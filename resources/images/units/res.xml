@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "resources/images/units/" />
+	<atlas>
+		<image file="hoellium.png" cols = "4" />
+		<image file="hoellium+maske.png" cols = "4" />
+	</atlas>
+</resources>

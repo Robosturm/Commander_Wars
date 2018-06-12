@@ -1,76 +1,85 @@
 #include "ox/oxygine.hpp"
 #include "ox/Stage.hpp"
 #include "ox/DebugActor.hpp"
+#include <QObject>
 
-using namespace oxygine;
+#include "mainwindow.h"
+
+
+
+#include <QQmlApplicationEngine>
+#include <QJSEngine>
+
+#include "coreengine/mainapp.h"
+#include "coreengine/settings.h"
+#include "coreengine/console.h"
 
 int main(int argc, char* argv[])
 {
-    /*************************************************************************************************/
-    // setup stuff is done here
-    ObjectBase::__startTracingLeaks();
-    // Initialize Oxygine's internal stuff
-    core::init_desc desc;
-    desc.title = "Commander Wars";
+    // qt metatypes
 
+
+    /*************************************************************************************************/
+
+    Mainapp app(argc, argv);
+    Settings* pSettings = Settings::getInstance();
+    // setup stuff is done here
+    oxygine::ObjectBase::__startTracingLeaks();
+    // Initialize Oxygine's internal stuff
+    oxygine::core::init_desc desc;
+    // translate all user visible texts with qt
+    desc.title = QObject::tr("Commander Wars").toStdString().c_str();
 
     // The initial window size can be set up here on SDL builds, ignored on Mobile devices
-    desc.w = 960;
-    desc.h = 640;
+    desc.w = pSettings->getWidth();
+    desc.h = pSettings->getHeigth();
+    desc.fullscreen = pSettings->getFullscreen();
+    desc.borderless = pSettings->getBorderless();
 
+    // init oxygine engine
+    oxygine::core::init(&desc);
 
     // Create the stage. Stage is a root node for all updateable and drawable objects
-    Stage::instance = new Stage();
-    Point size = core::getDisplaySize();
-    getStage()->setSize(size);
+    oxygine::Stage::instance = new oxygine::Stage();
 
+
+    oxygine::Point size = oxygine::core::getDisplaySize();
+    oxygine::getStage()->setSize(size);
+
+    Console* pConsole = Console::getInstance();
+    oxygine::getStage()->addChild(new Mainwindow());
+    oxygine::getStage()->addChild(pConsole);
+
+
+#ifdef GAMEDEBUG
     // DebugActor is a helper actor node. It shows FPS, memory usage and other useful stuff
-    //DebugActor::show();
+    oxygine::DebugActor::show();
+#endif
 
+    app.setup();
     /*************************************************************************************************/
     // This is the main game loop.
-    while (true)
-    {
-        // Update engine-internal components
-        // If input events are available, they are passed to Stage::instance.handleEvent
-        // If the function returns true, it means that the user requested the application to terminate
-        bool done = core::update();
+    app.exec();
 
-        // Update our stage
-        // Update all actors. Actor::update will also be called for all its children
-        getStage()->update();
-
-        if (core::beginRendering())
-        {
-            Color clearColor(32, 32, 32, 255);
-            Rect viewport(Point(0, 0), core::getDisplaySize());
-            // Render all actors inside the stage. Actor::render will also be called for all its children
-            getStage()->render(clearColor, viewport);
-
-            core::swapDisplayBuffers();
-        }
-        // check for termination
-        if (done)
-        {
-            break;
-        }
-    }
     /*************************************************************************************************/
     // clean up section ahead
+    // store current settings when closing
+    pSettings->saveSettings();
 
     // If we get here, the user has requested the Application to terminate.
     // We dump and log all our created objects that have not been freed yet
-    ObjectBase::dumpCreatedObjects();
+    oxygine::ObjectBase::dumpCreatedObjects();
 
     // Releases all internal components and the stage
-    core::release();
+    oxygine::core::release();
 
     // The dump list should be empty by now,
     // we want to make sure that there aren't any memory leaks, so we call it again.
-    ObjectBase::dumpCreatedObjects();
+    oxygine::ObjectBase::dumpCreatedObjects();
 
-    ObjectBase::__stopTracingLeaks();
+    oxygine::ObjectBase::__stopTracingLeaks();
     //end
 
 	return 0;
 }
+

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "resources/images/backgrounds/" />
+	<atlas>
+		<image file="Background+0.png" />
+		<image file="Background+1.png" />
+		<image file="Background+2.png" />
+	</atlas>
+</resources>
