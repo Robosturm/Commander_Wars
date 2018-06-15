@@ -10,6 +10,8 @@
 #include "coreengine/settings.h"
 #include "resource_management/fontmanager.h"
 
+#include "network/NetworkInterface.h"
+
 // values which differ from release to debug build
 #ifdef GAMEDEBUG
 Console::eLogLevels Console::LogLevel = Console::eDEBUG;
@@ -35,22 +37,25 @@ const QString Console::functions[] =
     QString("createfunnymessage"),
     QString("setVolume"),
     QString("setLogLevel"),
+    QString("connectToServer"),
+    QString("getServerAdresse"),
     QString("help"),
     QString("")
 };
 
 Console::Console()
 {
+    Mainapp* pApp = Mainapp::getInstance();
     // move console to top
     oxygine::Actor::setPriority(32000);
     oxygine::spSprite sprite = new oxygine::ColorRectSprite();
     sprite->setPosition(0, 0);
-    sprite->setSize(Settings::getInstance()->getWidth(), Settings::getInstance()->getHeigth());
+    sprite->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
     sprite->attachTo(this);
     sprite->setColor(oxygine::Color(0,0,0, 180));
 
     m_text = new oxygine::TextField();
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getInstance()->getResFont("times_10")).withColor(oxygine::Color(255,127,39)).alignLeft();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getTimesFont10()).withColor(oxygine::Color(255,127,39)).alignLeft();
     m_text->setStyle(style);
 
     m_text->attachTo(this);
@@ -68,7 +73,8 @@ Console* Console::getInstance()
     return m_pConsole;
 }
 
-void Console::init(){
+void Console::init()
+{
 
     // m_pConsole->moveToThread(GLOBALS::pWorkerUser);
 
@@ -95,7 +101,7 @@ void Console::init(){
 
 void Console::dotask(const QString& message)
 {
-    Mainapp* pMainapp = Mainapp::getInstance();
+    Mainapp* pApp = Mainapp::getInstance();
     print(message, Console::eINFO);
     QString order = "console." + message;
     // ignore console argument and evaluate the String on the Top-Level
@@ -103,7 +109,7 @@ void Console::dotask(const QString& message)
     {
         order = order.replace("console.game:", "");
     }
-    pMainapp->getInterpreter()->doString(order);
+    pApp->getInterpreter()->doString(order);
 }
 
 void Console::print(const QString& message, qint8 LogLevel)
@@ -118,6 +124,17 @@ void Console::print(const QString& message, eLogLevels MsgLogLevel)
     if (MsgLogLevel >= Console::LogLevel)
     {
         QString msg = tr(message.toStdString().c_str());
+
+        Mainapp* pApp = Mainapp::getInstance();
+        // send Client Logs to Server
+        if (pApp->getNetworkInterface() != nullptr)
+        {
+            if (!pApp->getNetworkInterface()->getIsServer() && pApp->getNetworkInterface()->getIsConnected())
+            {
+                QByteArray data(message.toStdString().c_str());
+                pApp->getNetworkInterface()->sendData(data,  Mainapp::NetworkSerives::Console, false);
+            }
+        }
 
         QString prefix = "";
         switch (MsgLogLevel)
@@ -166,10 +183,10 @@ void Console::update(const oxygine::UpdateState& us)
     // no need to calculate more than we need if we're invisible
     if(show)
     {
-
+        Mainapp* pApp = Mainapp::getInstance();
         QMutexLocker locker(datalocker);
-        qint32 screenheight = Settings::getInstance()->getHeigth();
-        qint32 h = FontManager::getInstance()->getResFont("times_10")->getSize();
+        qint32 screenheight = pApp->getSettings()->getHeight();
+        qint32 h = FontManager::getTimesFont10()->getSize();
         // pre calc message start
         qint32 num = screenheight / h - 1;
         qint32 i = 0;
@@ -214,12 +231,42 @@ void Console::toggleView()
 
 void Console::setVolume(qint32 volume)
 {
-    //GLOBALS::pAudioEngine->setVolume(volume);
+    Mainapp::getInstance()->getAudioThread()->setVolume(volume);
 }
 
 void Console::setLogLevel(eLogLevels newLogLevel)
 {
     Console::LogLevel = newLogLevel;
+}
+
+void Console::connectToServer(const QString& adresse, qint32 port)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    if (!pApp->getNetworkInterface()->getIsServer())
+    {
+        if (port > 0)
+        {
+            pApp->getSettings()->setGamePort(port);
+        }
+        emit pApp->getNetworkInterface()->sig_connect(adresse);
+    }
+    else
+    {
+        print("Running in Servermode!", eINFO);
+    }
+}
+
+void Console::getServerAdresse()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    if (pApp->getNetworkInterface()->getIsServer())
+    {
+        print("Adresse: " + pApp->getNetworkInterface()->getIPAdresse(), eINFO);
+    }
+    else
+    {
+        print("Running in Clientmode!", eINFO);
+    }
 }
 
 void Console::help(qint32 start, qint32 end)
@@ -240,7 +287,7 @@ void Console::createfunnymessage(qint32 message){
     if(message<0){
         QTime time = QTime::currentTime();
         qsrand((uint)time.msec());
-        message = Mainapp::randInt(0,325);
+        message = Mainapp::randInt(0,327);
     }
     QString printmessage;
     switch(message){
@@ -1219,6 +1266,12 @@ void Console::createfunnymessage(qint32 message){
     case 324:
         printmessage = "The Code is the Comment or believe in god.";
         break;
+    case 325:
+        printmessage = "This message was created by slavery and kids.";
+        break;
+    case 326:
+        printmessage = "Error 404 no game found. Do your homework instead.";
+        break;
     default:
         printmessage = "No more funny Messages found. Delete your Harddisk instead";
         break;
@@ -1237,12 +1290,21 @@ void Console::TextInput(SDL_Event *event)
     }
 }
 
+void Console::recieveNetworkMessage(QByteArray data, Mainapp::NetworkSerives serive)
+{
+    if (serive == Mainapp::NetworkSerives::Console)
+    {
+        QString msg(data);
+        print("Network Client: " + msg, eLogLevels::eDEBUG);
+    }
+}
+
 void Console::KeyInput(SDL_Event *event)
 {
     // for debugging
     SDL_Keycode cur = static_cast<SDL_Keycode>(event->key.keysym.sym);
-
-    if (cur == Settings::getInstance()->getKeyConsole())
+    Mainapp* pApp = Mainapp::getInstance();
+    if (cur == pApp->getSettings()->getKeyConsole())
     {
         Console::toggleView();
     }

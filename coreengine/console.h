@@ -6,6 +6,8 @@
 
 #include "oxygine-framework.h"
 
+#include "coreengine/mainapp.h"
+
 class QString;
 class QMutex;
 class QKeyEvent;
@@ -50,10 +52,13 @@ public slots:
     // Lua Libs Functions
     void setVolume(qint32 volume);
     void setLogLevel(eLogLevels newLogLevel);
+    void connectToServer(const QString&  adresse, qint32 port = -1);
+    void getServerAdresse();
     void help(qint32 start = 0, qint32 end = -1);
     virtual void update(const oxygine::UpdateState& us) override;
     void KeyInput(SDL_Event *event);
     void TextInput(SDL_Event *event);
+    void recieveNetworkMessage(QByteArray data, Mainapp::NetworkSerives serive);
 private:
     static eLogLevels LogLevel;
     static QString curmsg;

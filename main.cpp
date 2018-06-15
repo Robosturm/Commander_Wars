@@ -1,28 +1,31 @@
-#include "ox/oxygine.hpp"
-#include "ox/Stage.hpp"
-#include "ox/DebugActor.hpp"
 #include <QObject>
 
-#include "mainwindow.h"
+#include "coreengine/audiothread.h"
 
+ #include "coreengine/mainapp.h"
 
 
 #include <QQmlApplicationEngine>
 #include <QJSEngine>
 
-#include "coreengine/mainapp.h"
-#include "coreengine/settings.h"
+
 #include "coreengine/console.h"
+
+#include "ox/oxygine.hpp"
+#include "ox/Stage.hpp"
+#include "ox/DebugActor.hpp"
+
+#include "menue/mainwindow.h"
 
 int main(int argc, char* argv[])
 {
     // qt metatypes
-
+    qRegisterMetaType<Mainapp::NetworkSerives>("Mainapp::NetworkSerives");
 
     /*************************************************************************************************/
 
     Mainapp app(argc, argv);
-    Settings* pSettings = Settings::getInstance();
+
     // setup stuff is done here
     oxygine::ObjectBase::__startTracingLeaks();
     // Initialize Oxygine's internal stuff
@@ -31,10 +34,10 @@ int main(int argc, char* argv[])
     desc.title = QObject::tr("Commander Wars").toStdString().c_str();
 
     // The initial window size can be set up here on SDL builds, ignored on Mobile devices
-    desc.w = pSettings->getWidth();
-    desc.h = pSettings->getHeigth();
-    desc.fullscreen = pSettings->getFullscreen();
-    desc.borderless = pSettings->getBorderless();
+    desc.w = app.getSettings()->getWidth();
+    desc.h = app.getSettings()->getHeight();
+    desc.fullscreen = app.getSettings()->getFullscreen();
+    desc.borderless = app.getSettings()->getBorderless();
 
     // init oxygine engine
     oxygine::core::init(&desc);
@@ -64,7 +67,7 @@ int main(int argc, char* argv[])
     /*************************************************************************************************/
     // clean up section ahead
     // store current settings when closing
-    pSettings->saveSettings();
+    app.getSettings()->saveSettings();
 
     // If we get here, the user has requested the Application to terminate.
     // We dump and log all our created objects that have not been freed yet

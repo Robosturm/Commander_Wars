@@ -10,25 +10,21 @@ const QString Settings::m_settingFile = "Commander_Wars.ini";
 
 qint32 Settings::m_x                 = 0;
 qint32 Settings::m_y                 = 0;
-qint32 Settings::m_width             = 800;
-qint32 Settings::m_heigth            = 600;
+qint32 Settings::m_width             = 1024;
+qint32 Settings::m_height            = 800;
 bool Settings::m_borderless       = false;
 bool Settings::m_fullscreen       = false;
 SDL_Keycode Settings::m_key_escape    = SDLK_ESCAPE;
 SDL_Keycode Settings::m_key_console   = SDLK_F1;
 QString Settings::m_language      = "en";
-
+// Sound
+qint32 Settings::m_MusicVolume       = 80;
+// Network
+QString Settings::m_NetworkData   = "";
+qint32 Settings::m_GamePort          = 5603;
+bool Settings::m_Server           = true;
 // this Object
 Settings* Settings::m_pInstance = NULL;
-
-Settings* Settings::getInstance()
-{
-    if (m_pInstance == NULL)
-    {
-        m_pInstance = new Settings();
-    }
-    return m_pInstance;
-}
 
 Settings::Settings()
 {
@@ -57,17 +53,17 @@ void Settings::loadSettings(){
         Console::print(error, Console::eERROR);
         m_y = 50;
     }
-    m_width       = settings.value("width",800).toInt(&ok);
+    m_width       = settings.value("width", 1024).toInt(&ok);
     if(!ok){
         QString error = tr("Error in the Ini File: ") + "[Resolution] " + tr("Setting:") + " width";
         Console::print(error, Console::eERROR);
-        m_width = 800;
+        m_width = 1024;
     }
-    m_heigth      = settings.value("heigth",600).toInt(&ok);
+    m_height      = settings.value("height", 800).toInt(&ok);
     if(!ok){
         QString error = tr("Error in the Ini File: ") + "[Resolution] " + tr("Setting:") + " heigth";
         Console::print(error, Console::eERROR);
-        m_heigth = 600;
+        m_height = 800;
     }
     m_borderless  = settings.value("borderless",false).toBool();
     m_fullscreen  = settings.value("fullscreen",false).toBool();
@@ -88,6 +84,27 @@ void Settings::loadSettings(){
         m_key_console = SDLK_F1;
     }
     settings.endGroup();
+
+    // Sound
+    settings.beginGroup("Sound");
+    m_MusicVolume      = settings.value("MusicVolume", 80).toInt(&ok);
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Sound] " + tr("Setting:") + " MusicVolume";
+        Console::print(error, Console::eERROR);
+        m_MusicVolume = 80;
+    }
+    settings.endGroup();
+
+    settings.beginGroup("Network");
+    m_NetworkData = settings.value("NetworkConfiguration", "").toString();
+    m_GamePort = settings.value("GamePort", 5603).toInt();
+    if (m_GamePort < 0)
+    {
+        m_GamePort = 5603;
+    }
+    m_Server  = settings.value("Server", true).toBool();
+    settings.endGroup();
 }
 
 void Settings::saveSettings(){
@@ -101,7 +118,7 @@ void Settings::saveSettings(){
     settings.setValue("x",                          m_x);
     settings.setValue("y",                          m_y);
     settings.setValue("width",                      m_width);
-    settings.setValue("heigth",                     m_heigth);
+    settings.setValue("height",                     m_height);
     settings.setValue("borderless",                 m_borderless);
     settings.setValue("fullscreen",                 m_fullscreen);
     settings.endGroup();
@@ -109,6 +126,18 @@ void Settings::saveSettings(){
     settings.beginGroup("Keys");
     settings.setValue("key_escape",                 m_key_escape);
     settings.setValue("key_console",                m_key_console);
+    settings.endGroup();
+
+    // Sound
+    settings.beginGroup("Sound");
+    settings.setValue("MusicVolume",               m_MusicVolume);
+    settings.endGroup();
+
+    // network
+    settings.beginGroup("Network");
+    settings.setValue("NetworkConfiguration",      m_NetworkData);
+    settings.setValue("GamePort",                  m_GamePort);
+    settings.setValue("Server",                    m_Server);
     settings.endGroup();
 }
 

@@ -7,6 +7,10 @@ add_definitions(${OXYGINE_DEFINITIONS})
 include_directories(${OXYGINE_INCLUDE_DIRS})
 link_directories(${OXYGINE_LIBRARY_DIRS})
 
+#add_subdirectory(../../Oxygen/oxygine-sound oxygine-sound)
+#include_directories(${OXYGINESOUND_INCLUDE_DIRS})
+
+
 
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -17,6 +21,8 @@ find_package(Qt5Core REQUIRED)
 # Qt5LinguistTools
 find_package(Qt5LinguistTools REQUIRED)
 find_package(Qt5QML REQUIRED)
+find_package(Qt5Multimedia REQUIRED)
+find_package(Qt5Network REQUIRED)
 
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
     add_definitions(
@@ -30,20 +36,40 @@ else("Release")
     )
 endif()
 
+# disbale cxx 1 future for qt.
+add_definitions(
+    -DQT_FEATURE_cxx11_future=-1
+)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OXYGINE_CXX_FLAGS}")
 
 # source list we start slow here with the main cpp
 set(${PROJECT_NAME}_SRCS
         main.cpp
-        mainwindow.cpp
+
+        #menues
+        menue/mainwindow.cpp
+        menue/ingamemenue.cpp
+
+        # ressource management
         resource_management/unitspritemanager.cpp
         resource_management/fontmanager.cpp
+        resource_management/backgroundmanager.cpp
+        resource_management/objectmanager.cpp
+
+        # core engine
         coreengine/mainapp.cpp
         coreengine/settings.cpp
         coreengine/interpreter.cpp
         coreengine/console.cpp
+        coreengine/audiothread.cpp
 
+        # network engine
+        network/tcpclient.cpp
+        network/tcpserver.cpp
+        network/txtask.cpp
+        network/rxtask.cpp
+        network/NetworkInterface.h
 )
 
 
@@ -60,9 +86,12 @@ add_executable(
 # link libraries
 target_link_libraries(
         ${PROJECT_NAME}
+        ${OXYGINESOUND_LIBS}
 	${OXYGINE_CORE_LIBS}
         Qt5::Core
         Qt5::Qml
+        Qt5::Multimedia
+        Qt5::Network
 )
 
 
@@ -89,17 +118,33 @@ set(${PROJECT_NAME}_INSTALL_LIBS
 get_target_property(_qmake_executable Qt5::qmake IMPORTED_LOCATION)
 get_filename_component(QT_BIN_DIR "${_qmake_executable}" DIRECTORY)
 
+#find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
+
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
     set(${PROJECT_NAME}_INSTALL_QT_LIBS
          ${QT_BIN_DIR}/Qt5Qmld.dll
          ${QT_BIN_DIR}/Qt5Cored.dll
          ${QT_BIN_DIR}/Qt5Networkd.dll
+         ${QT_BIN_DIR}/Qt5Multimediad.dll
+         ${QT_BIN_DIR}/Qt5Guid.dll
+         ${QT_BIN_DIR}/Qt5Widgetsd.dll
+    )
+
+    set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
+         ${QT_BIN_DIR}/../plugins/mediaservice/dsengined.dll
+         ${QT_BIN_DIR}/../plugins/mediaservice/qtmedia_audioengined.dll
     )
 else("Release")
     set(${PROJECT_NAME}_INSTALL_QT_LIBS
          ${QT_BIN_DIR}/Qt5Qml.dll
          ${QT_BIN_DIR}/Qt5Core.dll
          ${QT_BIN_DIR}/Qt5Network.dll
+         ${QT_BIN_DIR}/Qt5Guid.dll
+    )
+
+    set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
+         ${QT_BIN_DIR}/../plugins/mediaservice/dsengine.dll
+         ${QT_BIN_DIR}/../plugins/mediaservice/qtmedia_audioengine.dll
     )
 endif()
 
@@ -107,5 +152,7 @@ endif()
 install(DIRECTORY resources DESTINATION ".")
 install(FILES ${${PROJECT_NAME}_INSTALL_LIBS} DESTINATION ".")
 install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION ".")
+install(FILES ${${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS} DESTINATION "mediaservice_dis")
 # install exe
 install(TARGETS ${PROJECT_NAME} DESTINATION ".")
+

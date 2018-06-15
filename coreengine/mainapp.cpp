@@ -3,16 +3,28 @@
 #include "ox/oxygine.hpp"
 #include "ox/Stage.hpp"
 
+#include "network/NetworkInterface.h"
+#include "network/tcpclient.h"
+#include "network/tcpserver.h"
+
 Mainapp* Mainapp::m_pMainapp = nullptr;
 
 Mainapp::Mainapp(int argc, char* argv[])
-    : QCoreApplication(argc, argv)
+    : QCoreApplication(argc, argv),
+      m_Audiothread(new AudioThread)
 {
     // create update timer
     m_Timer.setSingleShot(false);
     m_Timer.start(5);
     connect(&m_Timer, SIGNAL(timeout()), this, SLOT(update()));
     m_pMainapp = this;
+
+    m_Audiothread->start();
+}
+
+Mainapp::~Mainapp()
+{
+    m_Audiothread->deleteLater();
 }
 
 Mainapp* Mainapp::getInstance()
@@ -78,6 +90,7 @@ void Mainapp::setup()
 {
     oxygine::EventCallback cb = CLOSURE(this, &Mainapp::onEvent);
     ox::core::getDispatcher()->addEventListener(ox::core::EVENT_SYSTEM, cb);
+    setupNetwork();
 }
 
 void Mainapp::onEvent(oxygine::Event* ev)
@@ -96,4 +109,22 @@ void Mainapp::onEvent(oxygine::Event* ev)
     {
         emit sigKeyUp(event);
     }
+}
+
+void Mainapp::setupNetwork()
+{
+    if (m_pNetworkInterface != NULL)
+    {
+        m_pNetworkInterface->deleteLater();
+        m_pNetworkInterface = NULL;
+    }
+    if (m_Settings.getServer())
+    {
+        m_pNetworkInterface = new TCPServer();
+    }
+    else
+    {
+        m_pNetworkInterface = new TCPClient();
+    }
+    m_pNetworkInterface->start(QThread::HighPriority);
 }

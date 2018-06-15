@@ -1,13 +1,15 @@
 #ifndef MAINAPP_H
 #define MAINAPP_H
 
-#include "oxygine-framework.h"
-
 #include <QTimer>
 #include <QTranslator>
 #include <QCoreApplication>
 
 #include "coreengine/interpreter.h"
+#include "coreengine/audiothread.h"
+#include "coreengine/settings.h"
+
+class NetworkInterface;
 
 class Mainapp : public QCoreApplication
 {
@@ -23,8 +25,18 @@ signals:
     void sigKeyDown(SDL_Event* event);
     void sigKeyUp(SDL_Event* event);
 public:
+    /**
+      * @brief this enum contains all message recievers of the network
+      */
+    enum class NetworkSerives
+    {
+        Console = 0,
+        Game,
+        Max,
+    };
+
     explicit Mainapp(int argc, char* argv[]);
-    virtual ~Mainapp() = default;
+    virtual ~Mainapp();
 
     static Mainapp* getInstance();
 
@@ -38,7 +50,24 @@ public:
         return &m_Interpreter;
     }
 
+    inline AudioThread* getAudioThread()
+    {
+        return m_Audiothread;
+    }
+
+    inline Settings* getSettings()
+    {
+        return &m_Settings;
+    }
+
+    inline NetworkInterface* getNetworkInterface()
+    {
+        return m_pNetworkInterface;
+    }
+
     void setup();
+
+    void setupNetwork();
 protected:
     void onEvent(oxygine::Event* ev);
 private:
@@ -47,7 +76,9 @@ private:
     static Mainapp* m_pMainapp;
 
     Interpreter m_Interpreter;
-
+    AudioThread* m_Audiothread;
+    Settings m_Settings;
+    NetworkInterface* m_pNetworkInterface;
 };
 
 #endif // MAINAPP_H

@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <resources>
 	<set path = "resources/fonts" />
-	<font file="times_10.fnt" />	
+	<font file="times_10.fnt" />
+	<font file="main.fnt" />
+	<font file="standard.fnt" />
 </resources>
