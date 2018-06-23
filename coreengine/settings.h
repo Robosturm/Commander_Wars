@@ -13,6 +13,7 @@ class Settings : public QObject
     Q_OBJECT
 public:
     Settings();
+    virtual ~Settings() = default;
 
     static void loadSettings();
     static void saveSettings();
@@ -78,6 +79,10 @@ public:
     {
         return m_Server;
     }
+    inline QStringList getMods()
+    {
+        return m_activeMods;
+    }
 private:
     // setting variables
     static qint32 m_x;
@@ -102,7 +107,7 @@ private:
     // internal members
     static Settings* m_pInstance;
     static const QString m_settingFile;
-
+    static QStringList m_activeMods;
 
 
 };

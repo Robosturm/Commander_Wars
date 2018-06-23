@@ -32,18 +32,28 @@ Mainwindow::Mainwindow()
     oxygine::spButton pButton = ObjectManager::createButton(tr("Singleplayer"));
     pButton->attachTo(this);
     pButton->setPosition(pApp->getSettings()->getWidth() / 2.0f - pButton->getWidth() / 2.0f, pBackground->getHeight() / 2.0f);
-    pButton->addEventListener(oxygine::TouchEvent::CLICK, CLOSURE(this, &Mainwindow::enterSingleplayer));
+    pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigEnterSingleplayer();
+    });
+
+    connect(this, SIGNAL(sigEnterSingleplayer()), this, SLOT(enterSingleplayer()));
 }
 
-void Mainwindow::enterSingleplayer(oxygine::Event *)
+Mainwindow::~Mainwindow()
 {
 
-    leaveMenue();
+}
+
+void Mainwindow::enterSingleplayer()
+{
     oxygine::getStage()->addChild(new InGameMenue());
+    leaveMenue();
+
 }
 
 void Mainwindow::leaveMenue()
 {
     Console::print("Leaving Main Menue", Console::eDEBUG);
-    oxygine::getStage()->removeChild(this);
+    oxygine::Actor::detach();
 }

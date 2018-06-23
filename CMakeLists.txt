@@ -7,8 +7,8 @@ add_definitions(${OXYGINE_DEFINITIONS})
 include_directories(${OXYGINE_INCLUDE_DIRS})
 link_directories(${OXYGINE_LIBRARY_DIRS})
 
-#add_subdirectory(../../Oxygen/oxygine-sound oxygine-sound)
-#include_directories(${OXYGINESOUND_INCLUDE_DIRS})
+add_subdirectory(../../Oxygen/oxygine-flow oxygine-flow)
+include_directories(${OXYGINE_FLOW_INCLUDE_DIRS})
 
 
 
@@ -53,6 +53,7 @@ set(${PROJECT_NAME}_SRCS
 
         # ressource management
         resource_management/unitspritemanager.cpp
+        resource_management/terrainmanager.cpp
         resource_management/fontmanager.cpp
         resource_management/backgroundmanager.cpp
         resource_management/objectmanager.cpp
@@ -70,6 +71,10 @@ set(${PROJECT_NAME}_SRCS
         network/txtask.cpp
         network/rxtask.cpp
         network/NetworkInterface.h
+
+        # game
+        game/gamemap.cpp
+        game/terrain.cpp
 )
 
 
@@ -86,13 +91,16 @@ add_executable(
 # link libraries
 target_link_libraries(
         ${PROJECT_NAME}
-        ${OXYGINESOUND_LIBS}
+        oxygine-flow
 	${OXYGINE_CORE_LIBS}
         Qt5::Core
         Qt5::Qml
         Qt5::Multimedia
         Qt5::Network
 )
+
+FILE(GLOB_RECURSE JavaScripts "resources/*.js")
+add_custom_target(scripts SOURCES ${JavaScripts})
 
 
 # install section

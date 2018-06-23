@@ -9,7 +9,8 @@ class InGameMenue : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit InGameMenue();
+    explicit InGameMenue(qint32 width = 20, qint32 heigth = 20);
+    virtual ~InGameMenue();
 
 signals:
 

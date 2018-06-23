@@ -20,6 +20,12 @@ void TCPServer::connectTCP(const QString&)
 {
 }
 
+TCPServer::~TCPServer()
+{
+    disconnectTCP();
+    delete pTCPServer;
+}
+
 void TCPServer::disconnectTCP()
 {
     QMutexLocker locker(&TaskMutex);

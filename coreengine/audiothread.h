@@ -12,7 +12,7 @@ class AudioThread : public QThread
     Q_OBJECT
 public:
     AudioThread();
-    ~AudioThread();
+    virtual ~AudioThread();
 
 
     void playMusic(qint32 File);

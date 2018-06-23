@@ -75,6 +75,7 @@ private:
     void toggleView();
     void init();
     Console();
+    virtual  ~Console() = default;
 };
 
 #endif // CONSOLE_H

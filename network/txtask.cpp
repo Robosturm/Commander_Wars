@@ -12,6 +12,11 @@ TxTask::TxTask(QTcpSocket* pSocket, NetworkInterface* CommIF)
 {
 }
 
+TxTask::~TxTask()
+{
+
+}
+
 void TxTask::send(QByteArray data, Mainapp::NetworkSerives service, bool blocking)
 {
     QByteArray block;

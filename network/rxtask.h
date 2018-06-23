@@ -13,6 +13,7 @@ class RxTask : public QObject
     Q_OBJECT
 public:
     RxTask(QTcpSocket* pSocket, NetworkInterface* CommIF);
+    virtual ~RxTask();
 public slots:
     void recieveData();
 private:

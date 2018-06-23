@@ -11,6 +11,11 @@ RxTask::RxTask(QTcpSocket* pSocket, NetworkInterface* CommIF)
 {
 }
 
+RxTask::~RxTask()
+{
+
+}
+
 void RxTask::recieveData()
 {
         QDataStream pStream(m_pSocket);

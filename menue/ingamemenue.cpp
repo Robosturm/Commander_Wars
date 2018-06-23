@@ -1,9 +1,13 @@
 #include "menue/ingamemenue.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/console.h"
+
 #include "resource_management/backgroundmanager.h"
 
-InGameMenue::InGameMenue()
+#include "game/gamemap.h"
+
+InGameMenue::InGameMenue(qint32 width, qint32 heigth)
     : QObject()
 {
     Console::print("Entering In Game Menue", Console::eDEBUG);
@@ -11,7 +15,7 @@ InGameMenue::InGameMenue()
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
     oxygine::spSprite sprite = new oxygine::Sprite();
-    addChild(sprite);
+    oxygine::Actor::addChild(sprite);
     oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("Background+0");
     sprite->setResAnim(pBackground);
     sprite->setPosition(0, 0);
@@ -19,4 +23,11 @@ InGameMenue::InGameMenue()
     sprite->setPriority(-32000);
     sprite->setScaleX(pApp->getSettings()->getWidth() / pBackground->getWidth());
     sprite->setScaleY(pApp->getSettings()->getHeight() / pBackground->getHeight());
+    oxygine::Actor::addChild(new GameMap(width, heigth));
 }
+
+InGameMenue::~InGameMenue()
+{
+
+}
+

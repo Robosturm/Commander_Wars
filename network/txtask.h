@@ -14,6 +14,7 @@ class TxTask : public QObject
     Q_OBJECT
 public:
     TxTask(QTcpSocket* pSocket, NetworkInterface* CommIF);
+    virtual ~TxTask();
 public slots:
     /**
      * @brief send sends the Object via TCP

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "resources/images/terrain/" />
+	<atlas>
+		<image file="plains.png" />
+		<image file="plains+0.png" />
+		<image file="plains+1.png" />
+		<image file="plains+2.png" />
+		<image file="plains+3.png" />
+	</atlas>
+</resources>

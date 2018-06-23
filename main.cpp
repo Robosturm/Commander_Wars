@@ -1,8 +1,9 @@
 #include <QObject>
+#include <QDirIterator>
 
 #include "coreengine/audiothread.h"
 
- #include "coreengine/mainapp.h"
+#include "coreengine/mainapp.h"
 
 
 #include <QQmlApplicationEngine>
@@ -16,6 +17,7 @@
 #include "ox/DebugActor.hpp"
 
 #include "menue/mainwindow.h"
+#include "menue/ingamemenue.h"
 
 int main(int argc, char* argv[])
 {
@@ -50,7 +52,8 @@ int main(int argc, char* argv[])
     oxygine::getStage()->setSize(size);
 
     Console* pConsole = Console::getInstance();
-    oxygine::getStage()->addChild(new Mainwindow());
+    // create the initial menue no need to store the object
+    // it will add itself to the current stage
     oxygine::getStage()->addChild(pConsole);
 
 
@@ -60,6 +63,20 @@ int main(int argc, char* argv[])
 #endif
 
     app.setup();
+
+    // load General-Base Scripts
+    QString path =  QCoreApplication::applicationDirPath() + "/resources/scripts/general";
+    QStringList filter;
+    filter << "*.js";
+    QDirIterator* dirIter = new QDirIterator(path, filter, QDir::Files, QDirIterator::Subdirectories);
+    while (dirIter->hasNext())
+    {
+        dirIter->next();
+        QString file = dirIter->fileInfo().absoluteFilePath();
+        app.getInterpreter()->openScript(file);
+    }
+    delete dirIter;
+    oxygine::getStage()->addChild(new Mainwindow());
     /*************************************************************************************************/
     // This is the main game loop.
     app.exec();

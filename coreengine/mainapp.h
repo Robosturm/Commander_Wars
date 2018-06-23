@@ -47,7 +47,11 @@ public:
 
     inline Interpreter* getInterpreter()
     {
-        return &m_Interpreter;
+        if (m_pInterpreter == nullptr)
+        {
+            m_pInterpreter = new Interpreter();
+        }
+        return m_pInterpreter;
     }
 
     inline AudioThread* getAudioThread()
@@ -75,8 +79,8 @@ private:
     QTimer m_Timer;
     static Mainapp* m_pMainapp;
 
-    Interpreter m_Interpreter;
-    AudioThread* m_Audiothread;
+    Interpreter* m_pInterpreter{nullptr};
+    AudioThread* m_Audiothread{nullptr};
     Settings m_Settings;
     NetworkInterface* m_pNetworkInterface;
 };

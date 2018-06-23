@@ -18,7 +18,7 @@ class TCPServer : public NetworkInterface
     Q_OBJECT
 public:
     TCPServer();
-
+    virtual ~TCPServer();
 public slots:
     virtual void connectTCP(const QString& adress);
     virtual void disconnectTCP();

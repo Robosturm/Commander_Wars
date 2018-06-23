@@ -12,7 +12,7 @@ class TCPClient : public NetworkInterface
     Q_OBJECT
 public:
     TCPClient();
-    ~TCPClient();
+    virtual ~TCPClient();
 
 
 public slots:

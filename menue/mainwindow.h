@@ -8,10 +8,13 @@ class Mainwindow : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit Mainwindow();
-    virtual ~Mainwindow() = default;
+    virtual ~Mainwindow();
 
-    void exitMenue();
-    void enterSingleplayer(oxygine::Event *);
+public slots:
+    void enterSingleplayer();
 
     void leaveMenue();
+
+signals:
+    void sigEnterSingleplayer();
 };
