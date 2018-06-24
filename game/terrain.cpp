@@ -1,8 +1,12 @@
 #include "terrain.h"
 
 #include "coreengine/console.h"
+
 #include "coreengine/mainapp.h"
+
 #include "resource_management/terrainmanager.h"
+
+#include "game/gamemap.h"
 
 #include <QFileInfo>
 
@@ -28,7 +32,8 @@ Terrain::Terrain(const QString& terrainID, qint32 x, qint32 y)
         args << obj;
         pApp->getInterpreter()->doFunction(terrainID, function, args);
 
-        function = "loadBaseTerrainSprite";
+        // load sprite of the base terrain
+        function = "loadBaseTerrain";
         pApp->getInterpreter()->doFunction(terrainID, function, args);
     }
     else
@@ -37,22 +42,114 @@ Terrain::Terrain(const QString& terrainID, qint32 x, qint32 y)
     }
 }
 
-void Terrain::loadBaseTerrainSprite(QString spriteID)
+void Terrain::loadSprites()
 {
-    TerrainManager* pTerrainManager = TerrainManager::getInstance();
-    if (spriteID != "")
+    // unload old stuff
+    if (m_pTerrainSprite.get() != nullptr)
     {
-        if (Animated)
+        this->removeChild(m_pTerrainSprite);
+        m_pTerrainSprite = nullptr;
+    }
+    if (m_pOverlaySprites.size() > 0)
+    {
+        for (qint32 i = 0; i < m_pOverlaySprites.size(); i++)
         {
-
+            this->removeChild(m_pOverlaySprites[i]);
         }
-        else
+        m_pOverlaySprites.clear();
+    }
+    // load sub terrain
+    if (m_pBaseTerrain != nullptr)
+    {
+        m_pBaseTerrain->loadSprites();
+    }
+    // load main terrain
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function = "loadBaseSprite";
+    QJSValueList args;
+    QJSValue obj = pApp->getInterpreter()->getGlobal(terrainID);
+    obj = pApp->getInterpreter()->newQObject(this);
+    args << obj;
+    pApp->getInterpreter()->doFunction(terrainID, function, args);
+    function = "loadOverlaySprite";
+    pApp->getInterpreter()->doFunction(terrainID, function, args);
+}
+
+void Terrain::loadBaseTerrain(QString terrainID)
+{
+    m_pBaseTerrain = new Terrain(terrainID, x, y);
+    this->addChild(m_pBaseTerrain);
+}
+
+void Terrain::loadBaseSprite(QString spriteID)
+{
+
+    TerrainManager* pTerrainManager = TerrainManager::getInstance();
+    oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID.toStdString());
+    oxygine::spSprite pSprite = new oxygine::Sprite();
+    if (Animated)
+    {
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+        pSprite->addTween(tween);
+    }
+    else
+    {
+        pSprite->setResAnim(pAnim);
+    }
+    this->addChild(pSprite);
+}
+
+QString Terrain::getSurroundings(QString list, bool blacklist = false, qint32 searchType)
+{
+    QStringList searchList = list.split(",");
+    QString ret = "";
+    for (qint32 i = 0; i < 8; i++)
+    {
+        qint32 curX = x;
+        qint32 curY = y;
+        // get our x, y coordinates
+        GameMap::getField(curX, curY, i);
+        QString neighbourID =
+        switch (searchType)
         {
-            oxygine::spSprite sprite = new oxygine::Sprite();
-            oxygine::Actor::addChild(sprite);
-            sprite->setResAnim(pTerrainManager->getResAnim(spriteID.toStdString().c_str()));
+            case SearchTypes::All:
+            {
+
+                break;
+            }
+            case SearchTypes::Direct:
+            {
+                if ((i == GameMap::Directions::North) ||
+                    (i == GameMap::Directions::East) ||
+                    (i == GameMap::Directions::South) ||
+                    (i == GameMap::Directions::West))
+                {
+                    if (blacklist)
+                    {
+                        if (!searchList.contains())
+                    }
+                    else
+                    {
+
+                    }
+                }
+                break;
+            }
+            case SearchTypes::Diagnonal:
+            {
+                break;
+            }
+            default:
+            {
+                // do nothing
+            }
         }
     }
+}
+
+void Terrain::loadOverlaySprite(spriteID)
+{
+
 }
 
 bool Terrain::getAnimated() const

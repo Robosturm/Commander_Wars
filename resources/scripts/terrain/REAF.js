@@ -6,22 +6,26 @@ var Constructor = function()
         // default a terrain has no animation
         terrain.Animated = false;
     };
-    this.getDefense = function()
+	this.loadBaseTerrain = function(terrain)
     {
-        return 1;
+		terrain.loadBaseTerrain("SEA");
     };
     this.loadBaseSprite = function(terrain)
     {
-        var random = globals.randInt(-1, 3);
-        if (random >= 0)
+		var random = globals.randInt(0, 3);
+        if (random > 0)
         {
-            terrain.loadBaseSprite("plains+" + random.toString());
+            terrain.loadBaseSprite("reaf+" + random.toString() + "+N+E+S+W");
         }
         else
         {
-            terrain.loadBaseSprite("plains");
+            terrain.loadBaseSprite("reaf+N+E+S+W");
         }
+    };
+    this.getDefense = function()
+    {
+        return 2;
     };
 };
 Constructor.prototype = TERRAIN;
-var PLAINS = new Constructor();
+var REAF = new Constructor();

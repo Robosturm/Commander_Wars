@@ -23,6 +23,8 @@ qint32 Settings::m_MusicVolume       = 80;
 QString Settings::m_NetworkData   = "";
 qint32 Settings::m_GamePort          = 5603;
 bool Settings::m_Server           = true;
+// add mod path
+QStringList Settings::m_activeMods;
 // this Object
 Settings* Settings::m_pInstance = NULL;
 
@@ -96,6 +98,7 @@ void Settings::loadSettings(){
     }
     settings.endGroup();
 
+    // network
     settings.beginGroup("Network");
     m_NetworkData = settings.value("NetworkConfiguration", "").toString();
     m_GamePort = settings.value("GamePort", 5603).toInt();
@@ -104,6 +107,15 @@ void Settings::loadSettings(){
         m_GamePort = 5603;
     }
     m_Server  = settings.value("Server", true).toBool();
+    settings.endGroup();
+
+    // mods
+    settings.beginGroup("Mods");
+    QString modList = settings.value("Mods", "").toString();
+    if (!modList.isEmpty())
+    {
+        m_activeMods = modList.split(",");
+    }
     settings.endGroup();
 }
 
@@ -138,6 +150,20 @@ void Settings::saveSettings(){
     settings.setValue("NetworkConfiguration",      m_NetworkData);
     settings.setValue("GamePort",                  m_GamePort);
     settings.setValue("Server",                    m_Server);
+    settings.endGroup();
+
+    // mods
+    settings.beginGroup("Mods");
+    QString modString = "";
+    for (qint32 i = 0; i < m_activeMods.size(); i++)
+    {
+        modString += m_activeMods[i] ;
+        if (i < m_activeMods.size() - 1)
+        {
+            modString += ",";
+        }
+    }
+    settings.setValue("Mods",                    modString);
     settings.endGroup();
 }
 

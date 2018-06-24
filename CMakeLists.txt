@@ -11,7 +11,6 @@ add_subdirectory(../../Oxygen/oxygine-flow oxygine-flow)
 include_directories(${OXYGINE_FLOW_INCLUDE_DIRS})
 
 
-
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.

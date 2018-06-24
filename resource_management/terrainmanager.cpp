@@ -13,7 +13,7 @@ TerrainManager::TerrainManager() : QObject()
 void TerrainManager::reset()
 {
     Mainapp* pMainapp = Mainapp::getInstance();
-    for (qint32 i = 0; i < loadedTerrains.size(); i++)
+    for (qint32 i = 0; i < m_loadedTerrains.size(); i++)
     {
         pMainapp->getInterpreter()->deleteObject(m_loadedTerrains[i]);
     }
@@ -29,7 +29,7 @@ bool TerrainManager::loadTerrain(const QString& TerrainID)
     searchPaths.append("resources/scripts/terrain");
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
-        QString file = searchPaths[i] + "/" + TerrainID + "/" + TerrainID + ".js";
+        QString file = searchPaths[i] + "/" + TerrainID + ".js";
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
