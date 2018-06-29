@@ -1,5 +1,9 @@
 #include "resource_management/terrainmanager.h"
+
 #include <QFileInfo>
+
+#include <QDirIterator>
+
 #include "coreengine/mainapp.h"
 
 TerrainManager* TerrainManager::m_pInstance = nullptr;
@@ -20,6 +24,26 @@ void TerrainManager::reset()
     m_loadedTerrains.clear();
 }
 
+void TerrainManager::loadAll()
+{
+    reset();
+    Mainapp* pMainapp = Mainapp::getInstance();
+    QStringList searchPaths = pMainapp->getSettings()->getMods();
+    searchPaths.append("resources/scripts/terrain");
+    for (qint32 i = 0; i < searchPaths.size(); i++)
+    {
+        QString path =  QCoreApplication::applicationDirPath() + "/" + searchPaths[i];
+        QStringList filter;
+        filter << "*.js";
+        QDirIterator* dirIter = new QDirIterator(path, filter, QDir::Files, QDirIterator::Subdirectories);
+        while (dirIter->hasNext())
+        {
+            dirIter->next();
+            QString file = dirIter->fileInfo().fileName().split(".").at(0);
+            loadTerrain(file.toUpper());
+        }
+    }
+}
 
 bool TerrainManager::loadTerrain(const QString& TerrainID)
 {

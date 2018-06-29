@@ -10,12 +10,12 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        terrain.loadBaseSprite("rough_sea+N+E+S+W");
+		var surroundings = terrain.getSurroundings("SEA", true, true, TERRAIN.Direct);
+        terrain.loadBaseSprite("beach" + surroundings);
     };
-    this.getDefense = function()
+    this.loadOverlaySprite = function(terrain)
     {
-        return 2;
     };
 };
 Constructor.prototype = TERRAIN;
-var ROUGH_SEA = new Constructor();
+var BEACH = new Constructor();

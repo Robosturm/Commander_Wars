@@ -10,6 +10,13 @@
 
 #include <QFileInfo>
 
+Terrain* Terrain::createTerrain(const QString& terrainID, qint32 x, qint32 y)
+{
+    Terrain* pTerrain = new Terrain(terrainID, x, y);
+    pTerrain->createBaseTerrain();
+    return pTerrain;
+}
+
 Terrain::Terrain(const QString& terrainID, qint32 x, qint32 y)
     : terrainID(terrainID),
       x(x),
@@ -31,14 +38,32 @@ Terrain::Terrain(const QString& terrainID, qint32 x, qint32 y)
         obj = pApp->getInterpreter()->newQObject(this);
         args << obj;
         pApp->getInterpreter()->doFunction(terrainID, function, args);
-
-        // load sprite of the base terrain
-        function = "loadBaseTerrain";
-        pApp->getInterpreter()->doFunction(terrainID, function, args);
     }
     else
     {
         Console::print(tr("Unable to load Terrain ") + terrainID, Console::eFATAL);
+    }
+}
+
+Terrain::~Terrain()
+{
+
+
+
+}
+
+void Terrain::createBaseTerrain()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QJSValueList args;
+    QJSValue obj = pApp->getInterpreter()->newQObject(this);
+    args << obj;
+    // load sprite of the base terrain
+    QString function = "loadBaseTerrain";
+    pApp->getInterpreter()->doFunction(terrainID, function, args);
+    if (m_pBaseTerrain != nullptr)
+    {
+        m_pBaseTerrain->createBaseTerrain();
     }
 }
 
@@ -73,6 +98,7 @@ void Terrain::loadSprites()
     pApp->getInterpreter()->doFunction(terrainID, function, args);
     function = "loadOverlaySprite";
     pApp->getInterpreter()->doFunction(terrainID, function, args);
+
 }
 
 void Terrain::loadBaseTerrain(QString terrainID)
@@ -87,7 +113,7 @@ void Terrain::loadBaseSprite(QString spriteID)
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID.toStdString());
     oxygine::spSprite pSprite = new oxygine::Sprite();
-    if (Animated)
+    if (pAnim->getTotalFrames() > 1)
     {
         oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
         pSprite->addTween(tween);
@@ -97,9 +123,10 @@ void Terrain::loadBaseSprite(QString spriteID)
         pSprite->setResAnim(pAnim);
     }
     this->addChild(pSprite);
+    m_pTerrainSprite = pSprite;
 }
 
-QString Terrain::getSurroundings(QString list, bool blacklist = false, qint32 searchType)
+QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType)
 {
     QStringList searchList = list.split(",");
     QString ret = "";
@@ -108,58 +135,151 @@ QString Terrain::getSurroundings(QString list, bool blacklist = false, qint32 se
         qint32 curX = x;
         qint32 curY = y;
         // get our x, y coordinates
-        GameMap::getField(curX, curY, i);
-        QString neighbourID =
-        switch (searchType)
+        GameMap::getField(curX, curY, static_cast<GameMap::Directions>(i));
+        GameMap* pGameMap = GameMap::getInstance();
+        if (pGameMap->onMap(curX, curY))
         {
-            case SearchTypes::All:
+            QString neighbourID = "";
+            if (useBaseTerrainID)
             {
-
-                break;
+                neighbourID = pGameMap->getTerrain(curX, curY)->getBaseTerrainID();
             }
-            case SearchTypes::Direct:
+            else
             {
-                if ((i == GameMap::Directions::North) ||
-                    (i == GameMap::Directions::East) ||
-                    (i == GameMap::Directions::South) ||
-                    (i == GameMap::Directions::West))
+                neighbourID = pGameMap->getTerrain(curX, curY)->getTerrainID();
+            }
+            QString addString = "";
+            // load compare value
+            GameMap::Directions compareValue = GameMap::Directions::None;
+            if (searchType == GameMap::Directions::All)
+            {
+                compareValue = static_cast<GameMap::Directions>(i);
+            }
+            else if (searchType == GameMap::Directions::Direct)
+            {
+                switch (i)
                 {
-                    if (blacklist)
+                    case GameMap::Directions::North:
+                    case GameMap::Directions::East:
+                    case GameMap::Directions::West:
+                    case GameMap::Directions::South:
                     {
-                        if (!searchList.contains())
+                        compareValue = static_cast<GameMap::Directions>(i);
+                        break;
                     }
-                    else
+                    default:
                     {
-
+                        // do nothing
+                        compareValue = GameMap::Directions::None;
+                        break;
                     }
                 }
-                break;
             }
-            case SearchTypes::Diagnonal:
+            else if (searchType == GameMap::Directions::Diagnonal)
             {
-                break;
+                switch (i)
+                {
+                    case GameMap::Directions::NorthEast:
+                    case GameMap::Directions::NorthWest:
+                    case GameMap::Directions::SouthWest:
+                    case GameMap::Directions::SouthEast:
+                    {
+                        compareValue = static_cast<GameMap::Directions>(i);
+                        break;
+                    }
+                    default:
+                    {
+                        compareValue = GameMap::Directions::None;
+                        // do nothing
+                        break;
+                    }
+                }
             }
-            default:
+            else if (searchType == i)
+            {
+                compareValue = static_cast<GameMap::Directions>(i);
+            }
+            else
+            {
+                // you asshole reached unreachable code :D
+            }
+            // check for compare value to find string
+            if (compareValue == GameMap::Directions::North)
+            {
+                addString = "+N";
+            }
+            else if (compareValue == GameMap::Directions::East)
+            {
+                addString = "+E";
+            }
+            else if (compareValue == GameMap::Directions::South)
+            {
+                addString = "+S";
+            }
+            else if (compareValue == GameMap::Directions::West)
+            {
+                addString = "+W";
+            }
+            else if (compareValue == GameMap::Directions::NorthEast)
+            {
+                addString = "+NE";
+            }
+            else if (compareValue == GameMap::Directions::SouthEast)
+            {
+                addString = "+SE";
+            }
+            else if (compareValue == GameMap::Directions::SouthWest)
+            {
+                addString = "+SW";
+            }
+            else if (compareValue == GameMap::Directions::NorthWest)
+            {
+                addString = "+NW";
+            }
+            else
             {
                 // do nothing
             }
+            if (blacklist)
+            {
+                if (!searchList.contains(neighbourID))
+                {
+                    ret += addString;
+                }
+            }
+            else
+            {
+                if (searchList.contains(neighbourID))
+                {
+                    ret += addString;
+                }
+            }
         }
     }
+    return ret;
 }
 
-void Terrain::loadOverlaySprite(spriteID)
+void Terrain::loadOverlaySprite(QString spriteID)
 {
-
+    TerrainManager* pTerrainManager = TerrainManager::getInstance();
+    oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID.toStdString());
+    oxygine::spSprite pSprite = new oxygine::Sprite();
+    if (pAnim->getTotalFrames() > 1)
+    {
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+        pSprite->addTween(tween);
+    }
+    else
+    {
+        pSprite->setResAnim(pAnim);
+    }
+    this->addChild(pSprite);
+    m_pOverlaySprites.append(pSprite);
 }
 
-bool Terrain::getAnimated() const
+QString Terrain::getTerrainID() const
 {
-    return Animated;
-}
-
-void Terrain::setAnimated(bool value)
-{
-    Animated = value;
+    return terrainID;
 }
 
 qint32 Terrain::getX() const

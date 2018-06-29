@@ -6,13 +6,17 @@ var Constructor = function()
     };
     this.getDefense = function()
     {
-        return 1;
+        return 4;
+    };
+	this.loadBaseTerrain = function(terrain)
+    {
+		terrain.loadBaseTerrain("PLAINS");
     };
     this.loadBaseSprite = function(terrain)
     {
-        var random = globals.randInt(0, 4);
-        terrain.loadBaseSprite("plains+" + random.toString());
+        var random = globals.randInt(0, 1);
+        terrain.loadBaseSprite("mountain+" + random.toString());
     };
 };
 Constructor.prototype = TERRAIN;
-var PLAINS = new Constructor();
+var MOUNTAIN = new Constructor();

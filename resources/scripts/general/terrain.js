@@ -2,14 +2,22 @@
 var TERRAIN =
 {
     // search type filter for overlay
-    All : 0,
-    Direct : 1,
-    Diagnonal : 2,
+
+    North       : 0,
+    NorthEast   : 1,
+    East        : 2,
+    SouthEast   : 3,
+    South       : 4,
+    SouthWest   : 5,
+    West        : 6,
+    NorthWest   : 7,
+    All         : 8,
+    Direct      : 9,
+    Diagnonal   : 10,
 
     // loader for stuff which needs C++ Support
     init : function (terrain)
     {
-        terrain.Animated = false;
     },
     getDefense : function()
     {

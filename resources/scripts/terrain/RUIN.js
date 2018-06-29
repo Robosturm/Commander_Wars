@@ -8,11 +8,15 @@ var Constructor = function()
     {
         return 1;
     };
+	this.loadBaseTerrain = function(terrain)
+    {
+		terrain.loadBaseTerrain("PLAINS");
+    };
     this.loadBaseSprite = function(terrain)
     {
-        var random = globals.randInt(0, 4);
-        terrain.loadBaseSprite("plains+" + random.toString());
+        var random = globals.randInt(0, 2);
+        terrain.loadBaseSprite("ruin+" + random.toString());
     };
 };
 Constructor.prototype = TERRAIN;
-var PLAINS = new Constructor();
+var RUIN = new Constructor();

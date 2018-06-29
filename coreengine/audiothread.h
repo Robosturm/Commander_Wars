@@ -14,13 +14,38 @@ public:
     AudioThread();
     virtual ~AudioThread();
 
-
+    /**
+     * @brief playMusic
+     * @param File the music file to be played
+     */
     void playMusic(qint32 File);
+    /**
+     * @brief addMusic
+     * @param File adds a file to the playlist
+     */
     void addMusic(const QString& File);
+    /**
+     * @brief loadFolder loads all mp3 to the playlist
+     * @param folder  the folder to be loaded
+     */
     void loadFolder(const QString& folder);
+    /**
+     * @brief setVolume changes the volume between 0 and 100
+     * @param value
+     */
     void setVolume(qint32 value);
+    /**
+     * @brief getVolume
+     * @return the current volume in percent 0 to 100
+     */
     qint32 getVolume();
+    /**
+     * @brief clearPlayList clears the current playlist
+     */
     void clearPlayList();
+    /**
+     * @brief playRandom plays a random mp3 from the playlist
+     */
     void playRandom();
 protected:
     virtual void run();

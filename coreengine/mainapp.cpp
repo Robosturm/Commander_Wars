@@ -6,6 +6,7 @@
 #include "network/NetworkInterface.h"
 #include "network/tcpclient.h"
 #include "network/tcpserver.h"
+#include <QRandomGenerator>
 
 Mainapp* Mainapp::m_pMainapp = nullptr;
 
@@ -34,15 +35,7 @@ Mainapp* Mainapp::getInstance()
 
 qint32 Mainapp::randInt(qint32 low, qint32 high)
 {
-    if ((high + 1) - low != 0)
-    {
-    // Random number between low and high
-        return qrand() % ((high + 1) - low) + low;
-    }
-    else
-    {
-        return low;
-    }
+    return QRandomGenerator::global()->bounded(low, high + 1);
 }
 
 bool Mainapp::isEven(qint32 value)

@@ -52,12 +52,35 @@ public slots:
     // Lua Libs Functions
     void setVolume(qint32 volume);
     void setLogLevel(eLogLevels newLogLevel);
+    /**
+     * @brief connectToServer connects to the given server with the given port
+     * @param adresse
+     * @param port
+     */
     void connectToServer(const QString&  adresse, qint32 port = -1);
     void getServerAdresse();
+    /**
+     * @brief help shows the helps messages between given indexes or all as default
+     * @param start
+     * @param end
+     */
     void help(qint32 start = 0, qint32 end = -1);
     virtual void update(const oxygine::UpdateState& us) override;
+    /**
+     * @brief KeyInput event called when a key is pressed
+     * @param event
+     */
     void KeyInput(SDL_Event *event);
+    /**
+     * @brief TextInput event called when we recieved a text from the keyboard
+     * @param event
+     */
     void TextInput(SDL_Event *event);
+    /**
+     * @brief recieveNetworkMessage called when we recieve a console network message
+     * @param data the string we recieved
+     * @param serive
+     */
     void recieveNetworkMessage(QByteArray data, Mainapp::NetworkSerives serive);
 private:
     static eLogLevels LogLevel;

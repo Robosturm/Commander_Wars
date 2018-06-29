@@ -1,15 +1,26 @@
 #include "game/gamemap.h"
+
 #include "coreengine/mainapp.h"
+
+#include "resource_management/terrainmanager.h"
+
+#include "game/terrain.h"
 
 const QString GameMap::m_JavascriptName = "map";
 const qint32 GameMap::frameTime = 150;
+GameMap* GameMap::m_pInstance = nullptr;
+
 
 GameMap::GameMap(qint32 width, qint32 heigth)
     : width(width),
       heigth(heigth)
 {
+    m_pInstance = this;
     Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
     pInterpreter->setGlobal(m_JavascriptName, pInterpreter->newQObject(this));
+
+    TerrainManager* pTerrainManager = TerrainManager::getInstance();
+    pTerrainManager->loadAll();
 
     for (qint32 y = 0; y < heigth; y++)
     {
@@ -17,13 +28,16 @@ GameMap::GameMap(qint32 width, qint32 heigth)
         for (qint32 x = 0; x < width; x++)
         {
             // test code
-            Terrain* pTerrain = new Terrain("REAF", x, y);
-            oxygine::Actor::addChild(pTerrain);
+
+            QString terrain = pTerrainManager->getTerrainID(Mainapp::randInt(0, pTerrainManager->getTerrainCount() - 1));
+            Terrain* pTerrain = Terrain::createTerrain(terrain, x, y);
+            this->addChild(pTerrain);
             fields[y]->append(pTerrain);
             pTerrain->setPosition(x * 24.0f, y * 24.0f);
         }
     }
     updateTerrainSprites();
+
 }
 
 GameMap::GameMap(QString map)
@@ -33,6 +47,7 @@ GameMap::GameMap(QString map)
 
 GameMap::~GameMap()
 {
+    m_pInstance = nullptr;
     // remove us from the interpreter again
     Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
     pInterpreter->deleteObject(m_JavascriptName);
@@ -81,13 +96,13 @@ void GameMap::getField(qint32& x, qint32& y, Directions direction)
     {
         case GameMap::Directions::North:
         {
-            x++;
+            y--;
             break;
         }
         case GameMap::Directions::NorthEast:
         {
             x++;
-            y++;
+            y--;
             break;
         }
         case GameMap::Directions::East:
@@ -97,18 +112,18 @@ void GameMap::getField(qint32& x, qint32& y, Directions direction)
         }
         case GameMap::Directions::SouthEast:
         {
-            y--;
+            y++;
             x++;
             break;
         }
         case GameMap::Directions::South:
         {
-            y--;
+            y++;
             break;
         }
         case GameMap::Directions::SouthWest:
         {
-            y--;
+            y++;
             x--;
             break;
         }
@@ -119,8 +134,24 @@ void GameMap::getField(qint32& x, qint32& y, Directions direction)
         }
         case GameMap::Directions::NorthWest:
         {
-            y++;
+            y--;
             x--;
             break;
         }
+    }
+}
+
+bool GameMap::onMap(qint32 x, qint32 y)
+{
+    if ((x >= 0) &&
+        (y >= 0) &&
+        (x < width) &&
+        (y < heigth))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
