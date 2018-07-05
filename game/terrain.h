@@ -5,15 +5,16 @@
 #include <QVector>
 
 #include "oxygine-framework.h"
-#include "game/gamemap.h"
 
 #include "memory"
 
 class Terrain : public QObject, public oxygine::Actor
 {
     Q_OBJECT
-    Q_PROPERTY(bool x READ getX WRITE setX)
+    Q_PROPERTY(QString terrainID READ getTerrainID )
     Q_PROPERTY(bool y READ getY WRITE setY)
+    Q_PROPERTY(bool x READ getX WRITE setX)
+    Q_PROPERTY(QString terrainName READ getTerrainName WRITE setTerrainName)
 public:
 
     static Terrain* createTerrain(const QString& terrainID, qint32 x, qint32 y);
@@ -32,6 +33,9 @@ public:
     QString getTerrainID() const;
 
 
+    QString getTerrainName() const;
+    void setTerrainName(const QString &value);
+
 public slots:
     /**
      * @brief createBaseTerrain creates the base terrain for this terrain if it's a nullptr
@@ -49,12 +53,12 @@ public slots:
     void loadBaseSprite(QString spriteID);
     /**
      * @brief getSurroundings returns a string containing the directions which fulfill the given rule
-     * @param list
-     * @param blacklist
-     * @param searchType
+     * @param list the list as string split with ,
+     * @param blacklist use black or whitelist for given arguments
+     * @param searchType use GameMap::Directions here
      * @return
      */
-    QString getSurroundings(QString list, bool useBaseTerrainID = true, bool blacklist = false, qint32 searchType = GameMap::Directions::Direct);
+    QString getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType);
     void loadOverlaySprite(QString spriteID);
     /**
      * @brief getBaseTerrainID finds the base terrain id of the real base terrain recursivly
@@ -74,13 +78,17 @@ public slots:
 private:
     explicit Terrain(const QString& terrainID, qint32 x, qint32 y);
     /**
+     * @brief terrainName terrain name shown in the game
+     */
+    QString terrainName;
+    /**
      * @brief terrainID our terrain id
      */
     QString terrainID;
     /**
      * @brief terrainSprite which terrain sprite we loaded
      */
-    QString terrainSprite;
+    QString m_terrainSpriteName;
     /**
      * @brief m_pTerrainSprite actor holding our sprite data
      */
@@ -89,7 +97,7 @@ private:
     /**
      * @brief fixedSprite stores if the selected sprite is fixed or will be loaded based on the surrounding and random factors
      */
-    bool fixedSprite;
+    bool m_FixedSprite{false};
     /**
      * @brief m_pBaseTerrain base terrain of this terrain
      */

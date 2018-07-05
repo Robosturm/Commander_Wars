@@ -3,6 +3,7 @@
 #include "coreengine/mainapp.h"
 
 #include <QDir>
+#include <QQmlEngine>
 #include <QTextStream>
 
 Interpreter::Interpreter(const QString& script, QObject *parent)
@@ -58,6 +59,7 @@ Interpreter::~Interpreter()
 
 QJSValue Interpreter::doFunction(const QString& func, QJSValueList& args)
 {
+    Console::print("Calling: " + func, Console::eDEBUG);
     QJSValue ret;
     QJSValue funcPointer = engine->globalObject().property(func);
     if (funcPointer.isCallable())
@@ -79,6 +81,7 @@ QJSValue Interpreter::doFunction(const QString& func, QJSValueList& args)
 
 QJSValue Interpreter::doFunction(const QString& obj, const QString& func, const QJSValueList& args)
 {
+    Console::print("Calling: " + func + " of " + obj, Console::eDEBUG);
     QJSValue ret;
 
     QJSValue objPointer = engine->globalObject().property(obj);
@@ -147,6 +150,8 @@ void Interpreter::pushObject(const QString& name, QObject* object)
 QJSValue Interpreter::newQObject(QObject* object)
 {
     QJSValue newQObj = engine->newQObject(object);
+    // make sure js never deletes our qobject since that's kinda not what we want
+    QQmlEngine::setObjectOwnership(object, QQmlEngine::ObjectOwnership::CppOwnership);
     return newQObj;
 }
 
@@ -201,11 +206,6 @@ double Interpreter::getGlobalDouble(const QString& var)
         ret = value.toNumber();
     }
     return ret;
-}
-
-QJSValue Interpreter::createObject()
-{
-    return engine->newObject();
 }
 
 QString Interpreter::getGlobalString(const QString& var)

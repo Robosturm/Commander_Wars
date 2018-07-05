@@ -13,8 +13,9 @@ public:
     virtual ~InGameMenue();
 
 signals:
-
+    sigMouseWheel(qint32 direction);
 public slots:
+    void mouseWheel(qint32 direction);
 };
 
 #endif // INGAMEMENUE_H

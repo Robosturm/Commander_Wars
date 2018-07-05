@@ -3,6 +3,7 @@ var Constructor = function()
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
+        terrain.terrainName = qsTr("Mountain");
     };
     this.getDefense = function()
     {
@@ -14,8 +15,9 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var random = globals.randInt(0, 1);
-        terrain.loadBaseSprite("mountain+" + random.toString());
+        var surroundings = terrain.getSurroundings("MOUNTAIN", false, false, TERRAIN.East);
+        surroundings += terrain.getSurroundings("MOUNTAIN", false, false, TERRAIN.West);
+        terrain.loadBaseSprite("mountain" + surroundings);
     };
 };
 Constructor.prototype = TERRAIN;

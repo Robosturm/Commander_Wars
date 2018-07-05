@@ -88,7 +88,7 @@ void Mainapp::setup()
 
 void Mainapp::onEvent(oxygine::Event* ev)
 {
-    SDL_Event* event = static_cast<SDL_Event*>(ev->userData);
+    SDL_Event* event = reinterpret_cast<SDL_Event*>(ev->userData);
 
     if (event->type == SDL_KEYDOWN)
     {

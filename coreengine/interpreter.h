@@ -43,8 +43,6 @@ public:
     QString getGlobalString(const QString& var);
     QJSValue getGlobal(const QString& var);
     void setGlobal(const QString& var, QJSValue obj);
-
-    QJSValue createObject();
 private:
     /**
      * @brief JS-Engine

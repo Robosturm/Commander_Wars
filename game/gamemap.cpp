@@ -24,20 +24,21 @@ GameMap::GameMap(qint32 width, qint32 heigth)
 
     for (qint32 y = 0; y < heigth; y++)
     {
-        fields.append(new QVector<Terrain*>());
+        fields.append(new QVector<spTerrain>());
         for (qint32 x = 0; x < width; x++)
         {
             // test code
 
             QString terrain = pTerrainManager->getTerrainID(Mainapp::randInt(0, pTerrainManager->getTerrainCount() - 1));
-            Terrain* pTerrain = Terrain::createTerrain(terrain, x, y);
+            spTerrain pTerrain = Terrain::createTerrain(terrain, x, y);
             this->addChild(pTerrain);
+
             fields[y]->append(pTerrain);
             pTerrain->setPosition(x * 24.0f, y * 24.0f);
         }
     }
     updateTerrainSprites();
-
+    centerMap(width / 2, heigth / 2);
 }
 
 GameMap::GameMap(QString map)
@@ -51,6 +52,14 @@ GameMap::~GameMap()
     // remove us from the interpreter again
     Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
     pInterpreter->deleteObject(m_JavascriptName);
+    // clean up session
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        //
+        fields.at(y)->clear();
+        delete fields.at(y);
+    }
+    fields.clear();
 }
 
 void GameMap::updateTerrainSprites()
@@ -63,11 +72,6 @@ void GameMap::updateTerrainSprites()
             fields.at(x)->at(y)->loadSprites();
         }
     }
-}
-
-QVector<QVector<Terrain *> *> GameMap::getFields() const
-{
-    return fields;
 }
 
 qint32 GameMap::getWidth() const
@@ -154,4 +158,31 @@ bool GameMap::onMap(qint32 x, qint32 y)
     {
         return false;
     }
+}
+
+void GameMap::centerMap(qint32 x, qint32 y)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    // draw point
+    this->setPosition(pApp->getSettings()->getWidth() / 2.0f - x * m_zoom * Imagesize - Imagesize / 2.0f,
+                      pApp->getSettings()->getHeight() / 2.0f - y * m_zoom * Imagesize - Imagesize / 2.0f);
+}
+
+void GameMap::zoom(float zoom)
+{
+    m_zoom += zoom / 10.0f;
+    // limit zoom
+    if (m_zoom > 1.5f)
+    {
+        m_zoom = 1.5f;
+    }
+    else if (m_zoom < 0.5f)
+    {
+        m_zoom = 0.5f;
+    }
+    else
+    {
+        // all fine
+    }
+    this->setScale(m_zoom);
 }

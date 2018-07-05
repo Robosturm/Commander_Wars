@@ -35,14 +35,24 @@ Terrain::Terrain(const QString& terrainID, qint32 x, qint32 y)
     {
         QString function = "init";
         QJSValueList args;
-        obj = pApp->getInterpreter()->newQObject(this);
-        args << obj;
+        QJSValue objArg = pApp->getInterpreter()->newQObject(this);
+        args << objArg;
         pApp->getInterpreter()->doFunction(terrainID, function, args);
     }
     else
     {
         Console::print(tr("Unable to load Terrain ") + terrainID, Console::eFATAL);
     }
+}
+
+QString Terrain::getTerrainName() const
+{
+    return terrainName;
+}
+
+void Terrain::setTerrainName(const QString &value)
+{
+    terrainName = value;
 }
 
 Terrain::~Terrain()
@@ -90,15 +100,24 @@ void Terrain::loadSprites()
     }
     // load main terrain
     Mainapp* pApp = Mainapp::getInstance();
-    QString function = "loadBaseSprite";
-    QJSValueList args;
-    QJSValue obj = pApp->getInterpreter()->getGlobal(terrainID);
-    obj = pApp->getInterpreter()->newQObject(this);
-    args << obj;
-    pApp->getInterpreter()->doFunction(terrainID, function, args);
-    function = "loadOverlaySprite";
-    pApp->getInterpreter()->doFunction(terrainID, function, args);
-
+    if (m_FixedSprite)
+    {
+        loadBaseSprite(m_terrainSpriteName);
+    }
+    else
+    {
+        QString function1 = "loadBaseSprite";
+        QJSValueList args1;
+        QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+        args1 << obj1;
+        pApp->getInterpreter()->doFunction(terrainID, function1, args1);
+    }
+    // next call starting by 0 again
+    QString function2 = "loadOverlaySprite";
+    QJSValueList args2;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args2 << obj2;
+    pApp->getInterpreter()->doFunction(terrainID, function2, args2);
 }
 
 void Terrain::loadBaseTerrain(QString terrainID)
@@ -122,7 +141,9 @@ void Terrain::loadBaseSprite(QString spriteID)
     {
         pSprite->setResAnim(pAnim);
     }
+    pSprite->setPosition(-(pAnim->getWidth() - GameMap::Imagesize) / 2, -(pAnim->getHeight() - GameMap::Imagesize));
     this->addChild(pSprite);
+    m_terrainSpriteName = spriteID;
     m_pTerrainSprite = pSprite;
 }
 

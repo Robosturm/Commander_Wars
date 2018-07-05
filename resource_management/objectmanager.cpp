@@ -44,7 +44,7 @@ oxygine::spButton ObjectManager::createButton(QString text)
         ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), 300);
     });
 
-    pButton->addEventListener(oxygine::TouchEvent::OUT, [ = ](oxygine::Event*)
+    pButton->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
     });

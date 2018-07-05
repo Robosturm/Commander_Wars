@@ -24,6 +24,16 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth)
     sprite->setScaleX(pApp->getSettings()->getWidth() / pBackground->getWidth());
     sprite->setScaleY(pApp->getSettings()->getHeight() / pBackground->getHeight());
     oxygine::Actor::addChild(new GameMap(width, heigth));
+
+    addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event *pEvent )->void
+    {
+        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        if (pTouchEvent != nullptr)
+        {
+            emit sigMouseWheel(pTouchEvent->wheelDirection.y);
+        }
+    });
+    connect(this, SIGNAL(sigMouseWheel(qint32)), this, SLOT(mouseWheel(qint32)));
 }
 
 InGameMenue::~InGameMenue()
@@ -31,3 +41,7 @@ InGameMenue::~InGameMenue()
 
 }
 
+void InGameMenue::mouseWheel(qint32 direction)
+{
+    GameMap::getInstance()->zoom(direction);
+}

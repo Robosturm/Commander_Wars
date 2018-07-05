@@ -19,17 +19,27 @@ var TERRAIN =
     init : function (terrain)
     {
     },
+    // returns the defense of this terrain
     getDefense : function()
     {
         return 0;
     },
+    // called for loading a sub image terrain
+    // this has only a visual effect
     loadBaseTerrain : function(terrain)
     {
     },
+    // called for loading the main sprite
     loadBaseSprite : function(terrain)
     {
     },
+    // called for loading an overlay sprite
     loadOverlaySprite : function(terrain)
     {
+    },
+    // defines if a terrain can be placed in the editor at a given location
+    canBePlaced : function(x, y)
+    {
+        return true;
     },
 };
