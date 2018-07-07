@@ -123,6 +123,11 @@
 		<image file="river+S+W.png" />
 		<image file="river+W.png" />
 		
+		<image file="riverending+E.png" />
+		<image file="riverending+S.png" />
+		<image file="riverending+W.png" />
+		<image file="riverending+N.png" /
+		
 		<image file="plasma.png" cols = "3" />
 		<image file="plasma+E.png" cols = "3" />
 		<image file="plasma+E+S.png" cols = "3" />
@@ -164,5 +169,44 @@
 		<image file="pipeline+S.png" />
 		<image file="pipeline+S+W.png" />
 		<image file="pipeline+W.png" />
+		
+		<image file="wall+E.png" />
+		<image file="wall+E+S.png" />
+		<image file="wall+E+S+W.png" />
+		<image file="wall+E+W.png" />
+		<image file="wall+N.png" />
+		<image file="wall+N+E.png" />
+		<image file="wall+N+E+S.png" />
+		<image file="wall+N+E+S+W.png" />
+		<image file="wall+N+E+W.png" />
+		<image file="wall+N+S.png" />
+		<image file="wall+N+S+W.png" />
+		<image file="wall+N+W.png" />
+		<image file="wall+S.png" />
+		<image file="wall+S+W.png" />
+		<image file="wall+W.png" />
+		
+		<image file="bridge.png" />
+		<image file="bridge+E.png" />
+		<image file="bridge+E+S.png" />
+		<image file="bridge+E+S+W.png" />
+		<image file="bridge+E+W.png" />
+		<image file="bridge+N.png" />
+		<image file="bridge+N+E.png" />
+		<image file="bridge+N+E+S.png" />
+		<image file="bridge+N+E+S+W.png" />
+		<image file="bridge+N+E+W.png" />
+		<image file="bridge+N+S.png" />
+		<image file="bridge+N+S+W.png" />
+		<image file="bridge+N+W.png" />
+		<image file="bridge+S.png" />
+		<image file="bridge+S+W.png" />
+		<image file="bridge+W.png" />
+		
+		<image file="weld+E+W.png" />
+		<image file="weld+N+S.png" />
+		
+		<image file="destroyedweld+E+W.png" />
+		<image file="destroyedweld+N+S.png" />
 	</atlas>
 </resources>

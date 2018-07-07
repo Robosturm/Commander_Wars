@@ -8,6 +8,9 @@
 #include "resource_management/objectmanager.h"
 
 #include "menue/ingamemenue.h"
+#include "menue/editormenue.h"
+
+#include "SDL.h"
 
 Mainwindow::Mainwindow()
 {
@@ -28,16 +31,48 @@ Mainwindow::Mainwindow()
     pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");
     pApp->getAudioThread()->playRandom();
 
+
+    qint32 btnI = 0;
     // create the ui for the main menue here :)
-    oxygine::spButton pButton = ObjectManager::createButton(tr("Singleplayer"));
-    pButton->attachTo(this);
-    pButton->setPosition(pApp->getSettings()->getWidth() / 2.0f - pButton->getWidth() / 2.0f, pBackground->getHeight() / 2.0f);
-    pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    oxygine::spButton pButtonSingleplayer = ObjectManager::createButton(tr("Singleplayer"));
+    setButtonPosition(pButtonSingleplayer, btnI);
+    pButtonSingleplayer->attachTo(this);
+    pButtonSingleplayer->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigEnterSingleplayer();
     });
-
     connect(this, SIGNAL(sigEnterSingleplayer()), this, SLOT(enterSingleplayer()));
+    btnI++;
+
+    // editor button
+    oxygine::spButton pButtonEditor = ObjectManager::createButton(tr("Map Editor"));
+    pButtonEditor->attachTo(this);
+    setButtonPosition(pButtonEditor, btnI);
+    pButtonEditor->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigEnterEditor();
+    });
+    connect(this, SIGNAL(sigEnterEditor()), this, SLOT(enterEditor()));
+    btnI++;
+
+    // quit button
+    oxygine::spButton pQuit = ObjectManager::createButton(tr("Quit"));
+    pQuit->attachTo(this);
+    setButtonPosition(pQuit, btnI);
+    pQuit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigQuit();
+    });
+    connect(this, SIGNAL(sigQuit()), this, SLOT(quitGame()));
+    btnI++;
+}
+
+void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
+{
+    static const qint32 buttonCount = 3;
+    float buttonHeigth = pButton->getHeight() + 30;
+    Mainapp* pApp = Mainapp::getInstance();
+    pButton->setPosition(pApp->getSettings()->getWidth() / 2.0f - pButton->getWidth() / 2.0f, pApp->getSettings()->getHeight() / 2.0f - buttonCount  / 2.0f * buttonHeigth + buttonHeigth * btnI);
 }
 
 Mainwindow::~Mainwindow()
@@ -49,11 +84,22 @@ void Mainwindow::enterSingleplayer()
 {
     oxygine::getStage()->addChild(new InGameMenue());
     leaveMenue();
+}
 
+void Mainwindow::enterEditor()
+{
+    oxygine::getStage()->addChild(new EditorMenue());
+    leaveMenue();
 }
 
 void Mainwindow::leaveMenue()
 {
     Console::print("Leaving Main Menue", Console::eDEBUG);
     oxygine::Actor::detach();
+}
+
+void Mainwindow::quitGame()
+{
+     Mainapp* pApp = Mainapp::getInstance();
+     pApp->quitGame();
 }

@@ -11,8 +11,16 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var random = globals.randInt(0, 20);
-        terrain.loadBaseSprite("plains+" + random.toString());
+        var random = globals.randInt(0, 140);
+        if (random >= 15)
+        {
+            random = globals.randInt(15, 20);
+            terrain.loadBaseSprite("plains+" + random.toString());
+        }
+        else
+        {
+            terrain.loadBaseSprite("plains+" + random.toString());
+        }
     };
 };
 Constructor.prototype = TERRAIN;

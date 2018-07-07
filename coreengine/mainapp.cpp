@@ -52,6 +52,11 @@ bool Mainapp::isEven(qint32 value)
     }
 }
 
+void Mainapp::quitGame()
+{
+    m_quit = true;
+}
+
 void Mainapp::update()
 {
     // Update engine-internal components
@@ -73,7 +78,7 @@ void Mainapp::update()
         oxygine::core::swapDisplayBuffers();
     }
     // check for termination
-    if (done)
+    if (done || m_quit)
     {
         exit();
     }
@@ -84,6 +89,7 @@ void Mainapp::setup()
     oxygine::EventCallback cb = CLOSURE(this, &Mainapp::onEvent);
     ox::core::getDispatcher()->addEventListener(ox::core::EVENT_SYSTEM, cb);
     setupNetwork();
+    m_Settings.setup();
 }
 
 void Mainapp::onEvent(oxygine::Event* ev)

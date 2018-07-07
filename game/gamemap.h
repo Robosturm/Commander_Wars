@@ -103,6 +103,7 @@ public slots:
      * @param zoom
      */
     void zoom(float zoom);
+    void moveMap(qint32 x, qint32 y);
 private:
     static GameMap* m_pInstance;
     float m_zoom{1.0f};

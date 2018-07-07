@@ -3,17 +3,17 @@ var Constructor = function()
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
-        terrain.terrainName = qsTr("River");
+        terrain.terrainName = qsTr("Street");
     };
 	this.loadBaseTerrain = function(terrain)
     {
-		terrain.loadBaseTerrain("PLAINS");
+		terrain.loadBaseTerrain("RIVER");
     };
     this.loadBaseSprite = function(terrain)
     {
-		var surroundings = terrain.getSurroundings("RIVER,BRIDGE,SEA", false, false, TERRAIN.Direct);
-        terrain.loadBaseSprite("river" + surroundings);
+		var surroundings = terrain.getSurroundings("RIVER,SEA", false, false, TERRAIN.Direct);
+        terrain.loadBaseSprite("bridge" + surroundings);
     };
 };
 Constructor.prototype = TERRAIN;
-var RIVER = new Constructor();
+var BRIDGE = new Constructor();

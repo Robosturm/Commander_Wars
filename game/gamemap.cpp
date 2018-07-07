@@ -29,8 +29,7 @@ GameMap::GameMap(qint32 width, qint32 heigth)
         {
             // test code
 
-            QString terrain = pTerrainManager->getTerrainID(Mainapp::randInt(0, pTerrainManager->getTerrainCount() - 1));
-            spTerrain pTerrain = Terrain::createTerrain(terrain, x, y);
+            spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y);
             this->addChild(pTerrain);
 
             fields[y]->append(pTerrain);
@@ -166,6 +165,33 @@ void GameMap::centerMap(qint32 x, qint32 y)
     // draw point
     this->setPosition(pApp->getSettings()->getWidth() / 2.0f - x * m_zoom * Imagesize - Imagesize / 2.0f,
                       pApp->getSettings()->getHeight() / 2.0f - y * m_zoom * Imagesize - Imagesize / 2.0f);
+}
+
+void GameMap::moveMap(qint32 x, qint32 y)
+{
+    // draw point
+    qint32 resX = this->getPosition().x + x;
+    qint32 resY = this->getPosition().y + y;
+    static const qint32 minVisible = 10;
+    Mainapp* pApp = Mainapp::getInstance();
+    if (resX > pApp->getSettings()->getWidth()  - minVisible * m_zoom * Imagesize)
+    {
+        resX = pApp->getSettings()->getWidth() - minVisible * m_zoom * Imagesize;
+    }
+    if (resX < -m_zoom * Imagesize * width + minVisible * m_zoom * Imagesize)
+    {
+        resX = -m_zoom * Imagesize * width + minVisible * m_zoom * Imagesize;
+    }
+    if (resY > pApp->getSettings()->getHeight() - minVisible * m_zoom * Imagesize)
+    {
+        resY = pApp->getSettings()->getHeight() - minVisible * m_zoom * Imagesize;
+    }
+    if (resY < -m_zoom * Imagesize * heigth + minVisible * m_zoom * Imagesize)
+    {
+        resY = -m_zoom * Imagesize * heigth + minVisible * m_zoom * Imagesize;
+    }
+
+    this->setPosition(resX, resY);
 }
 
 void GameMap::zoom(float zoom)

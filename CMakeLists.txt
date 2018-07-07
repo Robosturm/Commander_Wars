@@ -16,6 +16,8 @@ include_directories(${OXYGINE_FLOW_INCLUDE_DIRS})
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
 # add qt to our project
 find_package(Qt5Core REQUIRED)
 # Qt5LinguistTools
@@ -50,6 +52,7 @@ set(${PROJECT_NAME}_SRCS
         #menues
         menue/mainwindow.cpp
         menue/ingamemenue.cpp
+        menue/editormenue.cpp
 
         # ressource management
         resource_management/unitspritemanager.cpp
@@ -78,10 +81,25 @@ set(${PROJECT_NAME}_SRCS
 )
 
 
-
+FILE(GLOB_RECURSE JavaScripts "resources/*.js")
+add_custom_target(scripts SOURCES ${JavaScripts})
 
 # create translation here :)
-qt5_create_translation(${CMAKE_CURRENT_SOURCE_DIR}/translation/language.qm ${${PROJECT_NAME}_SRCS})
+set(LUPDATE_OPTIONS "" CACHE STRING "specifies options passed to lupdate")
+# created translation files
+set(TS_FILES
+    translation/lang_de_DE.ts
+)
+
+# adds the translations and a target for it
+qt5_create_translation(
+        QM_FILES
+        ${${PROJECT_NAME}_SRCS}
+        ${JavaScripts}
+        ${TS_FILES}
+        OPTIONS ${LUPDATE_OPTIONS}
+)
+add_custom_target(${PROJECT_NAME}_translations DEPENDS ${QM_FILES})
 
 # create executable
 add_executable(
@@ -100,8 +118,6 @@ target_link_libraries(
         Qt5::Network
 )
 
-FILE(GLOB_RECURSE JavaScripts "resources/*.js")
-add_custom_target(scripts SOURCES ${JavaScripts})
 
 
 # install section
@@ -160,6 +176,8 @@ endif()
 # install libs
 install(DIRECTORY resources DESTINATION ".")
 install(FILES ${${PROJECT_NAME}_INSTALL_LIBS} DESTINATION ".")
+# install translations
+install(FILES ${QM_FILES} DESTINATION "resources/translation/")
 install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION ".")
 install(FILES ${${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS} DESTINATION "mediaservice_dis")
 # install exe

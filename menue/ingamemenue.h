@@ -2,6 +2,7 @@
 #define INGAMEMENUE_H
 
 #include <QObject>
+#include <QPoint>
 
 #include "oxygine-framework.h"
 
@@ -14,8 +15,13 @@ public:
 
 signals:
     sigMouseWheel(qint32 direction);
+    sigMoveMap(qint32 x, qint32 y);
 public slots:
     void mouseWheel(qint32 direction);
+    void MoveMap(qint32 x, qint32 y);
+private:
+    bool m_moveMap{false};
+    QPoint m_MoveMapMousePoint;
 };
 
 #endif // INGAMEMENUE_H

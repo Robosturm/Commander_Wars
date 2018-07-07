@@ -20,6 +20,7 @@ public slots:
 
     static qint32 randInt(qint32 low, qint32 high);
     static bool isEven(qint32 value);
+    void quitGame();
 signals:
     void sigText(SDL_Event* event);
     void sigKeyDown(SDL_Event* event);
@@ -82,7 +83,8 @@ private:
     Interpreter* m_pInterpreter{nullptr};
     AudioThread* m_Audiothread{nullptr};
     Settings m_Settings;
-    NetworkInterface* m_pNetworkInterface;
+    NetworkInterface* m_pNetworkInterface{nullptr};
+    bool m_quit{false};
 };
 
 #endif // MAINAPP_H

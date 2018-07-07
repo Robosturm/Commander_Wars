@@ -3,7 +3,7 @@ var Constructor = function()
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
-        terrain.terrainName = qsTr("Pipeline");
+        terrain.terrainName = qsTr("Wall");
     };
 	this.loadBaseTerrain = function(terrain)
     {
@@ -11,16 +11,16 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-		var surroundings = terrain.getSurroundings("PIPELINE,WELD,DESTROYEDWELD", false, false, TERRAIN.Direct);
+		var surroundings = terrain.getSurroundings("WALL", false, false, TERRAIN.Direct);
         if (surroundings === "")
         {
-            terrain.loadBaseSprite("pipeline+E+W");
+            terrain.loadBaseSprite("wall+E+W");
         }
         else
         {
-            terrain.loadBaseSprite("pipeline" + surroundings);
+            terrain.loadBaseSprite("wall" + surroundings);
         }
     };
 };
 Constructor.prototype = TERRAIN;
-var PIPELINE = new Constructor();
+var WALL = new Constructor();

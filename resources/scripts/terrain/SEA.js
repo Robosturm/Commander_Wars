@@ -12,7 +12,7 @@ var Constructor = function()
     };
     this.loadOverlaySprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("SEA", true, true, TERRAIN.Direct);
+        var surroundings = terrain.getSurroundings("SEA,RIVER", true, true, TERRAIN.Direct);
         if (surroundings !== "")
         {
             terrain.loadOverlaySprite("sea" + surroundings);
@@ -52,6 +52,28 @@ var Constructor = function()
             {
                 terrain.loadOverlaySprite("sea" + surroundingsNW);
             }
+        }
+		// load river overlay
+		surroundings = terrain.getSurroundings("RIVER", true, true, TERRAIN.Direct);
+		// load overlay north
+        if (surroundings.includes("+N"))
+        {
+            terrain.loadOverlaySprite("riverending+N");
+        }
+        // load overlay east
+        if (surroundings.includes("+E"))
+        {
+            terrain.loadOverlaySprite("riverending+E");
+        }
+		// load overlay south
+        if (surroundings.includes("+S"))
+        {
+            terrain.loadOverlaySprite("riverending+S");
+        }
+		// load overlay west
+        if (!surroundings.includes("+W"))
+        {
+            terrain.loadOverlaySprite("riverending+W");
         }
     };
 };

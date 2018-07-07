@@ -170,7 +170,9 @@ void Settings::saveSettings(){
 void Settings::setup()
 {
     Mainapp* pMainapp = Mainapp::getInstance();
-    if(pMainapp->getTranslator()->load(QLocale(m_language),"general","_","resources/language/" + m_language,".qm")){
+    // load language file and install it
+    if(pMainapp->getTranslator()->load(QLocale(m_language), "resources/translation/lang_" + m_language,".qm"))
+    {
         pMainapp->installTranslator(pMainapp->getTranslator());
     }
     else if (m_language != "en")
