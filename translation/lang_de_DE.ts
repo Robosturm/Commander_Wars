@@ -199,24 +199,26 @@
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="48"/>
+        <location filename="../coreengine/settings.cpp" line="44"/>
         <location filename="../coreengine/settings.cpp" line="54"/>
         <location filename="../coreengine/settings.cpp" line="60"/>
         <location filename="../coreengine/settings.cpp" line="66"/>
-        <location filename="../coreengine/settings.cpp" line="78"/>
+        <location filename="../coreengine/settings.cpp" line="72"/>
         <location filename="../coreengine/settings.cpp" line="84"/>
-        <location filename="../coreengine/settings.cpp" line="95"/>
+        <location filename="../coreengine/settings.cpp" line="90"/>
+        <location filename="../coreengine/settings.cpp" line="101"/>
         <source>Error in the Ini File: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../coreengine/settings.cpp" line="48"/>
+        <location filename="../coreengine/settings.cpp" line="44"/>
         <location filename="../coreengine/settings.cpp" line="54"/>
         <location filename="../coreengine/settings.cpp" line="60"/>
         <location filename="../coreengine/settings.cpp" line="66"/>
-        <location filename="../coreengine/settings.cpp" line="78"/>
+        <location filename="../coreengine/settings.cpp" line="72"/>
         <location filename="../coreengine/settings.cpp" line="84"/>
-        <location filename="../coreengine/settings.cpp" line="95"/>
+        <location filename="../coreengine/settings.cpp" line="90"/>
+        <location filename="../coreengine/settings.cpp" line="101"/>
         <source>Setting:</source>
         <translation></translation>
     </message>
@@ -250,7 +252,7 @@
 <context>
     <name>Terrain</name>
     <message>
-        <location filename="../game/terrain.cpp" line="44"/>
+        <location filename="../game/terrain.cpp" line="45"/>
         <source>Unable to load Terrain </source>
         <translation></translation>
     </message>

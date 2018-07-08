@@ -20,7 +20,7 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth)
     sprite->setResAnim(pBackground);
     sprite->setPosition(0, 0);
     // background should be last to draw
-    sprite->setPriority(-32000);
+    sprite->setPriority(static_cast<short>(Mainapp::ZOrder::Background));
     sprite->setScaleX(pApp->getSettings()->getWidth() / pBackground->getWidth());
     sprite->setScaleY(pApp->getSettings()->getHeight() / pBackground->getHeight());
 
@@ -29,6 +29,11 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth)
     {
         oxygine::Actor::addChild(new GameMap(width, heigth));
     }
+    else
+    {
+        // todo what we do instead xD
+    }
+
 
 
     addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event *pEvent )->void
@@ -36,52 +41,55 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth)
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-            emit sigMouseWheel(pTouchEvent->wheelDirection.y);
+            emit this->sigMouseWheel(pTouchEvent->wheelDirection.y);
         }
     });
     connect(this, SIGNAL(sigMouseWheel(qint32)), this, SLOT(mouseWheel(qint32)));
-    addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event *pEvent )->void
+    GameMap::getInstance()->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
             if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Middle)
             {
-                m_moveMap = true;
-                m_MoveMapMousePoint.setX(pTouchEvent->getPointer()->getPosition().x);
-                m_MoveMapMousePoint.setY(pTouchEvent->getPointer()->getPosition().y);
+                this->m_moveMap = true;
+                this->m_MoveMapMousePoint.setX(pTouchEvent->getPointer()->getPosition().x);
+                this->m_MoveMapMousePoint.setY(pTouchEvent->getPointer()->getPosition().y);
             }
         }
     });
-    addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event *pEvent )->void
+    GameMap::getInstance()->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
             if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Middle)
             {
-                m_moveMap = false;
+                this->m_moveMap = false;
             }
         }
     });
-    addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
+    GameMap::getInstance()->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-            if (m_moveMap)
-            {
-                qint32 x = m_MoveMapMousePoint.x() - pTouchEvent->getPointer()->getPosition().x;
-                qint32 y = m_MoveMapMousePoint.y() - pTouchEvent->getPointer()->getPosition().y;
-                m_MoveMapMousePoint.setX(pTouchEvent->getPointer()->getPosition().x);
-                m_MoveMapMousePoint.setX(pTouchEvent->getPointer()->getPosition().y);
-                Console::print("Position x: " + QString::number(pTouchEvent->getPointer()->getPosition().x )+ " y: " + QString::number(pTouchEvent->getPointer()->getPosition().y), Console::eDEBUG);
-                emit sigMoveMap(x, y);
+            qint32 curX = pTouchEvent->getPointer()->getPosition().x;
+            qint32 curY = pTouchEvent->getPointer()->getPosition().y;
+            if (this->m_moveMap)
+            {                
+                qint32 resX = (this->m_MoveMapMousePoint.x() - curX) * pApp->getSettings()->getMouseSensitivity();
+                qint32 resY = (this->m_MoveMapMousePoint.y() - curY) * pApp->getSettings()->getMouseSensitivity();
+                this->m_MoveMapMousePoint.setX(curX);
+                this->m_MoveMapMousePoint.setY(curY);
+                emit this->sigMoveMap(resX , resY);
             }
+            m_Cursor->updatePosition(curX, curY);
         }
     });
     connect(this, SIGNAL(sigMoveMap(qint32,qint32)), this, SLOT(MoveMap(qint32,qint32)));
 
+    GameMap::getInstance()->addChild(m_Cursor);
 }
 
 InGameMenue::~InGameMenue()

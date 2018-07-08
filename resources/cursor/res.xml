@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "resources/cursor/" />
+	<atlas>
+		<image file="cursor+attack.png" cols = "4" />
+		<image file="cursor+default.png" cols = "4" />
+		<image file="cursor+unable.png" cols = "4" />
+		<image file="cursor+delete.png" cols = "4" />
+	</atlas>
+</resources>

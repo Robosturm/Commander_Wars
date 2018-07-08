@@ -22,6 +22,7 @@ Terrain::Terrain(const QString& terrainID, qint32 x, qint32 y)
       x(x),
       y(y)
 {
+    this->setPriority(static_cast<short>(Mainapp::ZOrder::Terrain));
     Mainapp* pApp = Mainapp::getInstance();
     QJSValue obj = pApp->getInterpreter()->getGlobal(terrainID);
     // check if the js-script was loaded already
@@ -71,7 +72,7 @@ void Terrain::createBaseTerrain()
     // load sprite of the base terrain
     QString function = "loadBaseTerrain";
     pApp->getInterpreter()->doFunction(terrainID, function, args);
-    if (m_pBaseTerrain != nullptr)
+    if (m_pBaseTerrain.get() != nullptr)
     {
         m_pBaseTerrain->createBaseTerrain();
     }
@@ -94,7 +95,7 @@ void Terrain::loadSprites()
         m_pOverlaySprites.clear();
     }
     // load sub terrain
-    if (m_pBaseTerrain != nullptr)
+    if (m_pBaseTerrain.get() != nullptr)
     {
         m_pBaseTerrain->loadSprites();
     }

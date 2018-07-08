@@ -24,7 +24,7 @@ Mainwindow::Mainwindow()
     sprite->setResAnim(pBackground);
     sprite->setPosition(0, 0);
     // background should be last to draw
-    sprite->setPriority(-32000);
+    sprite->setPriority(static_cast<short>(Mainapp::ZOrder::Background));
     sprite->setScaleX(pApp->getSettings()->getWidth() / pBackground->getWidth());
     sprite->setScaleY(pApp->getSettings()->getHeight() / pBackground->getHeight());
 
@@ -39,7 +39,7 @@ Mainwindow::Mainwindow()
     pButtonSingleplayer->attachTo(this);
     pButtonSingleplayer->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        emit sigEnterSingleplayer();
+        emit this->sigEnterSingleplayer();
     });
     connect(this, SIGNAL(sigEnterSingleplayer()), this, SLOT(enterSingleplayer()));
     btnI++;
@@ -50,7 +50,7 @@ Mainwindow::Mainwindow()
     setButtonPosition(pButtonEditor, btnI);
     pButtonEditor->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        emit sigEnterEditor();
+        emit this->sigEnterEditor();
     });
     connect(this, SIGNAL(sigEnterEditor()), this, SLOT(enterEditor()));
     btnI++;
@@ -61,7 +61,7 @@ Mainwindow::Mainwindow()
     setButtonPosition(pQuit, btnI);
     pQuit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        emit sigQuit();
+        emit this->sigQuit();
     });
     connect(this, SIGNAL(sigQuit()), this, SLOT(quitGame()));
     btnI++;

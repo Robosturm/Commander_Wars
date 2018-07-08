@@ -2,6 +2,8 @@
 
 #include "resource_management/fontmanager.h"
 
+#include "coreengine/mainapp.h"
+
 ObjectManager* ObjectManager::m_pInstance = nullptr;
 
 ObjectManager* ObjectManager::getInstance()
@@ -16,14 +18,15 @@ ObjectManager* ObjectManager::getInstance()
 ObjectManager::ObjectManager()
 {
     oxygine::Resources::loadXML("resources/objects/res.xml");
+    oxygine::Resources::loadXML("resources/cursor/res.xml");
 }
 
 oxygine::spButton ObjectManager::createButton(QString text)
 {
     oxygine::spButton pButton = new oxygine::Button();
     // pButton->setPosition(200, 200);
-
     pButton->setResAnim(ObjectManager::getInstance()->getResAnim("button"));
+    pButton->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
 
     pButton->setSize(162, 42);
     //Create Actor with Text and add it to button as child

@@ -49,6 +49,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OXYGINE_CXX_FLAGS}")
 set(${PROJECT_NAME}_SRCS
         main.cpp
 
+        # objects
+        objects/cursor.cpp
+        objects/EditorSelection.cpp
+
         #menues
         menue/mainwindow.cpp
         menue/ingamemenue.cpp

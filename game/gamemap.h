@@ -11,8 +11,7 @@
 #include "memory"
 
 #include "game/terrain.h"
-
-typedef oxygine::intrusive_ptr<Terrain> spTerrain;
+#include "objects/cursor.h"
 
 
 class GameMap : public QObject, public oxygine::Actor
@@ -43,11 +42,8 @@ public:
     explicit GameMap(QString map);
     virtual ~GameMap();
 
-    qint32 getWidth() const;
-    void setWidth(const qint32 &value);
-
-    qint32 getHeigth() const;
-    void setHeigth(const qint32 &value);
+    qint32 getMapWidth() const;
+    qint32 getMapHeight() const;
 
     inline static GameMap* getInstance()
     {
@@ -103,16 +99,20 @@ public slots:
      * @param zoom
      */
     void zoom(float zoom);
+    inline float getZoom() const
+    {
+        return m_zoom;
+    }
     void moveMap(qint32 x, qint32 y);
 private:
     static GameMap* m_pInstance;
-    float m_zoom{1.0f};
+
     qint32 width{0};
     qint32 heigth{0};
     QVector<QVector<spTerrain>*> fields;
 
     static const QString m_JavascriptName;
-
+    float m_zoom{1.0f};
 };
 
 #endif // GAMEMAP_H

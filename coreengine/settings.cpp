@@ -7,7 +7,7 @@
 #include <QLocale>
 
 const QString Settings::m_settingFile = "Commander_Wars.ini";
-
+float Settings::m_mouseSensitivity   = -0.75f;
 qint32 Settings::m_x                 = 0;
 qint32 Settings::m_y                 = 0;
 qint32 Settings::m_width             = 1024;
@@ -39,6 +39,12 @@ void Settings::loadSettings(){
 
     settings.beginGroup("general");
     m_language    = settings.value("language","en").toString();
+    m_mouseSensitivity           = settings.value("MouseSensitivity",-0.75f).toFloat(&ok);
+    if(!ok){
+        QString error = tr("Error in the Ini File: ") + "[General] " + tr("Setting:") + " MouseSensitivity";
+        Console::print(error, Console::eERROR);
+        m_mouseSensitivity = -0.75f;
+    }
     settings.endGroup();
 
     // Resolution
@@ -124,6 +130,7 @@ void Settings::saveSettings(){
 
     settings.beginGroup("general");
     settings.setValue("language",                   m_language);
+    settings.setValue("MouseSensitivity",           m_mouseSensitivity);
     settings.endGroup();
 
     settings.beginGroup("Resolution");
@@ -180,4 +187,14 @@ void Settings::setup()
         QString error = "Error: Unknown Language " + m_language + " selected.";
         Console::print(error, Console::eERROR);
     }
+}
+
+float Settings::getMouseSensitivity()
+{
+    return m_mouseSensitivity;
+}
+
+void Settings::setMouseSensitivity(float value)
+{
+    m_mouseSensitivity = value;
 }

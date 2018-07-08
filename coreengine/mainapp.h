@@ -35,6 +35,13 @@ public:
         Game,
         Max,
     };
+    enum class ZOrder
+    {
+        Background = -32000,
+        Terrain = 0,
+        Cursor = 200,
+        Objects = 300,
+    };
 
     explicit Mainapp(int argc, char* argv[]);
     virtual ~Mainapp();

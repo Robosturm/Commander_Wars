@@ -71,7 +71,7 @@ var Constructor = function()
             terrain.loadOverlaySprite("riverending+S");
         }
 		// load overlay west
-        if (!surroundings.includes("+W"))
+        if (surroundings.includes("+W"))
         {
             terrain.loadOverlaySprite("riverending+W");
         }

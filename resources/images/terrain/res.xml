@@ -126,7 +126,7 @@
 		<image file="riverending+E.png" />
 		<image file="riverending+S.png" />
 		<image file="riverending+W.png" />
-		<image file="riverending+N.png" /
+		<image file="riverending+N.png" />
 		
 		<image file="plasma.png" cols = "3" />
 		<image file="plasma+E.png" cols = "3" />

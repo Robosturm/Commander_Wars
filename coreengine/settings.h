@@ -83,6 +83,9 @@ public:
     {
         return m_activeMods;
     }
+    float getMouseSensitivity();
+    void setMouseSensitivity(float value);
+
 private:
     // setting variables
     static qint32 m_x;
@@ -109,7 +112,7 @@ private:
     static const QString m_settingFile;
     static QStringList m_activeMods;
 
-
+    static float m_mouseSensitivity;
 };
 
 #endif // SETTINGS_H

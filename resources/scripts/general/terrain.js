@@ -37,9 +37,19 @@ var TERRAIN =
     loadOverlaySprite : function(terrain)
     {
     },
+
+
+    /***********************************************************************************/
+    // this section deals with map editor hints
+    // these functions have no influence in the game.
+    /***********************************************************************************/
     // defines if a terrain can be placed in the editor at a given location
     canBePlaced : function(x, y)
     {
         return true;
+    },
+    placeTerrain : function(x, y)
+    {
+
     },
 };

@@ -6,10 +6,14 @@
 
 #include "oxygine-framework.h"
 
+#include "objects/cursor.h"
+
 class InGameMenue : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
+
+
     explicit InGameMenue(qint32 width = 20, qint32 heigth = 20);
     virtual ~InGameMenue();
 
@@ -22,6 +26,8 @@ public slots:
 private:
     bool m_moveMap{false};
     QPoint m_MoveMapMousePoint;
+
+    spCursor m_Cursor{new Cursor()};
 };
 
 #endif // INGAMEMENUE_H

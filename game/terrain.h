@@ -6,7 +6,9 @@
 
 #include "oxygine-framework.h"
 
-#include "memory"
+// make us smart
+class Terrain;
+typedef oxygine::intrusive_ptr<Terrain> spTerrain;
 
 class Terrain : public QObject, public oxygine::Actor
 {
@@ -66,13 +68,13 @@ public slots:
      */
     inline QString getBaseTerrainID()
     {
-        if (m_pBaseTerrain != nullptr)
+        if (m_pBaseTerrain.get() != nullptr)
         {
             return m_pBaseTerrain->getBaseTerrainID();
         }
         else
         {
-            return terrainID;
+            return "";
         }
     }
 private:
@@ -101,7 +103,7 @@ private:
     /**
      * @brief m_pBaseTerrain base terrain of this terrain
      */
-    Terrain* m_pBaseTerrain{nullptr};
+    spTerrain m_pBaseTerrain{nullptr};
     /**
      * @brief x coordinates in x direction in the map array
      */

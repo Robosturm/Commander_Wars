@@ -5,10 +5,18 @@
 
 #include <QObject>
 
+#include "objects/editorselection.h"
+
 class EditorMenue : public InGameMenue
 {
+    Q_OBJECT
 public:
     EditorMenue();
+public slots:
+    void cursorMoved();
+
+private:
+    spEditorSelection m_EditorSelection{new EditorSelection()};
 };
 
 #endif // EDITORMENUE_H
