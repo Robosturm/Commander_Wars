@@ -5,7 +5,6 @@
 
 #include "oxygine-framework.h"
 
-// make us smart
 class Cursor;
 typedef oxygine::intrusive_ptr<Cursor> spCursor;
 
@@ -18,6 +17,14 @@ public:
     void updatePosition(qint32 mousePosX, qint32 mousePosY);
     void changeCursor(const QString& spriteID);
 
+    inline qint32 getMapPointX()
+    {
+        return m_MapPointX;
+    }
+    inline qint32 getMapPointY()
+    {
+        return m_MapPointY;
+    }
 signals:
     void sigCursorMoved();
 private:

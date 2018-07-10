@@ -15,11 +15,27 @@ class EditorSelection : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-
+    /**
+     * @brief The EditorMode enum describes what we want to place at the moment
+     */
+    enum class EditorMode
+    {
+        Terrain = 0,
+        Building,
+        Unit,
+    };
 
     explicit EditorSelection();
 
     void updateTerrainView();
+    inline EditorMode getCurrentMode() const
+    {
+        return m_Mode;
+    }
+    inline QString getCurrentTerrainID()
+    {
+        return m_Terrains.at(m_selectedIndex.x() + m_selectedIndex.y() * m_selectedIndex.z())->getTerrainID();
+    }
 signals:
     sigClicked(qint32 x, qint32 y);
 public slots:
@@ -30,6 +46,7 @@ private:
     static const qint32 startH = frameSize + GameMap::Imagesize;
     static const float xFactor;
     static const float yFactor;
+    EditorMode m_Mode{EditorMode::Terrain};
     qint32 m_StartIndex{0};
     QVector<spTerrain> m_Terrains;
     oxygine::spSprite m_Box;

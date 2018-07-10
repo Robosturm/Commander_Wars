@@ -39,8 +39,9 @@ EditorSelection::EditorSelection()
     {
         m_CurrentSelector->setResAnim(pAnim);
     }
-    this->addChild(m_CurrentSelector);
+    m_Box->addChild(m_CurrentSelector);
     m_CurrentSelector->setPosition(frameSize, startH);
+    m_CurrentSelector->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
 
     // create terrains
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
@@ -51,7 +52,7 @@ EditorSelection::EditorSelection()
         m_Terrains.append(Terrain::createTerrain(pTerrainManager->getTerrainID(i), -10, -10));
         m_Terrains[i]->loadSprites();
 
-        this->addChild(m_Terrains[i]);
+        m_Box->addChild(m_Terrains[i]);
     }
     updateTerrainView();
 
@@ -64,7 +65,7 @@ EditorSelection::EditorSelection()
             emit sigClicked(pTouchEvent->getPointer()->getPosition().x, pTouchEvent->getPointer()->getPosition().y);
         }
     });
-    connect(this, SIGNAL(sigClicked(qint32,qint32)), this, SLOT(Clicked(qint32,qint32)));
+    connect(this, SIGNAL(sigClicked(qint32,qint32)), this, SLOT(Clicked(qint32,qint32)), Qt::QueuedConnection);
 }
 
 void EditorSelection::updateTerrainView()

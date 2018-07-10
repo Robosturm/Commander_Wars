@@ -61,6 +61,8 @@ void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
         y = pGameMap->getMapHeight() - 1;
         onMap = false;
     }
+    m_MapPointX = x;
+    m_MapPointY = y;
     this->setPosition(x * GameMap::Imagesize, y * GameMap::Imagesize);
     // provide cursor move signal
     emit sigCursorMoved();

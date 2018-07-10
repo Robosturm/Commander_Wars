@@ -48,8 +48,11 @@ var TERRAIN =
     {
         return true;
     },
-    placeTerrain : function(x, y)
+    // only bridges use this function for now.
+    // all other replace the terrain complete with themself
+    // and their base terrain
+    useTerrainAsBaseTerrain : function()
     {
-
+        return false;
     },
 };

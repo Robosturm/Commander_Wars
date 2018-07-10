@@ -10,9 +10,9 @@
 
 #include <QFileInfo>
 
-Terrain* Terrain::createTerrain(const QString& terrainID, qint32 x, qint32 y)
+spTerrain Terrain::createTerrain(const QString& terrainID, qint32 x, qint32 y)
 {
-    Terrain* pTerrain = new Terrain(terrainID, x, y);
+    spTerrain pTerrain = new Terrain(terrainID, x, y);
     pTerrain->createBaseTerrain();
     return pTerrain;
 }
@@ -63,6 +63,25 @@ Terrain::~Terrain()
 
 }
 
+void Terrain::syncAnimation()
+{
+    oxygine::spTween pTween = m_pTerrainSprite->getFirstTween();
+    while (pTween.get() != nullptr)
+    {
+        pTween->reset();
+        pTween->init(pTween->getDuration(), pTween->getLoops());
+        // remove it
+        m_pTerrainSprite->removeTween(pTween);
+        // restart it
+        m_pTerrainSprite->addTween(pTween);
+        pTween = pTween->getNextSibling();
+    }
+    if (m_pBaseTerrain.get() != nullptr)
+    {
+        m_pBaseTerrain->syncAnimation();
+    }
+}
+
 void Terrain::createBaseTerrain()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -76,6 +95,19 @@ void Terrain::createBaseTerrain()
     {
         m_pBaseTerrain->createBaseTerrain();
     }
+}
+
+void Terrain::setBaseTerrain(spTerrain terrain)
+{
+    if (m_pBaseTerrain.get() != nullptr)
+    {
+        this->removeChild(m_pBaseTerrain);
+        m_pBaseTerrain = nullptr;
+    }
+    m_pBaseTerrain = terrain;
+    m_pBaseTerrain->setPriority(0);
+    m_pBaseTerrain->setPosition(0, 0);
+    this->addChild(m_pBaseTerrain);
 }
 
 void Terrain::loadSprites()
@@ -124,6 +156,8 @@ void Terrain::loadSprites()
 void Terrain::loadBaseTerrain(QString terrainID)
 {
     m_pBaseTerrain = new Terrain(terrainID, x, y);
+    m_pBaseTerrain->setPriority(0);
+    m_pBaseTerrain->setPosition(0, 0);
     this->addChild(m_pBaseTerrain);
 }
 
@@ -142,6 +176,7 @@ void Terrain::loadBaseSprite(QString spriteID)
     {
         pSprite->setResAnim(pAnim);
     }
+    pSprite->setScale(pAnim->getWidth() / GameMap::Imagesize);
     pSprite->setPosition(-(pAnim->getWidth() - GameMap::Imagesize) / 2, -(pAnim->getHeight() - GameMap::Imagesize));
     this->addChild(pSprite);
     m_terrainSpriteName = spriteID;
@@ -295,6 +330,7 @@ void Terrain::loadOverlaySprite(QString spriteID)
     {
         pSprite->setResAnim(pAnim);
     }
+    pSprite->setScale(pAnim->getWidth() / GameMap::Imagesize);
     this->addChild(pSprite);
     m_pOverlaySprites.append(pSprite);
 }

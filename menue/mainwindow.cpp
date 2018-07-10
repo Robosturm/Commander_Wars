@@ -41,7 +41,7 @@ Mainwindow::Mainwindow()
     {
         emit this->sigEnterSingleplayer();
     });
-    connect(this, SIGNAL(sigEnterSingleplayer()), this, SLOT(enterSingleplayer()));
+    connect(this, SIGNAL(sigEnterSingleplayer()), this, SLOT(enterSingleplayer()), Qt::QueuedConnection);
     btnI++;
 
     // editor button
@@ -52,7 +52,7 @@ Mainwindow::Mainwindow()
     {
         emit this->sigEnterEditor();
     });
-    connect(this, SIGNAL(sigEnterEditor()), this, SLOT(enterEditor()));
+    connect(this, SIGNAL(sigEnterEditor()), this, SLOT(enterEditor()), Qt::QueuedConnection);
     btnI++;
 
     // quit button
@@ -63,7 +63,7 @@ Mainwindow::Mainwindow()
     {
         emit this->sigQuit();
     });
-    connect(this, SIGNAL(sigQuit()), this, SLOT(quitGame()));
+    connect(this, SIGNAL(sigQuit()), this, SLOT(quitGame()), Qt::QueuedConnection);
     btnI++;
 }
 

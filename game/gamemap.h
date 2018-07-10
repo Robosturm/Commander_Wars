@@ -50,30 +50,19 @@ public:
         return m_pInstance;
     }
     /**
-     * @brief getTerrain
+     * @brief getTerrain smart pointer
      * @param x
      * @param y
-     * @return normal pointer only use this for jsengine access
-     */
-    inline Terrain* getTerrain(qint32 x, qint32 y)
-    {
-        return fields.at(y)->at(x).get();
-    }
-    /**
-     * @brief getTerrain
-     * @param x
-     * @param y
-     * @return smart pointer to the terrain use this when ever you can
+     * @return the smart pointer
      */
     inline spTerrain getSpTerrain(qint32 x, qint32 y)
     {
         return fields.at(y)->at(x);
     }
-
 signals:
 
 public slots:
-    void updateTerrainSprites();
+    void updateTerrainSprites(qint32 xInput = -1, qint32 yInput = -1);
     /**
      * @brief getField changes the coordinates into the given direction
      * @param x x-coordinates
@@ -104,6 +93,23 @@ public slots:
         return m_zoom;
     }
     void moveMap(qint32 x, qint32 y);
+    /**
+     * @brief getTerrain only use this for js scripts
+     * @param x
+     * @param y
+     * @return the real pointer to the given terrain
+     */
+    inline Terrain* getTerrain(qint32 x, qint32 y)
+    {
+        return fields.at(y)->at(x).get();
+    }
+    /**
+     * @brief replaceTerrain
+     * @param terrainID
+     * @param x
+     * @param y
+     */
+    void replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false);
 private:
     static GameMap* m_pInstance;
 

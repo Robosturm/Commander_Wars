@@ -11,19 +11,32 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-		var surroundings = terrain.getSurroundings("PIPELINE,WELD,DESTROYEDWELD", false, false, TERRAIN.Direct);
-        if ((surroundings === "") || (surroundings.includes("+E") && surroundings.includes("+W")))
+        var surroundings = terrain.getSurroundings("PIPELINE", false, false, TERRAIN.Direct);
+        if ((surroundings === ""))
         {
             terrain.loadBaseSprite("destroyedweld+E+W");
         }
-        else if ((surroundings === "") || (surroundings.includes("+N") && surroundings.includes("+S")))
+        else if ((surroundings === "+N+S"))
         {
 			
             terrain.loadBaseSprite("destroyedweld+N+S");
         }
-        else
+        else if ((surroundings === "+E+W"))
         {
             terrain.loadBaseSprite("destroyedweld+E+W");
+        }
+    };
+    this.canBePlaced = function(x, y)
+    {
+        var terrain = map.getTerrain(x, y);
+        var surroundings = terrain.getSurroundings("PIPELINE", false, false, TERRAIN.Direct);
+        if ((surroundings === "+E+W") || (surroundings === "+N+S"))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     };
 };

@@ -12,7 +12,7 @@ var Constructor = function()
     };
     this.loadOverlaySprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("SEA,RIVER", true, true, TERRAIN.Direct);
+        var surroundings = terrain.getSurroundings("SEA", true, true, TERRAIN.Direct);
         if (surroundings !== "")
         {
             terrain.loadOverlaySprite("sea" + surroundings);
@@ -25,6 +25,29 @@ var Constructor = function()
             {
                 terrain.loadOverlaySprite("sea" + surroundingsNE);
             }
+        }
+        // load river overlay
+        var surroundingsSea = terrain.getSurroundings("SEA", true, false, TERRAIN.All);
+        var surroundingsRiver = terrain.getSurroundings("RIVER", false, false, TERRAIN.Direct);
+        // load overlay north
+        if (surroundingsRiver.includes("+N") && surroundingsSea.includes("+E") && surroundingsSea.includes("+W"))
+        {
+            terrain.loadOverlaySprite("riverending+N");
+        }
+        // load overlay east
+        if (surroundingsRiver.includes("+E") && surroundingsSea.includes("+S") && surroundingsSea.includes("+N"))
+        {
+            terrain.loadOverlaySprite("riverending+E");
+        }
+        // load overlay south
+        if (surroundingsRiver.includes("+S") && surroundingsSea.includes("+E") && surroundingsSea.includes("+W"))
+        {
+            terrain.loadOverlaySprite("riverending+S");
+        }
+        // load overlay west
+        if (surroundingsRiver.includes("+W") && surroundingsSea.includes("+S") && surroundingsSea.includes("+N"))
+        {
+            terrain.loadOverlaySprite("riverending+W");
         }
         // load overlay south east
         if (!surroundings.includes("+S") && !surroundings.includes("+E"))
@@ -53,28 +76,7 @@ var Constructor = function()
                 terrain.loadOverlaySprite("sea" + surroundingsNW);
             }
         }
-		// load river overlay
-		surroundings = terrain.getSurroundings("RIVER", true, true, TERRAIN.Direct);
-		// load overlay north
-        if (surroundings.includes("+N"))
-        {
-            terrain.loadOverlaySprite("riverending+N");
-        }
-        // load overlay east
-        if (surroundings.includes("+E"))
-        {
-            terrain.loadOverlaySprite("riverending+E");
-        }
-		// load overlay south
-        if (surroundings.includes("+S"))
-        {
-            terrain.loadOverlaySprite("riverending+S");
-        }
-		// load overlay west
-        if (surroundings.includes("+W"))
-        {
-            terrain.loadOverlaySprite("riverending+W");
-        }
+
     };
 };
 Constructor.prototype = TERRAIN;

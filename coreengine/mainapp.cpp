@@ -17,7 +17,7 @@ Mainapp::Mainapp(int argc, char* argv[])
     // create update timer
     m_Timer.setSingleShot(false);
     m_Timer.start(5);
-    connect(&m_Timer, SIGNAL(timeout()), this, SLOT(update()));
+    connect(&m_Timer, SIGNAL(timeout()), this, SLOT(update()), Qt::QueuedConnection);
     m_pMainapp = this;
 
     m_Audiothread->start();

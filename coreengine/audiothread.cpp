@@ -12,12 +12,12 @@ AudioThread::AudioThread()
 {
     // move signals and slots to Audio Thread
     this->moveToThread(this);
-    connect(this, SIGNAL(SignalPlayMusic(int)), this, SLOT(SlotPlayMusic(int)));
-    connect(this, SIGNAL(SignalSetVolume(int)), this, SLOT(SlotSetVolume(int)));
-    connect(this, SIGNAL(SignalAddMusic(QString)), this, SLOT(SlotAddMusic(QString)));
-    connect(this, SIGNAL(SignalClearPlayList()), this, SLOT(SlotClearPlayList()));
-    connect(this, SIGNAL(SignalPlayRandom()), this, SLOT(SlotPlayRandom()));
-    connect(this, SIGNAL(SignalLoadFolder(QString)), this, SLOT(SlotLoadFolder(QString)));
+    connect(this, SIGNAL(SignalPlayMusic(int)), this, SLOT(SlotPlayMusic(int)), Qt::QueuedConnection);
+    connect(this, SIGNAL(SignalSetVolume(int)), this, SLOT(SlotSetVolume(int)), Qt::QueuedConnection);
+    connect(this, SIGNAL(SignalAddMusic(QString)), this, SLOT(SlotAddMusic(QString)), Qt::QueuedConnection);
+    connect(this, SIGNAL(SignalClearPlayList()), this, SLOT(SlotClearPlayList()), Qt::QueuedConnection);
+    connect(this, SIGNAL(SignalPlayRandom()), this, SLOT(SlotPlayRandom()), Qt::QueuedConnection);
+    connect(this, SIGNAL(SignalLoadFolder(QString)), this, SLOT(SlotLoadFolder(QString)), Qt::QueuedConnection);
 }
 
 AudioThread::~AudioThread()

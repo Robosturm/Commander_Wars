@@ -27,13 +27,11 @@ GameMap::GameMap(qint32 width, qint32 heigth)
         fields.append(new QVector<spTerrain>());
         for (qint32 x = 0; x < width; x++)
         {
-            // test code
-
             spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y);
             this->addChild(pTerrain);
-
             fields[y]->append(pTerrain);
-            pTerrain->setPosition(x * 24.0f, y * 24.0f);
+            pTerrain->setPosition(x * Imagesize, y * Imagesize);
+            pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
         }
     }
     updateTerrainSprites();
@@ -61,14 +59,38 @@ GameMap::~GameMap()
     fields.clear();
 }
 
-void GameMap::updateTerrainSprites()
+void GameMap::updateTerrainSprites(qint32 xInput, qint32 yInput)
 {
-    // update terrain sprites
+    if ((xInput < 0) && (yInput < 0))
+    {
+        // update terrain sprites
+        for (qint32 y = 0; y < heigth; y++)
+        {
+            for (qint32 x = 0; x < width; x++)
+            {
+                fields.at(y)->at(x)->loadSprites();
+            }
+        }
+    }
+    else
+    {
+        // more optimized for a single terrain :)
+        for (qint32 y = yInput -1; y <= yInput + 1; y++)
+        {
+            for (qint32 x = xInput -1; x <= xInput + 1; x++)
+            {
+                if (onMap(x, y))
+                {
+                    fields.at(y)->at(x)->loadSprites();
+                }
+            }
+        }
+    }
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
         {
-            fields.at(x)->at(y)->loadSprites();
+            fields.at(y)->at(x)->syncAnimation();
         }
     }
 }
@@ -203,3 +225,30 @@ void GameMap::zoom(float zoom)
     this->setScale(m_zoom);
 }
 
+void GameMap::replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain)
+{
+    if (onMap(x, y))
+    {
+        spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y);
+        if (useTerrainAsBaseTerrain)
+        {
+            spTerrain pTerrainOld = fields.at(y)->at(x);
+            this->removeChild(pTerrainOld);
+            pTerrain->setBaseTerrain(pTerrainOld);
+            fields.at(y)->replace(x, pTerrain);
+            this->addChild(pTerrain);
+            pTerrain->setPosition(x * Imagesize, y * Imagesize);
+            pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
+        }
+        else
+        {
+            spTerrain pTerrainOld = fields.at(y)->at(x);
+            this->removeChild(pTerrainOld);
+            fields.at(y)->replace(x, pTerrain);
+            this->addChild(pTerrain);
+            pTerrain->setPosition(x * Imagesize, y * Imagesize);
+            pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
+        }
+        updateTerrainSprites(x, y);
+    }
+}

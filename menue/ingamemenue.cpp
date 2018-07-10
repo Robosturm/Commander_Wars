@@ -44,7 +44,7 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth)
             emit this->sigMouseWheel(pTouchEvent->wheelDirection.y);
         }
     });
-    connect(this, SIGNAL(sigMouseWheel(qint32)), this, SLOT(mouseWheel(qint32)));
+    connect(this, SIGNAL(sigMouseWheel(qint32)), this, SLOT(mouseWheel(qint32)), Qt::QueuedConnection);
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
@@ -87,7 +87,7 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth)
             m_Cursor->updatePosition(curX, curY);
         }
     });
-    connect(this, SIGNAL(sigMoveMap(qint32,qint32)), this, SLOT(MoveMap(qint32,qint32)));
+    connect(this, SIGNAL(sigMoveMap(qint32,qint32)), this, SLOT(MoveMap(qint32,qint32)), Qt::QueuedConnection);
 
     GameMap::getInstance()->addChild(m_Cursor);
 }

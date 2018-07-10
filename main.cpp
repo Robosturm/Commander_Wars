@@ -19,11 +19,13 @@
 #include "menue/mainwindow.h"
 #include "menue/ingamemenue.h"
 
+#include "game/terrain.h"
+
 int main(int argc, char* argv[])
 {
-    // qt metatypes
+    // qt metatypes we need this for js and signal slot stuff
     qRegisterMetaType<Mainapp::NetworkSerives>("Mainapp::NetworkSerives");
-
+    qmlRegisterInterface<Terrain>("Terrain");
     /*************************************************************************************************/
 
     Mainapp app(argc, argv);

@@ -6,7 +6,6 @@
 
 #include "oxygine-framework.h"
 
-// make us smart
 class Terrain;
 typedef oxygine::intrusive_ptr<Terrain> spTerrain;
 
@@ -19,7 +18,7 @@ class Terrain : public QObject, public oxygine::Actor
     Q_PROPERTY(QString terrainName READ getTerrainName WRITE setTerrainName)
 public:
 
-    static Terrain* createTerrain(const QString& terrainID, qint32 x, qint32 y);
+    static spTerrain createTerrain(const QString& terrainID, qint32 x, qint32 y);
 
     virtual ~Terrain();
 
@@ -37,7 +36,15 @@ public:
 
     QString getTerrainName() const;
     void setTerrainName(const QString &value);
-
+    /**
+     * @brief syncAnimation call this on all terrains to make their animation synchronized.
+     */
+    void syncAnimation();
+    /**
+     * @brief setBaseTerrain replace base terrain
+     * @param terrain
+     */
+    void setBaseTerrain(spTerrain terrain);
 public slots:
     /**
      * @brief createBaseTerrain creates the base terrain for this terrain if it's a nullptr
@@ -74,7 +81,7 @@ public slots:
         }
         else
         {
-            return "";
+            return terrainID;
         }
     }
 private:
