@@ -1,0 +1,23 @@
+syntax: glob
+examples/example1/build_helloworld_vc10
+examples/example2/build_example2_vc10
+examples/example1/build_example1_vc10
+examples/example1/build_example1_vc11
+examples/example2/build_example2_vc11
+examples/build/
+examples/embuild/
+examples/example2/build/
+examples/example1/proj.cmake/build
+examples/example2/proj.cmake/build/
+*/proj.emscripten/build/
+data.js
+examples/HelloFlow/proj.emscripten/build_release/
+examples/HelloFlow/proj.android/bin/
+examples/HelloFlow/proj.android/gen/
+examples/HelloFlow/proj.android/obj/
+examples/HelloFlow/proj.android/libs/
+examples/HelloFlow/proj.win32/Debug_v*
+*.opensdf
+*.sdf
+examples/HelloFlow/proj.win32/Release_v*
+examples/HelloFlow/proj.cmake/build/

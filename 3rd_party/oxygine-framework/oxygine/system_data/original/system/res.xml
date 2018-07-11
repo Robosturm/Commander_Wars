@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "system/anims" />
+	<atlas>
+		<image file="tree.png"/>
+		<image file="finger.png"/>
+		<image file="t2p.png"/>
+		<image file="checkbox.png" rows="2"/>
+		<image file="checker.png"/>
+		<image file="remove.png"/>
+		<image file="images.png"/>
+		<image file="logo.png"/>
+		<image file="btn.png" guideX1="19" guideY1="15" guideX2="46" guideY2="42" vertical="2" horizontal="2"/>
+		<image file="button.png" cols="3"/>
+	</atlas>
+	
+	<set path = "system/fonts" />
+	<font file="system.fnt" version="7"/>	
+	<font file="mono.fnt" version="7"/>	
+</resources>

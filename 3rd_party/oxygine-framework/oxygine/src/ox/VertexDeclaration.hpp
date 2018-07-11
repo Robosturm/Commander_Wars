@@ -1,0 +1,1 @@
+#include "oxygine/core/VertexDeclaration.h"

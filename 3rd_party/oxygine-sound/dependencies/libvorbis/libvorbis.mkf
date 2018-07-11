@@ -1,0 +1,75 @@
+subproject libvorbis
+option module_path="../libogg"
+includepath lib
+subproject libogg
+
+files
+{
+	[source]
+	(lib)
+	analysis.c
+	bitrate.c
+	block.c
+	codebook.c
+	envelope.c
+	floor0.c
+	floor1.c
+	info.c
+	lookup.c
+	lpc.c
+	lsp.c
+	mapping0.c
+	mdct.c
+	psy.c
+	registry.c
+	res0.c
+	sharedbook.c
+	smallft.c
+	synthesis.c
+	vorbisenc.c
+	window.c
+
+	[headers]
+	(lib)
+	backends.h
+    bitrate.h
+    codebook.h 
+    codec_internal.h
+    envelope.h
+    modes\floor_all.h
+    books\floor\floor_books.h
+    highlevel.h
+    lookup.h
+    lookup_data.h
+    lpc.h
+    lsp.h
+    masking.h
+    mdct.h
+    misc.h
+    os.h
+    psy.h
+    modes\psych_11.h
+    modes\psych_16.h
+    modes\psych_44.h
+    modes\psych_8.h
+    registry.h
+    books\coupled\res_books_stereo.h
+    books\uncoupled\res_books_uncoupled.h
+    modes\residue_16.h
+    modes\residue_44.h
+    modes\residue_44u.h
+    modes\residue_8.h
+    scales.h
+    modes\setup_11.h
+    modes\setup_16.h
+    modes\setup_22.h
+    modes\setup_32.h
+    modes\setup_44.h
+    modes\setup_44u.h
+    modes\setup_8.h
+    modes\setup_X.h
+    smallft.h
+    window.h
+}
+
+ 

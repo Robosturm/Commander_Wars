@@ -1,0 +1,18 @@
+1. Start from readme.txt
+2a. Examples folder have configured iOS projects (except demobox2d)
+=================================================================================================
+ 
+- Go to oxygine-framework\examples and choose any example. For example "Demo"
+- Open xcode project from:
+  examples\Demo\proj.ios\
+- Select correct scheme: demo_ios-> iOS Simulator or real device
+- Build and run!
+
+2b. You could generate your own iOS project.
+=================================================================================================
+- you need installed Python 2.7
+- you need to run this script
+  oxygine-framework\tools\gen_template.py
+
+example:
+	python gen_template.py MyProject -t ios -d path/to/MyProject/

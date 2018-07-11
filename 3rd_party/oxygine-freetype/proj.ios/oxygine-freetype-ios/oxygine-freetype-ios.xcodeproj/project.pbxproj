@@ -1,0 +1,268 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AD1344A91D4AFCF600D65B88 /* ResFontFT.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD1344A71D4AFCF600D65B88 /* ResFontFT.cpp */; };
+		AD1344AD1D4B019A00D65B88 /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1344AC1D4B019A00D65B88 /* libfreetype.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AD1344991D4AFCDB00D65B88 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		AD13449B1D4AFCDB00D65B88 /* liboxygine-freetype-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "liboxygine-freetype-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD1344A71D4AFCF600D65B88 /* ResFontFT.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ResFontFT.cpp; path = ../../../src/ResFontFT.cpp; sourceTree = "<group>"; };
+		AD1344A81D4AFCF600D65B88 /* ResFontFT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResFontFT.h; path = ../../../src/ResFontFT.h; sourceTree = "<group>"; };
+		AD1344AC1D4B019A00D65B88 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreetype.a; path = ../../freetype/xcode/libfreetype.a; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AD1344981D4AFCDB00D65B88 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1344AD1D4B019A00D65B88 /* libfreetype.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AD1344921D4AFCDB00D65B88 = {
+			isa = PBXGroup;
+			children = (
+				AD1344AC1D4B019A00D65B88 /* libfreetype.a */,
+				AD13449D1D4AFCDB00D65B88 /* oxygine-freetype-ios */,
+				AD13449C1D4AFCDB00D65B88 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AD13449C1D4AFCDB00D65B88 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD13449B1D4AFCDB00D65B88 /* liboxygine-freetype-ios.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AD13449D1D4AFCDB00D65B88 /* oxygine-freetype-ios */ = {
+			isa = PBXGroup;
+			children = (
+				AD1344A71D4AFCF600D65B88 /* ResFontFT.cpp */,
+				AD1344A81D4AFCF600D65B88 /* ResFontFT.h */,
+			);
+			path = "oxygine-freetype-ios";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AD13449A1D4AFCDB00D65B88 /* oxygine-freetype-ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD1344A41D4AFCDB00D65B88 /* Build configuration list for PBXNativeTarget "oxygine-freetype-ios" */;
+			buildPhases = (
+				AD1344971D4AFCDB00D65B88 /* Sources */,
+				AD1344981D4AFCDB00D65B88 /* Frameworks */,
+				AD1344991D4AFCDB00D65B88 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "oxygine-freetype-ios";
+			productName = "oxygine-freetype-ios";
+			productReference = AD13449B1D4AFCDB00D65B88 /* liboxygine-freetype-ios.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AD1344931D4AFCDB00D65B88 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "denis-mac";
+				TargetAttributes = {
+					AD13449A1D4AFCDB00D65B88 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = AD1344961D4AFCDB00D65B88 /* Build configuration list for PBXProject "oxygine-freetype-ios" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = AD1344921D4AFCDB00D65B88;
+			productRefGroup = AD13449C1D4AFCDB00D65B88 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AD13449A1D4AFCDB00D65B88 /* oxygine-freetype-ios */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AD1344971D4AFCDB00D65B88 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1344A91D4AFCF600D65B88 /* ResFontFT.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		AD1344A21D4AFCDB00D65B88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"../../../oxygine-framework/oxygine/src",
+					../../freetype/xcode/include,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LIBRARY_SEARCH_PATHS = ../../freetype/xcode;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		AD1344A31D4AFCDB00D65B88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"../../../oxygine-framework/oxygine/src",
+					../../freetype/xcode/include,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LIBRARY_SEARCH_PATHS = ../../freetype/xcode;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		AD1344A51D4AFCDB00D65B88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		AD1344A61D4AFCDB00D65B88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AD1344961D4AFCDB00D65B88 /* Build configuration list for PBXProject "oxygine-freetype-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD1344A21D4AFCDB00D65B88 /* Debug */,
+				AD1344A31D4AFCDB00D65B88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD1344A41D4AFCDB00D65B88 /* Build configuration list for PBXNativeTarget "oxygine-freetype-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD1344A51D4AFCDB00D65B88 /* Debug */,
+				AD1344A61D4AFCDB00D65B88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AD1344931D4AFCDB00D65B88 /* Project object */;
+}

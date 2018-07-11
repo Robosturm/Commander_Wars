@@ -1,0 +1,44 @@
+defines
+{
+#_ARM_ASSEM_
+}
+
+subproject libogg
+includepath tremor
+files
+{
+    [source]
+    (tremor)
+    "block.c"
+    "codebook.c"
+    "floor0.c"
+    "floor1.c"
+    "info.c"
+    "mapping0.c"
+    "mdct.c"
+    "registry.c"
+    "res012.c"
+    "sharedbook.c"
+    "synthesis.c"
+    "vorbisfile.c"
+    "window.c"
+
+    [headers]
+    (tremor)
+    "backends.h"
+    "block.h"
+    "codebook.h"
+    "codec_internal.h"
+    "config_types.h"
+    "ivorbiscodec.h"
+    "ivorbisfile.h"
+    "lsp_lookup.h"
+    "mdct.h"
+    "mdct_lookup.h"
+    "misc.h"
+    "os.h"
+    "registry.h"
+    "window.h"
+    "window_lookup.h"
+
+}

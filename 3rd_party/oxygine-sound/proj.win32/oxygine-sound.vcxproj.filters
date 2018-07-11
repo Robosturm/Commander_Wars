@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="sound">
+      <UniqueIdentifier>{a6cd94a5-8e73-4954-8e7c-7c4687ed4167}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sound\oal">
+      <UniqueIdentifier>{5586f5fb-7b84-4c52-8831-1b829374006c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sound\null">
+      <UniqueIdentifier>{c9040c54-9237-4419-84e7-e7ffc118d745}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\sound\MemoryStream.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\oal.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\OggStream.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\ResSound.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\Sound.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\SoundInstance.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\SoundPlayer.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\SoundStream.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\SoundSystem.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\WavStream.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\oal\StaticSoundHandleOAL.h">
+      <Filter>sound\oal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\oal\StaticStreamOAL.h">
+      <Filter>sound\oal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\oal\StreamingSoundHandleOAL.h">
+      <Filter>sound\oal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\null\SoundNull.h">
+      <Filter>sound\null</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\null\SoundSystemNull.h">
+      <Filter>sound\null</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\SoundHandle.h">
+      <Filter>sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\oal\SoundHandleOAL.h">
+      <Filter>sound\oal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\oal\SoundOAL.h">
+      <Filter>sound\oal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\oal\SoundSystemOAL.h">
+      <Filter>sound\oal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\sound\null\SoundHandleNull.h">
+      <Filter>sound\null</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\sound\MemoryStream.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound\OggStream.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound\ResSound.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound\SoundInstance.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound\SoundPlayer.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound\WavStream.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound\oal\StaticSoundHandleOAL.cpp">
+      <Filter>sound\oal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound\oal\StaticStreamOAL.cpp">
+      <Filter>sound\oal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound\oal\StreamingSoundHandleOAL.cpp">
+      <Filter>sound\oal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound\null\SoundNull.cpp">
+      <Filter>sound\null</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound\null\SoundSystemNull.cpp">
+      <Filter>sound\null</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound\SoundHandle.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound\oal\SoundHandleOAL.cpp">
+      <Filter>sound\oal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound\oal\SoundOAL.cpp">
+      <Filter>sound\oal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound\oal\SoundSystemOAL.cpp">
+      <Filter>sound\oal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound\SoundSystem.cpp">
+      <Filter>sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sound\null\SoundHandleNull.cpp">
+      <Filter>sound\null</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

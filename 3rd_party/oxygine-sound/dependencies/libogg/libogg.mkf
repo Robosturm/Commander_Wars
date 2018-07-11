@@ -1,0 +1,11 @@
+#option lib
+
+#subproject libogg
+includepath include
+
+files
+{
+	(src)
+	bitwise.c
+	framing.c
+}

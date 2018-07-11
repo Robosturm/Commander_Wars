@@ -1,0 +1,13 @@
+includepath include
+
+library
+{
+	".,libogg"
+}
+
+files
+{
+	(include)
+	ogg\ogg.h
+	ogg\os_types.h
+}

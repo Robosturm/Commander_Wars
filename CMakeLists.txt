@@ -2,12 +2,12 @@ cmake_minimum_required (VERSION 2.8.11)
 project (Commander_Wars)
 
 # add oxygen as our engine
-add_subdirectory(../../Oxygen/oxygine-framework/ oxygine-framework)
+add_subdirectory(3rd_party/oxygine-framework/ oxygine-framework)
 add_definitions(${OXYGINE_DEFINITIONS})
 include_directories(${OXYGINE_INCLUDE_DIRS})
 link_directories(${OXYGINE_LIBRARY_DIRS})
 
-add_subdirectory(../../Oxygen/oxygine-flow oxygine-flow)
+add_subdirectory(3rd_party/oxygine-flow oxygine-flow)
 include_directories(${OXYGINE_FLOW_INCLUDE_DIRS})
 
 

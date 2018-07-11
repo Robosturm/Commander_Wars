@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "B55C98D2A6C98208CE406B5BFEF8B55ADBE2FFCC",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "B55C98D2A6C98208CE406B5BFEF8B55ADBE2FFCC" : 0,
+    "57DDEF850ACB64A14FE6233ED10DA2B97848AE68" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2434C645-C731-4C65-A4F2-CAE929BDA2EA",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "B55C98D2A6C98208CE406B5BFEF8B55ADBE2FFCC" : "oxygine-freetype\/",
+    "57DDEF850ACB64A14FE6233ED10DA2B97848AE68" : ".."
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "oxygine-freetype-ios",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "proj.ios\/oxygine-freetype-ios\/oxygine-freetype-ios.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:alisagaming\/slots.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "57DDEF850ACB64A14FE6233ED10DA2B97848AE68"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:oxygine\/oxygine-freetype.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B55C98D2A6C98208CE406B5BFEF8B55ADBE2FFCC"
+    }
+  ]
+}

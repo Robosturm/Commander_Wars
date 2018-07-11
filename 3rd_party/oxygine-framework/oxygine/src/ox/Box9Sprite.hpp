@@ -1,0 +1,1 @@
+#include "oxygine/actor/Box9Sprite.h"

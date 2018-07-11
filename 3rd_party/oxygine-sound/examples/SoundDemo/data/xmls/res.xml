@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "sounds" />	
+	
+	<sound file="success_22050_mono.ogg"/>
+	<sound file="success_22050_stereo.ogg"/>
+	<sound file="success_44100_mono.ogg"/>
+	<sound file="success_44100_stereo.ogg"/>
+
+	<sound file="track_22050_mono.ogg"/>
+	<sound file="track_22050_stereo.ogg"/>
+	<sound file="track_44100_mono.ogg" streaming="true"/>
+	<sound file="track_48000_stereo.ogg"/>
+	<sound file="looped.ogg"/>
+
+
+	<sound file="lose_round.ogg"  streaming="true"/>
+	<sound file="win_round.ogg"  streaming="true"/>
+	<sound file="collect_rare.ogg"  streaming="true"/>
+	<sound file="wave.wav"  streaming="true"/>
+	<sound file="amb_bird_2.ogg"/>
+</resources>

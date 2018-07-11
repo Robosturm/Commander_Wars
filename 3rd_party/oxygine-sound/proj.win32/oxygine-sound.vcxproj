@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\sound\MemoryStream.h" />
+    <ClInclude Include="..\src\sound\null\SoundHandleNull.h" />
+    <ClInclude Include="..\src\sound\null\SoundNull.h" />
+    <ClInclude Include="..\src\sound\null\SoundSystemNull.h" />
+    <ClInclude Include="..\src\sound\oal.h" />
+    <ClInclude Include="..\src\sound\oal\SoundHandleOAL.h" />
+    <ClInclude Include="..\src\sound\oal\SoundOAL.h" />
+    <ClInclude Include="..\src\sound\oal\SoundSystemOAL.h" />
+    <ClInclude Include="..\src\sound\oal\StaticSoundHandleOAL.h" />
+    <ClInclude Include="..\src\sound\oal\StaticStreamOAL.h" />
+    <ClInclude Include="..\src\sound\oal\StreamingSoundHandleOAL.h" />
+    <ClInclude Include="..\src\sound\OggStream.h" />
+    <ClInclude Include="..\src\sound\ResSound.h" />
+    <ClInclude Include="..\src\sound\Sound.h" />
+    <ClInclude Include="..\src\sound\SoundHandle.h" />
+    <ClInclude Include="..\src\sound\SoundInstance.h" />
+    <ClInclude Include="..\src\sound\SoundPlayer.h" />
+    <ClInclude Include="..\src\sound\SoundStream.h" />
+    <ClInclude Include="..\src\sound\SoundSystem.h" />
+    <ClInclude Include="..\src\sound\WavStream.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\sound\MemoryStream.cpp" />
+    <ClCompile Include="..\src\sound\null\SoundHandleNull.cpp" />
+    <ClCompile Include="..\src\sound\null\SoundNull.cpp" />
+    <ClCompile Include="..\src\sound\null\SoundSystemNull.cpp" />
+    <ClCompile Include="..\src\sound\oal\SoundHandleOAL.cpp" />
+    <ClCompile Include="..\src\sound\oal\SoundOAL.cpp" />
+    <ClCompile Include="..\src\sound\oal\SoundSystemOAL.cpp" />
+    <ClCompile Include="..\src\sound\oal\StaticSoundHandleOAL.cpp" />
+    <ClCompile Include="..\src\sound\oal\StaticStreamOAL.cpp" />
+    <ClCompile Include="..\src\sound\oal\StreamingSoundHandleOAL.cpp" />
+    <ClCompile Include="..\src\sound\OggStream.cpp" />
+    <ClCompile Include="..\src\sound\ResSound.cpp" />
+    <ClCompile Include="..\src\sound\SoundHandle.cpp" />
+    <ClCompile Include="..\src\sound\SoundInstance.cpp" />
+    <ClCompile Include="..\src\sound\SoundPlayer.cpp" />
+    <ClCompile Include="..\src\sound\SoundSystem.cpp" />
+    <ClCompile Include="..\src\sound\WavStream.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7FD3EB10-BD3E-459A-82D2-7DE937E4F3F8}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>oxyginesound</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v141_xp</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v141_xp</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)_$(PlatformToolset)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)_$(PlatformToolset)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)_$(PlatformToolset)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)_$(PlatformToolset)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../oxygine-framework/oxygine/src/;../../oxygine-framework\oxygine\third_party\win32\pthreads\include/;..\dependencies\openal\include\;..\dependencies\tremor\tremor;..\dependencies\libogg\include\;../src</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Lib>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>libogg_static.lib;openAL32.lib;tremor.lib;</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(VisualStudioVersion)' == '14.0' or '$(VisualStudioVersion)' == '15.0'">libogg_static_vs2013.lib;openAL32.lib;tremor.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../libs/win32;</AdditionalLibraryDirectories>
+    </Lib>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../../oxygine-framework/oxygine/src/;../../oxygine-framework\oxygine\third_party\win32\pthreads\include/;..\dependencies\openal\include\;..\dependencies\tremor\tremor;..\dependencies\libogg\include\;../src</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>libogg_static.lib;openAL32.lib;tremor.lib;</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(VisualStudioVersion)' == '14.0' or '$(VisualStudioVersion)' == '15.0'">libogg_static_vs2013.lib;openAL32.lib;tremor.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../libs/win32;</AdditionalLibraryDirectories>
+    </Lib>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

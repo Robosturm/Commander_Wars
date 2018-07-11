@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Oxygine-Sound Emscripten Demo</title>
+    <style>
+      body {
+        font-family: arial;
+        margin: 50;
+        padding: none;
+      }
+
+      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
+      div.emscripten { text-align: center; }      
+      /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
+      /*canvas.emscripten { border: 0px none; width: 960px;height: 640px;}*/
+      </style>
+  </head>
+  <body>
+    
+
+    <div class="emscripten" id="status">Downloading Please Wait...</div>
+
+    <div class="emscripten">
+      <progress value="0" max="100" id="progress" hidden=1></progress>
+    </div>
+
+    
+    <div class="emscripten_border">
+      <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+    </div>
+    <div>DEMO ISNT WORKING IN IE AND SAFARI!</div>
+
+    <textarea id="output" rows="8" style="width: 800px; height: 150px;"></textarea>
+
+    <a href="http://oxygine.org">Oxygine 2014. Built with Emscripten</a>
+
+    <script type='text/javascript'>
+      var statusElement = document.getElementById('status');
+      var progressElement = document.getElementById('progress');
+      var spinnerElement = document.getElementById('spinner');
+
+      var cv = document.getElementById('canvas');
+      cv.width = 960;
+      cv.height = 640;
+
+
+
+      function prerun()
+      {
+        //FS.writeFile("qwe/test.txt", "Hello World2");        
+      }
+
+      function postrun()
+      {
+        //var f = Module.cwrap('fromjs_preloaded', 'number', ['number']);
+        //f(123);
+      }
+
+      var Module = {
+        preRun: [prerun],
+        postRun: [postrun],
+        print: (function() {
+          var element = document.getElementById('output');
+          if (element) element.value = ''; // clear browser cache
+          return function(text) {
+            text = Array.prototype.slice.call(arguments).join(' ');
+            // These replacements are necessary if you render to raw HTML
+            //text = text.replace(/&/g, "&amp;");
+            //text = text.replace(/</g, "&lt;");
+            //text = text.replace(/>/g, "&gt;");
+            //text = text.replace('\n', '<br>', 'g');
+            console.log(text);
+            if (element) {
+              element.value += text + "\n";
+              element.scrollTop = element.scrollHeight; // focus on bottom
+            }
+          };
+        })(),
+        printErr: function(text) {
+          text = Array.prototype.slice.call(arguments).join(' ');
+          if (0) { // XXX disabled for safety typeof dump == 'function') {
+            dump(text + '\n'); // fast, straight to the real console
+          } else {
+            console.error(text);
+          }
+        },
+        canvas: cv,
+        setStatus: function(text) {
+          console.log("progress " + text);
+          if (!Module.setStatus.last) Module.setStatus.last = { time: Date.now(), text: '' };
+          if (text === Module.setStatus.text) return;
+          var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+          var now = Date.now();
+          //if (m && now - Date.now() < 30) return; // if this is a progress update, skip it if too soon
+          if (m) {
+            text = m[1];
+            progressElement.value = parseInt(m[2])*100;
+            progressElement.max = parseInt(m[4])*100;
+            progressElement.hidden = false;
+            //spinnerElement.hidden = false;
+          } else {
+            progressElement.value = null;
+            progressElement.max = null;
+            progressElement.hidden = true;
+            //if (!text) spinnerElement.style.display = 'none';
+          }
+          statusElement.innerHTML = text;
+        },
+        totalDependencies: 0,
+        monitorRunDependencies: function(left) {
+          this.totalDependencies = Math.max(this.totalDependencies, left);
+          Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+        }
+      };
+      //Module.setStatus('Downloading Please Wait (1-2 minuts)...');
+    </script>
+    <script type="text/javascript" src="js2cpp.js"></script>
+    <script type="text/javascript" src="sound.js"></script>
+    <script type="text/javascript" src="preloading.js"></script>
+    <script async type="text/javascript" src="build/SoundDemo.js"></script>    
+  </body>
+</html>

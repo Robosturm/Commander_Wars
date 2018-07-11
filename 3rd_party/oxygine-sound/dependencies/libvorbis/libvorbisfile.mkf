@@ -1,0 +1,15 @@
+subproject libvorbisfile
+option module_path="../libogg"
+
+subproject libogg
+subproject libvorbis
+includepath include
+
+files
+{
+	[source]
+	(lib)
+	vorbisfile.c
+}
+
+

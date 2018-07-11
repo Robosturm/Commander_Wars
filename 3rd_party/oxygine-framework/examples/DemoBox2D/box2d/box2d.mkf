@@ -1,0 +1,51 @@
+# (Box2D v2.2.0)
+
+includepath
+{
+	.
+}
+
+files
+{
+	(Box2D)
+	Box2D.h
+
+	
+	[Collision]
+	(Box2D/Collision)
+	"*.h"
+	"*.cpp"
+
+
+	[Collision/Shapes]
+	(Box2D/Collision/Shapes)
+	"*.h"
+	"*.cpp"
+
+
+	[Common]
+	(Box2D/Common)
+	"*.h"
+	"*.cpp"
+
+	[Dynamics]
+	(Box2D/Dynamics)
+	"*.h"
+	"*.cpp"
+
+	[Dynamics/Contacts]
+	(Box2D/Dynamics/Contacts)
+	"*.h"
+	"*.cpp"
+
+
+	[Dynamics/Joints]
+	(Box2D/Dynamics/Joints)	
+	"*.h"
+	"*.cpp"
+
+	[Rope]
+	(Box2D/Rope)
+	"*.h"
+	"*.cpp"
+}

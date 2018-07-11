@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "images" />
+	<atlas>
+		<image file="circle.png"/>
+		<image file="pen.png" />				
+		<image file="shot.png" />	
+	</atlas>
+</resources>

@@ -1,0 +1,28 @@
+options
+{
+	module_path="../../../"
+	module_path="../../../dependencies"
+	module_path="../../../../oxygine-framework/oxygine/marmalade"	
+	enable-exceptions=1
+	s3e-data-dir="../data"
+}
+
+subproject iwutil
+subproject oxygine-framework
+subproject oxygine-sound
+subproject openalext
+
+debug_define MARMALADE
+define MARMALADE
+
+files
+{
+	../src/example.cpp
+	../src/example.h
+	../src/main.cpp
+	../src/test.cpp
+	../src/TestSoundFormats.h
+	../src/test.h
+		
+# Add new source files here
+}
