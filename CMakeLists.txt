@@ -12,6 +12,8 @@ include_directories(${OXYGINE_FLOW_INCLUDE_DIRS})
 
 
 
+
+
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
@@ -82,6 +84,10 @@ set(${PROJECT_NAME}_SRCS
         # game
         game/gamemap.cpp
         game/terrain.cpp
+        game/building.cpp
+        game/ko.cpp
+        game/player.cpp
+        game/unit.cpp
 )
 
 

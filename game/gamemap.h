@@ -6,7 +6,7 @@
 
 #include "oxygine/core/ref_counter.h"
 #include "oxygine-framework.h"
-
+#include "game/smartpointers.h"
 
 #include "memory"
 
@@ -103,13 +103,28 @@ public slots:
     {
         return fields.at(y)->at(x).get();
     }
+
+    /**
+     * @brief canBePlaced
+     * @param terrainID the terrain id you want to place
+     * @param x position
+     * @param y position
+     * @return true if this terrain can be placed
+     */
+    bool canBePlaced(const QString& terrainID, qint32 x, qint32 y);
+    /**
+     * @brief updateTerrain updates the given fields around. So all terrains are placeable.
+     * @param x
+     * @param y
+     */
+    void updateTerrain(qint32 x, qint32 y);
     /**
      * @brief replaceTerrain
      * @param terrainID
      * @param x
      * @param y
      */
-    void replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false);
+    void replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool updateSprites = false);
 private:
     static GameMap* m_pInstance;
 

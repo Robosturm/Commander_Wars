@@ -225,7 +225,7 @@ void GameMap::zoom(float zoom)
     this->setScale(m_zoom);
 }
 
-void GameMap::replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain)
+void GameMap::replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool updateSprites)
 {
     if (onMap(x, y))
     {
@@ -249,6 +249,53 @@ void GameMap::replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool 
             pTerrain->setPosition(x * Imagesize, y * Imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
         }
-        updateTerrainSprites(x, y);
+        if (updateSprites)
+        {
+            updateTerrain(x, y);
+            updateTerrainSprites(x, y);
+        }
+        else
+        {
+               fields.at(y)->at(x)->loadSprites();
+        }
+    }
+}
+
+
+void GameMap::updateTerrain(qint32 x, qint32 y)
+{
+    for (qint32 xPos = x - 1; xPos <= x + 1; xPos++)
+    {
+        for (qint32 yPos = y - 1; yPos <= y + 1; yPos++)
+        {
+            if (!((xPos == x) && (yPos == y)))
+            {
+                if (onMap(xPos, yPos))
+                {
+                    if (!canBePlaced(fields.at(yPos)->at(xPos)->getTerrainID(), xPos, yPos))
+                    {
+                        replaceTerrain(fields.at(yPos)->at(xPos)->getBaseTerrainID(), xPos, yPos, false, true);
+                    }
+                }
+            }
+        }
+    }
+}
+
+bool GameMap::canBePlaced(const QString& terrainID, qint32 x, qint32 y)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function = "canBePlaced";
+    QJSValueList args;
+    args << QJSValue(x);
+    args << QJSValue(y);
+    QJSValue placeable = pApp->getInterpreter()->doFunction(terrainID, function, args);
+    if (placeable.isBool())
+    {
+        return placeable.toBool();
+    }
+    else
+    {
+        return false;
     }
 }

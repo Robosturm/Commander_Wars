@@ -59,41 +59,25 @@ void EditorMenue::onMapClicked()
     }
 }
 
+
 bool EditorMenue::canTerrainBePlaced(qint32 x, qint32 y)
 {
     QString terrainID = m_EditorSelection->getCurrentTerrainID();
-    Mainapp* pApp = Mainapp::getInstance();
-    QString function = "canBePlaced";
-    QJSValueList args;
-    args << QJSValue(x);
-    args << QJSValue(y);
-    QJSValue placeable = pApp->getInterpreter()->doFunction(terrainID, function, args);
-    if (placeable.isBool() && placeable.toBool())
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    GameMap* pMap = GameMap::getInstance();
+    return pMap->canBePlaced(terrainID, x, y);
 }
 
 void EditorMenue::placeTerrain(qint32 x, qint32 y)
 {
     QString terrainID = m_EditorSelection->getCurrentTerrainID();
-    Mainapp* pApp = Mainapp::getInstance();
-    QString function = "canBePlaced";
-    QJSValueList args;
-    args << QJSValue(x);
-    args << QJSValue(y);
-    QJSValue placeable = pApp->getInterpreter()->doFunction(terrainID, function, args);
-    if (placeable.isBool() && placeable.toBool())
+    // nice we can place the terrain
+    GameMap* pMap = GameMap::getInstance();
+    if (pMap->canBePlaced(terrainID, x, y))
     {
-        // nice we can place the terrain
-        GameMap* pMap = GameMap::getInstance();
+        Mainapp* pApp = Mainapp::getInstance();
         QString function1 = "useTerrainAsBaseTerrain";
         QJSValueList args1;
         QJSValue useTerrainAsBaseTerrain = pApp->getInterpreter()->doFunction(terrainID, function1, args1);
-        pMap->replaceTerrain(terrainID, x, y, useTerrainAsBaseTerrain.toBool());
+        pMap->replaceTerrain(terrainID, x, y, useTerrainAsBaseTerrain.toBool(), true);
     }
 }

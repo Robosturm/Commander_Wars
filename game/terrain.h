@@ -5,9 +5,9 @@
 #include <QVector>
 
 #include "oxygine-framework.h"
+#include "game/building.h"
+#include "game/smartpointers.h"
 
-class Terrain;
-typedef oxygine::intrusive_ptr<Terrain> spTerrain;
 
 class Terrain : public QObject, public oxygine::Actor
 {
@@ -119,6 +119,10 @@ private:
      * @brief y coordinates in y direction in the map array
      */
     qint32 y{-1};
+    /**
+      * the building at this position
+      */
+    spBuilding m_Building{nullptr};
 
 };
 
