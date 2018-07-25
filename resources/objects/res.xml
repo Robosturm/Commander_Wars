@@ -5,5 +5,14 @@
 		<image file="button.png" cols = "3" />
 		<image file="editorselection.png" guideX1="25" guideX2="299" guideY1="25" guideY2="179"/>
 		<image file="editor+selector.png" cols = "4" />
+		<image file="editor+big.png"/>
+		<image file="editor+fill.png"/>
+		<image file="editor+medium.png"/>
+		<image file="editor+small.png"/>
+		<image file="editor+special.png"/>
+		<image file="editor+terrain.png"/>
+		<image file="editor+unit.png"/>
+		<image file="editor+building.png"/>
 	</atlas>
 </resources>
+

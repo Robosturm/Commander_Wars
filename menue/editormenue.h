@@ -14,12 +14,15 @@ public:
     EditorMenue();
 
 signals:
-    void sigOnMapClicked();
+    void sigOnMapClickedLeft();
+    void sigOnMapClickedRight();
 public slots:
     void cursorMoved();
-    void onMapClicked();
+    void onMapClickedLeft();
+    void onMapClickedRight();
     void placeTerrain(qint32 x, qint32 y);
     bool canTerrainBePlaced(qint32 x, qint32 y);
+
 private:
     spEditorSelection m_EditorSelection{new EditorSelection()};
 };

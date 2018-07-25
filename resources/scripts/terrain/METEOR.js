@@ -11,7 +11,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-		var surroundings = terrain.getSurroundings("PLASMA", false, false, TERRAIN.Direct);
+        var surroundings = terrain.getSurroundings("PLASMA", false, false, TERRAIN.Direct, false);
 		// get rid of the north identifier
 		surroundings = surroundings.replace("+N", "");
         terrain.loadBaseSprite("meteor" + surroundings);

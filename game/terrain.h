@@ -5,7 +5,7 @@
 #include <QVector>
 
 #include "oxygine-framework.h"
-#include "game/building.h"
+
 #include "game/smartpointers.h"
 
 
@@ -45,6 +45,8 @@ public:
      * @param terrain
      */
     void setBaseTerrain(spTerrain terrain);
+
+
 public slots:
     /**
      * @brief createBaseTerrain creates the base terrain for this terrain if it's a nullptr
@@ -67,7 +69,7 @@ public slots:
      * @param searchType use GameMap::Directions here
      * @return
      */
-    QString getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType);
+    QString getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder = true);
     void loadOverlaySprite(QString spriteID);
     /**
      * @brief getBaseTerrainID finds the base terrain id of the real base terrain recursivly
@@ -83,6 +85,14 @@ public slots:
         {
             return terrainID;
         }
+    }
+    /**
+     * @brief getID the overall id of this terrain either terrain id or building id
+     * @return
+     */
+    inline QString getID()
+    {
+        return "";
     }
 private:
     explicit Terrain(const QString& terrainID, qint32 x, qint32 y);
@@ -122,7 +132,7 @@ private:
     /**
       * the building at this position
       */
-    spBuilding m_Building{nullptr};
+    spBuilding m_Building;
 
 };
 

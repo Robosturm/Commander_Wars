@@ -131,6 +131,7 @@ private:
     qint32 width{0};
     qint32 heigth{0};
     QVector<QVector<spTerrain>*> fields;
+    QVector<spPlayer> players;
 
     static const QString m_JavascriptName;
     float m_zoom{1.0f};

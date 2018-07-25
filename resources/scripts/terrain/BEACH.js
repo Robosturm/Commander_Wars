@@ -12,7 +12,7 @@ var Constructor = function()
     this.loadBaseSprite = function(terrain)
     {
         var surroundingsLand = terrain.getSurroundings("SEA", true, true, TERRAIN.Direct);
-        var surroundingsBeach = terrain.getSurroundings("BEACH", false, false, TERRAIN.Direct);
+        var surroundingsBeach = terrain.getSurroundings("BEACH", false, false, TERRAIN.Direct, false);
         if (surroundingsLand !== "")
         {
             if (surroundingsLand === "+S" && surroundingsBeach.includes("+N"))
@@ -41,23 +41,18 @@ var Constructor = function()
     this.canBePlaced = function(x, y)
     {
         var terrain = map.getTerrain(x, y);
-        var surroundingsBeach = terrain.getSurroundings("BEACH", false, false, TERRAIN.Direct);
-        var surroundingsBeachN = terrain.getSurroundings("BEACH", false, false, TERRAIN.North);
-        var surroundingsBeachS = terrain.getSurroundings("BEACH", false, false, TERRAIN.South);
-        var surroundingsLand = terrain.getSurroundings("SEA", true, true, TERRAIN.All);
-        var surroundingsLandN = terrain.getSurroundings("SEA", true, true, TERRAIN.North);
-        var surroundingsLandS = terrain.getSurroundings("SEA", true, true, TERRAIN.South);
-        var surroundingsSea = terrain.getSurroundings("SEA", false, true, TERRAIN.Direct);
+        var surroundingsLand = terrain.getSurroundings("SEA", true, true, TERRAIN.Direct);
+        var surroundingsSea = terrain.getSurroundings("SEA", false, true, TERRAIN.ALL);
 
         var c = (surroundingsLand === "");
-        var d = (surroundingsLandS.includes("+S") && surroundingsLand.includes("+E") && surroundingsSea.includes("+NW"));
-        var e = (surroundingsLandS.includes("+S") && surroundingsLand.includes("+W") && surroundingsSea.includes("+NE"));
-        var f = (surroundingsLand.includes("+W") && surroundingsLandS.includes("+S") && surroundingsSea.includes("+NE"));
-        var g = (surroundingsLand.includes("+W") && surroundingsLandN.includes("+N") && surroundingsSea.includes("+SE"));
-        var h = (surroundingsLandN.includes("+N") && surroundingsLand.includes("+W") && surroundingsSea.includes("+SE"));
-        var i = (surroundingsLandN.includes("+N") && surroundingsLand.includes("+E") && surroundingsSea.includes("+SW"));
-        var j = (surroundingsLand.includes("+E") && surroundingsLandS.includes("+S") && surroundingsSea.includes("+NW"));
-        var k = (surroundingsLand.includes("+E") && surroundingsLandN.includes("+N") && surroundingsSea.includes("+SW"));
+        var d = (surroundingsLand.includes("+S") && surroundingsLand.includes("+E") && surroundingsSea.includes("+NW"));
+        var e = (surroundingsLand.includes("+S") && surroundingsLand.includes("+W") && surroundingsSea.includes("+NE"));
+        var f = (surroundingsLand.includes("+W") && surroundingsLand.includes("+S") && surroundingsSea.includes("+NE"));
+        var g = (surroundingsLand.includes("+W") && surroundingsLand.includes("+N") && surroundingsSea.includes("+SE"));
+        var h = (surroundingsLand.includes("+N") && surroundingsLand.includes("+W") && surroundingsSea.includes("+SE"));
+        var i = (surroundingsLand.includes("+N") && surroundingsLand.includes("+E") && surroundingsSea.includes("+SW"));
+        var j = (surroundingsLand.includes("+E") && surroundingsLand.includes("+S") && surroundingsSea.includes("+NW"));
+        var k = (surroundingsLand.includes("+E") && surroundingsLand.includes("+N") && surroundingsSea.includes("+SW"));
         if (c || d || e || f || g || h || i || j || k)
         {
             return false;

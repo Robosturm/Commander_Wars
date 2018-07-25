@@ -15,8 +15,8 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("MOUNTAIN", false, false, TERRAIN.East);
-        surroundings += terrain.getSurroundings("MOUNTAIN", false, false, TERRAIN.West);
+        var surroundings = terrain.getSurroundings("MOUNTAIN", false, false, TERRAIN.East, false);
+        surroundings += terrain.getSurroundings("MOUNTAIN", false, false, TERRAIN.West, false);
         terrain.loadBaseSprite("mountain" + surroundings);
     };
 };

@@ -12,8 +12,8 @@ var BUILDING =
         return 3;
     },
 
-    // called for loading the main sprite
-    loadBaseSprite : function(terrain)
+    // called for loading the main sprites
+    loadSprites : function(building)
     {
     },
 };

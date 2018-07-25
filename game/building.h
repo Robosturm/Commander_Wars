@@ -2,10 +2,10 @@
 #define BUILDING_H
 
 #include <QObject>
+#include <QVector>
 
 #include "oxygine-framework.h"
 #include "game/smartpointers.h"
-
 
 class Building : public QObject, public oxygine::Actor
 {
@@ -13,12 +13,23 @@ class Building : public QObject, public oxygine::Actor
 public:
     explicit Building(const QString& BuildingID, qint32 x, qint32 y);
 
+    void setOwner(spPlayer pOwner);
+    void updateBuildingSprites();
 signals:
 
 public slots:
-
+    void loadSprite(QString sprite, bool addPlayerColor);
+    inline qint32 getOwnerID()
+    {
+        if (m_Owner.get() != nullptr)
+        {
+            // todo get player id
+            //m_Owner.
+        }
+        return -1;
+    }
 private:
-    oxygine::spSprite m_pBuildingSprite{nullptr};
+    QVector<oxygine::spSprite> m_pBuildingSprites;
     /**
      * @brief m_BuildingID the id of this terrain
      */
@@ -26,11 +37,11 @@ private:
     /**
      * @brief m_Owner our owner a nullptr means we're a neutral building
      */
-    spPlayer m_Owner{nullptr};
+    spPlayer m_Owner;
     /**
      * @brief m_Terrain the terrain at which we are placed
      */
-    spTerrain m_Terrain{nullptr};
+    spTerrain m_Terrain;
 };
 
 #endif // BUILDING_H

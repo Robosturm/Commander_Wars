@@ -3,8 +3,11 @@
 #include "coreengine/mainapp.h"
 
 #include "resource_management/terrainmanager.h"
+#include "resource_management/buildingspritemanager.h"
 
 #include "game/terrain.h"
+
+#include "game/player.h"
 
 const QString GameMap::m_JavascriptName = "map";
 const qint32 GameMap::frameTime = 150;
@@ -21,6 +24,8 @@ GameMap::GameMap(qint32 width, qint32 heigth)
 
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     pTerrainManager->loadAll();
+    BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
+    pBuildingSpriteManager->loadAll();
 
     for (qint32 y = 0; y < heigth; y++)
     {
@@ -36,6 +41,11 @@ GameMap::GameMap(qint32 width, qint32 heigth)
     }
     updateTerrainSprites();
     centerMap(width / 2, heigth / 2);
+    // add two players to a default map :)
+    for (qint32 i = 0; i < 1; i++)
+    {
+        players.append(new Player(i));
+    }
 }
 
 GameMap::GameMap(QString map)

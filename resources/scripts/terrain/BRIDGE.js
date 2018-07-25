@@ -11,7 +11,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("RIVER,SEA,ROUGH_SEA,REAF,BEACH", false, false, TERRAIN.Direct);
+        var surroundings = terrain.getSurroundings("RIVER,SEA,ROUGH_SEA,REAF,BEACH", false, false, TERRAIN.Direct, false);
         terrain.loadBaseSprite("bridge" + surroundings);
     };
     this.useTerrainAsBaseTerrain = function()
@@ -22,7 +22,8 @@ var Constructor = function()
     {
         var terrain = map.getTerrain(x, y);
         if ((terrain.terrainID === "SEA") ||
-            (terrain.terrainID === "RIVER"))
+            (terrain.terrainID === "RIVER") ||
+            (terrain.terrainID === "BRIDGE"))
         {
             return true;
         }

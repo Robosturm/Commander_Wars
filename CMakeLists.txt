@@ -13,7 +13,6 @@ include_directories(${OXYGINE_FLOW_INCLUDE_DIRS})
 
 
 
-
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
@@ -66,6 +65,7 @@ set(${PROJECT_NAME}_SRCS
         resource_management/fontmanager.cpp
         resource_management/backgroundmanager.cpp
         resource_management/objectmanager.cpp
+        resource_management/buildingspritemanager.cpp
 
         # core engine
         coreengine/mainapp.cpp
@@ -73,6 +73,7 @@ set(${PROJECT_NAME}_SRCS
         coreengine/interpreter.cpp
         coreengine/console.cpp
         coreengine/audiothread.cpp
+        coreengine/pathfindingsystem.cpp
 
         # network engine
         network/tcpclient.cpp
