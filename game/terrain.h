@@ -94,6 +94,11 @@ public slots:
     {
         return "";
     }
+    /**
+     * @brief setBuilding will place the building on this terrain ignoring all rules nullptr to delete it.
+     * @param pBuilding
+     */
+    void setBuilding(Building* pBuilding);
 private:
     explicit Terrain(const QString& terrainID, qint32 x, qint32 y);
     /**

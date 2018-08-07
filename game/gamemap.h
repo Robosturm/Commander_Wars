@@ -37,12 +37,27 @@ public:
         Direct,
         Diagnonal
     };
-
+    /**
+     * @brief GameMap creates an empty ma (filled with plains) with two players and the given size
+     * @param width
+     * @param heigth
+     */
     explicit GameMap(qint32 width, qint32 heigth);
+    /**
+     * @brief GameMap
+     * @param map path to the map which should be loaded
+     */
     explicit GameMap(QString map);
     virtual ~GameMap();
-
+    /**
+     * @brief getMapWidth
+     * @return width of the map
+     */
     qint32 getMapWidth() const;
+    /**
+     * @brief getMapHeight
+     * @return height of the map
+     */
     qint32 getMapHeight() const;
 
     inline static GameMap* getInstance()
@@ -55,10 +70,13 @@ public:
      * @param y
      * @return the smart pointer
      */
-    inline spTerrain getSpTerrain(qint32 x, qint32 y)
-    {
-        return fields.at(y)->at(x);
-    }
+    spTerrain getSpTerrain(qint32 x, qint32 y);
+    /**
+     * @brief getspPlayer
+     * @param player index of the player
+     * @return smart pointer to the selected player
+     */
+    spPlayer getspPlayer(qint32 player);
 signals:
 
 public slots:
@@ -99,10 +117,7 @@ public slots:
      * @param y
      * @return the real pointer to the given terrain
      */
-    inline Terrain* getTerrain(qint32 x, qint32 y)
-    {
-        return fields.at(y)->at(x).get();
-    }
+    Terrain* getTerrain(qint32 x, qint32 y);
 
     /**
      * @brief canBePlaced
@@ -125,6 +140,20 @@ public slots:
      * @param y
      */
     void replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool updateSprites = false);
+    /**
+     * @brief getPlayerCount
+     * @return number of players on the map
+     */
+    qint32 getPlayerCount()
+    {
+        return players.size();
+    }
+    /**
+     * @brief getPlayer
+     * @param player player index in the vector
+     * @return pointer to the player
+     */
+    Player* getPlayer(qint32 player);
 private:
     static GameMap* m_pInstance;
 

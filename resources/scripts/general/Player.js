@@ -9,64 +9,64 @@ var PLAYER =
         switch (player.getPlayerID())
         {
             case 0:
-                player.setColor("#E74F17");
+                player.setColor("tomato");
                 break;
             case 1:
-                player.setColor("#1FC7FF");
+                player.setColor("royalblue");
                 break;
             case 2:
-                player.setColor("#00FF00");
+                player.setColor("lime");
                 break;
             case 3:
-                player.setColor("#FFC700");
+                player.setColor("yellow");
                 break;
             case 4:
-                player.setColor("#00FF00");
+                player.setColor("darkslategray");
                 break;
             case 5:
-                player.setColor("#989291");
+                player.setColor("darkslateblue");
                 break;
             case 6:
-                player.setColor("#B4B4B4");
+                player.setColor("steelblue");
                 break;
             case 7:
-                player.setColor("#4C6D6D");
+                player.setColor("coral");
                 break;
             case 8:
-                player.setColor("#FF8D00");
+                player.setColor("peru");
                 break;
             case 9:
-                player.setColor("#C86400");
+                player.setColor("silver");
                 break;
             case 10:
-                player.setColor("#B1A40E");
+                player.setColor("magenta");
                 break;
             case 11:
-                player.setColor("#F400F4");
+                player.setColor("teal");
                 break;
             case 12:
-                player.setColor("#5AE1DF");
+                player.setColor("indigo");
                 break;
             case 13:
-                player.setColor("#303CD5");
+                player.setColor("cyan");
                 break;
             case 14:
-                player.setColor("#9400D3");
+                player.setColor("green");
                 break;
             case 15:
-                player.setColor("#0000FF");
+                player.setColor("red");
                 break;
             case 16:
-                player.setColor("#804000");
+                player.setColor("firebrick");
                 break;
             case 17:
-                player.setColor("#B93782");
+                player.setColor("purple");
                 break;
             case 18:
-                player.setColor("#676767");
+                player.setColor("goldenrod");
                 break;
             case 19:
-                player.setColor("#C800C8");
+                player.setColor("blue");
                 break;
             default:
                 // create a cool random color
@@ -92,7 +92,8 @@ var PLAYER =
     },
     getDefaultArmy : function (player)
     {
-        switch (player.getPlayerID())
+        var id = player.getPlayerID() % 13;
+        switch (id)
         {
             case 0:
                 return "OS";
@@ -107,17 +108,17 @@ var PLAYER =
             case 5:
                 return "BG";
             case 6:
-                return "ML";
+                return "MA";
             case 7:
                 return "AC";
             case 8:
-                return "BT";
+                return "BD";
             case 9:
-                return "GS";
+                return "JS";
             case 10:
-                return "PF";
+                return "PC";
             case 11:
-                return "TI";
+                return "TG";
             case 12:
                 return "DM";
         }
@@ -139,17 +140,17 @@ var PLAYER =
             case "BG":
                 return tr("Bolt Guard");
             case "ML":
-                return tr("Mecha Legion");
+                return tr("Metall Army");
             case "AC":
                 return tr("Amber Corona");
             case "BT":
-                return tr("Brown Tundra");
+                return tr("Brown Desert");
             case "GS":
-                return tr("Golden Sun");
+                return tr("Jade Sun");
             case "PF":
-                return tr("Pink Frontier");
+                return tr("Pink Crystal");
             case "TI":
-                return tr("Teal Isles");
+                return tr("Teal Guard");
             case "DM":
                 return tr("Dark Matters");
         }

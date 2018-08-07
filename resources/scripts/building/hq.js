@@ -6,8 +6,16 @@ var Constructor = function()
         if (building.getOwnerID() >= 0)
         {
             // none neutral player
-            building.loadSprite("hq+os", false);
-            building.loadSprite("hq+os+mask", true);
+            var player = building.getOwner();
+            // get army name
+            var armyName = player.getArmy();
+            // bh and bg have the same sprites
+            if (armyName === "BG")
+            {
+                armyName = "BH"
+            }
+            building.loadSprite("hq+" + armyName, false);
+            building.loadSprite("hq+" + armyName + "+mask", true);
         }
         else
         {

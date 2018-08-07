@@ -27,6 +27,25 @@ void Building::setOwner(spPlayer pOwner)
     updateBuildingSprites();
 }
 
+spPlayer Building::getSpOwner()
+{
+    return m_Owner;
+}
+
+Player* Building::getOwner()
+{
+    return m_Owner.get();
+}
+
+qint32 Building::getOwnerID()
+{
+    if (m_Owner.get() != nullptr)
+    {
+        return m_Owner->getPlayerID();
+    }
+    return -1;
+}
+
 void Building::loadSprite(QString spriteID, bool addPlayerColor)
 {
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
@@ -36,7 +55,7 @@ void Building::loadSprite(QString spriteID, bool addPlayerColor)
         oxygine::spSprite pSprite = new oxygine::Sprite();
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime * 2, -1);
             pSprite->addTween(tween);
         }
         else
@@ -46,8 +65,14 @@ void Building::loadSprite(QString spriteID, bool addPlayerColor)
         // repaint the building?
         if (addPlayerColor && m_Owner.get() != nullptr)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::Sprite::TweenColor(oxygine::Color(m_Owner->getColor().rgb(), 255)), -1);
-            pSprite->addTween(tween);
+            QColor color = m_Owner->getColor();
+            for (qint32 i = 0; i < 5; i++)
+            {
+                oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
+                oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
+                //pSprite->setBlendMode(oxygine::blend_disabled);
+                pSprite->addTween(tween);
+            }
         }
         pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
@@ -75,4 +100,21 @@ void Building::updateBuildingSprites()
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
     args1 << obj1;
     pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
+}
+
+bool Building::canBuildingBePlaced(QString terrainID)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "canBuildingBePlaced";
+    QJSValueList args1;
+    args1 << terrainID;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
+    if (ret.isBool())
+    {
+        return ret.toBool();
+    }
+    else
+    {
+        return false;
+    }
 }

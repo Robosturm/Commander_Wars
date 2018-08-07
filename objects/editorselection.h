@@ -8,6 +8,7 @@
 #include "game/terrain.h"
 #include "game/building.h"
 #include "game/gamemap.h"
+#include "game/player.h"
 
 class EditorSelection;
 typedef oxygine::intrusive_ptr<EditorSelection> spEditorSelection;
@@ -48,13 +49,21 @@ public:
     {
         return m_Terrains.at(m_selectedIndex.x() + m_selectedIndex.y() * m_selectedIndex.z())->getTerrainID();
     }
+    inline QString getCurrentBuildingID()
+    {
+        return m_Buildings.at(m_selectedIndex.x() + m_selectedIndex.y() * m_selectedIndex.z())->getBuildingID();
+    }
+    spBuilding getCurrentSpBuilding();
+
     PlacementSize getSizeMode() const;
 
 signals:
-    sigClickedPlacementSelection(qint32 x, qint32 y);
+   void sigClickedPlacementSelection(qint32 x, qint32 y);
+   void sigUpdateSelectedPlayer();
 public slots:
     void ClickedPlacementSelection(qint32 x, qint32 y);
     void selectTerrain(const QString& terrainID);
+    void updateSelectedPlayer();
 private:
     // small hints for the ui
     static const qint32 frameSize = 30;
@@ -92,7 +101,14 @@ private:
     void createBoxPlacementSize();
     void createBoxSelectionMode();
     void initSelection();
-    void updateSelectedPlayer(qint32 startIndex);
+
+    void createPlayerSelection();
+    /**
+     * @brief calcMaxPlayerSelection the amount of player hq's shown in the select player part
+     * @return
+     */
+    qint32 calcMaxPlayerSelection();
+
 };
 
 #endif // EDITORSELECTION_H

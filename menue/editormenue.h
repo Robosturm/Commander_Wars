@@ -21,7 +21,9 @@ public slots:
     void onMapClickedLeft();
     void onMapClickedRight();
     void placeTerrain(qint32 x, qint32 y);
+    void placeBuilding(qint32 x, qint32 y);
     bool canTerrainBePlaced(qint32 x, qint32 y);
+    bool canBuildingBePlaced(qint32 x, qint32 y);
 
 private:
     spEditorSelection m_EditorSelection{new EditorSelection()};

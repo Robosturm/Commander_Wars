@@ -22,6 +22,7 @@ EditorSelection::EditorSelection()
     m_BoxPlacementSelection = createV9Box(0, startHTerrain, pMainapp->getSettings()->getWidth() / 4.0f, pMainapp->getSettings()->getHeight() - startHTerrain);
     createBoxPlacementSize();
     createBoxSelectionMode();
+    createPlayerSelection();
 
     m_CurrentSelector = new oxygine::Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("editor+selector");
@@ -60,7 +61,7 @@ EditorSelection::EditorSelection()
         }
     });
     connect(this, SIGNAL(sigClickedPlacementSelection(qint32,qint32)), this, SLOT(ClickedPlacementSelection(qint32,qint32)), Qt::QueuedConnection);
-
+    connect(this, SIGNAL(sigUpdateSelectedPlayer()), this, SLOT(updateSelectedPlayer()));
 
     // load other sprites not shown in the starting screen
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
@@ -68,6 +69,11 @@ EditorSelection::EditorSelection()
     {
         m_Buildings.append(new Building(pBuildingSpriteManager->getBuildingID(i), -10, -10));
         m_Buildings[i]->updateBuildingSprites();
+        oxygine::spSprite pSprite = new oxygine::Sprite();
+        pAnim = pTerrainManager->getResAnim("plains+0");
+        pSprite->setResAnim(pAnim);
+        pSprite->setPriority(-100);
+        m_Buildings[i]->addChild(pSprite);
         m_Buildings[i]->setVisible(false);
         m_BoxPlacementSelection->addChild(m_Buildings[i]);
     }
@@ -142,14 +148,123 @@ void EditorSelection::createPlayerSelection()
     m_BoxSelectedPlayer->removeChildren();
     m_Players.clear();
 
-    updateSelectedPlayer(0);
+    oxygine::spButton pButtonLeft = new oxygine::Button();
+    pButtonLeft->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
+    pButtonLeft->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    oxygine::Sprite* ptr = pButtonLeft.get();
+    pButtonLeft->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    {
+        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), 300);
+    });
+
+    pButtonLeft->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    {
+        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+    });
+    pButtonLeft->setFlippedX(true);
+    pButtonLeft->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        m_playerStartIndex -= 1;
+        if (m_playerStartIndex < 0)
+        {
+            m_playerStartIndex = 0;
+        }
+        emit sigUpdateSelectedPlayer();
+    });
+    pButtonLeft->setPosition(20, 20);
+    m_BoxSelectedPlayer->addChild(pButtonLeft);
+
+    oxygine::spButton pButtonRight = new oxygine::Button();
+    pButtonRight->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
+    pButtonRight->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    ptr = pButtonRight.get();
+    pButtonRight->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    {
+        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), 300);
+    });
+
+    pButtonRight->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    {
+        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+    });
+    pButtonRight->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        m_playerStartIndex += 1;
+        if (m_playerStartIndex >= m_Players.size() - calcMaxPlayerSelection())
+        {
+            m_playerStartIndex = m_Players.size() - 1 - calcMaxPlayerSelection();
+            if (m_playerStartIndex < 0)
+            {
+                m_playerStartIndex = 0;
+            }
+        }
+        emit sigUpdateSelectedPlayer();
+    });
+    pButtonRight->setPosition(m_BoxSelectedPlayer->getScaledWidth() - 40, 20);
+    m_BoxSelectedPlayer->addChild(pButtonRight);
+    TerrainManager* pTerrainManager = TerrainManager::getInstance();
+    for (qint32 i = -1; i < GameMap::getInstance()->getPlayerCount(); i++)
+    {
+        spBuilding pBuilding = new Building("HQ", -10, -10);
+        oxygine::spSprite pSprite = new oxygine::Sprite();
+        oxygine::ResAnim* pAnim = pTerrainManager->getResAnim("plains+0");
+        pSprite->setResAnim(pAnim);
+        pSprite->setPriority(-100);
+        pBuilding->addChild(pSprite);
+        m_Players.append(pBuilding);
+        if (i >= 0)
+        {
+            pBuilding->setOwner(GameMap::getInstance()->getspPlayer(i));
+        }
+        else
+        {
+            pBuilding->setOwner(nullptr);
+        }
+        m_BoxSelectedPlayer->addChild(pBuilding);
+        pBuilding->setVisible(true);
+        pBuilding->setPosition(25 * i, 32);
+        pBuilding->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        {
+            // update buildings
+            for (qint32 i2 = 0; i2 < m_Buildings.size(); i2++)
+            {
+                if (i < 0)
+                {
+                    m_Buildings.at(i2)->setOwner(nullptr);
+                }
+                else
+                {
+                    m_Buildings.at(i2)->setOwner(m_Players.at(i + 1)->getSpOwner());
+                }
+            }
+        });
+    }
+
+    updateSelectedPlayer();
 }
 
-void EditorSelection::updateSelectedPlayer(qint32 startIndex)
+void EditorSelection::updateSelectedPlayer()
 {
-    m_playerStartIndex = startIndex;
-
+    for (qint32 i = 0; i < m_Players.size(); i++)
+    {
+        m_Players[i]->setVisible(false);
+    }
+    qint32 m_MaxPlayer = calcMaxPlayerSelection();
+    for (qint32 i = m_playerStartIndex; i < m_playerStartIndex + m_MaxPlayer; i++)
+    {
+        if (i < m_Players.size())
+        {
+            m_Players[i]->setVisible(true);
+            m_Players[i]->setPosition(50 + frameSize * (i - m_playerStartIndex), 32);
+        }
+    }
 }
+
+qint32 EditorSelection::calcMaxPlayerSelection()
+{
+    return (m_BoxSelectedPlayer->getScaledWidth() - 100) / frameSize;
+}
+
 
 void EditorSelection::createBoxSelectionMode()
 {
@@ -354,4 +469,9 @@ void EditorSelection::selectTerrain(const QString& terrainID)
 EditorSelection::PlacementSize EditorSelection::getSizeMode() const
 {
     return m_SizeMode;
+}
+
+spBuilding EditorSelection::getCurrentSpBuilding()
+{
+    return  m_Buildings.at(m_selectedIndex.x() + m_selectedIndex.y() * m_selectedIndex.z());
 }

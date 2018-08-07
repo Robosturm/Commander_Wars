@@ -363,6 +363,23 @@ void Terrain::loadOverlaySprite(QString spriteID)
     m_pOverlaySprites.append(pSprite);
 }
 
+void Terrain::setBuilding(Building* pBuilding)
+{
+    if (m_Building.get() != nullptr)
+    {
+        // delete it
+        this->removeChild(m_Building);
+        m_Building = nullptr;
+    }
+    if (pBuilding != nullptr)
+    {
+        m_Building = pBuilding;
+        pBuilding->setPriority(1);
+        pBuilding->setTerrain(GameMap::getInstance()->getSpTerrain(Terrain::x, Terrain::y));
+        this->addChild(pBuilding);
+    }
+}
+
 QString Terrain::getTerrainID() const
 {
     return terrainID;

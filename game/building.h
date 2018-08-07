@@ -15,18 +15,21 @@ public:
 
     void setOwner(spPlayer pOwner);
     void updateBuildingSprites();
+    spPlayer getSpOwner();
+    inline void setTerrain(spTerrain pTerrain)
+    {
+        m_Terrain = pTerrain;
+    }
+    bool canBuildingBePlaced(QString terrainID);
 signals:
 
 public slots:
     void loadSprite(QString sprite, bool addPlayerColor);
-    inline qint32 getOwnerID()
+    qint32 getOwnerID();
+    Player* getOwner();
+    inline QString getBuildingID()
     {
-        if (m_Owner.get() != nullptr)
-        {
-            // todo get player id
-            //m_Owner.
-        }
-        return -1;
+        return m_BuildingID;
     }
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;

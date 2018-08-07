@@ -65,6 +65,18 @@ void EditorMenue::cursorMoved()
             }
             break;
         }
+        case EditorSelection::EditorMode::Building:
+        {
+            if (canBuildingBePlaced(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()))
+            {
+                m_Cursor->changeCursor("cursor+default");
+            }
+            else
+            {
+                m_Cursor->changeCursor("cursor+unable");
+            }
+            break;
+        }
     }
 }
 
@@ -86,6 +98,11 @@ void EditorMenue::onMapClickedLeft()
             placeTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
             break;
         }
+        case EditorSelection::EditorMode::Building:
+        {
+            placeBuilding(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+            break;
+        }
     }
 }
 
@@ -102,6 +119,17 @@ bool EditorMenue::canTerrainBePlaced(qint32 x, qint32 y)
                 return true;
             }
         }
+    }
+    return false;
+}
+
+bool EditorMenue::canBuildingBePlaced(qint32 x, qint32 y)
+{
+    GameMap* pMap = GameMap::getInstance();
+    if (pMap->onMap(x, y))
+    {
+        spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
+        return pCurrentBuilding->canBuildingBePlaced(pMap->getTerrain(x, y)->getTerrainID());
     }
     return false;
 }
@@ -139,6 +167,43 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
             QJSValueList args1;
             QJSValue useTerrainAsBaseTerrain = pApp->getInterpreter()->doFunction(terrainID, function1, args1);
             pMap->replaceTerrain(terrainID, x + points->at(i).x(), y + points->at(i).y(), useTerrainAsBaseTerrain.toBool(), true);
+        }
+    }
+}
+
+void EditorMenue::placeBuilding(qint32 x, qint32 y)
+{
+    QSharedPointer<QVector<QPoint>> points;
+    switch (m_EditorSelection->getSizeMode())
+    {
+        case EditorSelection::PlacementSize::Small:
+        {
+            points = PathFindingSystem::getFields(0, 0);
+            break;
+        }
+        case EditorSelection::PlacementSize::Medium:
+        {
+            points = PathFindingSystem::getFields(0, 1);
+            break;
+        }
+        case EditorSelection::PlacementSize::Big:
+        {
+            points = PathFindingSystem::getFields(0, 2);
+            break;
+        }
+    }
+    for (qint32 i = 0; i < points->size(); i++)
+    {
+        // point still on the map great :)
+        qint32 curX = x + points->at(i).x();
+        qint32 curY = y + points->at(i).y();
+        if (canBuildingBePlaced(curX, curY))
+        {
+            spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
+            Building* pBuilding = new Building(pCurrentBuilding->getBuildingID(), curX, curY);
+            pBuilding->setOwner(pCurrentBuilding->getSpOwner());
+            GameMap* pMap = GameMap::getInstance();
+            pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
         }
     }
 }

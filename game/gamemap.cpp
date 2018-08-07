@@ -42,7 +42,7 @@ GameMap::GameMap(qint32 width, qint32 heigth)
     updateTerrainSprites();
     centerMap(width / 2, heigth / 2);
     // add two players to a default map :)
-    for (qint32 i = 0; i < 1; i++)
+    for (qint32 i = 0; i < 18; i++)
     {
         players.append(new Player(i));
     }
@@ -67,6 +67,54 @@ GameMap::~GameMap()
         delete fields.at(y);
     }
     fields.clear();
+}
+
+spTerrain GameMap::getSpTerrain(qint32 x, qint32 y)
+{
+    if (onMap(x, y))
+    {
+        return fields.at(y)->at(x);
+    }
+    else
+    {
+        return nullptr;
+    }
+}
+
+Terrain* GameMap::getTerrain(qint32 x, qint32 y)
+{
+    if (onMap(x, y))
+    {
+        return fields.at(y)->at(x).get();
+    }
+    else
+    {
+        return nullptr;
+    }
+}
+
+spPlayer GameMap::getspPlayer(qint32 player)
+{
+    if (player >= 0 && player < players.size())
+    {
+        return players[player];
+    }
+    else
+    {
+        return nullptr;
+    }
+}
+
+Player* GameMap::getPlayer(qint32 player)
+{
+    if (player >= 0 && player < players.size())
+    {
+        return players[player].get();
+    }
+    else
+    {
+        return nullptr;
+    }
 }
 
 void GameMap::updateTerrainSprites(qint32 xInput, qint32 yInput)
