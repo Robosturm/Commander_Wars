@@ -1,5 +1,7 @@
-#include "unitspritemanager.h"
+#include <QFileInfo>
 
+#include <QDirIterator>
+#include "unitspritemanager.h"
 #include "coreengine/mainapp.h"
 
 UnitSpriteManager* UnitSpriteManager::m_pInstance = nullptr;
@@ -21,4 +23,65 @@ UnitSpriteManager* UnitSpriteManager::getInstance()
         m_pInstance = new UnitSpriteManager();
     }
     return m_pInstance;
+}
+
+void UnitSpriteManager::loadAll()
+{
+    reset();
+    Mainapp* pMainapp = Mainapp::getInstance();
+    QStringList searchPaths;
+    searchPaths.append("resources/scripts/units");
+    // make sure to overwrite existing js stuff
+    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    {
+        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/units");
+    }
+    for (qint32 i = 0; i < searchPaths.size(); i++)
+    {
+        QString path =  QCoreApplication::applicationDirPath() + "/" + searchPaths[i];
+        QStringList filter;
+        filter << "*.js";
+        QDirIterator* dirIter = new QDirIterator(path, filter, QDir::Files, QDirIterator::Subdirectories);
+        while (dirIter->hasNext())
+        {
+            dirIter->next();
+            QString file = dirIter->fileInfo().fileName().split(".").at(0);
+            loadUnit(file.toUpper());
+        }
+    }
+}
+
+
+bool UnitSpriteManager::loadUnit(const QString& unitID)
+{
+    Mainapp* pMainapp = Mainapp::getInstance();
+
+    QStringList searchPaths;
+    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    {
+        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/units");
+    }
+    searchPaths.append("resources/scripts/units");
+    for (qint32 i = 0; i < searchPaths.size(); i++)
+    {
+        QString file = searchPaths[i] + "/" + unitID + ".js";
+        QFileInfo checkFile(file);
+        if (checkFile.exists() && checkFile.isFile())
+        {
+            pMainapp->getInterpreter()->openScript(file);
+            m_loadedUnits.append(unitID);
+            return true;
+        }
+    }
+    return false;
+}
+
+void UnitSpriteManager::reset()
+{
+    Mainapp* pMainapp = Mainapp::getInstance();
+    for (qint32 i = 0; i < m_loadedUnits.size(); i++)
+    {
+        pMainapp->getInterpreter()->deleteObject(m_loadedUnits[i]);
+    }
+    m_loadedUnits.clear();
 }

@@ -12,14 +12,15 @@
 
 #include "game/terrain.h"
 #include "objects/cursor.h"
+#include "coreengine/fileserializable.h"
 
-
-class GameMap : public QObject, public oxygine::Actor
+class GameMap : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
 
     Q_PROPERTY(qint32 width READ getWidth WRITE setWidth)
 public:
+    static const qint32 VersionID = 1;
     static const qint32 frameTime;
     static const qint32 Imagesize = 24;
     enum Directions
@@ -77,9 +78,24 @@ public:
      * @return smart pointer to the selected player
      */
     spPlayer getspPlayer(qint32 player);
+    /**
+     * @brief serialize stores the object
+     * @param pStream
+     */
+    virtual void serialize(QDataStream& pStream);
+    /**
+     * @brief deserialize restores the object
+     * @param pStream
+     */
+    virtual void deserialize(QDataStream& pStream);
 signals:
 
 public slots:
+    /**
+     * @brief updateTerrainSprites updates the terrain sprites refreshes them to fit the current map
+     * @param xInput around given coordinates -1 whole map
+     * @param yInput around given coordinates -1 whole map
+     */
     void updateTerrainSprites(qint32 xInput = -1, qint32 yInput = -1);
     /**
      * @brief getField changes the coordinates into the given direction

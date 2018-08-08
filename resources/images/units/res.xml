@@ -3,6 +3,36 @@
 	<set path = "resources/images/units/" />
 	<atlas>
 		<image file="hoellium.png" cols = "4" />
-		<image file="hoellium+maske.png" cols = "4" />
+		<image file="hoellium+mask.png" cols = "4" />
+		
+		<!-- infantry -->
+		<image file="infantry+os.png" cols = "4" />
+		<image file="infantry+os+mask.png" cols = "4" />
+		<image file="infantry+ac.png" cols = "4" />
+		<image file="infantry+ac+mask.png" cols = "4" />
+		<image file="infantry+bd.png" cols = "4" />
+		<image file="infantry+bd+mask.png" cols = "4" />
+		<image file="infantry+bh.png" cols = "4" />
+		<image file="infantry+bh+mask.png" cols = "4" />
+		<image file="infantry+bm.png" cols = "4" />
+		<image file="infantry+bm+mask.png" cols = "4" />
+		<image file="infantry+dm.png" cols = "4" />
+		<image file="infantry+dm+mask.png" cols = "4" />
+		<image file="infantry+ge.png" cols = "4" />
+		<image file="infantry+ge+mask.png" cols = "4" />
+		<image file="infantry+js.png" cols = "4" />
+		<image file="infantry+js+mask.png" cols = "4" />
+		<image file="infantry+ma.png" cols = "4" />
+		<image file="infantry+ma+mask.png" cols = "4" />
+		<image file="infantry+pc.png" cols = "4" />
+		<image file="infantry+pc+mask.png" cols = "4" />
+		<image file="infantry+tg.png" cols = "4" />
+		<image file="infantry+tg+mask.png" cols = "4" />
+		<image file="infantry+yc.png" cols = "4" />
+		<image file="infantry+yc+mask.png" cols = "4" />	
+
+		<!-- cruiser -->
+		<image file="cruiser.png" cols = "4" />
+		<image file="cruiser+mask.png" cols = "4" />		
 	</atlas>
 </resources>

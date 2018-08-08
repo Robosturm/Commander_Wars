@@ -3,6 +3,8 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/terrainmanager.h"
 #include "resource_management/buildingspritemanager.h"
+#include "resource_management/unitspritemanager.h"
+#include "resource_management/movementtablemanager.h"
 
 #include "coreengine/mainapp.h"
 
@@ -67,7 +69,7 @@ EditorSelection::EditorSelection()
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     for (qint32 i = 0; i < pBuildingSpriteManager->getBuildingCount(); i++)
     {
-        m_Buildings.append(new Building(pBuildingSpriteManager->getBuildingID(i), -10, -10));
+        m_Buildings.append(new Building(pBuildingSpriteManager->getBuildingID(i)));
         m_Buildings[i]->updateBuildingSprites();
         oxygine::spSprite pSprite = new oxygine::Sprite();
         pAnim = pTerrainManager->getResAnim("plains+0");
@@ -76,6 +78,37 @@ EditorSelection::EditorSelection()
         m_Buildings[i]->addChild(pSprite);
         m_Buildings[i]->setVisible(false);
         m_BoxPlacementSelection->addChild(m_Buildings[i]);
+    }
+
+    // load other sprites not shown in the starting screen
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
+
+    for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+    {
+        m_Units.append(new Unit(pUnitSpriteManager->getUnitID(i), m_Players.at(1)->getSpOwner()));
+        oxygine::spSprite pSprite = new oxygine::Sprite();
+        QString movementType = m_Units.at(i)->getMovementType();
+        if (pMovementTableManager->getBaseMovementPoints(movementType, "PLAINS") > 0)
+        {
+            pAnim = pTerrainManager->getResAnim("plains+0");
+            pSprite->setResAnim(pAnim);
+        }
+        else if (pMovementTableManager->getBaseMovementPoints(movementType, "SEA") > 0)
+        {
+            pAnim = pTerrainManager->getResAnim("SEA");
+            pSprite->setResAnim(pAnim);
+        }
+        else
+        {
+            // todo maybe to something about this here
+            pAnim = pTerrainManager->getResAnim("plains+0");
+            pSprite->setResAnim(pAnim);
+        }
+        pSprite->setPriority(-100);
+        m_Units[i]->addChild(pSprite);
+        m_Units[i]->setVisible(false);
+        m_BoxPlacementSelection->addChild(m_Units[i]);
     }
 
 
@@ -205,7 +238,7 @@ void EditorSelection::createPlayerSelection()
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     for (qint32 i = -1; i < GameMap::getInstance()->getPlayerCount(); i++)
     {
-        spBuilding pBuilding = new Building("HQ", -10, -10);
+        spBuilding pBuilding = new Building("HQ");
         oxygine::spSprite pSprite = new oxygine::Sprite();
         oxygine::ResAnim* pAnim = pTerrainManager->getResAnim("plains+0");
         pSprite->setResAnim(pAnim);
@@ -237,6 +270,19 @@ void EditorSelection::createPlayerSelection()
                     m_Buildings.at(i2)->setOwner(m_Players.at(i + 1)->getSpOwner());
                 }
             }
+            // update units
+            for (qint32 i2 = 0; i2 < m_Units.size(); i2++)
+            {
+                if (i < 0)
+                {
+                    // do nothing :)
+                }
+                else
+                {
+                    m_Units.at(i2)->setOwner(m_Players.at(i + 1)->getSpOwner());
+                }
+            }
+
         });
     }
 
@@ -327,7 +373,8 @@ void EditorSelection::createBoxSelectionMode()
     {
         m_Mode = EditorMode::Unit;
         m_CurrentSelectorMode->setPosition(frameSize + xChange * 2, yStartPos);
-        // todo add update unit view
+        updateUnitView();
+        ClickedPlacementSelection(this->getPosition().x + frameSize, startH + startHTerrain);
     });
 
 }
@@ -366,6 +413,15 @@ void EditorSelection::updateBuildingView()
     }
 }
 
+void EditorSelection::updateUnitView()
+{
+    initSelection();
+    for (qint32 i = m_StartIndex; i < m_Units.size(); i++)
+    {
+        m_Units[i]->setVisible(true);
+    }
+}
+
 void EditorSelection::initSelection()
 {
     qint32 posY = startH;
@@ -397,6 +453,21 @@ void EditorSelection::initSelection()
         }
         m_Terrains[i]->setPosition(posX, posY);
         m_Terrains[i]->setVisible(false);
+        xCounter++;
+    }
+    posY = startH;
+    xCounter = 0;
+    for (qint32 i = 0; i < m_Units.size(); i++)
+    {
+        qint32 posX = frameSize + xCounter * GameMap::Imagesize * xFactor;
+        if (posX > m_BoxPlacementSelection->getWidth() - GameMap::Imagesize - frameSize)
+        {
+            posY += GameMap::Imagesize * yFactor;
+            xCounter = 0;
+            posX = frameSize;
+        }
+        m_Units[i]->setPosition(posX, posY);
+        m_Units[i]->setVisible(false);
         xCounter++;
     }
 }
@@ -438,6 +509,14 @@ void EditorSelection::ClickedPlacementSelection(qint32 x, qint32 y)
                         }
                         break;
                     }
+                    case EditorMode::Unit:
+                    {
+                        if (xHit + yHit * xCount < m_Units.size())
+                        {
+                            valid = true;
+                        }
+                        break;
+                    }
                 }
                 if (valid)
                 {
@@ -474,4 +553,9 @@ EditorSelection::PlacementSize EditorSelection::getSizeMode() const
 spBuilding EditorSelection::getCurrentSpBuilding()
 {
     return  m_Buildings.at(m_selectedIndex.x() + m_selectedIndex.y() * m_selectedIndex.z());
+}
+
+spUnit EditorSelection::getCurrentSpUnit()
+{
+    return  m_Units.at(m_selectedIndex.x() + m_selectedIndex.y() * m_selectedIndex.z());
 }

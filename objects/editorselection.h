@@ -9,6 +9,7 @@
 #include "game/building.h"
 #include "game/gamemap.h"
 #include "game/player.h"
+#include "game/unit.h"
 
 class EditorSelection;
 typedef oxygine::intrusive_ptr<EditorSelection> spEditorSelection;
@@ -41,6 +42,7 @@ public:
 
     void updateTerrainView();
     void updateBuildingView();
+    void updateUnitView();
     inline EditorMode getCurrentMode() const
     {
         return m_Mode;
@@ -53,7 +55,17 @@ public:
     {
         return m_Buildings.at(m_selectedIndex.x() + m_selectedIndex.y() * m_selectedIndex.z())->getBuildingID();
     }
+    /**
+     * @brief getCurrentSpBuilding the current selected unit
+     * @return
+     */
     spBuilding getCurrentSpBuilding();
+    /**
+     * @brief getCurrentSpUnit the current selected unit
+     * @return
+     */
+    spUnit getCurrentSpUnit();
+
 
     PlacementSize getSizeMode() const;
 
@@ -80,6 +92,7 @@ private:
     qint32 m_StartIndex{0};
     QVector<spTerrain> m_Terrains;
     QVector<spBuilding> m_Buildings;
+    QVector<spUnit> m_Units;
 
     oxygine::spSprite m_BoxPlacementSize;
     oxygine::spSprite m_BoxSelectionType;

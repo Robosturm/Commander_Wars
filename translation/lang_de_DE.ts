@@ -252,7 +252,7 @@
 <context>
     <name>Terrain</name>
     <message>
-        <location filename="../game/terrain.cpp" line="48"/>
+        <location filename="../game/terrain.cpp" line="50"/>
         <source>Unable to load Terrain </source>
         <translation></translation>
     </message>
@@ -279,6 +279,30 @@
         <location filename="../resources/scripts/terrain/WELD.js" line="6"/>
         <source>Weld</source>
         <translation>Schweißnaht</translation>
+    </message>
+</context>
+<context>
+    <name>feet</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/feet.js" line="5"/>
+        <source>Feet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>movementtable</name>
+    <message>
+        <location filename="../resources/scripts/general/movementtable.js" line="5"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ship</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/ship.js" line="5"/>
+        <source>Ship</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

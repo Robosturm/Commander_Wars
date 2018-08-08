@@ -8,8 +8,9 @@
 
 #include "game/smartpointers.h"
 
+#include "coreengine/fileserializable.h"
 
-class Terrain : public QObject, public oxygine::Actor
+class Terrain : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
     Q_PROPERTY(QString terrainID READ getTerrainID )
@@ -17,7 +18,15 @@ class Terrain : public QObject, public oxygine::Actor
     Q_PROPERTY(bool x READ getX WRITE setX)
     Q_PROPERTY(QString terrainName READ getTerrainName WRITE setTerrainName)
 public:
-
+    /**
+     * @brief The DrawPriority enum z-priority for sprites
+     */
+    enum class DrawPriority
+    {
+        Terrain = 0,
+        Building = 1,
+        Unit = 2
+    };
     static spTerrain createTerrain(const QString& terrainID, qint32 x, qint32 y);
 
     virtual ~Terrain();
@@ -45,8 +54,21 @@ public:
      * @param terrain
      */
     void setBaseTerrain(spTerrain terrain);
-
-
+    /**
+     * @brief setUnit will place the units on this terrain ignoring all rules nullptr to delete it.
+     * @param pUnit
+     */
+    void setUnit(spUnit pUnit);
+    /**
+     * @brief serialize stores the object
+     * @param pStream
+     */
+    virtual void serialize(QDataStream& pStream);
+    /**
+     * @brief deserialize restores the object
+     * @param pStream
+     */
+    virtual void deserialize(QDataStream& pStream);
 public slots:
     /**
      * @brief createBaseTerrain creates the base terrain for this terrain if it's a nullptr
@@ -70,6 +92,10 @@ public slots:
      * @return
      */
     QString getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder = true);
+    /**
+     * @brief loadOverlaySprite loads overlay sprites of this terrain
+     * @param spriteID
+     */
     void loadOverlaySprite(QString spriteID);
     /**
      * @brief getBaseTerrainID finds the base terrain id of the real base terrain recursivly
@@ -90,10 +116,7 @@ public slots:
      * @brief getID the overall id of this terrain either terrain id or building id
      * @return
      */
-    inline QString getID()
-    {
-        return "";
-    }
+    QString getID();
     /**
      * @brief setBuilding will place the building on this terrain ignoring all rules nullptr to delete it.
      * @param pBuilding
@@ -138,6 +161,10 @@ private:
       * the building at this position
       */
     spBuilding m_Building;
+    /**
+      * the unit at this position
+      */
+    spUnit m_Unit;
 
 };
 

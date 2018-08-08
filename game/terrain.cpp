@@ -12,6 +12,8 @@
 
 #include "game/building.h"
 
+#include "game/unit.h"
+
 spTerrain Terrain::createTerrain(const QString& terrainID, qint32 x, qint32 y)
 {
     spTerrain pTerrain = new Terrain(terrainID, x, y);
@@ -111,7 +113,7 @@ void Terrain::setBaseTerrain(spTerrain terrain)
         m_pBaseTerrain = nullptr;
     }
     m_pBaseTerrain = terrain;
-    m_pBaseTerrain->setPriority(0);
+    m_pBaseTerrain->setPriority(static_cast<qint16>(DrawPriority::Terrain));
     m_pBaseTerrain->setPosition(0, 0);
     this->addChild(m_pBaseTerrain);
 }
@@ -162,7 +164,7 @@ void Terrain::loadSprites()
 void Terrain::loadBaseTerrain(QString terrainID)
 {
     m_pBaseTerrain = new Terrain(terrainID, x, y);
-    m_pBaseTerrain->setPriority(0);
+    m_pBaseTerrain->setPriority(static_cast<qint16>(DrawPriority::Terrain));
     m_pBaseTerrain->setPosition(0, 0);
     this->addChild(m_pBaseTerrain);
 }
@@ -374,9 +376,40 @@ void Terrain::setBuilding(Building* pBuilding)
     if (pBuilding != nullptr)
     {
         m_Building = pBuilding;
-        pBuilding->setPriority(1);
+        pBuilding->setPriority(static_cast<qint16>(DrawPriority::Building));
         pBuilding->setTerrain(GameMap::getInstance()->getSpTerrain(Terrain::x, Terrain::y));
         this->addChild(pBuilding);
+    }
+    // delete current unit to avoid strange impact :)
+    setUnit(nullptr);
+}
+
+void Terrain::setUnit(spUnit pUnit)
+{
+    if (m_Unit.get() != nullptr)
+    {
+        // delete it
+        this->removeChild(m_Unit);
+        m_Unit = nullptr;
+    }
+    if (pUnit.get() != nullptr)
+    {
+        m_Unit = pUnit;
+        pUnit->setPriority(static_cast<qint16>(DrawPriority::Unit));
+        pUnit->setTerrain(GameMap::getInstance()->getSpTerrain(Terrain::x, Terrain::y));
+        this->addChild(pUnit);
+    }
+}
+
+QString Terrain::getID()
+{
+    if (m_Building.get() == nullptr)
+    {
+        return terrainID;
+    }
+    else
+    {
+        return m_Building->getBuildingID();
     }
 }
 

@@ -11,7 +11,7 @@
 
 #include "resource_management/buildingspritemanager.h"
 
-Building::Building(const QString& BuildingID, qint32 x, qint32 y)
+Building::Building(const QString& BuildingID)
     : m_BuildingID(BuildingID),
       m_Owner(nullptr),
       m_Terrain(nullptr)
@@ -117,4 +117,14 @@ bool Building::canBuildingBePlaced(QString terrainID)
     {
         return false;
     }
+}
+
+qint32 Building::getX() const
+{
+    return m_Terrain->getX();
+}
+
+qint32 Building::getY() const
+{
+    return m_Terrain->getY();
 }

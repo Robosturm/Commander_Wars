@@ -35,11 +35,13 @@ public:
         Game,
         Max,
     };
+    /**
+     * @brief The ZOrder enum for z-order of actors directly attached to the game map or the menu
+     */
     enum class ZOrder
     {
         Background = -32000,
         Terrain = -30000,
-        Unit = 0,
         Animation = 28000,
         Cursor = 29000,
         Objects = 30000,

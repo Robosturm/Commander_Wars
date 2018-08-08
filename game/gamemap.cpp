@@ -1,16 +1,20 @@
+#include <QFile>
+
 #include "game/gamemap.h"
 
 #include "coreengine/mainapp.h"
 
 #include "resource_management/terrainmanager.h"
 #include "resource_management/buildingspritemanager.h"
+#include "resource_management/unitspritemanager.h"
+#include "resource_management/movementtablemanager.h"
 
 #include "game/terrain.h"
 
 #include "game/player.h"
 
 const QString GameMap::m_JavascriptName = "map";
-const qint32 GameMap::frameTime = 150;
+const qint32 GameMap::frameTime = 200;
 GameMap* GameMap::m_pInstance = nullptr;
 
 
@@ -26,6 +30,10 @@ GameMap::GameMap(qint32 width, qint32 heigth)
     pTerrainManager->loadAll();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     pBuildingSpriteManager->loadAll();
+    UnitSpriteManager* pUnitspritemanager = UnitSpriteManager::getInstance();
+    pUnitspritemanager->loadAll();
+    MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
+    pMovementTableManager->loadAll();
 
     for (qint32 y = 0; y < heigth; y++)
     {
@@ -42,7 +50,7 @@ GameMap::GameMap(qint32 width, qint32 heigth)
     updateTerrainSprites();
     centerMap(width / 2, heigth / 2);
     // add two players to a default map :)
-    for (qint32 i = 0; i < 18; i++)
+    for (qint32 i = 0; i < 2; i++)
     {
         players.append(new Player(i));
     }
@@ -50,7 +58,10 @@ GameMap::GameMap(qint32 width, qint32 heigth)
 
 GameMap::GameMap(QString map)
 {
-
+    QFile file(map);
+    file.open(QIODevice::ReadOnly);
+    QDataStream pStream(&file);
+    deserialize(pStream);
 }
 
 GameMap::~GameMap()
@@ -266,11 +277,11 @@ void GameMap::moveMap(qint32 x, qint32 y)
 
 void GameMap::zoom(float zoom)
 {
-    m_zoom += zoom / 10.0f;
+    m_zoom += zoom * 0.125;
     // limit zoom
-    if (m_zoom > 1.5f)
+    if (m_zoom > 2.0f)
     {
-        m_zoom = 1.5f;
+        m_zoom = 2.0f;
     }
     else if (m_zoom < 0.5f)
     {
@@ -356,4 +367,27 @@ bool GameMap::canBePlaced(const QString& terrainID, qint32 x, qint32 y)
     {
         return false;
     }
+}
+
+void GameMap::serialize(QDataStream& pStream)
+{
+    pStream << VersionID;
+    pStream << width;
+    pStream << heigth;
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            // serialize
+            fields.at(y)->at(x)->serialize(pStream);
+        }
+    }
+}
+
+void GameMap::deserialize(QDataStream& pStream)
+{
+    qint32 version = 0;
+    pStream >> version;
+    pStream >> width;
+    pStream >> heigth;
 }

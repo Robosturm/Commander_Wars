@@ -1,0 +1,22 @@
+- store maps
+- load maps
+- move units
+- perform unit actions
+- attack units
+- earn income
+- produce units
+- player
+- next player turn
+- rules
+- kos
+- ko unit
+- unit ranking
+- ko power
+- wetter
+- fog of war
+- ai
+- import maps
+- ko info
+- unit info
+- terrain info
+- special building
