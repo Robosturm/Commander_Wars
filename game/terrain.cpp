@@ -17,7 +17,10 @@
 spTerrain Terrain::createTerrain(const QString& terrainID, qint32 x, qint32 y)
 {
     spTerrain pTerrain = new Terrain(terrainID, x, y);
-    pTerrain->createBaseTerrain();
+    if (terrainID != "")
+    {
+        pTerrain->createBaseTerrain();
+    }
     return pTerrain;
 }
 
@@ -436,4 +439,17 @@ qint32 Terrain::getY() const
 void Terrain::setY(const qint32 &value)
 {
     y = value;
+}
+
+void Terrain::serialize(QDataStream& pStream)
+{
+
+}
+
+void Terrain::deserialize(QDataStream& pStream)
+{
+
+
+
+    createBaseTerrain();
 }

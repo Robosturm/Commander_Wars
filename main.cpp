@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
 
 #ifdef GAMEDEBUG
     // DebugActor is a helper actor node. It shows FPS, memory usage and other useful stuff
-    oxygine::DebugActor::show();
+    //oxygine::DebugActor::show();
 #endif
 
     app.setup();

@@ -51,6 +51,8 @@ set(${PROJECT_NAME}_SRCS
         # objects
         objects/cursor.cpp
         objects/EditorSelection.cpp
+        objects/topbar.cpp
+        objects/textbox.cpp
 
         #menues
         menue/mainwindow.cpp

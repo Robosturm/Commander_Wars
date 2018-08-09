@@ -1302,7 +1302,7 @@ void Console::recieveNetworkMessage(QByteArray data, Mainapp::NetworkSerives ser
 void Console::KeyInput(SDL_Event *event)
 {
     // for debugging
-    SDL_Keycode cur = static_cast<SDL_Keycode>(event->key.keysym.sym);
+    SDL_Keycode cur = event->key.keysym.sym;
     Mainapp* pApp = Mainapp::getInstance();
     if (cur == pApp->getSettings()->getKeyConsole())
     {
@@ -1353,8 +1353,12 @@ void Console::KeyInput(SDL_Event *event)
             case SDLK_UP:
             {
                 curlastmsgpos--;
-                if(curlastmsgpos < 0) curlastmsgpos = lastmsgs.size() - 1;
-                if(curlastmsgpos < lastmsgs.size() && curlastmsgpos >= 0){
+                if(curlastmsgpos < 0)
+                {
+                    curlastmsgpos = lastmsgs.size() - 1;
+                }
+                if(curlastmsgpos < lastmsgs.size() && curlastmsgpos >= 0)
+                {
                     curmsg = lastmsgs[curlastmsgpos];
                     curmsgpos = curmsg.size();
                 }
@@ -1363,14 +1367,21 @@ void Console::KeyInput(SDL_Event *event)
             case SDLK_LEFT:
             {
                 curmsgpos--;
-                if(curmsgpos < 0) curmsgpos = 0;
+                if(curmsgpos < 0)
+                {
+                    curmsgpos = 0;
+                }
                 break;
             }
             case SDLK_DOWN:
             {
                 curlastmsgpos++;
-                if(curlastmsgpos >= lastmsgs.size()) curlastmsgpos = 0;
-                if(curlastmsgpos < lastmsgs.size()){
+                if(curlastmsgpos >= lastmsgs.size())
+                {
+                    curlastmsgpos = 0;
+                }
+                if(curlastmsgpos < lastmsgs.size())
+                {
                     curmsg = lastmsgs[curlastmsgpos];
                     curmsgpos = curmsg.size();
                 }
@@ -1379,7 +1390,10 @@ void Console::KeyInput(SDL_Event *event)
             case SDLK_RIGHT:
             {
                 curmsgpos++;
-                if(curmsgpos > curmsg.size()) curmsgpos = curmsg.size();
+                if(curmsgpos > curmsg.size())
+                {
+                    curmsgpos = curmsg.size();
+                }
                 break;
             }
             case SDLK_KP_ENTER:
@@ -1394,7 +1408,8 @@ void Console::KeyInput(SDL_Event *event)
             }
             case SDLK_BACKSPACE:
             {
-                if(curmsgpos > 0){
+                if(curmsgpos > 0)
+                {
                     curmsg.remove(curmsgpos - 1,1);
                     curmsgpos--;
                 }

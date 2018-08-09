@@ -7,6 +7,8 @@
 
 #include "objects/editorselection.h"
 
+#include "objects/topbar.h"
+
 class EditorMenue : public InGameMenue
 {
     Q_OBJECT
@@ -68,9 +70,19 @@ public slots:
      * @return
      */
     bool canUnitBePlaced(qint32 x, qint32 y);
-
+    /**
+     * @brief KeyInput called on any key input
+     * @param event
+     */
+    void KeyInput(SDL_Event *event);
+    /**
+     * @brief clickedTopbar event handling for the top bar
+     * @param itemID
+     */
+    void clickedTopbar(QString itemID);
 private:
     spEditorSelection m_EditorSelection{new EditorSelection()};
+    spTopbar m_Topbar;
 };
 
 #endif // EDITORMENUE_H

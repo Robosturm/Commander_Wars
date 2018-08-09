@@ -49,6 +49,34 @@
     </message>
 </context>
 <context>
+    <name>EditorMenue</name>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="22"/>
+        <source>Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="23"/>
+        <source>Map Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="24"/>
+        <source>Save Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="25"/>
+        <source>Load Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="26"/>
+        <source>Exit Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FIRE</name>
     <message>
         <location filename="../resources/scripts/terrain/FIRE.js" line="6"/>
@@ -83,17 +111,17 @@
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="37"/>
+        <location filename="../menue/mainwindow.cpp" line="40"/>
         <source>Singleplayer</source>
         <translation>Einzelspieler</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="48"/>
+        <location filename="../menue/mainwindow.cpp" line="51"/>
         <source>Map Editor</source>
         <translation>Karteneditor</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="59"/>
+        <location filename="../menue/mainwindow.cpp" line="62"/>
         <source>Quit</source>
         <translation>Beenden</translation>
     </message>
@@ -252,7 +280,7 @@
 <context>
     <name>Terrain</name>
     <message>
-        <location filename="../game/terrain.cpp" line="50"/>
+        <location filename="../game/terrain.cpp" line="53"/>
         <source>Unable to load Terrain </source>
         <translation></translation>
     </message>

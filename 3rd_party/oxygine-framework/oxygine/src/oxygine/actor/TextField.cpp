@@ -212,7 +212,7 @@ namespace oxygine
         setHtmlText(ws2utf8(str.c_str()));
     }
 
-    int            TextField::getFontSize() const
+    int TextField::getFontSize() const
     {
         return _style.fontSize;
     }

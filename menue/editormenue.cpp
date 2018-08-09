@@ -4,11 +4,27 @@
 
 #include "coreengine/pathfindingsystem.h"
 
+#include "menue/mainwindow.h"
+
 #include "resource_management/movementtablemanager.h"
+
+#include "coreengine/console.h"
+
+
 
 EditorMenue::EditorMenue()
 {
+    Mainapp* pMainapp = Mainapp::getInstance();
     this->addChild(m_EditorSelection);
+    m_Topbar = new Topbar(0, pMainapp->getSettings()->getWidth() -  m_EditorSelection->getWidth());
+    this->addChild(m_Topbar);
+
+    m_Topbar->addGroup(tr("Menu"));
+    m_Topbar->addGroup(tr("Map Info"));
+    m_Topbar->addItem(tr("Save Map"), "SAVEMAP", 0);
+    m_Topbar->addItem(tr("Load Map"), "LOADMAP", 0);
+    m_Topbar->addItem(tr("Exit Editor"), "EXIT", 0);
+
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
@@ -48,6 +64,37 @@ EditorMenue::EditorMenue()
     connect(this, SIGNAL(sigOnMapClickedLeft()), this, SLOT(onMapClickedLeft()), Qt::QueuedConnection);
     connect(this, SIGNAL(sigOnMapClickedRight()), this, SLOT(onMapClickedRight()), Qt::QueuedConnection);
     connect(m_Cursor.get(), SIGNAL(sigCursorMoved()), this, SLOT(cursorMoved()), Qt::QueuedConnection);
+    connect(pMainapp, SIGNAL(sigKeyDown(SDL_Event*)), this, SLOT(KeyInput(SDL_Event*)));
+    connect(m_Topbar.get(), SIGNAL(sigItemClicked(QString)), this, SLOT(clickedTopbar(QString)));
+}
+
+void EditorMenue::clickedTopbar(QString itemID)
+{
+    if (itemID == "EXIT")
+    {
+        Console::print("Leaving Editor Menue", Console::eDEBUG);
+        oxygine::getStage()->addChild(new Mainwindow());
+        oxygine::Actor::detach();
+    }
+}
+
+void EditorMenue::KeyInput(SDL_Event *event)
+{
+    SDL_Keycode cur = event->key.keysym.sym;
+    switch (cur)
+    {
+        case SDLK_ESCAPE:
+        {
+            Console::print("Leaving Editor Menue", Console::eDEBUG);
+            oxygine::getStage()->addChild(new Mainwindow());
+            oxygine::Actor::detach();
+        }
+        default:
+        {
+            // do nothing
+            break;
+        }
+    }
 }
 
 void EditorMenue::cursorMoved()

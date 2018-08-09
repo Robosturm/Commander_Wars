@@ -12,6 +12,9 @@
 
 #include "SDL.h"
 
+
+#include "objects/textbox.h"
+
 Mainwindow::Mainwindow()
 {
     Console::print("Entering Main Menue", Console::eDEBUG);

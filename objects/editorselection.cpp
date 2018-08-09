@@ -17,6 +17,7 @@ EditorSelection::EditorSelection()
     Mainapp* pMainapp = Mainapp::getInstance();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    this->setWidth(pMainapp->getSettings()->getWidth() / 4.0f);
     this->setPosition(pMainapp->getSettings()->getWidth() - pMainapp->getSettings()->getWidth() / 4.0f, 0);
     m_BoxSelectionType = createV9Box(0, startHSelectionType, pMainapp->getSettings()->getWidth() / 4.0f, selectionHeight);
     m_BoxPlacementSize = createV9Box(0, startHPlacementSize, pMainapp->getSettings()->getWidth() / 4.0f, selectionHeight);

@@ -279,9 +279,9 @@ void GameMap::zoom(float zoom)
 {
     m_zoom += zoom * 0.125;
     // limit zoom
-    if (m_zoom > 2.0f)
+    if (m_zoom > 4.0f)
     {
-        m_zoom = 2.0f;
+        m_zoom = 4.0f;
     }
     else if (m_zoom < 0.5f)
     {
@@ -374,6 +374,8 @@ void GameMap::serialize(QDataStream& pStream)
     pStream << VersionID;
     pStream << width;
     pStream << heigth;
+    pStream << getPlayerCount();
+
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
@@ -390,4 +392,22 @@ void GameMap::deserialize(QDataStream& pStream)
     pStream >> version;
     pStream >> width;
     pStream >> heigth;
+    qint32 playerCount = 0;
+    pStream >> playerCount;
+
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        fields.append(new QVector<spTerrain>());
+        for (qint32 x = 0; x < width; x++)
+        {
+            spTerrain pTerrain = Terrain::createTerrain("", x, y);
+            pTerrain->deserialize(pStream);
+            this->addChild(pTerrain);
+            fields[y]->append(pTerrain);
+            pTerrain->setPosition(x * Imagesize, y * Imagesize);
+            pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
+        }
+    }
+    updateTerrainSprites();
+    centerMap(width / 2, heigth / 2);
 }
