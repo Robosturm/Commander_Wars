@@ -217,7 +217,7 @@ bool EditorMenue::canUnitBePlaced(qint32 x, qint32 y)
 
 void EditorMenue::placeTerrain(qint32 x, qint32 y)
 {
-    QSharedPointer<QVector<QPoint>> points;
+    QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
         case EditorSelection::PlacementSize::Small:
@@ -236,10 +236,10 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
             break;
         }
     }
-    for (qint32 i = 0; i < points->size(); i++)
+    for (qint32 i = 0; i < points.size(); i++)
     {
         // nice we can place the terrain
-        if (canTerrainBePlaced(x + points->at(i).x(), y + points->at(i).y()))
+        if (canTerrainBePlaced(x + points.at(i).x(), y + points.at(i).y()))
         {
             QString terrainID = m_EditorSelection->getCurrentTerrainID();
             GameMap* pMap = GameMap::getInstance();
@@ -247,14 +247,14 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
             QString function1 = "useTerrainAsBaseTerrain";
             QJSValueList args1;
             QJSValue useTerrainAsBaseTerrain = pApp->getInterpreter()->doFunction(terrainID, function1, args1);
-            pMap->replaceTerrain(terrainID, x + points->at(i).x(), y + points->at(i).y(), useTerrainAsBaseTerrain.toBool(), true);
+            pMap->replaceTerrain(terrainID, x + points.at(i).x(), y + points.at(i).y(), useTerrainAsBaseTerrain.toBool(), true);
         }
     }
 }
 
 void EditorMenue::placeBuilding(qint32 x, qint32 y)
 {
-    QSharedPointer<QVector<QPoint>> points;
+    QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
         case EditorSelection::PlacementSize::Small:
@@ -273,11 +273,11 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
             break;
         }
     }
-    for (qint32 i = 0; i < points->size(); i++)
+    for (qint32 i = 0; i < points.size(); i++)
     {
         // point still on the map great :)
-        qint32 curX = x + points->at(i).x();
-        qint32 curY = y + points->at(i).y();
+        qint32 curX = x + points.at(i).x();
+        qint32 curY = y + points.at(i).y();
         if (canBuildingBePlaced(curX, curY))
         {
             spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
@@ -291,7 +291,7 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
 
 void EditorMenue::placeUnit(qint32 x, qint32 y)
 {
-    QSharedPointer<QVector<QPoint>> points;
+    QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
         case EditorSelection::PlacementSize::Small:
@@ -310,11 +310,11 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
             break;
         }
     }
-    for (qint32 i = 0; i < points->size(); i++)
+    for (qint32 i = 0; i < points.size(); i++)
     {
         // point still on the map great :)
-        qint32 curX = x + points->at(i).x();
-        qint32 curY = y + points->at(i).y();
+        qint32 curX = x + points.at(i).x();
+        qint32 curY = y + points.at(i).y();
         if (canUnitBePlaced(curX, curY))
         {
             spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();

@@ -82,12 +82,12 @@ public:
      * @brief serialize stores the object
      * @param pStream
      */
-    virtual void serialize(QDataStream& pStream);
+    virtual void serialize(QDataStream& pStream) override;
     /**
      * @brief deserialize restores the object
      * @param pStream
      */
-    virtual void deserialize(QDataStream& pStream);
+    virtual void deserialize(QDataStream& pStream) override;
 signals:
 
 public slots:

@@ -253,23 +253,23 @@ void GameMap::moveMap(qint32 x, qint32 y)
     // draw point
     qint32 resX = this->getPosition().x + x;
     qint32 resY = this->getPosition().y + y;
-    static const qint32 minVisible = 10;
+    qint32 minVisible = 16 / m_zoom;
     Mainapp* pApp = Mainapp::getInstance();
-    if (resX > pApp->getSettings()->getWidth()  - minVisible * this->getZoom() * Imagesize)
+    if (resX > pApp->getSettings()->getWidth()  - minVisible * m_zoom * Imagesize)
     {
-        resX = pApp->getSettings()->getWidth() - minVisible * this->getZoom() * Imagesize;
+        resX = pApp->getSettings()->getWidth() - minVisible * m_zoom * Imagesize;
     }
-    if (resX < -m_zoom * Imagesize * width + minVisible * this->getZoom() * Imagesize)
+    if (resX < -m_zoom * Imagesize * width + minVisible * m_zoom * Imagesize)
     {
-        resX = -m_zoom * Imagesize * width + minVisible * this->getZoom() * Imagesize;
+        resX = -m_zoom * Imagesize * width + minVisible * m_zoom * Imagesize;
     }
-    if (resY > pApp->getSettings()->getHeight() - minVisible * this->getZoom() * Imagesize)
+    if (resY > pApp->getSettings()->getHeight() - minVisible * m_zoom * Imagesize)
     {
-        resY = pApp->getSettings()->getHeight() - minVisible * this->getZoom() * Imagesize;
+        resY = pApp->getSettings()->getHeight() - minVisible * m_zoom * Imagesize;
     }
-    if (resY < -m_zoom * Imagesize * heigth + minVisible * this->getZoom() * Imagesize)
+    if (resY < -m_zoom * Imagesize * heigth + minVisible * m_zoom * Imagesize)
     {
-        resY = -m_zoom * Imagesize * heigth + minVisible * this->getZoom() * Imagesize;
+        resY = -m_zoom * Imagesize * heigth + minVisible * m_zoom * Imagesize;
     }
 
     this->setPosition(resX, resY);
@@ -292,6 +292,7 @@ void GameMap::zoom(float zoom)
         // all fine
     }
     this->setScale(m_zoom);
+    moveMap(0, 0);
 }
 
 void GameMap::replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool updateSprites)

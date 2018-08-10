@@ -58,8 +58,6 @@ Textbox::Textbox(qint32 width)
 
 void Textbox::update(const oxygine::UpdateState& us)
 {
-
-
     // no need to calculate more than we need if we're invisible
     if(m_focused)
     {
@@ -106,7 +104,6 @@ void Textbox::update(const oxygine::UpdateState& us)
     else
     {
         m_Textfield->setText(m_Text.toStdString().c_str());
-        m_Textfield->setX(0);
     }
     oxygine::Actor::update(us);
 }

@@ -53,6 +53,8 @@ set(${PROJECT_NAME}_SRCS
         objects/EditorSelection.cpp
         objects/topbar.cpp
         objects/textbox.cpp
+        objects/h_scrollbar.cpp
+        objects/dropdownmenu.cpp
 
         #menues
         menue/mainwindow.cpp

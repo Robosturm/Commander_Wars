@@ -63,12 +63,12 @@ public:
      * @brief serialize stores the object
      * @param pStream
      */
-    virtual void serialize(QDataStream& pStream);
+    virtual void serialize(QDataStream& pStream) override;
     /**
      * @brief deserialize restores the object
      * @param pStream
      */
-    virtual void deserialize(QDataStream& pStream);
+    virtual void deserialize(QDataStream& pStream) override;
 public slots:
     /**
      * @brief createBaseTerrain creates the base terrain for this terrain if it's a nullptr

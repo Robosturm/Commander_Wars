@@ -12,7 +12,7 @@ var Constructor = function()
             case "SEA":
                 return 1;
 			case "ROUGH_SEA":
-			case "REEF":
+            case "REAF":
 				return 2;
         }
     };

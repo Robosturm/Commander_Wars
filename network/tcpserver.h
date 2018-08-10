@@ -20,16 +20,16 @@ public:
     TCPServer();
     virtual ~TCPServer();
 public slots:
-    virtual void connectTCP(const QString& adress);
-    virtual void disconnectTCP();
+    virtual void connectTCP(const QString& adress) override;
+    virtual void disconnectTCP() override;
     void onConnect();
 
     /**
      * @brief sendData send Data with this Connection
      * @param data
      */
-    virtual void sendData(QByteArray data, Mainapp::NetworkSerives service, bool blocking);
-    virtual void sessionOpened();
+    virtual void sendData(QByteArray data, Mainapp::NetworkSerives service, bool blocking) override;
+    virtual void sessionOpened() override;
 signals:
     void sig_sendData(QByteArray data, Mainapp::NetworkSerives service, bool blocking);
 private:

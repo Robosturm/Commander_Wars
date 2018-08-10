@@ -13,10 +13,12 @@
 #include "SDL.h"
 
 
-#include "objects/textbox.h"
+#include "objects/h_scrollbar.h"
 
 Mainwindow::Mainwindow()
 {
+    this->addChild(new H_Scrollbar(200, 100));
+
     Console::print("Entering Main Menue", Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();

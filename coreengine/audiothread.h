@@ -48,7 +48,7 @@ public:
      */
     void playRandom();
 protected:
-    virtual void run();
+    virtual void run()  override;
 private:
     QMediaPlayer* m_Player;
     QMediaPlaylist* m_playList;
