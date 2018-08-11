@@ -12,13 +12,10 @@
 
 #include "SDL.h"
 
-
-#include "objects/h_scrollbar.h"
+#include "objects/filedialog.h"
 
 Mainwindow::Mainwindow()
 {
-    this->addChild(new H_Scrollbar(200, 100));
-
     Console::print("Entering Main Menue", Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
@@ -70,6 +67,11 @@ Mainwindow::Mainwindow()
     });
     connect(this, SIGNAL(sigQuit()), this, SLOT(quitGame()), Qt::QueuedConnection);
     btnI++;
+
+
+
+    // test code
+    this->addChild(new FileDialog());
 }
 
 void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)

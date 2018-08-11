@@ -111,17 +111,17 @@
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="42"/>
+        <location filename="../menue/mainwindow.cpp" line="40"/>
         <source>Singleplayer</source>
         <translation>Einzelspieler</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="53"/>
+        <location filename="../menue/mainwindow.cpp" line="51"/>
         <source>Map Editor</source>
         <translation>Karteneditor</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="64"/>
+        <location filename="../menue/mainwindow.cpp" line="62"/>
         <source>Quit</source>
         <translation>Beenden</translation>
     </message>

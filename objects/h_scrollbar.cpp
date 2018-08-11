@@ -10,7 +10,7 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
 {
     m_ScrollTimer.start();
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-
+    this->setSize(33, heigth);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("scrollbar");
     oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
@@ -134,6 +134,23 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
             }
         }
     });
+}
+
+void H_Scrollbar::setContentHeigth(qint32 heigth)
+{
+    m_ContentHeigth = heigth;
+    qint32 sliderHeight = 50;
+    sliderHeight = ((heigth - m_slider->getHeight() - 20 - 20) * heigth) / m_ContentHeigth;
+    if (sliderHeight < 11)
+    {
+        sliderHeight = 11;
+    }
+    else if (sliderHeight > (heigth - m_slider->getHeight() - 20 - 20))
+    {
+        sliderHeight = (heigth - m_slider->getHeight() - 20 - 20);
+    }
+
+    m_slider->setSize(18, sliderHeight);
 }
 
 void H_Scrollbar::update(const oxygine::UpdateState& us)

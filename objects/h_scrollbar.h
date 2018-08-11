@@ -5,6 +5,9 @@
 #include <QTime>
 #include "oxygine-framework.h"
 
+class H_Scrollbar;
+typedef oxygine::intrusive_ptr<H_Scrollbar> spH_Scrollbar;
+
 class H_Scrollbar : public QObject, public oxygine::Actor
 {
     Q_OBJECT
@@ -15,6 +18,11 @@ public:
      * @param contentHeigth heigth of the area you can scroll with this scrollbar. Needed for the arrows to calculate the add value. :)
      */
     explicit H_Scrollbar(qint32 heigth, qint32 contentHeigth);
+    /**
+     * @brief setContentHeigth
+     * @param heigth
+     */
+    void setContentHeigth(qint32 heigth);
 
     virtual void update(const oxygine::UpdateState& us) override;
 signals:

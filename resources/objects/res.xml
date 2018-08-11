@@ -30,6 +30,14 @@
 		<image file="v_scrollbar_pressed.png" guideX1="2" guideX2="9" guideY1="2" guideY2="11"/>
 		<image file="small_arrow+down.png" cols = "3" />
 		<image file="small_arrow+right.png" cols = "3" />
+		<!-- panel -->
+		<image file="panel.png" guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>
+		<!-- dropdownmenu -->
+		<image file="dropdownmenu.png" guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>		
+		<image file="arrow+down.png" cols = "3" />
+		<!-- dropdownmenu -->
+		<image file="filedialog.png" guideX1="44" guideX2="71" guideY1="44" guideY2="71"/>		
+		
 	</atlas>
 </resources>
 

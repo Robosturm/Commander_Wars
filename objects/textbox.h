@@ -5,6 +5,9 @@
 #include <QTime>
 #include "oxygine-framework.h"
 
+class Textbox;
+typedef oxygine::intrusive_ptr<Textbox> spTextbox;
+
 class Textbox : public QObject, public oxygine::Actor
 {
     Q_OBJECT

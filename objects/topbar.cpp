@@ -34,8 +34,8 @@ void Topbar::addItem(QString text, QString itemID, qint32 group)
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
     oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
-    pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    pBox->setVerticalMode(oxygine::Box9Sprite::TILING);
+    pBox->setHorizontalMode(oxygine::Box9Sprite::TILING);
     pBox->setResAnim(pAnim);
     oxygine::spTextField textField = new oxygine::TextField();
     oxygine::TextStyle style = FontManager::getMainFont();
