@@ -173,6 +173,17 @@ void EditorSelection::createBoxPlacementSize()
         m_SizeMode = PlacementSize::Big;
         m_CurrentSelectorSize->setPosition(frameSize + xChange * 2, yStartPos);
     });
+
+    oxygine::spSprite pSpriteFill = new oxygine::Sprite();
+    pAnim = pObjectManager->getResAnim("editor+fill");
+    pSpriteFill->setResAnim(pAnim);
+    pSpriteFill->setPosition(frameSize + xChange * 3, yStartPos );
+    m_BoxPlacementSize->addChild(pSpriteFill);
+    pSpriteFill->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)->void
+    {
+        m_SizeMode = PlacementSize::Fill;
+        m_CurrentSelectorSize->setPosition(frameSize + xChange * 3, yStartPos);
+    });
 }
 
 void EditorSelection::createPlayerSelection()

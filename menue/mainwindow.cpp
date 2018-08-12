@@ -12,8 +12,6 @@
 
 #include "SDL.h"
 
-#include "objects/filedialog.h"
-
 Mainwindow::Mainwindow()
 {
     Console::print("Entering Main Menue", Console::eDEBUG);
@@ -67,11 +65,6 @@ Mainwindow::Mainwindow()
     });
     connect(this, SIGNAL(sigQuit()), this, SLOT(quitGame()), Qt::QueuedConnection);
     btnI++;
-
-
-
-    // test code
-    this->addChild(new FileDialog());
 }
 
 void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
@@ -89,7 +82,7 @@ Mainwindow::~Mainwindow()
 
 void Mainwindow::enterSingleplayer()
 {
-    oxygine::getStage()->addChild(new InGameMenue());
+    oxygine::getStage()->addChild(new InGameMenue(-1, -1, "D:/Programmierung/Commander_Wars/builds/install/Debug/maps/Test.map"));
     leaveMenue();
 }
 

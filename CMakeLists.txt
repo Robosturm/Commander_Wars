@@ -94,6 +94,7 @@ set(${PROJECT_NAME}_SRCS
         game/ko.cpp
         game/player.cpp
         game/unit.cpp
+        game/terrainfindingsystem.cpp
 )
 
 
@@ -191,6 +192,7 @@ endif()
 
 # install libs
 install(DIRECTORY resources DESTINATION ".")
+install(DIRECTORY maps DESTINATION ".")
 install(FILES ${${PROJECT_NAME}_INSTALL_LIBS} DESTINATION ".")
 # install translations
 install(FILES ${QM_FILES} DESTINATION "resources/translation/")

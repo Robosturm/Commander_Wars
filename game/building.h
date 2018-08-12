@@ -6,8 +6,9 @@
 
 #include "oxygine-framework.h"
 #include "game/smartpointers.h"
+#include "coreengine/fileserializable.h"
 
-class Building : public QObject, public oxygine::Actor
+class Building : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
 public:
@@ -40,6 +41,24 @@ public:
      * @return if the building can be placed on the given terrain
      */
     bool canBuildingBePlaced(QString terrainID);
+    /**
+     * @brief serialize stores the object
+     * @param pStream
+     */
+    virtual void serialize(QDataStream& pStream) override;
+    /**
+     * @brief deserialize restores the object
+     * @param pStream
+     */
+    virtual void deserialize(QDataStream& pStream) override;
+    /**
+     * @brief getVersion stream version for serialization
+     * @return
+     */
+    inline virtual qint32 getVersion() override
+    {
+        return 1;
+    }
 signals:
 
 public slots:

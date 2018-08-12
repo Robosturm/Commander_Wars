@@ -80,6 +80,16 @@ public slots:
      * @param itemID
      */
     void clickedTopbar(QString itemID);
+    /**
+     * @brief saveMap saves the map into the named file
+     * @param file
+     */
+    void saveMap(QString filename);
+    /**
+     * @brief loadMap loads the map from the named file
+     * @param file
+     */
+    void loadMap(QString filename);
 private:
     spEditorSelection m_EditorSelection{new EditorSelection()};
     spTopbar m_Topbar;

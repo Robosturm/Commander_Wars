@@ -15,7 +15,10 @@ Unit::Unit(QString unitID, spPlayer pOwner)
       m_UnitID(unitID),
       m_Owner(pOwner)
 {
-    updateSprites();
+    if (!m_UnitID.isEmpty())
+    {
+        updateSprites();
+    }
 }
 
 void Unit::setOwner(spPlayer pOwner)
@@ -126,4 +129,34 @@ qint32 Unit::getX() const
 qint32 Unit::getY() const
 {
     return m_Terrain->getY();
+}
+
+void Unit::serialize(QDataStream& pStream)
+{
+    pStream << getVersion();
+    pStream << m_UnitID.toStdString().c_str();
+    pStream << m_Hp;
+    pStream << m_Ammo1;
+    pStream << m_Ammo2;
+    pStream << m_Fuel;
+    pStream << m_Rank;
+    pStream << m_Owner->getPlayerID();
+}
+
+void Unit::deserialize(QDataStream& pStream)
+{
+    qint32 version = 0;
+    pStream >> version;
+    char* id;
+    pStream >> id;
+    m_UnitID = id;
+    pStream >> m_Hp;
+    pStream >> m_Ammo1;
+    pStream >> m_Ammo2;
+    pStream >> m_Fuel;
+    pStream >> m_Rank;
+    quint32 playerID = 0;
+    pStream >> playerID;
+    m_Owner = GameMap::getInstance()->getspPlayer(playerID);
+    updateSprites();
 }

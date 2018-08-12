@@ -1,3 +1,5 @@
+#include <QFile>
+
 #include "menue/editormenue.h"
 
 #include "coreengine/mainapp.h"
@@ -10,7 +12,9 @@
 
 #include "coreengine/console.h"
 
+#include "objects/filedialog.h"
 
+#include "game/terrainfindingsystem.h"
 
 EditorMenue::EditorMenue()
 {
@@ -75,6 +79,24 @@ void EditorMenue::clickedTopbar(QString itemID)
         Console::print("Leaving Editor Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new Mainwindow());
         oxygine::Actor::detach();
+    }
+    else if (itemID == "SAVEMAP")
+    {
+        QVector<QString> wildcards;
+        wildcards.append("*.map");
+        QString path = QCoreApplication::applicationDirPath() + "/maps";
+        spFileDialog saveDialog = new FileDialog(path, wildcards);
+        this->addChild(saveDialog);
+        connect(saveDialog.get(), SIGNAL(sigFileSelected(QString)), this, SLOT(saveMap(QString)), Qt::QueuedConnection);
+    }
+    else if (itemID == "LOADMAP")
+    {
+        QVector<QString> wildcards;
+        wildcards.append("*.map");
+        QString path = QCoreApplication::applicationDirPath() + "/maps";
+        spFileDialog saveDialog = new FileDialog(path, wildcards);
+        this->addChild(saveDialog);
+        connect(saveDialog.get(), SIGNAL(sigFileSelected(QString)), this, SLOT(loadMap(QString)), Qt::QueuedConnection);
     }
 }
 
@@ -218,36 +240,44 @@ bool EditorMenue::canUnitBePlaced(qint32 x, qint32 y)
 void EditorMenue::placeTerrain(qint32 x, qint32 y)
 {
     QVector<QPoint> points;
+    GameMap* pMap = GameMap::getInstance();
     switch (m_EditorSelection->getSizeMode())
     {
         case EditorSelection::PlacementSize::Small:
         {
-            points = PathFindingSystem::getFields(0, 0);
+            points = PathFindingSystem::getFields(x, y, 0, 0);
             break;
         }
         case EditorSelection::PlacementSize::Medium:
         {
-            points = PathFindingSystem::getFields(0, 1);
+            points = PathFindingSystem::getFields(x, y, 0, 1);
             break;
         }
         case EditorSelection::PlacementSize::Big:
         {
-            points = PathFindingSystem::getFields(0, 2);
+            points = PathFindingSystem::getFields(x, y, 0, 2);
+            break;
+        }
+        case EditorSelection::PlacementSize::Fill:
+        {
+            TerrainFindingSystem Pfs(pMap->getTerrain(x, y)->getID(),x , y);
+            Pfs.explore();
+            points = Pfs.getAllNodePoints();
             break;
         }
     }
     for (qint32 i = 0; i < points.size(); i++)
     {
         // nice we can place the terrain
-        if (canTerrainBePlaced(x + points.at(i).x(), y + points.at(i).y()))
+        if (canTerrainBePlaced(points.at(i).x(), points.at(i).y()))
         {
             QString terrainID = m_EditorSelection->getCurrentTerrainID();
-            GameMap* pMap = GameMap::getInstance();
+
             Mainapp* pApp = Mainapp::getInstance();
             QString function1 = "useTerrainAsBaseTerrain";
             QJSValueList args1;
             QJSValue useTerrainAsBaseTerrain = pApp->getInterpreter()->doFunction(terrainID, function1, args1);
-            pMap->replaceTerrain(terrainID, x + points.at(i).x(), y + points.at(i).y(), useTerrainAsBaseTerrain.toBool(), true);
+            pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), true);
         }
     }
 }
@@ -259,25 +289,25 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
     {
         case EditorSelection::PlacementSize::Small:
         {
-            points = PathFindingSystem::getFields(0, 0);
+            points = PathFindingSystem::getFields(x, y, 0, 0);
             break;
         }
         case EditorSelection::PlacementSize::Medium:
         {
-            points = PathFindingSystem::getFields(0, 1);
+            points = PathFindingSystem::getFields(x, y, 0, 1);
             break;
         }
         case EditorSelection::PlacementSize::Big:
         {
-            points = PathFindingSystem::getFields(0, 2);
+            points = PathFindingSystem::getFields(x, y, 0, 2);
             break;
         }
     }
     for (qint32 i = 0; i < points.size(); i++)
     {
         // point still on the map great :)
-        qint32 curX = x + points.at(i).x();
-        qint32 curY = y + points.at(i).y();
+        qint32 curX = points.at(i).x();
+        qint32 curY = points.at(i).y();
         if (canBuildingBePlaced(curX, curY))
         {
             spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
@@ -296,31 +326,60 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
     {
         case EditorSelection::PlacementSize::Small:
         {
-            points = PathFindingSystem::getFields(0, 0);
+            points = PathFindingSystem::getFields(x, y, 0, 0);
             break;
         }
         case EditorSelection::PlacementSize::Medium:
         {
-            points = PathFindingSystem::getFields(0, 1);
+            points = PathFindingSystem::getFields(x, y, 0, 1);
             break;
         }
         case EditorSelection::PlacementSize::Big:
         {
-            points = PathFindingSystem::getFields(0, 2);
+            points = PathFindingSystem::getFields(x, y, 0, 2);
             break;
         }
     }
     for (qint32 i = 0; i < points.size(); i++)
     {
         // point still on the map great :)
-        qint32 curX = x + points.at(i).x();
-        qint32 curY = y + points.at(i).y();
+        qint32 curX = points.at(i).x();
+        qint32 curY = points.at(i).y();
         if (canUnitBePlaced(curX, curY))
         {
             spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
             spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getSpOwner());
             GameMap* pMap = GameMap::getInstance();
             pMap->getTerrain(curX, curY)->setUnit(pUnit);
+        }
+    }
+}
+
+void EditorMenue::saveMap(QString filename)
+{
+    if (filename.endsWith(".map"))
+    {
+        QFile file(filename);
+        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+        QDataStream stream(&file);
+        GameMap* pMap = GameMap::getInstance();
+        pMap->serialize(stream);
+        file.close();
+    }
+}
+
+void EditorMenue::loadMap(QString filename)
+{
+    if (filename.endsWith(".map"))
+    {
+        QFile file(filename);
+        if (file.exists())
+        {
+            QFile file(filename);
+            file.open(QIODevice::ReadOnly);
+            QDataStream stream(&file);
+            GameMap::getInstance()->deserialize(stream);
+            file.close();
         }
     }
 }

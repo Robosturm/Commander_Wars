@@ -78,6 +78,16 @@ DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items, bool up)
     }
 }
 
+qint32 DropDownmenu::getCurrentItem() const
+{
+    return m_currentItem;
+}
+
+QString DropDownmenu::getCurrentItemText()
+{
+    return m_ItemTexts[m_currentItem];
+}
+
 void DropDownmenu::addDropDownItem(QString text, qint32 id)
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -115,5 +125,6 @@ void DropDownmenu::addDropDownItem(QString text, qint32 id)
         m_currentItem = id;
         this->m_Panel->setVisible(false);
         m_Textfield->setText(text.toStdString().c_str());
+        emit sigItemChanged(m_currentItem);
     });
 }

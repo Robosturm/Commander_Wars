@@ -6,11 +6,17 @@
 #include "oxygine-framework.h"
 
 #include "game/smartpointers.h"
+#include "coreengine/fileserializable.h"
 
-class Unit : public QObject, public oxygine::Actor
+class Unit : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
 public:
+    /**
+     * @brief Unit only for deserialization
+     */
+    explicit Unit();
+
     explicit Unit(QString unitID, spPlayer pOwner);
     /**
      * @brief setOwner changes the owner ship of this unit
@@ -27,6 +33,24 @@ public:
      * @param pTerrain smart pointer to the terrain this building is placed on
      */
     void setTerrain(spTerrain pTerrain);
+    /**
+     * @brief serialize stores the object
+     * @param pStream
+     */
+    virtual void serialize(QDataStream& pStream) override;
+    /**
+     * @brief deserialize restores the object
+     * @param pStream
+     */
+    virtual void deserialize(QDataStream& pStream) override;
+    /**
+     * @brief getVersion stream version for serialization
+     * @return
+     */
+    inline virtual qint32 getVersion() override
+    {
+        return 1;
+    }
 signals:
 
 public slots:
@@ -79,6 +103,13 @@ private:
      * @brief m_Terrain the terrain at which we are placed
      */
     spTerrain m_Terrain;
+    // basic data of this unit
+    qint32 m_Hp{10};
+    qint32 m_Ammo1{-1};
+    qint32 m_Ammo2{-1};
+    qint32 m_Fuel{-1};
+    qint32 m_Rank{0};
+
 };
 
 #endif // UNIT_H

@@ -1,0 +1,1 @@
+Folder for all premade maps and probably custom maps as well

@@ -22,18 +22,7 @@ GameMap::GameMap(qint32 width, qint32 heigth)
     : width(width),
       heigth(heigth)
 {
-    m_pInstance = this;
-    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
-    pInterpreter->setGlobal(m_JavascriptName, pInterpreter->newQObject(this));
-
-    TerrainManager* pTerrainManager = TerrainManager::getInstance();
-    pTerrainManager->loadAll();
-    BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
-    pBuildingSpriteManager->loadAll();
-    UnitSpriteManager* pUnitspritemanager = UnitSpriteManager::getInstance();
-    pUnitspritemanager->loadAll();
-    MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
-    pMovementTableManager->loadAll();
+    loadMapData();
 
     for (qint32 y = 0; y < heigth; y++)
     {
@@ -58,10 +47,26 @@ GameMap::GameMap(qint32 width, qint32 heigth)
 
 GameMap::GameMap(QString map)
 {
+    loadMapData();
     QFile file(map);
     file.open(QIODevice::ReadOnly);
     QDataStream pStream(&file);
     deserialize(pStream);
+}
+
+void GameMap::loadMapData()
+{
+    m_pInstance = this;
+    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    pInterpreter->setGlobal(m_JavascriptName, pInterpreter->newQObject(this));
+    TerrainManager* pTerrainManager = TerrainManager::getInstance();
+    pTerrainManager->loadAll();
+    BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
+    pBuildingSpriteManager->loadAll();
+    UnitSpriteManager* pUnitspritemanager = UnitSpriteManager::getInstance();
+    pUnitspritemanager->loadAll();
+    MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
+    pMovementTableManager->loadAll();
 }
 
 GameMap::~GameMap()
@@ -372,11 +377,17 @@ bool GameMap::canBePlaced(const QString& terrainID, qint32 x, qint32 y)
 
 void GameMap::serialize(QDataStream& pStream)
 {
-    pStream << VersionID;
+    // store header
+    pStream << getVersion();
     pStream << width;
     pStream << heigth;
     pStream << getPlayerCount();
+    for (qint32 i = 0; i < players.size(); i++)
+    {
+        players[i]->serialize(pStream);
+    }
 
+    // store map
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
@@ -389,22 +400,43 @@ void GameMap::serialize(QDataStream& pStream)
 
 void GameMap::deserialize(QDataStream& pStream)
 {
+    // delete all data
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            this->removeChild(fields.at(y)->at(x));
+        }
+        fields.at(y)->clear();
+    }
+    fields.clear();
+    players.clear();
+
+    // restore map header
     qint32 version = 0;
     pStream >> version;
     pStream >> width;
     pStream >> heigth;
     qint32 playerCount = 0;
     pStream >> playerCount;
+    for (qint32 i = 0; i < playerCount; i++)
+    {
+        // create new player
+        players.append(new Player(i));
+        // get player data from stream
+        players[i]->deserialize(pStream);
+    }
 
+    // restore map
     for (qint32 y = 0; y < heigth; y++)
     {
         fields.append(new QVector<spTerrain>());
         for (qint32 x = 0; x < width; x++)
         {
             spTerrain pTerrain = Terrain::createTerrain("", x, y);
+            fields[y]->append(pTerrain);
             pTerrain->deserialize(pStream);
             this->addChild(pTerrain);
-            fields[y]->append(pTerrain);
             pTerrain->setPosition(x * Imagesize, y * Imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
         }

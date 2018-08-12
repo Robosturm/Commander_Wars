@@ -10,7 +10,7 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize)
     this->addChild(m_Scrollbar);
     this->setSize(size.width(), size.height());
     m_Scrollbar->setX(size.width() - m_Scrollbar->getWidth());
-    connect(m_Scrollbar.get(), SIGNAL(sigScrollValueChanged(float)), this, SLOT(scrolled(float)));
+    connect(m_Scrollbar.get(), SIGNAL(sigScrollValueChanged(float)), this, SLOT(scrolled(float)), Qt::QueuedConnection);
     m_ClipRect = new oxygine::ClipRectActor();
     if (useBox)
     {
@@ -42,11 +42,23 @@ void Panel::scrolled(float value)
 
 void Panel::setContentHeigth(qint32 heigth)
 {
+    // content can't be smaller than our own size
+    // avoid complicate handling of smaller content
+    if (heigth <= this->getHeight())
+    {
+        heigth = this->getHeight();
+    }
     m_ContentRect->setHeight(heigth);
     m_Scrollbar->setContentHeigth(heigth);
+
 }
 
 void Panel::addItem(oxygine::spActor pActor)
 {
     m_ContentRect->addChild(pActor);
+}
+
+void Panel::removeItem(oxygine::spActor pActor)
+{
+    m_ContentRect->removeChild(pActor);
 }

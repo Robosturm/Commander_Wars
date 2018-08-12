@@ -20,7 +20,6 @@ class GameMap : public QObject, public oxygine::Actor, public FileSerializable
 
     Q_PROPERTY(qint32 width READ getWidth WRITE setWidth)
 public:
-    static const qint32 VersionID = 1;
     static const qint32 frameTime;
     static const qint32 Imagesize = 24;
     enum Directions
@@ -88,6 +87,16 @@ public:
      * @param pStream
      */
     virtual void deserialize(QDataStream& pStream) override;
+    /**
+     * @brief getVersion stream version for serialization
+     * @return
+     */
+    inline virtual qint32 getVersion() override
+    {
+        return 1;
+    }
+
+
 signals:
 
 public slots:
@@ -180,6 +189,8 @@ private:
 
     static const QString m_JavascriptName;
     float m_zoom{1.0f};
+
+    void loadMapData();
 };
 
 #endif // GAMEMAP_H

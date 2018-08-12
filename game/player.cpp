@@ -50,3 +50,18 @@ QString Player::getArmy()
         return "OS";
     }
 }
+
+void Player::serialize(QDataStream& pStream)
+{
+    pStream << getVersion();
+    quint32 color = m_Color.rgb();
+    pStream << color;
+}
+void Player::deserialize(QDataStream& pStream)
+{
+    qint32 version = 0;
+    pStream >> version;
+    quint32 color;
+    pStream >> color;
+    m_Color.fromRgb(color);
+}

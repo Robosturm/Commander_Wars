@@ -69,6 +69,14 @@ public:
      * @param pStream
      */
     virtual void deserialize(QDataStream& pStream) override;
+    /**
+     * @brief getVersion stream version for serialization
+     * @return
+     */
+    inline virtual qint32 getVersion() override
+    {
+        return 1;
+    }
 public slots:
     /**
      * @brief createBaseTerrain creates the base terrain for this terrain if it's a nullptr

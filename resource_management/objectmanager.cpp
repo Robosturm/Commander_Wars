@@ -21,7 +21,7 @@ ObjectManager::ObjectManager()
     oxygine::Resources::loadXML("resources/cursor/res.xml");
 }
 
-oxygine::spButton ObjectManager::createButton(QString text)
+oxygine::spButton ObjectManager::createButton(QString text, qint32 width)
 {
     oxygine::spButton pButton = new oxygine::Button();
     // pButton->setPosition(200, 200);
@@ -41,8 +41,19 @@ oxygine::spButton ObjectManager::createButton(QString text)
     textField->setStyle(style);
     textField->setText(text.toStdString().c_str());
     textField->attachTo(pButton);
-    qint32 width = textField->getTextRect().getWidth();
-    pButton->setSize(width + 30, 45);
+    if (width < 0)
+    {
+        width = textField->getTextRect().getWidth();
+        if (width < 150)
+        {
+            width = 150;
+        }
+    }
+    else
+    {
+        width -= 30;
+    }
+    pButton->setSize(width + 30, 40);
     textField->setSize(pButton->getSize());
 
     oxygine::Sprite* ptr = pButton.get();

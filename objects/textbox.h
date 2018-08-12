@@ -26,8 +26,13 @@ public:
         return m_Text;
     }
     virtual void update(const oxygine::UpdateState& us) override;
+    /**
+     * @brief setCurrentText changes the text of this textbox
+     * @param text
+     */
+    void setCurrentText(QString text);
 signals:
-
+    void sigTextChanged(QString text);
 public slots:
     void TextInput(SDL_Event *event);
     void KeyInput(SDL_Event *event);

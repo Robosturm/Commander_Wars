@@ -45,7 +45,7 @@ public:
         /**
          * @brief previousNode node we come from
          */
-        Node* previousNode{nullptr};
+        QVector<Node*> previousNodes;
     };
     /**
      * @brief PathFindingSystem
@@ -86,11 +86,19 @@ public:
      * @param y
      */
     QVector<QPoint> getPath(qint32 x, qint32 y);
-
+    /**
+     * @brief getClosedList pointer to all closed nodes -> found nodes
+     * @return
+     */
     inline const QVector<Node*>* getClosedList() const
     {
         return &m_ClosedList;
     }
+    /**
+     * @brief getAllNodePoints returns all reachable fields in a point vector
+     * @return
+     */
+    QVector<QPoint> getAllNodePoints();
 protected:
     QPoint m_StartPoint;
     /**
@@ -113,7 +121,7 @@ public slots:
      * @param max maximum search range
      * @return shared pointer to the points
      */
-    static QVector<QPoint> getFields(qint32 min, qint32 max);
+    static QVector<QPoint> getFields(qint32 startX, qint32 startY, qint32 min, qint32 max);
 };
 
 #endif // PATHFINDINGSYSTEM_H

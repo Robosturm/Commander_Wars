@@ -11,7 +11,7 @@ class ObjectManager : public oxygine::Resources
 public:
     static ObjectManager* getInstance();
 
-    static oxygine::spButton createButton(QString text);
+    static oxygine::spButton createButton(QString text, qint32 width = -1);
 private:
     explicit ObjectManager();
     virtual ~ObjectManager() = default;

@@ -123,13 +123,20 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
                 {
                     y = 20;
                 }
-                else if (y > heigth - m_slider->getHeight() - 20)
+                else if (y > this->getHeight() - m_slider->getHeight() - 20)
                 {
-                    y = heigth - m_slider->getHeight() - 20;
+                    y = this->getHeight() - m_slider->getHeight() - 20;
                 }
                 m_slider->setY(y);
                 // calc new scroll value :)
-                m_Scrollvalue = static_cast<float>(y - 20) / static_cast<float>(heigth - m_slider->getHeight() - 20 - 20);
+                if (static_cast<float>(this->getHeight() - m_slider->getHeight() - 20 - 20) > 0)
+                {
+                    m_Scrollvalue = static_cast<float>(y - 20) / static_cast<float>(this->getHeight() - m_slider->getHeight() - 20 - 20);
+                }
+                else
+                {
+                    m_Scrollvalue = 0;
+                }
                 emit sigScrollValueChanged(m_Scrollvalue);
             }
         }
@@ -140,17 +147,18 @@ void H_Scrollbar::setContentHeigth(qint32 heigth)
 {
     m_ContentHeigth = heigth;
     qint32 sliderHeight = 50;
-    sliderHeight = ((heigth - m_slider->getHeight() - 20 - 20) * heigth) / m_ContentHeigth;
+    sliderHeight = ((this->getHeight() - 20 - 20) * this->getHeight()) / m_ContentHeigth;
     if (sliderHeight < 11)
     {
         sliderHeight = 11;
     }
-    else if (sliderHeight > (heigth - m_slider->getHeight() - 20 - 20))
+    else if (sliderHeight > (this->getHeight() - 20 - 20))
     {
-        sliderHeight = (heigth - m_slider->getHeight() - 20 - 20);
+        sliderHeight = (this->getHeight() - 20 - 20);
     }
-
+    m_Scrollvalue = 0;
     m_slider->setSize(18, sliderHeight);
+    emit sigScrollValueChanged(m_Scrollvalue);
 }
 
 void H_Scrollbar::update(const oxygine::UpdateState& us)

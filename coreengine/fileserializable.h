@@ -18,7 +18,11 @@ public:
      * @param pStream
      */
     virtual void deserialize(QDataStream& pStream) = 0;
-
+    /**
+     * @brief getVersion version of the file
+     * @return
+     */
+    virtual qint32 getVersion() = 0;
 };
 
 #endif // FILESERIALIZABLE_H

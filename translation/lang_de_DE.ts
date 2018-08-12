@@ -51,27 +51,27 @@
 <context>
     <name>EditorMenue</name>
     <message>
-        <location filename="../menue/editormenue.cpp" line="22"/>
+        <location filename="../menue/editormenue.cpp" line="26"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="23"/>
+        <location filename="../menue/editormenue.cpp" line="27"/>
         <source>Map Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="24"/>
+        <location filename="../menue/editormenue.cpp" line="28"/>
         <source>Save Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="25"/>
+        <location filename="../menue/editormenue.cpp" line="29"/>
         <source>Load Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="26"/>
+        <location filename="../menue/editormenue.cpp" line="30"/>
         <source>Exit Editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -93,6 +93,19 @@
     </message>
 </context>
 <context>
+    <name>FileDialog</name>
+    <message>
+        <location filename="../objects/filedialog.cpp" line="39"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/filedialog.cpp" line="57"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>METEOR</name>
     <message>
         <location filename="../resources/scripts/terrain/METEOR.js" line="6"/>
@@ -111,17 +124,17 @@
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="40"/>
+        <location filename="../menue/mainwindow.cpp" line="37"/>
         <source>Singleplayer</source>
         <translation>Einzelspieler</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="51"/>
+        <location filename="../menue/mainwindow.cpp" line="48"/>
         <source>Map Editor</source>
         <translation>Karteneditor</translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="62"/>
+        <location filename="../menue/mainwindow.cpp" line="59"/>
         <source>Quit</source>
         <translation>Beenden</translation>
     </message>
@@ -280,7 +293,7 @@
 <context>
     <name>Terrain</name>
     <message>
-        <location filename="../game/terrain.cpp" line="53"/>
+        <location filename="../game/terrain.cpp" line="57"/>
         <source>Unable to load Terrain </source>
         <translation></translation>
     </message>
@@ -330,6 +343,14 @@
     <message>
         <location filename="../resources/scripts/movementtables/ship.js" line="5"/>
         <source>Ship</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>tank</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/tank.js" line="5"/>
+        <source>Tank</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

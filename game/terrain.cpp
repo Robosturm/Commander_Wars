@@ -14,6 +14,8 @@
 
 #include "game/unit.h"
 
+#include "game/player.h"
+
 spTerrain Terrain::createTerrain(const QString& terrainID, qint32 x, qint32 y)
 {
     spTerrain pTerrain = new Terrain(terrainID, x, y);
@@ -36,21 +38,24 @@ Terrain::Terrain(const QString& terrainID, qint32 x, qint32 y)
     // check if the js-script was loaded already
     // otherwise do load it
     bool terrainExists = true;
-    if (!obj.isObject())
+    if (terrainID != "")
     {
-        terrainExists = TerrainManager::getInstance()->loadTerrain(terrainID);
-    }
-    if (terrainExists)
-    {
-        QString function = "init";
-        QJSValueList args;
-        QJSValue objArg = pApp->getInterpreter()->newQObject(this);
-        args << objArg;
-        pApp->getInterpreter()->doFunction(terrainID, function, args);
-    }
-    else
-    {
-        Console::print(tr("Unable to load Terrain ") + terrainID, Console::eFATAL);
+        if (!obj.isObject())
+        {
+            terrainExists = TerrainManager::getInstance()->loadTerrain(terrainID);
+        }
+        if (terrainExists)
+        {
+            QString function = "init";
+            QJSValueList args;
+            QJSValue objArg = pApp->getInterpreter()->newQObject(this);
+            args << objArg;
+            pApp->getInterpreter()->doFunction(terrainID, function, args);
+        }
+        else
+        {
+            Console::print(tr("Unable to load Terrain ") + terrainID, Console::eFATAL);
+        }
     }
 }
 
@@ -443,13 +448,72 @@ void Terrain::setY(const qint32 &value)
 
 void Terrain::serialize(QDataStream& pStream)
 {
-
+    pStream << getVersion();
+    pStream << terrainID.toStdString().c_str();
+    if (m_pBaseTerrain.get() == nullptr)
+    {
+        pStream << false;
+    }
+    else
+    {
+        pStream << true;
+        m_pBaseTerrain->serialize(pStream);
+    }
+    if (m_Building.get() == nullptr)
+    {
+        pStream << false;
+    }
+    else
+    {
+        pStream << true;
+        m_Building->serialize(pStream);
+    }
+    if (m_Unit.get() == nullptr)
+    {
+        pStream << false;
+    }
+    else
+    {
+        pStream << true;
+        m_Unit->serialize(pStream);
+    }
 }
 
 void Terrain::deserialize(QDataStream& pStream)
 {
-
-
-
-    createBaseTerrain();
+    qint32 version = 0;
+    pStream >> version;
+    char* id;
+    pStream >> id;
+    terrainID = id;
+    bool hasBaseTerrain = false;
+    pStream >> hasBaseTerrain;
+    if (hasBaseTerrain)
+    {
+        m_pBaseTerrain = createTerrain("", x, y);
+        m_pBaseTerrain->deserialize(pStream);
+        m_pBaseTerrain->setPriority(static_cast<qint16>(DrawPriority::Terrain));
+        m_pBaseTerrain->setPosition(0, 0);
+        this->addChild(m_pBaseTerrain);
+    }
+    bool hasBuilding = false;
+    pStream >> hasBuilding;
+    if (hasBuilding)
+    {
+        m_Building = new Building("");
+        m_Building->deserialize(pStream);
+        m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
+        m_Building->setTerrain(GameMap::getInstance()->getSpTerrain(Terrain::x, Terrain::y));
+        this->addChild(m_Building);
+    }
+    bool hasUnit = false;
+    pStream >> hasUnit;
+    if (hasUnit)
+    {
+        m_Unit = new Unit("", nullptr);
+        m_Unit->deserialize(pStream);
+        m_Unit->setPriority(static_cast<qint16>(DrawPriority::Unit));
+        m_Unit->setTerrain(GameMap::getInstance()->getSpTerrain(Terrain::x, Terrain::y));
+        this->addChild(m_Unit);
+    }
 }

@@ -27,6 +27,7 @@ Textbox::Textbox(qint32 width)
     m_Textfield->attachTo(pClipActor);
     m_Textbox->addChild(pClipActor);
     m_Textbox->setSize(width, 40);
+    this->setSize(width, 40);
     m_Textfield->setWidth(m_Textbox->getWidth() - 20);
     m_Textfield->setHeight(m_Textbox->getHeight());
     pClipActor->setSize(m_Textfield->getSize());
@@ -47,13 +48,27 @@ Textbox::Textbox(qint32 width)
     {
         // not the best solution
         // but for the start the easiest one :)
-        m_focused = false;
+        if (m_focused)
+        {
+            m_focused = false;
+            emit sigTextChanged(m_Text);
+        }
+        else
+        {
+            m_focused = false;
+        }
+
     });
     toggle.start();
 
     Mainapp* pMainapp = Mainapp::getInstance();
-    connect(pMainapp, SIGNAL(sigKeyDown(SDL_Event*)), this, SLOT(KeyInput(SDL_Event*)));
-    connect(pMainapp, SIGNAL(sigText(SDL_Event*)), this, SLOT(TextInput(SDL_Event*)));
+    connect(pMainapp, SIGNAL(sigKeyDown(SDL_Event*)), this, SLOT(KeyInput(SDL_Event*)), Qt::QueuedConnection);
+    connect(pMainapp, SIGNAL(sigText(SDL_Event*)), this, SLOT(TextInput(SDL_Event*)), Qt::QueuedConnection);
+}
+
+void Textbox::setCurrentText(QString text)
+{
+    m_Text = text;
 }
 
 void Textbox::update(const oxygine::UpdateState& us)
@@ -187,6 +202,7 @@ void Textbox::KeyInput(SDL_Event *event)
             case SDLK_RETURN:
             {
                 m_focused = false;
+                emit sigTextChanged(m_Text);
                 break;
             }
             case SDLK_BACKSPACE:

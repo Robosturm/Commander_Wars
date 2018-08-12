@@ -5,8 +5,9 @@
 #include <QObject>
 #include "oxygine-flow.h"
 #include "game/smartpointers.h"
+#include "coreengine/fileserializable.h"
 
-class Player : public QObject, public oxygine::Actor
+class Player : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
 public:
@@ -17,6 +18,24 @@ public:
 
     void setPlayerID(const quint32 &value);
 
+    /**
+     * @brief serialize stores the object
+     * @param pStream
+     */
+    virtual void serialize(QDataStream& pStream);
+    /**
+     * @brief deserialize restores the object
+     * @param pStream
+     */
+    virtual void deserialize(QDataStream& pStream);
+    /**
+     * @brief getVersion version of the file
+     * @return
+     */
+    inline virtual qint32 getVersion() override
+    {
+        return 1;
+    }
 signals:
 
 public slots:

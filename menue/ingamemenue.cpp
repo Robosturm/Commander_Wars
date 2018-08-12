@@ -7,7 +7,7 @@
 
 #include "game/gamemap.h"
 
-InGameMenue::InGameMenue(qint32 width, qint32 heigth)
+InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map)
     : QObject()
 {
     Console::print("Entering In Game Menue", Console::eDEBUG);
@@ -31,7 +31,7 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth)
     }
     else
     {
-        // todo what we do instead xD
+        oxygine::Actor::addChild(new GameMap(map));
     }
 
 

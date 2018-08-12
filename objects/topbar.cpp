@@ -64,6 +64,13 @@ void Topbar::addItem(QString text, QString itemID, qint32 group)
     });
     pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
+        for (qint32 i = 0; i < m_Items.size(); i++)
+        {
+            for (qint32 i2 = 0; i2 < m_Items.at(i)->size(); i2++)
+            {
+                m_Items.at(i)->at(i2)->setVisible(false);
+            }
+        }
         emit sigItemClicked(itemID);
     });
 }
@@ -78,7 +85,7 @@ void Topbar::addGroup(QString text)
     {
         x += m_Buttons.at(i)->getWidth() + 5;
     }
-    pButton->setPosition(x, 15);
+    pButton->setPosition(x, 18);
     qint32 groupID = m_Buttons.size();
     pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)->void
     {

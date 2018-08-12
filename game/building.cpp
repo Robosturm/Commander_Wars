@@ -128,3 +128,30 @@ qint32 Building::getY() const
 {
     return m_Terrain->getY();
 }
+
+void Building::serialize(QDataStream& pStream)
+{
+    pStream << getVersion();
+    pStream << m_BuildingID.toStdString().c_str();
+    if (m_Owner.get() == nullptr)
+    {
+        pStream << static_cast<qint32>(-1);
+    }
+    else
+    {
+        pStream << static_cast<qint32>(m_Owner->getPlayerID());
+    }
+}
+
+void Building::deserialize(QDataStream& pStream)
+{
+    qint32 version = 0;
+    pStream >> version;
+    char* id;
+    pStream >> id;
+    m_BuildingID = id;
+    qint32 playerID = -1;
+    pStream >> playerID;
+    m_Owner = GameMap::getInstance()->getspPlayer(playerID);
+    updateBuildingSprites();
+}

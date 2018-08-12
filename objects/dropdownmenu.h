@@ -18,8 +18,18 @@ public:
     explicit DropDownmenu(qint32 width, QVector<QString> items, bool up = false);
 
 
+    /**
+     * @brief getCurrentItem index of the current item
+     * @return
+     */
+    qint32 getCurrentItem() const;
+    /**
+     * @brief getCurrentItemText text of the current item
+     * @return
+     */
+    QString getCurrentItemText();
 signals:
-
+    void sigItemChanged(qint32 item);
 public slots:
 
 private:

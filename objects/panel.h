@@ -16,6 +16,7 @@ public:
     explicit Panel(bool useBox, QSize size, QSize contentSize);
 
     void addItem(oxygine::spActor pActor);
+    void removeItem(oxygine::spActor pActor);
     void setContentHeigth(qint32 heigth);
 signals:
 

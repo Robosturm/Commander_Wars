@@ -14,7 +14,7 @@ class InGameMenue : public QObject, public oxygine::Actor
 public:
 
 
-    explicit InGameMenue(qint32 width = 20, qint32 heigth = 20);
+    explicit InGameMenue(qint32 width = 20, qint32 heigth = 20, QString map = "");
     virtual ~InGameMenue();
 
 signals:
