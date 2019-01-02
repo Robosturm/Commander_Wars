@@ -25,7 +25,10 @@ public:
     {
         Terrain = 0,
         Building = 1,
-        Unit = 2
+        MarkedFieldLow = 2,
+        Unit = 3,
+        MarkedFieldHigh = 4,
+        Arrow
     };
     static spTerrain createTerrain(const QString& terrainID, qint32 x, qint32 y);
 
@@ -60,6 +63,11 @@ public:
      */
     void setUnit(spUnit pUnit);
     /**
+     * @brief getUnit the unit on this terrain
+     * @return
+     */
+    spUnit getSpUnit();
+    /**
      * @brief serialize stores the object
      * @param pStream
      */
@@ -78,6 +86,16 @@ public:
         return 1;
     }
 public slots:
+    /**
+     * @brief getUnit the unit on this terrain
+     * @return
+     */
+    Unit* getUnit();
+    /**
+     * @brief getBuilding the building on this terrain
+     * @return
+     */
+    Building* getBuilding();
     /**
      * @brief createBaseTerrain creates the base terrain for this terrain if it's a nullptr
      */

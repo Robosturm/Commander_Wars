@@ -67,7 +67,7 @@ EditorMenue::EditorMenue()
     // connecting stuff
     connect(this, SIGNAL(sigOnMapClickedLeft()), this, SLOT(onMapClickedLeft()), Qt::QueuedConnection);
     connect(this, SIGNAL(sigOnMapClickedRight()), this, SLOT(onMapClickedRight()), Qt::QueuedConnection);
-    connect(m_Cursor.get(), SIGNAL(sigCursorMoved()), this, SLOT(cursorMoved()), Qt::QueuedConnection);
+    connect(m_Cursor.get(), SIGNAL(sigCursorMoved(qint32,qint32)), this, SLOT(cursorMoved(qint32,qint32)), Qt::QueuedConnection);
     connect(pMainapp, SIGNAL(sigKeyDown(SDL_Event*)), this, SLOT(KeyInput(SDL_Event*)));
     connect(m_Topbar.get(), SIGNAL(sigItemClicked(QString)), this, SLOT(clickedTopbar(QString)));
 }
@@ -119,14 +119,14 @@ void EditorMenue::KeyInput(SDL_Event *event)
     }
 }
 
-void EditorMenue::cursorMoved()
+void EditorMenue::cursorMoved(qint32 x, qint32 y)
 {
     // resolve cursor move
     switch (m_EditorSelection->getCurrentMode())
     {
         case EditorSelection::EditorMode::Terrain:
         {
-            if (canTerrainBePlaced(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()))
+            if (canTerrainBePlaced(x, y))
             {
                 m_Cursor->changeCursor("cursor+default");
             }
@@ -138,7 +138,7 @@ void EditorMenue::cursorMoved()
         }
         case EditorSelection::EditorMode::Building:
         {
-            if (canBuildingBePlaced(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()))
+            if (canBuildingBePlaced(x, y))
             {
                 m_Cursor->changeCursor("cursor+default");
             }
@@ -150,7 +150,7 @@ void EditorMenue::cursorMoved()
         }
         case EditorSelection::EditorMode::Unit:
         {
-            if (canUnitBePlaced(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()))
+            if (canUnitBePlaced(x, y))
             {
                 m_Cursor->changeCursor("cursor+default");
             }
@@ -277,8 +277,19 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
             QString function1 = "useTerrainAsBaseTerrain";
             QJSValueList args1;
             QJSValue useTerrainAsBaseTerrain = pApp->getInterpreter()->doFunction(terrainID, function1, args1);
-            pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), true);
+            if (points.size() < 14)
+            {
+                pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), true);
+            }
+            else
+            {
+                pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), false);
+            }
         }
+    }
+    if (points.size() >= 14)
+    {
+        pMap->updateTerrainSprites();
     }
 }
 

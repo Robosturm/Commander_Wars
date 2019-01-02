@@ -22,10 +22,8 @@ PathFindingSystem::~PathFindingSystem()
 
 void PathFindingSystem::explore()
 {
-    QTime time;
-    qint32 elapsed = 0;
     bool finshed = false;
-    m_OpenList.append(new Node(m_StartPoint.x(), m_StartPoint.y(), 0, getRemainingCost(m_StartPoint.x(), m_StartPoint.y())));
+    m_OpenList.append(new Node(m_StartPoint.x(), m_StartPoint.y(), 0, getRemainingCost(m_StartPoint.x(), m_StartPoint.y(), 0)));
     // explore till we reached the end
     while ((m_OpenList.size() > 0) && (finshed == false))
     {
@@ -61,7 +59,6 @@ void PathFindingSystem::explore()
                     break;
                 }
             }
-            time.start();
             bool skipNode = false;
             for (qint32 i2 = 0; i2 < pCurrentNode->previousNodes.size(); i2++)
             {
@@ -85,9 +82,10 @@ void PathFindingSystem::explore()
             {
                 // create the next node
                 qint32 costs = getCosts(x, y);
-                if (costs >= 0)
+                qint32 remaingCosts = getRemainingCost(x, y, pCurrentNode->currentCost + costs);
+                if ((costs >= 0) && (remaingCosts >= 0))
                 {
-                    Node* nextNode = new Node(x, y, pCurrentNode->currentCost + costs, getRemainingCost(x, y));
+                    Node* nextNode = new Node(x, y, pCurrentNode->currentCost + costs, remaingCosts);
                     // check the next
                     pCurrentNode->nextNodes.append(nextNode);
                     nextNode->previousNodes.append(pCurrentNode);
@@ -97,7 +95,8 @@ void PathFindingSystem::explore()
                     bool inserted = false;
                     for (qint32 i3 = m_OpenList.size() - 1; i3 >= 0; i3--)
                     {
-                        if (m_OpenList.at(i3)->currentCost + m_OpenList.at(i3)->remaingCost >= myTotalCost)
+                        if ((m_OpenList.at(i3)->currentCost + m_OpenList.at(i3)->remaingCost >= myTotalCost) &&
+                            (m_OpenList.at(i3)->currentCost >= nextNode->currentCost))
                         {
                             // exit
                             m_OpenList.insert(i3 + 1, nextNode);
@@ -113,8 +112,6 @@ void PathFindingSystem::explore()
             }
         }
     }
-    elapsed += time.elapsed();
-    elapsed++;
 }
 
 QVector<QPoint> PathFindingSystem::getFields(qint32 startX, qint32 startY, qint32 min, qint32 max)
@@ -141,4 +138,37 @@ QVector<QPoint> PathFindingSystem::getAllNodePoints()
         points.append(QPoint(m_ClosedList[i]->x, m_ClosedList[i]->y));
     }
     return points;
+}
+
+QVector<QPoint> PathFindingSystem::getPath(qint32 x, qint32 y)
+{
+    QVector<QPoint> points;
+    for (qint32 i = 0; i < m_ClosedList.size(); i++)
+    {
+        if ((m_ClosedList[i]->x == x) && (m_ClosedList[i]->y == y))
+        {
+            points.append(QPoint(m_ClosedList[i]->x, m_ClosedList[i]->y));
+            Node* pNode = m_ClosedList[i];
+            while (pNode->previousNodes.size() > 0)
+            {
+                // use a random node?
+                pNode = pNode->previousNodes[0];
+                points.append(QPoint(pNode->x, pNode->y));
+            }
+            return points;
+        }
+    }
+    return points;
+}
+
+bool PathFindingSystem::isReachable(qint32 x, qint32 y)
+{
+    for (qint32 i = 0; i < m_ClosedList.size(); i++)
+    {
+        if ((m_ClosedList[i]->x == x) && (m_ClosedList[i]->y == y))
+        {
+            return true;
+        }
+    }
+    return false;
 }

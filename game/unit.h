@@ -8,14 +8,25 @@
 #include "game/smartpointers.h"
 #include "coreengine/fileserializable.h"
 
+class GameAction;
+
 class Unit : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
+    Q_PROPERTY(float hp READ getHp WRITE setHp)
+    Q_PROPERTY(qint32 ammo1 READ getAmmo1 WRITE setAmmo1)
+    Q_PROPERTY(qint32 maxAmmo1 READ getMaxAmmo1 WRITE setMaxAmmo1)
+    Q_PROPERTY(qint32 ammo2 READ getAmmo2 WRITE setAmmo2)
+    Q_PROPERTY(qint32 maxAmmo2 READ getMaxAmmo2 WRITE setMaxAmmo2)
+    Q_PROPERTY(qint32 fuel READ getFuel WRITE setFuel)
+    Q_PROPERTY(qint32 maxFuel READ getMaxFuel WRITE setMaxFuel)
+    Q_PROPERTY(qint32 baseMovementPoints READ getBaseMovementPoints WRITE setBaseMovementPoints)
+    Q_PROPERTY(qint32 capturePoints READ getCapturePoints WRITE setCapturePoints)
 public:
     /**
      * @brief Unit only for deserialization
      */
-    explicit Unit();
+    explicit Unit() = default;
 
     explicit Unit(QString unitID, spPlayer pOwner);
     /**
@@ -49,8 +60,56 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 1;
+        return 3;
     }
+    qint32 getHp() const;
+    void setHp(const qint32 &value);
+
+    qint32 getAmmo1() const;
+    void setAmmo1(const qint32 &value);
+
+    qint32 getMaxAmmo1() const;
+    void setMaxAmmo1(const qint32 &value);
+
+    qint32 getAmmo2() const;
+    void setAmmo2(const qint32 &value);
+
+    qint32 getMaxAmmo2() const;
+    void setMaxAmmo2(const qint32 &value);
+
+    qint32 getFuel() const;
+    void setFuel(const qint32 &value);
+
+    qint32 getMaxFuel() const;
+    void setMaxFuel(const qint32 &value);
+
+    qint32 getCapturePoints() const;
+    void setCapturePoints(const qint32 &value);
+
+    /**
+     * @brief initUnit loads all default unit value
+     */
+    void initUnit();
+    /**
+     * @brief getMovementPoints the movement points this unit can move
+     * @return
+     */
+    qint32 getMovementPoints();
+    /**
+     * @brief getBaseMovementPoints the base movement points of this unit
+     * @return
+     */
+    qint32 getBaseMovementPoints() const;
+    /**
+     * @brief setBaseMovementPoints the base movement points of this unit
+     * @param value
+     */
+    void setBaseMovementPoints(const qint32 &value);
+    /**
+     * @brief getActionList
+     * @return the string id list of actions this units can perform
+     */
+    QStringList getActionList();
 signals:
 
 public slots:
@@ -84,12 +143,41 @@ public slots:
      * @return  y coordinates of this unit
      */
     qint32 getY() const;
+    /**
+     * @brief refill fills up all ammo and fuel to max
+     */
+    void refill();
+    /**
+     * @brief setHasMoved  changes if the unit has been moved or not
+     * @param value
+     */
+    void setHasMoved(bool value);
+    /**
+     * @brief getHasMoveed return if this unit has moved or not
+     * @return
+     */
+    bool getHasMoved();
+    /**
+     * @brief moveUnit moves the unit to the target position of this unit
+     * @param pAction
+     */
+    void moveUnitAction(GameAction* pAction);
+    /**
+     * @brief moveUnit moves the unit to the target path
+     * @param movePath
+     */
+    void moveUnit(QVector<QPoint> movePath);
+    /**
+     * @brief increaseCapturePoints increases the capture points of this unit based on units hp and ko owner
+     */
+    void increaseCapturePoints();
 private:
     /**
      * @brief updateSprites reloads all sprites
      */
     void updateSprites();
 
+    QVector<oxygine::spSprite> m_pUnitWaitSprites;
     QVector<oxygine::spSprite> m_pUnitSprites;
     /**
      * @brief m_UnitID the id of this unit
@@ -104,12 +192,20 @@ private:
      */
     spTerrain m_Terrain;
     // basic data of this unit
-    qint32 m_Hp{10};
-    qint32 m_Ammo1{-1};
-    qint32 m_Ammo2{-1};
-    qint32 m_Fuel{-1};
+    float hp{10};
+    qint32 ammo1{-1};
+    qint32 maxAmmo1{-1};
+    qint32 ammo2{-1};
+    qint32 maxAmmo2{-1};
+    qint32 fuel{-1};
+    qint32 maxFuel{-1};
     qint32 m_Rank{0};
+    qint32 baseMovementPoints{0};
+    bool m_Moved{false};
+    QVector<spUnit> m_TransportUnits;
 
+    qint32 capturePoints{0};
 };
 
 #endif // UNIT_H
+

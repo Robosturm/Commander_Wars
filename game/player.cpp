@@ -1,6 +1,7 @@
 #include "game/player.h"
 
 #include "coreengine/mainapp.h"
+#include "gameinput/basegameinputif.h"
 
 Player::Player(quint32 id)
     : playerID(id)
@@ -11,6 +12,14 @@ Player::Player(quint32 id)
     QJSValue objArg = pApp->getInterpreter()->newQObject(this);
     args << objArg;
     pApp->getInterpreter()->doFunction("PLAYER", function, args);
+}
+
+Player::~Player()
+{
+    if (m_pBaseGameInput != nullptr)
+    {
+        delete m_pBaseGameInput;
+    }
 }
 
 QColor Player::getColor() const
@@ -49,6 +58,25 @@ QString Player::getArmy()
     {
         return "OS";
     }
+}
+
+Player::Alliance Player::checkAlliance(Player* pPlayer)
+{
+    if (pPlayer == this)
+    {
+        return Alliance::Friend;
+    }
+    else
+    {
+        // todo implement real check for alliance
+        return Alliance::Enemy;
+    }
+}
+
+void Player::setBaseGameInput(BaseGameInputIF *pBaseGameInput)
+{
+    m_pBaseGameInput = pBaseGameInput;
+    m_pBaseGameInput->setPlayer(this);
 }
 
 void Player::serialize(QDataStream& pStream)

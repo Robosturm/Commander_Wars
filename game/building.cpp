@@ -9,6 +9,8 @@
 
 #include "game/gamemap.h"
 
+#include "game/unit.h"
+
 #include "resource_management/buildingspritemanager.h"
 
 Building::Building(const QString& BuildingID)
@@ -17,6 +19,11 @@ Building::Building(const QString& BuildingID)
       m_Terrain(nullptr)
 {
 
+}
+
+void Building::setOwner(Unit* pUnit)
+{
+    setOwner(pUnit->getSpOwner());
 }
 
 void Building::setOwner(spPlayer pOwner)

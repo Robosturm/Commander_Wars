@@ -98,6 +98,16 @@ void Terrain::syncAnimation()
     }
 }
 
+Unit* Terrain::getUnit()
+{
+    return m_Unit.get();
+}
+
+Building* Terrain::getBuilding()
+{
+    return m_Building.get();
+}
+
 void Terrain::createBaseTerrain()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -407,6 +417,11 @@ void Terrain::setUnit(spUnit pUnit)
         pUnit->setTerrain(GameMap::getInstance()->getSpTerrain(Terrain::x, Terrain::y));
         this->addChild(pUnit);
     }
+}
+
+spUnit Terrain::getSpUnit()
+{
+    return m_Unit;
 }
 
 QString Terrain::getID()

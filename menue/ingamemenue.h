@@ -17,6 +17,7 @@ public:
     explicit InGameMenue(qint32 width = 20, qint32 heigth = 20, QString map = "");
     virtual ~InGameMenue();
 
+    Cursor* getCursor();
 signals:
     sigMouseWheel(qint32 direction);
     sigMoveMap(qint32 x, qint32 y);

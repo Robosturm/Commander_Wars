@@ -62,6 +62,7 @@ set(${PROJECT_NAME}_SRCS
         menue/mainwindow.cpp
         menue/ingamemenue.cpp
         menue/editormenue.cpp
+        menue/gamemenue.cpp
 
         # ressource management
         resource_management/unitspritemanager.cpp
@@ -71,6 +72,7 @@ set(${PROJECT_NAME}_SRCS
         resource_management/objectmanager.cpp
         resource_management/buildingspritemanager.cpp
         resource_management/movementtablemanager.cpp
+        resource_management/gamemanager.cpp
 
         # core engine
         coreengine/mainapp.cpp
@@ -95,6 +97,13 @@ set(${PROJECT_NAME}_SRCS
         game/player.cpp
         game/unit.cpp
         game/terrainfindingsystem.cpp
+        game/gameaction.cpp
+        game/unitpathfindingsystem.cpp
+
+        # game input
+        gameinput/basegameinputif.cpp
+        gameinput/humanplayerinput.cpp
+        gameinput/humanplayerinputmenu.cpp
 )
 
 

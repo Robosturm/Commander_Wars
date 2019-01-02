@@ -22,7 +22,7 @@ public slots:
     /**
      * @brief cursorMoved called when the cursor moved
      */
-    void cursorMoved();
+    void cursorMoved(qint32 x, qint32 y);
     /**
      * @brief onMapClickedLeft left click on the map
      */

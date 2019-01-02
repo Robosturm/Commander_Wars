@@ -7,7 +7,7 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
-#include "menue/ingamemenue.h"
+#include "menue/gamemenue.h"
 #include "menue/editormenue.h"
 
 #include "SDL.h"
@@ -82,7 +82,7 @@ Mainwindow::~Mainwindow()
 
 void Mainwindow::enterSingleplayer()
 {
-    oxygine::getStage()->addChild(new InGameMenue(-1, -1, "D:/Programmierung/Commander_Wars/builds/install/Debug/maps/Test.map"));
+    oxygine::getStage()->addChild(new GameMenue("D:/Programmierung/Commander_Wars/builds/install/Debug/maps/Test.map"));
     leaveMenue();
 }
 

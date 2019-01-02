@@ -7,14 +7,22 @@
 #include "game/smartpointers.h"
 #include "coreengine/fileserializable.h"
 
+class BaseGameInputIF;
+
 class Player : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
+
 public:
+    enum class Alliance
+    {
+        Friend,
+        Enemy
+    };
+    Q_ENUM(Alliance)
+
     explicit Player(quint32 id);
-
-
-
+    virtual ~Player();
 
     void setPlayerID(const quint32 &value);
 
@@ -36,6 +44,20 @@ public:
     {
         return 1;
     }
+    /**
+     * @brief getBaseGameInput pointer to the ai or human player interface
+     * @return
+     */
+    inline BaseGameInputIF* getBaseGameInput()
+    {
+        return m_pBaseGameInput;
+    }
+    /**
+     * @brief setBaseGameInput sets the player input
+     * @param pBaseGameInput
+     */
+    void setBaseGameInput(BaseGameInputIF *pBaseGameInput);
+
 signals:
 
 public slots:
@@ -59,9 +81,19 @@ public slots:
      * @return
      */
     QString getArmy();
+    /**
+     * @brief isEnemy checks the alliance with this player
+     * @param pPlayer the player we want to check if he's an enemy
+     * @return the alliance of the player with us
+     */
+    Alliance checkAlliance(Player* pPlayer);
 private:
     quint32 playerID;
     QColor m_Color;
+    /**
+     * @brief m_pBaseGameInput pointer to the ai or human player
+     */
+    BaseGameInputIF* m_pBaseGameInput{nullptr};
 };
 
 #endif // PLAYER_H

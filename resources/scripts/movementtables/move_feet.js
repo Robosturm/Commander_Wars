@@ -2,7 +2,7 @@ var Constructor = function()
 {
     this.getName = function()
     {
-        return qsTr("Air");
+        return qsTr("Feet");
     };
     this.getMovementpoints = function(terrainID)
     {
@@ -11,9 +11,11 @@ var Constructor = function()
             case "PLAINS":
             case "BEACH":
             case "BRIDGE":
-            case "DESTROYEDWELD":            
+            case "DESTROYEDWELD":
+            case "FOREST":
             case "RUIN":
             case "STREET":
+            case "WASTELAND":
             case "AIRPORT":
             case "FACTORY":
             case "HARBOUR":
@@ -23,14 +25,12 @@ var Constructor = function()
             case "RADAR":
             case "TOWER":
             case "TOWN":
-			case "FOREST":
-			case "WASTELAND":
-            case "SEA":
-			case "ROUGH_SEA":
-            case "REAF":
-				return 1;
+                return 1;
+            case "MOUNTAIN":
+            case "RIVER":
+                return 2;
         }
     };
 };
 Constructor.prototype = MOVEMENTTABLE;
-var AIR = new Constructor();
+var MOVE_FEET = new Constructor();

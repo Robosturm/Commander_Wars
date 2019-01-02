@@ -1,5 +1,15 @@
 var Constructor = function()
 {
+    this.init = function(unit)
+    {
+        unit.ammo1 = 9;
+        unit.maxAmmo1 = 9;
+        unit.ammo2 = 9;
+        unit.maxAmmo2 = 9;
+        unit.fuel = 100;
+        unit.maxFuel = 100;
+        unit.baseMovementPoints = 6;
+    };
     // called for loading the main sprite
     this.loadSprites = function(unit)
     {
@@ -9,7 +19,7 @@ var Constructor = function()
     };
     this.getMovementType = function()
     {
-        return "SHIP";
+        return "MOVE_SHIP";
     };
 }
 

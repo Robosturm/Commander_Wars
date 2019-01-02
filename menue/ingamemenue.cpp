@@ -106,3 +106,8 @@ void InGameMenue::MoveMap(qint32 x, qint32 y)
 {
     GameMap::getInstance()->moveMap(x, y);
 }
+
+Cursor* InGameMenue::getCursor()
+{
+    return m_Cursor.get();
+}

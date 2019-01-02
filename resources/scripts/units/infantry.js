@@ -1,5 +1,15 @@
 var Constructor = function()
 {
+    this.init = function(unit)
+    {
+        unit.ammo1 = 10;
+        unit.maxAmmo1 = 10;
+        unit.ammo2 = 0;
+        unit.maxAmmo2 = 0;
+        unit.fuel = 100;
+        unit.maxFuel = 100;
+        unit.baseMovementPoints = 3;
+    };
     // called for loading the main sprite
     this.loadSprites = function(unit)
     {
@@ -18,7 +28,12 @@ var Constructor = function()
     };
     this.getMovementType = function()
     {
-        return "FEET";
+        return "MOVE_FEET";
+    };
+    this.getActions = function()
+    {
+        // returns a string id list of the actions this unit can perform
+        return "ACTION_WAIT,ACTION_CAPTURE";
     };
 }
 

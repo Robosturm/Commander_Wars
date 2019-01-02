@@ -22,14 +22,13 @@
 #include "game/terrain.h"
 #include "game/player.h"
 #include "game/building.h"
+#include "game/unit.h"
+#include "game/ko.h"
+#include "game/gameaction.h"
 
 int main(int argc, char* argv[])
 {
-    // qt metatypes we need this for js and signal slot stuff
-    qRegisterMetaType<Mainapp::NetworkSerives>("Mainapp::NetworkSerives");
-    qmlRegisterInterface<Terrain>("Terrain");
-    qmlRegisterInterface<Player>("Player");
-    qmlRegisterInterface<Building>("Building");
+
     /*************************************************************************************************/
 
     Mainapp app(argc, argv);
@@ -69,6 +68,16 @@ int main(int argc, char* argv[])
 #endif
 
     app.setup();
+
+    // qt metatypes we need this for js and signal slot stuff
+    qRegisterMetaType<Mainapp::NetworkSerives>("Mainapp::NetworkSerives");
+    qRegisterMetaType<Player::Alliance>("Player::Alliance");
+    qmlRegisterInterface<Terrain>("Terrain");
+    qmlRegisterInterface<Player>("Player");
+    qmlRegisterInterface<Building>("Building");
+    qmlRegisterInterface<Unit>("Unit");
+    qmlRegisterInterface<KO>("KO");
+    qmlRegisterInterface<GameAction>("GameAction");
 
     // load General-Base Scripts
     QString path =  QCoreApplication::applicationDirPath() + "/resources/scripts/general";

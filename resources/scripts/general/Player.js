@@ -155,4 +155,9 @@ var PLAYER =
                 return tr("Dark Matters");
         }
     },
+
+
+    // enumeration
+    Alliance_Friend : 0,
+    Alliance_Enemy : 1,
 }

@@ -13,6 +13,7 @@ class Building : public QObject, public oxygine::Actor, public FileSerializable
     Q_OBJECT
 public:
     explicit Building(const QString& BuildingID);
+
     /**
      * @brief setOwner changes the owner ship of this building
      * @param pOwner
@@ -62,6 +63,11 @@ public:
 signals:
 
 public slots:
+    /**
+     * @brief setOwner the building gets owned by the owner of this unit
+     * @param pUnit
+     */
+    void setOwner(Unit* pUnit);
     /**
      * @brief loadSprite loads a sprite for this building
      * @param sprite the sprite id

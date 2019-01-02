@@ -18,4 +18,4 @@ var Constructor = function()
     };
 };
 Constructor.prototype = MOVEMENTTABLE;
-var SHIP = new Constructor();
+var MOVE_SHIP = new Constructor();

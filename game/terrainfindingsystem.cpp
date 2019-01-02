@@ -9,7 +9,7 @@ TerrainFindingSystem::TerrainFindingSystem(QString terrainID, qint32 startX, qin
 {
 }
 
-qint32 TerrainFindingSystem::getRemainingCost(qint32, qint32)
+qint32 TerrainFindingSystem::getRemainingCost(qint32, qint32, qint32)
 {
     return 1;
 }

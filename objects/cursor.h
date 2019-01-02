@@ -36,7 +36,7 @@ public:
         return m_MapPointY;
     }
 signals:
-    void sigCursorMoved();
+    void sigCursorMoved(qint32 x, qint32 y);
 private:
     oxygine::spSprite m_CurrentCursor;
     bool onMap{false};

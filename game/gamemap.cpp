@@ -8,6 +8,7 @@
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/movementtablemanager.h"
+#include "resource_management/gamemanager.h"
 
 #include "game/terrain.h"
 
@@ -16,6 +17,7 @@
 const QString GameMap::m_JavascriptName = "map";
 const qint32 GameMap::frameTime = 200;
 GameMap* GameMap::m_pInstance = nullptr;
+
 
 
 GameMap::GameMap(qint32 width, qint32 heigth)
@@ -45,6 +47,7 @@ GameMap::GameMap(qint32 width, qint32 heigth)
     }
 }
 
+
 GameMap::GameMap(QString map)
 {
     loadMapData();
@@ -52,6 +55,7 @@ GameMap::GameMap(QString map)
     file.open(QIODevice::ReadOnly);
     QDataStream pStream(&file);
     deserialize(pStream);
+
 }
 
 void GameMap::loadMapData()
@@ -67,6 +71,8 @@ void GameMap::loadMapData()
     pUnitspritemanager->loadAll();
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
     pMovementTableManager->loadAll();
+    GameManager* pGameManager = GameManager::getInstance();
+    pGameManager->loadAll();
 }
 
 GameMap::~GameMap()
@@ -130,6 +136,19 @@ Player* GameMap::getPlayer(qint32 player)
     else
     {
         return nullptr;
+    }
+}
+
+Player* GameMap::getCurrentPlayer()
+{
+    return m_CurrentPlayer.get();
+}
+
+void GameMap::setCurrentPlayer(qint32 player)
+{
+    if ((player >= 0) && (player < players.size()))
+    {
+        m_CurrentPlayer = players[player];
     }
 }
 
@@ -328,10 +347,6 @@ void GameMap::replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool 
         {
             updateTerrain(x, y);
             updateTerrainSprites(x, y);
-        }
-        else
-        {
-               fields.at(y)->at(x)->loadSprites();
         }
     }
 }

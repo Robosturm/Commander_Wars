@@ -22,6 +22,10 @@
 		<image file="heavy_tank.png" cols = "4" />
 		<image file="heavy_tank+mask.png" cols = "4" />
 		
+		<!-- bomber -->
+		<image file="bomber.png" cols = "4" />
+		<image file="bomber+mask.png" cols = "4" />
+		
 		<!-- infantry -->
 		<image file="infantry+os.png" cols = "4" />
 		<image file="infantry+os+mask.png" cols = "4" />

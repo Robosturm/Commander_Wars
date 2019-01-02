@@ -14,6 +14,8 @@
 #include "objects/cursor.h"
 #include "coreengine/fileserializable.h"
 
+class GameAction;
+
 class GameMap : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
@@ -95,8 +97,6 @@ public:
     {
         return 1;
     }
-
-
 signals:
 
 public slots:
@@ -179,6 +179,17 @@ public slots:
      * @return pointer to the player
      */
     Player* getPlayer(qint32 player);
+    /**
+     * @brief getCurrentPlayer the current player
+     * @return
+     */
+    Player* getCurrentPlayer();
+    /**
+     * @brief setCurrentPlayer changes the current player to this one
+     * @param player
+     */
+    void setCurrentPlayer(qint32 player);
+
 private:
     static GameMap* m_pInstance;
 
@@ -186,6 +197,7 @@ private:
     qint32 heigth{0};
     QVector<QVector<spTerrain>*> fields;
     QVector<spPlayer> players;
+    spPlayer m_CurrentPlayer;
 
     static const QString m_JavascriptName;
     float m_zoom{1.0f};

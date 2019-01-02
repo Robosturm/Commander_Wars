@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
+    <name>ACTION_WAIT</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="25"/>
+        <source>Wait</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BEACH</name>
     <message>
         <location filename="../resources/scripts/terrain/BEACH.js" line="6"/>
@@ -184,7 +192,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="42"/>
+        <location filename="../main.cpp" line="41"/>
         <source>Commander Wars</source>
         <translation>Commander Wars</translation>
     </message>
@@ -323,10 +331,42 @@
     </message>
 </context>
 <context>
-    <name>feet</name>
+    <name>action</name>
     <message>
-        <location filename="../resources/scripts/movementtables/feet.js" line="5"/>
+        <location filename="../resources/scripts/general/action.js" line="17"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_air</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_air.js" line="5"/>
+        <source>Air</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_feet</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_feet.js" line="5"/>
         <source>Feet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_ship</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_ship.js" line="5"/>
+        <source>Ship</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_tank</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_tank.js" line="5"/>
+        <source>Tank</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -335,22 +375,6 @@
     <message>
         <location filename="../resources/scripts/general/movementtable.js" line="5"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ship</name>
-    <message>
-        <location filename="../resources/scripts/movementtables/ship.js" line="5"/>
-        <source>Ship</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>tank</name>
-    <message>
-        <location filename="../resources/scripts/movementtables/tank.js" line="5"/>
-        <source>Tank</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

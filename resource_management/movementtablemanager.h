@@ -48,6 +48,7 @@ public:
      */
     void reset();
 public slots:
+    qint8 getMovementPoints(QString movementID, QString terrainID);
     qint8 getBaseMovementPoints(QString movementID, QString terrainID);
 private:
     explicit MovementTableManager();

@@ -60,7 +60,7 @@ public:
      * @param y
      * @return the remaining costs for this node to reach the target
      */
-    virtual qint32 getRemainingCost(qint32 x, qint32 y) = 0;
+    virtual qint32 getRemainingCost(qint32 x, qint32 y, qint32 currentCost) = 0;
     /**
      * @brief finished checks if this would be the target node to reach
      * @param x
@@ -84,6 +84,7 @@ public:
      * @brief get the Path to the given field as vector of qpoints. an empty vector means unreachable
      * @param x
      * @param y
+     * @return the first point is the target and the last poin is the start
      */
     QVector<QPoint> getPath(qint32 x, qint32 y);
     /**
@@ -99,6 +100,13 @@ public:
      * @return
      */
     QVector<QPoint> getAllNodePoints();
+    /**
+     * @brief isReachable
+     * @param x
+     * @param y
+     * @return if the given field is reachable
+     */
+    bool isReachable(qint32 x, qint32 y);
 protected:
     QPoint m_StartPoint;
     /**

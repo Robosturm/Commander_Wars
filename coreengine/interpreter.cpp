@@ -59,7 +59,12 @@ Interpreter::~Interpreter()
 
 QJSValue Interpreter::doFunction(const QString& func, QJSValueList& args)
 {
-    Console::print("Calling: " + func, Console::eDEBUG);
+    QString text;
+    for (qint32 i = 0; i < args.size(); i++)
+    {
+        text += args[i].toString() + " ";
+    }
+    Console::print("Calling: " + func + " with " + text, Console::eDEBUG);
     QJSValue ret;
     QJSValue funcPointer = engine->globalObject().property(func);
     if (funcPointer.isCallable())
@@ -81,7 +86,12 @@ QJSValue Interpreter::doFunction(const QString& func, QJSValueList& args)
 
 QJSValue Interpreter::doFunction(const QString& obj, const QString& func, const QJSValueList& args)
 {
-    Console::print("Calling: " + func + " of " + obj, Console::eDEBUG);
+    QString text;
+    for (qint32 i = 0; i < args.size(); i++)
+    {
+        text += args[i].toString() + " ";
+    }
+    Console::print("Calling: " + func + " of " + obj + " with " + text, Console::eDEBUG);
     QJSValue ret;
 
     QJSValue objPointer = engine->globalObject().property(obj);

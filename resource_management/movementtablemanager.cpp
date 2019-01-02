@@ -79,6 +79,11 @@ void MovementTableManager::reset()
     m_loadedTables.clear();
 }
 
+qint8 MovementTableManager::getMovementPoints(QString movementID, QString terrainID)
+{
+    return getBaseMovementPoints(movementID, terrainID);
+}
+
 qint8 MovementTableManager::getBaseMovementPoints(QString movementID, QString terrainID)
 {
     Mainapp* pApp = Mainapp::getInstance();

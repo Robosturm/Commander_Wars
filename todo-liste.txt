@@ -1,15 +1,3 @@
-- Objects
-	- DropDownMenue
-	- Panel-Box
-	- File-Dialog	
-	- Checkbox
-	
-	
-	
-
-- store maps
-- load maps
-- move units
 - perform unit actions
 - attack units
 - earn income
@@ -33,3 +21,7 @@
 - game statistics
 - game recording
 - v-scrollbar
+- Objects
+	- Checkbox
+- store maps
+- load maps
