@@ -50,10 +50,10 @@ var Constructor = function()
         // capture the building
         unit.increaseCapturePoints();
         // check if the capture points are high enough
-        if (unit.capturePoints >= 10)
+        if (unit.capturePoints >= 20)
         {
             var building = action.getMovementBuilding();
-            building.setOwner(unit);
+            building.setUnitOwner(unit);
             unit.capturePoints = 0;
         }
         // disable unit commandments for this turn

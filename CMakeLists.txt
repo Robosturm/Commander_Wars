@@ -73,6 +73,7 @@ set(${PROJECT_NAME}_SRCS
         resource_management/buildingspritemanager.cpp
         resource_management/movementtablemanager.cpp
         resource_management/gamemanager.cpp
+        resource_management/gameanimationmanager.cpp
 
         # core engine
         coreengine/mainapp.cpp
@@ -81,6 +82,7 @@ set(${PROJECT_NAME}_SRCS
         coreengine/console.cpp
         coreengine/audiothread.cpp
         coreengine/pathfindingsystem.cpp
+        coreengine/tweentogglevisibility.cpp
 
         # network engine
         network/tcpclient.cpp
@@ -99,6 +101,9 @@ set(${PROJECT_NAME}_SRCS
         game/terrainfindingsystem.cpp
         game/gameaction.cpp
         game/unitpathfindingsystem.cpp
+        game/gameanimation.cpp
+        game/gameanimationfactory.cpp
+        game/gameanimationwalk.cpp
 
         # game input
         gameinput/basegameinputif.cpp

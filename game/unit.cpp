@@ -12,6 +12,8 @@
 
 #include "game/gameaction.h"
 
+#include "coreengine/tweentogglevisibility.h"
+
 Unit::Unit(QString unitID, spPlayer pOwner)
     : QObject(),
       m_UnitID(unitID),
@@ -54,6 +56,7 @@ void Unit::loadSprite(QString spriteID, bool addPlayerColor)
         {
             oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
             pSprite->addTween(tween);
+
             oxygine::spTween tweenWait = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
             pWaitSprite->addTween(tweenWait);
         }
@@ -66,13 +69,9 @@ void Unit::loadSprite(QString spriteID, bool addPlayerColor)
         if (addPlayerColor)
         {
             QColor color = m_Owner->getColor();
-            for (qint32 i = 0; i < 5; i++)
-            {
-                oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
-                oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
-                //pSprite->setBlendMode(oxygine::blend_disabled);
-                pSprite->addTween(tween);
-            }
+            oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
+            oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
+            pSprite->addTween(tween);
         }
         pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
@@ -84,7 +83,7 @@ void Unit::loadSprite(QString spriteID, bool addPlayerColor)
         pWaitSprite->addTween(tweenWait);
         pWaitSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
         pWaitSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
-        pWaitSprite->setPriority(10);
+        pWaitSprite->setPriority(static_cast<short>(Priorities::Waiting));
         this->addChild(pWaitSprite);
         pWaitSprite->setVisible(false);
         m_pUnitWaitSprites.append(pWaitSprite);
@@ -124,6 +123,14 @@ qint32 Unit::getCapturePoints() const
 void Unit::setCapturePoints(const qint32 &value)
 {
     capturePoints = value;
+    if (capturePoints > 0)
+    {
+        loadIcon("capture", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+    }
+    else
+    {
+        unloadIcon("capture");
+    }
 }
 
 qint32 Unit::getBaseMovementPoints() const
@@ -144,6 +151,10 @@ void Unit::initUnit()
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
     args1 << obj1;
     pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    setFuel(fuel);
+    setAmmo1(ammo1);
+    setAmmo2(ammo2);
+    setHp(hp);
 }
 
 qint32 Unit::getMaxFuel() const
@@ -164,6 +175,14 @@ qint32 Unit::getFuel() const
 void Unit::setFuel(const qint32 &value)
 {
     fuel = value;
+    if (static_cast<float>(fuel) / static_cast<float>(maxFuel) <= 1.0f / 3.0f)
+    {
+        loadIcon("fuel", GameMap::Imagesize / 2, 0);
+    }
+    else
+    {
+        unloadIcon("fuel");
+    }
 }
 
 qint32 Unit::getMaxAmmo2() const
@@ -214,6 +233,24 @@ qint32 Unit::getHp() const
 void Unit::setHp(const qint32 &value)
 {
     hp = value;
+    qint32 hpValue = Mainapp::roundUp(hp);
+    if (hpValue < 10)
+    {
+        loadIcon(QString::number(hpValue), 0, GameMap::Imagesize / 2);
+    }
+    else
+    {
+        // unload the number icons
+        unloadIcon("1");
+        unloadIcon("2");
+        unloadIcon("3");
+        unloadIcon("4");
+        unloadIcon("5");
+        unloadIcon("6");
+        unloadIcon("7");
+        unloadIcon("8");
+        unloadIcon("9");
+    }
 }
 
 QString Unit::getMovementType()
@@ -251,7 +288,7 @@ void Unit::refill()
 {
     ammo1 = maxAmmo1;
     ammo2 = maxAmmo2;
-    fuel = maxFuel;
+    setFuel(maxFuel);
 }
 
 void Unit::setHasMoved(bool value)
@@ -323,7 +360,130 @@ void Unit::moveUnit(QVector<QPoint> movePath)
 
 void Unit::increaseCapturePoints()
 {
-    capturePoints += static_cast<qint32>(hp);
+    // todo add ko modifications
+    // todo add animation
+    capturePoints += Mainapp::roundUp(hp);
+    // update icons
+    setCapturePoints(capturePoints);
+}
+
+void Unit::loadIcon(QString iconID, qint32 x, qint32 y)
+{
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(iconID.toStdString());
+    if (pAnim != nullptr)
+    {
+        oxygine::spSprite pSprite = new oxygine::Sprite();
+        if (pAnim->getTotalFrames() > 1)
+        {
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+            pSprite->addTween(tween);
+        }
+        else
+        {
+            pSprite->setResAnim(pAnim);
+        }
+        pSprite->setScale((GameMap::Imagesize / 2) / pAnim->getWidth() );
+        pSprite->setPosition(x, y);
+        pSprite->setPriority(static_cast<short>(Priorities::Icons));
+
+        this->addChild(pSprite);
+        m_pIconSprites.append(pSprite);
+
+        updateIconTweens();
+    }
+    else
+    {
+        Console::print("Unable to load icon sprite: " + iconID, Console::eERROR);
+    }
+}
+
+void Unit::unloadIcon(QString iconID)
+{
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(iconID.toStdString());
+    if (pAnim != nullptr)
+    {
+        for (qint32 i = 0; i < m_pIconSprites.size(); i++)
+        {
+            if (m_pIconSprites[i]->getResAnim() == pAnim)
+            {
+                this->removeChild(m_pIconSprites[i]);
+                m_pIconSprites.removeAt(i);
+                break;
+            }
+        }
+        updateIconTweens();
+    }
+}
+
+void Unit::updateIconTweens()
+{
+    for (qint32 i = 0; i < m_pIconSprites.size(); i++)
+    {
+        m_pIconSprites[i]->removeTweens();
+    }
+    for (qint32 i = 0; i < 4; i++)
+    {
+        // calculate positions of the icons
+        qint32 x = 0;
+        qint32 y = 0;
+        switch (i)
+        {
+            case 0:
+            {
+                x = 0;
+                y = 0;
+                break;
+            }
+            case 1:
+            {
+                x = GameMap::Imagesize / 2;
+                y = 0;
+                break;
+            }
+            case 2:
+            {
+                x = 0;
+                y = GameMap::Imagesize / 2;
+                break;
+            }
+            case 3:
+            {
+                x = GameMap::Imagesize / 2;
+                y = GameMap::Imagesize / 2;
+                break;
+            }
+        }
+        // check the amount of icons at this position
+        qint32 count = 0;
+        for (qint32 i2 = 0; i2 < m_pIconSprites.size(); i2++)
+        {
+            if ((m_pIconSprites[i2]->getPosition().x == x) &&
+                (m_pIconSprites[i2]->getPosition().y == y))
+            {
+                count++;
+            }
+        }
+        // create the toggle visibility sprites
+        if (count > 1)
+        {
+            qint32 step = 0;
+            for (qint32 i2 = 0; i2 < m_pIconSprites.size(); i2++)
+            {
+                if ((m_pIconSprites[i2]->getPosition().x == x) &&
+                    (m_pIconSprites[i2]->getPosition().y == y))
+                {
+                    qint32 visibileTime = 500;
+                    float startTime = static_cast<float>(step) / static_cast<float>(count);
+                    float endTime = static_cast<float>(step) / static_cast<float>(count) + 1.0f / static_cast<float>(count);
+                    oxygine::spTween tween = oxygine::createTween(TweenToggleVisibility(startTime, endTime), visibileTime * count, -1);
+                    m_pIconSprites[i2]->addTween(tween);
+                    step++;
+                }
+            }
+        }
+    }
 }
 
 void Unit::serialize(QDataStream& pStream)
@@ -355,9 +515,11 @@ void Unit::deserialize(QDataStream& pStream)
     m_UnitID = id;
     initUnit();
     pStream >> hp;
+    setHp(hp);
     pStream >> ammo1;
     pStream >> ammo2;
     pStream >> fuel;
+    setFuel(fuel);
     pStream >> m_Rank;
     quint32 playerID = 0;
     pStream >> playerID;

@@ -33,7 +33,19 @@ var Constructor = function()
     this.getActions = function()
     {
         // returns a string id list of the actions this unit can perform
-        return "ACTION_WAIT,ACTION_CAPTURE";
+        return "ACTION_CAPTURE,ACTION_WAIT";
+    };
+    this.doWalkingAnimation = function(action)
+    {
+        var unit = action.getTargetUnit();
+        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        // none neutral player
+        var player = unit.getOwner();
+        // get army name
+        var armyName = player.getArmy();
+        armyName = "os";
+        animation.loadSprite("infantry+" + armyName + "+walk+mask", true, 1);
+        animation.loadSprite("infantry+" + armyName + "+walk", true, 1);
     };
 }
 

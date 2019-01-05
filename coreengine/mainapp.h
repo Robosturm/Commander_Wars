@@ -19,6 +19,12 @@ public slots:
     void update();
 
     static qint32 randInt(qint32 low, qint32 high);
+    /**
+     * @brief roundUp rounds all numbers up. 9.1 -> 10
+     * @param value
+     * @return the rounded up integer value
+     */
+    static qint32 roundUp(float value);
     static bool isEven(qint32 value);
     void quitGame();
 signals:

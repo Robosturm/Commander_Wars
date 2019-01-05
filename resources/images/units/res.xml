@@ -2,6 +2,29 @@
 <resources>
 	<set path = "resources/images/units/" />
 	<atlas>
+		<!-- icon -->
+		<image file="icons/1.png" />
+		<image file="icons/2.png" />
+		<image file="icons/3.png" />
+		<image file="icons/4.png" />
+		<image file="icons/5.png" />
+		<image file="icons/6.png" />
+		<image file="icons/7.png" />
+		<image file="icons/8.png" />
+		<image file="icons/9.png" />
+		<image file="icons/ammo.png" />
+		<image file="icons/capture.png" />
+		<image file="icons/dive.png" />
+		<image file="icons/fuel.png" />
+		<image file="icons/transport.png" />
+		<image file="icons/transport+hidden.png" />
+		<image file="icons/co.png" />
+		<image file="icons/general.png" />
+		<image file="icons/lieutenant.png" />
+		<image file="icons/officier.png" />
+		<image file="icons/veteran.png" />
+		<image file="icons/hp+hidden.png" />
+				
 		<!-- hoellium -->
 		<image file="hoellium.png" cols = "4" />
 		<image file="hoellium+mask.png" cols = "4" />
@@ -17,6 +40,8 @@
 		<!-- tank -->
 		<image file="light_tank.png" cols = "4" />
 		<image file="light_tank+mask.png" cols = "4" />
+		<image file="light_tank+walk+mask.png" cols = "4" rows = "4" />
+		<image file="light_tank+walk.png" cols = "4"  rows = "4" />
 		
 		<!-- heavy_tank -->
 		<image file="heavy_tank.png" cols = "4" />
@@ -29,6 +54,9 @@
 		<!-- infantry -->
 		<image file="infantry+os.png" cols = "4" />
 		<image file="infantry+os+mask.png" cols = "4" />
+		<image file="infantry+os+walk.png" cols = "4"  rows = "4" />
+		<image file="infantry+os+walk+mask.png" cols = "4"  rows = "4" />
+		
 		<image file="infantry+ac.png" cols = "4" />
 		<image file="infantry+ac+mask.png" cols = "4" />
 		<image file="infantry+bd.png" cols = "4" />

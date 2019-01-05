@@ -2,6 +2,22 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
+    <name>ACTION_CAPTURE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="38"/>
+        <source>Capture</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_FIRE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="25"/>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_WAIT</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="25"/>
@@ -14,7 +30,7 @@
     <message>
         <location filename="../resources/scripts/terrain/BEACH.js" line="6"/>
         <source>Beach</source>
-        <translation>Strand</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -22,7 +38,7 @@
     <message>
         <location filename="../resources/scripts/terrain/BRIDGE.js" line="6"/>
         <source>Street</source>
-        <translation>Brücke</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -30,22 +46,22 @@
     <message>
         <location filename="../coreengine/console.cpp" line="93"/>
         <source>Enter &quot;help()&quot; for console info.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/console.cpp" line="94"/>
         <source>Starting Game...</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/console.cpp" line="95"/>
         <source>Prepare to Fight...</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/console.cpp" line="96"/>
         <source>Read this message while waiting...</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -89,7 +105,7 @@
     <message>
         <location filename="../resources/scripts/terrain/FIRE.js" line="6"/>
         <source>Fire</source>
-        <translation>Feuer</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -97,7 +113,7 @@
     <message>
         <location filename="../resources/scripts/terrain/FOREST.js" line="6"/>
         <source>Forest</source>
-        <translation>Wald</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -118,7 +134,7 @@
     <message>
         <location filename="../resources/scripts/terrain/METEOR.js" line="6"/>
         <source>Meteor</source>
-        <translation>Meteor</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -126,7 +142,7 @@
     <message>
         <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="6"/>
         <source>Mountain</source>
-        <translation>Berg</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -134,17 +150,17 @@
     <message>
         <location filename="../menue/mainwindow.cpp" line="37"/>
         <source>Singleplayer</source>
-        <translation>Einzelspieler</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="48"/>
         <source>Map Editor</source>
-        <translation>Karteneditor</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="59"/>
         <source>Quit</source>
-        <translation>Beenden</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -152,17 +168,17 @@
     <message>
         <location filename="../network/NetworkInterface.h" line="100"/>
         <source>The host was not found. Please check the host name and port settings.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../network/NetworkInterface.h" line="103"/>
         <source>The connection was refused by the peer.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../network/NetworkInterface.h" line="106"/>
         <source>Error inside the Socket happened.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -170,7 +186,7 @@
     <message>
         <location filename="../resources/scripts/terrain/PIPELINE.js" line="6"/>
         <source>Pipeline</source>
-        <translation>Pipeline</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -178,7 +194,7 @@
     <message>
         <location filename="../resources/scripts/terrain/PLAINS.js" line="6"/>
         <source>Plains</source>
-        <translation>Ebene</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -186,15 +202,15 @@
     <message>
         <location filename="../resources/scripts/terrain/PLASMA.js" line="6"/>
         <source>Plasma</source>
-        <translation>Plasma</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="41"/>
+        <location filename="../main.cpp" line="43"/>
         <source>Commander Wars</source>
-        <translation>Commander Wars</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -202,7 +218,7 @@
     <message>
         <location filename="../resources/scripts/terrain/REAF.js" line="6"/>
         <source>Reaf</source>
-        <translation>Riff</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -210,7 +226,7 @@
     <message>
         <location filename="../resources/scripts/terrain/RIVER.js" line="6"/>
         <source>River</source>
-        <translation>Fluss</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -218,7 +234,7 @@
     <message>
         <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="6"/>
         <source>Rough Sea</source>
-        <translation>Raue See</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -226,7 +242,7 @@
     <message>
         <location filename="../resources/scripts/terrain/RUIN.js" line="6"/>
         <source>Ruin</source>
-        <translation>Ruine</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -234,7 +250,7 @@
     <message>
         <location filename="../resources/scripts/terrain/SEA.js" line="6"/>
         <source>Sea</source>
-        <translation>See</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -242,7 +258,7 @@
     <message>
         <location filename="../resources/scripts/terrain/STREET.js" line="6"/>
         <source>Street</source>
-        <translation>Straße</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -257,7 +273,7 @@
         <location filename="../coreengine/settings.cpp" line="90"/>
         <location filename="../coreengine/settings.cpp" line="101"/>
         <source>Error in the Ini File: </source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../coreengine/settings.cpp" line="44"/>
@@ -269,7 +285,7 @@
         <location filename="../coreengine/settings.cpp" line="90"/>
         <location filename="../coreengine/settings.cpp" line="101"/>
         <source>Setting:</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -277,7 +293,7 @@
     <message>
         <location filename="../network/tcpclient.cpp" line="45"/>
         <source>Client is running</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -285,17 +301,17 @@
     <message>
         <location filename="../network/tcpserver.cpp" line="50"/>
         <source>Client disconnected.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../network/tcpserver.cpp" line="84"/>
         <source>New Client connection.</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../network/tcpserver.cpp" line="109"/>
         <source>Server is running</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -303,7 +319,7 @@
     <message>
         <location filename="../game/terrain.cpp" line="57"/>
         <source>Unable to load Terrain </source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -311,7 +327,7 @@
     <message>
         <location filename="../resources/scripts/terrain/WALL.js" line="6"/>
         <source>Wall</source>
-        <translation>Mauer</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -319,7 +335,7 @@
     <message>
         <location filename="../resources/scripts/terrain/WASTELAND.js" line="6"/>
         <source>Wasteland</source>
-        <translation>Oedland</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -327,7 +343,7 @@
     <message>
         <location filename="../resources/scripts/terrain/WELD.js" line="6"/>
         <source>Weld</source>
-        <translation>Schweißnaht</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

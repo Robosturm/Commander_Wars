@@ -23,6 +23,12 @@ class Unit : public QObject, public oxygine::Actor, public FileSerializable
     Q_PROPERTY(qint32 baseMovementPoints READ getBaseMovementPoints WRITE setBaseMovementPoints)
     Q_PROPERTY(qint32 capturePoints READ getCapturePoints WRITE setCapturePoints)
 public:
+    enum class Priorities
+    {
+        Waiting = 10,
+        Icons = 20
+    };
+
     /**
      * @brief Unit only for deserialization
      */
@@ -171,6 +177,23 @@ public slots:
      * @brief increaseCapturePoints increases the capture points of this unit based on units hp and ko owner
      */
     void increaseCapturePoints();
+    /**
+     * @brief loadIcon
+     * @param iconID icon we want to load
+     * @param x position of the icon
+     * @param y position of the icon
+     */
+    void loadIcon(QString iconID, qint32 x, qint32 y);
+    /**
+     * @brief unloadIcon removes the given icon from this unit
+     * @param iconID
+     */
+    void unloadIcon(QString iconID);
+protected:
+    /**
+     * @brief updateIconTweens creates the visibility toogle tweens for all icons
+     */
+    void updateIconTweens();
 private:
     /**
      * @brief updateSprites reloads all sprites
@@ -179,6 +202,10 @@ private:
 
     QVector<oxygine::spSprite> m_pUnitWaitSprites;
     QVector<oxygine::spSprite> m_pUnitSprites;
+    /**
+     * @brief m_pIconSprites vector containg all icon sprites
+     */
+    QVector<oxygine::spSprite> m_pIconSprites;
     /**
      * @brief m_UnitID the id of this unit
      */

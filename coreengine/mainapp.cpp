@@ -38,6 +38,20 @@ qint32 Mainapp::randInt(qint32 low, qint32 high)
     return QRandomGenerator::global()->bounded(low, high + 1);
 }
 
+qint32 Mainapp::roundUp(float value)
+{
+    qint32 roundDown = static_cast<qint32>(value);
+    // little cheat
+    if (static_cast<float>(roundDown) == value)
+    {
+        return roundDown;
+    }
+    else
+    {
+        return roundDown + 1;
+    }
+}
+
 bool Mainapp::isEven(qint32 value)
 {
     float val = value/2.0f;

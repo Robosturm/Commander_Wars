@@ -64,10 +64,10 @@ signals:
 
 public slots:
     /**
-     * @brief setOwner the building gets owned by the owner of this unit
+     * @brief setUnitOwner the building gets owned by the owner of this unit
      * @param pUnit
      */
-    void setOwner(Unit* pUnit);
+    void setUnitOwner(Unit* pUnit);
     /**
      * @brief loadSprite loads a sprite for this building
      * @param sprite the sprite id

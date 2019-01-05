@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "resources/images/animations/" />
+	<atlas>
+		<!-- backgrounds -->
+		<image file="background.png" />
+	
+		<!-- buildings -->
+		<image file="airport.png" />
+		<image file="factory.png" />
+		<image file="harbour.png" />
+		<image file="hq+bh.png" />
+		<image file="hq+bm.png" />
+		<image file="hq+ge.png" />
+		<image file="hq+os.png" />
+		<image file="hq+yc.png" />
+		<image file="town.png" />
+		
+		<!-- soldier -->
+		<image file="soldier+bh.png" cols = "5" />
+		<image file="soldier+bm.png" cols = "5" />
+		<image file="soldier+ge.png" cols = "5" />
+		<image file="soldier+os.png" cols = "5" />
+		<image file="soldier+yc.png" cols = "5" />
+		
+		<!-- animations -->
+		<image file="explosion+land.png" cols = "9" />
+	</atlas>
+</resources>

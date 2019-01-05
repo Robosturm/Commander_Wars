@@ -21,6 +21,13 @@ var Constructor = function()
     {
         return "MOVE_TANK";
     };
+    this.doWalkingAnimation = function(action)
+    {
+        var unit = action.getTargetUnit();
+        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        animation.loadSprite("light_tank+walk+mask", true, 1);
+        animation.loadSprite("light_tank+walk", true, 1);
+    };
 }
 
 Constructor.prototype = UNIT;

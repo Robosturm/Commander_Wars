@@ -14,8 +14,11 @@
 
 #include "game/player.h"
 
+#include "game/gameanimationfactory.h"
+
 const QString GameMap::m_JavascriptName = "map";
-const qint32 GameMap::frameTime = 200;
+const QString GameMap::m_GameAnimationFactory = "GameAnimationFactory";
+const qint32 GameMap::frameTime = 150;
 GameMap* GameMap::m_pInstance = nullptr;
 
 
@@ -63,6 +66,8 @@ void GameMap::loadMapData()
     m_pInstance = this;
     Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
     pInterpreter->setGlobal(m_JavascriptName, pInterpreter->newQObject(this));
+    pInterpreter->setGlobal(m_GameAnimationFactory, pInterpreter->newQObject(GameAnimationFactory::getInstance()));
+
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     pTerrainManager->loadAll();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
@@ -458,4 +463,9 @@ void GameMap::deserialize(QDataStream& pStream)
     }
     updateTerrainSprites();
     centerMap(width / 2, heigth / 2);
+}
+
+qint32 GameMap::getImageSize()
+{
+    return Imagesize;
 }

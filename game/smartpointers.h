@@ -15,4 +15,7 @@ typedef oxygine::intrusive_ptr<Player> spPlayer;
 class Unit;
 typedef oxygine::intrusive_ptr<Unit> spUnit;
 
+class GameAnimation;
+typedef oxygine::intrusive_ptr<GameAnimation> spGameAnimation;
+
 #endif // SMARTPOINTERS_H

@@ -189,7 +189,11 @@ public slots:
      * @param player
      */
     void setCurrentPlayer(qint32 player);
-
+    /**
+     * @brief getImageSize
+     * @return the size of an field in pixel
+     */
+    static qint32 getImageSize();
 private:
     static GameMap* m_pInstance;
 
@@ -200,6 +204,7 @@ private:
     spPlayer m_CurrentPlayer;
 
     static const QString m_JavascriptName;
+    static const QString m_GameAnimationFactory;
     float m_zoom{1.0f};
 
     void loadMapData();

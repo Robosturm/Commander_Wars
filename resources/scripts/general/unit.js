@@ -21,4 +21,9 @@ var UNIT =
         // returns a string id list of the actions this unit can perform
         return "ACTION_WAIT";
     },
+    doWalkingAnimation : function(action)
+    {
+        var unit = action.getTargetUnit();
+        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+    },
 };

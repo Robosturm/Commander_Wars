@@ -21,7 +21,7 @@ Building::Building(const QString& BuildingID)
 
 }
 
-void Building::setOwner(Unit* pUnit)
+void Building::setUnitOwner(Unit* pUnit)
 {
     setOwner(pUnit->getSpOwner());
 }
