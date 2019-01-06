@@ -54,7 +54,7 @@ public:
      * @brief createActionMenu creates the menu for selecting the next action
      * @param actionIDs
      */
-    void createActionMenu(QStringList actionIDs);
+    void createActionMenu(QStringList actionIDs, qint32 x, qint32 y);
     /**
      * @brief finishAction finishes input and performs the action
      */

@@ -7,7 +7,7 @@ if (EMSCRIPTEN)
 		${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 	set(OXYGINE_FREETYPE_CXX_FLAGS "-s USE_FREETYPE=1")
-	
+
 elseif(MSVC)
 	set(OXYGINE_FREETYPE_INCLUDE_DIRS 
 		${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -16,7 +16,15 @@ elseif(MSVC)
 	set(OXYGINE_FREETYPE_LIBS
 		${CMAKE_CURRENT_SOURCE_DIR}/freetype/win32/freetype.lib)
 else()
-	set(OXYGINE_FREETYPE_LIBS freetype)
+	find_package(Freetype REQUIRED)
+
+	set(OXYGINE_FREETYPE_INCLUDE_DIRS 
+                ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+	set(OXYGINE_FREETYPE_LIBS ${FREETYPE_LIBRARIES})
+	include_directories(${FREETYPE_INCLUDE_DIRS})
+
+
 endif(EMSCRIPTEN)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -27,7 +35,6 @@ add_library(oxygine-freetype STATIC
 	src/ResFontFT.h
 )
 
-#target_link_libraries(oxyginemagicparticles)
 
 set(OXYGINE_FREETYPE_INCLUDE_DIRS ${OXYGINE_FREETYPE_INCLUDE_DIRS} PARENT_SCOPE)
 set(OXYGINE_FREETYPE_LIBS ${OXYGINE_FREETYPE_LIBS} PARENT_SCOPE)

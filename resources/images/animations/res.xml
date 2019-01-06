@@ -3,7 +3,7 @@
 	<set path = "resources/images/animations/" />
 	<atlas>
 		<!-- backgrounds -->
-		<image file="background.png" />
+		<image file="capture_background.png" />
 	
 		<!-- buildings -->
 		<image file="airport.png" />

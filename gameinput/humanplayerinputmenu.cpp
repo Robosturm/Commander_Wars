@@ -69,8 +69,15 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
         QString action = actionIDs[i];
         pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
         {
-            pEvent->stopPropagation();
-            emit sigItemSelected(action);
+            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+            if (pTouchEvent != nullptr)
+            {
+                if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
+                {
+                    pEvent->stopPropagation();
+                    emit sigItemSelected(action);
+                }
+            }
         });
         y += pItemBox->getHeight();
     }
@@ -86,4 +93,20 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     this->addChild(m_Cursor);
     this->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
     this->setHeight(y + pBottomBox->getHeight());
+    this->setWidth(width);
+}
+
+void HumanPlayerInputMenu::setMenuPosition(qint32 x, qint32 y)
+{
+    GameMap* pMap = GameMap::getInstance();
+
+    if (x + getWidth() + GameMap::Imagesize / 2 > pMap->getMapWidth() * GameMap::Imagesize)
+    {
+        x = pMap->getMapWidth() * GameMap::Imagesize - getWidth() - GameMap::Imagesize / 2;
+    }
+    if (y + getHeight() + GameMap::Imagesize / 2 > pMap->getMapHeight() * GameMap::Imagesize)
+    {
+        y = pMap->getMapHeight() * GameMap::Imagesize - getHeight() - GameMap::Imagesize / 2;
+    }
+    this->setPosition(x, y);
 }

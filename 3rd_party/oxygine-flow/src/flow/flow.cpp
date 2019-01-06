@@ -3,6 +3,7 @@
 #include "Transition.h"
 #include "oxygine/actor/DebugActor.h"
 #include "oxygine/core/oxygine.h"
+#include "ox/key.hpp"
 
 #define LOGD(...) logs::messageln("flow::" __VA_ARGS__)
 
@@ -14,14 +15,6 @@ namespace oxygine
     {
         int BLOCK_TOUCH_DURATION = 300;
 
-        spActor _touchBlocker;
-
-        Vector2 _blockedTouchPosition(0, 0);
-        bool _wasTouchBlocked;
-        bool _wasBackBlocked;
-        timeMS _tm = 0;
-
-
         Flow Flow::instance;
 
 
@@ -30,28 +23,18 @@ namespace oxygine
 
         void init()
         {
-            _tm = 0;
-            _wasTouchBlocked = false;
-            _wasBackBlocked = false;
-            _touchBlocker = new Actor;
-            _touchBlocker->setName("Scene::_touchBlocker");
-            _touchBlocker->setPosition(-10000, -10000);
-            _touchBlocker->setSize(20000, 20000);
-            _touchBlocker->setName("touchBlocker");
-
             _defaultTransition = new TransitionFade;
 
+            key::init();
             Flow::instance = Flow();
             Flow::instance.init();
         }
 
         void free()
         {
-            if (_touchBlocker)
-                _touchBlocker->detach();
-            _touchBlocker = 0;
             _defaultTransition = 0;
             Flow::instance.free();
+            key::release();
         }
 
 
@@ -61,6 +44,13 @@ namespace oxygine
             _transitionDone = false;
             _back = false;
             _locked = false;
+
+            _secondary = false;
+
+
+            _tm = 0;
+            _wasTouchBlocked = false;
+            _wasBackBlocked = false;
         }
 
         Flow::~Flow()
@@ -70,6 +60,12 @@ namespace oxygine
 
         void Flow::init()
         {
+
+            _touchBlocker = new Actor;
+            _touchBlocker->setName("Flow::_touchBlocker");
+            _touchBlocker->setPosition(-10000, -10000);
+            _touchBlocker->setSize(20000, 20000);
+            _touchBlocker->setName("touchBlocker");
         }
 
         void Flow::free()
@@ -79,22 +75,15 @@ namespace oxygine
             _next = 0;
             scenes.clear();
             scenes2show.clear();
+
+
+            if (_touchBlocker)
+                _touchBlocker->detach();
+            _touchBlocker = 0;
         }
 
         void Flow::show(spScene scene, const resultCallback& cb)
         {
-            if (scenes.empty())
-            {
-                scenes.push_back(scene);
-                scene->preEntering();
-                scene->preShowing();
-                scene->_holder->attachTo(getStage());
-                scene->postShowing();
-                scene->postEntering();
-                scene->_resultCB = cb;
-                return;
-            }
-
             auto p = std::find(scenes.begin(), scenes.end(), scene);
             if (p != scenes.end())
             {
@@ -199,7 +188,7 @@ namespace oxygine
 
             _trans = next->runTransition(this, current, back);
 
-			_touchBlocker->setPriority(10000);
+            _touchBlocker->setPriority(10000);
             getStage()->addChild(_touchBlocker);
 
             _wasTouchBlocked = false;
@@ -224,8 +213,15 @@ namespace oxygine
                 current->postHiding();
             }
 
-			_touchBlocker->setPriority(next->getHolder()->getPriority());
-            next->getHolder()->insertSiblingBefore(_touchBlocker);
+            _touchBlocker->setPriority(next->getHolder()->getPriority());
+
+            
+            if (scenes.empty())
+                _touchBlocker->detach();//nothing to block
+            else
+                next->getHolder()->insertSiblingBefore(_touchBlocker);
+            
+            
 
             if (_back)
             {
@@ -293,14 +289,29 @@ namespace oxygine
 
         void Flow::checkDone()
         {
+            if (scenes.empty())
+                return;
+
             spScene current = scenes.back();
             if (current->_done)
             {
                 scenes.pop_back();
+
                 if (scenes.empty())
                 {
-                    current->_resultCB = resultCallback();
-                    current->_finishEvent = FlowEvent();
+                    if (_secondary)
+                    {
+                        spScene prev = new Scene;
+                        prev->_holder->setPriority(1000);
+                        prev->_holder->attachTo(getStage());                        
+                        phaseBegin(current, prev, true);
+                        prev->_holder->detach();
+                    }
+                    else
+                    {
+                        current->_resultCB = resultCallback();
+                        current->_finishEvent = FlowEvent();
+                    }
                 }
                 else
                 {
@@ -315,11 +326,44 @@ namespace oxygine
             if (scenes2show.empty())
                 return;
 
+            if (_transition)
+                return;
+
+
+            if (scenes.empty())
+            {
+                spScene scene = scenes2show.front();
+                scenes2show.erase(scenes2show.begin());
+
+                scenes.push_back(scene);
+                scene->preEntering();
+                scene->preShowing();
+
+                _wasBackBlocked = false;
+                _wasTouchBlocked = false;
+
+                if (_secondary)
+                {
+                    spScene current = new Scene;
+                    current->_holder->setPriority(1000);
+                    current->_holder->attachTo(getStage());
+
+                    phaseBegin(current, scene, false);
+                    current->_holder->detach();
+                }
+                else
+                {
+                    scene->_holder->attachTo(getStage());
+                    scene->postShowing();
+                    scene->postEntering();
+                }
+
+                return;
+            }
+
             if (scenes.back()->_done)
                 return;
 
-            if (_transition)
-                return;
 
             spScene current = scenes.back();
 
@@ -387,14 +431,14 @@ namespace oxygine
                 }
             }
 
+            
             bool quit = checkQuit();
-            static bool quitLast = false;
-            if (quit && !quitLast)
+            if (quit)
             {
                 _wasBackBlocked = true;
                 _wasTouchBlocked = false;
             }
-            quitLast = quit;
+     
 
             if (_transition)
             {
@@ -435,7 +479,10 @@ namespace oxygine
             }
 
             if (scenes.empty())
-                core::requestQuit();
+            {
+                if (!_secondary)
+                    core::requestQuit();
+            }
         }
 
         void update()

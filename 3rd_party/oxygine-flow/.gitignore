@@ -31,3 +31,6 @@ examples/HelloFlow/proj.android/.gradle/
 *.dll
 examples/HelloFlow/proj.win32/HelloFlow.VC.VC.opendb
 **/.externalNativeBuild
+examples/HelloFlow/proj.android/local.properties
+examples/HelloFlow/proj.android/proj.android.iml
+examples/HelloFlow/proj.android/.idea/

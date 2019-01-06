@@ -39,6 +39,10 @@
 #error Nope, you have to edit this file to force this off.
 #endif
 
+#if __MINGW32__
+    #define SDL_DYNAMIC_API 0
+#endif
+
 #ifdef __APPLE__
 #include "TargetConditionals.h"
 #endif

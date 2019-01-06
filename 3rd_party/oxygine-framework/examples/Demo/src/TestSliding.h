@@ -30,7 +30,7 @@ public:
         spButton button = new Button;
         _button = button;
         button->setPosition(map->getSize() / 2);
-        button->setResAnim(resourcesUI.getResAnim("button"));
+        button->setResAnim(DebugActor::resSystem->getResAnim("button"));
         button->attachTo(map);
         button->setAnchor(0.5f, 0.5f);
         button->addEventListener(TouchEvent::CLICK, CLOSURE(this, &TestSliding::testClick));
@@ -41,13 +41,13 @@ public:
         title->setSize(map->getSize());
         title->setAlign(TextStyle::VALIGN_MIDDLE, TextStyle::HALIGN_MIDDLE);
         title->setY(-50);
-        title->setFont(resourcesUI.getResFont("big"));
+        title->setFont(_resources.getResFont("big"));
         title->setColor(Color::Black);
         title->attachTo(map);
 
         sliding->setContent(map);
         sliding->setPosition(getSize() / 2 - sliding->getSize() / 2);
-        sliding->attachTo(content);
+        sliding->attachTo(_content);
 
         _sliding = sliding;
 

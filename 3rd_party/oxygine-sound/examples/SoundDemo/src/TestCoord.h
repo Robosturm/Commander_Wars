@@ -20,10 +20,10 @@ public:
 
         orange->addEventListener(TouchEvent::OVER, CLOSURE(this, &TestCoord::onEvent));
         orange->addEventListener(TouchEvent::MOVE, CLOSURE(this, &TestCoord::onEvent));
-        orange->addEventListener(TouchEvent::OUT, CLOSURE(this, &TestCoord::onEvent));
+        orange->addEventListener(TouchEvent::OUTX, CLOSURE(this, &TestCoord::onEvent));
 
         orange->setTouchChildrenEnabled(false);
-        orange->attachTo(content);
+        orange->attachTo(_content);
     }
 
     void onEvent(Event* ev)
@@ -35,7 +35,7 @@ public:
             orange->setColor(Color::Green);
             snd = splayer.play("amb_bird_2", PlayOptions().loop());
         }
-        else if (ev->type == TouchEvent::OUT)
+        else if (ev->type == TouchEvent::OUTX)
         {
             orange->setColor(Color::Orange);
             snd->stop();

@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <typeinfo>
+#include "../EventDispatcher.h"
 
 namespace oxygine
 {
@@ -115,7 +116,7 @@ namespace oxygine
     {
         __addToDebugList(this);
 
-        __userData = src.__userData;
+        __userData64 = src.__userData64;
 #if DYNAMIC_OBJECT_NAME
         if (src.__name)
             setName(*src.__name);
@@ -140,8 +141,10 @@ namespace oxygine
 #endif
     }
 
-    ObjectBase::ObjectBase(bool assignID): __userData(0), __id(0)
+    ObjectBase::ObjectBase(bool assignID): __id(0)
     {
+        __userData64 = 0;
+
 #if DYNAMIC_OBJECT_NAME
         __name = 0;
 #endif
@@ -248,7 +251,15 @@ namespace oxygine
         }
 
 
-        logs::messageln("id = %d, name = '%s', typeid = '%s', refs = %s", this->__id, name.c_str(), typeid(*this).name(), refs);
+        int cbs = 0;
+        if (o && o->_ref_counter)
+        {
+            const EventDispatcher *ed = dynamic_cast<const EventDispatcher*>(o);
+            if (ed)
+                cbs = ed->getListenersCount();
+        }
+
+        logs::messageln("id = %d, name = '%s', typeid = '%s', callbacks = '%d' refs = %s", this->__id, name.c_str(), typeid(*this).name(), cbs, refs);
     }
 
     void ObjectBase::dumpCreatedObjects()

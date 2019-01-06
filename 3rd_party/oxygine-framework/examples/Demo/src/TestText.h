@@ -43,19 +43,19 @@ public:
         addButton("prev", "Prev Test");
 
         textDetails = new TextField;
-        textDetails->attachTo(ui);
+        textDetails->attachTo(_ui);
         textDetails->setSize(Vector2(300, 0));
         textDetails->setPosition(200.0f, getStage()->getHeight() - 10);
 
         TextStyle st;
-        st.font = resourcesUI.getResFont("main");
+        st.font = _resources.getResFont("main");
         st.vAlign = TextStyle::VALIGN_BOTTOM;
         st.color = Color(0xffffffff);
         st.multiline = true;
         textDetails->setStyle(st);
 
         bg = new ColorRectSprite();
-        bg->attachTo(content);
+        bg->attachTo(_content);
         bg->setColor(Color(64, 64, 64, 255));
 
         /*
@@ -131,7 +131,7 @@ public:
         style.multiline = test.multiline;
         style.vAlign = test.vAlign;
         style.hAlign = test.hAlign;
-        style.font = resourcesUI.getResFont("big");
+        style.font = _resources.getResFont("big");
         style.color = Color(0xffffffff);
         style.fontSize = test.scale2size;
         if (!style.fontSize)

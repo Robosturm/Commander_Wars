@@ -1,12 +1,19 @@
 buildscript {
     repositories {
-        mavenLocal()
+    	google()
+        mavenLocal()        
         mavenCentral()
-        jcenter()
-        google()
+        jcenter()        
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.2.1'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
     }
 }
 
@@ -21,7 +28,7 @@ dependencies {
 
 android {
         
-    compileSdkVersion 23
+    compileSdkVersion 26
 
 
     sourceSets {
@@ -35,6 +42,9 @@ android {
     }
 
     defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 26
+
         ndk {
             abiFilters 'armeabi-v7a'//, 'arm64-v8a'
         }

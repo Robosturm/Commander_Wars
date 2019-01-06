@@ -11,6 +11,7 @@
 
 class GameAnimation;
 class GameAnimationWalk;
+class GameAnimationCapture;
 class GameAction;
 
 class GameAnimationFactory : public QObject
@@ -22,6 +23,16 @@ public:
      * @return the singleton of the factory
      */
     static GameAnimationFactory* getInstance();
+    /**
+     * @brief queueAnimation queues the given animation by removing it from the execution
+     * @param pGameAnimation
+     */
+    void queueAnimation(GameAnimation* pGameAnimation);
+    /**
+     * @brief startQueuedAnimation appends the given animation to the execution
+     * @param pGameAnimation
+     */
+    void startQueuedAnimation(GameAnimation* pGameAnimation);
 signals:
 
 public slots:
@@ -41,6 +52,11 @@ public slots:
      */
     static GameAnimationWalk* createWalkingAnimation(Unit* pUnit, GameAction* pAction);
     /**
+     * @brief createGameAnimationCapture
+     * @return
+     */
+    static GameAnimationCapture* createGameAnimationCapture(qint32 x, qint32 y, qint32 startPoints, qint32 endPoints);
+    /**
      * @brief getAnimationCount
      * @return the current amount of running animations
      */
@@ -53,7 +69,7 @@ public slots:
     /**
      * @brief removeAllAnimations removes all animations and calls onFinished of them
      */
-    static void removeAllAnimations();
+    static void finishAllAnimations();
 private:
     explicit GameAnimationFactory();
 

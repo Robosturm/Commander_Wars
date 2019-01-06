@@ -212,7 +212,7 @@ namespace oxygine
         setHtmlText(ws2utf8(str.c_str()));
     }
 
-    int TextField::getFontSize() const
+    int            TextField::getFontSize() const
     {
         return _style.fontSize;
     }
@@ -381,6 +381,8 @@ namespace oxygine
             stream << " linesOffset=" << s.linesOffset;
         if (!onlydiff || def.fontSize != s.fontSize)
             stream << " fontSize=" << s.fontSize;
+        if (!onlydiff || def.options != s.options)
+            stream << " options=" << s.options;
         if (s.font)
         {
             stream << " font='" << s.font->getName() << "'";

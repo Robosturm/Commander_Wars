@@ -27,6 +27,7 @@
 #include "game/gameaction.h"
 #include "game/gameanimation.h"
 #include "game/gameanimationwalk.h"
+#include "game/gameanimationcapture.h"
 
 int main(int argc, char* argv[])
 {
@@ -82,6 +83,7 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<GameAction>("GameAction");
     qmlRegisterInterface<GameAnimation>("GameAnimation");
     qmlRegisterInterface<GameAnimationWalk>("GameAnimationWalk");
+    qmlRegisterInterface<GameAnimationCapture>("GameAnimationCapture");
 
     // load General-Base Scripts
     QString path =  QCoreApplication::applicationDirPath() + "/resources/scripts/general";
@@ -121,5 +123,4 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
-
 

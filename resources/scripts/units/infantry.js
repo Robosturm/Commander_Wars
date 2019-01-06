@@ -45,7 +45,8 @@ var Constructor = function()
         var armyName = player.getArmy();
         armyName = "os";
         animation.loadSprite("infantry+" + armyName + "+walk+mask", true, 1);
-        animation.loadSprite("infantry+" + armyName + "+walk", true, 1);
+        animation.loadSprite("infantry+" + armyName + "+walk", false, 1);
+        return animation;
     };
 }
 

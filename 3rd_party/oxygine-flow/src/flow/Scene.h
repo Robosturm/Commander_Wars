@@ -6,12 +6,6 @@
 
 namespace oxygine
 {
-    class Action
-    {
-    public:
-        std::string id;
-    };
-
     namespace flow
     {
         class FlowEvent : public Event
@@ -67,9 +61,6 @@ namespace oxygine
                 //back button was pressed (android)
                 EVENT_BACK =            makefourcc('S', 'B', 'a', 'c'),
 
-                //fired from destructor
-                EVENT_DESTROY =         makefourcc('S', 'D', 'e', 's'),
-
                 EVENT_PRESHOWING = EVENT_PRE_SHOWING,
                 EVENT_POSTSHOWING = EVENT_POST_SHOWING,
                 EVENT_PREHIDING = EVENT_PRE_HIDING,
@@ -120,8 +111,12 @@ namespace oxygine
             bool            isInStackWide() const { return _instackWide; }
             bool            isVisibleWide() const { return _visibleWide; }
             bool            isFinished() const { return _done; }
+            spTransition    getTransitionIn() const { return _transitionIn; }
+            spTransition    getTransitionOut() const { return _transitionOut; }
 
             void setPassBlockedTouch(bool v) { _passBlockedTouch = v; }
+
+            void listenForAllSceneEvents(const EventCallback &cb);
 
         protected:
 

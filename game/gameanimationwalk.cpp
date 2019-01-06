@@ -23,7 +23,7 @@ GameAnimationWalk::GameAnimationWalk(Unit* pUnit, QVector<QPoint> movePath)
 void GameAnimationWalk::onFinished()
 {
     m_pUnit->setVisible(true);
-    GameAnimationFactory::removeAnimation(this);
+    GameAnimation::onFinished();
 }
 
 GameMap::Directions GameAnimationWalk::getMovementDirection(qint32 x, qint32 y, qint32 x2, qint32 y2)
@@ -81,27 +81,27 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
             y = m_movePath[i].y() * GameMap::Imagesize;
             queueMoving->add(oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(x, y)), GameMap::frameTime * pAnim->getRows(), 1));
 
-            oxygine::TweenAnim animTween = oxygine::TweenAnim(pAnim);
+            int row = 0;
             switch (direction)
             {
                 case GameMap::Directions::North:
                 {
-                    animTween.setInterval(pAnim->getRows() * 1 , pAnim->getRows() * 2 - 1);
+                    row = 1;
                     break;
                 }
                 case GameMap::Directions::South:
                 {
-                    animTween.setInterval(0, pAnim->getRows() - 1);
+                    row = 0;
                     break;
                 }
                 case GameMap::Directions::East:
                 {
-                    animTween.setInterval(pAnim->getRows() * 2 , pAnim->getRows() * 3 - 1);
+                    row = 2;
                     break;
                 }
                 case GameMap::Directions::West:
                 {
-                    animTween.setInterval(pAnim->getRows() * 3 , pAnim->getRows() * 4 - 1);
+                    row = 3;
                     break;
                 }
                 default:
@@ -109,8 +109,7 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
                     break;
                 }
             }
-            oxygine::spTween tween = oxygine::createTween(animTween, GameMap::frameTime * pAnim->getRows(), 1);
-
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, row), GameMap::frameTime * pAnim->getRows(), 1);
             queueAnimating->add(tween);
             if (i == 0)
             {

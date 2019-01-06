@@ -36,10 +36,10 @@ public:
     TestTweenText()
     {
         spTextField text = new TextField;
-        content->addChild(text);
+        _content->addChild(text);
 
         TextStyle st;
-        st.font = resourcesUI.getResFont("big");
+        st.font = _resources.getResFont("big");
         st.vAlign = TextStyle::VALIGN_MIDDLE;
         st.hAlign = TextStyle::HALIGN_MIDDLE;
         st.multiline = true;

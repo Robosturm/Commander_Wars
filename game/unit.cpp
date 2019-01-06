@@ -318,8 +318,14 @@ bool Unit::getHasMoved()
 
 qint32 Unit::getMovementPoints()
 {
-    // todo implement me
-    return baseMovementPoints;
+    if (fuel < baseMovementPoints)
+    {
+        return fuel;
+    }
+    else
+    {
+        return baseMovementPoints;
+    }
 }
 
 QStringList Unit::getActionList()

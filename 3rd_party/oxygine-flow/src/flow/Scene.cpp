@@ -30,20 +30,20 @@ namespace oxygine
 #else
         const Uint8* data = SDL_GetKeyboardState(0);
 
-        if (data[SDL_GetScancodeFromKey(SDLK_BACKSPACE)] ||
-                data[SDL_GetScancodeFromKey(SDLK_ESCAPE)] ||
-                data[SDL_GetScancodeFromKey(SDLK_AC_BACK)])
-        {
-            back = true;
-        }
+        if (key::wasPressed(SDL_SCANCODE_AC_BACK))
+            return true;
 
+        if (key::wasPressed(SDL_SCANCODE_ESCAPE))
+            return true;
+
+        if (key::wasPressed(SDL_SCANCODE_BACKSPACE))
+            return true;
 #endif
         return back;
     }
 
     namespace flow
     {
-        extern bool _wasTouchBlocked;
         extern spTransition _defaultTransition;
 
         Scene::Scene(): _done(false), _remove(false), _dialog(false), _instack(false), _instackWide(false), _visible(false), _visibleWide(false), _allowDialogsOnTop(true), _passBlockedTouch(true)
@@ -69,10 +69,6 @@ namespace oxygine
 
         Scene::~Scene()
         {
-            //workaround allows to convert this to sp from destructor
-            _ref_counter = 10000;
-            Event ev(EVENT_DESTROY);
-            EventDispatcher::dispatchEvent(&ev);
         }
 
         void Scene::setTransitionIn(spTransition t)
@@ -89,6 +85,17 @@ namespace oxygine
         {
             setTransitionIn(tin);
             setTransitionOut(tout);
+        }
+
+        void Scene::listenForAllSceneEvents(const EventCallback &cb)
+        {
+            size_t events[] = { 
+                EVENT_PRE_ENTERING, EVENT_POST_ENTERING, EVENT_PRE_LEAVING, EVENT_POST_LEAVING, 
+                EVENT_PRE_SHOWING, EVENT_POST_SHOWING, EVENT_PRE_HIDING, EVENT_POST_HIDING,
+                EVENT_SCENE_SHOWN, EVENT_SCENE_HIDDEN, EVENT_BACK };
+
+            for (size_t i = 0; i < sizeof(events) / sizeof(events[0]); ++i)            
+                addEventListener(events[i], cb);
         }
 
         void Scene::finishOnClick(spActor actor)

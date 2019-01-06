@@ -18,3 +18,6 @@ examples/HelloFreeType/proj.android/.gradle/
 examples/HelloFreeType/data/*.dll
 examples/HelloFreeType/proj.cmake/build/
 **/.externalNativeBuild
+examples/HelloFreeType/proj.android/local.properties
+examples/HelloFreeType/proj.android/proj.android.iml
+examples/HelloFreeType/proj.android/.idea/

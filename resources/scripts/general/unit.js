@@ -25,5 +25,6 @@ var UNIT =
     {
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        return animation;
     },
 };

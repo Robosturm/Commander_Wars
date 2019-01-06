@@ -74,6 +74,16 @@ namespace oxygine
             bool _transitionDone;
             spScene _current;
             spScene _next;
+
+
+            bool _secondary;
+
+            spActor _touchBlocker;
+
+            Vector2 _blockedTouchPosition;
+            bool _wasTouchBlocked;
+            bool _wasBackBlocked;
+            timeMS _tm;
         };
     }
 }

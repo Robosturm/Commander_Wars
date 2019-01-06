@@ -165,12 +165,14 @@ void example_preinit()
 
 void example_init()
 {
-    //Load resources in xml file
-    resources.loadXML("xmls/res.xml");
     Test::init();
 
+    //Load resources in xml file
+    resources.loadXML("xmls/res.xml");
+    
+
     Test::instance = new TestActor;
-    getStage()->addChild(Test::instance);
+    Test::instance->attachTo(getStage());
 
     //Initialize http requests
     HttpRequestTask::init();

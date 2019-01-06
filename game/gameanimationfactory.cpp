@@ -6,6 +6,8 @@
 
 #include "game/gameanimationwalk.h"
 
+#include "game/gameanimationcapture.h"
+
 #include "game/unit.h"
 
 #include "game/gameaction.h"
@@ -19,6 +21,30 @@ GameAnimationFactory::GameAnimationFactory()
     : QObject()
 {
 
+}
+
+void GameAnimationFactory::queueAnimation(GameAnimation* pGameAnimation)
+{
+    for (qint32 i = 0; i < m_Animations.size(); i++)
+    {
+        if (m_Animations[i].get() == pGameAnimation)
+        {
+            GameMap::getInstance()->removeChild(m_Animations[i]);
+            break;
+        }
+    }
+}
+
+void GameAnimationFactory::startQueuedAnimation(GameAnimation* pGameAnimation)
+{
+    for (qint32 i = 0; i < m_Animations.size(); i++)
+    {
+        if (m_Animations[i].get() == pGameAnimation)
+        {
+            GameMap::getInstance()->addChild(m_Animations[i]);
+            break;
+        }
+    }
 }
 
 GameAnimationFactory* GameAnimationFactory::getInstance()
@@ -50,6 +76,16 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(Unit* pUnit, Gam
     return pGameAnimationWalk;
 }
 
+GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(qint32 x, qint32 y, qint32 startPoints, qint32 endPoints)
+{
+    GameAnimationCapture* pGameAnimationCapture = new GameAnimationCapture(startPoints, endPoints);
+    pGameAnimationCapture->setPriority(static_cast<short>(Mainapp::ZOrder::Animation));
+    pGameAnimationCapture->setPosition(x, y);
+    GameMap::getInstance()->addChild(pGameAnimationCapture);
+    m_Animations.append(pGameAnimationCapture);
+    return pGameAnimationCapture;
+}
+
 quint32 GameAnimationFactory::getAnimationCount()
 {
     return m_Animations.size();
@@ -69,13 +105,11 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation)
     }
 }
 
-void GameAnimationFactory::removeAllAnimations()
+void GameAnimationFactory::finishAllAnimations()
 {
     while (m_Animations.size() > 0)
     {
         spGameAnimation spAnimation = m_Animations[m_Animations.size() - 1];
         spAnimation->onFinished();
-        GameMap::getInstance()->removeChild(spAnimation);
-        m_Animations.removeAt(m_Animations.size() - 1);
     }
 }

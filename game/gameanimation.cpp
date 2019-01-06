@@ -13,6 +13,12 @@ GameAnimation::GameAnimation(quint32 frameTime)
     connect(this, SIGNAL(sigFinished()), this, SLOT(onFinished()), Qt::QueuedConnection);
 }
 
+void GameAnimation::queueAnimation(GameAnimation* pGameAnimation)
+{
+    m_QueuedAnimations.append(pGameAnimation);
+    GameAnimationFactory::getInstance()->queueAnimation(pGameAnimation);
+}
+
 void GameAnimation::addSprite(QString spriteID, float offsetX, float offsetY)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
@@ -38,5 +44,9 @@ void GameAnimation::addSprite(QString spriteID, float offsetX, float offsetY)
 
 void GameAnimation::onFinished()
 {
+    for (qint32 i = 0; i < m_QueuedAnimations.size(); i++)
+    {
+        GameAnimationFactory::getInstance()->startQueuedAnimation(m_QueuedAnimations[i]);
+    }
     GameAnimationFactory::removeAnimation(this);
 }

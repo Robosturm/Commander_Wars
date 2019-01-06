@@ -134,8 +134,8 @@ public:
     TestCamera()
     {
         spCamera cam = new Camera;
-        cam->attachTo(content);
-        cam->setSize(content->getSize());
+        cam->attachTo(_content);
+        cam->setSize(_content->getSize());
 
 
         spSprite map = new Sprite();
@@ -145,7 +145,7 @@ public:
         spButton button = new Button;
 
         button->setPosition(map->getSize() / 2);
-        button->setResAnim(resourcesUI.getResAnim("button"));
+        button->setResAnim(DebugActor::resSystem->getResAnim("button"));
         button->attachTo(map);
         button->setAnchor(0.5f, 0.5f);
         button->addEventListener(TouchEvent::CLICK, CLOSURE(this, &TestCamera::testClick));

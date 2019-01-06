@@ -26,7 +26,8 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
         animation.loadSprite("light_tank+walk+mask", true, 1);
-        animation.loadSprite("light_tank+walk", true, 1);
+        animation.loadSprite("light_tank+walk", false, 1);
+        return animation;
     };
 }
 

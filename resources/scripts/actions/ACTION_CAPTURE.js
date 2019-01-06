@@ -45,10 +45,12 @@ var Constructor = function()
     {
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
+        var animation = this[unit.getUnitID()].doWalkingAnimation(action);
         // move unit to target position
         unit.moveUnitAction(action);
         // capture the building
         unit.increaseCapturePoints();
+        var capturePoints = unit.capturePoints;
         // check if the capture points are high enough
         if (unit.capturePoints >= 20)
         {
@@ -56,6 +58,13 @@ var Constructor = function()
             building.setUnitOwner(unit);
             unit.capturePoints = 0;
         }
+
+        var x = action.getActionTarget().x * map.getImageSize() - 10;
+        var y = action.getActionTarget().y * map.getImageSize() - 30;
+        var captureAnimation = GameAnimationFactory.createGameAnimationCapture(x , y, capturePoints, unit.capturePoints);
+        captureAnimation.addBackgroundSprite("capture_background");
+        animation.queueAnimation(captureAnimation);
+
         // disable unit commandments for this turn
         unit.setHasMoved(true);
     };

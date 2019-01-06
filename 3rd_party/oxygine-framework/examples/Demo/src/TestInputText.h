@@ -17,7 +17,7 @@ public:
         style.hAlign = TextStyle::HALIGN_MIDDLE;
         style.vAlign = TextStyle::VALIGN_MIDDLE;
         style.multiline = true;
-        style.font = Test::resourcesUI.getResFont("big");
+        style.font = Test::_resources.getResFont("big");
         text->setStyle(style);
         text->setText(defText);
 
@@ -47,13 +47,13 @@ public:
 
         spTextWithBackground t = new TextWithBackground("click and edit me 1");
         t->setSize(200, 60);
-        t->setPosition(content->getWidth() / 2 - t->getWidth() / 2, 100);
+        t->setPosition(_content->getWidth() / 2 - t->getWidth() / 2, 100);
         t->attachTo(this);
         t->addEventListener(TouchEvent::CLICK, CLOSURE(this, &TestInputText::onClick));
 
         t = new TextWithBackground("click and edit me 2");
         t->setSize(200, 60);
-        t->setPosition(content->getWidth() / 2 - t->getWidth() / 2, 170);
+        t->setPosition(_content->getWidth() / 2 - t->getWidth() / 2, 170);
         t->attachTo(this);
         t->addEventListener(TouchEvent::CLICK, CLOSURE(this, &TestInputText::onClick));
     }

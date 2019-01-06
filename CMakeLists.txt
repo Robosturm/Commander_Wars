@@ -104,6 +104,7 @@ set(${PROJECT_NAME}_SRCS
         game/gameanimation.cpp
         game/gameanimationfactory.cpp
         game/gameanimationwalk.cpp
+        game/gameanimationcapture.cpp
 
         # game input
         gameinput/basegameinputif.cpp

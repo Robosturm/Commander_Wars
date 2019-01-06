@@ -11,8 +11,14 @@ namespace oxygine
 
     namespace flow
     {
+        Color _fadeColor = Color(0, 0, 0, 128);
 
-		bool _TRANSITION_ADD_CHILD = false;
+        void setDefaultFadeColor(const Color &c)
+        {
+            _fadeColor = c;
+        }
+
+        bool _TRANSITION_ADD_CHILD = false;
 
         void Transition::assign(Scene* scene)
         {
@@ -39,6 +45,7 @@ namespace oxygine
 
         void Transition::waitTween(spTween t)
         {
+            //addRef();
             t->setDoneCallback([ = ](Event*)
             {
                 //_done = true;
@@ -46,6 +53,7 @@ namespace oxygine
                 //_current = 0;
                 //_next = 0;
                 _flow->phaseEnd();
+                //releaseRef();
             });
         }
 
@@ -61,13 +69,13 @@ namespace oxygine
                 if (back)
                     current->_holder->insertSiblingBefore(next->_holder);
                 else
-				{ 
-					if (_TRANSITION_ADD_CHILD)
-						current->_holder->_getStage()->addChild(next->_holder);
-					else
-						current->_holder->insertSiblingAfter(next->_holder);
-				}
-                    
+                {
+                    if (_TRANSITION_ADD_CHILD)
+                        current->_holder->_getStage()->addChild(next->_holder);
+                    else
+                        current->_holder->insertSiblingAfter(next->_holder);
+                }
+
             }
         }
 
@@ -93,15 +101,20 @@ namespace oxygine
             scene->setTransitionOut(t);
         }
 
-        TransitionMove::TransitionMove()
+        TransitionMove::TransitionMove():_moveIn(true)
         {
             _fade = new ColorRectSprite;
             _fade->setPosition(-10000, -10000);
             _fade->setSize(Vector2(30000, 30000));
-            _fade->setColor(Color(0, 0, 0, 128));
+            _fade->setColor(_fadeColor);
 
             _src = Vector2(0.0f, -getStage()->getHeight());
             _tweenOpt._ease = Tween::ease_inOutBack;
+        }
+
+        void TransitionMove::setMoveWhenIn(bool move)
+        {
+            _moveIn = move;
         }
 
         void TransitionMove::_run(spScene current, spScene next, bool back)
@@ -128,8 +141,19 @@ namespace oxygine
 
 
             holder->setPosition(src);
-            spTween tween = holder->addTween(Actor::TweenPosition(dest), _tweenOpt);
-            waitTween(tween);
+
+            if (_moveIn || back)
+            {
+                spTween tween = holder->addTween(Actor::TweenPosition(dest), _tweenOpt);
+                waitTween(tween);
+            }
+            else
+            {
+                holder->setPosition(dest);
+
+                spTween tween = holder->addTween(TweenDummy(), 1);
+                waitTween(tween);
+            }
         }
 
         void TransitionFade::assign(Scene* scene)

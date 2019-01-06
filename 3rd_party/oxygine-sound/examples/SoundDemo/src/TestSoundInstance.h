@@ -61,13 +61,13 @@ public:
         spTextField label;
         label = new TextField;
         label->setText("Volume:");
-        label->setFont(Test::resourcesUI.getResFont("main"));
+        label->setFont(Test::_resources.getResFont("main"));
         label->setX(10);
-        label->setY(content->getHeight() / 2 - 80);
-        label->attachTo(content);
+        label->setY(_content->getHeight() / 2 - 80);
+        label->attachTo(_content);
         volumeSprite = new Sprite;
         volumeSprite->setAnimFrame(AnimationFrame(volumeTexture));
-        volumeSprite->attachTo(content);
+        volumeSprite->attachTo(_content);
         volumeSprite->setY(label->getY() + 10);
 
 
@@ -80,21 +80,21 @@ public:
 
         label = new TextField;
         label->setText("Position:");
-        label->setFont(Test::resourcesUI.getResFont("main"));
+        label->setFont(Test::_resources.getResFont("main"));
         label->setX(10);
-        label->setY(content->getHeight() / 2);
-        label->attachTo(content);
+        label->setY(_content->getHeight() / 2);
+        label->attachTo(_content);
         posSprite = new Sprite;
         posSprite->setAnimFrame(AnimationFrame(posTexture));
-        posSprite->attachTo(content);
+        posSprite->attachTo(_content);
         posSprite->setY(label->getY() + 10);
 
 
         label = new TextField;
-        label->setFont(Test::resourcesUI.getResFont("main"));
+        label->setFont(Test::_resources.getResFont("main"));
         label->setX(10);
-        label->setY(content->getHeight() / 2 + 110);
-        label->attachTo(content);
+        label->setY(_content->getHeight() / 2 + 110);
+        label->attachTo(_content);
         txtState = label;
 
     }

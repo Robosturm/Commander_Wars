@@ -8,6 +8,8 @@
 
 #include "game/unitpathfindingsystem.h"
 
+#include "game/gameanimationfactory.h"
+
 #include "resource_management/gamemanager.h"
 
 HumanPlayerInput::HumanPlayerInput(GameMenue* pMenue)
@@ -29,7 +31,11 @@ HumanPlayerInput::~HumanPlayerInput()
 
 void HumanPlayerInput::rightClick(qint32 x, qint32 y)
 {
-    if (m_pGameAction != nullptr)
+    if (GameAnimationFactory::getAnimationCount() > 0)
+    {
+        GameAnimationFactory::finishAllAnimations();
+    }
+    else if (m_pGameAction != nullptr)
     {
         if (m_CurrentMenu.get() == nullptr)
         {
@@ -68,8 +74,12 @@ void HumanPlayerInput::cleanUpInput()
 
 void HumanPlayerInput::leftClick(qint32 x, qint32 y)
 {
+    if (GameAnimationFactory::getAnimationCount() > 0)
+    {
+        // do nothing
+    }
     // no action selected
-    if (m_pGameAction == nullptr)
+    else if (m_pGameAction == nullptr)
     {
         // prepare action
         m_pGameAction = new GameAction();
@@ -117,7 +127,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                 }
                 if (possibleActions.size() > 0)
                 {
-                    createActionMenu(possibleActions);
+                    createActionMenu(possibleActions, x, y);
                 }
             }
         }
@@ -156,7 +166,7 @@ void HumanPlayerInput::finishAction()
     cleanUpInput();
 }
 
-void HumanPlayerInput::createActionMenu(QStringList actionIDs)
+void HumanPlayerInput::createActionMenu(QStringList actionIDs, qint32 x, qint32 y)
 {
     QStringList actionTexts;
     QVector<oxygine::spSprite> sprites;
@@ -181,6 +191,8 @@ void HumanPlayerInput::createActionMenu(QStringList actionIDs)
         sprites.append(pSprite);
     }
     m_CurrentMenu = new HumanPlayerInputMenu(actionTexts, actionIDs, sprites);
+    m_CurrentMenu->setMenuPosition(x * GameMap::Imagesize, y * GameMap::Imagesize);
+
     pMap->addChild(m_CurrentMenu);
     connect(m_CurrentMenu.get(), SIGNAL(sigItemSelected(QString)), this, SLOT(menuItemSelected(QString)), Qt::QueuedConnection);
 }
