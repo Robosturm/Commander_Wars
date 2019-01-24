@@ -13,15 +13,6 @@ class GameAction;
 class Unit : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
-    Q_PROPERTY(float hp READ getHp WRITE setHp)
-    Q_PROPERTY(qint32 ammo1 READ getAmmo1 WRITE setAmmo1)
-    Q_PROPERTY(qint32 maxAmmo1 READ getMaxAmmo1 WRITE setMaxAmmo1)
-    Q_PROPERTY(qint32 ammo2 READ getAmmo2 WRITE setAmmo2)
-    Q_PROPERTY(qint32 maxAmmo2 READ getMaxAmmo2 WRITE setMaxAmmo2)
-    Q_PROPERTY(qint32 fuel READ getFuel WRITE setFuel)
-    Q_PROPERTY(qint32 maxFuel READ getMaxFuel WRITE setMaxFuel)
-    Q_PROPERTY(qint32 baseMovementPoints READ getBaseMovementPoints WRITE setBaseMovementPoints)
-    Q_PROPERTY(qint32 capturePoints READ getCapturePoints WRITE setCapturePoints)
 public:
     enum class Priorities
     {
@@ -68,6 +59,36 @@ public:
     {
         return 3;
     }
+
+
+    /**
+     * @brief initUnit loads all default unit value
+     */
+    void initUnit();
+
+    /**
+     * @brief getActionList
+     * @return the string id list of actions this units can perform
+     */
+    QStringList getActionList();
+signals:
+
+public slots:
+    /**
+     * @brief getMovementPoints the movement points this unit can move
+     * @return
+     */
+    qint32 getMovementPoints();
+    /**
+     * @brief getBaseMovementPoints the base movement points of this unit
+     * @return
+     */
+    qint32 getBaseMovementPoints() const;
+    /**
+     * @brief setBaseMovementPoints the base movement points of this unit
+     * @param value
+     */
+    void setBaseMovementPoints(const qint32 &value);
     qint32 getHp() const;
     void setHp(const qint32 &value);
 
@@ -91,34 +112,6 @@ public:
 
     qint32 getCapturePoints() const;
     void setCapturePoints(const qint32 &value);
-
-    /**
-     * @brief initUnit loads all default unit value
-     */
-    void initUnit();
-    /**
-     * @brief getMovementPoints the movement points this unit can move
-     * @return
-     */
-    qint32 getMovementPoints();
-    /**
-     * @brief getBaseMovementPoints the base movement points of this unit
-     * @return
-     */
-    qint32 getBaseMovementPoints() const;
-    /**
-     * @brief setBaseMovementPoints the base movement points of this unit
-     * @param value
-     */
-    void setBaseMovementPoints(const qint32 &value);
-    /**
-     * @brief getActionList
-     * @return the string id list of actions this units can perform
-     */
-    QStringList getActionList();
-signals:
-
-public slots:
     /**
      * @brief loadSprites loads the given sprite
      * @param spriteID

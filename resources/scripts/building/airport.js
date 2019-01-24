@@ -15,6 +15,12 @@ var Constructor = function()
             building.loadSprite("airport+neutral", false);
         }
     };
+
+    this.addCaptureAnimationBuilding = function(animation, building, startColor, capturedColor)
+    {
+        animation.addBuildingSprite("airport+mask", startColor , capturedColor, true);
+        animation.addBuildingSprite("airport", startColor , capturedColor, false);
+    };
 }
 
 Constructor.prototype = BUILDING;

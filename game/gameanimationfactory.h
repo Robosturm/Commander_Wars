@@ -55,7 +55,7 @@ public slots:
      * @brief createGameAnimationCapture
      * @return
      */
-    static GameAnimationCapture* createGameAnimationCapture(qint32 x, qint32 y, qint32 startPoints, qint32 endPoints);
+    static GameAnimationCapture* createGameAnimationCapture(qint32 x, qint32 y, qint32 startPoints, qint32 endPoints, qint32 maxPoints);
     /**
      * @brief getAnimationCount
      * @return the current amount of running animations

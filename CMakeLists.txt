@@ -131,6 +131,7 @@ qt5_create_translation(
         ${TS_FILES}
         OPTIONS ${LUPDATE_OPTIONS}
 )
+
 add_custom_target(${PROJECT_NAME}_translations DEPENDS ${QM_FILES})
 
 # create executable
@@ -209,10 +210,10 @@ endif()
 install(DIRECTORY resources DESTINATION ".")
 install(DIRECTORY maps DESTINATION ".")
 install(FILES ${${PROJECT_NAME}_INSTALL_LIBS} DESTINATION ".")
-# install translations
-install(FILES ${QM_FILES} DESTINATION "resources/translation/")
-install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION ".")
-install(FILES ${${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS} DESTINATION "mediaservice_dis")
 # install exe
 install(TARGETS ${PROJECT_NAME} DESTINATION ".")
+install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION ".")
+install(FILES ${${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS} DESTINATION "mediaservice_dis")
+# install translations
+install(FILES ${QM_FILES} DESTINATION "resources/translation/")
 

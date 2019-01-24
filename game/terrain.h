@@ -13,10 +13,6 @@
 class Terrain : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
-    Q_PROPERTY(QString terrainID READ getTerrainID )
-    Q_PROPERTY(bool y READ getY WRITE setY)
-    Q_PROPERTY(bool x READ getX WRITE setX)
-    Q_PROPERTY(QString terrainName READ getTerrainName WRITE setTerrainName)
 public:
     /**
      * @brief The DrawPriority enum z-priority for sprites
@@ -34,11 +30,7 @@ public:
 
     virtual ~Terrain();
 
-    qint32 getX() const;
-    void setX(const qint32 &value);
 
-    qint32 getY() const;
-    void setY(const qint32 &value);
     /**
      * @brief loadSprites loads all sprites we won't to show. Updates all sprite data
      */
@@ -46,8 +38,7 @@ public:
     QString getTerrainID() const;
 
 
-    QString getTerrainName() const;
-    void setTerrainName(const QString &value);
+
     /**
      * @brief syncAnimation call this on all terrains to make their animation synchronized.
      */
@@ -86,6 +77,13 @@ public:
         return 1;
     }
 public slots:
+    QString getTerrainName() const;
+    void setTerrainName(const QString &value);
+    qint32 getX() const;
+    void setX(const qint32 &value);
+
+    qint32 getY() const;
+    void setY(const qint32 &value);
     /**
      * @brief getUnit the unit on this terrain
      * @return

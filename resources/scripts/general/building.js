@@ -23,6 +23,12 @@ var BUILDING =
         return "PLAINS,STREET"
     },
 
+    addCaptureAnimationBuilding : function(animation, building, startColor, capturedColor)
+    {
+        animation.addBuildingSprite("town+mask", startColor , capturedColor, true);
+        animation.addBuildingSprite("town", startColor , capturedColor, false);
+    },
+
     canBuildingBePlaced : function(terrainID)
     {
         if ((terrainID === "PLAINS") || (terrainID === "STREET"))

@@ -43,26 +43,55 @@ var Constructor = function()
     };
     this.perform = function(action)
     {
+        var maxCapturePoints = 20;
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
         var animation = this[unit.getUnitID()].doWalkingAnimation(action);
         // move unit to target position
         unit.moveUnitAction(action);
         // capture the building
+        var capturePoints = unit.getCapturePoints();
+        var building = action.getMovementBuilding();
         unit.increaseCapturePoints();
-        var capturePoints = unit.capturePoints;
         // check if the capture points are high enough
-        if (unit.capturePoints >= 20)
+        if (unit.getCapturePoints() >= maxCapturePoints)
         {
-            var building = action.getMovementBuilding();
+
             building.setUnitOwner(unit);
-            unit.capturePoints = 0;
+            unit.setCapturePoints(0);
         }
 
         var x = action.getActionTarget().x * map.getImageSize() - 10;
         var y = action.getActionTarget().y * map.getImageSize() - 30;
-        var captureAnimation = GameAnimationFactory.createGameAnimationCapture(x , y, capturePoints, unit.capturePoints);
+        var captureAnimation = GameAnimationFactory.createGameAnimationCapture(x , y, capturePoints, unit.getCapturePoints(), maxCapturePoints);
         captureAnimation.addBackgroundSprite("capture_background");
+        var armyName = unit.getOwner().getArmy().toLowerCase();
+        // bh and bg have the same sprites
+        if (armyName === "bg")
+        {
+            armyName = "bh"
+        }
+        if ((armyName !== "os") &&
+            (armyName !== "yc") &&
+            (armyName !== "ge") &&
+            (armyName !== "bm") &&
+            (armyName !== "bh"))
+        {
+            armyName = "os";
+        }
+        var color;
+        if (building.getOwner() === null)
+        {
+            color = "#FFFFFF";
+        }
+        else
+        {
+            color = building.getOwner().getColor();
+        }
+        this[building.getBuildingID()].addCaptureAnimationBuilding(captureAnimation, building, color, unit.getOwner().getColor());
+        captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , unit.getOwner().getColor(), true);
+        captureAnimation.addSoldierSprite("soldier+" + armyName , unit.getOwner().getColor(), false);
+
         animation.queueAnimation(captureAnimation);
 
         // disable unit commandments for this turn

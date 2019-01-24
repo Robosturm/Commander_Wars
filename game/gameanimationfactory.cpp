@@ -76,9 +76,9 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(Unit* pUnit, Gam
     return pGameAnimationWalk;
 }
 
-GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(qint32 x, qint32 y, qint32 startPoints, qint32 endPoints)
+GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(qint32 x, qint32 y, qint32 startPoints, qint32 endPoints, qint32 maxPoints)
 {
-    GameAnimationCapture* pGameAnimationCapture = new GameAnimationCapture(startPoints, endPoints);
+    GameAnimationCapture* pGameAnimationCapture = new GameAnimationCapture(startPoints, endPoints, maxPoints);
     pGameAnimationCapture->setPriority(static_cast<short>(Mainapp::ZOrder::Animation));
     pGameAnimationCapture->setPosition(x, y);
     GameMap::getInstance()->addChild(pGameAnimationCapture);

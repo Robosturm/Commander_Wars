@@ -2,13 +2,13 @@ var Constructor = function()
 {
     this.init = function(unit)
     {
-        unit.ammo1 = 10;
-        unit.maxAmmo1 = 10;
-        unit.ammo2 = 0;
-        unit.maxAmmo2 = 0;
-        unit.fuel = 100;
-        unit.maxFuel = 100;
-        unit.baseMovementPoints = 3;
+        unit.setAmmo1(10);
+        unit.setMaxAmmo1(10);
+        unit.setAmmo2(0);
+        unit.setMaxAmmo2(0);
+        unit.setFuel(100);
+        unit.setMaxFuel(100);
+        unit.setBaseMovementPoints(3);
     };
     // called for loading the main sprite
     this.loadSprites = function(unit)
@@ -16,11 +16,11 @@ var Constructor = function()
         // none neutral player
         var player = unit.getOwner();
         // get army name
-        var armyName = player.getArmy();
+        var armyName = player.getArmy().toLowerCase();
         // bh and bg have the same sprites
-        if (armyName === "BG")
+        if (armyName === "bg")
         {
-            armyName = "BH"
+            armyName = "bh"
         }
         // load sprites
         unit.loadSprite("infantry+" + armyName, false);
@@ -43,7 +43,19 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = player.getArmy();
-        armyName = "os";
+        if (armyName === "bg")
+        {
+            armyName = "bh"
+        }
+        if ((armyName !== "os") &&
+            (armyName !== "yc") &&
+            (armyName !== "ge") &&
+            (armyName !== "bm") &&
+            (armyName !== "bh") &&
+            (armyName !== "ma"))
+        {
+            armyName = "os";
+        }
         animation.loadSprite("infantry+" + armyName + "+walk+mask", true, 1);
         animation.loadSprite("infantry+" + armyName + "+walk", false, 1);
         return animation;

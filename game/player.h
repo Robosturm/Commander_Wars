@@ -22,7 +22,7 @@ public:
     Q_ENUM(Alliance)
 
     explicit Player(quint32 id);
-    virtual ~Player();
+    virtual ~Player() override;
 
     void setPlayerID(const quint32 &value);
 
@@ -30,12 +30,12 @@ public:
      * @brief serialize stores the object
      * @param pStream
      */
-    virtual void serialize(QDataStream& pStream);
+    virtual void serialize(QDataStream& pStream) override;
     /**
      * @brief deserialize restores the object
      * @param pStream
      */
-    virtual void deserialize(QDataStream& pStream);
+    virtual void deserialize(QDataStream& pStream) override;
     /**
      * @brief getVersion version of the file
      * @return

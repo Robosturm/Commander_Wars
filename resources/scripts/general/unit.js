@@ -2,12 +2,12 @@ var UNIT =
 {
     init : function(unit)
     {
-        unit.ammo1 = 0;
-        unit.maxAmmo1 = 0;
-        unit.ammo2 = 0;
-        unit.maxAmmo2 = 0;
-        unit.fuel = 99;
-        unit.maxFuel = 99;
+        unit.setAmmo1(0);
+        unit.setMaxAmmo1(0);
+        unit.setAmmo2(0);
+        unit.setMaxAmmo2(0);
+        unit.setFuel(99);
+        unit.setMaxFuel(99);
     },
     loadSprites : function(unit)
     {

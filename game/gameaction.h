@@ -9,7 +9,6 @@
 class GameAction : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(qint32 inputStep READ getInputStep WRITE setInputStep)
 
 public:
     explicit GameAction();
@@ -20,26 +19,7 @@ public:
      * @param point
      */
     void setTarget(QPoint point);
-    /**
-     * @brief setActionID sets the action id for this action
-     * @param actionID
-     */
-    void setActionID(QString actionID);
-    /**
-     * @brief getActionID
-     * @return
-     */
-    QString getActionID();
-    /**
-     * @brief getInputStep step the ai or player performs for adding info to this action
-     * @return
-     */
-    qint32 getInputStep() const;
-    /**
-     * @brief setInputStep updates the input step
-     * @param value
-     */
-    void setInputStep(const qint32 &value);
+
     /**
      * @brief getActionText the displayed text for this action
      * @param actionID
@@ -60,6 +40,26 @@ public:
 signals:
 
 public slots:
+    /**
+     * @brief setActionID sets the action id for this action
+     * @param actionID
+     */
+    void setActionID(QString actionID);
+    /**
+     * @brief getActionID
+     * @return
+     */
+    QString getActionID();
+    /**
+     * @brief getInputStep step the ai or player performs for adding info to this action
+     * @return
+     */
+    qint32 getInputStep() const;
+    /**
+     * @brief setInputStep updates the input step
+     * @param value
+     */
+    void setInputStep(const qint32 &value);
     /**
      * @brief perform executes this action
      */

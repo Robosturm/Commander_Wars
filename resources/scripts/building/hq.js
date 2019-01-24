@@ -8,11 +8,11 @@ var Constructor = function()
             // none neutral player
             var player = building.getOwner();
             // get army name
-            var armyName = player.getArmy();
+            var armyName = player.getArmy().toLowerCase();
             // bh and bg have the same sprites
-            if (armyName === "BG")
+            if (armyName === "bg")
             {
-                armyName = "BH"
+                armyName = "bh"
             }
             building.loadSprite("hq+" + armyName, false);
             building.loadSprite("hq+" + armyName + "+mask", true);
@@ -22,6 +22,26 @@ var Constructor = function()
             // neutral player
             building.loadSprite("hq+neutral", false);
         }
+    };
+    this.addCaptureAnimationBuilding = function(animation, building, startColor, capturedColor)
+    {
+        var player = building.getOwner();
+        // get army name
+        var armyName = player.getArmy().toLowerCase();
+        if (armyName === "bg")
+        {
+            armyName = "bh"
+        }
+        if ((armyName !== "os") &&
+            (armyName !== "yc") &&
+            (armyName !== "ge") &&
+            (armyName !== "bm") &&
+            (armyName !== "bh"))
+        {
+            armyName = "os";
+        }
+        animation.addBuildingSprite("hq+" + armyName + "+mask", startColor , capturedColor, true);
+        animation.addBuildingSprite("hq+" + armyName, startColor , capturedColor, false);
     };
 }
 

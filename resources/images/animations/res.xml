@@ -6,24 +6,42 @@
 		<image file="capture_background.png" />
 	
 		<!-- buildings -->
+		<image file="airport+mask.png" />
 		<image file="airport.png" />
+		<image file="factory+mask.png" />
 		<image file="factory.png" />
+		<image file="harbour+mask.png" />
 		<image file="harbour.png" />
+		<image file="hq+bh+mask.png" />
 		<image file="hq+bh.png" />
+		<image file="hq+bm+mask.png" />
 		<image file="hq+bm.png" />
+		<image file="hq+ge+mask.png" />
 		<image file="hq+ge.png" />
+		<image file="hq+os+mask.png" />
 		<image file="hq+os.png" />
+		<image file="hq+yc+mask.png" />
 		<image file="hq+yc.png" />
+		<image file="town+mask.png" />
 		<image file="town.png" />
+		<image file="labor+mask.png" />
+		<image file="labor.png" />
 		
 		<!-- soldier -->
 		<image file="soldier+bh.png" cols = "5" />
+		<image file="soldier+bh+mask.png" cols = "5" />
 		<image file="soldier+bm.png" cols = "5" />
+		<image file="soldier+bm+mask.png" cols = "5" />
 		<image file="soldier+ge.png" cols = "5" />
+		<image file="soldier+ge+mask.png" cols = "5" />
 		<image file="soldier+os.png" cols = "5" />
+		<image file="soldier+os+mask.png" cols = "5" />
 		<image file="soldier+yc.png" cols = "5" />
+		<image file="soldier+yc+mask.png" cols = "5" />
 		
 		<!-- animations -->
 		<image file="explosion+land.png" cols = "9" />
+		<image file="explosion+air.png" cols = "9" />
+		<image file="explosion+water.png" cols = "9" />
 	</atlas>
 </resources>

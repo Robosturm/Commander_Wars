@@ -15,6 +15,11 @@ var Constructor = function()
             building.loadSprite("harbour+neutral", false);
         }
     };
+    this.addCaptureAnimationBuilding = function(animation, building, startColor, capturedColor)
+    {
+        animation.addBuildingSprite("harbour+mask", startColor , capturedColor, true);
+        animation.addBuildingSprite("harbour", startColor , capturedColor, false);
+    };
 }
 
 Constructor.prototype = BUILDING;

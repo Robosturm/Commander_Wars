@@ -2,13 +2,13 @@ var Constructor = function()
 {
     this.init = function(unit)
     {
-        unit.ammo1 = 6;
-        unit.maxAmmo1 = 6;
-        unit.ammo2 = 0;
-        unit.maxAmmo2 = 0;
-        unit.fuel = 60;
-        unit.maxFuel = 60;
-        unit.baseMovementPoints = 6;
+        unit.setAmmo1(6);
+        unit.setMaxAmmo1(6);
+        unit.setAmmo2(0);
+        unit.setMaxAmmo2(0);
+        unit.setFuel(60);
+        unit.setMaxFuel(60);
+        unit.setBaseMovementPoints(6);
     };
     // called for loading the main sprite
     this.loadSprites = function(unit)
