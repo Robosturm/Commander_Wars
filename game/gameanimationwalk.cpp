@@ -119,7 +119,16 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
                 });
             }
         }
+
         pSprite->setPosition(m_pUnit->getX() * GameMap::Imagesize, m_pUnit->getY() * GameMap::Imagesize);
+        //
+        if (m_movePath.size() == 0)
+        {
+            queueMoving->addDoneCallback([=](oxygine::Event *)->void
+            {
+                emit sigFinished();
+            });
+        }
         pSprite->addTween(queueMoving);
         pSprite->addTween(queueAnimating);
 
@@ -129,6 +138,7 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
             QColor color = m_pUnit->getOwner()->getColor();
             oxygine::Sprite::TweenColor tweenColor(oxygine::Color(static_cast<quint8>(color.red()), static_cast<quint8>(color.green()), static_cast<quint8>(color.blue()), 255));
             oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
+
             pSprite->addTween(tween);
         }
         pSprite->setScale(scaling);

@@ -58,6 +58,8 @@ public:
      * @return
      */
     spUnit getSpUnit();
+
+    spBuilding getSpBuilding();
     /**
      * @brief serialize stores the object
      * @param pStream

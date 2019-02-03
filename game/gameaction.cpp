@@ -63,6 +63,7 @@ bool GameAction::canBePerformed(QString actionID)
 {
     GameMap* pMap = GameMap::getInstance();
     Unit* pUnit = getTargetUnit();
+    Building* pBuilding = getTargetBuilding();
     if (pUnit != nullptr)
     {
         if ((pUnit->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID()) &&
@@ -71,8 +72,8 @@ bool GameAction::canBePerformed(QString actionID)
             return false;
         }
     }
-    Building* pBuilding = getTargetBuilding();
-    if (pBuilding != nullptr)
+
+    if ((pBuilding != nullptr) && (pUnit == nullptr))
     {
         if (pBuilding->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID())
         {

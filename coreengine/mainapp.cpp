@@ -52,6 +52,12 @@ qint32 Mainapp::roundUp(float value)
     }
 }
 
+qint32 Mainapp::roundDown(float value)
+{
+    qint32 roundDown = static_cast<qint32>(value);
+    return roundDown;
+}
+
 bool Mainapp::isEven(qint32 value)
 {
     float val = value/2.0f;

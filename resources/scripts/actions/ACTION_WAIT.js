@@ -28,10 +28,6 @@ var Constructor = function()
     {
         return "wait";
     };
-    this.perform = function(action)
-    {
-        action.getTargetUnit().setHasMoved(true);
-    };
     this.isFinalStep = function(action)
     {
         return true;

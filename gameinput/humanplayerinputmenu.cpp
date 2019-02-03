@@ -10,7 +10,19 @@
 
 HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList actionIDs, QVector<oxygine::spSprite> icons)
 {
-    qint32 width = 100;
+    qint32 width = 0;
+    oxygine::ResFont* font = FontManager::getMainFont();
+    for (qint32 i = 0; i < texts.size(); i++)
+    {
+        // todo get actual font width
+        qint32 newWidth = texts[i].length() * 15;
+        if (newWidth > width )
+        {
+            width = newWidth;
+        }
+    }
+    width += GameMap::Imagesize + GameMap::Imagesize / 4;
+
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::spBox9Sprite pTopBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+top");

@@ -1,7 +1,14 @@
+
+
 #include "game/player.h"
 
+#include "game/gamemap.h"
+
 #include "coreengine/mainapp.h"
+
 #include "gameinput/basegameinputif.h"
+
+#include "game/building.h"
 
 Player::Player(quint32 id)
     : playerID(id)
@@ -70,6 +77,35 @@ Player::Alliance Player::checkAlliance(Player* pPlayer)
     {
         // todo implement real check for alliance
         return Alliance::Enemy;
+    }
+}
+
+void Player::setFonds(const quint32 &value)
+{
+    fonds = value;
+}
+
+quint32 Player::getFonds() const
+{
+    return fonds;
+}
+
+void Player::earnMoney(float modifier)
+{
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 y = 0; y < pMap->getMapHeight(); y++)
+    {
+        for (qint32 x = 0; x < pMap->getMapHeight(); x++)
+        {
+            spBuilding pBuilding = pMap->getSpTerrain(x, y)->getSpBuilding();
+            if (pBuilding.get() != nullptr)
+            {
+                quint32 income = static_cast<quint32>(pBuilding->getBaseIncome() * modifier);
+                // todo modifier income by co's and rules
+
+                fonds += income;
+            }
+        }
     }
 }
 

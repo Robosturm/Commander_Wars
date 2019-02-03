@@ -15,6 +15,10 @@ var Constructor = function()
             building.loadSprite("mine+neutral", false);
         }
     };
+    this.getBaseIncome = function()
+    {
+        return 3000;
+    };
 }
 
 Constructor.prototype = BUILDING;

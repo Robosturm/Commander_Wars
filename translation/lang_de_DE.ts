@@ -18,6 +18,30 @@
     </message>
 </context>
 <context>
+    <name>ACTION_JOIN</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="29"/>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_NEXT_PLAYER</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="20"/>
+        <source>Next Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_RATION</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="58"/>
+        <source>Ration</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_WAIT</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="25"/>
@@ -363,10 +387,34 @@
     </message>
 </context>
 <context>
+    <name>move_boat</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_boat.js" line="5"/>
+        <source>Boat</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>move_feet</name>
     <message>
         <location filename="../resources/scripts/movementtables/move_feet.js" line="5"/>
         <source>Feet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_hoellium</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_hoellium.js" line="5"/>
+        <source>Hoellium</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_mech</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_mech.js" line="5"/>
+        <source>Mech</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -383,6 +431,22 @@
     <message>
         <location filename="../resources/scripts/movementtables/move_tank.js" line="5"/>
         <source>Tank</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_tire_a</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_tire_a.js" line="5"/>
+        <source>Tire</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>move_tire_b</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_tire_b.js" line="5"/>
+        <source>Tire</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

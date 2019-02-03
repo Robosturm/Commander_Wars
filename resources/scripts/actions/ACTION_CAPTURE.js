@@ -53,14 +53,13 @@ var Constructor = function()
         var capturePoints = unit.getCapturePoints();
         var building = action.getMovementBuilding();
         unit.increaseCapturePoints();
+        var captured = false;
         // check if the capture points are high enough
         if (unit.getCapturePoints() >= maxCapturePoints)
         {
-
-            building.setUnitOwner(unit);
+            captured = true;
             unit.setCapturePoints(0);
         }
-
         var x = action.getActionTarget().x * map.getImageSize() - 10;
         var y = action.getActionTarget().y * map.getImageSize() - 30;
         var captureAnimation = GameAnimationFactory.createGameAnimationCapture(x , y, capturePoints, unit.getCapturePoints(), maxCapturePoints);
@@ -94,6 +93,10 @@ var Constructor = function()
 
         animation.queueAnimation(captureAnimation);
 
+        if (captured)
+        {
+            building.setUnitOwner(unit);
+        }
         // disable unit commandments for this turn
         unit.setHasMoved(true);
     };

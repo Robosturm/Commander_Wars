@@ -108,6 +108,11 @@ Building* Terrain::getBuilding()
     return m_Building.get();
 }
 
+spBuilding Terrain::getSpBuilding()
+{
+    return m_Building;
+}
+
 void Terrain::createBaseTerrain()
 {
     Mainapp* pApp = Mainapp::getInstance();

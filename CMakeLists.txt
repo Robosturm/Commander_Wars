@@ -83,6 +83,7 @@ set(${PROJECT_NAME}_SRCS
         coreengine/audiothread.cpp
         coreengine/pathfindingsystem.cpp
         coreengine/tweentogglevisibility.cpp
+        coreengine/tweenwait.cpp
 
         # network engine
         network/tcpclient.cpp

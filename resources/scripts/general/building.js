@@ -40,4 +40,9 @@ var BUILDING =
             return false;
         }
     },
+
+    getBaseIncome : function()
+    {
+        return 1000;
+    },
 };

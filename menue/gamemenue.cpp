@@ -25,7 +25,7 @@ GameMenue::GameMenue(QString map)
 
 
     GameMap::getInstance()->getspPlayer(0)->setBaseGameInput(new HumanPlayerInput(this));
-    GameMap::getInstance()->setCurrentPlayer(0);
+    startGame(0);
 }
 
 void GameMenue::performAction(GameAction* pGameAction)
@@ -37,5 +37,6 @@ void GameMenue::performAction(GameAction* pGameAction)
 
 void GameMenue::startGame(qint32 startPlayer)
 {
-
+    GameMap::getInstance()->setCurrentPlayer(startPlayer);
+    GameMap::getInstance()->getCurrentPlayer()->earnMoney();
 }

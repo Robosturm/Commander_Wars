@@ -14,5 +14,18 @@
 		<image file="wait.png" />
 		<image file="fire.png" />
 		<image file="capture.png" />
+		<image file="next_player.png" />
+		<image file="join.png" />
+		<image file="destroy.png" />
+		<image file="dive.png" />
+		<image file="heal.png" />
+		<image file="load.png" />
+		<image file="power.png" />
+		<image file="ration.png" />
+		<image file="superpower.png" />
+		<image file="tagpower.png" />
+		<image file="unhide.png" />
+		
 	</atlas>
 </resources>
+

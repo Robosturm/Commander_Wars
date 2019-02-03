@@ -126,6 +126,22 @@ bool Building::canBuildingBePlaced(QString terrainID)
     }
 }
 
+quint32 Building::getBaseIncome() const
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getBaseIncome";
+    QJSValueList args1;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
+    if (ret.isNumber())
+    {
+        return ret.toUInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 qint32 Building::getX() const
 {
     return m_Terrain->getX();

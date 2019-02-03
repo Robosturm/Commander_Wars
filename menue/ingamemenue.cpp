@@ -31,7 +31,7 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map)
     }
     else
     {
-        oxygine::Actor::addChild(new GameMap(map));
+        oxygine::Actor::addChild(new GameMap(map, true));
     }
 
 

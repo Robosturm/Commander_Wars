@@ -12,6 +12,8 @@
 
 #include "game/terrain.h"
 
+#include "game/unit.h"
+
 #include "game/player.h"
 
 #include "game/gameanimationfactory.h"
@@ -44,20 +46,21 @@ GameMap::GameMap(qint32 width, qint32 heigth)
     updateTerrainSprites();
     centerMap(width / 2, heigth / 2);
     // add two players to a default map :)
-    for (qint32 i = 0; i < 2; i++)
+    for (quint32 i = 0; i < 2; i++)
     {
         players.append(new Player(i));
     }
 }
 
 
-GameMap::GameMap(QString map)
+GameMap::GameMap(QString map, bool gamestart)
 {
     loadMapData();
     QFile file(map);
     file.open(QIODevice::ReadOnly);
     QDataStream pStream(&file);
     deserialize(pStream);
+
 
 }
 
@@ -250,6 +253,10 @@ void GameMap::getField(qint32& x, qint32& y, Directions direction)
             y--;
             x--;
             break;
+        }
+        default:
+        {
+            // do nothing
         }
     }
 }
@@ -468,4 +475,49 @@ void GameMap::deserialize(QDataStream& pStream)
 qint32 GameMap::getImageSize()
 {
     return Imagesize;
+}
+
+void GameMap::enableUnits(Player* pPlayer)
+{
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            spUnit pUnit = fields.at(y)->at(x)->getSpUnit();
+            if (pUnit.get() != nullptr)
+            {
+                if (pUnit->getOwner() == pPlayer)
+                {
+                    pUnit->setHasMoved(false);
+                }
+            }
+        }
+    }
+}
+
+void GameMap::nextPlayer()
+{
+    for (qint32 i = 0; i < players.size(); i++)
+    {
+        if (players.at(i).get() == m_CurrentPlayer.get())
+        {
+            if (i == players.size() - 1)
+            {
+                m_CurrentPlayer = players[0];
+                break;
+            }
+            else
+            {
+                m_CurrentPlayer = players[i + 1];
+                break;
+            }
+        }
+    }
+}
+
+void GameMap::nextTurn()
+{
+    enableUnits(m_CurrentPlayer.get());
+    nextPlayer();
+    m_CurrentPlayer->earnMoney();
 }

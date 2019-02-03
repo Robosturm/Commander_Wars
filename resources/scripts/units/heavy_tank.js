@@ -4,11 +4,17 @@ var Constructor = function()
     {
         unit.setAmmo1(5);
         unit.setMaxAmmo1(5);
+        unit.setWeapon2ID("WEAPON_HEAVY_TANK_GUN");
         unit.setAmmo2(10);
         unit.setMaxAmmo2(10);
+        unit.setWeapon2ID("WEAPON_HEAVY_TANK_MG");
         unit.setFuel(50);
         unit.setMaxFuel(50);
         unit.setBaseMovementPoints(5);
+        unit.setCosts(12000);
+        unit.setMinRange(1);
+        unit.setMaxRange(1);
+        unit.setVision(2);
     };
     // called for loading the main sprite
     this.loadSprites = function(unit)

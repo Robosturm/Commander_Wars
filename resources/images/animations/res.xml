@@ -43,5 +43,6 @@
 		<image file="explosion+land.png" cols = "9" />
 		<image file="explosion+air.png" cols = "9" />
 		<image file="explosion+water.png" cols = "9" />
+		<image file="ration.png" />
 	</atlas>
 </resources>

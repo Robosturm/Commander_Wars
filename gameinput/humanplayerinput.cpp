@@ -12,6 +12,10 @@
 
 #include "resource_management/gamemanager.h"
 
+#include "coreengine/mainapp.h"
+
+#include "coreengine/interpreter.h"
+
 HumanPlayerInput::HumanPlayerInput(GameMenue* pMenue)
 {
     connect(pMenue, SIGNAL(sigRightClick(qint32,qint32)), this, SLOT(rightClick(qint32,qint32)), Qt::QueuedConnection);
@@ -99,7 +103,19 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
             }
             else
             {
-
+                QStringList actions = getEmptyActionList();
+                QStringList possibleActions;
+                for (qint32 i = 0; i < actions.size(); i++)
+                {
+                    if (m_pGameAction->canBePerformed(actions[i]))
+                    {
+                        possibleActions.append(actions[i]);
+                    }
+                }
+                if (possibleActions.size() > 0)
+                {
+                    createActionMenu(possibleActions, x, y);
+                }
             }
         }
 
@@ -316,6 +332,20 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
      }
  }
 
+ QStringList HumanPlayerInput::getEmptyActionList()
+ {
+     Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+     QJSValue value = pInterpreter->doFunction("ACTION", "getEmptyFieldActions");
+     if (value.isString())
+     {
+         return value.toString().split(",");
+     }
+     else
+     {
+        return QStringList();
+     }
+ }
+
 void HumanPlayerInput::deleteArrow()
 {
     GameMap* pMap = GameMap::getInstance();
@@ -326,3 +356,4 @@ void HumanPlayerInput::deleteArrow()
     m_ArrowPoints.clear();
     m_Arrows.clear();
 }
+

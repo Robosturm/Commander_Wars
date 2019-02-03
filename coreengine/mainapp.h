@@ -25,6 +25,7 @@ public slots:
      * @return the rounded up integer value
      */
     static qint32 roundUp(float value);
+    static qint32 roundDown(float value);
     static bool isEven(qint32 value);
     void quitGame();
 signals:

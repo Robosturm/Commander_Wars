@@ -25,4 +25,11 @@ var ACTION =
         // make the action infinite
         return false;
     },
+
+
+    getEmptyFieldActions : function()
+    {
+        return "ACTION_NEXT_PLAYER";
+    },
+
 };

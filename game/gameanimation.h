@@ -27,14 +27,22 @@ public slots:
      * @brief addSprite
      * @param spriteID
      */
-    void addSprite(QString spriteID, float offsetX, float offsetY);
+    void addSprite(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish = 0);
     /**
      * @brief onFinished called when the animation is finished
      */
     virtual void onFinished();
+    /**
+     * @brief setEndOfAnimationCall calls a java script function when the animation is finished. Note: no parameters can be used to call the function
+     * @param postActionObject java script object that will be used
+     * @param postActionFunction java script function of the object that will be called
+     */
+    void setEndOfAnimationCall(QString postActionObject, QString postActionFunction);
 private:
     quint32 m_frameTime{0};
     QVector<GameAnimation*> m_QueuedAnimations;
+    QString jsPostActionObject{""};
+    QString jsPostActionFunction{""};
 };
 
 #endif // GAMEANIMATION_H

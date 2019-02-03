@@ -49,7 +49,7 @@ public:
      * @brief GameMap
      * @param map path to the map which should be loaded
      */
-    explicit GameMap(QString map);
+    explicit GameMap(QString map, bool gamestart);
     virtual ~GameMap();
     /**
      * @brief getMapWidth
@@ -194,6 +194,19 @@ public slots:
      * @return the size of an field in pixel
      */
     static qint32 getImageSize();
+    /**
+     * @brief nextTurn next players turn.
+     */
+    void nextTurn();
+    /**
+     * @brief enableUnits makes all units of the given player movable again
+     * @param pPlayer
+     */
+    void enableUnits(Player* pPlayer);
+    /**
+     * @brief nextPlayer next player
+     */
+    void nextPlayer();
 private:
     static GameMap* m_pInstance;
 
@@ -202,6 +215,7 @@ private:
     QVector<QVector<spTerrain>*> fields;
     QVector<spPlayer> players;
     spPlayer m_CurrentPlayer;
+    quint32 currentDay{0};
 
     static const QString m_JavascriptName;
     static const QString m_GameAnimationFactory;

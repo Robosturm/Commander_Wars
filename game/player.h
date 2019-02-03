@@ -87,8 +87,17 @@ public slots:
      * @return the alliance of the player with us
      */
     Alliance checkAlliance(Player* pPlayer);
+    quint32 getFonds() const;
+
+    void setFonds(const quint32 &value);
+    /**
+     * @brief earnMoney earns money based on the buildings the player has
+     * @param modifier multiplier additionaly modifying the income
+     */
+    void earnMoney(float modifier = 1.0f);
 private:
     quint32 playerID;
+    quint32 fonds{0};
     QColor m_Color;
     /**
      * @brief m_pBaseGameInput pointer to the ai or human player

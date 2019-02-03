@@ -74,6 +74,7 @@ public slots:
     void leftClick(qint32 x, qint32 y);
     void cursorMoved(qint32 x, qint32 y);
     void menuItemSelected(QString itemID);
+    QStringList getEmptyActionList();
 private:
     GameAction* m_pGameAction{nullptr};
     UnitPathFindingSystem* m_pUnitPathFindingSystem{nullptr};

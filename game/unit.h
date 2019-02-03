@@ -26,6 +26,8 @@ public:
     explicit Unit() = default;
 
     explicit Unit(QString unitID, spPlayer pOwner);
+
+    virtual ~Unit();
     /**
      * @brief setOwner changes the owner ship of this unit
      * @param pOwner
@@ -71,6 +73,8 @@ public:
      * @return the string id list of actions this units can perform
      */
     QStringList getActionList();
+
+
 signals:
 
 public slots:
@@ -89,8 +93,9 @@ public slots:
      * @param value
      */
     void setBaseMovementPoints(const qint32 &value);
-    qint32 getHp() const;
-    void setHp(const qint32 &value);
+    float getHp() const;
+    void setHp(const float &value);
+    qint32 getHpRounded() const;
 
     qint32 getAmmo1() const;
     void setAmmo1(const qint32 &value);
@@ -98,11 +103,17 @@ public slots:
     qint32 getMaxAmmo1() const;
     void setMaxAmmo1(const qint32 &value);
 
+    QString getWeapon1ID() const;
+    void setWeapon1ID(const QString &value);
+
     qint32 getAmmo2() const;
     void setAmmo2(const qint32 &value);
 
     qint32 getMaxAmmo2() const;
     void setMaxAmmo2(const qint32 &value);
+
+    QString getWeapon2ID() const;
+    void setWeapon2ID(const QString &value);
 
     qint32 getFuel() const;
     void setFuel(const qint32 &value);
@@ -112,6 +123,18 @@ public slots:
 
     qint32 getCapturePoints() const;
     void setCapturePoints(const qint32 &value);
+
+    qint32 getCosts() const;
+    void setCosts(const qint32 &value);
+
+    qint32 getMinRange() const;
+    void setMinRange(const qint32 &value);
+
+    qint32 getMaxRange() const;
+    void setMaxRange(const qint32 &value);
+
+    qint32 getVision() const;
+    void setVision(const qint32 &value);
     /**
      * @brief loadSprites loads the given sprite
      * @param spriteID
@@ -167,6 +190,10 @@ public slots:
      */
     void moveUnit(QVector<QPoint> movePath);
     /**
+     * @brief removeUnit removes this from game
+     */
+    void removeUnit();
+    /**
      * @brief increaseCapturePoints increases the capture points of this unit based on units hp and ko owner
      */
     void increaseCapturePoints();
@@ -215,8 +242,10 @@ private:
     float hp{10};
     qint32 ammo1{-1};
     qint32 maxAmmo1{-1};
+    QString weapon1ID;
     qint32 ammo2{-1};
     qint32 maxAmmo2{-1};
+    QString weapon2ID;
     qint32 fuel{-1};
     qint32 maxFuel{-1};
     qint32 m_Rank{0};
@@ -225,6 +254,10 @@ private:
     QVector<spUnit> m_TransportUnits;
 
     qint32 capturePoints{0};
+    qint32 costs{-1};
+    qint32 minRange{1};
+    qint32 maxRange{-1};
+    qint32 vision{1};
 };
 
 #endif // UNIT_H

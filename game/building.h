@@ -102,6 +102,8 @@ public slots:
      * @return  y coordinates of this unit
      */
     qint32 getY() const;
+
+    quint32 getBaseIncome() const;
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     /**

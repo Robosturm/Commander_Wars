@@ -26,6 +26,11 @@ Unit::Unit(QString unitID, spPlayer pOwner)
     }
 }
 
+Unit::~Unit()
+{
+
+}
+
 void Unit::setOwner(spPlayer pOwner)
 {
     // change ownership
@@ -115,6 +120,46 @@ void Unit::updateSprites()
     pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
 }
 
+qint32 Unit::getVision() const
+{
+    return vision;
+}
+
+void Unit::setVision(const qint32 &value)
+{
+    vision = value;
+}
+
+qint32 Unit::getMaxRange() const
+{
+    return maxRange;
+}
+
+void Unit::setMaxRange(const qint32 &value)
+{
+    maxRange = value;
+}
+
+qint32 Unit::getMinRange() const
+{
+    return minRange;
+}
+
+void Unit::setMinRange(const qint32 &value)
+{
+    minRange = value;
+}
+
+qint32 Unit::getCosts() const
+{
+    return costs;
+}
+
+void Unit::setCosts(const qint32 &value)
+{
+    costs = value;
+}
+
 qint32 Unit::getCapturePoints() const
 {
     return capturePoints;
@@ -200,6 +245,17 @@ qint32 Unit::getAmmo2() const
     return ammo2;
 }
 
+
+QString Unit::getWeapon2ID() const
+{
+    return weapon2ID;
+}
+
+void Unit::setWeapon2ID(const QString &value)
+{
+    weapon2ID = value;
+}
+
 void Unit::setAmmo2(const qint32 &value)
 {
     ammo2 = value;
@@ -215,6 +271,16 @@ void Unit::setMaxAmmo1(const qint32 &value)
     maxAmmo1 = value;
 }
 
+QString Unit::getWeapon1ID() const
+{
+    return weapon1ID;
+}
+
+void Unit::setWeapon1ID(const QString &value)
+{
+    weapon1ID = value;
+}
+
 qint32 Unit::getAmmo1() const
 {
     return ammo1;
@@ -225,14 +291,23 @@ void Unit::setAmmo1(const qint32 &value)
     ammo1 = value;
 }
 
-qint32 Unit::getHp() const
+float Unit::getHp() const
 {
     return hp;
 }
 
-void Unit::setHp(const qint32 &value)
+qint32 Unit::getHpRounded() const
+{
+    return Mainapp::roundUp(hp);
+}
+
+void Unit::setHp(const float &value)
 {
     hp = value;
+    if (hp > 10)
+    {
+        hp = 10.0f;
+    }
     qint32 hpValue = Mainapp::roundUp(hp);
     if (hpValue < 10)
     {
@@ -362,6 +437,11 @@ void Unit::moveUnit(QVector<QPoint> movePath)
         // teleport unit to target position
         pMap->getTerrain(movePath[0].x(), movePath[0].y())->setUnit(pUnit);
     }
+}
+
+void Unit::removeUnit()
+{
+    m_Terrain->setUnit(nullptr);
 }
 
 void Unit::increaseCapturePoints()
@@ -521,6 +601,7 @@ void Unit::deserialize(QDataStream& pStream)
     m_UnitID = id;
     initUnit();
     pStream >> hp;
+    hp = 6;
     setHp(hp);
     pStream >> ammo1;
     pStream >> ammo2;
