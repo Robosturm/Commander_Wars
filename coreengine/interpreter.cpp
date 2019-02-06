@@ -22,8 +22,11 @@ Interpreter::Interpreter(QObject *parent)
 void Interpreter::init()
 {
     engine = new QJSEngine();
-    QJSValue globals = engine->newQObject(Mainapp::getInstance());
+    Mainapp* pApp = Mainapp::getInstance();
+    QJSValue globals = engine->newQObject(pApp);
     engine->globalObject().setProperty("globals", globals);
+    QJSValue audio = engine->newQObject(pApp->getAudioThread());
+    engine->globalObject().setProperty("audio", audio);
     engine->installTranslatorFunctions();
 }
 

@@ -6,6 +6,8 @@
 #include "coreengine/mainapp.h"
 #include "game/gamemap.h"
 
+#include <QSound>
+
 Cursor::Cursor()
 {
     changeCursor("cursor+default");
@@ -61,6 +63,13 @@ void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
         y = pGameMap->getMapHeight() - 1;
         onMap = false;
     }
+    // play tick sound when changing the field
+    if ((x != m_MapPointX) ||
+        (y != m_MapPointY))
+    {
+        QSound::play("resources/sounds/switchfield.wav");
+    }
+
     m_MapPointX = x;
     m_MapPointY = y;
     this->setPosition(x * GameMap::Imagesize, y * GameMap::Imagesize);

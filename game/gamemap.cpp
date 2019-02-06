@@ -152,6 +152,11 @@ Player* GameMap::getCurrentPlayer()
     return m_CurrentPlayer.get();
 }
 
+spPlayer GameMap::getSpCurrentPlayer()
+{
+    return m_CurrentPlayer;
+}
+
 void GameMap::setCurrentPlayer(qint32 player)
 {
     if ((player >= 0) && (player < players.size()))

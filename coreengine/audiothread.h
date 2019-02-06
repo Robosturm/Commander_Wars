@@ -70,6 +70,7 @@ public slots:
     void SlotMediaStatusChanged(QMediaPlayer::MediaStatus status);
     void SlotPlayRandom();
     void SlotLoadFolder(QString folder);
+    void SlotPlaySound(QString file);
 };
 
 #endif // AUDIOTHREAD_H

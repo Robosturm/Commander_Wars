@@ -46,6 +46,11 @@ public:
      * @brief reset deletes all data
      */
     void reset();
+    /**
+     * @brief existsUnit
+     * @param unitID
+     */
+    bool existsUnit(QString unitID);
 private:
     explicit UnitSpriteManager();
     virtual ~UnitSpriteManager() = default;

@@ -166,6 +166,22 @@ void Building::serialize(QDataStream& pStream)
     }
 }
 
+QStringList Building::getActionList()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getActions";
+    QJSValueList args1;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
+    if (ret.isString())
+    {
+        return ret.toString().split(",");
+    }
+    else
+    {
+        return QStringList();
+    }
+}
+
 void Building::deserialize(QDataStream& pStream)
 {
     qint32 version = 0;

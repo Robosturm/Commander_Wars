@@ -88,7 +88,11 @@ public slots:
      */
     Alliance checkAlliance(Player* pPlayer);
     quint32 getFonds() const;
-
+    /**
+     * @brief addFonds increases the money of this player by the given value
+     * @param value
+     */
+    void addFonds(const quint32 &value);
     void setFonds(const quint32 &value);
     /**
      * @brief earnMoney earns money based on the buildings the player has

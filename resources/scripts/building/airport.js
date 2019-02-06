@@ -21,6 +21,14 @@ var Constructor = function()
         animation.addBuildingSprite("airport+mask", startColor , capturedColor, true);
         animation.addBuildingSprite("airport", startColor , capturedColor, false);
     };
+
+    this.getActions = function()
+    {
+        // returns a string id list of the actions this building can perform
+        return "ACTION_BUILD_UNITS";
+    };
+
+
 }
 
 Constructor.prototype = BUILDING;

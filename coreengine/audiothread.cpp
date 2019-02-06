@@ -2,6 +2,7 @@
 #include "coreengine/settings.h"
 #include "coreengine/mainapp.h"
 
+#include <QSound>
 #include <QMediaPlaylist>
 #include <QDir>
 #include <QList>
@@ -150,5 +151,10 @@ void AudioThread::SlotLoadFolder(QString folder)
     {
         m_playList->addMedia(QUrl::fromLocalFile(folder + QString("/") + *it));
     }
+}
+
+void AudioThread::SlotPlaySound(QString file)
+{
+    QSound::play(file);
 }
 

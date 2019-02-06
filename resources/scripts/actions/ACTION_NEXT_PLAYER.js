@@ -3,17 +3,7 @@ var Constructor = function()
     // called for loading the main sprite
     this.canBePerformed = function(action)
     {
-        var unit = action.getTargetUnit();
-        var building = action.getTargetBuilding();
-        if ((unit === null) &&
-            (building === null))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return true;
     };
     this.getActionText = function()
     {

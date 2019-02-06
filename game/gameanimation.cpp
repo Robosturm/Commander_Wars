@@ -21,6 +21,7 @@ GameAnimation::GameAnimation(quint32 frameTime)
 
 void GameAnimation::queueAnimation(GameAnimation* pGameAnimation)
 {
+    pGameAnimation->stopSound();
     m_QueuedAnimations.append(pGameAnimation);
     GameAnimationFactory::getInstance()->queueAnimation(pGameAnimation);
 }
@@ -59,6 +60,11 @@ void GameAnimation::addSprite(QString spriteID, float offsetX, float offsetY, qi
 
 void GameAnimation::onFinished()
 {
+    if (animationSound != nullptr)
+    {
+        animationSound->stop();
+        delete animationSound;
+    }
     for (qint32 i = 0; i < m_QueuedAnimations.size(); i++)
     {
         GameAnimationFactory::getInstance()->startQueuedAnimation(m_QueuedAnimations[i]);
@@ -68,6 +74,29 @@ void GameAnimation::onFinished()
         Mainapp::getInstance()->getInterpreter()->doFunction(jsPostActionObject, jsPostActionFunction);
     }
     GameAnimationFactory::removeAnimation(this);
+}
+
+void GameAnimation::setSound(QString soundFile, qint32 loops)
+{
+    animationSound = new QSound(soundFile);
+    animationSound->setLoops(loops);
+    animationSound->play();
+}
+
+void GameAnimation::startSound()
+{
+    if (animationSound != nullptr)
+    {
+        animationSound->play();
+    }
+}
+
+void GameAnimation::stopSound()
+{
+    if (animationSound != nullptr)
+    {
+        animationSound->stop();
+    }
 }
 
 void GameAnimation::setEndOfAnimationCall(QString postActionObject, QString postActionFunction)

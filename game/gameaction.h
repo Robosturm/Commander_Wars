@@ -4,7 +4,9 @@
 #include <QObject>
 #include <QPoint>
 #include <QVector>
+#include <QDataStream>
 #include "game/smartpointers.h"
+#include "gameinput/menudata.h"
 
 class GameAction : public QObject
 {
@@ -32,11 +34,7 @@ public:
      * @return
      */
     static QString getActionIcon(QString actionID);
-    /**
-     * @brief isFinalStep checks if we have all data needed to perform this action
-     * @return true if all data needed for this action is gathered
-     */
-    bool isFinalStep();
+
 signals:
 
 public slots:
@@ -74,11 +72,20 @@ public slots:
     /**
      * @brief canBePerformed checks if this action can be performed
      * @param actionID id of the action we want to check
-     * @param x
-     * @param y
      * @return
      */
     bool canBePerformed(QString actionID);
+    /**
+     * @brief isFinalStep
+     * @return true if we have all data to perform this action
+     */
+    bool isFinalStep();
+    /**
+     * @brief isFinalStep
+     * @param actionID id of the action we want to perform
+     * @return true if we have all data to perform this action
+     */
+    bool isFinalStep(QString actionID);
     /**
      * @brief getTargetUnit the unit that will perform the action
      * @return
@@ -119,6 +126,86 @@ public slots:
      * @return
      */
     Building* getMovementBuilding();
+    /**
+     * @brief getCosts gets the costs of this actions
+     * @return
+     */
+    qint32 getCosts() const;
+    /**
+     * @brief setCosts sets the costs of this actions
+     * @param value
+     */
+    void setCosts(const qint32 &value);
+    /**
+     * @brief getStepInputType
+     * @return the input type used during this step
+     */
+    QString getStepInputType();
+    /**
+     * @brief getStepCursor
+     * @return the cursor we want to show during this step
+     */
+    QString getStepCursor();
+    /**
+     * @brief getMenuStepData
+     * @return the data needed to create an input menu. the data needs to be deleted by the caller
+     */
+    MenuData* getMenuStepData();
+    /************** reading and writing data to the action buffer *****************/
+    /**
+     * @brief writeDataString adds a string to the action data
+     * @param data
+     */
+    void writeDataString(QString data)
+    {
+        actionData << data;
+    }
+    /**
+     * @brief readDataString
+     * @return reads a string from the action data
+     */
+    QString readDataString()
+    {
+        QString data;
+        actionData >> data;
+        return data;
+    }
+    /**
+     * @brief writeDataInt32 adds a int32 to the action data
+     * @param data
+     */
+    void writeDataInt32(qint32 data)
+    {
+        actionData << data;
+    }
+    /**
+     * @brief readDataInt32
+     * @return reads a int32 from the action data
+     */
+    qint32 readDataInt32()
+    {
+        qint32 data;
+        actionData >> data;
+        return data;
+    }
+    /**
+     * @brief writeDataFloat adds a float to the action data
+     * @param data
+     */
+    void writeDataFloat(float data)
+    {
+        actionData << data;
+    }
+    /**
+     * @brief readDataFloat
+     * @return reads a float from the action data
+     */
+    float readDataFloat()
+    {
+        float data;
+        actionData >> data;
+        return data;
+    }
 private:
     QString m_actionID;
     /**
@@ -133,8 +220,14 @@ private:
       * @brief current input step for tracking when all data is gathered to perform the action
       */
     qint32 inputStep{0};
-
-
+    /**
+      * @brief costs needed to be paid to perform this action
+      */
+    qint32 costs{0};
+    /**
+     * @brief actionData data needed to perform this action
+     */
+    QDataStream actionData;
 };
 
 #endif // GAMEACTION_H

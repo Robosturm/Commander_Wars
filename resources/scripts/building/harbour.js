@@ -20,6 +20,12 @@ var Constructor = function()
         animation.addBuildingSprite("harbour+mask", startColor , capturedColor, true);
         animation.addBuildingSprite("harbour", startColor , capturedColor, false);
     };
+
+    this.getActions = function()
+    {
+        // returns a string id list of the actions this building can perform
+        return "ACTION_BUILD_UNITS";
+    };
 }
 
 Constructor.prototype = BUILDING;

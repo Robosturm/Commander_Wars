@@ -41,8 +41,18 @@ var BUILDING =
         }
     },
 
+    getBuildList : function()
+    {
+        return "";
+    },
+
     getBaseIncome : function()
     {
         return 1000;
+    },
+
+    getConstructionList : function()
+    {
+        return [];
     },
 };

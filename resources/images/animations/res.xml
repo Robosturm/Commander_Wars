@@ -43,6 +43,27 @@
 		<image file="explosion+land.png" cols = "9" />
 		<image file="explosion+air.png" cols = "9" />
 		<image file="explosion+water.png" cols = "9" />
+		<image file="explosion+silo.png" cols = "15" />
+		
+		<!-- static -->
 		<image file="ration.png" />
+		<image file="meteor.png" />
+		
+		<!-- co power animations -->
+		<image file="power0.png" cols = "8" />
+		<image file="power1.png" cols = "8" />
+		<image file="power2.png" cols = "8" />
+		<image file="power3.png" cols = "8" />
+		<image file="power4.png" cols = "8" />
+		<image file="power5.png" cols = "8" />
+		<image file="power6.png" cols = "8" />
+		<image file="power7.png" cols = "8" />
+		<image file="power8.png" cols = "8" />
+		<image file="power9.png" cols = "8" />
+		<image file="power10.png" cols = "8" />
+		<image file="power11.png" cols = "8" />
+		<image file="power12.png" cols = "8" />
+		<image file="power13.png" cols = "8" />
+		<image file="power14.png" cols = "8" />
 	</atlas>
 </resources>

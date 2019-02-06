@@ -85,6 +85,11 @@ void Player::setFonds(const quint32 &value)
     fonds = value;
 }
 
+void Player::addFonds(const quint32 &value)
+{
+    fonds += value;
+}
+
 quint32 Player::getFonds() const
 {
     return fonds;

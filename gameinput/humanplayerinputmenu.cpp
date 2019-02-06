@@ -8,20 +8,27 @@
 
 #include "resource_management/fontmanager.h"
 
-HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList actionIDs, QVector<oxygine::spSprite> icons)
+HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList actionIDs, QVector<oxygine::spActor> icons,
+                                           QVector<qint32> costList, QVector<bool> enabledList)
 {
     qint32 width = 0;
-    oxygine::ResFont* font = FontManager::getMainFont();
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_DEFAULT;
+    style.fontSize = 20;
+    oxygine::spTextField testText = new oxygine::TextField();
     for (qint32 i = 0; i < texts.size(); i++)
     {
-        // todo get actual font width
-        qint32 newWidth = texts[i].length() * 15;
+
+        testText->setStyle(style);
+        testText->setText(texts[i].toStdString().c_str());
+        qint32 newWidth = testText->getTextRect().getWidth();
         if (newWidth > width )
         {
             width = newWidth;
         }
     }
-    width += GameMap::Imagesize + GameMap::Imagesize / 4;
+    width += GameMap::Imagesize + GameMap::Imagesize * 3 / 4 ;
 
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::spBox9Sprite pTopBox = new oxygine::Box9Sprite();
@@ -33,7 +40,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     pTopBox->setWidth(width);
     this->addChild(pTopBox);
 
-    qint32 y = pAnim->getHeight();
+    qint32 y = static_cast<qint32>(pAnim->getHeight());
     m_Cursor = new oxygine::Sprite();
     pAnim = pGameManager->getResAnim("cursor+menu");
     if (pAnim->getTotalFrames() > 1)
@@ -49,6 +56,17 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     m_Cursor->setScale(GameMap::Imagesize / pAnim->getWidth());
     for (qint32 i = 0; i < actionIDs.size(); i++)
     {
+        bool enabled = true;
+        if (enabledList.size() > 0)
+        {
+            enabled = enabledList[i];
+        }
+        qint32 costs = 0;
+        if (costList.size() > 0)
+        {
+            costs = costList[i];
+        }
+
         oxygine::spBox9Sprite pItemBox = new oxygine::Box9Sprite();
         pAnim = pGameManager->getResAnim("menu+middle");
         pItemBox->setResAnim(pAnim);
@@ -63,34 +81,43 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
 
         // text for the item
         oxygine::spTextField textField = new oxygine::TextField();
-        oxygine::TextStyle style = FontManager::getMainFont();
-        style.color = oxygine::Color(255, 255, 255, 255);
-        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-        style.hAlign = oxygine::TextStyle::HALIGN_DEFAULT;
-        style.fontSize = 20;
+
+        // set color font based
+        if (!enabled)
+        {
+            style.color = oxygine::Color(255, 0, 0, 255);
+        }
+        else
+        {
+            style.color = oxygine::Color(255, 255, 255, 255);
+        }
         textField->setStyle(style);
         textField->setText(texts[i].toStdString().c_str());
         textField->attachTo(pItemBox);
-        textField->setPosition(3 + icons[i]->getScaledWidth(), 0);
+        textField->setPosition(3 + GameMap::Imagesize, 0);
         textField->setSize(width - textField->getX(), GameMap::Imagesize - 4);
+
         this->addChild(pItemBox);
         pItemBox->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event *)->void
         {
             m_Cursor->setY(y + GameMap::Imagesize / 2 - m_Cursor->getScaledHeight() / 2);
         });
         QString action = actionIDs[i];
-        pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
+        if (enabled)
         {
-            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
-            if (pTouchEvent != nullptr)
+            pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
             {
-                if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
+                oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+                if (pTouchEvent != nullptr)
                 {
-                    pEvent->stopPropagation();
-                    emit sigItemSelected(action);
+                    if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
+                    {
+                        pEvent->stopPropagation();
+                        emit sigItemSelected(action, costs);
+                    }
                 }
-            }
-        });
+            });
+        }
         y += pItemBox->getHeight();
     }
     oxygine::spBox9Sprite pBottomBox = new oxygine::Box9Sprite();

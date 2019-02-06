@@ -35,7 +35,6 @@ var Constructor = function()
             {
                 return true;
             }
-            return true;
         }
         return false;
     };
@@ -85,14 +84,14 @@ var Constructor = function()
         {
             map.getTerrain(x, y).getUnit().refill();
             animation = GameAnimationFactory.createAnimation(x, y);
-            animation.addSprite("ration", 12, 8, 300);
+            animation.addSprite("ration", 12, 8, 400);
         }
         x = ACTION_RATION.postAnimationUnit.getX() - 1;
         if (ACTION_RATION.checkUnit(ACTION_RATION.postAnimationUnit, x, y))
         {
             map.getTerrain(x, y).getUnit().refill();
             animation = GameAnimationFactory.createAnimation(x, y);
-            animation.addSprite("ration", 12, 8, 300);
+            animation.addSprite("ration", 12, 8, 400);
         }
         x = ACTION_RATION.postAnimationUnit.getX();
         y = ACTION_RATION.postAnimationUnit.getY() + 1;
@@ -100,14 +99,14 @@ var Constructor = function()
         {
             map.getTerrain(x, y).getUnit().refill();
             animation = GameAnimationFactory.createAnimation(x, y);
-            animation.addSprite("ration", 12, 8, 300);
+            animation.addSprite("ration", 12, 8, 400);
         }
         y = ACTION_RATION.postAnimationUnit.getY() - 1;
         if (ACTION_RATION.checkUnit(ACTION_RATION.postAnimationUnit, x, y))
         {
             map.getTerrain(x, y).getUnit().refill();
             animation = GameAnimationFactory.createAnimation(x, y);
-            animation.addSprite("ration", 12, 8, 300);
+            animation.addSprite("ration", 12, 8, 400);
         }
         ACTION_RATION.postAnimationUnit = null;
 	};

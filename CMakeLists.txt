@@ -111,6 +111,7 @@ set(${PROJECT_NAME}_SRCS
         gameinput/basegameinputif.cpp
         gameinput/humanplayerinput.cpp
         gameinput/humanplayerinputmenu.cpp
+        gameinput/menudata.cpp
 )
 
 

@@ -68,6 +68,7 @@ var Constructor = function()
 		}
         animation.loadSprite("infantry+" + armyName + "+walk+mask", true, zoom);
         animation.loadSprite("infantry+" + armyName + "+walk", false, zoom);
+        animation.setSound("resources/sounds/movefeet.wav", -1);
         return animation;
     };
 }

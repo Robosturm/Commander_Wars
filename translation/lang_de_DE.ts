@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
+    <name>ACTION_BUILD_UNITS</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_UNITS.js" line="14"/>
+        <source>Build</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_CAPTURE</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="38"/>
@@ -28,7 +36,7 @@
 <context>
     <name>ACTION_NEXT_PLAYER</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="20"/>
+        <location filename="../resources/scripts/actions/ACTION_NEXT_PLAYER.js" line="10"/>
         <source>Next Player</source>
         <translation type="unfinished"></translation>
     </message>
@@ -36,7 +44,7 @@
 <context>
     <name>ACTION_RATION</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="58"/>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="57"/>
         <source>Ration</source>
         <translation type="unfinished"></translation>
     </message>

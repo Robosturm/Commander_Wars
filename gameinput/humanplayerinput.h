@@ -60,6 +60,10 @@ public:
      */
     void finishAction();
     /**
+     * @brief getNextStepData
+     */
+    void getNextStepData();
+    /**
      * @brief cleanUpInput resets all internal data
      */
     void cleanUpInput();
@@ -73,8 +77,10 @@ public slots:
     void rightClick(qint32 x, qint32 y);
     void leftClick(qint32 x, qint32 y);
     void cursorMoved(qint32 x, qint32 y);
-    void menuItemSelected(QString itemID);
+    void menuItemSelected(QString itemID, qint32 cost);
     QStringList getEmptyActionList();
+protected:
+    oxygine::spSprite getIconSprite(QString itemID);
 private:
     GameAction* m_pGameAction{nullptr};
     UnitPathFindingSystem* m_pUnitPathFindingSystem{nullptr};

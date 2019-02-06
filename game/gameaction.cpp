@@ -51,7 +51,7 @@ void GameAction::setMovepath(QVector<QPoint> points)
 
 bool GameAction::canBePerformed()
 {
-    canBePerformed(m_actionID);
+    return canBePerformed(m_actionID);
 }
 
 QVector<QPoint> GameAction::getMovePath()
@@ -92,6 +92,25 @@ bool GameAction::canBePerformed(QString actionID)
     return false;
 }
 
+bool GameAction::isFinalStep()
+{
+    return isFinalStep(m_actionID);
+}
+
+bool GameAction::isFinalStep(QString actionID)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "isFinalStep";
+    QJSValueList args1;
+    args1 << pApp->getInterpreter()->newQObject(this);
+    QJSValue ret = pApp->getInterpreter()->doFunction(actionID, function1, args1);
+    if (ret.isBool())
+    {
+        return ret.toBool();
+    }
+    return false;
+}
+
 QString GameAction::getActionText(QString actionID)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -116,6 +135,45 @@ QString GameAction::getActionIcon(QString actionID)
         return ret.toString();
     }
     return "";
+}
+
+QString GameAction::getStepInputType()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getStepInputType";
+    QJSValueList args1;
+    args1 << pApp->getInterpreter()->newQObject(this);
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_actionID, function1, args1);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    return "";
+}
+
+QString GameAction::getStepCursor()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getStepCursor";
+    QJSValueList args1;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_actionID, function1, args1);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    return "";
+}
+
+MenuData* GameAction::getMenuStepData()
+{
+   MenuData* data = new MenuData;
+   Mainapp* pApp = Mainapp::getInstance();
+   QString function1 = "getStepData";
+   QJSValueList args1;
+   args1 << pApp->getInterpreter()->newQObject(this);
+   args1 << pApp->getInterpreter()->newQObject(data);
+   QJSValue ret = pApp->getInterpreter()->doFunction(m_actionID, function1, args1);
+   return data;
 }
 
 void GameAction::setTarget(QPoint point)
@@ -154,6 +212,16 @@ Building* GameAction::getMovementBuilding()
     return pMap->getTerrain(actionTarget.x(), actionTarget.y())->getBuilding();
 }
 
+qint32 GameAction::getCosts() const
+{
+    return costs;
+}
+
+void GameAction::setCosts(const qint32 &value)
+{
+    costs = value;
+}
+
 qint32 GameAction::getInputStep() const
 {
     return inputStep;
@@ -162,18 +230,4 @@ qint32 GameAction::getInputStep() const
 void GameAction::setInputStep(const qint32 &value)
 {
     inputStep = value;
-}
-
-bool GameAction::isFinalStep()
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    QString function1 = "isFinalStep";
-    QJSValueList args1;
-    args1 << pApp->getInterpreter()->newQObject(this);
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_actionID, function1, args1);
-    if (ret.isBool())
-    {
-        return ret.toBool();
-    }
-    return false;
 }

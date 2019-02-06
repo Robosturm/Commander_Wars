@@ -85,3 +85,15 @@ void UnitSpriteManager::reset()
     }
     m_loadedUnits.clear();
 }
+
+bool UnitSpriteManager::existsUnit(QString unitID)
+{
+    for (qint32 i = 0; i < m_loadedUnits.size(); i++)
+    {
+        if (m_loadedUnits[i] == unitID)
+        {
+            return true;
+        }
+    }
+    return false;
+}

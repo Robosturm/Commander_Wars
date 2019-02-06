@@ -104,6 +104,11 @@ public slots:
     qint32 getY() const;
 
     quint32 getBaseIncome() const;
+    /**
+     * @brief getActionList
+     * @return list of actions that can be performed by this building e.g building units.
+     */
+    QStringList getActionList();
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     /**

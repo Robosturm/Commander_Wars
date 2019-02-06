@@ -185,6 +185,11 @@ public slots:
      */
     Player* getCurrentPlayer();
     /**
+     * @brief getSpCurrentPlayer the current player
+     * @return
+     */
+    spPlayer getSpCurrentPlayer();
+    /**
      * @brief setCurrentPlayer changes the current player to this one
      * @param player
      */
