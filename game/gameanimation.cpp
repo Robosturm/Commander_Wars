@@ -26,7 +26,7 @@ void GameAnimation::queueAnimation(GameAnimation* pGameAnimation)
     GameAnimationFactory::getInstance()->queueAnimation(pGameAnimation);
 }
 
-void GameAnimation::addSprite(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish)
+void GameAnimation::addSprite(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish, float scale)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID.toStdString());
@@ -42,7 +42,7 @@ void GameAnimation::addSprite(QString spriteID, float offsetX, float offsetY, qi
             oxygine::spTween tween1 = oxygine::createTween(TweenWait(), sleepAfterFinish, 1);
             queuedAnim->add(tween1);
         }
-
+        pSprite->setScale(scale);
         pSprite->addTween(queuedAnim);
         this->addChild(pSprite);
         pSprite->setPosition(offsetX, offsetY);

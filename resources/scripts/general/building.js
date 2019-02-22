@@ -55,4 +55,14 @@ var BUILDING =
     {
         return [];
     },
+
+    getActions : function()
+    {
+        return "";
+    },
+
+    startOfTurn : function(unit)
+    {
+        // gets called at the start of a turn
+    },
 };

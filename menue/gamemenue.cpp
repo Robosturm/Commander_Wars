@@ -1,6 +1,7 @@
 #include "menue/gamemenue.h"
 
 #include "game/player.h"
+#include "game/co.h"
 
 #include "gameinput/humanplayerinput.h"
 

@@ -2,7 +2,7 @@
 #define INTERPRETER_H
 
 #include <QObject>
-#include <QJSEngine>
+#include <QQmlEngine>
 
 /**
  * @brief The Interpreter class java-script interpreter with easy access functions
@@ -47,7 +47,7 @@ private:
     /**
      * @brief JS-Engine
      */
-    QJSEngine* engine;
+    QQmlEngine* engine;
     void init();
 signals:
 

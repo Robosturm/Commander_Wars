@@ -29,9 +29,10 @@ var Constructor = function()
 
     this.getConstructionList = function()
     {
-        return ["INFANTRY", "MECH", "MOTORBIKE", "RECON", "APC", "FLARE",
-                "ARTILLERY", "LIGHT_TANK", "FLAK", "ANTITANKCANNON",
-                "HEAVY_TANK", "MISSILE", "ROCKETTHROWER", "MEGATANK"];
+        return ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "RECON", "APC", "FLARE",
+                "ARTILLERY", "LIGHT_TANK", "HOVERCRAFT", "FLAK", "HOVERFLAK",
+                "ANTITANKCANNON", "HEAVY_TANK", "HEAVY_HOVERCRAFT", "NEOTANK",
+                "MISSILE", "ROCKETTHROWER", "MEGATANK"];
     };
 }
 

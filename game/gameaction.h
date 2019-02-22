@@ -4,9 +4,11 @@
 #include <QObject>
 #include <QPoint>
 #include <QVector>
+#include <QBuffer>
 #include <QDataStream>
 #include "game/smartpointers.h"
 #include "gameinput/menudata.h"
+#include "gameinput/markedfielddata.h"
 
 class GameAction : public QObject
 {
@@ -92,7 +94,7 @@ public slots:
      */
     Unit* getTargetUnit();
     /**
-     * @brief getTargetUnit the unit that will perform the action
+     * @brief getTargetBuilding the building that will perform the action
      * @return
      */
     Building* getTargetBuilding();
@@ -151,6 +153,11 @@ public slots:
      * @return the data needed to create an input menu. the data needs to be deleted by the caller
      */
     MenuData* getMenuStepData();
+    /**
+     * @brief getMarkedFieldStepData
+     * @return
+     */
+    MarkedFieldData* getMarkedFieldStepData();
     /************** reading and writing data to the action buffer *****************/
     /**
      * @brief writeDataString adds a string to the action data
@@ -158,6 +165,7 @@ public slots:
      */
     void writeDataString(QString data)
     {
+        buffer.seek(buffer.size());
         actionData << data;
     }
     /**
@@ -176,6 +184,7 @@ public slots:
      */
     void writeDataInt32(qint32 data)
     {
+        buffer.seek(buffer.size());
         actionData << data;
     }
     /**
@@ -194,6 +203,7 @@ public slots:
      */
     void writeDataFloat(float data)
     {
+        buffer.seek(buffer.size());
         actionData << data;
     }
     /**
@@ -205,6 +215,14 @@ public slots:
         float data;
         actionData >> data;
         return data;
+    }
+    /**
+     * @brief startReading starts the reading of the buffer
+     */
+    void startReading()
+    {
+        // go to start again
+        buffer.seek(0);
     }
 private:
     QString m_actionID;
@@ -227,7 +245,8 @@ private:
     /**
      * @brief actionData data needed to perform this action
      */
-    QDataStream actionData;
+    QBuffer buffer;
+    QDataStream actionData{&buffer};
 };
 
 #endif // GAMEACTION_H

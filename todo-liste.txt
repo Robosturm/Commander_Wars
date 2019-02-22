@@ -1,9 +1,10 @@
-- perform unit actions
+
+- damage table
+- damage calculation
 - attack units
-- earn income
-- produce units
 - player
 - next player turn
+- player info
 - rules
 - kos
 - ko unit
@@ -23,5 +24,3 @@
 - v-scrollbar
 - Objects
 	- Checkbox
-- store maps
-- load maps

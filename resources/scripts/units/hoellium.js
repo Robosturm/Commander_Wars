@@ -11,7 +11,6 @@ var Constructor = function()
         unit.setFuel(100);
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(1);
-		unit.setCosts(10000);
         unit.setMinRange(1);
         unit.setMaxRange(1);
 		unit.setVision(1);
@@ -31,6 +30,14 @@ var Constructor = function()
     {
         // returns a string id list of the actions this unit can perform
         return "ACTION_HOELLIUM_WAIT";
+    };
+    this.getBaseCost = function()
+    {
+        return 10000;
+    };
+    this.getName = function()
+    {
+        return qsTr("Oozium");
     };
 }
 

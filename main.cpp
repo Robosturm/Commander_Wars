@@ -23,7 +23,7 @@
 #include "game/player.h"
 #include "game/building.h"
 #include "game/unit.h"
-#include "game/ko.h"
+#include "game/co.h"
 #include "game/gameaction.h"
 #include "game/gameanimation.h"
 #include "game/gameanimationwalk.h"
@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<Player>("Player");
     qmlRegisterInterface<Building>("Building");
     qmlRegisterInterface<Unit>("Unit");
-    qmlRegisterInterface<KO>("KO");
+    qmlRegisterInterface<CO>("CO");
     qmlRegisterInterface<GameAction>("GameAction");
     qmlRegisterInterface<GameAnimation>("GameAnimation");
     qmlRegisterInterface<GameAnimationWalk>("GameAnimationWalk");

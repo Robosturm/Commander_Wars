@@ -13,16 +13,16 @@
 #include "game/building.h"
 
 #include "game/player.h"
+#include "game/co.h"
 
 #include "game/gameanimationfactory.h"
-
 #include "resource_management/gamemanager.h"
-#include "resource_management/buildingspritemanager.h"
-#include "resource_management/unitspritemanager.h"
 
 #include "coreengine/mainapp.h"
 
 #include "coreengine/interpreter.h"
+
+#include "gameinput/markedfielddata.h"
 
 HumanPlayerInput::HumanPlayerInput(GameMenue* pMenue)
 {
@@ -49,7 +49,12 @@ void HumanPlayerInput::rightClick(qint32 x, qint32 y)
     }
     else if (m_pGameAction != nullptr)
     {
-        if (m_CurrentMenu.get() == nullptr)
+        if (m_pGameAction->getInputStep() > 0)
+        {
+            // todo implement go back steps
+            cleanUpInput();
+        }
+        else if (m_CurrentMenu.get() == nullptr)
         {
             cleanUpInput();
         }
@@ -58,9 +63,13 @@ void HumanPlayerInput::rightClick(qint32 x, qint32 y)
             Unit* pUnit = m_pGameAction->getTargetUnit();
             if (pUnit != nullptr)
             {
-                // go one step back :)
-                m_CurrentMenu->getParent()->removeChild(m_CurrentMenu);
-                m_CurrentMenu = nullptr;
+                if (m_pGameAction->getInputStep() == 0)
+                {
+                    // go one step back :)
+                    m_CurrentMenu->getParent()->removeChild(m_CurrentMenu);
+                    m_CurrentMenu = nullptr;
+                    createMarkedMoveFields();
+                }
             }
             else
             {
@@ -72,16 +81,27 @@ void HumanPlayerInput::rightClick(qint32 x, qint32 y)
 
 void HumanPlayerInput::cleanUpInput()
 {
-    if (m_CurrentMenu.get() != nullptr)
-    {
-        m_CurrentMenu->getParent()->removeChild(m_CurrentMenu);
-        m_CurrentMenu = nullptr;
-    }
+    clearMenu();
     // delete action
     delete m_pGameAction;
     m_pGameAction = nullptr;
     delete m_pUnitPathFindingSystem;
     m_pUnitPathFindingSystem = nullptr;
+    clearMarkedFields();
+    deleteArrow();
+}
+
+void HumanPlayerInput::clearMenu()
+{
+    if (m_CurrentMenu.get() != nullptr)
+    {
+        m_CurrentMenu->getParent()->removeChild(m_CurrentMenu);
+        m_CurrentMenu = nullptr;
+    }
+}
+
+void HumanPlayerInput::clearMarkedFields()
+{
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < m_Fields.size(); i++)
     {
@@ -89,14 +109,40 @@ void HumanPlayerInput::cleanUpInput()
     }
     m_FieldPoints.clear();
     m_Fields.clear();
-    deleteArrow();
+    if (m_pMarkedFieldData != nullptr)
+    {
+        delete m_pMarkedFieldData;
+        m_pMarkedFieldData = nullptr;
+    }
 }
 
 void HumanPlayerInput::leftClick(qint32 x, qint32 y)
 {
+
     if (GameAnimationFactory::getAnimationCount() > 0)
     {
         // do nothing
+    }
+    else if (m_pMarkedFieldData != nullptr)
+    {
+        // did we select a marked field?
+        if (m_pMarkedFieldData->getAllFields())
+        {
+            markedFieldSelected(QPoint(x, y));
+        }
+        else
+        {
+            QVector<QPoint>* pFields = m_pMarkedFieldData->getPoints();
+            for (qint32 i = 0; i < pFields->size(); i++)
+            {
+                if ((pFields->at(i).x() == x) &&
+                    (pFields->at(i).y() == y))
+                {
+                    markedFieldSelected(QPoint(x, y));
+                    break;
+                }
+            }
+        }
     }
     // no action selected
     else if (m_pGameAction == nullptr)
@@ -129,7 +175,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
             if (possibleActions.size() > 0)
             {
                 if ((possibleActions.size() == 1) &&
-                    m_pGameAction->isFinalStep(actions[0]))
+                    (!m_pGameAction->isFinalStep(actions[0])))
                 {
                     // skip show select action menu
                     m_pGameAction->setActionID(actions[0]);
@@ -200,7 +246,25 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
     }
     else
     {
-        cleanUpInput();
+        //cleanUpInput();
+    }
+}
+
+void HumanPlayerInput::markedFieldSelected(QPoint point)
+{
+    m_pGameAction->writeDataInt32(point.x());
+    m_pGameAction->writeDataInt32(point.y());
+    clearMarkedFields();
+    m_pGameAction->setInputStep(m_pGameAction->getInputStep() + 1);
+    if (m_pGameAction->isFinalStep())
+    {
+        // if not perform action
+        finishAction();
+    }
+    else
+    {
+        // else introduce next step
+        getNextStepData();
     }
 }
 
@@ -211,7 +275,7 @@ void HumanPlayerInput::menuItemSelected(QString itemID, qint32 cost)
     {
         // set the id
         m_pGameAction->setActionID(itemID);
-        m_pGameAction->setCosts(cost);
+        m_pGameAction->setCosts(m_pGameAction->getCosts() + cost);
         // check if the action needs further information
     }
     // we want to append some data to the action
@@ -236,39 +300,30 @@ void HumanPlayerInput::menuItemSelected(QString itemID, qint32 cost)
 
 void HumanPlayerInput::getNextStepData()
 {
+    clearMenu();
+    clearMarkedFields();
+
+
     QString stepType = m_pGameAction->getStepInputType();
     if (stepType.toUpper() == "MENU")
     {
         GameMap* pMap = GameMap::getInstance();
         MenuData* pData = m_pGameAction->getMenuStepData();
-        QVector<oxygine::spActor> sprites;
-        QStringList actionIDs = pData->getActionIDs();
-        GameManager* pGameManager = GameManager::getInstance();
-        for (qint32 i = 0; i < actionIDs.size(); i++)
-        {
-            oxygine::ResAnim* pAnim = pGameManager->getResAnim(GameAction::getActionIcon(actionIDs[i]).toStdString().c_str());
-            if (pAnim != nullptr)
-            {
-                sprites.append(getIconSprite(actionIDs[i]));
-            }
-            else
-            {
-                UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-                if (pUnitSpriteManager->existsUnit(actionIDs[i]))
-                {
-                    sprites.append(new Unit(actionIDs[i], pMap->getSpCurrentPlayer()));
-                }
-                else
-                {
-                    // check buildings?
-                }
-            }
-        }
-        m_CurrentMenu = new HumanPlayerInputMenu(pData->getTexts(), pData->getActionIDs(), sprites, pData->getCostList(), pData->getEnabledList());
-        m_CurrentMenu->setMenuPosition(m_pGameAction->getTarget().x() * GameMap::Imagesize, m_pGameAction->getTarget().y() * GameMap::Imagesize);
+        m_CurrentMenu = new HumanPlayerInputMenu(pData->getTexts(), pData->getActionIDs(), pData->getIconList(), pData->getCostList(), pData->getEnabledList());
+        m_CurrentMenu->setMenuPosition(m_pGameAction->getActionTarget().x() * GameMap::Imagesize, m_pGameAction->getActionTarget().y() * GameMap::Imagesize);
         pMap->addChild(m_CurrentMenu);
         connect(m_CurrentMenu.get(), SIGNAL(sigItemSelected(QString, qint32)), this, SLOT(menuItemSelected(QString, qint32)), Qt::QueuedConnection);
         delete pData;
+    }
+    else if (stepType.toUpper() == "FIELD")
+    {
+        MarkedFieldData* pData = m_pGameAction->getMarkedFieldStepData();
+        QVector<QPoint>* pFields = pData->getPoints();
+        for (qint32 i = 0; i < pFields->size(); i++)
+        {
+            createMarkedField(pFields->at(i), pData->getColor(), Terrain::DrawPriority::MarkedFieldHigh);
+        }
+        m_pMarkedFieldData = pData;
     }
 }
 
@@ -279,40 +334,18 @@ void HumanPlayerInput::finishAction()
     cleanUpInput();
 }
 
-oxygine::spSprite HumanPlayerInput::getIconSprite(QString itemID)
-{
-    oxygine::spSprite pSprite = new oxygine::Sprite();
-    GameManager* pGameManager = GameManager::getInstance();
-    oxygine::ResAnim* pAnim = pGameManager->getResAnim(GameAction::getActionIcon(itemID).toStdString().c_str());
-    if (pAnim != nullptr)
-    {
-        if (pAnim->getTotalFrames() > 1)
-        {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
-            pSprite->addTween(tween);
-        }
-        else
-        {
-            pSprite->setResAnim(pAnim);
-        }
-    }
-    pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
-    pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
-    return pSprite;
-}
+
 
 void HumanPlayerInput::createActionMenu(QStringList actionIDs, qint32 x, qint32 y)
 {
-    QStringList actionTexts;
-    QVector<oxygine::spActor> sprites;
-
+    clearMarkedFields();
+    MenuData data;
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < actionIDs.size(); i++)
     {
-        actionTexts.append(GameAction::getActionText(actionIDs[i]));
-        sprites.append(getIconSprite(actionIDs[i]));
+        data.addData(GameAction::getActionText(actionIDs[i]), actionIDs[i], GameAction::getActionIcon(actionIDs[i]));
     }
-    m_CurrentMenu = new HumanPlayerInputMenu(actionTexts, actionIDs, sprites);
+    m_CurrentMenu = new HumanPlayerInputMenu(data.getTexts(), actionIDs, data.getIconList());
     m_CurrentMenu->setMenuPosition(x * GameMap::Imagesize, y * GameMap::Imagesize);
 
     pMap->addChild(m_CurrentMenu);
@@ -326,31 +359,42 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
     GameMap* pMap = GameMap::getInstance();
     m_pUnitPathFindingSystem = new UnitPathFindingSystem(pMap->getTerrain(x, y)->getSpUnit());
     m_pUnitPathFindingSystem->explore();
+    createMarkedMoveFields();
+}
+
+void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::DrawPriority drawPriority)
+{
+    GameMap* pMap = GameMap::getInstance();
     GameManager* pGameManager = GameManager::getInstance();
+    oxygine::spSprite pSprite = new oxygine::Sprite();
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim("marked+field");
+    if (pAnim->getTotalFrames() > 1)
+    {
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+        pSprite->addTween(tween);
+    }
+    else
+    {
+        pSprite->setResAnim(pAnim);
+    }
+    oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), color.alpha()));
+    oxygine::spTween tween2 = oxygine::createTween(tweenColor, 1);
+    pSprite->addTween(tween2);
+    pSprite->setPriority(static_cast<qint8>(drawPriority));
+    pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
+    pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
+    pMap->getSpTerrain(point.x(), point.y())->addChild(pSprite);
+    m_Fields.append(pSprite);
+    m_FieldPoints.append(point);
+}
+
+void HumanPlayerInput::createMarkedMoveFields()
+{
+
     QVector<QPoint> points = m_pUnitPathFindingSystem->getAllNodePoints();
     for (qint32 i = 0; i < points.size(); i++)
     {
-        oxygine::spSprite pSprite = new oxygine::Sprite();
-        oxygine::ResAnim* pAnim = pGameManager->getResAnim("marked+field");
-        if (pAnim->getTotalFrames() > 1)
-        {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
-            pSprite->addTween(tween);
-        }
-        else
-        {
-            pSprite->setResAnim(pAnim);
-        }
-
-        oxygine::Sprite::TweenColor tweenColor(oxygine::Color(50, 230, 200, 255));
-        oxygine::spTween tween2 = oxygine::createTween(tweenColor, 1);
-        pSprite->addTween(tween2);
-        pSprite->setPriority(static_cast<qint8>(Terrain::DrawPriority::MarkedFieldLow));
-        pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
-        pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
-        pMap->getSpTerrain(points[i].x(), points[i].y())->addChild(pSprite);
-        m_Fields.append(pSprite);
-        m_FieldPoints.append(points[i]);
+        createMarkedField(points[i], QColor(50, 230, 200, 255), Terrain::DrawPriority::MarkedFieldLow);
     }
 }
 
@@ -365,94 +409,131 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
     }
 }
 
- void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
- {
-     // create unit moving arrow :)
-     deleteArrow();
-     QVector<QPoint> points = m_pUnitPathFindingSystem->getPath(x, y);
-     GameMap* pMap = GameMap::getInstance();
-     GameManager* pGameManager = GameManager::getInstance();
-     for (qint32 i = 0; i < points.size() - 1; i++)
-     {
-         oxygine::spSprite pSprite = new oxygine::Sprite();
-         oxygine::ResAnim* pAnim = pGameManager->getResAnim("arrow+unit");
-         pSprite->setResAnim(pAnim);
-         pSprite->setPriority(static_cast<qint8>(Terrain::DrawPriority::Arrow));
-         pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
-         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
-         pMap->getSpTerrain(points[i].x(), points[i].y())->addChild(pSprite);
-         m_Arrows.append(pSprite);
-         m_ArrowPoints.append(points[i]);
-         if (i > 0)
-         {
-             // select arrow
-             if (((points[i].x() < points[i + 1].x()) && (points[i].x() > points[i - 1].x())) ||
-                 ((points[i].x() < points[i - 1].x()) && (points[i].x() > points[i + 1].x())))
-             {
-                 pSprite->setColumn(static_cast<qint32>(Arrows::LeftRight));
-             }
-             else if (((points[i].y() < points[i + 1].y()) && (points[i].y() > points[i - 1].y())) ||
-                      ((points[i].y() < points[i - 1].y()) && (points[i].y() > points[i + 1].y())))
-             {
-                 pSprite->setColumn(static_cast<qint32>(Arrows::UpDown));
-             }
-             else if (((points[i].y() < points[i + 1].y()) && (points[i].x() < points[i - 1].x())) ||
-                      ((points[i].y() < points[i - 1].y()) && (points[i].x() < points[i + 1].x())))
-             {
-                 pSprite->setColumn(static_cast<qint32>(Arrows::DownRight));
-             }
-             else if (((points[i].y() < points[i + 1].y()) && (points[i].x() > points[i - 1].x())) ||
-                      ((points[i].y() < points[i - 1].y()) && (points[i].x() > points[i + 1].x())))
-             {
-                 pSprite->setColumn(static_cast<qint32>(Arrows::DownLeft));
-             }
-             else if (((points[i].y() > points[i + 1].y()) && (points[i].x() < points[i - 1].x())) ||
-                      ((points[i].y() > points[i - 1].y()) && (points[i].x() < points[i + 1].x())))
-             {
-                 pSprite->setColumn(static_cast<qint32>(Arrows::UpRight));
-             }
-             else if (((points[i].y() > points[i + 1].y()) && (points[i].x() > points[i - 1].x())) ||
-                      ((points[i].y() > points[i - 1].y()) && (points[i].x() > points[i + 1].x())))
-             {
-                 pSprite->setColumn(static_cast<qint32>(Arrows::UpLeft));
-             }
-         }
-         else
-         {
-             // final arrow
-             if (points[i].x() < points[i + 1].x())
-             {
-                 pSprite->setColumn(static_cast<qint32>(Arrows::Right));
-             }
-             else if (points[i].x() > points[i + 1].x())
-             {
-                 pSprite->setColumn(static_cast<qint32>(Arrows::Left));
-             }
-             else if (points[i].y() < points[i + 1].y())
-             {
-                 pSprite->setColumn(static_cast<qint32>(Arrows::Down));
-             }
-             else if (points[i].y() > points[i + 1].y())
-             {
-                 pSprite->setColumn(static_cast<qint32>(Arrows::Up));
-             }
-         }
-     }
- }
+void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
+{
+    QVector<QPoint> points = m_ArrowPoints;
+    deleteArrow();
+    if (m_pUnitPathFindingSystem->getCosts(x, y) > 0)
+    {
+        // is it a neighbour field to the last target?
+        qint32 fieldCosts = m_pUnitPathFindingSystem->getCosts(m_pGameAction->getTarget().x(), m_pGameAction->getTarget().y());
+        if (((points.size() > 0) && ((points[0].x() - x + points[0].y() - y) != 0)))
+        {
+            if ((points.size() > 0) && ((qAbs(points[0].x() - x) + qAbs(points[0].y() - y)) == 1))
+            {
+                if (points.contains(QPoint(x, y)))
+                {
+                    points = m_pUnitPathFindingSystem->getPath(x, y);
+                }
+                else
+                {
+                    points.push_front(QPoint(x, y));
+                    if (m_pUnitPathFindingSystem->getCosts(points) - fieldCosts > m_pGameAction->getTargetUnit()->getMovementPoints() )
+                    {
+                        // not reachable this way get the ideal path
+                        points = m_pUnitPathFindingSystem->getPath(x, y);
+                    }
+                }
+            }
+            else
+            {
+                points = m_pUnitPathFindingSystem->getPath(x, y);
+            }
+        }
+        else if (points.size() == 0)
+        {
+            points = m_pUnitPathFindingSystem->getPath(x, y);
+        }
+        else
+        {
+            // do nothing
+        }
+        m_pGameAction->setCosts(m_pUnitPathFindingSystem->getCosts(points) - fieldCosts);
+        m_ArrowPoints = points;
+        GameMap* pMap = GameMap::getInstance();
+        GameManager* pGameManager = GameManager::getInstance();
+        for (qint32 i = 0; i < points.size() - 1; i++)
+        {
+            oxygine::spSprite pSprite = new oxygine::Sprite();
+            oxygine::ResAnim* pAnim = pGameManager->getResAnim("arrow+unit");
+            pSprite->setResAnim(pAnim);
+            pSprite->setPriority(static_cast<qint8>(Terrain::DrawPriority::Arrow));
+            pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
+            pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
+            pMap->getSpTerrain(points[i].x(), points[i].y())->addChild(pSprite);
+            m_Arrows.append(pSprite);
 
- QStringList HumanPlayerInput::getEmptyActionList()
- {
-     Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
-     QJSValue value = pInterpreter->doFunction("ACTION", "getEmptyFieldActions");
-     if (value.isString())
-     {
-         return value.toString().split(",");
-     }
-     else
-     {
+            if (i > 0)
+            {
+                // select arrow
+                if (((points[i].x() < points[i + 1].x()) && (points[i].x() > points[i - 1].x())) ||
+                    ((points[i].x() < points[i - 1].x()) && (points[i].x() > points[i + 1].x())))
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::LeftRight));
+                }
+                else if (((points[i].y() < points[i + 1].y()) && (points[i].y() > points[i - 1].y())) ||
+                         ((points[i].y() < points[i - 1].y()) && (points[i].y() > points[i + 1].y())))
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::UpDown));
+                }
+                else if (((points[i].y() < points[i + 1].y()) && (points[i].x() < points[i - 1].x())) ||
+                         ((points[i].y() < points[i - 1].y()) && (points[i].x() < points[i + 1].x())))
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::DownRight));
+                }
+                else if (((points[i].y() < points[i + 1].y()) && (points[i].x() > points[i - 1].x())) ||
+                         ((points[i].y() < points[i - 1].y()) && (points[i].x() > points[i + 1].x())))
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::DownLeft));
+                }
+                else if (((points[i].y() > points[i + 1].y()) && (points[i].x() < points[i - 1].x())) ||
+                         ((points[i].y() > points[i - 1].y()) && (points[i].x() < points[i + 1].x())))
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::UpRight));
+                }
+                else if (((points[i].y() > points[i + 1].y()) && (points[i].x() > points[i - 1].x())) ||
+                         ((points[i].y() > points[i - 1].y()) && (points[i].x() > points[i + 1].x())))
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::UpLeft));
+                }
+            }
+            else
+            {
+                // final arrow
+                if (points[i].x() < points[i + 1].x())
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::Right));
+                }
+                else if (points[i].x() > points[i + 1].x())
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::Left));
+                }
+                else if (points[i].y() < points[i + 1].y())
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::Down));
+                }
+                else if (points[i].y() > points[i + 1].y())
+                {
+                    pSprite->setColumn(static_cast<qint32>(Arrows::Up));
+                }
+            }
+        }
+    }
+}
+
+QStringList HumanPlayerInput::getEmptyActionList()
+{
+    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    QJSValue value = pInterpreter->doFunction("ACTION", "getEmptyFieldActions");
+    if (value.isString())
+    {
+        return value.toString().split(",");
+    }
+    else
+    {
         return QStringList();
-     }
- }
+    }
+}
 
 void HumanPlayerInput::deleteArrow()
 {

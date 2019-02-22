@@ -11,7 +11,6 @@ var Constructor = function()
         unit.setFuel(100);
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(5);
-		unit.setCosts(25000);
         unit.setMinRange(3);
         unit.setMaxRange(5);
 		unit.setVision(3);
@@ -26,6 +25,29 @@ var Constructor = function()
     this.getMovementType = function()
     {
         return "MOVE_SHIP";
+    };
+    this.getBaseCost = function()
+    {
+        return 25000;
+    };
+    this.getName = function()
+    {
+        return qsTr("Battleship");
+    };
+    this.startOfTurn = function(unit)
+    {
+        // pay unit upkeep
+        unit.setFuel(unit.getFuel() - 1);
+    };
+    this.createExplosionAnimation = function(x, y)
+    {
+        var animation = GameAnimationFactory.createAnimation(x, y);
+        animation.addSprite("explosion+water", 0, -map.getImageSize(), 0, 1.5);
+        return animation;
+    };
+    this.canMoveAndFire = function()
+    {
+        return true;
     };
 }
 

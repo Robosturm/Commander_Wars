@@ -15,6 +15,7 @@
 #include "game/unit.h"
 
 #include "game/player.h"
+#include "game/co.h"
 
 spTerrain Terrain::createTerrain(const QString& terrainID, qint32 x, qint32 y)
 {
@@ -386,6 +387,44 @@ void Terrain::loadOverlaySprite(QString spriteID)
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
     this->addChild(pSprite);
     m_pOverlaySprites.append(pSprite);
+}
+
+qint32 Terrain::getBaseDefense()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getDefense";
+    QJSValueList args1;
+    qint32 defense = 0;
+    if (m_Building.get() == nullptr)
+    {
+        QJSValue ret = pApp->getInterpreter()->doFunction(terrainID, function1, args1);
+        if (ret.isNumber())
+        {
+            defense = ret.toInt();
+        }
+    }
+    else
+    {
+        QJSValue ret = pApp->getInterpreter()->doFunction(m_Building->getBuildingID(), function1, args1);
+        if (ret.isNumber())
+        {
+            defense = ret.toInt();
+        }
+    }
+    return defense;
+}
+
+qint32 Terrain::getDefense()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getDefense";
+    QJSValueList args1;
+    qint32 defense = getBaseDefense();
+    if (m_Unit.get() != nullptr)
+    {
+        defense += m_Unit->getTerrainDefenseModifier(QPoint(x, y));
+    }
+    return defense;
 }
 
 void Terrain::setBuilding(Building* pBuilding)

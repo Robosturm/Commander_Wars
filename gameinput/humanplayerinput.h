@@ -3,6 +3,8 @@
 
 #include <QVector>
 
+#include <QPoint>
+
 #include "gameinput/basegameinputif.h"
 
 #include "menue/gamemenue.h"
@@ -45,6 +47,17 @@ public:
      */
     void selectUnit(qint32 x, qint32 y);
     /**
+     * @brief createMarkedMoveFields createsthe fields marked for moving
+     */
+    void createMarkedMoveFields();
+    /**
+     * @brief createMarkedField
+     * @param x field
+     * @param y field
+     * @param color of the marked field
+     */
+    void createMarkedField(QPoint point, QColor color, Terrain::DrawPriority drawPriority);
+    /**
      * @brief createCursorPath creates the arrow showing the current unit path
      * @param x
      * @param y
@@ -67,6 +80,14 @@ public:
      * @brief cleanUpInput resets all internal data
      */
     void cleanUpInput();
+    /**
+     * @brief clearMarkedFields
+     */
+    void clearMarkedFields();
+    /**
+     * @brief clearMenu
+     */
+    void clearMenu();
 signals:
     /**
      * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
@@ -78,15 +99,16 @@ public slots:
     void leftClick(qint32 x, qint32 y);
     void cursorMoved(qint32 x, qint32 y);
     void menuItemSelected(QString itemID, qint32 cost);
+    void markedFieldSelected(QPoint point);
     QStringList getEmptyActionList();
 protected:
-    oxygine::spSprite getIconSprite(QString itemID);
 private:
     GameAction* m_pGameAction{nullptr};
     UnitPathFindingSystem* m_pUnitPathFindingSystem{nullptr};
 
     QVector<oxygine::spActor> m_Fields;
     QVector<QPoint> m_FieldPoints;
+    MarkedFieldData* m_pMarkedFieldData{nullptr};
 
     QVector<oxygine::spActor> m_Arrows;
     QVector<QPoint> m_ArrowPoints;

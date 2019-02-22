@@ -103,6 +103,12 @@
 		<image file="flare+walk.png" cols = "4" rows = "4"  />
 		<image file="flare+walk+mask.png" cols = "4" rows = "4"  />
 		
+		<!-- heavy_hovercraft -->
+		<image file="heavy_hovercraft.png" cols = "4" />
+		<image file="heavy_hovercraft+mask.png" cols = "4" />
+		<image file="heavy_hovercraft+walk+mask.png" cols = "4" rows = "4" />
+		<image file="heavy_hovercraft+walk.png" cols = "4"  rows = "4" />
+		
 		<!-- heavy_tank -->
 		<image file="heavy_tank.png" cols = "4" />
 		<image file="heavy_tank+mask.png" cols = "4" />
@@ -114,6 +120,18 @@
 		<image file="hoellium+mask.png" cols = "4" />
 		<image file="hoellium+walk.png" cols = "4" rows = "4"  />
 		<image file="hoellium+walk+mask.png" cols = "4" rows = "4"  />
+		
+		<!-- hovercraft -->
+		<image file="hovercraft.png" cols = "4" />
+		<image file="hovercraft+mask.png" cols = "4" />
+		<image file="hovercraft+walk.png" cols = "4" rows = "4"  />
+		<image file="hovercraft+walk+mask.png" cols = "4" rows = "4"  />
+		
+		<!-- hovercraft -->
+		<image file="hoverflak.png" cols = "4" />
+		<image file="hoverflak+mask.png" cols = "4" />
+		<image file="hoverflak+walk.png" cols = "4" rows = "4"  />
+		<image file="hoverflak+walk+mask.png" cols = "4" rows = "4"  />
 		
 		<!-- infantry -->
 		<image file="infantry+os.png" cols = "4" />
@@ -253,6 +271,12 @@
 		<image file="motorbike+walk+mask.png" cols = "4" rows = "4" />
 		<image file="motorbike+walk.png" cols = "4"  rows = "4" />
 		
+		<!-- neotank -->
+		<image file="neotank.png" cols = "4" />
+		<image file="neotank+mask.png" cols = "4" />
+		<image file="neotank+walk+mask.png" cols = "4" rows = "4" />
+		<image file="neotank+walk.png" cols = "4"  rows = "4" />
+		
 		<!-- recon -->
 		<image file="recon.png" cols = "4" />
 		<image file="recon+mask.png" cols = "4" />
@@ -264,6 +288,55 @@
 		<image file="rocketthrower+mask.png" cols = "4" />
 		<image file="rocketthrower+walk+mask.png" cols = "4" rows = "4" />
 		<image file="rocketthrower+walk.png" cols = "4"  rows = "4" />
+		
+		<!-- sniper -->
+		<image file="sniper+ac.png" cols = "4" />
+		<image file="sniper+ac+mask.png" cols = "4" />
+		
+		<image file="sniper+dm.png" cols = "4" />
+		<image file="sniper+dm+mask.png" cols = "4" />
+		
+		<image file="sniper+bd.png" cols = "4" />
+		<image file="sniper+bd+mask.png" cols = "4" />
+		
+		<image file="sniper+bh.png" cols = "4" />
+		<image file="sniper+bh+mask.png" cols = "4" />
+		<image file="sniper+bh+walk+mask.png" cols = "4" rows = "4" />
+		<image file="sniper+bh+walk.png" cols = "4"  rows = "4" />
+		
+		<image file="sniper+bm.png" cols = "4" />
+		<image file="sniper+bm+mask.png" cols = "4" />
+		<image file="sniper+bm+walk+mask.png" cols = "4" rows = "4" />
+		<image file="sniper+bm+walk.png" cols = "4"  rows = "4" />
+		
+		<image file="sniper+ge.png" cols = "4" />
+		<image file="sniper+ge+mask.png" cols = "4" />
+		<image file="sniper+ge+walk+mask.png" cols = "4" rows = "4" />
+		<image file="sniper+ge+walk.png" cols = "4"  rows = "4" />
+			
+		<image file="sniper+js.png" cols = "4" />
+		<image file="sniper+js+mask.png" cols = "4" />
+		
+		<image file="sniper+ma.png" cols = "4" />
+		<image file="sniper+ma+mask.png" cols = "4" />
+		<image file="sniper+ma+walk+mask.png" cols = "4" rows = "4" />
+		<image file="sniper+ma+walk.png" cols = "4"  rows = "4" />
+		
+		<image file="sniper+os.png" cols = "4" />
+		<image file="sniper+os+mask.png" cols = "4" />
+		<image file="sniper+os+walk+mask.png" cols = "4" rows = "4" />
+		<image file="sniper+os+walk.png" cols = "4"  rows = "4" />
+		
+		<image file="sniper+pc.png" cols = "4" />
+		<image file="sniper+pc+mask.png" cols = "4" />
+		
+		<image file="sniper+tg.png" cols = "4" />
+		<image file="sniper+tg+mask.png" cols = "4" />
+		
+		<image file="sniper+yc.png" cols = "4" />
+		<image file="sniper+yc+mask.png" cols = "4" />
+		<image file="sniper+yc+walk+mask.png" cols = "4" rows = "4" />
+		<image file="sniper+yc+walk.png" cols = "4"  rows = "4" />
 		
 		<!-- submarine -->
 		<image file="submarine.png" cols = "4" />
@@ -289,7 +362,7 @@
 		<image file="waterplane+walk+mask.png" cols = "4" rows = "4" />
 		<image file="waterplane+walk.png" cols = "4"  rows = "4" />
 		
-		<!-- waterplane -->
+		<!-- stealthbomber -->
 		<image file="stealthbomber.png" cols = "4" />
 		<image file="stealthbomber+mask.png" cols = "4" />
 		<image file="stealthbomber+walk+mask.png" cols = "4" rows = "4" />

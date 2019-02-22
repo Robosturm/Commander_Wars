@@ -79,6 +79,11 @@ signals:
 
 public slots:
     /**
+     * @brief getTerrainDefenseModifier the bonus defense for this unit
+     * @return
+     */
+    qint32 getTerrainDefenseModifier(QPoint position);
+    /**
      * @brief getMovementPoints the movement points this unit can move
      * @return
      */
@@ -125,12 +130,12 @@ public slots:
     void setCapturePoints(const qint32 &value);
 
     qint32 getCosts() const;
-    void setCosts(const qint32 &value);
 
     qint32 getMinRange() const;
     void setMinRange(const qint32 &value);
 
-    qint32 getMaxRange() const;
+    qint32 getMaxRange();
+    qint32 getMaxRange(QPoint position);
     void setMaxRange(const qint32 &value);
 
     qint32 getVision() const;
@@ -194,6 +199,10 @@ public slots:
      */
     void removeUnit();
     /**
+     * @brief killUnit removes the unit from the game and let it explode
+     */
+    void killUnit();
+    /**
      * @brief increaseCapturePoints increases the capture points of this unit based on units hp and ko owner
      */
     void increaseCapturePoints();
@@ -209,6 +218,40 @@ public slots:
      * @param iconID
      */
     void unloadIcon(QString iconID);
+    /**
+     * @brief startOfTurn
+     */
+    void startOfTurn();
+    /**
+     * @brief getTerrain
+     * @return
+     */
+    Terrain* getTerrain();
+    /**
+     * @brief canMoveAndFire
+     * @return if this unit can move and fire
+     */
+    bool canMoveAndFire(QPoint position);
+    /**
+     * @brief loadUnit adds a unit to the transport list
+     * @param pUnit
+     */
+    void loadUnit(Unit* pUnit);
+    /**
+     * @brief getLoadedUnit
+     * @param index
+     */
+    Unit* getLoadedUnit(qint32 index);
+    /**
+     * @brief unloadUnit removes a unit from the transport list
+     * @param index
+     */
+    void unloadUnit(Unit* pUnit, QPoint position);
+    /**
+     * @brief getLoadedUnitCount
+     * @return number of units loaded by this unit
+     */
+    qint32 getLoadedUnitCount();
 protected:
     /**
      * @brief updateIconTweens creates the visibility toogle tweens for all icons
@@ -254,7 +297,6 @@ private:
     QVector<spUnit> m_TransportUnits;
 
     qint32 capturePoints{0};
-    qint32 costs{-1};
     qint32 minRange{1};
     qint32 maxRange{-1};
     qint32 vision{1};

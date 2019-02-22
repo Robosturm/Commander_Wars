@@ -5,7 +5,11 @@
 #include <QObject>
 #include "oxygine-flow.h"
 #include "game/smartpointers.h"
+#include "game/smartCO.h"
+
 #include "coreengine/fileserializable.h"
+
+class CO;
 
 class BaseGameInputIF;
 
@@ -87,22 +91,29 @@ public slots:
      * @return the alliance of the player with us
      */
     Alliance checkAlliance(Player* pPlayer);
-    quint32 getFonds() const;
+    qint32 getFonds() const;
     /**
      * @brief addFonds increases the money of this player by the given value
      * @param value
      */
-    void addFonds(const quint32 &value);
-    void setFonds(const quint32 &value);
+    void addFonds(const qint32 &value);
+    void setFonds(const qint32 &value);
     /**
      * @brief earnMoney earns money based on the buildings the player has
      * @param modifier multiplier additionaly modifying the income
      */
     void earnMoney(float modifier = 1.0f);
+    /**
+     * @brief getCO
+     * @param id index of the co 0 or 1
+     * @return pointer to the co
+     */
+    CO* getCO(quint8 id);
 private:
     quint32 playerID;
-    quint32 fonds{0};
+    qint32 fonds{0};
     QColor m_Color;
+    spCO playerCOs[2] = {nullptr, nullptr};
     /**
      * @brief m_pBaseGameInput pointer to the ai or human player
      */

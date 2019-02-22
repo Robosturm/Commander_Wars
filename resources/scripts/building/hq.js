@@ -43,6 +43,16 @@ var Constructor = function()
         animation.addBuildingSprite("hq+" + armyName + "+mask", startColor , capturedColor, true);
         animation.addBuildingSprite("hq+" + armyName, startColor , capturedColor, false);
     };
+    this.getDefense = function()
+    {
+        return 4;
+    };
+    this.getConstructionList = function()
+    {
+        return ["INFANTRY", "MECH", "MOTORBIKE", "RECON", "APC", "FLARE",
+                "ARTILLERY", "LIGHT_TANK", "FLAK", "ANTITANKCANNON",
+                "HEAVY_TANK", "MISSILE", "ROCKETTHROWER", "MEGATANK"];
+    };
 }
 
 Constructor.prototype = BUILDING;

@@ -21,12 +21,15 @@ Interpreter::Interpreter(QObject *parent)
 
 void Interpreter::init()
 {
-    engine = new QJSEngine();
+    engine = new QQmlEngine();
     Mainapp* pApp = Mainapp::getInstance();
-    QJSValue globals = engine->newQObject(pApp);
+    QJSValue globals = newQObject(pApp);
     engine->globalObject().setProperty("globals", globals);
-    QJSValue audio = engine->newQObject(pApp->getAudioThread());
+    QJSValue audio = newQObject(pApp->getAudioThread());
     engine->globalObject().setProperty("audio", audio);
+
+    QJSValue console = newQObject(Console::getInstance());
+    engine->globalObject().setProperty("GameConsole", console);
     engine->installTranslatorFunctions();
 }
 
@@ -67,7 +70,9 @@ QJSValue Interpreter::doFunction(const QString& func, QJSValueList& args)
     {
         text += args[i].toString() + " ";
     }
+#ifdef GAMEDEBUG
     Console::print("Calling: " + func + " with " + text, Console::eDEBUG);
+#endif
     QJSValue ret;
     QJSValue funcPointer = engine->globalObject().property(func);
     if (funcPointer.isCallable())
@@ -84,6 +89,9 @@ QJSValue Interpreter::doFunction(const QString& func, QJSValueList& args)
         QString error = "Error: attemp to call a non function value.";
         Console::print(error, Console::eERROR);
     }
+#ifdef GAMEDEBUG
+    Console::print("Result is: " + ret.toString(), Console::eDEBUG);
+#endif
     return ret;
 }
 
@@ -94,7 +102,9 @@ QJSValue Interpreter::doFunction(const QString& obj, const QString& func, const 
     {
         text += args[i].toString() + " ";
     }
+#ifdef GAMEDEBUG
     Console::print("Calling: " + func + " of " + obj + " with " + text, Console::eDEBUG);
+#endif
     QJSValue ret;
 
     QJSValue objPointer = engine->globalObject().property(obj);
@@ -121,6 +131,9 @@ QJSValue Interpreter::doFunction(const QString& obj, const QString& func, const 
         QString error = "Error: attemp to call a non object value in order to call a function.";
         Console::print(error, Console::eERROR);
     }
+#ifdef GAMEDEBUG
+    Console::print("Result is: " + ret.toString(), Console::eDEBUG);
+#endif
     return ret;
 }
 

@@ -11,7 +11,6 @@ var Constructor = function()
         unit.setFuel(100);
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(5);
-		unit.setCosts(28000);
         unit.setMinRange(3);
         unit.setMaxRange(8);
 		unit.setVision(4);
@@ -26,6 +25,35 @@ var Constructor = function()
     this.getMovementType = function()
     {
         return "MOVE_SHIP";
+    };
+
+    this.getBaseCost = function()
+    {
+        return 28000;
+    };
+
+    this.getName = function()
+    {
+        return qsTr("Aircraft Carrier");
+    };
+    this.startOfTurn = function(unit)
+    {
+        // pay unit upkeep
+        unit.setFuel(unit.getFuel() - 1);
+    };
+    this.createExplosionAnimation = function(x, y)
+    {
+        var animation = GameAnimationFactory.createAnimation(x, y);
+        animation.addSprite("explosion+water", 0, -map.getImageSize(), 0, 1.5);
+        return animation;
+    };
+    this.getLoadingPlace = function()
+    {
+        return 2;
+    };
+    this.getTransportUnits = function()
+    {
+        return ["T_HELI", "K_HELI", "BOMBER", "DUSTER", "FIGHTER", "WATERPLANE", "STEALTHBOMBER"];
     };
 }
 

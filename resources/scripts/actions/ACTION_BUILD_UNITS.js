@@ -4,7 +4,8 @@ var Constructor = function()
     this.canBePerformed = function(action)
     {
         var unit = action.getTargetUnit();
-		if (unit === null)
+        var building = action.getTargetBuilding();
+        if ((unit === null) && building !== null)
 		{
 			return true;
 		}
@@ -21,18 +22,23 @@ var Constructor = function()
     {
         if (action.getInputStep() === 0)
         {
-            return true;
+            return false;
         }
         else
         {
-            return false;
+            return true;
         }
     };
 
 
     this.perform = function(action)
     {
-        
+        action.startReading();
+        var unitID = action.readDataString();
+        var unit = map.spawnUnit(action.getTarget().x, action.getTarget().y, unitID, map.getCurrentPlayer());
+        // pay for the unit
+        map.getCurrentPlayer().addFonds(-action.getCosts());
+        unit.setHasMoved(true);
     };
 
     this.getStepInputType = function(action)
@@ -47,8 +53,21 @@ var Constructor = function()
 
     this.getStepData = function(action, data)
     {
-        // type of the data object depends on the StepInputType
-        data.addData("Infantry 1000", "INFANTRY", 1000, true);
+        var building = action.getTargetBuilding();
+        var units = Global[building.getBuildingID()].getConstructionList();
+        for (i = 0; i < units.length; i++)
+        {
+            var name = Global[units[i]].getName();
+            var costs = Global[units[i]].getBaseCost();
+            // todo modify costs
+            var enabled = false;
+            var fonds = map.getCurrentPlayer().getFonds();
+            if (costs <= fonds)
+            {
+                enabled = true;
+            }
+            data.addData(name + " " + costs.toString(), units[i], units[i], costs, enabled);
+        }
     };
 }
 

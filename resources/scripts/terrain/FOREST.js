@@ -7,7 +7,7 @@ var Constructor = function()
     };
     this.getDefense = function()
     {
-        return 3;
+        return 2;
     };
 	this.loadBaseTerrain = function(terrain)
     {

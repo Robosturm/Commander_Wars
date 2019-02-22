@@ -11,7 +11,6 @@ var Constructor = function()
         unit.setFuel(100);
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(9);
-        unit.setCosts(20000);
         unit.setMinRange(1);
         unit.setMaxRange(1);
 		unit.setVision(2);
@@ -23,9 +22,32 @@ var Constructor = function()
         unit.loadSprite("fighter", false);
         unit.loadSprite("fighter+mask", true);
     };
+    this.getBaseCost = function()
+    {
+        return 20000;
+    };
     this.getMovementType = function()
     {
         return "MOVE_AIR";
+    };
+    this.getName = function()
+    {
+        return qsTr("Fighter");
+    };
+    this.startOfTurn = function(unit)
+    {
+        // pay unit upkeep
+        unit.setFuel(unit.getFuel() - 5);
+    };
+    this.createExplosionAnimation = function(x, y)
+    {
+        var animation = GameAnimationFactory.createAnimation(x, y);
+        animation.addSprite("explosion+air", 0, -map.getImageSize(), 0, 1.5);
+        return animation;
+    };
+    this.canMoveAndFire = function()
+    {
+        return true;
     };
 }
 

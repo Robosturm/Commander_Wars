@@ -100,6 +100,7 @@ public:
 signals:
 
 public slots:
+    Unit* spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint32 range = 0);
     /**
      * @brief updateTerrainSprites updates the terrain sprites refreshes them to fit the current map
      * @param xInput around given coordinates -1 whole map
@@ -209,9 +210,19 @@ public slots:
      */
     void enableUnits(Player* pPlayer);
     /**
+     * @brief startOfTurn calls all start of turn calls of each unit and building owned by this player
+     * @param pPlayer
+     */
+    void startOfTurn(Player* pPlayer);
+    /**
      * @brief nextPlayer next player
      */
     void nextPlayer();
+    /**
+     * @brief checkFuel checks fuel of the unit and if it's negative kills it.
+     * @param pPlayer
+     */
+    void checkFuel(Player* pPlayer);
 private:
     static GameMap* m_pInstance;
 

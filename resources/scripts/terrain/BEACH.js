@@ -62,6 +62,7 @@ var Constructor = function()
             return true;
         }
     }
+
 };
 Constructor.prototype = TERRAIN;
 var BEACH = new Constructor();

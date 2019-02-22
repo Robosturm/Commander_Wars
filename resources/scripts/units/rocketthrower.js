@@ -11,10 +11,13 @@ var Constructor = function()
         unit.setFuel(50);
         unit.setMaxFuel(50);
         unit.setBaseMovementPoints(5);
-        unit.setCosts(15000);
         unit.setMinRange(3);
         unit.setMaxRange(5);
         unit.setVision(3);
+    };
+    this.getBaseCost = function()
+    {
+        return 15000;
     };
     // called for loading the main sprite
     this.loadSprites = function(unit)
@@ -26,6 +29,14 @@ var Constructor = function()
     this.getMovementType = function()
     {
         return "MOVE_TIRE_A";
+    };
+    this.getName = function()
+    {
+        return qsTr("Rocketthrower");
+    };
+    this.canMoveAndFire = function()
+    {
+        return true;
     };
 }
 

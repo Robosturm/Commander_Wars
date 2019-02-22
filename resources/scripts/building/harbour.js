@@ -26,6 +26,10 @@ var Constructor = function()
         // returns a string id list of the actions this building can perform
         return "ACTION_BUILD_UNITS";
     };
+    this.getConstructionList = function()
+    {
+        return ["CANNONBOAT", "LANDER", "CRUISER", "SUBMARINE", "DESTROYER", "BATTLESHIP", "AIRCRAFTCARRIER"];
+    };
 }
 
 Constructor.prototype = BUILDING;

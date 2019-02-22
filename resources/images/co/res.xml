@@ -2,6 +2,42 @@
 <resources>
 	<set path = "resources/images/co/" />
 	<atlas>
+		<!-- Empty -->
+		<image file="empty.png" />
+		<!-- OS -->
+		<image file="os/andy+nrm.png" />
+		<image file="os/andy+info.png" />
+		<image file="os/andy+face.png" cols = "3" />
+		<image file="os/hachi+nrm.png" />
+		<image file="os/hachi+info.png" />
+		<image file="os/hachi+face.png" cols = "3" />
+		<image file="os/max+nrm.png" />
+		<image file="os/max+info.png" />
+		<image file="os/max+face.png" cols = "3" />
+		<image file="os/nell+nrm.png" />
+		<image file="os/nell+info.png" />
+		<image file="os/nell+face.png" cols = "3" />
+		<image file="os/sami+nrm.png" />
+		<image file="os/sami+info.png" />
+		<image file="os/sami+face.png" cols = "3" />
 		
+		<!-- BM -->
+		<image file="bm/colin+nrm.png" />
+		<image file="bm/colin+info.png" />
+		<image file="bm/colin+face.png" cols = "3" />
+		<image file="bm/kid+nrm.png" />
+		<image file="bm/kid+info.png" />
+		<image file="bm/kid+face.png" cols = "3" />
+		<image file="bm/olaf+nrm.png" />
+		<image file="bm/olaf+info.png" />
+		<image file="bm/olaf+face.png" cols = "3" />
+		<image file="bm/sasha+nrm.png" />
+		<image file="bm/sasha+info.png" />
+		<image file="bm/sasha+face.png" cols = "3" />
+		
+				<!-- BH -->
+		<image file="bh/sturm+nrm.png" />
+		<image file="bh/sturm+info.png" />
+		<image file="bh/sturm+face.png" cols = "3" />
 	</atlas>
 </resources>

@@ -10,15 +10,15 @@ var Constructor = function()
         {
             return false;
         }
-        if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
-            (action.getMovementTarget() === null))
+        if (((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y)))
         {
 
         }
-        else
+        else if ((action.getMovementTarget() === null) && unit.canMoveAndFire())
         {
-            return false;
+
         }
+        return false;
     };
     this.getActionText = function()
     {

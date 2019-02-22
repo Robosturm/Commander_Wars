@@ -23,8 +23,9 @@ public:
         Building = 1,
         MarkedFieldLow = 2,
         Unit = 3,
-        MarkedFieldHigh = 4,
-        Arrow
+        MarkedFieldMid = 4,
+        Arrow,
+        MarkedFieldHigh
     };
     static spTerrain createTerrain(const QString& terrainID, qint32 x, qint32 y);
 
@@ -148,6 +149,14 @@ public slots:
      * @param pBuilding
      */
     void setBuilding(Building* pBuilding);
+    /**
+     * @brief getDefense
+     */
+    qint32 getDefense();
+    /**
+     * @brief getDefense
+     */
+    qint32 getBaseDefense();
 private:
     explicit Terrain(const QString& terrainID, qint32 x, qint32 y);
     /**

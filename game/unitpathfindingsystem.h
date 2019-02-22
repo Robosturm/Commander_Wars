@@ -34,6 +34,12 @@ public:
      * @return the exact costs needed to get onto the given field. -1 = unreachable
      */
     virtual qint32 getCosts(qint32 x, qint32 y)  override;
+    /**
+     * @brief getCosts returns the costs need to go the given path
+     * @param path the path the unit should go
+     * @return the costs needed when using the given path
+     */
+    qint32 getCosts(QVector<QPoint> path);
 private:
     spUnit m_pUnit;
 };

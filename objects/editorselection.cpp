@@ -8,6 +8,8 @@
 
 #include "coreengine/mainapp.h"
 
+#include "game/co.h"
+
 const float EditorSelection::xFactor = 1.5f;
 const float EditorSelection::yFactor = 2.5f;
 
@@ -70,7 +72,8 @@ EditorSelection::EditorSelection()
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     for (qint32 i = 0; i < pBuildingSpriteManager->getBuildingCount(); i++)
     {
-        m_Buildings.append(new Building(pBuildingSpriteManager->getBuildingID(i)));
+        spBuilding building = new Building(pBuildingSpriteManager->getBuildingID(i));
+        m_Buildings.append(building);
         m_Buildings[i]->updateBuildingSprites();
         oxygine::spSprite pSprite = new oxygine::Sprite();
         pAnim = pTerrainManager->getResAnim("plains+0");
@@ -87,7 +90,8 @@ EditorSelection::EditorSelection()
 
     for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
     {
-        m_Units.append(new Unit(pUnitSpriteManager->getUnitID(i), m_Players.at(1)->getSpOwner()));
+        spUnit unit = new Unit(pUnitSpriteManager->getUnitID(i), m_Players.at(1)->getSpOwner());
+        m_Units.append(unit);
         oxygine::spSprite pSprite = new oxygine::Sprite();
         QString movementType = m_Units.at(i)->getMovementType();
         if (pMovementTableManager->getBaseMovementPoints(movementType, "PLAINS") > 0)

@@ -15,6 +15,7 @@
 #include "objects/filedialog.h"
 
 #include "game/terrainfindingsystem.h"
+#include "game/co.h"
 
 EditorMenue::EditorMenue()
 {

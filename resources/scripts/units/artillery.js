@@ -11,7 +11,6 @@ var Constructor = function()
         unit.setFuel(50);
         unit.setMaxFuel(50);
         unit.setBaseMovementPoints(5);
-        unit.setCosts(6000);
         unit.setMinRange(2);
         unit.setMaxRange(3);
         unit.setVision(1);
@@ -28,7 +27,14 @@ var Constructor = function()
     {
         return "MOVE_TANK";
     };
-
+    this.getBaseCost = function()
+    {
+        return 6000;
+    };
+    this.getName = function()
+    {
+        return qsTr("Artillery");
+    };
 }
 
 Constructor.prototype = UNIT;

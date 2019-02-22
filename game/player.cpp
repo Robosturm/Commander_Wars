@@ -10,6 +10,8 @@
 
 #include "game/building.h"
 
+#include "game/co.h"
+
 Player::Player(quint32 id)
     : playerID(id)
 {
@@ -80,17 +82,17 @@ Player::Alliance Player::checkAlliance(Player* pPlayer)
     }
 }
 
-void Player::setFonds(const quint32 &value)
+void Player::setFonds(const qint32 &value)
 {
     fonds = value;
 }
 
-void Player::addFonds(const quint32 &value)
+void Player::addFonds(const qint32 &value)
 {
     fonds += value;
 }
 
-quint32 Player::getFonds() const
+qint32 Player::getFonds() const
 {
     return fonds;
 }
@@ -118,6 +120,18 @@ void Player::setBaseGameInput(BaseGameInputIF *pBaseGameInput)
 {
     m_pBaseGameInput = pBaseGameInput;
     m_pBaseGameInput->setPlayer(this);
+}
+
+CO* Player::getCO(quint8 id)
+{
+    if (id <= 1)
+    {
+        return playerCOs[id].get();
+    }
+    else
+    {
+        return nullptr;
+    }
 }
 
 void Player::serialize(QDataStream& pStream)

@@ -4,15 +4,17 @@
 #include "game/unit.h"
 #include "game/building.h"
 #include "game/player.h"
+#include "game/co.h"
 
 GameAction::GameAction()
 {
+    buffer.open(QIODevice::ReadWrite);
 }
 
 GameAction::GameAction(QString actionID)
     : m_actionID(actionID)
 {
-
+    buffer.open(QIODevice::ReadWrite);
 }
 
 void GameAction::perform()
@@ -167,6 +169,18 @@ QString GameAction::getStepCursor()
 MenuData* GameAction::getMenuStepData()
 {
    MenuData* data = new MenuData;
+   Mainapp* pApp = Mainapp::getInstance();
+   QString function1 = "getStepData";
+   QJSValueList args1;
+   args1 << pApp->getInterpreter()->newQObject(this);
+   args1 << pApp->getInterpreter()->newQObject(data);
+   QJSValue ret = pApp->getInterpreter()->doFunction(m_actionID, function1, args1);
+   return data;
+}
+
+MarkedFieldData* GameAction::getMarkedFieldStepData()
+{
+   MarkedFieldData* data = new MarkedFieldData;
    Mainapp* pApp = Mainapp::getInstance();
    QString function1 = "getStepData";
    QJSValueList args1;

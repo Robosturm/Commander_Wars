@@ -16,6 +16,8 @@ var Constructor = function()
         {
             if ((targetUnit.getOwner() === unit.getOwner()) &&
                 (targetUnit.getUnitID() === unit.getUnitID()) &&
+                // join is only allowed with units that don't have anything loaded
+                (unit.getLoadedUnitCount() === 0) && (targetUnit.getLoadedUnitCount() === 0) &&
 				(targetUnit.getHpRounded() < 10))
 			{
 				return true;
@@ -43,7 +45,7 @@ var Constructor = function()
         // we need to move the unit to the target position
         ACTION_JOIN.postAnimationUnit = action.getTargetUnit();
         ACTION_JOIN.postAnimationTargetUnit = action.getMovementTarget();
-        var animation = this[ACTION_JOIN.postAnimationUnit.getUnitID()].doWalkingAnimation(action);
+        var animation = Global[ACTION_JOIN.postAnimationUnit.getUnitID()].doWalkingAnimation(action);
         animation.setEndOfAnimationCall("ACTION_JOIN", "performPostAnimation");
     };
     this.performPostAnimation = function()

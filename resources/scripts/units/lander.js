@@ -11,7 +11,6 @@ var Constructor = function()
         unit.setFuel(100);
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(6);
-		unit.setCosts(10000);
         unit.setMinRange(1);
         unit.setMaxRange(1);
 		unit.setVision(1);
@@ -26,6 +25,36 @@ var Constructor = function()
     this.getMovementType = function()
     {
         return "MOVE_BOAT";
+    };
+    this.getBaseCost = function()
+    {
+        return 10000;
+    };
+    this.getName = function()
+    {
+        return qsTr("Lander");
+    };
+    this.startOfTurn = function(unit)
+    {
+        // pay unit upkeep
+        unit.setFuel(unit.getFuel() - 1);
+    };
+    this.createExplosionAnimation = function(x, y)
+    {
+        var animation = GameAnimationFactory.createAnimation(x, y);
+        animation.addSprite("explosion+water", 0, 0);
+        return animation;
+    };
+    this.getLoadingPlace = function()
+    {
+        return 2;
+    };
+    this.getTransportUnits = function()
+    {
+        return ["ANTITANKCANNON", "APC", "ARTILLERY", "FLAK", "FLARE",
+                "HEAVY_HOVERCRAFT", "HEAVY_TANK", "HOVERCRAFT", "HOVERFLAK",
+                "INFANTRY", "LIGHT_TANK", "MECH", "MEGATANK", "MISSILE",
+                "MOTORBIKE", "NEOTANK", "RECON", "ROCKETTRHOWER", "SNIPER"];
     };
 }
 

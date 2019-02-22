@@ -41,8 +41,8 @@
 		
 		<!-- animations -->
 		<image file="explosion+land.png" cols = "9" />
-		<image file="explosion+air.png" cols = "9" />
-		<image file="explosion+water.png" cols = "9" />
+		<image file="explosion+air.png" cols = "18" />
+		<image file="explosion+water.png" cols = "7" />
 		<image file="explosion+silo.png" cols = "15" />
 		
 		<!-- static -->

@@ -11,7 +11,6 @@ var Constructor = function()
         unit.setFuel(100);
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(3);
-        unit.setCosts(1500);
         unit.setMinRange(1);
         unit.setMaxRange(1);
         unit.setVision(2);
@@ -39,7 +38,7 @@ var Constructor = function()
     this.getActions = function()
     {
         // returns a string id list of the actions this unit can perform
-        return "ACTION_CAPTURE,ACTION_WAIT,ACTION_JOIN";
+        return "ACTION_CAPTURE,ACTION_JOIN,ACTION_LOAD,ACTION_WAIT";
     };
     this.doWalkingAnimation = function(action)
     {
@@ -70,6 +69,18 @@ var Constructor = function()
         animation.loadSprite("infantry+" + armyName + "+walk", false, zoom);
         animation.setSound("resources/sounds/movefeet.wav", -1);
         return animation;
+    };
+    this.getBaseCost = function()
+    {
+        return 1500;
+    };
+    this.getName = function()
+    {
+        return qsTr("Infantry");
+    };
+    this.canMoveAndFire = function()
+    {
+        return true;
     };
 }
 

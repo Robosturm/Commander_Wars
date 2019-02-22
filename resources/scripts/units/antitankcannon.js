@@ -11,7 +11,6 @@ var Constructor = function()
         unit.setFuel(50);
         unit.setMaxFuel(50);
         unit.setBaseMovementPoints(4);
-        unit.setCosts(11000);
         unit.setMinRange(1);
         unit.setMaxRange(3);
         unit.setVision(2);
@@ -29,6 +28,15 @@ var Constructor = function()
         return "MOVE_TIRE_B";
     };
 
+    this.getBaseCost = function()
+    {
+        return 11000;
+    };
+
+    this.getName = function()
+    {
+        return qsTr("Anti Tank Cannon");
+    };
 }
 
 Constructor.prototype = UNIT;

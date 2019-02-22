@@ -9,7 +9,7 @@
 #include "game/player.h"
 
 #include "game/unit.h"
-
+#include "game/co.h"
 #include "game/gameanimationfactory.h"
 
 GameAnimationWalk::GameAnimationWalk(Unit* pUnit, QVector<QPoint> movePath)
@@ -64,7 +64,7 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
         oxygine::spTweenQueue queueAnimating = new oxygine::TweenQueue();
         oxygine::spTweenQueue queueMoving = new oxygine::TweenQueue();
 
-        for (qint32 i = m_movePath.size() - 1; i >= 0; i--)
+        for (qint32 i = m_movePath.size() - 2; i >= 0; i--)
         {
             qint32 x = 0;
             qint32 y = 0;

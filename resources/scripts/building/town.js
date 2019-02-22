@@ -15,6 +15,12 @@ var Constructor = function()
             building.loadSprite("town+neutral", false);
         }
     };
+    this.getConstructionList = function()
+    {
+        return ["INFANTRY", "MECH", "MOTORBIKE", "RECON", "APC", "FLARE",
+                "ARTILLERY", "LIGHT_TANK", "FLAK", "ANTITANKCANNON",
+                "HEAVY_TANK", "MISSILE", "ROCKETTHROWER", "MEGATANK"];
+    };
 }
 
 Constructor.prototype = BUILDING;

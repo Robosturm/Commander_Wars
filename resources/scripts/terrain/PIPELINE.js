@@ -21,6 +21,7 @@ var Constructor = function()
             terrain.loadBaseSprite("pipeline" + surroundings);
         }
     };
+
 };
 Constructor.prototype = TERRAIN;
 var PIPELINE = new Constructor();

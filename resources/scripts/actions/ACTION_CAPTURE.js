@@ -46,7 +46,7 @@ var Constructor = function()
         var maxCapturePoints = 20;
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
-        var animation = this[unit.getUnitID()].doWalkingAnimation(action);
+        var animation = Global[unit.getUnitID()].doWalkingAnimation(action);
         // move unit to target position
         unit.moveUnitAction(action);
         // capture the building
@@ -87,7 +87,7 @@ var Constructor = function()
         {
             color = building.getOwner().getColor();
         }
-        this[building.getBuildingID()].addCaptureAnimationBuilding(captureAnimation, building, color, unit.getOwner().getColor());
+        Global[building.getBuildingID()].addCaptureAnimationBuilding(captureAnimation, building, color, unit.getOwner().getColor());
         captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , unit.getOwner().getColor(), true);
         captureAnimation.addSoldierSprite("soldier+" + armyName , unit.getOwner().getColor(), false);
 

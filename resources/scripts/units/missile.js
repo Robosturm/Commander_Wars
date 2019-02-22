@@ -11,10 +11,13 @@ var Constructor = function()
         unit.setFuel(50);
         unit.setMaxFuel(50);
         unit.setBaseMovementPoints(4);
-        unit.setCosts(12000);
         unit.setMinRange(2);
         unit.setMaxRange(6);
         unit.setVision(5);
+    };
+    this.getBaseCost = function()
+    {
+        return 12000;
     };
     // called for loading the main sprite
     this.loadSprites = function(unit)
@@ -26,6 +29,10 @@ var Constructor = function()
     this.getMovementType = function()
     {
         return "MOVE_TIRE_A";
+    };
+    this.getName = function()
+    {
+        return qsTr("Missile");
     };
 }
 

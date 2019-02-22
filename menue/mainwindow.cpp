@@ -10,6 +10,8 @@
 #include "menue/gamemenue.h"
 #include "menue/editormenue.h"
 
+#include "game/co.h"
+
 #include "SDL.h"
 
 Mainwindow::Mainwindow()

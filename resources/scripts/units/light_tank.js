@@ -11,7 +11,6 @@ var Constructor = function()
         unit.setFuel(70);
         unit.setMaxFuel(70);
         unit.setBaseMovementPoints(6);
-        unit.setCosts(7000);
         unit.setMinRange(1);
         unit.setMaxRange(1);
         unit.setVision(2);
@@ -26,6 +25,18 @@ var Constructor = function()
     this.getMovementType = function()
     {
         return "MOVE_TANK";
+    };
+    this.getBaseCost = function()
+    {
+        return 7000;
+    };
+    this.getName = function()
+    {
+        return qsTr("Light Tank");
+    };
+    this.canMoveAndFire = function()
+    {
+        return true;
     };
 }
 

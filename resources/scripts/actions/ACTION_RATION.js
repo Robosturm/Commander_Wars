@@ -69,7 +69,7 @@ var Constructor = function()
     {
         // we need to move the unit to the target position
         ACTION_RATION.postAnimationUnit = action.getTargetUnit();
-        var animation = this[ACTION_RATION.postAnimationUnit.getUnitID()].doWalkingAnimation(action);
+        var animation = Global[ACTION_RATION.postAnimationUnit.getUnitID()].doWalkingAnimation(action);
         animation.setEndOfAnimationCall("ACTION_RATION", "performPostAnimation");
         // move unit to target position
         ACTION_RATION.postAnimationUnit.moveUnitAction(action);
@@ -77,38 +77,43 @@ var Constructor = function()
     };
 	this.performPostAnimation = function()
     {
-        var x = ACTION_RATION.postAnimationUnit.getX() + 1;
-        var y = ACTION_RATION.postAnimationUnit.getY();
-        var animation = null;
-        if (ACTION_RATION.checkUnit(ACTION_RATION.postAnimationUnit, x, y))
-        {
-            map.getTerrain(x, y).getUnit().refill();
-            animation = GameAnimationFactory.createAnimation(x, y);
-            animation.addSprite("ration", 12, 8, 400);
-        }
-        x = ACTION_RATION.postAnimationUnit.getX() - 1;
-        if (ACTION_RATION.checkUnit(ACTION_RATION.postAnimationUnit, x, y))
-        {
-            map.getTerrain(x, y).getUnit().refill();
-            animation = GameAnimationFactory.createAnimation(x, y);
-            animation.addSprite("ration", 12, 8, 400);
-        }
-        x = ACTION_RATION.postAnimationUnit.getX();
-        y = ACTION_RATION.postAnimationUnit.getY() + 1;
-        if (ACTION_RATION.checkUnit(ACTION_RATION.postAnimationUnit, x, y))
-        {
-            map.getTerrain(x, y).getUnit().refill();
-            animation = GameAnimationFactory.createAnimation(x, y);
-            animation.addSprite("ration", 12, 8, 400);
-        }
-        y = ACTION_RATION.postAnimationUnit.getY() - 1;
-        if (ACTION_RATION.checkUnit(ACTION_RATION.postAnimationUnit, x, y))
-        {
-            map.getTerrain(x, y).getUnit().refill();
-            animation = GameAnimationFactory.createAnimation(x, y);
-            animation.addSprite("ration", 12, 8, 400);
-        }
+        ACTION_RATION.giveRation(ACTION_RATION.postAnimationUnit);
         ACTION_RATION.postAnimationUnit = null;
+    };
+
+    this.giveRation = function(unit)
+    {
+        var x = unit.getX() + 1;
+        var y = unit.getY();
+        var animation = null;
+        if (ACTION_RATION.checkUnit(unit, x, y))
+        {
+            map.getTerrain(x, y).getUnit().refill();
+            animation = GameAnimationFactory.createAnimation(x, y);
+            animation.addSprite("ration", map.getImageSize() / 2, map.getImageSize() / 3, 400);
+        }
+        x = unit.getX() - 1;
+        if (ACTION_RATION.checkUnit(unit, x, y))
+        {
+            map.getTerrain(x, y).getUnit().refill();
+            animation = GameAnimationFactory.createAnimation(x, y);
+            animation.addSprite("ration", map.getImageSize() / 2, map.getImageSize() / 3, 400);
+        }
+        x = unit.getX();
+        y = unit.getY() + 1;
+        if (ACTION_RATION.checkUnit(unit, x, y))
+        {
+            map.getTerrain(x, y).getUnit().refill();
+            animation = GameAnimationFactory.createAnimation(x, y);
+            animation.addSprite("ration", map.getImageSize() / 2, map.getImageSize() / 3, 400);
+        }
+        y = unit.getY() - 1;
+        if (ACTION_RATION.checkUnit(unit, x, y))
+        {
+            map.getTerrain(x, y).getUnit().refill();
+            animation = GameAnimationFactory.createAnimation(x, y);
+            animation.addSprite("ration", map.getImageSize() / 2, map.getImageSize() / 3, 400);        }
+
 	};
 }
 

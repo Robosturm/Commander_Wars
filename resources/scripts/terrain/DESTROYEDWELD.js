@@ -39,6 +39,10 @@ var Constructor = function()
             return false;
         }
     };
+    this.getDefense = function()
+    {
+        return 1;
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESTROYEDWELD = new Constructor();

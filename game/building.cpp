@@ -10,6 +10,7 @@
 #include "game/gamemap.h"
 
 #include "game/unit.h"
+#include "game/co.h"
 
 #include "resource_management/buildingspritemanager.h"
 
@@ -180,6 +181,16 @@ QStringList Building::getActionList()
     {
         return QStringList();
     }
+}
+
+void Building::startOfTurn()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "startOfTurn";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj1;
+    pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
 }
 
 void Building::deserialize(QDataStream& pStream)

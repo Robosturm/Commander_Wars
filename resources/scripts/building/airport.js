@@ -28,7 +28,10 @@ var Constructor = function()
         return "ACTION_BUILD_UNITS";
     };
 
-
+    this.getConstructionList = function()
+    {
+        return ["T_HELI", "K_HELI", "DUSTER", "TRANSPORTPLANE", "BOMBER", "FIGHTER", "STEALTHBOMBER"];
+    };
 }
 
 Constructor.prototype = BUILDING;

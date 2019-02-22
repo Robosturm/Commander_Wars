@@ -11,10 +11,13 @@ var Constructor = function()
         unit.setFuel(50);
         unit.setMaxFuel(50);
         unit.setBaseMovementPoints(5);
-        unit.setCosts(12000);
         unit.setMinRange(1);
         unit.setMaxRange(1);
         unit.setVision(2);
+    };
+    this.getBaseCost = function()
+    {
+        return 16000;
     };
     // called for loading the main sprite
     this.loadSprites = function(unit)
@@ -26,6 +29,14 @@ var Constructor = function()
     this.getMovementType = function()
     {
         return "MOVE_TANK";
+    };
+    this.getName = function()
+    {
+        return qsTr("Megatank");
+    };
+    this.canMoveAndFire = function()
+    {
+        return true;
     };
 }
 

@@ -3,6 +3,9 @@
 #include "resource_management/movementtablemanager.h"
 #include "coreengine/mainapp.h"
 
+#include "game/unit.h"
+#include "game/terrain.h"
+
 MovementTableManager* MovementTableManager::m_pInstance = nullptr;
 
 MovementTableManager::MovementTableManager()
@@ -79,9 +82,10 @@ void MovementTableManager::reset()
     m_loadedTables.clear();
 }
 
-qint8 MovementTableManager::getMovementPoints(QString movementID, QString terrainID)
+qint8 MovementTableManager::getMovementPoints(Unit* pUnit, Terrain* pTerrain)
 {
-    return getBaseMovementPoints(movementID, terrainID);
+    qint8 basePoints = getBaseMovementPoints(pUnit->getMovementType(), pTerrain->getID());
+    return basePoints;
 }
 
 qint8 MovementTableManager::getBaseMovementPoints(QString movementID, QString terrainID)

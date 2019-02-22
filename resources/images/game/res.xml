@@ -25,6 +25,7 @@
 		<image file="superpower.png" />
 		<image file="tagpower.png" />
 		<image file="unhide.png" />
+		<image file="build.png" />
 		
 	</atlas>
 </resources>

@@ -109,6 +109,10 @@ public slots:
      * @return list of actions that can be performed by this building e.g building units.
      */
     QStringList getActionList();
+    /**
+     * @brief startOfTurn
+     */
+    void startOfTurn();
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     /**

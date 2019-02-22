@@ -8,14 +8,17 @@
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/movementtablemanager.h"
+#include "resource_management/weaponmanager.h"
 #include "resource_management/gamemanager.h"
 
 #include "game/terrain.h"
 
 #include "game/unit.h"
 
-#include "game/player.h"
+#include "game/building.h"
 
+#include "game/player.h"
+#include "game/co.h"
 #include "game/gameanimationfactory.h"
 
 const QString GameMap::m_JavascriptName = "map";
@@ -81,6 +84,8 @@ void GameMap::loadMapData()
     pMovementTableManager->loadAll();
     GameManager* pGameManager = GameManager::getInstance();
     pGameManager->loadAll();
+    WeaponManager* pWeaponManager = WeaponManager::getInstance();
+    pWeaponManager->loadAll();
 }
 
 GameMap::~GameMap()
@@ -199,6 +204,118 @@ void GameMap::updateTerrainSprites(qint32 xInput, qint32 yInput)
             fields.at(y)->at(x)->syncAnimation();
         }
     }
+}
+
+Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint32 range)
+{
+    if (range < 0)
+    {
+        range = width + heigth;
+    }
+    spPlayer pPlayer = nullptr;
+    for (qint32 i = 0; i < players.size(); i++)
+    {
+        if (owner == players[i].get())
+        {
+            pPlayer = players[i];
+            break;
+        }
+        else if (i == players.size() - 1)
+        {
+            // cancel since we have no owner for the unit
+            return nullptr;
+        }
+    }
+    spUnit pUnit = new Unit(unitID, pPlayer);
+    MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
+    QString movementType = pUnit->getMovementType();
+    if (onMap(x, y))
+    {
+        spTerrain pTerrain = getTerrain(x, y);
+        if ((pTerrain->getUnit() == nullptr) &&
+            (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain->getID()) > 0))
+        {
+            pTerrain->setUnit(pUnit);
+            return pUnit.get();
+        }
+    }
+
+    qint32 currentRadius = 0;
+    qint32 x2 = 0;
+    qint32 y2 = 0;
+    bool found = false;
+    while ((found == false) && (currentRadius <= range) && (range > 0))
+    {
+        currentRadius += 1;
+        x2 = currentRadius;
+        y2 = 0;
+        for (qint32 i = 1; i < currentRadius; i++)
+        {
+            x2 += 1;
+            y2 += 1;
+            if (onMap(x + x2 - currentRadius, y + y2 - currentRadius))
+            {
+                spTerrain pTerrain = getTerrain(x + x2 - currentRadius, y + y2 - currentRadius);
+                if ((pTerrain->getUnit() == nullptr) &&
+                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain->getID()) > 0))
+                {
+                    pTerrain->setUnit(pUnit);
+                    return pUnit.get();
+                }
+            }
+        }
+        for (qint32 i = 1; i < currentRadius; i++)
+        {
+            x2 -= 1;
+            y2 += 1;
+            if (onMap(x + x2 - currentRadius, y + y2 - currentRadius))
+            {
+                spTerrain pTerrain = getTerrain(x + x2 - currentRadius, y + y2 - currentRadius);
+                if ((pTerrain->getUnit() == nullptr) &&
+                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain->getID()) > 0))
+                {
+                    pTerrain->setUnit(pUnit);
+                    return pUnit.get();
+                }
+            }
+        }
+        for (qint32 i = 1; i < currentRadius; i++)
+        {
+            x2 -= 1;
+            y2 -= 1;
+            if (onMap(x + x2 - currentRadius, y + y2 - currentRadius))
+            {
+                spTerrain pTerrain = getTerrain(x + x2 - currentRadius, y + y2 - currentRadius);
+                if ((pTerrain->getUnit() == nullptr) &&
+                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain->getID()) > 0))
+                {
+                    pTerrain->setUnit(pUnit);
+                    return pUnit.get();
+                }
+            }
+        }
+        for (qint32 i = 1; i < currentRadius; i++)
+        {
+            x2 += 1;
+            y2 -= 1;
+            if (onMap(x + x2 - currentRadius, y + y2 - currentRadius))
+            {
+                spTerrain pTerrain = getTerrain(x + x2 - currentRadius, y + y2 - currentRadius);
+                if ((pTerrain->getUnit() == nullptr) &&
+                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain->getID()) > 0))
+                {
+                    pTerrain->setUnit(pUnit);
+                    return pUnit.get();
+                }
+            }
+        }
+
+        if (currentRadius > width && currentRadius > heigth)
+        {
+            break;
+        }
+    }
+    return nullptr;
 }
 
 qint32 GameMap::getMapWidth() const
@@ -520,9 +637,56 @@ void GameMap::nextPlayer()
     }
 }
 
+void GameMap::startOfTurn(Player* pPlayer)
+{
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            spUnit pUnit = fields.at(y)->at(x)->getSpUnit();
+            if (pUnit.get() != nullptr)
+            {
+                if (pUnit->getOwner() == pPlayer)
+                {
+                    pUnit->startOfTurn();
+                }
+            }
+            spBuilding pBuilding = fields.at(y)->at(x)->getSpBuilding();
+            if (pBuilding.get() != nullptr)
+            {
+                if (pBuilding->getOwner() == pPlayer)
+                {
+                    pBuilding->startOfTurn();
+                }
+            }
+        }
+    }
+}
+
+void GameMap::checkFuel(Player* pPlayer)
+{
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            spUnit pUnit = fields.at(y)->at(x)->getSpUnit();
+            if (pUnit.get() != nullptr)
+            {
+                if ((pUnit->getOwner() == pPlayer) &&
+                    (pUnit->getFuel() < 0))
+                {
+                    pUnit->killUnit();
+                }
+            }
+        }
+    }
+}
+
 void GameMap::nextTurn()
 {
     enableUnits(m_CurrentPlayer.get());
     nextPlayer();
     m_CurrentPlayer->earnMoney();
+    startOfTurn(m_CurrentPlayer.get());
+    checkFuel(m_CurrentPlayer.get());
 }

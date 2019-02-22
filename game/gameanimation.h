@@ -29,7 +29,7 @@ public slots:
      * @brief addSprite
      * @param spriteID
      */
-    void addSprite(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish = 0);
+    void addSprite(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish = 0, float scale = 1.0f);
     /**
      * @brief onFinished called when the animation is finished
      */

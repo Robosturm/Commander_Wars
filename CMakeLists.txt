@@ -74,6 +74,7 @@ set(${PROJECT_NAME}_SRCS
         resource_management/movementtablemanager.cpp
         resource_management/gamemanager.cpp
         resource_management/gameanimationmanager.cpp
+        resource_management/weaponmanager.cpp
 
         # core engine
         coreengine/mainapp.cpp
@@ -96,7 +97,7 @@ set(${PROJECT_NAME}_SRCS
         game/gamemap.cpp
         game/terrain.cpp
         game/building.cpp
-        game/ko.cpp
+        game/co.cpp
         game/player.cpp
         game/unit.cpp
         game/terrainfindingsystem.cpp
@@ -106,12 +107,14 @@ set(${PROJECT_NAME}_SRCS
         game/gameanimationfactory.cpp
         game/gameanimationwalk.cpp
         game/gameanimationcapture.cpp
+        game/playerinfo.cpp
 
         # game input
         gameinput/basegameinputif.cpp
         gameinput/humanplayerinput.cpp
         gameinput/humanplayerinputmenu.cpp
         gameinput/menudata.cpp
+        gameinput/markedfielddata.cpp
 )
 
 

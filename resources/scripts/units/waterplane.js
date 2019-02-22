@@ -11,10 +11,13 @@ var Constructor = function()
         unit.setFuel(50);
         unit.setMaxFuel(50);
         unit.setBaseMovementPoints(7);
-        unit.setCosts(15000);
         unit.setMinRange(1);
         unit.setMaxRange(1);
 		unit.setVision(3);
+    };
+    this.getBaseCost = function()
+    {
+        return 15000;
     };
     // called for loading the main sprite
     this.loadSprites = function(unit)
@@ -26,6 +29,20 @@ var Constructor = function()
     this.getMovementType = function()
     {
         return "MOVE_AIR";
+    };
+    this.getName = function()
+    {
+        return qsTr("Waterplane");
+    };
+    this.createExplosionAnimation = function(x, y)
+    {
+        var animation = GameAnimationFactory.createAnimation(x, y);
+        animation.addSprite("explosion+air", 0, -map.getImageSize(), 0, 1.5);
+        return animation;
+    };
+    this.canMoveAndFire = function()
+    {
+        return true;
     };
 }
 

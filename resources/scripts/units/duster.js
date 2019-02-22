@@ -11,7 +11,6 @@ var Constructor = function()
         unit.setFuel(100);
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(8);
-        unit.setCosts(13000);
         unit.setMinRange(1);
         unit.setMaxRange(1);
 		unit.setVision(4);
@@ -26,6 +25,29 @@ var Constructor = function()
     this.getMovementType = function()
     {
         return "MOVE_AIR";
+    };
+    this.getName = function()
+    {
+        return qsTr("Duster");
+    };
+    this.getBaseCost = function()
+    {
+        return 13000;
+    };
+    this.startOfTurn = function(unit)
+    {
+        // pay unit upkeep
+        unit.setFuel(unit.getFuel() - 5);
+    };
+    this.createExplosionAnimation = function(x, y)
+    {
+        var animation = GameAnimationFactory.createAnimation(x, y);
+        animation.addSprite("explosion+air", 0, -map.getImageSize(), 0, 1.5);
+        return animation;
+    };
+    this.canMoveAndFire = function()
+    {
+        return true;
     };
 }
 

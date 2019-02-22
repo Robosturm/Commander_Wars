@@ -3,19 +3,16 @@
 
 #include "oxygine-framework.h"
 
-class Building;
-typedef oxygine::intrusive_ptr<Building> spBuilding;
+#include "game/smartBuilding.h"
 
-class Terrain;
-typedef oxygine::intrusive_ptr<Terrain> spTerrain;
+#include "game/smartTerrain.h"
 
-class Player;
-typedef oxygine::intrusive_ptr<Player> spPlayer;
+#include "game/smartPlayer.h"
 
-class Unit;
-typedef oxygine::intrusive_ptr<Unit> spUnit;
+#include "game/smartUnit.h"
 
-class GameAnimation;
-typedef oxygine::intrusive_ptr<GameAnimation> spGameAnimation;
+#include "game/smartGameAnimation.h"
+
+#include "game/smartCO.h"
 
 #endif // SMARTPOINTERS_H

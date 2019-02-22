@@ -12,6 +12,8 @@
 
 #include "game/gameaction.h"
 
+#include "game/co.h"
+
 #include "coreengine/tweentogglevisibility.h"
 
 Unit::Unit(QString unitID, spPlayer pOwner)
@@ -130,9 +132,30 @@ void Unit::setVision(const qint32 &value)
     vision = value;
 }
 
-qint32 Unit::getMaxRange() const
+qint32 Unit::getMaxRange()
 {
-    return maxRange;
+    return getMaxRange(QPoint(getX(), getY()));
+}
+
+qint32 Unit::getMaxRange(QPoint position)
+{
+    qint32 rangeModifier = 0;
+    CO* pCO = m_Owner->getCO(0);
+    if (pCO != nullptr)
+    {
+        rangeModifier += pCO->getFirerangeModifier(this, position);
+    }
+    pCO = m_Owner->getCO(1);
+    if (pCO != nullptr)
+    {
+        rangeModifier += pCO->getFirerangeModifier(this, position);
+    }
+    qint32 points = maxRange + rangeModifier;
+    if (points < minRange)
+    {
+        points = minRange;
+    }
+    return points;
 }
 
 void Unit::setMaxRange(const qint32 &value)
@@ -152,12 +175,101 @@ void Unit::setMinRange(const qint32 &value)
 
 qint32 Unit::getCosts() const
 {
-    return costs;
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getBaseCost";
+    QJSValueList args1;
+    QJSValue erg = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return -1;
+    }
 }
 
-void Unit::setCosts(const qint32 &value)
+Terrain* Unit::getTerrain()
 {
-    costs = value;
+    return m_Terrain.get();
+}
+
+bool Unit::canMoveAndFire(QPoint position)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "canMoveAndFire";
+    QJSValueList args1;
+    QJSValue erg = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    if (erg.isBool() && erg.toBool())
+    {
+        return true;
+    }
+    CO* pCO = m_Owner->getCO(0);
+    if (pCO != nullptr)
+    {
+        if (pCO->getCanMoveAndFire(this, position))
+        {
+            return true;
+        }
+    }
+    pCO = m_Owner->getCO(1);
+    if (pCO != nullptr)
+    {
+        if (pCO->getCanMoveAndFire(this, position))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+void Unit::loadUnit(Unit* pUnit)
+{
+    m_TransportUnits.append(pUnit->getTerrain()->getSpUnit());
+    // todo check which icon we need to load
+    loadIcon("transport", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+}
+
+Unit* Unit::getLoadedUnit(qint32 index)
+{
+    if ((index >= 0) && (index < m_TransportUnits.size()))
+    {
+        return m_TransportUnits[index].get();
+    }
+    return nullptr;
+}
+
+void Unit::unloadUnit(Unit* pUnit, QPoint position)
+{
+    for (qint32 i = 0; i < m_TransportUnits.size(); i++)
+    {
+        if (m_TransportUnits[i] == pUnit)
+        {
+            GameMap::getInstance()->getTerrain(position.x(), position.y())->setUnit(m_TransportUnits[i]);
+            m_TransportUnits.removeAt(i);
+            break;
+        }
+    }
+    if (m_TransportUnits.size() <= 0)
+    {
+        unloadIcon("transport");
+        unloadIcon("transport+hidden");
+    }
+}
+
+qint32 Unit::getLoadedUnitCount()
+{
+    return m_TransportUnits.size();
+}
+
+void Unit::startOfTurn()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "startOfTurn";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj1;
+    pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
 }
 
 qint32 Unit::getCapturePoints() const
@@ -391,16 +503,45 @@ bool Unit::getHasMoved()
     return m_Moved;
 }
 
+qint32 Unit::getTerrainDefenseModifier(QPoint position)
+{
+    qint32 modifier = 0;
+    CO* pCO = m_Owner->getCO(0);
+    if (pCO != nullptr)
+    {
+        modifier += pCO->getTerrainDefenseModifier(this, position);
+    }
+    pCO = m_Owner->getCO(1);
+    if (pCO != nullptr)
+    {
+        modifier += pCO->getTerrainDefenseModifier(this, position);
+    }
+    return modifier;
+}
+
 qint32 Unit::getMovementPoints()
 {
-    if (fuel < baseMovementPoints)
+    qint32 movementModifier = 0;
+    CO* pCO = m_Owner->getCO(0);
+    if (pCO != nullptr)
+    {
+        movementModifier += pCO->getMovementPointModifier(this);
+    }
+    pCO = m_Owner->getCO(1);
+    if (pCO != nullptr)
+    {
+        movementModifier += pCO->getMovementPointModifier(this);
+    }
+    qint32 points = baseMovementPoints + movementModifier;
+    if (points < 0)
+    {
+        points = 0;
+    }
+    if (fuel < points)
     {
         return fuel;
     }
-    else
-    {
-        return baseMovementPoints;
-    }
+    return points;
 }
 
 QStringList Unit::getActionList()
@@ -421,6 +562,8 @@ QStringList Unit::getActionList()
 
 void Unit::moveUnitAction(GameAction* pAction)
 {
+    // reduce fuel
+    setFuel(fuel - pAction->getCosts());
     moveUnit(pAction->getMovePath());
 }
 
@@ -435,6 +578,7 @@ void Unit::moveUnit(QVector<QPoint> movePath)
         spUnit pUnit = m_Terrain->getSpUnit();
         m_Terrain->setUnit(nullptr);
         // teleport unit to target position
+        Console::print("Moving Unit from " + QString::number(getX()) + " , " + QString::number(getY()) + " to " + QString::number(movePath[0].x()) + " , " + QString::number(movePath[0].y()), Console::eLogLevels::eDEBUG);
         pMap->getTerrain(movePath[0].x(), movePath[0].y())->setUnit(pUnit);
     }
 }
@@ -442,6 +586,17 @@ void Unit::moveUnit(QVector<QPoint> movePath)
 void Unit::removeUnit()
 {
     m_Terrain->setUnit(nullptr);
+}
+
+void Unit::killUnit()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "createExplosionAnimation";
+    QJSValueList args1;
+    args1 << getX();
+    args1 << getY();
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    removeUnit();
 }
 
 void Unit::increaseCapturePoints()
@@ -455,6 +610,14 @@ void Unit::increaseCapturePoints()
 
 void Unit::loadIcon(QString iconID, qint32 x, qint32 y)
 {
+    for (qint32 i = 0; i < m_pIconSprites.size(); i++)
+    {
+        if (m_pIconSprites[i]->getResAnim()->getName() == iconID.toStdString())
+        {
+            // already loaded icon
+            return;
+        }
+    }
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(iconID.toStdString());
     if (pAnim != nullptr)
@@ -601,7 +764,6 @@ void Unit::deserialize(QDataStream& pStream)
     m_UnitID = id;
     initUnit();
     pStream >> hp;
-    hp = 6;
     setHp(hp);
     pStream >> ammo1;
     pStream >> ammo2;
