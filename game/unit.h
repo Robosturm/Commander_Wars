@@ -105,6 +105,7 @@ public slots:
     qint32 getAmmo1() const;
     void setAmmo1(const qint32 &value);
     bool hasAmmo1() const;
+    void reduceAmmo1(qint32 value);
 
     qint32 getMaxAmmo1() const;
     void setMaxAmmo1(const qint32 &value);
@@ -115,6 +116,7 @@ public slots:
     qint32 getAmmo2() const;
     void setAmmo2(const qint32 &value);
     bool hasAmmo2() const;
+    void reduceAmmo2(qint32 value);
 
     qint32 getMaxAmmo2() const;
     void setMaxAmmo2(const qint32 &value);
@@ -271,6 +273,11 @@ public slots:
      * @return defense bonus at this position
      */
     qint32 getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition);
+    /**
+     * @brief useTerrainDefense
+     * @return
+     */
+    bool useTerrainDefense();
     /**
      * @brief getAttackHpBonus
      * @param position

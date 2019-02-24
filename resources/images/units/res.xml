@@ -289,6 +289,12 @@
 		<image file="rocketthrower+walk+mask.png" cols = "4" rows = "4" />
 		<image file="rocketthrower+walk.png" cols = "4"  rows = "4" />
 		
+		<!-- piperunner -->
+		<image file="piperunner.png" cols = "4" />
+		<image file="piperunner+mask.png" cols = "4" />
+		<image file="piperunner+walk+mask.png" cols = "4" rows = "4" />
+		<image file="piperunner+walk.png" cols = "4"  rows = "4" />
+		
 		<!-- sniper -->
 		<image file="sniper+ac.png" cols = "4" />
 		<image file="sniper+ac+mask.png" cols = "4" />

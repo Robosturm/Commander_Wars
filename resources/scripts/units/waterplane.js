@@ -5,9 +5,11 @@ var Constructor = function()
         unit.setAmmo1(3);
         unit.setMaxAmmo1(3);
         unit.setWeapon1ID("WEAPON_WATERPLANE_MISSILE");
+
         unit.setAmmo2(0);
         unit.setMaxAmmo2(0);
         unit.setWeapon2ID("");
+
         unit.setFuel(50);
         unit.setMaxFuel(50);
         unit.setBaseMovementPoints(7);
@@ -37,12 +39,16 @@ var Constructor = function()
     this.createExplosionAnimation = function(x, y)
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
-        animation.addSprite("explosion+air", 0, -map.getImageSize(), 0, 1.5);
+        animation.addSprite("explosion+air", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
         return animation;
     };
     this.canMoveAndFire = function()
     {
         return true;
+    };
+    this.useTerrainDefense = function()
+    {
+        return false;
     };
 }
 

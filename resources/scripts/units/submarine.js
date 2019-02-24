@@ -5,9 +5,11 @@ var Constructor = function()
         unit.setAmmo1(6);
         unit.setMaxAmmo1(6);
         unit.setWeapon1ID("WEAPON_TORPEDO");
+
         unit.setAmmo2(0);
         unit.setMaxAmmo2(0);
         unit.setWeapon2ID("");
+
         unit.setFuel(70);
         unit.setMaxFuel(70);
         unit.setBaseMovementPoints(6);
@@ -42,7 +44,7 @@ var Constructor = function()
     this.createExplosionAnimation = function(x, y)
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
-        animation.addSprite("explosion+water", 0, -map.getImageSize(), 0, 1.5);
+        animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
         return animation;
     };
     this.canMoveAndFire = function()

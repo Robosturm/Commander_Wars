@@ -5,9 +5,11 @@ var Constructor = function()
         unit.setAmmo1(0);
         unit.setMaxAmmo1(0);
         unit.setWeapon1ID("");
+
         unit.setAmmo2(0);
         unit.setMaxAmmo2(0);
         unit.setWeapon2ID("");
+
         unit.setFuel(100);
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(7);
@@ -37,7 +39,7 @@ var Constructor = function()
     this.createExplosionAnimation = function(x, y)
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
-        animation.addSprite("explosion+air", 0, -map.getImageSize(), 0, 1.5);
+        animation.addSprite("explosion+air", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
         return animation;
     };
     this.getLoadingPlace = function()
@@ -50,6 +52,10 @@ var Constructor = function()
                 "HEAVY_HOVERCRAFT", "HEAVY_TANK", "HOVERCRAFT", "HOVERFLAK",
                 "INFANTRY", "LIGHT_TANK", "MECH", "MEGATANK", "MISSILE",
                 "MOTORBIKE", "NEOTANK", "RECON", "ROCKETTRHOWER", "SNIPER"];
+    };
+    this.useTerrainDefense = function()
+    {
+        return false;
     };
 }
 

@@ -4,10 +4,12 @@ var Constructor = function()
     {
         unit.setAmmo1(5);
         unit.setMaxAmmo1(5);
-        unit.setWeapon2ID("WEAPON_ANTI_AIR_MISSILE");
+        unit.setWeapon1ID("WEAPON_ANTI_AIR_MISSILE");
+
         unit.setAmmo2(0);
         unit.setMaxAmmo2(0);
         unit.setWeapon2ID("");
+
         unit.setFuel(50);
         unit.setMaxFuel(50);
         unit.setBaseMovementPoints(4);

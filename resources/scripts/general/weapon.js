@@ -26,6 +26,10 @@ var WEAPON =
             offBonus += defBonus;
             defBonus = 1;
         }
+        if (hp < 0)
+        {
+            hp = 0;
+        }
         var calcDamage = (hp / 10.0) * damage * (offBonus / defBonus);
         return calcDamage;
     },

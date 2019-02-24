@@ -5,9 +5,11 @@ var Constructor = function()
         unit.setAmmo1(9);
         unit.setMaxAmmo1(9);
         unit.setWeapon1ID("WEAPON_ANTI_SHIP_CANNON");
+
         unit.setAmmo2(9);
         unit.setMaxAmmo2(9);
         unit.setWeapon2ID("WEAPON_DESTROYER_A_AIR_GUN");
+
         unit.setFuel(100);
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(6);
@@ -44,7 +46,7 @@ var Constructor = function()
     this.createExplosionAnimation = function(x, y)
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
-        animation.addSprite("explosion+water", 0, -map.getImageSize(), 0, 1.5);
+        animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
         return animation;
     };
     this.canMoveAndFire = function()

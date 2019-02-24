@@ -42,7 +42,7 @@ var Constructor = function()
     this.createExplosionAnimation = function(x, y)
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
-        animation.addSprite("explosion+water", 0, 0);
+        animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
         return animation;
     };
     this.getLoadingPlace = function()

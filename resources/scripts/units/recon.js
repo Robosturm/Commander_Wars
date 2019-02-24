@@ -4,10 +4,12 @@ var Constructor = function()
     {
         unit.setAmmo1(10);
         unit.setMaxAmmo1(10);
-        unit.setWeapon2ID("WEAPON_RECON_MG");
+        unit.setWeapon1ID("WEAPON_RECON_MG");
+
         unit.setAmmo2(0);
         unit.setMaxAmmo2(0);
         unit.setWeapon2ID("");
+
         unit.setFuel(80);
         unit.setMaxFuel(80);
         unit.setBaseMovementPoints(8);

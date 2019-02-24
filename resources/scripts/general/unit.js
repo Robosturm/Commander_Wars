@@ -40,7 +40,7 @@ var UNIT =
     createExplosionAnimation : function(x, y)
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
-        animation.addSprite("explosion+land", 0, -map.getImageSize(), 0, 1.5);
+        animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
         return animation;
     },
 
@@ -67,6 +67,10 @@ var UNIT =
     getLoadingPlace : function()
     {
         return 0;
+    },
+    useTerrainDefense : function()
+    {
+        return true;
     },
     getTransportUnits : function()
     {

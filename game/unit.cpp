@@ -291,8 +291,25 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
     {
         bonus += pCO->getDeffensiveBonus(pAttacker, atkPosition, this, position);
     }
+    if (useTerrainDefense())
+    {
+        bonus += m_Terrain->getDefense() * 10;
+    }
 
     return bonus;
+}
+
+bool Unit::useTerrainDefense()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "useTerrainDefense";
+    QJSValueList args1;
+    QJSValue erg = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    if (erg.isBool() && erg.toBool())
+    {
+        return true;
+    }
+    return false;
 }
 
 qint32 Unit::getAttackHpBonus(QPoint position)
@@ -464,6 +481,27 @@ void Unit::setWeapon2ID(const QString &value)
 void Unit::setAmmo2(const qint32 &value)
 {
     ammo2 = value;
+    if ((ammo2 < 0) && (maxAmmo2 > 0))
+    {
+        ammo2 = 0;
+    }
+
+    if (static_cast<float>(ammo2) / static_cast<float>(maxAmmo2) <= 1.0f / 3.0f)
+    {
+        loadIcon("ammo", GameMap::Imagesize / 2, 0);
+    }
+    else
+    {
+        unloadIcon("ammo");
+    }
+}
+
+void Unit::reduceAmmo2(qint32 value)
+{
+    if (ammo2 > 0)
+    {
+        setAmmo2(ammo2 - value);
+    }
 }
 
 qint32 Unit::getMaxAmmo1() const
@@ -494,6 +532,19 @@ qint32 Unit::getAmmo1() const
 void Unit::setAmmo1(const qint32 &value)
 {
     ammo1 = value;
+    if ((ammo1 < 0) && (maxAmmo1 > 0))
+    {
+        ammo1 = 0;
+    }
+
+    if (static_cast<float>(ammo1) / static_cast<float>(maxAmmo1) <= 1.0f / 3.0f)
+    {
+        loadIcon("ammo", GameMap::Imagesize / 2, 0);
+    }
+    else
+    {
+        unloadIcon("ammo");
+    }
 }
 
 bool Unit::hasAmmo1() const
@@ -505,6 +556,14 @@ bool Unit::hasAmmo1() const
     else
     {
         return false;
+    }
+}
+
+void Unit::reduceAmmo1(qint32 value)
+{
+    if (ammo1 > 0)
+    {
+        setAmmo1(ammo1 - value);
     }
 }
 
@@ -526,22 +585,20 @@ void Unit::setHp(const float &value)
         hp = 10.0f;
     }
     qint32 hpValue = Mainapp::roundUp(hp);
+    // unload the number icons
+    unloadIcon("1");
+    unloadIcon("2");
+    unloadIcon("3");
+    unloadIcon("4");
+    unloadIcon("5");
+    unloadIcon("6");
+    unloadIcon("7");
+    unloadIcon("8");
+    unloadIcon("9");
+    unloadIcon("hp+hidden");
     if (hpValue < 10)
     {
         loadIcon(QString::number(hpValue), 0, GameMap::Imagesize / 2);
-    }
-    else
-    {
-        // unload the number icons
-        unloadIcon("1");
-        unloadIcon("2");
-        unloadIcon("3");
-        unloadIcon("4");
-        unloadIcon("5");
-        unloadIcon("6");
-        unloadIcon("7");
-        unloadIcon("8");
-        unloadIcon("9");
     }
 }
 
@@ -876,7 +933,9 @@ void Unit::deserialize(QDataStream& pStream)
     pStream >> hp;
     setHp(hp);
     pStream >> ammo1;
+    setAmmo1(ammo1);
     pStream >> ammo2;
+    setAmmo2(ammo2);
     pStream >> fuel;
     setFuel(fuel);
     pStream >> m_Rank;

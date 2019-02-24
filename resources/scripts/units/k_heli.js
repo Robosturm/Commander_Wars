@@ -5,9 +5,11 @@ var Constructor = function()
         unit.setAmmo1(6);
         unit.setMaxAmmo1(6);
         unit.setWeapon1ID("WEAPON_AIR_TO_GROUND_MISSILE");
+
         unit.setAmmo2(10);
         unit.setMaxAmmo2(10);
         unit.setWeapon2ID("WEAPON_K_HELI_MG");
+
         unit.setFuel(100);
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(6);
@@ -42,12 +44,16 @@ var Constructor = function()
     this.createExplosionAnimation = function(x, y)
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
-        animation.addSprite("explosion+air", 0, -map.getImageSize(), 0, 1.5);
+        animation.addSprite("explosion+air", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
         return animation;
     };
     this.canMoveAndFire = function()
     {
         return true;
+    };
+    this.useTerrainDefense = function()
+    {
+        return false;
     };
 }
 

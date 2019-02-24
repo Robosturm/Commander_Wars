@@ -4,10 +4,12 @@ var Constructor = function()
     {
         unit.setAmmo1(3);
         unit.setMaxAmmo1(3);
-        unit.setWeapon2ID("WEAPON_VULCAN_CANNON");
+        unit.setWeapon1ID("WEAPON_FLARE");
+
         unit.setAmmo2(10);
         unit.setMaxAmmo2(10);
-        unit.setWeapon1ID("FLARE_MG");
+        unit.setWeapon2ID("FLARE_MG");
+
         unit.setFuel(60);
         unit.setMaxFuel(60);
         unit.setBaseMovementPoints(6);

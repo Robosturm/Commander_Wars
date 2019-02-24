@@ -25,7 +25,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="142"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="153"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -415,7 +415,7 @@
 <context>
     <name>aircraftcarrier</name>
     <message>
-        <location filename="../resources/scripts/units/aircraftcarrier.js" line="37"/>
+        <location filename="../resources/scripts/units/aircraftcarrier.js" line="39"/>
         <source>Aircraft Carrier</source>
         <translation type="unfinished"></translation>
     </message>
@@ -423,7 +423,7 @@
 <context>
     <name>antitankcannon</name>
     <message>
-        <location filename="../resources/scripts/units/antitankcannon.js" line="38"/>
+        <location filename="../resources/scripts/units/antitankcannon.js" line="40"/>
         <source>Anti Tank Cannon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -431,7 +431,7 @@
 <context>
     <name>apc</name>
     <message>
-        <location filename="../resources/scripts/units/apc.js" line="40"/>
+        <location filename="../resources/scripts/units/apc.js" line="42"/>
         <source>APC</source>
         <translation type="unfinished"></translation>
     </message>
@@ -439,7 +439,7 @@
 <context>
     <name>artillery</name>
     <message>
-        <location filename="../resources/scripts/units/artillery.js" line="36"/>
+        <location filename="../resources/scripts/units/artillery.js" line="38"/>
         <source>Artillery</source>
         <translation type="unfinished"></translation>
     </message>
@@ -447,7 +447,7 @@
 <context>
     <name>battleship</name>
     <message>
-        <location filename="../resources/scripts/units/battleship.js" line="35"/>
+        <location filename="../resources/scripts/units/battleship.js" line="37"/>
         <source>Battleship</source>
         <translation type="unfinished"></translation>
     </message>
@@ -455,7 +455,7 @@
 <context>
     <name>bomber</name>
     <message>
-        <location filename="../resources/scripts/units/bomber.js" line="35"/>
+        <location filename="../resources/scripts/units/bomber.js" line="37"/>
         <source>Bomber</source>
         <translation type="unfinished"></translation>
     </message>
@@ -463,7 +463,7 @@
 <context>
     <name>cannonboat</name>
     <message>
-        <location filename="../resources/scripts/units/cannonboat.js" line="35"/>
+        <location filename="../resources/scripts/units/cannonboat.js" line="37"/>
         <source>Cannonboat</source>
         <translation type="unfinished"></translation>
     </message>
@@ -471,7 +471,7 @@
 <context>
     <name>cruiser</name>
     <message>
-        <location filename="../resources/scripts/units/cruiser.js" line="35"/>
+        <location filename="../resources/scripts/units/cruiser.js" line="37"/>
         <source>Cruiser</source>
         <translation type="unfinished"></translation>
     </message>
@@ -479,7 +479,7 @@
 <context>
     <name>destroyer</name>
     <message>
-        <location filename="../resources/scripts/units/destroyer.js" line="37"/>
+        <location filename="../resources/scripts/units/destroyer.js" line="39"/>
         <source>Destroyer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -487,7 +487,7 @@
 <context>
     <name>duster</name>
     <message>
-        <location filename="../resources/scripts/units/duster.js" line="31"/>
+        <location filename="../resources/scripts/units/duster.js" line="33"/>
         <source>Duster</source>
         <translation type="unfinished"></translation>
     </message>
@@ -495,7 +495,7 @@
 <context>
     <name>fighter</name>
     <message>
-        <location filename="../resources/scripts/units/fighter.js" line="35"/>
+        <location filename="../resources/scripts/units/fighter.js" line="37"/>
         <source>Fighter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -503,7 +503,7 @@
 <context>
     <name>flak</name>
     <message>
-        <location filename="../resources/scripts/units/flak.js" line="35"/>
+        <location filename="../resources/scripts/units/flak.js" line="37"/>
         <source>Anti Air</source>
         <translation type="unfinished"></translation>
     </message>
@@ -511,7 +511,7 @@
 <context>
     <name>flare</name>
     <message>
-        <location filename="../resources/scripts/units/flare.js" line="35"/>
+        <location filename="../resources/scripts/units/flare.js" line="37"/>
         <source>Flare</source>
         <translation type="unfinished"></translation>
     </message>
@@ -519,7 +519,7 @@
 <context>
     <name>heavy_hovercraft</name>
     <message>
-        <location filename="../resources/scripts/units/heavy_hovercraft.js" line="35"/>
+        <location filename="../resources/scripts/units/heavy_hovercraft.js" line="37"/>
         <source>Heavy Hovercraft</source>
         <translation type="unfinished"></translation>
     </message>
@@ -527,7 +527,7 @@
 <context>
     <name>heavy_tank</name>
     <message>
-        <location filename="../resources/scripts/units/heavy_tank.js" line="35"/>
+        <location filename="../resources/scripts/units/heavy_tank.js" line="37"/>
         <source>Heavy Tank</source>
         <translation type="unfinished"></translation>
     </message>
@@ -535,7 +535,7 @@
 <context>
     <name>hoellium</name>
     <message>
-        <location filename="../resources/scripts/units/hoellium.js" line="40"/>
+        <location filename="../resources/scripts/units/hoellium.js" line="42"/>
         <source>Oozium</source>
         <translation type="unfinished"></translation>
     </message>
@@ -543,7 +543,7 @@
 <context>
     <name>hovercraft</name>
     <message>
-        <location filename="../resources/scripts/units/hovercraft.js" line="35"/>
+        <location filename="../resources/scripts/units/hovercraft.js" line="37"/>
         <source>Hovercraft</source>
         <translation type="unfinished"></translation>
     </message>
@@ -551,7 +551,7 @@
 <context>
     <name>hoverflak</name>
     <message>
-        <location filename="../resources/scripts/units/hoverflak.js" line="35"/>
+        <location filename="../resources/scripts/units/hoverflak.js" line="37"/>
         <source>Hover Anti Air</source>
         <translation type="unfinished"></translation>
     </message>
@@ -559,7 +559,7 @@
 <context>
     <name>infantry</name>
     <message>
-        <location filename="../resources/scripts/units/infantry.js" line="79"/>
+        <location filename="../resources/scripts/units/infantry.js" line="81"/>
         <source>Infantry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -567,7 +567,7 @@
 <context>
     <name>k_heli</name>
     <message>
-        <location filename="../resources/scripts/units/k_heli.js" line="35"/>
+        <location filename="../resources/scripts/units/k_heli.js" line="37"/>
         <source>Battle Copter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -583,7 +583,7 @@
 <context>
     <name>light_tank</name>
     <message>
-        <location filename="../resources/scripts/units/light_tank.js" line="35"/>
+        <location filename="../resources/scripts/units/light_tank.js" line="37"/>
         <source>Light Tank</source>
         <translation type="unfinished"></translation>
     </message>
@@ -591,7 +591,7 @@
 <context>
     <name>mech</name>
     <message>
-        <location filename="../resources/scripts/units/mech.js" line="78"/>
+        <location filename="../resources/scripts/units/mech.js" line="80"/>
         <source>Mech</source>
         <translation type="unfinished"></translation>
     </message>
@@ -599,7 +599,7 @@
 <context>
     <name>megatank</name>
     <message>
-        <location filename="../resources/scripts/units/megatank.js" line="35"/>
+        <location filename="../resources/scripts/units/megatank.js" line="37"/>
         <source>Megatank</source>
         <translation type="unfinished"></translation>
     </message>
@@ -607,7 +607,7 @@
 <context>
     <name>missile</name>
     <message>
-        <location filename="../resources/scripts/units/missile.js" line="35"/>
+        <location filename="../resources/scripts/units/missile.js" line="37"/>
         <source>Missile</source>
         <translation type="unfinished"></translation>
     </message>
@@ -615,7 +615,7 @@
 <context>
     <name>motorbike</name>
     <message>
-        <location filename="../resources/scripts/units/motorbike.js" line="40"/>
+        <location filename="../resources/scripts/units/motorbike.js" line="42"/>
         <source>Motorbike</source>
         <translation type="unfinished"></translation>
     </message>
@@ -669,6 +669,14 @@
     </message>
 </context>
 <context>
+    <name>move_piperunner</name>
+    <message>
+        <location filename="../resources/scripts/movementtables/move_piperunner.js" line="5"/>
+        <source>Piperunner</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>move_ship</name>
     <message>
         <location filename="../resources/scripts/movementtables/move_ship.js" line="5"/>
@@ -711,15 +719,23 @@
 <context>
     <name>neotank</name>
     <message>
-        <location filename="../resources/scripts/units/neotank.js" line="35"/>
+        <location filename="../resources/scripts/units/neotank.js" line="37"/>
         <source>Neotank</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>piperunner</name>
+    <message>
+        <location filename="../resources/scripts/units/piperunner.js" line="37"/>
+        <source>Piperunner</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>recon</name>
     <message>
-        <location filename="../resources/scripts/units/recon.js" line="35"/>
+        <location filename="../resources/scripts/units/recon.js" line="37"/>
         <source>Recon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -727,7 +743,7 @@
 <context>
     <name>rocketthrower</name>
     <message>
-        <location filename="../resources/scripts/units/rocketthrower.js" line="35"/>
+        <location filename="../resources/scripts/units/rocketthrower.js" line="37"/>
         <source>Rocketthrower</source>
         <translation type="unfinished"></translation>
     </message>
@@ -735,7 +751,7 @@
 <context>
     <name>sniper</name>
     <message>
-        <location filename="../resources/scripts/units/sniper.js" line="79"/>
+        <location filename="../resources/scripts/units/sniper.js" line="81"/>
         <source>Sniper</source>
         <translation type="unfinished"></translation>
     </message>
@@ -743,7 +759,7 @@
 <context>
     <name>stealthbomber</name>
     <message>
-        <location filename="../resources/scripts/units/stealthbomber.js" line="35"/>
+        <location filename="../resources/scripts/units/stealthbomber.js" line="37"/>
         <source>Stealthbomber</source>
         <translation type="unfinished"></translation>
     </message>
@@ -751,7 +767,7 @@
 <context>
     <name>submarine</name>
     <message>
-        <location filename="../resources/scripts/units/submarine.js" line="35"/>
+        <location filename="../resources/scripts/units/submarine.js" line="37"/>
         <source>Submarine</source>
         <translation type="unfinished"></translation>
     </message>
@@ -759,7 +775,7 @@
 <context>
     <name>t_heli</name>
     <message>
-        <location filename="../resources/scripts/units/t_heli.js" line="35"/>
+        <location filename="../resources/scripts/units/t_heli.js" line="37"/>
         <source>Transport Copter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -767,7 +783,7 @@
 <context>
     <name>transportplane</name>
     <message>
-        <location filename="../resources/scripts/units/transportplane.js" line="35"/>
+        <location filename="../resources/scripts/units/transportplane.js" line="37"/>
         <source>Transportplane</source>
         <translation type="unfinished"></translation>
     </message>
@@ -775,8 +791,16 @@
 <context>
     <name>waterplane</name>
     <message>
-        <location filename="../resources/scripts/units/waterplane.js" line="35"/>
+        <location filename="../resources/scripts/units/waterplane.js" line="37"/>
         <source>Waterplane</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_a_air_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_a_air_gun.js" line="5"/>
+        <source>Anti Air Gun</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -789,6 +813,30 @@
     </message>
 </context>
 <context>
+    <name>weapon_air_to_air_missile</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_air_to_air_missile.js" line="5"/>
+        <source>Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_air_to_ground_missile</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_air_to_ground_missile.js" line="5"/>
+        <source>Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_airplane_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_airplane_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>weapon_anti_air_missile</name>
     <message>
         <location filename="../resources/scripts/weapons/weapon_anti_air_missile.js" line="5"/>
@@ -797,10 +845,26 @@
     </message>
 </context>
 <context>
+    <name>weapon_anti_ship_cannon</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_anti_ship_cannon.js" line="5"/>
+        <source>Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_anti_ship_cruiser_missile</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_anti_ship_cruiser_missile.js" line="5"/>
+        <source>Ship Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>weapon_anti_ship_missile</name>
     <message>
         <location filename="../resources/scripts/weapons/weapon_anti_ship_missile.js" line="5"/>
-        <source>Cannon</source>
+        <source>Ship Missile</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -809,6 +873,14 @@
     <message>
         <location filename="../resources/scripts/weapons/weapon_battleship_cannon.js" line="5"/>
         <source>Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_bazooka</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_bazooka.js" line="5"/>
+        <source>Bazooka</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -829,9 +901,105 @@
     </message>
 </context>
 <context>
+    <name>weapon_carrier_anti_air_missile</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_carrier_anti_air_missile.js" line="5"/>
+        <source>Anti Air Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_destroyer_a_air_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_destroyer_a_air_gun.js" line="5"/>
+        <source>Anti Air Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_heavy_hovercraft_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_heavy_hovercraft_gun.js" line="5"/>
+        <source>Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_heavy_hovercraft_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_heavy_hovercraft_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_heavy_tank_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_heavy_tank_gun.js" line="5"/>
+        <source>Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_heavy_tank_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_heavy_tank_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_hovercraft_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_hovercraft_gun.js" line="5"/>
+        <source>Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_hovercraft_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_hovercraft_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_hovervulcan_cannon</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_hovervulcan_cannon.js" line="5"/>
+        <source>Vulcan Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>weapon_infantry_mg</name>
     <message>
         <location filename="../resources/scripts/weapons/weapon_infantry_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_k_heli_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_k_heli_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_light_tank_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_light_tank_gun.js" line="5"/>
+        <source>Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_light_tank_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_light_tank_mg.js" line="5"/>
         <source>MG</source>
         <translation type="unfinished"></translation>
     </message>
@@ -845,10 +1013,106 @@
     </message>
 </context>
 <context>
+    <name>weapon_megatank_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_megatank_gun.js" line="5"/>
+        <source>Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_megatank_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_megatank_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>weapon_motorbike_mg</name>
     <message>
         <location filename="../resources/scripts/weapons/weapon_motorbike_mg.js" line="5"/>
         <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_neotank_gun</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_neotank_gun.js" line="5"/>
+        <source>Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_neotank_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_neotank_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_piperunner_missile</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_piperunner_missile.js" line="5"/>
+        <source>Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_recon_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_recon_mg.js" line="5"/>
+        <source>MG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_rocket_missile</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_rocket_missile.js" line="5"/>
+        <source>Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_sniper</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_sniper.js" line="5"/>
+        <source>Sniper Rifle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_stealthrocket</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_stealthrocket.js" line="5"/>
+        <source>Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_torpedo</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_torpedo.js" line="5"/>
+        <source>Torpedo</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_vulcan_cannon</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_vulcan_cannon.js" line="5"/>
+        <source>Vulcan Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_waterplane_missile</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_waterplane_missile.js" line="5"/>
+        <source>Missile</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

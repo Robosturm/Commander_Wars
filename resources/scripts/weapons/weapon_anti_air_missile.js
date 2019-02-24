@@ -9,21 +9,21 @@ var Constructor = function()
         switch(unit.getUnitID())
         {
 			case "DUSTER":
-				return 55;
+				return 150;
 			case "FIGHTER":
-				return 45;
+				return 150;
 			case "BOMBER":
-				return 55;
+				return 150;
 			case "STEALTHBOMBER":
-				return 55;
+				return 150;
 			case "TRANSPORTPLANE":
-				return 75;
+				return 150;
 			case "WATERPLANE":
-				return 55;
+				return 150;
 			case "K_HELI":
-				return 75;
+				return 170;
 			case "T_HELI":
-				return 85;
+				return 170;
 			default:
 				return -1;
         }
