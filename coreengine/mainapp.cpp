@@ -58,6 +58,43 @@ qint32 Mainapp::roundDown(float value)
     return roundDown;
 }
 
+QmlVectorPoint* Mainapp::getCircle(qint32 min, qint32 max)
+{
+    QmlVectorPoint* ret = new QmlVectorPoint();
+    qint32 x2 = 0;
+    qint32 y2 = 0;
+    for (qint32 currentRadius = min; currentRadius <= max; currentRadius++)
+    {
+        x2 = -currentRadius;
+        y2 = 0;
+        for (qint32 i = 0; i < currentRadius; i++)
+        {
+            x2 += 1;
+            y2 += 1;
+            ret->append(QPoint(x2, y2));
+        }
+        for (qint32 i = 0; i < currentRadius; i++)
+        {
+            x2 += 1;
+            y2 -= 1;
+            ret->append(QPoint(x2, y2));
+        }
+        for (qint32 i = 0; i < currentRadius; i++)
+        {
+            x2 -= 1;
+            y2 -= 1;
+            ret->append(QPoint(x2, y2));
+        }
+        for (qint32 i = 0; i < currentRadius; i++)
+        {
+            x2 -= 1;
+            y2 += 1;
+            ret->append(QPoint(x2, y2));
+        }
+    }
+    return ret;
+}
+
 bool Mainapp::isEven(qint32 value)
 {
     float val = value/2.0f;

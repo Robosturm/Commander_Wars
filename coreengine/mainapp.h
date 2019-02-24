@@ -9,6 +9,8 @@
 #include "coreengine/audiothread.h"
 #include "coreengine/settings.h"
 
+#include "coreengine/qmlvector.h"
+
 class NetworkInterface;
 
 class Mainapp : public QCoreApplication
@@ -27,6 +29,13 @@ public slots:
     static qint32 roundUp(float value);
     static qint32 roundDown(float value);
     static bool isEven(qint32 value);
+    /**
+     * @brief getCircle
+     * @param min radius
+     * @param max radius
+     * @return vector containing all fields in the given radius. Note: the Object needs to be deleted by the reciever
+     */
+    static QmlVectorPoint* getCircle(qint32 min, qint32 max);
     void quitGame();
 signals:
     void sigText(SDL_Event* event);

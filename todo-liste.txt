@@ -1,9 +1,10 @@
-
 - damage table
 - damage calculation
 - attack units
+
 - player
 - next player turn
+
 - player info
 - rules
 - kos

@@ -20,6 +20,14 @@ public:
     {
         return &m_MarkedFields;
     }
+    QVector<qint32>* getZInformation()
+    {
+        return &m_ZInformation;
+    }
+
+
+
+
 
 
 
@@ -43,6 +51,11 @@ public slots:
     void setAllFields(bool value);
     QColor getColor() const;
     void setColor(const QColor &Color);
+
+    QColor getZLabelColor() const;
+    void setZLabelColor(const QColor &ZLabelColor);
+    QString getZLabelText() const;
+    void setZLabelText(const QString &ZLabelText);
 private:
     bool allFields{false};
     bool showZData{false};
@@ -53,6 +66,9 @@ private:
     QVector<qint32> m_ZInformation;
 
     QColor m_Color;
+
+    QString m_ZLabelText;
+    QColor m_ZLabelColor;
 };
 
 #endif // MARKEDFIELDDATA_H

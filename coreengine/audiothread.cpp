@@ -8,8 +8,8 @@
 #include <QList>
 
 AudioThread::AudioThread()
-    : m_Player(NULL),
-      m_playList(NULL)
+    : m_Player(nullptr),
+      m_playList(nullptr)
 {
     // move signals and slots to Audio Thread
     this->moveToThread(this);
@@ -61,7 +61,7 @@ void AudioThread::setVolume(qint32 value)
 
 void AudioThread::SlotPlayMusic(qint32 File)
 {
-    if (m_Player != NULL)
+    if (m_Player != nullptr)
     {
         m_Player->stop();
         m_playList->setCurrentIndex(File);
@@ -71,7 +71,7 @@ void AudioThread::SlotPlayMusic(qint32 File)
 
 void AudioThread::SlotSetVolume(qint32 value)
 {
-    if (m_Player != NULL)
+    if (m_Player != nullptr)
     {
         m_Player->setVolume(value);
         Mainapp::getInstance()->getSettings()->setMusicVolume(value);

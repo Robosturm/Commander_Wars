@@ -10,7 +10,22 @@ var CO =
         return 0;
     },
 
+    getAttackHpBonus : function(unit, posX, posY)
+    {
+        return 0;
+    },
+
     getTerrainDefenseModifier : function(unit, posX, posY)
+    {
+        return 0;
+    },
+
+    getBonusLuck : function(unit, posX, posY)
+    {
+        return 0;
+    },
+
+    getBonusMisfortune : function(unit, posX, posY)
     {
         return 0;
     },

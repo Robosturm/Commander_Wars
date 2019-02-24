@@ -5,6 +5,10 @@ var WEAPON =
     mediumDamage : 55,
     lowDamage : 15,
 
+    softCounterDamage : 35,
+    softDamage : 65,
+
+
     getName : function()
     {
         return "";
@@ -15,14 +19,14 @@ var WEAPON =
         return -1;
     },
     // aw dc damage formular used here.
-    calculateDamage : function(hp, damage, bonusDmg, offBonus, defBonus)
+    calculateDamage : function(hp, damage, offBonus, defBonus)
     {
         if (defBonus <= 0)
         {
             offBonus += defBonus;
             defBonus = 1;
         }
-        var calcDamage = (hp / 10.0) * damage * (offBonus / defBonus) + bonusDmg;
+        var calcDamage = (hp / 10.0) * damage * (offBonus / defBonus);
         return calcDamage;
     },
 

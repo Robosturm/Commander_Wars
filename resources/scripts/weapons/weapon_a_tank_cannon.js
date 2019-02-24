@@ -2,7 +2,7 @@ var Constructor = function()
 {
     this.getName = function()
     {
-        return qsTr("MG");
+        return qsTr("Anti Tank Cannon");
     };
     this.getBaseDamage = function(unit)
     {
@@ -10,59 +10,60 @@ var Constructor = function()
         {
 			// infantry
 			case "INFANTRY":
-				return WEAPON.mediumDamage;
+				return WEAPON.lowDamage;
 			case "MECH":
 				return WEAPON.lowDamage;
 			case "MOTORBIKE":
-				return WEAPON.HighDamage;
+				return WEAPON.lowDamage;
 			case "SNIPER":
-				return WEAPON.HighDamage;
+				return WEAPON.lowDamage;
 
 			// supporter
 			case "APC":
-				return 10;
+				return WEAPON.HighDamage;
 			case "FLARE":
-				return 10;
+				return WEAPON.HighDamage;
 			case "RECON":
-				return 10;
+				return WEAPON.HighDamage;
 
 			// tanks
 			case "FLAK":
-				return 5;
+				return WEAPON.HighDamage;
 			case "HOVERFLAK":
-				return 5;
+				return WEAPON.HighDamage;
 			case "LIGHT_TANK":
-				return 5;
+				return WEAPON.HighDamage;
             case "HOVERTANK":
-				return 5;
+				return WEAPON.HighDamage;
 				
 			// heavy tanks
 			case "HEAVY_HOVERCRAFT":
-				return 3;
+                return WEAPON.softDamage;
 			case "HEAVY_TANK":
-				return 3;
+                return WEAPON.softDamage;
 			case "NEOTANK":
-				return 3;
+                return WEAPON.softDamage;
 				
 			// very heavy tanks
 			case "MEGATANK":
-				return 1;
+				return WEAPON.mediumDamage;
 				
 			// heli copter
 			case "T_HELI":
-				return 30;
+				return WEAPON.mediumDamage;
 			case "K_HELI":
-				return 10;
+				return 45;
 				
 			// ranged land units
 			case "ARTILLERY":
-				return 10;
+                return WEAPON.softDamage;
 			case "ANITANKCANNON":
-                return 45;
+				return WEAPON.mediumDamage;
 			case "MISSILE":
-                return 20;
+                return WEAPON.softDamage;
 			case "ROCKETTRHOWER":
-				return 20;
+                return WEAPON.softDamage;
+			
 			default:
 				return -1;
         }
@@ -70,4 +71,4 @@ var Constructor = function()
 };
 
 Constructor.prototype = WEAPON;
-var WEAPON_INFANTRY_MG = new Constructor();
+var WEAPON_A_TANK_CANNON = new Constructor();

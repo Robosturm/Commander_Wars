@@ -33,7 +33,7 @@ var Constructor = function()
     this.getActions = function()
     {
         // returns a string id list of the actions this unit can perform
-        return "ACTION_CAPTURE,ACTION_JOIN,ACTION_LOAD,ACTION_WAIT";
+        return "ACTION_CAPTURE,ACTION_FIRE,ACTION_JOIN,ACTION_LOAD,ACTION_WAIT";
     };
     this.getName = function()
     {

@@ -24,7 +24,7 @@ var UNIT =
     getActions : function()
     {
         // returns a string id list of the actions this unit can perform
-        return "ACTION_JOIN,ACTION_LOAD,ACTION_UNLOAD,ACTION_WAIT";
+        return "ACTION_FIRE,ACTION_JOIN,ACTION_LOAD,ACTION_UNLOAD,ACTION_WAIT";
     },
 
     getName : function()

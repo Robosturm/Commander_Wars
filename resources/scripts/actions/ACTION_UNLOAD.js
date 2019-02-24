@@ -46,12 +46,15 @@ var Constructor = function()
             // check all neighbour terrains
             for (var i = 0; i < targetFields.length; i++)
             {
-                var terrain = map.getTerrain(targetFields[i].x, targetFields[i].y);
-                // can the transported unit move over the terrain?
-                if ((Global[transportUnit.getMovementType()].getMovementpoints(terrain.getID()) > 0) &&
-                    (terrain.getUnit() === null))
+                if (map.onMap(targetFields[i].x, targetFields[i].y))
                 {
-                    ret.push(targetFields[i]);
+                    var terrain = map.getTerrain(targetFields[i].x, targetFields[i].y);
+                    // can the transported unit move over the terrain?
+                    if ((Global[transportUnit.getMovementType()].getMovementpoints(terrain.getID()) > 0) &&
+                            (terrain.getUnit() === null))
+                    {
+                        ret.push(targetFields[i]);
+                    }
                 }
             }
         }
@@ -172,7 +175,7 @@ var Constructor = function()
                     data.addPoint(fields[i3]);
                 }
             }
-            data.setColor("lime");
+            data.setColor("#1E90FF");
         }
     };
 

@@ -31,7 +31,6 @@
 
 int main(int argc, char* argv[])
 {
-
     /*************************************************************************************************/
 
     Mainapp app(argc, argv);
@@ -75,6 +74,8 @@ int main(int argc, char* argv[])
     // qt metatypes we need this for js and signal slot stuff
     qRegisterMetaType<Mainapp::NetworkSerives>("Mainapp::NetworkSerives");
     qRegisterMetaType<Player::Alliance>("Player::Alliance");
+
+    qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
     qmlRegisterInterface<Terrain>("Terrain");
     qmlRegisterInterface<Player>("Player");
     qmlRegisterInterface<Building>("Building");
@@ -84,6 +85,9 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<GameAnimation>("GameAnimation");
     qmlRegisterInterface<GameAnimationWalk>("GameAnimationWalk");
     qmlRegisterInterface<GameAnimationCapture>("GameAnimationCapture");
+    qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
+
+
 
     // load General-Base Scripts
     QString path =  QCoreApplication::applicationDirPath() + "/resources/scripts/general";

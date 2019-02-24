@@ -85,6 +85,66 @@ qint32 CO::getFirerangeModifier(Unit* pUnit, QPoint position)
     }
 }
 
+qint32 CO::getAttackHpBonus(Unit* pUnit, QPoint position)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getAttackHpBonus";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
+    args1 << obj1;
+    args1 << position.x();
+    args1 << position.y();
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+qint32 CO::getBonusLuck(Unit* pUnit, QPoint position)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getBonusLuck";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
+    args1 << obj1;
+    args1 << position.x();
+    args1 << position.y();
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+qint32 CO::getBonusMisfortune(Unit* pUnit, QPoint position)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getBonusMisfortune";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
+    args1 << obj1;
+    args1 << position.x();
+    args1 << position.y();
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 qint32 CO::getMovementPointModifier(Unit* pUnit)
 {
     Mainapp* pApp = Mainapp::getInstance();

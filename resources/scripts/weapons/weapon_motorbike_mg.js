@@ -30,7 +30,7 @@ var Constructor = function()
             return 5;
         case "LIGHT_TANK":
             return 5;
-        case "HOVERFLAK":
+        case "HOVERTANK":
             return 5;
 
         case "HEAVY_HOVERCRAFT":
@@ -49,13 +49,13 @@ var Constructor = function()
             return 10;
 
         case "ARTILLERY":
-            return 15;
+            return WEAPON.lowDamage;
         case "ANITANKCANNON":
-            return 35;
+            return 45;
         case "MISSILE":
-            return 35;
+            return WEAPON.softCounterDamage;
         case "ROCKETTRHOWER":
-            return 35;
+            return WEAPON.softCounterDamage;
         default:
             return -1;
         }

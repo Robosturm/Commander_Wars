@@ -113,7 +113,11 @@ private:
     QVector<oxygine::spActor> m_Arrows;
     QVector<QPoint> m_ArrowPoints;
 
+    oxygine::spActor m_ZInformationLabel;
+
     spHumanPlayerInputMenu m_CurrentMenu{nullptr};
+
+    GameMenue* m_pMenue{nullptr};
 };
 
 #endif // HUMANPLAYERINPUT_H

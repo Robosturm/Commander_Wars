@@ -91,6 +91,12 @@ public slots:
      * @return the alliance of the player with us
      */
     Alliance checkAlliance(Player* pPlayer);
+    /**
+     * @brief isEnemyUnit checks if the given unit is an enemy
+     * @param pUnit
+     * @return
+     */
+    bool isEnemyUnit(Unit* pUnit);
     qint32 getFonds() const;
     /**
      * @brief addFonds increases the money of this player by the given value

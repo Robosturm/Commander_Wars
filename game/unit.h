@@ -104,6 +104,7 @@ public slots:
 
     qint32 getAmmo1() const;
     void setAmmo1(const qint32 &value);
+    bool hasAmmo1() const;
 
     qint32 getMaxAmmo1() const;
     void setMaxAmmo1(const qint32 &value);
@@ -113,6 +114,7 @@ public slots:
 
     qint32 getAmmo2() const;
     void setAmmo2(const qint32 &value);
+    bool hasAmmo2() const;
 
     qint32 getMaxAmmo2() const;
     void setMaxAmmo2(const qint32 &value);
@@ -170,6 +172,11 @@ public slots:
      * @return  y coordinates of this unit
      */
     qint32 getY() const;
+    /**
+     * @brief getPosition
+     * @return
+     */
+    QPoint getPosition() const;
     /**
      * @brief refill fills up all ammo and fuel to max
      */
@@ -252,6 +259,36 @@ public slots:
      * @return number of units loaded by this unit
      */
     qint32 getLoadedUnitCount();
+    /**
+     * @brief getBonusOffensive
+     * @param position
+     * @return offensive bonus at this position
+     */
+    qint32 getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition);
+    /**
+     * @brief getBonusDeffensive
+     * @param position
+     * @return defense bonus at this position
+     */
+    qint32 getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition);
+    /**
+     * @brief getAttackHpBonus
+     * @param position
+     * @return
+     */
+    qint32 getAttackHpBonus(QPoint position);
+    /**
+     * @brief getMisfortune
+     * @param position
+     * @return
+     */
+    qint32 getBonusMisfortune(QPoint position);
+    /**
+     * @brief getLuck
+     * @param position
+     * @return
+     */
+    qint32 getBonusLuck(QPoint position);
 protected:
     /**
      * @brief updateIconTweens creates the visibility toogle tweens for all icons

@@ -24,6 +24,7 @@ signals:
 public slots:
     void mouseWheel(qint32 direction);
     void MoveMap(qint32 x, qint32 y);
+
 protected:
     bool m_moveMap{false};
     QPoint m_MoveMapMousePoint;

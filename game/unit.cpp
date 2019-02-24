@@ -262,6 +262,87 @@ qint32 Unit::getLoadedUnitCount()
     return m_TransportUnits.size();
 }
 
+qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition)
+{
+    qint32 bonus = 0;
+    CO* pCO = m_Owner->getCO(0);
+    if (pCO != nullptr)
+    {
+        bonus += pCO->getOffensiveBonus(this, position, pDefender, defPosition);
+    }
+    pCO = m_Owner->getCO(1);
+    if (pCO != nullptr)
+    {
+        bonus += pCO->getOffensiveBonus(this, position, pDefender, defPosition);
+    }
+    return bonus;
+}
+
+qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition)
+{
+    qint32 bonus = 0;
+    CO* pCO = m_Owner->getCO(0);
+    if (pCO != nullptr)
+    {
+        bonus += pCO->getDeffensiveBonus(pAttacker, atkPosition, this, position);
+    }
+    pCO = m_Owner->getCO(1);
+    if (pCO != nullptr)
+    {
+        bonus += pCO->getDeffensiveBonus(pAttacker, atkPosition, this, position);
+    }
+
+    return bonus;
+}
+
+qint32 Unit::getAttackHpBonus(QPoint position)
+{
+    qint32 bonus = 0;
+    CO* pCO = m_Owner->getCO(0);
+    if (pCO != nullptr)
+    {
+        bonus += pCO->getAttackHpBonus(this, position);
+    }
+    pCO = m_Owner->getCO(1);
+    if (pCO != nullptr)
+    {
+        bonus += pCO->getAttackHpBonus(this, position);
+    }
+    return bonus;
+}
+
+qint32 Unit::getBonusMisfortune(QPoint position)
+{
+    qint32 bonus = 0;
+    CO* pCO = m_Owner->getCO(0);
+    if (pCO != nullptr)
+    {
+        bonus += pCO->getBonusMisfortune(this, position);
+    }
+    pCO = m_Owner->getCO(1);
+    if (pCO != nullptr)
+    {
+        bonus += pCO->getBonusMisfortune(this, position);
+    }
+    return bonus;
+}
+
+qint32 Unit::getBonusLuck(QPoint position)
+{
+    qint32 bonus = 0;
+    CO* pCO = m_Owner->getCO(0);
+    if (pCO != nullptr)
+    {
+        bonus += pCO->getBonusLuck(this, position);
+    }
+    pCO = m_Owner->getCO(1);
+    if (pCO != nullptr)
+    {
+        bonus += pCO->getBonusLuck(this, position);
+    }
+    return bonus;
+}
+
 void Unit::startOfTurn()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -357,6 +438,18 @@ qint32 Unit::getAmmo2() const
     return ammo2;
 }
 
+bool Unit::hasAmmo2() const
+{
+    if ((maxAmmo2 < 0) || (ammo2 > 0))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 
 QString Unit::getWeapon2ID() const
 {
@@ -401,6 +494,18 @@ qint32 Unit::getAmmo1() const
 void Unit::setAmmo1(const qint32 &value)
 {
     ammo1 = value;
+}
+
+bool Unit::hasAmmo1() const
+{
+    if ((maxAmmo1 < 0) || (ammo1 > 0))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 float Unit::getHp() const
@@ -469,6 +574,11 @@ qint32 Unit::getX() const
 qint32 Unit::getY() const
 {
     return m_Terrain->getY();
+}
+
+QPoint Unit::getPosition() const
+{
+    return QPoint(getX(), getY());
 }
 
 void Unit::refill()

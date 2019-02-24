@@ -26,6 +26,9 @@
 		<image file="tagpower.png" />
 		<image file="unhide.png" />
 		<image file="build.png" />
+		<!-- z information label -->
+		<image file="z_information_label.png" cols = "8" />
+		<image file="z_information_label+mask.png" cols = "8" />
 		
 	</atlas>
 </resources>

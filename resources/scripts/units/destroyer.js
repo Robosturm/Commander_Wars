@@ -4,7 +4,7 @@ var Constructor = function()
     {
         unit.setAmmo1(9);
         unit.setMaxAmmo1(9);
-        unit.setWeapon1ID("WEAPON_ANTI_SHP_CANNON");
+        unit.setWeapon1ID("WEAPON_ANTI_SHIP_CANNON");
         unit.setAmmo2(9);
         unit.setMaxAmmo2(9);
         unit.setWeapon2ID("WEAPON_DESTROYER_A_AIR_GUN");

@@ -10,6 +10,8 @@
 
 #include "game/building.h"
 
+#include "game/unit.h"
+
 #include "game/co.h"
 
 Player::Player(quint32 id)
@@ -81,6 +83,12 @@ Player::Alliance Player::checkAlliance(Player* pPlayer)
         return Alliance::Enemy;
     }
 }
+
+bool Player::isEnemyUnit(Unit* pUnit)
+{
+    return (checkAlliance(pUnit->getOwner()) == Alliance::Enemy);
+}
+
 
 void Player::setFonds(const qint32 &value)
 {

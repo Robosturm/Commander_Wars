@@ -29,7 +29,7 @@ var Constructor = function()
     this.getActions = function()
     {
         // returns a string id list of the actions this unit can perform
-        return "ACTION_WAIT,ACTION_LOAD,ACTION_UNLOAD,ACTION_JOIN,ACTION_RATION";
+        return "ACTION_LOAD,ACTION_UNLOAD,ACTION_JOIN,ACTION_RATION,ACTION_WAIT";
     };
     this.getBaseCost = function()
     {

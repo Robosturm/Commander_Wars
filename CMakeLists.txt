@@ -13,6 +13,7 @@ include_directories(${OXYGINE_FLOW_INCLUDE_DIRS})
 
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
@@ -42,7 +43,7 @@ add_definitions(
     -DQT_FEATURE_cxx11_future=-1
 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OXYGINE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OXYGINE_CXX_FLAGS} -DCMAKE_C_FLAGS=\"-mwindows\"")
 
 # source list we start slow here with the main cpp
 set(${PROJECT_NAME}_SRCS
@@ -85,6 +86,7 @@ set(${PROJECT_NAME}_SRCS
         coreengine/pathfindingsystem.cpp
         coreengine/tweentogglevisibility.cpp
         coreengine/tweenwait.cpp
+        coreengine/qmlvector.cpp
 
         # network engine
         network/tcpclient.cpp
@@ -199,10 +201,12 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
     )
 else("Release")
     set(${PROJECT_NAME}_INSTALL_QT_LIBS
-         ${QT_BIN_DIR}/Qt5Qml.dll
-         ${QT_BIN_DIR}/Qt5Core.dll
-         ${QT_BIN_DIR}/Qt5Network.dll
-         ${QT_BIN_DIR}/Qt5Guid.dll
+        ${QT_BIN_DIR}/Qt5Qml.dll
+        ${QT_BIN_DIR}/Qt5Core.dll
+        ${QT_BIN_DIR}/Qt5Network.dll
+        ${QT_BIN_DIR}/Qt5Multimedia.dll
+        ${QT_BIN_DIR}/Qt5Gui.dll
+        ${QT_BIN_DIR}/Qt5Widgets.dll
     )
 
     set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS

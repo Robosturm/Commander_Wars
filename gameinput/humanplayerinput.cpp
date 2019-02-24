@@ -17,6 +17,7 @@
 
 #include "game/gameanimationfactory.h"
 #include "resource_management/gamemanager.h"
+#include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
 
@@ -25,6 +26,7 @@
 #include "gameinput/markedfielddata.h"
 
 HumanPlayerInput::HumanPlayerInput(GameMenue* pMenue)
+    : m_pMenue(pMenue)
 {
     connect(pMenue, SIGNAL(sigRightClick(qint32,qint32)), this, SLOT(rightClick(qint32,qint32)), Qt::QueuedConnection);
     connect(pMenue, SIGNAL(sigLeftClick(qint32,qint32)), this, SLOT(leftClick(qint32,qint32)), Qt::QueuedConnection);
@@ -89,6 +91,7 @@ void HumanPlayerInput::cleanUpInput()
     m_pUnitPathFindingSystem = nullptr;
     clearMarkedFields();
     deleteArrow();
+    m_pMenue->getCursor()->changeCursor("cursor+default");
 }
 
 void HumanPlayerInput::clearMenu()
@@ -114,12 +117,21 @@ void HumanPlayerInput::clearMarkedFields()
         delete m_pMarkedFieldData;
         m_pMarkedFieldData = nullptr;
     }
+    if (m_ZInformationLabel.get() != nullptr)
+    {
+        GameMap::getInstance()->removeChild(m_ZInformationLabel);
+        m_ZInformationLabel = nullptr;
+    }
 }
 
 void HumanPlayerInput::leftClick(qint32 x, qint32 y)
 {
 
     if (GameAnimationFactory::getAnimationCount() > 0)
+    {
+        // do nothing
+    }
+    else if (m_CurrentMenu.get() != nullptr)
     {
         // do nothing
     }
@@ -302,7 +314,7 @@ void HumanPlayerInput::getNextStepData()
 {
     clearMenu();
     clearMarkedFields();
-
+    m_pMenue->getCursor()->changeCursor("cursor+default");
 
     QString stepType = m_pGameAction->getStepInputType();
     if (stepType.toUpper() == "MENU")
@@ -321,9 +333,10 @@ void HumanPlayerInput::getNextStepData()
         QVector<QPoint>* pFields = pData->getPoints();
         for (qint32 i = 0; i < pFields->size(); i++)
         {
-            createMarkedField(pFields->at(i), pData->getColor(), Terrain::DrawPriority::MarkedFieldHigh);
+            createMarkedField(pFields->at(i), pData->getColor(), Terrain::DrawPriority::MarkedFieldLow);
         }
         m_pMarkedFieldData = pData;
+        m_pMenue->getCursor()->changeCursor(m_pGameAction->getStepCursor());
     }
 }
 
@@ -400,7 +413,93 @@ void HumanPlayerInput::createMarkedMoveFields()
 
 void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
 {
-    if (m_pUnitPathFindingSystem != nullptr)
+    if (m_pMarkedFieldData != nullptr)
+    {
+        if (m_pMarkedFieldData->getShowZData())
+        {
+            // marked field?
+            if (m_pMarkedFieldData->getPoints()->contains(QPoint(x, y)))
+            {
+                if (m_ZInformationLabel.get() != nullptr)
+                {
+                    GameMap::getInstance()->removeChild(m_ZInformationLabel);
+                    m_ZInformationLabel = nullptr;
+                }
+                m_ZInformationLabel = new oxygine::Actor();
+                GameManager* pGameManager = GameManager::getInstance();
+                oxygine::spSprite pSprite = new oxygine::Sprite();
+                oxygine::ResAnim* pAnim = pGameManager->getResAnim("z_information_label");
+                if (pAnim->getTotalFrames() > 1)
+                {
+                    oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                    pSprite->addTween(tween);
+                }
+                else
+                {
+                    pSprite->setResAnim(pAnim);
+                }
+                oxygine::spSprite pSprite2 = new oxygine::Sprite();
+                oxygine::ResAnim* pAnim2 = pGameManager->getResAnim("z_information_label+mask");
+                if (pAnim2->getTotalFrames() > 1)
+                {
+                    oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim2), pAnim2->getTotalFrames() * GameMap::frameTime, -1);
+                    pSprite2->addTween(tween);
+                }
+                else
+                {
+                    pSprite2->setResAnim(pAnim2);
+                }
+                QColor color = m_pMarkedFieldData->getZLabelColor();
+                pSprite2->setColor(color.red(), color.green(), color.blue(), color.alpha());
+                m_ZInformationLabel->addChild(pSprite);
+                m_ZInformationLabel->addChild(pSprite2);
+                // add text to the label
+                oxygine::spTextField textField = new oxygine::TextField();
+                oxygine::TextStyle style = oxygine::TextStyle(FontManager::getTimesFont10()).
+                                           withColor(oxygine::Color(0, 0, 0)).
+                                           alignLeft().
+                                           alignTop();
+                textField->setStyle(style);
+                textField->setScale(0.6f);
+                textField->setY(-2);
+                textField->setText(m_pMarkedFieldData->getZLabelText().toStdString().c_str());
+                textField->attachTo(m_ZInformationLabel);
+
+                oxygine::spTextField textField2 = new oxygine::TextField();
+                textField2->setStyle(style);
+                textField2->setScale(0.7f);
+                textField2->setY(8);
+                textField2->setX(3);
+                QString labelText = "";
+                QPoint field(x, y);
+                for (qint32 i = 0; i < m_pMarkedFieldData->getPoints()->size(); i++)
+                {
+                    if (m_pMarkedFieldData->getPoints()->at(i) == field)
+                    {
+                        labelText = QString::number(m_pMarkedFieldData->getZInformation()->at(i)) + " %";
+                        break;
+                    }
+                }
+                textField2->setText(labelText.toStdString().c_str());
+                textField2->attachTo(m_ZInformationLabel);
+
+                m_ZInformationLabel->setScale(1.5f);
+                m_ZInformationLabel->setPosition(x * GameMap::Imagesize - GameMap::Imagesize / 6.0f,
+                                                 y * GameMap::Imagesize - GameMap::Imagesize * 1.5f);
+                m_ZInformationLabel->setPriority(static_cast<qint8>(Mainapp::ZOrder::Animation));
+                GameMap::getInstance()->addChild(m_ZInformationLabel);
+            }
+            else
+            {
+                if (m_ZInformationLabel.get() != nullptr)
+                {
+                    GameMap::getInstance()->removeChild(m_ZInformationLabel);
+                    m_ZInformationLabel = nullptr;
+                }
+            }
+        }
+    }
+    else if (m_pUnitPathFindingSystem != nullptr)
     {
         if ((m_CurrentMenu.get() == nullptr) && m_pGameAction->getActionID() == "")
         {
@@ -447,6 +546,12 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
         else
         {
             // do nothing
+        }
+        if ((points.size() == 0) ||
+            (points[0].x() != x) ||
+            (points[0].y() != y))
+        {
+            points = m_pUnitPathFindingSystem->getPath(x, y);
         }
         m_pGameAction->setCosts(m_pUnitPathFindingSystem->getCosts(points) - fieldCosts);
         m_ArrowPoints = points;

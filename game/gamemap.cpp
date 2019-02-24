@@ -247,15 +247,15 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
     while ((found == false) && (currentRadius <= range) && (range > 0))
     {
         currentRadius += 1;
-        x2 = currentRadius;
+        x2 = -currentRadius;
         y2 = 0;
-        for (qint32 i = 1; i < currentRadius; i++)
+        for (qint32 i = 0; i < currentRadius; i++)
         {
             x2 += 1;
             y2 += 1;
-            if (onMap(x + x2 - currentRadius, y + y2 - currentRadius))
+            if (onMap(x + x2, y + y2))
             {
-                spTerrain pTerrain = getTerrain(x + x2 - currentRadius, y + y2 - currentRadius);
+                spTerrain pTerrain = getTerrain(x + x2 - currentRadius, y + y2);
                 if ((pTerrain->getUnit() == nullptr) &&
                     (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain->getID()) > 0))
                 {
@@ -264,43 +264,43 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
                 }
             }
         }
-        for (qint32 i = 1; i < currentRadius; i++)
-        {
-            x2 -= 1;
-            y2 += 1;
-            if (onMap(x + x2 - currentRadius, y + y2 - currentRadius))
-            {
-                spTerrain pTerrain = getTerrain(x + x2 - currentRadius, y + y2 - currentRadius);
-                if ((pTerrain->getUnit() == nullptr) &&
-                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain->getID()) > 0))
-                {
-                    pTerrain->setUnit(pUnit);
-                    return pUnit.get();
-                }
-            }
-        }
-        for (qint32 i = 1; i < currentRadius; i++)
-        {
-            x2 -= 1;
-            y2 -= 1;
-            if (onMap(x + x2 - currentRadius, y + y2 - currentRadius))
-            {
-                spTerrain pTerrain = getTerrain(x + x2 - currentRadius, y + y2 - currentRadius);
-                if ((pTerrain->getUnit() == nullptr) &&
-                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain->getID()) > 0))
-                {
-                    pTerrain->setUnit(pUnit);
-                    return pUnit.get();
-                }
-            }
-        }
-        for (qint32 i = 1; i < currentRadius; i++)
+        for (qint32 i = 0; i < currentRadius; i++)
         {
             x2 += 1;
             y2 -= 1;
-            if (onMap(x + x2 - currentRadius, y + y2 - currentRadius))
+            if (onMap(x + x2, y + y2))
             {
-                spTerrain pTerrain = getTerrain(x + x2 - currentRadius, y + y2 - currentRadius);
+                spTerrain pTerrain = getTerrain(x + x2, y + y2);
+                if ((pTerrain->getUnit() == nullptr) &&
+                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain->getID()) > 0))
+                {
+                    pTerrain->setUnit(pUnit);
+                    return pUnit.get();
+                }
+            }
+        }
+        for (qint32 i = 0; i < currentRadius; i++)
+        {
+            x2 -= 1;
+            y2 -= 1;
+            if (onMap(x + x2, y + y2))
+            {
+                spTerrain pTerrain = getTerrain(x + x2, y + y2);
+                if ((pTerrain->getUnit() == nullptr) &&
+                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain->getID()) > 0))
+                {
+                    pTerrain->setUnit(pUnit);
+                    return pUnit.get();
+                }
+            }
+        }
+        for (qint32 i = 0; i < currentRadius; i++)
+        {
+            x2 -= 1;
+            y2 += 1;
+            if (onMap(x + x2, y + y2))
+            {
+                spTerrain pTerrain = getTerrain(x + x2, y + y2);
                 if ((pTerrain->getUnit() == nullptr) &&
                     (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain->getID()) > 0))
                 {

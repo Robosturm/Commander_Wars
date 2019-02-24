@@ -20,8 +20,13 @@
 <context>
     <name>ACTION_FIRE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="25"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="55"/>
         <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="142"/>
+        <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -60,12 +65,12 @@
 <context>
     <name>ACTION_UNLOAD</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="63"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="66"/>
         <source>Unload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="153"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="156"/>
         <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>
@@ -261,7 +266,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="44"/>
+        <location filename="../main.cpp" line="43"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -772,6 +777,54 @@
     <message>
         <location filename="../resources/scripts/units/waterplane.js" line="35"/>
         <source>Waterplane</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_a_tank_cannon</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_a_tank_cannon.js" line="5"/>
+        <source>Anti Tank Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_anti_air_missile</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_anti_air_missile.js" line="5"/>
+        <source>Anti Air Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_anti_ship_missile</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_anti_ship_missile.js" line="5"/>
+        <source>Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_battleship_cannon</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_battleship_cannon.js" line="5"/>
+        <source>Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_bomb</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_bomb.js" line="5"/>
+        <source>Bomb</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_cannon</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_cannon.js" line="5"/>
+        <source>Cannon</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
