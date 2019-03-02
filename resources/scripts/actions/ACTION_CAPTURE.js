@@ -18,7 +18,7 @@ var Constructor = function()
             {
 
                 var alliance = unit.getOwner().checkAlliance(building.getOwner());
-                if (alliance === globals.Alliance_Enemy)
+                if (alliance === GameEnums.Alliance_Enemy)
                 {
                     return true;
                 }

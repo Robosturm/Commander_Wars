@@ -319,6 +319,10 @@ public slots:
      * @param co
      */
     void makeCOUnit(quint8 co);
+    /**
+     * @brief createCORange
+     */
+    void createCORange(qint32 coRange);
 protected:
     /**
      * @brief updateIconTweens creates the visibility toogle tweens for all icons
@@ -336,6 +340,10 @@ private:
      * @brief m_pIconSprites vector containg all icon sprites
      */
     QVector<oxygine::spSprite> m_pIconSprites;
+    /**
+     * @brief m_CORange
+     */
+    oxygine::spActor m_CORange;
     /**
      * @brief m_UnitID the id of this unit
      */

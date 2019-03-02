@@ -56,6 +56,11 @@ void GameMenue::performAction(GameAction* pGameAction)
 void GameMenue::updatePlayerinfo()
 {
     m_pPlayerinfo->updateData();
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        pMap->getPlayer(i)->updateVisualCORange();
+    }
 }
 
 void GameMenue::startGame(qint32 startPlayer)

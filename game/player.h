@@ -147,6 +147,10 @@ public slots:
      * @return
      */
     QmlVectorUnit* getUnits();
+    /**
+     * @brief updateCORange
+     */
+    void updateVisualCORange();
 private:
     quint32 playerID;
     qint32 fonds{0};

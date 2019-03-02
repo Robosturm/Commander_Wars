@@ -58,10 +58,11 @@ public:
     enum class ZOrder
     {
         Background = -32000,
-        Terrain = -30000,
-        Animation = 28000,
-        Cursor = 29000,
-        Objects = 30000,
+        Terrain = -30000,        
+        CORange = 28998,
+        Animation,
+        Cursor,
+        Objects,
     };
 
     explicit Mainapp(int argc, char* argv[]);

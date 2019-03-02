@@ -6,6 +6,8 @@
 
 #include "resource_management/unitspritemanager.h"
 
+#include "resource_management/gamemanager.h"
+
 #include "game/gamemap.h"
 
 #include "coreengine/console.h"
@@ -473,7 +475,10 @@ qint32 Unit::getRepairBonus(QPoint position)
 
 void Unit::setUnitVisible(bool value)
 {
-
+    if (m_CORange.get() != nullptr)
+    {
+        m_CORange->setVisible(value);
+    }
     setVisible(value);
 }
 
@@ -492,6 +497,7 @@ void Unit::makeCOUnit(quint8 co)
         {
             setUnitRank(GameEnums::UnitRank_CO1);
         }
+        createCORange(pCO->getCORange());
     }
 }
 
@@ -898,6 +904,17 @@ void Unit::moveUnit(QVector<QPoint> movePath)
         // teleport unit to target position
         Console::print("Moving Unit from " + QString::number(getX()) + " , " + QString::number(getY()) + " to " + QString::number(movePath[0].x()) + " , " + QString::number(movePath[0].y()), Console::eLogLevels::eDEBUG);
         pMap->getTerrain(movePath[0].x(), movePath[0].y())->setUnit(pUnit);
+        if (m_CORange.get() != nullptr)
+        {
+            if (m_UnitRank == GameEnums::UnitRank_CO0)
+            {
+                createCORange(m_Owner->getCO(0)->getCORange());
+            }
+            else
+            {
+                createCORange(m_Owner->getCO(1)->getCORange());
+            }
+        }
     }
 }
 
@@ -914,6 +931,19 @@ void Unit::killUnit()
     args1 << getX();
     args1 << getY();
     QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    if (m_UnitRank == GameEnums::UnitRank_CO0)
+    {
+        m_Owner->getCO(0)->setCOUnit(nullptr);
+    }
+    else if (m_UnitRank == GameEnums::UnitRank_CO1)
+    {
+        m_Owner->getCO(1)->setCOUnit(nullptr);
+    }
+    if (m_CORange.get() != nullptr)
+    {
+        GameMap::getInstance()->removeChild(m_CORange);
+    }
+
     removeUnit();
 }
 
@@ -1113,3 +1143,280 @@ void Unit::deserialize(QDataStream& pStream)
     updateSprites();
 }
 
+void Unit::createCORange(qint32 coRange)
+{
+    oxygine::ResAnim* pAnim = GameManager::getInstance()->getResAnim("co+range+marker");
+    GameMap* pMap = GameMap::getInstance();
+    if (m_CORange.get() == nullptr)
+    {
+        m_CORange = new oxygine::Actor();
+    }
+    m_CORange->removeChildren();
+    m_CORange->setPriority(static_cast<qint8>(Mainapp::ZOrder::CORange));
+    qint32 x = getX();
+    qint32 y = getY();
+    qint32 x2 = 0;
+    qint32 y2 = 0;
+    x2 = -coRange;
+    y2 = 0;
+    QColor color = m_Owner->getColor();
+    oxygine::Color playerColor = oxygine::Color(color.red(), color.green(), color.blue());
+    oxygine::Color inversColor = oxygine::Color(playerColor.r, playerColor.g, playerColor.b, 255);
+    for (qint32 i = 0; i < coRange; i++)
+    {
+        x2 += 1;
+        y2 += 1;
+        if (pMap->onMap(x2 + x, y2 + y))
+        {
+            oxygine::spSprite pSprite = new oxygine::Sprite();
+            pSprite->setResAnim(pAnim);
+            pSprite->setColor(playerColor);
+            if (pAnim->getTotalFrames() > 1)
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                pSprite->addTween(tween);
+            }
+            else
+            {
+                pSprite->setResAnim(pAnim);
+            }
+            oxygine::Sprite::TweenColor tweenColor(inversColor);
+            oxygine::spTween tween = oxygine::createTween(tweenColor, 500,  -1, true);
+            pSprite->addTween(tween);
+            pSprite->setPosition(GameMap::Imagesize * x2, GameMap::Imagesize * y2);
+            m_CORange->addChild(pSprite);
+
+            pSprite = new oxygine::Sprite();
+            pSprite->setResAnim(pAnim);
+            pSprite->setColor(playerColor);
+            if (pAnim->getTotalFrames() > 1)
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                pSprite->addTween(tween);
+            }
+            else
+            {
+                pSprite->setResAnim(pAnim);
+            }
+            tween = oxygine::createTween(tweenColor, 500,  -1, true);
+            pSprite->addTween(tween);
+            pSprite->setRotationDegrees(90);
+            pSprite->setPosition(GameMap::Imagesize * (x2 + 1), GameMap::Imagesize * (y2 + 1));
+            m_CORange->addChild(pSprite);
+            if (i == coRange - 1)
+            {
+                pSprite = new oxygine::Sprite();
+                pSprite->setResAnim(pAnim);
+                pSprite->setColor(playerColor);
+                if (pAnim->getTotalFrames() > 1)
+                {
+                    oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                    pSprite->addTween(tween);
+                }
+                else
+                {
+                    pSprite->setResAnim(pAnim);
+                }
+                tween = oxygine::createTween(tweenColor, 500,  -1, true);
+                pSprite->addTween(tween);
+                pSprite->setRotationDegrees(180);
+                pSprite->setPosition(GameMap::Imagesize * (x2 + 1), GameMap::Imagesize * (y2 + 1));
+                m_CORange->addChild(pSprite);
+            }
+        }
+    }
+    for (qint32 i = 0; i < coRange; i++)
+    {
+        x2 += 1;
+        y2 -= 1;
+        if (pMap->onMap(x2 + x, y2 + y))
+        {
+            oxygine::spSprite pSprite = new oxygine::Sprite();
+            pSprite->setResAnim(pAnim);
+            pSprite->setColor(playerColor);
+            if (pAnim->getTotalFrames() > 1)
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                pSprite->addTween(tween);
+            }
+            else
+            {
+                pSprite->setResAnim(pAnim);
+            }
+            oxygine::Sprite::TweenColor tweenColor(inversColor);
+            oxygine::spTween tween = oxygine::createTween(tweenColor, 500,  -1, true);
+            pSprite->addTween(tween);
+            pSprite->setRotationDegrees(90);
+            pSprite->setPosition(GameMap::Imagesize * (x2 + 1), GameMap::Imagesize * (y2 + 1));
+            m_CORange->addChild(pSprite);
+
+            pSprite = new oxygine::Sprite();
+            pSprite->setResAnim(pAnim);
+            pSprite->setColor(playerColor);
+            if (pAnim->getTotalFrames() > 1)
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                pSprite->addTween(tween);
+            }
+            else
+            {
+                pSprite->setResAnim(pAnim);
+            }
+            tween = oxygine::createTween(tweenColor, 500,  -1, true);
+            pSprite->addTween(tween);
+            pSprite->setRotationDegrees(180);
+            pSprite->setPosition(GameMap::Imagesize * (x2 + 1), GameMap::Imagesize * (y2 + 1));
+            m_CORange->addChild(pSprite);
+            if (i == coRange - 1)
+            {
+                pSprite = new oxygine::Sprite();
+                pSprite->setResAnim(pAnim);
+                pSprite->setColor(playerColor);
+                if (pAnim->getTotalFrames() > 1)
+                {
+                    oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                    pSprite->addTween(tween);
+                }
+                else
+                {
+                    pSprite->setResAnim(pAnim);
+                }
+                tween = oxygine::createTween(tweenColor, 500,  -1, true);
+                pSprite->addTween(tween);
+                pSprite->setRotationDegrees(270);
+                pSprite->setPosition(GameMap::Imagesize * x2, GameMap::Imagesize * y2);
+                m_CORange->addChild(pSprite);
+            }
+        }
+    }
+    for (qint32 i = 0; i < coRange; i++)
+    {
+        x2 -= 1;
+        y2 -= 1;
+        if (pMap->onMap(x2 + x, y2 + y))
+        {
+            oxygine::spSprite pSprite = new oxygine::Sprite();
+            pSprite->setResAnim(pAnim);
+            pSprite->setColor(playerColor);
+            if (pAnim->getTotalFrames() > 1)
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                pSprite->addTween(tween);
+            }
+            else
+            {
+                pSprite->setResAnim(pAnim);
+            }
+            oxygine::Sprite::TweenColor tweenColor(inversColor);
+            oxygine::spTween tween = oxygine::createTween(tweenColor, 500,  -1, true);
+            pSprite->addTween(tween);
+            pSprite->setRotationDegrees(270);
+            pSprite->setPosition(GameMap::Imagesize * x2, GameMap::Imagesize * y2);
+            m_CORange->addChild(pSprite);
+
+            pSprite = new oxygine::Sprite();
+            pSprite->setResAnim(pAnim);
+            pSprite->setColor(playerColor);
+            if (pAnim->getTotalFrames() > 1)
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                pSprite->addTween(tween);
+            }
+            else
+            {
+                pSprite->setResAnim(pAnim);
+            }
+            tween = oxygine::createTween(tweenColor, 500,  -1, true);
+            pSprite->addTween(tween);
+            pSprite->setRotationDegrees(180);
+            pSprite->setPosition(GameMap::Imagesize * (x2 + 1), GameMap::Imagesize * (y2 + 1));
+            m_CORange->addChild(pSprite);
+            if (i == coRange - 1)
+            {
+                pSprite = new oxygine::Sprite();
+                pSprite->setResAnim(pAnim);
+                pSprite->setColor(playerColor);
+                if (pAnim->getTotalFrames() > 1)
+                {
+                    oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                    pSprite->addTween(tween);
+                }
+                else
+                {
+                    pSprite->setResAnim(pAnim);
+                }
+                tween = oxygine::createTween(tweenColor, 500,  -1, true);
+                pSprite->addTween(tween);
+                pSprite->setPosition(GameMap::Imagesize * x2, GameMap::Imagesize * y2);
+                m_CORange->addChild(pSprite);
+            }
+        }
+    }
+    for (qint32 i = 0; i < coRange; i++)
+    {
+
+        x2 -= 1;
+        y2 += 1;
+        if (pMap->onMap(x2 + x, y2 + y))
+        {
+            oxygine::spSprite pSprite = new oxygine::Sprite();
+            pSprite->setResAnim(pAnim);
+            pSprite->setColor(playerColor);
+            if (pAnim->getTotalFrames() > 1)
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                pSprite->addTween(tween);
+            }
+            else
+            {
+                pSprite->setResAnim(pAnim);
+            }
+            oxygine::Sprite::TweenColor tweenColor(inversColor);
+            oxygine::spTween tween = oxygine::createTween(tweenColor, 500,  -1, true);
+            pSprite->addTween(tween);
+            pSprite->setRotationDegrees(270);
+            pSprite->setPosition(GameMap::Imagesize * x2, GameMap::Imagesize * y2);
+            m_CORange->addChild(pSprite);
+
+            pSprite = new oxygine::Sprite();
+            pSprite->setResAnim(pAnim);
+            pSprite->setColor(playerColor);
+            if (pAnim->getTotalFrames() > 1)
+            {
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                pSprite->addTween(tween);
+            }
+            else
+            {
+                pSprite->setResAnim(pAnim);
+            }
+            tween = oxygine::createTween(tweenColor, 500,  -1, true);
+            pSprite->addTween(tween);
+            pSprite->setPosition(GameMap::Imagesize * x2, GameMap::Imagesize * y2);
+            m_CORange->addChild(pSprite);
+
+            if (i == coRange - 1)
+            {
+                pSprite = new oxygine::Sprite();
+                pSprite->setResAnim(pAnim);
+                pSprite->setColor(playerColor);
+                if (pAnim->getTotalFrames() > 1)
+                {
+                    oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                    pSprite->addTween(tween);
+                }
+                else
+                {
+                    pSprite->setResAnim(pAnim);
+                }
+                tween = oxygine::createTween(tweenColor, 500,  -1, true);
+                pSprite->addTween(tween);
+                pSprite->setRotationDegrees(90);
+                pSprite->setPosition(GameMap::Imagesize * (x2 + 1), GameMap::Imagesize * (y2 + 1));
+                m_CORange->addChild(pSprite);
+            }
+        }
+    }
+    m_CORange->setPosition(GameMap::Imagesize * getX(), GameMap::Imagesize * getY());
+    pMap->addChild(m_CORange);
+}

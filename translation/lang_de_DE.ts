@@ -52,7 +52,7 @@
 <context>
     <name>ACTION_CO_UNIT_0</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="30"/>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="31"/>
         <source>CO 0</source>
         <translation type="unfinished"></translation>
     </message>
@@ -60,7 +60,7 @@
 <context>
     <name>ACTION_CO_UNIT_1</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="30"/>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="31"/>
         <source>CO 1</source>
         <translation type="unfinished"></translation>
     </message>
