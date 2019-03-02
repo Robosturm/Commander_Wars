@@ -147,6 +147,13 @@ public slots:
      */
     qint32 getRepairBonus(Unit* pUnit, QPoint position);
     /**
+     * @brief getCaptureBonus
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    qint32 getCaptureBonus(Unit* pUnit, QPoint position);
+    /**
      * @brief getCostModifier
      * @param baseCost
      * @return
@@ -194,6 +201,12 @@ public slots:
      * @return
      */
     qint32 getCORange();
+    /**
+     * @brief inCORange
+     * @param position
+     * @return
+     */
+    bool inCORange(QPoint position);
 private:
     Player* m_Owner;
     QString coID;

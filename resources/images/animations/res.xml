@@ -60,10 +60,10 @@
 		<image file="power7.png" cols = "8" />
 		<image file="power8.png" cols = "8" />
 		<image file="power9.png" cols = "8" />
-		<image file="power10.png" cols = "8" />
+		<image file="power10.png" cols = "9" />
 		<image file="power11.png" cols = "8" />
 		<image file="power12.png" cols = "12" />
 		<image file="power13.png" cols = "8" />
-		<image file="power14.png" cols = "8" />
+		<image file="power14.png" cols = "9" />
 	</atlas>
 </resources>

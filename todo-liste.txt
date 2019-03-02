@@ -1,9 +1,9 @@
-- ko unit
+- co's
 
 - unit info
 - terrain info
 
-- co's
+
 - import maps
 
 - stealth units
@@ -16,6 +16,7 @@
 
 - ai
 - ko info
+- dialogues
 
 - special building
 	- black hole buildings

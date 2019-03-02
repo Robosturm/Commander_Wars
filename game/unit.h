@@ -217,7 +217,7 @@ public slots:
     /**
      * @brief increaseCapturePoints increases the capture points of this unit based on units hp and ko owner
      */
-    void increaseCapturePoints();
+    void increaseCapturePoints(QPoint position);
     /**
      * @brief loadIcon
      * @param iconID icon we want to load

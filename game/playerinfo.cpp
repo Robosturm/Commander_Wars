@@ -187,7 +187,7 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
             Text->setStyle(style);
             Text->setText(tr("Power").toStdString().c_str());
             Text->setY(yPos);
-            Text->setX(68);
+            Text->setX(68 - 4);
             Text->setScale(1.0f);
             oxygine::Sprite::TweenColor tweenColor(oxygine::Color(0, 0, 255, 255));
             oxygine::spTween tween = oxygine::createTween(tweenColor, 500, -1, true);
@@ -201,7 +201,7 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
             oxygine::spTextField Text = new oxygine::TextField();
             Text->setStyle(style);
             Text->setText(tr("Superpower").toStdString().c_str());
-            Text->setY(yPos);
+            Text->setY(yPos - 4);
             Text->setX(68);
             Text->setScale(1.0f);
             oxygine::Sprite::TweenColor tweenColor(oxygine::Color(0, 0, 255, 255));

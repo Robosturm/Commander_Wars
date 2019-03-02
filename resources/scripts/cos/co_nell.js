@@ -15,10 +15,8 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            unit.setHp(unit.getHpRounded() + 2);
-
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-            animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+            animation.addSprite("power7", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
             if (animations.length < 5)
             {
                 animations.push(animation);
@@ -50,8 +48,6 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            unit.setHp(unit.getHpRounded() + 5);
-
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
             animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5);
             if (animations.length < 5)
@@ -77,14 +73,41 @@ var Constructor = function()
     };
     this.startOfTurn = function(co)
     {
-        audio.addMusic("resources/music/cos/andy.mp3")
+        audio.addMusic("resources/music/cos/nell.mp3")
     };
 
     this.getCOUnitRange = function(co)
     {
         return 2;
     };
+    this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                 defender, defPosX, defPosY)
+    {
+
+        return 0;
+    };
+    this.getCOArmy = function()
+    {
+        return "OS";
+    };
+    this.getBonusLuck = function(co, unit, posX, posY)
+    {
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Superpower:
+                return 100;
+            case GameEnums.PowerMode_Power:
+                return 60;
+            default:
+                if (co.inCORange(Qt.point(posX, posY)))
+                {
+                    return 25;
+                }
+                break;
+        }
+        return 5;
+    };
 }
 
 Constructor.prototype = CO;
-var ANDY = new Constructor();
+var CO_NELL = new Constructor();

@@ -6,37 +6,42 @@ var CO =
         co.setSuperpowerStars(3);
     },
 
-    getMovementPointModifier : function(unit)
+    getMovementPointModifier : function(co, unit)
     {
         return 0;
     },
 
-    getFirerangeModifier : function(unit, posX, posY)
+    getFirerangeModifier : function(co, unit, posX, posY)
     {
         return 0;
     },
 
-    getAttackHpBonus : function(unit, posX, posY)
+    getCaptureBonus : function(co, unit, posX, posY)
     {
         return 0;
     },
 
-    getTerrainDefenseModifier : function(unit, posX, posY)
+    getAttackHpBonus : function(co, unit, posX, posY)
     {
         return 0;
     },
 
-    getRepairBonus : function(unit, posX, posY)
+    getTerrainDefenseModifier : function(co, unit, posX, posY)
     {
         return 0;
     },
 
-    getBonusLuck : function(unit, posX, posY)
+    getRepairBonus : function(co, unit, posX, posY)
     {
         return 0;
     },
 
-    getBonusMisfortune : function(unit, posX, posY)
+    getBonusLuck : function(co, unit, posX, posY)
+    {
+        return 0;
+    },
+
+    getBonusMisfortune : function(co, unit, posX, posY)
     {
         return 0;
     },
@@ -49,24 +54,24 @@ var CO =
     {
     },
 
-    getOffensiveBonus : function(attacker, atkPosX, atkPosY,
+    getOffensiveBonus : function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY)
     {
         return 0;
     },
 
-    getDeffensiveBonus : function(attacker, atkPosX, atkPosY,
+    getDeffensiveBonus : function(co, attacker, atkPosX, atkPosY,
                                   defender, defPosX, defPosY)
     {
         return 0;
     },
 
-    getCanMoveAndFire : function(unit, posX, posY)
+    getCanMoveAndFire : function(co, unit, posX, posY)
     {
         return false;
     },
 
-    getCostModifier : function(id, baseCost)
+    getCostModifier : function(co, id, baseCost)
     {
         return 0;
     },

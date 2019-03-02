@@ -9,6 +9,7 @@ var Constructor = function()
         switch (terrainID)
         {
 			case "WELD":
+            case "FACTORY":
             case "PIPELINE":
 				return 1;
         }

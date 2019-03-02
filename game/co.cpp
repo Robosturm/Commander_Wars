@@ -64,7 +64,8 @@ void CO::setSuperpowerStars(const qint32 &value)
 
 bool CO::canUseSuperpower() const
 {
-    if (powerFilled >= powerStars + superpowerStars)
+    if ((powerFilled >= powerStars + superpowerStars) &&
+        (m_PowerMode == GameEnums::PowerMode_Off))
     {
         return true;
     }
@@ -73,7 +74,8 @@ bool CO::canUseSuperpower() const
 
 bool CO::canUsePower() const
 {
-    if (powerFilled >= powerStars)
+    if ((powerFilled >= powerStars) &&
+        (m_PowerMode == GameEnums::PowerMode_Off))
     {
         return true;
     }
@@ -95,6 +97,8 @@ qint32 CO::getTerrainDefenseModifier(Unit* pUnit, QPoint position)
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getTerrainDefenseModifier";
     QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
     args1 << obj1;
     args1 << position.x();
@@ -115,6 +119,8 @@ qint32 CO::getFirerangeModifier(Unit* pUnit, QPoint position)
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getFirerangeModifier";
     QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
     args1 << obj1;
     args1 << position.x();
@@ -135,6 +141,8 @@ qint32 CO::getAttackHpBonus(Unit* pUnit, QPoint position)
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getAttackHpBonus";
     QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
     args1 << obj1;
     args1 << position.x();
@@ -155,6 +163,8 @@ qint32 CO::getBonusLuck(Unit* pUnit, QPoint position)
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getBonusLuck";
     QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
     args1 << obj1;
     args1 << position.x();
@@ -175,6 +185,8 @@ qint32 CO::getBonusMisfortune(Unit* pUnit, QPoint position)
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getBonusMisfortune";
     QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
     args1 << obj1;
     args1 << position.x();
@@ -195,6 +207,8 @@ qint32 CO::getMovementPointModifier(Unit* pUnit)
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getMovementPointModifier";
     QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
     args1 << obj1;
     QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
@@ -213,6 +227,8 @@ qint32 CO::getCostModifier(QString id, qint32 baseCost)
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getCostModifier";
     QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
     args1 << id;
     args1 << baseCost;
     QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
@@ -247,6 +263,8 @@ bool CO::getCanMoveAndFire(Unit* pUnit, QPoint position)
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getCanMoveAndFire";
     QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
     args1 << obj1;
     args1 << position.x();
@@ -267,6 +285,30 @@ qint32 CO::getRepairBonus(Unit* pUnit, QPoint position)
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getRepairBonus";
     QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
+    args1 << obj1;
+    args1 << position.x();
+    args1 << position.y();
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+qint32 CO::getCaptureBonus(Unit* pUnit, QPoint position)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getCaptureBonus";
+    QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
     args1 << obj1;
     args1 << position.x();
@@ -318,6 +360,8 @@ qint32 CO::getOffensiveBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getOffensiveBonus";
     QJSValueList args1;
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj3;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(pAttacker);
     args1 << obj1;
     args1 << atkPosition.x();
@@ -342,6 +386,8 @@ qint32 CO::getDeffensiveBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefend
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getDeffensiveBonus";
     QJSValueList args1;
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj3;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(pAttacker);
     args1 << obj1;
     args1 << atkPosition.x();
@@ -373,6 +419,11 @@ void CO::setPowerMode(const GameEnums::PowerMode &PowerMode)
 
 void CO::gainPowerstar(qint32 fondsDamage, QPoint position)
 {
+    if (!inCORange(position))
+    {
+        // reduce power meter gain when not in co range
+        fondsDamage /= 4;
+    }
     if (m_PowerMode == GameEnums::PowerMode_Off)
     {
         Mainapp* pApp = Mainapp::getInstance();
@@ -393,24 +444,39 @@ Unit* CO::getCOUnit()
 }
 
 qint32 CO::getCORange()
-{
+{    
     qint32 ret = 0;
-    Mainapp* pApp = Mainapp::getInstance();
-    QString function1 = "getCOUnitRange";
-    QJSValueList args1;
-    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
-    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
-    if (erg.isNumber())
+    if (m_PowerMode == GameEnums::PowerMode_Off)
     {
-        ret += erg.toNumber();
-    }
-    if (canUsePower())
-    {
-        ret += 1;
-    }
-    if (canUseSuperpower())
-    {
-        ret += 1;
+        Mainapp* pApp = Mainapp::getInstance();
+        QString function1 = "getCOUnitRange";
+        QJSValueList args1;
+        QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+        QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+        if (erg.isNumber())
+        {
+            ret += erg.toNumber();
+        }
+        if (canUsePower())
+        {
+            ret += 1;
+        }
+        if (canUseSuperpower())
+        {
+            ret += 1;
+        }
     }
     return ret;
+}
+
+bool CO::inCORange(QPoint position)
+{
+    if (m_COUnit.get() != nullptr)
+    {
+        if ((qAbs(m_COUnit->getX() - position.x()) + qAbs(m_COUnit->getY() - position.y())) <= getCORange())
+        {
+            return true;
+        }
+    }
+    return false;
 }

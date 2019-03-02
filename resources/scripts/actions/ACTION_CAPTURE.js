@@ -52,7 +52,7 @@ var Constructor = function()
         // capture the building
         var capturePoints = unit.getCapturePoints();
         var building = action.getMovementBuilding();
-        unit.increaseCapturePoints();
+        unit.increaseCapturePoints(action.getActionTarget());
         var captured = false;
         // check if the capture points are high enough
         if (unit.getCapturePoints() >= maxCapturePoints)

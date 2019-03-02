@@ -947,11 +947,22 @@ void Unit::killUnit()
     removeUnit();
 }
 
-void Unit::increaseCapturePoints()
+void Unit::increaseCapturePoints(QPoint position)
 {
     // todo add ko modifications
-    // todo add animation
-    capturePoints += Mainapp::roundUp(hp);
+    qint32 modifier = 0;
+    CO* pCO = m_Owner->getCO(0);
+    if (pCO != nullptr)
+    {
+        modifier += pCO->getCaptureBonus(this, position);
+    }
+    pCO = m_Owner->getCO(1);
+    if (pCO != nullptr)
+    {
+        modifier += pCO->getCaptureBonus(this, position);
+    }
+
+    capturePoints += getHpRounded() + modifier;
     // update icons
     setCapturePoints(capturePoints);
 }

@@ -77,6 +77,7 @@ int main(int argc, char* argv[])
     qRegisterMetaType<Mainapp::NetworkSerives>("Mainapp::NetworkSerives");
     qRegisterMetaType<GameEnums::Alliance>("GameEnums::Alliance");
     qRegisterMetaType<GameEnums::UnitRanks>("GameEnums::UnitRanks");
+    qRegisterMetaType<GameEnums::PowerMode>("GameEnums::PowerMode");
 
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
     qmlRegisterInterface<Terrain>("Terrain");

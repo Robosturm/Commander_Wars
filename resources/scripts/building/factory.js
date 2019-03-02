@@ -32,7 +32,7 @@ var Constructor = function()
         return ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "RECON", "APC", "FLARE",
                 "ARTILLERY", "LIGHT_TANK", "HOVERCRAFT", "FLAK", "HOVERFLAK",
                 "ANTITANKCANNON", "HEAVY_TANK", "HEAVY_HOVERCRAFT", "NEOTANK",
-                "MISSILE", "ROCKETTHROWER", "MEGATANK"];
+                "MISSILE", "ROCKETTHROWER", "MEGATANK", "PIPERUNNER"];
     };
 }
 

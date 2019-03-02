@@ -27,10 +27,8 @@ GameMenue::GameMenue(QString map)
         }
     });
 
-    GameMap::getInstance()->getspPlayer(0)->setCO("ANDY", 0);
-    GameMap::getInstance()->getspPlayer(0)->setCO("ANDY", 1);
-    GameMap::getInstance()->getspPlayer(1)->setCO("ANDY", 0);
-    GameMap::getInstance()->getspPlayer(1)->setCO("ANDY", 1);
+    GameMap::getInstance()->getspPlayer(0)->setCO("CO_COLIN", 0);
+    GameMap::getInstance()->getspPlayer(1)->setCO("CO_COLIN", 0);
 
     m_pPlayerinfo = new PlayerInfo();
     m_pPlayerinfo->updateData();
