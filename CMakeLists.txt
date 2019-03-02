@@ -76,6 +76,7 @@ set(${PROJECT_NAME}_SRCS
         resource_management/gamemanager.cpp
         resource_management/gameanimationmanager.cpp
         resource_management/weaponmanager.cpp
+        resource_management/cospritemanager.cpp
 
         # core engine
         coreengine/mainapp.cpp
@@ -110,6 +111,7 @@ set(${PROJECT_NAME}_SRCS
         game/gameanimationwalk.cpp
         game/gameanimationcapture.cpp
         game/playerinfo.cpp
+        game/GameEnums.cpp
 
         # game input
         gameinput/basegameinputif.cpp

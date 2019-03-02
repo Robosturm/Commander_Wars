@@ -15,6 +15,8 @@
 
 #include "game/gamemap.h"
 
+#include "game/GameEnums.h"
+
 class GameAnimationWalk : public GameAnimation
 {
     Q_OBJECT
@@ -44,7 +46,7 @@ protected:
      * @param y2 next position
      * @return
      */
-    GameMap::Directions getMovementDirection(qint32 x, qint32 y, qint32 x2, qint32 y2);
+    GameEnums::Directions getMovementDirection(qint32 x, qint32 y, qint32 x2, qint32 y2);
 
 private:
     Unit* m_pUnit;

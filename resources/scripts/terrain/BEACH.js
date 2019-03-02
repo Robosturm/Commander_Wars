@@ -11,8 +11,8 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundingsLand = terrain.getSurroundings("SEA", true, true, TERRAIN.Direct);
-        var surroundingsBeach = terrain.getSurroundings("BEACH", false, false, TERRAIN.Direct, false);
+        var surroundingsLand = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct);
+        var surroundingsBeach = terrain.getSurroundings("BEACH", false, false, GameEnums.Directions_Direct, false);
         if (surroundingsLand !== "")
         {
             if (surroundingsLand === "+S" && surroundingsBeach.includes("+N"))
@@ -41,8 +41,8 @@ var Constructor = function()
     this.canBePlaced = function(x, y)
     {
         var terrain = map.getTerrain(x, y);
-        var surroundingsLand = terrain.getSurroundings("SEA", true, true, TERRAIN.Direct);
-        var surroundingsSea = terrain.getSurroundings("SEA", false, true, TERRAIN.ALL);
+        var surroundingsLand = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct);
+        var surroundingsSea = terrain.getSurroundings("SEA", false, true, GameEnums.Directions_All);
 
         var c = (surroundingsLand === "");
         var d = (surroundingsLand.includes("+S") && surroundingsLand.includes("+E") && surroundingsSea.includes("+NW"));

@@ -30,7 +30,19 @@ Unit::Unit(QString unitID, spPlayer pOwner)
 
 Unit::~Unit()
 {
-
+    CO* pCO = m_Owner->getCO(0);
+    if (pCO != nullptr)
+    {
+        if (pCO->getCOUnit() == this)
+        {
+            pCO->setCOUnit(nullptr);
+        }
+    }
+    pCO = m_Owner->getCO(1);
+    if (pCO != nullptr)
+    {
+        pCO->setCOUnit(nullptr);
+    }
 }
 
 void Unit::setOwner(spPlayer pOwner)
@@ -120,6 +132,53 @@ void Unit::updateSprites()
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
     args1 << obj1;
     pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+}
+
+GameEnums::UnitRanks Unit::getUnitRank() const
+{
+    return m_UnitRank;
+}
+
+void Unit::setUnitRank(const GameEnums::UnitRanks &UnitRank)
+{
+    m_UnitRank = UnitRank;
+    unloadIcon("lieutenant");
+    unloadIcon("general");
+    unloadIcon("veteran");
+    unloadIcon("co");
+    switch (m_UnitRank)
+    {
+        case GameEnums::UnitRank_None:
+        {
+            loadIcon("co", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+            break;
+        }
+        case GameEnums::UnitRank_Lieutenant:
+        {
+            loadIcon("lieutenant", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+            break;
+        }
+        case GameEnums::UnitRank_General:
+        {
+            loadIcon("general", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+            break;
+        }
+        case GameEnums::UnitRank_Veteran:
+        {
+            loadIcon("veteran", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+            break;
+        }
+        case GameEnums::UnitRank_CO0:
+        {
+            loadIcon("co", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+            break;
+        }
+        case GameEnums::UnitRank_CO1:
+        {
+            loadIcon("co", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+            break;
+        }
+    }
 }
 
 qint32 Unit::getVision() const
@@ -275,6 +334,30 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
     {
         bonus += pCO->getOffensiveBonus(this, position, pDefender, defPosition);
     }
+    switch (m_UnitRank)
+    {
+        case GameEnums::UnitRank_None:
+        {
+            break;
+        }
+        case GameEnums::UnitRank_Lieutenant:
+        {
+            bonus += 5;
+            break;
+        }
+        case GameEnums::UnitRank_General:
+        {
+            bonus += 10;
+            break;
+        }
+        case GameEnums::UnitRank_Veteran:
+        case GameEnums::UnitRank_CO0:
+        case GameEnums::UnitRank_CO1:
+        {
+            bonus += 20;
+            break;
+        }
+    }
     return bonus;
 }
 
@@ -295,7 +378,30 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
     {
         bonus += m_Terrain->getDefense() * 10;
     }
-
+    switch (m_UnitRank)
+    {
+        case GameEnums::UnitRank_None:
+        {
+            break;
+        }
+        case GameEnums::UnitRank_Lieutenant:
+        {
+            bonus += 0;
+            break;
+        }
+        case GameEnums::UnitRank_General:
+        {
+            bonus += 0;
+            break;
+        }
+        case GameEnums::UnitRank_Veteran:
+        case GameEnums::UnitRank_CO0:
+        case GameEnums::UnitRank_CO1:
+        {
+            bonus += 20;
+            break;
+        }
+    }
     return bonus;
 }
 
@@ -342,6 +448,51 @@ qint32 Unit::getBonusMisfortune(QPoint position)
         bonus += pCO->getBonusMisfortune(this, position);
     }
     return bonus;
+}
+
+qint32 Unit::getUnitCosts()
+{
+    return m_Owner->getCosts(m_UnitID);
+}
+
+qint32 Unit::getRepairBonus(QPoint position)
+{
+    qint32 bonus = 0;
+    CO* pCO = m_Owner->getCO(0);
+    if (pCO != nullptr)
+    {
+        bonus += pCO->getRepairBonus(this, position);
+    }
+    pCO = m_Owner->getCO(1);
+    if (pCO != nullptr)
+    {
+        bonus += pCO->getRepairBonus(this, position);
+    }
+    return bonus;
+}
+
+void Unit::setUnitVisible(bool value)
+{
+
+    setVisible(value);
+}
+
+void Unit::makeCOUnit(quint8 co)
+{
+    CO* pCO = m_Owner->getCO(co);
+    if (pCO != nullptr)
+    {
+        spUnit pUnit = m_Terrain->getSpUnit();
+        pCO->setCOUnit(pUnit);
+        if (co == 0)
+        {
+            setUnitRank(GameEnums::UnitRank_CO0);
+        }
+        else
+        {
+            setUnitRank(GameEnums::UnitRank_CO1);
+        }
+    }
 }
 
 qint32 Unit::getBonusLuck(QPoint position)
@@ -596,7 +747,7 @@ void Unit::setHp(const float &value)
     unloadIcon("8");
     unloadIcon("9");
     unloadIcon("hp+hidden");
-    if (hpValue < 10)
+    if ((hpValue < 10) && (hpValue > 0))
     {
         loadIcon(QString::number(hpValue), 0, GameMap::Imagesize / 2);
     }
@@ -640,9 +791,9 @@ QPoint Unit::getPosition() const
 
 void Unit::refill()
 {
-    ammo1 = maxAmmo1;
-    ammo2 = maxAmmo2;
     setFuel(maxFuel);
+    setAmmo1(maxAmmo1);
+    setAmmo2(maxAmmo2);
 }
 
 void Unit::setHasMoved(bool value)
@@ -961,3 +1112,4 @@ void Unit::deserialize(QDataStream& pStream)
     }
     updateSprites();
 }
+

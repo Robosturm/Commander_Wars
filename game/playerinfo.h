@@ -5,6 +5,10 @@
 #include <QVector>
 #include "oxygine-framework.h"
 
+class CO;
+class PlayerInfo;
+typedef oxygine::intrusive_ptr<PlayerInfo> spPlayerInfo;
+
 class PlayerInfo : public QObject, public oxygine::Actor
 {
     Q_OBJECT
@@ -15,6 +19,9 @@ signals:
 
 public slots:
     void updateData();
+
+protected:
+    void drawPowerMeter(CO* pCO, qint32 yPos);
 private:
     QVector<oxygine::spSprite> playerBackground;
 };

@@ -1,5 +1,11 @@
 var CO =
 {
+    init : function(co)
+    {
+        co.setPowerStars(3);
+        co.setSuperpowerStars(3);
+    },
+
     getMovementPointModifier : function(unit)
     {
         return 0;
@@ -20,6 +26,11 @@ var CO =
         return 0;
     },
 
+    getRepairBonus : function(unit, posX, posY)
+    {
+        return 0;
+    },
+
     getBonusLuck : function(unit, posX, posY)
     {
         return 0;
@@ -30,11 +41,11 @@ var CO =
         return 0;
     },
 
-    activatePower : function()
+    activatePower : function(co)
     {
     },
 
-    activateSuperpower : function()
+    activateSuperpower : function(co)
     {
     },
 
@@ -53,6 +64,31 @@ var CO =
     getCanMoveAndFire : function(unit, posX, posY)
     {
         return false;
+    },
+
+    getCostModifier : function(id, baseCost)
+    {
+        return 0;
+    },
+
+    getCOArmy : function()
+    {
+        return "OS";
+    },
+
+    gainPowerstar : function(co, fondsDamage, x, y)
+    {
+        co.setPowerFilled(co.getPowerFilled() + fondsDamage / 10000)
+    },
+
+    getCOUnitRange : function(co)
+    {
+        return 0;
+    },
+
+    startOfTurn : function(co)
+    {
+        // called at the start of the turn use it to do cool co stuff like caulder's healing :)
     },
 }
 

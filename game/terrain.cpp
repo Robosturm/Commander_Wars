@@ -232,51 +232,51 @@ QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool black
         qint32 curX = x;
         qint32 curY = y;
         // get our x, y coordinates
-        GameMap::getField(curX, curY, static_cast<GameMap::Directions>(i));
+        GameMap::getField(curX, curY, static_cast<GameEnums::Directions>(i));
         GameMap* pGameMap = GameMap::getInstance();
         bool found = false;
         QString addString = "";
         // load compare value
-        GameMap::Directions compareValue = GameMap::Directions::None;
-        if (searchType == GameMap::Directions::All)
+        GameEnums::Directions compareValue = GameEnums::Directions_None;
+        if (searchType == GameEnums::Directions_All)
         {
-            compareValue = static_cast<GameMap::Directions>(i);
+            compareValue = static_cast<GameEnums::Directions>(i);
         }
-        else if (searchType == GameMap::Directions::Direct)
+        else if (searchType == GameEnums::Directions_Direct)
         {
             switch (i)
             {
-                case GameMap::Directions::North:
-                case GameMap::Directions::East:
-                case GameMap::Directions::West:
-                case GameMap::Directions::South:
+                case GameEnums::Directions_North:
+                case GameEnums::Directions_East:
+                case GameEnums::Directions_West:
+                case GameEnums::Directions_South:
                 {
-                    compareValue = static_cast<GameMap::Directions>(i);
+                    compareValue = static_cast<GameEnums::Directions>(i);
                     break;
                 }
                 default:
                 {
                     // do nothing
-                    compareValue = GameMap::Directions::None;
+                    compareValue = GameEnums::Directions_None;
                     break;
                 }
             }
         }
-        else if (searchType == GameMap::Directions::Diagnonal)
+        else if (searchType == GameEnums::Directions_Diagnonal)
         {
             switch (i)
             {
-                case GameMap::Directions::NorthEast:
-                case GameMap::Directions::NorthWest:
-                case GameMap::Directions::SouthWest:
-                case GameMap::Directions::SouthEast:
+                case GameEnums::Directions_NorthEast:
+                case GameEnums::Directions_NorthWest:
+                case GameEnums::Directions_SouthWest:
+                case GameEnums::Directions_SouthEast:
                 {
-                    compareValue = static_cast<GameMap::Directions>(i);
+                    compareValue = static_cast<GameEnums::Directions>(i);
                     break;
                 }
                 default:
                 {
-                    compareValue = GameMap::Directions::None;
+                    compareValue = GameEnums::Directions_None;
                     // do nothing
                     break;
                 }
@@ -284,42 +284,42 @@ QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool black
         }
         else if (searchType == i)
         {
-            compareValue = static_cast<GameMap::Directions>(i);
+            compareValue = static_cast<GameEnums::Directions>(i);
         }
         else
         {
             // you asshole reached unreachable code :D
         }
         // check for compare value to find string
-        if (compareValue == GameMap::Directions::North)
+        if (compareValue == GameEnums::Directions_North)
         {
             addString = "+N";
         }
-        else if (compareValue == GameMap::Directions::East)
+        else if (compareValue == GameEnums::Directions_East)
         {
             addString = "+E";
         }
-        else if (compareValue == GameMap::Directions::South)
+        else if (compareValue == GameEnums::Directions_South)
         {
             addString = "+S";
         }
-        else if (compareValue == GameMap::Directions::West)
+        else if (compareValue == GameEnums::Directions_West)
         {
             addString = "+W";
         }
-        else if (compareValue == GameMap::Directions::NorthEast)
+        else if (compareValue == GameEnums::Directions_NorthEast)
         {
             addString = "+NE";
         }
-        else if (compareValue == GameMap::Directions::SouthEast)
+        else if (compareValue == GameEnums::Directions_SouthEast)
         {
             addString = "+SE";
         }
-        else if (compareValue == GameMap::Directions::SouthWest)
+        else if (compareValue == GameEnums::Directions_SouthWest)
         {
             addString = "+SW";
         }
-        else if (compareValue == GameMap::Directions::NorthWest)
+        else if (compareValue == GameEnums::Directions_NorthWest)
         {
             addString = "+NW";
         }
@@ -416,9 +416,6 @@ qint32 Terrain::getBaseDefense()
 
 qint32 Terrain::getDefense()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    QString function1 = "getDefense";
-    QJSValueList args1;
     qint32 defense = getBaseDefense();
     if (m_Unit.get() != nullptr)
     {

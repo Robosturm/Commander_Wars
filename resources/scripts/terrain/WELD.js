@@ -11,7 +11,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("PIPELINE", false, false, TERRAIN.Direct, false);
+        var surroundings = terrain.getSurroundings("PIPELINE", false, false, GameEnums.Directions_Direct, false);
         if ((surroundings === ""))
         {
             terrain.loadBaseSprite("weld+E+W");
@@ -29,7 +29,7 @@ var Constructor = function()
     this.canBePlaced = function(x, y)
     {
         var terrain = map.getTerrain(x, y);
-        var surroundings = terrain.getSurroundings("PIPELINE", false, false, TERRAIN.Direct, false);
+        var surroundings = terrain.getSurroundings("PIPELINE", false, false, GameEnums.Directions_Direct, false);
         if ((surroundings === "+E+W") || (surroundings === "+N+S"))
         {
             return true;

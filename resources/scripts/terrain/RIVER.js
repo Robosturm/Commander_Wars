@@ -11,12 +11,12 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-		var surroundings = terrain.getSurroundings("RIVER,BRIDGE,SEA", false, false, TERRAIN.Direct);
-        var surroundingsSea = terrain.getSurroundings("SEA", true, false, TERRAIN.All);
+        var surroundings = terrain.getSurroundings("RIVER,BRIDGE,SEA", false, false, GameEnums.Directions_Direct);
+        var surroundingsSea = terrain.getSurroundings("SEA", true, false, GameEnums.Directions_All);
         //
         if (!(surroundingsSea.includes("+N+NE") && surroundingsSea.includes("+NW")))
         {
-            var surroundingsN = terrain.getSurroundings("SEA", true, false, TERRAIN.North);
+            var surroundingsN = terrain.getSurroundings("SEA", true, false, GameEnums.Directions_North);
             if (surroundingsN === "+N")
             {
                 surroundings = surroundings.replace("+N", "");
@@ -25,7 +25,7 @@ var Constructor = function()
 
         if (!(surroundingsSea.includes("SE+S+SW")))
         {
-            var surroundingsS = terrain.getSurroundings("SEA", true, false, TERRAIN.South);
+            var surroundingsS = terrain.getSurroundings("SEA", true, false, GameEnums.Directions_South);
             if (surroundingsS === "+S")
             {
                 surroundings = surroundings.replace("+S", "");

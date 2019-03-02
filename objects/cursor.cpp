@@ -6,8 +6,6 @@
 #include "coreengine/mainapp.h"
 #include "game/gamemap.h"
 
-#include <QSound>
-
 Cursor::Cursor()
 {
     changeCursor("cursor+default");
@@ -67,7 +65,7 @@ void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
     if ((x != m_MapPointX) ||
         (y != m_MapPointY))
     {
-        QSound::play("resources/sounds/switchfield.wav");
+        Mainapp::getInstance()->getAudioThread()->playSound("switchfield.wav");
     }
 
     m_MapPointX = x;

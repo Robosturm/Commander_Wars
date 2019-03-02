@@ -21,9 +21,21 @@ GameAnimation::GameAnimation(quint32 frameTime)
 
 void GameAnimation::queueAnimation(GameAnimation* pGameAnimation)
 {
-    pGameAnimation->stopSound();
     m_QueuedAnimations.append(pGameAnimation);
     GameAnimationFactory::getInstance()->queueAnimation(pGameAnimation);
+}
+
+void GameAnimation::update(const oxygine::UpdateState& us)
+{
+    if (!m_SoundStarted)
+    {
+        if (!m_soundFile.isEmpty())
+        {
+            Mainapp::getInstance()->getAudioThread()->playSound(m_soundFile, m_loops);
+        }
+        m_SoundStarted = true;
+    }
+    oxygine::Actor::update(us);
 }
 
 void GameAnimation::addSprite(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish, float scale)
@@ -60,10 +72,9 @@ void GameAnimation::addSprite(QString spriteID, float offsetX, float offsetY, qi
 
 void GameAnimation::onFinished()
 {
-    if (animationSound != nullptr)
+    if (m_loops < 0)
     {
-        animationSound->stop();
-        delete animationSound;
+       Mainapp::getInstance()->getAudioThread()->stopSound(m_soundFile);
     }
     for (qint32 i = 0; i < m_QueuedAnimations.size(); i++)
     {
@@ -78,25 +89,8 @@ void GameAnimation::onFinished()
 
 void GameAnimation::setSound(QString soundFile, qint32 loops)
 {
-    animationSound = new QSound(soundFile);
-    animationSound->setLoops(loops);
-    animationSound->play();
-}
-
-void GameAnimation::startSound()
-{
-    if (animationSound != nullptr)
-    {
-        animationSound->play();
-    }
-}
-
-void GameAnimation::stopSound()
-{
-    if (animationSound != nullptr)
-    {
-        animationSound->stop();
-    }
+    m_soundFile = soundFile;
+    m_loops = loops;
 }
 
 void GameAnimation::setEndOfAnimationCall(QString postActionObject, QString postActionFunction)

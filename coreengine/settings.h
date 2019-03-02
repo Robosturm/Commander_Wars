@@ -51,6 +51,15 @@ public:
         return m_key_console;
     }
 
+    inline void setTotalVolume(qint32 value)
+    {
+        m_TotalVolume = value;
+    }
+    inline qint32 getTotalVolume()
+    {
+        return m_TotalVolume;
+    }
+
     inline void setMusicVolume(qint32 value)
     {
         m_MusicVolume = value;
@@ -59,6 +68,16 @@ public:
     {
         return m_MusicVolume;
     }
+
+    inline void setSoundVolume(qint32 value)
+    {
+        m_SoundVolume = value;
+    }
+    inline qint32 getSoundVolume()
+    {
+        return m_SoundVolume;
+    }
+
     inline QString getNetworkData()
     {
         return m_NetworkData;
@@ -101,7 +120,9 @@ private:
 
     static QString m_language;
     // Sound
+    static qint32 m_TotalVolume;
     static qint32 m_MusicVolume;
+    static qint32 m_SoundVolume;
     // Network
     static QString m_NetworkData;
     static qint32 m_GamePort;

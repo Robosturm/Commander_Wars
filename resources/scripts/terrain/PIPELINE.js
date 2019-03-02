@@ -11,7 +11,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-		var surroundings = terrain.getSurroundings("PIPELINE,WELD,DESTROYEDWELD", false, false, TERRAIN.Direct);
+        var surroundings = terrain.getSurroundings("PIPELINE,WELD,DESTROYEDWELD", false, false, GameEnums.Directions_Direct);
         if (surroundings === "")
         {
             terrain.loadBaseSprite("pipeline+E+W");

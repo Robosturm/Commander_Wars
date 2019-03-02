@@ -8,6 +8,8 @@
 #include "game/smartpointers.h"
 #include "coreengine/fileserializable.h"
 
+#include "game/GameEnums.h"
+
 class GameAction;
 
 class Unit : public QObject, public oxygine::Actor, public FileSerializable
@@ -73,8 +75,6 @@ public:
      * @return the string id list of actions this units can perform
      */
     QStringList getActionList();
-
-
 signals:
 
 public slots:
@@ -141,6 +141,9 @@ public slots:
     qint32 getMaxRange();
     qint32 getMaxRange(QPoint position);
     void setMaxRange(const qint32 &value);
+
+    GameEnums::UnitRanks getUnitRank() const;
+    void setUnitRank(const GameEnums::UnitRanks &UnitRank);
 
     qint32 getVision() const;
     void setVision(const qint32 &value);
@@ -296,6 +299,26 @@ public slots:
      * @return
      */
     qint32 getBonusLuck(QPoint position);
+    /**
+     * @brief getUnitCosts
+     * @return
+     */
+    qint32 getUnitCosts();
+    /**
+     * @brief getRepairBonus
+     * @return
+     */
+    qint32 getRepairBonus(QPoint position);
+    /**
+     * @brief setUnitVisible
+     * @param value
+     */
+    void setUnitVisible(bool value);
+    /**
+     * @brief makeCOUnit
+     * @param co
+     */
+    void makeCOUnit(quint8 co);
 protected:
     /**
      * @brief updateIconTweens creates the visibility toogle tweens for all icons
@@ -339,8 +362,10 @@ private:
     qint32 baseMovementPoints{0};
     bool m_Moved{false};
     QVector<spUnit> m_TransportUnits;
-
     qint32 capturePoints{0};
+    GameEnums::UnitRanks m_UnitRank{GameEnums::UnitRank_None};
+    bool m_Hidden{false};
+
     qint32 minRange{1};
     qint32 maxRange{-1};
     qint32 vision{1};

@@ -11,7 +11,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-		var surroundings = terrain.getSurroundings("WALL", false, false, TERRAIN.Direct);
+        var surroundings = terrain.getSurroundings("WALL", false, false, GameEnums.Directions_Direct);
         if (surroundings === "")
         {
             terrain.loadBaseSprite("wall+E+W");

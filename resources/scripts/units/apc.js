@@ -31,7 +31,7 @@ var Constructor = function()
     this.getActions = function()
     {
         // returns a string id list of the actions this unit can perform
-        return "ACTION_LOAD,ACTION_UNLOAD,ACTION_JOIN,ACTION_RATION,ACTION_WAIT";
+        return "ACTION_LOAD,ACTION_UNLOAD,ACTION_JOIN,ACTION_RATION,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
     };
     this.getBaseCost = function()
     {
@@ -40,6 +40,16 @@ var Constructor = function()
     this.getName = function()
     {
         return qsTr("APC");
+    };
+    this.doWalkingAnimation = function(action)
+    {
+        var unit = action.getTargetUnit();
+        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var unitID = unit.getUnitID().toLowerCase();
+        animation.loadSprite(unitID + "+walk+mask", true, 1.25);
+        animation.loadSprite(unitID + "+walk", false, 1.25);
+        animation.setSound("movetank.wav", -2);
+        return animation;
     };
     this.startOfTurn = function(unit)
     {
@@ -53,6 +63,10 @@ var Constructor = function()
     this.getTransportUnits = function()
     {
         return ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER"];
+    };
+    this.startOfTurn = function(unit)
+    {
+        UNIT.transporterRefilling(unit);
     };
 }
 

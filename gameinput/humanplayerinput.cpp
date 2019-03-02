@@ -1,7 +1,5 @@
 #include "humanplayerinput.h"
 
-#include <QSound>
-
 #include "game/gamemap.h"
 
 #include "game/gameaction.h"
@@ -367,7 +365,7 @@ void HumanPlayerInput::createActionMenu(QStringList actionIDs, qint32 x, qint32 
 
 void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
 {
-    QSound::play("resources/sounds/selectunit.wav");
+    Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
 
     GameMap* pMap = GameMap::getInstance();
     m_pUnitPathFindingSystem = new UnitPathFindingSystem(pMap->getTerrain(x, y)->getSpUnit());

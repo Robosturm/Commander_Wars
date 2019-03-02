@@ -18,7 +18,9 @@ SDL_Keycode Settings::m_key_escape    = SDLK_ESCAPE;
 SDL_Keycode Settings::m_key_console   = SDLK_F1;
 QString Settings::m_language      = "en";
 // Sound
+qint32 Settings::m_TotalVolume       = 100;
 qint32 Settings::m_MusicVolume       = 80;
+qint32 Settings::m_SoundVolume       = 80;
 // Network
 QString Settings::m_NetworkData   = "";
 qint32 Settings::m_GamePort          = 5603;
@@ -95,6 +97,13 @@ void Settings::loadSettings(){
 
     // Sound
     settings.beginGroup("Sound");
+    m_TotalVolume      = settings.value("TotalVolume", 100).toInt(&ok);
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Sound] " + tr("Setting:") + " TotalVolume";
+        Console::print(error, Console::eERROR);
+        m_TotalVolume = 100;
+    }
     m_MusicVolume      = settings.value("MusicVolume", 80).toInt(&ok);
     if(!ok)
     {
@@ -102,6 +111,14 @@ void Settings::loadSettings(){
         Console::print(error, Console::eERROR);
         m_MusicVolume = 80;
     }
+    m_SoundVolume      = settings.value("SoundVolume", 80).toInt(&ok);
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Sound] " + tr("Setting:") + " SoundVolume";
+        Console::print(error, Console::eERROR);
+        m_SoundVolume = 80;
+    }
+
     settings.endGroup();
 
     // network
@@ -149,7 +166,9 @@ void Settings::saveSettings(){
 
     // Sound
     settings.beginGroup("Sound");
+    settings.setValue("TotalVolume",               m_TotalVolume);
     settings.setValue("MusicVolume",               m_MusicVolume);
+    settings.setValue("SoundVolume",               m_SoundVolume);
     settings.endGroup();
 
     // network

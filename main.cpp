@@ -29,6 +29,8 @@
 #include "game/gameanimationwalk.h"
 #include "game/gameanimationcapture.h"
 
+#include "game/GameEnums.h"
+
 int main(int argc, char* argv[])
 {
     /*************************************************************************************************/
@@ -73,7 +75,8 @@ int main(int argc, char* argv[])
 
     // qt metatypes we need this for js and signal slot stuff
     qRegisterMetaType<Mainapp::NetworkSerives>("Mainapp::NetworkSerives");
-    qRegisterMetaType<Player::Alliance>("Player::Alliance");
+    qRegisterMetaType<GameEnums::Alliance>("GameEnums::Alliance");
+    qRegisterMetaType<GameEnums::UnitRanks>("GameEnums::UnitRanks");
 
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
     qmlRegisterInterface<Terrain>("Terrain");
@@ -86,8 +89,11 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<GameAnimationWalk>("GameAnimationWalk");
     qmlRegisterInterface<GameAnimationCapture>("GameAnimationCapture");
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
+    qmlRegisterInterface<QmlVectorUnit>("QmlVectorUnit");
+    qmlRegisterInterface<Mainapp>("Mainapp");
 
 
+    GameEnums::registerEnums();
 
     // load General-Base Scripts
     QString path =  QCoreApplication::applicationDirPath() + "/resources/scripts/general";

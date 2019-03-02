@@ -46,6 +46,16 @@ var Constructor = function()
     {
         return 2;
     };
+    this.doWalkingAnimation = function(action)
+    {
+        var unit = action.getTargetUnit();
+        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var unitID = unit.getUnitID().toLowerCase();
+        animation.loadSprite(unitID + "+walk+mask", true, 1.25);
+        animation.loadSprite(unitID + "+walk", false, 1.25);
+        animation.setSound("moveair.wav", -2);
+        return animation;
+    };
     this.getTransportUnits = function()
     {
         return ["ANTITANKCANNON", "APC", "ARTILLERY", "FLAK", "FLARE",
@@ -56,6 +66,12 @@ var Constructor = function()
     this.useTerrainDefense = function()
     {
         return false;
+    };
+    this.startOfTurn = function(unit)
+    {
+        // pay unit upkeep
+        unit.setFuel(unit.getFuel() - 5);
+        UNIT.transporterRefilling(unit);
     };
 }
 

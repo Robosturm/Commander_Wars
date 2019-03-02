@@ -193,6 +193,11 @@ void Building::startOfTurn()
     pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
 }
 
+Terrain* Building::getTerrain()
+{
+    return m_Terrain.get();
+}
+
 void Building::deserialize(QDataStream& pStream)
 {
     qint32 version = 0;

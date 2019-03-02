@@ -35,7 +35,7 @@ var Constructor = function()
     this.getActions = function()
     {
         // returns a string id list of the actions this unit can perform
-        return "ACTION_CAPTURE,ACTION_FIRE,ACTION_JOIN,ACTION_LOAD,ACTION_WAIT";
+        return "ACTION_CAPTURE,ACTION_FIRE,ACTION_JOIN,ACTION_LOAD,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
     };
     this.getName = function()
     {
@@ -44,6 +44,17 @@ var Constructor = function()
     this.canMoveAndFire = function()
     {
         return true;
+    };
+
+    this.doWalkingAnimation = function(action)
+    {
+        var unit = action.getTargetUnit();
+        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var unitID = unit.getUnitID().toLowerCase();
+        animation.loadSprite(unitID + "+walk+mask", true, 1.25);
+        animation.loadSprite(unitID + "+walk", false, 1.25);
+        animation.setSound("movetire.wav", -2);
+        return animation;
     };
 }
 

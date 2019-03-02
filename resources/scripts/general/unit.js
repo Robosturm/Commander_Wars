@@ -24,7 +24,7 @@ var UNIT =
     getActions : function()
     {
         // returns a string id list of the actions this unit can perform
-        return "ACTION_FIRE,ACTION_JOIN,ACTION_LOAD,ACTION_UNLOAD,ACTION_WAIT";
+        return "ACTION_FIRE,ACTION_JOIN,ACTION_LOAD,ACTION_UNLOAD,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
     },
 
     getName : function()
@@ -41,6 +41,7 @@ var UNIT =
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
         animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
+        audio.playSound("explosion+land.wav");
         return animation;
     },
 
@@ -75,5 +76,47 @@ var UNIT =
     getTransportUnits : function()
     {
         return [];
+    },
+
+    transporterRefilling : function (unit)
+    {
+        // carrier refilling and unmoving is done here
+        for (var i = 0; i < unit.getLoadedUnitCount(); i++)
+        {
+            var transportUnit = unit.getLoadedUnit(i);
+            transportUnit.refill();
+            transportUnit.setHasMoved(false);
+        }
+    },
+
+    repairUnit : function (unit, repairAmount)
+    {
+        // repair it
+        var costs = unit.getUnitCosts();
+        var hp = unit.getHpRounded();
+        var healingDone = 0;
+        if (hp + repairAmount <= 10)
+        {
+            healingDone = repairAmount;
+        }
+        else
+        {
+            // we could heal more than we need
+            healingDone = 10 - hp;
+        }
+        var fonds = unit.getOwner().getFonds();
+        // check if we can pay for all healing
+        for (var i = healingDone; i > 0; i--)
+        {
+            if (i / 10 * costs <= fonds)
+            {
+                healingDone = i;
+                break;
+            }
+        }
+        // heal unit
+        unit.setHp(hp + healingDone);
+        // pay for healing
+        unit.getOwner().addFonds(-healingDone / 10 * costs);
     },
 };

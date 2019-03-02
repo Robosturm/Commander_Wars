@@ -11,7 +11,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("RIVER,SEA,ROUGH_SEA,REAF,BEACH", false, false, TERRAIN.Direct, false);
+        var surroundings = terrain.getSurroundings("RIVER,SEA,ROUGH_SEA,REAF,BEACH", false, false, GameEnums.Directions_Direct, false);
         terrain.loadBaseSprite("bridge" + surroundings);
     };
     this.useTerrainAsBaseTerrain = function()

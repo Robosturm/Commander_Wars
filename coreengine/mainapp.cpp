@@ -8,6 +8,9 @@
 #include "network/tcpserver.h"
 #include <QRandomGenerator>
 
+#include "game/player.h"
+#include "game/co.h"
+
 Mainapp* Mainapp::m_pMainapp = nullptr;
 
 Mainapp::Mainapp(int argc, char* argv[])
@@ -48,7 +51,14 @@ qint32 Mainapp::roundUp(float value)
     }
     else
     {
-        return roundDown + 1;
+        if (value > 0)
+        {
+            return roundDown + 1;
+        }
+        else
+        {
+            return roundDown;
+        }
     }
 }
 

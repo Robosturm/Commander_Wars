@@ -40,7 +40,7 @@ var Constructor = function()
     this.getActions = function()
     {
         // returns a string id list of the actions this unit can perform
-        return "ACTION_CAPTURE,ACTION_FIRE,ACTION_JOIN,ACTION_LOAD,ACTION_WAIT";
+        return "ACTION_CAPTURE,ACTION_FIRE,ACTION_JOIN,ACTION_LOAD,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
     };
     this.doWalkingAnimation = function(action)
     {
@@ -69,7 +69,7 @@ var Constructor = function()
 		}
         animation.loadSprite("infantry+" + armyName + "+walk+mask", true, zoom);
         animation.loadSprite("infantry+" + armyName + "+walk", false, zoom);
-        animation.setSound("resources/sounds/movefeet.wav", -1);
+        animation.setSound("movefeet.wav", -2);
         return animation;
     };
     this.getBaseCost = function()

@@ -58,8 +58,7 @@ var Constructor = function()
         for (i = 0; i < units.length; i++)
         {
             var name = Global[units[i]].getName();
-            var costs = Global[units[i]].getBaseCost();
-            // todo modify costs
+            var costs = map.getCurrentPlayer().getCosts(units[i]);
             var enabled = false;
             var fonds = map.getCurrentPlayer().getFonds();
             if (costs <= fonds)

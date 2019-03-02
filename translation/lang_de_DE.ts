@@ -2,6 +2,38 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
+    <name>ACTION_ACTIVATE_POWER_CO_0</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="17"/>
+        <source>Power of CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_ACTIVATE_POWER_CO_1</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="17"/>
+        <source>Power of CO 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_ACTIVATE_SUPERPOWER_CO_0</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="17"/>
+        <source>Superpower of CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_ACTIVATE_SUPERPOWER_CO_1</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="17"/>
+        <source>Superpower of CO 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_BUILD_UNITS</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BUILD_UNITS.js" line="15"/>
@@ -18,6 +50,22 @@
     </message>
 </context>
 <context>
+    <name>ACTION_CO_UNIT_0</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="30"/>
+        <source>CO 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_CO_UNIT_1</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="30"/>
+        <source>CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_FIRE</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="55"/>
@@ -25,7 +73,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="153"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="157"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -264,9 +312,22 @@
     </message>
 </context>
 <context>
+    <name>PlayerInfo</name>
+    <message>
+        <location filename="../game/playerinfo.cpp" line="188"/>
+        <source>Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/playerinfo.cpp" line="203"/>
+        <source>Superpower</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="43"/>
+        <location filename="../main.cpp" line="45"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -322,26 +383,30 @@
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="44"/>
-        <location filename="../coreengine/settings.cpp" line="54"/>
-        <location filename="../coreengine/settings.cpp" line="60"/>
-        <location filename="../coreengine/settings.cpp" line="66"/>
-        <location filename="../coreengine/settings.cpp" line="72"/>
-        <location filename="../coreengine/settings.cpp" line="84"/>
-        <location filename="../coreengine/settings.cpp" line="90"/>
-        <location filename="../coreengine/settings.cpp" line="101"/>
+        <location filename="../coreengine/settings.cpp" line="46"/>
+        <location filename="../coreengine/settings.cpp" line="56"/>
+        <location filename="../coreengine/settings.cpp" line="62"/>
+        <location filename="../coreengine/settings.cpp" line="68"/>
+        <location filename="../coreengine/settings.cpp" line="74"/>
+        <location filename="../coreengine/settings.cpp" line="86"/>
+        <location filename="../coreengine/settings.cpp" line="92"/>
+        <location filename="../coreengine/settings.cpp" line="103"/>
+        <location filename="../coreengine/settings.cpp" line="110"/>
+        <location filename="../coreengine/settings.cpp" line="117"/>
         <source>Error in the Ini File: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/settings.cpp" line="44"/>
-        <location filename="../coreengine/settings.cpp" line="54"/>
-        <location filename="../coreengine/settings.cpp" line="60"/>
-        <location filename="../coreengine/settings.cpp" line="66"/>
-        <location filename="../coreengine/settings.cpp" line="72"/>
-        <location filename="../coreengine/settings.cpp" line="84"/>
-        <location filename="../coreengine/settings.cpp" line="90"/>
-        <location filename="../coreengine/settings.cpp" line="101"/>
+        <location filename="../coreengine/settings.cpp" line="46"/>
+        <location filename="../coreengine/settings.cpp" line="56"/>
+        <location filename="../coreengine/settings.cpp" line="62"/>
+        <location filename="../coreengine/settings.cpp" line="68"/>
+        <location filename="../coreengine/settings.cpp" line="74"/>
+        <location filename="../coreengine/settings.cpp" line="86"/>
+        <location filename="../coreengine/settings.cpp" line="92"/>
+        <location filename="../coreengine/settings.cpp" line="103"/>
+        <location filename="../coreengine/settings.cpp" line="110"/>
+        <location filename="../coreengine/settings.cpp" line="117"/>
         <source>Setting:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -423,7 +488,7 @@
 <context>
     <name>antitankcannon</name>
     <message>
-        <location filename="../resources/scripts/units/antitankcannon.js" line="40"/>
+        <location filename="../resources/scripts/units/antitankcannon.js" line="50"/>
         <source>Anti Tank Cannon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -439,7 +504,7 @@
 <context>
     <name>artillery</name>
     <message>
-        <location filename="../resources/scripts/units/artillery.js" line="38"/>
+        <location filename="../resources/scripts/units/artillery.js" line="48"/>
         <source>Artillery</source>
         <translation type="unfinished"></translation>
     </message>
@@ -503,7 +568,7 @@
 <context>
     <name>flak</name>
     <message>
-        <location filename="../resources/scripts/units/flak.js" line="37"/>
+        <location filename="../resources/scripts/units/flak.js" line="47"/>
         <source>Anti Air</source>
         <translation type="unfinished"></translation>
     </message>
@@ -511,7 +576,7 @@
 <context>
     <name>flare</name>
     <message>
-        <location filename="../resources/scripts/units/flare.js" line="37"/>
+        <location filename="../resources/scripts/units/flare.js" line="47"/>
         <source>Flare</source>
         <translation type="unfinished"></translation>
     </message>
@@ -519,7 +584,7 @@
 <context>
     <name>heavy_hovercraft</name>
     <message>
-        <location filename="../resources/scripts/units/heavy_hovercraft.js" line="37"/>
+        <location filename="../resources/scripts/units/heavy_hovercraft.js" line="47"/>
         <source>Heavy Hovercraft</source>
         <translation type="unfinished"></translation>
     </message>
@@ -527,7 +592,7 @@
 <context>
     <name>heavy_tank</name>
     <message>
-        <location filename="../resources/scripts/units/heavy_tank.js" line="37"/>
+        <location filename="../resources/scripts/units/heavy_tank.js" line="47"/>
         <source>Heavy Tank</source>
         <translation type="unfinished"></translation>
     </message>
@@ -543,7 +608,7 @@
 <context>
     <name>hovercraft</name>
     <message>
-        <location filename="../resources/scripts/units/hovercraft.js" line="37"/>
+        <location filename="../resources/scripts/units/hovercraft.js" line="47"/>
         <source>Hovercraft</source>
         <translation type="unfinished"></translation>
     </message>
@@ -551,7 +616,7 @@
 <context>
     <name>hoverflak</name>
     <message>
-        <location filename="../resources/scripts/units/hoverflak.js" line="37"/>
+        <location filename="../resources/scripts/units/hoverflak.js" line="47"/>
         <source>Hover Anti Air</source>
         <translation type="unfinished"></translation>
     </message>
@@ -583,7 +648,7 @@
 <context>
     <name>light_tank</name>
     <message>
-        <location filename="../resources/scripts/units/light_tank.js" line="37"/>
+        <location filename="../resources/scripts/units/light_tank.js" line="47"/>
         <source>Light Tank</source>
         <translation type="unfinished"></translation>
     </message>
@@ -591,7 +656,7 @@
 <context>
     <name>mech</name>
     <message>
-        <location filename="../resources/scripts/units/mech.js" line="80"/>
+        <location filename="../resources/scripts/units/mech.js" line="81"/>
         <source>Mech</source>
         <translation type="unfinished"></translation>
     </message>
@@ -599,7 +664,7 @@
 <context>
     <name>megatank</name>
     <message>
-        <location filename="../resources/scripts/units/megatank.js" line="37"/>
+        <location filename="../resources/scripts/units/megatank.js" line="47"/>
         <source>Megatank</source>
         <translation type="unfinished"></translation>
     </message>
@@ -607,7 +672,7 @@
 <context>
     <name>missile</name>
     <message>
-        <location filename="../resources/scripts/units/missile.js" line="37"/>
+        <location filename="../resources/scripts/units/missile.js" line="47"/>
         <source>Missile</source>
         <translation type="unfinished"></translation>
     </message>
@@ -719,7 +784,7 @@
 <context>
     <name>neotank</name>
     <message>
-        <location filename="../resources/scripts/units/neotank.js" line="37"/>
+        <location filename="../resources/scripts/units/neotank.js" line="47"/>
         <source>Neotank</source>
         <translation type="unfinished"></translation>
     </message>
@@ -727,7 +792,7 @@
 <context>
     <name>piperunner</name>
     <message>
-        <location filename="../resources/scripts/units/piperunner.js" line="37"/>
+        <location filename="../resources/scripts/units/piperunner.js" line="47"/>
         <source>Piperunner</source>
         <translation type="unfinished"></translation>
     </message>
@@ -735,7 +800,7 @@
 <context>
     <name>recon</name>
     <message>
-        <location filename="../resources/scripts/units/recon.js" line="37"/>
+        <location filename="../resources/scripts/units/recon.js" line="47"/>
         <source>Recon</source>
         <translation type="unfinished"></translation>
     </message>

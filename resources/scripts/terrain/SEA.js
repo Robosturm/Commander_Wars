@@ -12,14 +12,14 @@ var Constructor = function()
     };
     this.loadOverlaySprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("SEA", true, true, TERRAIN.Direct, false);
+        var surroundings = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct, false);
         if (surroundings !== "")
         {
             terrain.loadOverlaySprite("sea" + surroundings);
         }
         // load river overlay
-        var surroundingsSea = terrain.getSurroundings("SEA", true, false, TERRAIN.All, false);
-        var surroundingsRiver = terrain.getSurroundings("RIVER", false, false, TERRAIN.Direct, false);
+        var surroundingsSea = terrain.getSurroundings("SEA", true, false, GameEnums.Directions_All, false);
+        var surroundingsRiver = terrain.getSurroundings("RIVER", false, false, GameEnums.Directions_Direct, false);
         // load overlay north
         if (surroundingsRiver.includes("+N") && surroundingsSea.includes("+E") && surroundingsSea.includes("+W"))
         {
@@ -43,7 +43,7 @@ var Constructor = function()
         // load overlay south east
         if (!surroundings.includes("+S") && !surroundings.includes("+E"))
         {
-            var surroundingsSE = terrain.getSurroundings("SEA", true, true, TERRAIN.SouthEast, false);
+            var surroundingsSE = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_SouthEast, false);
             if (surroundingsSE !== "")
             {
                 terrain.loadOverlaySprite("sea" + surroundingsSE);
@@ -52,7 +52,7 @@ var Constructor = function()
         // load overlay north east
         if (!surroundings.includes("+N") && !surroundings.includes("+E"))
         {
-            var surroundingsNE = terrain.getSurroundings("SEA", true, true, TERRAIN.NorthEast, false);
+            var surroundingsNE = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_NorthEast, false);
             if (surroundingsNE !== "")
             {
                 terrain.loadOverlaySprite("sea" + surroundingsNE);
@@ -61,7 +61,7 @@ var Constructor = function()
         // load overlay south west
         if (!surroundings.includes("+S") && !surroundings.includes("+W"))
         {
-            var surroundingsSW = terrain.getSurroundings("SEA", true, true, TERRAIN.SouthWest, false);
+            var surroundingsSW = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_SouthWest, false);
             if (surroundingsSW !== "")
             {
                 terrain.loadOverlaySprite("sea" + surroundingsSW);
@@ -70,7 +70,7 @@ var Constructor = function()
         // load overlay north west
         if (!surroundings.includes("+N") && !surroundings.includes("+W"))
         {
-            var surroundingsNW = terrain.getSurroundings("SEA", true, true, TERRAIN.NorthWest, false);
+            var surroundingsNW = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_NorthWest, false);
             if (surroundingsNW !== "")
             {
                 terrain.loadOverlaySprite("sea" + surroundingsNW);

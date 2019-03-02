@@ -45,6 +45,17 @@ var Constructor = function()
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
         animation.addSprite("explosion+air", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
+        audio.playSound("explosion+air.wav");
+        return animation;
+    };
+    this.doWalkingAnimation = function(action)
+    {
+        var unit = action.getTargetUnit();
+        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var unitID = unit.getUnitID().toLowerCase();
+        animation.loadSprite(unitID + "+walk+mask", true, 1.25);
+        animation.loadSprite(unitID + "+walk", false, 1.25);
+        animation.setSound("moveair.wav", -2);
         return animation;
     };
     this.canMoveAndFire = function()

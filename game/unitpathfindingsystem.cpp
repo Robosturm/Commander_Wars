@@ -4,6 +4,8 @@
 
 #include "game/gamemap.h"
 
+#include "coreengine/mainapp.h"
+
 #include "game/player.h"
 #include "game/co.h"
 
@@ -41,7 +43,7 @@ qint32 UnitPathFindingSystem::getCosts(qint32 x, qint32 y)
         // check for an enemy on the field
         if (pUnit != nullptr)
         {
-            if (m_pUnit->getOwner()->checkAlliance(pUnit->getOwner()) == Player::Alliance::Enemy)
+            if (m_pUnit->getOwner()->isEnemyUnit(pUnit))
             {
                 return -1;
             }

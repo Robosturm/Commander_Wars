@@ -5,6 +5,7 @@
 #include <menue/ingamemenue.h>
 #include "game/gameaction.h"
 #include "game/gamemap.h"
+#include "game/playerinfo.h"
 
 /**
  * @brief The GameMenue class handles the game :)
@@ -14,6 +15,12 @@ class GameMenue : public InGameMenue
     Q_OBJECT
 public:
     GameMenue(QString map);
+    virtual ~GameMenue();
+
+    static GameMenue* getInstance()
+    {
+        return m_pInstance;
+    }
 
     void startGame(qint32 startPlayer);
 signals:
@@ -25,7 +32,13 @@ public slots:
      * @param pGameAction
      */
     void performAction(GameAction* pGameAction);
+    /**
+     * @brief updatePlayerinfo
+     */
+    void updatePlayerinfo();
 private:
+    spPlayerInfo m_pPlayerinfo;
+    static GameMenue* m_pInstance;
 };
 
 #endif // GAMEMENUE_H

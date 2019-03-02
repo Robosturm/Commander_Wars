@@ -17,7 +17,7 @@ var BUILDING =
     {
     },
     // the terrain on which a building can be placed
-    // if tzhe current terrain isn't in the list. it'll be replaced by the first :)
+    // if the current terrain isn't in the list. it'll be replaced by the first :)
     getBaseTerrain : function(building)
     {
         return "PLAINS,STREET"
@@ -61,8 +61,26 @@ var BUILDING =
         return "";
     },
 
-    startOfTurn : function(unit)
+    startOfTurn : function(building)
     {
-        // gets called at the start of a turn
+        BUILDING.replenishUnit(building);
     },
+
+    replenishUnit: function(building)
+    {
+        // default impl replenishes our units
+        // gets called at the start of a turn
+        var constructionList = Global[building.getBuildingID()].getConstructionList();
+        var unit = building.getTerrain().getUnit();
+        if ((unit !== null) &&
+            (unit.getOwner() === building.getOwner()) &&
+            (constructionList.indexOf(unit.getUnitID()) > 0))
+        {
+            // our unit and a repairable one
+            // replenish it
+            unit.refill();
+            var repairAmount = 2 + unit.getRepairBonus(Qt.point(unit.getX(), unit.getY()));
+            UNIT.repairUnit(unit, repairAmount);
+        }
+    }
 };

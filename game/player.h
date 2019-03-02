@@ -7,7 +7,11 @@
 #include "game/smartpointers.h"
 #include "game/smartCO.h"
 
+#include "coreengine/mainapp.h"
+
 #include "coreengine/fileserializable.h"
+
+#include "game/GameEnums.h"
 
 class CO;
 
@@ -18,12 +22,6 @@ class Player : public QObject, public oxygine::Actor, public FileSerializable
     Q_OBJECT
 
 public:
-    enum class Alliance
-    {
-        Friend,
-        Enemy
-    };
-    Q_ENUM(Alliance)
 
     explicit Player(quint32 id);
     virtual ~Player() override;
@@ -62,6 +60,8 @@ public:
      */
     void setBaseGameInput(BaseGameInputIF *pBaseGameInput);
 
+
+
 signals:
 
 public slots:
@@ -90,7 +90,7 @@ public slots:
      * @param pPlayer the player we want to check if he's an enemy
      * @return the alliance of the player with us
      */
-    Alliance checkAlliance(Player* pPlayer);
+    GameEnums::Alliance checkAlliance(Player* pPlayer);
     /**
      * @brief isEnemyUnit checks if the given unit is an enemy
      * @param pUnit
@@ -115,6 +115,38 @@ public slots:
      * @return pointer to the co
      */
     CO* getCO(quint8 id);
+    /**
+     * @brief setCO
+     * @param coId the co we want to load
+     * @param id the index at which we want this co
+     */
+    void setCO(QString coId, quint8 idx);
+    /**
+     * @brief getCostModifier
+     * @param baseCost
+     * @return
+     */
+    qint32 getCostModifier(QString id, qint32 baseCost);
+    /**
+     * @brief getCosts
+     * @param id
+     * @return
+     */
+    qint32 getCosts(QString id);
+    /**
+     * @brief gainPowerstar
+     * @param fondsDamage
+     */
+    void gainPowerstar(qint32 fondsDamage, QPoint position);
+    /**
+     * @brief startOfTurn
+     */
+    void startOfTurn();
+    /**
+     * @brief getUnits
+     * @return
+     */
+    QmlVectorUnit* getUnits();
 private:
     quint32 playerID;
     qint32 fonds{0};

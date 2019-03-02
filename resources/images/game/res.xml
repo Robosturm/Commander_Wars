@@ -2,8 +2,21 @@
 <resources>
 	<set path = "resources/images/game/" />
 	<atlas>
+		<!-- player info stuff -->
+		<image file="2co.png" />
+		<image file="co.png" />
+		<!-- power star stuff -->
+		<image file="powerstar.png" />
+		<image file="powerstarfull.png" cols = "13" />
+		<image file="powerstarhalf.png" cols = "13" />
+		<image file="superpowerstar.png" />
+		<image file="superpowerstarfull.png" cols = "13" />
+		<image file="superpowerstarhalf.png" cols = "13" />
+		
 		<!-- on map stuff -->
 		<image file="marked+field.png" cols = "2" />
+		<image file="co+range+marker.png" cols = "4" />
+		
 		<image file="arrow+unit.png" cols = "10" />
 		<!-- Human Player menu -->
 		<image file="cursor+menu.png" cols = "4" />
@@ -26,6 +39,8 @@
 		<image file="tagpower.png" />
 		<image file="unhide.png" />
 		<image file="build.png" />
+		<image file="co_unit.png" />
+		
 		<!-- z information label -->
 		<image file="z_information_label.png" cols = "8" />
 		<image file="z_information_label+mask.png" cols = "8" />

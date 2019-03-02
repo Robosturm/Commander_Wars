@@ -36,6 +36,16 @@ var Constructor = function()
     {
         return qsTr("Rocketthrower");
     };
+    this.doWalkingAnimation = function(action)
+    {
+        var unit = action.getTargetUnit();
+        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
+        var unitID = unit.getUnitID().toLowerCase();
+        animation.loadSprite(unitID + "+walk+mask", true, 1.25);
+        animation.loadSprite(unitID + "+walk", false, 1.25);
+        animation.setSound("moveheavytire.wav", -2);
+        return animation;
+    };
     this.canMoveAndFire = function()
     {
         return true;

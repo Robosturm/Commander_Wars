@@ -11,8 +11,14 @@
 #include "memory"
 
 #include "game/terrain.h"
+
 #include "objects/cursor.h"
+
 #include "coreengine/fileserializable.h"
+
+#include "coreengine/qmlvector.h"
+
+#include "game/GameEnums.h"
 
 class GameAction;
 
@@ -24,21 +30,7 @@ class GameMap : public QObject, public oxygine::Actor, public FileSerializable
 public:
     static const qint32 frameTime;
     static const qint32 Imagesize = 24;
-    enum Directions
-    {
-        None = -1,
-        North,
-        NorthEast,
-        East,
-        SouthEast,
-        South,
-        SouthWest,
-        West,
-        NorthWest,
-        All,
-        Direct,
-        Diagnonal
-    };
+
     /**
      * @brief GameMap creates an empty ma (filled with plains) with two players and the given size
      * @param width
@@ -113,7 +105,7 @@ public slots:
      * @param y y-coordinates
      * @param direction the suitable direction
      */
-    static void getField(qint32& x, qint32& y, Directions direction);
+    static void getField(qint32& x, qint32& y, GameEnums::Directions direction);
     /**
      * @brief onMap returns if the given coordinates are on the map
      * @param x
@@ -223,6 +215,12 @@ public slots:
      * @param pPlayer
      */
     void checkFuel(Player* pPlayer);
+    /**
+     * @brief getUnits
+     * @param pPlayer
+     * @return
+     */
+    QmlVectorUnit* getUnits(Player* pPlayer);
 private:
     static GameMap* m_pInstance;
 
@@ -231,6 +229,7 @@ private:
     QVector<QVector<spTerrain>*> fields;
     QVector<spPlayer> players;
     spPlayer m_CurrentPlayer;
+
     quint32 currentDay{0};
 
     static const QString m_JavascriptName;

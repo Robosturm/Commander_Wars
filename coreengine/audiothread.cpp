@@ -19,6 +19,8 @@ AudioThread::AudioThread()
     connect(this, SIGNAL(SignalClearPlayList()), this, SLOT(SlotClearPlayList()), Qt::QueuedConnection);
     connect(this, SIGNAL(SignalPlayRandom()), this, SLOT(SlotPlayRandom()), Qt::QueuedConnection);
     connect(this, SIGNAL(SignalLoadFolder(QString)), this, SLOT(SlotLoadFolder(QString)), Qt::QueuedConnection);
+    connect(this, SIGNAL(SignalPlaySound(QString, qint32, QString)), this, SLOT(SlotPlaySound(QString, qint32, QString)), Qt::QueuedConnection);
+    connect(this, SIGNAL(SignalStopSound(QString, QString)), this, SLOT(SlotStopSound(QString, QString)), Qt::QueuedConnection);
 }
 
 AudioThread::~AudioThread()
@@ -36,7 +38,8 @@ void AudioThread::initAudio()
     m_Player->moveToThread(this);
     m_playList->moveToThread(this);
     m_Player->setPlaylist(m_playList);
-    SlotSetVolume(Mainapp::getInstance()->getSettings()->getMusicVolume());
+    SlotSetVolume(static_cast<qint32>(static_cast<float>(Mainapp::getInstance()->getSettings()->getMusicVolume()) *
+                  static_cast<float>(Mainapp::getInstance()->getSettings()->getTotalVolume()) / 100.0f));
     connect(m_Player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(SlotMediaStatusChanged(QMediaPlayer::MediaStatus)));
 }
 
@@ -121,10 +124,20 @@ void AudioThread::SlotMediaStatusChanged(QMediaPlayer::MediaStatus status)
     }
 }
 
- void AudioThread::playRandom()
- {
-     emit SignalPlayRandom();
- }
+void AudioThread::playRandom()
+{
+    emit SignalPlayRandom();
+}
+
+void AudioThread::playSound(QString file, qint32 loops, QString folder)
+{
+    emit SignalPlaySound(file, loops, folder);
+}
+
+void AudioThread::stopSound(QString file, QString folder)
+{
+    emit SignalStopSound(file, folder);
+}
 
 void AudioThread::SlotPlayRandom()
 {
@@ -153,8 +166,54 @@ void AudioThread::SlotLoadFolder(QString folder)
     }
 }
 
-void AudioThread::SlotPlaySound(QString file)
+
+void AudioThread::SlotPlaySound(QString file, qint32 loops, QString folder)
 {
-    QSound::play(file);
+    float sound = (static_cast<float>(Mainapp::getInstance()->getSettings()->getSoundVolume()) / 100.0f *
+                   static_cast<float>(Mainapp::getInstance()->getSettings()->getTotalVolume()) / 100.0f);
+    QUrl url = QUrl::fromLocalFile(folder + file);
+    if (url.isValid())
+    {
+        QSoundEffect* pSoundEffect = new QSoundEffect();
+        pSoundEffect->setVolume(static_cast<qreal>(sound));
+        pSoundEffect->setSource(url);
+        pSoundEffect->setLoopCount(loops);
+        m_Sounds.push_back(pSoundEffect);
+        connect(pSoundEffect, SIGNAL(playingChanged()), this, SLOT(SlotSoundEnded()), Qt::QueuedConnection);
+        pSoundEffect->play();
+    }
+}
+
+void AudioThread::SlotSoundEnded()
+{
+    qint32 i = 0;
+    while (i < m_Sounds.size())
+    {
+        if ((m_Sounds[i]->isPlaying() == false) &&
+            (m_Sounds[i]->loopsRemaining() == 0))
+        {
+            delete m_Sounds[i];
+            m_Sounds.removeAt(i);
+        }
+        else
+        {
+            i++;
+        }
+    }
+}
+
+void AudioThread::SlotStopSound(QString file, QString folder)
+{
+    QUrl url = QUrl::fromLocalFile(folder + file);
+    for (qint32 i = 0; i < m_Sounds.size(); i++)
+    {
+        if (m_Sounds[i]->source() == url)
+        {
+            m_Sounds[i]->stop();
+            delete m_Sounds[i];
+            m_Sounds.removeAt(i);
+            break;
+        }
+    }
 }
 

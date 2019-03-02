@@ -5,8 +5,6 @@
 
 #include <QVector>
 
-#include <QSound>
-
 #include "oxygine-framework.h"
 
 #include "game/smartpointers.h"
@@ -46,21 +44,17 @@ public slots:
      * @param loops amount of loops to play this sound -1 till the animation is over;
      */
     void setSound(QString soundFile, qint32 loops);
-    /**
-     * @brief start the sound playing
-     */
-    void startSound();
-    /**
-     * @brief stops the sound playing
-     */
-    void stopSound();
+protected:
+    virtual void update(const oxygine::UpdateState& us) override;
 private:
     quint32 m_frameTime{0};
     QVector<GameAnimation*> m_QueuedAnimations;
     QString jsPostActionObject{""};
     QString jsPostActionFunction{""};
 
-    QSound* animationSound{nullptr};
+    QString m_soundFile;
+    qint32 m_loops;
+    bool m_SoundStarted{false};
 };
 
 #endif // GAMEANIMATION_H

@@ -10,6 +10,7 @@
 #include "resource_management/movementtablemanager.h"
 #include "resource_management/weaponmanager.h"
 #include "resource_management/gamemanager.h"
+#include "resource_management/cospritemanager.h"
 
 #include "game/terrain.h"
 
@@ -20,6 +21,8 @@
 #include "game/player.h"
 #include "game/co.h"
 #include "game/gameanimationfactory.h"
+
+#include "menue/gamemenue.h"
 
 const QString GameMap::m_JavascriptName = "map";
 const QString GameMap::m_GameAnimationFactory = "GameAnimationFactory";
@@ -86,6 +89,8 @@ void GameMap::loadMapData()
     pGameManager->loadAll();
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
     pWeaponManager->loadAll();
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+    pCOSpriteManager->loadAll();
 }
 
 GameMap::~GameMap()
@@ -328,49 +333,49 @@ qint32 GameMap::getMapHeight() const
     return heigth;
 }
 
-void GameMap::getField(qint32& x, qint32& y, Directions direction)
+void GameMap::getField(qint32& x, qint32& y, GameEnums::Directions direction)
 {
     switch (direction)
     {
-        case GameMap::Directions::North:
+        case GameEnums::Directions_North:
         {
             y--;
             break;
         }
-        case GameMap::Directions::NorthEast:
+        case GameEnums::Directions_NorthEast:
         {
             x++;
             y--;
             break;
         }
-        case GameMap::Directions::East:
+        case GameEnums::Directions_East:
         {
             x++;
             break;
         }
-        case GameMap::Directions::SouthEast:
+        case GameEnums::Directions_SouthEast:
         {
             y++;
             x++;
             break;
         }
-        case GameMap::Directions::South:
+        case GameEnums::Directions_South:
         {
             y++;
             break;
         }
-        case GameMap::Directions::SouthWest:
+        case GameEnums::Directions_SouthWest:
         {
             y++;
             x--;
             break;
         }
-        case GameMap::Directions::West:
+        case GameEnums::Directions_West:
         {
             x--;
             break;
         }
-        case GameMap::Directions::NorthWest:
+        case GameEnums::Directions_NorthWest:
         {
             y--;
             x--;
@@ -661,6 +666,7 @@ void GameMap::startOfTurn(Player* pPlayer)
             }
         }
     }
+    m_CurrentPlayer->startOfTurn();
 }
 
 void GameMap::checkFuel(Player* pPlayer)
@@ -682,11 +688,36 @@ void GameMap::checkFuel(Player* pPlayer)
     }
 }
 
+QmlVectorUnit* GameMap::getUnits(Player* pPlayer)
+{
+    QmlVectorUnit* ret = new QmlVectorUnit();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            spUnit pUnit = fields.at(y)->at(x)->getSpUnit();
+            if (pUnit.get() != nullptr)
+            {
+                if ((pUnit->getOwner() == pPlayer))
+                {
+                   ret->append(pUnit.get());
+                }
+            }
+        }
+    }
+    return ret;
+}
+
 void GameMap::nextTurn()
 {
     enableUnits(m_CurrentPlayer.get());
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->getAudioThread()->clearPlayList();
     nextPlayer();
     m_CurrentPlayer->earnMoney();
     startOfTurn(m_CurrentPlayer.get());
     checkFuel(m_CurrentPlayer.get());
+    GameMenue::getInstance()->updatePlayerinfo();
+
+    pApp->getAudioThread()->playRandom();
 }

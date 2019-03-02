@@ -17,40 +17,40 @@ GameAnimationWalk::GameAnimationWalk(Unit* pUnit, QVector<QPoint> movePath)
       m_pUnit(pUnit),
       m_movePath(movePath)
 {
-    m_pUnit->setVisible(false);
+    m_pUnit->setUnitVisible(false);
 }
 
 void GameAnimationWalk::onFinished()
 {
-    m_pUnit->setVisible(true);
+    m_pUnit->setUnitVisible(true);
     GameAnimation::onFinished();
 }
 
-GameMap::Directions GameAnimationWalk::getMovementDirection(qint32 x, qint32 y, qint32 x2, qint32 y2)
+GameEnums::Directions GameAnimationWalk::getMovementDirection(qint32 x, qint32 y, qint32 x2, qint32 y2)
 {
     if (x == x2)
     {
         if (y < y2)
         {
-            return GameMap::Directions::South;
+            return GameEnums::Directions_South;
         }
         else if (y > y2)
         {
-            return GameMap::Directions::North;
+            return GameEnums::Directions_North;
         }
     }
     else if (y == y2)
     {
         if (x < x2)
         {
-            return GameMap::Directions::East;
+            return GameEnums::Directions_East;
         }
         else if (x > x2)
         {
-            return GameMap::Directions::West;
+            return GameEnums::Directions_West;
         }
     }
-    return GameMap::Directions::None;
+    return GameEnums::Directions_None;
 }
 
 void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float scaling)
@@ -68,7 +68,7 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
         {
             qint32 x = 0;
             qint32 y = 0;
-            GameMap::Directions direction = GameMap::Directions::None;
+            GameEnums::Directions direction = GameEnums::Directions_None;
             if (i == m_movePath.size() - 1)
             {
                 direction = getMovementDirection(m_pUnit->getX(), m_pUnit->getY(), m_movePath[i].x(), m_movePath[i].y());
@@ -84,22 +84,22 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
             int row = 0;
             switch (direction)
             {
-                case GameMap::Directions::North:
+                case GameEnums::Directions_North:
                 {
                     row = 1;
                     break;
                 }
-                case GameMap::Directions::South:
+                case GameEnums::Directions_South:
                 {
                     row = 0;
                     break;
                 }
-                case GameMap::Directions::East:
+                case GameEnums::Directions_East:
                 {
                     row = 2;
                     break;
                 }
-                case GameMap::Directions::West:
+                case GameEnums::Directions_West:
                 {
                     row = 3;
                     break;

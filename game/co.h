@@ -4,18 +4,27 @@
 #include <QObject>
 #include <QPoint>
 
+#include "game/GameEnums.h"
+
 #include "oxygine-framework.h"
+
+#include "game/smartUnit.h"
 
 class Unit;
 class Terrain;
-
+class Player;
 
 class CO : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit CO(QString coID);
-
+    explicit CO(QString coID, Player* owner);
+    /**
+     * @brief setCOUnit
+     * @param pUnit
+     * @return
+     */
+    void setCOUnit(spUnit pUnit);
 signals:
 
 public slots:
@@ -105,19 +114,94 @@ public slots:
      * @param value
      */
     void setSuperpowerStars(const qint32 &value);
-
+    /**
+     * @brief canUseSuperpower
+     * @return
+     */
+    bool canUseSuperpower() const;
+    /**
+     * @brief canUsePower
+     * @return
+     */
+    bool canUsePower() const;
+    /**
+     * @brief getPowerFilled
+     * @return
+     */
     float getPowerFilled() const;
+    /**
+     * @brief setPowerFilled
+     * @param value
+     */
     void setPowerFilled(const float &value);
     /**
      * @brief getCanMoveAndFire returns
      * @return
      */
     bool getCanMoveAndFire(Unit* pUnit, QPoint position);
+    /**
+     * @brief getRepairBonus
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    qint32 getRepairBonus(Unit* pUnit, QPoint position);
+    /**
+     * @brief getCostModifier
+     * @param baseCost
+     * @return
+     */
+    qint32 getCostModifier(QString id, qint32 baseCost);
+    /**
+     * @brief getCOArmy
+     */
+    QString getCOArmy();
+    /**
+     * @brief getPowerMode
+     * @return
+     */
+    GameEnums::PowerMode getPowerMode() const;
+    /**
+     * @brief setPowerMode
+     * @param PowerMode
+     */
+    void setPowerMode(const GameEnums::PowerMode &PowerMode);
+    /**
+     * @brief gainPower
+     * @param fondsDamage
+     * @param position
+     */
+    void gainPowerstar(qint32 fondsDamage, QPoint position);
+    /**
+     * @brief startOfTurn called at the start of our turn
+     */
+    void startOfTurn();
+    /**
+     * @brief getPlayer
+     * @return
+     */
+    inline Player* getPlayer()
+    {
+        return m_Owner;
+    }
+    /**
+     * @brief getCOUnit
+     * @return
+     */
+    Unit* getCOUnit();
+    /**
+     * @brief getCORange
+     * @return
+     */
+    qint32 getCORange();
 private:
+    Player* m_Owner;
     QString coID;
-    qint32 powerStars;
-    qint32 superpowerStars;
-    float powerFilled;
+    qint32 powerStars{0};
+    qint32 superpowerStars{0};
+    float powerFilled{0.0f};
+    spUnit m_COUnit;
+    GameEnums::PowerMode m_PowerMode{GameEnums::PowerMode_Off};
 };
 
 #endif // KO_H

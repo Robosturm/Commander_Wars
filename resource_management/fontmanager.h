@@ -17,6 +17,11 @@ public:
     {
         return getInstance()->getResFont("times_10");
     }
+
+    inline static oxygine::ResFont* getAWStandard()
+    {
+        return getInstance()->getResFont("AWStandard");
+    }
 private:
     explicit FontManager();
     virtual ~FontManager() = default;

@@ -14,6 +14,8 @@
 
 #include "game/co.h"
 
+#include "menue/gamemenue.h"
+
 Player::Player(quint32 id)
     : playerID(id)
 {
@@ -71,33 +73,37 @@ QString Player::getArmy()
     }
 }
 
-Player::Alliance Player::checkAlliance(Player* pPlayer)
+GameEnums::Alliance Player::checkAlliance(Player* pPlayer)
 {
     if (pPlayer == this)
     {
-        return Alliance::Friend;
+        return GameEnums::Alliance_Friend;
     }
     else
     {
         // todo implement real check for alliance
-        return Alliance::Enemy;
+        return GameEnums::Alliance_Enemy;
     }
 }
 
 bool Player::isEnemyUnit(Unit* pUnit)
 {
-    return (checkAlliance(pUnit->getOwner()) == Alliance::Enemy);
+    return (checkAlliance(pUnit->getOwner()) == GameEnums::Alliance_Enemy);
 }
 
 
 void Player::setFonds(const qint32 &value)
 {
     fonds = value;
+    if (GameMenue::getInstance() != nullptr)
+    {
+        GameMenue::getInstance()->updatePlayerinfo();
+    }
 }
 
 void Player::addFonds(const qint32 &value)
 {
-    fonds += value;
+    setFonds(fonds + value);
 }
 
 qint32 Player::getFonds() const
@@ -115,13 +121,79 @@ void Player::earnMoney(float modifier)
             spBuilding pBuilding = pMap->getSpTerrain(x, y)->getSpBuilding();
             if (pBuilding.get() != nullptr)
             {
-                quint32 income = static_cast<quint32>(pBuilding->getBaseIncome() * modifier);
-                // todo modifier income by co's and rules
+                if (pBuilding->getOwner() == this)
+                {
+                    quint32 income = static_cast<quint32>(pBuilding->getBaseIncome() * modifier);
+                    // todo modifier income by co's and rules
 
-                fonds += income;
+                    fonds += income;
+                }
             }
         }
     }
+    setFonds(fonds);
+}
+
+qint32 Player::getCostModifier(QString id, qint32 baseCost)
+{
+    qint32 costModifier = 0;
+    if (playerCOs[0].get() != nullptr)
+    {
+       costModifier += playerCOs[0]->getCostModifier(id, baseCost);
+    }
+    if (playerCOs[1].get() != nullptr)
+    {
+       costModifier += playerCOs[1]->getCostModifier(id, baseCost);
+    }
+    return costModifier;
+}
+
+qint32 Player::getCosts(QString id)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QJSValue ret = pApp->getInterpreter()->doFunction(id, "getBaseCost");
+    qint32 costs = 0;
+    if (ret.isNumber())
+    {
+        costs = ret.toInt();
+    }
+    costs += getCostModifier(id, costs);
+    return costs;
+}
+
+void Player::gainPowerstar(qint32 fondsDamage, QPoint position)
+{
+    if (playerCOs[0].get() != nullptr)
+    {
+       playerCOs[0]->gainPowerstar(fondsDamage, position);
+    }
+    if (playerCOs[1].get() != nullptr)
+    {
+       playerCOs[1]->gainPowerstar(fondsDamage, position);
+    }
+    if (GameMenue::getInstance() != nullptr)
+    {
+        GameMenue::getInstance()->updatePlayerinfo();
+    }
+}
+
+void Player::startOfTurn()
+{
+    if (playerCOs[0].get() != nullptr)
+    {
+       playerCOs[0]->setPowerMode(GameEnums::PowerMode_Off);
+       playerCOs[0]->startOfTurn();
+    }
+    if (playerCOs[1].get() != nullptr)
+    {
+       playerCOs[1]->setPowerMode(GameEnums::PowerMode_Off);
+       playerCOs[0]->startOfTurn();
+    }
+}
+
+QmlVectorUnit* Player::getUnits()
+{
+    return GameMap::getInstance()->getUnits(this);
 }
 
 void Player::setBaseGameInput(BaseGameInputIF *pBaseGameInput)
@@ -139,6 +211,14 @@ CO* Player::getCO(quint8 id)
     else
     {
         return nullptr;
+    }
+}
+
+void Player::setCO(QString coId, quint8 idx)
+{
+    if (idx <= 1)
+    {
+        playerCOs[idx] = new CO(coId, this);
     }
 }
 

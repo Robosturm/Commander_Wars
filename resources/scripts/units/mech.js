@@ -44,7 +44,7 @@ var Constructor = function()
     this.getActions = function()
     {
         // returns a string id list of the actions this unit can perform
-        return "ACTION_CAPTURE,ACTION_FIRE,ACTION_JOIN,ACTION_LOAD,ACTION_WAIT";
+        return "ACTION_CAPTURE,ACTION_FIRE,ACTION_JOIN,ACTION_LOAD,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
     };
     this.doWalkingAnimation = function(action)
     {
@@ -73,6 +73,7 @@ var Constructor = function()
 		}
         animation.loadSprite("mech+" + armyName + "+walk+mask", true, zoom);
         animation.loadSprite("mech+" + armyName + "+walk", false, zoom);
+        animation.setSound("movefeet.wav", -2);
         return animation;
     };
     this.getName = function()

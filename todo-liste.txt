@@ -1,26 +1,27 @@
-- damage table
-- damage calculation
-- attack units
-
-- player
-- next player turn
-
-- player info
-- rules
-- kos
 - ko unit
-- unit ranking
-- ko power
-- wetter
-- fog of war
-- ai
-- import maps
-- ko info
+
 - unit info
 - terrain info
+
+- co's
+- import maps
+
+- stealth units
+- fog of war
+
+- rules
+
+
+- wetter
+
+- ai
+- ko info
+
 - special building
+	- black hole buildings
 - victory screen
 - game statistics
+
 - game recording
 - v-scrollbar
 - Objects

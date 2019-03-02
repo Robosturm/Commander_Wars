@@ -113,6 +113,11 @@ public slots:
      * @brief startOfTurn
      */
     void startOfTurn();
+    /**
+     * @brief getTerrain
+     * @return
+     */
+    Terrain* getTerrain();
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     /**
@@ -127,6 +132,10 @@ private:
      * @brief m_Terrain the terrain at which we are placed
      */
     spTerrain m_Terrain;
+    /**
+     * @brief m_Hp
+     */
+    qint32 m_Hp;
 };
 
 #endif // BUILDING_H

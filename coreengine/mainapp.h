@@ -16,6 +16,7 @@ class NetworkInterface;
 class Mainapp : public QCoreApplication
 {
     Q_OBJECT
+public:
 
 public slots:
     void update();

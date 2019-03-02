@@ -74,14 +74,18 @@ var Constructor = function()
     };
     this.calcDefenderDamage = function(attacker, attackerPosition, defender, defenderWeapon, takenDamage, useLuck)
     {
-        var health = defender.getHp() - takenDamage / 10.0;
-        health = globals.roundUp(health);
-        var damage = -1;
-        if (health > 0)
+        // only direct units can deal counter damage
+        if (defender.getMinRange() === 1)
         {
-            damage = ACTION_FIRE.calcDamage(defender, defenderWeapon, defender.getPosition(), health,
-                                                  attacker, attackerPosition,
-                                                  useLuck);
+            var health = defender.getHp() - takenDamage / 10.0;
+            health = globals.roundUp(health);
+            var damage = -1;
+            if (health > 0)
+            {
+                damage = ACTION_FIRE.calcDamage(defender, defenderWeapon, defender.getPosition(), health,
+                                                attacker, attackerPosition,
+                                                useLuck);
+            }
         }
         return damage;
     };
@@ -259,11 +263,34 @@ var Constructor = function()
         var defUnit = map.getTerrain(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY).getUnit();
         if (defUnit !== null)
         {
+            var costs = defUnit.getCosts();
+            var damage = ACTION_FIRE.postAnimationAttackerDamage / 10.0;
+            var power = 0;
+            // gain power based
+            if (damage > defUnit.getHp())
+            {
+                power = costs * defUnit.getHp() / 10;
+                defUnit.getOwner().gainPowerstar(power, Qt.point(defUnit.getX(), defUnit.getY()));
+                ACTION_FIRE.postAnimationUnit.getOwner().gainPowerstar(power / 4,
+                                                                       Qt.point(ACTION_FIRE.postAnimationUnit.getX(), ACTION_FIRE.postAnimationUnit.getY()));
+            }
+            else
+            {
+                power = costs * defUnit.getHp() / 10;
+                defUnit.getOwner().gainPowerstar(costs * damage / 10, Qt.point(defUnit.getX(), defUnit.getY()));
+                ACTION_FIRE.postAnimationUnit.getOwner().gainPowerstar(power / 4,
+                                                                       Qt.point(ACTION_FIRE.postAnimationUnit.getX(), ACTION_FIRE.postAnimationUnit.getY()));
+            }
             // set attacker damage
-            defUnit.setHp(defUnit.getHp() - ACTION_FIRE.postAnimationAttackerDamage / 10.0);
+            defUnit.setHp(defUnit.getHp() - damage);
             if (defUnit.getHp() <= 0)
             {
                 defUnit.killUnit();
+                defUnit = null;
+                if (ACTION_FIRE.postAnimationUnit.getUnitRank() < GameEnums.UnitRank_Veteran)
+                {
+                    ACTION_FIRE.postAnimationUnit.setUnitRank(ACTION_FIRE.postAnimationUnit.getUnitRank() + 1);
+                }
             }
             if (ACTION_FIRE.postAnimationAttackerWeapon === 0)
             {
@@ -277,20 +304,61 @@ var Constructor = function()
             if (ACTION_FIRE.postAnimationDefenderDamage > 0)
             {
                 ACTION_FIRE.postAnimationUnit.setHp(ACTION_FIRE.postAnimationUnit.getHp() - ACTION_FIRE.postAnimationDefenderDamage / 10.0);
-                if (ACTION_FIRE.postAnimationUnit.getHp() <= 0)
+
+                costs = ACTION_FIRE.postAnimationUnit.getCosts();
+                damage = ACTION_FIRE.postAnimationDefenderDamage / 10.0;
+                // gain power based
+                if (damage > ACTION_FIRE.postAnimationUnit.getHp())
                 {
-                    ACTION_FIRE.postAnimationUnit.killUnit();
-                }
-                if (ACTION_FIRE.postAnimationDefenderWeapon === 0)
-                {
-                    defUnit.reduceAmmo1(1);
+                    power = costs * ACTION_FIRE.postAnimationUnit.getHp() / 10;
+                    ACTION_FIRE.postAnimationUnit.getOwner().gainPowerstar(power,
+                                                                           Qt.point(ACTION_FIRE.postAnimationUnit.getX(), ACTION_FIRE.postAnimationUnit.getY()));
+                    if (defUnit !== null)
+                    {
+                        defUnit.getOwner().gainPowerstar(power / 4, Qt.point(defUnit.getX(), defUnit.getY()));
+                    }
                 }
                 else
                 {
-                    defUnit.reduceAmmo2(1);
+                    power = costs * damage / 10;
+                    ACTION_FIRE.postAnimationUnit.getOwner().gainPowerstar(power,
+                                                                           Qt.point(ACTION_FIRE.postAnimationUnit.getX(), ACTION_FIRE.postAnimationUnit.getY()));
+                    if (defUnit !== null)
+                    {
+                        defUnit.getOwner().gainPowerstar(power / 4, Qt.point(defUnit.getX(), defUnit.getY()));
+                    }
+                }
+
+                if (ACTION_FIRE.postAnimationUnit.getHp() <= 0)
+                {
+                    ACTION_FIRE.postAnimationUnit.killUnit();
+                    if (defUnit !== null)
+                    {
+                        if (defUnit.getUnitRank() < GameEnums.UnitRank_Veteran)
+                        {
+                            defUnit.setUnitRank(defUnit.getUnitRank() + 1);
+                        }
+                    }
+                }
+                if (defUnit !== null)
+                {
+                    if (ACTION_FIRE.postAnimationDefenderWeapon === 0)
+                    {
+                        defUnit.reduceAmmo1(1);
+                    }
+                    else
+                    {
+                        defUnit.reduceAmmo2(1);
+                    }
                 }
             }
         }
+        else
+        {
+            // we attacked a building or terrain ;)
+            // not implemented yet.
+        }
+
         // reset stuff
         ACTION_FIRE.postAnimationUnit = null;
         ACTION_FIRE.postAnimationAttackerDamage = -1;

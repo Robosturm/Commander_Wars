@@ -11,7 +11,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-		var surroundings = terrain.getSurroundings("PLASMA,METEOR", false, false, TERRAIN.Direct);
+        var surroundings = terrain.getSurroundings("PLASMA,METEOR", false, false, GameEnums.Directions_Direct);
         terrain.loadBaseSprite("plasma" + surroundings);
     };
 };
