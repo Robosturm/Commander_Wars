@@ -43,16 +43,7 @@ public:
      */
     explicit GameMap(QString map, bool gamestart);
     virtual ~GameMap();
-    /**
-     * @brief getMapWidth
-     * @return width of the map
-     */
-    qint32 getMapWidth() const;
-    /**
-     * @brief getMapHeight
-     * @return height of the map
-     */
-    qint32 getMapHeight() const;
+
 
     inline static GameMap* getInstance()
     {
@@ -92,13 +83,32 @@ public:
 signals:
 
 public slots:
+    /**
+     * @brief getMapWidth
+     * @return width of the map
+     */
+    qint32 getMapWidth() const;
+    /**
+     * @brief getMapHeight
+     * @return height of the map
+     */
+    qint32 getMapHeight() const;
+    /**
+     * @brief spawnUnit
+     * @param x
+     * @param y
+     * @param unitID
+     * @param owner
+     * @param range
+     * @return
+     */
     Unit* spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint32 range = 0);
     /**
      * @brief updateTerrainSprites updates the terrain sprites refreshes them to fit the current map
      * @param xInput around given coordinates -1 whole map
      * @param yInput around given coordinates -1 whole map
      */
-    void updateTerrainSprites(qint32 xInput = -1, qint32 yInput = -1);
+    void updateSprites(qint32 xInput = -1, qint32 yInput = -1);
     /**
      * @brief getField changes the coordinates into the given direction
      * @param x x-coordinates

@@ -290,7 +290,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
     }
     if (points.size() >= 14)
     {
-        pMap->updateTerrainSprites();
+        pMap->updateSprites();
     }
 }
 

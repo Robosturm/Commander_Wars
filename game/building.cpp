@@ -208,5 +208,4 @@ void Building::deserialize(QDataStream& pStream)
     qint32 playerID = -1;
     pStream >> playerID;
     m_Owner = GameMap::getInstance()->getspPlayer(playerID);
-    updateBuildingSprites();
 }

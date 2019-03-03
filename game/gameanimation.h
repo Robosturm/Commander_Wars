@@ -5,11 +5,13 @@
 
 #include <QVector>
 
+#include <QColor>
+
 #include "oxygine-framework.h"
 
 #include "game/smartpointers.h"
 
-class GameAnimation : public QObject, public oxygine::Actor
+class GameAnimation : public QObject, public oxygine::Sprite
 {
     Q_OBJECT
 public:
@@ -27,7 +29,12 @@ public slots:
      * @brief addSprite
      * @param spriteID
      */
-    void addSprite(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish = 0, float scale = 1.0f);
+    void addSprite(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish = 0, float scale = 1.0f, qint32 delay = 0);
+    /**
+     * @brief addSprite
+     * @param spriteID
+     */
+    void addSprite2(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish = 0, float scaleX = 1.0f, float scaleY = 1.0f, qint32 delay = 0);
     /**
      * @brief onFinished called when the animation is finished
      */
@@ -44,6 +51,26 @@ public slots:
      * @param loops amount of loops to play this sound -1 till the animation is over;
      */
     void setSound(QString soundFile, qint32 loops);
+    /**
+     * @brief addTweenScale adds a tween to change the scale of this animation
+     * @param endScale final scaling of the animation
+     * @param duration duration of scaling up
+     */
+    void addTweenScale(float endScale, qint32 duration);
+    /**
+     * @brief addTweenPosition adds a tween to change the position of this animation
+     * @param point final position of the animation
+     * @param duration duration of scaling up
+     */
+    void addTweenPosition(QPoint point, qint32 duration);
+    /**
+     * @brief addTweenColor
+     * @param startColor
+     * @param endColor
+     * @param duration
+     * @param twoSided
+     */
+    void addTweenColor(qint32 spriteIdx, QColor startColor, QColor endColor, qint32 duration, bool twoSided, qint32 delay = 0);
 protected:
     virtual void update(const oxygine::UpdateState& us) override;
 private:

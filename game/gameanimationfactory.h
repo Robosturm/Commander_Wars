@@ -43,7 +43,7 @@ public slots:
      * @param frameTime in ms
      * @return
      */
-    static GameAnimation* createAnimation(quint32 x, quint32 y, quint32 frameTime = GameMap::frameTime);
+    static GameAnimation* createAnimation(quint32 x, quint32 y, quint32 frameTime = GameMap::frameTime, bool mapPosition = true);
     /**
      * @brief createWalkingAnimation creates a walking animation. This doesn't move the unit
      * @param pUnit the unit that will walk

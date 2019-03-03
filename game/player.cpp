@@ -57,19 +57,26 @@ void Player::setPlayerID(const quint32 &value)
 
 QString Player::getArmy()
 {
-    // todo return ko army
-    Mainapp* pApp = Mainapp::getInstance();
-    QJSValueList args;
-    QJSValue objArg = pApp->getInterpreter()->newQObject(this);
-    args << objArg;
-    QJSValue ret = pApp->getInterpreter()->doFunction("PLAYER", "getDefaultArmy", args);
-    if (ret.isString())
+    if (GameMenue::getInstance() != nullptr)
     {
-        return ret.toString();
+        return playerArmy;
     }
     else
     {
-        return "OS";
+        // editor memu mode
+        Mainapp* pApp = Mainapp::getInstance();
+        QJSValueList args;
+        QJSValue objArg = pApp->getInterpreter()->newQObject(this);
+        args << objArg;
+        QJSValue ret = pApp->getInterpreter()->doFunction("PLAYER", "getDefaultArmy", args);
+        if (ret.isString())
+        {
+            return ret.toString();
+        }
+        else
+        {
+            return "OS";
+        }
     }
 }
 
@@ -177,6 +184,20 @@ void Player::gainPowerstar(qint32 fondsDamage, QPoint position)
     }
 }
 
+qint32 Player::getMovementpointModifier(Unit* pUnit, QPoint position)
+{
+    qint32 modifier = 0;
+    if (playerCOs[0].get() != nullptr)
+    {
+       modifier += playerCOs[0]->getMovementpointModifier(pUnit, position);
+    }
+    if (playerCOs[1].get() != nullptr)
+    {
+       modifier += playerCOs[1]->getMovementpointModifier(pUnit, position);
+    }
+    return modifier;
+}
+
 void Player::startOfTurn()
 {
     if (playerCOs[0].get() != nullptr)
@@ -187,7 +208,7 @@ void Player::startOfTurn()
     if (playerCOs[1].get() != nullptr)
     {
        playerCOs[1]->setPowerMode(GameEnums::PowerMode_Off);
-       playerCOs[0]->startOfTurn();
+       playerCOs[1]->startOfTurn();
     }
 }
 
@@ -237,6 +258,73 @@ void Player::setCO(QString coId, quint8 idx)
     if (idx <= 1)
     {
         playerCOs[idx] = new CO(coId, this);
+    }
+}
+
+QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue)
+{
+    GameMap* pMap = GameMap::getInstance();
+    QmlVectorPoint* pPoints = Mainapp::getCircle(0, radius);
+    qint32 highestDamage = -1;
+    QVector<QPoint> targets;
+
+    for (qint32 x = 0; x < pMap->getMapWidth(); x++)
+    {
+        for (qint32 y = 0; y < pMap->getMapHeight(); y++)
+        {
+            qint32 fondsDamage = 0;
+            for (qint32 i = 0; i < pPoints->size(); i++)
+            {
+                qint32 x2 = x + pPoints->at(i).x();
+                qint32 y2 = y + pPoints->at(i).y();
+                // is there a unit?
+                if ((pMap->onMap(x2, y2)) &&
+                    (pMap->getTerrain(x2, y2)->getUnit() != nullptr))
+                {
+                    Unit* pUnit = pMap->getTerrain(x2, y2)->getUnit();
+                    float modifier = 1.0f;
+                    if (!isEnemyUnit(pUnit))
+                    {
+                       modifier = -ownUnitValue;
+                    }
+                    qint32 damagePoints = damage;
+                    qint32 hpRounded = pUnit->getHpRounded();
+                    if (hpRounded < damage)
+                    {
+                        damagePoints = hpRounded;
+                    }
+                    // calc fonds damage
+                    fondsDamage += damagePoints / 10.0f * modifier * pUnit->getCosts();
+                }
+            }
+            if (fondsDamage > highestDamage)
+            {
+                highestDamage = fondsDamage;
+                targets.clear();
+                targets.append(QPoint(x, y));
+            }
+            else if ((fondsDamage == highestDamage) && highestDamage >= 0)
+            {
+                targets.append(QPoint(x, y));
+            }
+        }
+    }
+    delete pPoints;
+    if (targets.size() >= 0)
+    {
+        return targets[Mainapp::randInt(0, targets.size() - 1)];
+    }
+    else
+    {
+        return QPoint(-1, -1);
+    }
+}
+
+void Player::defineArmy()
+{
+    if (playerCOs[0].get() != nullptr)
+    {
+        playerArmy = playerCOs[0]->getCOArmy();
     }
 }
 

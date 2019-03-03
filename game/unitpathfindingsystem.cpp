@@ -48,7 +48,16 @@ qint32 UnitPathFindingSystem::getCosts(qint32 x, qint32 y)
                 return -1;
             }
         }
-        return pMovementTableManager->getMovementPoints(m_pUnit.get(), pMap->getTerrain(x, y));
+        qint32 baseCosts = pMovementTableManager->getMovementPoints(m_pUnit.get(), pMap->getTerrain(x, y));
+        qint32 costs = baseCosts + m_pUnit->getOwner()->getMovementpointModifier(m_pUnit.get(), QPoint(x, y));
+        if ((costs <= 0) && (baseCosts > 0))
+        {
+            return 1;
+        }
+        else
+        {
+            return costs;
+        }
     }
     else
     {

@@ -49,13 +49,14 @@ GameMap::GameMap(qint32 width, qint32 heigth)
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
         }
     }
-    updateTerrainSprites();
-    centerMap(width / 2, heigth / 2);
     // add two players to a default map :)
     for (quint32 i = 0; i < 2; i++)
     {
         players.append(new Player(i));
     }
+
+    updateSprites();
+    centerMap(width / 2, heigth / 2);
 }
 
 
@@ -67,7 +68,8 @@ GameMap::GameMap(QString map, bool gamestart)
     QDataStream pStream(&file);
     deserialize(pStream);
 
-
+    updateSprites();
+    centerMap(width / 2, heigth / 2);
 }
 
 void GameMap::loadMapData()
@@ -175,7 +177,7 @@ void GameMap::setCurrentPlayer(qint32 player)
     }
 }
 
-void GameMap::updateTerrainSprites(qint32 xInput, qint32 yInput)
+void GameMap::updateSprites(qint32 xInput, qint32 yInput)
 {
     if ((xInput < 0) && (yInput < 0))
     {
@@ -185,6 +187,14 @@ void GameMap::updateTerrainSprites(qint32 xInput, qint32 yInput)
             for (qint32 x = 0; x < width; x++)
             {
                 fields.at(y)->at(x)->loadSprites();
+                if (fields.at(y)->at(x)->getUnit() != nullptr)
+                {
+                    fields.at(y)->at(x)->getUnit()->updateSprites();
+                }
+                if (fields.at(y)->at(x)->getBuilding() != nullptr)
+                {
+                    fields.at(y)->at(x)->getBuilding()->updateBuildingSprites();
+                }
             }
         }
     }
@@ -198,6 +208,14 @@ void GameMap::updateTerrainSprites(qint32 xInput, qint32 yInput)
                 if (onMap(x, y))
                 {
                     fields.at(y)->at(x)->loadSprites();
+                    if (fields.at(y)->at(x)->getUnit() != nullptr)
+                    {
+                        fields.at(y)->at(x)->getUnit()->updateSprites();
+                    }
+                    if (fields.at(y)->at(x)->getBuilding() != nullptr)
+                    {
+                        fields.at(y)->at(x)->getBuilding()->updateBuildingSprites();
+                    }
                 }
             }
         }
@@ -485,7 +503,7 @@ void GameMap::replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool 
         if (updateSprites)
         {
             updateTerrain(x, y);
-            updateTerrainSprites(x, y);
+            this->updateSprites(x, y);
         }
     }
 }
@@ -594,9 +612,7 @@ void GameMap::deserialize(QDataStream& pStream)
             pTerrain->setPosition(x * Imagesize, y * Imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
         }
-    }
-    updateTerrainSprites();
-    centerMap(width / 2, heigth / 2);
+    }    
 }
 
 qint32 GameMap::getImageSize()

@@ -41,6 +41,13 @@ public slots:
      */
     qint32 getFirerangeModifier(Unit* pUnit, QPoint position);
     /**
+     * @brief getMovementpointModifier
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    qint32 getMovementpointModifier(Unit* pUnit, QPoint position);
+    /**
      * @brief getAttackHpBonus
      * @param pUnit
      * @param position
@@ -207,6 +214,14 @@ public slots:
      * @return
      */
     bool inCORange(QPoint position);
+    /**
+     * @brief getFuelCostModifier
+     * @param pUnit
+     * @param position
+     * @param costs
+     * @return
+     */
+    qint32 getFuelCostModifier(Unit* pUnit, QPoint position, qint32 costs);
 private:
     Player* m_Owner;
     QString coID;

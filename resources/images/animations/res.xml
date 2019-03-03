@@ -48,6 +48,7 @@
 		<!-- static -->
 		<image file="ration.png" />
 		<image file="meteor.png" />
+		<image file="white_pixel.png" />
 		
 		<!-- co power animations -->
 		<image file="power0.png" cols = "8" />

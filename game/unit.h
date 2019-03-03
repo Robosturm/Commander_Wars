@@ -323,17 +323,23 @@ public slots:
      * @brief createCORange
      */
     void createCORange(qint32 coRange);
+    /**
+     * @brief updateSprites reloads all sprites
+     */
+    void updateSprites();
+    /**
+     * @brief getFuelCostModifier
+     * @param pUnit
+     * @param costs
+     * @return
+     */
+    qint32 getFuelCostModifier(QPoint position, qint32 costs);
 protected:
     /**
      * @brief updateIconTweens creates the visibility toogle tweens for all icons
      */
     void updateIconTweens();
 private:
-    /**
-     * @brief updateSprites reloads all sprites
-     */
-    void updateSprites();
-
     QVector<oxygine::spSprite> m_pUnitWaitSprites;
     QVector<oxygine::spSprite> m_pUnitSprites;
     /**

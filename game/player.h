@@ -151,10 +151,32 @@ public slots:
      * @brief updateCORange
      */
     void updateVisualCORange();
+    /**
+     * @brief getMovementpointModifier
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    qint32 getMovementpointModifier(Unit* pUnit, QPoint position);
+    /**
+     * @brief getRockettarget finds the most valuable target for damaging units in a diamond.
+     * If multiple targets with the same value are found.
+     * One is selected at random
+     * @param radius
+     * @param damage
+     * @param ownUnitValue value of own or allied units compared to enemy ones.
+     * @return -1, -1 for no target found
+     */
+    QPoint getRockettarget(qint32 radius, qint32 damage, float ownUnitValue = 1.0f);
+    /**
+     * @brief defineArmy defines our army sprites based on the current co at position 0
+     */
+    void defineArmy();
 private:
     quint32 playerID;
     qint32 fonds{0};
     QColor m_Color;
+    QString playerArmy = "OS";
     spCO playerCOs[2] = {nullptr, nullptr};
     /**
      * @brief m_pBaseGameInput pointer to the ai or human player

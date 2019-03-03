@@ -1,10 +1,18 @@
-- co's
-
 - unit info
 - terrain info
 
+- co's
+
+
+- activate power animation
 
 - import maps
+
+- enhance editor options
+
+- select map menu
+- option menu
+- credits menu
 
 - stealth units
 - fog of war
@@ -22,8 +30,8 @@
 	- black hole buildings
 - victory screen
 - game statistics
+	- game recording
 
-- game recording
 - v-scrollbar
 - Objects
 	- Checkbox

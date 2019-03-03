@@ -70,7 +70,12 @@ var Constructor = function()
     this.startOfTurn = function(unit)
     {
         // pay unit upkeep
-        unit.setFuel(unit.getFuel() - 5);
+        var fuelCosts = 5 + unit.getFuelCostModifier(Qt.point(unit.getX(), unit.getY()), 5);
+        if (fuelCosts < 0)
+        {
+            fuelCosts = 0;
+        }
+        unit.setFuel(unit.getFuel() - fuelCosts);
         UNIT.transporterRefilling(unit);
     };
 }

@@ -27,9 +27,17 @@ GameMenue::GameMenue(QString map)
         }
     });
 
-    GameMap::getInstance()->getspPlayer(0)->setCO("CO_COLIN", 0);
-    GameMap::getInstance()->getspPlayer(1)->setCO("CO_COLIN", 0);
+    // test code
 
+    GameMap::getInstance()->getspPlayer(0)->setCO("CO_EAGLE", 0);
+    GameMap::getInstance()->getspPlayer(0)->defineArmy();
+
+    GameMap::getInstance()->getspPlayer(1)->setCO("CO_COLIN", 0);
+    GameMap::getInstance()->getspPlayer(1)->setCO("CO_MAX", 1);
+    GameMap::getInstance()->getspPlayer(1)->defineArmy();
+    GameMap::getInstance()->updateSprites();
+
+    // back to normal code
     m_pPlayerinfo = new PlayerInfo();
     m_pPlayerinfo->updateData();
     this->addChild(m_pPlayerinfo);

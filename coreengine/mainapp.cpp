@@ -73,35 +73,43 @@ QmlVectorPoint* Mainapp::getCircle(qint32 min, qint32 max)
     QmlVectorPoint* ret = new QmlVectorPoint();
     qint32 x2 = 0;
     qint32 y2 = 0;
-    for (qint32 currentRadius = min; currentRadius <= max; currentRadius++)
-    {
-        x2 = -currentRadius;
-        y2 = 0;
-        for (qint32 i = 0; i < currentRadius; i++)
+
+        for (qint32 currentRadius = min; currentRadius <= max; currentRadius++)
         {
-            x2 += 1;
-            y2 += 1;
-            ret->append(QPoint(x2, y2));
+            x2 = -currentRadius;
+            y2 = 0;
+            if (currentRadius == 0)
+            {
+                ret->append(QPoint(0, 0));
+            }
+            else
+            {
+                for (qint32 i = 0; i < currentRadius; i++)
+                {
+                    x2 += 1;
+                    y2 += 1;
+                    ret->append(QPoint(x2, y2));
+                }
+                for (qint32 i = 0; i < currentRadius; i++)
+                {
+                    x2 += 1;
+                    y2 -= 1;
+                    ret->append(QPoint(x2, y2));
+                }
+                for (qint32 i = 0; i < currentRadius; i++)
+                {
+                    x2 -= 1;
+                    y2 -= 1;
+                    ret->append(QPoint(x2, y2));
+                }
+                for (qint32 i = 0; i < currentRadius; i++)
+                {
+                    x2 -= 1;
+                    y2 += 1;
+                    ret->append(QPoint(x2, y2));
+                }
+            }
         }
-        for (qint32 i = 0; i < currentRadius; i++)
-        {
-            x2 += 1;
-            y2 -= 1;
-            ret->append(QPoint(x2, y2));
-        }
-        for (qint32 i = 0; i < currentRadius; i++)
-        {
-            x2 -= 1;
-            y2 -= 1;
-            ret->append(QPoint(x2, y2));
-        }
-        for (qint32 i = 0; i < currentRadius; i++)
-        {
-            x2 -= 1;
-            y2 += 1;
-            ret->append(QPoint(x2, y2));
-        }
-    }
     return ret;
 }
 

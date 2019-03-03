@@ -54,6 +54,11 @@ var CO =
     {
     },
 
+    getFuelCostModifier : function(co, unit, posX, posY, costs)
+    {
+        return 0;
+    },
+
     getOffensiveBonus : function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY)
     {
@@ -62,6 +67,11 @@ var CO =
 
     getDeffensiveBonus : function(co, attacker, atkPosX, atkPosY,
                                   defender, defPosX, defPosY)
+    {
+        return 0;
+    },
+
+    getMovementpointModifier : function(co, unit, posX, posY)
     {
         return 0;
     },

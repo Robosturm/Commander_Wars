@@ -120,6 +120,22 @@ Player* Unit::getOwner()
     return m_Owner.get();
 }
 
+qint32 Unit::getFuelCostModifier(QPoint position, qint32 costs)
+{
+    qint32 modifier = 0;
+    CO* pCO = m_Owner->getCO(0);
+    if (pCO != nullptr)
+    {
+        modifier += pCO->getFuelCostModifier(this, position, costs);
+    }
+    pCO = m_Owner->getCO(1);
+    if (pCO != nullptr)
+    {
+        modifier += pCO->getFuelCostModifier(this, position, costs);
+    }
+    return modifier;
+}
+
 void Unit::updateSprites()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -1151,7 +1167,6 @@ void Unit::deserialize(QDataStream& pStream)
         pStream >> capturePoints;
         setCapturePoints(capturePoints);
     }
-    updateSprites();
 }
 
 void Unit::createCORange(qint32 coRange)

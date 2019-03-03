@@ -114,6 +114,28 @@ qint32 CO::getTerrainDefenseModifier(Unit* pUnit, QPoint position)
     }
 }
 
+qint32 CO::getMovementpointModifier(Unit* pUnit, QPoint position)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getMovementpointModifier";
+    QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
+    args1 << obj1;
+    args1 << position.x();
+    args1 << position.y();
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 qint32 CO::getFirerangeModifier(Unit* pUnit, QPoint position)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -191,6 +213,29 @@ qint32 CO::getBonusMisfortune(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+qint32 CO::getFuelCostModifier(Unit* pUnit, QPoint position, qint32 costs)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getFuelCostModifier";
+    QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
+    args1 << obj1;
+    args1 << position.x();
+    args1 << position.y();
+    args1 << costs;
     QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
     if (erg.isNumber())
     {

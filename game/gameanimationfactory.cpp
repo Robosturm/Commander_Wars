@@ -56,10 +56,17 @@ GameAnimationFactory* GameAnimationFactory::getInstance()
     return m_pInstance;
 }
 
-GameAnimation* GameAnimationFactory::createAnimation(quint32 x, quint32 y, quint32 frameTime)
+GameAnimation* GameAnimationFactory::createAnimation(quint32 x, quint32 y, quint32 frameTime, bool mapPosition)
 {
     spGameAnimation animation = new GameAnimation(frameTime);
-    animation->setPosition(x * GameMap::Imagesize, y * GameMap::Imagesize);
+    if (mapPosition)
+    {
+        animation->setPosition(x * GameMap::Imagesize, y * GameMap::Imagesize);
+    }
+    else
+    {
+        animation->setPosition(x, y);
+    }
     animation->setPriority(static_cast<short>(Mainapp::ZOrder::Animation));
     GameMap::getInstance()->addChild(animation);
     m_Animations.append(animation);

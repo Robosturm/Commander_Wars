@@ -8,6 +8,10 @@ var Constructor = function()
 
     this.activatePower = function(co)
     {
+        var animation2 = GameAnimationFactory.createAnimation(0, 0);
+        animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
+        animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
+
         var player = co.getPlayer();
         player.addFonds(player.getFonds() * 0.5);
         audio.clearPlayList();
@@ -26,13 +30,15 @@ var Constructor = function()
             var unit = units.at(i);
 
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-            animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5);
+
             if (animations.length < 5)
             {
+                animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5, globals.randInt(0, 400));
                 animations.push(animation);
             }
             else
             {
+                animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5);
                 animations[counter].queueAnimation(animation);
                 animations[counter] = animation;
                 counter++;

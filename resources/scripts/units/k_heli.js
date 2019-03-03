@@ -39,7 +39,12 @@ var Constructor = function()
     this.startOfTurn = function(unit)
     {
         // pay unit upkeep
-        unit.setFuel(unit.getFuel() - 2);
+        var fuelCosts = 2 + unit.getFuelCostModifier(Qt.point(unit.getX(), unit.getY()), 2);
+        if (fuelCosts < 0)
+        {
+            fuelCosts = 0;
+        }
+        unit.setFuel(unit.getFuel() - fuelCosts);
     };
     this.createExplosionAnimation = function(x, y)
     {
