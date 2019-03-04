@@ -14,6 +14,7 @@ class Building : public QObject, public oxygine::Actor, public FileSerializable
 public:
     explicit Building(const QString& BuildingID);
 
+    virtual ~Building() = default;
     /**
      * @brief setOwner changes the owner ship of this building
      * @param pOwner

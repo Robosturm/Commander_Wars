@@ -163,12 +163,12 @@ void Unit::setUnitRank(const GameEnums::UnitRanks &UnitRank)
     unloadIcon("lieutenant");
     unloadIcon("general");
     unloadIcon("veteran");
-    unloadIcon("co");
+    unloadIcon("co0");
+    unloadIcon("co1");
     switch (m_UnitRank)
     {
         case GameEnums::UnitRank_None:
         {
-            loadIcon("co", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
             break;
         }
         case GameEnums::UnitRank_Lieutenant:
@@ -188,12 +188,12 @@ void Unit::setUnitRank(const GameEnums::UnitRanks &UnitRank)
         }
         case GameEnums::UnitRank_CO0:
         {
-            loadIcon("co", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+            loadIcon("co0", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
             break;
         }
         case GameEnums::UnitRank_CO1:
         {
-            loadIcon("co", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+            loadIcon("co1", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
             break;
         }
     }
@@ -1178,7 +1178,7 @@ void Unit::createCORange(qint32 coRange)
         m_CORange = new oxygine::Actor();
     }
     m_CORange->removeChildren();
-    m_CORange->setPriority(static_cast<qint8>(Mainapp::ZOrder::CORange));
+    m_CORange->setPriority(static_cast<qint16>(Mainapp::ZOrder::CORange));
     qint32 x = getX();
     qint32 y = getY();
     qint32 x2 = 0;

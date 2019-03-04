@@ -28,6 +28,7 @@
 #include "game/gameanimation.h"
 #include "game/gameanimationwalk.h"
 #include "game/gameanimationcapture.h"
+#include "gameinput/cursordata.h"
 
 #include "game/GameEnums.h"
 
@@ -92,6 +93,7 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
     qmlRegisterInterface<QmlVectorUnit>("QmlVectorUnit");
     qmlRegisterInterface<Mainapp>("Mainapp");
+    qmlRegisterInterface<CursorData>("CursorData");
 
 
     GameEnums::registerEnums();

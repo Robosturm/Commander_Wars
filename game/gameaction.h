@@ -9,6 +9,7 @@
 #include "game/smartpointers.h"
 #include "gameinput/menudata.h"
 #include "gameinput/markedfielddata.h"
+#include "gameinput/cursordata.h"
 
 class GameAction : public QObject
 {
@@ -145,9 +146,9 @@ public slots:
     QString getStepInputType();
     /**
      * @brief getStepCursor
-     * @return the cursor we want to show during this step
+     * @return the cursor we want to show during this step. Needs to be deleted by the reciever
      */
-    QString getStepCursor();
+    CursorData* getStepCursor();
     /**
      * @brief getMenuStepData
      * @return the data needed to create an input menu. the data needs to be deleted by the caller

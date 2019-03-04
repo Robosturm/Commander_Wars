@@ -18,10 +18,10 @@
 		<image file="icons/fuel.png" />
 		<image file="icons/transport.png" />
 		<image file="icons/transport+hidden.png" />
-		<image file="icons/co.png" />
-		<image file="icons/general.png" />
+		<image file="icons/co0.png" />
+		<image file="icons/co1.png" />
 		<image file="icons/lieutenant.png" />
-		<image file="icons/officier.png" />
+		<image file="icons/general.png" />		
 		<image file="icons/veteran.png" />
 		<image file="icons/hp+hidden.png" />
 			

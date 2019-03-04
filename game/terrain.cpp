@@ -223,7 +223,7 @@ void Terrain::loadBaseSprite(QString spriteID)
     }
 }
 
-QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder)
+QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder, bool useBuildingID)
 {
     QStringList searchList = list.split(",");
     QString ret = "";
@@ -330,7 +330,11 @@ QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool black
         if (pGameMap->onMap(curX, curY))
         {
             QString neighbourID = "";
-            if (useBaseTerrainID)
+            if (useBuildingID)
+            {
+                neighbourID = pGameMap->getTerrain(curX, curY)->getID();
+            }
+            else if (useBaseTerrainID)
             {
                 neighbourID = pGameMap->getTerrain(curX, curY)->getBaseTerrainID();
             }
@@ -441,6 +445,21 @@ void Terrain::setBuilding(Building* pBuilding)
     }
     // delete current unit to avoid strange impact :)
     setUnit(nullptr);
+}
+
+void Terrain::loadBuilding(QString buildingID)
+{
+    if (m_Building.get() != nullptr)
+    {
+        // delete it
+        this->removeChild(m_Building);
+        m_Building = nullptr;
+    }
+    m_Building = new Building(buildingID);
+    m_Building->updateBuildingSprites();
+    m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
+    m_Building->setTerrain(GameMap::getInstance()->getSpTerrain(Terrain::x, Terrain::y));
+    this->addChild(m_Building);
 }
 
 void Terrain::setUnit(spUnit pUnit)

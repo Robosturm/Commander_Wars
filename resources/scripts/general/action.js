@@ -43,7 +43,7 @@ var ACTION =
         return "";
     },
 
-    getStepCursor : function(action)
+    getStepCursor : function(action, cursorData)
     {
         return "cursor+default";
     },

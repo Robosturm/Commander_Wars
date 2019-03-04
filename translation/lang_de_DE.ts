@@ -44,7 +44,7 @@
 <context>
     <name>ACTION_CAPTURE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="38"/>
+        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="41"/>
         <source>Capture</source>
         <translation type="unfinished"></translation>
     </message>
@@ -73,7 +73,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="157"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="160"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -91,6 +91,14 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="31"/>
         <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_MISSILE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="27"/>
+        <source>Missile</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -327,7 +335,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="45"/>
+        <location filename="../main.cpp" line="46"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>

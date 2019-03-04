@@ -12,7 +12,7 @@ Cursor::Cursor()
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Cursor));
 }
 
-void Cursor::changeCursor(const QString& spriteID)
+void Cursor::changeCursor(const QString& spriteID, qint32 xOffset, qint32 yOffset, float scale)
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     if (m_CurrentCursor.get() != nullptr)
@@ -31,6 +31,8 @@ void Cursor::changeCursor(const QString& spriteID)
     {
         m_CurrentCursor->setResAnim(pAnim);
     }
+    m_CurrentCursor->setScale(scale);
+    m_CurrentCursor->setPosition(xOffset, yOffset);
     this->addChild(m_CurrentCursor);
 }
 

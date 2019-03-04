@@ -23,6 +23,9 @@ var Constructor = function()
             case "RADAR":
             case "TOWER":
             case "TOWN":
+            case "SILO":
+            case "SILO_ROCKET":
+            case "LABOR":
 			case "RIVER":
                 return 1;
 			case "FOREST":

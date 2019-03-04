@@ -15,6 +15,16 @@ var Constructor = function()
             building.loadSprite("pipestation+neutral", false);
         }
     };
+    this.getActions = function()
+    {
+        // returns a string id list of the actions this building can perform
+        return "ACTION_BUILD_UNITS";
+    };
+
+    this.getConstructionList = function()
+    {
+        return ["PIPERUNNER"];
+    };
 }
 
 Constructor.prototype = BUILDING;

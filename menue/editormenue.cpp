@@ -392,6 +392,7 @@ void EditorMenue::loadMap(QString filename)
             QDataStream stream(&file);
             GameMap::getInstance()->deserialize(stream);
             file.close();
+            GameMap::getInstance()->updateSprites();
         }
     }
 }

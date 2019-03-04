@@ -119,6 +119,7 @@ set(${PROJECT_NAME}_SRCS
         gameinput/humanplayerinputmenu.cpp
         gameinput/menudata.cpp
         gameinput/markedfielddata.cpp
+        gameinput/cursordata.cpp
 )
 
 

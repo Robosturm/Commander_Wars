@@ -6,5 +6,6 @@
 		<image file="cursor+default.png" cols = "4" />
 		<image file="cursor+unable.png" cols = "4" />
 		<image file="cursor+delete.png" cols = "4" />
+		<image file="cursor+missile.png" cols = "3" ScaleFactor = "1.5" />
 	</atlas>
 </resources>

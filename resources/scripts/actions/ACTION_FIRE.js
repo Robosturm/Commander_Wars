@@ -62,9 +62,12 @@ var Constructor = function()
     {
         return "FIELD";
     };
-    this.getStepCursor = function(action)
+    this.getStepCursor = function(action, cursorData)
     {
-        return "cursor+attack";
+        cursorData.setCursor("cursor+attack");
+        cursorData.setXOffset(- map.getImageSize() / 3);
+        cursorData.setYOffset(- map.getImageSize() / 3);
+        cursorData.setScale(1.5);
     };
     this.calcAttackerDamage = function(attacker, attackerWeapon, attackerPosition, defender, useLuck)
     {

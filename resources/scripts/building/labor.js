@@ -6,17 +6,16 @@ var Constructor = function()
         if (building.getOwnerID() >= 0)
         {
             // none neutral player
-            building.loadSprite("tower", false);
-            building.loadSprite("tower+mask", true);
+            building.loadSprite("labor", false);
+            building.loadSprite("labor+mask", true);
         }
         else
         {
             // neutral player
-            building.loadSprite("tower+neutral", false);
+            building.loadSprite("labor+neutral", false);
         }
     };
-
 }
 
 Constructor.prototype = BUILDING;
-var TOWER = new Constructor();
+var LABOR = new Constructor();

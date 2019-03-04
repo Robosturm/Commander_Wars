@@ -153,17 +153,20 @@ QString GameAction::getStepInputType()
     return "";
 }
 
-QString GameAction::getStepCursor()
+CursorData* GameAction::getStepCursor()
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getStepCursor";
+    CursorData* data = new CursorData();
     QJSValueList args1;
+    args1 << pApp->getInterpreter()->newQObject(this);
+    args1 << pApp->getInterpreter()->newQObject(data);
     QJSValue ret = pApp->getInterpreter()->doFunction(m_actionID, function1, args1);
     if (ret.isString())
     {
-        return ret.toString();
+        data->setCursor(ret.toString());
     }
-    return "";
+    return data;
 }
 
 MenuData* GameAction::getMenuStepData()

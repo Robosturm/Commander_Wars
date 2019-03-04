@@ -10,6 +10,8 @@ var Constructor = function()
         {
             return false;
         }
+        var capturableBuildings =["AIRPORT", "FACTORY", "HARBOUR", "HQ", "LABOR", "MINE",
+                                  "PIPESTATION", "RADAR", "TOWER", "TOWN"];
         if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
             (action.getMovementTarget() === null))
         {
@@ -18,7 +20,8 @@ var Constructor = function()
             {
 
                 var alliance = unit.getOwner().checkAlliance(building.getOwner());
-                if (alliance === GameEnums.Alliance_Enemy)
+                if ((alliance === GameEnums.Alliance_Enemy) &&
+                    (capturableBuildings.indexOf(building.getBuildingID()) >= 0))
                 {
                     return true;
                 }

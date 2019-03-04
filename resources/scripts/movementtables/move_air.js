@@ -23,12 +23,15 @@ var Constructor = function()
             case "RADAR":
             case "TOWER":
             case "TOWN":
+            case "SILO":
+            case "SILO_ROCKET":
+            case "LABOR":
 			case "FOREST":
 			case "WASTELAND":
             case "SEA":
 			case "ROUGH_SEA":
             case "REAF":
-			case "MOUNTAIN":
+            case "MOUNTAIN":
             case "RIVER":
 				return 1;
         }

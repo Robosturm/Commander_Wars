@@ -60,8 +60,8 @@ public:
         Background = -32000,
         Terrain = -30000,        
         CORange = 28998,
-        Animation,
         Cursor,
+        Animation,
         Objects,
     };
 

@@ -334,7 +334,9 @@ void HumanPlayerInput::getNextStepData()
             createMarkedField(pFields->at(i), pData->getColor(), Terrain::DrawPriority::MarkedFieldLow);
         }
         m_pMarkedFieldData = pData;
-        m_pMenue->getCursor()->changeCursor(m_pGameAction->getStepCursor());
+        CursorData* pCursordata = m_pGameAction->getStepCursor();
+        m_pMenue->getCursor()->changeCursor(pCursordata->getCursor(), pCursordata->getXOffset(), pCursordata->getYOffset(), pCursordata->getScale());
+        delete pCursordata;
     }
 }
 
@@ -391,7 +393,7 @@ void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::Dr
     oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), color.alpha()));
     oxygine::spTween tween2 = oxygine::createTween(tweenColor, 1);
     pSprite->addTween(tween2);
-    pSprite->setPriority(static_cast<qint8>(drawPriority));
+    pSprite->setPriority(static_cast<qint16>(drawPriority));
     pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
     pMap->getSpTerrain(point.x(), point.y())->addChild(pSprite);
@@ -482,9 +484,9 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                 textField2->attachTo(m_ZInformationLabel);
 
                 m_ZInformationLabel->setScale(1.5f);
-                m_ZInformationLabel->setPosition(x * GameMap::Imagesize - GameMap::Imagesize / 6.0f,
-                                                 y * GameMap::Imagesize - GameMap::Imagesize * 1.5f);
-                m_ZInformationLabel->setPriority(static_cast<qint8>(Mainapp::ZOrder::Animation));
+                m_ZInformationLabel->setPosition(x * GameMap::Imagesize - GameMap::Imagesize / 2.0f,
+                                                 y * GameMap::Imagesize - GameMap::Imagesize * 1.75f);
+                m_ZInformationLabel->setPriority(static_cast<qint16>(Mainapp::ZOrder::Animation));
                 GameMap::getInstance()->addChild(m_ZInformationLabel);
             }
             else
@@ -562,7 +564,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
                 oxygine::spSprite pSprite = new oxygine::Sprite();
                 oxygine::ResAnim* pAnim = pGameManager->getResAnim("arrow+unit");
                 pSprite->setResAnim(pAnim);
-                pSprite->setPriority(static_cast<qint8>(Terrain::DrawPriority::Arrow));
+                pSprite->setPriority(static_cast<qint16>(Terrain::DrawPriority::Arrow));
                 pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
                 pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
                 pMap->getSpTerrain(points[i].x(), points[i].y())->addChild(pSprite);

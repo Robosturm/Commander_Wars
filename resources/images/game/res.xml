@@ -39,7 +39,9 @@
 		<image file="tagpower.png" />
 		<image file="unhide.png" />
 		<image file="build.png" />
-		<image file="co_unit.png" />
+		<image file="co0.png" />
+		<image file="co1.png" />
+		<image file="missile.png" />		
 		
 		<!-- z information label -->
 		<image file="z_information_label.png" cols = "8" />

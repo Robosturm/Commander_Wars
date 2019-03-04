@@ -22,7 +22,7 @@ public:
      * @param mousePosY
      */
     void updatePosition(qint32 mousePosX, qint32 mousePosY);
-    void changeCursor(const QString& spriteID);
+    void changeCursor(const QString& spriteID, qint32 xOffset = 0, qint32 yOffset = 0, float scale = 1.0f);
     /**
      * @brief getMapPointX changes our cursor sprite
      * @return

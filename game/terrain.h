@@ -118,7 +118,7 @@ public slots:
      * @param searchType use GameMap::Directions here
      * @return
      */
-    QString getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder = true);
+    QString getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder = true, bool useBuildingID = false);
     /**
      * @brief loadOverlaySprite loads overlay sprites of this terrain
      * @param spriteID
@@ -149,6 +149,11 @@ public slots:
      * @param pBuilding
      */
     void setBuilding(Building* pBuilding);
+    /**
+     * @brief loadBuilding deletes the current building by loading the given building ID.
+     * @param buildingID
+     */
+    void loadBuilding(QString buildingID);
     /**
      * @brief getDefense
      */

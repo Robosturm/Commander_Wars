@@ -32,7 +32,7 @@ var Constructor = function()
     };
     this.getIcon = function()
     {
-        return "co_unit";
+        return "co0";
     };
     this.isFinalStep = function(action)
     {
