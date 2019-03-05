@@ -1,0 +1,7 @@
+kartenname=
+Spieler|FondsPerTown|StartFonds|AI|FactoryFonds
+groesse|width|heigth
+landschaft|X|Y|Z|TerrainID
+gebaeude|X|Y|Z|BuildingID|Player|CapturePoints|FireCount|Life
+einheit|X|Y|Z|UnitID|Ammo|Fuel|Hp|Owner|
+

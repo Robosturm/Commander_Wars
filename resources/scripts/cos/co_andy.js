@@ -102,7 +102,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY)))
                 {
-                    return 20;
+                    return 10;
                 }
                 break;
         }

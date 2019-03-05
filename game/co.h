@@ -10,11 +10,13 @@
 
 #include "game/smartUnit.h"
 
+#include "coreengine/fileserializable.h"
+
 class Unit;
 class Terrain;
 class Player;
 
-class CO : public QObject, public oxygine::Actor
+class CO : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
 public:
@@ -25,6 +27,25 @@ public:
      * @return
      */
     void setCOUnit(spUnit pUnit);
+    /**
+     * @brief serialize stores the object
+     * @param pStream
+     */
+    virtual void serialize(QDataStream& pStream) override;
+    /**
+     * @brief deserialize restores the object
+     * @param pStream
+     */
+    virtual void deserialize(QDataStream& pStream) override;
+    /**
+     * @brief getVersion
+     * @return
+     */
+    virtual qint32 getVersion()
+    {
+        return 1;
+    }
+    void init();
 signals:
 
 public slots:

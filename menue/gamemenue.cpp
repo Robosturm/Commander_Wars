@@ -29,7 +29,7 @@ GameMenue::GameMenue(QString map)
 
     // test code
 
-    GameMap::getInstance()->getspPlayer(0)->setCO("CO_EAGLE", 0);
+    GameMap::getInstance()->getspPlayer(0)->setCO("CO_ROBOSTURM", 0);
     GameMap::getInstance()->getspPlayer(0)->defineArmy();
 
     GameMap::getInstance()->getspPlayer(1)->setCO("CO_COLIN", 0);

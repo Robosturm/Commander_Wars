@@ -61,7 +61,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 3;
+        return 4;
     }
 
 
@@ -372,7 +372,6 @@ private:
     QString weapon2ID;
     qint32 fuel{-1};
     qint32 maxFuel{-1};
-    qint32 m_Rank{0};
     qint32 baseMovementPoints{0};
     bool m_Moved{false};
     QVector<spUnit> m_TransportUnits;

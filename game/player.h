@@ -44,7 +44,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 1;
+        return 2;
     }
     /**
      * @brief getBaseGameInput pointer to the ai or human player interface
@@ -175,6 +175,8 @@ public slots:
 private:
     quint32 playerID;
     qint32 fonds{0};
+    float fondsModifier{1.0f};
+
     QColor m_Color;
     QString playerArmy = "OS";
     spCO playerCOs[2] = {nullptr, nullptr};

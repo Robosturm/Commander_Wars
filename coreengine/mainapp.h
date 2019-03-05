@@ -37,6 +37,9 @@ public slots:
      * @return vector containing all fields in the given radius. Note: the Object needs to be deleted by the reciever
      */
     static QmlVectorPoint* getCircle(qint32 min, qint32 max);
+    /**
+     * @brief quitGame quits this game
+     */
     void quitGame();
 signals:
     void sigText(SDL_Event* event);

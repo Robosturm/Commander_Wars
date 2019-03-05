@@ -552,6 +552,7 @@ void Terrain::serialize(QDataStream& pStream)
         pStream << true;
         m_Unit->serialize(pStream);
     }
+    pStream << hp;
 }
 
 void Terrain::deserialize(QDataStream& pStream)
@@ -590,5 +591,9 @@ void Terrain::deserialize(QDataStream& pStream)
         m_Unit->setPriority(static_cast<qint16>(DrawPriority::Unit));
         m_Unit->setTerrain(GameMap::getInstance()->getSpTerrain(Terrain::x, Terrain::y));
         this->addChild(m_Unit);
+    }
+    if (version > 1)
+    {
+        pStream >> hp;
     }
 }

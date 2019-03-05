@@ -59,7 +59,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 1;
+        return 2;
     }
 signals:
 
@@ -136,7 +136,11 @@ private:
     /**
      * @brief m_Hp
      */
-    qint32 m_Hp;
+    qint32 m_Hp{-1};
+    /**
+      *
+      */
+    qint32 fireCount{0};
 };
 
 #endif // BUILDING_H

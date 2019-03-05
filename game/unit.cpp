@@ -1118,7 +1118,7 @@ void Unit::serialize(QDataStream& pStream)
     pStream << ammo1;
     pStream << ammo2;
     pStream << fuel;
-    pStream << m_Rank;
+    pStream << static_cast<qint32>(m_UnitRank);
     pStream << m_Owner->getPlayerID();
     pStream << m_Moved;
     qint32 units = m_TransportUnits.size();
@@ -1128,6 +1128,7 @@ void Unit::serialize(QDataStream& pStream)
         m_TransportUnits[i]->serialize(pStream);
     }
     pStream << capturePoints;
+    pStream << m_Hidden;
 }
 
 void Unit::deserialize(QDataStream& pStream)
@@ -1146,7 +1147,17 @@ void Unit::deserialize(QDataStream& pStream)
     setAmmo2(ammo2);
     pStream >> fuel;
     setFuel(fuel);
-    pStream >> m_Rank;
+    qint32 value = 0;
+    pStream >> value;
+    setUnitRank(static_cast<GameEnums::UnitRanks>(value));
+    if (m_UnitRank == GameEnums::UnitRank_CO0)
+    {
+        makeCOUnit(0);
+    }
+    else if (m_UnitRank == GameEnums::UnitRank_CO1)
+    {
+        makeCOUnit(1);
+    }
     quint32 playerID = 0;
     pStream >> playerID;
     m_Owner = GameMap::getInstance()->getspPlayer(playerID);
@@ -1166,6 +1177,10 @@ void Unit::deserialize(QDataStream& pStream)
     {
         pStream >> capturePoints;
         setCapturePoints(capturePoints);
+    }
+    if (version > 3)
+    {
+        pStream >> m_Hidden;
     }
 }
 

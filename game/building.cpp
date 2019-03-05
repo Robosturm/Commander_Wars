@@ -153,20 +153,6 @@ qint32 Building::getY() const
     return m_Terrain->getY();
 }
 
-void Building::serialize(QDataStream& pStream)
-{
-    pStream << getVersion();
-    pStream << m_BuildingID.toStdString().c_str();
-    if (m_Owner.get() == nullptr)
-    {
-        pStream << static_cast<qint32>(-1);
-    }
-    else
-    {
-        pStream << static_cast<qint32>(m_Owner->getPlayerID());
-    }
-}
-
 QStringList Building::getActionList()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -198,6 +184,22 @@ Terrain* Building::getTerrain()
     return m_Terrain.get();
 }
 
+void Building::serialize(QDataStream& pStream)
+{
+    pStream << getVersion();
+    pStream << m_BuildingID.toStdString().c_str();
+    if (m_Owner.get() == nullptr)
+    {
+        pStream << static_cast<qint32>(-1);
+    }
+    else
+    {
+        pStream << static_cast<qint32>(m_Owner->getPlayerID());
+    }
+    pStream << m_Hp;
+    pStream << fireCount;
+}
+
 void Building::deserialize(QDataStream& pStream)
 {
     qint32 version = 0;
@@ -208,4 +210,9 @@ void Building::deserialize(QDataStream& pStream)
     qint32 playerID = -1;
     pStream >> playerID;
     m_Owner = GameMap::getInstance()->getspPlayer(playerID);
+    if (version > 1)
+    {
+        pStream >> m_Hp;
+        pStream >> fireCount;
+    }
 }

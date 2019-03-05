@@ -1,4 +1,4 @@
-
+#include "QRandomGenerator"
 
 #include "game/player.h"
 
@@ -310,9 +310,12 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue)
         }
     }
     delete pPoints;
+
+    // create pseudo rand integer (not
+    QRandomGenerator randInt(static_cast<quint32>(highestDamage));
     if (targets.size() >= 0)
     {
-        return targets[Mainapp::randInt(0, targets.size() - 1)];
+        return targets[randInt.bounded(0, targets.size())];
     }
     else
     {
@@ -333,6 +336,29 @@ void Player::serialize(QDataStream& pStream)
     pStream << getVersion();
     quint32 color = m_Color.rgb();
     pStream << color;
+
+    pStream << playerID;
+    pStream << fonds;
+    pStream << fondsModifier;
+    pStream << playerArmy;
+    if (playerCOs[0].get() == nullptr)
+    {
+        pStream << false;
+    }
+    else
+    {
+        pStream << true;
+        playerCOs[0]->serialize(pStream);
+    }
+    if (playerCOs[1].get() == nullptr)
+    {
+        pStream << false;
+    }
+    else
+    {
+        pStream << true;
+        playerCOs[1]->serialize(pStream);
+    }
 }
 void Player::deserialize(QDataStream& pStream)
 {
@@ -341,4 +367,25 @@ void Player::deserialize(QDataStream& pStream)
     quint32 color;
     pStream >> color;
     m_Color.fromRgb(color);
+    if (version > 1)
+    {
+        pStream >> playerID;
+        pStream >> fonds;
+        pStream >> fondsModifier;
+        pStream >> playerArmy;
+        bool hasC0 = false;
+        pStream >> hasC0;
+        if (hasC0)
+        {
+            playerCOs[0] = new CO("", this);
+            playerCOs[0]->deserialize(pStream);
+        }
+        bool hasC1 = false;
+        pStream >> hasC1;
+        if (hasC1)
+        {
+            playerCOs[1] = new CO("", this);
+            playerCOs[1]->deserialize(pStream);
+        }
+    }
 }

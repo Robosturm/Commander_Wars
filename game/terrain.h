@@ -77,7 +77,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 1;
+        return 2;
     }
 public slots:
     QString getTerrainName() const;
@@ -205,6 +205,10 @@ private:
       * the unit at this position
       */
     spUnit m_Unit;
+    /**
+      * hp of this unit
+      */
+    qint32 hp{-1};
 
 };
 

@@ -63,6 +63,11 @@ public:
      */
     spPlayer getspPlayer(qint32 player);
     /**
+     * @brief getSpCurrentPlayer the current player
+     * @return
+     */
+    spPlayer getSpCurrentPlayer();
+    /**
      * @brief serialize stores the object
      * @param pStream
      */
@@ -78,7 +83,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 1;
+        return 2;
     }
 signals:
 
@@ -188,11 +193,6 @@ public slots:
      */
     Player* getCurrentPlayer();
     /**
-     * @brief getSpCurrentPlayer the current player
-     * @return
-     */
-    spPlayer getSpCurrentPlayer();
-    /**
      * @brief setCurrentPlayer changes the current player to this one
      * @param player
      */
@@ -234,6 +234,7 @@ public slots:
 private:
     static GameMap* m_pInstance;
 
+    QString mapName;
     qint32 width{0};
     qint32 heigth{0};
     QVector<QVector<spTerrain>*> fields;

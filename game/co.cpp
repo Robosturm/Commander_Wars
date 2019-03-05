@@ -10,12 +10,20 @@ CO::CO(QString coID, Player* owner)
     : m_Owner(owner),
       coID(coID)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    QString function1 = "init";
-    QJSValueList args1;
-    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
-    args1 << obj1;
-    QJSValue erg = pApp->getInterpreter()->doFunction(this->coID, function1, args1);
+    init();
+}
+
+void CO::init()
+{
+    if (!coID.isEmpty())
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        QString function1 = "init";
+        QJSValueList args1;
+        QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+        args1 << obj1;
+        QJSValue erg = pApp->getInterpreter()->doFunction(this->coID, function1, args1);
+    }
 }
 
 void CO::setCOUnit(spUnit pUnit)
@@ -524,4 +532,26 @@ bool CO::inCORange(QPoint position)
         }
     }
     return false;
+}
+
+void CO::serialize(QDataStream& pStream)
+{
+    pStream << getVersion();
+    pStream << coID;
+    pStream << powerStars;
+    pStream << superpowerStars;
+    pStream << powerFilled;
+    pStream << static_cast<qint32>(m_PowerMode);
+}
+
+void CO::deserialize(QDataStream& pStream)
+{
+    pStream >> coID;
+    pStream >> powerStars;
+    pStream >> superpowerStars;
+    pStream >> powerFilled;
+    qint32 value = 0;
+    pStream << value;
+    m_PowerMode = static_cast<GameEnums::PowerMode>(value);
+    init();
 }

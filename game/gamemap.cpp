@@ -551,14 +551,23 @@ void GameMap::serialize(QDataStream& pStream)
 {
     // store header
     pStream << getVersion();
+    pStream << mapName;
     pStream << width;
     pStream << heigth;
     pStream << getPlayerCount();
+    qint32 currentPlayerIdx = 0;
     for (qint32 i = 0; i < players.size(); i++)
     {
+        if (m_CurrentPlayer.get() == players[i].get())
+        {
+            currentPlayerIdx = i;
+        }
         players[i]->serialize(pStream);
     }
 
+
+    pStream << currentPlayerIdx;
+    pStream << currentDay;
     // store map
     for (qint32 y = 0; y < heigth; y++)
     {
@@ -587,6 +596,10 @@ void GameMap::deserialize(QDataStream& pStream)
     // restore map header
     qint32 version = 0;
     pStream >> version;
+    if (version > 1)
+    {
+        pStream >> mapName;
+    }
     pStream >> width;
     pStream >> heigth;
     qint32 playerCount = 0;
@@ -597,6 +610,13 @@ void GameMap::deserialize(QDataStream& pStream)
         players.append(new Player(i));
         // get player data from stream
         players[i]->deserialize(pStream);
+    }
+
+    qint32 currentPlayerIdx = 0;
+    if (version > 1)
+    {
+        pStream << currentPlayerIdx;
+        pStream << currentDay;
     }
 
     // restore map
@@ -613,6 +633,7 @@ void GameMap::deserialize(QDataStream& pStream)
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
         }
     }    
+    setCurrentPlayer(currentPlayerIdx);
 }
 
 qint32 GameMap::getImageSize()
