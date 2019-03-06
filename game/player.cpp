@@ -123,14 +123,14 @@ void Player::earnMoney(float modifier)
     GameMap* pMap = GameMap::getInstance();
     for (qint32 y = 0; y < pMap->getMapHeight(); y++)
     {
-        for (qint32 x = 0; x < pMap->getMapHeight(); x++)
+        for (qint32 x = 0; x < pMap->getMapWidth(); x++)
         {
             spBuilding pBuilding = pMap->getSpTerrain(x, y)->getSpBuilding();
             if (pBuilding.get() != nullptr)
             {
                 if (pBuilding->getOwner() == this)
                 {
-                    quint32 income = static_cast<quint32>(pBuilding->getBaseIncome() * modifier);
+                    quint32 income = static_cast<quint32>(pBuilding->getBaseIncome() * modifier * fondsModifier);
                     // todo modifier income by co's and rules
 
                     fonds += income;
@@ -329,6 +329,16 @@ void Player::defineArmy()
     {
         playerArmy = playerCOs[0]->getCOArmy();
     }
+}
+
+float Player::getFondsModifier() const
+{
+    return fondsModifier;
+}
+
+void Player::setFondsModifier(float value)
+{
+    fondsModifier = value;
 }
 
 void Player::serialize(QDataStream& pStream)

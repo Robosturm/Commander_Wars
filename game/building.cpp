@@ -184,6 +184,26 @@ Terrain* Building::getTerrain()
     return m_Terrain.get();
 }
 
+qint32 Building::getFireCount() const
+{
+    return fireCount;
+}
+
+void Building::setFireCount(const qint32 &value)
+{
+    fireCount = value;
+}
+
+qint32 Building::getHp() const
+{
+    return m_Hp;
+}
+
+void Building::setHp(const qint32 &Hp)
+{
+    m_Hp = Hp;
+}
+
 void Building::serialize(QDataStream& pStream)
 {
     pStream << getVersion();

@@ -60,6 +60,16 @@ Terrain::Terrain(const QString& terrainID, qint32 x, qint32 y)
     }
 }
 
+qint32 Terrain::getHp() const
+{
+    return hp;
+}
+
+void Terrain::setHp(const qint32 &value)
+{
+    hp = value;
+}
+
 QString Terrain::getTerrainName() const
 {
     return terrainName;

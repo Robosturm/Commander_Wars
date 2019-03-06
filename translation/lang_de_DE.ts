@@ -189,28 +189,43 @@
 <context>
     <name>EditorMenue</name>
     <message>
-        <location filename="../menue/editormenue.cpp" line="27"/>
+        <location filename="../menue/editormenue.cpp" line="29"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="28"/>
+        <location filename="../menue/editormenue.cpp" line="30"/>
         <source>Map Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="29"/>
+        <location filename="../menue/editormenue.cpp" line="31"/>
         <source>Save Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="30"/>
+        <location filename="../menue/editormenue.cpp" line="32"/>
         <source>Load Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="31"/>
+        <location filename="../menue/editormenue.cpp" line="33"/>
+        <source>Import CoW Txt Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="34"/>
         <source>Exit Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="36"/>
+        <source>New Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="37"/>
+        <source>Edit Map</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -274,6 +289,24 @@
     <message>
         <location filename="../menue/mainwindow.cpp" line="61"/>
         <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MapEditDialog</name>
+    <message>
+        <location filename="../objects/mapeditdialog.cpp" line="29"/>
+        <source>Map name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/mapeditdialog.cpp" line="41"/>
+        <source>Map width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/mapeditdialog.cpp" line="51"/>
+        <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

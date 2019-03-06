@@ -90,6 +90,11 @@ public slots:
      * @param file
      */
     void loadMap(QString filename);
+    /**
+     * @brief importCoWTxTMap
+     * @param filename
+     */
+    void importCoWTxTMap(QString filename);
 private:
     spEditorSelection m_EditorSelection{new EditorSelection()};
     spTopbar m_Topbar;

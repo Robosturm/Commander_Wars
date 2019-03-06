@@ -28,7 +28,7 @@ var Constructor = function()
     };
     this.getIcon = function()
     {
-        return "missile";
+        return "missile_icon";
     };
     this.getStepCursor = function(action, cursorData)
     {

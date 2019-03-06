@@ -615,8 +615,8 @@ void GameMap::deserialize(QDataStream& pStream)
     qint32 currentPlayerIdx = 0;
     if (version > 1)
     {
-        pStream << currentPlayerIdx;
-        pStream << currentDay;
+        pStream >> currentPlayerIdx;
+        pStream >> currentDay;
     }
 
     // restore map
@@ -743,6 +743,16 @@ QmlVectorUnit* GameMap::getUnits(Player* pPlayer)
         }
     }
     return ret;
+}
+
+QString GameMap::getMapName() const
+{
+    return mapName;
+}
+
+void GameMap::setMapName(const QString &value)
+{
+    mapName = value;
 }
 
 void GameMap::nextTurn()

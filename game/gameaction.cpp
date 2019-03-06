@@ -77,7 +77,8 @@ bool GameAction::canBePerformed(QString actionID)
 
     if ((pBuilding != nullptr) && (pUnit == nullptr))
     {
-        if (pBuilding->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID())
+        if ((pBuilding->getOwner() == nullptr) ||
+            (pBuilding->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID()))
         {
             return false;
         }

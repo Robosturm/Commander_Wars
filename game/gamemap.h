@@ -85,6 +85,8 @@ public:
     {
         return 2;
     }
+
+
 signals:
 
 public slots:
@@ -231,6 +233,13 @@ public slots:
      * @return
      */
     QmlVectorUnit* getUnits(Player* pPlayer);
+    /**
+     * @brief importTxtMap imports a map in old CoW text-format
+     */
+    void importTxtMap(QString file);
+
+    QString getMapName() const;
+    void setMapName(const QString &value);
 private:
     static GameMap* m_pInstance;
 

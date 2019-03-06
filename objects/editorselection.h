@@ -68,7 +68,10 @@ public:
 
 
     PlacementSize getSizeMode() const;
-
+    /**
+     * @brief createPlayerSelection
+     */
+    void createPlayerSelection();
 signals:
    void sigClickedPlacementSelection(qint32 x, qint32 y);
    void sigUpdateSelectedPlayer();
@@ -115,7 +118,6 @@ private:
     void createBoxSelectionMode();
     void initSelection();
 
-    void createPlayerSelection();
     /**
      * @brief calcMaxPlayerSelection the amount of player hq's shown in the select player part
      * @return

@@ -14,6 +14,8 @@
 
 #include "objects/filedialog.h"
 
+#include "objects/mapeditdialog.h"
+
 #include "game/terrainfindingsystem.h"
 #include "game/co.h"
 
@@ -28,7 +30,11 @@ EditorMenue::EditorMenue()
     m_Topbar->addGroup(tr("Map Info"));
     m_Topbar->addItem(tr("Save Map"), "SAVEMAP", 0);
     m_Topbar->addItem(tr("Load Map"), "LOADMAP", 0);
+    m_Topbar->addItem(tr("Import CoW Txt Map"), "IMPORTCOWTXT", 0);
     m_Topbar->addItem(tr("Exit Editor"), "EXIT", 0);
+
+    m_Topbar->addItem(tr("New Map"), "NEWMAP", 1);
+    m_Topbar->addItem(tr("Edit Map"), "EDITMAP", 1);
 
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
     {
@@ -98,6 +104,26 @@ void EditorMenue::clickedTopbar(QString itemID)
         spFileDialog saveDialog = new FileDialog(path, wildcards);
         this->addChild(saveDialog);
         connect(saveDialog.get(), SIGNAL(sigFileSelected(QString)), this, SLOT(loadMap(QString)), Qt::QueuedConnection);
+    }
+    else if (itemID == "IMPORTCOWTXT")
+    {
+        QVector<QString> wildcards;
+        wildcards.append("*.txt");
+        QString path = QCoreApplication::applicationDirPath() + "/maps";
+        spFileDialog saveDialog = new FileDialog(path, wildcards);
+        this->addChild(saveDialog);
+        connect(saveDialog.get(), SIGNAL(sigFileSelected(QString)), this, SLOT(importCoWTxTMap(QString)), Qt::QueuedConnection);
+    }
+    else if (itemID == "NEWMAP")
+    {
+        spMapEditDialog mapEditDialog = new MapEditDialog("", 20, 20);
+        this->addChild(mapEditDialog);
+    }
+    else if (itemID == "EDITMAP")
+    {
+        GameMap* pGameMap = GameMap::getInstance();
+        spMapEditDialog mapEditDialog = new MapEditDialog(pGameMap->getMapName(), pGameMap->getMapWidth(), pGameMap->getMapHeight());
+        this->addChild(mapEditDialog);
     }
 }
 
@@ -229,7 +255,7 @@ bool EditorMenue::canUnitBePlaced(qint32 x, qint32 y)
     if (pMap->onMap(x, y))
     {
         MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
-        QString movementType =m_EditorSelection->getCurrentSpUnit()->getMovementType();
+        QString movementType = m_EditorSelection->getCurrentSpUnit()->getMovementType();
         if (pMovementTableManager->getBaseMovementPoints(movementType, pMap->getTerrain(x, y)->getID()) > 0)
         {
             return true;
@@ -393,6 +419,20 @@ void EditorMenue::loadMap(QString filename)
             GameMap::getInstance()->deserialize(stream);
             file.close();
             GameMap::getInstance()->updateSprites();
+            m_EditorSelection->createPlayerSelection();
+        }
+    }
+}
+
+void EditorMenue::importCoWTxTMap(QString filename)
+{
+    if (filename.endsWith(".txt"))
+    {
+        QFile file(filename);
+        if (file.exists())
+        {
+            GameMap::getInstance()->importTxtMap(filename);
+            m_EditorSelection->createPlayerSelection();
         }
     }
 }

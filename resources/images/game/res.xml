@@ -41,7 +41,7 @@
 		<image file="build.png" />
 		<image file="co0.png" />
 		<image file="co1.png" />
-		<image file="missile.png" />		
+		<image file="missile_icon.png" />		
 		
 		<!-- z information label -->
 		<image file="z_information_label.png" cols = "8" />

@@ -60,8 +60,6 @@ public:
      */
     void setBaseGameInput(BaseGameInputIF *pBaseGameInput);
 
-
-
 signals:
 
 public slots:
@@ -172,6 +170,9 @@ public slots:
      * @brief defineArmy defines our army sprites based on the current co at position 0
      */
     void defineArmy();
+
+    float getFondsModifier() const;
+    void setFondsModifier(float value);
 private:
     quint32 playerID;
     qint32 fonds{0};

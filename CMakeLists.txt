@@ -58,6 +58,8 @@ set(${PROJECT_NAME}_SRCS
         objects/dropdownmenu.cpp
         objects/panel.cpp
         objects/filedialog.cpp
+        objects/mapeditdialog.cpp
+        objects/spinbox.cpp
 
         #menues
         menue/mainwindow.cpp
@@ -120,6 +122,9 @@ set(${PROJECT_NAME}_SRCS
         gameinput/menudata.cpp
         gameinput/markedfielddata.cpp
         gameinput/cursordata.cpp
+
+        # map importing\exporting support
+        mapsupport/importcowtxt.cpp
 )
 
 
