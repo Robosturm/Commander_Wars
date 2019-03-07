@@ -31,32 +31,11 @@ GameMap* GameMap::m_pInstance = nullptr;
 
 
 
-GameMap::GameMap(qint32 width, qint32 heigth)
-    : width(width),
-      heigth(heigth)
+GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
 {
     loadMapData();
+    newMap(width, heigth, playerCount);
 
-    for (qint32 y = 0; y < heigth; y++)
-    {
-        fields.append(new QVector<spTerrain>());
-        for (qint32 x = 0; x < width; x++)
-        {
-            spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y);
-            this->addChild(pTerrain);
-            fields[y]->append(pTerrain);
-            pTerrain->setPosition(x * Imagesize, y * Imagesize);
-            pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
-        }
-    }
-    // add two players to a default map :)
-    for (quint32 i = 0; i < 2; i++)
-    {
-        players.append(new Player(i));
-    }
-
-    updateSprites();
-    centerMap(width / 2, heigth / 2);
 }
 
 
@@ -69,6 +48,8 @@ GameMap::GameMap(QString map, bool gamestart)
     deserialize(pStream);
 
     updateSprites();
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
     centerMap(width / 2, heigth / 2);
 }
 
@@ -95,6 +76,31 @@ void GameMap::loadMapData()
     pCOSpriteManager->loadAll();
 }
 
+void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount)
+{
+    clearMap();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        fields.append(new QVector<spTerrain>());
+        for (qint32 x = 0; x < width; x++)
+        {
+            spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y);
+            this->addChild(pTerrain);
+            fields[y]->append(pTerrain);
+            pTerrain->setPosition(x * Imagesize, y * Imagesize);
+            pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
+        }
+    }
+    // add two players to a default map :)
+    for (qint32 i = 0; i < playerCount; i++)
+    {
+        players.append(new Player(static_cast<quint32>(i)));
+    }
+
+    updateSprites();
+    centerMap(width / 2, heigth / 2);
+}
+
 GameMap::~GameMap()
 {
     m_pInstance = nullptr;
@@ -102,7 +108,7 @@ GameMap::~GameMap()
     Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
     pInterpreter->deleteObject(m_JavascriptName);
     // clean up session
-    for (qint32 y = 0; y < heigth; y++)
+    for (qint32 y = 0; y < fields.size(); y++)
     {
         //
         fields.at(y)->clear();
@@ -182,6 +188,8 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput)
     if ((xInput < 0) && (yInput < 0))
     {
         // update terrain sprites
+        qint32 heigth = getMapHeight();
+        qint32 width = getMapWidth();
         for (qint32 y = 0; y < heigth; y++)
         {
             for (qint32 x = 0; x < width; x++)
@@ -220,6 +228,8 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput)
             }
         }
     }
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
@@ -231,6 +241,8 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput)
 
 Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint32 range)
 {
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
     if (range < 0)
     {
         range = width + heigth;
@@ -333,7 +345,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
             }
         }
 
-        if (currentRadius > width && currentRadius > heigth)
+        if (currentRadius > getMapWidth() && currentRadius > getMapHeight())
         {
             break;
         }
@@ -343,12 +355,12 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
 
 qint32 GameMap::getMapWidth() const
 {
-    return width;
+    return fields.at(0)->size();
 }
 
 qint32 GameMap::getMapHeight() const
 {
-    return heigth;
+    return fields.size();
 }
 
 void GameMap::getField(qint32& x, qint32& y, GameEnums::Directions direction)
@@ -408,6 +420,8 @@ void GameMap::getField(qint32& x, qint32& y, GameEnums::Directions direction)
 
 bool GameMap::onMap(qint32 x, qint32 y)
 {
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
     if ((x >= 0) &&
         (y >= 0) &&
         (x < width) &&
@@ -431,6 +445,8 @@ void GameMap::centerMap(qint32 x, qint32 y)
 
 void GameMap::moveMap(qint32 x, qint32 y)
 {
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
     // draw point
     qint32 resX = this->getPosition().x + x;
     qint32 resY = this->getPosition().y + y;
@@ -549,6 +565,8 @@ bool GameMap::canBePlaced(const QString& terrainID, qint32 x, qint32 y)
 
 void GameMap::serialize(QDataStream& pStream)
 {
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
     // store header
     pStream << getVersion();
     pStream << mapName;
@@ -579,12 +597,12 @@ void GameMap::serialize(QDataStream& pStream)
     }
 }
 
-void GameMap::deserialize(QDataStream& pStream)
+void GameMap::clearMap()
 {
     // delete all data
-    for (qint32 y = 0; y < heigth; y++)
+    for (qint32 y = 0; y < fields.size(); y++)
     {
-        for (qint32 x = 0; x < width; x++)
+        for (qint32 x = 0; x < fields.at(y)->size(); x++)
         {
             this->removeChild(fields.at(y)->at(x));
         }
@@ -592,6 +610,11 @@ void GameMap::deserialize(QDataStream& pStream)
     }
     fields.clear();
     players.clear();
+}
+
+void GameMap::deserialize(QDataStream& pStream)
+{
+    clearMap();
 
     // restore map header
     qint32 version = 0;
@@ -600,6 +623,8 @@ void GameMap::deserialize(QDataStream& pStream)
     {
         pStream >> mapName;
     }
+    qint32 heigth = 0;
+    qint32 width = 0;
     pStream >> width;
     pStream >> heigth;
     qint32 playerCount = 0;
@@ -643,6 +668,8 @@ qint32 GameMap::getImageSize()
 
 void GameMap::enableUnits(Player* pPlayer)
 {
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
@@ -681,6 +708,8 @@ void GameMap::nextPlayer()
 
 void GameMap::startOfTurn(Player* pPlayer)
 {
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
@@ -708,6 +737,8 @@ void GameMap::startOfTurn(Player* pPlayer)
 
 void GameMap::checkFuel(Player* pPlayer)
 {
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
     for (qint32 y = 0; y < heigth; y++)
     {
         for (qint32 x = 0; x < width; x++)
@@ -727,6 +758,8 @@ void GameMap::checkFuel(Player* pPlayer)
 
 QmlVectorUnit* GameMap::getUnits(Player* pPlayer)
 {
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
     QmlVectorUnit* ret = new QmlVectorUnit();
     for (qint32 y = 0; y < heigth; y++)
     {

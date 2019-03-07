@@ -95,6 +95,14 @@ public slots:
      * @param filename
      */
     void importCoWTxTMap(QString filename);
+    /**
+     * @brief newMap
+     * @param mapName
+     * @param mapWidth
+     * @param mapHeigth
+     * @param playerCount
+     */
+    void newMap(QString mapName, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount);
 private:
     spEditorSelection m_EditorSelection{new EditorSelection()};
     spTopbar m_Topbar;

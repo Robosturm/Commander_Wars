@@ -36,14 +36,21 @@ public:
      * @param width
      * @param heigth
      */
-    explicit GameMap(qint32 width, qint32 heigth);
+    explicit GameMap(qint32 width, qint32 heigth, qint32 playerCount);
+
     /**
      * @brief GameMap
      * @param map path to the map which should be loaded
      */
     explicit GameMap(QString map, bool gamestart);
     virtual ~GameMap();
-
+    /**
+     * @brief newMap
+     * @param width
+     * @param heigth
+     * @param playerCount
+     */
+    void newMap(qint32 width, qint32 heigth, qint32 playerCount);
 
     inline static GameMap* getInstance()
     {
@@ -85,8 +92,10 @@ public:
     {
         return 2;
     }
-
-
+    /**
+     * @brief clearMap
+     */
+    void clearMap();
 signals:
 
 public slots:
@@ -244,8 +253,6 @@ private:
     static GameMap* m_pInstance;
 
     QString mapName;
-    qint32 width{0};
-    qint32 heigth{0};
     QVector<QVector<spTerrain>*> fields;
     QVector<spPlayer> players;
     spPlayer m_CurrentPlayer;

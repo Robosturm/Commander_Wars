@@ -241,7 +241,7 @@ void EditorSelection::createPlayerSelection()
         m_playerStartIndex += 1;
         if (m_playerStartIndex >= m_Players.size() - calcMaxPlayerSelection())
         {
-            m_playerStartIndex = m_Players.size() - 1 - calcMaxPlayerSelection();
+            m_playerStartIndex = m_Players.size() - calcMaxPlayerSelection();
             if (m_playerStartIndex < 0)
             {
                 m_playerStartIndex = 0;

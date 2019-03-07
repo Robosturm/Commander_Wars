@@ -116,13 +116,16 @@ void EditorMenue::clickedTopbar(QString itemID)
     }
     else if (itemID == "NEWMAP")
     {
-        spMapEditDialog mapEditDialog = new MapEditDialog("", 20, 20);
+        spMapEditDialog mapEditDialog = new MapEditDialog("", 20, 20, 2);
+        this->addChild(mapEditDialog);
+        connect(mapEditDialog.get(), SIGNAL(editFinished(QString, qint32, qint32, qint32)), this, SLOT(newMap(QString, qint32, qint32, qint32)), Qt::QueuedConnection);
         this->addChild(mapEditDialog);
     }
     else if (itemID == "EDITMAP")
     {
         GameMap* pGameMap = GameMap::getInstance();
-        spMapEditDialog mapEditDialog = new MapEditDialog(pGameMap->getMapName(), pGameMap->getMapWidth(), pGameMap->getMapHeight());
+        spMapEditDialog mapEditDialog = new MapEditDialog(pGameMap->getMapName(), pGameMap->getMapWidth(), pGameMap->getMapHeight(), pGameMap->getPlayerCount());
+        connect(mapEditDialog.get(), SIGNAL(editFinished(QString, qint32, qint32, qint32)), this, SLOT(newMap(QString, qint32, qint32, qint32)), Qt::QueuedConnection);
         this->addChild(mapEditDialog);
     }
 }
@@ -435,4 +438,12 @@ void EditorMenue::importCoWTxTMap(QString filename)
             m_EditorSelection->createPlayerSelection();
         }
     }
+}
+
+void EditorMenue::newMap(QString mapName, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount)
+{
+    GameMap* pMap = GameMap::getInstance();
+    pMap->setMapName(mapName);
+    pMap->newMap(mapWidth, mapHeigth, playerCount);
+    m_EditorSelection->createPlayerSelection();
 }

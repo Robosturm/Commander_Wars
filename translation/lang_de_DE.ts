@@ -300,13 +300,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="41"/>
+        <location filename="../objects/mapeditdialog.cpp" line="42"/>
         <source>Map width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="51"/>
+        <location filename="../objects/mapeditdialog.cpp" line="55"/>
+        <source>Map heigth:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/mapeditdialog.cpp" line="68"/>
+        <source>Map Player:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/mapeditdialog.cpp" line="78"/>
         <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/mapeditdialog.cpp" line="89"/>
+        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

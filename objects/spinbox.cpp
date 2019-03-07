@@ -58,6 +58,10 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
         m_spinDirection = -1;
+        float value = m_Text.toFloat();
+        value += m_spinDirection;
+        setValue(value);
+        toggle.start();
     });
     pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
     {
@@ -82,6 +86,10 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
         m_spinDirection = 1;
+        float value = m_Text.toFloat();
+        value += m_spinDirection;
+        setValue(value);
+        toggle.start();
     });
     pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
     {

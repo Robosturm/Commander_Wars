@@ -27,7 +27,7 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map)
     // check for map creation
     if ((width > 0) && (heigth > 0))
     {
-        oxygine::Actor::addChild(new GameMap(width, heigth));
+        oxygine::Actor::addChild(new GameMap(width, heigth, 4));
     }
     else
     {

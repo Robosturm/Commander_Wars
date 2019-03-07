@@ -56,6 +56,9 @@
 		<image file="bh/co_hawke+nrm.png" />
 		<image file="bh/co_hawke+info.png" />
 		<image file="bh/co_hawke+face.png" cols = "3" />
+		<image file="bh/co_adder+nrm.png" />
+		<image file="bh/co_adder+info.png" />
+		<image file="bh/co_adder+face.png" cols = "3" />
 		
 		<!-- ML -->
 		<image file="ml/co_napoleon+nrm.png" />

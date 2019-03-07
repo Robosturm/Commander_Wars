@@ -25,12 +25,12 @@ var Constructor = function()
     this.throwMeteor = function(co, damage)
     {
         // let a meteor fall :D
-        var meteorTarget = co.getPlayer().getRockettarget(3, damage);
+        var meteorTarget = co.getPlayer().getRockettarget(2, damage);
         // create cool meteor animation :)
         var animation = GameAnimationFactory.createAnimation(meteorTarget.x + 2, meteorTarget.y - 4);
         animation.addSprite("meteor", 0, 0, 2500, 3.0);
-        animation.addTweenPosition(Qt.point((meteorTarget.x - 2) * map.getImageSize(), (meteorTarget.y - 3) * map.getImageSize()), 1000);
-        animation.addTweenScale(2 / 3, 1000);
+        animation.addTweenPosition(Qt.point((meteorTarget.x - 2) * map.getImageSize(), (meteorTarget.y - 2) * map.getImageSize()), 1000);
+        animation.addTweenScale(120 / 192, 1000);
         animation.addTweenColor(0, "#FFFFFFFF", "#00FFFFFF", 1000, false, 1200);
 
         var animation2 = GameAnimationFactory.createAnimation(0, 0);

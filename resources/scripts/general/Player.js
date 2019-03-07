@@ -9,19 +9,19 @@ var PLAYER =
         switch (player.getPlayerID())
         {
             case 0:
-                player.setColor("tomato");
+                player.setColor("#f85800");
                 break;
             case 1:
-                player.setColor("royalblue");
+                player.setColor("#0068e8");
                 break;
             case 2:
-                player.setColor("lime");
+                player.setColor("#00c010");
                 break;
             case 3:
-                player.setColor("yellow");
+                player.setColor("#f8c000");
                 break;
             case 4:
-                player.setColor("darkslategray");
+                player.setColor("#6038a0");
                 break;
             case 5:
                 player.setColor("darkslateblue");

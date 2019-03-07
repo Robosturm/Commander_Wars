@@ -92,17 +92,7 @@ void GameMap::importTxtMap(QString file)
 {
     if (QFile::exists(file))
     {
-        // delete all data
-        for (qint32 y = 0; y < heigth; y++)
-        {
-            for (qint32 x = 0; x < width; x++)
-            {
-                this->removeChild(fields.at(y)->at(x));
-            }
-            fields.at(y)->clear();
-        }
-        fields.clear();
-        players.clear();
+        clearMap();
 
         QFile data(file);
         data.open(QFile::ReadOnly);
@@ -127,8 +117,8 @@ void GameMap::importTxtMap(QString file)
             else if (line.startsWith(("GROESSE")))
             {
                 QStringList data = line.split("|");
-                width = data[1].toInt();
-                heigth = data[2].toInt();
+                qint32 width = data[1].toInt();
+                qint32 heigth = data[2].toInt();
                 for (qint32 y = 0; y < heigth; y++)
                 {
                     fields.append(new QVector<spTerrain>());
