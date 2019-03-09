@@ -109,10 +109,11 @@ void GameMap::importTxtMap(QString file)
             else if (line.startsWith("SPIELER|"))
             {
                 QStringList data = line.split("|");
-                players.append(new Player(players.size()));
+                players.append(new Player());
                 qint32 idx = players.size() - 1;
                 players[idx]->setFondsModifier(static_cast<float>(data[1].toInt()) / 1000.0f);
                 players[idx]->setFonds(data[2].toInt());
+                players[idx]->init();
             }
             else if (line.startsWith(("GROESSE")))
             {

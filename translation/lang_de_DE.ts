@@ -151,7 +151,7 @@
     <name>BRIDGE</name>
     <message>
         <location filename="../resources/scripts/terrain/BRIDGE.js" line="6"/>
-        <source>Street</source>
+        <source>Bridge</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -189,43 +189,68 @@
 <context>
     <name>EditorMenue</name>
     <message>
-        <location filename="../menue/editormenue.cpp" line="29"/>
+        <location filename="../menue/editormenue.cpp" line="30"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="30"/>
+        <location filename="../menue/editormenue.cpp" line="31"/>
         <source>Map Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="31"/>
+        <location filename="../menue/editormenue.cpp" line="32"/>
         <source>Save Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="32"/>
+        <location filename="../menue/editormenue.cpp" line="33"/>
         <source>Load Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="33"/>
+        <location filename="../menue/editormenue.cpp" line="34"/>
         <source>Import CoW Txt Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="34"/>
+        <location filename="../menue/editormenue.cpp" line="35"/>
         <source>Exit Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="36"/>
+        <location filename="../menue/editormenue.cpp" line="37"/>
         <source>New Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="37"/>
+        <location filename="../menue/editormenue.cpp" line="38"/>
         <source>Edit Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="39"/>
+        <source>Flip Map X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="40"/>
+        <source>Flip Map Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="41"/>
+        <source>Rotate Map X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="42"/>
+        <source>Rotate Map Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="43"/>
+        <source>Random Map</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -248,12 +273,12 @@
 <context>
     <name>FileDialog</name>
     <message>
-        <location filename="../objects/filedialog.cpp" line="39"/>
+        <location filename="../objects/filedialog.cpp" line="40"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/filedialog.cpp" line="57"/>
+        <location filename="../objects/filedialog.cpp" line="78"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -283,11 +308,16 @@
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="50"/>
-        <source>Map Editor</source>
+        <source>Demo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/mainwindow.cpp" line="61"/>
+        <source>Map Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mainwindow.cpp" line="72"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>

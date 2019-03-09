@@ -2,7 +2,10 @@
 #define GAMEMAP_H
 
 #include <QObject>
+
 #include <QVector>
+
+#include "QRandomGenerator"
 
 #include "oxygine/core/ref_counter.h"
 #include "oxygine-framework.h"
@@ -51,7 +54,86 @@ public:
      * @param playerCount
      */
     void newMap(qint32 width, qint32 heigth, qint32 playerCount);
-
+    /**
+     * @brief changeMap
+     * @param width
+     * @param heigth
+     * @param playerCount
+     */
+    void changeMap(qint32 width, qint32 heigth, qint32 playerCount);
+    /**
+     * @brief flipX
+     */
+    void flipX();
+    /**
+     * @brief flipY
+     */
+    void flipY();
+    /**
+     * @brief rotateX
+     */
+    void rotateX();
+    /**
+     * @brief rotateY
+     */
+    void rotateY();
+    /**
+     * @brief randomMap
+     * @param width
+     * @param heigth
+     * @param playerCount
+     * @param roadSupport
+     * @param seed
+     * @param forestchance
+     * @param mountainChance
+     * @param seachance
+     * @param buildingchance
+     * @return seed used to create the map
+     */
+    qint32 randomMap(qint32 width,qint32 heigth, qint32 playerCount,
+                              bool roadSupport = true, qint32 seed = -1,
+                              float forestchance = 0.0286f, float mountainChance= 0.0125f, float seachance = 0.007024f, float buildingchance = 0.1f);
+    /**
+     * @brief placeGroup
+     * @param startX
+     * @param startY
+     * @param count
+     * @param terrainID
+     * @param terrainRadius
+     * @param randInt
+     */
+    void placeGroup(qint32 startX, qint32 startY, qint32 count, QString terrainID, qint32 terrainRadius, QRandomGenerator& randInt);
+    /**
+     * @brief addTerrainPoint
+     * @param points
+     * @param x
+     * @param y
+     * @param terrainID
+     * @param terrainRadius
+     */
+    void addTerrainPoint(QVector<QPoint>& points, qint32 x, qint32 y, QString terrainID, qint32 terrainRadius);
+    /**
+     * @brief placeReaf
+     * @param randInt
+     */
+    void placeReaf(QRandomGenerator& randInt);
+    /**
+     * @brief placeBeach
+     * @param randInt
+     */
+    void placeBeach(QRandomGenerator& randInt);
+    /**
+     * @brief createBuildings
+     * @param buildings
+     * @param roadSupport
+     * @param randInt
+     * @param noHarbour
+     */
+    void createBuildings(qint32 buildings, bool roadSupport, QRandomGenerator& randInt, bool noHarbour = false);
+    /**
+     * @brief getInstance
+     * @return
+     */
     inline static GameMap* getInstance()
     {
         return m_pInstance;

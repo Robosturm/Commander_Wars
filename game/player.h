@@ -23,11 +23,9 @@ class Player : public QObject, public oxygine::Actor, public FileSerializable
 
 public:
 
-    explicit Player(quint32 id);
+    explicit Player();
+    void init();
     virtual ~Player() override;
-
-    void setPlayerID(const quint32 &value);
-
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -44,7 +42,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 2;
+        return 3;
     }
     /**
      * @brief getBaseGameInput pointer to the ai or human player interface
@@ -77,7 +75,7 @@ public slots:
      * @brief getPlayerID player id of this player from 0 to n
      * @return
      */
-    quint32 getPlayerID() const;
+    qint32 getPlayerID() const;
     /**
      * @brief getArmy the army string id of this player.
      * @return
@@ -101,6 +99,10 @@ public slots:
      * @param value
      */
     void addFonds(const qint32 &value);
+    /**
+     * @brief setFonds
+     * @param value
+     */
     void setFonds(const qint32 &value);
     /**
      * @brief earnMoney earns money based on the buildings the player has
@@ -170,11 +172,22 @@ public slots:
      * @brief defineArmy defines our army sprites based on the current co at position 0
      */
     void defineArmy();
-
+    /**
+     * @brief getFondsModifier
+     * @return
+     */
     float getFondsModifier() const;
+    /**
+     * @brief setFondsModifier
+     * @param value
+     */
     void setFondsModifier(float value);
+    /**
+     * @brief getBuildingCount
+     * @return
+     */
+    qint32 getBuildingCount();
 private:
-    quint32 playerID;
     qint32 fonds{0};
     float fondsModifier{1.0f};
 

@@ -29,10 +29,10 @@ GameMenue::GameMenue(QString map)
 
     // test code
 
-    GameMap::getInstance()->getspPlayer(0)->setCO("CO_ADDER", 0);
+    GameMap::getInstance()->getspPlayer(0)->setCO("CO_JAKE", 0);
     GameMap::getInstance()->getspPlayer(0)->defineArmy();
 
-    GameMap::getInstance()->getspPlayer(1)->setCO("CO_COLIN", 0);
+    GameMap::getInstance()->getspPlayer(1)->setCO("CO_FLAK", 0);
     GameMap::getInstance()->getspPlayer(1)->setCO("CO_MAX", 1);
     GameMap::getInstance()->getspPlayer(1)->defineArmy();
     GameMap::getInstance()->updateSprites();

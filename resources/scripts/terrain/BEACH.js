@@ -11,7 +11,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundingsLand = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct);
+        var surroundingsLand = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct, false);
         var surroundingsBeach = terrain.getSurroundings("BEACH", false, false, GameEnums.Directions_Direct, false);
         if (surroundingsLand !== "")
         {
@@ -41,10 +41,11 @@ var Constructor = function()
     this.canBePlaced = function(x, y)
     {
         var terrain = map.getTerrain(x, y);
-        var surroundingsLand = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct);
-        var surroundingsSea = terrain.getSurroundings("SEA", false, true, GameEnums.Directions_All);
+        var surroundingsLand = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct, false);
+        var surroundingsSea = terrain.getSurroundings("SEA", false, true, GameEnums.Directions_All, false);
 
         var c = (surroundingsLand === "");
+
         var d = (surroundingsLand.includes("+S") && surroundingsLand.includes("+E") && surroundingsSea.includes("+NW"));
         var e = (surroundingsLand.includes("+S") && surroundingsLand.includes("+W") && surroundingsSea.includes("+NE"));
         var f = (surroundingsLand.includes("+W") && surroundingsLand.includes("+S") && surroundingsSea.includes("+NE"));
@@ -53,7 +54,7 @@ var Constructor = function()
         var i = (surroundingsLand.includes("+N") && surroundingsLand.includes("+E") && surroundingsSea.includes("+SW"));
         var j = (surroundingsLand.includes("+E") && surroundingsLand.includes("+S") && surroundingsSea.includes("+NW"));
         var k = (surroundingsLand.includes("+E") && surroundingsLand.includes("+N") && surroundingsSea.includes("+SW"));
-        if (c || d || e || f || g || h || i || j || k)
+        if (c) // || d || e || f || g || h || i || j || k)
         {
             return false;
         }

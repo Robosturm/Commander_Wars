@@ -6,7 +6,7 @@
 
 #include "QDir"
 
-FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards)
+FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString startFile)
 {
     Mainapp* pApp = Mainapp::getInstance();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -34,6 +34,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards)
     // file folder
     m_CurrentFile = new Textbox(pApp->getSettings()->getWidth() - 60 - 160);
     m_CurrentFile->setPosition(30, m_MainPanel->getY() + m_MainPanel->getHeight() + 10);
+    m_CurrentFile->setCurrentText(startFile);
     pSpriteBox->addChild(m_CurrentFile);
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
@@ -42,6 +43,25 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards)
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         QString file = m_CurrentFolder->getCurrentText() + "/" + m_CurrentFile->getCurrentText();
+
+        QStringList items = m_DropDownmenu->getCurrentItemText().split((";"));
+        for (qint32 i = 0; i < items.size(); i++)
+        {
+            items[i] = items[i].replace("*", "");
+        }
+        bool found = false;
+        for (qint32 i = 0; i < items.size(); i++)
+        {
+            if (file.endsWith(items[i]))
+            {
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+        {
+            file += items[0];
+        }
         QDir folder(m_CurrentFolder->getCurrentText());
         if (folder.exists())
         {
@@ -53,6 +73,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards)
     m_DropDownmenu = new DropDownmenu(m_CurrentFile->getWidth(), wildcards, true);
     pSpriteBox->addChild(m_DropDownmenu);
     m_DropDownmenu->setPosition(30, m_CurrentFile->getY() + m_CurrentFile->getHeight() + 10);
+    connect(m_DropDownmenu.get(), SIGNAL(sigItemChanged(qint32)), this, SLOT(filterChanged(qint32)), Qt::QueuedConnection);
     // cancel button
     m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
     m_CancelButton->setPosition(m_DropDownmenu->getWidth() + 30 + 10, m_DropDownmenu->getY());
@@ -112,6 +133,11 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards)
 
 FileDialog::~FileDialog()
 {
+}
+
+void FileDialog::filterChanged(qint32)
+{
+    showFolder(m_CurrentFolder->getCurrentText());
 }
 
 void FileDialog::showFolder(QString folder)

@@ -428,12 +428,12 @@ qint32 Terrain::getBaseDefense()
     return defense;
 }
 
-qint32 Terrain::getDefense()
+qint32 Terrain::getDefense(Unit* pUnit)
 {
     qint32 defense = getBaseDefense();
-    if (m_Unit.get() != nullptr)
+    if (pUnit != nullptr)
     {
-        defense += m_Unit->getTerrainDefenseModifier(QPoint(x, y));
+        defense += pUnit->getTerrainDefenseModifier(QPoint(x, y));
     }
     return defense;
 }

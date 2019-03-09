@@ -84,14 +84,14 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 2;
+        return 3;
     };
     this.getCOArmy = function()
     {
         return "OS";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY)
+                                 defender, defPosX, defPosY, isDefender)
     {
         switch (co.getPowerMode())
         {

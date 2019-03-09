@@ -72,7 +72,7 @@ var Constructor = function()
     this.calcAttackerDamage = function(attacker, attackerWeapon, attackerPosition, defender, useLuck)
     {
         return ACTION_FIRE.calcDamage(attacker, attackerWeapon, attackerPosition, attacker.getHpRounded(),
-                          defender, defender.getPosition(),
+                          defender, defender.getPosition(), false,
                           useLuck)
     };
     this.calcDefenderDamage = function(attacker, attackerPosition, defender, defenderWeapon, takenDamage, useLuck)
@@ -86,18 +86,18 @@ var Constructor = function()
             if (health > 0)
             {
                 damage = ACTION_FIRE.calcDamage(defender, defenderWeapon, defender.getPosition(), health,
-                                                attacker, attackerPosition,
+                                                attacker, attackerPosition, true,
                                                 useLuck);
             }
         }
         return damage;
     };
     this.calcDamage = function(attacker, attackerWeapon, attackerPosition, attackerBaseHp,
-                               defender, defenderPosition,
+                               defender, defenderPosition, isDefender,
                                useLuck)
     {
         var baseDamage = Global[attackerWeapon].getBaseDamage(defender);
-        var offensive = 100 + attacker.getBonusOffensive(attackerPosition, defender, defender.getPosition());
+        var offensive = 100 + attacker.getBonusOffensive(attackerPosition, defender, defender.getPosition(), isDefender);
         var defensive = 100 + defender.getBonusDefensive(defenderPosition, attacker, attackerPosition);
         var attackerHp = attackerBaseHp + attacker.getAttackHpBonus(attackerPosition);
         var damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive);
@@ -105,7 +105,7 @@ var Constructor = function()
         {
             var luck = attackerBaseHp / 2 + attacker.getBonusLuck(attackerPosition);
             var misfortune = attacker.getBonusMisfortune(attackerPosition);
-            damage += globals.randInt(misfortune, luck);
+            damage += globals.randInt(-misfortune, luck);
         }
         return damage;
     };

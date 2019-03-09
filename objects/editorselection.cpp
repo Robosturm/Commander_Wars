@@ -274,35 +274,40 @@ void EditorSelection::createPlayerSelection()
         pBuilding->setPosition(25 * i, 32);
         pBuilding->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
-            // update buildings
-            for (qint32 i2 = 0; i2 < m_Buildings.size(); i2++)
-            {
-                if (i < 0)
-                {
-                    m_Buildings.at(i2)->setOwner(nullptr);
-                }
-                else
-                {
-                    m_Buildings.at(i2)->setOwner(m_Players.at(i + 1)->getSpOwner());
-                }
-            }
-            // update units
-            for (qint32 i2 = 0; i2 < m_Units.size(); i2++)
-            {
-                if (i < 0)
-                {
-                    // do nothing :)
-                }
-                else
-                {
-                    m_Units.at(i2)->setOwner(m_Players.at(i + 1)->getSpOwner());
-                }
-            }
-
+            changeSelectedPlayer(i);
         });
     }
-
     updateSelectedPlayer();
+    changeSelectedPlayer(0);
+}
+
+void EditorSelection::changeSelectedPlayer(qint32 player)
+{
+    // update buildings
+    for (qint32 i2 = 0; i2 < m_Buildings.size(); i2++)
+    {
+        if (player < 0)
+        {
+            m_Buildings.at(i2)->setOwner(nullptr);
+        }
+        else
+        {
+            m_Buildings.at(i2)->setOwner(m_Players.at(player + 1)->getSpOwner());
+        }
+    }
+    // update units
+    for (qint32 i2 = 0; i2 < m_Units.size(); i2++)
+    {
+        if (player < 0)
+        {
+            // do nothing :)
+            m_Units.at(i2)->setOwner(m_Players.at(1)->getSpOwner());
+        }
+        else
+        {
+            m_Units.at(i2)->setOwner(m_Players.at(player + 1)->getSpOwner());
+        }
+    }
 }
 
 void EditorSelection::updateSelectedPlayer()
@@ -553,10 +558,13 @@ void EditorSelection::selectTerrain(const QString& terrainID)
     {
         if (m_Terrains[i]->getTerrainID() == terrainID)
         {
-            // calc position
-            m_selectedIndex.setX(i % static_cast<qint32>(m_selectedIndex.z()));
-            m_selectedIndex.setY(i / static_cast<qint32>(m_selectedIndex.z()));
-            m_CurrentSelector->setPosition(frameSize + m_selectedIndex.x() * GameMap::Imagesize * xFactor, startH + GameMap::Imagesize * yFactor * m_selectedIndex.y());
+            if (m_selectedIndex.z() > 0)
+            {
+                // calc position
+                m_selectedIndex.setX(i % static_cast<qint32>(m_selectedIndex.z()));
+                m_selectedIndex.setY(i / static_cast<qint32>(m_selectedIndex.z()));
+                m_CurrentSelector->setPosition(frameSize + m_selectedIndex.x() * GameMap::Imagesize * xFactor, startH + GameMap::Imagesize * yFactor * m_selectedIndex.y());
+            }
         }
     }
 }

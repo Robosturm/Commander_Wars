@@ -22,6 +22,7 @@
 EditorMenue::EditorMenue()
 {
     Mainapp* pMainapp = Mainapp::getInstance();
+    m_EditorSelection = new EditorSelection();
     this->addChild(m_EditorSelection);
     m_Topbar = new Topbar(0, pMainapp->getSettings()->getWidth() -  m_EditorSelection->getWidth());
     this->addChild(m_Topbar);
@@ -35,6 +36,12 @@ EditorMenue::EditorMenue()
 
     m_Topbar->addItem(tr("New Map"), "NEWMAP", 1);
     m_Topbar->addItem(tr("Edit Map"), "EDITMAP", 1);
+    m_Topbar->addItem(tr("Flip Map X"), "FLIPX", 1);
+    m_Topbar->addItem(tr("Flip Map Y"), "FLIPY", 1);
+    m_Topbar->addItem(tr("Rotate Map X"), "ROTATEX", 1);
+    m_Topbar->addItem(tr("Rotate Map Y"), "ROTATEY", 1);
+    m_Topbar->addItem(tr("Random Map"), "RANDOMMAP", 1);
+
 
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
     {
@@ -92,7 +99,7 @@ void EditorMenue::clickedTopbar(QString itemID)
         QVector<QString> wildcards;
         wildcards.append("*.map");
         QString path = QCoreApplication::applicationDirPath() + "/maps";
-        spFileDialog saveDialog = new FileDialog(path, wildcards);
+        spFileDialog saveDialog = new FileDialog(path, wildcards, GameMap::getInstance()->getMapName());
         this->addChild(saveDialog);
         connect(saveDialog.get(), SIGNAL(sigFileSelected(QString)), this, SLOT(saveMap(QString)), Qt::QueuedConnection);
     }
@@ -125,8 +132,33 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         GameMap* pGameMap = GameMap::getInstance();
         spMapEditDialog mapEditDialog = new MapEditDialog(pGameMap->getMapName(), pGameMap->getMapWidth(), pGameMap->getMapHeight(), pGameMap->getPlayerCount());
-        connect(mapEditDialog.get(), SIGNAL(editFinished(QString, qint32, qint32, qint32)), this, SLOT(newMap(QString, qint32, qint32, qint32)), Qt::QueuedConnection);
+        connect(mapEditDialog.get(), SIGNAL(editFinished(QString, qint32, qint32, qint32)), this, SLOT(changeMap(QString, qint32, qint32, qint32)), Qt::QueuedConnection);
         this->addChild(mapEditDialog);
+    }
+    else if (itemID == "FLIPX")
+    {
+        GameMap* pGameMap = GameMap::getInstance();
+        pGameMap->flipX();
+    }
+    else if (itemID == "FLIPY")
+    {
+        GameMap* pGameMap = GameMap::getInstance();
+        pGameMap->flipY();
+    }
+    else if (itemID == "ROTATEX")
+    {
+        GameMap* pGameMap = GameMap::getInstance();
+        pGameMap->rotateX();
+    }
+    else if (itemID == "ROTATEY")
+    {
+        GameMap* pGameMap = GameMap::getInstance();
+        pGameMap->rotateY();
+    }
+    else if (itemID == "RANDOMMAP")
+    {
+        GameMap* pGameMap = GameMap::getInstance();
+        pGameMap->randomMap(30, 40, 4);
     }
 }
 
@@ -445,5 +477,13 @@ void EditorMenue::newMap(QString mapName, qint32 mapWidth, qint32 mapHeigth, qin
     GameMap* pMap = GameMap::getInstance();
     pMap->setMapName(mapName);
     pMap->newMap(mapWidth, mapHeigth, playerCount);
+    m_EditorSelection->createPlayerSelection();
+}
+
+void EditorMenue::changeMap(QString mapName, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount)
+{
+    GameMap* pMap = GameMap::getInstance();
+    pMap->setMapName(mapName);
+    pMap->changeMap(mapWidth, mapHeigth, playerCount);
     m_EditorSelection->createPlayerSelection();
 }

@@ -16,8 +16,12 @@
 
 #include "menue/gamemenue.h"
 
-Player::Player(quint32 id)
-    : playerID(id)
+Player::Player()
+{
+
+}
+
+void Player::init()
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function = "loadDefaultPlayerColor";
@@ -45,14 +49,17 @@ void Player::setColor(QColor color)
     m_Color = color;
 }
 
-quint32 Player::getPlayerID() const
+qint32 Player::getPlayerID() const
 {
-    return playerID;
-}
-
-void Player::setPlayerID(const quint32 &value)
-{
-    playerID = value;
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        if (pMap->getPlayer(i) == this)
+        {
+            return i;
+        }
+    }
+    return -1;
 }
 
 QString Player::getArmy()
@@ -116,6 +123,27 @@ void Player::addFonds(const qint32 &value)
 qint32 Player::getFonds() const
 {
     return fonds;
+}
+
+qint32 Player::getBuildingCount()
+{
+    qint32 ret = 0;
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 y = 0; y < pMap->getMapHeight(); y++)
+    {
+        for (qint32 x = 0; x < pMap->getMapWidth(); x++)
+        {
+            spBuilding pBuilding = pMap->getSpTerrain(x, y)->getSpBuilding();
+            if (pBuilding.get() != nullptr)
+            {
+                if (pBuilding->getOwner() == this)
+                {
+                    ret++;
+                }
+            }
+        }
+    }
+    return ret;
 }
 
 void Player::earnMoney(float modifier)
@@ -347,7 +375,6 @@ void Player::serialize(QDataStream& pStream)
     quint32 color = m_Color.rgb();
     pStream << color;
 
-    pStream << playerID;
     pStream << fonds;
     pStream << fondsModifier;
     pStream << playerArmy;
@@ -376,10 +403,14 @@ void Player::deserialize(QDataStream& pStream)
     pStream >> version;
     quint32 color;
     pStream >> color;
-    m_Color.fromRgb(color);
+    m_Color = QColor::fromRgb(color);
     if (version > 1)
     {
-        pStream >> playerID;
+        if (version < 3)
+        {
+            qint32 dummy = 0;
+            pStream >> dummy;
+        }
         pStream >> fonds;
         pStream >> fondsModifier;
         pStream >> playerArmy;

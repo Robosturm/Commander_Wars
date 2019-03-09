@@ -76,30 +76,7 @@ void GameMap::loadMapData()
     pCOSpriteManager->loadAll();
 }
 
-void GameMap::newMap(qint32 width, qint32 heigth, qint32 playerCount)
-{
-    clearMap();
-    for (qint32 y = 0; y < heigth; y++)
-    {
-        fields.append(new QVector<spTerrain>());
-        for (qint32 x = 0; x < width; x++)
-        {
-            spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y);
-            this->addChild(pTerrain);
-            fields[y]->append(pTerrain);
-            pTerrain->setPosition(x * Imagesize, y * Imagesize);
-            pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
-        }
-    }
-    // add two players to a default map :)
-    for (qint32 i = 0; i < playerCount; i++)
-    {
-        players.append(new Player(static_cast<quint32>(i)));
-    }
 
-    updateSprites();
-    centerMap(width / 2, heigth / 2);
-}
 
 GameMap::~GameMap()
 {
@@ -632,7 +609,7 @@ void GameMap::deserialize(QDataStream& pStream)
     for (qint32 i = 0; i < playerCount; i++)
     {
         // create new player
-        players.append(new Player(i));
+        players.append(new Player());
         // get player data from stream
         players[i]->deserialize(pStream);
     }

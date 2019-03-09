@@ -80,13 +80,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 2;
-    };
-    this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY)
-    {
-
-        return 0;
+        return 3;
     };
     this.getCOArmy = function()
     {

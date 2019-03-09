@@ -32,18 +32,21 @@ Unit::Unit(QString unitID, spPlayer pOwner)
 
 Unit::~Unit()
 {
-    CO* pCO = m_Owner->getCO(0);
-    if (pCO != nullptr)
+    if (m_Owner.get() != nullptr)
     {
-        if (pCO->getCOUnit() == this)
+        CO* pCO = m_Owner->getCO(0);
+        if (pCO != nullptr)
+        {
+            if (pCO->getCOUnit() == this)
+            {
+                pCO->setCOUnit(nullptr);
+            }
+        }
+        pCO = m_Owner->getCO(1);
+        if (pCO != nullptr)
         {
             pCO->setCOUnit(nullptr);
         }
-    }
-    pCO = m_Owner->getCO(1);
-    if (pCO != nullptr)
-    {
-        pCO->setCOUnit(nullptr);
     }
 }
 
@@ -339,18 +342,18 @@ qint32 Unit::getLoadedUnitCount()
     return m_TransportUnits.size();
 }
 
-qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition)
+qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender)
 {
     qint32 bonus = 0;
     CO* pCO = m_Owner->getCO(0);
     if (pCO != nullptr)
     {
-        bonus += pCO->getOffensiveBonus(this, position, pDefender, defPosition);
+        bonus += pCO->getOffensiveBonus(this, position, pDefender, defPosition, isDefender);
     }
     pCO = m_Owner->getCO(1);
     if (pCO != nullptr)
     {
-        bonus += pCO->getOffensiveBonus(this, position, pDefender, defPosition);
+        bonus += pCO->getOffensiveBonus(this, position, pDefender, defPosition, isDefender);
     }
     switch (m_UnitRank)
     {
@@ -394,7 +397,7 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
     }
     if (useTerrainDefense())
     {
-        bonus += m_Terrain->getDefense() * 10;
+        bonus += GameMap::getInstance()->getTerrain(position.x(), position.y())->getDefense(this) * 10;
     }
     switch (m_UnitRank)
     {

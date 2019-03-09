@@ -11,7 +11,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("STREET,BRIDGE", false, false, GameEnums.Directions_Direct);
+        var surroundings = terrain.getSurroundings("STREET,BRIDGE", false, false, GameEnums.Directions_Direct, false);
         terrain.loadBaseSprite("street" + surroundings);
     };
 };

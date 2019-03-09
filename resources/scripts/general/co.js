@@ -60,7 +60,7 @@ var CO =
     },
 
     getOffensiveBonus : function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY)
+                                 defender, defPosX, defPosY, isDefender)
     {
         return 0;
     },

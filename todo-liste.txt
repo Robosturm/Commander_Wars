@@ -1,16 +1,15 @@
 - unit info
 - terrain info
 
+- select map menu
+	- mini map
 - co's
-
 
 - activate power animation
 
-- import maps
 
-- enhance editor options
 
-- select map menu
+
 - option menu
 - credits menu
 
@@ -35,3 +34,5 @@
 - v-scrollbar
 - Objects
 	- Checkbox
+	
+	- import awds maps

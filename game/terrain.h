@@ -36,9 +36,6 @@ public:
      * @brief loadSprites loads all sprites we won't to show. Updates all sprite data
      */
     void loadSprites();
-    QString getTerrainID() const;
-
-
 
     /**
      * @brief syncAnimation call this on all terrains to make their animation synchronized.
@@ -82,6 +79,8 @@ public:
 
 
 public slots:
+    QString getTerrainID() const;
+
     QString getTerrainName() const;
     void setTerrainName(const QString &value);
 
@@ -163,7 +162,7 @@ public slots:
     /**
      * @brief getDefense
      */
-    qint32 getDefense();
+    qint32 getDefense(Unit* pUnit);
     /**
      * @brief getDefense
      */

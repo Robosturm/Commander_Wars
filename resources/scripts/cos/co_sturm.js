@@ -37,7 +37,7 @@ var Constructor = function()
         animation2.addSprite2("white_pixel", 0, 0, 4200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true, 1000);
 
-        var fields = globals.getCircle(0, 3);
+        var fields = globals.getCircle(0, 2);
         // check all fields we can attack
         for (var i = 0; i < fields.size(); i++)
         {
@@ -78,7 +78,7 @@ var Constructor = function()
         return "BH";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY)
+                                 defender, defPosX, defPosY, isDefender)
     {
         switch (co.getPowerMode())
         {
@@ -116,7 +116,7 @@ var Constructor = function()
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
         // todo return 0 when it's snowing
-        return -99;
+        return -999;
     };
 }
 

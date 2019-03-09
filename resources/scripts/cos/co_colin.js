@@ -72,7 +72,7 @@ var Constructor = function()
         return -baseCost * 0.2;
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY)
+                                 defender, defPosX, defPosY, isDefender)
     {
         switch (co.getPowerMode())
         {

@@ -3,7 +3,7 @@ var Constructor = function()
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
-        terrain.setTerrainName(qsTr("Street"));
+        terrain.setTerrainName(qsTr("Bridge"));
     };
 	this.loadBaseTerrain = function(terrain)
     {
@@ -21,9 +21,9 @@ var Constructor = function()
     this.canBePlaced = function(x, y)
     {
         var terrain = map.getTerrain(x, y);
-        if ((terrain.terrainID === "SEA") ||
-            (terrain.terrainID === "RIVER") ||
-            (terrain.terrainID === "BRIDGE"))
+        if ((terrain.getTerrainID() === "SEA") ||
+            (terrain.getTerrainID() === "RIVER") ||
+            (terrain.getTerrainID() === "BRIDGE"))
         {
             return true;
         }

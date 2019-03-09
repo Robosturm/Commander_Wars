@@ -124,7 +124,10 @@ set(${PROJECT_NAME}_SRCS
         gameinput/cursordata.cpp
 
         # map importing\exporting support
+        # and resizing etc.
         mapsupport/importcowtxt.cpp
+        mapsupport/refactorMap.cpp
+        mapsupport/randomMap.cpp
 )
 
 

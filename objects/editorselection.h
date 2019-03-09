@@ -72,6 +72,7 @@ public:
      * @brief createPlayerSelection
      */
     void createPlayerSelection();
+    void changeSelectedPlayer(qint32 player);
 signals:
    void sigClickedPlacementSelection(qint32 x, qint32 y);
    void sigUpdateSelectedPlayer();

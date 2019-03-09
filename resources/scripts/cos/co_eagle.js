@@ -119,7 +119,7 @@ var Constructor = function()
     };
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY)
+                                 defender, defPosX, defPosY, isDefender)
     {
         var airUnits = CO_EAGLE.getAirUnitIDS();
         var seaUnits = CO_EAGLE.getSeaUnitIDS();

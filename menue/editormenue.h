@@ -103,8 +103,16 @@ public slots:
      * @param playerCount
      */
     void newMap(QString mapName, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount);
+    /**
+     * @brief changeMap
+     * @param mapName
+     * @param mapWidth
+     * @param mapHeigth
+     * @param playerCount
+     */
+    void changeMap(QString mapName, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount);
 private:
-    spEditorSelection m_EditorSelection{new EditorSelection()};
+    spEditorSelection m_EditorSelection{nullptr};
     spTopbar m_Topbar;
 };
 

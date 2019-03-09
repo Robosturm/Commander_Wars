@@ -96,7 +96,7 @@ var Constructor = function()
         return "OS";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY)
+                                 defender, defPosX, defPosY, isDefender)
     {
         var unitInfantryIDs = ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
         switch (co.getPowerMode())

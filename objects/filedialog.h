@@ -25,7 +25,7 @@ public:
      * @param startFolder initial folder of the file dialog
      * @param wildcards wildcard items will be split at ;
      */
-    explicit FileDialog(QString startFolder, QVector<QString> wildcards);
+    explicit FileDialog(QString startFolder, QVector<QString> wildcards, QString startFile = "");
     virtual ~FileDialog();
 
 signals:
@@ -34,6 +34,7 @@ signals:
     void sigShowFolder(QString folder);
 public slots:
     void showFolder(QString folder);
+    void filterChanged(qint32);
 private:
     spTextbox m_CurrentFolder;
     spTextbox m_CurrentFile;

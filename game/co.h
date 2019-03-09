@@ -109,7 +109,7 @@ public slots:
      * @param pDefender the defending unit the unit we attack
      * @return
      */
-    qint32 getOffensiveBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition);
+    qint32 getOffensiveBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender);
     /**
      * @brief getDeffensiveBonus the deffensive bonus of our unit
      * @param pAttacker the unit attacking us

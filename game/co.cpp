@@ -58,6 +58,14 @@ void CO::setPowerFilled(const float &value)
     {
         powerFilled = powerStars + superpowerStars;
     }
+    else if (powerFilled < 0)
+    {
+        powerFilled = 0;
+    }
+    if (GameMenue::getInstance() != nullptr)
+    {
+        GameMenue::getInstance()->updatePlayerinfo();
+    }
 }
 
 qint32 CO::getSuperpowerStars() const
@@ -408,7 +416,7 @@ void CO::activateSuperpower()
     }
 }
 
-qint32 CO::getOffensiveBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition)
+qint32 CO::getOffensiveBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getOffensiveBonus";
@@ -423,6 +431,7 @@ qint32 CO::getOffensiveBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender
     args1 << obj2;
     args1 << defPosition.x();
     args1 << defPosition.y();
+    args1 << isDefender;
     QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
     if (erg.isNumber())
     {
@@ -448,7 +457,7 @@ qint32 CO::getDeffensiveBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefend
     QJSValue obj2 = pApp->getInterpreter()->newQObject(pDefender);
     args1 << obj2;
     args1 << defPosition.x();
-    args1 << defPosition.y();
+    args1 << defPosition.y();    
     QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
     if (erg.isNumber())
     {
