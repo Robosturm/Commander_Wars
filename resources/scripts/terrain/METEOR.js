@@ -16,6 +16,10 @@ var Constructor = function()
 		surroundings = surroundings.replace("+N", "");
         terrain.loadBaseSprite("meteor" + surroundings);
     };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_meteor";
+    };
 };
 Constructor.prototype = TERRAIN;
 var METEOR = new Constructor();

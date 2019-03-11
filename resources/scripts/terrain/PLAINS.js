@@ -22,6 +22,10 @@ var Constructor = function()
             terrain.loadBaseSprite("plains+" + random.toString());
         }
     };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_plains";
+    };
 };
 Constructor.prototype = TERRAIN;
 var PLAINS = new Constructor();

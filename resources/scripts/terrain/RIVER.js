@@ -45,6 +45,10 @@ var Constructor = function()
         }
         terrain.loadBaseSprite("river" + surroundings);
     };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_river";
+    };
 };
 Constructor.prototype = TERRAIN;
 var RIVER = new Constructor();

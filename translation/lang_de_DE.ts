@@ -302,22 +302,22 @@
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="39"/>
+        <location filename="../menue/mainwindow.cpp" line="40"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="50"/>
+        <location filename="../menue/mainwindow.cpp" line="51"/>
         <source>Demo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="61"/>
+        <location filename="../menue/mainwindow.cpp" line="62"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="72"/>
+        <location filename="../menue/mainwindow.cpp" line="73"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -352,6 +352,19 @@
     <message>
         <location filename="../objects/mapeditdialog.cpp" line="89"/>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MapSelectionMapsMenue</name>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="111"/>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="119"/>
+        <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -2,6 +2,7 @@
 #define WEAPONMANAGER_H
 
 #include "QString"
+#include "QStringList"
 
 class WeaponManager
 {
@@ -24,6 +25,11 @@ public:
      * @brief reset deletes all data
      */
     void reset();
+
+    qint32 getWeaponCount()
+    {
+        return m_loadedWeapons.size();
+    }
 private:
     explicit WeaponManager();
     virtual ~WeaponManager() = default;

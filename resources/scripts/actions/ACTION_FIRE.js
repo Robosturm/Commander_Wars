@@ -107,6 +107,11 @@ var Constructor = function()
             var misfortune = attacker.getBonusMisfortune(attackerPosition);
             damage += globals.randInt(-misfortune, luck);
         }
+        // avoid healing through negativ damage caused by misfortune
+        if (baseDamage >= 0 && damage < 0)
+        {
+            damage = 0;
+        }
         return damage;
     };
     this.getStepData = function(action, data)

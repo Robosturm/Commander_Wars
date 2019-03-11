@@ -357,6 +357,7 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
 
 void EditorMenue::placeBuilding(qint32 x, qint32 y)
 {
+    GameMap* pMap = GameMap::getInstance();
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
@@ -375,6 +376,13 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
             points = PathFindingSystem::getFields(x, y, 0, 2);
             break;
         }
+        case EditorSelection::PlacementSize::Fill:
+        {
+            TerrainFindingSystem Pfs(pMap->getTerrain(x, y)->getID(),x , y);
+            Pfs.explore();
+            points = Pfs.getAllNodePoints();
+            break;
+        }
     }
     for (qint32 i = 0; i < points.size(); i++)
     {
@@ -386,7 +394,6 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
             spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
             Building* pBuilding = new Building(pCurrentBuilding->getBuildingID());
             pBuilding->setOwner(pCurrentBuilding->getSpOwner());
-            GameMap* pMap = GameMap::getInstance();
             pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
         }
     }
@@ -410,6 +417,11 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
         case EditorSelection::PlacementSize::Big:
         {
             points = PathFindingSystem::getFields(x, y, 0, 2);
+            break;
+        }
+        case EditorSelection::PlacementSize::Fill:
+        {
+            points = PathFindingSystem::getFields(x, y, 0, 0);
             break;
         }
     }

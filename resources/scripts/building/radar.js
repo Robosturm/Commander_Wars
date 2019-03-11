@@ -15,6 +15,10 @@ var Constructor = function()
             building.loadSprite("radar+neutral", false);
         }
     };
+    this.getBaseIncome = function()
+    {
+        return 0;
+    };
 }
 
 Constructor.prototype = BUILDING;

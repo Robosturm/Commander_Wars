@@ -19,6 +19,10 @@ var Constructor = function()
         surroundings += terrain.getSurroundings("MOUNTAIN", false, false, GameEnums.Directions_West, false);
         terrain.loadBaseSprite("mountain" + surroundings);
     };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_mountain";
+    };
 };
 Constructor.prototype = TERRAIN;
 var MOUNTAIN = new Constructor();

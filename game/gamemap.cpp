@@ -38,22 +38,23 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
 
 }
 
-
-GameMap::GameMap(QString map, bool gamestart)
+GameMap::GameMap(QString map, bool gamestart, bool onlyLoad)
 {
     loadMapData();
     QFile file(map);
     file.open(QIODevice::ReadOnly);
     QDataStream pStream(&file);
     deserialize(pStream);
-
-    updateSprites();
-    qint32 heigth = getMapHeight();
-    qint32 width = getMapWidth();
-    centerMap(width / 2, heigth / 2);
+    if (!onlyLoad)
+    {
+        updateSprites();
+        qint32 heigth = getMapHeight();
+        qint32 width = getMapWidth();
+        centerMap(width / 2, heigth / 2);
+    }
 }
 
-void GameMap::loadMapData()
+void GameMap::loadMapData(bool reload)
 {
     m_pInstance = this;
     Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
@@ -61,19 +62,40 @@ void GameMap::loadMapData()
     pInterpreter->setGlobal(m_GameAnimationFactory, pInterpreter->newQObject(GameAnimationFactory::getInstance()));
 
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
-    pTerrainManager->loadAll();
+    if (reload || (pTerrainManager->getTerrainCount() == 0))
+    {
+        pTerrainManager->loadAll();
+    }
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
-    pBuildingSpriteManager->loadAll();
+    if (reload || (pBuildingSpriteManager->getBuildingCount() == 0))
+    {
+        pBuildingSpriteManager->loadAll();
+    }
     UnitSpriteManager* pUnitspritemanager = UnitSpriteManager::getInstance();
-    pUnitspritemanager->loadAll();
+    if (reload || (pUnitspritemanager->getUnitCount() == 0))
+    {
+        pUnitspritemanager->loadAll();
+    }
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
-    pMovementTableManager->loadAll();
+    if (reload || (pMovementTableManager->getMovementTableCount() == 0))
+    {
+        pMovementTableManager->loadAll();
+    }
     GameManager* pGameManager = GameManager::getInstance();
-    pGameManager->loadAll();
+    if (reload || !pGameManager->getLoaded())
+    {
+        pGameManager->loadAll();
+    }
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
-    pWeaponManager->loadAll();
+    if (reload || (pWeaponManager->getWeaponCount() == 0))
+    {
+        pWeaponManager->loadAll();
+    }
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    pCOSpriteManager->loadAll();
+    if (reload || (pCOSpriteManager->getCOCount() == 0))
+    {
+        pCOSpriteManager->loadAll();
+    }
 }
 
 
@@ -340,6 +362,28 @@ qint32 GameMap::getMapHeight() const
     return fields.size();
 }
 
+qint32 GameMap::getBuildingCount(QString buildingID)
+{
+    qint32 ret = 0;
+    qint32 width = getMapWidth();
+    qint32 heigth = getMapHeight();
+    for (qint32 x = 0; x < width; x++)
+    {
+        for (qint32 y = 0; y < heigth; y++)
+        {
+            Building* pBuilding = getTerrain(x, y)->getBuilding();
+            if (pBuilding != nullptr)
+            {
+                if (pBuilding->getBuildingID() == buildingID)
+                {
+                    ret++;
+                }
+            }
+        }
+    }
+    return ret;
+}
+
 void GameMap::getField(qint32& x, qint32& y, GameEnums::Directions direction)
 {
     switch (direction)
@@ -589,6 +633,19 @@ void GameMap::clearMap()
     players.clear();
 }
 
+QString GameMap::readMapName(QDataStream& pStream)
+{
+    QString name;
+    // restore map header
+    qint32 version = 0;
+    pStream >> version;
+    if (version > 1)
+    {
+        pStream >> name;
+    }
+    return name;
+}
+
 void GameMap::deserialize(QDataStream& pStream)
 {
     clearMap();
@@ -748,6 +805,28 @@ QmlVectorUnit* GameMap::getUnits(Player* pPlayer)
                 if ((pUnit->getOwner() == pPlayer))
                 {
                    ret->append(pUnit.get());
+                }
+            }
+        }
+    }
+    return ret;
+}
+
+QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer)
+{
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    QmlVectorBuilding* ret = new QmlVectorBuilding();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            spBuilding pBuilding = fields.at(y)->at(x)->getSpBuilding();
+            if (pBuilding.get() != nullptr)
+            {
+                if ((pBuilding->getOwner() == pPlayer))
+                {
+                   ret->append(pBuilding.get());
                 }
             }
         }

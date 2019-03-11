@@ -39,6 +39,10 @@ var Constructor = function()
             return false;
         }
     };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_weld";
+    };
 };
 Constructor.prototype = TERRAIN;
 var WELD = new Constructor();

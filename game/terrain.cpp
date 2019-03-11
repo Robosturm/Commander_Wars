@@ -428,6 +428,22 @@ qint32 Terrain::getBaseDefense()
     return defense;
 }
 
+QString Terrain::getMinimapIcon()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getMiniMapIcon";
+    QJSValueList args1;
+    QJSValue ret = pApp->getInterpreter()->doFunction(terrainID, function1, args1);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
 qint32 Terrain::getDefense(Unit* pUnit)
 {
     qint32 defense = getBaseDefense();

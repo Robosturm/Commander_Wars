@@ -33,6 +33,10 @@ var Constructor = function()
         }
             return false;
     };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_rough_sea";
+    };
 };
 Constructor.prototype = TERRAIN;
 var ROUGH_SEA = new Constructor();

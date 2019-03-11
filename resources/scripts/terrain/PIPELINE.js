@@ -21,6 +21,10 @@ var Constructor = function()
             terrain.loadBaseSprite("pipeline" + surroundings);
         }
     };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_pipeline";
+    };
 
 };
 Constructor.prototype = TERRAIN;

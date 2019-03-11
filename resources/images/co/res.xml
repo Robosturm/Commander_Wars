@@ -19,7 +19,13 @@
 		<image file="os/co_nell+face.png" cols = "3" />
 		<image file="os/co_sami+nrm.png" />
 		<image file="os/co_sami+info.png" />
-		<image file="os/co_sami+face.png" cols = "3" />
+		<image file="os/co_sami+face.png" cols = "3" />		
+		<image file="os/co_jake+nrm.png" />
+		<image file="os/co_jake+info.png" />
+		<image file="os/co_jake+face.png" cols = "3" />
+		<image file="os/co_rachel+nrm.png" />
+		<image file="os/co_rachel+info.png" />
+		<image file="os/co_rachel+face.png" cols = "3" />
 		
 		<!-- BM -->
 		<image file="bm/co_colin+nrm.png" />
@@ -44,15 +50,30 @@
 		<image file="ge/co_jess+face.png" cols = "3" />
 		<image file="ge/co_drake+nrm.png" />
 		<image file="ge/co_drake+info.png" />
-		<image file="ge/co_drake+face.png" cols = "3" />
+		<image file="ge/co_drake+face.png" cols = "3" />		
+		<image file="ge/co_peter+nrm.png" />
+		<image file="ge/co_peter+info.png" />
+		<image file="ge/co_peter+face.png" cols = "3" />
+		<image file="ge/co_smitan+nrm.png" />
+		<image file="ge/co_smitan+info.png" />
+		<image file="ge/co_smitan+face.png" cols = "3" />
+		<image file="ge/co_javier+nrm.png" />
+		<image file="ge/co_javier+info.png" />
+		<image file="ge/co_javier+face.png" cols = "3" />
 		
-		<!-- GE -->
+		<!-- YC -->
 		<image file="yc/co_kanbei+nrm.png" />
 		<image file="yc/co_kanbei+info.png" />
 		<image file="yc/co_kanbei+face.png" cols = "3" />
 		<image file="yc/co_grimm+nrm.png" />
 		<image file="yc/co_grimm+info.png" />
 		<image file="yc/co_grimm+face.png" cols = "3" />
+		<image file="yc/co_sensei+nrm.png" />
+		<image file="yc/co_sensei+info.png" />
+		<image file="yc/co_sensei+face.png" cols = "3" />
+		<image file="yc/co_sonja+nrm.png" />
+		<image file="yc/co_sonja+info.png" />
+		<image file="yc/co_sonja+face.png" cols = "3" />
 		
 		<!-- BH -->
 		<image file="bh/co_sturm+nrm.png" />

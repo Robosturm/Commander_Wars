@@ -44,4 +44,8 @@ var TERRAIN =
         return false;
     },
 
+    getMiniMapIcon : function()
+    {
+        return "minimap_plains";
+    },
 };

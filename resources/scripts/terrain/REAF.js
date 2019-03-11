@@ -41,6 +41,10 @@ var Constructor = function()
         }
             return false;
     };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_reaf";
+    };
 };
 Constructor.prototype = TERRAIN;
 var REAF = new Constructor();

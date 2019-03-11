@@ -45,7 +45,7 @@ public:
      * @brief GameMap
      * @param map path to the map which should be loaded
      */
-    explicit GameMap(QString map, bool gamestart);
+    explicit GameMap(QString map, bool gamestart, bool onlyLoad = false);
     virtual ~GameMap();
     /**
      * @brief newMap
@@ -167,6 +167,12 @@ public:
      */
     virtual void deserialize(QDataStream& pStream) override;
     /**
+     * @brief readMapName
+     * @param pStream
+     * @return
+     */
+    static QString readMapName(QDataStream& pStream);
+    /**
      * @brief getVersion stream version for serialization
      * @return
      */
@@ -181,6 +187,12 @@ public:
 signals:
 
 public slots:
+    /**
+     * @brief getBuildingCount
+     * @param buildingID
+     * @return
+     */
+    qint32 getBuildingCount(QString buildingID);
     /**
      * @brief getMapWidth
      * @return width of the map
@@ -325,6 +337,12 @@ public slots:
      */
     QmlVectorUnit* getUnits(Player* pPlayer);
     /**
+     * @brief getBuildings
+     * @param pPlayer
+     * @return
+     */
+    QmlVectorBuilding* getBuildings(Player* pPlayer);
+    /**
      * @brief importTxtMap imports a map in old CoW text-format
      */
     void importTxtMap(QString file);
@@ -345,7 +363,7 @@ private:
     static const QString m_GameAnimationFactory;
     float m_zoom{1.0f};
 
-    void loadMapData();
+    void loadMapData(bool reload = true);
 };
 
 #endif // GAMEMAP_H

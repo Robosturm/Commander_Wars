@@ -14,6 +14,10 @@ var Constructor = function()
     {
         return 2;
     };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_silo";
+    };
 }
 
 Constructor.prototype = BUILDING;

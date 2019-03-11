@@ -67,6 +67,11 @@ signals:
 
 public slots:
     /**
+     * @brief getMinimapIcon
+     * @return
+     */
+    QString getMinimapIcon();
+    /**
      * @brief setUnitOwner the building gets owned by the owner of this unit
      * @param pUnit
      */
@@ -130,6 +135,16 @@ public slots:
      * @return
      */
     Terrain* getTerrain();
+    /**
+     * @brief getOffensiveBonus
+     * @return
+     */
+    qint32 getOffensiveBonus();
+    /**
+     * @brief getDefensiveBonus
+     * @return
+     */
+    qint32 getDefensiveBonus();
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     /**

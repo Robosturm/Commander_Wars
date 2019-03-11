@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<resources>
-	<set path = "resources/music/menue" />	
-
-	<sound file="Hauptmenue.mp3" streaming="true"/>
-	<sound file="Hauptmenue+1.mp3" streaming="true"/>
-
-</resources>

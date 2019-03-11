@@ -14,6 +14,10 @@ var Constructor = function()
         var surroundings = terrain.getSurroundings("PLASMA,METEOR", false, false, GameEnums.Directions_Direct);
         terrain.loadBaseSprite("plasma" + surroundings);
     };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_plasma";
+    };
 };
 Constructor.prototype = TERRAIN;
 var PLASMA = new Constructor();

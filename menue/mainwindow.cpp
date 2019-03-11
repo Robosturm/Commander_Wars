@@ -9,6 +9,7 @@
 
 #include "menue/gamemenue.h"
 #include "menue/editormenue.h"
+#include "menue/mapselectionmapsmenue.h"
 
 #include "game/co.h"
 
@@ -95,7 +96,8 @@ Mainwindow::~Mainwindow()
 
 void Mainwindow::enterSingleplayer()
 {
-
+    oxygine::getStage()->addChild(new MapSelectionMapsMenue());
+    leaveMenue();
 }
 
 void Mainwindow::enterDemo()

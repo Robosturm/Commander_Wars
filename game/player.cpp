@@ -125,7 +125,7 @@ qint32 Player::getFonds() const
     return fonds;
 }
 
-qint32 Player::getBuildingCount()
+qint32 Player::getBuildingCount(QString buildingID)
 {
     qint32 ret = 0;
     GameMap* pMap = GameMap::getInstance();
@@ -138,7 +138,10 @@ qint32 Player::getBuildingCount()
             {
                 if (pBuilding->getOwner() == this)
                 {
-                    ret++;
+                    if (buildingID.isEmpty() || pBuilding->getBuildingID() == buildingID)
+                    {
+                        ret++;
+                    }
                 }
             }
         }
@@ -243,6 +246,11 @@ void Player::startOfTurn()
 QmlVectorUnit* Player::getUnits()
 {
     return GameMap::getInstance()->getUnits(this);
+}
+
+QmlVectorBuilding* Player::getBuildings()
+{
+    return GameMap::getInstance()->getBuildings(this);
 }
 
 void Player::updateVisualCORange()

@@ -60,12 +60,16 @@ set(${PROJECT_NAME}_SRCS
         objects/filedialog.cpp
         objects/mapeditdialog.cpp
         objects/spinbox.cpp
+        objects/minimap.cpp
+        objects/mapselection.cpp
+        objects/coselection.cpp
 
         #menues
         menue/mainwindow.cpp
         menue/ingamemenue.cpp
         menue/editormenue.cpp
         menue/gamemenue.cpp
+        menue/mapselectionmapsmenue.cpp
 
         # ressource management
         resource_management/unitspritemanager.cpp

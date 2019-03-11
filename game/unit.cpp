@@ -16,6 +16,8 @@
 
 #include "game/co.h"
 
+#include "game/building.h"
+
 #include "coreengine/tweentogglevisibility.h"
 
 Unit::Unit(QString unitID, spPlayer pOwner)
@@ -355,6 +357,20 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
     {
         bonus += pCO->getOffensiveBonus(this, position, pDefender, defPosition, isDefender);
     }
+    GameMap* pMap = GameMap::getInstance();
+    qint32 mapHeigth = pMap->getMapHeight();
+    qint32 mapWidth = pMap->getMapWidth();
+    for (qint32 x = 0; x < mapWidth; x++)
+    {
+        for (qint32 y = 0; y < mapHeigth; y++)
+        {
+            Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+            if ((pBuilding != nullptr) && pBuilding->getOwner() == m_Owner.get())
+            {
+                bonus += pBuilding->getOffensiveBonus();
+            }
+        }
+    }
     switch (m_UnitRank)
     {
         case GameEnums::UnitRank_None:
@@ -394,6 +410,20 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
     if (pCO != nullptr)
     {
         bonus += pCO->getDeffensiveBonus(pAttacker, atkPosition, this, position);
+    }
+    GameMap* pMap = GameMap::getInstance();
+    qint32 mapHeigth = pMap->getMapHeight();
+    qint32 mapWidth = pMap->getMapWidth();
+    for (qint32 x = 0; x < mapWidth; x++)
+    {
+        for (qint32 y = 0; y < mapHeigth; y++)
+        {
+            Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+            if ((pBuilding != nullptr) && pBuilding->getOwner() == m_Owner.get())
+            {
+                bonus += pBuilding->getDefensiveBonus();
+            }
+        }
     }
     if (useTerrainDefense())
     {

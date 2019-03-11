@@ -19,6 +19,10 @@ var Constructor = function()
         var random = globals.randInt(0, 2);
         terrain.loadBaseSprite("ruin+" + random.toString());
     };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_ruin";
+    };
 };
 Constructor.prototype = TERRAIN;
 var RUIN = new Constructor();

@@ -143,6 +143,22 @@ quint32 Building::getBaseIncome() const
     }
 }
 
+QString Building::getMinimapIcon()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getMiniMapIcon";
+    QJSValueList args1;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
 qint32 Building::getX() const
 {
     return m_Terrain->getX();
@@ -177,6 +193,42 @@ void Building::startOfTurn()
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
     args1 << obj1;
     pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
+}
+
+qint32 Building::getOffensiveBonus()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getOffensiveBonus";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj1;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+qint32 Building::getDefensiveBonus()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getDefensiveBonus";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj1;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 Terrain* Building::getTerrain()

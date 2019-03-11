@@ -66,6 +66,16 @@ var BUILDING =
         BUILDING.replenishUnit(building);
     },
 
+    getOffensiveBonus : function(building)
+    {
+        return 0;
+    },
+
+    getDefensiveBonus : function(building)
+    {
+        return 0;
+    },
+
     replenishUnit: function(building)
     {
         // default impl replenishes our units
@@ -82,5 +92,10 @@ var BUILDING =
             var repairAmount = 2 + unit.getRepairBonus(Qt.point(unit.getX(), unit.getY()));
             UNIT.repairUnit(unit, repairAmount);
         }
-    }
+    },
+
+    getMiniMapIcon : function()
+    {
+        return "minimap_building";
+    },
 };

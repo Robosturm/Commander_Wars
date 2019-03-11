@@ -53,6 +53,10 @@ var Constructor = function()
                 "ARTILLERY", "LIGHT_TANK", "FLAK", "ANTITANKCANNON",
                 "HEAVY_TANK", "MISSILE", "ROCKETTHROWER", "MEGATANK"];
     };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_hq";
+    };
 }
 
 Constructor.prototype = BUILDING;

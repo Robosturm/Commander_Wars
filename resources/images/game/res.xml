@@ -47,6 +47,29 @@
 		<image file="z_information_label.png" cols = "8" />
 		<image file="z_information_label+mask.png" cols = "8" />
 		
+		<!-- minimap -->
+		<image file="minimap/minimap_beach.png" />
+		<image file="minimap/minimap_bridge.png" />
+		<image file="minimap/minimap_building.png" />
+		<image file="minimap/minimap_fire.png" />
+		<image file="minimap/minimap_fog.png" />
+		<image file="minimap/minimap_forest.png" />
+		<image file="minimap/minimap_hq.png" />
+		<image file="minimap/minimap_meteor.png" />
+		<image file="minimap/minimap_mountain.png" />
+		<image file="minimap/minimap_pipeline.png" />
+		<image file="minimap/minimap_plains.png" />
+		<image file="minimap/minimap_plasma.png" />
+		<image file="minimap/minimap_reaf.png" />
+		<image file="minimap/minimap_river.png" />
+		<image file="minimap/minimap_rough_sea.png" />		
+		<image file="minimap/minimap_ruin.png" />
+		<image file="minimap/minimap_sea.png" />
+		<image file="minimap/minimap_silo.png" />
+		<image file="minimap/minimap_street.png" />
+		<image file="minimap/minimap_unit.png" />
+		<image file="minimap/minimap_wasteland.png" />
+		<image file="minimap/minimap_weld.png" />
 	</atlas>
 </resources>
 

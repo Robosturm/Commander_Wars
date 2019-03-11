@@ -92,6 +92,7 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<GameAnimationCapture>("GameAnimationCapture");
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
     qmlRegisterInterface<QmlVectorUnit>("QmlVectorUnit");
+    qmlRegisterInterface<QmlVectorBuilding>("QmlVectorBuilding");
     qmlRegisterInterface<Mainapp>("Mainapp");
     qmlRegisterInterface<CursorData>("CursorData");
 

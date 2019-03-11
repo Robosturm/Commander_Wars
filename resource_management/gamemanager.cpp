@@ -30,6 +30,7 @@ GameManager* GameManager::getInstance()
 
 void GameManager::loadAll()
 {
+    loaded = true;
     Mainapp* pMainapp = Mainapp::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/actions");

@@ -15,6 +15,20 @@ var Constructor = function()
             building.loadSprite("tower+neutral", false);
         }
     };
+    this.getBaseIncome = function()
+    {
+        return 0;
+    };
+
+    this.getOffensiveBonus = function(building)
+    {
+        return 5;
+    };
+
+    this.getDefensiveBonus = function(building)
+    {
+        return 5;
+    };
 
 }
 

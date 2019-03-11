@@ -9,6 +9,10 @@
 
 #include "game/unit.h"
 
+#include "game/building.h"
+
+#include "game/terrain.h"
+
 
 class QmlVectorPoint : public QObject
 {
@@ -68,4 +72,35 @@ public slots:
 private:
     QVector<Unit*> m_Vector;
 };
+
+class QmlVectorBuilding: public QObject
+{
+    Q_OBJECT
+public:
+    explicit QmlVectorBuilding() = default;
+    virtual ~QmlVectorBuilding() = default;
+signals:
+
+public slots:
+    inline Building* at(qint32 i) const
+    {
+        return m_Vector.at(i);
+    }
+    inline void append(Building* t)
+    {
+        m_Vector.append(t);
+    }
+    inline qint32 size() const
+    {
+        return m_Vector.size();
+    }
+    void remove()
+    {
+        delete this;
+    }
+    void randomize();
+private:
+    QVector<Building*> m_Vector;
+};
+
 #endif // QMLVECTOR_H

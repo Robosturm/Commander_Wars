@@ -43,6 +43,10 @@ var Constructor = function()
     {
         return 1;
     };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_plains";
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESTROYEDWELD = new Constructor();

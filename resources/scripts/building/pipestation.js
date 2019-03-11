@@ -25,6 +25,10 @@ var Constructor = function()
     {
         return ["PIPERUNNER"];
     };
+    this.getBaseIncome = function()
+    {
+        return 2000;
+    };
 }
 
 Constructor.prototype = BUILDING;

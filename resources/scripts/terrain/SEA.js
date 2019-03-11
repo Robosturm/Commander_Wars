@@ -76,7 +76,10 @@ var Constructor = function()
                 terrain.loadOverlaySprite("sea" + surroundingsNW);
             }
         }
-
+    };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_sea";
     };
 };
 Constructor.prototype = TERRAIN;

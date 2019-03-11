@@ -64,6 +64,10 @@ var Constructor = function()
         }
     }
 
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_beach";
+    };
 };
 Constructor.prototype = TERRAIN;
 var BEACH = new Constructor();

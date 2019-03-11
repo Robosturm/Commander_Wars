@@ -18,6 +18,10 @@ var Constructor = function()
         var random = globals.randInt(0, 1);
         terrain.loadBaseSprite("forest+" + random.toString());
     };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_forest";
+    };
 };
 Constructor.prototype = TERRAIN;
 var FOREST = new Constructor();

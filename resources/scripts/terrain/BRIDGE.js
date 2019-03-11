@@ -32,7 +32,11 @@ var Constructor = function()
             return false;
         }
 
-    }
+    };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_bridge";
+    };
 };
 Constructor.prototype = TERRAIN;
 var BRIDGE = new Constructor();

@@ -6,7 +6,7 @@
 
 #include "oxygine-framework.h"
 
-#include "game/smartpointers.h"
+#include "smartpointers.h"
 
 #include "coreengine/fileserializable.h"
 
@@ -79,6 +79,15 @@ public:
 
 
 public slots:
+    /**
+     * @brief getMinimapIcon
+     * @return
+     */
+    QString getMinimapIcon();
+    /**
+     * @brief getTerrainID
+     * @return
+     */
     QString getTerrainID() const;
 
     QString getTerrainName() const;

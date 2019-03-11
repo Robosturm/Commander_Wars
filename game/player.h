@@ -148,6 +148,11 @@ public slots:
      */
     QmlVectorUnit* getUnits();
     /**
+     * @brief getBuildings
+     * @return
+     */
+    QmlVectorBuilding* getBuildings();
+    /**
      * @brief updateCORange
      */
     void updateVisualCORange();
@@ -186,7 +191,7 @@ public slots:
      * @brief getBuildingCount
      * @return
      */
-    qint32 getBuildingCount();
+    qint32 getBuildingCount(QString buildingID = "");
 private:
     qint32 fonds{0};
     float fondsModifier{1.0f};

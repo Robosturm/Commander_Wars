@@ -14,6 +14,10 @@ var Constructor = function()
         var random = globals.randInt(0, 3);
         terrain.loadBaseSprite("wasteland+" + random.toString());
     };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_wasteland";
+    };
 };
 Constructor.prototype = TERRAIN;
 var WASTELAND = new Constructor();
