@@ -73,7 +73,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="160"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="165"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -158,22 +158,22 @@
 <context>
     <name>Console</name>
     <message>
-        <location filename="../coreengine/console.cpp" line="93"/>
+        <location filename="../coreengine/console.cpp" line="94"/>
         <source>Enter &quot;help()&quot; for console info.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="94"/>
+        <location filename="../coreengine/console.cpp" line="95"/>
         <source>Starting Game...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="95"/>
+        <location filename="../coreengine/console.cpp" line="96"/>
         <source>Prepare to Fight...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="96"/>
+        <location filename="../coreengine/console.cpp" line="97"/>
         <source>Read this message while waiting...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -358,13 +358,48 @@
 <context>
     <name>MapSelectionMapsMenue</name>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="111"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="123"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="119"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="131"/>
         <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="279"/>
+        <source>Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="279"/>
+        <source>AI Strength</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="279"/>
+        <source>Startfonds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="279"/>
+        <source>Income</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="279"/>
+        <source>Team</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="279"/>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="279"/>
+        <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

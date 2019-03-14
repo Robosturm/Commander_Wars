@@ -86,13 +86,15 @@ private:
     static eLogLevels LogLevel;
     static QString curmsg;
     static QList<QString> lastmsgs;
+    static const qint32 lastMsgSize{10};
     static qint32 curlastmsgpos;
     static qint32 curmsgpos;
     static QTime toggle;
     static Console* m_pConsole;
     static bool show;
     static bool toggled;
-    static QVector<QString> output;
+    static QList<QString> output;
+    static qint32 outputSize;
     static QMutex *datalocker;
     oxygine::spTextField m_text;
     void toggleView();

@@ -5,6 +5,7 @@
 #include <QSize>
 #include "oxygine-framework.h"
 #include "objects/h_scrollbar.h"
+#include "objects/v_scrollbar.h"
 
 class Panel;
 typedef oxygine::intrusive_ptr<Panel> spPanel;
@@ -18,15 +19,19 @@ public:
     void addItem(oxygine::spActor pActor);
     void removeItem(oxygine::spActor pActor);
     void setContentHeigth(qint32 heigth);
+    void setContentWidth(qint32 width);
+    void clearContent();
 signals:
 
 public slots:
-    void scrolled(float value);
+    void scrolledY(float value);
+    void scrolledX(float value);
 private:
     oxygine::spBox9Sprite m_Panelbox;
     oxygine::spClipRectActor m_ClipRect;
     oxygine::spActor m_ContentRect;
-    spH_Scrollbar m_Scrollbar;
+    spH_Scrollbar m_HScrollbar;
+    spV_Scrollbar m_VScrollbar;
 };
 
 #endif // PANEL_H

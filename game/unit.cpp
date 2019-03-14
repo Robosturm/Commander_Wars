@@ -20,10 +20,10 @@
 
 #include "coreengine/tweentogglevisibility.h"
 
-Unit::Unit(QString unitID, spPlayer pOwner)
+Unit::Unit(QString unitID, Player* pOwner)
     : QObject(),
       m_UnitID(unitID),
-      m_Owner(pOwner)
+      m_pOwner(pOwner)
 {
     if (!m_UnitID.isEmpty())
     {
@@ -34,9 +34,9 @@ Unit::Unit(QString unitID, spPlayer pOwner)
 
 Unit::~Unit()
 {
-    if (m_Owner.get() != nullptr)
+    if (m_pOwner != nullptr)
     {
-        CO* pCO = m_Owner->getCO(0);
+        CO* pCO = m_pOwner->getCO(0);
         if (pCO != nullptr)
         {
             if (pCO->getCOUnit() == this)
@@ -44,7 +44,7 @@ Unit::~Unit()
                 pCO->setCOUnit(nullptr);
             }
         }
-        pCO = m_Owner->getCO(1);
+        pCO = m_pOwner->getCO(1);
         if (pCO != nullptr)
         {
             pCO->setCOUnit(nullptr);
@@ -52,23 +52,18 @@ Unit::~Unit()
     }
 }
 
-void Unit::setOwner(spPlayer pOwner)
+void Unit::setOwner(Player* pOwner)
 {
     // change ownership
-    m_Owner = pOwner;
+    m_pOwner = pOwner;
     // update sprites :)
     updateSprites();
 }
 
- spPlayer Unit::getSpOwner()
- {
-    return m_Owner;
- }
-
- void Unit::setTerrain(spTerrain pTerrain)
- {
-     m_Terrain = pTerrain;
- }
+void Unit::setTerrain(Terrain* pTerrain)
+{
+    m_pTerrain = pTerrain;
+}
 
 void Unit::loadSprite(QString spriteID, bool addPlayerColor)
 {
@@ -94,7 +89,7 @@ void Unit::loadSprite(QString spriteID, bool addPlayerColor)
         // repaint the unit?
         if (addPlayerColor)
         {
-            QColor color = m_Owner->getColor();
+            QColor color = m_pOwner->getColor();
             oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
             oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
             pSprite->addTween(tween);
@@ -122,18 +117,18 @@ void Unit::loadSprite(QString spriteID, bool addPlayerColor)
 
 Player* Unit::getOwner()
 {
-    return m_Owner.get();
+    return m_pOwner;
 }
 
 qint32 Unit::getFuelCostModifier(QPoint position, qint32 costs)
 {
     qint32 modifier = 0;
-    CO* pCO = m_Owner->getCO(0);
+    CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
         modifier += pCO->getFuelCostModifier(this, position, costs);
     }
-    pCO = m_Owner->getCO(1);
+    pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
         modifier += pCO->getFuelCostModifier(this, position, costs);
@@ -222,12 +217,12 @@ qint32 Unit::getMaxRange()
 qint32 Unit::getMaxRange(QPoint position)
 {
     qint32 rangeModifier = 0;
-    CO* pCO = m_Owner->getCO(0);
+    CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
         rangeModifier += pCO->getFirerangeModifier(this, position);
     }
-    pCO = m_Owner->getCO(1);
+    pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
         rangeModifier += pCO->getFirerangeModifier(this, position);
@@ -273,7 +268,7 @@ qint32 Unit::getCosts() const
 
 Terrain* Unit::getTerrain()
 {
-    return m_Terrain.get();
+    return m_pTerrain;
 }
 
 bool Unit::canMoveAndFire(QPoint position)
@@ -286,7 +281,7 @@ bool Unit::canMoveAndFire(QPoint position)
     {
         return true;
     }
-    CO* pCO = m_Owner->getCO(0);
+    CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
         if (pCO->getCanMoveAndFire(this, position))
@@ -294,7 +289,7 @@ bool Unit::canMoveAndFire(QPoint position)
             return true;
         }
     }
-    pCO = m_Owner->getCO(1);
+    pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
         if (pCO->getCanMoveAndFire(this, position))
@@ -347,12 +342,12 @@ qint32 Unit::getLoadedUnitCount()
 qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender)
 {
     qint32 bonus = 0;
-    CO* pCO = m_Owner->getCO(0);
+    CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
         bonus += pCO->getOffensiveBonus(this, position, pDefender, defPosition, isDefender);
     }
-    pCO = m_Owner->getCO(1);
+    pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
         bonus += pCO->getOffensiveBonus(this, position, pDefender, defPosition, isDefender);
@@ -365,7 +360,7 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
         for (qint32 y = 0; y < mapHeigth; y++)
         {
             Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
-            if ((pBuilding != nullptr) && pBuilding->getOwner() == m_Owner.get())
+            if ((pBuilding != nullptr) && pBuilding->getOwner() == m_pOwner)
             {
                 bonus += pBuilding->getOffensiveBonus();
             }
@@ -401,12 +396,12 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
 qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition)
 {
     qint32 bonus = 0;
-    CO* pCO = m_Owner->getCO(0);
+    CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
         bonus += pCO->getDeffensiveBonus(pAttacker, atkPosition, this, position);
     }
-    pCO = m_Owner->getCO(1);
+    pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
         bonus += pCO->getDeffensiveBonus(pAttacker, atkPosition, this, position);
@@ -419,7 +414,7 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
         for (qint32 y = 0; y < mapHeigth; y++)
         {
             Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
-            if ((pBuilding != nullptr) && pBuilding->getOwner() == m_Owner.get())
+            if ((pBuilding != nullptr) && pBuilding->getOwner() == m_pOwner)
             {
                 bonus += pBuilding->getDefensiveBonus();
             }
@@ -472,12 +467,12 @@ bool Unit::useTerrainDefense()
 qint32 Unit::getAttackHpBonus(QPoint position)
 {
     qint32 bonus = 0;
-    CO* pCO = m_Owner->getCO(0);
+    CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
         bonus += pCO->getAttackHpBonus(this, position);
     }
-    pCO = m_Owner->getCO(1);
+    pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
         bonus += pCO->getAttackHpBonus(this, position);
@@ -488,12 +483,12 @@ qint32 Unit::getAttackHpBonus(QPoint position)
 qint32 Unit::getBonusMisfortune(QPoint position)
 {
     qint32 bonus = 0;
-    CO* pCO = m_Owner->getCO(0);
+    CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
         bonus += pCO->getBonusMisfortune(this, position);
     }
-    pCO = m_Owner->getCO(1);
+    pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
         bonus += pCO->getBonusMisfortune(this, position);
@@ -503,18 +498,18 @@ qint32 Unit::getBonusMisfortune(QPoint position)
 
 qint32 Unit::getUnitCosts()
 {
-    return m_Owner->getCosts(m_UnitID);
+    return m_pOwner->getCosts(m_UnitID);
 }
 
 qint32 Unit::getRepairBonus(QPoint position)
 {
     qint32 bonus = 0;
-    CO* pCO = m_Owner->getCO(0);
+    CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
         bonus += pCO->getRepairBonus(this, position);
     }
-    pCO = m_Owner->getCO(1);
+    pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
         bonus += pCO->getRepairBonus(this, position);
@@ -533,11 +528,10 @@ void Unit::setUnitVisible(bool value)
 
 void Unit::makeCOUnit(quint8 co)
 {
-    CO* pCO = m_Owner->getCO(co);
+    CO* pCO = m_pOwner->getCO(co);
     if (pCO != nullptr)
     {
-        spUnit pUnit = m_Terrain->getSpUnit();
-        pCO->setCOUnit(pUnit);
+        pCO->setCOUnit(this);
         if (co == 0)
         {
             setUnitRank(GameEnums::UnitRank_CO0);
@@ -553,12 +547,12 @@ void Unit::makeCOUnit(quint8 co)
 qint32 Unit::getBonusLuck(QPoint position)
 {
     qint32 bonus = 0;
-    CO* pCO = m_Owner->getCO(0);
+    CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
         bonus += pCO->getBonusLuck(this, position);
     }
-    pCO = m_Owner->getCO(1);
+    pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
         bonus += pCO->getBonusLuck(this, position);
@@ -831,12 +825,12 @@ QString Unit::getUnitID()
 
 qint32 Unit::getX() const
 {
-    return m_Terrain->getX();
+    return m_pTerrain->getX();
 }
 
 qint32 Unit::getY() const
 {
-    return m_Terrain->getY();
+    return m_pTerrain->getY();
 }
 
 QPoint Unit::getPosition() const
@@ -879,12 +873,12 @@ bool Unit::getHasMoved()
 qint32 Unit::getTerrainDefenseModifier(QPoint position)
 {
     qint32 modifier = 0;
-    CO* pCO = m_Owner->getCO(0);
+    CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
         modifier += pCO->getTerrainDefenseModifier(this, position);
     }
-    pCO = m_Owner->getCO(1);
+    pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
         modifier += pCO->getTerrainDefenseModifier(this, position);
@@ -895,12 +889,12 @@ qint32 Unit::getTerrainDefenseModifier(QPoint position)
 qint32 Unit::getMovementPoints()
 {
     qint32 movementModifier = 0;
-    CO* pCO = m_Owner->getCO(0);
+    CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
         movementModifier += pCO->getMovementPointModifier(this);
     }
-    pCO = m_Owner->getCO(1);
+    pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
         movementModifier += pCO->getMovementPointModifier(this);
@@ -948,8 +942,8 @@ void Unit::moveUnit(QVector<QPoint> movePath)
         setCapturePoints(0);
 
         GameMap* pMap = GameMap::getInstance();
-        spUnit pUnit = m_Terrain->getSpUnit();
-        m_Terrain->setUnit(nullptr);
+        spUnit pUnit = m_pTerrain->getSpUnit();
+        m_pTerrain->setUnit(nullptr);
         // teleport unit to target position
         Console::print("Moving Unit from " + QString::number(getX()) + " , " + QString::number(getY()) + " to " + QString::number(movePath[0].x()) + " , " + QString::number(movePath[0].y()), Console::eLogLevels::eDEBUG);
         pMap->getTerrain(movePath[0].x(), movePath[0].y())->setUnit(pUnit);
@@ -957,11 +951,11 @@ void Unit::moveUnit(QVector<QPoint> movePath)
         {
             if (m_UnitRank == GameEnums::UnitRank_CO0)
             {
-                createCORange(m_Owner->getCO(0)->getCORange());
+                createCORange(m_pOwner->getCO(0)->getCORange());
             }
             else
             {
-                createCORange(m_Owner->getCO(1)->getCORange());
+                createCORange(m_pOwner->getCO(1)->getCORange());
             }
         }
     }
@@ -969,7 +963,7 @@ void Unit::moveUnit(QVector<QPoint> movePath)
 
 void Unit::removeUnit()
 {
-    m_Terrain->setUnit(nullptr);
+    m_pTerrain->setUnit(nullptr);
 }
 
 void Unit::killUnit()
@@ -982,11 +976,11 @@ void Unit::killUnit()
     QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
     if (m_UnitRank == GameEnums::UnitRank_CO0)
     {
-        m_Owner->getCO(0)->setCOUnit(nullptr);
+        m_pOwner->getCO(0)->setCOUnit(nullptr);
     }
     else if (m_UnitRank == GameEnums::UnitRank_CO1)
     {
-        m_Owner->getCO(1)->setCOUnit(nullptr);
+        m_pOwner->getCO(1)->setCOUnit(nullptr);
     }
     if (m_CORange.get() != nullptr)
     {
@@ -1000,12 +994,12 @@ void Unit::increaseCapturePoints(QPoint position)
 {
     // todo add ko modifications
     qint32 modifier = 0;
-    CO* pCO = m_Owner->getCO(0);
+    CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
         modifier += pCO->getCaptureBonus(this, position);
     }
-    pCO = m_Owner->getCO(1);
+    pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
         modifier += pCO->getCaptureBonus(this, position);
@@ -1152,7 +1146,7 @@ void Unit::serialize(QDataStream& pStream)
     pStream << ammo2;
     pStream << fuel;
     pStream << static_cast<qint32>(m_UnitRank);
-    pStream << m_Owner->getPlayerID();
+    pStream << m_pOwner->getPlayerID();
     pStream << m_Moved;
     qint32 units = m_TransportUnits.size();
     pStream << units;
@@ -1193,7 +1187,7 @@ void Unit::deserialize(QDataStream& pStream)
     }
     quint32 playerID = 0;
     pStream >> playerID;
-    m_Owner = GameMap::getInstance()->getspPlayer(playerID);
+    m_pOwner = GameMap::getInstance()->getPlayer(playerID);
     if (version > 1)
     {
         pStream >> m_Moved;
@@ -1233,7 +1227,7 @@ void Unit::createCORange(qint32 coRange)
     qint32 y2 = 0;
     x2 = -coRange;
     y2 = 0;
-    QColor color = m_Owner->getColor();
+    QColor color = m_pOwner->getColor();
     oxygine::Color playerColor = oxygine::Color(color.red(), color.green(), color.blue());
     oxygine::Color inversColor = oxygine::Color(playerColor.r, playerColor.g, playerColor.b, 255);
     for (qint32 i = 0; i < coRange; i++)

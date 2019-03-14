@@ -133,14 +133,14 @@ void GameMap::flipX()
             if (flipTerrain->getBuilding() != nullptr)
             {
                 Building* pBuilding = new Building(pCurrentBuilding->getBuildingID());
-                pBuilding->setOwner(pCurrentBuilding->getSpOwner());
+                pBuilding->setOwner(pCurrentBuilding->getOwner());
                 pTerrain->setBuilding(pBuilding);
             }
 
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
             if (pCurrentUnit.get() != nullptr)
             {
-                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getSpOwner());
+                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner());
                 pTerrain->setUnit(pUnit);
             }
         }
@@ -168,14 +168,14 @@ void GameMap::rotateX()
             if (flipTerrain->getBuilding() != nullptr)
             {
                 Building* pBuilding = new Building(pCurrentBuilding->getBuildingID());
-                pBuilding->setOwner(pCurrentBuilding->getSpOwner());
+                pBuilding->setOwner(pCurrentBuilding->getOwner());
                 pTerrain->setBuilding(pBuilding);
             }
 
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
             if (pCurrentUnit.get() != nullptr)
             {
-                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getSpOwner());
+                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner());
                 pTerrain->setUnit(pUnit);
             }
         }
@@ -204,14 +204,14 @@ void GameMap::flipY()
             if (flipTerrain->getBuilding() != nullptr)
             {
                 Building* pBuilding = new Building(pCurrentBuilding->getBuildingID());
-                pBuilding->setOwner(pCurrentBuilding->getSpOwner());
+                pBuilding->setOwner(pCurrentBuilding->getOwner());
                 pTerrain->setBuilding(pBuilding);
             }
 
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
             if (pCurrentUnit.get() != nullptr)
             {
-                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getSpOwner());
+                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner());
                 pTerrain->setUnit(pUnit);
             }
         }
@@ -240,14 +240,14 @@ void GameMap::rotateY()
             if (flipTerrain->getBuilding() != nullptr)
             {
                 Building* pBuilding = new Building(pCurrentBuilding->getBuildingID());
-                pBuilding->setOwner(pCurrentBuilding->getSpOwner());
+                pBuilding->setOwner(pCurrentBuilding->getOwner());
                 pTerrain->setBuilding(pBuilding);
             }
 
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
             if (pCurrentUnit.get() != nullptr)
             {
-                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getSpOwner());
+                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner());
                 pTerrain->setUnit(pUnit);
             }
         }

@@ -19,23 +19,18 @@ public:
      * @brief setOwner changes the owner ship of this building
      * @param pOwner
      */
-    void setOwner(spPlayer pOwner);
+    void setOwner(Player* pOwner);
     /**
      * @brief updateBuildingSprites updates all sprites of this building
      */
     void updateBuildingSprites();
     /**
-     * @brief getSpOwner
-     * @return  smart pointer to the owner
-     */
-    spPlayer getSpOwner();
-    /**
      * @brief setTerrain
      * @param pTerrain smart pointer to the terrain this building is placed on
      */
-    inline void setTerrain(spTerrain pTerrain)
+    inline void setTerrain(Terrain* pTerrain)
     {
-        m_Terrain = pTerrain;
+        m_pTerrain = pTerrain;
     }
     /**
      * @brief canBuildingBePlaced
@@ -154,11 +149,11 @@ private:
     /**
      * @brief m_Owner our owner a nullptr means we're a neutral building
      */
-    spPlayer m_Owner;
+    Player* m_pOwner{nullptr};
     /**
      * @brief m_Terrain the terrain at which we are placed
      */
-    spTerrain m_Terrain;
+    Terrain* m_pTerrain{nullptr};
     /**
      * @brief m_Hp
      */

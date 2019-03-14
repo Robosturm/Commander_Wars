@@ -15,6 +15,10 @@ void GameEnums::registerEnums()
     value.setProperty("PowerMode_Power", PowerMode_Power);
     value.setProperty("PowerMode_Superpower", PowerMode_Superpower);
 
+    value.setProperty("RocketTarget_Money", RocketTarget_Money);
+    value.setProperty("RocketTarget_HpHighMoney", RocketTarget_HpHighMoney);
+    value.setProperty("RocketTarget_HpLowMoney", RocketTarget_HpLowMoney);
+
     value.setProperty("UnitRank_None", UnitRank_None);
     value.setProperty("UnitRank_Lieutenant", UnitRank_Lieutenant);
     value.setProperty("UnitRank_General", UnitRank_General);

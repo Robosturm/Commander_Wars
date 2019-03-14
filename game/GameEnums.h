@@ -22,6 +22,14 @@ public:
     };
     Q_ENUM(PowerMode)
 
+    enum RocketTarget
+    {
+        RocketTarget_Money,
+        RocketTarget_HpLowMoney,
+        RocketTarget_HpHighMoney
+    };
+    Q_ENUM(RocketTarget)
+
     enum UnitRanks
     {
         UnitRank_None,

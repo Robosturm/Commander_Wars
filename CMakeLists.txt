@@ -55,6 +55,7 @@ set(${PROJECT_NAME}_SRCS
         objects/topbar.cpp
         objects/textbox.cpp
         objects/h_scrollbar.cpp
+        objects/v_scrollbar.cpp
         objects/dropdownmenu.cpp
         objects/panel.cpp
         objects/filedialog.cpp

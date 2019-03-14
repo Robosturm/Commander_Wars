@@ -90,7 +90,7 @@ EditorSelection::EditorSelection()
 
     for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
     {
-        spUnit unit = new Unit(pUnitSpriteManager->getUnitID(i), m_Players.at(1)->getSpOwner());
+        spUnit unit = new Unit(pUnitSpriteManager->getUnitID(i), m_Players.at(1)->getOwner());
         m_Units.append(unit);
         oxygine::spSprite pSprite = new oxygine::Sprite();
         QString movementType = m_Units.at(i)->getMovementType();
@@ -263,7 +263,7 @@ void EditorSelection::createPlayerSelection()
         m_Players.append(pBuilding);
         if (i >= 0)
         {
-            pBuilding->setOwner(GameMap::getInstance()->getspPlayer(i));
+            pBuilding->setOwner(GameMap::getInstance()->getPlayer(i));
         }
         else
         {
@@ -292,7 +292,7 @@ void EditorSelection::changeSelectedPlayer(qint32 player)
         }
         else
         {
-            m_Buildings.at(i2)->setOwner(m_Players.at(player + 1)->getSpOwner());
+            m_Buildings.at(i2)->setOwner(m_Players.at(player + 1)->getOwner());
         }
     }
     // update units
@@ -301,11 +301,11 @@ void EditorSelection::changeSelectedPlayer(qint32 player)
         if (player < 0)
         {
             // do nothing :)
-            m_Units.at(i2)->setOwner(m_Players.at(1)->getSpOwner());
+            m_Units.at(i2)->setOwner(m_Players.at(1)->getOwner());
         }
         else
         {
-            m_Units.at(i2)->setOwner(m_Players.at(player + 1)->getSpOwner());
+            m_Units.at(i2)->setOwner(m_Players.at(player + 1)->getOwner());
         }
     }
 }

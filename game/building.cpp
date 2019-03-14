@@ -16,40 +16,35 @@
 
 Building::Building(const QString& BuildingID)
     : m_BuildingID(BuildingID),
-      m_Owner(nullptr),
-      m_Terrain(nullptr)
+      m_pOwner(nullptr),
+      m_pTerrain(nullptr)
 {
 
 }
 
 void Building::setUnitOwner(Unit* pUnit)
 {
-    setOwner(pUnit->getSpOwner());
+    setOwner(pUnit->getOwner());
 }
 
-void Building::setOwner(spPlayer pOwner)
+void Building::setOwner(Player* pOwner)
 {
     // change ownership
-    m_Owner = pOwner;
+    m_pOwner = pOwner;
     // update sprites :)
     updateBuildingSprites();
 }
 
-spPlayer Building::getSpOwner()
-{
-    return m_Owner;
-}
-
 Player* Building::getOwner()
 {
-    return m_Owner.get();
+    return m_pOwner;
 }
 
 qint32 Building::getOwnerID()
 {
-    if (m_Owner.get() != nullptr)
+    if (m_pOwner != nullptr)
     {
-        return m_Owner->getPlayerID();
+        return m_pOwner->getPlayerID();
     }
     return -1;
 }
@@ -71,9 +66,9 @@ void Building::loadSprite(QString spriteID, bool addPlayerColor)
             pSprite->setResAnim(pAnim);
         }
         // repaint the building?
-        if (addPlayerColor && m_Owner.get() != nullptr)
+        if (addPlayerColor && m_pOwner != nullptr)
         {
-            QColor color = m_Owner->getColor();
+            QColor color = m_pOwner->getColor();
             for (qint32 i = 0; i < 5; i++)
             {
                 oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
@@ -161,12 +156,12 @@ QString Building::getMinimapIcon()
 
 qint32 Building::getX() const
 {
-    return m_Terrain->getX();
+    return m_pTerrain->getX();
 }
 
 qint32 Building::getY() const
 {
-    return m_Terrain->getY();
+    return m_pTerrain->getY();
 }
 
 QStringList Building::getActionList()
@@ -233,7 +228,7 @@ qint32 Building::getDefensiveBonus()
 
 Terrain* Building::getTerrain()
 {
-    return m_Terrain.get();
+    return m_pTerrain;
 }
 
 qint32 Building::getFireCount() const
@@ -260,13 +255,13 @@ void Building::serialize(QDataStream& pStream)
 {
     pStream << getVersion();
     pStream << m_BuildingID.toStdString().c_str();
-    if (m_Owner.get() == nullptr)
+    if (m_pOwner == nullptr)
     {
         pStream << static_cast<qint32>(-1);
     }
     else
     {
-        pStream << static_cast<qint32>(m_Owner->getPlayerID());
+        pStream << static_cast<qint32>(m_pOwner->getPlayerID());
     }
     pStream << m_Hp;
     pStream << fireCount;
@@ -281,7 +276,7 @@ void Building::deserialize(QDataStream& pStream)
     m_BuildingID = id;
     qint32 playerID = -1;
     pStream >> playerID;
-    m_Owner = GameMap::getInstance()->getspPlayer(playerID);
+    m_pOwner = GameMap::getInstance()->getPlayer(playerID);
     if (version > 1)
     {
         pStream >> m_Hp;

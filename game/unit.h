@@ -27,24 +27,19 @@ public:
      */
     explicit Unit() = default;
 
-    explicit Unit(QString unitID, spPlayer pOwner);
+    explicit Unit(QString unitID, Player* pOwner);
 
     virtual ~Unit();
     /**
      * @brief setOwner changes the owner ship of this unit
      * @param pOwner
      */
-    void setOwner(spPlayer pOwner);
-    /**
-     * @brief getSpOwner
-     * @return  smart pointer to the owner
-     */
-    spPlayer getSpOwner();
+    void setOwner(Player* pOwner);
     /**
      * @brief setTerrain
      * @param pTerrain smart pointer to the terrain this building is placed on
      */
-    void setTerrain(spTerrain pTerrain);
+    void setTerrain(Terrain* pTerrain);
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -357,11 +352,11 @@ private:
     /**
      * @brief m_Owner our owner a nullptr means we're a neutral building
      */
-    spPlayer m_Owner;
+    Player* m_pOwner{nullptr};
     /**
      * @brief m_Terrain the terrain at which we are placed
      */
-    spTerrain m_Terrain;
+    Terrain* m_pTerrain{nullptr};
     // basic data of this unit
     float hp{10};
     qint32 ammo1{-1};

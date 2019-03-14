@@ -83,8 +83,6 @@ void Terrain::setTerrainName(const QString &value)
 Terrain::~Terrain()
 {
 
-
-
 }
 
 void Terrain::syncAnimation()
@@ -466,7 +464,7 @@ void Terrain::setBuilding(Building* pBuilding)
     {
         m_Building = pBuilding;
         pBuilding->setPriority(static_cast<qint16>(DrawPriority::Building));
-        pBuilding->setTerrain(GameMap::getInstance()->getSpTerrain(Terrain::x, Terrain::y));
+        pBuilding->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
         this->addChild(pBuilding);
     }
     // delete current unit to avoid strange impact :)
@@ -484,7 +482,7 @@ void Terrain::loadBuilding(QString buildingID)
     m_Building = new Building(buildingID);
     m_Building->updateBuildingSprites();
     m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
-    m_Building->setTerrain(GameMap::getInstance()->getSpTerrain(Terrain::x, Terrain::y));
+    m_Building->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
     this->addChild(m_Building);
 }
 
@@ -500,7 +498,7 @@ void Terrain::setUnit(spUnit pUnit)
     {
         m_Unit = pUnit;
         pUnit->setPriority(static_cast<qint16>(DrawPriority::Unit));
-        pUnit->setTerrain(GameMap::getInstance()->getSpTerrain(Terrain::x, Terrain::y));
+        pUnit->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
         this->addChild(pUnit);
     }
 }
@@ -605,7 +603,7 @@ void Terrain::deserialize(QDataStream& pStream)
         m_Building = new Building("");
         m_Building->deserialize(pStream);
         m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
-        m_Building->setTerrain(GameMap::getInstance()->getSpTerrain(Terrain::x, Terrain::y));
+        m_Building->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
         this->addChild(m_Building);
     }
     bool hasUnit = false;
@@ -615,7 +613,7 @@ void Terrain::deserialize(QDataStream& pStream)
         m_Unit = new Unit("", nullptr);
         m_Unit->deserialize(pStream);
         m_Unit->setPriority(static_cast<qint16>(DrawPriority::Unit));
-        m_Unit->setTerrain(GameMap::getInstance()->getSpTerrain(Terrain::x, Terrain::y));
+        m_Unit->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
         this->addChild(m_Unit);
     }
     if (version > 1)

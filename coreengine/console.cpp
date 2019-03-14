@@ -21,7 +21,7 @@ Console::eLogLevels Console::LogLevel = Console::eINFO;
 
 bool Console::show = false;
 bool Console::toggled = false;
-QVector<QString> Console::output;
+QList<QString> Console::output;
 QMutex* Console::datalocker = NULL;
 Console* Console::m_pConsole = NULL;
 QString Console::curmsg = NULL;
@@ -29,6 +29,7 @@ qint32 Console::curmsgpos = 0;
 QTime Console::toggle;
 qint32 Console::curlastmsgpos = 0;
 QList<QString> Console::lastmsgs;
+qint32 Console::outputSize = 100;
 
 
 // Console Libary
@@ -175,6 +176,10 @@ void Console::print(const QString& message, eLogLevels MsgLogLevel)
 
 
         output.append(prefix + msg);
+        while (output.size() > outputSize)
+        {
+            output.removeFirst();
+        }
     }
 }
 
@@ -189,8 +194,11 @@ void Console::update(const oxygine::UpdateState& us)
         qint32 h = FontManager::getTimesFont10()->getSize();
         // pre calc message start
         qint32 num = screenheight / h - 1;
+        outputSize = num + 30;
         qint32 i = 0;
         qint32 start = output.size() - num;
+        // todo clean up output
+
         if (start < 0)
         {
             start = 0;
@@ -1405,6 +1413,10 @@ void Console::KeyInput(SDL_Event *event)
             {
                 dotask(curmsg);
                 lastmsgs.append(curmsg);
+                while (lastmsgs.size() > lastMsgSize)
+                {
+                    lastmsgs.removeFirst();
+                }
                 curlastmsgpos = lastmsgs.size();
                 curmsg = "";
                 curmsgpos = 0;

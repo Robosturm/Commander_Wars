@@ -9,6 +9,10 @@
 
 #include "objects/minimap.h"
 
+#include "objects/coselection.h"
+
+#include "objects/panel.h"
+
 class GameMap;
 
 class MapSelectionMapsMenue : public QObject, public oxygine::Actor
@@ -27,6 +31,8 @@ public:
 
     void hideMapSelection();
     void showMapSelection();
+    void hideCOSelection();
+    void showCOSelection();
 signals:
     void buttonBack();
     void buttonNext();
@@ -36,13 +42,20 @@ public slots:
     void slotButtonBack();
     void slotButtonNext();
 private:
+    GameMap* m_pCurrentMap{nullptr};
+    // map selection
     spMapSelection m_pMapSelection;
     spMinimap m_pMinimap;
     oxygine::spSlidingActor m_MinimapSlider;
     oxygine::spBox9Sprite m_pMiniMapBox;
     QVector<oxygine::spTextField> m_BuildingCountTexts;
     oxygine::spBox9Sprite m_pBuildingBackground;
-    GameMap* m_pCurrentMap{nullptr};
+    // rule selection
+
+    // player selection
+    spCOSelection m_pCOSelection;
+    spPanel m_pPlayerSelection;
+
 
     MapSelectionStep m_MapSelectionStep{MapSelectionStep::selectMap};
 };

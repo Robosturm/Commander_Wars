@@ -109,7 +109,6 @@ GameMap::~GameMap()
     // clean up session
     for (qint32 y = 0; y < fields.size(); y++)
     {
-        //
         fields.at(y)->clear();
         delete fields.at(y);
     }
@@ -260,7 +259,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
             return nullptr;
         }
     }
-    spUnit pUnit = new Unit(unitID, pPlayer);
+    spUnit pUnit = new Unit(unitID, pPlayer.get());
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
     QString movementType = pUnit->getMovementType();
     if (onMap(x, y))

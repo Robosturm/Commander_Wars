@@ -26,9 +26,9 @@ void CO::init()
     }
 }
 
-void CO::setCOUnit(spUnit pUnit)
+void CO::setCOUnit(Unit* pUnit)
 {
-    m_COUnit = pUnit;
+    m_pCOUnit = pUnit;
 }
 
 QString CO::getCoID() const
@@ -502,7 +502,7 @@ void CO::gainPowerstar(qint32 fondsDamage, QPoint position)
 
 Unit* CO::getCOUnit()
 {
-    return m_COUnit.get();
+    return m_pCOUnit;
 }
 
 qint32 CO::getCORange()
@@ -533,9 +533,9 @@ qint32 CO::getCORange()
 
 bool CO::inCORange(QPoint position)
 {
-    if (m_COUnit.get() != nullptr)
+    if (m_pCOUnit != nullptr)
     {
-        if ((qAbs(m_COUnit->getX() - position.x()) + qAbs(m_COUnit->getY() - position.y())) <= getCORange())
+        if ((qAbs(m_pCOUnit->getX() - position.x()) + qAbs(m_pCOUnit->getY() - position.y())) <= getCORange())
         {
             return true;
         }

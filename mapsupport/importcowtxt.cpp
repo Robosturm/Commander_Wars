@@ -165,7 +165,7 @@ void GameMap::importTxtMap(QString file)
                             qint32 player = data[5].toInt();
                             if (player > 0)
                             {
-                                pBuilding->setOwner(getspPlayer(player - 1));
+                                pBuilding->setOwner(getPlayer(player - 1));
                             }
                             pBuilding->setFireCount(data[7].toInt());
                             pBuilding->setHp(data[8].toInt());
@@ -187,7 +187,7 @@ void GameMap::importTxtMap(QString file)
                         if (unitIdMapping[i][0] == unitID)
                         {
                             qint32 player = data[8].toInt();
-                            spUnit pUnit = new Unit(unitIdMapping[i][1], getspPlayer(player - 1));
+                            spUnit pUnit = new Unit(unitIdMapping[i][1], getPlayer(player - 1));
                             pUnit->setFuel(data[6].toInt());
                             pUnit->setHp(data[7].toInt());
                             pTerrain->setUnit(pUnit);

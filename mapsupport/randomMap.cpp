@@ -252,7 +252,7 @@ void GameMap::createBuildings(qint32 buildings, bool roadSupport, QRandomGenerat
         replaceTerrain("PLAINS", position.x(), position.y());
         playerPositions.push_back(position);
         Building* pBuilding = new Building("HQ");
-        pBuilding->setOwner(getspPlayer(i));
+        pBuilding->setOwner(getPlayer(i));
         getTerrain(position.x(), position.y())->setBuilding(pBuilding);
     }
 
@@ -281,7 +281,7 @@ void GameMap::createBuildings(qint32 buildings, bool roadSupport, QRandomGenerat
         {
             replaceTerrain("PLAINS", x, y);
             Building* pBuilding = new Building("FACTORY");
-            pBuilding->setOwner(getspPlayer(i));
+            pBuilding->setOwner(getPlayer(i));
             getTerrain(x, y)->setBuilding(pBuilding);
         }
     }

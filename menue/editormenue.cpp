@@ -393,7 +393,7 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
         {
             spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
             Building* pBuilding = new Building(pCurrentBuilding->getBuildingID());
-            pBuilding->setOwner(pCurrentBuilding->getSpOwner());
+            pBuilding->setOwner(pCurrentBuilding->getOwner());
             pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
         }
     }
@@ -433,7 +433,7 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
         if (canUnitBePlaced(curX, curY))
         {
             spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
-            spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getSpOwner());
+            spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner());
             GameMap* pMap = GameMap::getInstance();
             pMap->getTerrain(curX, curY)->setUnit(pUnit);
         }

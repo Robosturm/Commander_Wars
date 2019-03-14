@@ -16,6 +16,8 @@
 
 #include "menue/gamemenue.h"
 
+#include "resource_management/unitspritemanager.h"
+
 Player::Player()
 {
 
@@ -297,18 +299,33 @@ void Player::setCO(QString coId, quint8 idx)
     }
 }
 
-QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue)
+QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType)
 {
     GameMap* pMap = GameMap::getInstance();
     QmlVectorPoint* pPoints = Mainapp::getCircle(0, radius);
     qint32 highestDamage = -1;
     QVector<QPoint> targets;
 
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    qint32 averageCosts = 0;
+    for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+    {
+        QString unitId = pUnitSpriteManager->getUnitID(i);
+        Mainapp* pApp = Mainapp::getInstance();
+        QString function1 = "getBaseCost";
+        QJSValue erg = pApp->getInterpreter()->doFunction(unitId, function1);
+        if (erg.isNumber())
+        {
+             averageCosts += erg.toInt();
+        }
+    }
+    averageCosts = averageCosts / pUnitSpriteManager->getUnitCount();
+
     for (qint32 x = 0; x < pMap->getMapWidth(); x++)
     {
         for (qint32 y = 0; y < pMap->getMapHeight(); y++)
         {
-            qint32 fondsDamage = 0;
+            qint32 damageDone = 0;
             for (qint32 i = 0; i < pPoints->size(); i++)
             {
                 qint32 x2 = x + pPoints->at(i).x();
@@ -321,25 +338,58 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue)
                     float modifier = 1.0f;
                     if (!isEnemyUnit(pUnit))
                     {
-                       modifier = -ownUnitValue;
+                        modifier = -ownUnitValue;
                     }
-                    qint32 damagePoints = damage;
+                    float damagePoints = damage;
                     qint32 hpRounded = pUnit->getHpRounded();
                     if (hpRounded < damage)
                     {
                         damagePoints = hpRounded;
                     }
-                    // calc fonds damage
-                    fondsDamage += damagePoints / 10.0f * modifier * pUnit->getCosts();
+                    switch (targetType)
+                    {
+                        case GameEnums::RocketTarget_Money:
+                        {
+                            // calc fonds damage
+                            damageDone += damagePoints / 10.0f * modifier * pUnit->getCosts();
+                            break;
+                        }
+                        case GameEnums::RocketTarget_HpHighMoney:
+                        {
+                            // calc fonds damage
+                            if (pUnit->getCosts() >= averageCosts / 2)
+                            {
+                                damageDone += damagePoints * modifier;
+                            }
+                            else
+                            {
+                                damageDone += damagePoints * modifier * 1 / 4;
+                            }
+                            break;
+                        }
+                        case GameEnums::RocketTarget_HpLowMoney:
+                        {
+                            // calc fonds damage
+                            if (pUnit->getCosts() <= averageCosts / 2)
+                            {
+                                damageDone += damagePoints * modifier;
+                            }
+                            else
+                            {
+                                damageDone += damagePoints * modifier * 1 / 4;
+                            }
+                            break;
+                        }
+                    }
                 }
             }
-            if (fondsDamage > highestDamage)
+            if (damageDone > highestDamage)
             {
-                highestDamage = fondsDamage;
+                highestDamage = damageDone;
                 targets.clear();
                 targets.append(QPoint(x, y));
             }
-            else if ((fondsDamage == highestDamage) && highestDamage >= 0)
+            else if ((damageDone == highestDamage) && highestDamage >= 0)
             {
                 targets.append(QPoint(x, y));
             }
@@ -347,7 +397,7 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue)
     }
     delete pPoints;
 
-    // create pseudo rand integer (not
+    // create pseudo rand integer (not based on a real randomize)
     QRandomGenerator randInt(static_cast<quint32>(highestDamage));
     if (targets.size() >= 0)
     {

@@ -26,7 +26,7 @@ public:
      * @param pUnit
      * @return
      */
-    void setCOUnit(spUnit pUnit);
+    void setCOUnit(Unit* pUnit);
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -249,7 +249,7 @@ private:
     qint32 powerStars{0};
     qint32 superpowerStars{0};
     float powerFilled{0.0f};
-    spUnit m_COUnit;
+    Unit* m_pCOUnit{nullptr};
     GameEnums::PowerMode m_PowerMode{GameEnums::PowerMode_Off};
 };
 
