@@ -58,6 +58,15 @@ public:
     };
     Q_ENUM(Directions)
 
+    enum AIQuestionType
+    {
+        AIQuestionType_Equal,
+        AIQuestionType_Smaler,
+        AIQuestionType_Greater,
+        AIQuestionType_Between
+    };
+    Q_ENUM(AIQuestionType)
+
     static void registerEnums();
 private:
     explicit GameEnums() = default;

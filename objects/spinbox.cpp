@@ -57,11 +57,12 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     });
     pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
-        m_spinDirection = -1;
+        m_spinDirection = -1 * m_SpinSpeed;
         float value = m_Text.toFloat();
         value += m_spinDirection;
         setValue(value);
         toggle.start();
+        emit sigValueChanged(value);
     });
     pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
     {
@@ -85,11 +86,12 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     });
     pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
-        m_spinDirection = 1;
+        m_spinDirection = 1 * m_SpinSpeed;
         float value = m_Text.toFloat();
         value += m_spinDirection;
         setValue(value);
         toggle.start();
+        emit sigValueChanged(value);
     });
     pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
     {
@@ -201,21 +203,25 @@ void SpinBox::update(const oxygine::UpdateState& us)
 
 float SpinBox::checkInput()
 {
+
     bool ok = false;
     float value = m_Text.toFloat(&ok);
-    if (!ok)
+    if (!m_focused)
     {
-        value = m_MinValue;
+        if (!ok)
+        {
+            value = m_MinValue;
+        }
+        if (value < m_MinValue)
+        {
+            value = m_MinValue;
+        }
+        if (value > m_MaxValue)
+        {
+            value = m_MaxValue;
+        }
+        setValue(value);
     }
-    if (value < m_MinValue)
-    {
-        value = m_MinValue;
-    }
-    if (value > m_MaxValue)
-    {
-        value = m_MaxValue;
-    }
-    setValue(value);
     return value;
 }
 
@@ -234,6 +240,16 @@ void SpinBox::setValue(float value)
             break;
         }
     }
+}
+
+float SpinBox::getSpinSpeed() const
+{
+    return m_SpinSpeed;
+}
+
+void SpinBox::setSpinSpeed(float SpinSpeed)
+{
+    m_SpinSpeed = SpinSpeed;
 }
 
 void SpinBox::TextInput(SDL_Event *event)

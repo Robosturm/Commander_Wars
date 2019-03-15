@@ -37,6 +37,9 @@ public:
      * @param text
      */
     void setCurrentValue(float value);
+    float getSpinSpeed() const;
+    void setSpinSpeed(float SpinSpeed);
+
 signals:
     void sigValueChanged(float value);
 public slots:
@@ -63,6 +66,7 @@ private:
     float m_MinValue{0.0f};
     float m_MaxValue{100.0f};
     float m_spinDirection{0.0f};
+    float m_SpinSpeed{1.0f};
     Mode m_Mode{Mode::Int};
 };
 

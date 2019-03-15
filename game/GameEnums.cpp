@@ -39,5 +39,10 @@ void GameEnums::registerEnums()
     value.setProperty("Directions_Direct", Directions_Direct);
     value.setProperty("Directions_Diagnonal", Directions_Diagnonal);
 
+    value.setProperty("AIQuestionType_Equal", AIQuestionType_Equal);
+    value.setProperty("AIQuestionType_Smaler", AIQuestionType_Smaler);
+    value.setProperty("AIQuestionType_Greater", AIQuestionType_Greater);
+    value.setProperty("AIQuestionType_Between", AIQuestionType_Between);
+
     pInterpreter->setGlobal("GameEnums", value);
 }

@@ -1,36 +1,40 @@
-#include "dropdownmenu.h"
+#include "dropdownmenucolor.h"
+
 #include "coreengine/mainapp.h"
+
 #include "resource_management/objectmanager.h"
+
 #include "resource_management/fontmanager.h"
 
-DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items, bool up)
-    : m_ItemTexts(items)
+DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items, bool up)
+    : m_ItemColors(items)
 {
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     this->setWidth(width);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("dropdownmenu");
-    m_Textbox = new oxygine::Box9Sprite();
-    m_Textbox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_Textbox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-    m_Textbox->setResAnim(pAnim);
-    m_Textfield = new oxygine::TextField();
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    style.multiline = false;
-    m_Textfield->setStyle(style);
-    m_Textfield->setText(items[0].toStdString().c_str());
+    m_Colorbox = new oxygine::Box9Sprite();
+    m_Colorbox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    m_Colorbox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    m_Colorbox->setResAnim(pAnim);
+
+    pAnim = pObjectManager->getResAnim("dropdownmenucolor");
+    m_Colorfield = new oxygine::Sprite();
+    m_Colorfield->setResAnim(pAnim);
     oxygine::spClipRectActor pClipActor = new oxygine::ClipRectActor();
-    m_Textfield->attachTo(pClipActor);
-    m_Textbox->addChild(pClipActor);
-    m_Textbox->setSize(width, 40);
-    m_Textfield->setWidth(m_Textbox->getWidth() - 20 - 45);
-    m_Textfield->setHeight(m_Textbox->getHeight());
-    pClipActor->setSize(m_Textfield->getSize());
+    m_Colorfield->attachTo(pClipActor);
+    m_Colorbox->addChild(pClipActor);
+    m_Colorbox->setSize(width, 40);
+    m_Colorfield->setWidth(pAnim->getWidth());
+    m_Colorfield->setHeight(pAnim->getHeight());
+    m_Colorfield->setScaleX((m_Colorbox->getWidth() - 20 - 45) / pAnim->getWidth());
+    m_Colorfield->setScaleY((m_Colorbox->getHeight() - 20) / pAnim->getHeight());
+    m_Colorfield->setColor(m_ItemColors[0].red(), m_ItemColors[0].green(), m_ItemColors[0].blue(), 255);
+    pClipActor->setWidth(m_Colorfield->getScaledWidth());
+    pClipActor->setHeight(m_Colorfield->getScaledHeight());
     pClipActor->setX(10);
-    this->addChild(m_Textbox);
+    pClipActor->setY(10);
+    this->addChild(m_Colorbox);
 
     qint32 scrollHeigth = 6 * 40;
     if (items.size() < 6)
@@ -45,14 +49,14 @@ DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items, bool up)
     }
     else
     {
-        m_Panel->setY(m_Textbox->getHeight());
+        m_Panel->setY(m_Colorbox->getHeight());
     }
     this->addChild(m_Panel);
 
 
     oxygine::spButton pArrowDown = new oxygine::Button();
-    m_Textbox->addChild(pArrowDown);
-    pArrowDown->setPosition(m_Textbox->getWidth() - 45, 10);
+    m_Colorbox->addChild(pArrowDown);
+    pArrowDown->setPosition(m_Colorbox->getWidth() - 45, 10);
     // pButton->setPosition(200, 200);
     pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
     pArrowDown->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
@@ -85,29 +89,24 @@ DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items, bool up)
         }
         this->m_Panel->setVisible(false);
     });
-    for (qint32 i = 0; i < m_ItemTexts.size(); i++)
+    for (qint32 i = 0; i < m_ItemColors.size(); i++)
     {
-        addDropDownItem(m_ItemTexts[i], i);
+        addDropDownItem(m_ItemColors[i], i);
     }
 }
 
-qint32 DropDownmenu::getCurrentItem() const
+void DropDownmenuColor::setCurrentItem(QColor color)
+{
+    m_currentItem = color;
+    m_Colorfield->setColor(color.red(), color.green(), color.blue(), 255);
+}
+
+QColor DropDownmenuColor::getCurrentItem()
 {
     return m_currentItem;
 }
 
-void DropDownmenu::setCurrentItem(qint32 index)
-{
-    m_currentItem = index;
-    m_Textfield->setText(m_ItemTexts[index].toStdString().c_str());
-}
-
-QString DropDownmenu::getCurrentItemText()
-{
-    return m_ItemTexts[m_currentItem];
-}
-
-void DropDownmenu::addDropDownItem(QString text, qint32 id)
+void DropDownmenuColor::addDropDownItem(QColor color, qint32 id)
 {
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
@@ -115,17 +114,24 @@ void DropDownmenu::addDropDownItem(QString text, qint32 id)
     pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setResAnim(pAnim);
-    oxygine::spTextField textField = new oxygine::TextField();
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
-    style.multiline = true;
-    textField->setStyle(style);
-    textField->setText(text.toStdString().c_str());
-    textField->attachTo(pBox);
     pBox->setSize(getWidth() - 33, 40);
-    textField->setSize(pBox->getSize());
+
+    oxygine::spSprite colorField = new oxygine::Sprite();
+    pAnim = pObjectManager->getResAnim("dropdownmenucolor");
+    colorField->setResAnim(pAnim);
+    colorField->setColor(color.red(), color.green(), color.blue(), 255);
+    colorField->setSize(pAnim->getWidth(), pAnim->getHeight());
+    colorField->setScaleX((pBox->getSize().x - 20) / pAnim->getWidth());
+    colorField->setScaleY((pBox->getSize().y - 20) / pAnim->getHeight());
+    oxygine::spClipRectActor pClipActor = new oxygine::ClipRectActor();
+    pClipActor->addChild(colorField);
+    pClipActor->setWidth(colorField->getScaledWidth());
+    pClipActor->setHeight(colorField->getScaledHeight());
+    pClipActor->setX(10);
+    pClipActor->setY(10);
+
+    pClipActor->attachTo(pBox);
+
     pBox->setPosition(0, 40 * m_Items.size());
     m_Items.append(pBox);
     pBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
@@ -141,9 +147,9 @@ void DropDownmenu::addDropDownItem(QString text, qint32 id)
     });
     pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        m_currentItem = id;
+        m_currentItem = color;
         this->m_Panel->setVisible(false);
-        m_Textfield->setText(text.toStdString().c_str());
+        m_Colorfield->setColor(color.red(), color.green(), color.blue(), 255);
         emit sigItemChanged(m_currentItem);
     });
 }

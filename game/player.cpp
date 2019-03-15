@@ -97,8 +97,14 @@ GameEnums::Alliance Player::checkAlliance(Player* pPlayer)
     }
     else
     {
-        // todo implement real check for alliance
-        return GameEnums::Alliance_Enemy;
+        if (team == pPlayer->getTeam())
+        {
+            return GameEnums::Alliance_Friend;
+        }
+        else
+        {
+            return GameEnums::Alliance_Enemy;
+        }
     }
 }
 
@@ -149,6 +155,16 @@ qint32 Player::getBuildingCount(QString buildingID)
         }
     }
     return ret;
+}
+
+qint32 Player::getTeam() const
+{
+    return team;
+}
+
+void Player::setTeam(const qint32 &value)
+{
+    team = value;
 }
 
 void Player::earnMoney(float modifier)
@@ -454,6 +470,7 @@ void Player::serialize(QDataStream& pStream)
         pStream << true;
         playerCOs[1]->serialize(pStream);
     }
+     pStream << team;
 }
 void Player::deserialize(QDataStream& pStream)
 {
@@ -485,6 +502,10 @@ void Player::deserialize(QDataStream& pStream)
         {
             playerCOs[1] = new CO("", this);
             playerCOs[1]->deserialize(pStream);
+        }
+        if (version > 3)
+        {
+            pStream >> team;
         }
     }
 }

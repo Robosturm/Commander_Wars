@@ -32,12 +32,13 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize)
         this->addChild(m_Panelbox);
         m_Panelbox->addChild(m_ClipRect);
         m_ClipRect->setPosition(10, 10);
-        m_ClipRect->setSize(size.width() - 20, size.height() - 20);
+        m_ClipRect->setSize(m_Panelbox->getWidth() - 20, m_Panelbox->getHeight() - 20);
     }
     else
     {
         this->addChild(m_ClipRect);
-        m_ClipRect->setSize(size.width(), size.height());
+        m_ClipRect->setSize(size.width() - m_HScrollbar->getWidth(),
+                            size.height() - m_VScrollbar->getHeight());
     }
     m_ContentRect = new oxygine::Actor();
     m_ContentRect->setSize(contentSize.width(), contentSize.height());

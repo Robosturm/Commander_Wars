@@ -28,6 +28,8 @@ public:
      * @return
      */
     QString getCurrentItemText();
+
+    void setCurrentItem(qint32 index);
 signals:
     void sigItemChanged(qint32 item);
 public slots:

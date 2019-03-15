@@ -16,6 +16,8 @@
 
 #include "menue/mainwindow.h"
 
+#include "objects/dropdownmenucolor.h"
+
 #include "QFileInfo"
 
 MapSelectionMapsMenue::MapSelectionMapsMenue()
@@ -137,15 +139,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
     });
     connect(this, SIGNAL(buttonNext()), this, SLOT(slotButtonNext()), Qt::QueuedConnection);
 
-
-
-    // co selection
-    m_pCOSelection = new COSelection();
-    m_pCOSelection->setPosition(10, 10);
-    m_pCOSelection->setScale(1.25f);
-    addChild(m_pCOSelection);
-
-    qint32 yPos = m_pCOSelection->getY() + m_pCOSelection->getScaledHeight() + 10;
+    qint32 yPos = 10;
     m_pPlayerSelection = new Panel(true,
                                    QSize(pApp->getSettings()->getWidth() - 20,
                                          pApp->getSettings()->getHeight() - yPos - 20 - pButtonBack->getHeight()),
@@ -259,16 +253,12 @@ void MapSelectionMapsMenue::showMapSelection()
 
 void MapSelectionMapsMenue::hideCOSelection()
 {
-    m_pCOSelection->setVisible(false);
     m_pPlayerSelection->setVisible(false);
     m_pPlayerSelection->clearContent();
 }
 void MapSelectionMapsMenue::showCOSelection()
 {
     m_pPlayerSelection->setVisible(true);
-    m_pCOSelection->setVisible(true);
-    m_pCOSelection->colorChanged(m_pCurrentMap->getPlayer(0)->getColor());
-
     // font style
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);
@@ -276,12 +266,16 @@ void MapSelectionMapsMenue::showCOSelection()
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
     // add player labels at top
-    QStringList items = {tr("Username"), tr("CO's"), tr("Color"), tr("AI Strength"), tr("Startfonds"), tr("Income"), tr("Team")};
-    qint32 labelminStepSize = 100;
+    QStringList items = {tr("Username"), tr("CO's"), tr("Color"), tr("AI Strength"), tr("Startfonds"), tr("Income Modifier"), tr("Team")};
+    QVector<qint32> xPositions;
+    qint32 labelminStepSize = 150;
     qint32 curPos = 5;
+
+    oxygine::spTextField pLabel;
     for (qint32 i = 0; i < items.size(); i++)
     {
-        oxygine::spTextField pLabel = new oxygine::TextField();
+        xPositions.append(curPos);
+        pLabel = new oxygine::TextField();
         pLabel->setStyle(style);
         pLabel->setText(items[i].toStdString().c_str());
         qint32 width = pLabel->getTextRect().getWidth() + 10;
@@ -293,10 +287,143 @@ void MapSelectionMapsMenue::showCOSelection()
         }
         curPos += width;
     }
+    xPositions.append(curPos);
+    m_pPlayerSelection->setContentWidth(curPos);
+    qint32 y = pLabel->getTextRect().getHeight() + 10 + 50; // 50 is dummy value
+    // all player
+    pLabel = new oxygine::TextField();
+    pLabel->setStyle(style);
+    pLabel->setText(tr("All").toStdString().c_str());
+    pLabel->setPosition(xPositions[0], y);
+    m_pPlayerSelection->addItem(pLabel);
+    qint32 itemIndex = 4;
+
+    spSpinBox allStartFondsSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
+    allStartFondsSpinBox->setPosition(xPositions[itemIndex], y);
+    m_pPlayerSelection->addItem(allStartFondsSpinBox);
+    connect(allStartFondsSpinBox.get(), SIGNAL(sigValueChanged(float)), this, SLOT(allPlayerStartFondsChanged(float)), Qt::QueuedConnection);
+    itemIndex = 5;
+    spSpinBox allIncomeSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 10, SpinBox::Mode::Float);
+    allIncomeSpinBox->setPosition(xPositions[itemIndex], y);
+    allIncomeSpinBox->setCurrentValue(1.0f);
+    allIncomeSpinBox->setSpinSpeed(0.1f);
+    m_pPlayerSelection->addItem(allIncomeSpinBox);
+    connect(allIncomeSpinBox.get(), SIGNAL(sigValueChanged(float)), this, SLOT(allPlayerIncomeChanged(float)), Qt::QueuedConnection);
+
+    y += 10 + allIncomeSpinBox->getHeight();
+    QVector<QString> teamList;
+    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+    {
+        teamList.append(tr("Team") + " " + QString::number(i + 1));
+    }
+
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function = "getDefaultPlayerColors";
+    QJSValueList args;
+    QJSValue ret = pApp->getInterpreter()->doFunction("PLAYER", function, args);
+    qint32 colorCount = ret.toInt();
+    QVector<QColor> playerColors;
+
+    for (qint32 i = 0; i < colorCount; i++)
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        QString function = "getDefaultColor";
+        QJSValueList args;
+        args << i;
+        ret = pApp->getInterpreter()->doFunction("PLAYER", function, args);
+        playerColors.append(QColor(ret.toString()));
+    }
+
     // add player selection information
     for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
     {
 
+
+        bool up = false;
+        if ((m_pCurrentMap->getPlayerCount() - i <= 5) &&
+            (i > 5))
+        {
+            up = true;
+        }
+
+        itemIndex = 2;
+        spDropDownmenuColor playerColor = new DropDownmenuColor(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, playerColors, up);
+        playerColor->setPosition(xPositions[itemIndex], y);
+        playerColor->setCurrentItem(m_pCurrentMap->getPlayer(i)->getColor());
+        m_pPlayerSelection->addItem(playerColor);
+        connect(playerColor.get(), &DropDownmenuColor::sigItemChanged, this, [=](QColor value)
+        {
+            playerColorChanged(value, i);
+        }, Qt::QueuedConnection);
+
+        itemIndex = 4;
+        spSpinBox playerStartFondsSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
+        playerStartFondsSpinBox->setPosition(xPositions[itemIndex], y);
+        playerStartFondsSpinBox->setCurrentValue(m_pCurrentMap->getPlayer(i)->getFonds());
+        m_pPlayerSelection->addItem(playerStartFondsSpinBox);
+        m_playerStartFonds.append(playerStartFondsSpinBox);
+        connect(playerStartFondsSpinBox.get(), &SpinBox::sigValueChanged, this, [=](float value)
+        {
+            playerStartFondsChanged(value, i);
+        }, Qt::QueuedConnection);
+
+        itemIndex = 5;
+        spSpinBox playerIncomeSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 10, SpinBox::Mode::Float);
+        playerIncomeSpinBox->setPosition(xPositions[itemIndex], y);
+        playerIncomeSpinBox->setCurrentValue(m_pCurrentMap->getPlayer(i)->getFondsModifier());
+        playerIncomeSpinBox->setSpinSpeed(0.1f);
+        m_pPlayerSelection->addItem(playerIncomeSpinBox);
+        m_playerIncomes.append(playerIncomeSpinBox);
+        connect(playerIncomeSpinBox.get(), &SpinBox::sigValueChanged, this, [=](float value)
+        {
+            playerIncomeChanged(value, i);
+        }, Qt::QueuedConnection);
+
+        itemIndex = 6;
+
+        spDropDownmenu playerTeam = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, teamList, up);
+        playerTeam->setPosition(xPositions[itemIndex], y);
+        playerTeam->setCurrentItem(m_pCurrentMap->getPlayer(i)->getTeam());
+        m_pPlayerSelection->addItem(playerTeam);
+        connect(playerTeam.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 value)
+        {
+            playerTeamChanged(value, i);
+        }, Qt::QueuedConnection);
+
+        y += 10 + playerIncomeSpinBox->getHeight();
     }
+    m_pPlayerSelection->setContentHeigth(y);
 }
 
+void MapSelectionMapsMenue::allPlayerIncomeChanged(float value)
+{
+    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+    {
+        m_pCurrentMap->getPlayer(i)->setFondsModifier(value);
+        m_playerIncomes[i]->setCurrentValue(value);
+    }
+}
+void MapSelectionMapsMenue::allPlayerStartFondsChanged(float value)
+{
+    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+    {
+        m_pCurrentMap->getPlayer(i)->setFonds(static_cast<qint32>(value));
+        m_playerStartFonds[i]->setCurrentValue(value);
+    }
+}
+void MapSelectionMapsMenue::playerIncomeChanged(float value, qint32 playerIdx)
+{
+    m_pCurrentMap->getPlayer(playerIdx)->setFondsModifier(static_cast<qint32>(value));
+}
+void MapSelectionMapsMenue::playerStartFondsChanged(float value, qint32 playerIdx)
+{
+    m_pCurrentMap->getPlayer(playerIdx)->setFonds(static_cast<qint32>(value));
+}
+void MapSelectionMapsMenue::playerTeamChanged(qint32 value, qint32 playerIdx)
+{
+    m_pCurrentMap->getPlayer(playerIdx)->setTeam(value);
+}
+void MapSelectionMapsMenue::playerColorChanged(QColor value, qint32 playerIdx)
+{
+    m_pCurrentMap->getPlayer(playerIdx)->setColor(value);
+}

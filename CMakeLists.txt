@@ -57,6 +57,7 @@ set(${PROJECT_NAME}_SRCS
         objects/h_scrollbar.cpp
         objects/v_scrollbar.cpp
         objects/dropdownmenu.cpp
+        objects/dropdownmenucolor.cpp
         objects/panel.cpp
         objects/filedialog.cpp
         objects/mapeditdialog.cpp
@@ -133,6 +134,12 @@ set(${PROJECT_NAME}_SRCS
         mapsupport/importcowtxt.cpp
         mapsupport/refactorMap.cpp
         mapsupport/randomMap.cpp
+
+        # ai
+        ai/leaf.cpp
+        ai/decisionnode.cpp
+        ai/question.cpp
+        ai/decisiontree.cpp
 )
 
 

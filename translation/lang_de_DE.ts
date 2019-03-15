@@ -358,48 +358,54 @@
 <context>
     <name>MapSelectionMapsMenue</name>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="123"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="125"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="131"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="133"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="279"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="269"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="279"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="269"/>
         <source>AI Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="279"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="269"/>
         <source>Startfonds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="279"/>
-        <source>Income</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="279"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="269"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="317"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="279"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="269"/>
         <source>Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="279"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="269"/>
         <source>CO&apos;s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="269"/>
+        <source>Income Modifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="296"/>
+        <source>All</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

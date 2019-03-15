@@ -13,6 +13,10 @@
 
 #include "objects/panel.h"
 
+#include "objects/spinbox.h"
+
+#include "objects/dropdownmenu.h"
+
 class GameMap;
 
 class MapSelectionMapsMenue : public QObject, public oxygine::Actor
@@ -41,6 +45,13 @@ public slots:
     void mapSelectionItemChanged(QString item);
     void slotButtonBack();
     void slotButtonNext();
+
+    void allPlayerIncomeChanged(float value);
+    void playerIncomeChanged(float value, qint32 playerIdx);
+    void allPlayerStartFondsChanged(float value);
+    void playerStartFondsChanged(float value, qint32 playerIdx);
+    void playerTeamChanged(qint32 value, qint32 playerIdx);
+    void playerColorChanged(QColor value, qint32 playerIdx);
 private:
     GameMap* m_pCurrentMap{nullptr};
     // map selection
@@ -53,11 +64,12 @@ private:
     // rule selection
 
     // player selection
-    spCOSelection m_pCOSelection;
     spPanel m_pPlayerSelection;
-
+    QVector<spSpinBox> m_playerIncomes;
+    QVector<spSpinBox> m_playerStartFonds;
 
     MapSelectionStep m_MapSelectionStep{MapSelectionStep::selectMap};
 };
 
 #endif // MAPSELECTIONMENUE_H
+

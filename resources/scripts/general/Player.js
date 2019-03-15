@@ -3,70 +3,74 @@ var PLAYER =
     // static information about players
     // making it easy editable\modable for everyone :)
 
-    // return the default set for colors
-    loadDefaultPlayerColor : function (player)
+    getDefaultPlayerColors : function()
     {
-        switch (player.getPlayerID())
+        return 20;
+    },
+    getDefaultColor : function(index)
+    {
+        var color = "#000000";
+        switch (index)
         {
             case 0:
-                player.setColor("#f85800");
+                color = "#f85800";
                 break;
             case 1:
-                player.setColor("#0068e8");
+                color = "#0068e8";
                 break;
             case 2:
-                player.setColor("#00c010");
+                color = "#00c010";
                 break;
             case 3:
-                player.setColor("#f8c000");
+                color = "#f8c000";
                 break;
             case 4:
-                player.setColor("#6038a0");
+                color = "#6038a0";
                 break;
             case 5:
-                player.setColor("darkslateblue");
+                color = "darkslateblue";
                 break;
             case 6:
-                player.setColor("steelblue");
+                color = "steelblue";
                 break;
             case 7:
-                player.setColor("coral");
+                color = "coral";
                 break;
             case 8:
-                player.setColor("peru");
+                color = "peru";
                 break;
             case 9:
-                player.setColor("silver");
+                color = "silver";
                 break;
             case 10:
-                player.setColor("magenta");
+                color = "magenta";
                 break;
             case 11:
-                player.setColor("teal");
+                color = "teal";
                 break;
             case 12:
-                player.setColor("indigo");
+                color = "indigo";
                 break;
             case 13:
-                player.setColor("cyan");
+                color = "cyan";
                 break;
             case 14:
-                player.setColor("green");
+                color = "green";
                 break;
             case 15:
-                player.setColor("red");
+                color = "red";
                 break;
             case 16:
-                player.setColor("firebrick");
+                color = "firebrick";
                 break;
             case 17:
-                player.setColor("purple");
+                color = "purple";
                 break;
             case 18:
-                player.setColor("goldenrod");
+                color = "goldenrod";
                 break;
             case 19:
-                player.setColor("blue");
+                color = "blue";
                 break;
             default:
                 // create a cool random color
@@ -85,11 +89,19 @@ var PLAYER =
                 {
                     blue = 16;
                 }
-                var color = "#" + red.toString(16) + green.toString(16) + blue.toString(16)
-                player.setColor(color);
+                color = "#" + red.toString(16) + green.toString(16) + blue.toString(16);
                 break;
         }
+        return color;
     },
+
+    // return the default set for colors
+    loadDefaultPlayerColor : function (player)
+    {
+        var color = PLAYER.getDefaultColor(player.getPlayerID());
+        player.setColor(color);
+    },
+
     getDefaultArmy : function (player)
     {
         var id = player.getPlayerID() % 13;
@@ -155,9 +167,4 @@ var PLAYER =
                 return tr("Dark Matters");
         }
     },
-
-
-    // enumeration
-    Alliance_Friend : 0,
-    Alliance_Enemy : 1,
 }

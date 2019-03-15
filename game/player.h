@@ -42,7 +42,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 3;
+        return 4;
     }
     /**
      * @brief getBaseGameInput pointer to the ai or human player interface
@@ -57,6 +57,8 @@ public:
      * @param pBaseGameInput
      */
     void setBaseGameInput(BaseGameInputIF *pBaseGameInput);
+
+
 
 signals:
 
@@ -192,12 +194,23 @@ public slots:
      * @return
      */
     qint32 getBuildingCount(QString buildingID = "");
+    /**
+     * @brief getTeam
+     * @return
+     */
+    qint32 getTeam() const;
+    /**
+     * @brief setTeam
+     * @param value
+     */
+    void setTeam(const qint32 &value);
 private:
     qint32 fonds{0};
     float fondsModifier{1.0f};
 
     QColor m_Color;
     QString playerArmy = "OS";
+    qint32 team{0};
     spCO playerCOs[2] = {nullptr, nullptr};
     /**
      * @brief m_pBaseGameInput pointer to the ai or human player
