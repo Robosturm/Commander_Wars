@@ -40,6 +40,8 @@ public:
 signals:
     void buttonBack();
     void buttonNext();
+    void buttonStartGame();
+    void buttonAllCOsRandom();
 public slots:
     void mapSelectionItemClicked(QString item);
     void mapSelectionItemChanged(QString item);
@@ -52,7 +54,16 @@ public slots:
     void playerStartFondsChanged(float value, qint32 playerIdx);
     void playerTeamChanged(qint32 value, qint32 playerIdx);
     void playerColorChanged(QColor value, qint32 playerIdx);
+
+    void playerCO1Changed(QString coid, qint32 playerIdx);
+    void playerCO2Changed(QString coid, qint32 playerIdx);
+    void slotAllCOsRandom();
+
+    void startGame();
 private:
+    // buttons
+    oxygine::spButton m_pButtonNext;
+    oxygine::spButton m_pButtonStart;
     GameMap* m_pCurrentMap{nullptr};
     // map selection
     spMapSelection m_pMapSelection;
@@ -65,8 +76,11 @@ private:
 
     // player selection
     spPanel m_pPlayerSelection;
+    QVector<oxygine::spSprite> m_playerCO1;
+    QVector<oxygine::spSprite> m_playerCO2;
     QVector<spSpinBox> m_playerIncomes;
     QVector<spSpinBox> m_playerStartFonds;
+    QVector<spDropDownmenu> m_playerAIs;
 
     MapSelectionStep m_MapSelectionStep{MapSelectionStep::selectMap};
 };

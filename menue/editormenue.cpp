@@ -20,6 +20,7 @@
 #include "game/co.h"
 
 EditorMenue::EditorMenue()
+    : InGameMenue (20, 20)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
     m_EditorSelection = new EditorSelection();

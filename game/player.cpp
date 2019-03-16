@@ -35,15 +35,21 @@ void Player::init()
 
 Player::~Player()
 {
-    if (m_pBaseGameInput != nullptr)
-    {
-        delete m_pBaseGameInput;
-    }
 }
 
 QColor Player::getColor() const
 {
     return m_Color;
+}
+
+void Player::swapCOs()
+{
+    if (playerCOs[1].get() != nullptr)
+    {
+        spCO co0 = playerCOs[0];
+        playerCOs[0] = playerCOs[1];
+        playerCOs[1] = co0;
+    }
 }
 
 void Player::setColor(QColor color)
@@ -311,7 +317,15 @@ void Player::setCO(QString coId, quint8 idx)
 {
     if (idx <= 1)
     {
-        playerCOs[idx] = new CO(coId, this);
+        if (coId.isEmpty())
+        {
+            playerCOs[idx] = nullptr;
+        }
+        else
+        {
+            playerCOs[idx] = new CO(coId, this);
+        }
+
     }
 }
 

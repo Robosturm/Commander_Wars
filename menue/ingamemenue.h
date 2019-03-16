@@ -13,19 +13,21 @@ class InGameMenue : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
 
-
-    explicit InGameMenue(qint32 width = 20, qint32 heigth = 20, QString map = "");
+    explicit InGameMenue();
+    explicit InGameMenue(qint32 width, qint32 heigth, QString map = "");
     virtual ~InGameMenue();
 
     Cursor* getCursor();
 signals:
-    sigMouseWheel(qint32 direction);
-    sigMoveMap(qint32 x, qint32 y);
+    void sigMouseWheel(qint32 direction);
+    void sigMoveMap(qint32 x, qint32 y);
 public slots:
     void mouseWheel(qint32 direction);
     void MoveMap(qint32 x, qint32 y);
 
 protected:
+    void loadBackground();
+    void loadHandling();
     bool m_moveMap{false};
     QPoint m_MoveMapMousePoint;
 

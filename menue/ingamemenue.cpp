@@ -7,8 +7,30 @@
 
 #include "game/gamemap.h"
 
+InGameMenue::InGameMenue()
+{
+    loadBackground();
+    oxygine::Actor::addChild(GameMap::getInstance());
+    loadHandling();
+}
+
 InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map)
     : QObject()
+{
+    loadBackground();
+    // check for map creation
+    if ((width > 0) && (heigth > 0))
+    {
+        oxygine::Actor::addChild(new GameMap(width, heigth, 4));
+    }
+    else
+    {
+        oxygine::Actor::addChild(new GameMap(map, true));
+    }
+    loadHandling();
+}
+
+void InGameMenue::loadBackground()
 {
     Console::print("Entering In Game Menue", Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
@@ -23,19 +45,11 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map)
     sprite->setPriority(static_cast<short>(Mainapp::ZOrder::Background));
     sprite->setScaleX(pApp->getSettings()->getWidth() / pBackground->getWidth());
     sprite->setScaleY(pApp->getSettings()->getHeight() / pBackground->getHeight());
+}
 
-    // check for map creation
-    if ((width > 0) && (heigth > 0))
-    {
-        oxygine::Actor::addChild(new GameMap(width, heigth, 4));
-    }
-    else
-    {
-        oxygine::Actor::addChild(new GameMap(map, true));
-    }
-
-
-
+void InGameMenue::loadHandling()
+{
+    Mainapp* pApp = Mainapp::getInstance();
     addEventListener(oxygine::TouchEvent::WHEEL_DIR, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
@@ -77,7 +91,7 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map)
             qint32 curX = pTouchEvent->getPointer()->getPosition().x;
             qint32 curY = pTouchEvent->getPointer()->getPosition().y;
             if (this->m_moveMap)
-            {                
+            {
                 qint32 resX = (this->m_MoveMapMousePoint.x() - curX) * pApp->getSettings()->getMouseSensitivity();
                 qint32 resY = (this->m_MoveMapMousePoint.y() - curY) * pApp->getSettings()->getMouseSensitivity();
                 this->m_MoveMapMousePoint.setX(curX);

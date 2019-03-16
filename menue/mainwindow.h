@@ -17,11 +17,8 @@ public slots:
 
     void leaveMenue();
     void quitGame();
-
-    void enterDemo();
 signals:
     void sigEnterSingleplayer();
-    void sigDemo();
     void sigEnterEditor();
     void sigQuit();
 protected:

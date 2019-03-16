@@ -2,12 +2,12 @@
 <resources>
 	<set path = "resources/images/co/" />
 	<atlas>
-		<!-- unusable co sprites for co selection -->
-		<image file="os/no_co+info.png" />
-		<image file="os/no_co+face.png" cols = "3" />
-		<image file="os/co_random+nrm.png" />
-		<image file="os/co_random+info.png" />
-		<image file="os/co_random+face.png" cols = "3" />
+		<!-- unusable co's for co selection -->
+		<image file="no_co+info.png" />
+		<image file="no_co+face.png" cols = "3" />
+		<image file="co_random+nrm.png" />
+		<image file="co_random+info.png" />
+		<image file="co_random+face.png" cols = "3" />
 		<!-- OS -->
 		<image file="os/co_andy+nrm.png" />
 		<image file="os/co_andy+info.png" />

@@ -65,21 +65,23 @@ void PlayerInfo::updateData()
         qint32 itemHeigth = pAnim->getHeight() + 5;
 
         CO* pCO = pPlayer->getCO(0);
-        if (pCO == nullptr)
+        if (pCO != nullptr)
         {
             pAnim = pCOSpriteManager->getResAnim(QString(pCO->getCoID() + "+info").toLower().toStdString().c_str());
         }
         else
         {
-            pAnim = pCOSpriteManager->getResAnim("no_co+info"));
+            pAnim = pCOSpriteManager->getResAnim("no_co+info");
         }
         pSprite = new oxygine::Sprite();
         pSprite->setResAnim(pAnim);
         pSprite->setY(yPos);
         pSprite->setScale(2.0f);
         this->addChild(pSprite);
-        drawPowerMeter(pCO, pSprite->getY());
-
+        if (pCO != nullptr)
+        {
+            drawPowerMeter(pCO, pSprite->getY());
+        }
 
         if (pPlayer->getCO(1) != nullptr)
         {

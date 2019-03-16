@@ -34,8 +34,10 @@ public:
         Down
     };
 
-    HumanPlayerInput(GameMenue* pMenue);
+    HumanPlayerInput();
     ~HumanPlayerInput();
+
+    virtual void init() override;
     /**
      * @brief deleteArrow deletes the current unit path arrow
      */
@@ -116,8 +118,6 @@ private:
     oxygine::spActor m_ZInformationLabel;
 
     spHumanPlayerInputMenu m_CurrentMenu{nullptr};
-
-    GameMenue* m_pMenue{nullptr};
 };
 
 #endif // HUMANPLAYERINPUT_H

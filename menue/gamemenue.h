@@ -14,7 +14,8 @@ class GameMenue : public InGameMenue
 {
     Q_OBJECT
 public:
-    GameMenue(QString map);
+    explicit GameMenue(qint32 startPlayer = 0);
+    explicit GameMenue(QString map);
     virtual ~GameMenue();
 
     static GameMenue* getInstance()
@@ -36,6 +37,8 @@ public slots:
      * @brief updatePlayerinfo
      */
     void updatePlayerinfo();
+protected:
+    void loadGameMenue();
 private:
     spPlayerInfo m_pPlayerinfo;
     static GameMenue* m_pInstance;

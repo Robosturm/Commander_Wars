@@ -13,9 +13,9 @@
 
 #include "game/GameEnums.h"
 
-class CO;
+#include "gameinput/basegameinputif.h"
 
-class BaseGameInputIF;
+class CO;
 
 class Player : public QObject, public oxygine::Actor, public FileSerializable
 {
@@ -50,7 +50,7 @@ public:
      */
     inline BaseGameInputIF* getBaseGameInput()
     {
-        return m_pBaseGameInput;
+        return m_pBaseGameInput.get();
     }
     /**
      * @brief setBaseGameInput sets the player input
@@ -63,6 +63,10 @@ public:
 signals:
 
 public slots:
+    /**
+     * @brief swapCOs swaps co 0 and 1
+     */
+    void swapCOs();
     /**
      * @brief getColor the color of this player
      * @return
@@ -215,7 +219,7 @@ private:
     /**
      * @brief m_pBaseGameInput pointer to the ai or human player
      */
-    BaseGameInputIF* m_pBaseGameInput{nullptr};
+    spBaseGameInputIF m_pBaseGameInput{nullptr};
 };
 
 #endif // PLAYER_H

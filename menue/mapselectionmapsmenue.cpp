@@ -7,6 +7,7 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/buildingspritemanager.h"
+#include "resource_management/cospritemanager.h"
 
 #include "game/gamemap.h"
 
@@ -14,9 +15,14 @@
 
 #include "game/co.h"
 
+#include "gameinput/humanplayerinput.h"
+
 #include "menue/mainwindow.h"
+#include "menue/gamemenue.h"
 
 #include "objects/dropdownmenucolor.h"
+
+#include "objects/coselectiondialog.h"
 
 #include "QFileInfo"
 
@@ -130,14 +136,24 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
         emit buttonBack();
     });
     connect(this, SIGNAL(buttonBack()), this, SLOT(slotButtonBack()), Qt::QueuedConnection);
-    oxygine::spButton pButtonNext = ObjectManager::createButton(tr("Next"));
-    pButtonNext->setPosition(pApp->getSettings()->getWidth() - 10 - pButtonBack->getWidth(), pApp->getSettings()->getHeight() - 10 - pButtonBack->getHeight());
-    pButtonNext->attachTo(this);
-    pButtonNext->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+
+    m_pButtonNext = ObjectManager::createButton(tr("Next"));
+    m_pButtonNext->setPosition(pApp->getSettings()->getWidth() - 10 - pButtonBack->getWidth(), pApp->getSettings()->getHeight() - 10 - pButtonBack->getHeight());
+    m_pButtonNext->attachTo(this);
+    m_pButtonNext->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit buttonNext();
     });
     connect(this, SIGNAL(buttonNext()), this, SLOT(slotButtonNext()), Qt::QueuedConnection);
+
+    m_pButtonStart = ObjectManager::createButton(tr("Start Game"));
+    m_pButtonStart->setPosition(pApp->getSettings()->getWidth() - 10 - pButtonBack->getWidth(), pApp->getSettings()->getHeight() - 10 - pButtonBack->getHeight());
+    m_pButtonStart->attachTo(this);
+    m_pButtonStart->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit buttonStartGame();
+    });
+    connect(this, SIGNAL(buttonStartGame()), this, SLOT(startGame()), Qt::QueuedConnection);
 
     qint32 yPos = 10;
     m_pPlayerSelection = new Panel(true,
@@ -249,16 +265,26 @@ void MapSelectionMapsMenue::showMapSelection()
     m_pMapSelection->setVisible(true);
     m_pMiniMapBox->setVisible(true);
     m_pBuildingBackground->setVisible(true);
+
 }
 
 void MapSelectionMapsMenue::hideCOSelection()
 {
     m_pPlayerSelection->setVisible(false);
+    m_pButtonStart->setVisible(false);
+    m_pButtonNext->setVisible(true);
     m_pPlayerSelection->clearContent();
+    m_playerCO1.clear();
+    m_playerCO2.clear();
+    m_playerIncomes.clear();
+    m_playerStartFonds.clear();
+    m_playerAIs.clear();
 }
 void MapSelectionMapsMenue::showCOSelection()
 {
     m_pPlayerSelection->setVisible(true);
+    m_pButtonStart->setVisible(true);
+    m_pButtonNext->setVisible(false);
     // font style
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);
@@ -289,15 +315,25 @@ void MapSelectionMapsMenue::showCOSelection()
     }
     xPositions.append(curPos);
     m_pPlayerSelection->setContentWidth(curPos);
-    qint32 y = pLabel->getTextRect().getHeight() + 10 + 50; // 50 is dummy value
+    qint32 y = pLabel->getTextRect().getHeight() + 10 + 25;
     // all player
     pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
     pLabel->setText(tr("All").toStdString().c_str());
     pLabel->setPosition(xPositions[0], y);
     m_pPlayerSelection->addItem(pLabel);
-    qint32 itemIndex = 4;
 
+    qint32 itemIndex = 1;
+    oxygine::spButton pButtonAllCOs = ObjectManager::createButton(tr("All Random"));
+    pButtonAllCOs->setPosition(xPositions[itemIndex], y);
+    pButtonAllCOs->attachTo(this);
+    pButtonAllCOs->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit buttonAllCOsRandom();
+    });
+    connect(this, &MapSelectionMapsMenue::buttonAllCOsRandom, this, &MapSelectionMapsMenue::slotAllCOsRandom, Qt::QueuedConnection);
+
+    itemIndex = 4;
     spSpinBox allStartFondsSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
     allStartFondsSpinBox->setPosition(xPositions[itemIndex], y);
     m_pPlayerSelection->addItem(allStartFondsSpinBox);
@@ -317,6 +353,8 @@ void MapSelectionMapsMenue::showCOSelection()
         teamList.append(tr("Team") + " " + QString::number(i + 1));
     }
 
+    QVector<QString> aiList = {tr("Human"), tr("Easy")};
+
     Mainapp* pApp = Mainapp::getInstance();
     QString function = "getDefaultPlayerColors";
     QJSValueList args;
@@ -333,11 +371,80 @@ void MapSelectionMapsMenue::showCOSelection()
         ret = pApp->getInterpreter()->doFunction("PLAYER", function, args);
         playerColors.append(QColor(ret.toString()));
     }
+    bool allPlayer1 = true;
+    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+    {
+        if (m_pCurrentMap->getPlayer(i)->getTeam() != 0)
+        {
+            allPlayer1 = false;
+            break;
+        }
+    }
+    // assume players had no real team assigned
+    // reassign each a unique team
+    if (allPlayer1)
+    {
+        for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+        {
+           m_pCurrentMap->getPlayer(i)->setTeam(i);
+        }
+    }
 
     // add player selection information
     for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
     {
+        itemIndex = 1;
+        oxygine::spSprite spriteCO1 = new oxygine::Sprite();
+        spriteCO1->setPosition(xPositions[itemIndex], y);
+        spriteCO1->setSize(32, 12);
+        spriteCO1->setScale(2.0f);
+        m_pPlayerSelection->addItem(spriteCO1);
+        m_playerCO1.append(spriteCO1);
+        if (m_pCurrentMap->getPlayer(i)->getCO(0) != nullptr)
+        {
+            playerCO1Changed(m_pCurrentMap->getPlayer(i)->getCO(0)->getCoID(), i);
+        }
+        else
+        {
+            playerCO1Changed("", i);
+        }
+        spriteCO1->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        {
+            QString coid = "";
+            if (m_pCurrentMap->getPlayer(i)->getCO(0) != nullptr)
+            {
+                coid = m_pCurrentMap->getPlayer(i)->getCO(0)->getCoID();
+            }
+            spCOSelectionDialog dialog = new COSelectionDialog(coid, m_pCurrentMap->getPlayer(i)->getColor(), i);
+            this->addChild(dialog);
+            connect(dialog.get(), &COSelectionDialog::editFinished, this , &MapSelectionMapsMenue::playerCO1Changed, Qt::QueuedConnection);
+        });
 
+        oxygine::spSprite spriteCO2 = new oxygine::Sprite();
+        spriteCO2->setPosition(xPositions[itemIndex], y + 24);
+        spriteCO2->setSize(32, 12);
+        spriteCO2->setScale(2.0f);
+        m_pPlayerSelection->addItem(spriteCO2);
+        m_playerCO2.append(spriteCO2);
+        if (m_pCurrentMap->getPlayer(i)->getCO(1) != nullptr)
+        {
+            playerCO2Changed(m_pCurrentMap->getPlayer(i)->getCO(1)->getCoID(), i);
+        }
+        else
+        {
+            playerCO2Changed("", i);
+        }
+        spriteCO2->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        {
+            QString coid = "";
+            if (m_pCurrentMap->getPlayer(i)->getCO(1) != nullptr)
+            {
+                coid = m_pCurrentMap->getPlayer(i)->getCO(1)->getCoID();
+            }
+            spCOSelectionDialog dialog = new COSelectionDialog(coid, m_pCurrentMap->getPlayer(i)->getColor(), i);
+            this->addChild(dialog);
+            connect(dialog.get(), &COSelectionDialog::editFinished, this , &MapSelectionMapsMenue::playerCO2Changed, Qt::QueuedConnection);
+        });
 
         bool up = false;
         if ((m_pCurrentMap->getPlayerCount() - i <= 5) &&
@@ -355,6 +462,13 @@ void MapSelectionMapsMenue::showCOSelection()
         {
             playerColorChanged(value, i);
         }, Qt::QueuedConnection);
+
+        itemIndex = 3;
+        spDropDownmenu playerAi = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, aiList, up);
+        playerAi->setPosition(xPositions[itemIndex], y);
+        playerAi->setCurrentItem(0);
+        m_playerAIs.append(playerAi);
+        m_pPlayerSelection->addItem(playerAi);
 
         itemIndex = 4;
         spSpinBox playerStartFondsSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
@@ -390,7 +504,7 @@ void MapSelectionMapsMenue::showCOSelection()
             playerTeamChanged(value, i);
         }, Qt::QueuedConnection);
 
-        y += 10 + playerIncomeSpinBox->getHeight();
+        y += 15 + playerIncomeSpinBox->getHeight();
     }
     m_pPlayerSelection->setContentHeigth(y);
 }
@@ -426,4 +540,97 @@ void MapSelectionMapsMenue::playerTeamChanged(qint32 value, qint32 playerIdx)
 void MapSelectionMapsMenue::playerColorChanged(QColor value, qint32 playerIdx)
 {
     m_pCurrentMap->getPlayer(playerIdx)->setColor(value);
+}
+void MapSelectionMapsMenue::playerCO1Changed(QString coid, qint32 playerIdx)
+{
+    m_pCurrentMap->getPlayer(playerIdx)->setCO(coid, 0);
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+    oxygine::ResAnim* pAnim = nullptr;
+    if (coid.isEmpty())
+    {
+        pAnim = pCOSpriteManager->getResAnim("no_co+info");
+    }
+    else
+    {
+        pAnim = pCOSpriteManager->getResAnim((coid + "+info").toStdString().c_str());
+    }
+    m_playerCO1[playerIdx]->setResAnim(pAnim);
+}
+void MapSelectionMapsMenue::playerCO2Changed(QString coid, qint32 playerIdx)
+{
+    m_pCurrentMap->getPlayer(playerIdx)->setCO(coid, 1);
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+    oxygine::ResAnim* pAnim = nullptr;
+    if (coid.isEmpty())
+    {
+        pAnim = pCOSpriteManager->getResAnim("no_co+info");
+    }
+    else
+    {
+        pAnim = pCOSpriteManager->getResAnim((coid + "+info").toStdString().c_str());
+    }
+    m_playerCO2[playerIdx]->setResAnim(pAnim);
+}
+
+void MapSelectionMapsMenue::slotAllCOsRandom()
+{
+    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+    {
+        playerCO1Changed("CO_RANDOM", i);
+        playerCO2Changed("CO_RANDOM", i);
+    }
+}
+
+void MapSelectionMapsMenue::startGame()
+{
+    // fix some stuff for the players based on our current input
+    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+    {
+        Player* pPlayer = GameMap::getInstance()->getPlayer(i);
+        // resolve random CO
+        if (pPlayer->getCO(0) != nullptr)
+        {
+            COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+            while (pPlayer->getCO(0)->getCoID() == "CO_RANDOM")
+            {
+                pPlayer->setCO(pCOSpriteManager->getCOID(Mainapp::randInt(0, pCOSpriteManager->getCOCount() - 1)), 0);
+            }
+        }
+        if (pPlayer->getCO(1) != nullptr)
+        {
+            COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+            while ((pPlayer->getCO(1)->getCoID() == "CO_RANDOM") ||
+                   (pPlayer->getCO(1)->getCoID() == pPlayer->getCO(0)->getCoID()))
+            {
+                pPlayer->setCO(pCOSpriteManager->getCOID(Mainapp::randInt(0, pCOSpriteManager->getCOCount() - 1)), 1);
+            }
+        }
+
+        switch (m_playerAIs[i]->getCurrentItem())
+        {
+            case 0:
+            {
+                pPlayer->setBaseGameInput(new HumanPlayerInput());
+                break;
+            }
+            default:
+            {
+                pPlayer->setBaseGameInput(new HumanPlayerInput());
+                break;
+            }
+        }
+
+        // resolve CO 1 beeing set and CO 0 not
+        if ((pPlayer->getCO(0) == nullptr) &&
+            (pPlayer->getCO(1) != nullptr))
+        {
+            pPlayer->swapCOs();
+        }
+
+        pPlayer->defineArmy();
+    }
+    // start game
+    Console::print("Leaving Map Selection Menue", Console::eDEBUG);
+    oxygine::getStage()->addChild(new GameMenue());
+    oxygine::Actor::detach();
 }

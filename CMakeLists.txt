@@ -65,6 +65,7 @@ set(${PROJECT_NAME}_SRCS
         objects/minimap.cpp
         objects/mapselection.cpp
         objects/coselection.cpp
+        objects/coselectiondialog.cpp
 
         #menues
         menue/mainwindow.cpp

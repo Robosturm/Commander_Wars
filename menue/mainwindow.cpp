@@ -47,17 +47,6 @@ Mainwindow::Mainwindow()
     connect(this, SIGNAL(sigEnterSingleplayer()), this, SLOT(enterSingleplayer()), Qt::QueuedConnection);
     btnI++;
 
-    // create the ui for the main menue here :)
-    oxygine::spButton pButtonDemo = ObjectManager::createButton(tr("Demo"));
-    setButtonPosition(pButtonDemo, btnI);
-    pButtonDemo->attachTo(this);
-    pButtonDemo->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit this->sigDemo();
-    });
-    connect(this, SIGNAL(sigDemo()), this, SLOT(enterDemo()), Qt::QueuedConnection);
-    btnI++;
-
     // editor button
     oxygine::spButton pButtonEditor = ObjectManager::createButton(tr("Map Editor"));
     pButtonEditor->attachTo(this);
@@ -83,7 +72,7 @@ Mainwindow::Mainwindow()
 
 void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
 {
-    static const qint32 buttonCount = 4;
+    static const qint32 buttonCount = 3;
     float buttonHeigth = pButton->getHeight() + 30;
     Mainapp* pApp = Mainapp::getInstance();
     pButton->setPosition(pApp->getSettings()->getWidth() / 2.0f - pButton->getWidth() / 2.0f, pApp->getSettings()->getHeight() / 2.0f - buttonCount  / 2.0f * buttonHeigth + buttonHeigth * btnI);
@@ -97,12 +86,6 @@ Mainwindow::~Mainwindow()
 void Mainwindow::enterSingleplayer()
 {
     oxygine::getStage()->addChild(new MapSelectionMapsMenue());
-    leaveMenue();
-}
-
-void Mainwindow::enterDemo()
-{
-    oxygine::getStage()->addChild(new GameMenue("D:/Programmierung/Commander_Wars/builds/install/Debug/maps/Test.map"));
     leaveMenue();
 }
 

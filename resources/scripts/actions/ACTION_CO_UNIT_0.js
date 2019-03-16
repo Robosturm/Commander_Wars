@@ -28,7 +28,7 @@ var Constructor = function()
     };
     this.getActionText = function()
     {
-        return qsTr("CO 0");
+        return qsTr("CO 1");
     };
     this.getIcon = function()
     {
