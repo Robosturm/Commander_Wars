@@ -47,7 +47,7 @@ class QmlVectorUnit : public QObject
 {
     Q_OBJECT
 public:
-    explicit QmlVectorUnit() = default;
+    explicit QmlVectorUnit();
     virtual ~QmlVectorUnit() = default;
 signals:
 
@@ -77,7 +77,7 @@ class QmlVectorBuilding: public QObject
 {
     Q_OBJECT
 public:
-    explicit QmlVectorBuilding() = default;
+    explicit QmlVectorBuilding();
     virtual ~QmlVectorBuilding() = default;
 signals:
 

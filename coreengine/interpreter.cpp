@@ -7,30 +7,29 @@
 #include <QTextStream>
 
 Interpreter::Interpreter(const QString& script, QObject *parent)
-    : QObject(parent)
+    : QQmlEngine(parent)
 {
     init();
     openScript(script);
 }
 
 Interpreter::Interpreter(QObject *parent)
-    : QObject(parent)
+    : QQmlEngine(parent)
 {
     init();
 }
 
 void Interpreter::init()
 {
-    engine = new QQmlEngine();
     Mainapp* pApp = Mainapp::getInstance();
     QJSValue globals = newQObject(pApp);
-    engine->globalObject().setProperty("globals", globals);
+    globalObject().setProperty("globals", globals);
     QJSValue audio = newQObject(pApp->getAudioThread());
-    engine->globalObject().setProperty("audio", audio);
+    globalObject().setProperty("audio", audio);
 
     QJSValue console = newQObject(Console::getInstance());
-    engine->globalObject().setProperty("GameConsole", console);
-    engine->installTranslatorFunctions();
+    globalObject().setProperty("GameConsole", console);
+    installTranslatorFunctions();
 }
 
 void Interpreter::openScript(const QString& script)
@@ -46,7 +45,7 @@ void Interpreter::openScript(const QString& script)
         QTextStream stream(&scriptFile);
         QString contents = stream.readAll();
         scriptFile.close();
-        QJSValue value = engine->evaluate(contents, script);
+        QJSValue value = evaluate(contents, script);
         if (value.isError())
         {
             QString error = value.toString() + " in File:" + script;
@@ -58,8 +57,7 @@ void Interpreter::openScript(const QString& script)
 Interpreter::~Interpreter()
 {
     // free memory
-   engine->collectGarbage();
-   delete engine;
+   collectGarbage();
 }
 
 
@@ -74,7 +72,7 @@ QJSValue Interpreter::doFunction(const QString& func, QJSValueList& args)
     Console::print("Calling: " + func + " with " + text, Console::eDEBUG);
 #endif
     QJSValue ret;
-    QJSValue funcPointer = engine->globalObject().property(func);
+    QJSValue funcPointer = globalObject().property(func);
     if (funcPointer.isCallable())
     {
         ret = funcPointer.call(args);
@@ -107,7 +105,7 @@ QJSValue Interpreter::doFunction(const QString& obj, const QString& func, const 
 #endif
     QJSValue ret;
 
-    QJSValue objPointer = engine->globalObject().property(obj);
+    QJSValue objPointer = globalObject().property(obj);
     if (objPointer.isObject())
     {
         QJSValue funcPointer = objPointer.property(func);
@@ -139,7 +137,7 @@ QJSValue Interpreter::doFunction(const QString& obj, const QString& func, const 
 
 QJSValue Interpreter::doString(const QString& task)
 {
-    QJSValue value = engine->evaluate(task, "GameCode");
+    QJSValue value = evaluate(task, "GameCode");
 
     if (value.isError())
     {
@@ -154,42 +152,47 @@ QJSValue Interpreter::doString(const QString& task)
 
 void Interpreter::pushInt(const QString& name, qint32 value)
 {
-    engine->globalObject().setProperty(name, value);
+    globalObject().setProperty(name, value);
 }
 
 void Interpreter::pushDouble(const QString& name, double value)
 {
-    engine->globalObject().setProperty(name, value);
+    globalObject().setProperty(name, value);
 }
 
 void Interpreter::pushString(const QString& name, const QString& value)
 {
-    engine->globalObject().setProperty(name, value);
+    globalObject().setProperty(name, value);
 }
 
 void Interpreter::pushObject(const QString& name, QObject* object)
 {
-    QJSValue newQObj = engine->newQObject(object);
-    engine->globalObject().setProperty(name, newQObj);
+    QJSValue newQObj = newQObject(object);
+    globalObject().setProperty(name, newQObj);
 }
 
 QJSValue Interpreter::newQObject(QObject* object)
 {
-    QJSValue newQObj = engine->newQObject(object);
+    QJSValue newQObj = QQmlEngine::newQObject(object);
     // make sure js never deletes our qobject since that's kinda not what we want
     QQmlEngine::setObjectOwnership(object, QQmlEngine::ObjectOwnership::CppOwnership);
     return newQObj;
 }
 
+void Interpreter::setCppOwnerShip(QObject* object)
+{
+    QQmlEngine::setObjectOwnership(object, QQmlEngine::ObjectOwnership::CppOwnership);
+}
+
 void Interpreter::cleanMemory()
 {
-    engine->collectGarbage();
+    collectGarbage();
 }
 
 qint32 Interpreter::getGlobalInt(const QString& var)
 {
     qint32 ret = 0;
-    QJSValue value = engine->globalObject().property(var);
+    QJSValue value = globalObject().property(var);
     if (!value.isNumber())
     {
         QString error = "Error: attemp to read " + var + "which is not from type number.";
@@ -205,7 +208,7 @@ qint32 Interpreter::getGlobalInt(const QString& var)
 bool Interpreter::getGlobalBool(const QString& var)
 {
     bool ret = 0;
-    QJSValue value = engine->globalObject().property(var);
+    QJSValue value = globalObject().property(var);
     if (!value.isBool())
     {
         QString error = "Error: attemp to read " + var + "which is not from type bool.";
@@ -221,7 +224,7 @@ bool Interpreter::getGlobalBool(const QString& var)
 double Interpreter::getGlobalDouble(const QString& var)
 {
     double ret = 0;
-    QJSValue value = engine->globalObject().property(var);
+    QJSValue value = globalObject().property(var);
     if (!value.isNumber())
     {
         QString error = "Error: attemp to read " + var + "which is not from type number.";
@@ -237,7 +240,7 @@ double Interpreter::getGlobalDouble(const QString& var)
 QString Interpreter::getGlobalString(const QString& var)
 {
     QString ret = "";
-    QJSValue value = engine->globalObject().property(var);
+    QJSValue value = globalObject().property(var);
     if (!value.isString())
     {
         QString error = "Error: attemp to read " + var + "which is not from type QString.";
@@ -252,13 +255,13 @@ QString Interpreter::getGlobalString(const QString& var)
 
 QJSValue Interpreter::getGlobal(const QString& var)
 {
-    QJSValue value = engine->globalObject().property(var);
+    QJSValue value = globalObject().property(var);
     return value;
 }
 
 void Interpreter::setGlobal(const QString& var, QJSValue obj)
 {
-    engine->globalObject().setProperty(var, obj);
+    globalObject().setProperty(var, obj);
 }
 
 void Interpreter::deleteObject(const QString& name)

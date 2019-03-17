@@ -20,11 +20,17 @@
 
 #include "coreengine/tweentogglevisibility.h"
 
+Unit::Unit()
+{
+    Interpreter::setCppOwnerShip(this);
+}
+
 Unit::Unit(QString unitID, Player* pOwner)
     : QObject(),
       m_UnitID(unitID),
       m_pOwner(pOwner)
 {
+    Interpreter::setCppOwnerShip(this);
     if (!m_UnitID.isEmpty())
     {
         initUnit();

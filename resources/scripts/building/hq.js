@@ -5,10 +5,8 @@ var Constructor = function()
     {
         if (building.getOwnerID() >= 0)
         {
-            // none neutral player
-            var player = building.getOwner();
             // get army name
-            var armyName = player.getArmy().toLowerCase();
+            var armyName = building.getOwner().getArmy().toLowerCase();
             // bh and bg have the same sprites
             if (armyName === "bg")
             {

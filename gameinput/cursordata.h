@@ -7,7 +7,7 @@ class CursorData : public QObject
 {
     Q_OBJECT
 public:
-    explicit CursorData() = default;
+    explicit CursorData();
     virtual ~CursorData() = default;
     CursorData(CursorData&& move) = default;
     CursorData(const CursorData& copy) = default;

@@ -18,7 +18,7 @@ class GameAction : public QObject
 public:
     explicit GameAction();
     explicit GameAction(QString actionID);
-
+    virtual ~GameAction() = default;
     /**
      * @brief setTarget sets the target for the current action
      * @param point

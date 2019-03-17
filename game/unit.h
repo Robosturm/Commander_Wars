@@ -25,7 +25,7 @@ public:
     /**
      * @brief Unit only for deserialization
      */
-    explicit Unit() = default;
+    explicit Unit();
 
     explicit Unit(QString unitID, Player* pOwner);
 

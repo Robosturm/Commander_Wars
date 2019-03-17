@@ -15,7 +15,7 @@
 MenuData::MenuData()
     : QObject()
 {
-
+    Interpreter::setCppOwnerShip(this);
 }
 
 void MenuData::addData(QString text, QString actionID, QString icon, qint32 costs, bool enabled)

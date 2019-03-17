@@ -57,6 +57,7 @@ GameMap::GameMap(QString map, bool gamestart, bool onlyLoad)
 void GameMap::loadMapData(bool reload)
 {
     m_pInstance = this;
+    Interpreter::setCppOwnerShip(this);
     Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
     pInterpreter->setGlobal(m_JavascriptName, pInterpreter->newQObject(this));
     pInterpreter->setGlobal(m_GameAnimationFactory, pInterpreter->newQObject(GameAnimationFactory::getInstance()));

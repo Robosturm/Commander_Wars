@@ -2,11 +2,17 @@
 
 #include "coreengine/mainapp.h"
 
-QmlVectorPoint::QmlVectorPoint() : QObject()
+QmlVectorPoint::QmlVectorPoint()
+    : QObject()
 {
-
+    Interpreter::setCppOwnerShip(this);
 }
 
+QmlVectorUnit::QmlVectorUnit()
+    : QObject()
+{
+    Interpreter::setCppOwnerShip(this);
+}
 
 void QmlVectorUnit::randomize()
 {
@@ -18,6 +24,12 @@ void QmlVectorUnit::randomize()
         m_Vector.removeAt(value);
     }
     m_Vector.swap(randVector);
+}
+
+QmlVectorBuilding::QmlVectorBuilding()
+    : QObject()
+{
+    Interpreter::setCppOwnerShip(this);
 }
 
 void QmlVectorBuilding::randomize()

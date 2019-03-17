@@ -412,7 +412,7 @@
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="295"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="353"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="354"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
@@ -427,12 +427,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="356"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="357"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="356"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="357"/>
         <source>Easy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -608,7 +608,7 @@
 <context>
     <name>Terrain</name>
     <message>
-        <location filename="../game/terrain.cpp" line="58"/>
+        <location filename="../game/terrain.cpp" line="59"/>
         <source>Unable to load Terrain </source>
         <translation type="unfinished"></translation>
     </message>

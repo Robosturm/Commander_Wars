@@ -7,7 +7,7 @@
 /**
  * @brief The Interpreter class java-script interpreter with easy access functions
  */
-class Interpreter : public QObject
+class Interpreter : public QQmlEngine
 {
     Q_OBJECT
 
@@ -43,11 +43,8 @@ public:
     QString getGlobalString(const QString& var);
     QJSValue getGlobal(const QString& var);
     void setGlobal(const QString& var, QJSValue obj);
+    static void setCppOwnerShip(QObject* object);
 private:
-    /**
-     * @brief JS-Engine
-     */
-    QQmlEngine* engine;
     void init();
 signals:
 

@@ -24,9 +24,6 @@ void GameMenue::loadGameMenue()
 {
     m_pInstance = this;
 
-    GameMap* pMap = GameMap::getInstance();
-    pMap->updateSprites();
-
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
@@ -42,10 +39,10 @@ void GameMenue::loadGameMenue()
             }
         }
     });
-
+    GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
-        pMap->getPlayer(i)->getBaseGameInput()->init();
+         pMap->getPlayer(i)->getBaseGameInput()->init();
     }
 
     // back to normal code

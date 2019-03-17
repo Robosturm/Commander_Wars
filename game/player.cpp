@@ -20,7 +20,7 @@
 
 Player::Player()
 {
-
+    Interpreter::setCppOwnerShip(this);
 }
 
 void Player::init()
@@ -72,7 +72,7 @@ qint32 Player::getPlayerID() const
 
 QString Player::getArmy()
 {
-    if (GameMenue::getInstance() != nullptr)
+    if (!playerArmy.isEmpty())
     {
         return playerArmy;
     }

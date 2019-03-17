@@ -77,7 +77,6 @@ void AudioThread::SlotSetVolume(qint32 value)
     if (m_Player != nullptr)
     {
         m_Player->setVolume(value);
-        Mainapp::getInstance()->getSettings()->setMusicVolume(value);
     }
 }
 

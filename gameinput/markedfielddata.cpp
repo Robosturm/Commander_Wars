@@ -1,8 +1,11 @@
 #include "markedfielddata.h"
 
-MarkedFieldData::MarkedFieldData() : QObject()
-{
+#include "coreengine/interpreter.h"
 
+MarkedFieldData::MarkedFieldData()
+    : QObject()
+{
+    Interpreter::setCppOwnerShip(this);
 }
 
 bool MarkedFieldData::getAllFields() const

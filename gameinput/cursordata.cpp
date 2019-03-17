@@ -1,5 +1,12 @@
 #include "cursordata.h"
 
+#include "coreengine/interpreter.h"
+
+CursorData::CursorData()
+{
+    Interpreter::setCppOwnerShip(this);
+}
+
 QString CursorData::getCursor() const
 {
     return cursor;

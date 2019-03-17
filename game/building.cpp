@@ -19,7 +19,7 @@ Building::Building(const QString& BuildingID)
       m_pOwner(nullptr),
       m_pTerrain(nullptr)
 {
-
+    Interpreter::setCppOwnerShip(this);
 }
 
 void Building::setUnitOwner(Unit* pUnit)

@@ -325,8 +325,8 @@ void MapSelectionMapsMenue::showCOSelection()
 
     qint32 itemIndex = 1;
     oxygine::spButton pButtonAllCOs = ObjectManager::createButton(tr("All Random"));
-    pButtonAllCOs->setPosition(xPositions[itemIndex], y);
-    pButtonAllCOs->attachTo(this);
+    pButtonAllCOs->setPosition(xPositions[itemIndex] - 20, y);
+    pButtonAllCOs->attachTo(m_pPlayerSelection);
     pButtonAllCOs->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit buttonAllCOsRandom();
@@ -338,6 +338,7 @@ void MapSelectionMapsMenue::showCOSelection()
     allStartFondsSpinBox->setPosition(xPositions[itemIndex], y);
     m_pPlayerSelection->addItem(allStartFondsSpinBox);
     connect(allStartFondsSpinBox.get(), SIGNAL(sigValueChanged(float)), this, SLOT(allPlayerStartFondsChanged(float)), Qt::QueuedConnection);
+
     itemIndex = 5;
     spSpinBox allIncomeSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 10, SpinBox::Mode::Float);
     allIncomeSpinBox->setPosition(xPositions[itemIndex], y);
@@ -605,7 +606,6 @@ void MapSelectionMapsMenue::startGame()
                 pPlayer->setCO(pCOSpriteManager->getCOID(Mainapp::randInt(0, pCOSpriteManager->getCOCount() - 1)), 1);
             }
         }
-
         switch (m_playerAIs[i]->getCurrentItem())
         {
             case 0:
@@ -629,8 +629,13 @@ void MapSelectionMapsMenue::startGame()
 
         pPlayer->defineArmy();
     }
+
+    GameMap* pMap = GameMap::getInstance();
+    pMap->updateSprites();
     // start game
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new GameMenue());
     oxygine::Actor::detach();
+
+
 }

@@ -8,12 +8,14 @@
 
 GameAction::GameAction()
 {
+    Interpreter::setCppOwnerShip(this);
     buffer.open(QIODevice::ReadWrite);
 }
 
 GameAction::GameAction(QString actionID)
     : m_actionID(actionID)
 {
+    Interpreter::setCppOwnerShip(this);
     buffer.open(QIODevice::ReadWrite);
 }
 

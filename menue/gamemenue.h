@@ -23,6 +23,10 @@ public:
         return m_pInstance;
     }
 
+    /**
+     * @brief startGame
+     * @param startPlayer
+     */
     void startGame(qint32 startPlayer);
 signals:
     void sigRightClick(qint32 x, qint32 y);

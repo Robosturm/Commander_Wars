@@ -16,7 +16,7 @@ class GameAnimation : public QObject, public oxygine::Sprite
     Q_OBJECT
 public:
     explicit GameAnimation(quint32 frameTime);
-
+    virtual ~GameAnimation() = default;
 signals:
     void sigFinished();
 public slots:

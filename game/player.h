@@ -213,9 +213,9 @@ private:
     float fondsModifier{1.0f};
 
     QColor m_Color;
-    QString playerArmy = "OS";
+    QString playerArmy{""};
     qint32 team{0};
-    spCO playerCOs[2] = {nullptr, nullptr};
+    spCO playerCOs[2]{nullptr, nullptr};
     /**
      * @brief m_pBaseGameInput pointer to the ai or human player
      */
