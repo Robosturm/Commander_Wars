@@ -47,67 +47,70 @@ void PlayerInfo::updateData()
         }
 
         spPlayer pPlayer = pMap->getspPlayer(currentPlayer);
-        oxygine::spSprite pSprite = new oxygine::Sprite();
-        oxygine::ResAnim* pAnim = nullptr;
-        if (pPlayer->getCO(1) == nullptr)
+        // draw player if he is alive
+        if (!pPlayer->getIsDefeated())
         {
-            pAnim = pGameManager->getResAnim("co");
-        }
-        else
-        {
-            pAnim = pGameManager->getResAnim("2co");
-        }
-        pSprite->setResAnim(pAnim);
-        QColor color = pPlayer->getColor();
-        pSprite->setColor(oxygine::Color(color.red(), color.green(),color.blue()));
-        pSprite->setY(yPos);
-        this->addChild(pSprite);
-        qint32 itemHeigth = pAnim->getHeight() + 5;
+            oxygine::spSprite pSprite = new oxygine::Sprite();
+            oxygine::ResAnim* pAnim = nullptr;
+            if (pPlayer->getCO(1) == nullptr)
+            {
+                pAnim = pGameManager->getResAnim("co");
+            }
+            else
+            {
+                pAnim = pGameManager->getResAnim("2co");
+            }
+            pSprite->setResAnim(pAnim);
+            QColor color = pPlayer->getColor();
+            pSprite->setColor(oxygine::Color(static_cast<unsigned char>(color.red()), static_cast<unsigned char>(color.green()), static_cast<unsigned char>(color.blue())));
+            pSprite->setY(yPos);
+            this->addChild(pSprite);
+            qint32 itemHeigth = static_cast<qint32>(pAnim->getHeight()) + 5;
 
-        CO* pCO = pPlayer->getCO(0);
-        if (pCO != nullptr)
-        {
-            pAnim = pCOSpriteManager->getResAnim(QString(pCO->getCoID() + "+info").toLower().toStdString().c_str());
-        }
-        else
-        {
-            pAnim = pCOSpriteManager->getResAnim("no_co+info");
-        }
-        pSprite = new oxygine::Sprite();
-        pSprite->setResAnim(pAnim);
-        pSprite->setY(yPos);
-        pSprite->setScale(2.0f);
-        this->addChild(pSprite);
-        if (pCO != nullptr)
-        {
-            drawPowerMeter(pCO, pSprite->getY());
-        }
-
-        if (pPlayer->getCO(1) != nullptr)
-        {
-            pCO = pPlayer->getCO(1);
-            pAnim = pCOSpriteManager->getResAnim(QString(pCO->getCoID() + "+info").toLower().toStdString().c_str());
+            CO* pCO = pPlayer->getCO(0);
+            if (pCO != nullptr)
+            {
+                pAnim = pCOSpriteManager->getResAnim(QString(pCO->getCoID() + "+info").toLower().toStdString().c_str());
+            }
+            else
+            {
+                pAnim = pCOSpriteManager->getResAnim("no_co+info");
+            }
             pSprite = new oxygine::Sprite();
             pSprite->setResAnim(pAnim);
-            pSprite->setY(yPos + 62);
-            drawPowerMeter(pCO, pSprite->getY());
+            pSprite->setY(yPos);
             pSprite->setScale(2.0f);
             this->addChild(pSprite);
+            if (pCO != nullptr)
+            {
+                drawPowerMeter(pCO, pSprite->getY());
+            }
+
+            if (pPlayer->getCO(1) != nullptr)
+            {
+                pCO = pPlayer->getCO(1);
+                pAnim = pCOSpriteManager->getResAnim(QString(pCO->getCoID() + "+info").toLower().toStdString().c_str());
+                pSprite = new oxygine::Sprite();
+                pSprite->setResAnim(pAnim);
+                pSprite->setY(yPos + 62);
+                drawPowerMeter(pCO, pSprite->getY());
+                pSprite->setScale(2.0f);
+                this->addChild(pSprite);
+            }
+
+            oxygine::TextStyle style = FontManager::getAWStandard();
+            oxygine::spTextField Text = new oxygine::TextField();
+
+            Text->setStyle(style);
+            QString number = QString::number(pPlayer->getFonds());
+            Text->setText(number.toStdString().c_str());
+            Text->setY(yPos + 20);
+            Text->setX(0);
+            Text->setScale(1.0f);
+            this->addChild(Text);
+
+            yPos += itemHeigth;
         }
-
-        oxygine::TextStyle style = FontManager::getAWStandard();
-        oxygine::spTextField Text = new oxygine::TextField();
-
-        Text->setStyle(style);
-        QString number = QString::number(pPlayer->getFonds());
-        Text->setText(number.toStdString().c_str());
-        Text->setY(yPos + 20);
-        Text->setX(0);
-        Text->setScale(1.0f);
-        this->addChild(Text);
-
-        yPos += itemHeigth;
-
     }
 }
 

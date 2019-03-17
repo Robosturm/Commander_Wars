@@ -10,8 +10,8 @@ CO::CO(QString coID, Player* owner)
     : m_Owner(owner),
       coID(coID)
 {
-    init();
     Interpreter::setCppOwnerShip(this);
+    init();
 }
 
 void CO::init()

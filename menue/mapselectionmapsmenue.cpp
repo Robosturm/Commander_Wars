@@ -8,6 +8,7 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/cospritemanager.h"
+#include "resource_management/gamerulemanager.h"
 
 #include "game/gamemap.h"
 
@@ -183,12 +184,14 @@ void MapSelectionMapsMenue::slotButtonBack()
         }
         case MapSelectionStep::selectRules:
         {
+            hideRuleSelection();
             showMapSelection();
             m_MapSelectionStep = MapSelectionStep::selectMap;
             break;
         }
         case MapSelectionStep::selectPlayer:
         {
+            showRuleSelection();
             hideCOSelection();
             m_MapSelectionStep = MapSelectionStep::selectRules;
             break;
@@ -205,12 +208,14 @@ void MapSelectionMapsMenue::slotButtonNext()
             if (m_pCurrentMap != nullptr)
             {
                 hideMapSelection();
+                showRuleSelection();
                 m_MapSelectionStep = MapSelectionStep::selectRules;
             }
             break;
         }
         case MapSelectionStep::selectRules:
         {
+            hideRuleSelection();
             showCOSelection();
             m_MapSelectionStep = MapSelectionStep::selectPlayer;
             break;
@@ -266,6 +271,20 @@ void MapSelectionMapsMenue::showMapSelection()
     m_pMiniMapBox->setVisible(true);
     m_pBuildingBackground->setVisible(true);
 
+}
+
+void MapSelectionMapsMenue::hideRuleSelection()
+{
+
+}
+
+void MapSelectionMapsMenue::showRuleSelection()
+{
+    GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
+    for (qint32 i = 0; i < pGameRuleManager->getVictoryRuleCount(); i++)
+    {
+        m_pCurrentMap->getGameRules()->addVictoryRule(pGameRuleManager->getVictoryRuleID(i));
+    }
 }
 
 void MapSelectionMapsMenue::hideCOSelection()
@@ -588,6 +607,12 @@ void MapSelectionMapsMenue::startGame()
     for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
     {
         Player* pPlayer = GameMap::getInstance()->getPlayer(i);
+        // resolve CO 1 beeing set and CO 0 not
+        if ((pPlayer->getCO(0) == nullptr) &&
+            (pPlayer->getCO(1) != nullptr))
+        {
+            pPlayer->swapCOs();
+        }
         // resolve random CO
         if (pPlayer->getCO(0) != nullptr)
         {
@@ -619,14 +644,6 @@ void MapSelectionMapsMenue::startGame()
                 break;
             }
         }
-
-        // resolve CO 1 beeing set and CO 0 not
-        if ((pPlayer->getCO(0) == nullptr) &&
-            (pPlayer->getCO(1) != nullptr))
-        {
-            pPlayer->swapCOs();
-        }
-
         pPlayer->defineArmy();
     }
 

@@ -42,7 +42,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 4;
+        return 5;
     }
     /**
      * @brief getBaseGameInput pointer to the ai or human player interface
@@ -58,11 +58,14 @@ public:
      */
     void setBaseGameInput(BaseGameInputIF *pBaseGameInput);
 
-
-
 signals:
 
 public slots:
+    /**
+     * @brief getIsDefeated
+     * @return
+     */
+    bool getIsDefeated() const;
     /**
      * @brief swapCOs swaps co 0 and 1
      */
@@ -199,6 +202,11 @@ public slots:
      */
     qint32 getBuildingCount(QString buildingID = "");
     /**
+     * @brief getUnitCount
+     * @return
+     */
+    qint32 getUnitCount(QString unitID = "");
+    /**
      * @brief getTeam
      * @return
      */
@@ -208,6 +216,12 @@ public slots:
      * @param value
      */
     void setTeam(const qint32 &value);
+    /**
+     * @brief defeatPlayer defeats the player and removes him from further playing
+     * @param pPLayer none nullptr will give all buildings to the selected player
+     * @param units if units is true the player will also get the controll of the given player
+     */
+    void defeatPlayer(Player* pPLayer, bool units = false);
 private:
     qint32 fonds{0};
     float fondsModifier{1.0f};
@@ -220,6 +234,7 @@ private:
      * @brief m_pBaseGameInput pointer to the ai or human player
      */
     spBaseGameInputIF m_pBaseGameInput{nullptr};
+    bool isDefeated{false};
 };
 
 #endif // PLAYER_H

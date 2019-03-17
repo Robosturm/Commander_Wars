@@ -3,6 +3,9 @@
 #include "game/player.h"
 #include "game/co.h"
 
+#include "menue/mainwindow.h"
+#include "coreengine/console.h"
+
 #include "gameinput/humanplayerinput.h"
 
 GameMenue* GameMenue::m_pInstance = nullptr;
@@ -44,7 +47,7 @@ void GameMenue::loadGameMenue()
     {
          pMap->getPlayer(i)->getBaseGameInput()->init();
     }
-
+    connect(pMap->getGameRules(), &GameRules::signalVictory, this, &GameMenue::victory, Qt::QueuedConnection);
     // back to normal code
     m_pPlayerinfo = new PlayerInfo();
     m_pPlayerinfo->updateData();
@@ -73,6 +76,13 @@ void GameMenue::updatePlayerinfo()
     }
 }
 
+void GameMenue::victory(qint32 team)
+{
+    Console::print("Leaving Game Menue", Console::eDEBUG);
+    oxygine::getStage()->addChild(new Mainwindow());
+    oxygine::Actor::detach();
+}
+
 void GameMenue::startGame(qint32 startPlayer)
 {
     GameMap* pMap = GameMap::getInstance();
@@ -86,3 +96,4 @@ void GameMenue::startGame(qint32 startPlayer)
     }
     pMap->nextTurn();
 }
+

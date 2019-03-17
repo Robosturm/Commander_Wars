@@ -12,6 +12,9 @@
 
 #include "coreengine/console.h"
 
+#include "coreengine/scriptvariable.h"
+#include "coreengine/scriptvariables.h"
+
 #include "ox/oxygine.hpp"
 #include "ox/Stage.hpp"
 #include "ox/DebugActor.hpp"
@@ -28,6 +31,9 @@
 #include "game/gameanimation.h"
 #include "game/gameanimationwalk.h"
 #include "game/gameanimationcapture.h"
+#include "game/victoryrule.h"
+#include "game/gamerules.h"
+
 #include "gameinput/cursordata.h"
 
 #include "game/GameEnums.h"
@@ -80,6 +86,10 @@ int main(int argc, char* argv[])
     qRegisterMetaType<GameEnums::UnitRanks>("GameEnums::UnitRanks");
     qRegisterMetaType<GameEnums::PowerMode>("GameEnums::PowerMode");
     qRegisterMetaType<GameEnums::RocketTarget>("GameEnums::RocketTarget");
+    qRegisterMetaType<GameEnums::DefeatType>("GameEnums::DefeatType");
+    qRegisterMetaType<GameEnums::Directions>("GameEnums::Directions");
+    qRegisterMetaType<GameEnums::AIQuestionType>("GameEnums::AIQuestionType");
+
 
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
     qmlRegisterInterface<Terrain>("Terrain");
@@ -95,7 +105,11 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<QmlVectorUnit>("QmlVectorUnit");
     qmlRegisterInterface<QmlVectorBuilding>("QmlVectorBuilding");
     qmlRegisterInterface<Mainapp>("Mainapp");
-    qmlRegisterInterface<CursorData>("CursorData");
+    qmlRegisterInterface<CursorData>("CursorData");    
+    qmlRegisterInterface<VictoryRule>("VictoryRule");
+    qmlRegisterInterface<GameRules>("GameRules");
+    qmlRegisterInterface<ScriptVariable>("ScriptVariable");
+    qmlRegisterInterface<ScriptVariables>("ScriptVariables");
 
 
     GameEnums::registerEnums();

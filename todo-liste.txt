@@ -1,25 +1,21 @@
-- unit info
-- terrain info
-
-- select map menu
-	- mini map
-- co's
-
-- activate power animation
 
 
 
+
+
+- rules
+	- wetter
+	- fog of war
 
 - option menu
 - credits menu
 
 - stealth units
-- fog of war
 
-- rules
-
-
-- wetter
+- unit info
+- terrain info
+- co's
+- activate power animation
 
 - ai
 - ko info
@@ -31,8 +27,6 @@
 - game statistics
 	- game recording
 
-- v-scrollbar
 - Objects
-	- Checkbox
-	
+	- Checkbox	
 	- import awds maps

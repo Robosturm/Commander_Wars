@@ -366,73 +366,73 @@
 <context>
     <name>MapSelectionMapsMenue</name>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="131"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="132"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="140"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="141"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="149"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="150"/>
         <source>Start Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="295"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="314"/>
         <source>Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="295"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="314"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="295"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="314"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="295"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="314"/>
         <source>AI Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="295"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="314"/>
         <source>Startfonds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="295"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="314"/>
         <source>Income Modifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="295"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="354"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="314"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="373"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="322"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="341"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="327"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="346"/>
         <source>All Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="357"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="376"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="357"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="376"/>
         <source>Easy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -482,12 +482,12 @@
 <context>
     <name>PlayerInfo</name>
     <message>
-        <location filename="../game/playerinfo.cpp" line="197"/>
+        <location filename="../game/playerinfo.cpp" line="200"/>
         <source>Power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/playerinfo.cpp" line="212"/>
+        <location filename="../game/playerinfo.cpp" line="215"/>
         <source>Superpower</source>
         <translation type="unfinished"></translation>
     </message>
@@ -495,7 +495,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="46"/>
+        <location filename="../main.cpp" line="52"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>

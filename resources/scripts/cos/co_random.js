@@ -7,7 +7,7 @@ var Constructor = function()
 
     this.getCOArmy = function()
     {
-        return "OS";
+        return "BH";
     };
 }
 

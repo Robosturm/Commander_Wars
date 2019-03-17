@@ -11,6 +11,7 @@
 #include "resource_management/weaponmanager.h"
 #include "resource_management/gamemanager.h"
 #include "resource_management/cospritemanager.h"
+#include "resource_management/gamerulemanager.h"
 
 #include "game/terrain.h"
 
@@ -32,13 +33,16 @@ GameMap* GameMap::m_pInstance = nullptr;
 
 
 GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
+    : m_CurrentPlayer(nullptr),
+      m_Rules(new GameRules())
 {
     loadMapData();
     newMap(width, heigth, playerCount);
-
 }
 
 GameMap::GameMap(QString map, bool gamestart, bool onlyLoad)
+    : m_CurrentPlayer(nullptr),
+      m_Rules(new GameRules())
 {
     loadMapData();
     QFile file(map);
@@ -96,6 +100,11 @@ void GameMap::loadMapData(bool reload)
     if (reload || (pCOSpriteManager->getCOCount() == 0))
     {
         pCOSpriteManager->loadAll();
+    }
+    GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
+    if (reload || (pGameRuleManager->getVictoryRuleCount() == 0))
+    {
+        pGameRuleManager->loadAll();
     }
 }
 
@@ -469,9 +478,9 @@ void GameMap::moveMap(qint32 x, qint32 y)
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     // draw point
-    qint32 resX = this->getPosition().x + x;
-    qint32 resY = this->getPosition().y + y;
-    qint32 minVisible = 16 / m_zoom;
+    float resX = this->getPosition().x + x;
+    float resY = this->getPosition().y + y;
+    float minVisible = 16.0f / m_zoom;
     Mainapp* pApp = Mainapp::getInstance();
     if (resX > pApp->getSettings()->getWidth()  - minVisible * m_zoom * Imagesize)
     {
@@ -495,7 +504,7 @@ void GameMap::moveMap(qint32 x, qint32 y)
 
 void GameMap::zoom(float zoom)
 {
-    m_zoom += zoom * 0.125;
+    m_zoom += zoom * 0.125f;
     // limit zoom
     if (m_zoom > 4.0f)
     {
@@ -526,7 +535,7 @@ void GameMap::replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool 
             fields.at(y)->replace(x, pTerrain);
             this->addChild(pTerrain);
             pTerrain->setPosition(x * Imagesize, y * Imagesize);
-            pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
+            pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
         }
         else
         {
@@ -535,7 +544,7 @@ void GameMap::replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool 
             fields.at(y)->replace(x, pTerrain);
             this->addChild(pTerrain);
             pTerrain->setPosition(x * Imagesize, y * Imagesize);
-            pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
+            pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
         }
         if (updateSprites)
         {
@@ -616,6 +625,7 @@ void GameMap::serialize(QDataStream& pStream)
             fields.at(y)->at(x)->serialize(pStream);
         }
     }
+    m_Rules->serialize(pStream);
 }
 
 void GameMap::clearMap()
@@ -689,10 +699,15 @@ void GameMap::deserialize(QDataStream& pStream)
             pTerrain->deserialize(pStream);
             this->addChild(pTerrain);
             pTerrain->setPosition(x * Imagesize, y * Imagesize);
-            pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
+            pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
         }
     }    
     setCurrentPlayer(currentPlayerIdx);
+    m_Rules = new  GameRules();
+    if (version > 2)
+    {
+        m_Rules->deserialize(pStream);
+    }
 }
 
 qint32 GameMap::getImageSize()
@@ -726,16 +741,22 @@ void GameMap::nextPlayer()
     {
         if (players.at(i).get() == m_CurrentPlayer.get())
         {
-            if (i == players.size() - 1)
+            for (qint32 i2 = 0; i2 < players.size(); i2++)
             {
-                m_CurrentPlayer = players[0];
-                break;
+                if (i + i2 >= players.size() - 1)
+                {
+                    m_CurrentPlayer = players[i + i2 - (players.size() - 1)];
+                }
+                else
+                {
+                    m_CurrentPlayer = players[i + i2 + 1];
+                }
+                if (!m_CurrentPlayer->getIsDefeated())
+                {
+                    break;
+                }
             }
-            else
-            {
-                m_CurrentPlayer = players[i + 1];
-                break;
-            }
+            break;
         }
     }
 }
@@ -846,6 +867,7 @@ void GameMap::setMapName(const QString &value)
 
 void GameMap::nextTurn()
 {
+    m_Rules->checkVictory();
     enableUnits(m_CurrentPlayer.get());
     Mainapp* pApp = Mainapp::getInstance();
     pApp->getAudioThread()->clearPlayList();

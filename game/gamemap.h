@@ -23,9 +23,11 @@
 
 #include "game/GameEnums.h"
 
+#include "game/gamerules.h"
+
 class GameAction;
 
-class GameMap : public QObject, public oxygine::Actor, public FileSerializable
+class GameMap : public QObject, public FileSerializable, public oxygine::Actor
 {
     Q_OBJECT
 
@@ -178,7 +180,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 2;
+        return 3;
     }
     /**
      * @brief clearMap
@@ -349,16 +351,19 @@ public slots:
 
     QString getMapName() const;
     void setMapName(const QString &value);
+
+    inline GameRules* getGameRules()
+    {
+        return m_Rules.get();
+    }
 private:
     static GameMap* m_pInstance;
-
     QString mapName;
     QVector<QVector<spTerrain>*> fields;
     QVector<spPlayer> players;
     spPlayer m_CurrentPlayer;
-
     quint32 currentDay{0};
-
+    spGameRules m_Rules;
     static const QString m_JavascriptName;
     static const QString m_GameAnimationFactory;
     float m_zoom{1.0f};

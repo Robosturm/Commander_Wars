@@ -8,7 +8,7 @@
 #include "network/txtask.h"
 
 TCPServer::TCPServer()
-    : pTCPServer(NULL)
+    : pTCPServer(nullptr)
 {
     isServer = true;
     isConnected = true;
@@ -35,16 +35,16 @@ void TCPServer::disconnectTCP()
         if (pTCPSockets[i]->isOpen())
         {
             delete pRXTasks[i];
-            pRXTasks[i] = NULL;
+            pRXTasks[i] = nullptr;
             pRXTasks.removeAt(i);
 
             delete pTXTasks[i];
-            pTXTasks[i] = NULL;
+            pTXTasks[i] = nullptr;
             pTXTasks.removeAt(i);
 
             // realize correct deletion
             pTCPSockets[i]->deleteLater();
-            pTCPSockets[i] = NULL;
+            pTCPSockets[i] = nullptr;
             pTCPSockets.removeAt(i);
 
             Console::print(tr("Client disconnected."), Console::eDEBUG);
@@ -103,7 +103,7 @@ void TCPServer::sessionOpened()
 
     pTCPServer = new QTcpServer(this);
     pTCPServer->moveToThread(this);
-    pTCPServer->listen(QHostAddress::Any, pApp->getSettings()->getGamePort());
+    pTCPServer->listen(QHostAddress::Any, static_cast<quint16>(pApp->getSettings()->getGamePort()));
     QObject::connect(pTCPServer, SIGNAL(newConnection()), this, SLOT(onConnect()));
 
     Console::print(tr("Server is running"), Console::eDEBUG);

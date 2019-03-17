@@ -35,6 +35,8 @@ public:
 
     void hideMapSelection();
     void showMapSelection();
+    void hideRuleSelection();
+    void showRuleSelection();
     void hideCOSelection();
     void showCOSelection();
 signals:

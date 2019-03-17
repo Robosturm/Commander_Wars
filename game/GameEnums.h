@@ -24,9 +24,9 @@ public:
 
     enum RocketTarget
     {
-        RocketTarget_Money,
-        RocketTarget_HpLowMoney,
-        RocketTarget_HpHighMoney
+        RocketTarget_Money, /**< targets the most money damage witht the rocket */
+        RocketTarget_HpLowMoney, /**< targets most hp damage where units which costs less than half of the average fonds count four time */
+        RocketTarget_HpHighMoney /**< targets most hp damage where units which costs more than half of the average fonds count four time */
     };
     Q_ENUM(RocketTarget)
 
@@ -66,6 +66,15 @@ public:
         AIQuestionType_Between
     };
     Q_ENUM(AIQuestionType)
+
+    enum DefeatType
+    {
+        DefeatType_Alive, /**< the player will not loose the game cause of this rule for now */
+        DefeatType_Defeated, /**< all units will get destroyed and the player looses the game */
+        DefeatType_ByCurrentPlayer, /**< all buildings will get controlled by the current player and all units will get destroyed */
+        DefeatType_Domination /**< all units and buildings will get controlled by the current player */
+    };
+    Q_ENUM(DefeatType)
 
     static void registerEnums();
 private:

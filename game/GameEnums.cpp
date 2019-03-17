@@ -44,5 +44,10 @@ void GameEnums::registerEnums()
     value.setProperty("AIQuestionType_Greater", AIQuestionType_Greater);
     value.setProperty("AIQuestionType_Between", AIQuestionType_Between);
 
+    value.setProperty("DefeatType_Alive", DefeatType_Alive);
+    value.setProperty("DefeatType_Defeated", DefeatType_Defeated);
+    value.setProperty("DefeatType_ByCurrentPlayer", DefeatType_ByCurrentPlayer);
+    value.setProperty("DefeatType_Domination", DefeatType_Domination);
+
     pInterpreter->setGlobal("GameEnums", value);
 }

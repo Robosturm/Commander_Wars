@@ -41,6 +41,11 @@ public slots:
      * @brief updatePlayerinfo
      */
     void updatePlayerinfo();
+    /**
+     * @brief victory
+     * @param team
+     */
+    void victory(qint32 team);
 protected:
     void loadGameMenue();
 private:

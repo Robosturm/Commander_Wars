@@ -60,7 +60,7 @@ public slots:
      * @brief getAnimationCount
      * @return the current amount of running animations
      */
-    static quint32 getAnimationCount();
+    static qint32 getAnimationCount();
     /**
      * @brief removeAnimation deletes the given animation
      * @param pAnimation pointer of the animation

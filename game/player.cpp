@@ -49,6 +49,10 @@ void Player::swapCOs()
         spCO co0 = playerCOs[0];
         playerCOs[0] = playerCOs[1];
         playerCOs[1] = co0;
+        if (GameMenue::getInstance() != nullptr)
+        {
+            GameMenue::getInstance()->updatePlayerinfo();
+        }
     }
 }
 
@@ -103,7 +107,8 @@ GameEnums::Alliance Player::checkAlliance(Player* pPlayer)
     }
     else
     {
-        if (team == pPlayer->getTeam())
+        if ((pPlayer != nullptr) &&
+            (team == pPlayer->getTeam()))
         {
             return GameEnums::Alliance_Friend;
         }
@@ -163,6 +168,30 @@ qint32 Player::getBuildingCount(QString buildingID)
     return ret;
 }
 
+qint32 Player::getUnitCount(QString unitID)
+{
+    qint32 ret = 0;
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 y = 0; y < pMap->getMapHeight(); y++)
+    {
+        for (qint32 x = 0; x < pMap->getMapWidth(); x++)
+        {
+            spUnit pUnit = pMap->getSpTerrain(x, y)->getSpUnit();
+            if (pUnit.get() != nullptr)
+            {
+                if (pUnit->getOwner() == this)
+                {
+                    if (unitID.isEmpty() || pUnit->getUnitID() == unitID)
+                    {
+                        ret++;
+                    }
+                }
+            }
+        }
+    }
+    return ret;
+}
+
 qint32 Player::getTeam() const
 {
     return team;
@@ -171,6 +200,54 @@ qint32 Player::getTeam() const
 void Player::setTeam(const qint32 &value)
 {
     team = value;
+}
+
+void Player::defeatPlayer(Player* pPLayer, bool units)
+{
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 y = 0; y < pMap->getMapHeight(); y++)
+    {
+        for (qint32 x = 0; x < pMap->getMapWidth(); x++)
+        {
+            spBuilding pBuilding = pMap->getSpTerrain(x, y)->getSpBuilding();
+            if (pBuilding.get() != nullptr)
+            {
+                if (pBuilding->getOwner() == this)
+                {
+                    pBuilding->setOwner(pPLayer);
+                }
+            }
+            spUnit pUnit = pMap->getSpTerrain(x, y)->getSpUnit();
+            if (pUnit.get() != nullptr)
+            {
+                if (pUnit->getOwner() == this)
+                {
+                    if ((pPLayer != nullptr) && units)
+                    {
+                        pUnit->setOwner(pPLayer);
+                        if (pUnit->getUnitRank() >= GameEnums::UnitRank_CO0)
+                        {
+                            pUnit->setUnitRank(GameEnums::UnitRank_Veteran);
+                        }
+                    }
+                    else
+                    {
+                        pUnit->killUnit();
+                    }
+                }
+            }
+        }
+    }
+    isDefeated = true;
+    if (GameMenue::getInstance() != nullptr)
+    {
+        GameMenue::getInstance()->updatePlayerinfo();
+    }
+}
+
+bool Player::getIsDefeated() const
+{
+    return isDefeated;
 }
 
 void Player::earnMoney(float modifier)
@@ -389,11 +466,11 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue,
                             // calc fonds damage
                             if (pUnit->getCosts() >= averageCosts / 2)
                             {
-                                damageDone += damagePoints * modifier;
+                                damageDone += damagePoints * modifier * 4;
                             }
                             else
                             {
-                                damageDone += damagePoints * modifier * 1 / 4;
+                                damageDone += damagePoints * modifier;
                             }
                             break;
                         }
@@ -402,11 +479,11 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue,
                             // calc fonds damage
                             if (pUnit->getCosts() <= averageCosts / 2)
                             {
-                                damageDone += damagePoints * modifier;
+                                damageDone += damagePoints * modifier * 4;
                             }
                             else
                             {
-                                damageDone += damagePoints * modifier * 1 / 4;
+                                damageDone += damagePoints * modifier;
                             }
                             break;
                         }
@@ -485,6 +562,8 @@ void Player::serialize(QDataStream& pStream)
         playerCOs[1]->serialize(pStream);
     }
      pStream << team;
+     pStream << isDefeated;
+     BaseGameInputIF::serializeInterface(pStream, m_pBaseGameInput.get());
 }
 void Player::deserialize(QDataStream& pStream)
 {
@@ -520,6 +599,12 @@ void Player::deserialize(QDataStream& pStream)
         if (version > 3)
         {
             pStream >> team;
+        }
+        if (version > 4)
+        {
+            pStream >> isDefeated;
+            m_pBaseGameInput = BaseGameInputIF::deserializeInterface(pStream);
+            m_pBaseGameInput->setPlayer(this);
         }
     }
 }

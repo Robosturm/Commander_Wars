@@ -86,6 +86,7 @@ set(${PROJECT_NAME}_SRCS
         resource_management/gameanimationmanager.cpp
         resource_management/weaponmanager.cpp
         resource_management/cospritemanager.cpp
+        resource_management/gamerulemanager.cpp
 
         # core engine
         coreengine/mainapp.cpp
@@ -97,6 +98,8 @@ set(${PROJECT_NAME}_SRCS
         coreengine/tweentogglevisibility.cpp
         coreengine/tweenwait.cpp
         coreengine/qmlvector.cpp
+        coreengine/scriptvariables.cpp
+        coreengine/scriptvariable.cpp
 
         # network engine
         network/tcpclient.cpp
@@ -121,6 +124,8 @@ set(${PROJECT_NAME}_SRCS
         game/gameanimationcapture.cpp
         game/playerinfo.cpp
         game/GameEnums.cpp
+        game/gamerules.cpp
+        game/victoryrule.cpp
 
         # game input
         gameinput/basegameinputif.cpp

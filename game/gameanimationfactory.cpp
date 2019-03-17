@@ -1,4 +1,4 @@
-#include "game/GameAnimationFactory.h"
+#include "game/gameanimationfactory.h"
 
 #include "game/gameanimation.h"
 
@@ -93,7 +93,7 @@ GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(qint32 x,
     return pGameAnimationCapture;
 }
 
-quint32 GameAnimationFactory::getAnimationCount()
+qint32 GameAnimationFactory::getAnimationCount()
 {
     return m_Animations.size();
 }
@@ -109,6 +109,11 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation)
             m_Animations.removeAt(i);
             break;
         }
+    }
+    if (m_Animations.size() == 0)
+    {
+        // every time all animations are finished we check for a victory
+        GameMap::getInstance()->getGameRules()->checkVictory();
     }
 }
 
