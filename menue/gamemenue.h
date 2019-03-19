@@ -46,6 +46,14 @@ public slots:
      * @param team
      */
     void victory(qint32 team);
+    /**
+     * @brief saveGame
+     */
+    void saveGame();
+    /**
+     * @brief exitGame
+     */
+    void exitGame();
 protected:
     void loadGameMenue();
 private:

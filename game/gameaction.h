@@ -77,7 +77,7 @@ public slots:
      * @param actionID id of the action we want to check
      * @return
      */
-    bool canBePerformed(QString actionID);
+    bool canBePerformed(QString actionID, bool emptyField = false);
     /**
      * @brief isFinalStep
      * @return true if we have all data to perform this action

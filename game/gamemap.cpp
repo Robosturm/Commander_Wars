@@ -628,6 +628,16 @@ void GameMap::serialize(QDataStream& pStream)
     m_Rules->serialize(pStream);
 }
 
+void GameMap::exitGame()
+{
+    emit signalExitGame();
+}
+
+void GameMap::saveGame()
+{
+    emit signalSaveGame();
+}
+
 void GameMap::clearMap()
 {
     // delete all data
@@ -872,6 +882,7 @@ void GameMap::nextTurn()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->getAudioThread()->clearPlayList();
     nextPlayer();
+    m_Rules->startOfTurn();
     m_CurrentPlayer->earnMoney();
     startOfTurn(m_CurrentPlayer.get());
     checkFuel(m_CurrentPlayer.get());

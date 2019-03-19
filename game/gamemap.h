@@ -187,8 +187,17 @@ public:
      */
     void clearMap();
 signals:
-
+    void signalExitGame();
+    void signalSaveGame();
 public slots:
+    /**
+     * @brief exitGame
+     */
+    void exitGame();
+    /**
+     * @brief saveGame
+     */
+    void saveGame();
     /**
      * @brief getBuildingCount
      * @param buildingID

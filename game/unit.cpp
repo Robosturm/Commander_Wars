@@ -205,9 +205,28 @@ void Unit::setUnitRank(const GameEnums::UnitRanks &UnitRank)
     }
 }
 
-qint32 Unit::getVision() const
+qint32 Unit::getVision(QPoint position)
 {
-    return vision;
+    qint32 rangeModifier = 0;
+    CO* pCO = m_pOwner->getCO(0);
+    if (pCO != nullptr)
+    {
+        rangeModifier += pCO->getVisionrangeModifier(this, position);
+    }
+    pCO = m_pOwner->getCO(1);
+    if (pCO != nullptr)
+    {
+        rangeModifier += pCO->getVisionrangeModifier(this, position);
+    }
+    GameMap* pMap = GameMap::getInstance();
+    rangeModifier += pMap->getGameRules()->getCurrentWeather()->getVisionrangeModifier();
+    qint32 points = vision + rangeModifier;
+
+    if (points < 0)
+    {
+        points = 0;
+    }
+    return points;
 }
 
 void Unit::setVision(const qint32 &value)
@@ -233,7 +252,10 @@ qint32 Unit::getMaxRange(QPoint position)
     {
         rangeModifier += pCO->getFirerangeModifier(this, position);
     }
+    GameMap* pMap = GameMap::getInstance();
+    rangeModifier += pMap->getGameRules()->getCurrentWeather()->getFirerangeModifier();
     qint32 points = maxRange + rangeModifier;
+
     if (points < minRange)
     {
         points = minRange;
@@ -372,6 +394,7 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
             }
         }
     }
+    bonus += pMap->getGameRules()->getCurrentWeather()->getOffensiveModifier();
     switch (m_UnitRank)
     {
         case GameEnums::UnitRank_None:
@@ -428,8 +451,9 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
     }
     if (useTerrainDefense())
     {
-        bonus += GameMap::getInstance()->getTerrain(position.x(), position.y())->getDefense(this) * 10;
+        bonus += pMap->getTerrain(position.x(), position.y())->getDefense(this) * 10;
     }
+    bonus += pMap->getGameRules()->getCurrentWeather()->getDefensiveModifier();
     switch (m_UnitRank)
     {
         case GameEnums::UnitRank_None:
@@ -1162,6 +1186,7 @@ void Unit::serialize(QDataStream& pStream)
     }
     pStream << capturePoints;
     pStream << m_Hidden;
+    m_Variables.serialize(pStream);
 }
 
 void Unit::deserialize(QDataStream& pStream)
@@ -1214,6 +1239,10 @@ void Unit::deserialize(QDataStream& pStream)
     if (version > 3)
     {
         pStream >> m_Hidden;
+    }
+    if (version > 4)
+    {
+        m_Variables.deserialize(pStream);
     }
 }
 

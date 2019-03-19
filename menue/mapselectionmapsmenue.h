@@ -32,7 +32,7 @@ public:
 
     explicit MapSelectionMapsMenue();
     virtual ~MapSelectionMapsMenue();
-
+    // functions for swapping between the inputs
     void hideMapSelection();
     void showMapSelection();
     void hideRuleSelection();
@@ -44,24 +44,36 @@ signals:
     void buttonNext();
     void buttonStartGame();
     void buttonAllCOsRandom();
+    void buttonShowEnviromentRules();
+    void buttonShowGameplayRules();
+    void buttonShowVictoryRules();
 public slots:
+    // slots for changing the map
     void mapSelectionItemClicked(QString item);
     void mapSelectionItemChanged(QString item);
-    void slotButtonBack();
-    void slotButtonNext();
 
+    // slots for changing the rules
+    void showEnviromentRules();
+    void showGameplayRules();
+    void showVictoryRules();
+
+    // slots for changing player data
     void allPlayerIncomeChanged(float value);
     void playerIncomeChanged(float value, qint32 playerIdx);
     void allPlayerStartFondsChanged(float value);
     void playerStartFondsChanged(float value, qint32 playerIdx);
     void playerTeamChanged(qint32 value, qint32 playerIdx);
     void playerColorChanged(QColor value, qint32 playerIdx);
-
     void playerCO1Changed(QString coid, qint32 playerIdx);
     void playerCO2Changed(QString coid, qint32 playerIdx);
     void slotAllCOsRandom();
 
+    // general slots
+    void slotButtonBack();
+    void slotButtonNext();
     void startGame();
+protected:
+
 private:
     // buttons
     oxygine::spButton m_pButtonNext;
@@ -75,6 +87,10 @@ private:
     QVector<oxygine::spTextField> m_BuildingCountTexts;
     oxygine::spBox9Sprite m_pBuildingBackground;
     // rule selection
+    oxygine::spButton m_pEnviroment;
+    oxygine::spButton m_pGameplay;
+    oxygine::spButton m_pVictoryConditions;
+    spPanel m_pRuleSelection;
 
     // player selection
     spPanel m_pPlayerSelection;

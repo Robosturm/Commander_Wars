@@ -3,9 +3,13 @@
 
 #include <QObject>
 
+#include "QRandomGenerator"
+
 #include "coreengine/fileserializable.h"
 
 #include "game/victoryrule.h"
+
+#include "game/weather.h"
 
 #include "oxygine-framework.h"
 
@@ -42,6 +46,7 @@ public:
     {
         return 1;
     }
+    void addVictoryRule(spVictoryRule rule);
 signals:
     void signalVictory(qint32 team);
 public slots:
@@ -51,9 +56,46 @@ public slots:
     void checkVictory();
     void addVictoryRule(QString rule);
     void removeVictoryRule(QString rule);
+    /**
+     * @brief addWeather
+     * @param weatherId
+     * @param weatherChance
+     */
+    void addWeather(QString weatherId, qint32 weatherChance);
+    /**
+     * @brief changeWeatherChance
+     * @param weatherId
+     * @param weatherChance
+     */
+    void changeWeatherChance(QString weatherId, qint32 weatherChance);
+    /**
+     * @brief getCurrentWeather
+     * @return
+     */
+    inline Weather* getCurrentWeather()
+    {
+        return m_Weathers[m_CurrentWeather].get();
+    }
+    /**
+     * @brief startOfTurn
+     */
+    void startOfTurn();
+    /**
+     * @brief changeWeather
+     * @param weatherId
+     * @param duration
+     */
+    void changeWeather(QString weatherId, qint32 duration);
 private:
     QVector<spVictoryRule> m_VictoryRules;
 
+    // weather chances
+    QVector<spWeather> m_Weathers;
+    QVector<qint32> m_WeatherChances;
+    qint32 m_weatherDuration{0};
+    qint32 m_CurrentWeather{0};
+    QRandomGenerator randInt;
+    qint32 randCounter{0};
 };
 
 #endif // GAMERULES_H

@@ -1,5 +1,9 @@
 var Constructor = function()
 {
+    this.getRuleName = function()
+    {
+        return qsTr("No Units");
+    };
     // the type how the rule will be represented in the map selection ui
     this.getRuleType = function()
     {
@@ -9,7 +13,7 @@ var Constructor = function()
     // defines the default value during map selection for this rule
     this.getDefaultRuleValue = function()
     {
-        return true;
+        return 1;
     };
     // create and initialize the variables for this rule
     this.init = function(rule)

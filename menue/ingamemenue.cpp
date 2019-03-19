@@ -108,7 +108,6 @@ void InGameMenue::loadHandling()
 
 InGameMenue::~InGameMenue()
 {
-
 }
 
 void InGameMenue::mouseWheel(qint32 direction)

@@ -48,6 +48,8 @@ void GameMenue::loadGameMenue()
          pMap->getPlayer(i)->getBaseGameInput()->init();
     }
     connect(pMap->getGameRules(), &GameRules::signalVictory, this, &GameMenue::victory, Qt::QueuedConnection);
+    connect(pMap, &GameMap::signalExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
+    connect(pMap, &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
     // back to normal code
     m_pPlayerinfo = new PlayerInfo();
     m_pPlayerinfo->updateData();
@@ -81,6 +83,16 @@ void GameMenue::victory(qint32 team)
     Console::print("Leaving Game Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
     oxygine::Actor::detach();
+}
+
+void GameMenue::saveGame()
+{
+
+}
+
+void GameMenue::exitGame()
+{
+    victory(-1);
 }
 
 void GameMenue::startGame(qint32 startPlayer)

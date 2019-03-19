@@ -12,9 +12,12 @@
 
 #include "coreengine/fileserializable.h"
 
+#include "coreengine/scriptvariables.h"
+
 class Unit;
 class Terrain;
 class Player;
+class Building;
 
 class CO : public QObject, public oxygine::Actor, public FileSerializable
 {
@@ -43,7 +46,7 @@ public:
      */
     virtual qint32 getVersion()
     {
-        return 1;
+        return 2;
     }
     void init();
 signals:
@@ -95,6 +98,12 @@ public slots:
      * @return
      */
     qint32 getTerrainDefenseModifier(Unit* pUnit, QPoint position);
+    /**
+     * @brief getVisionrangeModifier the bonus defense of this co for a terrain
+     * @param pUnit the unit we want to get the bonus points from
+     * @return
+     */
+    qint32 getVisionrangeModifier(Unit* pUnit, QPoint position);
     /**
      * @brief activatePower called when the power is activated
      */
@@ -243,6 +252,34 @@ public slots:
      * @return
      */
     qint32 getFuelCostModifier(Unit* pUnit, QPoint position, qint32 costs);
+    /**
+     * @brief getBuildingActions
+     * @param pBuilding
+     * @return
+     */
+    QString getAdditionalBuildingActions(Building* pBuilding);
+    /**
+     * @brief getBonusIncome
+     * @param pBuilding
+     * @param income
+     * @return
+     */
+    qint32 getBonusIncome(Building* pBuilding, qint32 income);
+    /**
+     * @brief postBattleActions
+     * @param pAttacker
+     * @param atkDamage
+     * @param pDefender
+     */
+    void postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender);
+    /**
+     * @brief getVariables
+     * @return
+     */
+    inline ScriptVariables* getVariables()
+    {
+        return &m_Variables;
+    }
 private:
     Player* m_Owner;
     QString coID;
@@ -251,6 +288,7 @@ private:
     float powerFilled{0.0f};
     Unit* m_pCOUnit{nullptr};
     GameEnums::PowerMode m_PowerMode{GameEnums::PowerMode_Off};
+    ScriptVariables m_Variables;
 };
 
 #endif // KO_H

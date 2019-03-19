@@ -39,7 +39,12 @@ public:
         return 1;
     }
 
-public slots:
+public slots:    
+    void setRuleValue(qint32 value);
+    qint32 getInfiniteValue();
+    qint32 getDefaultValue();
+    QString getRuleType();
+    QString getRuleName();
     QString getRuleID() const;
     ScriptVariables* getVariables()
     {

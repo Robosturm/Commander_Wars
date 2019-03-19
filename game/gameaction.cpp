@@ -63,26 +63,28 @@ QVector<QPoint> GameAction::getMovePath()
     return m_Movepath;
 }
 
-bool GameAction::canBePerformed(QString actionID)
+bool GameAction::canBePerformed(QString actionID, bool emptyField)
 {
     GameMap* pMap = GameMap::getInstance();
     Unit* pUnit = getTargetUnit();
     Building* pBuilding = getTargetBuilding();
-    if (pUnit != nullptr)
+    if (!emptyField)
     {
-        if ((pUnit->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID()) &&
-            (!pUnit->getHasMoved()))
+        if (pUnit != nullptr)
         {
-            return false;
+            if ((pUnit->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID()) &&
+                (!pUnit->getHasMoved()))
+            {
+                return false;
+            }
         }
-    }
-
-    if ((pBuilding != nullptr) && (pUnit == nullptr))
-    {
-        if ((pBuilding->getOwner() == nullptr) ||
-            (pBuilding->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID()))
+        if ((pBuilding != nullptr) && (pUnit == nullptr))
         {
-            return false;
+            if ((pBuilding->getOwner() == nullptr) ||
+                (pBuilding->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID()))
+            {
+                return false;
+            }
         }
     }
     Mainapp* pApp = Mainapp::getInstance();

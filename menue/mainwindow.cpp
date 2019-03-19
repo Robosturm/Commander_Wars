@@ -15,6 +15,8 @@
 
 #include "SDL.h"
 
+#include "objects/checkbox.h"
+
 Mainwindow::Mainwindow()
 {
     Console::print("Entering Main Menue", Console::eDEBUG);
@@ -31,6 +33,7 @@ Mainwindow::Mainwindow()
     sprite->setScaleX(pApp->getSettings()->getWidth() / pBackground->getWidth());
     sprite->setScaleY(pApp->getSettings()->getHeight() / pBackground->getHeight());
 
+    pApp->getAudioThread()->clearPlayList();
     pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");
     pApp->getAudioThread()->playRandom();
 

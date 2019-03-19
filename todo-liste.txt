@@ -1,11 +1,8 @@
 
-
-
-
-
 - rules
 	- wetter
 	- fog of war
+	- slider/ multislider
 
 - option menu
 - credits menu
@@ -28,5 +25,4 @@
 	- game recording
 
 - Objects
-	- Checkbox	
 	- import awds maps

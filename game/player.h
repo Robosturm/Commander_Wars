@@ -3,6 +3,7 @@
 
 #include <QColor>
 #include <QObject>
+#include "QRandomGenerator"
 #include "oxygine-flow.h"
 #include "game/smartpointers.h"
 #include "game/smartCO.h"
@@ -222,6 +223,12 @@ public slots:
      * @param units if units is true the player will also get the controll of the given player
      */
     void defeatPlayer(Player* pPLayer, bool units = false);
+    /**
+     * @brief postBattleActions
+     * @param pAttacker
+     * @param pDefender
+     */
+    void postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender);
 private:
     qint32 fonds{0};
     float fondsModifier{1.0f};
@@ -235,6 +242,8 @@ private:
      */
     spBaseGameInputIF m_pBaseGameInput{nullptr};
     bool isDefeated{false};
+    QRandomGenerator randInt;
+    qint32 randCounter{0};
 };
 
 #endif // PLAYER_H

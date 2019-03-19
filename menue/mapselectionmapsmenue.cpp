@@ -22,8 +22,9 @@
 #include "menue/gamemenue.h"
 
 #include "objects/dropdownmenucolor.h"
-
+#include "objects/checkbox.h"
 #include "objects/coselectiondialog.h"
+#include "objects/spinbox.h"
 
 #include "QFileInfo"
 
@@ -47,7 +48,8 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
     sprite->setScaleX(pApp->getSettings()->getWidth() / pBackground->getWidth());
     sprite->setScaleY(pApp->getSettings()->getHeight() / pBackground->getHeight());
 
-    pApp->getAudioThread()->loadFolder("resources/music/mapselectionmenue");
+    pApp->getAudioThread()->clearPlayList();
+    pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");
     pApp->getAudioThread()->playRandom();
 
     qint32 width = 0;
@@ -163,7 +165,45 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
                                    QSize(pApp->getSettings()->getWidth() - 70, 100));
     m_pPlayerSelection->setPosition(10, yPos);
     this->addChild(m_pPlayerSelection);
+
+    // rule selection
+    m_pEnviroment = ObjectManager::createButton(tr("Enviroment"));
+    m_pEnviroment->setPosition(10, 10);
+    m_pEnviroment->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit buttonShowEnviromentRules();
+    });
+    addChild(m_pEnviroment);
+
+    m_pGameplay = ObjectManager::createButton(tr("Gameplay"));
+    m_pGameplay->setPosition(pApp->getSettings()->getWidth() / 2 - 20 - m_pGameplay->getWidth() / 2, 10);
+    m_pGameplay->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit buttonShowGameplayRules();
+    });
+    addChild(m_pGameplay);
+
+    m_pVictoryConditions = ObjectManager::createButton(tr("Victory Rules"));
+    m_pVictoryConditions->setPosition(pApp->getSettings()->getWidth() - 10 - m_pVictoryConditions->getWidth(), 10);
+    m_pVictoryConditions->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit buttonShowVictoryRules();
+    });
+    addChild(m_pVictoryConditions);
+
+    QSize size(pApp->getSettings()->getWidth() - 20,
+               pApp->getSettings()->getHeight() - 40 - m_pVictoryConditions->getHeight() * 2);
+    m_pRuleSelection = new  Panel(true,  size, size);
+    m_pRuleSelection->setPosition(10, m_pVictoryConditions->getHeight() + 20);
+    addChild(m_pRuleSelection);
+
+    connect(this, &MapSelectionMapsMenue::buttonShowEnviromentRules, this, &MapSelectionMapsMenue::showEnviromentRules, Qt::QueuedConnection);
+    connect(this, &MapSelectionMapsMenue::buttonShowGameplayRules, this, &MapSelectionMapsMenue::showGameplayRules, Qt::QueuedConnection);
+    connect(this, &MapSelectionMapsMenue::buttonShowVictoryRules, this, &MapSelectionMapsMenue::showVictoryRules, Qt::QueuedConnection);
+
+
     hideCOSelection();
+    hideRuleSelection();
 }
 
 MapSelectionMapsMenue::~MapSelectionMapsMenue()
@@ -209,6 +249,7 @@ void MapSelectionMapsMenue::slotButtonNext()
             {
                 hideMapSelection();
                 showRuleSelection();
+                showVictoryRules();
                 m_MapSelectionStep = MapSelectionStep::selectRules;
             }
             break;
@@ -259,6 +300,103 @@ void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
     }
 }
 
+void MapSelectionMapsMenue::showEnviromentRules()
+{
+    m_pRuleSelection->clearContent();
+}
+
+void MapSelectionMapsMenue::showGameplayRules()
+{
+    m_pRuleSelection->clearContent();
+
+}
+
+void MapSelectionMapsMenue::showVictoryRules()
+{
+    m_pRuleSelection->clearContent();
+
+    GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
+    // font style
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+
+    for (qint32 i = 0; i < pGameRuleManager->getVictoryRuleCount(); i++)
+    {
+        QString ruleID = pGameRuleManager->getVictoryRuleID(i);
+        spVictoryRule pRule = new VictoryRule(ruleID);
+        QString inputType = pRule->getRuleType();
+        if (inputType == "checkbox")
+        {
+            bool defaultValue = pRule->getDefaultValue();
+            if (defaultValue)
+            {
+                m_pCurrentMap->getGameRules()->addVictoryRule(pRule);
+            }
+            // add a cool check box and a cool text
+            QString labelName = pRule->getRuleName();
+            oxygine::spTextField textField = new oxygine::TextField();
+            textField->setStyle(style);
+            textField->setText(labelName.toStdString().c_str());
+            textField->setPosition(30, 30 + i * 50);
+            m_pRuleSelection->addItem(textField);
+            spCheckbox pCheckbox = new Checkbox();
+            pCheckbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
+            m_pRuleSelection->addItem(pCheckbox);
+            pCheckbox->setChecked(defaultValue);
+            connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+            {
+                if (value)
+                {
+                    m_pCurrentMap->getGameRules()->addVictoryRule(ruleID);
+                }
+                else
+                {
+                    m_pCurrentMap->getGameRules()->removeVictoryRule(ruleID);
+                }
+            });
+        }
+        else if (inputType == "spinbox")
+        {
+            qint32 defaultValue = pRule->getDefaultValue();
+            qint32 startValue = pRule->getInfiniteValue();
+            if (defaultValue == startValue)
+            {
+                m_pCurrentMap->getGameRules()->addVictoryRule(pRule);
+            }
+            QString labelName = pRule->getRuleName();
+            oxygine::spTextField textField = new oxygine::TextField();
+            textField->setStyle(style);
+            textField->setText(labelName.toStdString().c_str());
+            textField->setPosition(30, 30 + i * 50);
+            m_pRuleSelection->addItem(textField);
+            spSpinBox pSpinbox = new SpinBox(200, startValue, 9999);
+            pSpinbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
+            m_pRuleSelection->addItem(pSpinbox);
+            pSpinbox->setCurrentValue(defaultValue);
+            connect(pSpinbox.get(), &SpinBox::sigValueChanged, [=](float value)
+            {
+                qint32 newValue = static_cast<qint32>(value);
+                if (newValue == startValue)
+                {
+                    m_pCurrentMap->getGameRules()->removeVictoryRule(ruleID);
+                }
+                else
+                {
+                    spVictoryRule pRule = new VictoryRule(ruleID);
+                    pRule->setRuleValue(newValue);
+                    m_pCurrentMap->getGameRules()->addVictoryRule(pRule);
+
+                }
+            });
+        }
+    }
+    m_pRuleSelection->setContentHeigth(50 + pGameRuleManager->getVictoryRuleCount() * 50);
+}
+
+
+
 void MapSelectionMapsMenue::hideMapSelection()
 {
     m_pMapSelection->setVisible(false);
@@ -275,16 +413,18 @@ void MapSelectionMapsMenue::showMapSelection()
 
 void MapSelectionMapsMenue::hideRuleSelection()
 {
-
+    m_pEnviroment->setVisible(false);
+    m_pGameplay->setVisible(false);
+    m_pVictoryConditions->setVisible(false);
+    m_pRuleSelection->setVisible(false);
 }
 
 void MapSelectionMapsMenue::showRuleSelection()
 {
-    GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
-    for (qint32 i = 0; i < pGameRuleManager->getVictoryRuleCount(); i++)
-    {
-        m_pCurrentMap->getGameRules()->addVictoryRule(pGameRuleManager->getVictoryRuleID(i));
-    }
+    m_pEnviroment->setVisible(true);
+    m_pGameplay->setVisible(true);
+    m_pVictoryConditions->setVisible(true);
+    m_pRuleSelection->setVisible(true);
 }
 
 void MapSelectionMapsMenue::hideCOSelection()
@@ -344,8 +484,8 @@ void MapSelectionMapsMenue::showCOSelection()
 
     qint32 itemIndex = 1;
     oxygine::spButton pButtonAllCOs = ObjectManager::createButton(tr("All Random"));
-    pButtonAllCOs->setPosition(xPositions[itemIndex] - 20, y);
-    pButtonAllCOs->attachTo(m_pPlayerSelection);
+    pButtonAllCOs->setPosition(xPositions[itemIndex] - 40, y);
+    m_pPlayerSelection->addItem(pButtonAllCOs);
     pButtonAllCOs->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit buttonAllCOsRandom();
@@ -653,6 +793,4 @@ void MapSelectionMapsMenue::startGame()
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new GameMenue());
     oxygine::Actor::detach();
-
-
 }

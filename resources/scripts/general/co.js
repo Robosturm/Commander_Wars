@@ -26,6 +26,11 @@ var CO =
         return 0;
     },
 
+    getVisionrangeModifier: function(co, unit, posX, posY)
+    {
+        return 0;
+    },
+
     getTerrainDefenseModifier : function(co, unit, posX, posY)
     {
         return 0;
@@ -99,6 +104,22 @@ var CO =
     getCOUnitRange : function(co)
     {
         return 0;
+    },
+
+    getAdditionalBuildingActions : function(co, building)
+    {
+        return "";
+    },
+
+    getBonusIncome : function(co, building, income)
+    {
+        return 0;
+    },
+
+    postBattleActions : function(co, attacker, atkDamage, defender)
+    {
+        // called after damage was dealt to the defender unit.
+        // the damage given is the damage was dealt to the unit.
     },
 
     startOfTurn : function(co)

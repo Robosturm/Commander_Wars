@@ -17,6 +17,7 @@ Mainapp::Mainapp(int argc, char* argv[])
     : QCoreApplication(argc, argv),
       m_Audiothread(new AudioThread)
 {
+    Interpreter::setCppOwnerShip(this);
     // create update timer
     m_Timer.setSingleShot(false);
     m_Timer.start(5);
@@ -187,10 +188,10 @@ void Mainapp::onEvent(oxygine::Event* ev)
 
 void Mainapp::setupNetwork()
 {
-    if (m_pNetworkInterface != NULL)
+    if (m_pNetworkInterface != nullptr)
     {
         m_pNetworkInterface->deleteLater();
-        m_pNetworkInterface = NULL;
+        m_pNetworkInterface = nullptr;
     }
     if (m_Settings.getServer())
     {

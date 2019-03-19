@@ -22,9 +22,9 @@ Console::eLogLevels Console::LogLevel = Console::eINFO;
 bool Console::show = false;
 bool Console::toggled = false;
 QList<QString> Console::output;
-QMutex* Console::datalocker = NULL;
-Console* Console::m_pConsole = NULL;
-QString Console::curmsg = NULL;
+QMutex* Console::datalocker = nullptr;
+Console* Console::m_pConsole = nullptr;
+QString Console::curmsg = nullptr;
 qint32 Console::curmsgpos = 0;
 QTime Console::toggle;
 qint32 Console::curlastmsgpos = 0;
@@ -46,6 +46,7 @@ const QString Console::functions[] =
 
 Console::Console()
 {
+    Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     // move console to top
     oxygine::Actor::setPriority(32000);
@@ -104,11 +105,11 @@ void Console::dotask(const QString& message)
 {
     Mainapp* pApp = Mainapp::getInstance();
     print(message, Console::eINFO);
-    QString order = "console." + message;
+    QString order = "GameConsole." + message;
     // ignore console argument and evaluate the String on the Top-Level
     if (message.startsWith("game:"))
     {
-        order = order.replace("console.game:", "");
+        order = order.replace("GameConsole.game:", "");
     }
     pApp->getInterpreter()->doString(order);
 }
@@ -166,8 +167,8 @@ void Console::print(const QString& message, eLogLevels MsgLogLevel)
         }
         case eFATAL:
         {
-            qFatal(msg.toStdString().c_str());
             prefix = "FATAL: ";
+            qFatal(msg.toStdString().c_str());
             break;
         }
         default:
@@ -292,9 +293,8 @@ void Console::help(qint32 start, qint32 end)
 }
 
 void Console::createfunnymessage(qint32 message){
-    if(message<0){
-        QTime time = QTime::currentTime();
-        qsrand((uint)time.msec());
+    if (message < 0)
+    {
         message = Mainapp::randInt(0,327);
     }
     QString printmessage;

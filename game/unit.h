@@ -7,6 +7,7 @@
 
 #include "game/smartpointers.h"
 #include "coreengine/fileserializable.h"
+#include "coreengine/scriptvariables.h"
 
 #include "game/GameEnums.h"
 
@@ -56,7 +57,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 4;
+        return 5;
     }
 
 
@@ -140,7 +141,7 @@ public slots:
     GameEnums::UnitRanks getUnitRank() const;
     void setUnitRank(const GameEnums::UnitRanks &UnitRank);
 
-    qint32 getVision() const;
+    qint32 getVision(QPoint position);
     void setVision(const qint32 &value);
     /**
      * @brief loadSprites loads the given sprite
@@ -329,6 +330,14 @@ public slots:
      * @return
      */
     qint32 getFuelCostModifier(QPoint position, qint32 costs);
+    /**
+     * @brief getVariables
+     * @return
+     */
+    inline ScriptVariables* getVariables()
+    {
+        return &m_Variables;
+    }
 protected:
     /**
      * @brief updateIconTweens creates the visibility toogle tweens for all icons
@@ -377,6 +386,8 @@ private:
     qint32 minRange{1};
     qint32 maxRange{-1};
     qint32 vision{1};
+
+    ScriptVariables m_Variables;
 };
 
 #endif // UNIT_H

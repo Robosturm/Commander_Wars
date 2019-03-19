@@ -131,6 +131,28 @@ qint32 CO::getTerrainDefenseModifier(Unit* pUnit, QPoint position)
     }
 }
 
+qint32 CO::getVisionrangeModifier(Unit* pUnit, QPoint position)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getVisionrangeModifier";
+    QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
+    args1 << obj1;
+    args1 << position.x();
+    args1 << position.y();
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 qint32 CO::getMovementpointModifier(Unit* pUnit, QPoint position)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -238,6 +260,26 @@ qint32 CO::getBonusMisfortune(Unit* pUnit, QPoint position)
     else
     {
         return 0;
+    }
+}
+
+QString CO::getAdditionalBuildingActions(Building* pBuilding)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getAdditionalBuildingActions";
+    QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pBuilding);
+    args1 << obj1;
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isString())
+    {
+        return erg.toString();
+    }
+    else
+    {
+        return "";
     }
 }
 
@@ -544,6 +586,42 @@ bool CO::inCORange(QPoint position)
     return false;
 }
 
+qint32 CO::getBonusIncome(Building* pBuilding, qint32 income)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getBonusIncome";
+    QJSValueList args1;
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj3;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pBuilding);
+    args1 << obj1;
+    args1 << income;
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "postBattleActions";
+    QJSValueList args1;
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj3;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pAttacker);
+    args1 << obj1;
+    args1 << atkDamage;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(pDefender);
+    args1 << obj2;
+    pApp->getInterpreter()->doFunction(coID, function1, args1);
+}
+
 void CO::serialize(QDataStream& pStream)
 {
     pStream << getVersion();
@@ -552,10 +630,13 @@ void CO::serialize(QDataStream& pStream)
     pStream << superpowerStars;
     pStream << powerFilled;
     pStream << static_cast<qint32>(m_PowerMode);
+    m_Variables.serialize(pStream);
 }
 
 void CO::deserialize(QDataStream& pStream)
 {
+    qint32 version = 0;
+    pStream >> version;
     pStream >> coID;
     pStream >> powerStars;
     pStream >> superpowerStars;
@@ -563,5 +644,9 @@ void CO::deserialize(QDataStream& pStream)
     qint32 value = 0;
     pStream << value;
     m_PowerMode = static_cast<GameEnums::PowerMode>(value);
+    if (version > 1)
+    {
+        m_Variables.deserialize(pStream);
+    }
     init();
 }

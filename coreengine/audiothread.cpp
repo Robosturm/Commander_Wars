@@ -11,6 +11,7 @@ AudioThread::AudioThread()
     : m_Player(nullptr),
       m_playList(nullptr)
 {
+    Interpreter::setCppOwnerShip(this);
     // move signals and slots to Audio Thread
     this->moveToThread(this);
     connect(this, SIGNAL(SignalPlayMusic(int)), this, SLOT(SlotPlayMusic(int)), Qt::QueuedConnection);

@@ -27,6 +27,77 @@ VictoryRule::VictoryRule(QString ruleID)
     QJSValue erg = pApp->getInterpreter()->doFunction(m_RuleID, function1, args1);
 }
 
+QString VictoryRule::getRuleType()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getRuleType";
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
+QString VictoryRule::getRuleName()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getRuleName";
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
+void VictoryRule::setRuleValue(qint32 value)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "setRuleValue";
+    QJSValueList args;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args << obj1;
+    args << value;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1, args);
+}
+
+qint32 VictoryRule::getInfiniteValue()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getInfiniteValue";
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+qint32 VictoryRule::getDefaultValue()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getDefaultRuleValue";
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 void VictoryRule::serialize(QDataStream& pStream)
 {
     pStream << getVersion();

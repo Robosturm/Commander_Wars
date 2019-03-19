@@ -172,7 +172,35 @@ QStringList Building::getActionList()
     QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
     if (ret.isString())
     {
-        return ret.toString().split(",");
+        QString retString = ret.toString();
+
+        CO* pCO = m_pOwner->getCO(0);
+        if (pCO != nullptr)
+        {
+            QString result = pCO->getAdditionalBuildingActions(this);
+            if (retString.isEmpty())
+            {
+                retString = result;
+            }
+            else if (!result.isEmpty())
+            {
+                retString += "," + result;
+            }
+        }
+        pCO = m_pOwner->getCO(1);
+        if (pCO != nullptr)
+        {
+            QString result = pCO->getAdditionalBuildingActions(this);
+            if (retString.isEmpty())
+            {
+                retString = result;
+            }
+            else if (!result.isEmpty())
+            {
+                retString += "," + result;
+            }
+        }
+        return retString.split(",");
     }
     else
     {
@@ -265,6 +293,7 @@ void Building::serialize(QDataStream& pStream)
     }
     pStream << m_Hp;
     pStream << fireCount;
+    m_Variables.serialize(pStream);
 }
 
 void Building::deserialize(QDataStream& pStream)
@@ -281,5 +310,9 @@ void Building::deserialize(QDataStream& pStream)
     {
         pStream >> m_Hp;
         pStream >> fireCount;
+    }
+    if (version > 2)
+    {
+        m_Variables.deserialize(pStream);
     }
 }

@@ -7,6 +7,7 @@
 #include "oxygine-framework.h"
 #include "game/smartpointers.h"
 #include "coreengine/fileserializable.h"
+#include "coreengine/scriptvariables.h"
 
 class Building : public QObject, public oxygine::Actor, public FileSerializable
 {
@@ -54,7 +55,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 2;
+        return 3;
     }
 
 
@@ -140,6 +141,14 @@ public slots:
      * @return
      */
     qint32 getDefensiveBonus();
+    /**
+     * @brief getVariables
+     * @return
+     */
+    inline ScriptVariables* getVariables()
+    {
+        return &m_Variables;
+    }
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     /**
@@ -162,6 +171,8 @@ private:
       *
       */
     qint32 fireCount{0};
+
+    ScriptVariables m_Variables;
 };
 
 #endif // BUILDING_H

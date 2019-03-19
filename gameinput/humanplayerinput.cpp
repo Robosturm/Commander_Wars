@@ -25,6 +25,7 @@
 
 HumanPlayerInput::HumanPlayerInput()
 {    
+    Interpreter::setCppOwnerShip(this);
 }
 
 void HumanPlayerInput::init()
@@ -215,7 +216,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                     possibleActions.clear();
                     for (qint32 i = 0; i < actions.size(); i++)
                     {
-                        if (m_pGameAction->canBePerformed(actions[i]))
+                        if (m_pGameAction->canBePerformed(actions[i], true))
                         {
                             possibleActions.append(actions[i]);
                         }

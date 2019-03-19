@@ -1,5 +1,3 @@
-#include "QRandomGenerator"
-
 #include "game/player.h"
 
 #include "game/gamemap.h"
@@ -14,6 +12,8 @@
 
 #include "game/co.h"
 
+#include "game/gamerules.h"
+
 #include "menue/gamemenue.h"
 
 #include "resource_management/unitspritemanager.h"
@@ -21,6 +21,7 @@
 Player::Player()
 {
     Interpreter::setCppOwnerShip(this);
+    m_pBaseGameInput = nullptr;
 }
 
 void Player::init()
@@ -262,9 +263,19 @@ void Player::earnMoney(float modifier)
             {
                 if (pBuilding->getOwner() == this)
                 {
-                    quint32 income = static_cast<quint32>(pBuilding->getBaseIncome() * modifier * fondsModifier);
-                    // todo modifier income by co's and rules
-
+                    qint32 income = static_cast<qint32>(pBuilding->getBaseIncome() * modifier * fondsModifier);
+                    qint32 modifier = 0;
+                    CO* pCO = getCO(0);
+                    if (pCO != nullptr)
+                    {
+                        modifier += pCO->getBonusIncome(pBuilding.get(), income);
+                    }
+                    pCO = getCO(1);
+                    if (pCO != nullptr)
+                    {
+                        modifier += pCO->getBonusIncome(pBuilding.get(), income);
+                    }
+                    income = static_cast<qint32>(income) + modifier;
                     fonds += income;
                 }
             }
@@ -285,6 +296,18 @@ qint32 Player::getCostModifier(QString id, qint32 baseCost)
        costModifier += playerCOs[1]->getCostModifier(id, baseCost);
     }
     return costModifier;
+}
+
+void Player::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender)
+{
+    if (playerCOs[0].get() != nullptr)
+    {
+       playerCOs[0]->postBattleActions(pAttacker, atkDamage, pDefender);
+    }
+    if (playerCOs[1].get() != nullptr)
+    {
+       playerCOs[1]->postBattleActions(pAttacker, atkDamage, pDefender);
+    }
 }
 
 qint32 Player::getCosts(QString id)
@@ -327,6 +350,8 @@ qint32 Player::getMovementpointModifier(Unit* pUnit, QPoint position)
     {
        modifier += playerCOs[1]->getMovementpointModifier(pUnit, position);
     }
+    GameMap* pMap = GameMap::getInstance();
+    modifier += pMap->getGameRules()->getCurrentWeather()->getMovementCostModifier();
     return modifier;
 }
 
@@ -504,8 +529,17 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue,
     }
     delete pPoints;
 
-    // create pseudo rand integer (not based on a real randomize)
-    QRandomGenerator randInt(static_cast<quint32>(highestDamage));
+    if (randCounter <= 0)
+    {
+        randCounter = 100;
+        // create pseudo rand integer (not based on a real randomize)
+        randInt = QRandomGenerator(static_cast<quint32>(highestDamage) * targets.size());
+    }
+    else
+    {
+       randCounter--;
+    }
+
     if (targets.size() >= 0)
     {
         return targets[randInt.bounded(0, targets.size())];

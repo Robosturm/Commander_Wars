@@ -66,6 +66,14 @@
     </message>
 </context>
 <context>
+    <name>ACTION_EXITGAME</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_EXITGAME.js" line="10"/>
+        <source>Exit Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_FIRE</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="55"/>
@@ -171,22 +179,22 @@
 <context>
     <name>Console</name>
     <message>
-        <location filename="../coreengine/console.cpp" line="94"/>
+        <location filename="../coreengine/console.cpp" line="95"/>
         <source>Enter &quot;help()&quot; for console info.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="95"/>
+        <location filename="../coreengine/console.cpp" line="96"/>
         <source>Starting Game...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="96"/>
+        <location filename="../coreengine/console.cpp" line="97"/>
         <source>Prepare to Fight...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="97"/>
+        <location filename="../coreengine/console.cpp" line="98"/>
         <source>Read this message while waiting...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -315,17 +323,17 @@
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="40"/>
+        <location filename="../menue/mainwindow.cpp" line="42"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="51"/>
+        <location filename="../menue/mainwindow.cpp" line="53"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="62"/>
+        <location filename="../menue/mainwindow.cpp" line="64"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -366,73 +374,88 @@
 <context>
     <name>MapSelectionMapsMenue</name>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="132"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="133"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="141"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="142"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="150"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="151"/>
         <source>Start Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="314"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="169"/>
+        <source>Enviroment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="177"/>
+        <source>Gameplay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="185"/>
+        <source>Victory Rules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="453"/>
         <source>Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="314"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="453"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="314"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="453"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="314"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="453"/>
         <source>AI Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="314"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="453"/>
         <source>Startfonds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="314"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="453"/>
         <source>Income Modifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="314"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="373"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="453"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="512"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="341"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="480"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="346"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="485"/>
         <source>All Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="376"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="515"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="376"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="515"/>
         <source>Easy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1022,6 +1045,22 @@
     </message>
 </context>
 <context>
+    <name>victoryrule_nohq</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_nohq.js" line="5"/>
+        <source>No HQ&apos;s</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>victoryrule_nounits</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_nounits.js" line="5"/>
+        <source>No Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>waterplane</name>
     <message>
         <location filename="../resources/scripts/units/waterplane.js" line="37"/>
@@ -1346,6 +1385,30 @@
     <message>
         <location filename="../resources/scripts/weapons/weapon_waterplane_missile.js" line="5"/>
         <source>Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weather_sandstorm</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/weather/weather_sandstorm.js" line="6"/>
+        <source>Sandstorm</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weather_snow</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/weather/weather_snow.js" line="6"/>
+        <source>Sandstorm</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weather_sun</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/weather/weather_sun.js" line="6"/>
+        <source>Sun</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

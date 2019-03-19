@@ -1,0 +1,23 @@
+var Constructor = function()
+{
+    this.getWeatherName = function()
+    {
+
+        return qsTr("Rain");
+    };
+
+    this.getWeatherTerrainSprite = function()
+    {
+
+        return "weather_rain";
+    };
+
+    this.getVisionrangeModifier = function()
+    {
+
+        return -1;
+    };
+}
+
+Constructor.prototype = WEATHER;
+var WEATHER_RAIN = new Constructor();

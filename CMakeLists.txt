@@ -66,6 +66,7 @@ set(${PROJECT_NAME}_SRCS
         objects/mapselection.cpp
         objects/coselection.cpp
         objects/coselectiondialog.cpp
+        objects/checkbox.cpp
 
         #menues
         menue/mainwindow.cpp
@@ -126,6 +127,7 @@ set(${PROJECT_NAME}_SRCS
         game/GameEnums.cpp
         game/gamerules.cpp
         game/victoryrule.cpp
+        game/weather.cpp
 
         # game input
         gameinput/basegameinputif.cpp
@@ -176,6 +178,11 @@ add_executable(
         ${${PROJECT_NAME}_SRCS}
         ICON.rc
 )
+
+if (WIN32) #disable console mode for VC++
+        set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE TRUE)
+endif(WIN32)
+
 # link libraries
 target_link_libraries(
         ${PROJECT_NAME}
