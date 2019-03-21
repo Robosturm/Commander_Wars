@@ -64,6 +64,7 @@ public:
         Background = -32000,
         Terrain = -30000,        
         CORange = 30000,
+        Weather,
         Cursor,
         Animation,
         Objects,

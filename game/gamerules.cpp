@@ -12,6 +12,8 @@
 
 #include "resource_management/cospritemanager.h"
 
+#include "resource_management/gamemanager.h"
+
 #include "coreengine/mainapp.h"
 
 GameRules::GameRules()
@@ -198,7 +200,10 @@ void GameRules::changeWeather(QString weatherId, qint32 duration)
     {
         if (m_Weathers[i]->getWeatherId() == weatherId)
         {
-            m_Weathers[m_CurrentWeather]->deactivate();
+            if (m_CurrentWeather >= 0)
+            {
+                m_Weathers[m_CurrentWeather]->deactivate();
+            }
             m_CurrentWeather = i;
             m_Weathers[m_CurrentWeather]->activate();
             break;
@@ -206,6 +211,51 @@ void GameRules::changeWeather(QString weatherId, qint32 duration)
     }
     m_weatherDuration = duration;
     // create weather sprites :)
+    createWeatherSprites();
+}
+
+void GameRules::createWeatherSprites()
+{
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < m_WeatherSprites.size(); i++)
+    {
+        pMap->removeChild(m_WeatherSprites[i]);
+    }
+    m_WeatherSprites.clear();
+    if (m_Weathers.size() > 0)
+    {
+        qint32 width = pMap->getMapWidth();
+        qint32 heigth = pMap->getMapHeight();
+        QString weatherSprite = m_Weathers[m_CurrentWeather]->getWeatherTerrainSprite();
+        if (!weatherSprite.isEmpty())
+        {
+            oxygine::ResAnim* pAnim = GameManager::getInstance()->getResAnim(weatherSprite.toStdString().c_str());
+            if (pAnim != nullptr)
+            {
+                for (qint32 x = 0; x < width; x++)
+                {
+                    for (qint32 y = 0; y < heigth; y++)
+                    {
+                        oxygine::spSprite pSprite = new oxygine::Sprite();
+                        if (pAnim->getTotalFrames() > 1)
+                        {
+                            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                            pSprite->addTween(tween);
+                        }
+                        else
+                        {
+                            pSprite->setResAnim(pAnim);
+                        }
+                        pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
+                        pSprite->setPosition(x * GameMap::Imagesize, y * GameMap::Imagesize);
+                        pSprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::Weather));
+                        m_WeatherSprites.append(pSprite);
+                        pMap->addChild(pSprite);
+                    }
+                }
+            }
+        }
+    }
 }
 
 qint32 GameRules::getUnitLimit() const

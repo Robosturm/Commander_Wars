@@ -245,6 +245,10 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput)
             fields.at(y)->at(x)->syncAnimation();
         }
     }
+    if (m_Rules.get() != nullptr)
+    {
+        m_Rules->createWeatherSprites();
+    }
 }
 
 Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint32 range)

@@ -45,6 +45,10 @@ public:
         return 1;
     }
     void addVictoryRule(spVictoryRule rule);
+    /**
+     * @brief createWeatherSprites
+     */
+    void createWeatherSprites();
 signals:
     void signalVictory(qint32 team);
 public slots:
@@ -72,7 +76,11 @@ public slots:
      */
     inline Weather* getCurrentWeather()
     {
-        return m_Weathers[m_CurrentWeather].get();
+        if (m_CurrentWeather >= 0)
+        {
+            return m_Weathers[m_CurrentWeather].get();
+        }
+        return nullptr;
     }
     inline qint32 getCurrentWeatherId()
     {
@@ -129,12 +137,13 @@ private:
     QVector<spWeather> m_Weathers;
     QVector<qint32> m_WeatherChances;
     qint32 m_weatherDuration{0};
-    qint32 m_CurrentWeather{0};
+    qint32 m_CurrentWeather{-1};
 
     bool m_RankingSystem{true};
     bool m_NoPower{false};
     qint32 m_UnitLimit{0};
 
+    QVector<oxygine::spSprite> m_WeatherSprites;
 };
 
 #endif // GAMERULES_H
