@@ -12,6 +12,8 @@
 
 #include "resource_management/cospritemanager.h"
 
+#include "coreengine/mainapp.h"
+
 GameRules::GameRules()
     : QObject()
 {
@@ -127,6 +129,39 @@ void GameRules::changeWeatherChance(QString weatherId, qint32 weatherChance)
     }
 }
 
+Weather* GameRules::getWeather(qint32 index)
+{
+    if ((index >= 0) && (index < m_Weathers.size()))
+    {
+        return m_Weathers[index].get();
+    }
+    return nullptr;
+}
+
+Weather* GameRules::getWeather(QString weatherId)
+{
+    for (qint32 i = 0; i < m_Weathers.size(); i++)
+    {
+        if (m_Weathers[i]->getWeatherId() == weatherId)
+        {
+            return m_Weathers[i].get();
+        }
+    }
+    return nullptr;
+}
+
+qint32 GameRules::getWeatherChance(QString weatherId)
+{
+    for (qint32 i = 0; i < m_WeatherChances.size(); i++)
+    {
+        if (m_Weathers[i]->getWeatherId() == weatherId)
+        {
+            return m_WeatherChances[i];
+        }
+    }
+    return 0;
+}
+
 void GameRules::startOfTurn()
 {
     GameMap* pMap = GameMap::getInstance();
@@ -137,64 +172,13 @@ void GameRules::startOfTurn()
         qint32 heigth = pMap->getMapHeight();
         qint32 width = pMap->getMapWidth();
         qint32 playerCount = pMap->getPlayerCount();
-        if (randCounter <= 0)
-        {
-            randCounter = 100;
-            quint32 value = static_cast<quint32>(heigth) * static_cast<quint32>(width);
-            for (qint32 x = 0; x < width; x++)
-            {
-                for (qint32 y = 0; y < heigth; y++)
-                {
-                    Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
-                    if (pUnit != nullptr)
-                    {
-                        value += static_cast<quint32>(pUnit->getUnitCosts());
-                    }
-                }
-            }
-            COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-            for (qint32 i = 0; i < playerCount; i++)
-            {
-                Player* pPlayer = pMap->getPlayer(i);
-                CO* pCO = pPlayer->getCO(0);
-                if (pCO != nullptr)
-                {
-                    for (qint32 i2 = 0; i2 < pCOSpriteManager->getCOCount(); i2++)
-                    {
-                        if (pCOSpriteManager->getCOID(i2) == pCO->getCoID())
-                        {
-                            value += static_cast<quint32>(i2);
-                            break;
-                        }
-                    }
-                }
-                pCO = pPlayer->getCO(1);
-                if (pCO != nullptr)
-                {
-                    for (qint32 i2 = 0; i2 < pCOSpriteManager->getCOCount(); i2++)
-                    {
-                        if (pCOSpriteManager->getCOID(i2) == pCO->getCoID())
-                        {
-                            value += static_cast<quint32>(i2);
-                            break;
-                        }
-                    }
-                }
-            }
-            randInt = QRandomGenerator(value);
-        }
-        else
-        {
-            randCounter--;
-        }
+
         qint32 totalWeatherChances = 0;
         for (qint32 i = 0; i < m_WeatherChances.size(); i++)
         {
             totalWeatherChances += m_WeatherChances[i];
         }
-
-
-        qint32 erg = randInt.bounded(0, totalWeatherChances);
+        qint32 erg = Mainapp::randInt(0, totalWeatherChances);
         totalWeatherChances = 0;
         for (qint32 i = 0; i < m_WeatherChances.size(); i++)
         {
@@ -224,6 +208,36 @@ void GameRules::changeWeather(QString weatherId, qint32 duration)
     // create weather sprites :)
 }
 
+qint32 GameRules::getUnitLimit() const
+{
+    return m_UnitLimit;
+}
+
+void GameRules::setUnitLimit(const qint32 &UnitLimit)
+{
+    m_UnitLimit = UnitLimit;
+}
+
+bool GameRules::getNoPower() const
+{
+    return m_NoPower;
+}
+
+void GameRules::setNoPower(bool NoPower)
+{
+    m_NoPower = NoPower;
+}
+
+bool GameRules::getRankingSystem() const
+{
+    return m_RankingSystem;
+}
+
+void GameRules::setRankingSystem(bool RankingSystem)
+{
+    m_RankingSystem = RankingSystem;
+}
+
 void GameRules::serialize(QDataStream& pStream)
 {
     pStream << getVersion();
@@ -241,6 +255,9 @@ void GameRules::serialize(QDataStream& pStream)
     }
     pStream << m_weatherDuration;
     pStream << m_CurrentWeather;
+    pStream << m_RankingSystem;
+    pStream << m_NoPower;
+    pStream << m_UnitLimit;
 }
 
 void GameRules::deserialize(QDataStream& pStream)
@@ -265,4 +282,7 @@ void GameRules::deserialize(QDataStream& pStream)
     }
     pStream >> m_weatherDuration;
     pStream >> m_CurrentWeather;
+    pStream >> m_RankingSystem;
+    pStream >> m_NoPower;
+    pStream >> m_UnitLimit;
 }

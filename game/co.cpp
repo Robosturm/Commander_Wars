@@ -75,13 +75,21 @@ qint32 CO::getSuperpowerStars() const
 }
 
 void CO::setSuperpowerStars(const qint32 &value)
-{
-    superpowerStars = value;
+{    
+    if (GameMap::getInstance()->getGameRules()->getNoPower())
+    {
+        superpowerStars = 0;
+    }
+    else
+    {
+        superpowerStars = value;
+    }
 }
 
 bool CO::canUseSuperpower() const
 {
     if ((powerFilled >= powerStars + superpowerStars) &&
+        (superpowerStars > 0) &&
         (m_PowerMode == GameEnums::PowerMode_Off))
     {
         return true;
@@ -92,6 +100,7 @@ bool CO::canUseSuperpower() const
 bool CO::canUsePower() const
 {
     if ((powerFilled >= powerStars) &&
+        (powerStars > 0) &&
         (m_PowerMode == GameEnums::PowerMode_Off))
     {
         return true;
@@ -106,7 +115,14 @@ qint32 CO::getPowerStars() const
 
 void CO::setPowerStars(const qint32 &value)
 {
-    powerStars = value;
+    if (GameMap::getInstance()->getGameRules()->getNoPower())
+    {
+        powerStars = 0;
+    }
+    else
+    {
+        powerStars = value;
+    }
 }
 
 qint32 CO::getTerrainDefenseModifier(Unit* pUnit, QPoint position)

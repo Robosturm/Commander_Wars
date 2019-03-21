@@ -25,6 +25,7 @@
 #include "objects/checkbox.h"
 #include "objects/coselectiondialog.h"
 #include "objects/spinbox.h"
+#include "objects/multislider.h"
 
 #include "QFileInfo"
 
@@ -302,13 +303,52 @@ void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
 
 void MapSelectionMapsMenue::showEnviromentRules()
 {
+    Mainapp* pApp = Mainapp::getInstance();
     m_pRuleSelection->clearContent();
+    QVector<QString> weatherStrings;
+    QVector<qint32> weatherChances;
+    for (qint32 i = 0; i < m_pCurrentMap->getGameRules()->getWeatherCount(); i++)
+    {
+        Weather* pWeather = m_pCurrentMap->getGameRules()->getWeather(i);
+        weatherStrings.append(pWeather->getWeatherName());
+        weatherChances.append(m_pCurrentMap->getGameRules()->getWeatherChance(pWeather->getWeatherId()));
+    }
+    spMultislider multSlider = new Multislider(weatherStrings, pApp->getSettings()->getWidth() - 80, weatherChances);
+    multSlider->setPosition(30, 30);
+    m_pRuleSelection->addItem(multSlider);
+
+    // font style
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+
+    oxygine::spTextField textField = new oxygine::TextField();
+    textField->setStyle(style);
+    textField->setText(tr("Random Weather: ").toStdString().c_str());
+    textField->setPosition(30, 30 + multSlider->getHeight());
+    m_pRuleSelection->addItem(textField);
+    spCheckbox pCheckbox = new Checkbox();
+    pCheckbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
+    m_pRuleSelection->addItem(pCheckbox);
+    pCheckbox->setChecked(false);
+
+    textField = new oxygine::TextField();
+    textField->setStyle(style);
+    textField->setText(tr("Start Weather: ").toStdString().c_str());
+    textField->setPosition(30, pCheckbox->getY() + 40);
+    m_pRuleSelection->addItem(textField);
+
+    spDropDownmenu startWeather = new DropDownmenu(200, weatherStrings);
+    startWeather->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
+    startWeather->setCurrentItem(m_pCurrentMap->getGameRules()->getCurrentWeatherId());
+    m_pRuleSelection->addItem(startWeather);
+    m_pRuleSelection->setContentHeigth(90 + startWeather->getY());
 }
 
 void MapSelectionMapsMenue::showGameplayRules()
-{
-    m_pRuleSelection->clearContent();
-
+{    
+    m_pRuleSelection->clearContent();    
 }
 
 void MapSelectionMapsMenue::showVictoryRules()
@@ -395,8 +435,6 @@ void MapSelectionMapsMenue::showVictoryRules()
     m_pRuleSelection->setContentHeigth(50 + pGameRuleManager->getVictoryRuleCount() * 50);
 }
 
-
-
 void MapSelectionMapsMenue::hideMapSelection()
 {
     m_pMapSelection->setVisible(false);
@@ -408,7 +446,6 @@ void MapSelectionMapsMenue::showMapSelection()
     m_pMapSelection->setVisible(true);
     m_pMiniMapBox->setVisible(true);
     m_pBuildingBackground->setVisible(true);
-
 }
 
 void MapSelectionMapsMenue::hideRuleSelection()
@@ -425,6 +462,16 @@ void MapSelectionMapsMenue::showRuleSelection()
     m_pGameplay->setVisible(true);
     m_pVictoryConditions->setVisible(true);
     m_pRuleSelection->setVisible(true);
+    GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
+    if (m_pCurrentMap->getGameRules()->getWeatherCount() != pGameRuleManager->getWeatherCount())
+    {
+        qint32 weatherChance = 100 / pGameRuleManager->getWeatherCount();
+        for (qint32 i = 0; i < pGameRuleManager->getWeatherCount(); i++)
+        {
+            m_pCurrentMap->getGameRules()->addWeather(pGameRuleManager->getWeatherID(i), weatherChance);
+        }
+    }
+
 }
 
 void MapSelectionMapsMenue::hideCOSelection()

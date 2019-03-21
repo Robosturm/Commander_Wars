@@ -5,7 +5,7 @@
 
 #include <QVector>
 
-#include "QRandomGenerator"
+#include <QRandomGenerator>
 
 #include "oxygine/core/ref_counter.h"
 #include "oxygine-framework.h"
@@ -376,7 +376,6 @@ private:
     static const QString m_JavascriptName;
     static const QString m_GameAnimationFactory;
     float m_zoom{1.0f};
-
     void loadMapData(bool reload = true);
 };
 

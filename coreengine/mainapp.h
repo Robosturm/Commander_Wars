@@ -4,6 +4,7 @@
 #include <QTimer>
 #include <QTranslator>
 #include <QCoreApplication>
+#include <QRandomGenerator>
 
 #include "coreengine/interpreter.h"
 #include "coreengine/audiothread.h"
@@ -111,6 +112,7 @@ private:
     QTranslator m_Translator;
     QTimer m_Timer;
     static Mainapp* m_pMainapp;
+    static QRandomGenerator randGenerator;
 
     Interpreter* m_pInterpreter{nullptr};
     AudioThread* m_Audiothread{nullptr};

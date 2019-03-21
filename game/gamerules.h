@@ -3,8 +3,6 @@
 
 #include <QObject>
 
-#include "QRandomGenerator"
-
 #include "coreengine/fileserializable.h"
 
 #include "game/victoryrule.h"
@@ -76,6 +74,35 @@ public slots:
     {
         return m_Weathers[m_CurrentWeather].get();
     }
+    inline qint32 getCurrentWeatherId()
+    {
+        return m_CurrentWeather;
+    }
+    /**
+     * @brief getWeather
+     * @param index
+     * @return
+     */
+    Weather* getWeather(qint32 index);
+    /**
+     * @brief getCurrentWeather
+     * @return
+     */
+    Weather* getWeather(QString weatherId);
+    /**
+     * @brief getWeatherChance
+     * @param index
+     * @return
+     */
+    qint32 getWeatherChance(QString weatherId);
+    /**
+     * @brief getWeatherCount
+     * @return
+     */
+    inline qint32 getWeatherCount()
+    {
+        return m_Weathers.size();
+    }
     /**
      * @brief startOfTurn
      */
@@ -86,6 +113,15 @@ public slots:
      * @param duration
      */
     void changeWeather(QString weatherId, qint32 duration);
+
+    bool getRankingSystem() const;
+    void setRankingSystem(bool RankingSystem);
+
+    bool getNoPower() const;
+    void setNoPower(bool NoPower);
+
+    qint32 getUnitLimit() const;
+    void setUnitLimit(const qint32 &UnitLimit);
 private:
     QVector<spVictoryRule> m_VictoryRules;
 
@@ -94,8 +130,11 @@ private:
     QVector<qint32> m_WeatherChances;
     qint32 m_weatherDuration{0};
     qint32 m_CurrentWeather{0};
-    QRandomGenerator randInt;
-    qint32 randCounter{0};
+
+    bool m_RankingSystem{true};
+    bool m_NoPower{false};
+    qint32 m_UnitLimit{0};
+
 };
 
 #endif // GAMERULES_H

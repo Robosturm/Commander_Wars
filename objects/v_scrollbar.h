@@ -25,6 +25,10 @@ public:
     void setContentWidth(qint32 width);
 
     virtual void update(const oxygine::UpdateState& us) override;
+
+    float getScrollvalue() const;
+    void setScrollvalue(float Scrollvalue);
+
 signals:
     /**
      * @brief sigScrollValueChanged emitted when the scroll value changes between 0.0f and 1.0f

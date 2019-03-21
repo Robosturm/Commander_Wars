@@ -67,6 +67,8 @@ set(${PROJECT_NAME}_SRCS
         objects/coselection.cpp
         objects/coselectiondialog.cpp
         objects/checkbox.cpp
+        objects/slider.cpp
+        objects/multislider.cpp
 
         #menues
         menue/mainwindow.cpp

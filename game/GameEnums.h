@@ -76,6 +76,13 @@ public:
     };
     Q_ENUM(DefeatType)
 
+    enum Fog
+    {
+        Fog_Off,
+        Fog_OfWar
+    };
+    Q_ENUM(Fog)
+
     static void registerEnums();
 private:
     explicit GameEnums() = default;

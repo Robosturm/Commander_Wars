@@ -3,7 +3,6 @@
 
 #include <QColor>
 #include <QObject>
-#include "QRandomGenerator"
 #include "oxygine-flow.h"
 #include "game/smartpointers.h"
 #include "game/smartCO.h"
@@ -242,8 +241,6 @@ private:
      */
     spBaseGameInputIF m_pBaseGameInput{nullptr};
     bool isDefeated{false};
-    QRandomGenerator randInt;
-    qint32 randCounter{0};
 };
 
 #endif // PLAYER_H

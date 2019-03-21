@@ -12,6 +12,7 @@
 #include "game/co.h"
 
 Mainapp* Mainapp::m_pMainapp = nullptr;
+QRandomGenerator Mainapp::randGenerator;
 
 Mainapp::Mainapp(int argc, char* argv[])
     : QCoreApplication(argc, argv),
@@ -25,6 +26,8 @@ Mainapp::Mainapp(int argc, char* argv[])
     m_pMainapp = this;
 
     m_Audiothread->start();
+    quint32 seedValue = QRandomGenerator::global()->bounded(0u, std::numeric_limits<quint32>::max());
+    randGenerator.seed(seedValue);
 }
 
 Mainapp::~Mainapp()
@@ -39,7 +42,7 @@ Mainapp* Mainapp::getInstance()
 
 qint32 Mainapp::randInt(qint32 low, qint32 high)
 {
-    return QRandomGenerator::global()->bounded(low, high + 1);
+    return randGenerator.bounded(low, high + 1);
 }
 
 qint32 Mainapp::roundUp(float value)

@@ -5,10 +5,17 @@ var Constructor = function()
     {
         var unit = action.getTargetUnit();
         var building = action.getTargetBuilding();
-        if ((unit === null) && building !== null)
+        var unitLimit = map.getGameRules().getUnitLimit();
+        if ((unit === null) && (building !== null))
 		{
-			return true;
+            var unitCount = building.getOwner().getUnitCount();
+            if ((unitLimit <= 0) ||
+                (unitCount < unitLimit))
+            {
+                return true;
+            }
 		}
+        return false;
     };
     this.getActionText = function()
     {

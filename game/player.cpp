@@ -529,20 +529,9 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue,
     }
     delete pPoints;
 
-    if (randCounter <= 0)
-    {
-        randCounter = 100;
-        // create pseudo rand integer (not based on a real randomize)
-        randInt = QRandomGenerator(static_cast<quint32>(highestDamage) * targets.size());
-    }
-    else
-    {
-       randCounter--;
-    }
-
     if (targets.size() >= 0)
     {
-        return targets[randInt.bounded(0, targets.size())];
+        return targets[Mainapp::randInt(0, targets.size() - 1)];
     }
     else
     {

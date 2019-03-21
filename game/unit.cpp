@@ -165,7 +165,13 @@ GameEnums::UnitRanks Unit::getUnitRank() const
 
 void Unit::setUnitRank(const GameEnums::UnitRanks &UnitRank)
 {
-    m_UnitRank = UnitRank;
+    GameMap* pMap = GameMap::getInstance();
+    if (pMap->getGameRules()->getRankingSystem() ||
+        (UnitRank == GameEnums::UnitRank_CO0) ||
+        (UnitRank == GameEnums::UnitRank_CO1))
+    {
+        m_UnitRank = UnitRank;
+    }
     unloadIcon("lieutenant");
     unloadIcon("general");
     unloadIcon("veteran");
@@ -395,28 +401,31 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
         }
     }
     bonus += pMap->getGameRules()->getCurrentWeather()->getOffensiveModifier();
-    switch (m_UnitRank)
+    if (pMap->getGameRules()->getRankingSystem())
     {
-        case GameEnums::UnitRank_None:
+        switch (m_UnitRank)
         {
-            break;
-        }
-        case GameEnums::UnitRank_Lieutenant:
-        {
-            bonus += 5;
-            break;
-        }
-        case GameEnums::UnitRank_General:
-        {
-            bonus += 10;
-            break;
-        }
-        case GameEnums::UnitRank_Veteran:
-        case GameEnums::UnitRank_CO0:
-        case GameEnums::UnitRank_CO1:
-        {
-            bonus += 20;
-            break;
+            case GameEnums::UnitRank_None:
+            {
+                break;
+            }
+            case GameEnums::UnitRank_Lieutenant:
+            {
+                bonus += 5;
+                break;
+            }
+            case GameEnums::UnitRank_General:
+            {
+                bonus += 10;
+                break;
+            }
+            case GameEnums::UnitRank_Veteran:
+            case GameEnums::UnitRank_CO0:
+            case GameEnums::UnitRank_CO1:
+            {
+                bonus += 20;
+                break;
+            }
         }
     }
     return bonus;

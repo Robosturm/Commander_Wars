@@ -15,8 +15,6 @@
 
 #include "SDL.h"
 
-#include "objects/checkbox.h"
-
 Mainwindow::Mainwindow()
 {
     Console::print("Entering Main Menue", Console::eDEBUG);
@@ -36,7 +34,6 @@ Mainwindow::Mainwindow()
     pApp->getAudioThread()->clearPlayList();
     pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");
     pApp->getAudioThread()->playRandom();
-
 
     qint32 btnI = 0;
     // create the ui for the main menue here :)

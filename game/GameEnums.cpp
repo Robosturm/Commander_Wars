@@ -49,5 +49,8 @@ void GameEnums::registerEnums()
     value.setProperty("DefeatType_ByCurrentPlayer", DefeatType_ByCurrentPlayer);
     value.setProperty("DefeatType_Domination", DefeatType_Domination);
 
+    value.setProperty("Fog_Off", Fog_Off);
+    value.setProperty("Fog_OfWar", Fog_OfWar);
+
     pInterpreter->setGlobal("GameEnums", value);
 }

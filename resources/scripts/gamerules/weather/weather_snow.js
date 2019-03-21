@@ -3,7 +3,7 @@ var Constructor = function()
     this.getWeatherName = function()
     {
 
-        return qsTr("Sandstorm");
+        return qsTr("Snow");
     };
 
     this.getWeatherTerrainSprite = function()

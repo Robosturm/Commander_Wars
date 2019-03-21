@@ -170,23 +170,34 @@ void V_Scrollbar::update(const oxygine::UpdateState& us)
         {
             if (m_ContentWidth > m_Width)
             {
-                m_Scrollvalue += m_scroll * 10.0f / static_cast<float>(m_ContentWidth);
-                if (m_Scrollvalue < 0)
-                {
-                    m_Scrollvalue = 0;
-                }
-                else if (m_Scrollvalue > 1.0f)
-                {
-                    m_Scrollvalue = 1.0f;
-                }
-                else
-                {
-                    // all fine do nothing
-                }
-                m_slider->setX(20 + m_Scrollvalue * (m_Width - m_slider->getWidth() - 20 - 20));
+                setScrollvalue(m_Scrollvalue + m_scroll * 10.0f / static_cast<float>(m_ContentWidth));
                 emit sigScrollValueChanged(m_Scrollvalue);
                 m_ScrollTimer.start();
             }
         }
     }
+    oxygine::Actor::update(us);
+}
+
+float V_Scrollbar::getScrollvalue() const
+{
+    return m_Scrollvalue;
+}
+
+void V_Scrollbar::setScrollvalue(float Scrollvalue)
+{
+    m_Scrollvalue = Scrollvalue;
+    if (m_Scrollvalue < 0)
+    {
+        m_Scrollvalue = 0;
+    }
+    else if (m_Scrollvalue > 1.0f)
+    {
+        m_Scrollvalue = 1.0f;
+    }
+    else
+    {
+        // all fine do nothing
+    }
+    m_slider->setX(20 + m_Scrollvalue * (m_Width - m_slider->getWidth() - 20 - 20));
 }
