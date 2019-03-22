@@ -25,7 +25,6 @@
 #include "objects/checkbox.h"
 #include "objects/coselectiondialog.h"
 #include "objects/spinbox.h"
-#include "objects/multislider.h"
 
 #include "QFileInfo"
 
@@ -167,41 +166,13 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
     m_pPlayerSelection->setPosition(10, yPos);
     this->addChild(m_pPlayerSelection);
 
-    // rule selection
-    m_pEnviroment = ObjectManager::createButton(tr("Enviroment"));
-    m_pEnviroment->setPosition(10, 10);
-    m_pEnviroment->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit buttonShowEnviromentRules();
-    });
-    addChild(m_pEnviroment);
 
-    m_pGameplay = ObjectManager::createButton(tr("Gameplay"));
-    m_pGameplay->setPosition(pApp->getSettings()->getWidth() / 2 - 20 - m_pGameplay->getWidth() / 2, 10);
-    m_pGameplay->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit buttonShowGameplayRules();
-    });
-    addChild(m_pGameplay);
-
-    m_pVictoryConditions = ObjectManager::createButton(tr("Victory Rules"));
-    m_pVictoryConditions->setPosition(pApp->getSettings()->getWidth() - 10 - m_pVictoryConditions->getWidth(), 10);
-    m_pVictoryConditions->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit buttonShowVictoryRules();
-    });
-    addChild(m_pVictoryConditions);
 
     QSize size(pApp->getSettings()->getWidth() - 20,
-               pApp->getSettings()->getHeight() - 40 - m_pVictoryConditions->getHeight() * 2);
+               pApp->getSettings()->getHeight() - 40 * 2);
     m_pRuleSelection = new  Panel(true,  size, size);
-    m_pRuleSelection->setPosition(10, m_pVictoryConditions->getHeight() + 20);
+    m_pRuleSelection->setPosition(10, 20);
     addChild(m_pRuleSelection);
-
-    connect(this, &MapSelectionMapsMenue::buttonShowEnviromentRules, this, &MapSelectionMapsMenue::showEnviromentRules, Qt::QueuedConnection);
-    connect(this, &MapSelectionMapsMenue::buttonShowGameplayRules, this, &MapSelectionMapsMenue::showGameplayRules, Qt::QueuedConnection);
-    connect(this, &MapSelectionMapsMenue::buttonShowVictoryRules, this, &MapSelectionMapsMenue::showVictoryRules, Qt::QueuedConnection);
-
 
     hideCOSelection();
     hideRuleSelection();
@@ -250,7 +221,6 @@ void MapSelectionMapsMenue::slotButtonNext()
             {
                 hideMapSelection();
                 showRuleSelection();
-                showVictoryRules();
                 m_MapSelectionStep = MapSelectionStep::selectRules;
             }
             break;
@@ -301,22 +271,53 @@ void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
     }
 }
 
-void MapSelectionMapsMenue::showEnviromentRules()
+void MapSelectionMapsMenue::startWeatherChanged(qint32 value)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    m_pRuleSelection->clearContent();
-    QVector<QString> weatherStrings;
-    QVector<qint32> weatherChances;
+    m_pCurrentMap->getGameRules()->setStartWeather(value);
+}
+
+void MapSelectionMapsMenue::weatherChancesChanged()
+{
     for (qint32 i = 0; i < m_pCurrentMap->getGameRules()->getWeatherCount(); i++)
     {
-        Weather* pWeather = m_pCurrentMap->getGameRules()->getWeather(i);
-        weatherStrings.append(pWeather->getWeatherName());
-        weatherChances.append(m_pCurrentMap->getGameRules()->getWeatherChance(pWeather->getWeatherId()));
+        m_pCurrentMap->getGameRules()->changeWeatherChance(i, m_pWeatherSlider->getSliderValue(i));
     }
-    spMultislider multSlider = new Multislider(weatherStrings, pApp->getSettings()->getWidth() - 80, weatherChances);
-    multSlider->setPosition(30, 30);
-    m_pRuleSelection->addItem(multSlider);
+}
 
+void MapSelectionMapsMenue::hideMapSelection()
+{
+    m_pMapSelection->setVisible(false);
+    m_pMiniMapBox->setVisible(false);
+    m_pBuildingBackground->setVisible(false);
+}
+
+void MapSelectionMapsMenue::showMapSelection()
+{
+    m_pMapSelection->setVisible(true);
+    m_pMiniMapBox->setVisible(true);
+    m_pBuildingBackground->setVisible(true);
+}
+
+void MapSelectionMapsMenue::hideRuleSelection()
+{
+    m_pRuleSelection->setVisible(false);
+}
+
+void MapSelectionMapsMenue::showRuleSelection()
+{
+    m_pRuleSelection->setVisible(true);
+    GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
+    if (m_pCurrentMap->getGameRules()->getWeatherCount() != pGameRuleManager->getWeatherCount())
+    {
+        qint32 weatherChance = 100 / pGameRuleManager->getWeatherCount();
+        for (qint32 i = 0; i < pGameRuleManager->getWeatherCount(); i++)
+        {
+            m_pCurrentMap->getGameRules()->addWeather(pGameRuleManager->getWeatherID(i), weatherChance);
+        }
+    }
+    Mainapp* pApp = Mainapp::getInstance();
+    m_pRuleSelection->clearContent();
+    qint32 y = 20;
     // font style
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);
@@ -325,8 +326,29 @@ void MapSelectionMapsMenue::showEnviromentRules()
 
     oxygine::spTextField textField = new oxygine::TextField();
     textField->setStyle(style);
+    textField->setText(tr("Enviroment").toStdString().c_str());
+    textField->setPosition(30, y);
+    m_pRuleSelection->addItem(textField);
+    y += 40;
+
+    QVector<QString> weatherStrings;
+    QVector<qint32> weatherChances;
+    for (qint32 i = 0; i < m_pCurrentMap->getGameRules()->getWeatherCount(); i++)
+    {
+        Weather* pWeather = m_pCurrentMap->getGameRules()->getWeather(i);
+        weatherStrings.append(pWeather->getWeatherName());
+        weatherChances.append(m_pCurrentMap->getGameRules()->getWeatherChance(pWeather->getWeatherId()));
+    }
+    m_pWeatherSlider = new Multislider(weatherStrings, pApp->getSettings()->getWidth() - 80, weatherChances);
+    m_pWeatherSlider->setPosition(30, y);
+    m_pRuleSelection->addItem(m_pWeatherSlider);
+    connect(m_pWeatherSlider.get(), &Multislider::signalSliderChanged, this, &MapSelectionMapsMenue::weatherChancesChanged, Qt::QueuedConnection);
+
+    y += m_pWeatherSlider->getHeight();
+    textField = new oxygine::TextField();
+    textField->setStyle(style);
     textField->setText(tr("Random Weather: ").toStdString().c_str());
-    textField->setPosition(30, 30 + multSlider->getHeight());
+    textField->setPosition(30, y);
     m_pRuleSelection->addItem(textField);
     spCheckbox pCheckbox = new Checkbox();
     pCheckbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
@@ -345,31 +367,16 @@ void MapSelectionMapsMenue::showEnviromentRules()
     startWeather->setCurrentItem(m_pCurrentMap->getGameRules()->getCurrentWeatherId());
     connect(startWeather.get(), &DropDownmenu::sigItemChanged, this, &MapSelectionMapsMenue::startWeatherChanged, Qt::QueuedConnection);
     m_pRuleSelection->addItem(startWeather);
-    m_pRuleSelection->setContentHeigth(90 + startWeather->getY());
     startWeatherChanged(0);
-}
 
-void MapSelectionMapsMenue::startWeatherChanged(qint32 value)
-{
-    m_pCurrentMap->getGameRules()->setStartWeather(value);
-}
+    y = textField->getY() + 50;
 
-void MapSelectionMapsMenue::showGameplayRules()
-{    
-    m_pRuleSelection->clearContent();    
-}
-
-void MapSelectionMapsMenue::showVictoryRules()
-{
-    m_pRuleSelection->clearContent();
-
-    GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
-    // font style
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-
+    textField = new oxygine::TextField();
+    textField->setStyle(style);
+    textField->setText(tr("Victory Rules").toStdString().c_str());
+    textField->setPosition(30, y);
+    m_pRuleSelection->addItem(textField);
+    y += 40;
     for (qint32 i = 0; i < pGameRuleManager->getVictoryRuleCount(); i++)
     {
         QString ruleID = pGameRuleManager->getVictoryRuleID(i);
@@ -384,10 +391,10 @@ void MapSelectionMapsMenue::showVictoryRules()
             }
             // add a cool check box and a cool text
             QString labelName = pRule->getRuleName();
-            oxygine::spTextField textField = new oxygine::TextField();
+            textField = new oxygine::TextField();
             textField->setStyle(style);
             textField->setText(labelName.toStdString().c_str());
-            textField->setPosition(30, 30 + i * 50);
+            textField->setPosition(30, i * 50 + y);
             m_pRuleSelection->addItem(textField);
             spCheckbox pCheckbox = new Checkbox();
             pCheckbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
@@ -414,10 +421,10 @@ void MapSelectionMapsMenue::showVictoryRules()
                 m_pCurrentMap->getGameRules()->addVictoryRule(pRule);
             }
             QString labelName = pRule->getRuleName();
-            oxygine::spTextField textField = new oxygine::TextField();
+            textField = new oxygine::TextField();
             textField->setStyle(style);
             textField->setText(labelName.toStdString().c_str());
-            textField->setPosition(30, 30 + i * 50);
+            textField->setPosition(30, i * 50 + y);
             m_pRuleSelection->addItem(textField);
             spSpinBox pSpinbox = new SpinBox(200, startValue, 9999);
             pSpinbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
@@ -440,46 +447,7 @@ void MapSelectionMapsMenue::showVictoryRules()
             });
         }
     }
-    m_pRuleSelection->setContentHeigth(50 + pGameRuleManager->getVictoryRuleCount() * 50);
-}
-
-void MapSelectionMapsMenue::hideMapSelection()
-{
-    m_pMapSelection->setVisible(false);
-    m_pMiniMapBox->setVisible(false);
-    m_pBuildingBackground->setVisible(false);
-}
-void MapSelectionMapsMenue::showMapSelection()
-{
-    m_pMapSelection->setVisible(true);
-    m_pMiniMapBox->setVisible(true);
-    m_pBuildingBackground->setVisible(true);
-}
-
-void MapSelectionMapsMenue::hideRuleSelection()
-{
-    m_pEnviroment->setVisible(false);
-    m_pGameplay->setVisible(false);
-    m_pVictoryConditions->setVisible(false);
-    m_pRuleSelection->setVisible(false);
-}
-
-void MapSelectionMapsMenue::showRuleSelection()
-{
-    m_pEnviroment->setVisible(true);
-    m_pGameplay->setVisible(true);
-    m_pVictoryConditions->setVisible(true);
-    m_pRuleSelection->setVisible(true);
-    GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
-    if (m_pCurrentMap->getGameRules()->getWeatherCount() != pGameRuleManager->getWeatherCount())
-    {
-        qint32 weatherChance = 100 / pGameRuleManager->getWeatherCount();
-        for (qint32 i = 0; i < pGameRuleManager->getWeatherCount(); i++)
-        {
-            m_pCurrentMap->getGameRules()->addWeather(pGameRuleManager->getWeatherID(i), weatherChance);
-        }
-    }
-
+    m_pRuleSelection->setContentHeigth(90 + startWeather->getY() + pGameRuleManager->getVictoryRuleCount() * 50);
 }
 
 void MapSelectionMapsMenue::hideCOSelection()

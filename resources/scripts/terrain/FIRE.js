@@ -21,6 +21,10 @@ var Constructor = function()
     {
         return "minimap_fire";
     };
+    this.getVision = function()
+    {
+        return 3;
+    };
 };
 Constructor.prototype = TERRAIN;
 var FIRE = new Constructor();

@@ -102,6 +102,17 @@ public slots:
     qint32 getY() const;
     void setY(const qint32 &value);
     /**
+     * @brief Terrain::getVision
+     * @return
+     */
+    qint32 getVision();
+    /**
+     * @brief getBonusVision
+     * @param pUnit
+     * @return
+     */
+    qint32 getBonusVision(Unit* pUnit);
+    /**
      * @brief getUnit the unit on this terrain
      * @return
      */

@@ -3,6 +3,8 @@
 
 #include <QColor>
 #include <QObject>
+#include <QVector>
+#include <QVector3D>
 #include "oxygine-flow.h"
 #include "game/smartpointers.h"
 #include "game/smartCO.h"
@@ -228,6 +230,11 @@ public slots:
      * @param pDefender
      */
     void postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender);
+    /**
+     * @brief updatePlayerVision updates the current vision of this player.
+     * @brief reduces the timer for vision created for several turns
+     */
+    void updatePlayerVision(bool reduceTimer = false);
 private:
     qint32 fonds{0};
     float fondsModifier{1.0f};
@@ -241,6 +248,7 @@ private:
      */
     spBaseGameInputIF m_pBaseGameInput{nullptr};
     bool isDefeated{false};
+    QVector<QVector3D> m_FogVisionFields;
 };
 
 #endif // PLAYER_H

@@ -19,6 +19,11 @@ var Constructor = function()
     {
         return 0;
     };
+
+    this.getVisionBonus = function()
+    {
+        return 0;
+    };
 }
 
 Constructor.prototype = BUILDING;

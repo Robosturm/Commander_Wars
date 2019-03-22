@@ -20,7 +20,9 @@ class Multislider : public QObject, public oxygine::Actor
 public:
     explicit Multislider(QVector<QString> texts, qint32 width, QVector<qint32> values = {});
 
+    qint32 getSliderValue(qint32 slider);
 signals:
+    void signalSliderChanged();
     void signalSliderValueChanged(qint32 slider);
 public slots:
     void sliderValueChanged(qint32 slider);

@@ -131,6 +131,14 @@ void GameRules::changeWeatherChance(QString weatherId, qint32 weatherChance)
     }
 }
 
+void GameRules::changeWeatherChance(qint32 index, qint32 weatherChance)
+{
+    if ((index >= 0) && (index < m_Weathers.size()))
+    {
+        m_WeatherChances[index] = weatherChance;
+    }
+}
+
 Weather* GameRules::getWeather(qint32 index)
 {
     if ((index >= 0) && (index < m_Weathers.size()))
@@ -202,6 +210,7 @@ void GameRules::setStartWeather(qint32 index)
 {
     GameMap* pMap = GameMap::getInstance();
     changeWeather(m_Weathers[index]->getWeatherId(), pMap->getPlayerCount());
+    m_StartWeather = index;
 }
 
 void GameRules::changeWeather(QString weatherId, qint32 duration)

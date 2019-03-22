@@ -226,6 +226,20 @@ qint32 Unit::getVision(QPoint position)
     }
     GameMap* pMap = GameMap::getInstance();
     rangeModifier += pMap->getGameRules()->getCurrentWeather()->getVisionrangeModifier();
+    qint32 mapHeigth = pMap->getMapHeight();
+    qint32 mapWidth = pMap->getMapWidth();
+    for (qint32 x = 0; x < mapWidth; x++)
+    {
+        for (qint32 y = 0; y < mapHeigth; y++)
+        {
+            Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+            if ((pBuilding != nullptr) && pBuilding->getOwner() == m_pOwner)
+            {
+                rangeModifier += pBuilding->getVisionBonus();
+            }
+        }
+    }
+    rangeModifier += m_pTerrain->getBonusVision(this);
     qint32 points = vision + rangeModifier;
 
     if (points < 0)

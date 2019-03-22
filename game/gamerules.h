@@ -77,6 +77,12 @@ public slots:
      */
     void changeWeatherChance(QString weatherId, qint32 weatherChance);
     /**
+     * @brief changeWeatherChance
+     * @param index
+     * @param weatherChance
+     */
+    void changeWeatherChance(qint32 index, qint32 weatherChance);
+    /**
      * @brief getCurrentWeather
      * @return
      */

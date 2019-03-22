@@ -12,6 +12,12 @@ var BUILDING =
         return 3;
     },
 
+    // vision bonus for units created by this building
+    getVisionBonus : function()
+    {
+        return 0;
+    },
+
     // called for loading the main sprites
     loadSprites : function(building)
     {

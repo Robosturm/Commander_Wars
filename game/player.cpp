@@ -310,6 +310,55 @@ void Player::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender
     }
 }
 
+void Player::updatePlayerVision(bool reduceTimer)
+{
+    for (qint32 i = 0; i < m_FogVisionFields.size(); i++)
+    {
+        if (reduceTimer)
+        {
+            m_FogVisionFields[i].setZ(m_FogVisionFields[i].z() - 1);
+        }
+        if (m_FogVisionFields[i].z() <= 0)
+        {
+            m_FogVisionFields[i].setX(-1);
+            m_FogVisionFields[i].setY(-1);
+            m_FogVisionFields[i].setZ(-1);
+        }
+    }
+    GameMap* pMap = GameMap::getInstance();
+    qint32 width = pMap->getMapWidth();
+    qint32 heigth = pMap->getMapHeight();
+    for (qint32 x = 0; x < width; x++)
+    {
+        for (qint32 y = 0; y < heigth; x++)
+        {
+            Terrain* pTerrain = pMap->getTerrain(x, y);
+            qint32 visionRange = pTerrain->getVision();
+            if (visionRange >= 0)
+            {
+                QmlVectorPoint* pPoints = Mainapp::getCircle(0, visionRange);
+                for (qint32 i = 0; i < pPoints->size(); i++)
+                {
+
+                }
+                delete pPoints;
+            }
+            Building* pBuilding = pTerrain->getBuilding();
+            if ((pBuilding != nullptr) &&
+                (pBuilding->getOwner() == this))
+            {
+
+            }
+            Unit* pUnit = pTerrain->getUnit();
+            if ((pUnit != nullptr) &&
+                (pUnit->getOwner() == this))
+            {
+                qint32 visionRange = pUnit->getVision(QPoint(x, y));
+            }
+        }
+    }
+}
+
 qint32 Player::getCosts(QString id)
 {
     Mainapp* pApp = Mainapp::getInstance();

@@ -546,6 +546,39 @@ void Terrain::setY(const qint32 &value)
     y = value;
 }
 
+qint32 Terrain::getVision()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getVision";
+    QJSValue ret = pApp->getInterpreter()->doFunction(terrainID, function1);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+qint32 Terrain::getBonusVision(Unit* pUnit)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getBonusVision";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
+    args1 << obj1;
+    QJSValue ret = pApp->getInterpreter()->doFunction(terrainID, function1, args1);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 void Terrain::serialize(QDataStream& pStream)
 {
     pStream << getVersion();

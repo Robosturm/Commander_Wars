@@ -254,6 +254,21 @@ qint32 Building::getDefensiveBonus()
     }
 }
 
+qint32 Building::getVisionBonus()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getVisionBonus";
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 Terrain* Building::getTerrain()
 {
     return m_pTerrain;

@@ -44,6 +44,17 @@ var TERRAIN =
         return false;
     },
 
+    // vision created by this field
+    getVision : function()
+    {
+        return -1;
+    },
+
+    getBonusVision : function(unit)
+    {
+        return 0;
+    },
+
     getMiniMapIcon : function()
     {
         return "minimap_plains";

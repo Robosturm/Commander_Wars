@@ -149,6 +149,11 @@ public slots:
     {
         return &m_Variables;
     }
+    /**
+     * @brief getVision
+     * @return
+     */
+    qint32 getVisionBonus();
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     /**

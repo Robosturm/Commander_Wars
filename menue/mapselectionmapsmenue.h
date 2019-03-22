@@ -17,6 +17,8 @@
 
 #include "objects/dropdownmenu.h"
 
+#include "objects/multislider.h"
+
 class GameMap;
 
 class MapSelectionMapsMenue : public QObject, public oxygine::Actor
@@ -44,19 +46,14 @@ signals:
     void buttonNext();
     void buttonStartGame();
     void buttonAllCOsRandom();
-    void buttonShowEnviromentRules();
-    void buttonShowGameplayRules();
-    void buttonShowVictoryRules();
 public slots:
     // slots for changing the map
     void mapSelectionItemClicked(QString item);
     void mapSelectionItemChanged(QString item);
 
     // slots for changing the rules
-    void showEnviromentRules();
-    void showGameplayRules();
-    void showVictoryRules();
     void startWeatherChanged(qint32 value);
+    void weatherChancesChanged();
 
     // slots for changing player data
     void allPlayerIncomeChanged(float value);
@@ -88,10 +85,8 @@ private:
     QVector<oxygine::spTextField> m_BuildingCountTexts;
     oxygine::spBox9Sprite m_pBuildingBackground;
     // rule selection
-    oxygine::spButton m_pEnviroment;
-    oxygine::spButton m_pGameplay;
-    oxygine::spButton m_pVictoryConditions;
     spPanel m_pRuleSelection;
+    spMultislider m_pWeatherSlider;
 
     // player selection
     spPanel m_pPlayerSelection;

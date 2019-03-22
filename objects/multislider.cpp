@@ -74,6 +74,18 @@ Multislider::Multislider(QVector<QString> texts, qint32 width, QVector<qint32> v
     }
 }
 
+qint32 Multislider::getSliderValue(qint32 slider)
+{
+    if ((slider >= 0) && (slider < m_Slider.size()))
+    {
+        return m_Slider[slider]->getCurrentValue();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 void Multislider::sliderValueChanged(qint32 slider)
 {
     qint32 totalSliderValue = 0;
@@ -108,4 +120,5 @@ void Multislider::sliderValueChanged(qint32 slider)
             currentSliderChange = 0;
         }
     }
+    emit signalSliderChanged();
 }
