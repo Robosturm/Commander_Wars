@@ -409,63 +409,63 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="338"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="339"/>
         <source>Start Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="501"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="509"/>
         <source>Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="501"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="509"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="501"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="509"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="501"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="509"/>
         <source>AI Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="501"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="509"/>
         <source>Startfonds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="501"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="509"/>
         <source>Income Modifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="501"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="560"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="509"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="568"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="528"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="536"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="533"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="541"/>
         <source>All Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="563"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="571"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="563"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="571"/>
         <source>Easy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -528,7 +528,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="52"/>
+        <location filename="../main.cpp" line="53"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1399,6 +1399,14 @@
     </message>
 </context>
 <context>
+    <name>weather_1sun</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/weather/weather_1sun.js" line="6"/>
+        <source>Sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>weather_sandstorm</name>
     <message>
         <location filename="../resources/scripts/gamerules/weather/weather_sandstorm.js" line="6"/>
@@ -1411,14 +1419,6 @@
     <message>
         <location filename="../resources/scripts/gamerules/weather/weather_snow.js" line="6"/>
         <source>Snow</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>weather_sun</name>
-    <message>
-        <location filename="../resources/scripts/gamerules/weather/weather_sun.js" line="6"/>
-        <source>Sun</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -56,6 +56,7 @@ public slots:
     void showEnviromentRules();
     void showGameplayRules();
     void showVictoryRules();
+    void startWeatherChanged(qint32 value);
 
     // slots for changing player data
     void allPlayerIncomeChanged(float value);

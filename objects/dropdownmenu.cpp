@@ -98,8 +98,11 @@ qint32 DropDownmenu::getCurrentItem() const
 
 void DropDownmenu::setCurrentItem(qint32 index)
 {
-    m_currentItem = index;
-    m_Textfield->setText(m_ItemTexts[index].toStdString().c_str());
+    if ((index >= 0) && (index < m_ItemTexts.size()))
+    {
+        m_currentItem = index;
+        m_Textfield->setText(m_ItemTexts[index].toStdString().c_str());
+    }
 }
 
 QString DropDownmenu::getCurrentItemText()

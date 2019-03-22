@@ -23,7 +23,7 @@ void ScriptVariables::deserialize(QDataStream& pStream)
     qint32 version = 0;
     pStream >> version;
     qint32 size = 0;
-    pStream << size;
+    pStream >> size;
     for (qint32 i = 0; i < size; i++)
     {
         ScriptVariable* pVar = new ScriptVariable();

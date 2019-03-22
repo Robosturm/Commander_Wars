@@ -331,7 +331,8 @@ void MapSelectionMapsMenue::showEnviromentRules()
     spCheckbox pCheckbox = new Checkbox();
     pCheckbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
     m_pRuleSelection->addItem(pCheckbox);
-    pCheckbox->setChecked(false);
+    pCheckbox->setChecked(m_pCurrentMap->getGameRules()->getRandomWeather());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, m_pCurrentMap->getGameRules(), &GameRules::setRandomWeather, Qt::QueuedConnection);
 
     textField = new oxygine::TextField();
     textField->setStyle(style);
@@ -342,8 +343,15 @@ void MapSelectionMapsMenue::showEnviromentRules()
     spDropDownmenu startWeather = new DropDownmenu(200, weatherStrings);
     startWeather->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
     startWeather->setCurrentItem(m_pCurrentMap->getGameRules()->getCurrentWeatherId());
+    connect(startWeather.get(), &DropDownmenu::sigItemChanged, this, &MapSelectionMapsMenue::startWeatherChanged, Qt::QueuedConnection);
     m_pRuleSelection->addItem(startWeather);
     m_pRuleSelection->setContentHeigth(90 + startWeather->getY());
+    startWeatherChanged(0);
+}
+
+void MapSelectionMapsMenue::startWeatherChanged(qint32 value)
+{
+    m_pCurrentMap->getGameRules()->setStartWeather(value);
 }
 
 void MapSelectionMapsMenue::showGameplayRules()

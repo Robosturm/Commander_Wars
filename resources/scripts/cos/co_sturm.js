@@ -115,8 +115,14 @@ var Constructor = function()
     };
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
-        // todo return 0 when it's snowing
-        return -999;
+        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        {
+            return 0;
+        }
+        else
+        {
+            return -999;
+        }
     };
 }
 

@@ -12,12 +12,13 @@ class Player;
 class BaseGameInputIF;
 typedef oxygine::intrusive_ptr<BaseGameInputIF> spBaseGameInputIF;
 
-class BaseGameInputIF : public QObject, public oxygine::ref_counter, public FileSerializable
+class BaseGameInputIF : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
     enum class AiTypes
     {
+        Unkown = -1,
         Human,
     };
 

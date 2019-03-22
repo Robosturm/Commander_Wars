@@ -367,7 +367,11 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
 
 qint32 GameMap::getMapWidth() const
 {
-    return fields.at(0)->size();
+    if (fields.size() > 0)
+    {
+        return fields.at(0)->size();
+    }
+    return 0;
 }
 
 qint32 GameMap::getMapHeight() const
@@ -632,44 +636,6 @@ void GameMap::serialize(QDataStream& pStream)
     m_Rules->serialize(pStream);
 }
 
-void GameMap::exitGame()
-{
-    emit signalExitGame();
-}
-
-void GameMap::saveGame()
-{
-    emit signalSaveGame();
-}
-
-void GameMap::clearMap()
-{
-    // delete all data
-    for (qint32 y = 0; y < fields.size(); y++)
-    {
-        for (qint32 x = 0; x < fields.at(y)->size(); x++)
-        {
-            this->removeChild(fields.at(y)->at(x));
-        }
-        fields.at(y)->clear();
-    }
-    fields.clear();
-    players.clear();
-}
-
-QString GameMap::readMapName(QDataStream& pStream)
-{
-    QString name;
-    // restore map header
-    qint32 version = 0;
-    pStream >> version;
-    if (version > 1)
-    {
-        pStream >> name;
-    }
-    return name;
-}
-
 void GameMap::deserialize(QDataStream& pStream)
 {
     clearMap();
@@ -722,6 +688,45 @@ void GameMap::deserialize(QDataStream& pStream)
     {
         m_Rules->deserialize(pStream);
     }
+}
+
+
+void GameMap::exitGame()
+{
+    emit signalExitGame();
+}
+
+void GameMap::saveGame()
+{
+    emit signalSaveGame();
+}
+
+void GameMap::clearMap()
+{
+    // delete all data
+    for (qint32 y = 0; y < fields.size(); y++)
+    {
+        for (qint32 x = 0; x < fields.at(y)->size(); x++)
+        {
+            this->removeChild(fields.at(y)->at(x));
+        }
+        fields.at(y)->clear();
+    }
+    fields.clear();
+    players.clear();
+}
+
+QString GameMap::readMapName(QDataStream& pStream)
+{
+    QString name;
+    // restore map header
+    qint32 version = 0;
+    pStream >> version;
+    if (version > 1)
+    {
+        pStream >> name;
+    }
+    return name;
 }
 
 qint32 GameMap::getImageSize()

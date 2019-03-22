@@ -49,6 +49,12 @@ public:
      * @brief createWeatherSprites
      */
     void createWeatherSprites();
+    /**
+     * @brief setStartWeather
+     * @param index
+     * @param duration
+     */
+    void setStartWeather(qint32 index);
 signals:
     void signalVictory(qint32 team);
 public slots:
@@ -130,6 +136,9 @@ public slots:
 
     qint32 getUnitLimit() const;
     void setUnitLimit(const qint32 &UnitLimit);
+
+    bool getRandomWeather() const;
+    void setRandomWeather(bool randomWeather);
 private:
     QVector<spVictoryRule> m_VictoryRules;
 
@@ -138,6 +147,8 @@ private:
     QVector<qint32> m_WeatherChances;
     qint32 m_weatherDuration{0};
     qint32 m_CurrentWeather{-1};
+    qint32 m_StartWeather{-1};
+    bool m_randomWeather{true};
 
     bool m_RankingSystem{true};
     bool m_NoPower{false};

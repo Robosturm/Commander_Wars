@@ -170,28 +170,38 @@ void GameRules::startOfTurn()
     m_weatherDuration -= 1;
     if (m_weatherDuration <= 0)
     {
-        // calc a pseudo random
-        qint32 heigth = pMap->getMapHeight();
-        qint32 width = pMap->getMapWidth();
-        qint32 playerCount = pMap->getPlayerCount();
 
-        qint32 totalWeatherChances = 0;
-        for (qint32 i = 0; i < m_WeatherChances.size(); i++)
+        qint32 playerCount = pMap->getPlayerCount();
+        if (m_randomWeather)
         {
-            totalWeatherChances += m_WeatherChances[i];
-        }
-        qint32 erg = Mainapp::randInt(0, totalWeatherChances);
-        totalWeatherChances = 0;
-        for (qint32 i = 0; i < m_WeatherChances.size(); i++)
-        {
-            if (erg < totalWeatherChances + m_WeatherChances[i])
+            qint32 totalWeatherChances = 0;
+            for (qint32 i = 0; i < m_WeatherChances.size(); i++)
             {
-                changeWeather(m_Weathers[i]->getWeatherId() , playerCount);
-                break;
+                totalWeatherChances += m_WeatherChances[i];
             }
-            totalWeatherChances += m_WeatherChances[i];
+            qint32 erg = Mainapp::randInt(0, totalWeatherChances);
+            totalWeatherChances = 0;
+            for (qint32 i = 0; i < m_WeatherChances.size(); i++)
+            {
+                if (erg < totalWeatherChances + m_WeatherChances[i])
+                {
+                    changeWeather(m_Weathers[i]->getWeatherId() , playerCount);
+                    break;
+                }
+                totalWeatherChances += m_WeatherChances[i];
+            }
+        }
+        else
+        {
+            changeWeather(m_Weathers[m_StartWeather]->getWeatherId() , playerCount);
         }
     }
+}
+
+void GameRules::setStartWeather(qint32 index)
+{
+    GameMap* pMap = GameMap::getInstance();
+    changeWeather(m_Weathers[index]->getWeatherId(), pMap->getPlayerCount());
 }
 
 void GameRules::changeWeather(QString weatherId, qint32 duration)
@@ -216,6 +226,10 @@ void GameRules::changeWeather(QString weatherId, qint32 duration)
 
 void GameRules::createWeatherSprites()
 {
+    if ((m_CurrentWeather < 0) && (m_CurrentWeather < m_Weathers.size()))
+    {
+        m_CurrentWeather = 0;
+    }
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < m_WeatherSprites.size(); i++)
     {
@@ -268,6 +282,16 @@ void GameRules::setUnitLimit(const qint32 &UnitLimit)
     m_UnitLimit = UnitLimit;
 }
 
+bool GameRules::getRandomWeather() const
+{
+    return m_randomWeather;
+}
+
+void GameRules::setRandomWeather(bool randomWeather)
+{
+    m_randomWeather = randomWeather;
+}
+
 bool GameRules::getNoPower() const
 {
     return m_NoPower;
@@ -305,6 +329,8 @@ void GameRules::serialize(QDataStream& pStream)
     }
     pStream << m_weatherDuration;
     pStream << m_CurrentWeather;
+    pStream << m_StartWeather;
+    pStream << m_randomWeather;
     pStream << m_RankingSystem;
     pStream << m_NoPower;
     pStream << m_UnitLimit;
@@ -332,6 +358,8 @@ void GameRules::deserialize(QDataStream& pStream)
     }
     pStream >> m_weatherDuration;
     pStream >> m_CurrentWeather;
+    pStream >> m_StartWeather;
+    pStream >> m_randomWeather;
     pStream >> m_RankingSystem;
     pStream >> m_NoPower;
     pStream >> m_UnitLimit;

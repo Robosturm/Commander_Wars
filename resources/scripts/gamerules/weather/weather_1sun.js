@@ -8,5 +8,5 @@ var Constructor = function()
 }
 
 Constructor.prototype = WEATHER;
-var WEATHER_SUN = new Constructor();
+var WEATHER_1SUN = new Constructor();
 
