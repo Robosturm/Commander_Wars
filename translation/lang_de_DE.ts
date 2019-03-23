@@ -4,7 +4,7 @@
 <context>
     <name>ACTION_ACTIVATE_POWER_CO_0</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="17"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="18"/>
         <source>Power of CO 1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12,7 +12,7 @@
 <context>
     <name>ACTION_ACTIVATE_POWER_CO_1</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="17"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="18"/>
         <source>Power of CO 2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -20,7 +20,7 @@
 <context>
     <name>ACTION_ACTIVATE_SUPERPOWER_CO_0</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="17"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="18"/>
         <source>Superpower of CO 1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28,7 +28,7 @@
 <context>
     <name>ACTION_ACTIVATE_SUPERPOWER_CO_1</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="17"/>
+        <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="18"/>
         <source>Superpower of CO 2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -81,7 +81,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="183"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="187"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -451,63 +451,78 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="405"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="404"/>
+        <source>Fog Of War: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="407"/>
+        <source>Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="407"/>
+        <source>Fog of War</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="420"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="506"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
         <source>Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="506"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="506"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="506"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
         <source>AI Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="506"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
         <source>Startfonds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="506"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
         <source>Income Modifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="506"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="565"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="521"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="580"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="533"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="548"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="538"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="553"/>
         <source>All Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="568"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="583"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="568"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="583"/>
         <source>Easy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1445,6 +1460,14 @@
     <message>
         <location filename="../resources/scripts/gamerules/weather/weather_1sun.js" line="6"/>
         <source>Sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weather_rain</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/weather/weather_rain.js" line="6"/>
+        <source>Rain</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

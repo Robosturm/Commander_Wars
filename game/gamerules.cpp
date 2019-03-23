@@ -357,10 +357,8 @@ void GameRules::createFogVision()
     {
         for (qint32 y = 0; y < heigth; y++)
         {
-
             bool visible = pPlayer->getFieldVisible(x, y);
             Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
-
             switch (m_FogMode)
             {
                 case GameEnums::Fog_Off:

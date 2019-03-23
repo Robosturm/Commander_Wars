@@ -2,16 +2,13 @@ var Constructor = function()
 {
     this.init = function(co)
     {
-        co.setPowerStars(3);
-        co.setSuperpowerStars(4);
+        co.setPowerStars(4);
+        co.setSuperpowerStars(3);
     };
 
     this.activatePower = function(co)
     {
-        var animation2 = GameAnimationFactory.createAnimation(0, 0);
-        animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
-        animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
-        map.getGameRules().changeWeather("WEATHER_SNOW", map.getPlayerCount() * 2);
+        CO_DRAKE.drakeDamage(co, 1, null);
         audio.clearPlayList();
         audio.addMusic("resources/music/cos/power.mp3");
         audio.playRandom();
@@ -22,21 +19,20 @@ var Constructor = function()
         var animation2 = GameAnimationFactory.createAnimation(0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
-        map.getGameRules().changeWeather("WEATHER_SNOW", map.getPlayerCount() * 2);
-        CO_OLAF.olafDamage(co, 2, animation2);
+        map.getGameRules().changeWeather("WEATHER_RAIN", map.getPlayerCount() * 2);
+        CO_DRAKE.drakeDamage(co, 2, animation2);
         audio.clearPlayList();
         audio.addMusic("resources/music/cos/superpower.mp3");
         audio.playRandom();
     };
 
-    this.olafDamage = function(co, value, animation2)
+    this.drakeDamage = function(co, value, animation2)
     {
         var player = co.getPlayer();
         var counter = 0;
         var playerCounter = map.getPlayerCount();
         var animation = null;
         var animations = [];
-
         for (var i2 = 0; i2 < playerCounter; i2++)
         {
             var enemyPlayer = map.getPlayer(i2);
@@ -54,7 +50,10 @@ var Constructor = function()
                     if (animations.length < 5)
                     {
                         animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
-                        animation2.queueAnimation(animation);
+                        if (animation2 !== null)
+                        {
+                            animation2.queueAnimation(animation);
+                        }
                         animations.push(animation);
                     }
                     else
@@ -78,6 +77,8 @@ var Constructor = function()
                     {
                         unit.setHp(hp - value);
                     }
+                    // reduce fuel
+                    unit.setFuel(unit.getFuel() / 2);
                 }
                 units.remove();
             }
@@ -86,7 +87,7 @@ var Constructor = function()
 
     this.startOfTurn = function(co)
     {
-        audio.addMusic("resources/music/cos/olaf.mp3")
+        audio.addMusic("resources/music/cos/drake.mp3")
     };
 
     this.getCOUnitRange = function(co)
@@ -95,65 +96,64 @@ var Constructor = function()
     };
     this.getCOArmy = function()
     {
-        return "BM";
+        return "GE";
+    };
+    this.getAirUnitIDS = function()
+    {
+        return ["BOMBER", "FIGHTER", "DUSTER", "K_HELI", "T_HELI", "STEALTHBOMBER", "TRANSPORTPLANE", "WATERPLANE"];
+    };
+    this.getSeaUnitIDS = function()
+    {
+        return ["AIRCRAFTCARRIER", "CRUISER", "BATTLESHIP", "CANNONBOAT", "DESTROYER", "SUBMARINE"];
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
+        var airUnits = CO_EAGLE.getAirUnitIDS();
+        var seaUnits = CO_EAGLE.getSeaUnitIDS();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-                {
-                    // apply snow buff :)
-                    return 40;
-                }
-                else
+                if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
                 {
                     return 20;
                 }
+                break;
             case GameEnums.PowerMode_Power:
-                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-                {
-                    // apply snow buff :)
-                    return 40;
-                }
-                else
+                if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
                 {
                     return 20;
                 }
+                break;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY)))
                 {
-                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                    if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
                     {
-                        // apply snow buff :)
                         return 20;
                     }
-                    return 10;
                 }
                 break;
         }
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
         {
-            // apply snow buff :)
             return 10;
+        }
+        if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+        {
+            return -15;
         }
         return 0;
     };
-    this.getMovementpointModifier = function(co, unit, posX, posY)
+    this.getMovementPointModifier = function(co, unit)
     {
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        var seaUnits = CO_EAGLE.getSeaUnitIDS();
+        if (seaUnits.indexOf(unit.getUnitID()) >= 0)
         {
-            // apply snow buff :)
-            return -1;
-        }
-        else
-        {
-            return 0;
+            return 1;
         }
     };
 }
 
 Constructor.prototype = CO;
-var CO_OLAF = new Constructor();
+var CO_DRAKE = new Constructor();

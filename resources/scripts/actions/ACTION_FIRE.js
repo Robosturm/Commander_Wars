@@ -26,7 +26,7 @@ var Constructor = function()
                     var defUnit = map.getTerrain(x, y).getUnit();
                     if (defUnit !== null)
                     {
-                        if (ACTION_FIRE.isVisibleUnit(action, defUnit))
+                        if (ACTION_FIRE.isAttackableUnit(action, defUnit))
                         {
                             if (unit.getOwner().isEnemyUnit(defUnit) === true)
                             {
@@ -117,14 +117,18 @@ var Constructor = function()
         }
         return damage;
     };
-    this.isVisibleUnit = function(action, defUnit)
+    this.isAttackableUnit = function(action, defUnit)
     {
         var unit = action.getTargetUnit();
         if (unit.getOwner().getFieldVisible(defUnit.getX(), defUnit.getY()))
         {
             if (!defUnit.isStealthed(unit.getOwner()))
             {
-                return true;
+                if (!defUnit.getHidden() ||
+                    (defUnit.getHidden && unit.getMovementType() === defUnit.getMovementType()))
+                {
+                    return true;
+                }
             }
         }
         return false;
@@ -145,7 +149,7 @@ var Constructor = function()
                 var defUnit = map.getTerrain(x, y).getUnit();
                 if (defUnit !== null)
                 {
-                    if (ACTION_FIRE.isVisibleUnit(action, defUnit))
+                    if (ACTION_FIRE.isAttackableUnit(action, defUnit))
                     {
                         if (unit.getOwner().isEnemyUnit(defUnit) === true)
                         {

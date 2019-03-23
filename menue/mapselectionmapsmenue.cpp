@@ -398,6 +398,21 @@ void MapSelectionMapsMenue::showRuleSelection()
     m_pRuleSelection->addItem(pCheckbox);
     pCheckbox->setChecked(m_pCurrentMap->getGameRules()->getNoPower());
     connect(pCheckbox.get(), &Checkbox::checkChanged, m_pCurrentMap->getGameRules(), &GameRules::setNoPower, Qt::QueuedConnection);
+    y += 40;
+    textField = new oxygine::TextField();
+    textField->setStyle(style);
+    textField->setText(tr("Fog Of War: ").toStdString().c_str());
+    textField->setPosition(30, y);
+    m_pRuleSelection->addItem(textField);
+    QVector<QString> fogModes = {tr("Off"), tr("Fog of War")};
+    spDropDownmenu fogOfWar = new DropDownmenu(200, fogModes);
+    fogOfWar->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
+    fogOfWar->setCurrentItem(m_pCurrentMap->getGameRules()->getFogMode());
+    connect(fogOfWar.get(), &DropDownmenu::sigItemChanged, m_pCurrentMap->getGameRules(), [=](qint32 value)
+    {
+        m_pCurrentMap->getGameRules()->setFogMode(static_cast<GameEnums::Fog>(value));
+    });
+    m_pRuleSelection->addItem(fogOfWar);
 
     y += 50;
     textField = new oxygine::TextField();

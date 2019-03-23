@@ -1,7 +1,5 @@
-- rules
-	- fog of war
-	- stealth units
-
+- attack buildings and terrain
+	
 - option menu
 - credits menu
 
@@ -9,12 +7,14 @@
 - terrain info
 - activate power animation
 
+
+- special building
+	- black hole buildings
+
 - ai
 - co info
 - dialogues
 
-- special building
-	- black hole buildings
 - victory screen
 - game statistics
 	- game recording

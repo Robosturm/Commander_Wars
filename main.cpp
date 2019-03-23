@@ -90,6 +90,7 @@ int main(int argc, char* argv[])
     qRegisterMetaType<GameEnums::DefeatType>("GameEnums::DefeatType");
     qRegisterMetaType<GameEnums::Directions>("GameEnums::Directions");
     qRegisterMetaType<GameEnums::AIQuestionType>("GameEnums::AIQuestionType");
+    qRegisterMetaType<GameEnums::Fog>("GameEnums::Fog");
 
 
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");

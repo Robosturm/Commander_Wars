@@ -3,7 +3,8 @@ var Constructor = function()
     // called for loading the main sprite
     this.canBePerformed = function(action)
     {
-        if (map.getCurrentPlayer().getCO(0).canUseSuperpower())
+        var co = map.getCurrentPlayer().getCO(0);
+        if ((co !== null) && co.canUseSuperpower())
         {
             return true;
         }

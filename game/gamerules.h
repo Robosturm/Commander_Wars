@@ -182,7 +182,7 @@ private:
 
     bool m_RankingSystem{true};
     bool m_NoPower{false};
-    GameEnums::Fog m_FogMode{GameEnums::Fog_OfWar};
+    GameEnums::Fog m_FogMode{GameEnums::Fog_Off};
     qint32 m_UnitLimit{0};
 
     QVector<QVector<oxygine::spSprite>> m_FogSprites;
