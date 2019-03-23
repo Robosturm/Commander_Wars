@@ -4,6 +4,7 @@ var Constructor = function()
     this.init = function (terrain)
     {
         terrain.setTerrainName(qsTr("Weld"));
+        terrain.setHp(100);
     };
 	this.loadBaseTerrain = function(terrain)
     {
@@ -42,6 +43,17 @@ var Constructor = function()
     this.getMiniMapIcon = function()
     {
         return "minimap_weld";
+    };
+    this.onDestroyed = function(terrain)
+    {
+        // called when the terrain is destroyed and replacing of this terrain starts
+        var x = terrain.getX();
+        var y = terrain.getY();
+        map.replaceTerrain("DESTROYEDWELD", x, y);
+        map.getTerrain(x, y).loadSprites();
+        var animation = GameAnimationFactory.createAnimation(x, y);
+        animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
+        audio.playSound("explosion+land.wav");
     };
 };
 Constructor.prototype = TERRAIN;

@@ -18,6 +18,10 @@ var WEAPON =
     {
         return -1;
     },
+    getEnviromentDamage : function(enviromentId)
+    {
+        return -1;
+    },
     // aw dc damage formular used here.
     calculateDamage : function(hp, damage, offBonus, defBonus)
     {

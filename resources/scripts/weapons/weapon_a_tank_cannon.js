@@ -4,6 +4,12 @@ var Constructor = function()
     {
         return qsTr("Anti Tank Cannon");
     };
+
+    this.getEnviromentDamage = function(enviromentId)
+    {
+        return 55;
+    };
+
     this.getBaseDamage = function(unit)
     {
         switch(unit.getUnitID())

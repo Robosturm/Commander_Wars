@@ -4,6 +4,7 @@ var Constructor = function()
     this.init = function (terrain)
     {
         terrain.setTerrainName(qsTr("Meteor"));
+        terrain.setHp(100);
     };
 	this.loadBaseTerrain = function(terrain)
     {

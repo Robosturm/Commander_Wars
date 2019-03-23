@@ -23,7 +23,9 @@ var Constructor = function()
                 // check with which weapon we can attack and if we could deal damage with this weapon
                 if (map.onMap(x, y))
                 {
-                    var defUnit = map.getTerrain(x, y).getUnit();
+                    var defTerrain = map.getTerrain(x, y);
+                    var defBuilding = defTerrain.getBuilding();
+                    var defUnit = defTerrain.getUnit();
                     if (defUnit !== null)
                     {
                         if (ACTION_FIRE.isAttackableUnit(action, defUnit))
@@ -44,6 +46,28 @@ var Constructor = function()
                                         return true;
                                     }
                                 }
+                            }
+                        }
+                    }
+                    if ((defBuilding !== null) && (defBuilding.getHp() > 0))
+                    {
+
+                    }
+                    // check for damage against terrain
+                    else if (defTerrain.getHp() > 0)
+                    {
+                        if (unit.hasAmmo1())
+                        {
+                            if (Global[unit.getWeapon1ID()].getEnviromentDamage(defTerrain.getID()) > 0)
+                            {
+                                return true;
+                            }
+                        }
+                        if (unit.hasAmmo2())
+                        {
+                            if (Global[unit.getWeapon2ID()].getEnviromentDamage(defTerrain.getID()) > 0)
+                            {
+                                return true;
                             }
                         }
                     }
@@ -71,6 +95,14 @@ var Constructor = function()
         cursorData.setXOffset(- map.getImageSize() / 3);
         cursorData.setYOffset(- map.getImageSize() / 3);
         cursorData.setScale(1.5);
+    };
+    this.calcEnviromentDamage = function(attacker, attackerWeapon, attackerPosition, targetField, enviroment)
+    {
+        var baseDamage = Global[attackerWeapon].getEnviromentDamage(enviroment);
+        var offensive = 100 + attacker.getBonusOffensive(attackerPosition, null, targetField, false);
+        var attackerHp = attacker.getHpRounded() + attacker.getAttackHpBonus(attackerPosition);
+        var damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, 100);
+        return damage;
     };
     this.calcAttackerDamage = function(attacker, attackerWeapon, attackerPosition, defender, useLuck)
     {
@@ -146,19 +178,21 @@ var Constructor = function()
             var y = fields.at(i).y + actionTargetField.y;
             if (map.onMap(x, y))
             {
-                var defUnit = map.getTerrain(x, y).getUnit();
+                var defTerrain = map.getTerrain(x, y);
+                var defBuilding = defTerrain.getBuilding();
+                var defUnit = defTerrain.getUnit();
+                var dmg1 = -1;
+                var dmg2 = -1;
                 if (defUnit !== null)
                 {
                     if (ACTION_FIRE.isAttackableUnit(action, defUnit))
                     {
                         if (unit.getOwner().isEnemyUnit(defUnit) === true)
                         {
-                            var dmg1 = -1;
                             if (unit.hasAmmo1())
                             {
                                 dmg1 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon1ID(), actionTargetField ,defUnit, false);
                             }
-                            var dmg2 = -1;
                             if (unit.hasAmmo2())
                             {
                                 dmg2 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon2ID(), actionTargetField ,defUnit, false);
@@ -175,6 +209,38 @@ var Constructor = function()
                                     data.addPoint(Qt.point(x, y));
                                     data.addZInformation(dmg2);
                                 }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if ((defBuilding !== null) && (defBuilding.getHp() > 0))
+                    {
+
+                    }
+                    // check for damage against terrain
+                    else if (defTerrain.getHp() > 0)
+                    {
+                        if (unit.hasAmmo1())
+                        {
+                            dmg1 = ACTION_FIRE.calcEnviromentDamage(unit, unit.getWeapon1ID(), actionTargetField, Qt.point(x, y), defTerrain.getID());
+                        }
+                        if (unit.hasAmmo2())
+                        {
+                            dmg2 = ACTION_FIRE.calcEnviromentDamage(unit, unit.getWeapon2ID(), actionTargetField, Qt.point(x, y), defTerrain.getID());
+                        }
+                        if ((dmg1 > 0) || (dmg2 > 0))
+                        {
+                            if (dmg1 >= dmg2)
+                            {
+                                data.addPoint(Qt.point(x, y));
+                                data.addZInformation(dmg1);
+                            }
+                            else
+                            {
+                                data.addPoint(Qt.point(x, y));
+                                data.addZInformation(dmg2);
                             }
                         }
                     }
@@ -197,20 +263,24 @@ var Constructor = function()
             action.startReading();
             var targetX = action.readDataInt32();
             var targetY = action.readDataInt32();
-            var defUnit = map.getTerrain(targetX, targetY).getUnit();
+
+            var defTerrain = map.getTerrain(targetX, targetY);
+            var defBuilding = defTerrain.getBuilding();
+            var defUnit = defTerrain.getUnit();
+            var dmg2 = -1;
+            var damage = -1;
+            var weapon = 0;
             if (defUnit !== null)
             {
 
                 // calc damage
-                var damage = -1;
-                var weapon = 0;
                 if (unit.hasAmmo1())
                 {
                     damage = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon1ID(), actionTargetField , defUnit, true);
                 }
                 if (unit.hasAmmo2())
                 {
-                    var dmg2 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon2ID(), actionTargetField , defUnit, true);
+                    dmg2 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon2ID(), actionTargetField , defUnit, true);
                     if (dmg2 > damage)
                     {
                         damage = dmg2;
@@ -253,6 +323,32 @@ var Constructor = function()
                     action.writeDataInt32(-1);
                 }
             }
+            else
+            {
+                if (((defBuilding !== null) && (defBuilding.getHp() > 0)) ||
+                     (defTerrain.getHp() > 0))
+                {
+                    // calc damage
+                    if (unit.hasAmmo1())
+                    {
+                        damage = ACTION_FIRE.calcEnviromentDamage(unit, unit.getWeapon1ID(), actionTargetField, Qt.point(targetX, targetY), defTerrain.getID());
+                    }
+                    if (unit.hasAmmo2())
+                    {
+                        dmg2 = ACTION_FIRE.calcEnviromentDamage(unit, unit.getWeapon2ID(), actionTargetField, Qt.point(targetX, targetY), defTerrain.getID());
+                        if (dmg2 > damage)
+                        {
+                            damage = dmg2;
+                            weapon = 1;
+                        }
+                    }
+                    action.writeDataInt32(damage);
+                    action.writeDataInt32(weapon);
+
+                    action.writeDataInt32(-1);
+                    action.writeDataInt32(-1);
+                }
+            }
             return true;
         }
         else
@@ -290,7 +386,9 @@ var Constructor = function()
     };
     this.performPostAnimation = function()
     {
-        var defUnit = map.getTerrain(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY).getUnit();
+        var defTerrain = map.getTerrain(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY);
+        var defBuilding = defTerrain.getBuilding();
+        var defUnit = defTerrain.getUnit();
         if (defUnit !== null)
         {
             var costs = defUnit.getCosts();
@@ -392,6 +490,27 @@ var Constructor = function()
         {
             // we attacked a building or terrain ;)
             // not implemented yet.
+            if ((defBuilding !== null) && (defBuilding.getHp() > 0))
+            {
+
+            }
+            // check for damage against terrain
+            else if (defTerrain.getHp() > 0)
+            {
+                defTerrain.setHp(defTerrain.getHp() - ACTION_FIRE.postAnimationAttackerDamage);
+                if (ACTION_FIRE.postAnimationAttackerWeapon === 0)
+                {
+                    ACTION_FIRE.postAnimationUnit.reduceAmmo1(1);
+                }
+                else
+                {
+                    ACTION_FIRE.postAnimationUnit.reduceAmmo2(1);
+                }
+                if (defTerrain.getHp() <= 0)
+                {
+                    Global[defTerrain.getID()].onDestroyed(defTerrain);
+                }
+            }
         }
 
         // reset stuff

@@ -48,17 +48,23 @@ Terrain::Terrain(const QString& terrainID, qint32 x, qint32 y)
         }
         if (terrainExists)
         {
-            QString function = "init";
-            QJSValueList args;
-            QJSValue objArg = pApp->getInterpreter()->newQObject(this);
-            args << objArg;
-            pApp->getInterpreter()->doFunction(terrainID, function, args);
+            init();
         }
         else
         {
             Console::print(tr("Unable to load Terrain ") + terrainID, Console::eFATAL);
         }
     }
+}
+
+void Terrain::init()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function = "init";
+    QJSValueList args;
+    QJSValue objArg = pApp->getInterpreter()->newQObject(this);
+    args << objArg;
+    pApp->getInterpreter()->doFunction(terrainID, function, args);
 }
 
 qint32 Terrain::getHp() const
@@ -635,6 +641,7 @@ void Terrain::deserialize(QDataStream& pStream)
     char* id;
     pStream >> id;
     terrainID = id;
+    init();
     bool hasBaseTerrain = false;
     pStream >> hasBaseTerrain;
     if (hasBaseTerrain)
@@ -667,6 +674,11 @@ void Terrain::deserialize(QDataStream& pStream)
     }
     if (version > 1)
     {
-        pStream >> hp;
+        qint32 newHp = 0;
+        pStream >> newHp;
+        if (newHp > 0 && hp > 0)
+        {
+            hp = newHp;
+        }
     }
 }

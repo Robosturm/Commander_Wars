@@ -76,12 +76,12 @@
 <context>
     <name>ACTION_FIRE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="58"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="82"/>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="187"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="253"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -698,7 +698,7 @@
 <context>
     <name>Terrain</name>
     <message>
-        <location filename="../game/terrain.cpp" line="59"/>
+        <location filename="../game/terrain.cpp" line="55"/>
         <source>Unable to load Terrain </source>
         <translation type="unfinished"></translation>
     </message>

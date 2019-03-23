@@ -4,6 +4,10 @@ var Constructor = function()
     {
         return qsTr("Missile");
     };
+    this.getEnviromentDamage = function(enviromentId)
+    {
+        return 25;
+    };
     this.getBaseDamage = function(unit)
     {
         switch(unit.getUnitID())

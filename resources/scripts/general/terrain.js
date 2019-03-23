@@ -63,4 +63,9 @@ var TERRAIN =
     {
         return "minimap_plains";
     },
+
+    onDestroyed : function(terrain)
+    {
+        // called when the terrain is destroyed and replacing of this terrain starts
+    },
 };

@@ -1,4 +1,7 @@
 - attack buildings and terrain
+
+- special building
+	- black hole buildings
 	
 - option menu
 - credits menu
@@ -6,10 +9,6 @@
 - unit info
 - terrain info
 - activate power animation
-
-
-- special building
-	- black hole buildings
 
 - ai
 - co info

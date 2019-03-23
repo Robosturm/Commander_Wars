@@ -32,12 +32,7 @@ public:
 
     virtual ~Terrain();
 
-
-    /**
-     * @brief loadSprites loads all sprites we won't to show. Updates all sprite data
-     */
-    void loadSprites();
-
+    void init();
     /**
      * @brief syncAnimation call this on all terrains to make their animation synchronized.
      */
@@ -80,6 +75,10 @@ public:
 
 
 public slots:
+    /**
+     * @brief loadSprites loads all sprites we won't to show. Updates all sprite data
+     */
+    void loadSprites();
     /**
      * @brief getMinimapIcon
      * @return
