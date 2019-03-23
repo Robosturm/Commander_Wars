@@ -61,7 +61,7 @@ var Constructor = function()
                 return 1;
 			case "MISSILE":
                 return WEAPON.softCounterDamage;
-			case "ROCKETTRHOWER":
+            case "ROCKETTHROWER":
 				return WEAPON.softCounterDamage;
 			default:
 				return -1;

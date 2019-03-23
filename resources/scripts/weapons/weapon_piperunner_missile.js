@@ -75,7 +75,7 @@ var Constructor = function()
                 return WEAPON.mediumDamage;
 			case "MISSILE":
                 return WEAPON.HighDamage;
-			case "ROCKETTRHOWER":
+            case "ROCKETTHROWER":
 				return WEAPON.HighDamage;
 				
 			// ships

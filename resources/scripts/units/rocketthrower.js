@@ -48,7 +48,7 @@ var Constructor = function()
     };
     this.canMoveAndFire = function()
     {
-        return true;
+        return false;
     };
 }
 

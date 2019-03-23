@@ -61,7 +61,7 @@ var Constructor = function()
                 return 8;
 			case "MISSILE":
                 return 12;
-			case "ROCKETTRHOWER":
+            case "ROCKETTHROWER":
 				return 12;
 			default:
 				return -1;

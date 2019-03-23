@@ -69,7 +69,8 @@ void HumanPlayerInput::rightClick(qint32 x, qint32 y)
             {
                 Unit* pUnit = m_pGameAction->getTargetUnit();
                 if ((pUnit != nullptr) &&
-                    (!pUnit->isStealthed(m_pPlayer)))
+                    (!pUnit->isStealthed(m_pPlayer)) &&
+                    (pUnit->getVisible()))
                 {
                     if (m_pGameAction->getInputStep() == 0)
                     {
@@ -174,7 +175,8 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
             GameMap* pMap = GameMap::getInstance();
             Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
             if ((pUnit != nullptr) &&
-                (!pUnit->isStealthed(m_pPlayer)))
+                (!pUnit->isStealthed(m_pPlayer)) &&
+                (pUnit->getVisible()))
             {
                 selectUnit(x, y);
             }

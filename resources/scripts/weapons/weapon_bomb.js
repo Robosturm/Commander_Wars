@@ -55,7 +55,7 @@ var Constructor = function()
 				return WEAPON.mediumDamage;
 			case "MISSILE":
 				return 75;
-			case "ROCKETTRHOWER":
+            case "ROCKETTHROWER":
 				return 75;				
 			
 			// ships

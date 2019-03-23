@@ -45,7 +45,7 @@ var Constructor = function()
 				return WEAPON.softCounterDamage;
 			case "MISSILE":
                 return 95;
-			case "ROCKETTRHOWER":
+            case "ROCKETTHROWER":
                 return 95;
 			
 			// ships
