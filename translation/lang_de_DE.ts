@@ -125,6 +125,30 @@
         <source>Ration</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="94"/>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="102"/>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="111"/>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="119"/>
+        <source>RATION</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_STEALTH</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="25"/>
+        <source>Stealth</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_TRAP</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_TRAP.js" line="30"/>
+        <source>TRAP!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_UNLOAD</name>
@@ -136,6 +160,14 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="156"/>
         <source>Wait</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_UNSTEALTH</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="25"/>
+        <source>Unstealth</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

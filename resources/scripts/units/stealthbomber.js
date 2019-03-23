@@ -39,7 +39,12 @@ var Constructor = function()
     this.startOfTurn = function(unit)
     {
         // pay unit upkeep
-        var fuelCosts = 5 + unit.getFuelCostModifier(Qt.point(unit.getX(), unit.getY()), 5);
+        var fuelCosts = 5;
+        if (unit.getHidden())
+        {
+            fuelCosts += 3;
+        }
+        fuelCosts = fuelCosts + unit.getFuelCostModifier(Qt.point(unit.getX(), unit.getY()), fuelCosts);
         if (fuelCosts < 0)
         {
             fuelCosts = 0;
@@ -62,6 +67,11 @@ var Constructor = function()
         animation.loadSprite(unitID + "+walk", false, 1.25);
         animation.setSound("moveair.wav", -2);
         return animation;
+    };
+    this.getActions = function()
+    {
+        // returns a string id list of the actions this unit can perform
+        return "ACTION_FIRE,ACTION_STEALTH,ACTION_UNSTEALTH,ACTION_LOAD,ACTION_JOIN,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
     };
     this.canMoveAndFire = function()
     {

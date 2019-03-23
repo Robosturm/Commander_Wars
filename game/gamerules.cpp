@@ -215,8 +215,6 @@ void GameRules::startOfTurn()
 
 void GameRules::setStartWeather(qint32 index)
 {
-    GameMap* pMap = GameMap::getInstance();
-    changeWeather(m_Weathers[index]->getWeatherId(), pMap->getPlayerCount());
     m_StartWeather = index;
 }
 
@@ -339,8 +337,11 @@ void GameRules::createFogVision()
     {
         for (qint32 y = 0; y < heigth; y++)
         {
-            pMap->getTerrain(x, y)->removeChild(m_FogSprites[x][y]);
-            m_FogSprites[x][y] = nullptr;
+            if (m_FogSprites[x][y].get() != nullptr)
+            {
+                pMap->removeChild(m_FogSprites[x][y]);
+                m_FogSprites[x][y] = nullptr;
+            }
         }
     }
     // get player for which we should create the vision
@@ -386,8 +387,9 @@ void GameRules::createFogVision()
                         oxygine::spColorRectSprite sprite = new oxygine::ColorRectSprite();
                         sprite->setSize(GameMap::Imagesize, GameMap::Imagesize);
                         sprite->setColor(70, 70, 70, 100);
-                        sprite->setPriority(static_cast<qint16>(Terrain::DrawPriority::Fog));
-                        pMap->getTerrain(x, y)->addChild(sprite);
+                        sprite->setPosition(GameMap::Imagesize * x, y * GameMap::Imagesize);
+                        sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
+                        pMap->addChild(sprite);
                         m_FogSprites[x][y] = sprite;
                     }
                     break;
@@ -405,7 +407,7 @@ void GameRules::showHideStealthUnit(Player* pPlayer, Unit* pUnit)
         {
             if (pUnit->isStealthed(pPlayer))
             {
-                pUnit->setUnitVisible(true);
+                pUnit->setUnitVisible(false);
             }
             else
             {
@@ -419,6 +421,11 @@ void GameRules::showHideStealthUnit(Player* pPlayer, Unit* pUnit)
             break;
         }
     }
+}
+
+qint32 GameRules::getStartWeather() const
+{
+    return m_StartWeather;
 }
 
 bool GameRules::getNoPower() const

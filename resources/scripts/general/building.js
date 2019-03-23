@@ -97,6 +97,7 @@ var BUILDING =
             unit.refill();
             var repairAmount = 2 + unit.getRepairBonus(Qt.point(unit.getX(), unit.getY()));
             UNIT.repairUnit(unit, repairAmount);
+
         }
     },
 

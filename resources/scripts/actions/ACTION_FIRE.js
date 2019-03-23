@@ -295,7 +295,7 @@ var Constructor = function()
             // gain power based
             if (damage > defUnit.getHp())
             {
-                power = costs * defUnit.getHp();
+                power = costs * defUnit.getHp() / 10;
                 damage = defUnit.getHp();
                 defUnit.getOwner().gainPowerstar(power, Qt.point(defUnit.getX(), defUnit.getY()));
                 ACTION_FIRE.postAnimationUnit.getOwner().gainPowerstar(power / 4,
@@ -304,7 +304,7 @@ var Constructor = function()
             else
             {
                 power = costs * damage / 10;
-                defUnit.getOwner().gainPowerstar(costs * damage / 10, Qt.point(defUnit.getX(), defUnit.getY()));
+                defUnit.getOwner().gainPowerstar(power, Qt.point(defUnit.getX(), defUnit.getY()));
                 ACTION_FIRE.postAnimationUnit.getOwner().gainPowerstar(power / 4,
                                                                        Qt.point(ACTION_FIRE.postAnimationUnit.getX(), ACTION_FIRE.postAnimationUnit.getY()));
             }
@@ -339,7 +339,7 @@ var Constructor = function()
                 // gain power based
                 if (damage > ACTION_FIRE.postAnimationUnit.getHp())
                 {
-                    power = costs * ACTION_FIRE.postAnimationUnit.getHp();
+                    power = costs * ACTION_FIRE.postAnimationUnit.getHp() / 10;
                     damage = ACTION_FIRE.postAnimationUnit.getHp();
                     ACTION_FIRE.postAnimationUnit.getOwner().gainPowerstar(power,
                                                                            Qt.point(ACTION_FIRE.postAnimationUnit.getX(), ACTION_FIRE.postAnimationUnit.getY()));

@@ -226,9 +226,12 @@ Unit* GameAction::getMovementTarget()
     QPoint actionTarget = getActionTarget();
     Unit* pUnit = pMap->getTerrain(actionTarget.x(), actionTarget.y())->getUnit();
     // ignore stealthed units
-    if (pUnit->isStealthed(pMap->getCurrentPlayer()))
+    if (pUnit != nullptr)
     {
-        return nullptr;
+        if (pUnit->isStealthed(pMap->getCurrentPlayer()))
+        {
+            return nullptr;
+        }
     }
     return pUnit;
 }

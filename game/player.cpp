@@ -348,12 +348,18 @@ void Player::updatePlayerVision(bool reduceTimer)
             if (reduceTimer)
             {
                 m_FogVisionFields[x][y].setY(m_FogVisionFields[x][y].y() - 1);
-                if (m_FogVisionFields[x][y].y() <= 0)
-                {
-                    m_FogVisionFields[x][y].setX(0);
-                    m_FogVisionFields[x][y].setY(0);
-                }
             }
+            if (m_FogVisionFields[x][y].y() <= 0)
+            {
+                m_FogVisionFields[x][y].setX(0);
+                m_FogVisionFields[x][y].setY(0);
+            }
+        }
+    }
+    for (qint32 x = 0; x < width; x++)
+    {
+        for (qint32 y = 0; y < heigth; y++)
+        {
             Terrain* pTerrain = pMap->getTerrain(x, y);
             qint32 visionRange = pTerrain->getVision();
             if (visionRange >= 0)

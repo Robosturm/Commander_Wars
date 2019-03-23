@@ -63,6 +63,36 @@ GameMenue::~GameMenue()
 
 void GameMenue::performAction(GameAction* pGameAction)
 {
+    QVector<QPoint> path = pGameAction->getMovePath();
+    if (path.size() > 0)
+    {
+        GameMap* pMap = GameMap::getInstance();
+        QVector<QPoint> trapPath;
+        for (qint32 i = path.size() - 1; i >= 0; i--)
+        {
+            // check the movepath for a trap
+            QPoint point = path[i];
+            Unit* pUnit = pMap->getTerrain(point.x(), point.y())->getUnit();
+            if ((pUnit != nullptr) &&
+                (pUnit->isStealthed(pMap->getCurrentPlayer())))
+            {
+
+                GameAction* pTrapAction = new GameAction("ACTION_TRAP");
+                pTrapAction->setMovepath(trapPath);
+                pTrapAction->writeDataInt32(point.x());
+                pTrapAction->writeDataInt32(point.y());
+                pTrapAction->setTarget(pGameAction->getTarget());
+                delete pGameAction;
+                pGameAction = pTrapAction;
+                break;
+            }
+            else
+            {
+                trapPath.push_front(point);
+            }
+        }
+    }
+
     pGameAction->perform();
     // clean up the action
     delete pGameAction;
@@ -106,6 +136,8 @@ void GameMenue::startGame(qint32 startPlayer)
     {
         pMap->setCurrentPlayer(startPlayer - 1);
     }
+    GameRules* pRules = pMap->getGameRules();
+    pRules->changeWeather(pRules->getWeather(pRules->getStartWeather())->getWeatherId(), pMap->getPlayerCount() + 1);
     pMap->nextTurn();
 }
 

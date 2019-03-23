@@ -68,7 +68,8 @@ void HumanPlayerInput::rightClick(qint32 x, qint32 y)
             else
             {
                 Unit* pUnit = m_pGameAction->getTargetUnit();
-                if (pUnit != nullptr)
+                if ((pUnit != nullptr) &&
+                    (!pUnit->isStealthed(m_pPlayer)))
                 {
                     if (m_pGameAction->getInputStep() == 0)
                     {
@@ -173,7 +174,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
             GameMap* pMap = GameMap::getInstance();
             Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
             if ((pUnit != nullptr) &&
-                (!pUnit->isStealthed(pMap->getCurrentPlayer())))
+                (!pUnit->isStealthed(m_pPlayer)))
             {
                 selectUnit(x, y);
             }
@@ -417,11 +418,13 @@ void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::Dr
 
 void HumanPlayerInput::createMarkedMoveFields()
 {
-
-    QVector<QPoint> points = m_pUnitPathFindingSystem->getAllNodePoints();
-    for (qint32 i = 0; i < points.size(); i++)
+    if (m_pUnitPathFindingSystem != nullptr)
     {
-        createMarkedField(points[i], QColor(50, 230, 200, 255), Terrain::DrawPriority::MarkedFieldLow);
+        QVector<QPoint> points = m_pUnitPathFindingSystem->getAllNodePoints();
+        for (qint32 i = 0; i < points.size(); i++)
+        {
+            createMarkedField(points[i], QColor(50, 230, 200, 255), Terrain::DrawPriority::MarkedFieldLow);
+        }
     }
 }
 

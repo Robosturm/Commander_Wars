@@ -54,16 +54,21 @@ public:
      * @brief createWeatherSprites
      */
     void createWeatherSprites();
+
+signals:
+    void signalVictory(qint32 team);
+public slots:
     /**
      * @brief setStartWeather
      * @param index
      * @param duration
      */
     void setStartWeather(qint32 index);
-
-signals:
-    void signalVictory(qint32 team);
-public slots:
+    /**
+     * @brief getStartWeather
+     * @return
+     */
+    qint32 getStartWeather() const;
     /**
      * @brief checkVictory checks for defeats of a player and for the win of a team;
      */

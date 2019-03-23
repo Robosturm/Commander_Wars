@@ -4,6 +4,8 @@
 
 #include "resource_management/gameanimationmanager.h"
 
+#include "resource_management/fontmanager.h"
+
 #include "coreengine/console.h"
 
 #include "coreengine/mainapp.h"
@@ -77,6 +79,21 @@ void GameAnimation::addSprite2(QString spriteID, float offsetX, float offsetY, q
     }
 }
 
+void GameAnimation::addText(QString text, float offsetX, float offsetY, float scale, QColor color)
+{
+    oxygine::TextStyle style = FontManager::getTimesFont10();
+    style.color = oxygine::Color(static_cast<quint8>(color.red()), static_cast<quint8>(color.green()), static_cast<quint8>(color.blue()), static_cast<quint8>(color.alpha()));
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+    oxygine::spTextField pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(text.toStdString().c_str());
+    pTextfield->setPosition(offsetX, offsetY);
+    pTextfield->setScale(scale);
+    addChild(pTextfield);
+}
+
 void GameAnimation::onFinished()
 {
     if (m_loops < 0)
@@ -122,8 +139,8 @@ void GameAnimation::addTweenColor(qint32 spriteIdx, QColor startColor, QColor en
     oxygine::Sprite* sprite = dynamic_cast<oxygine::Sprite*>(actor.get());
     if (sprite != nullptr)
     {
-        sprite->setColor(oxygine::Color(startColor.red(), startColor.green(), startColor.blue(), startColor.alpha()));
-        oxygine::Sprite::TweenColor tweenColor(oxygine::Color(endColor.red(), endColor.green(), endColor.blue(), endColor.alpha()));
+        sprite->setColor(oxygine::Color(static_cast<quint8>(startColor.red()), static_cast<quint8>(startColor.green()), static_cast<quint8>(startColor.blue()), static_cast<quint8>(startColor.alpha())));
+        oxygine::Sprite::TweenColor tweenColor(oxygine::Color(static_cast<quint8>(endColor.red()), static_cast<quint8>(endColor.green()), static_cast<quint8>(endColor.blue()), static_cast<quint8>(endColor.alpha())));
         oxygine::spTween tween = oxygine::createTween(tweenColor, duration, 1, twoSided, delay);
         sprite->addTween(tween);
     }

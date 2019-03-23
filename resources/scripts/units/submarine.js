@@ -40,6 +40,10 @@ var Constructor = function()
     {
         // pay unit upkeep
         var fuelCosts = 1 + unit.getFuelCostModifier(Qt.point(unit.getX(), unit.getY()), 1);
+        if (unit.getHidden())
+        {
+            fuelCosts += 4;
+        }
         if (fuelCosts < 0)
         {
             fuelCosts = 0;
@@ -62,6 +66,11 @@ var Constructor = function()
             return animation;
         };
         return animation;
+    };
+    this.getActions = function()
+    {
+        // returns a string id list of the actions this unit can perform
+        return "ACTION_FIRE,ACTION_STEALTH,ACTION_UNSTEALTH,ACTION_JOIN,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
     };
     this.canMoveAndFire = function()
     {

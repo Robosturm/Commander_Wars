@@ -243,9 +243,9 @@ qint32 Unit::getVision(QPoint position)
     rangeModifier += m_pTerrain->getBonusVision(this);
     qint32 points = vision + rangeModifier;
 
-    if (points < 0)
+    if (points < 1)
     {
-        points = 0;
+        points = 1;
     }
     return points;
 }
@@ -1205,39 +1205,46 @@ bool Unit::getHidden() const
 void Unit::setHidden(bool Hidden)
 {
     m_Hidden = Hidden;
+    if (m_Hidden)
+    {
+        loadIcon("dive", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+    }
+    else
+    {
+        unloadIcon("dive");
+    }
 }
 
 bool Unit::isStealthed(Player* pPlayer)
 {
-    // a unit can be stealth by itself or by the terrain it's on.
-    if (getHidden() || (m_pTerrain->getVisionHide() && useTerrainDefense()))
+    if (pPlayer->checkAlliance(m_pOwner) == GameEnums::Alliance_Enemy)
     {
-        GameMap* pMap = GameMap::getInstance();
-        qint32 x = getX();
-        qint32 y = getY();
-        QmlVectorPoint* pPoints = Mainapp::getCircle(1, 1);
-        for (qint32 i = 0; i < pPoints->size(); i++)
+        // a unit can be stealth by itself or by the terrain it's on.
+        if (getHidden() || (m_pTerrain->getVisionHide() && useTerrainDefense()))
         {
-            QPoint point = pPoints->at(i);
-            if (pMap->onMap(point.x() + x, point.y() + y))
+            GameMap* pMap = GameMap::getInstance();
+            qint32 x = getX();
+            qint32 y = getY();
+            QmlVectorPoint* pPoints = Mainapp::getCircle(1, 1);
+            for (qint32 i = 0; i < pPoints->size(); i++)
             {
-                Unit* pVisionUnit = pMap->getTerrain(x + point.x(), y + point.y())->getUnit();
-                if (pVisionUnit != nullptr)
+                QPoint point = pPoints->at(i);
+                if (pMap->onMap(point.x() + x, point.y() + y))
                 {
-                    if (pPlayer->checkAlliance(pVisionUnit->getOwner()) == GameEnums::Alliance_Friend)
+                    Unit* pVisionUnit = pMap->getTerrain(x + point.x(), y + point.y())->getUnit();
+                    if (pVisionUnit != nullptr)
                     {
-                        return false;
+                        if (pPlayer->checkAlliance(pVisionUnit->getOwner()) == GameEnums::Alliance_Friend)
+                        {
+                            return false;
+                        }
                     }
                 }
             }
+            return true;
         }
-        return true;
     }
-    else
-    {
-        return false;
-    }
-
+    return false;
 }
 
 void Unit::serialize(QDataStream& pStream)
@@ -1312,6 +1319,7 @@ void Unit::deserialize(QDataStream& pStream)
     if (version > 3)
     {
         pStream >> m_Hidden;
+        setHidden(m_Hidden);
     }
     if (version > 4)
     {

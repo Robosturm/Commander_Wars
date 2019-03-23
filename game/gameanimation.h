@@ -36,6 +36,11 @@ public slots:
      */
     void addSprite2(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish = 0, float scaleX = 1.0f, float scaleY = 1.0f, qint32 delay = 0);
     /**
+     * @brief addText
+     * @param text
+     */
+    void addText(QString text, float offsetX, float offsetY, float scale, QColor color = Qt::GlobalColor::black);
+    /**
      * @brief onFinished called when the animation is finished
      */
     virtual void onFinished();
