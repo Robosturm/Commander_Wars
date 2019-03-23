@@ -172,7 +172,8 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
             m_pGameAction->setTarget(QPoint(x, y));
             GameMap* pMap = GameMap::getInstance();
             Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
-            if (pUnit != nullptr)
+            if ((pUnit != nullptr) &&
+                (!pUnit->isStealthed(pMap->getCurrentPlayer())))
             {
                 selectUnit(x, y);
             }

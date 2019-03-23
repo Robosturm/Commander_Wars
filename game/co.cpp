@@ -54,14 +54,17 @@ void CO::startOfTurn()
 
 void CO::setPowerFilled(const float &value)
 {
-    powerFilled = value;
-    if (powerFilled > powerStars + superpowerStars)
+    if (!GameMap::getInstance()->getGameRules()->getNoPower())
     {
-        powerFilled = powerStars + superpowerStars;
-    }
-    else if (powerFilled < 0)
-    {
-        powerFilled = 0;
+        powerFilled = value;
+        if (powerFilled > powerStars + superpowerStars)
+        {
+            powerFilled = powerStars + superpowerStars;
+        }
+        else if (powerFilled < 0)
+        {
+            powerFilled = 0;
+        }
     }
     if (GameMenue::getInstance() != nullptr)
     {
@@ -75,15 +78,8 @@ qint32 CO::getSuperpowerStars() const
 }
 
 void CO::setSuperpowerStars(const qint32 &value)
-{    
-    if (GameMap::getInstance()->getGameRules()->getNoPower())
-    {
-        superpowerStars = 0;
-    }
-    else
-    {
-        superpowerStars = value;
-    }
+{        
+    superpowerStars = value;
 }
 
 bool CO::canUseSuperpower() const
@@ -115,14 +111,7 @@ qint32 CO::getPowerStars() const
 
 void CO::setPowerStars(const qint32 &value)
 {
-    if (GameMap::getInstance()->getGameRules()->getNoPower())
-    {
-        powerStars = 0;
-    }
-    else
-    {
-        powerStars = value;
-    }
+    powerStars = value;
 }
 
 qint32 CO::getTerrainDefenseModifier(Unit* pUnit, QPoint position)

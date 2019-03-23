@@ -26,20 +26,23 @@ var Constructor = function()
                     var defUnit = map.getTerrain(x, y).getUnit();
                     if (defUnit !== null)
                     {
-                        if (unit.getOwner().isEnemyUnit(defUnit) === true)
+                        if (ACTION_FIRE.isVisibleUnit(action, defUnit))
                         {
-                            if (unit.hasAmmo1())
+                            if (unit.getOwner().isEnemyUnit(defUnit) === true)
                             {
-                                if (Global[unit.getWeapon1ID()].getBaseDamage(defUnit) > 0)
+                                if (unit.hasAmmo1())
                                 {
-                                    return true;
+                                    if (Global[unit.getWeapon1ID()].getBaseDamage(defUnit) > 0)
+                                    {
+                                        return true;
+                                    }
                                 }
-                            }
-                            if (unit.hasAmmo2())
-                            {
-                                if (Global[unit.getWeapon2ID()].getBaseDamage(defUnit) > 0)
+                                if (unit.hasAmmo2())
                                 {
-                                    return true;
+                                    if (Global[unit.getWeapon2ID()].getBaseDamage(defUnit) > 0)
+                                    {
+                                        return true;
+                                    }
                                 }
                             }
                         }
@@ -114,6 +117,18 @@ var Constructor = function()
         }
         return damage;
     };
+    this.isVisibleUnit = function(action, defUnit)
+    {
+        var unit = action.getTargetUnit();
+        if (unit.getOwner().getFieldVisible(defUnit.getX(), defUnit.getY()))
+        {
+            if (!defUnit.isStealthed(unit.getOwner()))
+            {
+                return true;
+            }
+        }
+        return false;
+    };
     this.getStepData = function(action, data)
     {
         var unit = action.getTargetUnit();
@@ -130,29 +145,32 @@ var Constructor = function()
                 var defUnit = map.getTerrain(x, y).getUnit();
                 if (defUnit !== null)
                 {
-                    if (unit.getOwner().isEnemyUnit(defUnit) === true)
+                    if (ACTION_FIRE.isVisibleUnit(action, defUnit))
                     {
-                        var dmg1 = -1;
-                        if (unit.hasAmmo1())
+                        if (unit.getOwner().isEnemyUnit(defUnit) === true)
                         {
-                            dmg1 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon1ID(), actionTargetField ,defUnit, false);
-                        }
-                        var dmg2 = -1;
-                        if (unit.hasAmmo2())
-                        {
-                            dmg2 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon2ID(), actionTargetField ,defUnit, false);
-                        }
-                        if ((dmg1 > 0) || (dmg2 > 0))
-                        {
-                            if (dmg1 >= dmg2)
+                            var dmg1 = -1;
+                            if (unit.hasAmmo1())
                             {
-                                data.addPoint(Qt.point(x, y));
-                                data.addZInformation(dmg1);
+                                dmg1 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon1ID(), actionTargetField ,defUnit, false);
                             }
-                            else
+                            var dmg2 = -1;
+                            if (unit.hasAmmo2())
                             {
-                                data.addPoint(Qt.point(x, y));
-                                data.addZInformation(dmg2);
+                                dmg2 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon2ID(), actionTargetField ,defUnit, false);
+                            }
+                            if ((dmg1 > 0) || (dmg2 > 0))
+                            {
+                                if (dmg1 >= dmg2)
+                                {
+                                    data.addPoint(Qt.point(x, y));
+                                    data.addZInformation(dmg1);
+                                }
+                                else
+                                {
+                                    data.addPoint(Qt.point(x, y));
+                                    data.addZInformation(dmg2);
+                                }
                             }
                         }
                     }
@@ -277,8 +295,8 @@ var Constructor = function()
             // gain power based
             if (damage > defUnit.getHp())
             {
-                power = costs * defUnit.getHp() / 10;
-                damage = defUnit.getHp() / 10;
+                power = costs * defUnit.getHp();
+                damage = defUnit.getHp();
                 defUnit.getOwner().gainPowerstar(power, Qt.point(defUnit.getX(), defUnit.getY()));
                 ACTION_FIRE.postAnimationUnit.getOwner().gainPowerstar(power / 4,
                                                                        Qt.point(ACTION_FIRE.postAnimationUnit.getX(), ACTION_FIRE.postAnimationUnit.getY()));
@@ -321,8 +339,8 @@ var Constructor = function()
                 // gain power based
                 if (damage > ACTION_FIRE.postAnimationUnit.getHp())
                 {
-                    power = costs * ACTION_FIRE.postAnimationUnit.getHp() / 10;
-                    damage = ACTION_FIRE.postAnimationUnit.getHp() / 10;
+                    power = costs * ACTION_FIRE.postAnimationUnit.getHp();
+                    damage = ACTION_FIRE.postAnimationUnit.getHp();
                     ACTION_FIRE.postAnimationUnit.getOwner().gainPowerstar(power,
                                                                            Qt.point(ACTION_FIRE.postAnimationUnit.getX(), ACTION_FIRE.postAnimationUnit.getY()));
                     if (defUnit !== null)

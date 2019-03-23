@@ -22,7 +22,7 @@ var Constructor = function()
 
     this.getVisionBonus = function()
     {
-        return 0;
+        return 1;
     };
 }
 

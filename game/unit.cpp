@@ -233,7 +233,8 @@ qint32 Unit::getVision(QPoint position)
         for (qint32 y = 0; y < mapHeigth; y++)
         {
             Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
-            if ((pBuilding != nullptr) && pBuilding->getOwner() == m_pOwner)
+            if ((pBuilding != nullptr) &&
+                (pBuilding->getOwner() == m_pOwner))
             {
                 rangeModifier += pBuilding->getVisionBonus();
             }
@@ -351,8 +352,7 @@ bool Unit::canMoveAndFire(QPoint position)
 void Unit::loadUnit(Unit* pUnit)
 {
     m_TransportUnits.append(pUnit->getTerrain()->getSpUnit());
-    // todo check which icon we need to load
-    loadIcon("transport", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+    updateIcons(m_pOwner);
 }
 
 Unit* Unit::getLoadedUnit(qint32 index)
@@ -375,11 +375,7 @@ void Unit::unloadUnit(Unit* pUnit, QPoint position)
             break;
         }
     }
-    if (m_TransportUnits.size() <= 0)
-    {
-        unloadIcon("transport");
-        unloadIcon("transport+hidden");
-    }
+    updateIcons(m_pOwner);
 }
 
 qint32 Unit::getLoadedUnitCount()
@@ -741,11 +737,11 @@ void Unit::setAmmo2(const qint32 &value)
 
     if (static_cast<float>(ammo2) / static_cast<float>(maxAmmo2) <= 1.0f / 3.0f)
     {
-        loadIcon("ammo", GameMap::Imagesize / 2, 0);
+        loadIcon("ammo1", GameMap::Imagesize / 2, 0);
     }
     else
     {
-        unloadIcon("ammo");
+        unloadIcon("ammo1");
     }
 }
 
@@ -837,8 +833,13 @@ void Unit::setHp(const float &value)
     {
         hp = 10.0f;
     }
+    updateIcons(m_pOwner);
+}
+
+void Unit::updateIcons(Player* pPlayer)
+{
     qint32 hpValue = Mainapp::roundUp(hp);
-    // unload the number icons
+    // unload the icons
     unloadIcon("1");
     unloadIcon("2");
     unloadIcon("3");
@@ -849,9 +850,16 @@ void Unit::setHp(const float &value)
     unloadIcon("8");
     unloadIcon("9");
     unloadIcon("hp+hidden");
+    unloadIcon("transport");
+    unloadIcon("transport+hidden");
+
     if ((hpValue < 10) && (hpValue > 0))
     {
         loadIcon(QString::number(hpValue), 0, GameMap::Imagesize / 2);
+    }
+    if (m_TransportUnits.size() > 0)
+    {
+        loadIcon("transport", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
     }
 }
 
@@ -1045,7 +1053,6 @@ void Unit::killUnit()
 
 void Unit::increaseCapturePoints(QPoint position)
 {
-    // todo add ko modifications
     qint32 modifier = 0;
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
@@ -1188,6 +1195,49 @@ void Unit::updateIconTweens()
             }
         }
     }
+}
+
+bool Unit::getHidden() const
+{
+    return m_Hidden;
+}
+
+void Unit::setHidden(bool Hidden)
+{
+    m_Hidden = Hidden;
+}
+
+bool Unit::isStealthed(Player* pPlayer)
+{
+    // a unit can be stealth by itself or by the terrain it's on.
+    if (getHidden() || (m_pTerrain->getVisionHide() && useTerrainDefense()))
+    {
+        GameMap* pMap = GameMap::getInstance();
+        qint32 x = getX();
+        qint32 y = getY();
+        QmlVectorPoint* pPoints = Mainapp::getCircle(1, 1);
+        for (qint32 i = 0; i < pPoints->size(); i++)
+        {
+            QPoint point = pPoints->at(i);
+            if (pMap->onMap(point.x() + x, point.y() + y))
+            {
+                Unit* pVisionUnit = pMap->getTerrain(x + point.x(), y + point.y())->getUnit();
+                if (pVisionUnit != nullptr)
+                {
+                    if (pPlayer->checkAlliance(pVisionUnit->getOwner()) == GameEnums::Alliance_Friend)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
 }
 
 void Unit::serialize(QDataStream& pStream)

@@ -23,7 +23,8 @@ public:
         Building = 1,
         MarkedFieldLow = 2,
         Unit = 3,
-        MarkedFieldMid = 4,
+        Fog,
+        MarkedFieldMid,
         Arrow,
         MarkedFieldHigh
     };
@@ -187,6 +188,11 @@ public slots:
      * @brief getDefense
      */
     qint32 getBaseDefense();
+    /**
+     * @brief getVisionHide
+     * @return
+     */
+    bool getVisionHide();
 private:
     explicit Terrain(const QString& terrainID, qint32 x, qint32 y);
     /**

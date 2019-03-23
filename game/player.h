@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <tuple>
 #include <QColor>
 #include <QObject>
 #include <QVector>
@@ -44,7 +45,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 5;
+        return 6;
     }
     /**
      * @brief getBaseGameInput pointer to the ai or human player interface
@@ -235,6 +236,23 @@ public slots:
      * @brief reduces the timer for vision created for several turns
      */
     void updatePlayerVision(bool reduceTimer = false);
+    /**
+     * @brief addVisionField
+     * @param x
+     * @param y
+     * @param duration
+     */
+    void addVisionField(qint32 x, qint32 y, qint32 duration = 1);
+    /**
+     * @brief getFieldVisible
+     * @param x
+     * @param y
+     */
+    bool getFieldVisible(qint32 x, qint32 y);
+    /**
+     * @brief loadVisionFields
+     */
+    void loadVisionFields();
 private:
     qint32 fonds{0};
     float fondsModifier{1.0f};
@@ -248,7 +266,7 @@ private:
      */
     spBaseGameInputIF m_pBaseGameInput{nullptr};
     bool isDefeated{false};
-    QVector<QVector3D> m_FogVisionFields;
+    QVector<QVector<QPoint>> m_FogVisionFields;
 };
 
 #endif // PLAYER_H

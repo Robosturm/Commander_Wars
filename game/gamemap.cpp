@@ -688,6 +688,10 @@ void GameMap::deserialize(QDataStream& pStream)
     {
         m_Rules->deserialize(pStream);
     }
+    for (qint32 i = 0; i < playerCount; i++)
+    {
+        players[i]->loadVisionFields();
+    }
 }
 
 

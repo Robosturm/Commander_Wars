@@ -1,21 +1,16 @@
-
 - rules
-	- wetter
 	- fog of war
-	- slider/ multislider
+	- stealth units
 
 - option menu
 - credits menu
 
-- stealth units
-
 - unit info
 - terrain info
-- co's
 - activate power animation
 
 - ai
-- ko info
+- co info
 - dialogues
 
 - special building
@@ -23,6 +18,6 @@
 - victory screen
 - game statistics
 	- game recording
+- import awds maps
 
-- Objects
-	- import awds maps
+multiplayer

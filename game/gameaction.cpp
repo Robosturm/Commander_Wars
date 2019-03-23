@@ -224,7 +224,13 @@ Unit* GameAction::getMovementTarget()
 {
     GameMap* pMap = GameMap::getInstance();
     QPoint actionTarget = getActionTarget();
-    return pMap->getTerrain(actionTarget.x(), actionTarget.y())->getUnit();
+    Unit* pUnit = pMap->getTerrain(actionTarget.x(), actionTarget.y())->getUnit();
+    // ignore stealthed units
+    if (pUnit->isStealthed(pMap->getCurrentPlayer()))
+    {
+        return nullptr;
+    }
+    return pUnit;
 }
 
 Building* GameAction::getMovementBuilding()

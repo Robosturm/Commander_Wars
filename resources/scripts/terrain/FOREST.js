@@ -22,6 +22,10 @@ var Constructor = function()
     {
         return "minimap_forest";
     };
+    this.getVisionHide = function()
+    {
+        return true;
+    };
 };
 Constructor.prototype = TERRAIN;
 var FOREST = new Constructor();

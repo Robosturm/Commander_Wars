@@ -373,6 +373,35 @@ void MapSelectionMapsMenue::showRuleSelection()
 
     textField = new oxygine::TextField();
     textField->setStyle(style);
+    textField->setText(tr("Gameplay").toStdString().c_str());
+    textField->setPosition(30, y);
+    m_pRuleSelection->addItem(textField);
+    y += 40;
+    textField = new oxygine::TextField();
+    textField->setStyle(style);
+    textField->setText(tr("Unit Ranking System: ").toStdString().c_str());
+    textField->setPosition(30, y);
+    m_pRuleSelection->addItem(textField);
+    pCheckbox = new Checkbox();
+    pCheckbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
+    m_pRuleSelection->addItem(pCheckbox);
+    pCheckbox->setChecked(m_pCurrentMap->getGameRules()->getRankingSystem());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, m_pCurrentMap->getGameRules(), &GameRules::setRankingSystem, Qt::QueuedConnection);
+    y += 40;
+    textField = new oxygine::TextField();
+    textField->setStyle(style);
+    textField->setText(tr("No CO Powers: ").toStdString().c_str());
+    textField->setPosition(30, y);
+    m_pRuleSelection->addItem(textField);
+    pCheckbox = new Checkbox();
+    pCheckbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
+    m_pRuleSelection->addItem(pCheckbox);
+    pCheckbox->setChecked(m_pCurrentMap->getGameRules()->getNoPower());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, m_pCurrentMap->getGameRules(), &GameRules::setNoPower, Qt::QueuedConnection);
+
+    y += 50;
+    textField = new oxygine::TextField();
+    textField->setStyle(style);
     textField->setText(tr("Victory Rules").toStdString().c_str());
     textField->setPosition(30, y);
     m_pRuleSelection->addItem(textField);

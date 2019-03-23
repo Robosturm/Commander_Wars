@@ -14,12 +14,17 @@
 
 #include "resource_management/gamemanager.h"
 
+#include "game/gameanimationfactory.h"
+
 #include "coreengine/mainapp.h"
 
 GameRules::GameRules()
     : QObject()
 {
     Interpreter::setCppOwnerShip(this);
+    connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameRules::checkVictory, Qt::QueuedConnection);
+    connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameRules::createFogVision, Qt::QueuedConnection);
+
 }
 
 void GameRules::addVictoryRule(QString rule)
@@ -204,6 +209,8 @@ void GameRules::startOfTurn()
             changeWeather(m_Weathers[m_StartWeather]->getWeatherId() , playerCount);
         }
     }
+    pMap->getCurrentPlayer()->updatePlayerVision(true);
+    createFogVision();
 }
 
 void GameRules::setStartWeather(qint32 index)
@@ -299,6 +306,119 @@ bool GameRules::getRandomWeather() const
 void GameRules::setRandomWeather(bool randomWeather)
 {
     m_randomWeather = randomWeather;
+}
+
+GameEnums::Fog GameRules::getFogMode() const
+{
+    return m_FogMode;
+}
+
+void GameRules::setFogMode(const GameEnums::Fog &FogMode)
+{
+    m_FogMode = FogMode;
+}
+
+void GameRules::createFogVision()
+{
+    GameMap* pMap = GameMap::getInstance();
+    qint32 width = pMap->getMapWidth();
+    qint32 heigth = pMap->getMapHeight();
+    if (m_FogSprites.size() == 0)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            m_FogSprites.append(QVector<oxygine::spSprite>());
+            for (qint32 y = 0; y < heigth; y++)
+            {
+                m_FogSprites[x].append(nullptr);
+            }
+        }
+    }
+
+    for (qint32 x = 0; x < width; x++)
+    {
+        for (qint32 y = 0; y < heigth; y++)
+        {
+            pMap->getTerrain(x, y)->removeChild(m_FogSprites[x][y]);
+            m_FogSprites[x][y] = nullptr;
+        }
+    }
+    // get player for which we should create the vision
+    Player* pPlayer = pMap->getCurrentPlayer();
+    // todo get last human player :)
+
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        pMap->getPlayer(i)->updatePlayerVision(false);
+    }
+
+    for (qint32 x = 0; x < width; x++)
+    {
+        for (qint32 y = 0; y < heigth; y++)
+        {
+
+            bool visible = pPlayer->getFieldVisible(x, y);
+            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+
+            switch (m_FogMode)
+            {
+                case GameEnums::Fog_Off:
+                {
+                    if (pUnit != nullptr)
+                    {
+                        showHideStealthUnit(pPlayer, pUnit);
+                    }
+                    break;
+                }
+                case GameEnums::Fog_OfWar:
+                {
+                    if (pUnit != nullptr)
+                    {
+                        showHideStealthUnit(pPlayer, pUnit);
+                        if (!visible)
+                        {
+                            pUnit->setUnitVisible(false);
+                        }
+                    }
+                    if (!visible)
+                    {
+                        // create fog of war sprite
+                        oxygine::spColorRectSprite sprite = new oxygine::ColorRectSprite();
+                        sprite->setSize(GameMap::Imagesize, GameMap::Imagesize);
+                        sprite->setColor(70, 70, 70, 100);
+                        sprite->setPriority(static_cast<qint16>(Terrain::DrawPriority::Fog));
+                        pMap->getTerrain(x, y)->addChild(sprite);
+                        m_FogSprites[x][y] = sprite;
+                    }
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void GameRules::showHideStealthUnit(Player* pPlayer, Unit* pUnit)
+{
+    switch (pPlayer->checkAlliance(pUnit->getOwner()))
+    {
+        case GameEnums::Alliance_Enemy:
+        {
+            if (pUnit->isStealthed(pPlayer))
+            {
+                pUnit->setUnitVisible(true);
+            }
+            else
+            {
+                pUnit->setUnitVisible(true);
+            }
+            break;
+        }
+        case GameEnums::Alliance_Friend:
+        {
+            pUnit->setUnitVisible(true);
+            break;
+        }
+    }
 }
 
 bool GameRules::getNoPower() const

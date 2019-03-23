@@ -26,7 +26,6 @@ var TERRAIN =
     {
     },
 
-
     /***********************************************************************************/
     // this section deals with map editor hints
     // these functions have no influence in the game.
@@ -53,6 +52,11 @@ var TERRAIN =
     getBonusVision : function(unit)
     {
         return 0;
+    },
+
+    getVisionHide : function()
+    {
+        return false;
     },
 
     getMiniMapIcon : function()

@@ -71,6 +71,11 @@ public:
      * @return the string id list of actions this units can perform
      */
     QStringList getActionList();
+    /**
+     * @brief updateIcons updates icons that can be modified by the co.
+     * E.g Transport sign and health point sign
+     */
+    void updateIcons(Player* pPlayer);
 signals:
 
 public slots:
@@ -137,6 +142,10 @@ public slots:
     qint32 getMaxRange();
     qint32 getMaxRange(QPoint position);
     void setMaxRange(const qint32 &value);
+
+    bool getHidden() const;
+    void setHidden(bool Hidden);
+    bool isStealthed(Player* pPlayer);
 
     GameEnums::UnitRanks getUnitRank() const;
     void setUnitRank(const GameEnums::UnitRanks &UnitRank);

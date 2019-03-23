@@ -561,6 +561,21 @@ qint32 Terrain::getVision()
     }
 }
 
+bool Terrain::getVisionHide()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getVisionHide";
+    QJSValue ret = pApp->getInterpreter()->doFunction(terrainID, function1);
+    if (ret.isBool())
+    {
+        return ret.toBool();
+    }
+    else
+    {
+        return false;
+    }
+}
+
 qint32 Terrain::getBonusVision(Unit* pUnit)
 {
     Mainapp* pApp = Mainapp::getInstance();

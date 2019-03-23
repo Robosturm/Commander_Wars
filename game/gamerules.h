@@ -9,7 +9,12 @@
 
 #include "game/weather.h"
 
+#include "game/GameEnums.h"
+
 #include "oxygine-framework.h"
+
+class Player;
+class Unit;
 
 class GameRules;
 typedef oxygine::intrusive_ptr<GameRules> spGameRules;
@@ -55,6 +60,7 @@ public:
      * @param duration
      */
     void setStartWeather(qint32 index);
+
 signals:
     void signalVictory(qint32 team);
 public slots:
@@ -145,6 +151,19 @@ public slots:
 
     bool getRandomWeather() const;
     void setRandomWeather(bool randomWeather);
+
+    GameEnums::Fog getFogMode() const;
+    void setFogMode(const GameEnums::Fog &FogMode);
+    /**
+     * @brief createFogVision
+     */
+    void createFogVision();
+    /**
+     * @brief showHideStealthUnit
+     * @param pPlayer
+     * @param pUnit
+     */
+    void showHideStealthUnit(Player* pPlayer, Unit* pUnit);
 private:
     QVector<spVictoryRule> m_VictoryRules;
 
@@ -158,8 +177,10 @@ private:
 
     bool m_RankingSystem{true};
     bool m_NoPower{false};
+    GameEnums::Fog m_FogMode{GameEnums::Fog_OfWar};
     qint32 m_UnitLimit{0};
 
+    QVector<QVector<oxygine::spSprite>> m_FogSprites;
     QVector<oxygine::spSprite> m_WeatherSprites;
 };
 

@@ -25,6 +25,10 @@ var Constructor = function()
     {
         return 2;
     };
+    this.getVisionHide = function()
+    {
+        return true;
+    };
     this.canBePlaced = function(x, y)
     {
         var terrain = map.getTerrain(x, y);

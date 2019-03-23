@@ -23,6 +23,18 @@ var Constructor = function()
     {
         return "minimap_mountain";
     };
+    this.getBonusVision = function(unit)
+    {
+        var infantry = ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
+        if (infantry.indexOf(unit.getUnitID()) >= 0)
+        {
+            return 3;
+        }
+        else
+        {
+            return 0;
+        }
+    };
 };
 Constructor.prototype = TERRAIN;
 var MOUNTAIN = new Constructor();

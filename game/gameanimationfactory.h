@@ -34,7 +34,7 @@ public:
      */
     void startQueuedAnimation(GameAnimation* pGameAnimation);
 signals:
-
+    void animationsFinished();
 public slots:
     /**
      * @brief createAnimation creates a new animation and returns it

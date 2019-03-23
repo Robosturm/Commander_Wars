@@ -22,6 +22,7 @@ Player::Player()
 {
     Interpreter::setCppOwnerShip(this);
     m_pBaseGameInput = nullptr;
+
 }
 
 void Player::init()
@@ -32,6 +33,22 @@ void Player::init()
     QJSValue objArg = pApp->getInterpreter()->newQObject(this);
     args << objArg;
     pApp->getInterpreter()->doFunction("PLAYER", function, args);
+}
+
+void Player::loadVisionFields()
+{
+    GameMap* pMap = GameMap::getInstance();
+    qint32 width = pMap->getMapWidth();
+    qint32 heigth = pMap->getMapHeight();
+    m_FogVisionFields.clear();
+    for (qint32 x = 0; x < width; x++)
+    {
+        m_FogVisionFields.append(QVector<QPoint>());
+        for (qint32 y = 0; y < heigth; y++)
+        {
+            m_FogVisionFields[x].append(QPoint());
+        }
+    }
 }
 
 Player::~Player()
@@ -310,28 +327,33 @@ void Player::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender
     }
 }
 
+void Player::addVisionField(qint32 x, qint32 y, qint32 duration)
+{
+    m_FogVisionFields[x][y].setX(1);
+    if (duration > m_FogVisionFields[x][y].y())
+    {
+        m_FogVisionFields[x][y].setY(duration);
+    }
+}
+
 void Player::updatePlayerVision(bool reduceTimer)
 {
-    for (qint32 i = 0; i < m_FogVisionFields.size(); i++)
-    {
-        if (reduceTimer)
-        {
-            m_FogVisionFields[i].setZ(m_FogVisionFields[i].z() - 1);
-        }
-        if (m_FogVisionFields[i].z() <= 0)
-        {
-            m_FogVisionFields[i].setX(-1);
-            m_FogVisionFields[i].setY(-1);
-            m_FogVisionFields[i].setZ(-1);
-        }
-    }
     GameMap* pMap = GameMap::getInstance();
     qint32 width = pMap->getMapWidth();
     qint32 heigth = pMap->getMapHeight();
     for (qint32 x = 0; x < width; x++)
     {
-        for (qint32 y = 0; y < heigth; x++)
+        for (qint32 y = 0; y < heigth; y++)
         {
+            if (reduceTimer)
+            {
+                m_FogVisionFields[x][y].setY(m_FogVisionFields[x][y].y() - 1);
+                if (m_FogVisionFields[x][y].y() <= 0)
+                {
+                    m_FogVisionFields[x][y].setX(0);
+                    m_FogVisionFields[x][y].setY(0);
+                }
+            }
             Terrain* pTerrain = pMap->getTerrain(x, y);
             qint32 visionRange = pTerrain->getVision();
             if (visionRange >= 0)
@@ -339,14 +361,27 @@ void Player::updatePlayerVision(bool reduceTimer)
                 QmlVectorPoint* pPoints = Mainapp::getCircle(0, visionRange);
                 for (qint32 i = 0; i < pPoints->size(); i++)
                 {
-
+                    QPoint point = pPoints->at(i);
+                    if (pMap->onMap(point.x() + x, point.y() + y))
+                    {
+                        Terrain* visionField = pMap->getTerrain(point.x() + x,point.y() + y);
+                        Unit* pUnit = visionField->getUnit();
+                        bool visionHide = visionField->getVisionHide();
+                        if ((!visionHide) ||
+                            ((pUnit != nullptr) && visionHide && !pUnit->useTerrainDefense()))
+                        {
+                            m_FogVisionFields[point.x() + x][point.y() + y].setX(1);
+                        }
+                    }
                 }
                 delete pPoints;
             }
             Building* pBuilding = pTerrain->getBuilding();
             if ((pBuilding != nullptr) &&
-                (pBuilding->getOwner() == this))
+                ((pBuilding->getOwner() == this) ||
+                 (checkAlliance(pBuilding->getOwner()) == GameEnums::Alliance_Friend)))
             {
+                m_FogVisionFields[x][y].setX(1);
 
             }
             Unit* pUnit = pTerrain->getUnit();
@@ -354,7 +389,49 @@ void Player::updatePlayerVision(bool reduceTimer)
                 (pUnit->getOwner() == this))
             {
                 qint32 visionRange = pUnit->getVision(QPoint(x, y));
+                QmlVectorPoint* pPoints = Mainapp::getCircle(0, visionRange);
+                for (qint32 i = 0; i < pPoints->size(); i++)
+                {
+                    QPoint point = pPoints->at(i);
+                    if (pMap->onMap(point.x() + x, point.y() + y))
+                    {
+                        Terrain* visionField = pMap->getTerrain(point.x() + x,point.y() + y);
+                        Unit* pUnit = visionField->getUnit();
+                        bool visionHide = visionField->getVisionHide();
+                        if ((!visionHide) ||
+                            ((pUnit != nullptr) && visionHide && !pUnit->useTerrainDefense()))
+                        {
+                            m_FogVisionFields[point.x() + x][point.y() + y].setX(1);
+                        }
+                        // terrain hides are visible if we're near it.
+                        else if (((qAbs(point.x()) + qAbs(point.y())) <= 1))
+                        {
+                            m_FogVisionFields[point.x() + x][point.y() + y].setX(1);
+                        }
+                        else
+                        {
+                            // do nothing
+                        }
+                    }
+                }
+                delete pPoints;
             }
+        }
+    }
+}
+
+bool Player::getFieldVisible(qint32 x, qint32 y)
+{
+    GameMap* pMap = GameMap::getInstance();
+    switch (pMap->getGameRules()->getFogMode())
+    {
+        case GameEnums::Fog_Off:
+        {
+            return true;
+        }
+        case GameEnums::Fog_OfWar:
+        {
+            return static_cast<bool>(m_FogVisionFields[x][y].x());
         }
     }
 }
@@ -636,6 +713,20 @@ void Player::serialize(QDataStream& pStream)
      pStream << team;
      pStream << isDefeated;
      BaseGameInputIF::serializeInterface(pStream, m_pBaseGameInput.get());
+     qint32 width = m_FogVisionFields.size();
+     qint32 heigth = m_FogVisionFields[0].size();
+     pStream << width;
+     pStream << heigth;
+     for (qint32 x = 0; x < width; x++)
+     {
+         for (qint32 y = 0; y < heigth; y++)
+         {
+             pStream << m_FogVisionFields[x][y].x();
+             pStream << m_FogVisionFields[x][y].y();
+         }
+     }
+
+
 }
 void Player::deserialize(QDataStream& pStream)
 {
@@ -677,6 +768,26 @@ void Player::deserialize(QDataStream& pStream)
             pStream >> isDefeated;
             m_pBaseGameInput = BaseGameInputIF::deserializeInterface(pStream);
             m_pBaseGameInput->setPlayer(this);
+        }
+        if (version > 5)
+        {
+            qint32 width = 0;
+            qint32 heigth = 0;
+            pStream >> width;
+            pStream >> heigth;
+            for (qint32 x = 0; x < width; x++)
+            {
+                m_FogVisionFields.append(QVector<QPoint>());
+                for (qint32 y = 0; y < heigth; y++)
+                {
+                    m_FogVisionFields[x].append(QPoint());
+                    qint32 value = 0;
+                    pStream >> value;
+                    m_FogVisionFields[x][y].setX(value);
+                    pStream >> value;
+                    m_FogVisionFields[x][y].setY(value);
+                }
+            }
         }
     }
 }

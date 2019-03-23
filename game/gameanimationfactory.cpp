@@ -112,8 +112,7 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation)
     }
     if (m_Animations.size() == 0)
     {
-        // every time all animations are finished we check for a victory
-        GameMap::getInstance()->getGameRules()->checkVictory();
+        emit GameAnimationFactory::getInstance()->animationsFinished();
     }
 }
 
