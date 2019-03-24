@@ -23,6 +23,24 @@
 		<image file="plains+18.png" />
 		<image file="plains+19.png" />
 		<image file="plains+20.png" />
+		<image file="plains+destroyed.png" />		
+		
+		<image file="plains+plasma.png" />
+		<image file="plains+plasma+E.png" />
+		<image file="plains+plasma+E+S.png" />
+		<image file="plains+plasma+E+S+W.png" />
+		<image file="plains+plasma+E+W.png" />
+		<image file="plains+plasma+N.png" />
+		<image file="plains+plasma+N+E.png" />
+		<image file="plains+plasma+N+E+S.png" />
+		<image file="plains+plasma+N+E+S+W.png" />
+		<image file="plains+plasma+N+E+W.png" />
+		<image file="plains+plasma+N+S.png" />
+		<image file="plains+plasma+N+S+W.png" />
+		<image file="plains+plasma+N+W.png" />
+		<image file="plains+plasma+S.png" />
+		<image file="plains+plasma+S+W.png" />
+		<image file="plains+plasma+W.png" />
 		
 		<image file="sea.png" cols = "5" />
 		<image file="sea+NE.png" cols = "5" />
@@ -58,6 +76,13 @@
 		<image file="mountain+E.png" />
 		<image file="mountain+E+W.png" />
 		<image file="mountain+W.png" />
+		
+		<image file="fog+0.png" />
+		<image file="fog+1.png" />
+		<image file="fog+2.png" />
+		<image file="fog+E.png" />
+		<image file="fog+E+W.png" />
+		<image file="fog+W.png" />
 		
 		<image file="beach+E+land+N.png" />
 		<image file="beach+E+land+N+S.png" />

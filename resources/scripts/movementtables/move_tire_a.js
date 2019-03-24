@@ -10,6 +10,8 @@ var Constructor = function()
         {   
 			case "RUIN":	
 			case "PLAINS":
+            case "PLAINS_DESTROYED":
+            case "PLAINS_PLASMA":
             case "BEACH":
 			case "DESTROYEDWELD":
 				return 2;

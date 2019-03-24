@@ -316,6 +316,14 @@
     </message>
 </context>
 <context>
+    <name>FOG</name>
+    <message>
+        <location filename="../resources/scripts/terrain/FOG.js" line="6"/>
+        <source>Fog</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FOREST</name>
     <message>
         <location filename="../resources/scripts/terrain/FOREST.js" line="6"/>
@@ -557,6 +565,22 @@
     <name>PLAINS</name>
     <message>
         <location filename="../resources/scripts/terrain/PLAINS.js" line="6"/>
+        <source>Plains</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PLAINS_DESTROYED</name>
+    <message>
+        <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="6"/>
+        <source>Plains</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PLAINS_PLASMA</name>
+    <message>
+        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="6"/>
         <source>Plains</source>
         <translation type="unfinished"></translation>
     </message>

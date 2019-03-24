@@ -9,6 +9,8 @@ var Constructor = function()
         switch (terrainID)
         {
             case "PLAINS":
+            case "PLAINS_DESTROYED":
+            case "PLAINS_PLASMA":
             case "BEACH":
             case "BRIDGE":
             case "DESTROYEDWELD":

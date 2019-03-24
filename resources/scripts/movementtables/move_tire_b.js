@@ -13,6 +13,8 @@ var Constructor = function()
             case "RUIN":			
 			case "DESTROYEDWELD":
 			case "PLAINS":
+            case "PLAINS_DESTROYED":
+            case "PLAINS_PLASMA":
 			case "BRIDGE":
             case "STREET":
             case "AIRPORT":

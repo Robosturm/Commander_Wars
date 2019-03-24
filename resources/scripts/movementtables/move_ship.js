@@ -10,6 +10,7 @@ var Constructor = function()
         {
             case "HARBOUR":
             case "SEA":
+            case "FOG":
                 return 1;
 			case "ROUGH_SEA":
             case "REAF":
