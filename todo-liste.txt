@@ -1,13 +1,14 @@
 - attack buildings and terrain
-
-- special building
 	- black hole buildings
 	
 - option menu
 - credits menu
 
-- unit info
-- terrain info
+- ingame info bar
+	- unit info
+	- terrain info
+
+
 - activate power animation
 
 - ai
@@ -18,5 +19,7 @@
 - game statistics
 	- game recording
 - import awds maps
+
+- finish random map generation
 
 multiplayer
