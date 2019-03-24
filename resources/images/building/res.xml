@@ -75,8 +75,46 @@
 		<image file="hq+tg.png" cols = "2" />
 		<image file="hq+tg+mask.png" cols = "2" />
 		<image file="hq+yc.png" cols = "2" />
-		<image file="hq+yc+mask.png" cols = "2" />
-		
+		<image file="hq+yc+mask.png" cols = "2" />		
 		<image file="hq+neutral.png" />
+		
+		<!-- Block Hole Stuff -->
+		<image file="black_cannon+E.png" cols = "2" />
+		<image file="black_cannon+E+mask.png" cols = "2" />
+		<image file="black_cannon+S.png" cols = "2" />
+		<image file="black_cannon+S+mask.png" cols = "2" />
+		<image file="black_cannon+N.png" cols = "2" />
+		<image file="black_cannon+N+mask.png" cols = "2" />
+		<image file="black_cannon+W.png" cols = "2" />
+		<image file="black_cannon+W+mask.png" cols = "2" />
+		<image file="blackhole_factory.png" cols = "2" />
+		<image file="blackhole_factory+mask.png" cols = "2" />
+		<image file="crystall.png" />
+		<image file="crystall+mask.png" />
+		<image file="deathray+E.png" cols = "2" />
+		<image file="deathray+E+mask.png" cols = "2" />
+		<image file="deathray+S.png" cols = "2" />
+		<image file="deathray+S+mask.png" cols = "2" />
+		<image file="deathray+N.png" cols = "2" />
+		<image file="deathray+N+mask.png" cols = "2" />
+		<image file="deathray+W.png" cols = "2" />
+		<image file="deathray+W+mask.png" cols = "2" />
+		<image file="fortress.png" cols = "2" />
+		<image file="fortress+mask.png" cols = "2" />
+		<image file="fortress+neutral.png" />		
+		<image file="minicannon+E.png" />
+		<image file="minicannon+E+mask.png" />
+		<image file="minicannon+S.png" />
+		<image file="minicannon+S+mask.png" />
+		<image file="minicannon+W.png" />
+		<image file="minicannon+W+mask.png" />
+		<image file="minicannon+N.png" />
+		<image file="minicannon+N+mask.png" />		
+		<image file="monolith.png" cols = "2" />
+		<image file="monolith+mask.png" cols = "2" />
+		<image file="omega+base.png" cols = "2" />
+		<image file="omega+base+mask.png" cols = "2" />
+		<image file="omega+base+neutral.png" />
+		<image file="volcan.png" />
 	</atlas>
 </resources>
