@@ -2,11 +2,13 @@
 
 #include "game/gamemap.h"
 
+#include "coreengine/interpreter.h"
+
 TerrainFindingSystem::TerrainFindingSystem(QString terrainID, qint32 startX, qint32 startY)
     : PathFindingSystem(startX, startY),
       m_terrainID(terrainID)
-
 {
+    Interpreter::setCppOwnerShip(this);
 }
 
 qint32 TerrainFindingSystem::getRemainingCost(qint32, qint32, qint32)
@@ -29,4 +31,9 @@ qint32 TerrainFindingSystem::getCosts(qint32 x, qint32 y)
         }
     }
     return -1;
+}
+
+void TerrainFindingSystem::killTerrainFindingSystem()
+{
+    delete this;
 }

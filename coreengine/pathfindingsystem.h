@@ -5,6 +5,7 @@
 #include <QSharedPointer>
 #include <QVector>
 #include <QPoint>
+#include "coreengine/qmlvector.h"
 
 class PathFindingSystem : public QObject
 {
@@ -100,6 +101,7 @@ public:
      * @return
      */
     QVector<QPoint> getAllNodePoints();
+public slots:
     /**
      * @brief isReachable
      * @param x
@@ -107,6 +109,11 @@ public:
      * @return if the given field is reachable
      */
     bool isReachable(qint32 x, qint32 y);
+    /**
+     * @brief getAllNodePoints returns all reachable fields in a point vector
+     * @return
+     */
+    QmlVectorPoint* getAllQmlVectorPoints();
 protected:
     QPoint m_StartPoint;
     /**

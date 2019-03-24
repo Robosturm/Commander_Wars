@@ -52,7 +52,7 @@
 <context>
     <name>ACTION_CO_UNIT_0</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="31"/>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="32"/>
         <source>CO 1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -60,7 +60,7 @@
 <context>
     <name>ACTION_CO_UNIT_1</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="31"/>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="32"/>
         <source>CO 2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -609,7 +609,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="53"/>
+        <location filename="../main.cpp" line="54"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -722,7 +722,7 @@
 <context>
     <name>Terrain</name>
     <message>
-        <location filename="../game/terrain.cpp" line="55"/>
+        <location filename="../game/terrain.cpp" line="57"/>
         <source>Unable to load Terrain </source>
         <translation type="unfinished"></translation>
     </message>

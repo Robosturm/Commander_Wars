@@ -34,6 +34,7 @@
 #include "game/victoryrule.h"
 #include "game/gamerules.h"
 #include "game/weather.h"
+#include "game/terrainfindingsystem.h"
 
 #include "gameinput/cursordata.h"
 
@@ -113,6 +114,8 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<ScriptVariable>("ScriptVariable");
     qmlRegisterInterface<ScriptVariables>("ScriptVariables");
     qmlRegisterInterface<Weather>("Weather");
+    qmlRegisterInterface<TerrainFindingSystem>("TerrainFindingSystem");
+
 
 
     GameEnums::registerEnums();

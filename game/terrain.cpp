@@ -8,6 +8,8 @@
 
 #include "game/gamemap.h"
 
+#include "game/terrainfindingsystem.h"
+
 #include <QFileInfo>
 
 #include "game/building.h"
@@ -565,6 +567,13 @@ qint32 Terrain::getVision()
     {
         return 0;
     }
+}
+
+TerrainFindingSystem* Terrain::createTerrainFindingSystem()
+{
+    TerrainFindingSystem* pPfs = new TerrainFindingSystem(getID(), getX(), getY());
+    pPfs->explore();
+    return pPfs;
 }
 
 bool Terrain::getVisionHide()

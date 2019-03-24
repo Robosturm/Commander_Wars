@@ -13,6 +13,7 @@ UnitPathFindingSystem::UnitPathFindingSystem(spUnit pUnit)
     : PathFindingSystem(pUnit->getX(), pUnit->getY()),
       m_pUnit(pUnit)
 {
+    Interpreter::setCppOwnerShip(this);
 }
 
 qint32 UnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint32 currentCost)

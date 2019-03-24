@@ -11,7 +11,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("PLAINS_PLASMA", false, false, GameEnums.Directions_Direct, false);
+        var surroundings = terrain.getSurroundings("PLAINS_PLASMA", false, false, GameEnums.Directions_Direct);
         terrain.loadBaseSprite("plains+plasma" + surroundings);
     };
     this.getMiniMapIcon = function()

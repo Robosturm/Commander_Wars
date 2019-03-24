@@ -30,8 +30,11 @@ public:
      * @return the exact costs needed to get onto the given field. -1 = unreachable
      */
     virtual qint32 getCosts(qint32 x, qint32 y);
-
-
+public slots:
+    /**
+     * @brief killTerrainFindingSystem
+     */
+    void killTerrainFindingSystem();
 private:
     QString m_terrainID;
 };

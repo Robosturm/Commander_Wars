@@ -11,7 +11,8 @@ var Constructor = function()
         {
             return false;
         }
-        if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y))
+        if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) &&
+            (building !== null))
         {
             var constructionList = Global[building.getBuildingID()].getConstructionList();
             var co = unit.getOwner().getCO(1);

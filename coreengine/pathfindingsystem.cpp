@@ -2,10 +2,12 @@
 
 #include "QTime"
 
+#include "coreengine/interpreter.h"
+
 PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY)
     : m_StartPoint(startX, startY)
 {
-
+    Interpreter::setCppOwnerShip(this);
 }
 
 PathFindingSystem::~PathFindingSystem()
@@ -138,6 +140,16 @@ QVector<QPoint> PathFindingSystem::getAllNodePoints()
         points.append(QPoint(m_ClosedList[i]->x, m_ClosedList[i]->y));
     }
     return points;
+}
+
+QmlVectorPoint* PathFindingSystem::getAllQmlVectorPoints()
+{
+    QmlVectorPoint* ret = new QmlVectorPoint();
+    for (qint32 i = 0; i < m_ClosedList.size(); i++)
+    {
+        ret->append(QPoint(m_ClosedList[i]->x, m_ClosedList[i]->y));
+    }
+    return ret;
 }
 
 QVector<QPoint> PathFindingSystem::getPath(qint32 x, qint32 y)

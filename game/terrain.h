@@ -10,6 +10,8 @@
 
 #include "coreengine/fileserializable.h"
 
+class TerrainFindingSystem;
+
 class Terrain : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
@@ -192,6 +194,11 @@ public slots:
      * @return
      */
     bool getVisionHide();
+    /**
+     * @brief createTerrainFindingSystem
+     * @return a path finding system that contains
+     */
+    TerrainFindingSystem* createTerrainFindingSystem();
 private:
     explicit Terrain(const QString& terrainID, qint32 x, qint32 y);
     /**
