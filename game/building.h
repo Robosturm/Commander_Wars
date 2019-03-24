@@ -17,10 +17,9 @@ public:
 
     virtual ~Building() = default;
     /**
-     * @brief setOwner changes the owner ship of this building
-     * @param pOwner
+     * @brief init
      */
-    void setOwner(Player* pOwner);
+    void init();
     /**
      * @brief updateBuildingSprites updates all sprites of this building
      */
@@ -62,6 +61,11 @@ public:
 signals:
 
 public slots:
+    /**
+     * @brief setOwner changes the owner ship of this building
+     * @param pOwner
+     */
+    void setOwner(Player* pOwner);
     /**
      * @brief getMinimapIcon
      * @return

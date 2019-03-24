@@ -66,6 +66,14 @@
     </message>
 </context>
 <context>
+    <name>ACTION_CRYSTALL_HEAL</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CRYSTALL_HEAL.js" line="18"/>
+        <source>Heal</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_EXITGAME</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_EXITGAME.js" line="10"/>

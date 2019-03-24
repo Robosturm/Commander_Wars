@@ -20,6 +20,17 @@ Building::Building(const QString& BuildingID)
       m_pTerrain(nullptr)
 {
     Interpreter::setCppOwnerShip(this);
+    init();
+}
+
+void Building::init()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function = "init";
+    QJSValueList args;
+    QJSValue objArg = pApp->getInterpreter()->newQObject(this);
+    args << objArg;
+    pApp->getInterpreter()->doFunction(m_BuildingID, function, args);
 }
 
 void Building::setUnitOwner(Unit* pUnit)
@@ -69,13 +80,15 @@ void Building::loadSprite(QString spriteID, bool addPlayerColor)
         if (addPlayerColor && m_pOwner != nullptr)
         {
             QColor color = m_pOwner->getColor();
-            for (qint32 i = 0; i < 5; i++)
-            {
-                oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
-                oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
-                //pSprite->setBlendMode(oxygine::blend_disabled);
-                pSprite->addTween(tween);
-            }
+            oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
+            oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
+            pSprite->addTween(tween);
+        }
+        else if (addPlayerColor)
+        {
+            oxygine::Sprite::TweenColor tweenColor(oxygine::Color(100, 100, 100, 255));
+            oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
+            pSprite->addTween(tween);
         }
         pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
@@ -323,7 +336,12 @@ void Building::deserialize(QDataStream& pStream)
     m_pOwner = GameMap::getInstance()->getPlayer(playerID);
     if (version > 1)
     {
-        pStream >> m_Hp;
+        qint32 newHp = 0;
+        pStream >> newHp;
+        if (newHp > 0 && m_Hp > 0)
+        {
+            m_Hp = newHp;
+        }
         pStream >> fireCount;
     }
     if (version > 2)
