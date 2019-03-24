@@ -150,12 +150,9 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return 60;
             default:
-                if (tankUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (co.inCORange(Qt.point(atkPosX, atkPosY)))
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
-                    {
-                        return 40;
-                    }
+                    return 40;
                 }
                 break;
         }

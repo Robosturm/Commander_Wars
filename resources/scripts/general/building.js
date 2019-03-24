@@ -81,7 +81,12 @@ var BUILDING =
     {
         return 0;
     },
-
+    getActionTargetFields : function(building)
+    {
+        // targets of a building. For most things this is a null pointer
+        // return must be null or a QmlVectorPoint
+        return null;
+    },
     replenishUnit: function(building)
     {
         // default impl replenishes our units

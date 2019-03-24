@@ -7,8 +7,8 @@ var Constructor = function()
     // called for loading the main sprite
     this.loadSprites = function(building)
     {
-        building.loadSprite("crystall", false);
-		building.loadSprite("crystall+mask", true);
+        building.loadSprite("minicannon+W", false);
+        building.loadSprite("minicannon+W+mask", true);
     };
     this.getBaseIncome = function()
     {
@@ -17,7 +17,7 @@ var Constructor = function()
     this.getActions = function()
     {
         // returns a string id list of the actions this building can perform
-        return "ACTION_CRYSTALL_HEAL";
+        return "ACTION_MINICANNON_FIRE";
     };
     this.startOfTurn = function(building)
     {
@@ -25,9 +25,9 @@ var Constructor = function()
     };
     this.getActionTargetFields = function(building)
     {
-        return globals.getCircle(1, 2);
+        return globals.getShotFields(1, 4, -1);
     };
 }
 
 Constructor.prototype = BUILDING;
-var CRYSTALL = new Constructor();
+var MINICANNON_W = new Constructor();

@@ -15,11 +15,11 @@ var Constructor = function()
     };
     this.getActionText = function()
     {
-        return qsTr("Heal");
+        return qsTr("Fire");
     };
     this.getIcon = function()
     {
-        return "heal";
+        return "fire";
     };
     this.isFinalStep = function(action)
     {
@@ -32,20 +32,20 @@ var Constructor = function()
         var x = building.getX();
         var y = building.getY();
         building.setFireCount(building.getFireCount() - 1);
-
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
         var animation = null;
+
         for (var i = 0; i < fields.size(); i++)
         {
             var point = fields.at(i);
             var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
-            if ((unit !== null) &&
-                (unit.getOwner() === building.getOwner()))
+            if ((unit !== null))
             {
-                unit.refill();
-                unit.setHp(unit.getHpRounded() + 2);
-                animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                unit.setHp(unit.getHpRounded() - 5);
+                if (unit.getHp() <= 0)
+                {
+                    unit.killUnit();
+                }
             }
         }
         fields.remove();
@@ -53,4 +53,4 @@ var Constructor = function()
 }
 
 Constructor.prototype = ACTION;
-var ACTION_CRYSTALL_HEAL = new Constructor();
+var ACTION_LASER_FIRE = new Constructor();

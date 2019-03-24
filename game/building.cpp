@@ -86,7 +86,7 @@ void Building::loadSprite(QString spriteID, bool addPlayerColor)
         }
         else if (addPlayerColor)
         {
-            oxygine::Sprite::TweenColor tweenColor(oxygine::Color(100, 100, 100, 255));
+            oxygine::Sprite::TweenColor tweenColor(oxygine::Color(150, 150, 150, 255));
             oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
             pSprite->addTween(tween);
         }

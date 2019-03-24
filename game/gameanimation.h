@@ -21,6 +21,11 @@ signals:
     void sigFinished();
 public slots:
     /**
+     * @brief setRotation sets the rotation of this animation
+     * @param angle angle in degree 0° to 360°
+     */
+    void setRotation(float angle);
+    /**
      * @brief queueAnimation
      * @param pGameAnimation
      */

@@ -114,6 +114,11 @@ void Unit::loadSprite(QString spriteID, bool addPlayerColor)
         this->addChild(pWaitSprite);
         pWaitSprite->setVisible(false);
         m_pUnitWaitSprites.append(pWaitSprite);
+        if (!Mainapp::isEven(m_pOwner->getPlayerID()))
+        {
+            pSprite->setFlippedX(true);
+            pWaitSprite->setFlippedX(true);
+        }
     }
     else
     {

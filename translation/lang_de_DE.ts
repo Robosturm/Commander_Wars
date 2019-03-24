@@ -103,10 +103,31 @@
     </message>
 </context>
 <context>
+    <name>ACTION_LASER_FIRE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_LASER_FIRE.js" line="18"/>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_LOAD</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="31"/>
         <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_MINICANNON_FIRE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_MINICANNON_FIRE.js" line="21"/>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_MINICANNON_FIRE.js" line="85"/>
+        <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -7,8 +7,8 @@ var Constructor = function()
     // called for loading the main sprite
     this.loadSprites = function(building)
     {
-        building.loadSprite("crystall", false);
-		building.loadSprite("crystall+mask", true);
+        building.loadSprite("laser", false);
+		building.loadSprite("laser+mask", true);
     };
     this.getBaseIncome = function()
     {
@@ -17,7 +17,7 @@ var Constructor = function()
     this.getActions = function()
     {
         // returns a string id list of the actions this building can perform
-        return "ACTION_CRYSTALL_HEAL";
+        return "ACTION_LASER_FIRE";
     };
     this.startOfTurn = function(building)
     {
@@ -25,9 +25,18 @@ var Constructor = function()
     };
     this.getActionTargetFields = function(building)
     {
-        return globals.getCircle(1, 2);
+        var targets = globals.getEmptyPointArray();
+        // laser to not fire infinitly but the range is still fucking huge :)
+        for (var i = 1; i < 20; i++)
+        {
+            targets.append(Qt.point(0, i));
+            targets.append(Qt.point(0, -i));
+            targets.append(Qt.point(i, 0));
+            targets.append(Qt.point(-i, 0));
+        }
+        return targets;
     };
 }
 
 Constructor.prototype = BUILDING;
-var CRYSTALL = new Constructor();
+var LASER = new Constructor();

@@ -91,6 +91,8 @@
 		<image file="blackhole_factory+mask.png" cols = "2" />
 		<image file="crystall.png" />
 		<image file="crystall+mask.png" />
+		<image file="laser.png" cols = "2" />
+		<image file="laser+mask.png" cols = "2" />
 		<image file="deathray+E.png" cols = "2" />
 		<image file="deathray+E+mask.png" cols = "2" />
 		<image file="deathray+S.png" cols = "2" />

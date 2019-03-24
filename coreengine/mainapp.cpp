@@ -117,6 +117,49 @@ QmlVectorPoint* Mainapp::getCircle(qint32 min, qint32 max)
     return ret;
 }
 
+QmlVectorPoint* Mainapp::getShotFields(qint32 min, qint32 max, qint32 xDirection, qint32 yDirection)
+{
+    QmlVectorPoint* ret = new QmlVectorPoint();
+    for (qint32 i = min; i <= max; i++)
+    {
+        if (xDirection > 0)
+        {
+            for (qint32 y = -i + 1; y < i; y++)
+            {
+                ret->append(QPoint(i, y));
+            }
+        }
+        else if (xDirection < 0)
+        {
+            for (qint32 y = -i + 1; y < i; y++)
+            {
+                ret->append(QPoint(-i, y));
+            }
+        }
+
+        if (yDirection > 0)
+        {
+            for (qint32 x = -i + 1; x < i; x++)
+            {
+                ret->append(QPoint(x, i));
+            }
+        }
+        else if (yDirection < 0)
+        {
+            for (qint32 x = -i + 1; x < i; x++)
+            {
+                ret->append(QPoint(x, -i));
+            }
+        }
+    }
+    return ret;
+}
+
+QmlVectorPoint* Mainapp::getEmptyPointArray()
+{
+    return new QmlVectorPoint();
+}
+
 bool Mainapp::isEven(qint32 value)
 {
     float val = value/2.0f;

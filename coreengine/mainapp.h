@@ -39,6 +39,20 @@ public slots:
      */
     static QmlVectorPoint* getCircle(qint32 min, qint32 max);
     /**
+     * @brief getShotFields
+     * @param min
+     * @param max
+     * @param xDirection
+     * @param yDirection
+     * @return
+     */
+    static QmlVectorPoint* getShotFields(qint32 min, qint32 max, qint32 xDirection = 0, qint32 yDirection = 0);
+    /**
+     * @brief getEmptyPointArray
+     * @return
+     */
+    static QmlVectorPoint* getEmptyPointArray();
+    /**
      * @brief quitGame quits this game
      */
     void quitGame();
