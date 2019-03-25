@@ -73,12 +73,26 @@ EditorSelection::EditorSelection()
     for (qint32 i = 0; i < pBuildingSpriteManager->getBuildingCount(); i++)
     {
         spBuilding building = new Building(pBuildingSpriteManager->getBuildingID(i));
+        qint32 width = building->getBuildingWidth();
+        qint32 heigth = building->getBuildingHeigth();
+        building->setScaleX(1.0f / static_cast<float>(width));
+        building->setScaleY(1.0f / static_cast<float>(heigth));
         m_Buildings.append(building);
         m_Buildings[i]->updateBuildingSprites();
         oxygine::spSprite pSprite = new oxygine::Sprite();
         pAnim = pTerrainManager->getResAnim("plains+0");
         pSprite->setResAnim(pAnim);
         pSprite->setPriority(-100);
+        pSprite->setScaleX(1 / building->getScaleX());
+        pSprite->setScaleY(1 / building->getScaleY());
+        if (width > 1)
+        {
+            pSprite->setX(-GameMap::Imagesize * (width - 1));
+        }
+        if (heigth > 1)
+        {
+            pSprite->setY(-GameMap::Imagesize * (heigth - 1));
+        }
         m_Buildings[i]->addChild(pSprite);
         m_Buildings[i]->setVisible(false);
         m_BoxPlacementSelection->addChild(m_Buildings[i]);
@@ -457,7 +471,10 @@ void EditorSelection::initSelection()
             xCounter = 0;
             posX = frameSize;
         }
-        m_Buildings[i]->setPosition(posX, posY);
+        qint32 width = m_Buildings[i]->getBuildingWidth();
+        qint32 heigth = m_Buildings[i]->getBuildingHeigth();
+        m_Buildings[i]->setX(posX + GameMap::Imagesize * (width - 1) / (width));
+        m_Buildings[i]->setY(posY + GameMap::Imagesize * (heigth - 1) / (heigth));
         m_Buildings[i]->setVisible(false);
         xCounter++;
     }

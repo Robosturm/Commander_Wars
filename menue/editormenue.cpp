@@ -280,7 +280,7 @@ bool EditorMenue::canBuildingBePlaced(qint32 x, qint32 y)
     if (pMap->onMap(x, y))
     {
         spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
-        return pCurrentBuilding->canBuildingBePlaced(pMap->getTerrain(x, y)->getTerrainID());
+        return pCurrentBuilding->canBuildingBePlaced(pMap->getTerrain(x, y));
     }
     return false;
 }

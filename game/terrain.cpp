@@ -465,9 +465,7 @@ void Terrain::setBuilding(Building* pBuilding)
 {
     if (m_Building.get() != nullptr)
     {
-        // delete it
-        this->removeChild(m_Building);
-        m_Building = nullptr;
+        removeBuilding();
     }
     if (pBuilding != nullptr)
     {
@@ -475,6 +473,57 @@ void Terrain::setBuilding(Building* pBuilding)
         pBuilding->setPriority(static_cast<qint16>(DrawPriority::Building));
         pBuilding->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
         this->addChild(pBuilding);
+        createBuildingDownStream();
+    }
+    // delete current unit to avoid strange impact :)
+    setUnit(nullptr);
+}
+
+void Terrain::removeBuilding()
+{
+    if (m_Building->getTerrain() == this)
+    {
+        // delete it
+        this->removeChild(m_Building);
+        qint32 width = m_Building->getBuildingWidth();
+        qint32 heigth = m_Building->getBuildingHeigth();
+        GameMap* pMap = GameMap::getInstance();
+        // delete pointers
+        for (qint32 x1 = 0; x1 < width; x1++)
+        {
+            for (qint32 y1 = 0; y1 < heigth; y1++)
+            {
+                // delete down stream on all other fields
+                if (!((x1 == 0) && (y1 == 0)))
+                {
+                    pMap->getTerrain(x - x1, y - y1)->removeDownstream();
+                }
+            }
+        }
+        m_Building = nullptr;
+    }
+    else
+    {
+        // remove building from base terrain instead of us
+        m_Building->getTerrain()->removeBuilding();
+    }
+}
+
+void Terrain::setSpBuilding(spBuilding pBuilding, bool OnlyDownStream)
+{
+    if (m_Building.get() != nullptr)
+    {
+        removeBuilding();
+    }
+    if (pBuilding.get() != nullptr)
+    {
+        m_Building = pBuilding;
+        pBuilding->setPriority(static_cast<qint16>(DrawPriority::Building));
+        if (!OnlyDownStream)
+        {
+            pBuilding->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
+            this->addChild(pBuilding);
+        }
     }
     // delete current unit to avoid strange impact :)
     setUnit(nullptr);
@@ -628,8 +677,15 @@ void Terrain::serialize(QDataStream& pStream)
     }
     else
     {
-        pStream << true;
-        m_Building->serialize(pStream);
+        if (m_Building->getTerrain() == this)
+        {
+            pStream << true;
+            m_Building->serialize(pStream);
+        }
+        else
+        {
+            pStream << false;
+        }
     }
     if (m_Unit.get() == nullptr)
     {
@@ -670,6 +726,7 @@ void Terrain::deserialize(QDataStream& pStream)
         m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
         m_Building->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
         this->addChild(m_Building);
+        createBuildingDownStream();
     }
     bool hasUnit = false;
     pStream >> hasUnit;
@@ -690,4 +747,28 @@ void Terrain::deserialize(QDataStream& pStream)
             hp = newHp;
         }
     }
+}
+
+void Terrain::createBuildingDownStream()
+{
+    qint32 width = m_Building->getBuildingWidth();
+    qint32 heigth = m_Building->getBuildingHeigth();
+    GameMap* pMap = GameMap::getInstance();
+    // recreate pointers
+    for (qint32 x1 = 0; x1 < width; x1++)
+    {
+        for (qint32 y1 = 0; y1 < heigth; y1++)
+        {
+            // create down stream on all other fields
+            if (!((x1 == 0) && (y1 == 0)))
+            {
+                pMap->getTerrain(x - x1, y - y1)->setSpBuilding(m_Building, true);
+            }
+        }
+    }
+}
+
+void Terrain::removeDownstream()
+{
+    m_Building = nullptr;
 }

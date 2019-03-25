@@ -54,7 +54,12 @@ public:
      * @return
      */
     spUnit getSpUnit();
-
+    /**
+     * @brief setBuilding
+     * @param pBuilding
+     * @param * @param OnlyDownStream normally the terrain knows the building and vice versa for large buildings like black hole cannon. This rule doesn't apply only the terrain knows the building.
+     */
+    void setSpBuilding(spBuilding pBuilding, bool OnlyDownStream);
     spBuilding getSpBuilding();
     /**
      * @brief serialize stores the object
@@ -177,6 +182,10 @@ public slots:
      */
     void setBuilding(Building* pBuilding);
     /**
+     * @brief removeBuilding
+     */
+    void removeBuilding();
+    /**
      * @brief loadBuilding deletes the current building by loading the given building ID.
      * @param buildingID
      */
@@ -199,6 +208,15 @@ public slots:
      * @return a path finding system that contains
      */
     TerrainFindingSystem* createTerrainFindingSystem();
+protected:
+    /**
+     * @brief createBuildingDownStream
+     */
+    void createBuildingDownStream();
+    /**
+     * @brief removeDownstream
+     */
+    void removeDownstream();
 private:
     explicit Terrain(const QString& terrainID, qint32 x, qint32 y);
     /**

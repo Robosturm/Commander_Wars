@@ -27,7 +27,11 @@ var Constructor = function()
     {
         return globals.getShotFields(1, 4, 0, 1);
     };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_blackholebuilding";
+    };
 }
 
 Constructor.prototype = BUILDING;
-var MINICANNON_S = new Constructor();
+var ZMINICANNON_S = new Constructor();

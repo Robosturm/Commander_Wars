@@ -6,7 +6,7 @@ var Constructor = function()
         var building = action.getTargetBuilding();
         if (building.getFireCount() >= 1)
         {
-            if (ACTION_MINICANNON_FIRE.getTargets(building).length > 0)
+            if (ACTION_BLACKHOLECANNON_FIRE_S.getTargets(building).length > 0)
             {
                 return true;
             }
@@ -45,8 +45,8 @@ var Constructor = function()
     };
     this.getTargets = function(building)
     {
-        var x = building.getX();
-        var y = building.getY();
+        var x = building.getX() - 1;
+        var y = building.getY() - 1;
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
         var ret = [];
         for (var i = 0; i < fields.size(); i++)
@@ -74,11 +74,11 @@ var Constructor = function()
     this.getStepData = function(action, data)
     {
         var building = action.getTargetBuilding();
-        var targets = ACTION_MINICANNON_FIRE.getTargets(building);
+        var targets = ACTION_BLACKHOLECANNON_FIRE_S.getTargets(building);
         for (var i = 0; i < targets.length; i++)
         {
             data.addPoint(Qt.point(targets[i].x, targets[i].y));
-            data.addZInformation(30);
+            data.addZInformation(50);
         }
         data.setColor("#FF0000");
         data.setZLabelColor("#ff4500");
@@ -99,7 +99,7 @@ var Constructor = function()
         var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY(), 70);
         animation.addSprite("blackhole_shot", -map.getImageSize() * 0.5, -map.getImageSize() * 0.5, 0, 1.5);
 
-        unit.setHp(unit.getHpRounded() - 3);
+        unit.setHp(unit.getHpRounded() - 5);
         if (unit.getHp() <= 0)
         {
             unit.killUnit();
@@ -108,4 +108,4 @@ var Constructor = function()
 }
 
 Constructor.prototype = ACTION;
-var ACTION_MINICANNON_FIRE = new Constructor();
+var ACTION_BLACKHOLECANNON_FIRE_S = new Constructor();

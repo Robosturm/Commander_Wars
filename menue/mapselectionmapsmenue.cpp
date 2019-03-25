@@ -114,7 +114,12 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
     {
         spBuilding building = new Building(pBuildingSpriteManager->getBuildingID(i));
         building->updateBuildingSprites();
-        building->setPosition(i * (GameMap::Imagesize + 12), 5 + GameMap::Imagesize / 2);
+        qint32 width = building->getBuildingWidth();
+        qint32 heigth = building->getBuildingHeigth();
+        building->setScaleX(1.0f / static_cast<float>(width));
+        building->setScaleY(1.0f / static_cast<float>(heigth));
+        building->setPosition(i * (GameMap::Imagesize + 12) + GameMap::Imagesize * (width - 1) / (width),
+                              5 + GameMap::Imagesize / 2 + GameMap::Imagesize * (heigth - 1) / (heigth));
         content->addChild(building);
         oxygine::spTextField pText = new oxygine::TextField();
         pText->setText("0");

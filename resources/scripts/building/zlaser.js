@@ -36,7 +36,11 @@ var Constructor = function()
         }
         return targets;
     };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_blackholebuilding";
+    };
 }
 
 Constructor.prototype = BUILDING;
-var LASER = new Constructor();
+var ZLASER = new Constructor();

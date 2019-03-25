@@ -7,8 +7,8 @@ var Constructor = function()
     // called for loading the main sprite
     this.loadSprites = function(building)
     {
-        building.loadSprite("minicannon+W", false);
-        building.loadSprite("minicannon+W+mask", true);
+        building.loadSprite("minicannon+E", false);
+        building.loadSprite("minicannon+E+mask", true);
     };
     this.getBaseIncome = function()
     {
@@ -25,9 +25,13 @@ var Constructor = function()
     };
     this.getActionTargetFields = function(building)
     {
-        return globals.getShotFields(1, 4, -1);
+        return globals.getShotFields(1, 4, 1);
+    };
+    this.getMiniMapIcon = function()
+    {
+        return "minimap_blackholebuilding";
     };
 }
 
 Constructor.prototype = BUILDING;
-var MINICANNON_W = new Constructor();
+var ZMINICANNON_E = new Constructor();

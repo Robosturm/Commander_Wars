@@ -18,6 +18,16 @@ var BUILDING =
         return 0;
     },
 
+    getBuildingWidth : function()
+    {
+        // one field width default for most buildings
+        return 1;
+    },
+    getBuildingHeigth : function()
+    {
+        // one field heigth default for most buildings
+        return 1;
+    },
     // called for loading the main sprites
     loadSprites : function(building)
     {
@@ -35,9 +45,33 @@ var BUILDING =
         animation.addBuildingSprite("town", startColor , capturedColor, false);
     },
 
-    canBuildingBePlaced : function(terrainID)
+    canLargeBuildingPlaced : function(terrain, width, heigth)
     {
-        if ((terrainID === "PLAINS") || (terrainID === "STREET"))
+        var placeX = terrain.getX();
+        var placeY = terrain.getY();
+        for (var x = 0; x < width; x++)
+        {
+            for (var y = 0; y < heigth; y++)
+            {
+                if (map.onMap(placeX - x, placeY - y))
+                {
+                    if (map.getTerrain(placeX - x, placeY - y).getTerrainID() !== "PLAINS")
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    },
+
+    canBuildingBePlaced : function(terrain)
+    {
+        if ((terrain.getTerrainID() === "PLAINS") || (terrain.getTerrainID() === "STREET"))
         {
             return true;
         }

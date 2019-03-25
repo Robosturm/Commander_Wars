@@ -93,8 +93,18 @@ void Building::loadSprite(QString spriteID, bool addPlayerColor)
             oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
             pSprite->addTween(tween);
         }
-        pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
-        pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
+        qint32 width = getBuildingWidth();
+        qint32 heigth = getBuildingHeigth();
+        if (width == 1 && heigth == 1)
+        {
+            pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
+            pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
+        }
+        else
+        {
+            pSprite->setScale((GameMap::Imagesize * width) / pAnim->getWidth());
+            pSprite->setPosition(-pSprite->getScaledWidth() + GameMap::Imagesize, -pSprite->getScaledHeight() + GameMap::Imagesize);
+        }
         this->addChild(pSprite);
         m_pBuildingSprites.append(pSprite);
 
@@ -121,12 +131,13 @@ void Building::updateBuildingSprites()
     pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
 }
 
-bool Building::canBuildingBePlaced(QString terrainID)
+bool Building::canBuildingBePlaced(Terrain* pTerrain)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "canBuildingBePlaced";
     QJSValueList args1;
-    args1 << terrainID;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pTerrain);
+    args1 << obj1;
     QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
     if (ret.isBool())
     {
@@ -274,6 +285,36 @@ qint32 Building::getVisionBonus()
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getVisionBonus";
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+qint32 Building::getBuildingWidth()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getBuildingWidth";
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+qint32 Building::getBuildingHeigth()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getBuildingHeigth";
     QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1);
     if (ret.isNumber())
     {

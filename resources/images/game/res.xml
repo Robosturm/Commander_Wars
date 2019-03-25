@@ -80,6 +80,7 @@
 		<image file="minimap/minimap_unit.png" />
 		<image file="minimap/minimap_wasteland.png" />
 		<image file="minimap/minimap_weld.png" />
+		<image file="minimap/minimap_blackholebuilding.png" />
 	</atlas>
 </resources>
 

@@ -37,7 +37,7 @@ public:
      * @param terrainID
      * @return if the building can be placed on the given terrain
      */
-    bool canBuildingBePlaced(QString terrainID);
+    bool canBuildingBePlaced(Terrain* pTerrain);
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -158,6 +158,16 @@ public slots:
      * @return
      */
     qint32 getVisionBonus();
+    /**
+     * @brief getBuildingWidth
+     * @return
+     */
+    qint32 getBuildingWidth();
+    /**
+     * @brief getBuildingHeigth
+     * @return
+     */
+    qint32 getBuildingHeigth();
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     /**
@@ -180,6 +190,8 @@ private:
       *
       */
     qint32 fireCount{0};
+
+
 
     ScriptVariables m_Variables;
 };

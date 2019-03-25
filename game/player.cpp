@@ -722,7 +722,11 @@ void Player::serialize(QDataStream& pStream)
      pStream << isDefeated;
      BaseGameInputIF::serializeInterface(pStream, m_pBaseGameInput.get());
      qint32 width = m_FogVisionFields.size();
-     qint32 heigth = m_FogVisionFields[0].size();
+     qint32 heigth = 0;
+     if (width > 0)
+     {
+        m_FogVisionFields[0].size();
+     }
      pStream << width;
      pStream << heigth;
      for (qint32 x = 0; x < width; x++)
