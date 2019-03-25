@@ -48,7 +48,7 @@
 		<image file="blackhole_shot.png" cols = "9" />
 		<image file="laserray.png" cols = "9" />
 		<image file="laserray+center.png" cols = "9" />
-		<image file="laserray+center+start.png" cols = "9" />
+		<image file="laserray+center+start.png" cols = "10" />
 		
 		
 		<!-- static -->

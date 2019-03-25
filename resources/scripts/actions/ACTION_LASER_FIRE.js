@@ -25,30 +25,96 @@ var Constructor = function()
     {
         return true;
     };
+    this.postAnimationActionFields = null;
+    this.postAnimationActionX = -1;
+    this.postAnimationActionY = -1;
     this.perform = function(action)
     {
         // we need to move the unit to the target position
         var building = action.getTargetBuilding();
         var x = building.getX();
         var y = building.getY();
+
         building.setFireCount(building.getFireCount() - 1);
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
-        var animation = null;
+        var animation = GameAnimationFactory.createAnimation(x, y);
+        animation.addSprite("laserray+center+start", -map.getImageSize() * 1, -map.getImageSize() * 1, 0, 1.5);
 
-        for (var i = 0; i < fields.size(); i++)
+        var animation2 = GameAnimationFactory.createAnimation(x, y);
+        animation2.addSprite("laserray+center", -map.getImageSize() * 1, -map.getImageSize() * 1, 0, 1.5);
+        animation.queueAnimation(animation2);
+        animation2.setEndOfAnimationCall("ACTION_LASER_FIRE", "performPostAnimation");
+        var size = fields.size();
+        for (var i = 0; i < size; i++)
         {
             var point = fields.at(i);
-            var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
-            if ((unit !== null))
+            if (map.onMap(x + point.x, y + point.y))
             {
-                unit.setHp(unit.getHpRounded() - 5);
-                if (unit.getHp() <= 0)
+                if (point.x === 0)
                 {
-                    unit.killUnit();
+                    if (point.y > 1)
+                    {
+                        animation2 = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
+                        animation2.addSprite("laserray", -map.getImageSize() * 0.4 , -map.getImageSize() * 1.45, 0, 1.5);
+                        animation2.setRotation(90);
+                        animation.queueAnimation(animation2);
+                    }
+                    else if (point.y < -1)
+                    {
+                        animation2 = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
+                        animation2.addSprite("laserray", 0, -map.getImageSize() * 1.45, 0, 1.5);
+                        animation2.setRotation(90);
+                        animation.queueAnimation(animation2);
+                    }
+                }
+                else
+                {
+                    if (point.x > 1)
+                    {
+                        animation2 = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
+                        animation2.addSprite("laserray", -map.getImageSize() * 0.15, -map.getImageSize() * 0.6, 0, 1.5);
+                        animation.queueAnimation(animation2);
+                    }
+                    else if (point.x < -1)
+                    {
+                        animation2 = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
+                        animation2.addSprite("laserray", 0, -map.getImageSize() * 0.6, 0, 1.5);
+                        animation.queueAnimation(animation2);
+                    }
+                }
+
+
+            }
+        }
+        ACTION_LASER_FIRE.postAnimationActionFields = fields;
+        ACTION_LASER_FIRE.postAnimationActionX = x;
+        ACTION_LASER_FIRE.postAnimationActionY = y;
+    };
+    this.performPostAnimation = function()
+    {
+        var x = ACTION_LASER_FIRE.postAnimationActionX;
+        var y = ACTION_LASER_FIRE.postAnimationActionY;
+        var size = ACTION_LASER_FIRE.postAnimationActionFields.size();
+        for (var i = 0; i < size; i++)
+        {
+            var point = ACTION_LASER_FIRE.postAnimationActionFields.at(i);
+            if (map.onMap(x + point.x, y + point.y))
+            {
+                var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
+                if ((unit !== null))
+                {
+                    unit.setHp(unit.getHpRounded() - 5);
+                    if (unit.getHp() <= 0)
+                    {
+                        unit.killUnit();
+                    }
                 }
             }
         }
-        fields.remove();
+        ACTION_LASER_FIRE.postAnimationActionFields.remove();
+        ACTION_LASER_FIRE.postAnimationActionFields = null;
+        ACTION_LASER_FIRE.postAnimationActionX = -1;
+        ACTION_LASER_FIRE.postAnimationActionY = -1;
     };
 }
 

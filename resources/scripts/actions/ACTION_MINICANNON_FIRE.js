@@ -97,6 +97,10 @@ var Constructor = function()
         var targetX = action.readDataInt32();
         var targetY = action.readDataInt32();
         var unit = map.getTerrain(targetX, targetY).getUnit();
+
+        var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY(), 70);
+        animation.addSprite("blackhole_shot", -map.getImageSize() * 0.5, -map.getImageSize() * 0.5, 0, 1.5);
+
         unit.setHp(unit.getHpRounded() - 3);
         if (unit.getHp() <= 0)
         {

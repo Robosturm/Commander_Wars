@@ -20,7 +20,10 @@ Building::Building(const QString& BuildingID)
       m_pTerrain(nullptr)
 {
     Interpreter::setCppOwnerShip(this);
-    init();
+    if (m_BuildingID != "")
+    {
+        init();
+    }
 }
 
 void Building::init()
@@ -331,6 +334,7 @@ void Building::deserialize(QDataStream& pStream)
     char* id;
     pStream >> id;
     m_BuildingID = id;
+    init();
     qint32 playerID = -1;
     pStream >> playerID;
     m_pOwner = GameMap::getInstance()->getPlayer(playerID);

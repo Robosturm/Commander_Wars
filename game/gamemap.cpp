@@ -27,7 +27,7 @@
 
 const QString GameMap::m_JavascriptName = "map";
 const QString GameMap::m_GameAnimationFactory = "GameAnimationFactory";
-const qint32 GameMap::frameTime = 125;
+const qint32 GameMap::frameTime = 100;
 GameMap* GameMap::m_pInstance = nullptr;
 
 
