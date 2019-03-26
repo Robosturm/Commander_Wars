@@ -29,8 +29,9 @@ var Constructor = function()
     {
         // we need to move the unit to the target position
         var building = action.getTargetBuilding();
-        var x = building.getX();
-        var y = building.getY();
+        var offset = Global[building.getBuildingID()].getActionTargetOffset(building);
+        var x = building.getX() + offset.x;
+        var y = building.getY() + offset.y;
         building.setFireCount(building.getFireCount() - 1);
 
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);

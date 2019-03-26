@@ -6,7 +6,7 @@ var Constructor = function()
         var building = action.getTargetBuilding();
         if (building.getFireCount() >= 1)
         {
-            if (ACTION_BLACKHOLECANNON_FIRE_S.getTargets(building).length > 0)
+            if (ACTION_BLACKHOLECANNON_FIRE.getTargets(building).length > 0)
             {
                 return true;
             }
