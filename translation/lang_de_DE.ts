@@ -34,14 +34,14 @@
     </message>
 </context>
 <context>
-    <name>ACTION_BLACKHOLECANNON_FIRE_S</name>
+    <name>ACTION_BLACKHOLECANNON_FIRE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BLACKHOLECANNON_FIRE_S.js" line="18"/>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLECANNON_FIRE.js" line="18"/>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BLACKHOLECANNON_FIRE_S.js" line="85"/>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLECANNON_FIRE.js" line="86"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>

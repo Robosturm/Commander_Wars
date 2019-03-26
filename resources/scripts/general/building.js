@@ -121,6 +121,12 @@ var BUILDING =
         // return must be null or a QmlVectorPoint
         return null;
     },
+    getActionTargetOffset : function(building)
+    {
+        // offset for large buildings since there reference point is bound to the lower right corner.
+        return Qt.point(0, 0);
+    },
+
     replenishUnit: function(building)
     {
         // default impl replenishes our units

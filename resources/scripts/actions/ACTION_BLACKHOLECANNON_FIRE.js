@@ -45,8 +45,9 @@ var Constructor = function()
     };
     this.getTargets = function(building)
     {
-        var x = building.getX() - 1;
-        var y = building.getY() - 1;
+        var offset = Global[building.getBuildingID()].getActionTargetOffset(building);
+        var x = building.getX() + offset.x;
+        var y = building.getY() + offset.y;
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
         var ret = [];
         for (var i = 0; i < fields.size(); i++)
@@ -74,7 +75,7 @@ var Constructor = function()
     this.getStepData = function(action, data)
     {
         var building = action.getTargetBuilding();
-        var targets = ACTION_BLACKHOLECANNON_FIRE_S.getTargets(building);
+        var targets = ACTION_BLACKHOLECANNON_FIRE.getTargets(building);
         for (var i = 0; i < targets.length; i++)
         {
             data.addPoint(Qt.point(targets[i].x, targets[i].y));
@@ -108,4 +109,4 @@ var Constructor = function()
 }
 
 Constructor.prototype = ACTION;
-var ACTION_BLACKHOLECANNON_FIRE_S = new Constructor();
+var ACTION_BLACKHOLECANNON_FIRE = new Constructor();
