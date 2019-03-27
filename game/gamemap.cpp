@@ -803,8 +803,10 @@ void GameMap::startOfTurn(Player* pPlayer)
             spBuilding pBuilding = fields.at(y)->at(x)->getSpBuilding();
             if (pBuilding.get() != nullptr)
             {
-                if (pBuilding->getOwner() == pPlayer)
+                if (pBuilding->getOwner() == pPlayer &&
+                    (pBuilding->getX() == x && pBuilding->getY() == y))
                 {
+
                     pBuilding->startOfTurn();
                 }
             }

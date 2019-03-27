@@ -105,6 +105,12 @@ public slots:
      * @return
      */
     bool isEnemyUnit(Unit* pUnit);
+    /**
+     * @brief isEnemy
+     * @param pOwner
+     * @return
+     */
+    bool isEnemy(Player* pOwner);
     qint32 getFonds() const;
     /**
      * @brief addFonds increases the money of this player by the given value

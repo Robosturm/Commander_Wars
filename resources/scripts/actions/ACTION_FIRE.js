@@ -49,7 +49,8 @@ var Constructor = function()
                             }
                         }
                     }
-                    if (((defBuilding !== null) && (defBuilding.getHp() > 0) && (defBuilding.getIsAttackable(x, y))) ||
+                    if (((defBuilding !== null) && (defBuilding.getHp() > 0) &&
+                         (defBuilding.getIsAttackable(x, y) && unit.getOwner().isEnemy(defBuilding.getOwner()))) ||
                          (defTerrain.getHp() > 0))
                     {
                         if (unit.hasAmmo1())
@@ -211,7 +212,8 @@ var Constructor = function()
                 }
                 else
                 {
-                    if (((defBuilding !== null) && (defBuilding.getHp() > 0) && (defBuilding.getIsAttackable(x, y))) ||
+                    if (((defBuilding !== null) && (defBuilding.getHp() > 0) &&
+                         (defBuilding.getIsAttackable(x, y) && unit.getOwner().isEnemy(defBuilding.getOwner()))) ||
                          (defTerrain.getHp() > 0))
                     {
                         if (unit.hasAmmo1())

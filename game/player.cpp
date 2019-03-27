@@ -142,6 +142,11 @@ bool Player::isEnemyUnit(Unit* pUnit)
     return (checkAlliance(pUnit->getOwner()) == GameEnums::Alliance_Enemy);
 }
 
+bool Player::isEnemy(Player* pOwner)
+{
+    return (checkAlliance(pOwner) == GameEnums::Alliance_Enemy);
+}
+
 
 void Player::setFonds(const qint32 &value)
 {

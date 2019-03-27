@@ -87,6 +87,14 @@
     </message>
 </context>
 <context>
+    <name>ACTION_DEATHRAY_FIRE_S</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE_S.js" line="18"/>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_EXITGAME</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_EXITGAME.js" line="10"/>
@@ -97,12 +105,12 @@
 <context>
     <name>ACTION_FIRE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="78"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="79"/>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="245"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="247"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
