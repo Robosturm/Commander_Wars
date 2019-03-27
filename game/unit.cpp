@@ -1225,12 +1225,16 @@ bool Unit::isStealthed(Player* pPlayer)
     if (pPlayer->checkAlliance(m_pOwner) == GameEnums::Alliance_Enemy)
     {
         GameMap* pMap = GameMap::getInstance();
+        qint32 x = getX();
+        qint32 y = getY();
+        // can we see the unit?
+        if (!pPlayer->getFieldVisible(x, y))
+        {
+            return true;
+        }
         // a unit can be stealth by itself or by the terrain it's on.
         if (getHidden() || (m_pTerrain->getVisionHide() && useTerrainDefense() && pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off))
         {
-
-            qint32 x = getX();
-            qint32 y = getY();
             QmlVectorPoint* pPoints = Mainapp::getCircle(1, 1);
             for (qint32 i = 0; i < pPoints->size(); i++)
             {

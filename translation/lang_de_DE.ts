@@ -195,12 +195,12 @@
 <context>
     <name>ACTION_UNLOAD</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="66"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="67"/>
         <source>Unload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="156"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="157"/>
         <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>

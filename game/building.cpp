@@ -14,6 +14,8 @@
 
 #include "resource_management/buildingspritemanager.h"
 
+#include "coreengine/qmlvector.h"
+
 Building::Building(const QString& BuildingID)
     : m_BuildingID(BuildingID),
       m_pOwner(nullptr),
@@ -344,6 +346,33 @@ bool Building::getIsAttackable(qint32 x, qint32 y)
     {
         return false;
     }
+}
+QmlVectorPoint* Building::getActionTargetFields()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getActionTargetFields";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj1;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
+    if (ret.isQObject())
+    {
+        return dynamic_cast<QmlVectorPoint*>(ret.toQObject());
+    }
+    else
+    {
+        return nullptr;
+    }
+}
+QPoint Building::getActionTargetOffset()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getActionTargetOffset";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj1;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
+    return ret.toVariant().toPoint();
 }
 
 Terrain* Building::getTerrain()

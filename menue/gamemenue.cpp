@@ -76,7 +76,6 @@ void GameMenue::performAction(GameAction* pGameAction)
             if ((pUnit != nullptr) &&
                 (pUnit->isStealthed(pMap->getCurrentPlayer())))
             {
-
                 GameAction* pTrapAction = new GameAction("ACTION_TRAP");
                 pTrapAction->setMovepath(trapPath);
                 pTrapAction->writeDataInt32(point.x());

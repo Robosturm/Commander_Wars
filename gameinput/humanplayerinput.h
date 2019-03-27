@@ -85,6 +85,12 @@ public:
      */
     void cleanUpInput();
     /**
+     * @brief HumanPlayerInput::showAttackableFields
+     * @param x
+     * @param y
+     */
+    void showAttackableFields(qint32 x, qint32 y);
+    /**
      * @brief clearMarkedFields
      */
     void clearMarkedFields();

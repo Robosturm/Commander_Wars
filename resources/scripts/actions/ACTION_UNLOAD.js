@@ -49,9 +49,10 @@ var Constructor = function()
                 if (map.onMap(targetFields[i].x, targetFields[i].y))
                 {
                     var terrain = map.getTerrain(targetFields[i].x, targetFields[i].y);
+                    var defUnit = terrain.getUnit();
                     // can the transported unit move over the terrain?
                     if ((Global[transportUnit.getMovementType()].getMovementpoints(terrain.getID()) > 0) &&
-                            (terrain.getUnit() === null))
+                        (defUnit === null || defUnit.isStealthed(unit.getOwner())))
                     {
                         ret.push(targetFields[i]);
                     }
@@ -216,9 +217,14 @@ var Constructor = function()
         // unloading the units here :)
         for (var i = 0; i < ACTION_UNLOAD.postAnimationTransportUnits.length; i++)
         {
-            ACTION_UNLOAD.postAnimationUnit.unloadUnit(ACTION_UNLOAD.postAnimationTransportUnits[i],
-                                                       Qt.point(ACTION_UNLOAD.postAnimationTransportUnitsPosX[i],
-                                                       ACTION_UNLOAD.postAnimationTransportUnitsPosY[i]));
+            // check if the field is empty before unloading
+            if (map.getTerrain(ACTION_UNLOAD.postAnimationTransportUnitsPosX[i],
+                           ACTION_UNLOAD.postAnimationTransportUnitsPosY[i]).getUnit() === null)
+            {
+                ACTION_UNLOAD.postAnimationUnit.unloadUnit(ACTION_UNLOAD.postAnimationTransportUnits[i],
+                                                           Qt.point(ACTION_UNLOAD.postAnimationTransportUnitsPosX[i],
+                                                                    ACTION_UNLOAD.postAnimationTransportUnitsPosY[i]));
+            }
         }
         ACTION_UNLOAD.postAnimationUnit = null;
         ACTION_UNLOAD.postAnimationTransportUnits = [];

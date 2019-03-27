@@ -145,6 +145,11 @@ public slots:
 
     bool getHidden() const;
     void setHidden(bool Hidden);
+    /**
+     * @brief isStealthed checks if the unit is invisible for the given player. Either by terrain, Out of Vision or Stealthmode
+     * @param pPlayer
+     * @return
+     */
     bool isStealthed(Player* pPlayer);
 
     GameEnums::UnitRanks getUnitRank() const;

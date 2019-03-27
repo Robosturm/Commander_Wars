@@ -9,6 +9,8 @@
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
 
+class QmlVectorPoint;
+
 class Building : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
@@ -173,6 +175,16 @@ public slots:
      * @return
      */
     bool getIsAttackable(qint32 x, qint32 y);
+    /**
+     * @brief getActionTargetFields
+     * @return
+     */
+    QmlVectorPoint* getActionTargetFields();
+    /**
+     * @brief getActionTargetOffset
+     * @return
+     */
+    QPoint getActionTargetOffset();
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     /**
