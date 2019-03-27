@@ -326,6 +326,26 @@ qint32 Building::getBuildingHeigth()
     }
 }
 
+bool Building::getIsAttackable(qint32 x, qint32 y)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getIsAttackable";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj1;
+    args1 << x;
+    args1 << y;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
+    if (ret.isBool())
+    {
+        return ret.toBool();
+    }
+    else
+    {
+        return false;
+    }
+}
+
 Terrain* Building::getTerrain()
 {
     return m_pTerrain;

@@ -80,7 +80,7 @@ var Constructor = function()
             data.addPoint(Qt.point(targets[i].x, targets[i].y));
             data.addZInformation(30);
         }
-        data.setColor("#FF0000");
+        data.setColor("#C8FF0000");
         data.setZLabelColor("#ff4500");
         data.setZLabelText(qsTr("Damage"))
         data.setShowZData(true);

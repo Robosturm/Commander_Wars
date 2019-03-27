@@ -97,12 +97,12 @@
 <context>
     <name>ACTION_FIRE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="82"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="78"/>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="253"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="245"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>

@@ -533,15 +533,14 @@ void Terrain::loadBuilding(QString buildingID)
 {
     if (m_Building.get() != nullptr)
     {
-        // delete it
-        this->removeChild(m_Building);
-        m_Building = nullptr;
+        removeBuilding();
     }
     m_Building = new Building(buildingID);
     m_Building->updateBuildingSprites();
     m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
     m_Building->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
     this->addChild(m_Building);
+    createBuildingDownStream();
 }
 
 void Terrain::setUnit(spUnit pUnit)

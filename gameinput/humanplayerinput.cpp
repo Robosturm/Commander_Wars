@@ -117,7 +117,14 @@ void HumanPlayerInput::clearMarkedFields()
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < m_Fields.size(); i++)
     {
-        pMap->getTerrain(m_FieldPoints[i].x(), m_FieldPoints[i].y())->removeChild(m_Fields[i]);
+        if (static_cast<qint32>(m_FieldPoints[i].z()) == 0)
+        {
+            pMap->getTerrain(static_cast<qint32>(m_FieldPoints[i].x()), static_cast<qint32>(m_FieldPoints[i].y()))->removeChild(m_Fields[i]);
+        }
+        else
+        {
+            pMap->removeChild(m_Fields[i]);
+        }
     }
     m_FieldPoints.clear();
     m_Fields.clear();
@@ -348,7 +355,7 @@ void HumanPlayerInput::getNextStepData()
         QVector<QPoint>* pFields = pData->getPoints();
         for (qint32 i = 0; i < pFields->size(); i++)
         {
-            createMarkedField(pFields->at(i), pData->getColor(), Terrain::DrawPriority::MarkedFieldLow);
+            createMarkedField(pFields->at(i), pData->getColor(), Terrain::DrawPriority::MarkedFieldMap);
         }
         m_pMarkedFieldData = pData;
         CursorData* pCursordata = m_pGameAction->getStepCursor();
@@ -410,12 +417,25 @@ void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::Dr
     oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), color.alpha()));
     oxygine::spTween tween2 = oxygine::createTween(tweenColor, 1);
     pSprite->addTween(tween2);
-    pSprite->setPriority(static_cast<qint16>(drawPriority));
+
     pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
-    pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
-    pMap->getSpTerrain(point.x(), point.y())->addChild(pSprite);
+
+    if (drawPriority == Terrain::DrawPriority::MarkedFieldMap)
+    {
+        pSprite->setPosition(point.x() * GameMap::Imagesize, point.y() * GameMap::Imagesize);
+        pSprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::MarkedFields));
+        pMap->addChild(pSprite);
+        m_FieldPoints.append(QVector3D(point.x(), point.y(), 1));
+    }
+    else
+    {
+        pSprite->setPriority(static_cast<qint16>(drawPriority));
+        pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
+        pMap->getSpTerrain(point.x(), point.y())->addChild(pSprite);
+        m_FieldPoints.append(QVector3D(point.x(), point.y(), 0));
+    }
     m_Fields.append(pSprite);
-    m_FieldPoints.append(point);
+
 }
 
 void HumanPlayerInput::createMarkedMoveFields()

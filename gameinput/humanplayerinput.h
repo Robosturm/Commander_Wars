@@ -3,6 +3,8 @@
 
 #include <QVector>
 
+#include <QVector3D>
+
 #include <QPoint>
 
 #include "gameinput/basegameinputif.h"
@@ -127,7 +129,7 @@ private:
     UnitPathFindingSystem* m_pUnitPathFindingSystem{nullptr};
 
     QVector<oxygine::spActor> m_Fields;
-    QVector<QPoint> m_FieldPoints;
+    QVector<QVector3D> m_FieldPoints;
     MarkedFieldData* m_pMarkedFieldData{nullptr};
 
     QVector<oxygine::spActor> m_Arrows;

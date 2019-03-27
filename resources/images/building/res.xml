@@ -118,5 +118,7 @@
 		<image file="omega+base+mask.png" cols = "2" />
 		<image file="omega+base+neutral.png" />
 		<image file="volcan.png" />
+		<image file="black_building_destroyed.png" />
+		
 	</atlas>
 </resources>

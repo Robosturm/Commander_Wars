@@ -49,12 +49,8 @@ var Constructor = function()
                             }
                         }
                     }
-                    if ((defBuilding !== null) && (defBuilding.getHp() > 0))
-                    {
-
-                    }
-                    // check for damage against terrain
-                    else if (defTerrain.getHp() > 0)
+                    if (((defBuilding !== null) && (defBuilding.getHp() > 0) && (defBuilding.getIsAttackable(x, y))) ||
+                         (defTerrain.getHp() > 0))
                     {
                         if (unit.hasAmmo1())
                         {
@@ -215,12 +211,8 @@ var Constructor = function()
                 }
                 else
                 {
-                    if ((defBuilding !== null) && (defBuilding.getHp() > 0))
-                    {
-
-                    }
-                    // check for damage against terrain
-                    else if (defTerrain.getHp() > 0)
+                    if (((defBuilding !== null) && (defBuilding.getHp() > 0) && (defBuilding.getIsAttackable(x, y))) ||
+                         (defTerrain.getHp() > 0))
                     {
                         if (unit.hasAmmo1())
                         {
@@ -248,7 +240,7 @@ var Constructor = function()
             }
         }
         fields.remove();
-        data.setColor("#FF0000");
+        data.setColor("#C8FF0000");
         data.setZLabelColor("#ff4500");
         data.setZLabelText(qsTr("Damage"))
         data.setShowZData(true);
@@ -325,7 +317,7 @@ var Constructor = function()
             }
             else
             {
-                if (((defBuilding !== null) && (defBuilding.getHp() > 0)) ||
+                if (((defBuilding !== null) && (defBuilding.getHp() > 0) && (defBuilding.getIsAttackable(targetX, targetY))) ||
                      (defTerrain.getHp() > 0))
                 {
                     // calc damage
@@ -492,7 +484,19 @@ var Constructor = function()
             // not implemented yet.
             if ((defBuilding !== null) && (defBuilding.getHp() > 0))
             {
-
+                defBuilding.setHp(defBuilding.getHp() - ACTION_FIRE.postAnimationAttackerDamage);
+                if (ACTION_FIRE.postAnimationAttackerWeapon === 0)
+                {
+                    ACTION_FIRE.postAnimationUnit.reduceAmmo1(1);
+                }
+                else
+                {
+                    ACTION_FIRE.postAnimationUnit.reduceAmmo2(1);
+                }
+                if (defBuilding.getHp() <= 0)
+                {
+                    Global[defBuilding.getBuildingID()].onDestroyed(defBuilding);
+                }
             }
             // check for damage against terrain
             else if (defTerrain.getHp() > 0)

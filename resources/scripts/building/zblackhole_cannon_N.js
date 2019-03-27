@@ -50,6 +50,27 @@ var Constructor = function()
     {
         return "minimap_blackholebuilding";
     };
+    this.getIsAttackable = function(building, x, y)
+    {
+        var buildX = building.getX();
+        var buildY = building.getY();
+        if (y === buildY && buildX - 1 === x)
+        {
+            return true;
+        }
+        return false;
+    };
+    this.onDestroyed = function(building)
+    {
+        // called when the terrain is destroyed and replacing of this terrain starts
+        var x = building.getX();
+        var y = building.getY();
+        var animation2 = GameAnimationFactory.createAnimation(0, 0);
+        animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
+        animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
+        audio.playSound("explosion+land.wav");
+        map.getTerrain(x, y).loadBuilding("ZBLACK_BUILDING_DESTROYED");
+    };
 }
 
 Constructor.prototype = BUILDING;

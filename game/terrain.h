@@ -21,14 +21,13 @@ public:
      */
     enum class DrawPriority
     {
+        MarkedFieldMap,
         Terrain = 0,
         Building = 1,
         MarkedFieldLow = 2,
         Unit = 3,
         Fog,
-        MarkedFieldMid,
-        Arrow,
-        MarkedFieldHigh
+        Arrow
     };
     static spTerrain createTerrain(const QString& terrainID, qint32 x, qint32 y);
 

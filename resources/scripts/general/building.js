@@ -126,6 +126,10 @@ var BUILDING =
         // offset for large buildings since there reference point is bound to the lower right corner.
         return Qt.point(0, 0);
     },
+    getIsAttackable : function(building, x, y)
+    {
+        return true;
+    },
 
     replenishUnit: function(building)
     {
@@ -149,5 +153,10 @@ var BUILDING =
     getMiniMapIcon : function()
     {
         return "minimap_building";
+    },
+
+    onDestroyed : function(building)
+    {
+        // called when the building is destroyed and replacing of this building starts
     },
 };

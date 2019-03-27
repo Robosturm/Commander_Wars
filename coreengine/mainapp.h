@@ -79,6 +79,7 @@ public:
         Terrain = -30000,        
         CORange = 30000,
         FogFields,
+        MarkedFields,
         Weather,
         Cursor,
         Animation,

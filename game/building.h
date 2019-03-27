@@ -168,6 +168,11 @@ public slots:
      * @return
      */
     qint32 getBuildingHeigth();
+    /**
+     * @brief getIsAttackable
+     * @return
+     */
+    bool getIsAttackable(qint32 x, qint32 y);
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     /**
