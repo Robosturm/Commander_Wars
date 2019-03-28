@@ -6,6 +6,7 @@
 #include "game/gameaction.h"
 #include "game/gamemap.h"
 #include "game/playerinfo.h"
+#include "objects/ingameinfobar.h"
 
 /**
  * @brief The GameMenue class handles the game :)
@@ -42,6 +43,10 @@ public slots:
      */
     void updatePlayerinfo();
     /**
+     * @brief updateMinimap
+     */
+    void updateMinimap();
+    /**
      * @brief victory
      * @param team
      */
@@ -58,6 +63,7 @@ protected:
     void loadGameMenue();
 private:
     spPlayerInfo m_pPlayerinfo;
+    spIngameInfoBar m_IngameInfoBar;
     static GameMenue* m_pInstance;
 };
 

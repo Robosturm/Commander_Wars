@@ -912,3 +912,8 @@ void GameMap::nextTurn()
 
     pApp->getAudioThread()->playRandom();
 }
+
+Player* GameMap::getCurrentViewPlayer()
+{
+    return m_CurrentPlayer.get();
+}

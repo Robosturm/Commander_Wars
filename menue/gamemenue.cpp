@@ -8,6 +8,8 @@
 
 #include "gameinput/humanplayerinput.h"
 
+#include "game/gameanimationfactory.h"
+
 GameMenue* GameMenue::m_pInstance = nullptr;
 
 GameMenue::GameMenue(qint32 startPlayer)
@@ -47,13 +49,19 @@ void GameMenue::loadGameMenue()
     {
          pMap->getPlayer(i)->getBaseGameInput()->init();
     }
+
+    // back to normal code
+    m_pPlayerinfo = new PlayerInfo();
+    m_IngameInfoBar = new IngameInfoBar();
+    m_IngameInfoBar->updateMinimap();
+    m_pPlayerinfo->updateData();
+    addChild(m_IngameInfoBar);
+    addChild(m_pPlayerinfo);
+
     connect(pMap->getGameRules(), &GameRules::signalVictory, this, &GameMenue::victory, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
-    // back to normal code
-    m_pPlayerinfo = new PlayerInfo();
-    m_pPlayerinfo->updateData();
-    this->addChild(m_pPlayerinfo);
+    connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameMenue::updateMinimap, Qt::QueuedConnection);
 }
 
 GameMenue::~GameMenue()
@@ -95,6 +103,10 @@ void GameMenue::performAction(GameAction* pGameAction)
     pGameAction->perform();
     // clean up the action
     delete pGameAction;
+    if (GameAnimationFactory::getAnimationCount() == 0)
+    {
+        GameAnimationFactory::getInstance()->removeAnimation(nullptr);
+    }
 }
 
 void GameMenue::updatePlayerinfo()
@@ -105,6 +117,11 @@ void GameMenue::updatePlayerinfo()
     {
         pMap->getPlayer(i)->updateVisualCORange();
     }
+}
+
+void GameMenue::updateMinimap()
+{
+    m_IngameInfoBar->updateMinimap();
 }
 
 void GameMenue::victory(qint32 team)

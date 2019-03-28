@@ -345,7 +345,7 @@ void GameRules::createFogVision()
         }
     }
     // get player for which we should create the vision
-    Player* pPlayer = pMap->getCurrentPlayer();
+    Player* pPlayer = pMap->getCurrentViewPlayer();
     // todo get last human player :)
 
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)

@@ -365,6 +365,11 @@ public slots:
     {
         return m_Rules.get();
     }
+    /**
+     * @brief getCurrentViewPlayer
+     * @return
+     */
+    Player* getCurrentViewPlayer();
 private:
     static GameMap* m_pInstance;
     QString mapName;

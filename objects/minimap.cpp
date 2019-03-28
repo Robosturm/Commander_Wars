@@ -24,7 +24,7 @@ Minimap::~Minimap()
 {
 }
 
-void Minimap::updateMinimap(GameMap* pMap)
+void Minimap::updateMinimap(GameMap* pMap, bool useVision)
 {
     // clear minimap
     removeChildren();
@@ -32,6 +32,7 @@ void Minimap::updateMinimap(GameMap* pMap)
     qint32 width = static_cast<qint32>(pMap->getMapWidth());
     qint32 heigth = static_cast<qint32>(pMap->getMapHeight());
     setSize(ImageSize * width, ImageSize * heigth);
+    Player* pPlayer = pMap->getCurrentViewPlayer();
     GameManager* pGameManager = GameManager::getInstance();
     for (qint32 x = 0; x < width; x++)
     {
@@ -86,27 +87,30 @@ void Minimap::updateMinimap(GameMap* pMap)
             Unit* pUnit = pTerrain->getUnit();
             if (pUnit != nullptr)
             {
-                oxygine::ResAnim* pAnim = pGameManager->getResAnim("minimap_unit");
-                if (pAnim != nullptr)
+                if (!useVision || !pUnit->isStealthed(pPlayer))
                 {
-                    oxygine::spSprite pSprite = new oxygine::Sprite();
-                    if (pAnim->getTotalFrames() > 1)
+                    oxygine::ResAnim* pAnim = pGameManager->getResAnim("minimap_unit");
+                    if (pAnim != nullptr)
                     {
-                        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
-                        pSprite->addTween(tween);
+                        oxygine::spSprite pSprite = new oxygine::Sprite();
+                        if (pAnim->getTotalFrames() > 1)
+                        {
+                            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                            pSprite->addTween(tween);
+                        }
+                        else
+                        {
+                            pSprite->setResAnim(pAnim);
+                        }
+                        oxygine::spTween tween2 = oxygine::createTween(TweenToggleVisibility(0, 0.5f), 1000, -1);
+                        pSprite->addTween(tween2);
+                        pSprite->setPosition(x * ImageSize, y * ImageSize);
+                        Player* pPlayer = pUnit->getOwner();
+                        QColor color = pPlayer->getColor();
+                        pSprite->setColor(color.red(), color.green(), color.blue(), 255);
+                        pSprite->setPriority(1);
+                        addChild(pSprite);
                     }
-                    else
-                    {
-                        pSprite->setResAnim(pAnim);
-                    }
-                    oxygine::spTween tween2 = oxygine::createTween(TweenToggleVisibility(0, 0.5f), 1000, -1);
-                    pSprite->addTween(tween2);
-                    pSprite->setPosition(x * ImageSize, y * ImageSize);
-                    Player* pPlayer = pUnit->getOwner();
-                    QColor color = pPlayer->getColor();
-                    pSprite->setColor(color.red(), color.green(), color.blue(), 255);
-                    pSprite->setPriority(1);
-                    addChild(pSprite);
                 }
             }
         }

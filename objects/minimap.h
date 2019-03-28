@@ -20,7 +20,7 @@ public:
 signals:
 
 public slots:
-    void updateMinimap(GameMap* pMap);
+    void updateMinimap(GameMap* pMap, bool useVision = false);
 private:
     static const qint32 ImageSize{4};
 };
