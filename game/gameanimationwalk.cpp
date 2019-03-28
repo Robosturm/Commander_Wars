@@ -63,7 +63,9 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
 
         oxygine::spTweenQueue queueAnimating = new oxygine::TweenQueue();
         oxygine::spTweenQueue queueMoving = new oxygine::TweenQueue();
-
+        pSprite->setPosition(m_pUnit->getX() * GameMap::Imagesize - static_cast<qint32>((pAnim->getWidth() * scaling - GameMap::Imagesize) / 2.0f),
+                             m_pUnit->getY() * GameMap::Imagesize - static_cast<qint32>((pAnim->getHeight() * scaling - GameMap::Imagesize) / 2.0f));
+        pSprite->setScale(scaling);
         for (qint32 i = m_movePath.size() - 2; i >= 0; i--)
         {
             qint32 x = 0;
@@ -77,8 +79,8 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
             {
                 direction = getMovementDirection(m_movePath[i + 1].x(), m_movePath[i + 1].y(), m_movePath[i].x(), m_movePath[i].y());
             }
-            x = m_movePath[i].x() * GameMap::Imagesize;
-            y = m_movePath[i].y() * GameMap::Imagesize;
+            x = m_movePath[i].x() * GameMap::Imagesize - static_cast<qint32>((pAnim->getWidth() * scaling - GameMap::Imagesize) / 2.0f);
+            y = m_movePath[i].y() * GameMap::Imagesize - static_cast<qint32>((pAnim->getHeight() * scaling - GameMap::Imagesize) / 2.0f);
             queueMoving->add(oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(x, y)), GameMap::frameTime * pAnim->getRows(), 1));
 
             int row = 0;
@@ -119,8 +121,6 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
                 });
             }
         }
-
-        pSprite->setPosition(m_pUnit->getX() * GameMap::Imagesize, m_pUnit->getY() * GameMap::Imagesize);
         //
         if (m_movePath.size() == 0)
         {
@@ -141,8 +141,6 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
 
             pSprite->addTween(tween);
         }
-        pSprite->setScale(scaling);
-        pSprite->setPosition(-pSprite->getScaledWidth() / 2, -pSprite->getScaledHeight() / 2);
         this->addChild(pSprite);
     }
     else

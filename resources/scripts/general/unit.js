@@ -50,8 +50,8 @@ var UNIT =
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
         var unitID = unit.getUnitID().toLowerCase();
-        animation.loadSprite(unitID + "+walk+mask", true, 1.25);
-        animation.loadSprite(unitID + "+walk", false, 1.25);
+        animation.loadSprite(unitID + "+walk+mask", true);
+        animation.loadSprite(unitID + "+walk", false);
         return animation;
     },
 

@@ -68,6 +68,8 @@ Mainwindow::Mainwindow()
     });
     connect(this, SIGNAL(sigQuit()), this, SLOT(quitGame()), Qt::QueuedConnection);
     btnI++;
+
+    // oxygine::spProgressBar bar = new oxygine::ProgressBar()
 }
 
 void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)

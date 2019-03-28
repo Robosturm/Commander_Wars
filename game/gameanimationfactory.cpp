@@ -76,7 +76,6 @@ GameAnimation* GameAnimationFactory::createAnimation(quint32 x, quint32 y, quint
 GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(Unit* pUnit, GameAction* pAction)
 {
     GameAnimationWalk* pGameAnimationWalk = new GameAnimationWalk(pUnit, pAction->getMovePath());
-    // pGameAnimationWalk->setPosition(pUnit->getX() * GameMap::Imagesize, pUnit->getY() * GameMap::Imagesize);
     pGameAnimationWalk->setPriority(static_cast<short>(Mainapp::ZOrder::Animation));
     GameMap::getInstance()->addChild(pGameAnimationWalk);
     m_Animations.append(pGameAnimationWalk);
