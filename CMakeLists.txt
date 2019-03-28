@@ -69,6 +69,7 @@ set(${PROJECT_NAME}_SRCS
         objects/checkbox.cpp
         objects/slider.cpp
         objects/multislider.cpp
+        objects/ingameinfobar.cpp
 
         #menues
         menue/mainwindow.cpp
