@@ -137,11 +137,14 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
             QmlVectorPoint* pPoints = pBuilding->getActionTargetFields();
             QPoint targetOffset = pBuilding->getActionTargetOffset();
             QPoint buildingPos(pBuilding->getX(), pBuilding->getY());
-            for (qint32 i = 0; i < pPoints->size(); i++)
+            if (pPoints != nullptr)
             {
-              createMarkedField(buildingPos + targetOffset + pPoints->at(i), QColor(255, 0, 0), Terrain::DrawPriority::MarkedFieldMap);
+                for (qint32 i = 0; i < pPoints->size(); i++)
+                {
+                    createMarkedField(buildingPos + targetOffset + pPoints->at(i), QColor(255, 0, 0), Terrain::DrawPriority::MarkedFieldMap);
+                }
+                delete pPoints;
             }
-            delete pPoints;
         }
     }
 }

@@ -53,7 +53,8 @@
 		<image file="deathray_start.png" cols = "22" />
 		<image file="deathray_start_loading.png" cols = "18" />
 		<image file="volcan_eruption.png" cols = "9" />
-		<image file="volcan_hit.png" cols = "4" />
+		<image file="volcan_hit.png" cols = "3" />
+		<image file="volcan_fireball.png" />		
 		<image file="blackhole_shot_down.png" cols = "4" />
 		
 		<!-- static -->

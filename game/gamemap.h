@@ -335,7 +335,7 @@ public slots:
     /**
      * @brief nextPlayer next player
      */
-    void nextPlayer();
+    bool nextPlayer();
     /**
      * @brief checkFuel checks fuel of the unit and if it's negative kills it.
      * @param pPlayer

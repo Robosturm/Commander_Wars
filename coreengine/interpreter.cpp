@@ -69,7 +69,7 @@ QJSValue Interpreter::doFunction(const QString& func, QJSValueList& args)
         text += args[i].toString() + " ";
     }
 #ifdef GAMEDEBUG
-    Console::print("Calling: " + func + " with " + text, Console::eDEBUG);
+    // Console::print("Calling: " + func + " with " + text, Console::eDEBUG);
 #endif
     QJSValue ret;
     QJSValue funcPointer = globalObject().property(func);
@@ -88,7 +88,7 @@ QJSValue Interpreter::doFunction(const QString& func, QJSValueList& args)
         Console::print(error, Console::eERROR);
     }
 #ifdef GAMEDEBUG
-    Console::print("Result is: " + ret.toString(), Console::eDEBUG);
+    // Console::print("Result is: " + ret.toString(), Console::eDEBUG);
 #endif
     return ret;
 }
@@ -101,7 +101,7 @@ QJSValue Interpreter::doFunction(const QString& obj, const QString& func, const 
         text += args[i].toString() + " ";
     }
 #ifdef GAMEDEBUG
-    Console::print("Calling: " + func + " of " + obj + " with " + text, Console::eDEBUG);
+    // Console::print("Calling: " + func + " of " + obj + " with " + text, Console::eDEBUG);
 #endif
     QJSValue ret;
 
@@ -130,7 +130,7 @@ QJSValue Interpreter::doFunction(const QString& obj, const QString& func, const 
         Console::print(error, Console::eERROR);
     }
 #ifdef GAMEDEBUG
-    Console::print("Result is: " + ret.toString(), Console::eDEBUG);
+    // Console::print("Result is: " + ret.toString(), Console::eDEBUG);
 #endif
     return ret;
 }

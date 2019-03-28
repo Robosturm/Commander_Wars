@@ -87,9 +87,9 @@
     </message>
 </context>
 <context>
-    <name>ACTION_DEATHRAY_FIRE_S</name>
+    <name>ACTION_DEATHRAY_FIRE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE_S.js" line="18"/>
+        <location filename="../resources/scripts/actions/ACTION_DEATHRAY_FIRE.js" line="18"/>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>

@@ -758,8 +758,9 @@ void GameMap::enableUnits(Player* pPlayer)
     }
 }
 
-void GameMap::nextPlayer()
+bool GameMap::nextPlayer()
 {
+    bool nextDay = false;
     for (qint32 i = 0; i < players.size(); i++)
     {
         if (players.at(i).get() == m_CurrentPlayer.get())
@@ -769,6 +770,7 @@ void GameMap::nextPlayer()
                 if (i + i2 >= players.size() - 1)
                 {
                     m_CurrentPlayer = players[i + i2 - (players.size() - 1)];
+                    nextDay = true;
                 }
                 else
                 {
@@ -782,6 +784,7 @@ void GameMap::nextPlayer()
             break;
         }
     }
+    return nextDay;
 }
 
 void GameMap::startOfTurn(Player* pPlayer)
@@ -896,7 +899,11 @@ void GameMap::nextTurn()
     enableUnits(m_CurrentPlayer.get());
     Mainapp* pApp = Mainapp::getInstance();
     pApp->getAudioThread()->clearPlayList();
-    nextPlayer();
+    bool nextDay = nextPlayer();
+    if (nextDay)
+    {
+        startOfTurn(nullptr);
+    }
     m_Rules->startOfTurn();
     m_CurrentPlayer->earnMoney();
     startOfTurn(m_CurrentPlayer.get());

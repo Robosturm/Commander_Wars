@@ -100,10 +100,12 @@ var BUILDING =
     {
         return "";
     },
-
     startOfTurn : function(building)
     {
-        BUILDING.replenishUnit(building);
+        if (building.getOwner() !== null)
+        {
+            BUILDING.replenishUnit(building);
+        }
     },
 
     getOffensiveBonus : function(building)

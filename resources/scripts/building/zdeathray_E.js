@@ -7,8 +7,8 @@ var Constructor = function()
     // called for loading the main sprite
     this.loadSprites = function(building)
     {
-        building.loadSprite("deathray+S", false);
-        building.loadSprite("deathray+S+mask", true);
+        building.loadSprite("deathray+E", false);
+        building.loadSprite("deathray+E+mask", true);
     };
     this.getBaseIncome = function()
     {
@@ -29,16 +29,16 @@ var Constructor = function()
         // laser to not fire infinitly but the range is still fucking huge :)
         for (var i = 1; i < 60; i++)
         {
-            targets.append(Qt.point(-1, i));
-            targets.append(Qt.point(0, i));
-            targets.append(Qt.point(1, i));
+            targets.append(Qt.point(i, -1));
+            targets.append(Qt.point(i, 0));
+            targets.append(Qt.point(i, 1));
         }
         return targets;
     };
     this.getActionTargetOffset = function(building)
     {
         // offset for large buildings since there reference point is bound to the lower right corner.
-        return Qt.point(-1, 0);
+        return Qt.point(0, -1);
     };
     this.getBuildingWidth = function()
     {
@@ -82,21 +82,25 @@ var Constructor = function()
 
     this.createRayAnimation = function(building, x, y, fields)
     {
-        var animation = GameAnimationFactory.createAnimation(x - 1, y - 1);
+        var animation = GameAnimationFactory.createAnimation(x, y + 2);
         animation.addSprite("deathray_start_loading", 0, 0, 0, 1.5);
-        var animation2 = GameAnimationFactory.createAnimation(x - 1, y - 1);
+        animation.setRotation(270);
+        var animation2 = GameAnimationFactory.createAnimation(x, y + 2);
         animation2.addSprite("deathray_start", 0, 0, 0, 1.5);
+        animation2.setRotation(270);
         animation.queueAnimation(animation2);
+
 
         for (var i = 0; i < fields.size(); i++)
         {
             var point = fields.at(i);
             if (map.onMap(x + point.x, y + point.y))
             {
-                if ((point.x === -1) && ((point.y) % 2 === 0))
+                if ((point.y === -1) && ((point.x) % 2 === 0))
                 {
-                    animation2 = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
+                    animation2 = GameAnimationFactory.createAnimation(x + point.x, y + point.y + 3);
                     animation2.addSprite("deathray", 0, -map.getImageSize() * 0.085, 0, 1.5);
+                    animation2.setRotation(270);
                     animation.queueAnimation(animation2);
                 }
             }
@@ -106,4 +110,4 @@ var Constructor = function()
 }
 
 Constructor.prototype = BUILDING;
-var ZDEATHRAY_S = new Constructor();
+var ZDEATHRAY_E = new Constructor();

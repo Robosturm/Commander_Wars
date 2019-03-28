@@ -36,15 +36,25 @@ var Constructor = function()
 
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
 
-        var animation = GameAnimationFactory.createAnimation(x - 1, y - 1);
-        animation.addSprite("deathray_start_loading", 0, 0, 0, 1.5);
-        var animation2 = GameAnimationFactory.createAnimation(x - 1, y - 1);
-        animation2.addSprite("deathray_start", 0, 0, 0, 1.5);
-        animation.queueAnimation(animation2);
-
-        for (var i = 0; i < fields.size(); i++)
+        var animation = Global[building.getBuildingID()].createRayAnimation(building, x, y, fields);
+        animation.setEndOfAnimationCall("ACTION_DEATHRAY_FIRE", "performPostAnimation");
+        ACTION_DEATHRAY_FIRE.postAnimationFields = fields;
+        ACTION_DEATHRAY_FIRE.postAnimationX = x;
+        ACTION_DEATHRAY_FIRE.postAnimationY = y;
+        ACTION_DEATHRAY_FIRE.postAnimationBuilding = building;
+    };
+    this.postAnimationFields = null;
+    this.postAnimationX = null;
+    this.postAnimationY = null;
+    this.postAnimationBuilding = null;
+    this.performPostAnimation = function()
+    {
+        var x = ACTION_DEATHRAY_FIRE.postAnimationX;
+        var y = ACTION_DEATHRAY_FIRE.postAnimationY;
+        var building = ACTION_DEATHRAY_FIRE.postAnimationBuilding;
+        for (var i = 0; i < ACTION_DEATHRAY_FIRE.postAnimationFields.size(); i++)
         {
-            var point = fields.at(i);
+            var point = ACTION_DEATHRAY_FIRE.postAnimationFields.at(i);
             if (map.onMap(x + point.x, y + point.y))
             {
                 var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
@@ -57,17 +67,15 @@ var Constructor = function()
                         unit.killUnit();
                     }
                 }
-                if ((point.x === -1) && ((point.y) % 2 === 0))
-                {
-                    animation2 = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
-                    animation2.addSprite("deathray", 0, -map.getImageSize() * 0.085, 0, 1.5);
-                    animation.queueAnimation(animation2);
-                }
             }
         }
-        fields.remove();
-    };
+        ACTION_DEATHRAY_FIRE.postAnimationFields.remove();
+        ACTION_DEATHRAY_FIRE.postAnimationFields = null;
+        ACTION_DEATHRAY_FIRE.postAnimationX = null;
+        ACTION_DEATHRAY_FIRE.postAnimationY = null;
+        ACTION_DEATHRAY_FIRE.postAnimationBuilding = null;
+    }
 }
 
 Constructor.prototype = ACTION;
-var ACTION_DEATHRAY_FIRE_S = new Constructor();
+var ACTION_DEATHRAY_FIRE = new Constructor();
