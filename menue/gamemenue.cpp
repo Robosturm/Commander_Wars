@@ -49,6 +49,7 @@ void GameMenue::loadGameMenue()
     {
          pMap->getPlayer(i)->getBaseGameInput()->init();
     }
+    pMap->centerMap(pMap->getMapWidth() / 2, pMap->getMapHeight() / 2);
 
     // back to normal code
     m_pPlayerinfo = new PlayerInfo();
@@ -61,6 +62,7 @@ void GameMenue::loadGameMenue()
     connect(pMap->getGameRules(), &GameRules::signalVictory, this, &GameMenue::victory, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
+    connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap, &GameMap::centerMap, Qt::QueuedConnection);
     connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameMenue::updateMinimap, Qt::QueuedConnection);
 }
 

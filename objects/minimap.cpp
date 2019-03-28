@@ -17,7 +17,16 @@
 Minimap::Minimap()
     : QObject()
 {
-
+    addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* pEvent)
+    {
+        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        if (pTouchEvent != nullptr)
+        {
+            float x = pTouchEvent->localPosition.x / ImageSize;
+            float y = pTouchEvent->localPosition.y / ImageSize;
+            emit clicked(static_cast<qint32>(x), static_cast<qint32>(y));
+        }
+    });
 }
 
 Minimap::~Minimap()

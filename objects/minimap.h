@@ -18,7 +18,7 @@ public:
 
 
 signals:
-
+    void clicked(qint32 x, qint32 y);
 public slots:
     void updateMinimap(GameMap* pMap, bool useVision = false);
 private:

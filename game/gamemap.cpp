@@ -476,9 +476,12 @@ bool GameMap::onMap(qint32 x, qint32 y)
 void GameMap::centerMap(qint32 x, qint32 y)
 {
     Mainapp* pApp = Mainapp::getInstance();
-    // draw point
-    this->setPosition(pApp->getSettings()->getWidth() / 2.0f - x * this->getZoom() * Imagesize - Imagesize / 2.0f,
-                      pApp->getSettings()->getHeight() / 2.0f - y * this->getZoom() * Imagesize - Imagesize / 2.0f);
+    if (onMap(x, y))
+    {
+        // draw point
+        this->setPosition(pApp->getSettings()->getWidth() / 2.0f - x * this->getZoom() * Imagesize - Imagesize / 2.0f,
+                          pApp->getSettings()->getHeight() / 2.0f - y * this->getZoom() * Imagesize - Imagesize / 2.0f);
+    }
 }
 
 void GameMap::moveMap(qint32 x, qint32 y)

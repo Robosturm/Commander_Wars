@@ -15,6 +15,10 @@ class IngameInfoBar : public QObject, public oxygine::Actor
 public:
     explicit IngameInfoBar();
 
+    Minimap* getMinimap()
+    {
+        return m_pMinimap.get();
+    }
 signals:
 
 public slots:
