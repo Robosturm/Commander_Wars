@@ -5,6 +5,11 @@ var Constructor = function()
 
         return qsTr("Sun");
     };
+
+    this.getWeatherSymbol = function()
+    {
+        return "weather_symbol_sun";
+    };
 }
 
 Constructor.prototype = WEATHER;

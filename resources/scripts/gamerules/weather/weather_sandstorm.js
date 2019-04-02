@@ -12,6 +12,11 @@ var Constructor = function()
         return "weather_sandstorm";
     };
 
+    this.getWeatherSymbol = function()
+    {
+        return "weather_symbol_sandstorm";
+    };
+
     this.getOffensiveModifier = function()
     {
 

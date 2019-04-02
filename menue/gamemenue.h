@@ -43,10 +43,6 @@ public slots:
      */
     void updatePlayerinfo();
     /**
-     * @brief updateMinimap
-     */
-    void updateMinimap();
-    /**
      * @brief victory
      * @param team
      */

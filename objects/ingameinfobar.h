@@ -23,9 +23,12 @@ signals:
 
 public slots:
     void updateMinimap();
+    void updatePlayerInfo();
+    void updateCursorInfo(qint32 x, qint32 y);
 private:
     spMinimap m_pMinimap;
     oxygine::spSlidingActor m_pMinimapSlider;
+    oxygine::spBox9Sprite m_pGameInfoBox;
 };
 
 #endif // INGAMEINFOBAR_H

@@ -59,6 +59,21 @@ QString Weather::getWeatherTerrainSprite()
     }
 }
 
+QString Weather::getWeatherSymbol()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getWeatherSymbol";
+    QJSValue erg = pApp->getInterpreter()->doFunction(m_WeatherId, function1);
+    if (erg.isString())
+    {
+        return erg.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
 qint32 Weather::getOffensiveModifier()
 {
     Mainapp* pApp = Mainapp::getInstance();

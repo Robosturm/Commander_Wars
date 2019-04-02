@@ -395,6 +395,34 @@
     </message>
 </context>
 <context>
+    <name>IngameInfoBar</name>
+    <message>
+        <location filename="../objects/ingameinfobar.cpp" line="115"/>
+        <source>Buildings: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ingameinfobar.cpp" line="122"/>
+        <source>Units: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ingameinfobar.cpp" line="129"/>
+        <source>Fonds: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ingameinfobar.cpp" line="136"/>
+        <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ingameinfobar.cpp" line="143"/>
+        <source>Team: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>METEOR</name>
     <message>
         <location filename="../resources/scripts/terrain/METEOR.js" line="6"/>

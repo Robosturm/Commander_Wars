@@ -12,6 +12,11 @@ var Constructor = function()
         return "weather_rain";
     };
 
+    this.getWeatherSymbol = function()
+    {
+        return "weather_symbol_rain";
+    };
+
     this.getVisionrangeModifier = function()
     {
 

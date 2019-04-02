@@ -41,6 +41,7 @@ public slots:
     QString getWeatherId() const;
     QString getWeatherName();
     QString getWeatherTerrainSprite();
+    QString getWeatherSymbol();
     qint32 getOffensiveModifier();
     qint32 getDefensiveModifier();
     qint32 getMovementCostModifier();

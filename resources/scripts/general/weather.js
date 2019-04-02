@@ -12,6 +12,11 @@ var WEATHER =
         return "";
     },
 
+    getWeatherSymbol : function()
+    {
+        return "";
+    },
+
     getOffensiveModifier : function(weather)
     {
         // only called when the weather is active

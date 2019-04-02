@@ -63,7 +63,9 @@ void GameMenue::loadGameMenue()
     connect(pMap, &GameMap::signalExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap, &GameMap::centerMap, Qt::QueuedConnection);
-    connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameMenue::updateMinimap, Qt::QueuedConnection);
+    connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, m_IngameInfoBar.get(), &IngameInfoBar::updateMinimap, Qt::QueuedConnection);
+    connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, m_IngameInfoBar.get(), &IngameInfoBar::updatePlayerInfo, Qt::QueuedConnection);
+    connect(m_Cursor.get(), &Cursor::sigCursorMoved, m_IngameInfoBar.get(), &IngameInfoBar::updateCursorInfo, Qt::QueuedConnection);
 }
 
 GameMenue::~GameMenue()
@@ -121,11 +123,6 @@ void GameMenue::updatePlayerinfo()
     }
 }
 
-void GameMenue::updateMinimap()
-{
-    m_IngameInfoBar->updateMinimap();
-}
-
 void GameMenue::victory(qint32 team)
 {
     Console::print("Leaving Game Menue", Console::eDEBUG);
@@ -157,5 +154,6 @@ void GameMenue::startGame(qint32 startPlayer)
     GameRules* pRules = pMap->getGameRules();
     pRules->changeWeather(pRules->getWeather(pRules->getStartWeather())->getWeatherId(), pMap->getPlayerCount() + 1);
     pMap->nextTurn();
+    m_IngameInfoBar->updatePlayerInfo();
 }
 

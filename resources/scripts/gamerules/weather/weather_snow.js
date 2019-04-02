@@ -11,6 +11,11 @@ var Constructor = function()
         return "weather_snow";
     };
 
+    this.getWeatherSymbol = function()
+    {
+        return "weather_symbol_snow";
+    };
+
     this.getMovementCostModifier = function()
     {
 
