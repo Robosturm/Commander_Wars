@@ -13,6 +13,7 @@
 
 Mainapp* Mainapp::m_pMainapp = nullptr;
 QRandomGenerator Mainapp::randGenerator;
+bool Mainapp::m_useSeed{false};
 
 Mainapp::Mainapp(int argc, char* argv[])
     : QCoreApplication(argc, argv),
@@ -40,9 +41,21 @@ Mainapp* Mainapp::getInstance()
     return m_pMainapp;
 }
 
+void Mainapp::seed(quint32 seed)
+{
+    randGenerator.seed(seed);
+}
+
 qint32 Mainapp::randInt(qint32 low, qint32 high)
 {
-    return randGenerator.bounded(low, high + 1);
+    if (m_useSeed)
+    {
+        return randGenerator.bounded(low, high + 1);
+    }
+    else
+    {
+        return QRandomGenerator::global()->bounded(low, high + 1);
+    }
 }
 
 qint32 Mainapp::roundUp(float value)
@@ -230,6 +243,16 @@ void Mainapp::onEvent(oxygine::Event* ev)
     {
         emit sigKeyUp(event);
     }
+}
+
+bool Mainapp::getUseSeed()
+{
+    return m_useSeed;
+}
+
+void Mainapp::setUseSeed(bool useSeed)
+{
+    m_useSeed = useSeed;
 }
 
 void Mainapp::setupNetwork()

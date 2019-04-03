@@ -10,6 +10,7 @@ GameAction::GameAction()
 {
     Interpreter::setCppOwnerShip(this);
     buffer.open(QIODevice::ReadWrite);
+    seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
 }
 
 GameAction::GameAction(QString actionID)
@@ -17,6 +18,7 @@ GameAction::GameAction(QString actionID)
 {
     Interpreter::setCppOwnerShip(this);
     buffer.open(QIODevice::ReadWrite);
+    seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
 }
 
 void GameAction::perform()
@@ -196,6 +198,11 @@ MarkedFieldData* GameAction::getMarkedFieldStepData()
    args1 << pApp->getInterpreter()->newQObject(data);
    QJSValue ret = pApp->getInterpreter()->doFunction(m_actionID, function1, args1);
    return data;
+}
+
+quint32 GameAction::getSeed() const
+{
+    return seed;
 }
 
 void GameAction::setTarget(QPoint point)

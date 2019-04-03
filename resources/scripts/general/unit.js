@@ -119,4 +119,19 @@ var UNIT =
         // pay for healing
         unit.getOwner().addFonds(-healingDone / 10 * costs);
     },
+
+    getTerrainAnimationBase : function(unit, terrain)
+    {
+        return Global[terrain.getID()].getTerrainAnimationBase(unit, terrain);
+    },
+
+    getTerrainAnimationForeground : function(unit, terrain)
+    {
+        return Global[terrain.getID()].getTerrainAnimationForeground(unit, terrain);
+    },
+
+    getTerrainAnimationBackground : function(unit, terrain)
+    {
+        return Global[terrain.getID()].getTerrainAnimationBackground(unit, terrain);
+    },
 };

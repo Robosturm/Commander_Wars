@@ -38,9 +38,16 @@ public:
      */
     static QString getActionIcon(QString actionID);
 
+
+
 signals:
 
 public slots:
+    /**
+     * @brief getSeed
+     * @return
+     */
+    quint32 getSeed() const;
     /**
      * @brief setActionID sets the action id for this action
      * @param actionID
@@ -248,6 +255,8 @@ private:
      */
     QBuffer buffer;
     QDataStream actionData{&buffer};
+
+    quint32 seed;
 };
 
 #endif // GAMEACTION_H

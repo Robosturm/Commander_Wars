@@ -6,6 +6,7 @@
 #include "resource_management/cospritemanager.h"
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
+#include "resource_management/objectmanager.h"
 
 #include "game/gamemap.h"
 #include "game/player.h"
@@ -34,7 +35,7 @@ IngameInfoBar::IngameInfoBar()
     m_pMinimapSlider = new oxygine::SlidingActor();
     m_pMinimapSlider->setPosition(10, 10);
     m_pMinimapSlider->setSize(pMiniMapBox->getWidth() - 20,
-                            pMiniMapBox->getHeight() - 20);
+                              pMiniMapBox->getHeight() - 20);
     m_pMinimapSlider->setContent(m_pMinimap);
     pMiniMapBox->addChild(m_pMinimapSlider);
     addChild(pMiniMapBox);
@@ -49,14 +50,14 @@ IngameInfoBar::IngameInfoBar()
     addChild(m_pGameInfoBox);
 
 
-    oxygine::spBox9Sprite pCursorInfoBox = new oxygine::Box9Sprite();
-    pCursorInfoBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pCursorInfoBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-    pCursorInfoBox->setResAnim(pAnim);
-    pCursorInfoBox->setPosition(pApp->getSettings()->getWidth() - width, pApp->getSettings()->getHeight() - cursorInfoHeigth);
-    pCursorInfoBox->setSize(width, cursorInfoHeigth);
-    pCursorInfoBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
-    addChild(pCursorInfoBox);
+    m_pCursorInfoBox = new oxygine::Box9Sprite();
+    m_pCursorInfoBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    m_pCursorInfoBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    m_pCursorInfoBox->setResAnim(pAnim);
+    m_pCursorInfoBox->setPosition(pApp->getSettings()->getWidth() - width, pApp->getSettings()->getHeight() - cursorInfoHeigth);
+    m_pCursorInfoBox->setSize(width, cursorInfoHeigth);
+    m_pCursorInfoBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+    addChild(m_pCursorInfoBox);
 }
 
 void IngameInfoBar::updatePlayerInfo()
@@ -152,4 +153,213 @@ void IngameInfoBar::updateMinimap()
 
 void IngameInfoBar::updateCursorInfo(qint32 x, qint32 y)
 {
+    m_pCursorInfoBox->removeChildren();
+    GameMap* pMap = GameMap::getInstance();
+    Player* pPlayer = pMap->getCurrentViewPlayer();
+    Terrain* pTerrain = pMap->getTerrain(x, y);
+    Building* pBuilding = pTerrain->getBuilding();
+    Unit* pUnit = pTerrain->getUnit();
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    oxygine::spSprite pSprite = new oxygine::Sprite();
+    oxygine::ResAnim* pAnim = nullptr;
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+
+
+    // draw building hp
+    oxygine::spTextField pTextfield = new oxygine::TextField();
+    qint32 hp = 0;
+    if ((pBuilding != nullptr) && (pBuilding->getHp() > 0))
+    {
+        hp = pBuilding->getHp();
+    }
+    else if ((pTerrain->getHp() > 0))
+    {
+        hp = pTerrain->getHp();
+    }
+    if (hp > 0)
+    {
+        pAnim = pObjectManager->getResAnim("barforeground");
+        pTextfield->setStyle(style);
+        qint32 hpMax = 100;
+        if (hp > 100)
+        {
+            hpMax = hp;
+        }
+        pTextfield->setText((tr("HP: ") + QString::number(hp) + "/" + QString::number(hpMax)).toStdString().c_str());
+        pTextfield->setPosition(10, 10);
+        m_pCursorInfoBox->addChild(pTextfield);
+        oxygine::spColorRectSprite pColorBar = new oxygine::ColorRectSprite();
+        float divider = static_cast<float>(hp) / static_cast<float>(hpMax);
+        if (divider > 2.0f / 3.0f)
+        {
+            pColorBar->setColor(0, 255, 0, 255);
+        }
+        else if (divider > 1.0f / 3.0f)
+        {
+            pColorBar->setColor(255, 128, 0, 255);
+        }
+        else
+        {
+            pColorBar->setColor(255, 0, 0, 255);
+        }
+        pColorBar->setSize(divider * pAnim->getWidth(), pAnim->getHeight());
+        pColorBar->setPosition(m_pCursorInfoBox->getWidth() - 10 - pColorBar->getWidth(), 12);
+        m_pCursorInfoBox->addChild(pColorBar);
+        pColorBar = new oxygine::ColorRectSprite();
+        pColorBar->setColor(127, 127, 127, 255);
+        pColorBar->setSize((1 - divider) * pAnim->getWidth(), pAnim->getHeight());
+        pColorBar->setPosition(m_pCursorInfoBox->getWidth() - 10 - pAnim->getWidth(), 12);
+        m_pCursorInfoBox->addChild(pColorBar);
+        pSprite = new oxygine::Sprite();
+        pSprite->setResAnim(pAnim);
+        pSprite->setPosition(m_pCursorInfoBox->getWidth() - 10 - pAnim->getWidth(), 12);
+        m_pCursorInfoBox->addChild(pSprite);
+    }
+
+
+    pAnim = pObjectManager->getResAnim("barforeground");
+    if (pUnit != nullptr && !pUnit->isStealthed(pPlayer))
+    {
+
+        float count = pUnit->getHp();
+        float countMax = 10.0f;
+        pTextfield = new oxygine::TextField();
+        pTextfield->setStyle(style);
+        pTextfield->setText((tr("HP: ") + QString::number(count, 'f', 0) + "/" + QString::number(countMax, 'f', 0)).toStdString().c_str());
+        pTextfield->setPosition(10, 10);
+        m_pCursorInfoBox->addChild(pTextfield);
+        oxygine::spColorRectSprite pColorBar = new oxygine::ColorRectSprite();
+        float divider = count / countMax;
+        if (divider > 2.0f / 3.0f)
+        {
+            pColorBar->setColor(0, 255, 0, 255);
+        }
+        else if (divider > 1.0f / 3.0f)
+        {
+            pColorBar->setColor(255, 128, 0, 255);
+        }
+        else
+        {
+            pColorBar->setColor(255, 0, 0, 255);
+        }
+        pColorBar->setSize(divider * pAnim->getWidth(), pAnim->getHeight());
+        pColorBar->setPosition(m_pCursorInfoBox->getWidth() - 10 - pColorBar->getWidth(), 12);
+        m_pCursorInfoBox->addChild(pColorBar);
+        pColorBar = new oxygine::ColorRectSprite();
+        pColorBar->setColor(127, 127, 127, 255);
+        pColorBar->setSize((1 - divider) * pAnim->getWidth(), pAnim->getHeight());
+        pColorBar->setPosition(m_pCursorInfoBox->getWidth() - 10 - pAnim->getWidth(), 12);
+        m_pCursorInfoBox->addChild(pColorBar);
+
+        qint32 countInt = pUnit->getAmmo1();
+        qint32 countMaxInt = pUnit->getMaxAmmo1();
+        pTextfield = new oxygine::TextField();
+        pTextfield->setStyle(style);
+        if (countMaxInt > 0)
+        {
+            pTextfield->setText((tr("Ammo1: ") + QString::number(countInt) + "/" + QString::number(countMaxInt)).toStdString().c_str());
+            pColorBar = new oxygine::ColorRectSprite();
+            divider = static_cast<float>(countInt) / static_cast<float>(countMaxInt);
+            pColorBar->setColor(139, 69, 19, 255);
+            pColorBar->setSize(divider * pAnim->getWidth(), pAnim->getHeight());
+            pColorBar->setPosition(m_pCursorInfoBox->getWidth() - 10 - pColorBar->getWidth(), 37);
+            m_pCursorInfoBox->addChild(pColorBar);
+
+            pColorBar = new oxygine::ColorRectSprite();
+            pColorBar->setColor(127, 127, 127, 255);
+            pColorBar->setSize((1 - divider) * pAnim->getWidth(), pAnim->getHeight());
+            pColorBar->setPosition(m_pCursorInfoBox->getWidth() - 10 - pAnim->getWidth(), 37);
+            m_pCursorInfoBox->addChild(pColorBar);
+        }
+        else
+        {
+            pTextfield->setText(tr("Ammo1: -/-").toStdString().c_str());
+            pColorBar = new oxygine::ColorRectSprite();
+            pColorBar->setColor(127, 127, 127, 255);
+            pColorBar->setSize(pAnim->getWidth(), pAnim->getHeight());
+            pColorBar->setPosition(m_pCursorInfoBox->getWidth() - 10 - pColorBar->getWidth(), 37);
+            m_pCursorInfoBox->addChild(pColorBar);
+        }
+        pTextfield->setPosition(10, 35);
+        m_pCursorInfoBox->addChild(pTextfield);
+
+        countInt = pUnit->getAmmo2();
+        countMaxInt = pUnit->getMaxAmmo2();
+        pTextfield = new oxygine::TextField();
+        pTextfield->setStyle(style);
+        if (countMaxInt > 0)
+        {
+            pTextfield->setText((tr("Ammo2: ") + QString::number(countInt) + "/" + QString::number(countMaxInt)).toStdString().c_str());
+            pColorBar = new oxygine::ColorRectSprite();
+            divider = static_cast<float>(countInt) / static_cast<float>(countMaxInt);
+            pColorBar->setColor(255, 255, 0, 255);
+            pColorBar->setSize(divider * pAnim->getWidth(), pAnim->getHeight());
+            pColorBar->setPosition(m_pCursorInfoBox->getWidth() - 10 - pColorBar->getWidth(), 62);
+            m_pCursorInfoBox->addChild(pColorBar);
+
+            pColorBar = new oxygine::ColorRectSprite();
+            pColorBar->setColor(127, 127, 127, 255);
+            pColorBar->setSize((1 - divider) * pAnim->getWidth(), pAnim->getHeight());
+            pColorBar->setPosition(m_pCursorInfoBox->getWidth() - 10 - pAnim->getWidth(), 62);
+            m_pCursorInfoBox->addChild(pColorBar);
+        }
+        else
+        {
+            pTextfield->setText(tr("Ammo2: -/-").toStdString().c_str());
+            pColorBar = new oxygine::ColorRectSprite();
+            pColorBar->setColor(127, 127, 127, 255);
+            pColorBar->setSize(pAnim->getWidth(), pAnim->getHeight());
+            pColorBar->setPosition(m_pCursorInfoBox->getWidth() - 10 - pColorBar->getWidth(), 62);
+            m_pCursorInfoBox->addChild(pColorBar);
+        }
+        pTextfield->setPosition(10, 60);
+        m_pCursorInfoBox->addChild(pTextfield);
+
+
+        countInt = pUnit->getFuel();
+        countMaxInt = pUnit->getMaxFuel();
+        pTextfield = new oxygine::TextField();
+        pTextfield->setStyle(style);
+        if (countMaxInt > 0)
+        {
+            pTextfield->setText((tr("Fuel: ") + QString::number(countInt) + "/" + QString::number(countMaxInt)).toStdString().c_str());
+
+            pColorBar = new oxygine::ColorRectSprite();
+            divider = static_cast<float>(countInt) / static_cast<float>(countMaxInt);
+            pColorBar->setColor(0, 0, 255, 255);
+            pColorBar->setSize(divider * pAnim->getWidth(), pAnim->getHeight());
+            pColorBar->setPosition(m_pCursorInfoBox->getWidth() - 10 - pColorBar->getWidth(), 87);
+            m_pCursorInfoBox->addChild(pColorBar);
+
+            pColorBar = new oxygine::ColorRectSprite();
+            pColorBar->setColor(127, 127, 127, 255);
+            pColorBar->setSize((1 - divider) * pAnim->getWidth(), pAnim->getHeight());
+            pColorBar->setPosition(m_pCursorInfoBox->getWidth() - 10 - pAnim->getWidth(), 87);
+            m_pCursorInfoBox->addChild(pColorBar);
+        }
+        else
+        {
+            pTextfield->setText(tr("Fuel: -/-").toStdString().c_str());
+            pColorBar = new oxygine::ColorRectSprite();
+            pColorBar->setColor(127, 127, 127, 255);
+            pColorBar->setSize(pAnim->getWidth(), pAnim->getHeight());
+            pColorBar->setPosition(m_pCursorInfoBox->getWidth() - 10 - pColorBar->getWidth(), 87);
+            m_pCursorInfoBox->addChild(pColorBar);
+        }
+        pTextfield->setPosition(10, 85);
+        m_pCursorInfoBox->addChild(pTextfield);
+
+        // draw unit overlay
+        for (qint32 i = 0; i < 4; i++)
+        {
+            pSprite = new oxygine::Sprite();
+            pSprite->setResAnim(pAnim);
+            pSprite->setPosition(m_pCursorInfoBox->getWidth() - 10 - pAnim->getWidth(), 10 + i * 25 + 2);
+            m_pCursorInfoBox->addChild(pSprite);
+        }
+    }
 }

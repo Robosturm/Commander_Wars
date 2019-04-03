@@ -2,6 +2,53 @@
 <resources>
 	<set path = "resources/images/game/" />
 	<atlas>
+		<!-- battle sprite -->
+		<image file="battlesprites/base_air.png" />
+		<image file="battlesprites/base_forest.png" />
+		
+		<image file="battlesprites/foreground/fore_airport.png" />
+		<image file="battlesprites/foreground/fore_beach.png" />
+		<image file="battlesprites/foreground/fore_bridge.png" />
+		<image file="battlesprites/foreground/fore_factory.png" />
+		<image file="battlesprites/foreground/fore_forest.png" />
+		<image file="battlesprites/foreground/fore_forest+0.png" />
+		<image file="battlesprites/foreground/fore_harbour.png" />
+		<image file="battlesprites/foreground/fore_hq+bh.png" />
+		<image file="battlesprites/foreground/fore_hq+bm.png" />
+		<image file="battlesprites/foreground/fore_hq+ge.png" />
+		<image file="battlesprites/foreground/fore_hq+os.png" />
+		<image file="battlesprites/foreground/fore_mountain.png" />
+		<image file="battlesprites/foreground/fore_pipeline.png" />
+		<image file="battlesprites/foreground/fore_plains.png" />
+		<image file="battlesprites/foreground/fore_plains+0.png" />
+		<image file="battlesprites/foreground/fore_plains+1.png" />
+		<image file="battlesprites/foreground/fore_river.png" />
+		<image file="battlesprites/foreground/fore_sea.png" />
+		<image file="battlesprites/foreground/fore_street.png" />
+		<image file="battlesprites/foreground/fore_town.png" />
+		<image file="battlesprites/foreground/fore_town+0.png" />
+		
+		<image file="battlesprites/background/back_airport.png" />
+		<image file="battlesprites/background/back_beach.png" />
+		<image file="battlesprites/background/back_bridge.png" />
+		<image file="battlesprites/background/back_cliff.png" />
+		<image file="battlesprites/background/back_factory.png" />
+		<image file="battlesprites/background/back_forest.png" />
+		<image file="battlesprites/background/back_forest+0.png" />
+		<image file="battlesprites/background/back_harbour.png" />
+		<image file="battlesprites/background/back_hq+bh.png" />
+		<image file="battlesprites/background/back_hq+bm.png" />
+		<image file="battlesprites/background/back_hq+ge.png" />
+		<image file="battlesprites/background/back_hq+os.png" />
+		<image file="battlesprites/background/back_mountain.png" />
+		<image file="battlesprites/background/back_mountain+0.png" />
+		<image file="battlesprites/background/back_plains.png" />
+		<image file="battlesprites/background/back_river.png" />
+		<image file="battlesprites/background/back_sea.png" />
+		<image file="battlesprites/background/back_street.png" />
+		<image file="battlesprites/background/back_town.png" />
+		<image file="battlesprites/background/back_town+0.png" />
+		
 		<!-- weather stuff -->
 		<image file="weather/weather_sandstorm.png" cols = "16" />
 		<image file="weather/weather_rain.png" cols = "16" />

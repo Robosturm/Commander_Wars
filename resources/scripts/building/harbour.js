@@ -30,6 +30,15 @@ var Constructor = function()
     {
         return ["CANNONBOAT", "LANDER", "CRUISER", "SUBMARINE", "DESTROYER", "BATTLESHIP", "AIRCRAFTCARRIER"];
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_harbour";
+    };
+
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_harbour";
+    };
 }
 
 Constructor.prototype = BUILDING;

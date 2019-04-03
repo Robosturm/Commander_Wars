@@ -31,8 +31,12 @@ public:
     void startGame(qint32 startPlayer);
 signals:
     void sigRightClick(qint32 x, qint32 y);
-    void sigLeftClick(qint32 x, qint32 y);
+    void sigLeftClick(qint32 x, qint32 y);    
 public slots:
+    /**
+     * @brief actionPerformed
+     */
+    void actionPerformed();
     /**
      * @brief performAction performs the given action and deletes it afterwards.
      * @param pGameAction

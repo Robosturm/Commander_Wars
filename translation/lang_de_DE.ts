@@ -397,28 +397,64 @@
 <context>
     <name>IngameInfoBar</name>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="115"/>
+        <location filename="../objects/ingameinfobar.cpp" line="116"/>
         <source>Buildings: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="122"/>
+        <location filename="../objects/ingameinfobar.cpp" line="123"/>
         <source>Units: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="129"/>
+        <location filename="../objects/ingameinfobar.cpp" line="130"/>
         <source>Fonds: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="136"/>
+        <location filename="../objects/ingameinfobar.cpp" line="137"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="143"/>
+        <location filename="../objects/ingameinfobar.cpp" line="144"/>
         <source>Team: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ingameinfobar.cpp" line="192"/>
+        <location filename="../objects/ingameinfobar.cpp" line="232"/>
+        <source>HP: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ingameinfobar.cpp" line="264"/>
+        <source>Ammo1: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ingameinfobar.cpp" line="280"/>
+        <source>Ammo1: -/-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ingameinfobar.cpp" line="296"/>
+        <source>Ammo2: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ingameinfobar.cpp" line="312"/>
+        <source>Ammo2: -/-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ingameinfobar.cpp" line="329"/>
+        <source>Fuel: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ingameinfobar.cpp" line="346"/>
+        <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

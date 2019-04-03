@@ -55,6 +55,46 @@ var Constructor = function()
     {
         return "minimap_hq";
     };
+
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        var player = terrain.getBuilduing().getOwner();
+        // get army name
+        var armyName = player.getArmy().toLowerCase();
+        if (armyName === "bg")
+        {
+            armyName = "bh"
+        }
+        if ((armyName !== "os") &&
+            (armyName !== "yc") &&
+            (armyName !== "ge") &&
+            (armyName !== "bm") &&
+            (armyName !== "bh"))
+        {
+            armyName = "os";
+        }
+        return "fore_hq+" + armyName;
+    };
+
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        var player = terrain.getBuilduing().getOwner();
+        // get army name
+        var armyName = player.getArmy().toLowerCase();
+        if (armyName === "bg")
+        {
+            armyName = "bh"
+        }
+        if ((armyName !== "os") &&
+            (armyName !== "yc") &&
+            (armyName !== "ge") &&
+            (armyName !== "bm") &&
+            (armyName !== "bh"))
+        {
+            armyName = "os";
+        }
+        return "back_hq+" + armyName;
+    };
 }
 
 Constructor.prototype = BUILDING;

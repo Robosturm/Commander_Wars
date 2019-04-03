@@ -32,6 +32,16 @@ var Constructor = function()
     {
         return ["T_HELI", "K_HELI", "DUSTER", "TRANSPORTPLANE", "BOMBER", "FIGHTER", "STEALTHBOMBER"];
     };
+
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_airport";
+    };
+
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_airport";
+    };
 }
 
 Constructor.prototype = BUILDING;

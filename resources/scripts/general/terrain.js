@@ -68,4 +68,19 @@ var TERRAIN =
     {
         // called when the terrain is destroyed and replacing of this terrain starts
     },
+
+    getTerrainAnimationBase : function(unit, terrain)
+    {
+        return "base_air";
+    },
+
+    getTerrainAnimationForeground : function(unit, terrain)
+    {
+        return "";
+    },
+
+    getTerrainAnimationBackground : function(unit, terrain)
+    {
+        return "";
+    },
 };

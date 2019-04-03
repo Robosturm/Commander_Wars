@@ -34,6 +34,15 @@ var Constructor = function()
                 "ANTITANKCANNON", "HEAVY_TANK", "HEAVY_HOVERCRAFT", "NEOTANK",
                 "MISSILE", "ROCKETTHROWER", "MEGATANK", "PIPERUNNER"];
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_factory";
+    };
+
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_factory";
+    };
 }
 
 Constructor.prototype = BUILDING;

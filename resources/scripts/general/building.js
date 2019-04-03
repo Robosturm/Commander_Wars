@@ -161,4 +161,27 @@ var BUILDING =
     {
         // called when the building is destroyed and replacing of this building starts
     },
+
+    getTerrainAnimationBase : function(unit, terrain)
+    {
+        return "base_air";
+    },
+
+    getTerrainAnimationForeground : function(unit, terrain)
+    {
+        if (globals.randInt(0, 1) === 0)
+        {
+            return "fore_town";
+        }
+        else
+        {
+            return "fore_town+0";
+        }
+
+    },
+
+    getTerrainAnimationBackground : function(unit, terrain)
+    {
+        return "back_town";
+    },
 };

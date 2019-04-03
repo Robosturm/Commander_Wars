@@ -65,6 +65,7 @@ void GameMenue::loadGameMenue()
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap, &GameMap::centerMap, Qt::QueuedConnection);
     connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, m_IngameInfoBar.get(), &IngameInfoBar::updateMinimap, Qt::QueuedConnection);
     connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, m_IngameInfoBar.get(), &IngameInfoBar::updatePlayerInfo, Qt::QueuedConnection);
+    connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameMenue::actionPerformed, Qt::QueuedConnection);
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, m_IngameInfoBar.get(), &IngameInfoBar::updateCursorInfo, Qt::QueuedConnection);
 }
 
@@ -103,7 +104,8 @@ void GameMenue::performAction(GameAction* pGameAction)
             }
         }
     }
-
+    Mainapp::seed(pGameAction->getSeed());
+    Mainapp::setUseSeed(true);
     pGameAction->perform();
     // clean up the action
     delete pGameAction;
@@ -111,6 +113,11 @@ void GameMenue::performAction(GameAction* pGameAction)
     {
         GameAnimationFactory::getInstance()->removeAnimation(nullptr);
     }
+}
+
+void GameMenue::actionPerformed()
+{
+    Mainapp::setUseSeed(false);
 }
 
 void GameMenue::updatePlayerinfo()

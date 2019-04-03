@@ -29,6 +29,7 @@ private:
     spMinimap m_pMinimap;
     oxygine::spSlidingActor m_pMinimapSlider;
     oxygine::spBox9Sprite m_pGameInfoBox;
+    oxygine::spBox9Sprite m_pCursorInfoBox;
 };
 
 #endif // INGAMEINFOBAR_H

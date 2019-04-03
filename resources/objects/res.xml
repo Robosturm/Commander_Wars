@@ -60,6 +60,8 @@
 		<image file="co_cursor.png"/>
 		<image file="co_selection.png"/>
 		<image file="co_selection+mask.png"/>
+		<!-- ingame stuff -->
+		<image file="barforeground.png"/>
 		
 	</atlas>
 </resources>

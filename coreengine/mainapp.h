@@ -21,7 +21,7 @@ public:
 
 public slots:
     void update();
-
+    static void seed(quint32 seed);
     static qint32 randInt(qint32 low, qint32 high);
     /**
      * @brief roundUp rounds all numbers up. 9.1 -> 10
@@ -123,6 +123,9 @@ public:
     void setup();
 
     void setupNetwork();
+    static bool getUseSeed();
+    static void setUseSeed(bool useSeed);
+
 protected:
     void onEvent(oxygine::Event* ev);
 private:
@@ -130,6 +133,7 @@ private:
     QTimer m_Timer;
     static Mainapp* m_pMainapp;
     static QRandomGenerator randGenerator;
+    static bool m_useSeed;
 
     Interpreter* m_pInterpreter{nullptr};
     AudioThread* m_Audiothread{nullptr};
