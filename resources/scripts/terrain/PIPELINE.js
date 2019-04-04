@@ -25,7 +25,10 @@ var Constructor = function()
     {
         return "minimap_pipeline";
     };
-
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_pipeline";
+    };
 };
 Constructor.prototype = TERRAIN;
 var PIPELINE = new Constructor();

@@ -37,6 +37,14 @@ var Constructor = function()
     {
         return "minimap_bridge";
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_bridge";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_bridge";
+    };
 };
 Constructor.prototype = TERRAIN;
 var BRIDGE = new Constructor();

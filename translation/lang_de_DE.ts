@@ -422,38 +422,38 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="192"/>
-        <location filename="../objects/ingameinfobar.cpp" line="232"/>
+        <location filename="../objects/ingameinfobar.cpp" line="201"/>
+        <location filename="../objects/ingameinfobar.cpp" line="241"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="264"/>
+        <location filename="../objects/ingameinfobar.cpp" line="273"/>
         <source>Ammo1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="280"/>
+        <location filename="../objects/ingameinfobar.cpp" line="289"/>
         <source>Ammo1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="296"/>
+        <location filename="../objects/ingameinfobar.cpp" line="305"/>
         <source>Ammo2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="312"/>
+        <location filename="../objects/ingameinfobar.cpp" line="321"/>
         <source>Ammo2: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="329"/>
+        <location filename="../objects/ingameinfobar.cpp" line="338"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="346"/>
+        <location filename="../objects/ingameinfobar.cpp" line="355"/>
         <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
@@ -918,6 +918,14 @@
     <message>
         <location filename="../resources/scripts/units/bomber.js" line="37"/>
         <source>Bomber</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>building</name>
+    <message>
+        <location filename="../resources/scripts/general/building.js" line="155"/>
+        <source>RATION</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

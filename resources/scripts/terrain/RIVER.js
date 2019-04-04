@@ -49,6 +49,14 @@ var Constructor = function()
     {
         return "minimap_river";
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_river";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_river";
+    };
 };
 Constructor.prototype = TERRAIN;
 var RIVER = new Constructor();

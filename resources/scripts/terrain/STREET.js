@@ -18,6 +18,10 @@ var Constructor = function()
     {
         return "minimap_street";
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_street";
+    };
 };
 Constructor.prototype = TERRAIN;
 var STREET = new Constructor();

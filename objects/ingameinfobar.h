@@ -30,6 +30,8 @@ private:
     oxygine::spSlidingActor m_pMinimapSlider;
     oxygine::spBox9Sprite m_pGameInfoBox;
     oxygine::spBox9Sprite m_pCursorInfoBox;
+    qint32 m_LastX{-1};
+    qint32 m_LastY{-1};
 };
 
 #endif // INGAMEINFOBAR_H

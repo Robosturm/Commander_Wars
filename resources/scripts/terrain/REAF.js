@@ -49,6 +49,14 @@ var Constructor = function()
     {
         return "minimap_reaf";
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_sea";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_sea";
+    };
 };
 Constructor.prototype = TERRAIN;
 var REAF = new Constructor();

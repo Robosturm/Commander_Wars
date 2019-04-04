@@ -458,6 +458,11 @@ qint32 Terrain::getDefense(Unit* pUnit)
     {
         defense += pUnit->getTerrainDefenseModifier(QPoint(x, y));
     }
+    // defense can't be negative
+    if (defense < 0)
+    {
+        defense = 0;
+    }
     return defense;
 }
 
@@ -574,6 +579,66 @@ QString Terrain::getID()
     else
     {
         return m_Building->getBuildingID();
+    }
+}
+
+QString Terrain::getTerrainAnimationBase()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getTerrainAnimationBase";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(nullptr);
+    args1 << obj1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
+    QJSValue erg = pApp->getInterpreter()->doFunction(terrainID, function1, args1);
+    if (erg.isString())
+    {
+        return erg.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
+QString Terrain::getTerrainAnimationForeground()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getTerrainAnimationForeground";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(nullptr);
+    args1 << obj1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
+    QJSValue erg = pApp->getInterpreter()->doFunction(terrainID, function1, args1);
+    if (erg.isString())
+    {
+        return erg.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
+QString Terrain::getTerrainAnimationBackground()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getTerrainAnimationBackground";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(nullptr);
+    args1 << obj1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
+    QJSValue erg = pApp->getInterpreter()->doFunction(terrainID, function1, args1);
+    if (erg.isString())
+    {
+        return erg.toString();
+    }
+    else
+    {
+        return "";
     }
 }
 

@@ -35,6 +35,14 @@ var Constructor = function()
     {
         return "minimap_fog";
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_sea";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_sea";
+    };
 };
 Constructor.prototype = TERRAIN;
 var FOG = new Constructor();

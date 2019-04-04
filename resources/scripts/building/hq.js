@@ -58,7 +58,7 @@ var Constructor = function()
 
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
-        var player = terrain.getBuilduing().getOwner();
+        var player = terrain.getBuilding().getOwner();
         // get army name
         var armyName = player.getArmy().toLowerCase();
         if (armyName === "bg")
@@ -78,7 +78,7 @@ var Constructor = function()
 
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        var player = terrain.getBuilduing().getOwner();
+        var player = terrain.getBuilding().getOwner();
         // get army name
         var armyName = player.getArmy().toLowerCase();
         if (armyName === "bg")

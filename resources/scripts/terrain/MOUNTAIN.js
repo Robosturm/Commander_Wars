@@ -35,6 +35,14 @@ var Constructor = function()
             return 0;
         }
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_mountain";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_mountain";
+    };
 };
 Constructor.prototype = TERRAIN;
 var MOUNTAIN = new Constructor();

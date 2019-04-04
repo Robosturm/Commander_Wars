@@ -185,6 +185,21 @@ public slots:
      * @return
      */
     QPoint getActionTargetOffset();
+    /**
+     * @brief getTerrainAnimationBase
+     * @return
+     */
+    QString getTerrainAnimationBase();
+    /**
+     * @brief getTerrainAnimationForeground
+     * @return
+     */
+    QString getTerrainAnimationForeground();
+    /**
+     * @brief getTerrainAnimationBackground
+     * @return
+     */
+    QString getTerrainAnimationBackground();
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     /**

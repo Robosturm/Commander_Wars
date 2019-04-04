@@ -17,6 +17,7 @@
 		<image file="battlesprites/foreground/fore_hq+bm.png" />
 		<image file="battlesprites/foreground/fore_hq+ge.png" />
 		<image file="battlesprites/foreground/fore_hq+os.png" />
+		<image file="battlesprites/foreground/fore_hq+yc.png" />
 		<image file="battlesprites/foreground/fore_mountain.png" />
 		<image file="battlesprites/foreground/fore_pipeline.png" />
 		<image file="battlesprites/foreground/fore_plains.png" />
@@ -71,6 +72,7 @@
 		<!-- on map stuff -->
 		<image file="marked+field.png" cols = "2" />
 		<image file="co+range+marker.png" cols = "4" />
+		<image file="defenseStar.png" />
 		
 		<image file="arrow+unit.png" cols = "10" />
 		<!-- Human Player menu -->

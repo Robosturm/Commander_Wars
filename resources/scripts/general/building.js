@@ -141,14 +141,18 @@ var BUILDING =
         var unit = building.getTerrain().getUnit();
         if ((unit !== null) &&
             (unit.getOwner() === building.getOwner()) &&
-            (constructionList.indexOf(unit.getUnitID()) > 0))
+            (constructionList.indexOf(unit.getUnitID()) >= 0))
         {
             // our unit and a repairable one
             // replenish it
             unit.refill();
-            var repairAmount = 2 + unit.getRepairBonus(Qt.point(unit.getX(), unit.getY()));
+            var x = unit.getX();
+            var y = unit.getY();
+            var repairAmount = 2 + unit.getRepairBonus(Qt.point(x, y));
             UNIT.repairUnit(unit, repairAmount);
-
+            var animation = GameAnimationFactory.createAnimation(x, y);
+            animation.addSprite("ration", map.getImageSize() / 2, map.getImageSize() / 3, 400);
+            animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 15, map.getImageSize() / 3, 0.7);
         }
     },
 
@@ -177,7 +181,6 @@ var BUILDING =
         {
             return "fore_town+0";
         }
-
     },
 
     getTerrainAnimationBackground : function(unit, terrain)

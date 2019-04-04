@@ -320,6 +320,66 @@ qint32 Unit::getCosts() const
     }
 }
 
+QString Unit::getTerrainAnimationBase()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getTerrainAnimationBase";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(m_pTerrain);
+    args1 << obj2;
+    QJSValue erg = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    if (erg.isString())
+    {
+        return erg.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
+QString Unit::getTerrainAnimationForeground()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getTerrainAnimationForeground";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(m_pTerrain);
+    args1 << obj2;
+    QJSValue erg = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    if (erg.isString())
+    {
+        return erg.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
+QString Unit::getTerrainAnimationBackground()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getTerrainAnimationBackground";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(m_pTerrain);
+    args1 << obj2;
+    QJSValue erg = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    if (erg.isString())
+    {
+        return erg.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
 Terrain* Unit::getTerrain()
 {
     return m_pTerrain;
@@ -446,6 +506,16 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
     return bonus;
 }
 
+qint32 Unit::getTerrainDefense()
+{
+    GameMap* pMap = GameMap::getInstance();
+    if (useTerrainDefense())
+    {
+        return pMap->getTerrain(getX(), getY())->getDefense(this);
+    }
+    return 0;
+}
+
 qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition)
 {
     qint32 bonus = 0;
@@ -475,7 +545,7 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
     }
     if (useTerrainDefense())
     {
-        bonus += pMap->getTerrain(position.x(), position.y())->getDefense(this) * 10;
+        bonus += getTerrainDefense() * 10;
     }
     bonus += pMap->getGameRules()->getCurrentWeather()->getDefensiveModifier();
     switch (m_UnitRank)

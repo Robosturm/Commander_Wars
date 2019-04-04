@@ -26,6 +26,19 @@ var Constructor = function()
     {
         return true;
     };
+
+    this.getTerrainAnimationBase = function(unit, terrain)
+    {
+        return "base_forest";
+    };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_forest";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_forest";
+    };
 };
 Constructor.prototype = TERRAIN;
 var FOREST = new Constructor();

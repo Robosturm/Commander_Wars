@@ -74,6 +74,20 @@ var Constructor = function()
     {
         return ["T_HELI", "K_HELI", "BOMBER", "DUSTER", "FIGHTER", "WATERPLANE", "STEALTHBOMBER"];
     };
+    this.getTerrainAnimationBase = function(unit, terrain)
+    {
+        return "base_air";
+    };
+
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_sea";
+    };
+
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_sea";
+    };
 }
 
 Constructor.prototype = UNIT;

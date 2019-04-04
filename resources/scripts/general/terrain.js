@@ -76,11 +76,53 @@ var TERRAIN =
 
     getTerrainAnimationForeground : function(unit, terrain)
     {
-        return "";
+        var rand = globals.randInt(0, 2);
+        if (rand === 2)
+        {
+            return "fore_plains";
+        }
+        else
+        {
+            return "fore_plains+" + rand.toString();
+        }
     },
 
     getTerrainAnimationBackground : function(unit, terrain)
     {
-        return "";
+
+        var id = "PLAINS";
+
+        var y = terrain.getY() - 1;
+        var x = terrain.getX();
+        if (map.onMap(x, y))
+        {
+            var upTerrain = map.getTerrain(x, y);
+            id = upTerrain.getID();
+            if (upTerrain.getBuilding() !== null)
+            {
+                id = "BUILDING";
+            }
+        }
+        switch (id)
+        {
+            case "BRIDGE":
+                return "back_bridge";
+            case "SEA":
+            case "BEACH":
+            case "FOG":
+            case "REAF":
+            case "ROUGH_SEA":
+                return "back_cliff";
+            case "FOREST":
+                return "back_forest+0";
+            case "MOUNTAIN":
+                return "back_mountain+0";
+            case "BUILDING":
+                return "back_town+0";
+            case "STREET":
+                return "back_street";
+            default:
+                return "back_plains";
+        }
     },
 };

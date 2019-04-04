@@ -55,6 +55,10 @@ var Constructor = function()
         animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
         audio.playSound("explosion+land.wav");
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_pipeline";
+    };
 };
 Constructor.prototype = TERRAIN;
 var WELD = new Constructor();

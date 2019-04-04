@@ -76,6 +76,20 @@ var Constructor = function()
         animation.setSound("movecopter.wav", -2);
         return animation;
     };
+    this.getTerrainAnimationBase = function(unit, terrain)
+    {
+        return "base_air";
+    };
+
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "";
+    };
+
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "";
+    };
 }
 
 Constructor.prototype = UNIT;

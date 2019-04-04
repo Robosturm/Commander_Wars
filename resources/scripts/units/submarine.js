@@ -76,6 +76,20 @@ var Constructor = function()
     {
         return true;
     };
+    this.getTerrainAnimationBase = function(unit, terrain)
+    {
+        return "base_air";
+    };
+
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_sea";
+    };
+
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_sea";
+    };
 }
 
 Constructor.prototype = UNIT;

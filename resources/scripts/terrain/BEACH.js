@@ -68,6 +68,16 @@ var Constructor = function()
     {
         return "minimap_beach";
     };
+
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_beach";
+    };
+
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_beach";
+    };
 };
 Constructor.prototype = TERRAIN;
 var BEACH = new Constructor();

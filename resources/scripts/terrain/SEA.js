@@ -81,6 +81,14 @@ var Constructor = function()
     {
         return "minimap_sea";
     };
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "fore_sea";
+    };
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "back_sea";
+    };
 };
 Constructor.prototype = TERRAIN;
 var SEA = new Constructor();

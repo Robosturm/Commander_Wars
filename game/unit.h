@@ -281,6 +281,11 @@ public slots:
      */
     qint32 getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender);
     /**
+     * @brief getTerrainDefense
+     * @return
+     */
+    qint32 getTerrainDefense();
+    /**
      * @brief getBonusDeffensive
      * @param position
      * @return defense bonus at this position
@@ -352,6 +357,21 @@ public slots:
     {
         return &m_Variables;
     }
+    /**
+     * @brief getTerrainAnimationBase
+     * @return
+     */
+    QString getTerrainAnimationBase();
+    /**
+     * @brief getTerrainAnimationForeground
+     * @return
+     */
+    QString getTerrainAnimationForeground();
+    /**
+     * @brief getTerrainAnimationBackground
+     * @return
+     */
+    QString getTerrainAnimationBackground();
 protected:
     /**
      * @brief updateIconTweens creates the visibility toogle tweens for all icons

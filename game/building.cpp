@@ -375,6 +375,66 @@ QPoint Building::getActionTargetOffset()
     return ret.toVariant().toPoint();
 }
 
+QString Building::getTerrainAnimationBase()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getTerrainAnimationBase";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(nullptr);
+    args1 << obj1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(m_pTerrain);
+    args1 << obj2;
+    QJSValue erg = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
+    if (erg.isString())
+    {
+        return erg.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
+QString Building::getTerrainAnimationForeground()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getTerrainAnimationForeground";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(nullptr);
+    args1 << obj1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(m_pTerrain);
+    args1 << obj2;
+    QJSValue erg = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
+    if (erg.isString())
+    {
+        return erg.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
+QString Building::getTerrainAnimationBackground()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getTerrainAnimationBackground";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(nullptr);
+    args1 << obj1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(m_pTerrain);
+    args1 << obj2;
+    QJSValue erg = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
+    if (erg.isString())
+    {
+        return erg.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
 Terrain* Building::getTerrain()
 {
     return m_pTerrain;

@@ -207,6 +207,21 @@ public slots:
      * @return a path finding system that contains
      */
     TerrainFindingSystem* createTerrainFindingSystem();
+    /**
+     * @brief getTerrainAnimationBase
+     * @return
+     */
+    QString getTerrainAnimationBase();
+    /**
+     * @brief getTerrainAnimationForeground
+     * @return
+     */
+    QString getTerrainAnimationForeground();
+    /**
+     * @brief getTerrainAnimationBackground
+     * @return
+     */
+    QString getTerrainAnimationBackground();
 protected:
     /**
      * @brief createBuildingDownStream

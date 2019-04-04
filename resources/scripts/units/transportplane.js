@@ -78,6 +78,20 @@ var Constructor = function()
         unit.setFuel(unit.getFuel() - fuelCosts);
         UNIT.transporterRefilling(unit);
     };
+    this.getTerrainAnimationBase = function(unit, terrain)
+    {
+        return "base_air";
+    };
+
+    this.getTerrainAnimationForeground = function(unit, terrain)
+    {
+        return "";
+    };
+
+    this.getTerrainAnimationBackground = function(unit, terrain)
+    {
+        return "";
+    };
 }
 
 Constructor.prototype = UNIT;
