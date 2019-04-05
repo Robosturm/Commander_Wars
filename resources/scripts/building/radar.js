@@ -24,6 +24,11 @@ var Constructor = function()
     {
         return 1;
     };
+
+    this.getName = function()
+    {
+        return qsTr("Radar");
+    };
 }
 
 Constructor.prototype = BUILDING;

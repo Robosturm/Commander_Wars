@@ -23,6 +23,10 @@ var Constructor = function()
     {
         building.setFireCount(building.getFireCount() + 1);
     };
+    this.getName = function()
+    {
+        return qsTr("Death Ray");
+    };
     this.getActionTargetFields = function(building)
     {
 		var targets = globals.getEmptyPointArray();

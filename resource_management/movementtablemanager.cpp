@@ -21,6 +21,21 @@ MovementTableManager* MovementTableManager::getInstance()
     return m_pInstance;
 }
 
+QString MovementTableManager::getMovementName(QString movementID)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getName";
+    QJSValue ret = pApp->getInterpreter()->doFunction(movementID, function1);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
 void MovementTableManager::loadAll()
 {
     reset();

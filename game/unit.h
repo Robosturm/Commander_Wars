@@ -80,6 +80,11 @@ signals:
 
 public slots:
     /**
+     * @brief getName
+     * @return
+     */
+    QString getName();
+    /**
      * @brief getTerrainDefenseModifier the bonus defense for this unit
      * @return
      */

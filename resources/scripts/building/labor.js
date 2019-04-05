@@ -15,6 +15,10 @@ var Constructor = function()
             building.loadSprite("labor+neutral", false);
         }
     };
+    this.getName = function()
+    {
+        return qsTr("Labor");
+    };
 }
 
 Constructor.prototype = BUILDING;

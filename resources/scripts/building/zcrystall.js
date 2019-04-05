@@ -23,6 +23,10 @@ var Constructor = function()
     {
         building.setFireCount(1);
     };
+    this.getName = function()
+    {
+        return qsTr("Crystall");
+    };
     this.getActionTargetFields = function(building)
     {
         return globals.getCircle(1, 2);

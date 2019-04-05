@@ -151,6 +151,21 @@ bool Building::canBuildingBePlaced(Terrain* pTerrain)
     }
 }
 
+QString Building::getName()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getName";
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
 quint32 Building::getBaseIncome() const
 {
     Mainapp* pApp = Mainapp::getInstance();

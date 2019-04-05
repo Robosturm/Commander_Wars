@@ -20,6 +20,10 @@ var Constructor = function()
         animation.addBuildingSprite("harbour+mask", startColor , capturedColor, true);
         animation.addBuildingSprite("harbour", startColor , capturedColor, false);
     };
+    this.getName = function()
+    {
+        return qsTr("Harbour");
+    };
 
     this.getActions = function()
     {

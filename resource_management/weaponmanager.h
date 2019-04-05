@@ -30,6 +30,12 @@ public:
     {
         return m_loadedWeapons.size();
     }
+    /**
+     * @brief getWeaponName
+     * @param weaponID
+     * @return
+     */
+    QString getWeaponName(QString weaponID);
 private:
     explicit WeaponManager();
     virtual ~WeaponManager() = default;

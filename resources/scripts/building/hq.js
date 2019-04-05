@@ -21,6 +21,10 @@ var Constructor = function()
             building.loadSprite("hq+neutral", false);
         }
     };
+    this.getName = function()
+    {
+        return qsTr("HQ");
+    };
     this.addCaptureAnimationBuilding = function(animation, building, startColor, capturedColor)
     {
         var player = building.getOwner();

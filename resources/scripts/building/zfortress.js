@@ -21,6 +21,10 @@ var Constructor = function()
     {
         return 0;
     };
+    this.getName = function()
+    {
+        return qsTr("Fortress");
+    };
     this.getBuildingWidth = function()
     {
         // one field width default for most buildings

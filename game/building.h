@@ -64,6 +64,11 @@ signals:
 
 public slots:
     /**
+     * @brief getName
+     * @return
+     */
+    QString getName();
+    /**
      * @brief setOwner changes the owner ship of this building
      * @param pOwner
      */

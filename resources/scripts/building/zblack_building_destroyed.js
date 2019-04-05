@@ -31,6 +31,11 @@ var Constructor = function()
     {
         return "minimap_blackholebuilding";
     };
+
+    this.getName = function()
+    {
+        return qsTr("Ruins");
+    };
 }
 
 Constructor.prototype = BUILDING;

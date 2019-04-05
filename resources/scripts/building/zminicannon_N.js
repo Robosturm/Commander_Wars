@@ -31,6 +31,10 @@ var Constructor = function()
     {
         return "minimap_blackholebuilding";
     };
+    this.getName = function()
+    {
+        return qsTr("Mini Cannon");
+    };
     this.onDestroyed = function(building)
     {
         // called when the terrain is destroyed and replacing of this terrain starts

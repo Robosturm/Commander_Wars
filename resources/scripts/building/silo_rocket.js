@@ -18,6 +18,11 @@ var Constructor = function()
     {
         return "minimap_silo";
     };
+
+    this.getName = function()
+    {
+        return qsTr("Silo");
+    };
 }
 
 Constructor.prototype = BUILDING;

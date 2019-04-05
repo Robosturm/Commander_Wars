@@ -397,64 +397,95 @@
 <context>
     <name>IngameInfoBar</name>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="116"/>
+        <location filename="../objects/ingameinfobar.cpp" line="118"/>
         <source>Buildings: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="123"/>
+        <location filename="../objects/ingameinfobar.cpp" line="125"/>
         <source>Units: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="130"/>
+        <location filename="../objects/ingameinfobar.cpp" line="132"/>
         <source>Fonds: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="137"/>
+        <location filename="../objects/ingameinfobar.cpp" line="139"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="144"/>
+        <location filename="../objects/ingameinfobar.cpp" line="146"/>
         <source>Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="201"/>
-        <location filename="../objects/ingameinfobar.cpp" line="241"/>
+        <location filename="../objects/ingameinfobar.cpp" line="203"/>
+        <location filename="../objects/ingameinfobar.cpp" line="243"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="273"/>
+        <location filename="../objects/ingameinfobar.cpp" line="275"/>
         <source>Ammo1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="289"/>
+        <location filename="../objects/ingameinfobar.cpp" line="291"/>
         <source>Ammo1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="305"/>
+        <location filename="../objects/ingameinfobar.cpp" line="307"/>
         <source>Ammo2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="321"/>
+        <location filename="../objects/ingameinfobar.cpp" line="323"/>
         <source>Ammo2: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="338"/>
+        <location filename="../objects/ingameinfobar.cpp" line="340"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="355"/>
+        <location filename="../objects/ingameinfobar.cpp" line="357"/>
         <source>Fuel: -/-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ingameinfobar.cpp" line="475"/>
+        <location filename="../objects/ingameinfobar.cpp" line="546"/>
+        <source>Resistance: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ingameinfobar.cpp" line="495"/>
+        <source>Weapon 1: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ingameinfobar.cpp" line="507"/>
+        <source>Weapon 2: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ingameinfobar.cpp" line="517"/>
+        <source>Move: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ingameinfobar.cpp" line="526"/>
+        <source>Movementpoints: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ingameinfobar.cpp" line="535"/>
+        <source>Vision: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -882,6 +913,14 @@
     </message>
 </context>
 <context>
+    <name>airport</name>
+    <message>
+        <location filename="../resources/scripts/building/airport.js" line="26"/>
+        <source>Airport</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>antitankcannon</name>
     <message>
         <location filename="../resources/scripts/units/antitankcannon.js" line="50"/>
@@ -924,7 +963,7 @@
 <context>
     <name>building</name>
     <message>
-        <location filename="../resources/scripts/general/building.js" line="155"/>
+        <location filename="../resources/scripts/general/building.js" line="159"/>
         <source>RATION</source>
         <translation type="unfinished"></translation>
     </message>
@@ -962,6 +1001,14 @@
     </message>
 </context>
 <context>
+    <name>factory</name>
+    <message>
+        <location filename="../resources/scripts/building/factory.js" line="20"/>
+        <source>Base</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>fighter</name>
     <message>
         <location filename="../resources/scripts/units/fighter.js" line="37"/>
@@ -982,6 +1029,14 @@
     <message>
         <location filename="../resources/scripts/units/flare.js" line="47"/>
         <source>Flare</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>harbour</name>
+    <message>
+        <location filename="../resources/scripts/building/harbour.js" line="25"/>
+        <source>Harbour</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1026,6 +1081,14 @@
     </message>
 </context>
 <context>
+    <name>hq</name>
+    <message>
+        <location filename="../resources/scripts/building/hq.js" line="26"/>
+        <source>HQ</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>infantry</name>
     <message>
         <location filename="../resources/scripts/units/infantry.js" line="81"/>
@@ -1038,6 +1101,14 @@
     <message>
         <location filename="../resources/scripts/units/k_heli.js" line="37"/>
         <source>Battle Copter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>labor</name>
+    <message>
+        <location filename="../resources/scripts/building/labor.js" line="20"/>
+        <source>Labor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1070,6 +1141,14 @@
     <message>
         <location filename="../resources/scripts/units/megatank.js" line="47"/>
         <source>Megatank</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>mine</name>
+    <message>
+        <location filename="../resources/scripts/building/mine.js" line="24"/>
+        <source>Mine</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1202,6 +1281,22 @@
     </message>
 </context>
 <context>
+    <name>pipestation</name>
+    <message>
+        <location filename="../resources/scripts/building/pipestation.js" line="34"/>
+        <source>Pipestation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>radar</name>
+    <message>
+        <location filename="../resources/scripts/building/radar.js" line="30"/>
+        <source>Radar</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>recon</name>
     <message>
         <location filename="../resources/scripts/units/recon.js" line="47"/>
@@ -1214,6 +1309,22 @@
     <message>
         <location filename="../resources/scripts/units/rocketthrower.js" line="37"/>
         <source>Rocketthrower</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>silo</name>
+    <message>
+        <location filename="../resources/scripts/building/silo.js" line="24"/>
+        <source>Silo</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>silo_rocket</name>
+    <message>
+        <location filename="../resources/scripts/building/silo_rocket.js" line="24"/>
+        <source>Silo</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1246,6 +1357,22 @@
     <message>
         <location filename="../resources/scripts/units/t_heli.js" line="37"/>
         <source>Transport Copter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>tower</name>
+    <message>
+        <location filename="../resources/scripts/building/tower.js" line="35"/>
+        <source>Tower</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>town</name>
+    <message>
+        <location filename="../resources/scripts/building/town.js" line="27"/>
+        <source>Town</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1630,6 +1757,158 @@
     <message>
         <location filename="../resources/scripts/gamerules/weather/weather_snow.js" line="6"/>
         <source>Snow</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zblack_building_destroyed</name>
+    <message>
+        <location filename="../resources/scripts/building/zblack_building_destroyed.js" line="37"/>
+        <source>Ruins</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zblackhole_cannon_E</name>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_cannon_E.js" line="24"/>
+        <source>Black Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zblackhole_cannon_N</name>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_cannon_N.js" line="28"/>
+        <source>Black Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zblackhole_cannon_S</name>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_cannon_S.js" line="28"/>
+        <source>Black Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zblackhole_cannon_W</name>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_cannon_W.js" line="28"/>
+        <source>Black Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zcrystall</name>
+    <message>
+        <location filename="../resources/scripts/building/zcrystall.js" line="28"/>
+        <source>Crystall</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zdeathray_E</name>
+    <message>
+        <location filename="../resources/scripts/building/zdeathray_E.js" line="28"/>
+        <source>Death Ray</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zdeathray_N</name>
+    <message>
+        <location filename="../resources/scripts/building/zdeathray_N.js" line="28"/>
+        <source>Death Ray</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zdeathray_S</name>
+    <message>
+        <location filename="../resources/scripts/building/zdeathray_S.js" line="28"/>
+        <source>Death Ray</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zdeathray_W</name>
+    <message>
+        <location filename="../resources/scripts/building/zdeathray_W.js" line="28"/>
+        <source>Death Ray</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zfortress</name>
+    <message>
+        <location filename="../resources/scripts/building/zfortress.js" line="26"/>
+        <source>Fortress</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zlaser</name>
+    <message>
+        <location filename="../resources/scripts/building/zlaser.js" line="28"/>
+        <source>Laser</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zminicannon_E</name>
+    <message>
+        <location filename="../resources/scripts/building/zminicannon_E.js" line="32"/>
+        <source>Mini Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zminicannon_N</name>
+    <message>
+        <location filename="../resources/scripts/building/zminicannon_N.js" line="36"/>
+        <source>Mini Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zminicannon_S</name>
+    <message>
+        <location filename="../resources/scripts/building/zminicannon_S.js" line="36"/>
+        <source>Mini Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zminicannon_W</name>
+    <message>
+        <location filename="../resources/scripts/building/zminicannon_W.js" line="36"/>
+        <source>Mini Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zmonolith</name>
+    <message>
+        <location filename="../resources/scripts/building/zmonolith.js" line="32"/>
+        <source>Black Obelisk</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zomega_base</name>
+    <message>
+        <location filename="../resources/scripts/building/zomega_base.js" line="26"/>
+        <source>Omega Base</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zvolcan</name>
+    <message>
+        <location filename="../resources/scripts/building/zvolcan.js" line="28"/>
+        <source>Volcan</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

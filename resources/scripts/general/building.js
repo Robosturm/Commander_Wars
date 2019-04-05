@@ -6,6 +6,10 @@ var BUILDING =
     init : function (building)
     {
     },
+    getName : function()
+    {
+        return "";
+    },
     // returns the defense of this terrain
     getDefense : function()
     {

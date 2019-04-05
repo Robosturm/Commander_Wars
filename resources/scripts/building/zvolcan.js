@@ -23,6 +23,10 @@ var Constructor = function()
         // one field heigth default for most buildings
         return 4;
     };
+    this.getName = function()
+    {
+        return qsTr("Volcan");
+    };
     this.canBuildingBePlaced = function(terrain)
     {
         return BUILDING.canLargeBuildingPlaced(terrain, ZVOLCAN.getBuildingWidth(), ZVOLCAN.getBuildingHeigth());

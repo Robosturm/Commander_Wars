@@ -29,6 +29,10 @@ var Constructor = function()
     {
         return 2000;
     };
+    this.getName = function()
+    {
+        return qsTr("Pipestation");
+    };
 }
 
 Constructor.prototype = BUILDING;

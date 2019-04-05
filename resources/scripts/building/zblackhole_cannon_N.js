@@ -23,6 +23,10 @@ var Constructor = function()
     {
         building.setFireCount(1);
     };
+    this.getName = function()
+    {
+        return qsTr("Black Cannon");
+    };
     this.getActionTargetFields = function(building)
     {
         return globals.getShotFields(1, 10, 0, -1);

@@ -21,6 +21,11 @@ var Constructor = function()
                 "ARTILLERY", "LIGHT_TANK", "FLAK", "ANTITANKCANNON",
                 "HEAVY_TANK", "MISSILE", "ROCKETTHROWER", "MEGATANK"];
     };
+
+    this.getName = function()
+    {
+        return qsTr("Town");
+    };
 }
 
 Constructor.prototype = BUILDING;

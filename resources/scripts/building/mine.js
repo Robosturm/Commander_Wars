@@ -19,6 +19,10 @@ var Constructor = function()
     {
         return 3000;
     };
+    this.getName = function()
+    {
+        return qsTr("Mine");
+    };
 }
 
 Constructor.prototype = BUILDING;

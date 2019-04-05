@@ -15,6 +15,10 @@ var Constructor = function()
             building.loadSprite("factory+neutral", false);
         }
     };
+    this.getName = function()
+    {
+        return qsTr("Base");
+    };
     this.addCaptureAnimationBuilding = function(animation, building, startColor, capturedColor)
     {
         animation.addBuildingSprite("factory+mask", startColor , capturedColor, true);

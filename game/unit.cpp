@@ -131,6 +131,21 @@ Player* Unit::getOwner()
     return m_pOwner;
 }
 
+QString Unit::getName()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getName";
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
 qint32 Unit::getFuelCostModifier(QPoint position, qint32 costs)
 {
     qint32 modifier = 0;

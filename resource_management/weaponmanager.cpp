@@ -22,6 +22,21 @@ WeaponManager* WeaponManager::getInstance()
     return m_pInstance;
 }
 
+QString WeaponManager::getWeaponName(QString weaponID)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getName";
+    QJSValue ret = pApp->getInterpreter()->doFunction(weaponID, function1);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
 void WeaponManager::reset()
 {
     Mainapp* pMainapp = Mainapp::getInstance();

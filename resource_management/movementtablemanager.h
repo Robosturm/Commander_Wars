@@ -17,6 +17,12 @@ public:
      */
     static MovementTableManager* getInstance();
     /**
+     * @brief getMovementName
+     * @param movementID
+     * @return
+     */
+    QString getMovementName(QString movementID);
+    /**
      * @brief loadAll loads all movement table data
      */
     void loadAll();

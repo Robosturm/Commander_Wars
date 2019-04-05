@@ -27,6 +27,10 @@ var Constructor = function()
     {
         return globals.getCircle(1, 3);
     };
+    this.getName = function()
+    {
+        return qsTr("Black Obelisk");
+    };
     this.getActionTargetOffset = function(building)
     {
         // offset for large buildings since there reference point is bound to the lower right corner.

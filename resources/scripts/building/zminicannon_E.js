@@ -27,6 +27,10 @@ var Constructor = function()
     {
         return globals.getShotFields(1, 4, 1);
     };
+    this.getName = function()
+    {
+        return qsTr("Mini Cannon");
+    };
     this.getMiniMapIcon = function()
     {
         return "minimap_blackholebuilding";
