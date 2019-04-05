@@ -16,19 +16,19 @@ var Constructor = function()
 			case "INFANTRY":
 				return WEAPON.mediumDamage;
 			case "MECH":
-				return WEAPON.mediumDamage;
+				return WEAPON.lowDamage;
 			case "MOTORBIKE":
-				return WEAPON.mediumDamage;
+				return WEAPON.HighDamage;
 			case "SNIPER":
-				return WEAPON.mediumDamage;
+				return WEAPON.HighDamage;
 
 			// supporter
 			case "APC":
-				return WEAPON.lowDamage;
+				return 10;
 			case "FLARE":
-				return WEAPON.lowDamage;
+				return 10;
 			case "RECON":
-				return WEAPON.lowDamage;
+				return 10;
 
 			// tanks
 			case "FLAK":
@@ -51,34 +51,22 @@ var Constructor = function()
 			// very heavy tanks
 			case "MEGATANK":
 				return 1;
-
+				
+			// heli copter
+			case "T_HELI":
+				return 30;
+			case "K_HELI":
+				return 10;
+				
 			// ranged land units
 			case "ARTILLERY":
-				return WEAPON.lowDamage;
+				return 10;
 			case "ANITANKCANNON":
-                return 5;
+                return 45;
 			case "MISSILE":
                 return 20;
             case "ROCKETTHROWER":
 				return 20;
-				
-			// air
-			case "DUSTER":
-				return WEAPON.mediumDamage;
-			case "FIGHTER":
-				return WEAPON.lowDamage;
-			case "BOMBER":
-				return WEAPON.mediumDamage;
-			case "STEALTHBOMBER":
-				return WEAPON.mediumDamage;
-			case "TRANSPORTPLANE":
-				return WEAPON.mediumDamage;
-			case "WATERPLANE":
-				return WEAPON.HighDamage;
-			case "K_HELI":
-				return 85;
-			case "T_HELI":
-				return 95;
 			default:
 				return -1;
         }
@@ -86,4 +74,4 @@ var Constructor = function()
 };
 
 Constructor.prototype = WEAPON;
-var WEAPON_AIRPLANE_MG = new Constructor();
+var WEAPON_INFANTRY_MG = new Constructor();

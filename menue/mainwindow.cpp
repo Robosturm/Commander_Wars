@@ -9,6 +9,7 @@
 
 #include "menue/gamemenue.h"
 #include "menue/editormenue.h"
+#include "menue/optionmenue.h"
 #include "menue/mapselectionmapsmenue.h"
 
 #include "game/co.h"
@@ -58,6 +59,17 @@ Mainwindow::Mainwindow()
     connect(this, SIGNAL(sigEnterEditor()), this, SLOT(enterEditor()), Qt::QueuedConnection);
     btnI++;
 
+    // option button
+    oxygine::spButton pButtonOptions = ObjectManager::createButton(tr("Options"));
+    pButtonOptions->attachTo(this);
+    setButtonPosition(pButtonOptions, btnI);
+    pButtonOptions->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigEnterOptionmenue();
+    });
+    connect(this, &Mainwindow::sigEnterOptionmenue, this, &Mainwindow::enterOptionmenue, Qt::QueuedConnection);
+    btnI++;
+
     // quit button
     oxygine::spButton pQuit = ObjectManager::createButton(tr("Quit"));
     pQuit->attachTo(this);
@@ -68,13 +80,11 @@ Mainwindow::Mainwindow()
     });
     connect(this, SIGNAL(sigQuit()), this, SLOT(quitGame()), Qt::QueuedConnection);
     btnI++;
-
-    // oxygine::spProgressBar bar = new oxygine::ProgressBar()
 }
 
 void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
 {
-    static const qint32 buttonCount = 3;
+    static const qint32 buttonCount = 4;
     float buttonHeigth = pButton->getHeight() + 30;
     Mainapp* pApp = Mainapp::getInstance();
     pButton->setPosition(pApp->getSettings()->getWidth() / 2.0f - pButton->getWidth() / 2.0f, pApp->getSettings()->getHeight() / 2.0f - buttonCount  / 2.0f * buttonHeigth + buttonHeigth * btnI);
@@ -94,6 +104,12 @@ void Mainwindow::enterSingleplayer()
 void Mainwindow::enterEditor()
 {
     oxygine::getStage()->addChild(new EditorMenue());
+    leaveMenue();
+}
+
+void Mainwindow::enterOptionmenue()
+{
+    oxygine::getStage()->addChild(new OptionMenue());
     leaveMenue();
 }
 

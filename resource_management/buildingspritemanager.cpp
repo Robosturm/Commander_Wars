@@ -14,7 +14,10 @@ BuildingSpriteManager::BuildingSpriteManager()
     Mainapp* pMainapp = Mainapp::getInstance();
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
-        oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/building/res.xml").toStdString());
+        if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/building/res.xml"))
+        {
+            oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/building/res.xml").toStdString());
+        }
     }
     oxygine::Resources::loadXML("resources/images/building/res.xml");
 }
@@ -49,7 +52,10 @@ void BuildingSpriteManager::loadAll()
         {
             dirIter->next();
             QString file = dirIter->fileInfo().fileName().split(".").at(0);
-            loadBuilding(file.toUpper());
+            if (!m_loadedBuildings.contains(file.toUpper()))
+            {
+                loadBuilding(file.toUpper());
+            }
         }
     }
 }

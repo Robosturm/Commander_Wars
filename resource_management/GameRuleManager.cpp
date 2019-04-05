@@ -14,7 +14,10 @@ GameRuleManager::GameRuleManager() : QObject()
     Mainapp* pMainapp = Mainapp::getInstance();
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
-        oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/gamerule/res.xml").toStdString());
+        if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/gamerule/res.xml"))
+        {
+            oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/gamerule/res.xml").toStdString());
+        }
     }
     oxygine::Resources::loadXML("resources/images/gamerule/res.xml");
 }
@@ -57,11 +60,17 @@ void GameRuleManager::loadAll()
             QString file = dirIter->fileInfo().fileName().split(".").at(0);
             if (dirIter->fileInfo().filePath().contains("gamerules/victory"))
             {
-                loadVictoryRule(file.toUpper());
+                if (!m_loadedVictoryRules.contains(file.toUpper()))
+                {
+                    loadVictoryRule(file.toUpper());
+                }
             }
             else if (dirIter->fileInfo().filePath().contains("gamerules/weather"))
             {
-                loadWeather(file.toUpper());
+                if (!m_loadedWeather.contains(file.toUpper()))
+                {
+                    loadWeather(file.toUpper());
+                }
             }
 
         }

@@ -12,7 +12,10 @@ GameAnimationManager::GameAnimationManager()
     Mainapp* pMainapp = Mainapp::getInstance();
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
-        oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/animations/res.xml").toStdString());
+        if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/animations/res.xml"))
+        {
+            oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/animations/res.xml").toStdString());
+        }
     }
     oxygine::Resources::loadXML("resources/images/animations/res.xml");
 }

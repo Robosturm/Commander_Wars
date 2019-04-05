@@ -14,71 +14,59 @@ var Constructor = function()
         {
 			// infantry
 			case "INFANTRY":
-				return WEAPON.mediumDamage;
+				return 75;
 			case "MECH":
-				return WEAPON.mediumDamage;
+				return 75;
 			case "MOTORBIKE":
-				return WEAPON.mediumDamage;
+				return 75;
 			case "SNIPER":
-				return WEAPON.mediumDamage;
+				return 75;
 
 			// supporter
 			case "APC":
-				return WEAPON.lowDamage;
+				return WEAPON.softCounterDamage;
 			case "FLARE":
-				return WEAPON.lowDamage;
+				return WEAPON.softCounterDamage;
 			case "RECON":
-				return WEAPON.lowDamage;
+				return WEAPON.softCounterDamage;
 
 			// tanks
 			case "FLAK":
-				return 5;
+				return 1;
 			case "HOVERFLAK":
-				return 5;
+				return 1;
 			case "LIGHT_TANK":
-				return 5;
+				return 8;
             case "HOVERTANK":
-				return 5;
+				return 8;
 				
 			// heavy tanks
 			case "HEAVY_HOVERCRAFT":
-				return 3;
+				return 5;
 			case "HEAVY_TANK":
-				return 3;
+				return 5;
 			case "NEOTANK":
-				return 3;
+				return 5;
 				
 			// very heavy tanks
 			case "MEGATANK":
 				return 1;
-
-			// ranged land units
-			case "ARTILLERY":
-				return WEAPON.lowDamage;
-			case "ANITANKCANNON":
-                return 5;
-			case "MISSILE":
-                return 20;
-            case "ROCKETTHROWER":
-				return 20;
 				
-			// air
-			case "DUSTER":
-				return WEAPON.mediumDamage;
-			case "FIGHTER":
-				return WEAPON.lowDamage;
-			case "BOMBER":
-				return WEAPON.mediumDamage;
-			case "STEALTHBOMBER":
-				return WEAPON.mediumDamage;
-			case "TRANSPORTPLANE":
-				return WEAPON.mediumDamage;
-			case "WATERPLANE":
+			// heli copter
+			case "T_HELI":
 				return WEAPON.HighDamage;
 			case "K_HELI":
-				return 85;
-			case "T_HELI":
-				return 95;
+				return WEAPON.softDamage;
+				
+			// ranged land units
+			case "ARTILLERY":
+				return 25;
+			case "ANITANKCANNON":
+                return 1;
+			case "MISSILE":
+                return 25;
+            case "ROCKETTHROWER":
+				return 35;
 			default:
 				return -1;
         }
@@ -86,4 +74,4 @@ var Constructor = function()
 };
 
 Constructor.prototype = WEAPON;
-var WEAPON_AIRPLANE_MG = new Constructor();
+var WEAPON_K_HELI_MG = new Constructor();

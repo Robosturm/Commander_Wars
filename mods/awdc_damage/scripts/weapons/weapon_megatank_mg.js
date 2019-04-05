@@ -14,71 +14,59 @@ var Constructor = function()
         {
 			// infantry
 			case "INFANTRY":
-				return WEAPON.mediumDamage;
+				return 130;
 			case "MECH":
-				return WEAPON.mediumDamage;
+				return 130;
 			case "MOTORBIKE":
-				return WEAPON.mediumDamage;
+				return 130;
 			case "SNIPER":
-				return WEAPON.mediumDamage;
+				return 130;
 
 			// supporter
 			case "APC":
-				return WEAPON.lowDamage;
+				return 50;
 			case "FLARE":
-				return WEAPON.lowDamage;
+				return 50;
 			case "RECON":
-				return WEAPON.lowDamage;
+				return 50;
 
 			// tanks
 			case "FLAK":
-				return 5;
+				return 10;
 			case "HOVERFLAK":
-				return 5;
+				return 10;
 			case "LIGHT_TANK":
-				return 5;
+				return 10;
             case "HOVERTANK":
-				return 5;
+				return 10;
 				
 			// heavy tanks
 			case "HEAVY_HOVERCRAFT":
-				return 3;
+				return 10;
 			case "HEAVY_TANK":
-				return 3;
+				return 10;
 			case "NEOTANK":
-				return 3;
+				return 10;
 				
 			// very heavy tanks
 			case "MEGATANK":
 				return 1;
-
+				
+			// heli copter
+			case "T_HELI":
+				return 45;
+			case "K_HELI":
+				return 35;
+				
 			// ranged land units
 			case "ARTILLERY":
-				return WEAPON.lowDamage;
+				return 50;
 			case "ANITANKCANNON":
-                return 5;
+                return 1;
 			case "MISSILE":
-                return 20;
+                return 45;
             case "ROCKETTHROWER":
-				return 20;
-				
-			// air
-			case "DUSTER":
-				return WEAPON.mediumDamage;
-			case "FIGHTER":
-				return WEAPON.lowDamage;
-			case "BOMBER":
-				return WEAPON.mediumDamage;
-			case "STEALTHBOMBER":
-				return WEAPON.mediumDamage;
-			case "TRANSPORTPLANE":
-				return WEAPON.mediumDamage;
-			case "WATERPLANE":
-				return WEAPON.HighDamage;
-			case "K_HELI":
-				return 85;
-			case "T_HELI":
-				return 95;
+				return 45;
 			default:
 				return -1;
         }
@@ -86,4 +74,4 @@ var Constructor = function()
 };
 
 Constructor.prototype = WEAPON;
-var WEAPON_AIRPLANE_MG = new Constructor();
+var WEAPON_MEGATANK_MG = new Constructor();

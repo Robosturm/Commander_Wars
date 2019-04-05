@@ -1,6 +1,7 @@
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 
+#include <QStringList>
 
 #include "oxygine-framework.h"
 
@@ -22,6 +23,7 @@ private:
     explicit GameManager();
     virtual ~GameManager() = default;
     static GameManager* m_pInstance;
+    QStringList m_loadedActions;
     bool loaded{false};
 };
 

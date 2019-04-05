@@ -2,11 +2,11 @@ var Constructor = function()
 {
     this.getName = function()
     {
-        return qsTr("MG");
+        return qsTr("Missile");
     };
     this.getEnviromentDamage = function(enviromentId)
     {
-        return 1;
+        return 55;
     };
     this.getBaseDamage = function(unit)
     {
@@ -14,71 +14,69 @@ var Constructor = function()
         {
 			// infantry
 			case "INFANTRY":
-				return WEAPON.mediumDamage;
+				return 120;
 			case "MECH":
-				return WEAPON.mediumDamage;
+				return 120;
 			case "MOTORBIKE":
-				return WEAPON.mediumDamage;
+				return 120;
 			case "SNIPER":
-				return WEAPON.mediumDamage;
-
+				return 120;
+				
 			// supporter
 			case "APC":
-				return WEAPON.lowDamage;
+				return 80;
 			case "FLARE":
-				return WEAPON.lowDamage;
+				return 80;
 			case "RECON":
-				return WEAPON.lowDamage;
+				return 80;
 
 			// tanks
 			case "FLAK":
-				return 5;
+                return 75;
 			case "HOVERFLAK":
-				return 5;
+                return 75;
 			case "LIGHT_TANK":
-				return 5;
+                return 75;
             case "HOVERTANK":
-				return 5;
+                return 75;
 				
 			// heavy tanks
 			case "HEAVY_HOVERCRAFT":
-				return 3;
+                return WEAPON.mediumDamage;
 			case "HEAVY_TANK":
-				return 3;
+                return WEAPON.mediumDamage;
 			case "NEOTANK":
-				return 3;
+                return WEAPON.mediumDamage;
 				
 			// very heavy tanks
 			case "MEGATANK":
-				return 1;
-
+				return 45;
+				
 			// ranged land units
 			case "ARTILLERY":
-				return WEAPON.lowDamage;
+                return WEAPON.HighDamage;
 			case "ANITANKCANNON":
-                return 5;
+				return WEAPON.softDamage;
 			case "MISSILE":
-                return 20;
+                return WEAPON.HighDamage;
             case "ROCKETTHROWER":
-				return 20;
-				
-			// air
-			case "DUSTER":
+                return WEAPON.HighDamage;
+			
+			// ships
+			case "BATTLESHIP":
 				return WEAPON.mediumDamage;
-			case "FIGHTER":
-				return WEAPON.lowDamage;
-			case "BOMBER":
+			case "CANNONBOAT":
+				return 105;
+			case "CRUISER":
 				return WEAPON.mediumDamage;
-			case "STEALTHBOMBER":
+			case "DESTROYER":
 				return WEAPON.mediumDamage;
-			case "TRANSPORTPLANE":
+			case "SUBMARINE":
 				return WEAPON.mediumDamage;
-			case "WATERPLANE":
-				return WEAPON.HighDamage;
-			case "K_HELI":
-				return 85;
-			case "T_HELI":
-				return 95;
+			case "LANDER":
+				return WEAPON.mediumDamage;
+			case "AIRCRAFTCARRIER":
+				return WEAPON.mediumDamage;
 			default:
 				return -1;
         }
@@ -86,4 +84,4 @@ var Constructor = function()
 };
 
 Constructor.prototype = WEAPON;
-var WEAPON_AIRPLANE_MG = new Constructor();
+var WEAPON_ROCKET_MISSILE = new Constructor();

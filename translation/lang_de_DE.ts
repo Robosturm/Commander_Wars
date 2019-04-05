@@ -508,17 +508,22 @@
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="40"/>
+        <location filename="../menue/mainwindow.cpp" line="41"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="51"/>
+        <location filename="../menue/mainwindow.cpp" line="52"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="62"/>
+        <location filename="../menue/mainwindow.cpp" line="63"/>
+        <source>Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mainwindow.cpp" line="74"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -695,6 +700,19 @@
     <message>
         <location filename="../network/NetworkInterface.h" line="106"/>
         <source>Error inside the Socket happened.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OptionMenue</name>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="32"/>
+        <source>Exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="44"/>
+        <source>Mods</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

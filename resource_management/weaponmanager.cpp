@@ -68,7 +68,10 @@ void WeaponManager::loadAll()
         {
             dirIter->next();
             QString file = dirIter->fileInfo().fileName().split(".").at(0);
-            loadWeapon(file.toUpper());
+            if (!m_loadedWeapons.contains(file.toUpper()))
+            {
+                loadWeapon(file.toUpper());
+            }
         }
     }
 }

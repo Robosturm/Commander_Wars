@@ -65,7 +65,6 @@ int main(int argc, char* argv[])
     // Create the stage. Stage is a root node for all updateable and drawable objects
     oxygine::Stage::instance = new oxygine::Stage();
 
-
     oxygine::Point size = oxygine::core::getDisplaySize();
     oxygine::getStage()->setSize(size);
 

@@ -57,7 +57,10 @@ void MovementTableManager::loadAll()
         {
             dirIter->next();
             QString file = dirIter->fileInfo().fileName().split(".").at(0);
-            loadTable(file.toUpper());
+            if (!m_loadedTables.contains(file.toUpper()))
+            {
+                loadTable(file.toUpper());
+            }
         }
     }
 }

@@ -76,6 +76,7 @@ set(${PROJECT_NAME}_SRCS
         menue/ingamemenue.cpp
         menue/editormenue.cpp
         menue/gamemenue.cpp
+        menue/optionmenue.cpp
         menue/mapselectionmapsmenue.cpp
 
         # ressource management
@@ -156,6 +157,9 @@ set(${PROJECT_NAME}_SRCS
 
 FILE(GLOB_RECURSE JavaScripts "resources/*.js")
 add_custom_target(scripts SOURCES ${JavaScripts})
+
+FILE(GLOB_RECURSE ModScripts "mods/*.js")
+add_custom_target(modscripts SOURCES ${ModScripts})
 
 # create translation here :)
 set(LUPDATE_OPTIONS "" CACHE STRING "specifies options passed to lupdate")
@@ -257,6 +261,7 @@ endif()
 # install libs
 install(DIRECTORY resources DESTINATION ".")
 install(DIRECTORY maps DESTINATION ".")
+install(DIRECTORY mods DESTINATION ".")
 install(FILES ${${PROJECT_NAME}_INSTALL_LIBS} DESTINATION ".")
 # install exe
 install(TARGETS ${PROJECT_NAME} DESTINATION ".")

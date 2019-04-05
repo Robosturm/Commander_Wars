@@ -11,7 +11,10 @@ COSpriteManager::COSpriteManager()
     Mainapp* pMainapp = Mainapp::getInstance();
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
-        oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/co/res.xml").toStdString());
+        if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/co/res.xml"))
+        {
+            oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/co/res.xml").toStdString());
+        }
     }
     oxygine::Resources::loadXML("resources/images/co/res.xml");
 }
@@ -46,7 +49,10 @@ void COSpriteManager::loadAll()
         {
             dirIter->next();
             QString file = dirIter->fileInfo().fileName().split(".").at(0);
-            loadCO(file.toUpper());
+            if (!m_loadedCOs.contains(file.toUpper()))
+            {
+                loadCO(file.toUpper());
+            }
         }
     }
 }

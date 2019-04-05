@@ -14,71 +14,59 @@ var Constructor = function()
         {
 			// infantry
 			case "INFANTRY":
-				return WEAPON.mediumDamage;
+				return WEAPON.HighDamage;
 			case "MECH":
-				return WEAPON.mediumDamage;
+				return WEAPON.HighDamage;
 			case "MOTORBIKE":
-				return WEAPON.mediumDamage;
+				return WEAPON.HighDamage;
 			case "SNIPER":
-				return WEAPON.mediumDamage;
+				return WEAPON.HighDamage;
 
 			// supporter
 			case "APC":
-				return WEAPON.lowDamage;
+				return 45;
 			case "FLARE":
-				return WEAPON.lowDamage;
+				return 45;
 			case "RECON":
-				return WEAPON.lowDamage;
+				return 45;
 
 			// tanks
 			case "FLAK":
-				return 5;
+				return 8;
 			case "HOVERFLAK":
-				return 5;
+				return 8;
 			case "LIGHT_TANK":
-				return 5;
+				return 8;
             case "HOVERTANK":
-				return 5;
+				return 8;
 				
 			// heavy tanks
 			case "HEAVY_HOVERCRAFT":
-				return 3;
+				return 5;
 			case "HEAVY_TANK":
-				return 3;
+				return 5;
 			case "NEOTANK":
-				return 3;
+				return 5;
 				
 			// very heavy tanks
 			case "MEGATANK":
 				return 1;
-
+				
+			// heli copter
+			case "T_HELI":
+				return 40;
+			case "K_HELI":
+				return 25;
+				
 			// ranged land units
 			case "ARTILLERY":
-				return WEAPON.lowDamage;
+				return 45;
 			case "ANITANKCANNON":
-                return 5;
+                return 1;
 			case "MISSILE":
-                return 20;
+                return WEAPON.softDamage;
             case "ROCKETTHROWER":
-				return 20;
-				
-			// air
-			case "DUSTER":
-				return WEAPON.mediumDamage;
-			case "FIGHTER":
-				return WEAPON.lowDamage;
-			case "BOMBER":
-				return WEAPON.mediumDamage;
-			case "STEALTHBOMBER":
-				return WEAPON.mediumDamage;
-			case "TRANSPORTPLANE":
-				return WEAPON.mediumDamage;
-			case "WATERPLANE":
-				return WEAPON.HighDamage;
-			case "K_HELI":
-				return 85;
-			case "T_HELI":
-				return 95;
+				return WEAPON.softDamage;
 			default:
 				return -1;
         }
@@ -86,4 +74,4 @@ var Constructor = function()
 };
 
 Constructor.prototype = WEAPON;
-var WEAPON_AIRPLANE_MG = new Constructor();
+var WEAPON_NEOTANK_MG = new Constructor();

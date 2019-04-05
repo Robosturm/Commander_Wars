@@ -14,7 +14,10 @@ GameManager::GameManager()
     Mainapp* pMainapp = Mainapp::getInstance();
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
-        oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/game/res.xml").toStdString());
+        if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/game/res.xml"))
+        {
+            oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/game/res.xml").toStdString());
+        }
     }
     oxygine::Resources::loadXML("resources/images/game/res.xml");
 }
@@ -49,7 +52,12 @@ void GameManager::loadAll()
         {
             dirIter->next();
             QString file = dirIter->fileInfo().absoluteFilePath();
-            pMainapp->getInterpreter()->openScript(file);
+            QString actionID = dirIter->fileInfo().fileName().split(".").at(0).toUpper();
+            if (!m_loadedActions.contains(actionID))
+            {
+                m_loadedActions.append(actionID);
+                pMainapp->getInterpreter()->openScript(file);
+            }
         }
     }
 }
