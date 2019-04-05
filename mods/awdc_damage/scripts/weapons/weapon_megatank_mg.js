@@ -14,21 +14,21 @@ var Constructor = function()
         {
 			// infantry
 			case "INFANTRY":
-				return 130;
+                return 105;
 			case "MECH":
-				return 130;
+                return 95;
 			case "MOTORBIKE":
-				return 130;
+                return 95;
 			case "SNIPER":
-				return 130;
+                return 95;
 
 			// supporter
 			case "APC":
-				return 50;
+                return 45;
 			case "FLARE":
-				return 50;
+                return 40;
 			case "RECON":
-				return 50;
+                return 45;
 
 			// tanks
 			case "FLAK":
@@ -60,13 +60,13 @@ var Constructor = function()
 				
 			// ranged land units
 			case "ARTILLERY":
-				return 50;
+                return 45;
 			case "ANITANKCANNON":
                 return 1;
 			case "MISSILE":
-                return 45;
+                return 65;
             case "ROCKETTHROWER":
-				return 45;
+                return 65;
 			default:
 				return -1;
         }

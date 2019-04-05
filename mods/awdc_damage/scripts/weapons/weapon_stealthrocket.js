@@ -14,69 +14,69 @@ var Constructor = function()
         {
 			// infantry
 			case "INFANTRY":
-				return WEAPON.HighDamage;
+                return 85;
 			case "MECH":
-				return WEAPON.HighDamage;
+                return 85;
 			case "MOTORBIKE":
-				return WEAPON.HighDamage;
+                return 85;
 			case "SNIPER":
-				return WEAPON.HighDamage;
+                return 85;
 
 			// supporter
 			case "APC":
-				return WEAPON.HighDamage;
+                return 85;
 			case "FLARE":
-				return WEAPON.HighDamage;
+                return 85;
 			case "RECON":
-				return WEAPON.HighDamage;
+                return 85;
 
 			// tanks
 			case "FLAK":
-                return 25;
+                return 55;
 			case "HOVERFLAK":
-                return 25;
+                return 55;
 			case "LIGHT_TANK":
-                return WEAPON.mediumDamage;
+                return 55;
 			case "HOVERTANK":
-                return WEAPON.mediumDamage;
+                return 55;
 				
 			// heavy tanks
 			case "HEAVY_HOVERCRAFT":
-				return WEAPON.softCounterDamage;
+                return 35;
 			case "HEAVY_TANK":
-				return WEAPON.softCounterDamage;
+                return 35;
 			case "NEOTANK":
-				return WEAPON.softCounterDamage;
+                return 35;
 				
 			// very heavy tanks
 			case "MEGATANK":
-                return WEAPON.lowDamage;
+                return 15;
 				
 			// ranged land units
 			case "ARTILLERY":
-				return WEAPON.softDamage;
+                return 65;
 			case "ANITANKCANNON":
-				return WEAPON.mediumDamage;
+                return 55;
 			case "MISSILE":
-				return WEAPON.softDamage;
+                return 65;
             case "ROCKETTHROWER":
-				return WEAPON.softDamage;				
+                return 65;
 			
 			// ships
 			case "BATTLESHIP":
-				return WEAPON.mediumDamage;
+                return 55;
 			case "CANNONBOAT":
 				return 75;				
 			case "CRUISER":
-				return WEAPON.lowDamage;
+                return 35;
 			case "DESTROYER":
-				return WEAPON.lowDamage;
+                return 35;
 			case "SUBMARINE":
-				return WEAPON.mediumDamage;				
+                return 55;
 			case "LANDER":
-				return WEAPON.mediumDamage;
+                return 55;
 			case "AIRCRAFTCARRIER":
-                return WEAPON.mediumDamage;
+                return 55;
 			default:
 				return -1;
         }

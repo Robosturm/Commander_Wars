@@ -2,11 +2,11 @@ var Constructor = function()
 {
     this.getName = function()
     {
-        return qsTr("Gun");
+        return qsTr("Flare");
     };
     this.getEnviromentDamage = function(enviromentId)
     {
-        return 55;
+        return 15;
     };
     this.getBaseDamage = function(unit)
     {
@@ -14,59 +14,59 @@ var Constructor = function()
         {
 			// supporter
 			case "APC":
-				return 90;
-			case "FLARE":
-				return 90;
+				return 85;
 			case "RECON":
-				return 95;
+				return 75;
 
 			// tanks
 			case "FLAK":
-                return 90;
+                return WEAPON.HighDamage;
 			case "HOVERFLAK":
-                return 90;
-			case "LIGHT_TANK":
-                return 70;
+                return WEAPON.HighDamage;
+            case "LIGHT_TANK":
+                return WEAPON.HighDamage;
             case "HOVERTANK":
-                return 70;
+                return WEAPON.lowDamage;
+            case "FLARE":
+                return WEAPON.mediumDamage;
 				
 			// heavy tanks
 			case "HEAVY_HOVERCRAFT":
-                return WEAPON.mediumDamage;
+                return WEAPON.softCounterDamage;
 			case "HEAVY_TANK":
-                return 45;
+                return WEAPON.softCounterDamage;
 			case "NEOTANK":
-                return WEAPON.HighDamage;
+                return WEAPON.softCounterDamage;
 				
 			// very heavy tanks
 			case "MEGATANK":
-                return 35;
+				return WEAPON.lowDamage;
 				
 			// ranged land units
 			case "ARTILLERY":
-                return 85;
+                return 70;
 			case "ANITANKCANNON":
-                return 35;
+				return WEAPON.lowDamage;
 			case "MISSILE":
-                return 90;
+                return WEAPON.HighDamage;
             case "ROCKETTHROWER":
-                return 90;
+                return WEAPON.HighDamage;
 			
 			// ships
 			case "BATTLESHIP":
-                return 10;
+				return 10;
 			case "CANNONBOAT":
-                return 55;
+				return 45;
 			case "CRUISER":
-                return 12;
+				return 10;
 			case "DESTROYER":
-                return 12;
+				return 10;
 			case "SUBMARINE":
-                return 12;
+				return 10;
 			case "LANDER":
-                return 22;
+				return 10;
 			case "AIRCRAFTCARRIER":
-                return 10;
+				return 10;
 			default:
 				return -1;
         }
@@ -74,4 +74,4 @@ var Constructor = function()
 };
 
 Constructor.prototype = WEAPON;
-var WEAPON_HEAVY_HOVERCRAFT_GUN = new Constructor();
+var WEAPON_FLARE = new Constructor();

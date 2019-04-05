@@ -2,19 +2,19 @@ var Constructor = function()
 {
     this.init = function(unit)
     {
-        unit.setAmmo1(3);
-        unit.setMaxAmmo1(3);
+        unit.setAmmo1(6);
+        unit.setMaxAmmo1(6);
         unit.setWeapon1ID("WEAPON_FLARE");
 
         unit.setAmmo2(10);
         unit.setMaxAmmo2(10);
-        unit.setWeapon2ID("FLARE_MG");
+        unit.setWeapon2ID("WEAPON_FLARE_MG");
 
-        unit.setFuel(60);
-        unit.setMaxFuel(60);
+        unit.setFuel(70);
+        unit.setMaxFuel(70);
         unit.setBaseMovementPoints(6);
         unit.setMinRange(1);
-        unit.setMaxRange(5);
+        unit.setMaxRange(1);
         unit.setVision(2);
     };
     // called for loading the main sprite
@@ -40,7 +40,7 @@ var Constructor = function()
     };
     this.getBaseCost = function()
     {
-        return 5000;
+        return 6000;
     };
     this.getName = function()
     {

@@ -706,12 +706,12 @@
 <context>
     <name>OptionMenue</name>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="32"/>
+        <location filename="../menue/optionmenue.cpp" line="39"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="44"/>
+        <location filename="../menue/optionmenue.cpp" line="51"/>
         <source>Mods</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1543,6 +1543,22 @@
     <message>
         <location filename="../resources/scripts/weapons/weapon_destroyer_a_air_gun.js" line="5"/>
         <source>Anti Air Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_flare</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_flare.js" line="5"/>
+        <source>Flare</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>weapon_flare_mg</name>
+    <message>
+        <location filename="../resources/scripts/weapons/weapon_flare_mg.js" line="5"/>
+        <source>MG</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

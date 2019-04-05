@@ -15,8 +15,6 @@ var Constructor = function()
 			// supporter
 			case "APC":
 				return 85;
-			case "FLARE":
-				return 85;
 			case "RECON":
 				return 75;
 
@@ -25,10 +23,13 @@ var Constructor = function()
                 return WEAPON.HighDamage;
 			case "HOVERFLAK":
                 return WEAPON.HighDamage;
-			case "LIGHT_TANK":
+
+            case "LIGHT_TANK":
                 return WEAPON.lowDamage;
             case "HOVERTANK":
                 return WEAPON.mediumDamage;
+            case "FLARE":
+                return WEAPON.HighDamage;
 				
 			// heavy tanks
 			case "HEAVY_HOVERCRAFT":

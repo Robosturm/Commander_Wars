@@ -102,6 +102,20 @@ public:
     {
         return m_activeMods;
     }
+    void addMod(QString mod)
+    {
+        if (!m_activeMods.contains(mod))
+        {
+            m_activeMods.append(mod);
+        }
+    }
+    void removeMod(QString mod)
+    {
+        if (m_activeMods.contains(mod))
+        {
+            m_activeMods.removeOne(mod);
+        }
+    }
     float getMouseSensitivity();
     void setMouseSensitivity(float value);
 

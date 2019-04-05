@@ -12,54 +12,54 @@ var Constructor = function()
     {
         switch(unit.getUnitID())
         {
-        case "INFANTRY":
-            return WEAPON.HighDamage;
-        case "MECH":
-            return WEAPON.mediumDamage;
-        case "MOTORBIKE":
-            return WEAPON.lowDamage;
-        case "SNIPER":
-            return WEAPON.HighDamage;
+            case "INFANTRY":
+                return 65;
+            case "MECH":
+                return 55;
+            case "MOTORBIKE":
+                return 55;
+            case "SNIPER":
+                return 75;
 
-        case "APC":
-            return 20;
-        case "FLARE":
-            return 20;
-        case "RECON":
-            return 20;
+            case "APC":
+                return 20;
+            case "FLARE":
+                return 15;
+            case "RECON":
+                return 18;
 
-        case "FLAK":
-            return 5;
-        case "HOVERFLAK":
-            return 5;
-        case "LIGHT_TANK":
-            return 5;
-        case "HOVERTANK":
-            return 5;
+            case "FLAK":
+                return 5;
+            case "HOVERFLAK":
+                return 5;
+            case "LIGHT_TANK":
+                return 8;
+            case "HOVERTANK":
+                return 8;
 
-        case "HEAVY_HOVERCRAFT":
-            return 3;
-        case "HEAVY_TANK":
-            return 3;
-        case "NEOTANK":
-            return 3;
+            case "HEAVY_HOVERCRAFT":
+                return 5;
+            case "HEAVY_TANK":
+                return 5;
+            case "NEOTANK":
+                return 5;
 
-        case "MEGATANK":
-            return 1;
+            case "MEGATANK":
+                return 1;
 
-        case "T_HELI":
-            return 30;
-        case "K_HELI":
-            return 10;
+            case "T_HELI":
+                return 35;
+            case "K_HELI":
+                return 12;
 
-        case "ARTILLERY":
-            return WEAPON.lowDamage;
-        case "ANITANKCANNON":
-            return 45;
-        case "MISSILE":
-            return WEAPON.softCounterDamage;
-        case "ROCKETTHROWER":
-            return WEAPON.softCounterDamage;
+            case "ARTILLERY":
+                return 15;
+            case "ANITANKCANNON":
+                return 35;
+            case "MISSILE":
+                return 35;
+            case "ROCKETTHROWER":
+                return 35;
         default:
             return -1;
         }

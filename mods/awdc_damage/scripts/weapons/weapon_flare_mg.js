@@ -14,31 +14,31 @@ var Constructor = function()
         {
 			// infantry
 			case "INFANTRY":
-                return 90;
+                return 80;
 			case "MECH":
-                return 80;
+                return 70;
 			case "MOTORBIKE":
-                return 80;
+                return 70;
 			case "SNIPER":
-                return 80;
+                return 70;
 
 			// supporter
 			case "APC":
 				return 45;
 			case "FLARE":
-                return 35;
+                return 50;
 			case "RECON":
-                return 40;
+                return 60;
 
 			// tanks
 			case "FLAK":
-				return 8;
+                return 10;
 			case "HOVERFLAK":
-				return 8;
+                return 10;
 			case "LIGHT_TANK":
-				return 8;
+                return 10;
             case "HOVERTANK":
-				return 8;
+                return 10;
 				
 			// heavy tanks
 			case "HEAVY_HOVERCRAFT":
@@ -54,19 +54,19 @@ var Constructor = function()
 				
 			// heli copter
 			case "T_HELI":
-				return 40;
+                return 35;
 			case "K_HELI":
-                return 24;
+                return 18;
 				
 			// ranged land units
 			case "ARTILLERY":
-				return 45;
+                return 50;
 			case "ANITANKCANNON":
-                return 1;
+                return 25;
 			case "MISSILE":
-                return 60;
+                return 55;
             case "ROCKETTHROWER":
-                return 60;
+                return 55;
 			default:
 				return -1;
         }
@@ -74,4 +74,4 @@ var Constructor = function()
 };
 
 Constructor.prototype = WEAPON;
-var WEAPON_HEAVY_HOVERCRAFT_MG = new Constructor();
+var WEAPON_FLARE_MG = new Constructor();
