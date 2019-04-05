@@ -65,6 +65,13 @@ public slots:
      */
     qint32 getFirerangeModifier(Unit* pUnit, QPoint position);
     /**
+     * @brief getHpHidden
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    bool getHpHidden(Unit* pUnit, QPoint position);
+    /**
      * @brief getMovementpointModifier
      * @param pUnit
      * @param position
@@ -104,6 +111,13 @@ public slots:
      * @return
      */
     qint32 getVisionrangeModifier(Unit* pUnit, QPoint position);
+    /**
+     * @brief getEnemyTerrainDefenseModifier
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    qint32 getEnemyTerrainDefenseModifier(Unit* pUnit, QPoint position);
     /**
      * @brief activatePower called when the power is activated
      */
@@ -265,6 +279,11 @@ public slots:
      * @return
      */
     qint32 getBonusIncome(Building* pBuilding, qint32 income);
+    /**
+     * @brief getPerfectVision
+     * @return
+     */
+    bool getPerfectVision();
     /**
      * @brief postBattleActions
      * @param pAttacker

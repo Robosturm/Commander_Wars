@@ -235,36 +235,50 @@ void IngameInfoBar::updateCursorInfo(qint32 x, qint32 y)
         pAnim = pObjectManager->getResAnim("barforeground");
         if (pUnit != nullptr)
         {
-
+            bool HpHidden = pUnit->getHpHidden(pMap->getCurrentViewPlayer());
             float count = pUnit->getHp();
             float countMax = 10.0f;
             pTextfield = new oxygine::TextField();
             pTextfield->setStyle(style);
-            pTextfield->setText((tr("HP: ") + QString::number(count, 'f', 0) + "/" + QString::number(countMax, 'f', 0)).toStdString().c_str());
-            pTextfield->setPosition(10, 10);
-            m_pCursorInfoBox->addChild(pTextfield);
-            oxygine::spColorRectSprite pColorBar = new oxygine::ColorRectSprite();
-            float divider = count / countMax;
-            if (divider > 2.0f / 3.0f)
+            if (HpHidden)
             {
-                pColorBar->setColor(0, 255, 0, 255);
-            }
-            else if (divider > 1.0f / 3.0f)
-            {
-                pColorBar->setColor(255, 128, 0, 255);
+                pTextfield->setText((tr("HP: ") + "?/10").toStdString().c_str());
             }
             else
             {
-                pColorBar->setColor(255, 0, 0, 255);
+                pTextfield->setText((tr("HP: ") + QString::number(count, 'f', 0) + "/" + QString::number(countMax, 'f', 0)).toStdString().c_str());
             }
-            pColorBar->setSize(divider * pAnim->getWidth(), pAnim->getHeight());
-            pColorBar->setPosition(m_pCursorInfoBox->getWidth() - 10 - pColorBar->getWidth(), 12);
-            m_pCursorInfoBox->addChild(pColorBar);
+            pTextfield->setPosition(10, 10);
+            m_pCursorInfoBox->addChild(pTextfield);
+
+            oxygine::spColorRectSprite pColorBar = new oxygine::ColorRectSprite();
+            float divider = 0;
+            if (!HpHidden)
+            {
+                divider = count / countMax;
+                if (divider > 2.0f / 3.0f)
+                {
+                    pColorBar->setColor(0, 255, 0, 255);
+                }
+                else if (divider > 1.0f / 3.0f)
+                {
+                    pColorBar->setColor(255, 128, 0, 255);
+                }
+                else
+                {
+                    pColorBar->setColor(255, 0, 0, 255);
+                }
+                pColorBar->setSize(divider * pAnim->getWidth(), pAnim->getHeight());
+                pColorBar->setPosition(m_pCursorInfoBox->getWidth() - 10 - pColorBar->getWidth(), 12);
+                m_pCursorInfoBox->addChild(pColorBar);
+            }
             pColorBar = new oxygine::ColorRectSprite();
             pColorBar->setColor(127, 127, 127, 255);
             pColorBar->setSize((1 - divider) * pAnim->getWidth(), pAnim->getHeight());
             pColorBar->setPosition(m_pCursorInfoBox->getWidth() - 10 - pAnim->getWidth(), 12);
             m_pCursorInfoBox->addChild(pColorBar);
+
+
 
             qint32 countInt = pUnit->getAmmo1();
             qint32 countMaxInt = pUnit->getMaxAmmo1();

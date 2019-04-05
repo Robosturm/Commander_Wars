@@ -432,7 +432,7 @@ bool Unit::canMoveAndFire(QPoint position)
 void Unit::loadUnit(Unit* pUnit)
 {
     m_TransportUnits.append(pUnit->getTerrain()->getSpUnit());
-    updateIcons(m_pOwner);
+    updateIcons(GameMap::getInstance()->getCurrentViewPlayer());
 }
 
 Unit* Unit::getLoadedUnit(qint32 index)
@@ -455,7 +455,7 @@ void Unit::unloadUnit(Unit* pUnit, QPoint position)
             break;
         }
     }
-    updateIcons(m_pOwner);
+    updateIcons(GameMap::getInstance()->getCurrentViewPlayer());
 }
 
 qint32 Unit::getLoadedUnitCount()
@@ -923,7 +923,32 @@ void Unit::setHp(const float &value)
     {
         hp = 10.0f;
     }
-    updateIcons(m_pOwner);
+    updateIcons(GameMap::getInstance()->getCurrentViewPlayer());
+}
+
+bool Unit::getHpHidden(Player* pPlayer)
+{
+    if (pPlayer->isEnemy(m_pOwner))
+    {
+        CO* pCO = m_pOwner->getCO(0);
+        if (pCO != nullptr)
+        {
+            if (pCO->getHpHidden(this, QPoint(getX(), getY())))
+            {
+                return true;
+            }
+        }
+        pCO = m_pOwner->getCO(1);
+        if (pCO != nullptr)
+        {
+            if (pCO->getHpHidden(this, QPoint(getX(), getY())))
+            {
+                return true;
+            }
+        }
+
+    }
+    return false;
 }
 
 void Unit::updateIcons(Player* pPlayer)
@@ -942,12 +967,24 @@ void Unit::updateIcons(Player* pPlayer)
     unloadIcon("hp+hidden");
     unloadIcon("transport");
     unloadIcon("transport+hidden");
-
-    if ((hpValue < 10) && (hpValue > 0))
+    if (!getHpHidden(pPlayer))
     {
-        loadIcon(QString::number(hpValue), 0, GameMap::Imagesize / 2);
+        if ((hpValue < 10) && (hpValue > 0))
+        {
+            loadIcon(QString::number(hpValue), 0, GameMap::Imagesize / 2);
+        }
     }
-    if (m_TransportUnits.size() > 0)
+    else
+    {
+        loadIcon("hp+hidden", 0, GameMap::Imagesize / 2);
+    }
+    GameMap* pMap = GameMap::getInstance();
+    if ((pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off) &&
+        (pPlayer->isEnemy(m_pOwner)) && getLoadingPlace() > 0)
+    {
+        loadIcon("transport+hidden", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+    }
+    else if (m_TransportUnits.size() > 0)
     {
         loadIcon("transport", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
     }
@@ -966,6 +1003,22 @@ QString Unit::getMovementType()
     else
     {
         return "";
+    }
+}
+
+qint32 Unit::getLoadingPlace()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getLoadingPlace";
+    QJSValueList args1;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    if (ret.isNumber())
+    {
+        return ret.toNumber();
+    }
+    else
+    {
+        return 0;
     }
 }
 
@@ -1318,7 +1371,7 @@ bool Unit::isStealthed(Player* pPlayer)
             return true;
         }
         // a unit can be stealth by itself or by the terrain it's on.
-        if (getHidden() || (m_pTerrain->getVisionHide() && useTerrainDefense() && pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off))
+        if (getHidden() || (m_pTerrain->getVisionHide(pPlayer) && useTerrainDefense() && pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off))
         {
             QmlVectorPoint* pPoints = Mainapp::getCircle(1, 1);
             for (qint32 i = 0; i < pPoints->size(); i++)

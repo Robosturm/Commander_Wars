@@ -76,6 +76,12 @@ public:
      * E.g Transport sign and health point sign
      */
     void updateIcons(Player* pPlayer);
+    /**
+     * @brief getHpHidden
+     * @param pPlayer
+     * @return
+     */
+    bool getHpHidden(Player* pPlayer);
 signals:
 
 public slots:
@@ -177,6 +183,11 @@ public slots:
      * @return
      */
     QString getMovementType();
+    /**
+     * @brief getLoadingPlace
+     * @return
+     */
+    qint32 getLoadingPlace();
     /**
      * @brief getUnitID the unit id
      * @return

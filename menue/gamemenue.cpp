@@ -118,6 +118,7 @@ void GameMenue::performAction(GameAction* pGameAction)
 void GameMenue::actionPerformed()
 {
     Mainapp::setUseSeed(false);
+    m_IngameInfoBar->updateCursorInfo(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
 }
 
 void GameMenue::updatePlayerinfo()

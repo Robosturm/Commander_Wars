@@ -201,7 +201,7 @@ public slots:
      * @brief getVisionHide
      * @return
      */
-    bool getVisionHide();
+    bool getVisionHide(Player* pPlayer);
     /**
      * @brief createTerrainFindingSystem
      * @return a path finding system that contains

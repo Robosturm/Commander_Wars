@@ -457,6 +457,24 @@ qint32 Terrain::getDefense(Unit* pUnit)
     if (pUnit != nullptr)
     {
         defense += pUnit->getTerrainDefenseModifier(QPoint(x, y));
+        GameMap* pMap = GameMap::getInstance();
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = pMap->getPlayer(i);
+            if (pPlayer->isEnemyUnit(pUnit))
+            {
+                CO* pCO = pPlayer->getCO(0);
+                if (pCO != nullptr)
+                {
+                    defense += pCO->getEnemyTerrainDefenseModifier(pUnit, QPoint(x, y));
+                }
+                pCO = pPlayer->getCO(1);
+                if (pCO != nullptr)
+                {
+                    defense += pCO->getEnemyTerrainDefenseModifier(pUnit, QPoint(x, y));
+                }
+            }
+        }
     }
     // defense can't be negative
     if (defense < 0)
@@ -689,14 +707,34 @@ TerrainFindingSystem* Terrain::createTerrainFindingSystem()
     return pPfs;
 }
 
-bool Terrain::getVisionHide()
+bool Terrain::getVisionHide(Player* pPlayer)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getVisionHide";
     QJSValue ret = pApp->getInterpreter()->doFunction(terrainID, function1);
     if (ret.isBool())
     {
-        return ret.toBool();
+        bool value = ret.toBool();
+        if (value && pPlayer != nullptr)
+        {
+            CO* pCO = pPlayer->getCO(0);
+            if (pCO != nullptr)
+            {
+                if (pCO->getPerfectVision())
+                {
+                    return false;
+                }
+            }
+            pCO = pPlayer->getCO(1);
+            if (pCO != nullptr)
+            {
+                if (pCO->getPerfectVision())
+                {
+                    return false;
+                }
+            }
+        }
+        return value;
     }
     else
     {

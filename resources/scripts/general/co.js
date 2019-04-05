@@ -36,6 +36,23 @@ var CO =
         return 0;
     },
 
+    getEnemyTerrainDefenseModifier : function(co, unit, posX, posY)
+    {
+        return 0;
+    },
+
+    getPerfectVision : function(co)
+    {
+        // return true if forest and reafs etc are disabled in fog of war see sonja
+        return false;
+    },
+
+    getHpHidden : function(co, unit, posX, posY)
+    {
+        // are the hp hidden of this unit?
+        return false;
+    },
+
     getRepairBonus : function(co, unit, posX, posY)
     {
         return 0;

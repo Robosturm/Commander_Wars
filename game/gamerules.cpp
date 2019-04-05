@@ -74,33 +74,36 @@ void GameRules::removeVictoryRule(QString rule)
 
 void GameRules::checkVictory()
 {
-    for (qint32 i = 0; i < m_VictoryRules.size(); i++)
-    {
-        m_VictoryRules[i]->checkDefeat();
-    }
     GameMap* pMap = GameMap::getInstance();
-    QVector<qint32> teamsAlive;
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    if (pMap != nullptr)
     {
-        Player* pPlayer = pMap->getPlayer(i);
-        if (!pPlayer->getIsDefeated())
+        for (qint32 i = 0; i < m_VictoryRules.size(); i++)
         {
-            if (!teamsAlive.contains(pPlayer->getTeam()))
+            m_VictoryRules[i]->checkDefeat();
+        }
+        QVector<qint32> teamsAlive;
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = pMap->getPlayer(i);
+            if (!pPlayer->getIsDefeated())
             {
-                teamsAlive.append(pPlayer->getTeam());
+                if (!teamsAlive.contains(pPlayer->getTeam()))
+                {
+                    teamsAlive.append(pPlayer->getTeam());
+                }
             }
         }
-    }
-    if (teamsAlive.size() <= 1)
-    {
-        // go to victory screen
-        if (teamsAlive.size() == 1)
+        if (teamsAlive.size() <= 1)
         {
-            emit signalVictory(teamsAlive[0]);
-        }
-        else
-        {
-            emit signalVictory(-1);
+            // go to victory screen
+            if (teamsAlive.size() == 1)
+            {
+                emit signalVictory(teamsAlive[0]);
+            }
+            else
+            {
+                emit signalVictory(-1);
+            }
         }
     }
 }

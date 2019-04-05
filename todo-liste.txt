@@ -1,12 +1,6 @@
 - save and reload map
 - option menu
 - credits menu
-- aw dc damage mod
-
-- ingame info bar
-	- unit info
-	- terrain info
-
 
 - activate power animation
 

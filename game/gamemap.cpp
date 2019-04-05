@@ -805,6 +805,7 @@ void GameMap::startOfTurn(Player* pPlayer)
                 {
                     pUnit->startOfTurn();
                 }
+                pUnit->updateIcons(getCurrentViewPlayer());
             }
             spBuilding pBuilding = fields.at(y)->at(x)->getSpBuilding();
             if (pBuilding.get() != nullptr)

@@ -129,6 +129,11 @@ var Constructor = function()
         }
         return 0;
     };
+
+    this.getRepairBonus = function(co, unit, posX, posY)
+    {
+        return 1;
+    };
 }
 
 Constructor.prototype = CO;
