@@ -16,12 +16,15 @@ public:
 signals:
     void sigExitMenue();
     void sigShowMods();
+    void sigShowSettings();
 public slots:
     void exitMenue();
     void showMods();
-
+    void restart();
+    void showSettings();
 private:
     spPanel m_pOptions;
+    bool restartNeeded{false};
 };
 
 #endif // OPTIONMENUE_H

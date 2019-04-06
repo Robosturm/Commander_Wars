@@ -39,8 +39,7 @@ void AudioThread::initAudio()
     m_Player->moveToThread(this);
     m_playList->moveToThread(this);
     m_Player->setPlaylist(m_playList);
-    SlotSetVolume(static_cast<qint32>(static_cast<float>(Mainapp::getInstance()->getSettings()->getMusicVolume()) *
-                  static_cast<float>(Mainapp::getInstance()->getSettings()->getTotalVolume()) / 100.0f));
+    SlotSetVolume(static_cast<qint32>(static_cast<float>(Mainapp::getInstance()->getSettings()->getMusicVolume())));
     connect(m_Player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(SlotMediaStatusChanged(QMediaPlayer::MediaStatus)));
 }
 
@@ -77,7 +76,7 @@ void AudioThread::SlotSetVolume(qint32 value)
 {
     if (m_Player != nullptr)
     {
-        m_Player->setVolume(value);
+        m_Player->setVolume(static_cast<qint32>(value  * static_cast<float>(Mainapp::getInstance()->getSettings()->getTotalVolume()) / 100.0f));
     }
 }
 

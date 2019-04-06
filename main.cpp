@@ -1,5 +1,6 @@
 #include <QObject>
 #include <QDirIterator>
+#include <QProcess>
 
 #include "coreengine/audiothread.h"
 
@@ -134,7 +135,7 @@ int main(int argc, char* argv[])
     oxygine::getStage()->addChild(new Mainwindow());
     /*************************************************************************************************/
     // This is the main game loop.
-    app.exec();
+    qint32 returncode = app.exec();
 
     /*************************************************************************************************/
     // clean up section ahead
@@ -154,7 +155,10 @@ int main(int argc, char* argv[])
 
     oxygine::ObjectBase::__stopTracingLeaks();
     //end
-
-	return 0;
+    if (returncode == 1)
+    {
+        QProcess::startDetached(QCoreApplication::applicationFilePath());
+    }
+    return returncode;
 }
 

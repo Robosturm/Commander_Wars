@@ -707,13 +707,33 @@
 <context>
     <name>OptionMenue</name>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="39"/>
+        <location filename="../menue/optionmenue.cpp" line="41"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="51"/>
+        <location filename="../menue/optionmenue.cpp" line="53"/>
         <source>Mods</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="62"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="111"/>
+        <source>Global Volume: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="127"/>
+        <source>Music Volume: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="143"/>
+        <source>Sound Volume: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -773,7 +793,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="54"/>
+        <location filename="../main.cpp" line="55"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>

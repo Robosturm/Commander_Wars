@@ -10,10 +10,12 @@
 #include "resource_management/fontmanager.h"
 
 #include "objects/checkbox.h"
+#include "objects/slider.h"
 
 #include <QDir>
 #include <QFileInfoList>
 #include <QTextStream>
+#include <QProcess>
 
 OptionMenue::OptionMenue()
 {
@@ -50,12 +52,21 @@ OptionMenue::OptionMenue()
 
     oxygine::spButton pButtonMods = ObjectManager::createButton(tr("Mods"));
     pButtonMods->attachTo(this);
-    pButtonMods->setPosition(pApp->getSettings()->getWidth() - pButtonMods->getWidth() -10, 10);
+    pButtonMods->setPosition(pApp->getSettings()->getWidth() - pButtonMods->getWidth() - 10, 10);
     pButtonMods->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigShowMods();
     });
     connect(this, &OptionMenue::sigShowMods, this, &OptionMenue::showMods, Qt::QueuedConnection);
+
+    oxygine::spButton pButtonSettings = ObjectManager::createButton(tr("Settings"));
+    pButtonSettings->attachTo(this);
+    pButtonSettings->setPosition(10, 10);
+    pButtonSettings->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigShowSettings();
+    });
+    connect(this, &OptionMenue::sigShowSettings, this, &OptionMenue::showSettings, Qt::QueuedConnection);
 
     QSize size(pApp->getSettings()->getWidth() - 20,
                pApp->getSettings()->getHeight() - (20 + pButtonMods->getHeight()) * 2);
@@ -63,16 +74,85 @@ OptionMenue::OptionMenue()
     m_pOptions->setPosition(10, 20 + pButtonMods->getHeight());
     addChild(m_pOptions);
 
-
-
-    showMods();
+    showSettings();
 }
 
 void OptionMenue::exitMenue()
 {
-    Console::print("Leaving Editor Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new Mainwindow());
-    oxygine::Actor::detach();
+    if (restartNeeded)
+    {
+        restart();
+    }
+    else
+    {
+        Console::print("Leaving Editor Menue", Console::eDEBUG);
+        oxygine::getStage()->addChild(new Mainwindow());
+        oxygine::Actor::detach();
+    }
+}
+
+void OptionMenue::showSettings()
+{
+    m_pOptions->clearContent();
+    Mainapp* pApp = Mainapp::getInstance();
+    AudioThread* pAudio = pApp->getAudioThread();
+    Settings* pSettings = pApp->getSettings();
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+
+    qint32 y = 10;
+
+    qint32 sliderOffset = 400;
+    oxygine::spTextField pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Global Volume: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSlider pSlider = new Slider(pApp->getSettings()->getWidth() - 20 - sliderOffset, 0, 100);
+    pSlider->setPosition(sliderOffset - 130, y);
+    pSlider->setCurrentValue(pSettings->getTotalVolume());
+    connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        pSettings->setTotalVolume(value);
+        pAudio->setVolume(pSettings->getMusicVolume());
+    });
+    m_pOptions->addItem(pSlider);
+
+    y += 40;
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Music Volume: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pSlider = new Slider(pApp->getSettings()->getWidth() - 20 - sliderOffset, 0, 100);
+    pSlider->setPosition(sliderOffset - 130, y);
+    pSlider->setCurrentValue(pSettings->getMusicVolume());
+    connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        pSettings->setMusicVolume(value);
+        pAudio->setVolume(value);
+    });
+    m_pOptions->addItem(pSlider);
+
+    y += 40;
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Sound Volume: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pSlider = new Slider(pApp->getSettings()->getWidth() - 20 - sliderOffset, 0, 100);
+    pSlider->setPosition(sliderOffset - 130, y);
+    pSlider->setCurrentValue(pSettings->getSoundVolume());
+    connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        pSettings->setSoundVolume(value);
+    });
+    m_pOptions->addItem(pSlider);
+    // qApp->screens()[0]->size();
+
 }
 
 void OptionMenue::showMods()
@@ -135,6 +215,7 @@ void OptionMenue::showMods()
                 {
                     pSettings->removeMod(folder);
                 }
+                restartNeeded = true;
             });
             mods++;
             if (curWidth > width)
@@ -145,4 +226,9 @@ void OptionMenue::showMods()
     }
     m_pOptions->setContentWidth(width);
     m_pOptions->setContentHeigth(20 + mods * 40);
+}
+
+void OptionMenue::restart()
+{
+    QCoreApplication::exit(1);
 }

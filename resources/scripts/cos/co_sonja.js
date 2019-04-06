@@ -83,6 +83,23 @@ var Constructor = function()
                 return false;
         }
     };
+    this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                 defender, defPosX, defPosY, isDefender)
+    {
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Superpower:
+                if (isDefender)
+                {
+                    return 150;
+                }
+                break;
+            case GameEnums.PowerMode_Power:
+            default:
+                break;
+        }
+        return 0;
+    };
 
     this.getHpHidden = function(co, unit, posX, posY)
     {
