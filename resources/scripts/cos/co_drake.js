@@ -165,6 +165,63 @@ var Constructor = function()
             return 1;
         }
     };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("A bighearted former pirate who hates fighting. Also a great surfer.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("The sea");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("High places");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("Naval units have superior firepower, but air units have reduced firepower.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Causes a tidal wave that does one HP of damage to all enemy units.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Tsunami");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Causes a giant tidal wave that does two HP of damage to all enemy units and weather changes to rain.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Typhoon");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("Panic is for landlubbers!"),
+                qsTr("Prepare to be washed away!"),
+                qsTr("Time to show you how we do things at sea!"),
+                qsTr("Wave good-bye to your troops!"),
+                qsTr("Can't you just feel the riptide washing you out to open sea?"),
+                qsTr("Drake is taking the helm!")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("I'm just glad I survived that..."),
+                qsTr("That was some rough sailing!|Blow me down... we finally won.")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("A job well done! You've beaten me."),
+                qsTr("Curses! I've been defeated. Time to hoist sail and flee!")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Drake");
+    };
 }
 
 Constructor.prototype = CO;

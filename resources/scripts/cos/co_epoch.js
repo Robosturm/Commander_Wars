@@ -118,7 +118,7 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                break;
+                return true;
             case GameEnums.PowerMode_Power:
                 // are the hp hidden of this unit?
                 return true;
@@ -152,22 +152,23 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                return 40;
+                return 30;
             case GameEnums.PowerMode_Power:
-                return 10;
+                return 20;
             default:
                 break;
         }
         return 0;
     };
-    this.getBonusMisfortune = function(co, unit, posX, posY)
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                 defender, defPosX, defPosY, isDefender)
     {
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                return 5;
+                return 30;
             case GameEnums.PowerMode_Power:
-                return 0;
+                return 20;
             default:
                 break;
         }
@@ -202,6 +203,63 @@ var Constructor = function()
             }
         }
         return 0;
+    };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("The first prototype for the Robot Commanding Officer Series invented by Lash.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Tests");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Upgrades");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("Epoch is blessed with simple programming so it has only basic command abilities. Powers charge at an unmatched speed.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Firepower is increased and unit HP is hidden from opponents.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Short Circuit");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Direct combat units gain one movement and indirect combat units recieve one extra range. Hides HP from opponents. Firepower is increased.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Shocker");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("Error: Overcharged. initiate saftey mode."),
+                qsTr("Power surge detected."),
+                qsTr("Overload! Release Energy!"),
+                qsTr("System Over. Overload equals very yes."),
+                qsTr("Blackout!"),
+                qsTr("Register your firmware for continued use!")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("Epoch Succesful. Upgrade irrelevant"),
+                qsTr("Test Completed. Anaylsing battle log..."),
+                qsTr("Victory recorded in database and filed under category 'insulting'")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("Noooo... No upgrade please.")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Epoch");
     };
 }
 

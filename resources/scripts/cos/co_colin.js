@@ -103,6 +103,64 @@ var Constructor = function()
         }
         return -10;
     };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("Blue Moon's rich boy CO and Sasha's little brother. A gifted CO with a sharp, if insecure, mind.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Olaf and Grit");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Black Hole");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("The heir to a vast fortune who can purchase units at bargain-basement prices. Troops' low firepower stems from his lack of confidence.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Increases current funds by 50 percent.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Gold Rush");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Uses wealth to increase the strength of units. The more funds available, the more firepower his units receive.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Power of Money");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("Let me show you the power of money!"),
+                qsTr("This is not a drill... I won't give up so easily!"),
+                qsTr("People of Blue Moon!  I need your help!"),
+                qsTr("I'll give it everything I've got!"),
+                qsTr("You're not getting away with this!"),
+                qsTr("I'll show you what I can do!")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("I w-won! Whew!"),
+                qsTr("I'll win if I try my best!"),
+                qsTr("Whew... I won! I really won!")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("If only Commander Olaf were here..."),
+                qsTr("Wait till I tell my sis! Then you'll be sorry!")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Colin");
+    };
 }
 
 Constructor.prototype = CO;

@@ -134,6 +134,64 @@ var Constructor = function()
         }
         return 5;
     };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("The strongman of the Black Hole army. Promoted form private by Hawke, who was impressed by his natural ability.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Meat");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Vegetables");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("High firepower, but he relies solely on strength. His shoddy technique sometimes reduces the damage his units deal.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Firepower rises, but so does his chances of reduced firepower.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Brute Force");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Firepower rises dramatically, but so does his chances of reduced power.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Barbaric Blow");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("Stay outta my way!"),
+                qsTr("Grrrrrraaaaaaa! I'm outta control!"),
+                qsTr("You can't hide from me! I'll hunt you down like a dog!"),
+                qsTr("Nnnggrr! Braaaawrr! Smaarrrrgh!"),
+                qsTr("Grr! Now you've really made me angry!"),
+                qsTr("You're gonna get pummeled!")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("What was that? A waste of my time!"),
+                qsTr("Graaa! Blaarrgggg! Smaaarrgggghhh!!"),
+                qsTr("Enough pussyfooting around!")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("I-I don't believe it... They were... stronger than me?"),
+                qsTr("Grrr... I wanna smash your face in!!!")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Flak");
+    };
 }
 
 Constructor.prototype = CO;

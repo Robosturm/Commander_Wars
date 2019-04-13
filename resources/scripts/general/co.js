@@ -155,5 +155,55 @@ var CO =
     {
         // called at the start of the turn use it to do cool co stuff like caulder's healing :)
     },
+
+    // CO - Intel
+    getBio : function()
+    {
+        return "";
+    },
+    getHits : function()
+    {
+        return "";
+    },
+    getMiss : function()
+    {
+        return "";
+    },
+    getCODescription : function()
+    {
+        return "";
+    },
+    getPowerDescription : function()
+    {
+        return "";
+    },
+    getPowerName : function()
+    {
+        return "";
+    },
+    getSuperPowerDescription : function()
+    {
+        return "";
+    },
+    getSuperPowerName : function()
+    {
+        return "";
+    },
+    getPowerSentences : function()
+    {
+        return [];
+    },
+    getVictorySentences : function()
+    {
+        return [];
+    },
+    getDefeatSentences : function()
+    {
+        return [];
+    },
+    getName : function()
+    {
+        return "";
+    },
 }
 

@@ -145,6 +145,63 @@ var Constructor = function()
         }
         return 10;
     };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("A commander of the Black Hole army who willstop at nothing to achieve his goals.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Black Coffee");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Incompetence");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("All units possess superior firepower. However, his CO power gauge is longer than it should be.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("All enemy units suffer one HP of damage. In addition, all allied units recover one HP.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Black Wave");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("All enemy units suffer two HP of damage. In addition, all allied units recover two HP.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Black Storm");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("This is the end.|Farewell."),
+                qsTr("I give you credit for pushing me this far."),
+                qsTr("You have inspired me to take action."),
+                qsTr("To be defeated is to lose everything. Are you prepared for that outcome?"),
+                qsTr("You leave me no choice.")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("Will you sacrifice all? Then perhaps you can win."),
+                qsTr("Sad...you were no match for me."),
+                qsTr("There is no chance.  My victory was assured.")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("That's it then. We shall withdraw."),
+                qsTr("... This is one situation I never expected myself to be in.")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Hawke");
+    };
 }
 
 Constructor.prototype = CO;

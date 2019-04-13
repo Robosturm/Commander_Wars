@@ -92,8 +92,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 return 10;
             case GameEnums.PowerMode_Power:
-				return 10;
-                break;
+                return 10;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY)))
                 {
@@ -102,6 +101,64 @@ var Constructor = function()
                 break;
         }
         return 0;
+    };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("Owner of the Battle Maps shop. Rumored to be Orange Star's former commander-in-chief.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Tea");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Medicine");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("Uses secret trade routes to get slightly lower deployment costs for all units.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Speaks with such authority that he obtains even lower deployment costs.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Barter");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Merchant pals gather from around the globe and help him deploy ground units from any allied city and even cheaper.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Merchant Union");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("This brings back memories!"),
+                qsTr("Runnin' away won't prove anything! Stand your ground, soldier!"),
+                qsTr("No need to get all worked up!"),
+                qsTr("Hey, I'm no retiree!"),
+                qsTr("I may be old, but I can still rumble!"),
+                qsTr("This is my best seller!")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("Battles cost too much!"),
+                qsTr("Rematches are free!"),
+                qsTr("Thank you, come again!")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("I'm getting too old for this."),
+                qsTr("Shop's closing for today...")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Hachi");
     };
 }
 

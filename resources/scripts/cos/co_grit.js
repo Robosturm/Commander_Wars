@@ -182,6 +182,64 @@ var Constructor = function()
     {
         return "BM";
     };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("A laid-back style masks his dependability. A peerless marksman. Works well with Olaf.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Cats");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Rats");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("Indirect-combat units cause more damage and have increased firerange. Weak in non-infantry direct combat.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Increases range of indirect units by one space. Firepower of these units also rise.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Snipe Attack");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Increases range of indirect units by two spaces. Firepower of these units greatly rise.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Super Snipe");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("Once you're in my sights, there's no gettin' away!"),
+                qsTr("Reckon it's time to take you down!"),
+                qsTr("Where's the fool who wants to help me with target practice?"),
+                qsTr("Y'all can run, but you can't hide!"),
+                qsTr("Y'all gimme no choice... Time to bring in the big guns!"),
+                qsTr("Aw, shucks. I was hopin' it wouldn't come to this.")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("This ain't for show."),
+                qsTr("Maybe now I can get some shut-eye."),
+                qsTr("I hope this gets easier. That was harder'n college!")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("Aw, possum spit!"),
+                qsTr("Just as I reckoned... This ain't gonna be no Sunday stroll.")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Grit");
+    };
 }
 
 Constructor.prototype = CO;

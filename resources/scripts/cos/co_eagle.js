@@ -175,6 +175,64 @@ var Constructor = function()
         }
         return 0;
     };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("Green Earth's daring pilot hero. Joined the air force to honor his father's legacy.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Lucky goggles");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Swimming");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("Air units use less fuel and have superior firepower. Naval units have weaker firepower.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("All non-infantry units that have already carried out orders may move again, but their firepower is cut in half.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Lightning Drive");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("All non-infantry units that have already carried out orders may move again.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Lightning Strike");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("Checkmate!"),
+                qsTr("All units, ready for attack! Don't even give them time for regret!"),
+                qsTr("Do you think you can keep up?"),
+                qsTr("The Eagle soars above you!"),
+                qsTr("I have no interest in underlings. Begone!"),
+                qsTr("I've caught you with your guard down!")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("Hmph! As expected!"),
+                qsTr("Where's the challenge in that?"),
+                qsTr("Another victory! Was there ever any doubt?")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("This is what happens when you lose focus!"),
+                qsTr("Impossible! I'm getting angrier by the moment!")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Eagle");
+    };
 }
 
 Constructor.prototype = CO;

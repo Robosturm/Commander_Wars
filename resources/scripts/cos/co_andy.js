@@ -129,6 +129,66 @@ var Constructor = function()
         }
         return 0;
     };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("A whiz with a wrench, this mechanical boy wonder earned fame as the hero who saved Macro Land in the last great war.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Mechanics");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Waking up too early");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("No real weaknesses. Proficient with air, sea and land units. Ready to fight wherever and whenever.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Restores two HP to all units.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Hyper Repair");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Restores five HP to all units. Firepower rises, and unit movement increases by one space.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Hyper Upgrade");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("I've got parts to spare!"),
+                qsTr("I'm not giving up!"),
+                qsTr("Time to roll up my sleeves!"),
+                qsTr("I haven't even cranked the engine yet!"),
+                qsTr("Pass me my wrench!!"),
+                qsTr("It's time for a tune-up!"),
+                qsTr("Never give up, and never lose! I'm on my way!"),
+                qsTr("I'm not worried! I can fix anything!")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("We won! Wooooooohooo!"),
+                qsTr("I can fix anything!"),
+                qsTr("I did it! Did you see that!?")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("Oh, come on!"),
+                qsTr("Next time I see you, you're in trouble!")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Andy");
+    };
 }
 
 Constructor.prototype = CO;
