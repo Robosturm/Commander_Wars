@@ -6,6 +6,11 @@ var CO =
         co.setSuperpowerStars(3);
     },
 
+    loadCOMusic : function(co)
+    {
+        // put the co music in here.
+    },
+
     getMovementPointModifier : function(co, unit)
     {
         return 0;
@@ -37,6 +42,12 @@ var CO =
     },
 
     getEnemyTerrainDefenseModifier : function(co, unit, posX, posY)
+    {
+        return 0;
+    },
+
+    getDamageReduction : function(co, damage, attacker, atkPosX, atkPosY,
+                                  defender, defPosX, defPosY, isDefender)
     {
         return 0;
     },

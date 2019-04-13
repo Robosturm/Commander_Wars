@@ -6,11 +6,28 @@ var Constructor = function()
         co.setSuperpowerStars(4);
     };
 
+    this.loadCOMusic = function(co)
+    {
+        // put the co music in here.
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/bh_power.mp3");
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/bh_superpower.mp3");
+                break;
+            default:
+                audio.addMusic("resources/music/cos/hawke.mp3")
+                break;
+        }
+    };
+
     this.activatePower = function(co)
     {
         CO_HAWKE.hawkeDamage(co, 1);
         audio.clearPlayList();
-        audio.addMusic("resources/music/cos/bh_power.mp3");
+        CO_HAWKE.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -98,13 +115,8 @@ var Constructor = function()
     {
         CO_HAWKE.hawkeDamage(co, 2);
         audio.clearPlayList();
-        audio.addMusic("resources/music/cos/bh_superpower.mp3");
+        CO_HAWKE.loadCOMusic(co);
         audio.playRandom();
-    };
-
-    this.startOfTurn = function(co)
-    {
-        audio.addMusic("resources/music/cos/hawke.mp3")
     };
 
     this.getCOUnitRange = function(co)

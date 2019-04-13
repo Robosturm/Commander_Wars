@@ -10,7 +10,7 @@ var Constructor = function()
     {
         CO_DRAKE.drakeDamage(co, 1, null);
         audio.clearPlayList();
-        audio.addMusic("resources/music/cos/power.mp3");
+        CO_DRAKE.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -22,7 +22,7 @@ var Constructor = function()
         map.getGameRules().changeWeather("WEATHER_RAIN", map.getPlayerCount() * 2);
         CO_DRAKE.drakeDamage(co, 2, animation2);
         audio.clearPlayList();
-        audio.addMusic("resources/music/cos/superpower.mp3");
+        CO_DRAKE.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -85,9 +85,21 @@ var Constructor = function()
         }
     };
 
-    this.startOfTurn = function(co)
+    this.loadCOMusic = function(co)
     {
-        audio.addMusic("resources/music/cos/drake.mp3")
+        // put the co music in here.
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3");
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3");
+                break;
+            default:
+                audio.addMusic("resources/music/cos/drake.mp3")
+                break;
+        }
     };
 
     this.getCOUnitRange = function(co)

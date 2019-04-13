@@ -15,6 +15,8 @@ public slots:
     void enterSingleplayer();
     void enterEditor();
     void enterOptionmenue();
+    void enterLoadGame();
+    void loadGame(QString filename);
 
     void leaveMenue();
     void quitGame();
@@ -23,6 +25,7 @@ signals:
     void sigEnterEditor();
     void sigEnterOptionmenue();
     void sigQuit();
+    void sigEnterLoadGame();
 protected:
     void setButtonPosition(oxygine::spButton pButton, qint32 btnI);
 };

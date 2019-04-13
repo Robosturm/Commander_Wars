@@ -20,7 +20,7 @@ void ScriptVariable::serialize(QDataStream& pStream)
     pStream << getVersion();
     pStream << m_Id;
     QByteArray data = buffer.data();
-    pStream << data.size();
+    pStream << static_cast<qint32>(data.size());
     for (qint32 i = 0; i < data.size(); i++)
     {
         pStream << static_cast<qint8>(data[i]);
@@ -39,6 +39,7 @@ void ScriptVariable::deserialize(QDataStream& pStream)
     {
         qint8 value = 0;
         pStream >> value;
+
         actionData << value;
     }
 }

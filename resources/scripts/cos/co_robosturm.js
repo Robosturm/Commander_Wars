@@ -6,11 +6,28 @@ var Constructor = function()
         co.setSuperpowerStars(5);
     };
 
+    this.loadCOMusic = function(co)
+    {
+        // put the co music in here.
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/bh_power.mp3");
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/bh_superpower.mp3");
+                break;
+            default:
+                audio.addMusic("resources/music/cos/robosturm.mp3")
+                break;
+        }
+    };
+
     this.activatePower = function(co)
     {
         CO_ROBOSTURM.power(co, 0);
         audio.clearPlayList();
-        audio.addMusic("resources/music/cos/bh_power.mp3");
+        CO_ROBOSTURM.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -18,7 +35,7 @@ var Constructor = function()
     {
         CO_ROBOSTURM.power(co, 2);
         audio.clearPlayList();
-        audio.addMusic("resources/music/cos/bh_superpower.mp3");
+        CO_ROBOSTURM.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -108,11 +125,6 @@ var Constructor = function()
                 units.remove();
             }
         }
-    };
-
-    this.startOfTurn = function(co)
-    {
-        audio.addMusic("resources/music/cos/robosturm.mp3")
     };
 
     this.getCOUnitRange = function(co)

@@ -141,6 +141,19 @@ public slots:
      */
     qint32 getDeffensiveBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition);
     /**
+     * @brief getDamageReduction
+     * @param damage
+     * @param pAttacker
+     * @param position
+     * @param attackerBaseHp
+     * @param pDefender
+     * @param defPosition
+     * @param isDefender
+     * @return
+     */
+    float getDamageReduction(float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
+                             Unit* pDefender, QPoint defPosition, bool isDefender);
+    /**
      * @brief getCoID our co id
      * @return
      */
@@ -299,6 +312,11 @@ public slots:
     {
         return &m_Variables;
     }
+    /**
+     * @brief loadCOMusic
+     */
+    void loadCOMusic();
+
 private:
     Player* m_Owner;
     QString coID;

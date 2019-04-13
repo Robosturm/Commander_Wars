@@ -6,6 +6,23 @@ var Constructor = function()
         co.setSuperpowerStars(3);
     };
 
+    this.loadCOMusic = function(co)
+    {
+        // put the co music in here.
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/bh_power.mp3");
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/bh_superpower.mp3");
+                break;
+            default:
+                audio.addMusic("resources/music/cos/kindle.mp3")
+                break;
+        }
+    };
+
     this.activatePower = function(co)
     {
         var units = co.getPlayer().getUnits();
@@ -42,7 +59,7 @@ var Constructor = function()
         CO_KINDLE.kindleDamage(co, 3);
 
         audio.clearPlayList();
-        audio.addMusic("resources/music/cos/bh_power.mp3");
+        CO_KINDLE.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -137,13 +154,8 @@ var Constructor = function()
         units.remove();
 
         audio.clearPlayList();
-        audio.addMusic("resources/music/cos/bh_superpower.mp3");
+        CO_KINDLE.loadCOMusic(co);
         audio.playRandom();
-    };
-
-    this.startOfTurn = function(co)
-    {
-        audio.addMusic("resources/music/cos/kindle.mp3")
     };
 
     this.getCOUnitRange = function(co)

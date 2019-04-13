@@ -56,6 +56,11 @@ public slots:
      */
     void saveGame();
     /**
+     * @brief saveMap
+     * @param file
+     */
+    void saveMap(QString filename);
+    /**
      * @brief exitGame
      */
     void exitGame();

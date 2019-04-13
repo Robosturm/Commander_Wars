@@ -297,6 +297,17 @@ public slots:
      */
     qint32 getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender);
     /**
+     * @brief getDamageReduction
+     * @param pAttacker
+     * @param position
+     * @param pDefender
+     * @param defPosition
+     * @param isDefender
+     * @return
+     */
+    float getDamageReduction(float damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
+                              QPoint defPosition, bool isDefender);
+    /**
      * @brief getTerrainDefense
      * @return
      */

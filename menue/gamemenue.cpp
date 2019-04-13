@@ -10,6 +10,10 @@
 
 #include "game/gameanimationfactory.h"
 
+#include "objects/filedialog.h"
+
+#include <QFile>
+
 GameMenue* GameMenue::m_pInstance = nullptr;
 
 GameMenue::GameMenue(qint32 startPlayer)
@@ -140,7 +144,25 @@ void GameMenue::victory(qint32 team)
 
 void GameMenue::saveGame()
 {
+    QVector<QString> wildcards;
+    wildcards.append("*.sav");
+    QString path = QCoreApplication::applicationDirPath() + "/savegames";
+    spFileDialog saveDialog = new FileDialog(path, wildcards, GameMap::getInstance()->getMapName());
+    this->addChild(saveDialog);
+    connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMap, Qt::QueuedConnection);
+}
 
+void GameMenue::saveMap(QString filename)
+{
+    if (filename.endsWith(".sav"))
+    {
+        QFile file(filename);
+        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+        QDataStream stream(&file);
+        GameMap* pMap = GameMap::getInstance();
+        pMap->serialize(stream);
+        file.close();
+    }
 }
 
 void GameMenue::exitGame()

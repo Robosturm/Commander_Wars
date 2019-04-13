@@ -15,7 +15,7 @@ var Constructor = function()
         var player = co.getPlayer();
         player.addFonds(player.getFonds() * 0.5);
         audio.clearPlayList();
-        audio.addMusic("resources/music/cos/power.mp3");
+        CO_COLIN.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -51,12 +51,25 @@ var Constructor = function()
         units.remove();
 
         audio.clearPlayList();
-        audio.addMusic("resources/music/cos/superpower.mp3");
+        CO_COLIN.loadCOMusic(co);
         audio.playRandom();
     };
-    this.startOfTurn = function(co)
+
+    this.loadCOMusic = function(co)
     {
-        audio.addMusic("resources/music/cos/colin.mp3")
+        // put the co music in here.
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3");
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3");
+                break;
+            default:
+                audio.addMusic("resources/music/cos/colin.mp3")
+                break;
+        }
     };
 
     this.getCOUnitRange = function(co)

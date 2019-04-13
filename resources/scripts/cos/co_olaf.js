@@ -6,6 +6,23 @@ var Constructor = function()
         co.setSuperpowerStars(4);
     };
 
+    this.loadCOMusic = function(co)
+    {
+        // put the co music in here.
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3");
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3");
+                break;
+            default:
+                audio.addMusic("resources/music/cos/olaf.mp3")
+                break;
+        }
+    };
+
     this.activatePower = function(co)
     {
         var animation2 = GameAnimationFactory.createAnimation(0, 0);
@@ -13,7 +30,7 @@ var Constructor = function()
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         map.getGameRules().changeWeather("WEATHER_SNOW", map.getPlayerCount() * 2);
         audio.clearPlayList();
-        audio.addMusic("resources/music/cos/power.mp3");
+        CO_OLAF.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -25,7 +42,7 @@ var Constructor = function()
         map.getGameRules().changeWeather("WEATHER_SNOW", map.getPlayerCount() * 2);
         CO_OLAF.olafDamage(co, 2, animation2);
         audio.clearPlayList();
-        audio.addMusic("resources/music/cos/superpower.mp3");
+        CO_OLAF.loadCOMusic(co);
         audio.playRandom();
     };
 

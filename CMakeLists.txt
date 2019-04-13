@@ -262,6 +262,7 @@ endif()
 install(DIRECTORY resources DESTINATION ".")
 install(DIRECTORY maps DESTINATION ".")
 install(DIRECTORY mods DESTINATION ".")
+install(DIRECTORY savegames DESTINATION ".")
 install(FILES ${${PROJECT_NAME}_INSTALL_LIBS} DESTINATION ".")
 # install exe
 install(TARGETS ${PROJECT_NAME} DESTINATION ".")

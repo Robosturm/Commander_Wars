@@ -139,6 +139,9 @@ var Constructor = function()
             var misfortune = attacker.getBonusMisfortune(attackerPosition);
             damage += globals.randInt(-misfortune, luck);
         }
+        damage -= defender.getDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,
+                                    defenderPosition, isDefender);
+
         // avoid healing through negativ damage caused by misfortune
         if (baseDamage >= 0 && damage < 0)
         {

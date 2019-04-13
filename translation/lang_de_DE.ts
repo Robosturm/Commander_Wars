@@ -110,7 +110,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="247"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="250"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -181,6 +181,14 @@
         <location filename="../resources/scripts/actions/ACTION_RATION.js" line="111"/>
         <location filename="../resources/scripts/actions/ACTION_RATION.js" line="119"/>
         <source>RATION</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_SAVEGAME</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SAVEGAME.js" line="10"/>
+        <source>Save Game</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -509,22 +517,27 @@
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="41"/>
+        <location filename="../menue/mainwindow.cpp" line="45"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="52"/>
+        <location filename="../menue/mainwindow.cpp" line="56"/>
+        <source>Load Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mainwindow.cpp" line="67"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="63"/>
+        <location filename="../menue/mainwindow.cpp" line="78"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="74"/>
+        <location filename="../menue/mainwindow.cpp" line="89"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>

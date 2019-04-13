@@ -6,11 +6,28 @@ var Constructor = function()
         co.setSuperpowerStars(4);
     };
 
+    this.loadCOMusic = function(co)
+    {
+        // put the co music in here.
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3");
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3");
+                break;
+            default:
+                audio.addMusic("resources/music/cos/sensei.mp3")
+                break;
+        }
+    };
+
     this.activatePower = function(co)
     {
         CO_SENSEI.spawnUnits(co, "INFANTRY", 9);
         audio.clearPlayList();
-        audio.addMusic("resources/music/cos/power.mp3");
+        CO_SENSEI.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -18,7 +35,7 @@ var Constructor = function()
     {
         CO_SENSEI.spawnUnits(co, "MECH", 9);
         audio.clearPlayList();
-        audio.addMusic("resources/music/cos/superpower.mp3");
+        CO_SENSEI.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -58,11 +75,6 @@ var Constructor = function()
             }
         }
         buildings.remove();
-    };
-
-    this.startOfTurn = function(co)
-    {
-        audio.addMusic("resources/music/cos/sensei.mp3")
     };
 
     this.getCOUnitRange = function(co)

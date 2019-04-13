@@ -561,6 +561,36 @@ qint32 CO::getDeffensiveBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefend
     }
 }
 
+float CO::getDamageReduction(float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
+                             Unit* pDefender, QPoint defPosition, bool isDefender)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getDamageReduction";
+    QJSValueList args1;
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj3;
+    args1 << damage;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pAttacker);
+    args1 << obj1;
+    args1 << atkPosition.x();
+    args1 << atkPosition.y();
+    args1 << attackerBaseHp;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(pDefender);
+    args1 << obj2;
+    args1 << defPosition.x();
+    args1 << defPosition.y();
+    args1 << isDefender;
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 GameEnums::PowerMode CO::getPowerMode() const
 {
     return m_PowerMode;
@@ -674,6 +704,16 @@ bool CO::getPerfectVision()
     }
 }
 
+void CO::loadCOMusic()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "loadCOMusic";
+    QJSValueList args1;
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj3;
+    pApp->getInterpreter()->doFunction(coID, function1, args1);
+}
+
 void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -709,7 +749,7 @@ void CO::deserialize(QDataStream& pStream)
     pStream >> superpowerStars;
     pStream >> powerFilled;
     qint32 value = 0;
-    pStream << value;
+    pStream >> value;
     m_PowerMode = static_cast<GameEnums::PowerMode>(value);
     if (version > 1)
     {

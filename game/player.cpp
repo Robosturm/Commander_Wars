@@ -51,6 +51,18 @@ void Player::loadVisionFields()
     }
 }
 
+void Player::loadCOMusic()
+{
+    if (playerCOs[0].get() != nullptr)
+    {
+       playerCOs[0]->loadCOMusic();
+    }
+    if (playerCOs[1].get() != nullptr)
+    {
+       playerCOs[1]->loadCOMusic();
+    }
+}
+
 Player::~Player()
 {
 }
@@ -730,7 +742,7 @@ void Player::serialize(QDataStream& pStream)
      qint32 heigth = 0;
      if (width > 0)
      {
-        m_FogVisionFields[0].size();
+        heigth = m_FogVisionFields[0].size();
      }
      pStream << width;
      pStream << heigth;

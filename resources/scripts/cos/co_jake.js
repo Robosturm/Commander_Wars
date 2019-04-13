@@ -19,6 +19,23 @@ var Constructor = function()
                 "PIPERUNNER", "ROCKETTHROWER"];
     };
 
+    this.loadCOMusic = function(co)
+    {
+        // put the co music in here.
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3");
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3");
+                break;
+            default:
+                audio.addMusic("resources/music/cos/jake.mp3")
+                break;
+        }
+    };
+
     this.activatePower = function(co)
     {
         var units = co.getPlayer().getUnits();
@@ -50,7 +67,7 @@ var Constructor = function()
         units.remove();
 
         audio.clearPlayList();
-        audio.addMusic("resources/music/cos/power.mp3");
+        CO_JAKE.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -85,12 +102,8 @@ var Constructor = function()
         units.remove();
 
         audio.clearPlayList();
-        audio.addMusic("resources/music/cos/superpower.mp3");
+        CO_JAKE.loadCOMusic(co);
         audio.playRandom();
-    };
-    this.startOfTurn = function(co)
-    {
-        audio.addMusic("resources/music/cos/jake.mp3")
     };
 
     this.getCOUnitRange = function(co)

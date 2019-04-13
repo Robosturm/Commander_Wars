@@ -55,6 +55,7 @@ GameMap::GameMap(QString map, bool gamestart, bool onlyLoad)
         qint32 heigth = getMapHeight();
         qint32 width = getMapWidth();
         centerMap(width / 2, heigth / 2);
+
     }
 }
 
@@ -790,6 +791,23 @@ bool GameMap::nextPlayer()
     return nextDay;
 }
 
+void GameMap::updateUnitIcons()
+{
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            spUnit pUnit = fields.at(y)->at(x)->getSpUnit();
+            if (pUnit.get() != nullptr)
+            {
+                pUnit->updateIcons(getCurrentViewPlayer());
+            }
+        }
+    }
+}
+
 void GameMap::startOfTurn(Player* pPlayer)
 {
     qint32 heigth = getMapHeight();
@@ -910,6 +928,7 @@ void GameMap::nextTurn()
     }
     m_Rules->startOfTurn();
     m_CurrentPlayer->earnMoney();
+    m_CurrentPlayer->loadCOMusic();
     startOfTurn(m_CurrentPlayer.get());
     checkFuel(m_CurrentPlayer.get());
     GameMenue::getInstance()->updatePlayerinfo();

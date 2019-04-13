@@ -11,8 +11,8 @@ ScriptVariables::ScriptVariables()
 void ScriptVariables::serialize(QDataStream& pStream)
 {
     pStream << getVersion();
-    pStream << m_Variables.size();
-    for (qint32 i = 0; m_Variables.size(); i++)
+    pStream << static_cast<qint32>(m_Variables.size());
+    for (qint32 i = 0; i < m_Variables.size(); i++)
     {
         m_Variables[i]->serialize(pStream);
     }

@@ -176,6 +176,7 @@ void Unit::updateSprites()
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
     args1 << obj1;
     pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    setHasMoved(m_Moved);
 }
 
 GameEnums::UnitRanks Unit::getUnitRank() const
@@ -529,6 +530,25 @@ qint32 Unit::getTerrainDefense()
         return pMap->getTerrain(getX(), getY())->getDefense(this);
     }
     return 0;
+}
+
+float Unit::getDamageReduction(float damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
+                          QPoint defPosition, bool isDefender)
+{
+    float bonus = 0;
+    CO* pCO = m_pOwner->getCO(0);
+    if (pCO != nullptr)
+    {
+        bonus += pCO->getDamageReduction(damage, pAttacker, position, attackerBaseHp,
+                                         this, defPosition, isDefender);
+    }
+    pCO = m_pOwner->getCO(1);
+    if (pCO != nullptr)
+    {
+        bonus += pCO->getDamageReduction(damage, pAttacker, position, attackerBaseHp,
+                                         this, defPosition, isDefender);
+    }
+    return bonus;
 }
 
 qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition)
@@ -928,7 +948,7 @@ void Unit::setHp(const float &value)
 
 bool Unit::getHpHidden(Player* pPlayer)
 {
-    if (pPlayer->isEnemy(m_pOwner))
+    if (pPlayer != nullptr && pPlayer->isEnemy(m_pOwner))
     {
         CO* pCO = m_pOwner->getCO(0);
         if (pCO != nullptr)
@@ -1406,7 +1426,7 @@ void Unit::serialize(QDataStream& pStream)
     pStream << static_cast<qint32>(m_UnitRank);
     pStream << m_pOwner->getPlayerID();
     pStream << m_Moved;
-    qint32 units = m_TransportUnits.size();
+    qint32 units = static_cast<qint32>(m_TransportUnits.size());
     pStream << units;
     for (qint32 i = 0; i < units; i++)
     {

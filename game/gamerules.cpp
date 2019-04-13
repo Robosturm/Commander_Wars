@@ -452,14 +452,14 @@ void GameRules::setRankingSystem(bool RankingSystem)
 void GameRules::serialize(QDataStream& pStream)
 {
     pStream << getVersion();
-    pStream << m_VictoryRules.size();
+    pStream << static_cast<qint32>(m_VictoryRules.size());
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
     {
         m_VictoryRules[i]->serialize(pStream);
     }
 
-    pStream << m_Weathers.size();
-    for (qint32 i = 0; i < m_VictoryRules.size(); i++)
+    pStream << static_cast<qint32>(m_Weathers.size());
+    for (qint32 i = 0; i < m_Weathers.size(); i++)
     {
         m_Weathers[i]->serialize(pStream);
         pStream << m_WeatherChances[i];
@@ -471,6 +471,7 @@ void GameRules::serialize(QDataStream& pStream)
     pStream << m_RankingSystem;
     pStream << m_NoPower;
     pStream << m_UnitLimit;
+    pStream << static_cast<qint32>(m_FogMode);
 }
 
 void GameRules::deserialize(QDataStream& pStream)
@@ -500,4 +501,10 @@ void GameRules::deserialize(QDataStream& pStream)
     pStream >> m_RankingSystem;
     pStream >> m_NoPower;
     pStream >> m_UnitLimit;
+    if (version > 1)
+    {
+        qint32 value = 0;
+        pStream >> value;
+        m_FogMode = static_cast<GameEnums::Fog>(value);
+    }
 }

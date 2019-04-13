@@ -12,6 +12,10 @@
 #include "menue/optionmenue.h"
 #include "menue/mapselectionmapsmenue.h"
 
+#include "objects/filedialog.h"
+
+#include <QFile>
+
 #include "game/co.h"
 
 #include "SDL.h"
@@ -46,6 +50,17 @@ Mainwindow::Mainwindow()
         emit this->sigEnterSingleplayer();
     });
     connect(this, SIGNAL(sigEnterSingleplayer()), this, SLOT(enterSingleplayer()), Qt::QueuedConnection);
+    btnI++;
+
+    // load button
+    oxygine::spButton pButtonLoadGame = ObjectManager::createButton(tr("Load Game"));
+    pButtonLoadGame->attachTo(this);
+    setButtonPosition(pButtonLoadGame, btnI);
+    pButtonLoadGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigEnterLoadGame();
+    });
+    connect(this, &Mainwindow::sigEnterLoadGame, this, &Mainwindow::enterLoadGame, Qt::QueuedConnection);
     btnI++;
 
     // editor button
@@ -84,7 +99,7 @@ Mainwindow::Mainwindow()
 
 void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
 {
-    static const qint32 buttonCount = 4;
+    static const qint32 buttonCount = 6;
     float buttonHeigth = pButton->getHeight() + 30;
     Mainapp* pApp = Mainapp::getInstance();
     pButton->setPosition(pApp->getSettings()->getWidth() / 2.0f - pButton->getWidth() / 2.0f, pApp->getSettings()->getHeight() / 2.0f - buttonCount  / 2.0f * buttonHeigth + buttonHeigth * btnI);
@@ -111,6 +126,39 @@ void Mainwindow::enterOptionmenue()
 {
     oxygine::getStage()->addChild(new OptionMenue());
     leaveMenue();
+}
+
+void Mainwindow::enterLoadGame()
+{
+    // dummy impl for loading
+    QVector<QString> wildcards;
+    wildcards.append("*.sav");
+    QString path = QCoreApplication::applicationDirPath() + "/savegames";
+    spFileDialog saveDialog = new FileDialog(path, wildcards);
+    this->addChild(saveDialog);
+    connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadGame, Qt::QueuedConnection);
+}
+
+void Mainwindow::loadGame(QString filename)
+{
+    if (filename.endsWith(".sav"))
+    {
+        QFile file(filename);
+        if (file.exists())
+        {
+            oxygine::getStage()->addChild(new GameMenue(filename));
+
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->getAudioThread()->clearPlayList();
+            GameMap* pMap = GameMap::getInstance();
+            pMap->getCurrentPlayer()->loadCOMusic();
+            pMap->updateUnitIcons();
+            pMap->getGameRules()->createFogVision();
+            pApp->getAudioThread()->playRandom();
+
+            leaveMenue();
+        }
+    }
 }
 
 void Mainwindow::leaveMenue()

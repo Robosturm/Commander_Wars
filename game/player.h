@@ -259,6 +259,10 @@ public slots:
      * @brief loadVisionFields
      */
     void loadVisionFields();
+    /**
+     * @brief loadCOMusic
+     */
+    void loadCOMusic();
 private:
     qint32 fonds{0};
     float fondsModifier{1.0f};

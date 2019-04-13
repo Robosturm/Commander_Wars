@@ -370,6 +370,10 @@ public slots:
      * @return
      */
     Player* getCurrentViewPlayer();
+    /**
+     * @brief updateUnitIcons
+     */
+    void updateUnitIcons();
 private:
     static GameMap* m_pInstance;
     QString mapName;
