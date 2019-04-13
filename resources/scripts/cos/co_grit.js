@@ -16,7 +16,7 @@ var Constructor = function()
     this.getIndirectUnitIDS = function()
     {
         return ["AIRCRAFTCARRIER", "ANTITANKCANNON", "ARTILLERY", "BATTLESHIP",
-                "MISSILE", "PIPERUNNER", "ROCKETTHROWER"];
+                "MISSILE", "PIPERUNNER", "ROCKETTHROWER", "SNIPER"];
     };
 
     this.loadCOMusic = function(co)
