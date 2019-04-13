@@ -303,7 +303,7 @@ public slots:
      * @param atkDamage
      * @param pDefender
      */
-    void postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender);
+    void postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked);
     /**
      * @brief getVariables
      * @return

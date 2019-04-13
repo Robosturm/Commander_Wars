@@ -714,7 +714,7 @@ void CO::loadCOMusic()
     pApp->getInterpreter()->doFunction(coID, function1, args1);
 }
 
-void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender)
+void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "postBattleActions";
@@ -726,6 +726,7 @@ void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender)
     args1 << atkDamage;
     QJSValue obj2 = pApp->getInterpreter()->newQObject(pDefender);
     args1 << obj2;
+    args1 << gotAttacked;
     pApp->getInterpreter()->doFunction(coID, function1, args1);
 }
 

@@ -15,8 +15,6 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            unit.setHp(unit.getHpRounded() + 2);
-
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
             if (animations.length < 5)
             {
@@ -51,8 +49,6 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            unit.setHp(unit.getHpRounded() + 5);
-
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
             if (animations.length < 5)
             {

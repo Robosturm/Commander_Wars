@@ -46,7 +46,7 @@ var CO =
         return 0;
     },
 
-    getDamageReduction : function(co, damage, attacker, atkPosX, atkPosY,
+    getDamageReduction : function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
                                   defender, defPosX, defPosY, isDefender)
     {
         return 0;
@@ -144,10 +144,11 @@ var CO =
         return 0;
     },
 
-    postBattleActions : function(co, attacker, atkDamage, defender)
+    postBattleActions : function(co, attacker, atkDamage, defender, gotAttacked)
     {
         // called after damage was dealt to the defender unit.
         // the damage given is the damage was dealt to the unit.
+        // gotAttacked means we own the unit which got damage dealt.
     },
 
     startOfTurn : function(co)

@@ -410,7 +410,8 @@ var Constructor = function()
             // set attacker damage
             defUnit.setHp(defUnit.getHp() - damage);
             // post battle action of the attacking unit
-            ACTION_FIRE.postAnimationUnit.getOwner().postBattleActions(ACTION_FIRE.postAnimationUnit, damage, defUnit);
+            ACTION_FIRE.postAnimationUnit.getOwner().postBattleActions(ACTION_FIRE.postAnimationUnit, damage, defUnit, false);
+            defUnit.getOwner().postBattleActions(ACTION_FIRE.postAnimationUnit, damage, defUnit, true);
             if (defUnit.getHp() <= 0)
             {
                 defUnit.killUnit();
@@ -458,7 +459,8 @@ var Constructor = function()
                     }
                 }
                 // post battle action of the defending unit
-                defUnit.getOwner().postBattleActions(defUnit, damage, ACTION_FIRE.postAnimationUnit);
+                defUnit.getOwner().postBattleActions(defUnit, damage, ACTION_FIRE.postAnimationUnit, false);
+                ACTION_FIRE.postAnimationUnit.getOwner().postBattleActions(defUnit, damage, ACTION_FIRE.postAnimationUnit, true);
                 if (ACTION_FIRE.postAnimationUnit.getHp() <= 0)
                 {
                     ACTION_FIRE.postAnimationUnit.killUnit();

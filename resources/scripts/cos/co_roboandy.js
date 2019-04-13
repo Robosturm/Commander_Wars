@@ -2,57 +2,41 @@ var Constructor = function()
 {
     this.init = function(co)
     {
-        co.setPowerStars(2);
-        co.setSuperpowerStars(4);
-    };
-
-    this.loadCOMusic = function(co)
-    {
-        // put the co music in here.
-        switch (co.getPowerMode())
-        {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3");
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3");
-                break;
-            default:
-                audio.addMusic("resources/music/cos/sasha.mp3")
-                break;
-        }
+        co.setPowerStars(3);
+        co.setSuperpowerStars(3);
     };
 
     this.activatePower = function(co)
     {
-        var animation2 = GameAnimationFactory.createAnimation(0, 0);
-        animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
-        animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
-
-        var player = co.getPlayer();
-        // i prefer this version you could change it to 10% per fonds easily
-        var reduction = co.getPlayer().getFonds() / 5000.0;
-        var playerCounter = map.getPlayerCount();
-        for (var i2 = 0; i2 < playerCounter; i2++)
+        var units = co.getPlayer().getUnits();
+        var animations = [];
+        var counter = 0;
+        units.randomize();
+        for (var i = 0; i < units.size(); i++)
         {
-            var enemyPlayer = map.getPlayer(i2);
-            if ((enemyPlayer !== player) &&
-                (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
+            var unit = units.at(i);
+            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            if (animations.length < 5)
             {
-                var enemyCo = enemyPlayer.getCO(0);
-                if (enemyCo !== null)
+                animation.addSprite("power3", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
+                animations.push(animation);
+            }
+            else
+            {
+                animation.addSprite("power3", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                animations[counter].queueAnimation(animation);
+                animations[counter] = animation;
+                counter++;
+                if (counter >= animations.length)
                 {
-                    enemyCo.setPowerFilled(enemyCo.getPowerFilled() - reduction);
-                }
-                enemyCo = enemyPlayer.getCO(1);
-                if (enemyCo !== null)
-                {
-                    enemyCo.setPowerFilled(enemyCo.getPowerFilled() - reduction);
+                    counter = 0;
                 }
             }
         }
+        units.remove();
+
         audio.clearPlayList();
-        CO_SASHA.loadCOMusic(co);
+        CO_ROBOANDY.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -86,8 +70,25 @@ var Constructor = function()
         units.remove();
 
         audio.clearPlayList();
-        CO_SASHA.loadCOMusic(co);
+        CO_ROBOANDY.loadCOMusic(co);
         audio.playRandom();
+    };
+
+    this.loadCOMusic = function(co)
+    {
+        // put the co music in here.
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/bh_power.mp3");
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/bh_superpower.mp3");
+                break;
+            default:
+                audio.addMusic("resources/music/cos/roboandy.mp3")
+                break;
+        }
     };
 
     this.getCOUnitRange = function(co)
@@ -96,21 +97,15 @@ var Constructor = function()
     };
     this.getCOArmy = function()
     {
-        return "BM";
+        return "MA";
     };
-
-    this.getBonusIncome = function(co, building, income)
-    {
-        return income * 0.1;
-    };
-
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                return 10;
+                return 20;
             case GameEnums.PowerMode_Power:
                 return 10;
             default:
@@ -128,9 +123,30 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                co.getPlayer().addFonds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
+                if (gotAttacked)
+                {
+                    if (defender.getHp() <= 0)
+                    {
+                        attacker.setHp(attacker.getHp() - 3);
+                    }
+                }
+                else
+                {
+                    attacker.setHp(attacker.getHp() + 3);
+                }
                 break;
             case GameEnums.PowerMode_Power:
+                if (gotAttacked)
+                {
+                    if (defender.getHp() <= 0)
+                    {
+                        attacker.setHp(attacker.getHp() - 1);
+                    }
+                }
+                else
+                {
+                    attacker.setHp(attacker.getHp() + 1);
+                }
                 break;
             default:
                 break;
@@ -139,4 +155,4 @@ var Constructor = function()
 }
 
 Constructor.prototype = CO;
-var CO_SASHA = new Constructor();
+var CO_ROBOANDY = new Constructor();

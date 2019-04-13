@@ -110,18 +110,18 @@
 		<image file="bg/co_jugger+info.png" />
 		<image file="bg/co_jugger+face.png" cols = "3" />
 		
-		<!-- ML -->
-		<image file="ml/co_napoleon+nrm.png" />
-		<image file="ml/co_napoleon+info.png" />
-		<image file="ml/co_napoleon+face.png" cols = "3" />
-		<image file="ml/co_robosturm+nrm.png" />
-		<image file="ml/co_robosturm+info.png" />
-		<image file="ml/co_robosturm+face.png" cols = "3" />
-		<image file="ml/co_roboandy+nrm.png" />
-		<image file="ml/co_roboandy+info.png" />
-		<image file="ml/co_roboandy+face.png" cols = "3" />
-		<image file="ml/co_epoch+nrm.png" />
-		<image file="ml/co_epoch+info.png" />
-		<image file="ml/co_epoch+face.png" cols = "3" />
+		<!-- MA -->
+		<image file="ma/co_napoleon+nrm.png" />
+		<image file="ma/co_napoleon+info.png" />
+		<image file="ma/co_napoleon+face.png" cols = "3" />
+		<image file="ma/co_robosturm+nrm.png" />
+		<image file="ma/co_robosturm+info.png" />
+		<image file="ma/co_robosturm+face.png" cols = "3" />
+		<image file="ma/co_roboandy+nrm.png" />
+		<image file="ma/co_roboandy+info.png" />
+		<image file="ma/co_roboandy+face.png" cols = "3" />
+		<image file="ma/co_epoch+nrm.png" />
+		<image file="ma/co_epoch+info.png" />
+		<image file="ma/co_epoch+face.png" cols = "3" />
 	</atlas>
 </resources>
