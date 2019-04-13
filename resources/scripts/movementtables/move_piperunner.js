@@ -4,9 +4,9 @@ var Constructor = function()
     {
         return qsTr("Piperunner");
     };
-    this.getMovementpoints = function(terrainID)
+    this.getMovementpoints = function(terrain)
     {
-        switch (terrainID)
+        switch (terrain.getID)
         {
 			case "WELD":
             case "FACTORY":

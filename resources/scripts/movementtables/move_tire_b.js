@@ -4,10 +4,10 @@ var Constructor = function()
     {
         return qsTr("Tire");
     };
-    this.getMovementpoints = function(terrainID)
+    this.getMovementpoints = function(terrain)
     {
-        switch (terrainID)
-        {            
+        switch (terrain.getID)
+        {
             case "BEACH":
 				return 2;            
             case "RUIN":			

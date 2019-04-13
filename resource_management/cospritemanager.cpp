@@ -8,6 +8,7 @@ COSpriteManager* COSpriteManager::m_pInstance = nullptr;
 
 COSpriteManager::COSpriteManager()
 {
+    oxygine::Resources::loadXML("resources/images/co/res.xml");
     Mainapp* pMainapp = Mainapp::getInstance();
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
@@ -16,7 +17,6 @@ COSpriteManager::COSpriteManager()
             oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/co/res.xml").toStdString());
         }
     }
-    oxygine::Resources::loadXML("resources/images/co/res.xml");
 }
 
 COSpriteManager* COSpriteManager::getInstance()

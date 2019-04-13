@@ -12,6 +12,7 @@ TerrainManager::TerrainManager() : QObject()
 {
     // load terrain
     Mainapp* pMainapp = Mainapp::getInstance();
+    oxygine::Resources::loadXML("resources/images/terrain/res.xml");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
         if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/terrain/res.xml"))
@@ -19,7 +20,6 @@ TerrainManager::TerrainManager() : QObject()
             oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/terrain/res.xml").toStdString());
         }
     }
-    oxygine::Resources::loadXML("resources/images/terrain/res.xml");
 }
 
 void TerrainManager::reset()

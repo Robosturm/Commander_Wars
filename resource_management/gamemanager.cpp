@@ -10,7 +10,8 @@ GameManager* GameManager::m_pInstance = nullptr;
 
 GameManager::GameManager()
 {
-    // load terrain
+    oxygine::Resources::loadXML("resources/images/game/res.xml");
+    // load game images
     Mainapp* pMainapp = Mainapp::getInstance();
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
@@ -19,7 +20,6 @@ GameManager::GameManager()
             oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/game/res.xml").toStdString());
         }
     }
-    oxygine::Resources::loadXML("resources/images/game/res.xml");
 }
 
 GameManager* GameManager::getInstance()

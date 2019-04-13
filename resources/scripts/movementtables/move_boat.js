@@ -4,9 +4,9 @@ var Constructor = function()
     {
         return qsTr("Boat");
     };
-    this.getMovementpoints = function(terrainID)
+    this.getMovementpoints = function(terrain)
     {
-        switch (terrainID)
+        switch (terrain.getID)
         {
 			case "BEACH":
             case "HARBOUR":
@@ -16,6 +16,12 @@ var Constructor = function()
 			case "ROUGH_SEA":
             case "REAF":
 				return 2;
+            case "BRIDGE":
+                if (terrain.getBaseTerrainID() === "SEA")
+                {
+                    return 1;
+                }
+                break;
         }
     };
 };

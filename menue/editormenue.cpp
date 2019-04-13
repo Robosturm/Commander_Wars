@@ -292,7 +292,7 @@ bool EditorMenue::canUnitBePlaced(qint32 x, qint32 y)
     {
         MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
         QString movementType = m_EditorSelection->getCurrentSpUnit()->getMovementType();
-        if (pMovementTableManager->getBaseMovementPoints(movementType, pMap->getTerrain(x, y)->getID()) > 0)
+        if (pMovementTableManager->getBaseMovementPoints(movementType, pMap->getTerrain(x, y)) > 0)
         {
             return true;
         }

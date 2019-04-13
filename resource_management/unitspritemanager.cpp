@@ -8,6 +8,7 @@ UnitSpriteManager* UnitSpriteManager::m_pInstance = nullptr;
 
 UnitSpriteManager::UnitSpriteManager()
 {
+    oxygine::Resources::loadXML("resources/images/units/res.xml");
     Mainapp* pMainapp = Mainapp::getInstance();
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
@@ -16,7 +17,6 @@ UnitSpriteManager::UnitSpriteManager()
             oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/units/res.xml").toStdString());
         }
     }
-    oxygine::Resources::loadXML("resources/images/units/res.xml");
 }
 
 UnitSpriteManager* UnitSpriteManager::getInstance()

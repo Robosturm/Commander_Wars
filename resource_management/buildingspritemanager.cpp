@@ -11,6 +11,7 @@ BuildingSpriteManager* BuildingSpriteManager::m_pInstance = nullptr;
 BuildingSpriteManager::BuildingSpriteManager()
 {
     // load terrain
+    oxygine::Resources::loadXML("resources/images/building/res.xml");
     Mainapp* pMainapp = Mainapp::getInstance();
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
@@ -19,7 +20,6 @@ BuildingSpriteManager::BuildingSpriteManager()
             oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/building/res.xml").toStdString());
         }
     }
-    oxygine::Resources::loadXML("resources/images/building/res.xml");
 }
 
 BuildingSpriteManager* BuildingSpriteManager::getInstance()

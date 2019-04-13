@@ -10,7 +10,8 @@ GameRuleManager* GameRuleManager::m_pInstance = nullptr;
 
 GameRuleManager::GameRuleManager() : QObject()
 {
-    // load terrain
+    oxygine::Resources::loadXML("resources/images/gamerule/res.xml");
+    // load rule sprites
     Mainapp* pMainapp = Mainapp::getInstance();
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
@@ -19,7 +20,6 @@ GameRuleManager::GameRuleManager() : QObject()
             oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/gamerule/res.xml").toStdString());
         }
     }
-    oxygine::Resources::loadXML("resources/images/gamerule/res.xml");
 }
 
 void GameRuleManager::reset()

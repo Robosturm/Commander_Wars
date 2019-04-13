@@ -1,0 +1,192 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "mods/aw2_image/images/terrain/" />
+	<atlas>
+		<image file="plains+0.png" />
+		<image file="plains+1.png" />
+		<image file="plains+2.png" />
+		<image file="plains+3.png" />
+		<image file="plains+4.png" />		
+		<image file="plains+5.png" />
+		<image file="plains+6.png" />
+		<image file="plains+7.png" />
+		<image file="plains+8.png" />
+		<image file="plains+9.png" />
+		<image file="plains+10.png" />
+		<image file="plains+11.png" />
+		<image file="plains+12.png" />
+		<image file="plains+13.png" />
+		<image file="plains+14.png" />
+		<image file="plains+15.png" />
+		<image file="plains+16.png" />
+		<image file="plains+17.png" />
+		<image file="plains+18.png" />
+		<image file="plains+19.png" />
+		<image file="plains+20.png" />
+		<image file="plains+destroyed.png" />		
+				
+		<image file="sea.png" cols = "4" />
+		<image file="sea+NE.png" cols = "4" />
+		<image file="sea+NW.png" cols = "4" />
+		<image file="sea+SE.png" cols = "1" />
+		<image file="sea+SW.png" cols = "1" />
+		<image file="sea+E.png" cols = "4" />
+		<image file="sea+E+S.png" cols = "4" />
+		<image file="sea+E+S+W.png" cols = "4" />
+		<image file="sea+E+W.png" cols = "4" />
+		<image file="sea+N.png" cols = "4" />
+		<image file="sea+N+E.png" cols = "4" />
+		<image file="sea+N+E+S.png" cols = "4" />
+		<image file="sea+N+E+S+W.png" cols = "4" />
+		<image file="sea+N+E+W.png" cols = "4" />
+		<image file="sea+N+S.png" cols = "4" />
+		<image file="sea+N+S+W.png" cols = "4" />
+		<image file="sea+N+W.png" cols = "4" />
+		<image file="sea+S.png" cols = "4" />
+		<image file="sea+S+W.png" cols = "4" />
+		<image file="sea+W.png" cols = "4" />
+				
+		<image file="reaf+N+E+S+W.png" cols = "4" />
+		<image file="reaf+1+N+E+S+W.png" cols = "4" />
+		<image file="reaf+2+N+E+S+W.png" cols = "4" />
+		<image file="reaf+3+N+E+S+W.png" cols = "4" />
+		
+		<image file="mountain.png" />
+		<image file="mountain+E.png" />
+		<image file="mountain+E+W.png" />
+		<image file="mountain+W.png" />
+		
+		<!--
+		<image file="beach+E+land+N.png" />
+		<image file="beach+E+land+N+S.png" />
+		<image file="beach+E+land+N+S+W.png" />		
+		<image file="beach+E+land+N+W.png" />
+		<image file="beach+E+land+S.png" />
+		<image file="beach+E+land+S+W.png" />
+		<image file="beach+E+S+land+N+W.png" />		
+		<image file="beach+E+W+land+N.png" />		
+		<image file="beach+E+W+land+N+S.png" />		
+		<image file="beach+E+W+land+S.png" />
+		<image file="beach+land+E.png" />
+		<image file="beach+land+E+S.png" />
+		<image file="beach+land+E+S+W.png" />
+		<image file="beach+land+E+W.png" />		
+		<image file="beach+land+N.png" />
+		<image file="beach+land+N+E.png" />
+		<image file="beach+land+N+E+S.png" />
+		<image file="beach+land+N+E+S+W.png" />
+		<image file="beach+land+N+E+W.png" />
+		<image file="beach+land+N+S.png" />
+		<image file="beach+land+N+S+W.png" />
+		<image file="beach+land+N+W.png" />
+		<image file="beach+land+S.png" />
+		<image file="beach+land+S+W.png" />
+		<image file="beach+land+W.png" />		
+		<image file="beach+N+E+land+S+W.png" />
+		<image file="beach+N+land+E.png" />		
+		<image file="beach+N+land+E+S+W.png" />
+		<image file="beach+N+land+E+W.png" />	
+		<image file="beach+N+land+E+S.png" />		
+		<image file="beach+N+land+S+W.png" />
+		<image file="beach+N+land+W.png" />		
+		<image file="beach+N+S+land+E.png" />
+		<image file="beach+N+S+land+E+W.png" />
+		<image file="beach+N+S+land+W.png" />		
+		<image file="beach+N+W+land+E+S.png" />		
+		<image file="beach+S+land+E.png" />
+		<image file="beach+S+land+W.png" />
+		<image file="beach+S+land+E+W.png" />
+		<image file="beach+S+land+N+E.png" />
+		<image file="beach+S+land+N+E+W.png" />
+		<image file="beach+S+land+N+W.png" />		
+		<image file="beach+W+land+E+S.png" />
+		<image file="beach+W+land+N.png" />
+		<image file="beach+W+land+N+E.png" />
+		<image file="beach+S+W+land+N+E.png" />
+		<image file="beach+W+land+N+E+S.png" />
+		<image file="beach+W+land+N+S.png" />
+		<image file="beach+W+land+S.png" />
+		-->
+		
+		<image file="forest+0.png" />
+		<image file="forest+1.png" />
+				
+		<image file="street.png" />
+		<image file="street+E.png" />
+		<image file="street+E+S.png" />
+		<image file="street+E+S+W.png" />
+		<image file="street+E+W.png" />
+		<image file="street+N.png" />
+		<image file="street+N+E.png" />
+		<image file="street+N+E+S.png" />
+		<image file="street+N+E+S+W.png" />
+		<image file="street+N+E+W.png" />
+		<image file="street+N+S.png" />
+		<image file="street+N+S+W.png" />
+		<image file="street+N+W.png" />
+		<image file="street+S.png" />
+		<image file="street+S+W.png" />
+		<image file="street+W.png" />
+		
+		<image file="river.png" cols = "4" />
+		<image file="river+E.png" cols = "4" />
+		<image file="river+E+S.png" cols = "4" />
+		<image file="river+E+S+W.png" cols = "4" />
+		<image file="river+E+W.png" cols = "4" />
+		<image file="river+N.png" cols = "4" />
+		<image file="river+N+E.png" cols = "4" />
+		<image file="river+N+E+S.png" cols = "4" />
+		<image file="river+N+E+S+W.png" cols = "4" />
+		<image file="river+N+E+W.png" cols = "4" />
+		<image file="river+N+S.png" cols = "4" />
+		<image file="river+N+S+W.png" cols = "4" />
+		<image file="river+N+W.png" cols = "4" />
+		<image file="river+S.png" cols = "4" />
+		<image file="river+S+W.png" cols = "4" />
+		<image file="river+W.png" cols = "4" />
+		
+		<image file="riverending+E.png" cols = "4" />
+		<image file="riverending+S.png" cols = "4" />
+		<image file="riverending+W.png" cols = "4" />
+		<image file="riverending+N.png" cols = "4" />
+				
+		<image file="pipeline+E.png" />
+		<image file="pipeline+E+S.png" />
+		<image file="pipeline+E+S+W.png" />
+		<image file="pipeline+E+W.png" />
+		<image file="pipeline+N.png" />
+		<image file="pipeline+N+E.png" />
+		<image file="pipeline+N+E+S.png" />
+		<image file="pipeline+N+E+S+W.png" />
+		<image file="pipeline+N+E+W.png" />
+		<image file="pipeline+N+S.png" />
+		<image file="pipeline+N+S+W.png" />
+		<image file="pipeline+N+W.png" />
+		<image file="pipeline+S.png" />
+		<image file="pipeline+S+W.png" />
+		<image file="pipeline+W.png" />
+				
+		<image file="bridge.png" />
+		<image file="bridge+E.png" />
+		<image file="bridge+E+S.png" />
+		<image file="bridge+E+S+W.png" />
+		<image file="bridge+E+W.png" />
+		<image file="bridge+N.png" />
+		<image file="bridge+N+E.png" />
+		<image file="bridge+N+E+S.png" />
+		<image file="bridge+N+E+S+W.png" />
+		<image file="bridge+N+E+W.png" />
+		<image file="bridge+N+S.png" />
+		<image file="bridge+N+S+W.png" />
+		<image file="bridge+N+W.png" />
+		<image file="bridge+S.png" />
+		<image file="bridge+S+W.png" />
+		<image file="bridge+W.png" />
+		
+		<image file="weld+E+W.png" />
+		<image file="weld+N+S.png" />
+		
+		<image file="destroyedweld+E+W.png" />
+		<image file="destroyedweld+N+S.png" />
+	</atlas>
+</resources>

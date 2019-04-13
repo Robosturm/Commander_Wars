@@ -4,9 +4,9 @@ var Constructor = function()
     {
         return qsTr("Mech");
     };
-    this.getMovementpoints = function(terrainID)
+    this.getMovementpoints = function(terrain)
     {
-        switch (terrainID)
+        switch (terrain.getID)
         {
             case "PLAINS":
             case "PLAINS_DESTROYED":

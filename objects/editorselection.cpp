@@ -102,18 +102,20 @@ EditorSelection::EditorSelection()
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
 
+    spTerrain plains = Terrain::createTerrain("PLAINS", -1, -1);
+    spTerrain sea = Terrain::createTerrain("PLAINS", -1, -1);
     for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
     {
         spUnit unit = new Unit(pUnitSpriteManager->getUnitID(i), m_Players.at(1)->getOwner());
         m_Units.append(unit);
         oxygine::spSprite pSprite = new oxygine::Sprite();
         QString movementType = m_Units.at(i)->getMovementType();
-        if (pMovementTableManager->getBaseMovementPoints(movementType, "PLAINS") > 0)
+        if (pMovementTableManager->getBaseMovementPoints(movementType, plains.get()) > 0)
         {
             pAnim = pTerrainManager->getResAnim("plains+0");
             pSprite->setResAnim(pAnim);
         }
-        else if (pMovementTableManager->getBaseMovementPoints(movementType, "SEA") > 0)
+        else if (pMovementTableManager->getBaseMovementPoints(movementType, sea.get()) > 0)
         {
             pAnim = pTerrainManager->getResAnim("SEA");
             pSprite->setResAnim(pAnim);
