@@ -83,8 +83,8 @@ EditorSelection::EditorSelection()
         pAnim = pTerrainManager->getResAnim("plains+0");
         pSprite->setResAnim(pAnim);
         pSprite->setPriority(-100);
-        pSprite->setScaleX(1 / building->getScaleX());
-        pSprite->setScaleY(1 / building->getScaleY());
+        pSprite->setScaleX(1 / building->getScaleX() * GameMap::Imagesize / pAnim->getWidth());
+        pSprite->setScaleY(1 / building->getScaleY() * GameMap::Imagesize / pAnim->getWidth());
         if (width > 1)
         {
             pSprite->setX(-GameMap::Imagesize * (width - 1));
@@ -103,7 +103,7 @@ EditorSelection::EditorSelection()
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
 
     spTerrain plains = Terrain::createTerrain("PLAINS", -1, -1);
-    spTerrain sea = Terrain::createTerrain("PLAINS", -1, -1);
+    spTerrain sea = Terrain::createTerrain("SEA", -1, -1);
     for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
     {
         spUnit unit = new Unit(pUnitSpriteManager->getUnitID(i), m_Players.at(1)->getOwner());
@@ -127,6 +127,7 @@ EditorSelection::EditorSelection()
             pSprite->setResAnim(pAnim);
         }
         pSprite->setPriority(-100);
+        pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
         m_Units[i]->addChild(pSprite);
         m_Units[i]->setVisible(false);
         m_BoxPlacementSelection->addChild(m_Units[i]);

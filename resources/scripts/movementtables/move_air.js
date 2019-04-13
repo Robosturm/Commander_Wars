@@ -6,7 +6,7 @@ var Constructor = function()
     };
     this.getMovementpoints = function(terrain)
     {
-        switch (terrain.getID)
+        switch (terrain.getID())
         {
             case "PLAINS":
             case "PLAINS_DESTROYED":
@@ -37,6 +37,7 @@ var Constructor = function()
             case "RIVER":
 				return 1;
         }
+        return -1;
     };
 };
 Constructor.prototype = MOVEMENTTABLE;

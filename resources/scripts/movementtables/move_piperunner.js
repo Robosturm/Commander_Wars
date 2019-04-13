@@ -6,13 +6,14 @@ var Constructor = function()
     };
     this.getMovementpoints = function(terrain)
     {
-        switch (terrain.getID)
+        switch (terrain.getID())
         {
 			case "WELD":
             case "FACTORY":
             case "PIPELINE":
 				return 1;
         }
+        return -1;
     };
 };
 Constructor.prototype = MOVEMENTTABLE;

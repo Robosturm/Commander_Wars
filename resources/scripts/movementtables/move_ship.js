@@ -6,7 +6,7 @@ var Constructor = function()
     };
     this.getMovementpoints = function(terrain)
     {
-        switch (terrain.getID)
+        switch (terrain.getID())
         {
             case "HARBOUR":
             case "SEA":
@@ -22,6 +22,7 @@ var Constructor = function()
                 }
                 break;
         }
+        return -1;
     };
 };
 Constructor.prototype = MOVEMENTTABLE;
