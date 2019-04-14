@@ -392,9 +392,12 @@ qint32 GameMap::getBuildingCount(QString buildingID)
             Building* pBuilding = getTerrain(x, y)->getBuilding();
             if (pBuilding != nullptr)
             {
-                if (pBuilding->getBuildingID() == buildingID)
+                if (pBuilding->getBuildingID() == buildingID || buildingID.isEmpty())
                 {
-                    ret++;
+                    if (pBuilding->getX() == x && pBuilding->getY() == y)
+                    {
+                        ret++;
+                    }
                 }
             }
         }

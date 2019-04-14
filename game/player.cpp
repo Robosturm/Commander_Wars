@@ -194,7 +194,10 @@ qint32 Player::getBuildingCount(QString buildingID)
                 {
                     if (buildingID.isEmpty() || pBuilding->getBuildingID() == buildingID)
                     {
-                        ret++;
+                        if (pBuilding->getX() == x && pBuilding->getY() == y)
+                        {
+                            ret++;
+                        }
                     }
                 }
             }
