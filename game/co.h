@@ -106,6 +106,13 @@ public slots:
      */
     qint32 getTerrainDefenseModifier(Unit* pUnit, QPoint position);
     /**
+     * @brief getFirstStrike
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    bool getFirstStrike(Unit* pUnit, QPoint position);
+    /**
      * @brief getVisionrangeModifier the bonus defense of this co for a terrain
      * @param pUnit the unit we want to get the bonus points from
      * @return

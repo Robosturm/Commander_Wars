@@ -4,6 +4,7 @@
 
 #include "resource_management/objectmanager.h"
 #include "resource_management/cospritemanager.h"
+#include "resource_management/fontmanager.h"
 
 COSelection::COSelection()
     : QObject()
@@ -82,7 +83,55 @@ COSelection::COSelection()
     connect(this, SIGNAL(armySelectedChange(QString)), this, SLOT(armyChanged(QString)));
     armyChanged(m_Armies[0]);
 
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
 
+    m_COName = new oxygine::TextField();
+    m_COName->setStyle(style);
+    m_COName->setSize(175 / 0.8f, 20);
+    m_COName->setScale(0.8f);
+    m_COName->setPosition(163, 15 + m_BackgroundMask->getY());
+    addChild(m_COName);
+
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    m_COPower = new oxygine::TextField();
+    m_COPower->setStyle(style);
+    m_COPower->setPosition(165, 154 + m_BackgroundMask->getY());
+    m_COPower->setScale(0.6f);
+    addChild(m_COPower);
+
+    m_COSuperpower = new oxygine::TextField();
+    m_COSuperpower->setStyle(style);
+    m_COSuperpower->setPosition(165, 170 + m_BackgroundMask->getY());
+    m_COSuperpower->setScale(0.6f);
+    addChild(m_COSuperpower);
+
+    style.multiline = true;
+
+    m_COBio = new oxygine::TextField();
+    m_COBio->setStyle(style);
+    m_COBio->setScale(0.5f);
+    m_COBio->setSize(175 / m_COBio->getScaleY(), 20);
+
+    m_COBioRect = new oxygine::SlidingActor();
+    m_COBioRect->setPosition(m_COName->getX() + 2, m_COName->getY() + m_COName->getHeight() + 5);
+    m_COBioRect->setSize(179, 110 - m_COName->getHeight());
+    m_COBioRect->setContent(m_COBio);
+    addChild(m_COBioRect);
+
+    m_CODesc = new oxygine::TextField();
+    m_CODesc->setStyle(style);
+    m_CODesc->setScale(0.5f);
+    m_CODesc->setSize(175 / m_CODesc->getScaleY(), 48);
+
+    m_CODescRect = new oxygine::SlidingActor();
+    m_CODescRect->setPosition(m_COName->getX() + 2, 212 + m_BackgroundMask->getY());
+    m_CODescRect->setSize(179, 48);
+    m_CODescRect->setContent(m_COBio);
+    addChild(m_CODescRect);
 }
 
 void COSelection::armyBannerClicked(QString army, qint32 index)
@@ -162,7 +211,9 @@ void COSelection::armyChanged(QString army)
             {
                 m_Cursor->setPosition(5 + x * 51, 7 + y * 51 + m_BackgroundMask->getY());
                 m_CurrentCO = coid;
+                emit sigHoveredCOChanged(m_CurrentCO);
             });
+            connect(this, &COSelection::sigHoveredCOChanged, this, &COSelection::hoveredCOChanged, Qt::QueuedConnection);
             actor->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
             {
                 emit coSelected(m_CurrentCO);
@@ -187,4 +238,59 @@ void COSelection::colorChanged(QColor color)
     }
     m_Cursor->setColor(oxColor);
     m_CurrentColor = color;
+}
+
+void COSelection::hoveredCOChanged(QString coid)
+{
+    if (coid != "")
+    {
+        QString coName = "";
+        QString coBio = "";
+        QString coDesc = "";
+        QString coPower = "";
+        QString coSuperpower = "";
+
+        Mainapp* pApp = Mainapp::getInstance();
+        Interpreter* pInterpreter = pApp->getInterpreter();
+        QJSValue value = pInterpreter->doFunction(coid, "getName");
+        if (value.isString())
+        {
+            coName = value.toString();
+        }
+        value = pInterpreter->doFunction(coid, "getBio");
+        if (value.isString())
+        {
+            coBio = value.toString();
+        }
+        value = pInterpreter->doFunction(coid, "getCODescription");
+        if (value.isString())
+        {
+            coDesc = value.toString();
+        }
+        value = pInterpreter->doFunction(coid, "getPowerName");
+        if (value.isString())
+        {
+            coPower = value.toString();
+        }
+        value = pInterpreter->doFunction(coid, "getSuperPowerName");
+        if (value.isString())
+        {
+            coSuperpower = value.toString();
+        }
+        m_COName->setText(coName.toStdString().c_str());
+        m_COName->setX(165 + m_COName->getScaledWidth() / 2 - m_COName->getTextRect().getWidth() / 2);
+
+        m_COBio->setText(coBio.toStdString().c_str());
+        m_COBio->setHeight(m_COBio->getTextRect().getHeight() + 20);
+        m_COBioRect->setContent(m_COBio);
+        m_COBioRect->snap();
+
+        m_CODesc->setText(coDesc.toStdString().c_str());
+        m_CODesc->setHeight(m_CODesc->getTextRect().getHeight() + 20);
+        m_CODescRect->setContent(m_CODesc);
+        m_CODescRect->snap();
+
+        m_COPower->setText(coPower.toStdString().c_str());
+        m_COSuperpower->setText(coSuperpower.toStdString().c_str());
+    }
 }

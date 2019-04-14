@@ -15,7 +15,7 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player)
     Mainapp* pApp = Mainapp::getInstance();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
-    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
@@ -54,6 +54,7 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player)
     pSpriteBox->addChild(m_ExitButton);
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
+        emit canceled();
         this->getParent()->removeChild(this);
     });
 }

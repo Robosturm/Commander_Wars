@@ -649,7 +649,9 @@ void MapSelectionMapsMenue::showCOSelection()
             }
             spCOSelectionDialog dialog = new COSelectionDialog(coid, m_pCurrentMap->getPlayer(i)->getColor(), i);
             this->addChild(dialog);
+            m_pPlayerSelection->setVisible(false);
             connect(dialog.get(), &COSelectionDialog::editFinished, this , &MapSelectionMapsMenue::playerCO1Changed, Qt::QueuedConnection);
+            connect(dialog.get(), &COSelectionDialog::canceled, this , &MapSelectionMapsMenue::playerCOCanceled, Qt::QueuedConnection);
         });
 
         oxygine::spSprite spriteCO2 = new oxygine::Sprite();
@@ -675,7 +677,9 @@ void MapSelectionMapsMenue::showCOSelection()
             }
             spCOSelectionDialog dialog = new COSelectionDialog(coid, m_pCurrentMap->getPlayer(i)->getColor(), i);
             this->addChild(dialog);
+            m_pPlayerSelection->setVisible(false);
             connect(dialog.get(), &COSelectionDialog::editFinished, this , &MapSelectionMapsMenue::playerCO2Changed, Qt::QueuedConnection);
+            connect(dialog.get(), &COSelectionDialog::canceled, this , &MapSelectionMapsMenue::playerCOCanceled, Qt::QueuedConnection);
         });
 
         bool up = false;
@@ -787,6 +791,7 @@ void MapSelectionMapsMenue::playerCO1Changed(QString coid, qint32 playerIdx)
         pAnim = pCOSpriteManager->getResAnim((coid + "+info").toStdString().c_str());
     }
     m_playerCO1[playerIdx]->setResAnim(pAnim);
+    m_pPlayerSelection->setVisible(true);
 }
 void MapSelectionMapsMenue::playerCO2Changed(QString coid, qint32 playerIdx)
 {
@@ -802,6 +807,12 @@ void MapSelectionMapsMenue::playerCO2Changed(QString coid, qint32 playerIdx)
         pAnim = pCOSpriteManager->getResAnim((coid + "+info").toStdString().c_str());
     }
     m_playerCO2[playerIdx]->setResAnim(pAnim);
+    m_pPlayerSelection->setVisible(true);
+}
+
+void MapSelectionMapsMenue::playerCOCanceled()
+{
+    m_pPlayerSelection->setVisible(true);
 }
 
 void MapSelectionMapsMenue::slotAllCOsRandom()

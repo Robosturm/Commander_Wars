@@ -64,6 +64,7 @@ public slots:
     void playerColorChanged(QColor value, qint32 playerIdx);
     void playerCO1Changed(QString coid, qint32 playerIdx);
     void playerCO2Changed(QString coid, qint32 playerIdx);
+    void playerCOCanceled();
     void slotAllCOsRandom();
 
     // general slots

@@ -41,6 +41,11 @@ var CO =
         return 0;
     },
 
+    getFirstStrike : function(co, unit, posX, posY)
+    {
+        return false;
+    },
+
     getEnemyTerrainDefenseModifier : function(co, unit, posX, posY)
     {
         return 0;

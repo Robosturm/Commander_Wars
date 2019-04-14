@@ -96,6 +96,12 @@ public slots:
      */
     qint32 getTerrainDefenseModifier(QPoint position);
     /**
+     * @brief getFirstStrike
+     * @param position
+     * @return
+     */
+    bool getFirstStrike(QPoint position);
+    /**
      * @brief getMovementPoints the movement points this unit can move
      * @return
      */

@@ -24,9 +24,11 @@ public:
 signals:
     void armySelectedChange(QString army);
     void coSelected(QString coid);
+    void sigHoveredCOChanged(QString coid);
 public slots:
     void colorChanged(QColor color);
     void armyChanged(QString army);
+    void hoveredCOChanged(QString);
 protected:
     void armyBannerClicked(QString army, qint32 index);
 private:
@@ -39,6 +41,15 @@ private:
     QStringList m_CoIDs;
     QString m_CurrentCO;
     QColor m_CurrentColor;
+
+
+    oxygine::spTextField m_COName;
+    oxygine::spTextField m_COBio;
+    oxygine::spSlidingActor m_COBioRect;
+    oxygine::spTextField m_CODesc;
+    oxygine::spSlidingActor m_CODescRect;
+    oxygine::spTextField m_COPower;
+    oxygine::spTextField m_COSuperpower;
 };
 
 #endif // COSELECTION_H

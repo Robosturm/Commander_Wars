@@ -1110,6 +1110,27 @@ qint32 Unit::getTerrainDefenseModifier(QPoint position)
     return modifier;
 }
 
+bool Unit::getFirstStrike(QPoint position)
+{
+    CO* pCO = m_pOwner->getCO(0);
+    if (pCO != nullptr)
+    {
+        if (pCO->getFirstStrike(this, position))
+        {
+            return true;
+        }
+    }
+    pCO = m_pOwner->getCO(1);
+    if (pCO != nullptr)
+    {
+        if (pCO->getFirstStrike(this, position))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 qint32 Unit::getMovementPoints()
 {
     qint32 movementModifier = 0;

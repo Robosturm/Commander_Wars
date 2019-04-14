@@ -96,22 +96,20 @@ var Constructor = function()
                 return false;
         }
     };
-    this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+
+    this.getFirstStrike = function(co, unit, posX, posY)
     {
+        // sonja's troops get first strike during counter attacks
+        // meaning her troops attack before they loose their hp
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                if (isDefender)
-                {
-                    return 150;
-                }
-                break;
+                return true;
             case GameEnums.PowerMode_Power:
+                return false;
             default:
-                break;
+                return false;
         }
-        return 0;
     };
 
     this.getHpHidden = function(co, unit, posX, posY)
@@ -123,59 +121,59 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A former paratrooper rumored to have been quite the commander in his day. Cranky Paratrooper");
+        return qsTr("Kanbei's cool and collected daughter who likes to plan before acting. She excels in gathering information. Sees All, Knows All");
     };
     this.getHits = function()
     {
-        return qsTr("Lazy, rainy days");
+        return qsTr("Computers");
     };
     this.getMiss = function()
     {
-        return qsTr("Busy malls");
+        return qsTr("Bugs");
     };
     this.getCODescription = function()
     {
-        return qsTr("Copters have incredibly high firepower, but naval units have weak attacks. Foot soldiers have increased firepower.");
+        return qsTr("Keeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. However, she suffers from chronic bad luck.");
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Copter firepower increases and copter movement increases. Infantry firepower rises greatly.");
+        return qsTr("Reduces enemy terrain defensive cover by two. Allows all units to see into woods and reefs.");
     };
     this.getPowerName = function()
     {
-        return qsTr("Copter Command");
+        return qsTr("Enhanced Vision");
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Copter firepower increases. Infantry units with 9 HP appear in all his cities, ready to be moved.");
+        return qsTr("Reduces enemy terrain defensive cover by three. Allows all units to see into woods and reefs. Units always strike first, even during counterattacks.");
     };
     this.getSuperPowerName = function()
     {
-        return qsTr("Airborne Assault");
+        return qsTr("Counter Break");
     };
     this.getPowerSentences = function()
     {
-        return [qsTr("Nothing good ever comes from war... when this is done, let's go home."),
-                qsTr("I've still got what it takes to defeat you youngsters!"),
-                qsTr("Paratroopers! Prepare to jump!"),
-                qsTr("Ha ha hah!  This will be a crushing victory!"),
-                qsTr("See what experience can do for you!?"),
-                qsTr("Ha ha! I didn't get old for nothing!")];
+        return [qsTr("I see right through your plans!"),
+                qsTr("I'll show you there's more to combat than power alone!"),
+                qsTr("Number of enemy troops...location... Got it! This is so easy!"),
+                qsTr("Get me some fresh intel, stat!"),
+                qsTr("You can't hide from me!"),
+                qsTr("Just like I planned...")];
     };
     this.getVictorySentences = function()
     {
-        return [qsTr("Hm hm hmmm... I've still got what it takes!"),
-                qsTr("Ah, time for a nap."),
-                qsTr("Now we can take things nice and slow again...")];
+        return [qsTr("My strategy was merely better... That is all."),
+                qsTr("I must review my strategy."),
+                qsTr("Perfect planning wins the day!")];
     };
     this.getDefeatSentences = function()
     {
-        return [qsTr("Hah ha! We were defeated fair and square. Score one for the young 'uns."),
-                qsTr("Eh? The battle's over? When did that happen?")];
+        return [qsTr("... I'm sorry, Father... I've broken my promise..."),
+                qsTr("I have learned much from this...")];
     };
     this.getName = function()
     {
-        return qsTr("Sensei");
+        return qsTr("Sonja");
     };
 }
 

@@ -136,6 +136,28 @@ qint32 CO::getTerrainDefenseModifier(Unit* pUnit, QPoint position)
     }
 }
 
+bool CO::getFirstStrike(Unit* pUnit, QPoint position)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getFirstStrike";
+    QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
+    args1 << obj1;
+    args1 << position.x();
+    args1 << position.y();
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isBool())
+    {
+        return erg.toBool();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 qint32 CO::getEnemyTerrainDefenseModifier(Unit* pUnit, QPoint position)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -655,7 +677,12 @@ qint32 CO::getCORange()
 
 bool CO::inCORange(QPoint position)
 {
-    if (m_pCOUnit != nullptr)
+    if (position.x() < 0 && position.y() < 0)
+    {
+        // return true for intel information
+        return true;
+    }
+    else if (m_pCOUnit != nullptr)
     {
         if ((qAbs(m_pCOUnit->getX() - position.x()) + qAbs(m_pCOUnit->getY() - position.y())) <= getCORange())
         {

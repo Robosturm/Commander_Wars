@@ -26,6 +26,7 @@ public:
 signals:
 signals:
     void editFinished(QString coid, qint32 player);
+    void canceled();
 public slots:
     void selectedCOIDChanged(QString coid);
 private:

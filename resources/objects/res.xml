@@ -37,7 +37,8 @@
 		<image file="dropdownmenu.png" guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>		
 		<image file="arrow+down.png" cols = "3" />
 		<!-- dropdownmenu -->
-		<image file="filedialog.png" guideX1="44" guideX2="71" guideY1="44" guideY2="71"/>		
+		<image file="filedialog.png" guideX1="44" guideX2="71" guideY1="44" guideY2="71"/>	
+		<image file="codialog.png" guideX1="44" guideX2="71" guideY1="44" guideY2="71"/>			
 		<image file="filedialogitems.png" guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>	
 		<image file="dropdownmenucolor.png"/>
 		<!-- map selection -->
