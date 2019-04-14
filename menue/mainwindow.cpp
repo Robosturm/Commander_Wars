@@ -20,6 +20,7 @@
 
 #include "SDL.h"
 
+
 Mainwindow::Mainwindow()
 {
     Console::print("Entering Main Menue", Console::eDEBUG);

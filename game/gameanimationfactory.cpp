@@ -10,6 +10,8 @@
 
 #include "game/gameanimationdialog.h"
 
+#include "game/gameanimationpower.h"
+
 #include "game/unit.h"
 
 #include "game/gameaction.h"
@@ -33,8 +35,9 @@ void GameAnimationFactory::queueAnimation(GameAnimation* pGameAnimation)
     {
         if (m_Animations[i].get() == pGameAnimation)
         {
-            GameMap::getInstance()->removeChild(m_Animations[i]);
-            break;
+           m_Animations[i]->detach();
+           m_Animations[i]->stop();
+           break;
         }
     }
 }
@@ -45,7 +48,7 @@ void GameAnimationFactory::startQueuedAnimation(GameAnimation* pGameAnimation)
     {
         if (m_Animations[i].get() == pGameAnimation)
         {
-            GameMap::getInstance()->addChild(m_Animations[i]);
+            m_Animations[i]->restart();
             break;
         }
     }
@@ -86,6 +89,15 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(Unit* pUnit, Gam
     return pGameAnimationWalk;
 }
 
+GameAnimationPower* GameAnimationFactory::createAnimationPower(QColor color, bool superpower, QString coid, quint32 frameTime)
+{
+    GameAnimationPower* pAnim = new GameAnimationPower(frameTime, color, superpower, coid);
+    pAnim->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    GameMenue::getInstance()->addChild(pAnim);
+    m_Animations.append(pAnim);
+    return pAnim;
+}
+
 GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(QString text, QString coid, GameEnums::COMood mood, QColor color, quint32 frameTime)
 {
     GameAnimationDialog* pAnim = new GameAnimationDialog(frameTime);
@@ -121,7 +133,7 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation)
         if (m_Animations[i].get() == pAnimation)
         {
             spGameAnimation spAnimation = m_Animations[i];
-            spAnimation->getParent()->removeChild(spAnimation);
+            spAnimation->detach();
             m_Animations.removeAt(i);
             break;
         }

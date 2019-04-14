@@ -18,6 +18,8 @@ class Unit;
 class Terrain;
 class Player;
 class Building;
+class GameAnimationDialog;
+class GameAnimationPower;
 
 class CO : public QObject, public oxygine::Actor, public FileSerializable
 {
@@ -323,7 +325,16 @@ public slots:
      * @brief loadCOMusic
      */
     void loadCOMusic();
-
+    /**
+     * @brief createPowerSentence
+     * @return
+     */
+    GameAnimationDialog* createPowerSentence();
+    /**
+     * @brief createPowerScreen
+     * @return
+     */
+    GameAnimationPower* createPowerScreen(bool superpower);
 private:
     Player* m_Owner;
     QString coID;

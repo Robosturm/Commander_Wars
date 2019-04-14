@@ -70,6 +70,7 @@ set(${PROJECT_NAME}_SRCS
         objects/slider.cpp
         objects/multislider.cpp
         objects/ingameinfobar.cpp
+        objects/rotatingsprite.cpp
 
         #menues
         menue/mainwindow.cpp
@@ -127,12 +128,13 @@ set(${PROJECT_NAME}_SRCS
         game/gameanimationfactory.cpp
         game/gameanimationwalk.cpp
         game/gameanimationcapture.cpp
+        game/gameanimationdialog.cpp
+        game/gameanimationpower.cpp
         game/playerinfo.cpp
         game/GameEnums.cpp
         game/gamerules.cpp
         game/victoryrule.cpp
         game/weather.cpp
-        game/gameanimationdialog.cpp
 
         # game input
         gameinput/basegameinputif.cpp

@@ -517,27 +517,27 @@
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="45"/>
+        <location filename="../menue/mainwindow.cpp" line="46"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="56"/>
+        <location filename="../menue/mainwindow.cpp" line="57"/>
         <source>Load Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="67"/>
+        <location filename="../menue/mainwindow.cpp" line="68"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="78"/>
+        <location filename="../menue/mainwindow.cpp" line="79"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="89"/>
+        <location filename="../menue/mainwindow.cpp" line="90"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -806,7 +806,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="60"/>
+        <location filename="../main.cpp" line="58"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1031,122 +1031,122 @@
 <context>
     <name>co_adder</name>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="142"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="153"/>
         <source>A self-absorbed CO who believes his skills are matchless. Second to Hawke in rank.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="146"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="157"/>
         <source>His own Face</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="150"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="161"/>
         <source>Dirty Things</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="154"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="165"/>
         <source>Adept at making quick command decisions, he stores up energy for his CO Power more rapidly than other CO&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="158"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="169"/>
         <source>Movement range for all units is increased by one space.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="162"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="173"/>
         <source>Sideslip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="166"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="177"/>
         <source>Movement range for all units is increased by two spaces.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="170"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="181"/>
         <source>Sidewinder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="174"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="185"/>
         <source>The look of terror on your face... It&apos;s absolutely delicious!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="175"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="186"/>
         <source>Heh heh heh... I&apos;m going to enjoy breaking you!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="176"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="187"/>
         <source>Heh heh heh... Can&apos;t a guy have a little fun!?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="177"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="188"/>
         <source>Heh heh heh... It only hurts for a moment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="178"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="189"/>
         <source>A battle with me is a greater honor than you deserve!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="179"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="190"/>
         <source>Heh heh heh... Kneel before Adder!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="180"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="191"/>
         <source>Hee hee. Your skills are laughable!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="181"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="192"/>
         <source>It&apos;s already too late for you!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="182"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="193"/>
         <source>Let me hear your last words!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="183"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="194"/>
         <source>Check out my new and improved powers!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="184"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="195"/>
         <source>Wriggle worm... wriggle!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="185"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="196"/>
         <source>My venom courses through your veins!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="189"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="200"/>
         <source>Heh heh heh... What did you expect?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="193"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="204"/>
         <source>Hssss! Today was... unlucky. A bad day. Nothing more.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="194"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="205"/>
         <source>It&apos;s the blasted weather! That was the problem! Hssss!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adder.js" line="198"/>
+        <location filename="../resources/scripts/cos/co_adder.js" line="209"/>
         <source>Adder</source>
         <translation type="unfinished"></translation>
     </message>

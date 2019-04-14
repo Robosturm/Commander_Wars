@@ -2,6 +2,8 @@
 
 #include "coreengine/mainapp.h"
 
+#include "menue/gamemenue.h"
+
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
 #include "resource_management/cospritemanager.h"
@@ -67,6 +69,11 @@ void GameAnimationDialog::update(const oxygine::UpdateState& us)
         if (writePosition > m_Text.size())
         {
             writePosition = m_Text.size();
+            if (autoFinishMs >= 0 && !finishTimer.isActive())
+            {
+                finishTimer.setSingleShot(true);
+                finishTimer.start(autoFinishMs);
+            }
         }
         m_TextField->setText(m_Text.mid(0, writePosition).toStdString().c_str());
         float textHeight = m_TextField->getTextRect().getHeight();
@@ -76,6 +83,7 @@ void GameAnimationDialog::update(const oxygine::UpdateState& us)
             m_TextField->setY((-textHeight + 48) * textScale - 9);
         }
         textTimer.start();
+
     }
     GameAnimation::update(us);
 }
@@ -86,18 +94,6 @@ bool GameAnimationDialog::onFinished()
     if (writePosition >= m_Text.size())
     {
         return GameAnimation::onFinished();
-    }
-    else if (writePosition == m_Text.size())
-    {
-        writePosition = 0;
-        if (writePosition >= m_Text.size())
-        {
-            if (autoFinishMs >= 0)
-            {
-                finishTimer.setSingleShot(true);
-                finishTimer.start(autoFinishMs);
-            }
-        }
     }
     else
     {
@@ -144,4 +140,9 @@ void GameAnimationDialog::setFinishDelay(qint32 valueMs)
 void GameAnimationDialog::setTextSpeed(qint32 speed)
 {
     textSpeed = speed;
+}
+
+void GameAnimationDialog::restart()
+{
+    GameMenue::getInstance()->addChild(this);
 }

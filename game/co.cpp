@@ -6,6 +6,12 @@
 
 #include "menue/gamemenue.h"
 
+#include "game/gameanimationfactory.h"
+#include "game/gameanimationdialog.h"
+#include "game/gameanimationpower.h"
+
+#include "game/player.h"
+
 CO::CO(QString coID, Player* owner)
     : m_Owner(owner),
       coID(coID)
@@ -740,6 +746,24 @@ void CO::loadCOMusic()
     args1 << obj3;
     pApp->getInterpreter()->doFunction(coID, function1, args1);
 }
+
+GameAnimationDialog* CO::createPowerSentence()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QStringList sentences = pApp->getInterpreter()->doFunction(coID, "getPowerSentences").toVariant().toStringList();
+    QString sentence = sentences[Mainapp::randInt(0, sentences.size() - 1)];
+
+    GameAnimationDialog* pGameAnimationDialog = GameAnimationFactory::createGameAnimationDialog(sentence, coID, GameEnums::COMood_Normal, m_Owner->getColor());
+    pGameAnimationDialog->setFinishDelay(500);
+
+    return pGameAnimationDialog;
+}
+
+ GameAnimationPower* CO::createPowerScreen(bool superpower)
+ {
+     GameAnimationPower* pGameAnimationPower = GameAnimationFactory::createAnimationPower(m_Owner->getColor(), superpower, coID);
+     return pGameAnimationPower;
+ }
 
 void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked)
 {

@@ -22,6 +22,11 @@ GameAnimation::GameAnimation(quint32 frameTime)
     connect(this, SIGNAL(sigFinished()), this, SLOT(onFinished()), Qt::QueuedConnection);
 }
 
+void GameAnimation::restart()
+{
+    GameMap::getInstance()->addChild(this);
+}
+
 void GameAnimation::setRotation(float angle)
 {
     setRotationDegrees(angle);

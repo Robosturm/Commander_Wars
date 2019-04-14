@@ -33,18 +33,16 @@
 #include "game/gameanimationwalk.h"
 #include "game/gameanimationcapture.h"
 #include "game/gameanimationdialog.h"
+#include "game/gameanimationpower.h"
 #include "game/victoryrule.h"
 #include "game/gamerules.h"
 #include "game/weather.h"
 #include "game/terrainfindingsystem.h"
 
 
-
 #include "gameinput/cursordata.h"
 
 #include "game/GameEnums.h"
-
-#include "resource_management/cospritemanager.h"
 
 int main(int argc, char* argv[])
 {
@@ -111,6 +109,7 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<GameAnimationWalk>("GameAnimationWalk");
     qmlRegisterInterface<GameAnimationCapture>("GameAnimationCapture");
     qmlRegisterInterface<GameAnimationDialog>("GameAnimationDialog");
+    qmlRegisterInterface<GameAnimationPower>("GameAnimationPower");
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
     qmlRegisterInterface<QmlVectorUnit>("QmlVectorUnit");
     qmlRegisterInterface<QmlVectorBuilding>("QmlVectorBuilding");

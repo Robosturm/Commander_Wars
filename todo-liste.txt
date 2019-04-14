@@ -1,10 +1,6 @@
 - credits menu
 
-- activate power animation
-
 - ai
-- dialogues
-
 - victory screen
 - game statistics
 	- game recording

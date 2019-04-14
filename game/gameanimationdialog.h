@@ -14,7 +14,7 @@ class GameAnimationDialog : public GameAnimation
 public:
     GameAnimationDialog(quint32 frameTime);
 
-
+    virtual void restart() override;
 public slots:
     virtual bool onFinished() override;
     /**

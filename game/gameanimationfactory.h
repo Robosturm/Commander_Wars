@@ -13,7 +13,9 @@ class GameAnimation;
 class GameAnimationWalk;
 class GameAnimationCapture;
 class GameAnimationDialog;
+class GameAnimationPower;
 class GameAction;
+
 
 class GameAnimationFactory : public QObject
 {
@@ -45,6 +47,15 @@ public slots:
      * @return
      */
     static GameAnimation* createAnimation(quint32 x, quint32 y, quint32 frameTime = GameMap::frameTime, bool mapPosition = true);
+    /**
+     * @brief createAnimationPower
+     * @param color
+     * @param superpower
+     * @param coid
+     * @param frameTime
+     * @return
+     */
+    static GameAnimationPower* createAnimationPower(QColor color, bool superpower, QString coid, quint32 frameTime = GameMap::frameTime);
     /**
      * @brief createGameAnimationDialog
      * @param text
