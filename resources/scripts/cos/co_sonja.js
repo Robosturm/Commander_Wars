@@ -25,9 +25,14 @@ var Constructor = function()
 
     this.activatePower = function(co)
     {
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(true);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
         var animation2 = GameAnimationFactory.createAnimation(0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
+        powerNameAnimation.queueAnimation(animation2);
 
         audio.clearPlayList();
         CO_SONJA.loadCOMusic(co);
@@ -36,9 +41,14 @@ var Constructor = function()
 
     this.activateSuperpower = function(co)
     {
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(true);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
         var animation2 = GameAnimationFactory.createAnimation(0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
+        powerNameAnimation.queueAnimation(animation2);
 
         audio.clearPlayList();
         CO_SONJA.loadCOMusic(co);

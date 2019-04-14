@@ -8,7 +8,11 @@ var Constructor = function()
 
     this.activatePower = function(co)
     {
-        CO_DRAKE.drakeDamage(co, 1, null);
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(false);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
+        CO_DRAKE.drakeDamage(co, 1, powerNameAnimation);
         audio.clearPlayList();
         CO_DRAKE.loadCOMusic(co);
         audio.playRandom();
@@ -16,11 +20,17 @@ var Constructor = function()
 
     this.activateSuperpower = function(co)
     {
-        var animation2 = GameAnimationFactory.createAnimation(0, 0);
-        animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
-        animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(true);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
+        var animation = GameAnimationFactory.createAnimation(0, 0);
+        animation.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
+        animation.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
+        powerNameAnimation.queueAnimation(animation);
+
         map.getGameRules().changeWeather("WEATHER_RAIN", map.getPlayerCount() * 2);
-        CO_DRAKE.drakeDamage(co, 2, animation2);
+        CO_DRAKE.drakeDamage(co, 2, animation);
         audio.clearPlayList();
         CO_DRAKE.loadCOMusic(co);
         audio.playRandom();

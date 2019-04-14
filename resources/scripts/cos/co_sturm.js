@@ -25,7 +25,11 @@ var Constructor = function()
 
     this.activatePower = function(co)
     {
-        CO_STURM.throwMeteor(co, 4);
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(true);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
+        CO_STURM.throwMeteor(co, 4, powerNameAnimation);
         audio.clearPlayList();
         CO_STURM.loadCOMusic(co);
         audio.playRandom();
@@ -33,13 +37,17 @@ var Constructor = function()
 
     this.activateSuperpower = function(co)
     {
-        CO_STURM.throwMeteor(co, 8);
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(true);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
+        CO_STURM.throwMeteor(co, 8, powerNameAnimation);
         audio.clearPlayList();
         CO_STURM.loadCOMusic(co);
         audio.playRandom();
     };
 
-    this.throwMeteor = function(co, damage)
+    this.throwMeteor = function(co, damage, powerNameAnimation)
     {
         // let a meteor fall :D
         var meteorTarget = co.getPlayer().getRockettarget(2, damage);
@@ -49,10 +57,12 @@ var Constructor = function()
         animation.addTweenPosition(Qt.point((meteorTarget.x - 2) * map.getImageSize(), (meteorTarget.y - 2) * map.getImageSize()), 1000);
         animation.addTweenScale(120 / 192, 1000);
         animation.addTweenColor(0, "#FFFFFFFF", "#00FFFFFF", 1000, false, 1200);
+        powerNameAnimation.queueAnimation(animation);
 
         var animation2 = GameAnimationFactory.createAnimation(0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 4200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true, 1000);
+        powerNameAnimation.queueAnimation(animation2);
 
         var fields = globals.getCircle(0, 2);
         // check all fields we can attack

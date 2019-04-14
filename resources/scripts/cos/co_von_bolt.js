@@ -25,7 +25,11 @@ var Constructor = function()
 
     this.activatePower = function(co)
     {
-        CO_VON_BOLT.throwMeteor(co, 1, 2);
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(true);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
+        CO_VON_BOLT.throwLaserray(co, 1, 2, powerNameAnimation);
         audio.clearPlayList();
         CO_VON_BOLT.loadCOMusic(co);
         audio.playRandom();
@@ -33,13 +37,17 @@ var Constructor = function()
 
     this.activateSuperpower = function(co)
     {
-        CO_VON_BOLT.throwMeteor(co, 3, 3);
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(true);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
+        CO_VON_BOLT.throwLaserray(co, 3, 3, powerNameAnimation);
         audio.clearPlayList();
         CO_VON_BOLT.loadCOMusic(co);
         audio.playRandom();
     };
 
-    this.throwMeteor = function(co, damage, range)
+    this.throwLaserray = function(co, damage, range, powerNameAnimation)
     {
         // let a meteor fall :D
         var meteorTarget = co.getPlayer().getRockettarget(range, damage);
@@ -47,7 +55,7 @@ var Constructor = function()
         var animation2 = GameAnimationFactory.createAnimation(0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
-
+        powerNameAnimation.queueAnimation(animation2);
 
         var fields = globals.getCircle(0, range);
         // check all fields we can attack

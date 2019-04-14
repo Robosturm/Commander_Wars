@@ -25,6 +25,10 @@ var Constructor = function()
 
     this.activatePower = function(co)
     {
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(false);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
         var units = co.getPlayer().getUnits();
         var animations = [];
         var counter = 0;
@@ -33,12 +37,12 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            unit.refill();
 
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
             if (animations.length < 5)
             {
                 animation.addSprite("power2", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
+                powerNameAnimation.queueAnimation(animation);
                 animations.push(animation);
             }
             else
@@ -63,6 +67,10 @@ var Constructor = function()
 
     this.activateSuperpower = function(co)
     {
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(true);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
         var units = co.getPlayer().getUnits();
         var animations = [];
         var counter = 0;
@@ -76,6 +84,7 @@ var Constructor = function()
             if (animations.length < 5)
             {
                 animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5, globals.randInt(0, 400));
+                powerNameAnimation.queueAnimation(animation);
                 animations.push(animation);
             }
             else

@@ -25,7 +25,11 @@ var Constructor = function()
 
     this.activatePower = function(co)
     {
-        CO_ROBOSTURM.power(co, 0);
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(false);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
+        CO_ROBOSTURM.power(co, 0, powerNameAnimation);
         audio.clearPlayList();
         CO_ROBOSTURM.loadCOMusic(co);
         audio.playRandom();
@@ -33,13 +37,17 @@ var Constructor = function()
 
     this.activateSuperpower = function(co)
     {
-        CO_ROBOSTURM.power(co, 2);
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(true);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
+        CO_ROBOSTURM.power(co, 2, powerNameAnimation);
         audio.clearPlayList();
         CO_ROBOSTURM.loadCOMusic(co);
         audio.playRandom();
     };
 
-    this.power = function(co, value)
+    this.power = function(co, value, powerNameAnimation)
     {
 
         var player = co.getPlayer();
@@ -54,6 +62,7 @@ var Constructor = function()
             if (animations.length < 5)
             {
                 animation.addSprite("power2", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
+                powerNameAnimation.queueAnimation(animation);
                 animations.push(animation);
             }
             else
@@ -108,6 +117,7 @@ var Constructor = function()
                     if (animations.length < 5)
                     {
                         animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
+                        powerNameAnimation.queueAnimation(animation);
                         animations.push(animation);
                     }
                     else

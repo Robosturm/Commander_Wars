@@ -8,6 +8,10 @@ var Constructor = function()
 
     this.activatePower = function(co)
     {
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(false);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
         var units = co.getPlayer().getUnits();
         var animations = [];
         var counter = 0;
@@ -19,6 +23,7 @@ var Constructor = function()
             if (animations.length < 5)
             {
                 animation.addSprite("power3", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
+                powerNameAnimation.queueAnimation(animation);
                 animations.push(animation);
             }
             else
@@ -42,6 +47,10 @@ var Constructor = function()
 
     this.activateSuperpower = function(co)
     {
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(true);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
         var units = co.getPlayer().getUnits();
         var animations = [];
         var counter = 0;
@@ -53,6 +62,7 @@ var Constructor = function()
             if (animations.length < 5)
             {
                 animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5, globals.randInt(0, 400));
+                powerNameAnimation.queueAnimation(animation);
                 animations.push(animation);
             }
             else
@@ -111,12 +121,31 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY)))
                 {
-                    return 10;
+                    return co.getPowerFilled() * 4;
                 }
                 break;
         }
-        return 0;
+        return co.getPowerFilled() * 2;
     };
+
+    this.getBonusMisfortune = function(co, unit, posX, posY)
+    {
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Superpower:
+                return 0;
+            case GameEnums.PowerMode_Power:
+                return 0;
+            default:
+                if (co.inCORange(Qt.point(posX, posY)))
+                {
+                    return co.getPowerFilled() * 2;
+                }
+                break;
+        }
+        return co.getPowerFilled();
+    };
+
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
     {
@@ -168,7 +197,7 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Robo-Andy is Lash's newest advancement in technology. He incorporates the newest battle AI and robotics developed by Lash herself. However, his processors are outdated and tend to overheat often. His superior AI allows for efficient command of troops, but behaves erratically when he begins to heat up.");
+        return qsTr("His processors are outdated and tend to overheat often. His superior AI allows for efficient command of troops, but behaves erratically when he begins to heat up.");
     };
     this.getPowerDescription = function()
     {

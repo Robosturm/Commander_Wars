@@ -25,9 +25,14 @@ var Constructor = function()
 
     this.activatePower = function(co)
     {
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(true);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
         var animation2 = GameAnimationFactory.createAnimation(0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
+        powerNameAnimation.queueAnimation(animation2);
 
         var player = co.getPlayer();
         // i prefer this version you could change it to 10% per fonds easily
@@ -58,6 +63,10 @@ var Constructor = function()
 
     this.activateSuperpower = function(co)
     {
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(true);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
         var units = co.getPlayer().getUnits();
         var animations = [];
         var counter = 0;
@@ -69,6 +78,7 @@ var Constructor = function()
             if (animations.length < 5)
             {
                 animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5, globals.randInt(0, 400));
+                powerNameAnimation.queueAnimation(animation);
                 animations.push(animation);
             }
             else

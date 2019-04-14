@@ -25,13 +25,17 @@ var Constructor = function()
 
     this.activatePower = function(co)
     {
-        CO_HAWKE.hawkeDamage(co, 1);
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(false);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
+        CO_HAWKE.hawkeDamage(co, 1, powerNameAnimation);
         audio.clearPlayList();
         CO_HAWKE.loadCOMusic(co);
         audio.playRandom();
     };
 
-    this.hawkeDamage = function(co, value)
+    this.hawkeDamage = function(co, value, powerNameAnimation)
     {
 
         var player = co.getPlayer();
@@ -48,6 +52,7 @@ var Constructor = function()
             if (animations.length < 5)
             {
                 animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
+                powerNameAnimation.queueAnimation(animation);
                 animations.push(animation);
             }
             else
@@ -92,6 +97,7 @@ var Constructor = function()
                     if (animations.length < 5)
                     {
                         animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
+                        powerNameAnimation.queueAnimation(animation);
                         animations.push(animation);
                     }
                     else
@@ -113,7 +119,11 @@ var Constructor = function()
 
     this.activateSuperpower = function(co)
     {
-        CO_HAWKE.hawkeDamage(co, 2);
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(true);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
+        CO_HAWKE.hawkeDamage(co, 2, powerNameAnimation);
         audio.clearPlayList();
         CO_HAWKE.loadCOMusic(co);
         audio.playRandom();

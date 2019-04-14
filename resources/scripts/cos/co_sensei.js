@@ -25,7 +25,11 @@ var Constructor = function()
 
     this.activatePower = function(co)
     {
-        CO_SENSEI.spawnUnits(co, "INFANTRY", 9);
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(false);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
+        CO_SENSEI.spawnUnits(co, "INFANTRY", 9, powerNameAnimation);
         audio.clearPlayList();
         CO_SENSEI.loadCOMusic(co);
         audio.playRandom();
@@ -33,13 +37,17 @@ var Constructor = function()
 
     this.activateSuperpower = function(co)
     {
-        CO_SENSEI.spawnUnits(co, "MECH", 9);
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(true);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
+        CO_SENSEI.spawnUnits(co, "MECH", 9, powerNameAnimation);
         audio.clearPlayList();
         CO_SENSEI.loadCOMusic(co);
         audio.playRandom();
     };
 
-    this.spawnUnits = function(co, unitID, hp)
+    this.spawnUnits = function(co, unitID, hp, powerNameAnimation)
     {
         var buildings = co.getPlayer().getBuildings();
         var animations = [];
@@ -58,6 +66,7 @@ var Constructor = function()
                     if (animations.length < 5)
                     {
                         animation.addSprite("power8", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
+                        powerNameAnimation.queueAnimation(animation);
                         animations.push(animation);
                     }
                     else

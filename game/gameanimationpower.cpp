@@ -79,7 +79,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, bool sup
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     float heigth = 20.0f;
-    float scale = (pApp->getSettings()->getHeight() - 700) / heigth;
+    float scale = 3;
     qint32 xPos = 10;
     for (qint32 i = 0; i < text.size(); i++)
     {

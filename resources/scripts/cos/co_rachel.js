@@ -25,6 +25,10 @@ var Constructor = function()
 
     this.activatePower = function(co)
     {
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(false);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
         var units = co.getPlayer().getUnits();
         var animations = [];
         var counter = 0;
@@ -36,6 +40,7 @@ var Constructor = function()
             if (animations.length < 5)
             {
                 animation.addSprite("power7", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
+                powerNameAnimation.queueAnimation(animation);
                 animations.push(animation);
             }
             else
@@ -58,21 +63,26 @@ var Constructor = function()
 
     this.activateSuperpower = function(co)
     {
-        CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_HpLowMoney);
-        CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_HpHighMoney);
-        CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_Money);
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(true);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
+        var ret = CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_HpLowMoney, powerNameAnimation);
+        ret = CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_HpHighMoney, ret);
+        CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_Money, ret);
         audio.clearPlayList();
         CO_RACHEL.loadCOMusic(co);
         audio.playRandom();
     };
 
-    this.throwRocket = function(co, damage, targetType)
+    this.throwRocket = function(co, damage, targetType, animation2)
     {
         // let a rocket fall :D
         var rocketTarget = co.getPlayer().getRockettarget(2, damage, 1.0, targetType);
         
         var animation = GameAnimationFactory.createAnimation(rocketTarget.x - 2, rocketTarget.y - 2 - 1);
         animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 1.5, 0);
+        animation2.queueAnimation(animation);
         audio.playSound("explosion+land.wav");
 
         var fields = globals.getCircle(0, 2);
@@ -100,6 +110,7 @@ var Constructor = function()
                 }
             }
         }
+        return animation;
     }
 
     this.getCOUnitRange = function(co)
