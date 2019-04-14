@@ -136,6 +136,64 @@ var Constructor = function()
             return -999;
         }
     };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("The original commander of the Black Hole army. A mysterious invader from another world. Mastermind of the Cosmo and Macro wars. Enigma");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Plotting invasions");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Peace");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("His troops are not affected by terrain only snow can stop him.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("A small Meteor fall from space and deal 4 HP of damage tp all affected units.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Meteor");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Pulls a giant meteor from space, which deals 8 HP of damage to all affected units. Firepower and defense is increased.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Meteor Strike");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("Prepare to embrace darkness!"),
+                qsTr("You will tremble before my power!"),
+                qsTr("Fear is all you have left..."),
+                qsTr("You shall not survive!"),
+                qsTr("Burning earth!!!"),
+                qsTr("Such power... I regret crushing it.")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("Who would have thought you could oppose me?"),
+                qsTr("My name is Sturm. Hear it and tremble."),
+                qsTr("This is but a taste of my power!")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("Gwaaaaaaaaaahhhh! I underestimated the strength of these worms!"),
+                qsTr("NOOOOOOOOOOOOOOOOOOO!!!")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Sturm");
+    };
 }
 
 Constructor.prototype = CO;

@@ -180,6 +180,64 @@ var Constructor = function()
         }
         return 0;
     };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("A brave and loyal friend, not to mention a strong fighter, Max hates any kind of treachery, preferring a good, old-fashioned brawl.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Weight Training");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Studying");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("Non-infantry direct-combat units are tops.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Firepower and movement of all non-infantry direct-combat units rises.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Max Force");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Firepower and movement of all non-infantry direct-combat units rises greatly.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Max Blast");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("Roll, tanks, roll!"),
+                qsTr("Now you're gonna get hurt!"),
+                qsTr("Hey!  Give up while you still can!"),
+                qsTr("Wanna test might?  I won't lose!"),
+                qsTr("That's enough!  Get outta the road!"),
+                qsTr("Alright, the gloves are comin' off.")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("That was a piece of cake!"),
+                qsTr("Ha! It'll take more than that to beat me!"),
+                qsTr("I'm on a roll!")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("Ouch... I let my guard down."),
+                qsTr("Oh, man! Not good! What are we supposed to do now!?")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Max");
+    };
 }
 
 Constructor.prototype = CO;

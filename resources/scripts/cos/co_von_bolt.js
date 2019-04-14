@@ -25,7 +25,7 @@ var Constructor = function()
 
     this.activatePower = function(co)
     {
-        CO_VON_BOLT.throwMeteor(co, 2, 2);
+        CO_VON_BOLT.throwMeteor(co, 1, 2);
         audio.clearPlayList();
         CO_VON_BOLT.loadCOMusic(co);
         audio.playRandom();
@@ -120,6 +120,64 @@ var Constructor = function()
                 break;
         }
         return 10;
+    };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("Former commander-in-chief of the Black Hole forces. A mysterious old man who has been alive a very, very long time. Masterminded of the Omega war. Immortal Evil");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Long life");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Young 'uns!");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("All units have superior firepower and defense.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Fires shock waves that disables electical systems and all forces in range become paralyzed. Affected units suffer one HP of damage. Firepower and defense rises.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Shockwave");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Fires shock waves that disables electical systems and all forces in range become paralyzed. Affected units suffer three HP of damage. Firepower and defense rises.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Deus Ex Machina");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("No matter how powerful...hhh...you are, you're...hhh...still a worm on a hook..."),
+                qsTr("Well...hhh...let me have a taste...hhh...of your soul."),
+                qsTr("Hheh heh heh... Stop panicking... it's...hhh...almost over..."),
+                qsTr("Hheh heh heh. The darkness rises..."),
+                qsTr("The sweet scent of destruction...hhh...it makes me...hhh...feel young!"),
+                qsTr("Hold still...hhh...I'm going to...hhhhh...suck the marrow from your bones.")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("Predator...prey...hhh... I hunt them all..."),
+                qsTr("Hehh hhh hhh... Pathetic."),
+                qsTr("Even death...hhh...fears me...")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("What? Why are you Jouth so strong?"),
+                qsTr("Nooo...I want to live forever.")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Von Bolt");
     };
 }
 

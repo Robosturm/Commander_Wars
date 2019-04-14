@@ -41,6 +41,8 @@
 
 #include "game/GameEnums.h"
 
+#include "resource_management/cospritemanager.h"
+
 int main(int argc, char* argv[])
 {
     /*************************************************************************************************/
@@ -133,6 +135,7 @@ int main(int argc, char* argv[])
     }
     delete dirIter;
     oxygine::getStage()->addChild(new Mainwindow());
+
     /*************************************************************************************************/
     // This is the main game loop.
     qint32 returncode = app.exec();

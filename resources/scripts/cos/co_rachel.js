@@ -135,7 +135,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 break;
             case GameEnums.PowerMode_Power:
-                return 60;
+                return 40;
             default:
                 break;
         }
@@ -145,6 +145,64 @@ var Constructor = function()
     this.getRepairBonus = function(co, unit, posX, posY)
     {
         return 1;
+    };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("Brings a breath of fresh air to her troops. Strives to follow in the footsteps of her older sister, Nell. Led the Allied Nations during the Omega war. Rocket Girl");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Hard Work");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Excuses");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("Her troops are quite hardworking, and they increase repairs by one on properties.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Has a chance to strike with more damage than expected. Lucky!");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Lucky Lass");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Launches three missiles from Orange Star HQ in Omega Land.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Covering Fire");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("I will protect this land to the end!"),
+                qsTr("This time, I'm serious!"),
+                qsTr("You don't have a chance!"),
+                qsTr("I'm going to send you packing!"),
+                qsTr("Don't pick a fight with me!"),
+                qsTr("Finally, some real competition!")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("Another one down... Who's next?"),
+                qsTr("I never give up."),
+                qsTr("Don't take me lightly just because I'm cute!")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("You beat me! Hmmm... Not bad!"),
+                qsTr("You've got to be kidding me!")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Rachel");
     };
 }
 

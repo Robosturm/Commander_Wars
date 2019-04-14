@@ -3,7 +3,7 @@ var Constructor = function()
     this.init = function(co)
     {
         co.setPowerStars(4);
-        co.setSuperpowerStars(5);
+        co.setSuperpowerStars(4);
     };
 
     this.loadCOMusic = function(co)
@@ -209,6 +209,64 @@ var Constructor = function()
     this.getCOArmy = function()
     {
         return "MA";
+    };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("The current second commander of the Metall Army. Believes Metall Army's ingenuity gives it a right to control the world.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Sudoku");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Horror Movies");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("Unit's have high defensive capabilities.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Units cannot take damage that is more than half of their starting HP in a single attack.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Blast Shield");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Units fight as though they were four HP stronger and inflict extra damage relative to their terrain cover.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Last Stand");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("Me and what army, you ask?  I have many more soldiers than you think."),
+                qsTr("Size does not matter in a battle of wills."),
+                qsTr("I can take any attack.  You would be wrong to test that statement."),
+                qsTr("You can give up now and avoid further bloodshed.  Either way, though, my troops simply won't die."),
+                qsTr("My casualties are not dead, but simply waiting to fight again."),
+                qsTr("I need not worry about attrition.  On the other hand, you do.")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("The survival of the Metall Army is assured."),
+                qsTr("My casualties are recovering.  Yours are not so lucky."),
+                qsTr("Why were you so confident?  Success is earned, not granted.")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("Our losses are unacceptable.  I will fix that."),
+                qsTr("Stand aside; I will deal with them.")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Napoleon");
     };
 }
 

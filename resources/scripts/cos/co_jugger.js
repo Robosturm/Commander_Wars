@@ -134,6 +134,64 @@ var Constructor = function()
         }
         return 7;
     };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("A robot-like commander with the Bolt Guard army. No one knows his true identity!");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Energy");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Static electricity");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("Units may suddenly deal more damage than expected, but units' firepower is inherently low.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("There is a chance he might get a stronger blow, but base firepower is slightly reduced.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Overclock");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("There is a chance he might get a devestating blow, but firepower is reduced.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("System Crash");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("Enemy: Prepare for mega hurtz."),
+                qsTr("Memory: upgraded. Shell: shined. Ready to uh...roll."),
+                qsTr("Enemy system purge initiated..."),
+                qsTr("Blue screen of death!"),
+                qsTr("Crushware loaded..."),
+                qsTr("Approaching system meltdown.")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("Victory; downloading party hat."),
+                qsTr("Victory dance initiated."),
+                qsTr("Jugger; superior. Enemy; lame.")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("Critical Error: Does not compute."),
+                qsTr("Victory impossible! Units overwhelmed. Jugger must... Control-Alt-Delete.")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Jugger");
+    };
 }
 
 Constructor.prototype = CO;

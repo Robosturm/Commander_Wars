@@ -105,7 +105,7 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                return 20;
+                return 10;
             case GameEnums.PowerMode_Power:
                 return 10;
             default:
@@ -151,6 +151,64 @@ var Constructor = function()
             default:
                 break;
         }
+    };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("After the (moderate) success of the Robo-Andys, Lash was asked by the military to create artificial intelligence able to direct troops. However, being given orders by a computer freaked out the soldiers of OS somewhat, so she fixed the problem by putting it in the original Robo-Andy.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Puppet Shows");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Housework");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("Robo-Andy is Lash's newest advancement in technology. He incorporates the newest battle AI and robotics developed by Lash herself. However, his processors are outdated and tend to overheat often. His superior AI allows for efficient command of troops, but behaves erratically when he begins to heat up.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("His units heal 1 HP after any attack or counter-attack, and deal 1 HP damage to the offender if they are destroyed.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Cooldown");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("His units heal 3 HP after any attack or counter-attack, and deal 3 HP damage to the offender if they are destroyed.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Critical Mass");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("DADADA! ANNOYING PESTS DESERVE TO BE SWATTED!"),
+                qsTr("ERROR DETECTED. PREPARE TO BE ELIMINATED!"),
+                qsTr("YOU'RE A RUDE ONE! EAT HEAVY METAL!"),
+                qsTr("KYAAA! SUCH A JERK! TIME TO DIE!"),
+                qsTr("WARNING! WARNING! EXECUTING EMERGENCY VENTING MODULE."),
+                qsTr("YOU'RE SO DISAPPOINTING. WITNESS MY POWER!")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("USELESS CREATURE!"),
+                qsTr("THANK YOU FOR USING ROBO-ANDY, INFERIOR BEING!"),
+                qsTr("FOR MORE EXCITING PERFORMANCES PLEASE UPGRADE TO THE LATEST VERSION.")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("HOW MAY I SERVE YOU, INFERIOR BEING?"),
+                qsTr("ALT+TAB! ALT+TAB! ALT+TAB!")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Robo-Andy");
     };
 }
 

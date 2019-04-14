@@ -170,6 +170,64 @@ var Constructor = function()
             return 0;
         }
     };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("He may be a pompous braggart, but his tactical prowess has earned him the respect of his peers and the admiration of his people. Old Man Winter");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Warm boots");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Rain clouds");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("Winter poses no problem for Olaf or his troops. Snow causes his firepower to rise, and his troops can move through it without any penalties.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Causes snow to fall for two days, causing his firepower to rise.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Blizzard");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("A mighty blizzard causes two HP of damage to all enemy troops. The snow will also cause his firepower to rise for two days.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Winter Fury");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("Oho ho ho.  Do you think your pitiful troops can stand the cold?"),
+                qsTr("Neither man nor machine can withstand the fury of nature!"),
+                qsTr("You're going to regret challenging me!"),
+                qsTr("Let the winds of war bring snow!"),
+                qsTr("I'll bury you!"),
+                qsTr("Your weapons are powerless before the might of nature!")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("Olaf's troops know no match!"),
+                qsTr("I won! ...That is...we won!"),
+                qsTr("In the end, Olaf stands victorious!")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("Unbelievable! We've been forced to withdraw? What's going on?"),
+                qsTr("Next time, I will give them a display of true might! Mark my words!")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Olaf");
+    };
 }
 
 Constructor.prototype = CO;

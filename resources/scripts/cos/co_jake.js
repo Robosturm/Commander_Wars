@@ -182,6 +182,64 @@ var Constructor = function()
         }
         return 0;
     };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("A young, energetic Orange Star CO who is a top-notch tank commander.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Clubbin'");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Easy listening");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("Fights well in the open. Firepower of all units increased on plains.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Firepower is increased on plains. Firing range of indirect-combat units is increased by one.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Beat Down");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Firepower is greatly increased on plains. Firing range of indirect units is increased by one, and movement of direct units by two");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Block Rock");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("Give it up, fool!"),
+                qsTr("Prepare to get served."),
+                qsTr("Prepare for a subpoena of pain! Yeah, that's lawyer style!"),
+                qsTr("This is how I roll!"),
+                qsTr("Wassup now?!"),
+                qsTr("Here...have a taste!")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("Get the plates, 'cause you just got served!"),
+                qsTr("Owned!"),
+                qsTr("You got dropped like a phat beat!")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("I got spanked out there! This combat is the real deal..."),
+                qsTr("Dude, we so don't have time for this.")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Jake");
+    };
 }
 
 Constructor.prototype = CO;

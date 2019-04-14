@@ -169,6 +169,64 @@ var Constructor = function()
         }
         return 0;
     };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("A strong-willed Orange Star special forces captain who loves long hair. Despite having short hair. Whatever, IS.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Chocolate");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Cowards");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("As an infantry specialist, her foot soldiers do more damage and capture faster. Non-infantry direct-combat units have weaker firepower.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Infantry units receive a movement bonus of one space. Their attack also increases. ");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Double Time");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("All foot soldiers's capturing rate is doubled. Their movement is increased by two spaces and their attack increases greatly. ");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Victory March");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("You're not bad!  Now it's my turn!"),
+                qsTr("All right!  Time to end this!"),
+                qsTr("Infantry... Assault!"),
+                qsTr("Ready or not, here I come!"),
+                qsTr("All right, it's make-or-break time!"),
+                qsTr("Move out, grunts!")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("Mission accomplished! Awaiting orders!"),
+                qsTr("Commandos always complete their mission."),
+                qsTr("Score one for the grunts!")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("Things would be easier if we had more infantry units..."),
+                qsTr("Next time's for real. I won't lose focus.")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Sami");
+    };
 }
 
 Constructor.prototype = CO;

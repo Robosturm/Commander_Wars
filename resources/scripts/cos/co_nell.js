@@ -116,6 +116,64 @@ var Constructor = function()
         }
         return 5;
     };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("Rachel's older sister and supreme commander of the Orange Star army, Nell is an able commanding officer with a superb sense of fashion.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Willful students");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Downtime");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("Sometimes strikes with slightly more force than expected. She's the first to tell you she was born lucky.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Has a chance to strike with more damage than expected. Lucky!");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Lucky Star");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Improves her chance to strike with massive damage. Very lucky!");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Lady Luck");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("Luck IS a skill!"),
+                qsTr("Hmm... Time to get serious!"),
+                qsTr("I'm just getting started!"),
+                qsTr("Don't hate me just because I'm lucky!"),
+                qsTr("Everything will work out!"),
+                qsTr("I'm feelin' lucky!")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("Did I go too far?"),
+                qsTr("Lady luck was with me!"),
+                qsTr("...And that's how it's done.")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("Seems like I just wasn't lucky enough..."),
+                qsTr("Congratulations! You've beaten me!")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Nell");
+    };
 }
 
 Constructor.prototype = CO;

@@ -136,6 +136,64 @@ var Constructor = function()
                 break;
         }
     };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("Colin's older sister. Normally ladylike, but becomes daring when she gets angry. Dominatrix");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Truffles");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Pork rinds");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("Being the heir to a vast fortune, she gets an additional 10% funds from allied properties.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("The more funds she has, the more she can decrease the enemy's CO power gauge.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Market Crash");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Earns funds when she inflicts damage on a foe. The greater the damage, the more she earns.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("War Bonds");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("Wealth is power."),
+                qsTr("I won't go easy on you."),
+                qsTr("I'll keep fighting until peace is restored."),
+                qsTr("I will not back down."),
+                qsTr("I'll show you my true strength."),
+                qsTr("You've made me very, very...upset.")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("Even kittens have claws."),
+                qsTr("Money is power."),
+                qsTr("Bravo!")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("This is like some horrible dream."),
+                qsTr("This is such a nightmare.")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Sasha");
+    };
 }
 
 Constructor.prototype = CO;

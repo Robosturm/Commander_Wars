@@ -152,6 +152,63 @@ var Constructor = function()
 
     };
 
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("The wunderkind of the Black Hole forces. She's small but fierce. Designed most of Black Hole's recent weaponry.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Getting her way");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Not getting it");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("Skilled at taking advantage of terrain features. Can turn terrain effects into firepower bonuses.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("All units' movements are unhindered by terrain.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Terrain Tactics");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Terrain effects are doubled and used to increase firepower. Additionally, all units' movements are unhindered by terrain.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Prime Tactics");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("Ooh!  You're so annoying!  I'm gonna have to get rid of you now!"),
+                qsTr("You're no fun... I don't like you at all!"),
+                qsTr("I've had enough!  I'm bored now!"),
+                qsTr("Oooo, you're driving me nuts!"),
+                qsTr("You want to match wits with me? You're so silly!"),
+                qsTr("Tee hee! C'mon! Let's play!")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("Hee hee hee... Hm? Broken already?"),
+                qsTr("Tee hee hee! You're a loser!"),
+                qsTr("Huh? That's all you got? Wow, you're no fun!")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("Boo! Nothing's going right! That's enough. I'm going home!"),
+                qsTr("Oh, well. I guess I'll have to find someplace new to play. Toodles!")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Lash");
+    };
 }
 
 Constructor.prototype = CO;

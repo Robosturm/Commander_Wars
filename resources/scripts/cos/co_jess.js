@@ -190,6 +190,64 @@ var Constructor = function()
         }
         return 0;
     };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("A gallant tank-driving commander who excels at analyzing information. Often argues with Eagle.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Dandelions");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Unfit COs");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("Vehicular units have superior firepower. Air and naval units are comparatively weak.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Movement range of vehicles increases by one space and their firepower increases. All units' fuel and ammunition supplies are replenished.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Turbo Charge");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Movement range of vehicles increases by two spaces and their firepower greatly increases. All units' fuel and ammunition supplies are replenished.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Overdrive");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("Battle should never be taken lightly. I always give 100%! Always!!!"),
+                qsTr("I won't let this chance pass me by!"),
+                qsTr("Weakness has no place on the battlefield!"),
+                qsTr("Here's my chance..."),
+                qsTr("Time to turn the tables..."),
+                qsTr("I've been waiting for this moment!")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("This battle will advance my tactical research..."),
+                qsTr("Looks like I survived another day."),
+                qsTr("We made it... I'm glad that's done.")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("This is looking grim..."),
+                qsTr("It was inevitable under these conditions.")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Jess");
+    };
 }
 
 Constructor.prototype = CO;

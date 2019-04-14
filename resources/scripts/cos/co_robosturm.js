@@ -187,6 +187,64 @@ var Constructor = function()
         }
         return 1;
     };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("Black Hole was in need of new strong CO's so Kat invented a second Sturm. But he doesn't accept any orders and formed his own Army.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Robots");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Livings");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("His troops can move 1 point more, but they have weaker firepower but higher defense capabilities.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Enemy looses half of their ammo and his troops can move 1 point more and their defense rises.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Machinzied Storm");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Enemy looses half of their ammo and 2 HP and his troops can move 2 point more and their defense rises extremly.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Machinzied Destruction");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("System Runtime. Error! No more Enemies found!"),
+                qsTr("...Sturm is coming...you have no chance..."),
+                qsTr("Order analyzied! Destroy Enemies."),
+                qsTr("Nobody can kill a Robot."),
+                qsTr("This is a war of a new time!"),
+                qsTr("Humans befare the power of machines come to your country.")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr(".........."),
+                qsTr("...Enemy destroyed Country conquered."),
+                qsTr("Robots are stronger than human beeings.")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("No Programm found for this Situation."),
+                qsTr("In accurate Attack this situation is impossible.")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Robo-Sturm");
+    };
 }
 
 Constructor.prototype = CO;

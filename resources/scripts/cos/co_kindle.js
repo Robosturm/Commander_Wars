@@ -202,6 +202,65 @@ var Constructor = function()
         }
         return 0;
     };
+
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("Jugger and Koal's commanding officer. Has a blunt, queen-like personality.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Anything chic");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Anything passe");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("An upper-crust CO who excels at urban warfare. Firepower of all units increased on properties.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Inflicts three HP of damage to enemy units on properties. Also increases firepower of all units on a property.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Urban Blight");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("The more properties she controls, the more firepower she gains. Also greatly increases firepower of all units on a property.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("High Society");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("So, you want to see me get serious? Very well! You asked for it!"),
+                qsTr("Even the prettiest rose has thorns!"),
+                qsTr("I am Kindle, Gorgeous AND Clever!"),
+                qsTr("Let us play a more dangerous game, shall we? I grow weary of this."),
+                qsTr("Aha ha ha! Beg for mercy, rat!"),
+                qsTr("Still putting up a fight? Unbelievable!")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("Winning is almost as wonderful as I am. Aha ha ha!"),
+                qsTr("I won again? This is getting so boring."),
+                qsTr("Aha ha ha! Pathetic.")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("Losing to you corn-fed country folk is enough to give me frown lines."),
+                qsTr("That was a bit of a disappointment.")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Kindle");
+    };
 }
 
 Constructor.prototype = CO;

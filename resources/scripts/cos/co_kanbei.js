@@ -149,6 +149,64 @@ var Constructor = function()
         }
         return 20;
     };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("The emperor of Yellow Comet. A skilled commander who has a soft spot for his daughter.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Sonja");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Computers");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("All units have high offensive and defensive capabilities, but are expensive to deploy.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Increases firepower and defence of all units.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Morale Boost");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Greatly strengthens offensive and defensive abilities of all units. Counterattacks are stronger.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Samurai Spirit");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("Who shall taste my wrath?"),
+                qsTr("Observe the heart of a true Samurai."),
+                qsTr("Your numbers mean nothing!  Nothing can stop me!"),
+                qsTr("My mind is honed for battle.  That is the essence of a samurai!"),
+                qsTr("True Samurai don't know the meaning of retreat."),
+                qsTr("I hope you thoroughly enjoy the taste of my sword!")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("Kanbei is victorious! We shall meet again!"),
+                qsTr("Raise your voices in victory!"),
+                qsTr("No enemy can stand before Kanbei!")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("Preposterous! So many of Kanbei's forces defeated in such a short time? Withdraw!"),
+                qsTr("Regardless of the odds, Kanbei should never lose this many units! Withdraw!")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Kanbei");
+    };
 }
 
 Constructor.prototype = CO;
