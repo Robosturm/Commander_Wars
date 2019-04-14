@@ -17,6 +17,7 @@ GameAnimationCapture::GameAnimationCapture(qint32 startPoints, qint32 endPoints,
       m_endPoints(endPoints),
       m_maxPoints(maxPoints)
 {
+    Interpreter::setCppOwnerShip(this);
 }
 
 void GameAnimationCapture::addBuildingSprite(QString spriteID, QColor startColor, QColor capturedColor, bool addColor)

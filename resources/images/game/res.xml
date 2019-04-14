@@ -130,6 +130,11 @@
 		<image file="minimap/minimap_wasteland.png" />
 		<image file="minimap/minimap_weld.png" />
 		<image file="minimap/minimap_blackholebuilding.png" />
+		
+		<!-- dialogue stuff -->
+		<image file="dialogfield.png" />		
+		<image file="dialogfield+mask.png" />		
+		
 	</atlas>
 </resources>
 

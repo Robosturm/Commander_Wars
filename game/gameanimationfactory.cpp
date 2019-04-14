@@ -8,9 +8,13 @@
 
 #include "game/gameanimationcapture.h"
 
+#include "game/gameanimationdialog.h"
+
 #include "game/unit.h"
 
 #include "game/gameaction.h"
+
+#include "menue/gamemenue.h"
 
 #include "coreengine/mainapp.h"
 
@@ -20,7 +24,7 @@ QVector<spGameAnimation> GameAnimationFactory::m_Animations;
 GameAnimationFactory::GameAnimationFactory()
     : QObject()
 {
-
+    Interpreter::setCppOwnerShip(this);
 }
 
 void GameAnimationFactory::queueAnimation(GameAnimation* pGameAnimation)
@@ -82,6 +86,19 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(Unit* pUnit, Gam
     return pGameAnimationWalk;
 }
 
+GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(QString text, QString coid, GameEnums::COMood mood, QColor color, quint32 frameTime)
+{
+    GameAnimationDialog* pAnim = new GameAnimationDialog(frameTime);
+    pAnim->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    pAnim->setDialog(text);
+    pAnim->setCO(coid, mood);
+    pAnim->setColor(color);
+
+    GameMenue::getInstance()->addChild(pAnim);
+    m_Animations.append(pAnim);
+    return pAnim;
+}
+
 GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(qint32 x, qint32 y, qint32 startPoints, qint32 endPoints, qint32 maxPoints)
 {
     GameAnimationCapture* pGameAnimationCapture = new GameAnimationCapture(startPoints, endPoints, maxPoints);
@@ -104,7 +121,7 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation)
         if (m_Animations[i].get() == pAnimation)
         {
             spGameAnimation spAnimation = m_Animations[i];
-            GameMap::getInstance()->removeChild(spAnimation);
+            spAnimation->getParent()->removeChild(spAnimation);
             m_Animations.removeAt(i);
             break;
         }
@@ -117,9 +134,13 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation)
 
 void GameAnimationFactory::finishAllAnimations()
 {
-    while (m_Animations.size() > 0)
+    qint32 i = 0;
+    while (i < m_Animations.size())
     {
-        spGameAnimation spAnimation = m_Animations[m_Animations.size() - 1];
-        spAnimation->onFinished();
+        spGameAnimation spAnimation = m_Animations[i];
+        if (!spAnimation->onFinished())
+        {
+            i++;
+        }
     }
 }

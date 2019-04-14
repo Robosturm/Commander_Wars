@@ -83,6 +83,14 @@ public:
     };
     Q_ENUM(Fog)
 
+    enum COMood
+    {
+        COMood_Normal,
+        COMood_Happy,
+        COMood_Sad
+    };
+    Q_ENUM(COMood)
+
     static void registerEnums();
 private:
     explicit GameEnums() = default;

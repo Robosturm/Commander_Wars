@@ -99,7 +99,7 @@ void GameAnimation::addText(QString text, float offsetX, float offsetY, float sc
     addChild(pTextfield);
 }
 
-void GameAnimation::onFinished()
+bool GameAnimation::onFinished()
 {
     if (m_loops < 0)
     {
@@ -114,6 +114,7 @@ void GameAnimation::onFinished()
         Mainapp::getInstance()->getInterpreter()->doFunction(jsPostActionObject, jsPostActionFunction);
     }
     GameAnimationFactory::removeAnimation(this);
+    return true;
 }
 
 void GameAnimation::setSound(QString soundFile, qint32 loops)

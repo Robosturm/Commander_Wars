@@ -9,6 +9,7 @@
 
 InGameMenue::InGameMenue()
 {
+    Interpreter::setCppOwnerShip(this);
     loadBackground();
     oxygine::Actor::addChild(GameMap::getInstance());
     loadHandling();
@@ -17,6 +18,7 @@ InGameMenue::InGameMenue()
 InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map)
     : QObject()
 {
+    Interpreter::setCppOwnerShip(this);
     loadBackground();
     // check for map creation
     if ((width > 0) && (heigth > 0))

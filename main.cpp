@@ -32,10 +32,13 @@
 #include "game/gameanimation.h"
 #include "game/gameanimationwalk.h"
 #include "game/gameanimationcapture.h"
+#include "game/gameanimationdialog.h"
 #include "game/victoryrule.h"
 #include "game/gamerules.h"
 #include "game/weather.h"
 #include "game/terrainfindingsystem.h"
+
+
 
 #include "gameinput/cursordata.h"
 
@@ -94,6 +97,7 @@ int main(int argc, char* argv[])
     qRegisterMetaType<GameEnums::Directions>("GameEnums::Directions");
     qRegisterMetaType<GameEnums::AIQuestionType>("GameEnums::AIQuestionType");
     qRegisterMetaType<GameEnums::Fog>("GameEnums::Fog");
+    qRegisterMetaType<GameEnums::COMood>("GameEnums::COMood");
 
 
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
@@ -106,6 +110,7 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<GameAnimation>("GameAnimation");
     qmlRegisterInterface<GameAnimationWalk>("GameAnimationWalk");
     qmlRegisterInterface<GameAnimationCapture>("GameAnimationCapture");
+    qmlRegisterInterface<GameAnimationDialog>("GameAnimationDialog");
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
     qmlRegisterInterface<QmlVectorUnit>("QmlVectorUnit");
     qmlRegisterInterface<QmlVectorBuilding>("QmlVectorBuilding");
@@ -117,8 +122,6 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<ScriptVariables>("ScriptVariables");
     qmlRegisterInterface<Weather>("Weather");
     qmlRegisterInterface<TerrainFindingSystem>("TerrainFindingSystem");
-
-
 
     GameEnums::registerEnums();
 

@@ -17,13 +17,14 @@ GameAnimationWalk::GameAnimationWalk(Unit* pUnit, QVector<QPoint> movePath)
       m_pUnit(pUnit),
       m_movePath(movePath)
 {
+    Interpreter::setCppOwnerShip(this);
     m_pUnit->setUnitVisible(false);
 }
 
-void GameAnimationWalk::onFinished()
+bool GameAnimationWalk::onFinished()
 {
     m_pUnit->setUnitVisible(true);
-    GameAnimation::onFinished();
+    return GameAnimation::onFinished();
 }
 
 GameEnums::Directions GameAnimationWalk::getMovementDirection(qint32 x, qint32 y, qint32 x2, qint32 y2)

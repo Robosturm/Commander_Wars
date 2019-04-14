@@ -1,11 +1,8 @@
-- save and reload map
-- option menu
 - credits menu
 
 - activate power animation
 
 - ai
-- co info
 - dialogues
 
 - victory screen

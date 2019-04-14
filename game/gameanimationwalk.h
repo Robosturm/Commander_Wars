@@ -36,7 +36,7 @@ public slots:
     /**
      * @brief onFinished called when the animation has finished
      */
-    virtual void onFinished() override;
+    virtual bool onFinished() override;
 protected:
     /**
      * @brief getMovementDirection returns the movement direction of this unit

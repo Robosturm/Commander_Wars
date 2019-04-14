@@ -132,6 +132,7 @@ set(${PROJECT_NAME}_SRCS
         game/gamerules.cpp
         game/victoryrule.cpp
         game/weather.cpp
+        game/gameanimationdialog.cpp
 
         # game input
         gameinput/basegameinputif.cpp

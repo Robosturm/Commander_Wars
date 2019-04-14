@@ -12,6 +12,7 @@
 class GameAnimation;
 class GameAnimationWalk;
 class GameAnimationCapture;
+class GameAnimationDialog;
 class GameAction;
 
 class GameAnimationFactory : public QObject
@@ -44,6 +45,15 @@ public slots:
      * @return
      */
     static GameAnimation* createAnimation(quint32 x, quint32 y, quint32 frameTime = GameMap::frameTime, bool mapPosition = true);
+    /**
+     * @brief createGameAnimationDialog
+     * @param text
+     * @param coid
+     * @param mood
+     * @param color
+     * @return
+     */
+    static GameAnimationDialog* createGameAnimationDialog(QString text, QString coid, GameEnums::COMood mood, QColor color, quint32 frameTime = GameMap::frameTime);
     /**
      * @brief createWalkingAnimation creates a walking animation. This doesn't move the unit
      * @param pUnit the unit that will walk

@@ -31,6 +31,7 @@ GameMenue::GameMenue(QString map)
 
 void GameMenue::loadGameMenue()
 {
+    Interpreter::setCppOwnerShip(this);
     m_pInstance = this;
 
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void

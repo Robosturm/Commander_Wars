@@ -52,5 +52,9 @@ void GameEnums::registerEnums()
     value.setProperty("Fog_Off", Fog_Off);
     value.setProperty("Fog_OfWar", Fog_OfWar);
 
+    value.setProperty("COMood_Normal", COMood_Normal);
+    value.setProperty("COMood_Happy", COMood_Happy);
+    value.setProperty("COMood_Sad", COMood_Sad);
+
     pInterpreter->setGlobal("GameEnums", value);
 }

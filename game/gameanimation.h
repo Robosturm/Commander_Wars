@@ -48,7 +48,7 @@ public slots:
     /**
      * @brief onFinished called when the animation is finished
      */
-    virtual void onFinished();
+    virtual bool onFinished();
     /**
      * @brief setEndOfAnimationCall calls a java script function when the animation is finished. Note: no parameters can be used to call the function
      * @param postActionObject java script object that will be used

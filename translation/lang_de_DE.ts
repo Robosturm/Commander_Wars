@@ -806,7 +806,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="57"/>
+        <location filename="../main.cpp" line="60"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
