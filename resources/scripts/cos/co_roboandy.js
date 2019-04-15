@@ -185,7 +185,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("After the (moderate) success of the Robo-Andys, Lash was asked by the military to create artificial intelligence able to direct troops. However, being given orders by a computer freaked out the soldiers of OS somewhat, so she fixed the problem by putting it in the original Robo-Andy.");
+        return qsTr("Lash was asked by the military to create artificial intelligence able to direct troops. However, being given orders by a computer freaked out the soldiers. So she fixed the problem by putting it in the original Robo-Andy.");
     };
     this.getHits = function()
     {
@@ -197,7 +197,7 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("His processors are outdated and tend to overheat often. His superior AI allows for efficient command of troops, but behaves erratically when he begins to heat up.");
+        return qsTr("He gets firepower for his powermeter, but his firepower may also drop drastically.");
     };
     this.getPowerDescription = function()
     {

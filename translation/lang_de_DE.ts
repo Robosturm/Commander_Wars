@@ -806,7 +806,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="58"/>
+        <location filename="../main.cpp" line="59"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3562,11 +3562,6 @@
 <context>
     <name>co_roboandy</name>
     <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="188"/>
-        <source>After the (moderate) success of the Robo-Andys, Lash was asked by the military to create artificial intelligence able to direct troops. However, being given orders by a computer freaked out the soldiers of OS somewhat, so she fixed the problem by putting it in the original Robo-Andy.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_roboandy.js" line="192"/>
         <source>Puppet Shows</source>
         <translation type="unfinished"></translation>
@@ -3577,8 +3572,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="188"/>
+        <source>Lash was asked by the military to create artificial intelligence able to direct troops. However, being given orders by a computer freaked out the soldiers. So she fixed the problem by putting it in the original Robo-Andy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_roboandy.js" line="200"/>
-        <source>His processors are outdated and tend to overheat often. His superior AI allows for efficient command of troops, but behaves erratically when he begins to heat up.</source>
+        <source>He gets firepower for his powermeter, but his firepower may also drop drastically.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

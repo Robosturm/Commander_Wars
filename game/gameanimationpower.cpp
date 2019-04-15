@@ -12,6 +12,8 @@
 #include "coreengine/tweentogglevisibility.h"
 #include "coreengine/tweenwait.h"
 
+#include "game/gameanimationfactory.h"
+
 GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, bool superpower, QString coid)
     : GameAnimation (frameTime)
 {
@@ -111,7 +113,24 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, bool sup
         time = frameTime * 35;
     }
     endTimer.setInterval(time);
-    connect(&endTimer, &QTimer::timeout, this, &GameAnimation::onFinished, Qt::QueuedConnection);
+    connect(&endTimer, &QTimer::timeout, this, &GameAnimationPower::onFinished, Qt::QueuedConnection);
+    addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
+    {
+        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        if (pTouchEvent != nullptr)
+        {
+            if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
+            {
+                emit sigRightClick();
+            }
+        }
+    });
+    connect(this, &GameAnimationPower::sigRightClick, this, &GameAnimationPower::rightClick, Qt::QueuedConnection);
+}
+
+void GameAnimationPower::rightClick()
+{
+    GameAnimationFactory::finishAllAnimations();
 }
 
 void GameAnimationPower::stop()

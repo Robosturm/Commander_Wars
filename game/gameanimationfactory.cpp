@@ -12,6 +12,8 @@
 
 #include "game/gameanimationpower.h"
 
+#include "game/gameanimationnextday.h"
+
 #include "game/unit.h"
 
 #include "game/gameaction.h"
@@ -106,6 +108,14 @@ GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(QString tex
     pAnim->setCO(coid, mood);
     pAnim->setColor(color);
 
+    GameMenue::getInstance()->addChild(pAnim);
+    m_Animations.append(pAnim);
+    return pAnim;
+}
+
+GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(Player* pPlayer, quint32 frameTime)
+{
+    GameAnimationNextDay* pAnim = new GameAnimationNextDay(pPlayer, frameTime);
     GameMenue::getInstance()->addChild(pAnim);
     m_Animations.append(pAnim);
     return pAnim;

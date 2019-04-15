@@ -14,6 +14,7 @@ class GameAnimationWalk;
 class GameAnimationCapture;
 class GameAnimationDialog;
 class GameAnimationPower;
+class GameAnimationNextDay;
 class GameAction;
 
 
@@ -77,6 +78,13 @@ public slots:
      * @return
      */
     static GameAnimationCapture* createGameAnimationCapture(qint32 x, qint32 y, qint32 startPoints, qint32 endPoints, qint32 maxPoints);
+    /**
+     * @brief createGameAnimationNextDay
+     * @param pPlayer
+     * @param frameTime
+     * @return
+     */
+    static GameAnimationNextDay* createGameAnimationNextDay(Player* pPlayer, quint32 frameTime = GameMap::frameTime);
     /**
      * @brief getAnimationCount
      * @return the current amount of running animations

@@ -134,6 +134,7 @@
 		<!-- dialogue stuff -->
 		<image file="dialogfield.png" />		
 		<image file="dialogfield+mask.png" />	
+		<image file="nextday.png" />				
 		<!-- powert stuff -->
 		<image file="power_background.png" guideX1="0" guideX2="480" guideY1="0" guideY2="320"/>
 		<image file="superpower_background.png" guideX1="0" guideX2="480" guideY1="0" guideY2="320"/>

@@ -777,6 +777,7 @@ bool GameMap::nextPlayer()
                 if (i + i2 >= players.size() - 1)
                 {
                     m_CurrentPlayer = players[i + i2 - (players.size() - 1)];
+                    currentDay++;
                     nextDay = true;
                 }
                 else
@@ -809,6 +810,11 @@ void GameMap::updateUnitIcons()
             }
         }
     }
+}
+
+quint32 GameMap::getCurrentDay() const
+{
+    return currentDay;
 }
 
 void GameMap::startOfTurn(Player* pPlayer)
@@ -937,6 +943,8 @@ void GameMap::nextTurn()
     GameMenue::getInstance()->updatePlayerinfo();
 
     pApp->getAudioThread()->playRandom();
+
+    GameAnimationFactory::createGameAnimationNextDay(m_CurrentPlayer.get());
 }
 
 Player* GameMap::getCurrentViewPlayer()

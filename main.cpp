@@ -34,6 +34,7 @@
 #include "game/gameanimationcapture.h"
 #include "game/gameanimationdialog.h"
 #include "game/gameanimationpower.h"
+#include "game/gameanimationnextday.h"
 #include "game/victoryrule.h"
 #include "game/gamerules.h"
 #include "game/weather.h"
@@ -110,6 +111,7 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<GameAnimationCapture>("GameAnimationCapture");
     qmlRegisterInterface<GameAnimationDialog>("GameAnimationDialog");
     qmlRegisterInterface<GameAnimationPower>("GameAnimationPower");
+    qmlRegisterInterface<GameAnimationNextDay>("GameAnimationNextDay");
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
     qmlRegisterInterface<QmlVectorUnit>("QmlVectorUnit");
     qmlRegisterInterface<QmlVectorBuilding>("QmlVectorBuilding");

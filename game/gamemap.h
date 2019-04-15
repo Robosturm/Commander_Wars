@@ -186,10 +186,17 @@ public:
      * @brief clearMap
      */
     void clearMap();
+
+
 signals:
     void signalExitGame();
     void signalSaveGame();
 public slots:
+    /**
+     * @brief getCurrentDay
+     * @return
+     */
+    quint32 getCurrentDay() const;
     /**
      * @brief exitGame
      */

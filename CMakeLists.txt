@@ -130,6 +130,7 @@ set(${PROJECT_NAME}_SRCS
         game/gameanimationcapture.cpp
         game/gameanimationdialog.cpp
         game/gameanimationpower.cpp
+        game/gameanimationnextday.cpp
         game/playerinfo.cpp
         game/GameEnums.cpp
         game/gamerules.cpp
