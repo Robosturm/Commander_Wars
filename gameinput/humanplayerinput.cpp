@@ -107,7 +107,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
             qint32 minRange = pUnit->getMinRange();
             qint32 maxRange = pUnit->getMaxRange();
 
-            UnitPathFindingSystem pfs(pMap->getTerrain(x, y)->getSpUnit());
+            UnitPathFindingSystem pfs(pMap->getTerrain(x, y)->getUnit());
             pfs.explore();
             QVector<QPoint> points = pfs.getAllNodePoints();
             for (qint32 i = 0; i < points.size(); i++)
@@ -453,7 +453,7 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
     Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
 
     GameMap* pMap = GameMap::getInstance();
-    m_pUnitPathFindingSystem = new UnitPathFindingSystem(pMap->getTerrain(x, y)->getSpUnit());
+    m_pUnitPathFindingSystem = new UnitPathFindingSystem(pMap->getTerrain(x, y)->getUnit());
     m_pUnitPathFindingSystem->explore();
     createMarkedMoveFields();
 }

@@ -29,8 +29,9 @@ public slots:
     void nextAction();
 
 protected:
-    virtual void run()  override;
 
+    static const QString ACTION_CAPTURE;
+    static const QString ACTION_NEXT_PLAYER;
 private:
     bool finish{false};
 };

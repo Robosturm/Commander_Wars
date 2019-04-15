@@ -1160,8 +1160,7 @@ QStringList Unit::getActionList()
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getActions";
-    QJSValueList args1;
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1);
     if (ret.isString())
     {
         return ret.toString().split(",");
@@ -1190,7 +1189,6 @@ void Unit::moveUnit(QVector<QPoint> movePath)
         spUnit pUnit = m_pTerrain->getSpUnit();
         m_pTerrain->setUnit(nullptr);
         // teleport unit to target position
-        Console::print("Moving Unit from " + QString::number(getX()) + " , " + QString::number(getY()) + " to " + QString::number(movePath[0].x()) + " , " + QString::number(movePath[0].y()), Console::eLogLevels::eDEBUG);
         pMap->getTerrain(movePath[0].x(), movePath[0].y())->setUnit(pUnit);
         if (m_CORange.get() != nullptr)
         {

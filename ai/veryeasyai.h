@@ -3,6 +3,8 @@
 
 #include "ai/coreai.h"
 
+class QmlVectorUnit;
+
 class VeryEasyAI : public CoreAI
 {
     Q_OBJECT
@@ -32,6 +34,7 @@ public:
         return 1;
     }
 protected:
+    bool captureBuildings(QmlVectorUnit* pUnits);
     void finishTurn();
 };
 

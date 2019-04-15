@@ -1,8 +1,6 @@
 #ifndef BASEGAMEINPUTIF_H
 #define BASEGAMEINPUTIF_H
 
-#include "QThread"
-
 #include <QObject>
 
 #include "oxygine-framework.h"
@@ -14,7 +12,7 @@ class Player;
 class BaseGameInputIF;
 typedef oxygine::intrusive_ptr<BaseGameInputIF> spBaseGameInputIF;
 
-class BaseGameInputIF : public QThread, public FileSerializable, public oxygine::ref_counter
+class BaseGameInputIF : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 public:

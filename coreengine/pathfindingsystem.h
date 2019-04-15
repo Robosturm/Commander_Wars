@@ -123,7 +123,7 @@ protected:
     /**
      * @brief m_OpenList sorted list of nodes we need to check. The last item is the next item we gonna check. this should avoid a lot of resizing of the array
      */
-    QVector<Node*> m_OpenList;
+    QList<Node*> m_OpenList;
 
 
 signals:

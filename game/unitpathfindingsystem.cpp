@@ -9,7 +9,7 @@
 #include "game/player.h"
 #include "game/co.h"
 
-UnitPathFindingSystem::UnitPathFindingSystem(spUnit pUnit)
+UnitPathFindingSystem::UnitPathFindingSystem(Unit* pUnit)
     : PathFindingSystem(pUnit->getX(), pUnit->getY()),
       m_pUnit(pUnit)
 {
@@ -52,7 +52,7 @@ qint32 UnitPathFindingSystem::getCosts(qint32 x, qint32 y)
             }
         }
         qint32 baseCosts = pMovementTableManager->getBaseMovementPoints(m_pUnit->getMovementType(), pMap->getTerrain(x, y));
-        qint32 costs = baseCosts + m_pUnit->getOwner()->getMovementpointModifier(m_pUnit.get(), QPoint(x, y));
+        qint32 costs = baseCosts + m_pUnit->getOwner()->getMovementpointModifier(m_pUnit, QPoint(x, y));
         if (baseCosts > 0)
         {
             if ((costs <= 0) && (baseCosts > 0))

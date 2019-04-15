@@ -11,7 +11,7 @@ class UnitPathFindingSystem : public PathFindingSystem
 {
     Q_OBJECT
 public:
-    explicit UnitPathFindingSystem(spUnit pUnit);
+    explicit UnitPathFindingSystem(Unit* pUnit);
 
     /**
      * @brief getRemainingCost
@@ -41,7 +41,7 @@ public:
      */
     qint32 getCosts(QVector<QPoint> path);
 private:
-    spUnit m_pUnit;
+    Unit* m_pUnit;
 };
 
 #endif // UNITPATHFINDINGSYSTEM_H

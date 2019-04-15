@@ -8,6 +8,7 @@
 
 #include "coreengine/interpreter.h"
 #include "coreengine/audiothread.h"
+#include "coreengine/renderthread.h"
 #include "coreengine/settings.h"
 
 #include "coreengine/qmlvector.h"
@@ -137,6 +138,7 @@ private:
 
     Interpreter* m_pInterpreter{nullptr};
     AudioThread* m_Audiothread{nullptr};
+    RenderThread* m_Renderthread{nullptr};
     Settings m_Settings;
     NetworkInterface* m_pNetworkInterface{nullptr};
     bool m_quit{false};

@@ -17,7 +17,8 @@ bool Mainapp::m_useSeed{false};
 
 Mainapp::Mainapp(int argc, char* argv[])
     : QCoreApplication(argc, argv),
-      m_Audiothread(new AudioThread)
+      m_Audiothread(new AudioThread()),
+      m_Renderthread(new RenderThread())
 {
     Interpreter::setCppOwnerShip(this);
     // create update timer
@@ -34,6 +35,7 @@ Mainapp::Mainapp(int argc, char* argv[])
 Mainapp::~Mainapp()
 {
     m_Audiothread->deleteLater();
+    m_Renderthread->deleteLater();
 }
 
 Mainapp* Mainapp::getInstance()
@@ -194,26 +196,8 @@ void Mainapp::quitGame()
 
 void Mainapp::update()
 {
-    // Update engine-internal components
-    // If input events are available, they are passed to Stage::instance.handleEvent
-    // If the function returns true, it means that the user requested the application to terminate
-    bool done = oxygine::core::update();
-
-    // Update our stage
-    // Update all actors. Actor::update will also be called for all its children
-    oxygine::getStage()->update();
-
-    if (oxygine::core::beginRendering())
-    {
-        oxygine::Color clearColor(181, 255, 32, 255);
-        oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::core::getDisplaySize());
-        // Render all actors inside the stage. Actor::render will also be called for all its children
-        oxygine::getStage()->render(clearColor, viewport);
-
-        oxygine::core::swapDisplayBuffers();
-    }
     // check for termination
-    if (done || m_quit)
+    if (m_quit)
     {
         exit();
     }

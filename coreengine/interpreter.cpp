@@ -63,14 +63,6 @@ Interpreter::~Interpreter()
 
 QJSValue Interpreter::doFunction(const QString& func, QJSValueList& args)
 {
-    QString text;
-    for (qint32 i = 0; i < args.size(); i++)
-    {
-        text += args[i].toString() + " ";
-    }
-#ifdef GAMEDEBUG
-    // Console::print("Calling: " + func + " with " + text, Console::eDEBUG);
-#endif
     QJSValue ret;
     QJSValue funcPointer = globalObject().property(func);
     if (funcPointer.isCallable())
@@ -87,24 +79,12 @@ QJSValue Interpreter::doFunction(const QString& func, QJSValueList& args)
         QString error = "Error: attemp to call a non function value.";
         Console::print(error, Console::eERROR);
     }
-#ifdef GAMEDEBUG
-    // Console::print("Result is: " + ret.toString(), Console::eDEBUG);
-#endif
     return ret;
 }
 
 QJSValue Interpreter::doFunction(const QString& obj, const QString& func, const QJSValueList& args)
 {
-    QString text;
-    for (qint32 i = 0; i < args.size(); i++)
-    {
-        text += args[i].toString() + " ";
-    }
-#ifdef GAMEDEBUG
-    // Console::print("Calling: " + func + " of " + obj + " with " + text, Console::eDEBUG);
-#endif
     QJSValue ret;
-
     QJSValue objPointer = globalObject().property(obj);
     if (objPointer.isObject())
     {
@@ -129,9 +109,6 @@ QJSValue Interpreter::doFunction(const QString& obj, const QString& func, const 
         QString error = "Error: attemp to call a non object value in order to call a function.";
         Console::print(error, Console::eERROR);
     }
-#ifdef GAMEDEBUG
-    // Console::print("Result is: " + ret.toString(), Console::eDEBUG);
-#endif
     return ret;
 }
 
