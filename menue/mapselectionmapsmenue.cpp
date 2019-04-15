@@ -17,6 +17,7 @@
 #include "game/co.h"
 
 #include "gameinput/humanplayerinput.h"
+#include "ai/veryeasyai.h"
 
 #include "menue/mainwindow.h"
 #include "menue/gamemenue.h"
@@ -585,7 +586,7 @@ void MapSelectionMapsMenue::showCOSelection()
         teamList.append(tr("Team") + " " + QString::number(i + 1));
     }
 
-    QVector<QString> aiList = {tr("Human"), tr("Easy")};
+    QVector<QString> aiList = {tr("Human"), tr("Very Easy")};
 
     Mainapp* pApp = Mainapp::getInstance();
     QString function = "getDefaultPlayerColors";
@@ -859,6 +860,11 @@ void MapSelectionMapsMenue::startGame()
             case 0:
             {
                 pPlayer->setBaseGameInput(new HumanPlayerInput());
+                break;
+            }
+            case 1:
+            {
+                pPlayer->setBaseGameInput(new VeryEasyAI());
                 break;
             }
             default:

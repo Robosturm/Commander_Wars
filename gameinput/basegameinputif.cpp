@@ -3,6 +3,7 @@
 #include "coreengine/interpreter.h"
 
 #include "humanplayerinput.h"
+#include "ai/veryeasyai.h"
 
 BaseGameInputIF::BaseGameInputIF()
 {
@@ -19,9 +20,15 @@ void BaseGameInputIF::serializeInterface(QDataStream& pStream, BaseGameInputIF* 
 {
 
     HumanPlayerInput* humanIf = dynamic_cast<HumanPlayerInput*>(input);
+     VeryEasyAI* veryEasyAi = dynamic_cast<VeryEasyAI*>(input);
     if (humanIf != nullptr)
     {
         pStream << static_cast<qint32>(AiTypes::Human);
+        input->serialize(pStream);
+    }
+    else if (veryEasyAi != nullptr)
+    {
+        pStream << static_cast<qint32>(AiTypes::VeryEasy);
         input->serialize(pStream);
     }
     else
@@ -42,6 +49,12 @@ BaseGameInputIF* BaseGameInputIF::deserializeInterface(QDataStream& pStream)
         case AiTypes::Human:
         {
             ret = new HumanPlayerInput();
+            ret->deserialize(pStream);
+            break;
+        }
+        case AiTypes::VeryEasy:
+        {
+            ret = new VeryEasyAI();
             ret->deserialize(pStream);
             break;
         }

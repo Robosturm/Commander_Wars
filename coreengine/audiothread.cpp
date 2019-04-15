@@ -29,6 +29,8 @@ AudioThread::~AudioThread()
     m_Player->stop();
     delete m_Player;
     delete m_playList;
+    terminate();
+    wait();
 }
 
 void AudioThread::initAudio()
