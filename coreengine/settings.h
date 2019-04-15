@@ -119,6 +119,9 @@ public:
     float getMouseSensitivity();
     void setMouseSensitivity(float value);
 
+    bool getShowAnimations();
+    void setShowAnimations(bool value);
+
 private:
     // setting variables
     static qint32 m_x;
@@ -141,6 +144,9 @@ private:
     static QString m_NetworkData;
     static qint32 m_GamePort;
     static bool m_Server;
+
+    // ingame options
+    static bool showAnimations;
 
     // internal members
     static Settings* m_pInstance;

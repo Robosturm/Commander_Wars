@@ -114,9 +114,17 @@ void GameMenue::performAction(GameAction* pGameAction)
     pGameAction->perform();
     // clean up the action
     delete pGameAction;
+
     if (GameAnimationFactory::getAnimationCount() == 0)
     {
         GameAnimationFactory::getInstance()->removeAnimation(nullptr);
+    }
+    else if (!Mainapp::getInstance()->getSettings()->getShowAnimations())
+    {
+        while (GameAnimationFactory::getAnimationCount() > 0)
+        {
+            GameAnimationFactory::finishAllAnimations();
+        }
     }
 }
 

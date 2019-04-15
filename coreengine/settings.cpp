@@ -25,6 +25,10 @@ qint32 Settings::m_SoundVolume       = 80;
 QString Settings::m_NetworkData   = "";
 qint32 Settings::m_GamePort          = 5603;
 bool Settings::m_Server           = true;
+
+// ingame options
+bool Settings::showAnimations = true;
+
 // add mod path
 QStringList Settings::m_activeMods;
 // this Object
@@ -121,6 +125,10 @@ void Settings::loadSettings(){
 
     settings.endGroup();
 
+    settings.beginGroup("Game");
+    showAnimations  = settings.value("ShowAnimations", true).toBool();
+    settings.endGroup();
+
     // network
     settings.beginGroup("Network");
     m_NetworkData = settings.value("NetworkConfiguration", "").toString();
@@ -171,6 +179,10 @@ void Settings::saveSettings(){
     settings.setValue("SoundVolume",               m_SoundVolume);
     settings.endGroup();
 
+    settings.beginGroup("Game");
+    settings.setValue("ShowAnimations",                 showAnimations);
+    settings.endGroup();
+
     // network
     settings.beginGroup("Network");
     settings.setValue("NetworkConfiguration",      m_NetworkData);
@@ -216,4 +228,14 @@ float Settings::getMouseSensitivity()
 void Settings::setMouseSensitivity(float value)
 {
     m_mouseSensitivity = value;
+}
+
+bool Settings::getShowAnimations()
+{
+    return showAnimations;
+}
+
+void Settings::setShowAnimations(bool value)
+{
+    showAnimations = value;
 }

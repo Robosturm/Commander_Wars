@@ -31,6 +31,7 @@ public slots:
 protected:
 
     static const QString ACTION_CAPTURE;
+    static const QString ACTION_FIRE;
     static const QString ACTION_NEXT_PLAYER;
 private:
     bool finish{false};

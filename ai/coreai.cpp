@@ -9,6 +9,7 @@
 #include "menue/gamemenue.h"
 
 const QString CoreAI::ACTION_CAPTURE = "ACTION_CAPTURE";
+const QString CoreAI::ACTION_FIRE = "ACTION_FIRE";
 const QString CoreAI::ACTION_NEXT_PLAYER = "ACTION_NEXT_PLAYER";
 
 CoreAI::CoreAI()

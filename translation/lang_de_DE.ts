@@ -862,30 +862,30 @@
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="46"/>
-        <location filename="../coreengine/settings.cpp" line="56"/>
-        <location filename="../coreengine/settings.cpp" line="62"/>
-        <location filename="../coreengine/settings.cpp" line="68"/>
-        <location filename="../coreengine/settings.cpp" line="74"/>
-        <location filename="../coreengine/settings.cpp" line="86"/>
-        <location filename="../coreengine/settings.cpp" line="92"/>
-        <location filename="../coreengine/settings.cpp" line="103"/>
-        <location filename="../coreengine/settings.cpp" line="110"/>
-        <location filename="../coreengine/settings.cpp" line="117"/>
+        <location filename="../coreengine/settings.cpp" line="50"/>
+        <location filename="../coreengine/settings.cpp" line="60"/>
+        <location filename="../coreengine/settings.cpp" line="66"/>
+        <location filename="../coreengine/settings.cpp" line="72"/>
+        <location filename="../coreengine/settings.cpp" line="78"/>
+        <location filename="../coreengine/settings.cpp" line="90"/>
+        <location filename="../coreengine/settings.cpp" line="96"/>
+        <location filename="../coreengine/settings.cpp" line="107"/>
+        <location filename="../coreengine/settings.cpp" line="114"/>
+        <location filename="../coreengine/settings.cpp" line="121"/>
         <source>Error in the Ini File: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/settings.cpp" line="46"/>
-        <location filename="../coreengine/settings.cpp" line="56"/>
-        <location filename="../coreengine/settings.cpp" line="62"/>
-        <location filename="../coreengine/settings.cpp" line="68"/>
-        <location filename="../coreengine/settings.cpp" line="74"/>
-        <location filename="../coreengine/settings.cpp" line="86"/>
-        <location filename="../coreengine/settings.cpp" line="92"/>
-        <location filename="../coreengine/settings.cpp" line="103"/>
-        <location filename="../coreengine/settings.cpp" line="110"/>
-        <location filename="../coreengine/settings.cpp" line="117"/>
+        <location filename="../coreengine/settings.cpp" line="50"/>
+        <location filename="../coreengine/settings.cpp" line="60"/>
+        <location filename="../coreengine/settings.cpp" line="66"/>
+        <location filename="../coreengine/settings.cpp" line="72"/>
+        <location filename="../coreengine/settings.cpp" line="78"/>
+        <location filename="../coreengine/settings.cpp" line="90"/>
+        <location filename="../coreengine/settings.cpp" line="96"/>
+        <location filename="../coreengine/settings.cpp" line="107"/>
+        <location filename="../coreengine/settings.cpp" line="114"/>
+        <location filename="../coreengine/settings.cpp" line="121"/>
         <source>Setting:</source>
         <translation type="unfinished"></translation>
     </message>
