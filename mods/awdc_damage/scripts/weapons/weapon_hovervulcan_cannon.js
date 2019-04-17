@@ -88,4 +88,4 @@ var Constructor = function()
 };
 
 Constructor.prototype = WEAPON;
-var WEAPON_VULCAN_CANNON = new Constructor();
+var WEAPON_HOVERVULCAN_CANNON = new Constructor();

@@ -373,6 +373,11 @@ void GameRules::createFogVision()
             {
                 case GameEnums::Fog_Off:
                 {
+                    if (m_FogSprites[x][y].get() != nullptr)
+                    {
+                        pMap->removeChild(m_FogSprites[x][y]);
+                        m_FogSprites[x][y] = nullptr;
+                    }
                     if (pUnit != nullptr)
                     {
                         showHideStealthUnit(pPlayer, pUnit);

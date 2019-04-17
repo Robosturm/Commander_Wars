@@ -1,8 +1,9 @@
 #ifndef COREAI_H
 #define COREAI_H
 
+#include <qvector.h>
 #include <qvector3d.h>
-#include <qvector2d.h>
+#include <QRectF>
 
 #include "gameinput/basegameinputif.h"
 
@@ -39,7 +40,7 @@ public slots:
      * @param pPfs
      * @return target unit x, y and z = fonddamage
      */
-    QVector3D getBestTarget(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem* pPfs);
+    void getBestTarget(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QPoint>& moveTargetFields);
     /**
      * @brief calcUnitDamage
      * @param pUnit
@@ -47,7 +48,14 @@ public slots:
      * @param target
      * @return x = unit damage and y = counter damage
      */
-    QVector2D calcUnitDamage(Unit* pUnit, QPoint position, QPoint target);
+    QRectF calcUnitDamage(GameAction* pAction, QPoint target);
+    /**
+     * @brief getAttacksFromField
+     * @param pUnit
+     * @param pAction
+     * @param ret
+     */
+    void getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVector3D>& ret, QVector<QPoint>& moveTargetFields);
 protected:
 
     static const QString ACTION_CAPTURE;

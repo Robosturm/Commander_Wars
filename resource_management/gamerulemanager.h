@@ -3,9 +3,7 @@
 
 #include <QObject>
 
-#include "oxygine-framework.h"
-
-class GameRuleManager : public QObject, public oxygine::Resources
+class GameRuleManager : public QObject
 {
     Q_OBJECT
 public:

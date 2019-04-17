@@ -36,6 +36,8 @@ public:
 protected:
     bool captureBuildings(QmlVectorUnit* pUnits);
     bool fireWithIndirectUnits(QmlVectorUnit* pUnits);
+    bool fireWithDirectUnits(QmlVectorUnit* pUnits);
+    bool attack(Unit* pUnit);
     void finishTurn();
 };
 

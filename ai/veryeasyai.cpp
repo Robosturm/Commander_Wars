@@ -22,6 +22,7 @@ void VeryEasyAI::process()
     pUnits->randomize();
     if (captureBuildings(pUnits)){}
     else if (fireWithIndirectUnits(pUnits)){}
+    else if (fireWithDirectUnits(pUnits)){}
     else
     {
         finishTurn();
@@ -83,15 +84,73 @@ bool VeryEasyAI::fireWithIndirectUnits(QmlVectorUnit* pUnits)
         if (!pUnit->getHasMoved() && pUnit->getMaxRange() > 1 &&
             (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0))
         {
-            if (pUnit->getActionList().contains(ACTION_FIRE))
+            if (attack(pUnit))
             {
-                // try to perform an attack
-                GameAction* pAction = new GameAction(ACTION_FIRE);
-                pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
-                UnitPathFindingSystem pfs(pUnit);
-                pfs.explore();
-
+                return true;
             }
+        }
+    }
+    return false;
+}
+
+bool VeryEasyAI::fireWithDirectUnits(QmlVectorUnit* pUnits)
+{
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pUnit = pUnits->at(i);
+        // can we use the unit?
+        if (!pUnit->getHasMoved() && pUnit->getMaxRange() == 1 &&
+            (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0))
+        {
+            if (attack(pUnit))
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool VeryEasyAI::attack(Unit* pUnit)
+{
+    if (pUnit->getActionList().contains(ACTION_FIRE))
+    {
+        // try to perform an attack
+        GameAction* pAction = new GameAction(ACTION_FIRE);
+        pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+        UnitPathFindingSystem pfs(pUnit);
+        pfs.explore();
+        QVector<QVector3D> ret;
+        QVector<QPoint> moveTargetFields;
+        CoreAI::getBestTarget(pUnit, pAction, &pfs, ret, moveTargetFields);
+        if (ret.size() > 0)
+        {
+            qint32 selection = Mainapp::randInt(0, ret.size() - 1);
+            QVector3D target = ret[selection];
+            if (moveTargetFields[selection] != pAction->getTarget())
+            {
+                pAction->setMovepath(pfs.getPath(moveTargetFields[selection].x(), moveTargetFields[selection].y()));
+            }
+            else
+            {
+                pAction->setMovepath(QVector<QPoint>());
+            }
+            pAction->writeDataInt32(static_cast<qint32>(target.x()));
+            pAction->writeDataInt32(static_cast<qint32>(target.y()));
+            pAction->setInputStep(pAction->getInputStep() + 1);
+            if (pAction->isFinalStep())
+            {
+                emit performAction(pAction);
+                return true;
+            }
+            else
+            {
+                delete pAction;
+            }
+        }
+        else
+        {
+            delete pAction;
         }
     }
     return false;
