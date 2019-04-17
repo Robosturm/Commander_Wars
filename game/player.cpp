@@ -361,90 +361,96 @@ void Player::addVisionField(qint32 x, qint32 y, qint32 duration)
 void Player::updatePlayerVision(bool reduceTimer)
 {
     GameMap* pMap = GameMap::getInstance();
-    qint32 width = pMap->getMapWidth();
-    qint32 heigth = pMap->getMapHeight();
-    for (qint32 x = 0; x < width; x++)
+    // only update visual stuff if needed
+    if (reduceTimer ||
+        pMap->getCurrentPlayer() == this ||
+        pMap->getCurrentViewPlayer() == this)
     {
-        for (qint32 y = 0; y < heigth; y++)
+        qint32 width = pMap->getMapWidth();
+        qint32 heigth = pMap->getMapHeight();
+        for (qint32 x = 0; x < width; x++)
         {
-            if (reduceTimer)
+            for (qint32 y = 0; y < heigth; y++)
             {
-                m_FogVisionFields[x][y].setY(m_FogVisionFields[x][y].y() - 1);
-            }
-            if (m_FogVisionFields[x][y].y() <= 0)
-            {
-                m_FogVisionFields[x][y].setX(0);
-                m_FogVisionFields[x][y].setY(0);
+                if (reduceTimer)
+                {
+                    m_FogVisionFields[x][y].setY(m_FogVisionFields[x][y].y() - 1);
+                }
+                if (m_FogVisionFields[x][y].y() <= 0)
+                {
+                    m_FogVisionFields[x][y].setX(0);
+                    m_FogVisionFields[x][y].setY(0);
+                }
             }
         }
-    }
-    for (qint32 x = 0; x < width; x++)
-    {
-        for (qint32 y = 0; y < heigth; y++)
+        for (qint32 x = 0; x < width; x++)
         {
-            Terrain* pTerrain = pMap->getTerrain(x, y);
-            qint32 visionRange = pTerrain->getVision();
-            if (visionRange >= 0)
+            for (qint32 y = 0; y < heigth; y++)
             {
-                QmlVectorPoint* pPoints = Mainapp::getCircle(0, visionRange);
-                for (qint32 i = 0; i < pPoints->size(); i++)
+                Terrain* pTerrain = pMap->getTerrain(x, y);
+                qint32 visionRange = pTerrain->getVision();
+                if (visionRange >= 0)
                 {
-                    QPoint point = pPoints->at(i);
-                    if (pMap->onMap(point.x() + x, point.y() + y))
+                    QmlVectorPoint* pPoints = Mainapp::getCircle(0, visionRange);
+                    for (qint32 i = 0; i < pPoints->size(); i++)
                     {
-                        Terrain* visionField = pMap->getTerrain(point.x() + x,point.y() + y);
-                        Unit* pUnit = visionField->getUnit();
-                        bool visionHide = visionField->getVisionHide(this);
-                        if ((!visionHide) ||
-                            ((pUnit != nullptr) && visionHide &&
-                             !pUnit->useTerrainDefense() && !pUnit->isStealthed(this)))
+                        QPoint point = pPoints->at(i);
+                        if (pMap->onMap(point.x() + x, point.y() + y))
                         {
-                            m_FogVisionFields[point.x() + x][point.y() + y].setX(1);
+                            Terrain* visionField = pMap->getTerrain(point.x() + x,point.y() + y);
+                            Unit* pUnit = visionField->getUnit();
+                            bool visionHide = visionField->getVisionHide(this);
+                            if ((!visionHide) ||
+                                ((pUnit != nullptr) && visionHide &&
+                                 !pUnit->useTerrainDefense() && !pUnit->isStealthed(this)))
+                            {
+                                m_FogVisionFields[point.x() + x][point.y() + y].setX(1);
+                            }
                         }
                     }
+                    delete pPoints;
                 }
-                delete pPoints;
-            }
-            Building* pBuilding = pTerrain->getBuilding();
-            if ((pBuilding != nullptr) &&
-                ((pBuilding->getOwner() == this) ||
-                 (checkAlliance(pBuilding->getOwner()) == GameEnums::Alliance_Friend)))
-            {
-                m_FogVisionFields[x][y].setX(1);
+                Building* pBuilding = pTerrain->getBuilding();
+                if ((pBuilding != nullptr) &&
+                    ((pBuilding->getOwner() == this) ||
+                     (checkAlliance(pBuilding->getOwner()) == GameEnums::Alliance_Friend)))
+                {
+                    m_FogVisionFields[x][y].setX(1);
 
-            }
-            Unit* pUnit = pTerrain->getUnit();
-            if ((pUnit != nullptr) &&
-                (pUnit->getOwner() == this))
-            {
-                qint32 visionRange = pUnit->getVision(QPoint(x, y));
-                QmlVectorPoint* pPoints = Mainapp::getCircle(0, visionRange);
-                for (qint32 i = 0; i < pPoints->size(); i++)
+                }
+                Unit* pUnit = pTerrain->getUnit();
+                if ((pUnit != nullptr) &&
+                    (pUnit->getOwner() == this))
                 {
-                    QPoint point = pPoints->at(i);
-                    if (pMap->onMap(point.x() + x, point.y() + y))
+                    qint32 visionRange = pUnit->getVision(QPoint(x, y));
+                    QmlVectorPoint* pPoints = Mainapp::getCircle(0, visionRange);
+                    for (qint32 i = 0; i < pPoints->size(); i++)
                     {
-                        Terrain* visionField = pMap->getTerrain(point.x() + x,point.y() + y);
-                        Unit* pUnit = visionField->getUnit();
-                        bool visionHide = visionField->getVisionHide(this);
-                        if ((!visionHide) ||
-                            ((pUnit != nullptr) && visionHide &&
-                             !pUnit->useTerrainDefense() && !pUnit->isStealthed(this)))
+                        QPoint point = pPoints->at(i);
+                        if (pMap->onMap(point.x() + x, point.y() + y))
                         {
-                            m_FogVisionFields[point.x() + x][point.y() + y].setX(1);
-                        }
-                        // terrain hides are visible if we're near it.
-                        else if (((qAbs(point.x()) + qAbs(point.y())) <= 1))
-                        {
-                            m_FogVisionFields[point.x() + x][point.y() + y].setX(1);
-                        }
-                        else
-                        {
-                            // do nothing
+                            Terrain* visionField = pMap->getTerrain(point.x() + x,point.y() + y);
+                            Unit* pUnit = visionField->getUnit();
+                            bool visionHide = visionField->getVisionHide(this);
+                            if ((!visionHide) ||
+                                ((pUnit != nullptr) && visionHide &&
+                                 !pUnit->useTerrainDefense() && !pUnit->isStealthed(this)))
+                            {
+                                m_FogVisionFields[point.x() + x][point.y() + y].setX(1);
+                            }
+                            // terrain hides are visible if we're near it.
+                            else if (((qAbs(point.x()) + qAbs(point.y())) <= 1))
+                            {
+                                m_FogVisionFields[point.x() + x][point.y() + y].setX(1);
+                            }
+                            else
+                            {
+                                // do nothing
+                            }
                         }
                     }
+                    delete pPoints;
                 }
-                delete pPoints;
             }
         }
     }

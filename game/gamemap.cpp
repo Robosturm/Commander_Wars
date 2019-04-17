@@ -503,6 +503,8 @@ void GameMap::replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool 
 {
     if (onMap(x, y))
     {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
         spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y);
         if (useTerrainAsBaseTerrain)
         {
@@ -528,6 +530,7 @@ void GameMap::replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool 
             updateTerrain(x, y);
             this->updateSprites(x, y);
         }
+        pApp->continueThread();
     }
 }
 
@@ -759,6 +762,9 @@ bool GameMap::nextPlayer()
 
 void GameMap::updateUnitIcons()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     for (qint32 y = 0; y < heigth; y++)
@@ -772,6 +778,7 @@ void GameMap::updateUnitIcons()
             }
         }
     }
+    pApp->continueThread();
 }
 
 quint32 GameMap::getCurrentDay() const
@@ -781,6 +788,8 @@ quint32 GameMap::getCurrentDay() const
 
 void GameMap::startOfTurn(Player* pPlayer)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
     for (qint32 y = 0; y < heigth; y++)
@@ -809,6 +818,7 @@ void GameMap::startOfTurn(Player* pPlayer)
         }
     }
     m_CurrentPlayer->startOfTurn();
+    pApp->continueThread();
 }
 
 void GameMap::checkFuel(Player* pPlayer)

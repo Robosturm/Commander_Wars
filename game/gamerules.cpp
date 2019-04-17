@@ -76,6 +76,9 @@ void GameRules::removeVictoryRule(QString rule)
 
 void GameRules::checkVictory()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
     GameMap* pMap = GameMap::getInstance();
     if (pMap != nullptr)
     {
@@ -108,6 +111,7 @@ void GameRules::checkVictory()
             }
         }
     }
+     pApp->continueThread();
 }
 
 void GameRules::addWeather(QString weatherId, qint32 weatherChance)
@@ -184,6 +188,8 @@ qint32 GameRules::getWeatherChance(QString weatherId)
 
 void GameRules::startOfTurn()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
     m_weatherDuration -= 1;
     if (m_weatherDuration <= 0)
@@ -216,6 +222,7 @@ void GameRules::startOfTurn()
     }
     pMap->getCurrentPlayer()->updatePlayerVision(true);
     createFogVision();
+    pApp->continueThread();
 }
 
 void GameRules::setStartWeather(qint32 index)
@@ -225,6 +232,8 @@ void GameRules::setStartWeather(qint32 index)
 
 void GameRules::changeWeather(QString weatherId, qint32 duration)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     for (qint32 i = 0; i < m_Weathers.size(); i++)
     {
         if (m_Weathers[i]->getWeatherId() == weatherId)
@@ -241,10 +250,13 @@ void GameRules::changeWeather(QString weatherId, qint32 duration)
     m_weatherDuration = duration;
     // create weather sprites :)
     createWeatherSprites();
+    pApp->continueThread();
 }
 
 void GameRules::createWeatherSprites()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     if ((m_CurrentWeather < 0) && (m_CurrentWeather < m_Weathers.size()))
     {
         m_CurrentWeather = 0;
@@ -289,6 +301,7 @@ void GameRules::createWeatherSprites()
             }
         }
     }
+    pApp->continueThread();
 }
 
 qint32 GameRules::getUnitLimit() const
@@ -323,6 +336,9 @@ void GameRules::setFogMode(const GameEnums::Fog &FogMode)
 
 void GameRules::createFogVision()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
     GameMap* pMap = GameMap::getInstance();
     qint32 width = pMap->getMapWidth();
     qint32 heigth = pMap->getMapHeight();
@@ -338,21 +354,10 @@ void GameRules::createFogVision()
         }
     }
 
-    for (qint32 x = 0; x < width; x++)
-    {
-        for (qint32 y = 0; y < heigth; y++)
-        {
-            if (m_FogSprites[x][y].get() != nullptr)
-            {
-                pMap->removeChild(m_FogSprites[x][y]);
-                m_FogSprites[x][y] = nullptr;
-            }
-        }
-    }
+
     // get player for which we should create the vision
     Player* pPlayer = pMap->getCurrentViewPlayer();
     // todo get last human player :)
-
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         pMap->getPlayer(i)->updatePlayerVision(false);
@@ -386,24 +391,35 @@ void GameRules::createFogVision()
                     }
                     if (!visible)
                     {
-                        // create fog of war sprite
-                        oxygine::spColorRectSprite sprite = new oxygine::ColorRectSprite();
-                        sprite->setSize(GameMap::Imagesize, GameMap::Imagesize);
-                        sprite->setColor(70, 70, 70, 100);
-                        sprite->setPosition(GameMap::Imagesize * x, y * GameMap::Imagesize);
-                        sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
-                        pMap->addChild(sprite);
-                        m_FogSprites[x][y] = sprite;
+                        if (m_FogSprites[x][y].get() == nullptr)
+                        {
+                            // create fog of war sprite
+                            oxygine::spColorRectSprite sprite = new oxygine::ColorRectSprite();
+                            sprite->setSize(GameMap::Imagesize, GameMap::Imagesize);
+                            sprite->setColor(70, 70, 70, 100);
+                            sprite->setPosition(GameMap::Imagesize * x, y * GameMap::Imagesize);
+                            sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
+                            pMap->addChild(sprite);
+                            m_FogSprites[x][y] = sprite;
+                        }
+                    }
+                    else if (m_FogSprites[x][y].get() != nullptr)
+                    {
+                        pMap->removeChild(m_FogSprites[x][y]);
+                        m_FogSprites[x][y] = nullptr;
                     }
                     break;
                 }
             }
         }
     }
+    pApp->continueThread();
 }
 
 void GameRules::showHideStealthUnit(Player* pPlayer, Unit* pUnit)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     switch (pPlayer->checkAlliance(pUnit->getOwner()))
     {
         case GameEnums::Alliance_Enemy:
@@ -424,6 +440,7 @@ void GameRules::showHideStealthUnit(Player* pPlayer, Unit* pUnit)
             break;
         }
     }
+    pApp->continueThread();
 }
 
 qint32 GameRules::getStartWeather() const
