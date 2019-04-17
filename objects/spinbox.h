@@ -43,8 +43,8 @@ public:
 signals:
     void sigValueChanged(float value);
 public slots:
-    void TextInput(SDL_Event *event);
-    void KeyInput(SDL_Event *event);
+    void TextInput(SDL_Event event);
+    void KeyInput(SDL_Event event);
 protected:
     /**
      * @brief checkInput checks if the input is correct and updates it if needed and returns the new value

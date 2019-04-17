@@ -39,6 +39,7 @@ public:
     static Console* getInstance();
     static void dotask(const QString& message);
     static void draw();
+    void init();
 // use slots here since they're part of QMetaObject thus they get published to JSEngine.
 public slots:
     static void print(const QString& message, qint8 LogLevel);
@@ -53,13 +54,6 @@ public slots:
     void setVolume(qint32 volume);
     void setLogLevel(eLogLevels newLogLevel);
     /**
-     * @brief connectToServer connects to the given server with the given port
-     * @param adresse
-     * @param port
-     */
-    void connectToServer(const QString&  adresse, qint32 port = -1);
-    void getServerAdresse();
-    /**
      * @brief help shows the helps messages between given indexes or all as default
      * @param start
      * @param end
@@ -70,12 +64,12 @@ public slots:
      * @brief KeyInput event called when a key is pressed
      * @param event
      */
-    void KeyInput(SDL_Event *event);
+    void KeyInput(SDL_Event event);
     /**
      * @brief TextInput event called when we recieved a text from the keyboard
      * @param event
      */
-    void TextInput(SDL_Event *event);
+    void TextInput(SDL_Event event);
     /**
      * @brief recieveNetworkMessage called when we recieve a console network message
      * @param data the string we recieved
@@ -98,7 +92,7 @@ private:
     static QMutex *datalocker;
     oxygine::spTextField m_text;
     void toggleView();
-    void init();
+
     Console();
     virtual  ~Console() = default;
 };

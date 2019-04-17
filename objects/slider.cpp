@@ -9,6 +9,9 @@ Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue)
       m_minValue(minValue),
       m_maxValue(maxValue)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+
     m_Textfield = new oxygine::TextField();
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);
@@ -25,9 +28,13 @@ Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue)
 
 void Slider::slotSliderValueChanged(float value)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_CurrentValue = (m_maxValue - m_minValue) * value + m_minValue;
     m_Textfield->setText((QString::number(m_CurrentValue) + " %").toStdString().c_str());
     emit sliderValueChanged(m_CurrentValue);
+
+    pApp->continueThread();
 }
 
 qint32 Slider::getCurrentValue() const
@@ -37,6 +44,9 @@ qint32 Slider::getCurrentValue() const
 
 void Slider::setCurrentValue(const qint32 &CurrentValue)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
     m_CurrentValue = CurrentValue;
     if (m_CurrentValue < m_minValue)
     {
@@ -53,4 +63,6 @@ void Slider::setCurrentValue(const qint32 &CurrentValue)
     m_Textfield->setText((QString::number(m_CurrentValue) + " %").toStdString().c_str());
     float scrollValue = static_cast<float>(m_CurrentValue - m_minValue) / static_cast<float>(m_maxValue - m_minValue);
     V_Scrollbar::setScrollvalue(scrollValue);
+
+    pApp->continueThread();
 }

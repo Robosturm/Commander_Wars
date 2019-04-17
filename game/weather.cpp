@@ -6,11 +6,15 @@ Weather::Weather(QString weatherId)
     : QObject(),
       m_WeatherId(weatherId)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
 Weather::Weather()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

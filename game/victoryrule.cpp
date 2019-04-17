@@ -11,6 +11,8 @@
 
 VictoryRule::VictoryRule()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -18,8 +20,9 @@ VictoryRule::VictoryRule(QString ruleID)
     : QObject(),
       m_RuleID(ruleID)
 {
-    Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
     QString function1 = "init";
     QJSValueList args1;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);

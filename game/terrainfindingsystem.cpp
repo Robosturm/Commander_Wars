@@ -4,10 +4,14 @@
 
 #include "coreengine/interpreter.h"
 
+#include "coreengine/mainapp.h"
+
 TerrainFindingSystem::TerrainFindingSystem(QString terrainID, qint32 startX, qint32 startY)
     : PathFindingSystem(startX, startY),
       m_terrainID(terrainID)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

@@ -2,9 +2,13 @@
 
 #include "resource_management/objectmanager.h"
 
+#include "coreengine/mainapp.h"
+
 Checkbox::Checkbox()
     : QObject()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("checkbox");
     setResAnim(pAnim);
@@ -57,6 +61,8 @@ bool Checkbox::getChecked() const
 
 void Checkbox::setChecked(bool Checked)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("checkbox");
     m_Checked = Checked;
@@ -68,4 +74,5 @@ void Checkbox::setChecked(bool Checked)
     {
         setAnimFrame(pAnim, 0);
     }
+    pApp->continueThread();
 }

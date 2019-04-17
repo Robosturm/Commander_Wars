@@ -9,6 +9,7 @@
 FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString startFile)
 {
     Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");
@@ -142,6 +143,8 @@ void FileDialog::filterChanged(qint32)
 
 void FileDialog::showFolder(QString folder)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     // clean up current panel items
     for (qint32 i = 0; i < m_Items.size(); i++)
     {
@@ -235,4 +238,5 @@ void FileDialog::showFolder(QString folder)
     }
     m_MainPanel->setContentHeigth(itemCount * 40 + 50);
     m_CurrentFolder->setCurrentText(folder);
+    pApp->continueThread();
 }

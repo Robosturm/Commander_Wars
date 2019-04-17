@@ -47,7 +47,7 @@ public:
      * @brief GameMap
      * @param map path to the map which should be loaded
      */
-    explicit GameMap(QString map, bool gamestart, bool onlyLoad = false);
+    explicit GameMap(QString map, bool onlyLoad);
     virtual ~GameMap();
     /**
      * @brief newMap
@@ -392,7 +392,7 @@ private:
     static const QString m_JavascriptName;
     static const QString m_GameAnimationFactory;
     float m_zoom{1.0f};
-    void loadMapData(bool reload = true);
+    void loadMapData();
 };
 
 #endif // GAMEMAP_H

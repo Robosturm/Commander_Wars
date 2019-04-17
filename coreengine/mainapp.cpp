@@ -18,16 +18,16 @@ bool Mainapp::m_useSeed{false};
 Mainapp::Mainapp(int argc, char* argv[])
     : QCoreApplication(argc, argv),
       m_Audiothread(new AudioThread()),
-      m_Renderthread(new RenderThread())
+      m_Workerthread(new WorkerThread())
 {
     Interpreter::setCppOwnerShip(this);
     // create update timer
-    m_Timer.setSingleShot(false);
-    m_Timer.start(5);
-    connect(&m_Timer, SIGNAL(timeout()), this, SLOT(update()), Qt::QueuedConnection);
+    m_Timer.setSingleShot(true);
+    connect(&m_Timer, &QTimer::timeout, this, &Mainapp::update, Qt::QueuedConnection);
+    connect(this, &Mainapp::sigStart, this, &Mainapp::start, Qt::QueuedConnection);
     m_pMainapp = this;
-
     m_Audiothread->start();
+
     quint32 seedValue = QRandomGenerator::global()->bounded(0u, std::numeric_limits<quint32>::max());
     randGenerator.seed(seedValue);
 }
@@ -35,7 +35,7 @@ Mainapp::Mainapp(int argc, char* argv[])
 Mainapp::~Mainapp()
 {
     m_Audiothread->deleteLater();
-    m_Renderthread->deleteLater();
+    m_Workerthread->deleteLater();
 }
 
 Mainapp* Mainapp::getInstance()
@@ -196,19 +196,70 @@ void Mainapp::quitGame()
 
 void Mainapp::update()
 {
+    m_sleeping = false;
+    // Update engine-internal components
+    // If input events are available, they are passed to Stage::instance.handleEvent
+    // If the function returns true, it means that the user requested the application to terminate
+    bool done = oxygine::core::update();
+
+    // Update our stage
+    // Update all actors. Actor::update will also be called for all its children
+    oxygine::getStage()->update();
+
+    if (oxygine::core::beginRendering())
+    {
+        oxygine::Color clearColor(181, 255, 32, 255);
+        oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::core::getDisplaySize());
+        // Render all actors inside the stage. Actor::render will also be called for all its children
+        oxygine::getStage()->render(clearColor, viewport);
+
+        oxygine::core::swapDisplayBuffers();
+    }
     // check for termination
-    if (m_quit)
+    if (done || m_quit)
     {
         exit();
     }
+    if (m_SuspendCount <= 0)
+    {
+        m_Timer.start(5);
+    }
+    else
+    {
+        m_sleeping = true;
+    }
+
 }
 
 void Mainapp::setup()
 {
     oxygine::EventCallback cb = CLOSURE(this, &Mainapp::onEvent);
     ox::core::getDispatcher()->addEventListener(ox::core::EVENT_SYSTEM, cb);
-    setupNetwork();
     m_Settings.setup();
+}
+
+void Mainapp::suspendThread()
+{
+    m_SuspendCount++;
+    while (!m_sleeping)
+    {
+        QThread::msleep(5);
+    }
+}
+
+void Mainapp::continueThread()
+{
+    m_SuspendCount--;
+    if (m_SuspendCount <= 0)
+    {
+        m_SuspendCount = 0;
+        emit sigStart();
+    }
+}
+
+void Mainapp::start()
+{
+    m_Timer.start(5);
 }
 
 void Mainapp::onEvent(oxygine::Event* ev)
@@ -217,16 +268,21 @@ void Mainapp::onEvent(oxygine::Event* ev)
 
     if (event->type == SDL_KEYDOWN)
     {
-        emit sigKeyDown(event);
+        emit sigKeyDown(*event);
     }
     if (event->type == SDL_TEXTINPUT)
     {
-        emit sigText(event);
+        emit sigText(*event);
     }
     else if (event->type == SDL_KEYUP)
     {
-        emit sigKeyUp(event);
+        emit sigKeyUp(*event);
     }
+}
+
+WorkerThread *Mainapp::getWorkerthread() const
+{
+    return m_Workerthread;
 }
 
 bool Mainapp::getUseSeed()
@@ -237,22 +293,4 @@ bool Mainapp::getUseSeed()
 void Mainapp::setUseSeed(bool useSeed)
 {
     m_useSeed = useSeed;
-}
-
-void Mainapp::setupNetwork()
-{
-    if (m_pNetworkInterface != nullptr)
-    {
-        m_pNetworkInterface->deleteLater();
-        m_pNetworkInterface = nullptr;
-    }
-    if (m_Settings.getServer())
-    {
-        m_pNetworkInterface = new TCPServer();
-    }
-    else
-    {
-        m_pNetworkInterface = new TCPClient();
-    }
-    m_pNetworkInterface->start(QThread::HighPriority);
 }

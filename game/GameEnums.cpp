@@ -56,5 +56,9 @@ void GameEnums::registerEnums()
     value.setProperty("COMood_Happy", COMood_Happy);
     value.setProperty("COMood_Sad", COMood_Sad);
 
+    value.setProperty("LuckDamageMode_Off", LuckDamageMode_Off);
+    value.setProperty("LuckDamageMode_On", LuckDamageMode_On);
+    value.setProperty("LuckDamageMode_Average", LuckDamageMode_Average);
+
     pInterpreter->setGlobal("GameEnums", value);
 }

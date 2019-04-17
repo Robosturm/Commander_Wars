@@ -16,15 +16,16 @@ const float EditorSelection::yFactor = 2.5f;
 EditorSelection::EditorSelection()
     : QObject()
 {
-    Mainapp* pMainapp = Mainapp::getInstance();
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    this->setWidth(pMainapp->getSettings()->getWidth() / 4.0f);
-    this->setPosition(pMainapp->getSettings()->getWidth() - pMainapp->getSettings()->getWidth() / 4.0f, 0);
-    m_BoxSelectionType = createV9Box(0, startHSelectionType, pMainapp->getSettings()->getWidth() / 4.0f, selectionHeight);
-    m_BoxPlacementSize = createV9Box(0, startHPlacementSize, pMainapp->getSettings()->getWidth() / 4.0f, selectionHeight);
-    m_BoxSelectedPlayer = createV9Box(0, startHSelectedPlayer, pMainapp->getSettings()->getWidth() / 4.0f, selectionHeight);
-    m_BoxPlacementSelection = createV9Box(0, startHTerrain, pMainapp->getSettings()->getWidth() / 4.0f, pMainapp->getSettings()->getHeight() - startHTerrain);
+    this->setWidth(pApp->getSettings()->getWidth() / 4.0f);
+    this->setPosition(pApp->getSettings()->getWidth() - pApp->getSettings()->getWidth() / 4.0f, 0);
+    m_BoxSelectionType = createV9Box(0, startHSelectionType, pApp->getSettings()->getWidth() / 4.0f, selectionHeight);
+    m_BoxPlacementSize = createV9Box(0, startHPlacementSize, pApp->getSettings()->getWidth() / 4.0f, selectionHeight);
+    m_BoxSelectedPlayer = createV9Box(0, startHSelectedPlayer, pApp->getSettings()->getWidth() / 4.0f, selectionHeight);
+    m_BoxPlacementSelection = createV9Box(0, startHTerrain, pApp->getSettings()->getWidth() / 4.0f, pApp->getSettings()->getHeight() - startHTerrain);
     createBoxPlacementSize();
     createBoxSelectionMode();
     createPlayerSelection();
@@ -329,6 +330,8 @@ void EditorSelection::changeSelectedPlayer(qint32 player)
 
 void EditorSelection::updateSelectedPlayer()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     for (qint32 i = 0; i < m_Players.size(); i++)
     {
         m_Players[i]->setVisible(false);
@@ -342,6 +345,7 @@ void EditorSelection::updateSelectedPlayer()
             m_Players[i]->setPosition(50 + frameSize * (i - m_playerStartIndex), 32);
         }
     }
+    pApp->continueThread();
 }
 
 qint32 EditorSelection::calcMaxPlayerSelection()
@@ -382,7 +386,7 @@ void EditorSelection::createBoxSelectionMode()
         m_Mode = EditorMode::Terrain;
         m_CurrentSelectorMode->setPosition(frameSize, yStartPos);
         updateTerrainView();
-        ClickedPlacementSelection(this->getPosition().x + frameSize, startH + startHTerrain);
+        emit sigClickedPlacementSelection(this->getPosition().x + frameSize, startH + startHTerrain);
     });
     // scale marker to correct size if needed
     m_CurrentSelectorMode->setScale(pAnim->getWidth() / pAnimMarker->getWidth());
@@ -398,7 +402,7 @@ void EditorSelection::createBoxSelectionMode()
         m_Mode = EditorMode::Building;
         m_CurrentSelectorMode->setPosition(frameSize + xChange, yStartPos);
         updateBuildingView();
-        ClickedPlacementSelection(this->getPosition().x + frameSize, startH + startHTerrain);
+        emit sigClickedPlacementSelection(this->getPosition().x + frameSize, startH + startHTerrain);
     });
 
     oxygine::spSprite pSpriteUnitMode = new oxygine::Sprite();
@@ -412,7 +416,7 @@ void EditorSelection::createBoxSelectionMode()
         m_Mode = EditorMode::Unit;
         m_CurrentSelectorMode->setPosition(frameSize + xChange * 2, yStartPos);
         updateUnitView();
-        ClickedPlacementSelection(this->getPosition().x + frameSize, startH + startHTerrain);
+        emit sigClickedPlacementSelection(this->getPosition().x + frameSize, startH + startHTerrain);
     });
 
 }
@@ -515,6 +519,8 @@ void EditorSelection::initSelection()
 
 void EditorSelection::ClickedPlacementSelection(qint32 x, qint32 y)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     qint32 curX = x - this->getPosition().x - frameSize;
     qint32 curY = y - startH - startHTerrain;
     if ((curX >= 0) && (curY >= 0) && (curX < m_BoxPlacementSelection->getWidth() - GameMap::Imagesize - frameSize))
@@ -569,11 +575,13 @@ void EditorSelection::ClickedPlacementSelection(qint32 x, qint32 y)
 
         }
     }
-
+    pApp->continueThread();
 }
 
 void EditorSelection::selectTerrain(const QString& terrainID)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     for (qint32 i = 0; i < m_Terrains.size(); i++)
     {
         if (m_Terrains[i]->getTerrainID() == terrainID)
@@ -587,6 +595,7 @@ void EditorSelection::selectTerrain(const QString& terrainID)
             }
         }
     }
+     pApp->continueThread();
 }
 
 EditorSelection::PlacementSize EditorSelection::getSizeMode() const

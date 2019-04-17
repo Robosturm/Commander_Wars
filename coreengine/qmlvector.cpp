@@ -5,12 +5,16 @@
 QmlVectorPoint::QmlVectorPoint()
     : QObject()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
 QmlVectorUnit::QmlVectorUnit()
     : QObject()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -29,6 +33,8 @@ void QmlVectorUnit::randomize()
 QmlVectorBuilding::QmlVectorBuilding()
     : QObject()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

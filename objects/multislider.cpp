@@ -2,9 +2,13 @@
 
 #include "resource_management/fontmanager.h"
 
+#include "coreengine/mainapp.h"
+
 Multislider::Multislider(QVector<QString> texts, qint32 width, QVector<qint32> values)
     : QObject()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     qint32 textWidth = 0;
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);
@@ -88,6 +92,8 @@ qint32 Multislider::getSliderValue(qint32 slider)
 
 void Multislider::sliderValueChanged(qint32 slider)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     qint32 totalSliderValue = 0;
     for (qint32 i = 0; i < m_Slider.size(); i++)
     {
@@ -121,4 +127,5 @@ void Multislider::sliderValueChanged(qint32 slider)
         }
     }
     emit signalSliderChanged();
+    pApp->continueThread();
 }

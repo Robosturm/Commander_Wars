@@ -8,6 +8,9 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
     : m_Width(width),
       m_ContentWidth(contentWidth)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+
     m_ScrollTimer.start();
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     this->setSize(width, 33);
@@ -145,6 +148,8 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
 
 void V_Scrollbar::setContentWidth(qint32 width)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_ContentWidth = width;
     qint32 sliderWidth = 50;
     sliderWidth = ((this->getWidth() - 20 - 20) * this->getWidth()) / m_ContentWidth;
@@ -159,6 +164,7 @@ void V_Scrollbar::setContentWidth(qint32 width)
     m_Scrollvalue = 0;
     m_slider->setSize(sliderWidth, 18);
     emit sigScrollValueChanged(m_Scrollvalue);
+    pApp->continueThread();
 }
 
 void V_Scrollbar::update(const oxygine::UpdateState& us)
@@ -186,6 +192,8 @@ float V_Scrollbar::getScrollvalue() const
 
 void V_Scrollbar::setScrollvalue(float Scrollvalue)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_Scrollvalue = Scrollvalue;
     if (m_Scrollvalue < 0)
     {
@@ -200,4 +208,5 @@ void V_Scrollbar::setScrollvalue(float Scrollvalue)
         // all fine do nothing
     }
     m_slider->setX(20 + m_Scrollvalue * (m_Width - m_slider->getWidth() - 20 - 20));
+    pApp->continueThread();
 }

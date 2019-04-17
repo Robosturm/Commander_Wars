@@ -16,6 +16,8 @@ CO::CO(QString coID, Player* owner)
     : m_Owner(owner),
       coID(coID)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     init();
 }

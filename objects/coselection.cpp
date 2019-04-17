@@ -9,6 +9,9 @@
 COSelection::COSelection()
     : QObject()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     pCOSpriteManager->loadAll();
@@ -151,6 +154,8 @@ COSelection::~COSelection()
 
 void COSelection::armyChanged(QString army)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     for (qint32 i = 0; i < m_COFields.size(); i++)
     {
         removeChild(m_COFields[i]);
@@ -223,11 +228,13 @@ void COSelection::armyChanged(QString army)
         }
     }
     colorChanged(m_CurrentColor);
-
+    pApp->continueThread();
 }
 
 void COSelection::colorChanged(QColor color)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     oxygine::Color oxColor(color.red(), color.green(), color.blue(), 255);
     oxygine::Color oxColorAlpha(color.red(), color.green(), color.blue(), 120);
     m_BackgroundMask->setColor(oxColor);
@@ -238,10 +245,13 @@ void COSelection::colorChanged(QColor color)
     }
     m_Cursor->setColor(oxColor);
     m_CurrentColor = color;
+    pApp->continueThread();
 }
 
 void COSelection::hoveredCOChanged(QString coid)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     if (coid != "")
     {
         QString coName = "";
@@ -293,4 +303,5 @@ void COSelection::hoveredCOChanged(QString coid)
         m_COPower->setText(coPower.toStdString().c_str());
         m_COSuperpower->setText(coSuperpower.toStdString().c_str());
     }
+    pApp->continueThread();
 }

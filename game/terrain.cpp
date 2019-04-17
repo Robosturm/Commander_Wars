@@ -35,9 +35,10 @@ Terrain::Terrain(const QString& terrainID, qint32 x, qint32 y)
       y(y),
       m_Building{nullptr}
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Terrain));
-    Mainapp* pApp = Mainapp::getInstance();
     QJSValue obj = pApp->getInterpreter()->getGlobal(terrainID);
     // check if the js-script was loaded already
     // otherwise do load it

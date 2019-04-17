@@ -13,6 +13,7 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player)
       m_player(player)
 {
     Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
@@ -61,6 +62,8 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player)
 
 void COSelectionDialog::selectedCOIDChanged(QString coid)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = nullptr;
     if (!coid.isEmpty())
@@ -69,4 +72,5 @@ void COSelectionDialog::selectedCOIDChanged(QString coid)
     }
     m_pCurrentCO->setResAnim(pAnim);
     m_currentCOID = coid;
+    pApp->continueThread();
 }

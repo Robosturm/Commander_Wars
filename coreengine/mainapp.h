@@ -1,14 +1,16 @@
 #ifndef MAINAPP_H
 #define MAINAPP_H
 
+#include <atomic>
 #include <QTimer>
 #include <QTranslator>
 #include <QCoreApplication>
 #include <QRandomGenerator>
+#include "QMutex"
 
 #include "coreengine/interpreter.h"
 #include "coreengine/audiothread.h"
-#include "coreengine/renderthread.h"
+#include "coreengine/workerthread.h"
 #include "coreengine/settings.h"
 
 #include "coreengine/qmlvector.h"
@@ -57,10 +59,15 @@ public slots:
      * @brief quitGame quits this game
      */
     void quitGame();
+    /**
+     * @brief start
+     */
+    void start();
 signals:
-    void sigText(SDL_Event* event);
-    void sigKeyDown(SDL_Event* event);
-    void sigKeyUp(SDL_Event* event);
+    void sigText(SDL_Event event);
+    void sigKeyDown(SDL_Event event);
+    void sigKeyUp(SDL_Event event);
+    void sigStart();
 public:
     /**
       * @brief this enum contains all message recievers of the network
@@ -99,11 +106,7 @@ public:
 
     inline Interpreter* getInterpreter()
     {
-        if (m_pInterpreter == nullptr)
-        {
-            m_pInterpreter = new Interpreter();
-        }
-        return m_pInterpreter;
+        return m_Workerthread->getInterpreter();
     }
 
     inline AudioThread* getAudioThread()
@@ -116,16 +119,16 @@ public:
         return &m_Settings;
     }
 
-    inline NetworkInterface* getNetworkInterface()
-    {
-        return m_pNetworkInterface;
-    }
-
     void setup();
 
     void setupNetwork();
     static bool getUseSeed();
     static void setUseSeed(bool useSeed);
+
+    WorkerThread *getWorkerthread() const;
+
+    void suspendThread();
+    void continueThread();
 
 protected:
     void onEvent(oxygine::Event* ev);
@@ -136,12 +139,14 @@ private:
     static QRandomGenerator randGenerator;
     static bool m_useSeed;
 
-    Interpreter* m_pInterpreter{nullptr};
+
     AudioThread* m_Audiothread{nullptr};
-    RenderThread* m_Renderthread{nullptr};
+    WorkerThread* m_Workerthread{nullptr};
     Settings m_Settings;
-    NetworkInterface* m_pNetworkInterface{nullptr};
     bool m_quit{false};
+
+    std::atomic<bool> m_sleeping{true};
+    std::atomic<quint32> m_SuspendCount{0};
 };
 
 #endif // MAINAPP_H

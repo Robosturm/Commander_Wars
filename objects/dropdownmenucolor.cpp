@@ -6,9 +6,13 @@
 
 #include "resource_management/fontmanager.h"
 
+#include "coreengine/mainapp.h"
+
 DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items, bool up)
     : m_ItemColors(items)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     this->setWidth(width);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -97,8 +101,11 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items, bool u
 
 void DropDownmenuColor::setCurrentItem(QColor color)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_currentItem = color;
     m_Colorfield->setColor(color.red(), color.green(), color.blue(), 255);
+    pApp->continueThread();
 }
 
 QColor DropDownmenuColor::getCurrentItem()

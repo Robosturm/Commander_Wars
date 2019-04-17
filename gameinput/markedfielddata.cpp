@@ -2,9 +2,13 @@
 
 #include "coreengine/interpreter.h"
 
+#include "coreengine/mainapp.h"
+
 MarkedFieldData::MarkedFieldData()
     : QObject()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

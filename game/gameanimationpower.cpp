@@ -18,6 +18,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, bool sup
     : GameAnimation (frameTime)
 {
     Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     oxygine::ResAnim* pAnimMask = GameManager::getInstance()->getResAnim("power_background");
     if (superpower)
     {

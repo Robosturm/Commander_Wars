@@ -106,7 +106,7 @@ set(${PROJECT_NAME}_SRCS
         coreengine/qmlvector.cpp
         coreengine/scriptvariables.cpp
         coreengine/scriptvariable.cpp
-        coreengine/renderthread.cpp
+        coreengine/workerthread.cpp
 
         # network engine
         network/tcpclient.cpp

@@ -21,6 +21,8 @@ Building::Building(const QString& BuildingID)
       m_pOwner(nullptr),
       m_pTerrain(nullptr)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     if (m_BuildingID != "")
     {

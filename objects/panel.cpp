@@ -4,6 +4,8 @@
 
 Panel::Panel(bool useBox, QSize size, QSize contentSize)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
 
@@ -47,12 +49,18 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize)
 
 void Panel::scrolledY(float value)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_ContentRect->setY(-value * (m_ContentRect->getHeight() - m_ClipRect->getHeight()));
+    pApp->continueThread();
 }
 
 void Panel::scrolledX(float value)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_ContentRect->setX(-value * (m_ContentRect->getWidth() - m_ClipRect->getWidth()));
+    pApp->continueThread();
 }
 
 void Panel::setContentHeigth(qint32 heigth)

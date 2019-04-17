@@ -5,8 +5,12 @@
 #include "humanplayerinput.h"
 #include "ai/veryeasyai.h"
 
+#include "coreengine/mainapp.h"
+
 BaseGameInputIF::BaseGameInputIF()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

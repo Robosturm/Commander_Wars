@@ -28,6 +28,8 @@ QVector<spGameAnimation> GameAnimationFactory::m_Animations;
 GameAnimationFactory::GameAnimationFactory()
     : QObject()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

@@ -32,8 +32,10 @@
 MapSelectionMapsMenue::MapSelectionMapsMenue()
     : QObject()
 {
-    Console::print("Entering Map Selection Menue", Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+
+    Console::print("Entering Map Selection Menue", Console::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
@@ -191,6 +193,8 @@ MapSelectionMapsMenue::~MapSelectionMapsMenue()
 
 void MapSelectionMapsMenue::slotButtonBack()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     switch (m_MapSelectionStep)
     {
         case MapSelectionStep::selectMap:
@@ -215,10 +219,13 @@ void MapSelectionMapsMenue::slotButtonBack()
             break;
         }
     }
+    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::slotButtonNext()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     switch (m_MapSelectionStep)
     {
         case MapSelectionStep::selectMap:
@@ -243,19 +250,25 @@ void MapSelectionMapsMenue::slotButtonNext()
             break;
         }
     }
+    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     QFileInfo info = m_pMapSelection->getCurrentFolder() + item;
     if (info.isFile())
     {
         emit buttonNext();
     }
+    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     QFileInfo info = m_pMapSelection->getCurrentFolder() + item;
     if (info.isFile())
     {
@@ -264,7 +277,7 @@ void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
             delete m_pCurrentMap;
             m_pCurrentMap = nullptr;
         }
-        m_pCurrentMap = new GameMap(info.absoluteFilePath(), false, true);
+        m_pCurrentMap = new GameMap(info.absoluteFilePath(), true);
         m_pMinimap->updateMinimap(m_pCurrentMap);
         m_MinimapSlider->setContent(m_pMinimap);
         m_MinimapSlider->snap();
@@ -275,42 +288,60 @@ void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
             m_BuildingCountTexts[i]->setText(QString::number(count).toStdString().c_str());
         }
     }
+    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::startWeatherChanged(qint32 value)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pCurrentMap->getGameRules()->setStartWeather(value);
+    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::weatherChancesChanged()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     for (qint32 i = 0; i < m_pCurrentMap->getGameRules()->getWeatherCount(); i++)
     {
         m_pCurrentMap->getGameRules()->changeWeatherChance(i, m_pWeatherSlider->getSliderValue(i));
     }
+    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::hideMapSelection()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pMapSelection->setVisible(false);
     m_pMiniMapBox->setVisible(false);
     m_pBuildingBackground->setVisible(false);
+    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::showMapSelection()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pMapSelection->setVisible(true);
     m_pMiniMapBox->setVisible(true);
     m_pBuildingBackground->setVisible(true);
+    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::hideRuleSelection()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pRuleSelection->setVisible(false);
+    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::showRuleSelection()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pRuleSelection->setVisible(true);
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
     if (m_pCurrentMap->getGameRules()->getWeatherCount() != pGameRuleManager->getWeatherCount())
@@ -321,7 +352,6 @@ void MapSelectionMapsMenue::showRuleSelection()
             m_pCurrentMap->getGameRules()->addWeather(pGameRuleManager->getWeatherID(i), weatherChance);
         }
     }
-    Mainapp* pApp = Mainapp::getInstance();
     m_pRuleSelection->clearContent();
     qint32 y = 20;
     // font style
@@ -498,10 +528,13 @@ void MapSelectionMapsMenue::showRuleSelection()
         }
     }
     m_pRuleSelection->setContentHeigth(90 + startWeather->getY() + pGameRuleManager->getVictoryRuleCount() * 50);
+    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::hideCOSelection()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pPlayerSelection->setVisible(false);
     m_pButtonStart->setVisible(false);
     m_pButtonNext->setVisible(true);
@@ -511,9 +544,12 @@ void MapSelectionMapsMenue::hideCOSelection()
     m_playerIncomes.clear();
     m_playerStartFonds.clear();
     m_playerAIs.clear();
+    pApp->continueThread();
 }
 void MapSelectionMapsMenue::showCOSelection()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pPlayerSelection->setVisible(true);
     m_pButtonStart->setVisible(true);
     m_pButtonNext->setVisible(false);
@@ -588,7 +624,6 @@ void MapSelectionMapsMenue::showCOSelection()
 
     QVector<QString> aiList = {tr("Human"), tr("Very Easy")};
 
-    Mainapp* pApp = Mainapp::getInstance();
     QString function = "getDefaultPlayerColors";
     QJSValueList args;
     QJSValue ret = pApp->getInterpreter()->doFunction("PLAYER", function, args);
@@ -744,42 +779,63 @@ void MapSelectionMapsMenue::showCOSelection()
         y += 15 + playerIncomeSpinBox->getHeight();
     }
     m_pPlayerSelection->setContentHeigth(y);
+    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::allPlayerIncomeChanged(float value)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
     {
         m_pCurrentMap->getPlayer(i)->setFondsModifier(value);
         m_playerIncomes[i]->setCurrentValue(value);
     }
+    pApp->continueThread();
 }
 void MapSelectionMapsMenue::allPlayerStartFondsChanged(float value)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
     {
         m_pCurrentMap->getPlayer(i)->setFonds(static_cast<qint32>(value));
         m_playerStartFonds[i]->setCurrentValue(value);
     }
+    pApp->continueThread();
 }
 void MapSelectionMapsMenue::playerIncomeChanged(float value, qint32 playerIdx)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pCurrentMap->getPlayer(playerIdx)->setFondsModifier(static_cast<qint32>(value));
+    pApp->continueThread();
 }
 void MapSelectionMapsMenue::playerStartFondsChanged(float value, qint32 playerIdx)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pCurrentMap->getPlayer(playerIdx)->setFonds(static_cast<qint32>(value));
+    pApp->continueThread();
 }
 void MapSelectionMapsMenue::playerTeamChanged(qint32 value, qint32 playerIdx)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pCurrentMap->getPlayer(playerIdx)->setTeam(value);
+    pApp->continueThread();
 }
 void MapSelectionMapsMenue::playerColorChanged(QColor value, qint32 playerIdx)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pCurrentMap->getPlayer(playerIdx)->setColor(value);
+    pApp->continueThread();
 }
 void MapSelectionMapsMenue::playerCO1Changed(QString coid, qint32 playerIdx)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pCurrentMap->getPlayer(playerIdx)->setCO(coid, 0);
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = nullptr;
@@ -793,9 +849,13 @@ void MapSelectionMapsMenue::playerCO1Changed(QString coid, qint32 playerIdx)
     }
     m_playerCO1[playerIdx]->setResAnim(pAnim);
     m_pPlayerSelection->setVisible(true);
+    pApp->continueThread();
 }
+
 void MapSelectionMapsMenue::playerCO2Changed(QString coid, qint32 playerIdx)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pCurrentMap->getPlayer(playerIdx)->setCO(coid, 1);
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     oxygine::ResAnim* pAnim = nullptr;
@@ -809,24 +869,33 @@ void MapSelectionMapsMenue::playerCO2Changed(QString coid, qint32 playerIdx)
     }
     m_playerCO2[playerIdx]->setResAnim(pAnim);
     m_pPlayerSelection->setVisible(true);
+    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::playerCOCanceled()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pPlayerSelection->setVisible(true);
+    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::slotAllCOsRandom()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
     {
         playerCO1Changed("CO_RANDOM", i);
         playerCO2Changed("CO_RANDOM", i);
     }
+    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::startGame()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     // fix some stuff for the players based on our current input
     for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
     {
@@ -882,4 +951,5 @@ void MapSelectionMapsMenue::startGame()
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new GameMenue());
     oxygine::Actor::detach();
+    pApp->continueThread();
 }

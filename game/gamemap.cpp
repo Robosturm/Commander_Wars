@@ -36,14 +36,18 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     : m_CurrentPlayer(nullptr),
       m_Rules(new GameRules())
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     loadMapData();
     newMap(width, heigth, playerCount);
 }
 
-GameMap::GameMap(QString map, bool gamestart, bool onlyLoad)
+GameMap::GameMap(QString map, bool onlyLoad)
     : m_CurrentPlayer(nullptr),
       m_Rules(new GameRules())
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     loadMapData();
     QFile file(map);
     file.open(QIODevice::ReadOnly);
@@ -55,58 +59,16 @@ GameMap::GameMap(QString map, bool gamestart, bool onlyLoad)
         qint32 heigth = getMapHeight();
         qint32 width = getMapWidth();
         centerMap(width / 2, heigth / 2);
-
     }
 }
 
-void GameMap::loadMapData(bool reload)
+void GameMap::loadMapData()
 {
     m_pInstance = this;
     Interpreter::setCppOwnerShip(this);
     Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
     pInterpreter->setGlobal(m_JavascriptName, pInterpreter->newQObject(this));
     pInterpreter->setGlobal(m_GameAnimationFactory, pInterpreter->newQObject(GameAnimationFactory::getInstance()));
-
-    TerrainManager* pTerrainManager = TerrainManager::getInstance();
-    if (reload || (pTerrainManager->getTerrainCount() == 0))
-    {
-        pTerrainManager->loadAll();
-    }
-    BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
-    if (reload || (pBuildingSpriteManager->getBuildingCount() == 0))
-    {
-        pBuildingSpriteManager->loadAll();
-    }
-    UnitSpriteManager* pUnitspritemanager = UnitSpriteManager::getInstance();
-    if (reload || (pUnitspritemanager->getUnitCount() == 0))
-    {
-        pUnitspritemanager->loadAll();
-    }
-    MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
-    if (reload || (pMovementTableManager->getMovementTableCount() == 0))
-    {
-        pMovementTableManager->loadAll();
-    }
-    GameManager* pGameManager = GameManager::getInstance();
-    if (reload || !pGameManager->getLoaded())
-    {
-        pGameManager->loadAll();
-    }
-    WeaponManager* pWeaponManager = WeaponManager::getInstance();
-    if (reload || (pWeaponManager->getWeaponCount() == 0))
-    {
-        pWeaponManager->loadAll();
-    }
-    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    if (reload || (pCOSpriteManager->getCOCount() == 0))
-    {
-        pCOSpriteManager->loadAll();
-    }
-    GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
-    if (reload || (pGameRuleManager->getVictoryRuleCount() == 0))
-    {
-        pGameRuleManager->loadAll();
-    }
 }
 
 

@@ -11,6 +11,8 @@
 HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList actionIDs, QVector<oxygine::spActor> icons,
                                            QVector<qint32> costList, QVector<bool> enabledList)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     qint32 width = 0;
     oxygine::TextStyle style = FontManager::getMainFont();

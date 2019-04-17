@@ -5,6 +5,8 @@
 
 Topbar::Topbar(qint32 x, qint32 width)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     // create the box for the bar in which everything will be placed
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     m_pSpriteBox = new oxygine::Box9Sprite();
@@ -31,6 +33,9 @@ Topbar::Topbar(qint32 x, qint32 width)
 
 void Topbar::addItem(QString text, QString itemID, qint32 group)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
     oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
@@ -73,10 +78,15 @@ void Topbar::addItem(QString text, QString itemID, qint32 group)
         }
         emit sigItemClicked(itemID);
     });
+
+    pApp->continueThread();
 }
 
 void Topbar::addGroup(QString text)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spButton pButton = pObjectManager->createButton(text);
     m_pSpriteBox->addChild(pButton);
@@ -105,4 +115,6 @@ void Topbar::addGroup(QString text)
     });
     m_Buttons.append(pButton);
     m_Items.append(new QVector<oxygine::spBox9Sprite>());
+
+    pApp->continueThread();
 }

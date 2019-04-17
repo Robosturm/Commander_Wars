@@ -34,8 +34,8 @@ public:
 signals:
     void sigTextChanged(QString text);
 public slots:
-    void TextInput(SDL_Event *event);
-    void KeyInput(SDL_Event *event);
+    void TextInput(SDL_Event event);
+    void KeyInput(SDL_Event event);
 private:
     bool m_focused{false};
     oxygine::spBox9Sprite m_Textbox;

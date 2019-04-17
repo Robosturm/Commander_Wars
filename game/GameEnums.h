@@ -91,6 +91,14 @@ public:
     };
     Q_ENUM(COMood)
 
+    enum LuckDamageMode
+    {
+        LuckDamageMode_Off,
+        LuckDamageMode_On,
+        LuckDamageMode_Average
+    };
+    Q_ENUM(LuckDamageMode)
+
     static void registerEnums();
 private:
     explicit GameEnums() = default;

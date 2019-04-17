@@ -1,5 +1,7 @@
 #include "rotatingsprite.h"
 
+#include "coreengine/mainapp.h"
+
 RotatingSprite::RotatingSprite()
 {
     speedTimer.start();

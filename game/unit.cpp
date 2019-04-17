@@ -22,6 +22,8 @@
 
 Unit::Unit()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -30,6 +32,8 @@ Unit::Unit(QString unitID, Player* pOwner)
       m_UnitID(unitID),
       m_pOwner(pOwner)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     if (!m_UnitID.isEmpty())
     {

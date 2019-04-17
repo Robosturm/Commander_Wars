@@ -17,6 +17,8 @@
 Minimap::Minimap()
     : QObject()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* pEvent)
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
@@ -35,6 +37,8 @@ Minimap::~Minimap()
 
 void Minimap::updateMinimap(GameMap* pMap, bool useVision)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     // clear minimap
     removeChildren();
     // load new minimap
@@ -124,4 +128,5 @@ void Minimap::updateMinimap(GameMap* pMap, bool useVision)
             }
         }
     }
+    pApp->continueThread();
 }

@@ -4,9 +4,13 @@
 
 #include "coreengine/interpreter.h"
 
+#include "coreengine/mainapp.h"
+
 PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY)
     : m_StartPoint(startX, startY)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

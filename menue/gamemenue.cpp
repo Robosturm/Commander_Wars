@@ -25,12 +25,14 @@ GameMenue::GameMenue(qint32 startPlayer)
 
 GameMenue::GameMenue(QString map)
     : InGameMenue(-1, -1, map)
-{
+{    
     loadGameMenue();
 }
 
 void GameMenue::loadGameMenue()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_pInstance = this;
 
@@ -81,6 +83,9 @@ GameMenue::~GameMenue()
 
 void GameMenue::performAction(GameAction* pGameAction)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
     QVector<QPoint> path = pGameAction->getMovePath();
     if (path.size() > 0)
     {
@@ -126,43 +131,58 @@ void GameMenue::performAction(GameAction* pGameAction)
             GameAnimationFactory::finishAllAnimations();
         }
     }
+    pApp->continueThread();
 }
 
 void GameMenue::actionPerformed()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     Mainapp::setUseSeed(false);
     m_IngameInfoBar->updateCursorInfo(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+    pApp->continueThread();
 }
 
 void GameMenue::updatePlayerinfo()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pPlayerinfo->updateData();
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         pMap->getPlayer(i)->updateVisualCORange();
     }
+    pApp->continueThread();
 }
 
 void GameMenue::victory(qint32 team)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     Console::print("Leaving Game Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
     oxygine::Actor::detach();
+    pApp->continueThread();
 }
 
 void GameMenue::saveGame()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     QVector<QString> wildcards;
     wildcards.append("*.sav");
     QString path = QCoreApplication::applicationDirPath() + "/savegames";
     spFileDialog saveDialog = new FileDialog(path, wildcards, GameMap::getInstance()->getMapName());
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMap, Qt::QueuedConnection);
+    pApp->continueThread();
 }
 
 void GameMenue::saveMap(QString filename)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     if (filename.endsWith(".sav"))
     {
         QFile file(filename);
@@ -172,6 +192,7 @@ void GameMenue::saveMap(QString filename)
         pMap->serialize(stream);
         file.close();
     }
+    pApp->continueThread();
 }
 
 void GameMenue::exitGame()
@@ -181,6 +202,8 @@ void GameMenue::exitGame()
 
 void GameMenue::startGame(qint32 startPlayer)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
     if (startPlayer == 0)
     {
@@ -194,5 +217,6 @@ void GameMenue::startGame(qint32 startPlayer)
     pRules->changeWeather(pRules->getWeather(pRules->getStartWeather())->getWeatherId(), pMap->getPlayerCount() + 1);
     pMap->nextTurn();
     m_IngameInfoBar->updatePlayerInfo();
+    pApp->continueThread();
 }
 

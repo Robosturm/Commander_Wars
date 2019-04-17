@@ -21,6 +21,8 @@
 GameRules::GameRules()
     : QObject()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameRules::checkVictory, Qt::QueuedConnection);
     connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameRules::createFogVision, Qt::QueuedConnection);

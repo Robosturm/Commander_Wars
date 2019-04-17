@@ -9,6 +9,8 @@
 
 InGameMenue::InGameMenue()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     loadBackground();
     oxygine::Actor::addChild(GameMap::getInstance());
@@ -18,6 +20,8 @@ InGameMenue::InGameMenue()
 InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map)
     : QObject()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     loadBackground();
     // check for map creation
@@ -100,7 +104,7 @@ void InGameMenue::loadHandling()
                 this->m_MoveMapMousePoint.setY(curY);
                 emit this->sigMoveMap(resX , resY);
             }
-            m_Cursor->updatePosition(curX, curY);
+            emit m_Cursor->sigUpdatePosition(curX, curY);
         }
     });
     connect(this, SIGNAL(sigMoveMap(qint32,qint32)), this, SLOT(MoveMap(qint32,qint32)), Qt::QueuedConnection);
@@ -114,12 +118,18 @@ InGameMenue::~InGameMenue()
 
 void InGameMenue::mouseWheel(qint32 direction)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     GameMap::getInstance()->zoom(direction);
+    pApp->continueThread();
 }
 
 void InGameMenue::MoveMap(qint32 x, qint32 y)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     GameMap::getInstance()->moveMap(x, y);
+    pApp->continueThread();
 }
 
 Cursor* InGameMenue::getCursor()

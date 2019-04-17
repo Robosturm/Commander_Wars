@@ -8,12 +8,17 @@
 
 Cursor::Cursor()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     changeCursor("cursor+default");
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Cursor));
+    connect(this, &Cursor::sigUpdatePosition, this, &Cursor::updatePosition, Qt::QueuedConnection);
 }
 
 void Cursor::changeCursor(const QString& spriteID, qint32 xOffset, qint32 yOffset, float scale)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     if (m_CurrentCursor.get() != nullptr)
     {
@@ -34,10 +39,13 @@ void Cursor::changeCursor(const QString& spriteID, qint32 xOffset, qint32 yOffse
     m_CurrentCursor->setScale(scale);
     m_CurrentCursor->setPosition(xOffset, yOffset);
     this->addChild(m_CurrentCursor);
+    pApp->continueThread();
 }
 
 void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     GameMap* pGameMap = GameMap::getInstance();
     qint32 x = (mousePosX - pGameMap->getPosition().x) / (GameMap::Imagesize * pGameMap->getZoom());
     qint32 y = (mousePosY - pGameMap->getPosition().y) / (GameMap::Imagesize * pGameMap->getZoom());
@@ -75,4 +83,5 @@ void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
     this->setPosition(x * GameMap::Imagesize, y * GameMap::Imagesize);
     // provide cursor move signal
     emit sigCursorMoved(m_MapPointX, m_MapPointY);
+    pApp->continueThread();
 }

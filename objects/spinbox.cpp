@@ -8,6 +8,9 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
       m_MaxValue(max),
       m_Mode(mode)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("textbox");
@@ -128,9 +131,8 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     });
     toggle.start();
 
-    Mainapp* pMainapp = Mainapp::getInstance();
-    connect(pMainapp, SIGNAL(sigKeyDown(SDL_Event*)), this, SLOT(KeyInput(SDL_Event*)), Qt::QueuedConnection);
-    connect(pMainapp, SIGNAL(sigText(SDL_Event*)), this, SLOT(TextInput(SDL_Event*)), Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigKeyDown, this, &SpinBox::SpinBox::KeyInput, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigText, this, &SpinBox::TextInput, Qt::QueuedConnection);
 }
 
 void SpinBox::setCurrentValue(float value)
@@ -252,25 +254,30 @@ void SpinBox::setSpinSpeed(float SpinSpeed)
     m_SpinSpeed = SpinSpeed;
 }
 
-void SpinBox::TextInput(SDL_Event *event)
+void SpinBox::TextInput(SDL_Event event)
 {
     if (m_focused)
     {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
         // for the start we don't check for upper or lower key input
-        QString msg = QString(event->text.text);
+        QString msg = QString(event.text.text);
         m_Text.insert(curmsgpos, msg);
         checkInput();
         curmsgpos = m_Text.size();
+        pApp->continueThread();
     }
 }
 
-void SpinBox::KeyInput(SDL_Event *event)
+void SpinBox::KeyInput(SDL_Event event)
 {
     // for debugging
-    SDL_Keycode cur = event->key.keysym.sym;
+    SDL_Keycode cur = event.key.keysym.sym;
     if (m_focused)
     {
-        if ((event->key.keysym.mod & KMOD_CTRL) > 0)
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
+        if ((event.key.keysym.mod & KMOD_CTRL) > 0)
         {
             switch(cur)
             {
@@ -360,5 +367,6 @@ void SpinBox::KeyInput(SDL_Event *event)
             }
             }
         }
+        pApp->continueThread();
     }
 }

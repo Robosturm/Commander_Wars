@@ -74,7 +74,7 @@ public slots:
      * @brief KeyInput called on any key input
      * @param event
      */
-    void KeyInput(SDL_Event *event);
+    void KeyInput(SDL_Event event);
     /**
      * @brief clickedTopbar event handling for the top bar
      * @param itemID

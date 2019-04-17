@@ -2,15 +2,21 @@
 
 #include "interpreter.h"
 
+#include "coreengine/mainapp.h"
+
 ScriptVariable::ScriptVariable(QString id)
     : m_Id(id)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     buffer.open(QIODevice::ReadWrite);
 }
 
 ScriptVariable::ScriptVariable()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     buffer.open(QIODevice::ReadWrite);
 }

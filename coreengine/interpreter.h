@@ -12,12 +12,15 @@ class Interpreter : public QQmlEngine
     Q_OBJECT
 
 public:
-    explicit Interpreter(const QString& script, QObject *parent = 0);
-    explicit Interpreter(QObject *parent = 0);
-
+    explicit Interpreter(const QString& script);
+    explicit Interpreter();
     virtual ~Interpreter();
-    void openScript(const QString& script);
 
+    static void setCppOwnerShip(QObject* object);
+signals:
+
+public slots:
+    void openScript(const QString& script);
     QJSValue doFunction(const QString& func, QJSValueList& args);
     QJSValue doFunction(const QString& obj, const QString& func, const QJSValueList& args = QJSValueList());
     void cleanMemory();
@@ -43,12 +46,11 @@ public:
     QString getGlobalString(const QString& var);
     QJSValue getGlobal(const QString& var);
     void setGlobal(const QString& var, QJSValue obj);
-    static void setCppOwnerShip(QObject* object);
+
+
 private:
     void init();
-signals:
 
-public slots:
 };
 
 #endif // INTERPRETER_H

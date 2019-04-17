@@ -18,6 +18,8 @@ GameAnimation::GameAnimation(quint32 frameTime)
     : QObject(),
       m_frameTime(frameTime)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     connect(this, SIGNAL(sigFinished()), this, SLOT(onFinished()), Qt::QueuedConnection);
 }

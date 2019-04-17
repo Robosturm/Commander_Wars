@@ -48,6 +48,7 @@ Console::Console()
 {
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     // move console to top
     oxygine::Actor::setPriority(32000);
     oxygine::spSprite sprite = new oxygine::ColorRectSprite();
@@ -70,22 +71,18 @@ Console* Console::getInstance()
     if (m_pConsole == nullptr)
     {
         m_pConsole = new Console();
-        m_pConsole->init();
     }
     return m_pConsole;
 }
 
 void Console::init()
 {
-
-    // m_pConsole->moveToThread(GLOBALS::pWorkerUser);
-
     toggle.start();
 
     Mainapp* pMainapp = Mainapp::getInstance();
 
-    connect(pMainapp, SIGNAL(sigKeyDown(SDL_Event*)), m_pConsole, SLOT(KeyInput(SDL_Event*)));
-    connect(pMainapp, SIGNAL(sigText(SDL_Event*)), m_pConsole, SLOT(TextInput(SDL_Event*)));
+    connect(pMainapp, &Mainapp::sigKeyDown, m_pConsole, &Console::KeyInput, Qt::QueuedConnection);
+    connect(pMainapp, &Mainapp::sigText, m_pConsole, &Console::TextInput, Qt::QueuedConnection);
     datalocker = new QMutex();
     //Setup Lua
     QString consoleName = "console";
@@ -104,6 +101,7 @@ void Console::init()
 void Console::dotask(const QString& message)
 {
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     print(message, Console::eINFO);
     QString order = "GameConsole." + message;
     // ignore console argument and evaluate the String on the Top-Level
@@ -112,11 +110,15 @@ void Console::dotask(const QString& message)
         order = order.replace("GameConsole.game:", "");
     }
     pApp->getInterpreter()->doString(order);
+    pApp->continueThread();
 }
 
 void Console::print(const QString& message, qint8 LogLevel)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     print(message, static_cast<eLogLevels>(LogLevel));
+    pApp->continueThread();
 }
 
 void Console::print(const QString& message, eLogLevels MsgLogLevel)
@@ -126,18 +128,6 @@ void Console::print(const QString& message, eLogLevels MsgLogLevel)
     if (MsgLogLevel >= Console::LogLevel)
     {
         QString msg = tr(message.toStdString().c_str());
-
-        Mainapp* pApp = Mainapp::getInstance();
-        // send Client Logs to Server
-        if (pApp->getNetworkInterface() != nullptr)
-        {
-            if (!pApp->getNetworkInterface()->getIsServer() && pApp->getNetworkInterface()->getIsConnected())
-            {
-                QByteArray data(message.toStdString().c_str());
-                pApp->getNetworkInterface()->sendData(data,  Mainapp::NetworkSerives::Console, false);
-            }
-        }
-
         QString prefix = "";
         switch (MsgLogLevel)
         {
@@ -246,36 +236,6 @@ void Console::setVolume(qint32 volume)
 void Console::setLogLevel(eLogLevels newLogLevel)
 {
     Console::LogLevel = newLogLevel;
-}
-
-void Console::connectToServer(const QString& adresse, qint32 port)
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    if (!pApp->getNetworkInterface()->getIsServer())
-    {
-        if (port > 0)
-        {
-            pApp->getSettings()->setGamePort(port);
-        }
-        emit pApp->getNetworkInterface()->sig_connect(adresse);
-    }
-    else
-    {
-        print("Running in Servermode!", eINFO);
-    }
-}
-
-void Console::getServerAdresse()
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    if (pApp->getNetworkInterface()->getIsServer())
-    {
-        print("Adresse: " + pApp->getNetworkInterface()->getIPAdresse(), eINFO);
-    }
-    else
-    {
-        print("Running in Clientmode!", eINFO);
-    }
 }
 
 void Console::help(qint32 start, qint32 end)
@@ -1291,12 +1251,12 @@ void Console::createfunnymessage(qint32 message){
     print(printmessage, Console::eINFO);
 }
 
-void Console::TextInput(SDL_Event *event)
+void Console::TextInput(SDL_Event event)
 {
     if (show)
     {
         // for the start we don't check for upper or lower key input
-        QString msg = QString(event->text.text);
+        QString msg = QString(event.text.text);
         curmsg.insert(curmsgpos,msg);
         curmsgpos += msg.size();
     }
@@ -1311,10 +1271,10 @@ void Console::recieveNetworkMessage(QByteArray data, Mainapp::NetworkSerives ser
     }
 }
 
-void Console::KeyInput(SDL_Event *event)
+void Console::KeyInput(SDL_Event event)
 {
     // for debugging
-    SDL_Keycode cur = event->key.keysym.sym;
+    SDL_Keycode cur = event.key.keysym.sym;
     Mainapp* pApp = Mainapp::getInstance();
     if (cur == pApp->getSettings()->getKeyConsole())
     {
@@ -1322,7 +1282,7 @@ void Console::KeyInput(SDL_Event *event)
     }
     else if (show)
     {
-        if ((event->key.keysym.mod & KMOD_CTRL) > 0)
+        if ((event.key.keysym.mod & KMOD_CTRL) > 0)
         {
             switch(cur)
             {

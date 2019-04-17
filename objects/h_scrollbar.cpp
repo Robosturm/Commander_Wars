@@ -4,10 +4,15 @@
 
 #include "coreengine/console.h"
 
+#include "coreengine/mainapp.h"
+
 H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
     : m_Heigth(heigth),
       m_ContentHeigth(contentHeigth)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+
     m_ScrollTimer.start();
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     this->setSize(33, heigth);
@@ -145,6 +150,8 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
 
 void H_Scrollbar::setContentHeigth(qint32 heigth)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_ContentHeigth = heigth;
     qint32 sliderHeight = 50;
     sliderHeight = ((this->getHeight() - 20 - 20) * this->getHeight()) / m_ContentHeigth;
@@ -159,6 +166,7 @@ void H_Scrollbar::setContentHeigth(qint32 heigth)
     m_Scrollvalue = 0;
     m_slider->setSize(18, sliderHeight);
     emit sigScrollValueChanged(m_Scrollvalue);
+    pApp->continueThread();
 }
 
 void H_Scrollbar::update(const oxygine::UpdateState& us)

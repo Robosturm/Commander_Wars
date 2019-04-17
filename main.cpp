@@ -1,5 +1,5 @@
 #include <QObject>
-#include <QDirIterator>
+
 #include <QProcess>
 
 #include "coreengine/audiothread.h"
@@ -20,7 +20,6 @@
 #include "ox/Stage.hpp"
 #include "ox/DebugActor.hpp"
 
-#include "menue/mainwindow.h"
 #include "menue/ingamemenue.h"
 
 #include "game/terrain.h"
@@ -44,6 +43,18 @@
 #include "gameinput/cursordata.h"
 
 #include "game/GameEnums.h"
+
+#include "resource_management/backgroundmanager.h"
+#include "resource_management/buildingspritemanager.h"
+#include "resource_management/cospritemanager.h"
+#include "resource_management/fontmanager.h"
+#include "resource_management/gameanimationmanager.h"
+#include "resource_management/gamemanager.h"
+#include "resource_management/gamerulemanager.h"
+#include "resource_management/objectmanager.h"
+#include "resource_management/terrainmanager.h"
+#include "resource_management/unitspritemanager.h"
+
 
 int main(int argc, char* argv[])
 {
@@ -69,15 +80,10 @@ int main(int argc, char* argv[])
 
     // Create the stage. Stage is a root node for all updateable and drawable objects
     oxygine::Stage::instance = new oxygine::Stage();
+    oxygine::Stage::instance->setVisible(false);
 
     oxygine::Point size = oxygine::core::getDisplaySize();
     oxygine::getStage()->setSize(size);
-
-    Console* pConsole = Console::getInstance();
-    // create the initial menue no need to store the object
-    // it will add itself to the current stage
-    oxygine::getStage()->addChild(pConsole);
-
 
 #ifdef GAMEDEBUG
     // DebugActor is a helper actor node. It shows FPS, memory usage and other useful stuff
@@ -97,7 +103,8 @@ int main(int argc, char* argv[])
     qRegisterMetaType<GameEnums::AIQuestionType>("GameEnums::AIQuestionType");
     qRegisterMetaType<GameEnums::Fog>("GameEnums::Fog");
     qRegisterMetaType<GameEnums::COMood>("GameEnums::COMood");
-
+    qRegisterMetaType<GameEnums::LuckDamageMode>("GameEnums::LuckDamageMode");
+    qRegisterMetaType<SDL_Event>("SDL_Event");
 
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
     qmlRegisterInterface<Terrain>("Terrain");
@@ -123,25 +130,29 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<ScriptVariables>("ScriptVariables");
     qmlRegisterInterface<Weather>("Weather");
     qmlRegisterInterface<TerrainFindingSystem>("TerrainFindingSystem");
+    // load ressources
+    BackgroundManager::getInstance();
+    BuildingSpriteManager::getInstance();
+    COSpriteManager::getInstance();
+    FontManager::getInstance();
+    GameAnimationManager::getInstance();
+    GameManager::getInstance();
+    GameRuleManager::getInstance();
+    ObjectManager::getInstance();
+    TerrainManager::getInstance();
+    UnitSpriteManager::getInstance();
 
-    GameEnums::registerEnums();
 
-    // load General-Base Scripts
-    QString path =  QCoreApplication::applicationDirPath() + "/resources/scripts/general";
-    QStringList filter;
-    filter << "*.js";
-    QDirIterator* dirIter = new QDirIterator(path, filter, QDir::Files, QDirIterator::Subdirectories);
-    while (dirIter->hasNext())
+    app.getWorkerthread()->start();
+    while (!app.getWorkerthread()->getStarted())
     {
-        dirIter->next();
-        QString file = dirIter->fileInfo().absoluteFilePath();
-        app.getInterpreter()->openScript(file);
+        QThread::msleep(100);
     }
-    delete dirIter;
-    oxygine::getStage()->addChild(new Mainwindow());
 
+    oxygine::Stage::instance->setVisible(true);
     /*************************************************************************************************/
     // This is the main game loop.
+    app.start();
     qint32 returncode = app.exec();
 
     /*************************************************************************************************/

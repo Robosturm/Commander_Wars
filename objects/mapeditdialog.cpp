@@ -10,6 +10,7 @@ MapEditDialog::MapEditDialog(QString mapName, qint32 mapWidth, qint32 mapHeigth,
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialog");

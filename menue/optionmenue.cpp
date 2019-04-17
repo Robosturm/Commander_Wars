@@ -19,8 +19,10 @@
 
 OptionMenue::OptionMenue()
 {
-    Console::print("Entering Main Menue", Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+    Console::print("Entering Main Menue", Console::eDEBUG);
+
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
     oxygine::spSprite sprite = new oxygine::Sprite();
@@ -79,6 +81,8 @@ OptionMenue::OptionMenue()
 
 void OptionMenue::exitMenue()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     if (restartNeeded)
     {
         restart();
@@ -89,12 +93,14 @@ void OptionMenue::exitMenue()
         oxygine::getStage()->addChild(new Mainwindow());
         oxygine::Actor::detach();
     }
+    pApp->continueThread();
 }
 
 void OptionMenue::showSettings()
 {
-    m_pOptions->clearContent();
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    m_pOptions->clearContent();
     AudioThread* pAudio = pApp->getAudioThread();
     Settings* pSettings = pApp->getSettings();
     oxygine::TextStyle style = FontManager::getMainFont();
@@ -152,11 +158,13 @@ void OptionMenue::showSettings()
     });
     m_pOptions->addItem(pSlider);
     // qApp->screens()[0]->size();
-
+    pApp->continueThread();
 }
 
 void OptionMenue::showMods()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pOptions->clearContent();
     QFileInfoList infoList = QDir("mods").entryInfoList(QDir::Dirs);
 
@@ -226,6 +234,7 @@ void OptionMenue::showMods()
     }
     m_pOptions->setContentWidth(width);
     m_pOptions->setContentHeigth(20 + mods * 40);
+    pApp->continueThread();
 }
 
 void OptionMenue::restart()

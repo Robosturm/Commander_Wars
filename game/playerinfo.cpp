@@ -15,11 +15,15 @@
 PlayerInfo::PlayerInfo()
     : QObject()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     this->setScale(1.0f);
 }
 
 void PlayerInfo::updateData()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     // clean up
     this->removeChildren();
     // recreate the ui
@@ -112,6 +116,7 @@ void PlayerInfo::updateData()
             yPos += itemHeigth;
         }
     }
+    pApp->continueThread();
 }
 
 void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)

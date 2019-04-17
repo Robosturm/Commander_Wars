@@ -25,6 +25,8 @@
 
 HumanPlayerInput::HumanPlayerInput()
 {    
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 
@@ -50,6 +52,8 @@ void HumanPlayerInput::rightClick(qint32 x, qint32 y)
 {
     if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer)
     {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
         if (GameAnimationFactory::getAnimationCount() > 0)
         {
             GameAnimationFactory::finishAllAnimations();
@@ -89,6 +93,7 @@ void HumanPlayerInput::rightClick(qint32 x, qint32 y)
         {
             showAttackableFields(x, y);
         }
+        pApp->continueThread();
     }
 }
 
@@ -202,8 +207,11 @@ void HumanPlayerInput::clearMarkedFields()
 
 void HumanPlayerInput::leftClick(qint32 x, qint32 y)
 {
+
     if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer)
     {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
         if (GameAnimationFactory::getAnimationCount() > 0)
         {
             // do nothing
@@ -339,11 +347,14 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
         {
             //cleanUpInput();
         }
-    }
+        pApp->continueThread();
+    }    
 }
 
 void HumanPlayerInput::markedFieldSelected(QPoint point)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pGameAction->writeDataInt32(point.x());
     m_pGameAction->writeDataInt32(point.y());
     clearMarkedFields();
@@ -358,10 +369,13 @@ void HumanPlayerInput::markedFieldSelected(QPoint point)
         // else introduce next step
         getNextStepData();
     }
+    pApp->continueThread();
 }
 
 void HumanPlayerInput::menuItemSelected(QString itemID, qint32 cost)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     // we're currently selecting the action for this action
     if (m_pGameAction->getActionID() == "")
     {
@@ -388,6 +402,7 @@ void HumanPlayerInput::menuItemSelected(QString itemID, qint32 cost)
         // else introduce next step
         getNextStepData();
     }
+    pApp->continueThread();
 }
 
 void HumanPlayerInput::getNextStepData()
@@ -516,6 +531,8 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
 {
     if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer)
     {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
         if (m_pMarkedFieldData != nullptr)
         {
             if (m_pMarkedFieldData->getShowZData())
@@ -609,7 +626,9 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                 createCursorPath(x, y);
             }
         }
+        pApp->continueThread();
     }
+
 }
 
 void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)

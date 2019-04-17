@@ -17,10 +17,12 @@
 IngameInfoBar::IngameInfoBar()
     : QObject()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+
     qint32 width = 300;
     qint32 cursorInfoHeigth = 310;
     qint32 gameInfoHeigth = 290;
-    Mainapp* pApp = Mainapp::getInstance();
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     oxygine::spBox9Sprite pMiniMapBox = new oxygine::Box9Sprite();
@@ -64,6 +66,8 @@ IngameInfoBar::IngameInfoBar()
 
 void IngameInfoBar::updatePlayerInfo()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pGameInfoBox->removeChildren();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     GameManager* pGameManager = GameManager::getInstance();
@@ -146,15 +150,22 @@ void IngameInfoBar::updatePlayerInfo()
     pTextfield->setText((tr("Team: ") + QString::number(count + 1)).toStdString().c_str());
     pTextfield->setPosition(10, 240);
     m_pGameInfoBox->addChild(pTextfield);
+    pApp->continueThread();
 }
 
 void IngameInfoBar::updateMinimap()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     m_pMinimap->updateMinimap(GameMap::getInstance(), true);
+    pApp->continueThread();
+
 }
 
 void IngameInfoBar::updateCursorInfo(qint32 x, qint32 y)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     if (m_LastX != x || m_LastY != y)
     {
         m_LastX = x;
@@ -237,6 +248,7 @@ void IngameInfoBar::updateCursorInfo(qint32 x, qint32 y)
         {
             bool HpHidden = pUnit->getHpHidden(pMap->getCurrentViewPlayer());
             float count = pUnit->getHp();
+            qint32 hpRounded = pUnit->getHpRounded();
             float countMax = 10.0f;
             pTextfield = new oxygine::TextField();
             pTextfield->setStyle(style);
@@ -246,7 +258,7 @@ void IngameInfoBar::updateCursorInfo(qint32 x, qint32 y)
             }
             else
             {
-                pTextfield->setText((tr("HP: ") + QString::number(count, 'f', 0) + "/" + QString::number(countMax, 'f', 0)).toStdString().c_str());
+                pTextfield->setText((tr("HP: ") + QString::number(hpRounded) + "/" + QString::number(countMax, 'f', 0)).toStdString().c_str());
             }
             pTextfield->setPosition(10, 10);
             m_pCursorInfoBox->addChild(pTextfield);
@@ -563,4 +575,5 @@ void IngameInfoBar::updateCursorInfo(qint32 x, qint32 y)
             y += 20;
         }
     }
+    pApp->continueThread();
 }

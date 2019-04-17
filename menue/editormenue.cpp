@@ -22,10 +22,12 @@
 EditorMenue::EditorMenue()
     : InGameMenue (20, 20)
 {
-    Mainapp* pMainapp = Mainapp::getInstance();
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+
     m_EditorSelection = new EditorSelection();
     this->addChild(m_EditorSelection);
-    m_Topbar = new Topbar(0, pMainapp->getSettings()->getWidth() -  m_EditorSelection->getWidth());
+    m_Topbar = new Topbar(0, pApp->getSettings()->getWidth() -  m_EditorSelection->getWidth());
     this->addChild(m_Topbar);
 
     m_Topbar->addGroup(tr("Menu"));
@@ -83,12 +85,14 @@ EditorMenue::EditorMenue()
     connect(this, SIGNAL(sigOnMapClickedLeft()), this, SLOT(onMapClickedLeft()), Qt::QueuedConnection);
     connect(this, SIGNAL(sigOnMapClickedRight()), this, SLOT(onMapClickedRight()), Qt::QueuedConnection);
     connect(m_Cursor.get(), SIGNAL(sigCursorMoved(qint32,qint32)), this, SLOT(cursorMoved(qint32,qint32)), Qt::QueuedConnection);
-    connect(pMainapp, SIGNAL(sigKeyDown(SDL_Event*)), this, SLOT(KeyInput(SDL_Event*)));
-    connect(m_Topbar.get(), SIGNAL(sigItemClicked(QString)), this, SLOT(clickedTopbar(QString)));
+    connect(pApp, &Mainapp::sigKeyDown, this, &EditorMenue::KeyInput, Qt::QueuedConnection);
+    connect(m_Topbar.get(), SIGNAL(sigItemClicked(QString)), this, SLOT(clickedTopbar(QString)), Qt::QueuedConnection);
 }
 
 void EditorMenue::clickedTopbar(QString itemID)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     if (itemID == "EXIT")
     {
         Console::print("Leaving Editor Menue", Console::eDEBUG);
@@ -161,11 +165,14 @@ void EditorMenue::clickedTopbar(QString itemID)
         GameMap* pGameMap = GameMap::getInstance();
         pGameMap->randomMap(30, 40, 4);
     }
+    pApp->continueThread();
 }
 
-void EditorMenue::KeyInput(SDL_Event *event)
+void EditorMenue::KeyInput(SDL_Event event)
 {
-    SDL_Keycode cur = event->key.keysym.sym;
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    SDL_Keycode cur = event.key.keysym.sym;
     switch (cur)
     {
         case SDLK_ESCAPE:
@@ -180,10 +187,13 @@ void EditorMenue::KeyInput(SDL_Event *event)
             break;
         }
     }
+    pApp->continueThread();
 }
 
 void EditorMenue::cursorMoved(qint32 x, qint32 y)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     // resolve cursor move
     switch (m_EditorSelection->getCurrentMode())
     {
@@ -224,18 +234,24 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
             break;
         }
     }
+    pApp->continueThread();
 }
 
 void EditorMenue::onMapClickedRight()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     // resolve click
     GameMap* pMap = GameMap::getInstance();
     QString terrainID = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY())->getTerrainID();
     m_EditorSelection->selectTerrain(terrainID);
+    pApp->continueThread();
 }
 
 void EditorMenue::onMapClickedLeft()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     // resolve click
     switch (m_EditorSelection->getCurrentMode())
     {
@@ -255,38 +271,51 @@ void EditorMenue::onMapClickedLeft()
             break;
         }
     }
+    pApp->continueThread();
 }
 
 bool EditorMenue::canTerrainBePlaced(qint32 x, qint32 y)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    bool ret = false;
     QString terrainID = m_EditorSelection->getCurrentTerrainID();
     GameMap* pMap = GameMap::getInstance();
+
     if (pMap->onMap(x, y))
     {
         if (pMap->canBePlaced(terrainID, x, y))
         {
             if (pMap->getTerrain(x, y)->getTerrainID() != terrainID)
             {
-                return true;
+                ret = true;
             }
         }
     }
-    return false;
+    pApp->continueThread();
+    return ret;
 }
 
 bool EditorMenue::canBuildingBePlaced(qint32 x, qint32 y)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    bool ret = false;
     GameMap* pMap = GameMap::getInstance();
     if (pMap->onMap(x, y))
     {
         spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
-        return pCurrentBuilding->canBuildingBePlaced(pMap->getTerrain(x, y));
+        ret = pCurrentBuilding->canBuildingBePlaced(pMap->getTerrain(x, y));
     }
-    return false;
+    pApp->continueThread();
+    return ret;
 }
 
 bool EditorMenue::canUnitBePlaced(qint32 x, qint32 y)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    bool ret = false;
     GameMap* pMap = GameMap::getInstance();
     if (pMap->onMap(x, y))
     {
@@ -294,14 +323,17 @@ bool EditorMenue::canUnitBePlaced(qint32 x, qint32 y)
         QString movementType = m_EditorSelection->getCurrentSpUnit()->getMovementType();
         if (pMovementTableManager->getBaseMovementPoints(movementType, pMap->getTerrain(x, y)) > 0)
         {
-            return true;
+            ret = true;
         }
     }
-    return false;
+    pApp->continueThread();
+    return ret;
 }
 
 void EditorMenue::placeTerrain(qint32 x, qint32 y)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     QVector<QPoint> points;
     GameMap* pMap = GameMap::getInstance();
     switch (m_EditorSelection->getSizeMode())
@@ -354,10 +386,14 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
     {
         pMap->updateSprites();
     }
+    pApp->continueThread();
 }
 
 void EditorMenue::placeBuilding(qint32 x, qint32 y)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
     GameMap* pMap = GameMap::getInstance();
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
@@ -398,10 +434,14 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
             pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
         }
     }
+    pApp->continueThread();
 }
 
 void EditorMenue::placeUnit(qint32 x, qint32 y)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
     QVector<QPoint> points;
     switch (m_EditorSelection->getSizeMode())
     {
@@ -439,10 +479,14 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
             pMap->getTerrain(curX, curY)->setUnit(pUnit);
         }
     }
+    pApp->continueThread();
 }
 
 void EditorMenue::saveMap(QString filename)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
     if (filename.endsWith(".map"))
     {
         QFile file(filename);
@@ -452,10 +496,14 @@ void EditorMenue::saveMap(QString filename)
         pMap->serialize(stream);
         file.close();
     }
+    pApp->continueThread();
 }
 
 void EditorMenue::loadMap(QString filename)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
     if (filename.endsWith(".map"))
     {
         QFile file(filename);
@@ -470,10 +518,14 @@ void EditorMenue::loadMap(QString filename)
             m_EditorSelection->createPlayerSelection();
         }
     }
+    pApp->continueThread();
 }
 
 void EditorMenue::importCoWTxTMap(QString filename)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
     if (filename.endsWith(".txt"))
     {
         QFile file(filename);
@@ -483,20 +535,30 @@ void EditorMenue::importCoWTxTMap(QString filename)
             m_EditorSelection->createPlayerSelection();
         }
     }
+    pApp->continueThread();
 }
 
 void EditorMenue::newMap(QString mapName, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
     GameMap* pMap = GameMap::getInstance();
     pMap->setMapName(mapName);
     pMap->newMap(mapWidth, mapHeigth, playerCount);
     m_EditorSelection->createPlayerSelection();
+    pApp->continueThread();
 }
 
 void EditorMenue::changeMap(QString mapName, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
     GameMap* pMap = GameMap::getInstance();
     pMap->setMapName(mapName);
     pMap->changeMap(mapWidth, mapHeigth, playerCount);
     m_EditorSelection->createPlayerSelection();
+
+    pApp->continueThread();
 }

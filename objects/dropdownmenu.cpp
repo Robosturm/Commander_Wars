@@ -6,6 +6,8 @@
 DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items, bool up)
     : m_ItemTexts(items)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     this->setWidth(width);
     ObjectManager* pObjectManager = ObjectManager::getInstance();
@@ -100,8 +102,11 @@ void DropDownmenu::setCurrentItem(qint32 index)
 {
     if ((index >= 0) && (index < m_ItemTexts.size()))
     {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
         m_currentItem = index;
         m_Textfield->setText(m_ItemTexts[index].toStdString().c_str());
+        pApp->continueThread();
     }
 }
 

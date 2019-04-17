@@ -11,6 +11,8 @@
 MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     : QObject()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     oxygine::spButton pArrowUp = new oxygine::Button();
     oxygine::ResAnim* pAnim = ObjectManager::getInstance()->getResAnim("arrow+down");
     pArrowUp->setResAnim(pAnim);
@@ -142,6 +144,8 @@ MapSelection::~MapSelection()
 
 void MapSelection::changeFolder(QString folder)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
 
     QString newFolder = folder;
     if (folder == "")
@@ -192,10 +196,13 @@ void MapSelection::changeFolder(QString folder)
         currentItem = files[currentIdx];
         emit itemChanged(currentItem);
     }
+    pApp->continueThread();
 }
 
 void MapSelection::updateSelection(qint32 startIndex)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     currentStartIndex = startIndex;
     if (currentStartIndex < 0)
     {
@@ -268,4 +275,5 @@ void MapSelection::updateSelection(qint32 startIndex)
             }
         }
     }
+    pApp->continueThread();
 }

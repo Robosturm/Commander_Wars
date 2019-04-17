@@ -17,6 +17,8 @@ GameAnimationWalk::GameAnimationWalk(Unit* pUnit, QVector<QPoint> movePath)
       m_pUnit(pUnit),
       m_movePath(movePath)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_pUnit->setUnitVisible(false);
 }

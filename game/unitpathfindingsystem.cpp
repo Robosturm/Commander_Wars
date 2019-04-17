@@ -13,6 +13,8 @@ UnitPathFindingSystem::UnitPathFindingSystem(Unit* pUnit)
     : PathFindingSystem(pUnit->getX(), pUnit->getY()),
       m_pUnit(pUnit)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

@@ -23,8 +23,9 @@
 
 Mainwindow::Mainwindow()
 {
-    Console::print("Entering Main Menue", Console::eDEBUG);
     Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+    Console::print("Entering Main Menue", Console::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
     oxygine::spSprite sprite = new oxygine::Sprite();
@@ -113,24 +114,35 @@ Mainwindow::~Mainwindow()
 
 void Mainwindow::enterSingleplayer()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     oxygine::getStage()->addChild(new MapSelectionMapsMenue());
     leaveMenue();
+    pApp->continueThread();
 }
 
 void Mainwindow::enterEditor()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     oxygine::getStage()->addChild(new EditorMenue());
     leaveMenue();
+    pApp->continueThread();
 }
 
 void Mainwindow::enterOptionmenue()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     oxygine::getStage()->addChild(new OptionMenue());
     leaveMenue();
+    pApp->continueThread();
 }
 
 void Mainwindow::enterLoadGame()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     // dummy impl for loading
     QVector<QString> wildcards;
     wildcards.append("*.sav");
@@ -138,10 +150,13 @@ void Mainwindow::enterLoadGame()
     spFileDialog saveDialog = new FileDialog(path, wildcards);
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadGame, Qt::QueuedConnection);
+    pApp->continueThread();
 }
 
 void Mainwindow::loadGame(QString filename)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     if (filename.endsWith(".sav"))
     {
         QFile file(filename);
@@ -160,12 +175,16 @@ void Mainwindow::loadGame(QString filename)
             leaveMenue();
         }
     }
+    pApp->continueThread();
 }
 
 void Mainwindow::leaveMenue()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     Console::print("Leaving Main Menue", Console::eDEBUG);
     oxygine::Actor::detach();
+    pApp->continueThread();
 }
 
 void Mainwindow::quitGame()

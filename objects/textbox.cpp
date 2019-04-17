@@ -5,6 +5,9 @@
 
 Textbox::Textbox(qint32 width)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("textbox");
@@ -62,8 +65,8 @@ Textbox::Textbox(qint32 width)
     toggle.start();
 
     Mainapp* pMainapp = Mainapp::getInstance();
-    connect(pMainapp, SIGNAL(sigKeyDown(SDL_Event*)), this, SLOT(KeyInput(SDL_Event*)), Qt::QueuedConnection);
-    connect(pMainapp, SIGNAL(sigText(SDL_Event*)), this, SLOT(TextInput(SDL_Event*)), Qt::QueuedConnection);
+    connect(pMainapp, &Mainapp::sigKeyDown, this, &Textbox::KeyInput, Qt::QueuedConnection);
+    connect(pMainapp, &Mainapp::sigText, this, &Textbox::TextInput, Qt::QueuedConnection);
 }
 
 void Textbox::setCurrentText(QString text)
@@ -123,24 +126,29 @@ void Textbox::update(const oxygine::UpdateState& us)
     oxygine::Actor::update(us);
 }
 
-void Textbox::TextInput(SDL_Event *event)
+void Textbox::TextInput(SDL_Event event)
 {
     if (m_focused)
     {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
         // for the start we don't check for upper or lower key input
-        QString msg = QString(event->text.text);
+        QString msg = QString(event.text.text);
         m_Text.insert(curmsgpos, msg);
         curmsgpos += msg.size();
+        pApp->continueThread();
     }
 }
 
-void Textbox::KeyInput(SDL_Event *event)
+void Textbox::KeyInput(SDL_Event event)
 {
     // for debugging
-    SDL_Keycode cur = event->key.keysym.sym;
+    SDL_Keycode cur = event.key.keysym.sym;
     if (m_focused)
     {
-        if ((event->key.keysym.mod & KMOD_CTRL) > 0)
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
+        if ((event.key.keysym.mod & KMOD_CTRL) > 0)
         {
             switch(cur)
             {
@@ -228,5 +236,6 @@ void Textbox::KeyInput(SDL_Event *event)
             }
             }
         }
+        pApp->continueThread();
     }
 }

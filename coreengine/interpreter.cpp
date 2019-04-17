@@ -5,17 +5,22 @@
 #include <QDir>
 #include <QQmlEngine>
 #include <QTextStream>
+#include <QThread>
 
-Interpreter::Interpreter(const QString& script, QObject *parent)
-    : QQmlEngine(parent)
+Interpreter::Interpreter(const QString& script)
+    : QQmlEngine()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     init();
     openScript(script);
 }
 
-Interpreter::Interpreter(QObject *parent)
-    : QQmlEngine(parent)
+Interpreter::Interpreter()
+    : QQmlEngine()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     init();
 }
 
@@ -34,24 +39,24 @@ void Interpreter::init()
 
 void Interpreter::openScript(const QString& script)
 {
-    QFile scriptFile(script);
-    if (!scriptFile.open(QIODevice::ReadOnly))
-    {
-        QString error = "Error: attemp to read File " + script + " which couldn't be opened.";
-        Console::print(error, Console::eERROR);
-    }
-    else
-    {
-        QTextStream stream(&scriptFile);
-        QString contents = stream.readAll();
-        scriptFile.close();
-        QJSValue value = evaluate(contents, script);
-        if (value.isError())
+        QFile scriptFile(script);
+        if (!scriptFile.open(QIODevice::ReadOnly))
         {
-            QString error = value.toString() + " in File:" + script;
+            QString error = "Error: attemp to read File " + script + " which couldn't be opened.";
             Console::print(error, Console::eERROR);
         }
-    }
+        else
+        {
+            QTextStream stream(&scriptFile);
+            QString contents = stream.readAll();
+            scriptFile.close();
+            QJSValue value = evaluate(contents, script);
+            if (value.isError())
+            {
+                QString error = value.toString() + " in File:" + script;
+                Console::print(error, Console::eERROR);
+            }
+        }
 }
 
 Interpreter::~Interpreter()
@@ -246,3 +251,5 @@ void Interpreter::deleteObject(const QString& name)
     QString order = "delete " + name + ";";
     doString(order);
 }
+
+

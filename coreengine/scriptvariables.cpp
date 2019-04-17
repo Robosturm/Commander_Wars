@@ -2,9 +2,13 @@
 
 #include "interpreter.h"
 
+#include "coreengine/mainapp.h"
+
 ScriptVariables::ScriptVariables()
     : QObject()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

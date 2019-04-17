@@ -2,8 +2,12 @@
 
 #include "coreengine/interpreter.h"
 
+#include "coreengine/mainapp.h"
+
 CursorData::CursorData()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 }
 

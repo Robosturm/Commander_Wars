@@ -16,12 +16,7 @@ class Cursor : public QObject, public oxygine::Actor
    Q_OBJECT
 public:
     Cursor();
-    /**
-     * @brief updatePosition calculates the new cursor point based on the mouse x and y coordinates
-     * @param mousePosX
-     * @param mousePosY
-     */
-    void updatePosition(qint32 mousePosX, qint32 mousePosY);
+
     void changeCursor(const QString& spriteID, qint32 xOffset = 0, qint32 yOffset = 0, float scale = 1.0f);
     /**
      * @brief getMapPointX changes our cursor sprite
@@ -37,6 +32,14 @@ public:
     }
 signals:
     void sigCursorMoved(qint32 x, qint32 y);
+    void sigUpdatePosition(qint32 x, qint32 y);
+public slots:
+    /**
+     * @brief updatePosition calculates the new cursor point based on the mouse x and y coordinates
+     * @param mousePosX
+     * @param mousePosY
+     */
+    void updatePosition(qint32 mousePosX, qint32 mousePosY);
 private:
     oxygine::spSprite m_CurrentCursor;
     bool onMap{false};

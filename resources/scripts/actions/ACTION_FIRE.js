@@ -101,13 +101,13 @@ var Constructor = function()
         var damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, 100);
         return damage;
     };
-    this.calcAttackerDamage = function(attacker, attackerWeapon, attackerPosition, defender, useLuck)
+    this.calcAttackerDamage = function(attacker, attackerWeapon, attackerPosition, defender, luckMode)
     {
         return ACTION_FIRE.calcDamage(attacker, attackerWeapon, attackerPosition, attacker.getHpRounded(),
                           defender, defender.getPosition(), false,
-                          useLuck)
+                          luckMode)
     };
-    this.calcDefenderDamage = function(attacker, attackerPosition, defender, defenderWeapon, takenDamage, useLuck)
+    this.calcDefenderDamage = function(attacker, attackerPosition, defender, defenderWeapon, takenDamage, luckMode)
     {
         // only direct units can deal counter damage
         if (defender.getMinRange() === 1)
@@ -123,25 +123,32 @@ var Constructor = function()
             {
                 damage = ACTION_FIRE.calcDamage(defender, defenderWeapon, defender.getPosition(), health,
                                                 attacker, attackerPosition, true,
-                                                useLuck);
+                                                luckMode);
             }
         }
         return damage;
     };
     this.calcDamage = function(attacker, attackerWeapon, attackerPosition, attackerBaseHp,
                                defender, defenderPosition, isDefender,
-                               useLuck)
+                               luckMode)
     {
         var baseDamage = Global[attackerWeapon].getBaseDamage(defender);
         var offensive = 100 + attacker.getBonusOffensive(attackerPosition, defender, defender.getPosition(), isDefender);
         var defensive = 100 + defender.getBonusDefensive(defenderPosition, attacker, attackerPosition);
         var attackerHp = attackerBaseHp + attacker.getAttackHpBonus(attackerPosition);
         var damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive);
-        if (useLuck)
+        if (luckMode !== GameEnums.LuckDamageMode_Off)
         {
             var luck = attackerBaseHp / 2 + attacker.getBonusLuck(attackerPosition);
             var misfortune = attacker.getBonusMisfortune(attackerPosition);
-            damage += globals.randInt(-misfortune, luck);
+            if (luckMode === GameEnums.LuckDamageMode_On)
+            {
+                damage += globals.randInt(-misfortune, luck);
+            }
+            else if (luckMode === GameEnums.LuckDamageMode_Average)
+            {
+                damage += (-misfortune + luck) / 2;
+            }
         }
         damage -= defender.getDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,
                                     defenderPosition, isDefender);
@@ -169,187 +176,143 @@ var Constructor = function()
         }
         return false;
     };
-    this.getStepData = function(action, data)
+
+    this.calcBattleDamage = function(action, x, y, luckMode)
     {
-        var unit = action.getTargetUnit();
-        var actionTargetField = action.getActionTarget();
-        var targetField = action.getTarget();
-        var fields = globals.getCircle(unit.getMinRange(), unit.getMaxRange(targetField));
-        // check all fields we can attack
-        for (var i = 0; i < fields.size(); i++)
+        var result = Qt.rect(-1, -1, -1, -1);
+        if (map.onMap(x, y))
         {
-            var x = fields.at(i).x + actionTargetField.x;
-            var y = fields.at(i).y + actionTargetField.y;
-            if (map.onMap(x, y))
+            var unit = action.getTargetUnit();
+            var actionTargetField = action.getActionTarget();
+            var targetField = action.getTarget();
+            var defTerrain = map.getTerrain(x, y);
+            var defBuilding = defTerrain.getBuilding();
+            var defUnit = defTerrain.getUnit();
+            var dmg1 = -1;
+            var dmg2 = -1;
+            if (defUnit !== null)
             {
-                var defTerrain = map.getTerrain(x, y);
-                var defBuilding = defTerrain.getBuilding();
-                var defUnit = defTerrain.getUnit();
-                var dmg1 = -1;
-                var dmg2 = -1;
-                if (defUnit !== null)
+                if (ACTION_FIRE.isAttackableUnit(action, defUnit))
                 {
-                    if (ACTION_FIRE.isAttackableUnit(action, defUnit))
-                    {
-                        if (unit.getOwner().isEnemyUnit(defUnit) === true)
-                        {
-                            if (unit.hasAmmo1())
-                            {
-                                dmg1 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon1ID(), actionTargetField ,defUnit, false);
-                            }
-                            if (unit.hasAmmo2())
-                            {
-                                dmg2 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon2ID(), actionTargetField ,defUnit, false);
-                            }
-                            if ((dmg1 > 0) || (dmg2 > 0))
-                            {
-                                if (dmg1 >= dmg2)
-                                {
-                                    data.addPoint(Qt.point(x, y));
-                                    data.addZInformation(dmg1);
-                                }
-                                else
-                                {
-                                    data.addPoint(Qt.point(x, y));
-                                    data.addZInformation(dmg2);
-                                }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (((defBuilding !== null) && (defBuilding.getHp() > 0) &&
-                         (defBuilding.getIsAttackable(x, y) && unit.getOwner().isEnemy(defBuilding.getOwner()))) ||
-                         (defTerrain.getHp() > 0))
+                    if (unit.getOwner().isEnemyUnit(defUnit) === true)
                     {
                         if (unit.hasAmmo1())
                         {
-                            dmg1 = ACTION_FIRE.calcEnviromentDamage(unit, unit.getWeapon1ID(), actionTargetField, Qt.point(x, y), defTerrain.getID());
+                            dmg1 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon1ID(), actionTargetField ,defUnit, luckMode);
                         }
                         if (unit.hasAmmo2())
                         {
-                            dmg2 = ACTION_FIRE.calcEnviromentDamage(unit, unit.getWeapon2ID(), actionTargetField, Qt.point(x, y), defTerrain.getID());
+                            dmg2 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon2ID(), actionTargetField ,defUnit, luckMode);
                         }
                         if ((dmg1 > 0) || (dmg2 > 0))
                         {
                             if (dmg1 >= dmg2)
                             {
-                                data.addPoint(Qt.point(x, y));
-                                data.addZInformation(dmg1);
+                                result.x = dmg1;
+                                result.y = 0;
                             }
                             else
                             {
-                                data.addPoint(Qt.point(x, y));
-                                data.addZInformation(dmg2);
+                                result.x = dmg2;
+                                result.y = 1;
                             }
+                        }
+                        if (Math.abs(actionTargetField.x - x) + Math.abs(actionTargetField.y - y) === 1)
+                        {
+                            var defDamage = -1;
+                            var defWeapon = 0;
+                            if (defUnit.hasAmmo1())
+                            {
+                                defDamage = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon1ID(), result.x, luckMode);
+                            }
+                            if (defUnit.hasAmmo2())
+                            {
+                                var defDamage2 = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon2ID(), result.x, luckMode);
+                                if (defDamage2 > defDamage)
+                                {
+                                    defDamage = defDamage2;
+                                    defWeapon = 1;
+                                }
+                            }
+                            if (defDamage >= 0)
+                            {
+                                result.width = defDamage
+                                result.height = defWeapon
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (((defBuilding !== null) && (defBuilding.getHp() > 0) &&
+                     (defBuilding.getIsAttackable(x, y) && unit.getOwner().isEnemy(defBuilding.getOwner()))) ||
+                     (defTerrain.getHp() > 0))
+                {
+                    if (unit.hasAmmo1())
+                    {
+                        dmg1 = ACTION_FIRE.calcEnviromentDamage(unit, unit.getWeapon1ID(), actionTargetField, Qt.point(x, y), defTerrain.getID());
+                    }
+                    if (unit.hasAmmo2())
+                    {
+                        dmg2 = ACTION_FIRE.calcEnviromentDamage(unit, unit.getWeapon2ID(), actionTargetField, Qt.point(x, y), defTerrain.getID());
+                    }
+                    if ((dmg1 > 0) || (dmg2 > 0))
+                    {
+                        if (dmg1 >= dmg2)
+                        {
+                            result.x = dmg1;
+                            result.y = 1;
+                        }
+                        else
+                        {
+                            result.x = dmg2;
+                            result.y = 2;
                         }
                     }
                 }
             }
         }
-        fields.remove();
+        return result;
+    };
+
+    this.getStepData = function(action, data)
+    {
+        var unit = action.getTargetUnit();
+        var targetField = action.getTarget();
+        var actionTargetField = action.getActionTarget();
+        var fields = globals.getCircle(unit.getMinRange(), unit.getMaxRange(targetField));
         data.setColor("#C8FF0000");
         data.setZLabelColor("#ff4500");
         data.setZLabelText(qsTr("Damage"))
         data.setShowZData(true);
+        // check all fields we can attack
+        for (var i = 0; i < fields.size(); i++)
+        {
+            var x = fields.at(i).x + actionTargetField.x;
+            var y = fields.at(i).y + actionTargetField.y;
+            var result = ACTION_FIRE.calcBattleDamage(action, x, y, GameEnums.LuckDamageMode_Off);
+            if (result.x >= 0)
+            {
+                data.addPoint(Qt.point(x, y));
+                data.addZInformation(result.x);
+            }
+        }
+        fields.remove();
     };
     this.isFinalStep = function(action)
     {
         if (action.getInputStep() === 1)
         {
-            var unit = action.getTargetUnit();
-            var actionTargetField = action.getActionTarget();
             // get the target unit
             action.startReading();
             var targetX = action.readDataInt32();
             var targetY = action.readDataInt32();
-
-            var defTerrain = map.getTerrain(targetX, targetY);
-            var defBuilding = defTerrain.getBuilding();
-            var defUnit = defTerrain.getUnit();
-            var dmg2 = -1;
-            var damage = -1;
-            var weapon = 0;
-            if (defUnit !== null)
-            {
-
-                // calc damage
-                if (unit.hasAmmo1())
-                {
-                    damage = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon1ID(), actionTargetField , defUnit, true);
-                }
-                if (unit.hasAmmo2())
-                {
-                    dmg2 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon2ID(), actionTargetField , defUnit, true);
-                    if (dmg2 > damage)
-                    {
-                        damage = dmg2;
-                        weapon = 1;
-                    }
-                }
-                action.writeDataInt32(damage);
-                action.writeDataInt32(weapon);
-                if (Math.abs(actionTargetField.x - defUnit.getX()) + Math.abs(actionTargetField.y - defUnit.getY()) === 1)
-                {
-                    var defDamage = -1;
-                    var defWeapon = 0;
-                    if (defUnit.hasAmmo1())
-                    {
-                        defDamage = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon1ID(), damage, true);
-                    }
-                    if (defUnit.hasAmmo2())
-                    {
-                        var defDamage2 = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon2ID(), damage, true);
-                        if (defDamage2 > defDamage)
-                        {
-                            defDamage = defDamage2;
-                            defWeapon = 1;
-                        }
-                    }
-                    if (defDamage > 0)
-                    {
-                        action.writeDataInt32(defDamage);
-                        action.writeDataInt32(defWeapon);
-                    }
-                    else
-                    {
-                        action.writeDataInt32(-1);
-                        action.writeDataInt32(-1);
-                    }
-                }
-                else
-                {
-                    action.writeDataInt32(-1);
-                    action.writeDataInt32(-1);
-                }
-            }
-            else
-            {
-                if (((defBuilding !== null) && (defBuilding.getHp() > 0) && (defBuilding.getIsAttackable(targetX, targetY))) ||
-                     (defTerrain.getHp() > 0))
-                {
-                    // calc damage
-                    if (unit.hasAmmo1())
-                    {
-                        damage = ACTION_FIRE.calcEnviromentDamage(unit, unit.getWeapon1ID(), actionTargetField, Qt.point(targetX, targetY), defTerrain.getID());
-                    }
-                    if (unit.hasAmmo2())
-                    {
-                        dmg2 = ACTION_FIRE.calcEnviromentDamage(unit, unit.getWeapon2ID(), actionTargetField, Qt.point(targetX, targetY), defTerrain.getID());
-                        if (dmg2 > damage)
-                        {
-                            damage = dmg2;
-                            weapon = 1;
-                        }
-                    }
-                    action.writeDataInt32(damage);
-                    action.writeDataInt32(weapon);
-
-                    action.writeDataInt32(-1);
-                    action.writeDataInt32(-1);
-                }
-            }
+            var result = ACTION_FIRE.calcBattleDamage(action, targetX, targetY, GameEnums.LuckDamageMode_On);
+            action.writeDataInt32(result.x);
+            action.writeDataInt32(result.y);
+            action.writeDataInt32(result.width);
+            action.writeDataInt32(result.height);
             return true;
         }
         else
