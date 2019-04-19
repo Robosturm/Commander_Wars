@@ -43,7 +43,7 @@ float Leaf::getDecision(QVector<float>&)
 	return m_Answers[0];
 }
 
-void Leaf::serialize(QDataStream& pStream)
+void Leaf::serializeObject(QDataStream& pStream)
 {
     pStream << false; // --> 0 for node and 1 for leaf
     pStream << getVersion();
@@ -60,7 +60,18 @@ void Leaf::serialize(QDataStream& pStream)
     pStream << totalChance;
 }
 
-void Leaf::deserialize(QDataStream& pStream)
+QString Leaf::print()
+{
+    QString ret = "Answer ";
+    for (qint32 i = 0; i < m_Answers.size(); i++)
+    {
+        ret += QString::number(m_Answers[i], 'f', 1) + " ";
+    }
+
+    return ret;
+}
+
+void Leaf::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;

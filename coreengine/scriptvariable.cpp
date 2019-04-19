@@ -21,7 +21,7 @@ ScriptVariable::ScriptVariable()
     buffer.open(QIODevice::ReadWrite);
 }
 
-void ScriptVariable::serialize(QDataStream& pStream)
+void ScriptVariable::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
     pStream << m_Id;
@@ -33,7 +33,7 @@ void ScriptVariable::serialize(QDataStream& pStream)
     }
 }
 
-void ScriptVariable::deserialize(QDataStream& pStream)
+void ScriptVariable::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;

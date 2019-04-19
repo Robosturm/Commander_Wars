@@ -1,6 +1,14 @@
+#include "ai/coreai.h"
+
 #include "decisiontree.h"
 
 #include "leaf.h"
+
+#include "coreengine/console.h"
+
+#include <qcryptographichash.h>
+#include <qfile.h>
+#include <qdatastream.h>
 
 DecisionTree::DecisionTree(spDecisionNode pRootNode)
 	: m_pRootNode(pRootNode)
@@ -17,9 +25,53 @@ DecisionTree::DecisionTree(QVector<QVector<float>>& trainingData, QVector<QVecto
  * @param file
  * @param trainingFile
  */
-DecisionTree::DecisionTree(QString treeFile, QString trainingData)
+DecisionTree::DecisionTree(QString treeFile, QString trainingDataFile)
 {
+    QFile file(treeFile);
+    QFile trainingFile(trainingDataFile);
 
+    trainingFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
+    QCryptographicHash myHash(QCryptographicHash::Sha256);
+    myHash.addData(&trainingFile);
+    QByteArray hash = myHash.result();
+    trainingFile.close();
+
+    bool needsTraining = true;
+    if (file.exists())
+    {
+        file.open(QIODevice::ReadOnly | QIODevice::Truncate);
+        QDataStream stream(&file);
+        QByteArray currentHash;
+        for (qint32 i = 0; i < hash.size(); i++)
+        {
+            qint8 value = 0;
+            stream >> value;
+            currentHash.append(value);
+        }
+        // check if the training data has changed
+        if (currentHash == hash)
+        {
+            deserializeObject(stream);
+            needsTraining = false;
+        }
+        file.close();
+    }
+    if (needsTraining)
+    {
+        QVector<QVector<float>> trainingData;
+        QVector<QVector<spQuestion>> questions;
+        CoreAI::getTrainingData(trainingDataFile, trainingData, questions);
+        m_pRootNode = train(trainingData, questions);
+
+        // store trained tree for next use.
+        file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+        QDataStream stream(&file);
+        for (qint32 i = 0; i < hash.size(); i++)
+        {
+            stream << hash[i];
+        }
+        serializeObject(stream);
+    }
 }
 
 DecisionTree::~DecisionTree()
@@ -135,13 +187,13 @@ spQuestion DecisionTree::findBestSplit(QVector<QVector<float>>& trainingData, fl
 	return bestQuestion;
 }
 
-void DecisionTree::serialize(QDataStream& pStream)
+void DecisionTree::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
-    m_pRootNode->serialize(pStream);
+    m_pRootNode->serializeObject(pStream);
 }
 
-void DecisionTree::deserialize(QDataStream& pStream)
+void DecisionTree::deserializeObject(QDataStream& pStream)
 {
     qint32 version;
     pStream >> version;
@@ -149,5 +201,24 @@ void DecisionTree::deserialize(QDataStream& pStream)
     bool isNode = false;
     pStream >> isNode;
     m_pRootNode = new DecisionNode(nullptr, nullptr, nullptr);
-    m_pRootNode->deserialize(pStream);
+    m_pRootNode->deserializeObject(pStream);
+}
+
+void DecisionTree::printTree(DecisionNode* pNode, QString spacing)
+{
+    if (pNode == nullptr)
+    {
+        pNode = m_pRootNode.get();
+    }
+    Leaf* pLeaf = dynamic_cast<Leaf*>(pNode);
+    if (pLeaf != nullptr)
+    {
+        Console::print(spacing + "Predict " + pLeaf->print(), Console::eDEBUG);
+        return;
+    }
+    Console::print(spacing + pNode->getQuestion()->print(), Console::eDEBUG);
+    Console::print(spacing + "--> True:", Console::eDEBUG);
+    printTree(pNode->getNodeTrue() , spacing + "    ");
+    Console::print(spacing + "--> False:", Console::eDEBUG);
+    printTree(pNode->getNodeFalse() , spacing + "    ");
 }

@@ -44,12 +44,12 @@ public:
      * @brief serialize stores the object
      * @param pStream
      */
-    virtual void serialize(QDataStream& pStream) override;
+    virtual void serializeObject(QDataStream& pStream) override;
     /**
      * @brief deserialize restores the object
      * @param pStream
      */
-    virtual void deserialize(QDataStream& pStream) override;
+    virtual void deserializeObject(QDataStream& pStream) override;
     /**
      * @brief getVersion stream version for serialization
      * @return

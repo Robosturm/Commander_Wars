@@ -37,6 +37,12 @@ public:
         }
     }
     /**
+     * @brief getCOIndex
+     * @param id
+     * @return
+     */
+    qint32 getCOIndex(QString id);
+    /**
      * @brief getCOCount
      * @return the amount of units loaded at the current time
      */

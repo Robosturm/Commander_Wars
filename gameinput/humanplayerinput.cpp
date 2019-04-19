@@ -777,9 +777,9 @@ void HumanPlayerInput::deleteArrow()
     m_Arrows.clear();
 }
 
-void HumanPlayerInput::serialize(QDataStream&)
+void HumanPlayerInput::serializeObject(QDataStream&)
 {
 }
-void HumanPlayerInput::deserialize(QDataStream&)
+void HumanPlayerInput::deserializeObject(QDataStream&)
 {
 }

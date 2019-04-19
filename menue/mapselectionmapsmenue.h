@@ -46,6 +46,7 @@ signals:
     void buttonNext();
     void buttonStartGame();
     void buttonAllCOsRandom();
+    void sigShowSelectCO(qint32 player, quint8 co);
 public slots:
     // slots for changing the map
     void mapSelectionItemClicked(QString item);
@@ -62,6 +63,7 @@ public slots:
     void playerStartFondsChanged(float value, qint32 playerIdx);
     void playerTeamChanged(qint32 value, qint32 playerIdx);
     void playerColorChanged(QColor value, qint32 playerIdx);
+    void showSelectCO(qint32 player, quint8 co);
     void playerCO1Changed(QString coid, qint32 playerIdx);
     void playerCO2Changed(QString coid, qint32 playerIdx);
     void playerCOCanceled();

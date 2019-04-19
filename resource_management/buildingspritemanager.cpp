@@ -31,6 +31,18 @@ BuildingSpriteManager* BuildingSpriteManager::getInstance()
     return m_pInstance;
 }
 
+qint32 BuildingSpriteManager::getBuildingIndex(QString id)
+{
+    for (qint32 i = 0; i < m_loadedBuildings.size(); i++)
+    {
+        if (m_loadedBuildings[i] == id)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
 void BuildingSpriteManager::loadAll()
 {
     reset();

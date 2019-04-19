@@ -101,19 +101,19 @@ qint32 VictoryRule::getDefaultValue()
     }
 }
 
-void VictoryRule::serialize(QDataStream& pStream)
+void VictoryRule::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
     pStream << m_RuleID;
-    m_Variables.serialize(pStream);
+    m_Variables.serializeObject(pStream);
 }
 
-void VictoryRule::deserialize(QDataStream& pStream)
+void VictoryRule::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
     pStream >> m_RuleID;
-    m_Variables.deserialize(pStream);
+    m_Variables.deserializeObject(pStream);
 }
 
 void VictoryRule::checkDefeat()

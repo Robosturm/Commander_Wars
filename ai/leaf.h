@@ -4,6 +4,7 @@
 #include "decisionnode.h"
 
 #include "QObject"
+#include "qstring.h"
 
 #include "coreengine/fileserializable.h"
 
@@ -14,12 +15,13 @@ public:
         Leaf() = default;
         Leaf(QVector<QVector<float>>& trainingData);
         virtual ~Leaf() = default;
-        virtual void serialize(QDataStream& pStream)  override;
-        virtual void deserialize(QDataStream& pStream)  override;
+        virtual void serializeObject(QDataStream& pStream)  override;
+        virtual void deserializeObject(QDataStream& pStream)  override;
         virtual qint32 getVersion() override
         {
             return 1;
         }
+        QString print();
 public slots:
         virtual float getDecision(QVector<float>& input) override;
 private:

@@ -536,6 +536,29 @@ QmlVectorUnit* Player::getUnits()
     return GameMap::getInstance()->getUnits(this);
 }
 
+QmlVectorUnit* Player::getEnemyUnits()
+{
+    GameMap* pMap = GameMap::getInstance();
+    qint32 heigth = pMap->getMapHeight();
+    qint32 width = pMap->getMapWidth();
+    QmlVectorUnit* ret = new QmlVectorUnit();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+            if (pUnit != nullptr)
+            {
+                if ((isEnemyUnit(pUnit)))
+                {
+                   ret->append(pUnit);
+                }
+            }
+        }
+    }
+    return ret;
+}
+
 QmlVectorBuilding* Player::getBuildings()
 {
     return GameMap::getInstance()->getBuildings(this);
@@ -719,7 +742,7 @@ void Player::setFondsModifier(float value)
     fondsModifier = value;
 }
 
-void Player::serialize(QDataStream& pStream)
+void Player::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
     quint32 color = m_Color.rgb();
@@ -735,7 +758,7 @@ void Player::serialize(QDataStream& pStream)
     else
     {
         pStream << true;
-        playerCOs[0]->serialize(pStream);
+        playerCOs[0]->serializeObject(pStream);
     }
     if (playerCOs[1].get() == nullptr)
     {
@@ -744,7 +767,7 @@ void Player::serialize(QDataStream& pStream)
     else
     {
         pStream << true;
-        playerCOs[1]->serialize(pStream);
+        playerCOs[1]->serializeObject(pStream);
     }
      pStream << team;
      pStream << isDefeated;
@@ -768,7 +791,7 @@ void Player::serialize(QDataStream& pStream)
 
 
 }
-void Player::deserialize(QDataStream& pStream)
+void Player::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
@@ -790,14 +813,14 @@ void Player::deserialize(QDataStream& pStream)
         if (hasC0)
         {
             playerCOs[0] = new CO("", this);
-            playerCOs[0]->deserialize(pStream);
+            playerCOs[0]->deserializeObject(pStream);
         }
         bool hasC1 = false;
         pStream >> hasC1;
         if (hasC1)
         {
             playerCOs[1] = new CO("", this);
-            playerCOs[1]->deserialize(pStream);
+            playerCOs[1]->deserializeObject(pStream);
         }
         if (version > 3)
         {

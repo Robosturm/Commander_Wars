@@ -23,7 +23,7 @@ bool Question::matches(float value)
         case GameEnums::AIQuestionType_Between:
         {
             if ((value >= m_MinValue) &&
-                (value <= m_MaxValue))
+                (value < m_MaxValue))
             {
                 return true;
             }
@@ -47,7 +47,7 @@ bool Question::matches(float value)
         }
         case GameEnums::AIQuestionType_Smaler:
         {
-            if (value < m_MinValue)
+            if (value <= m_MinValue)
             {
                 return true;
             }
@@ -62,20 +62,50 @@ bool Question::matches(QVector<float> &rData)
 	return matches(rData[m_Index]);
 }
 
-void Question::serialize(QDataStream& pStream)
+qint32 Question::getIndex() const
+{
+    return m_Index;
+}
+
+QString Question::print()
+{
+    switch (m_QuestionType)
+    {
+        case GameEnums::AIQuestionType_Between:
+        {
+            return "Index " + QString::number(m_Index) + " Question " +  QString::number(m_MinValue, 'f', 1) + " < value < " + QString::number(m_MaxValue, 'f', 1);
+        }
+        case GameEnums::AIQuestionType_Equal:
+        {
+            return "Index " + QString::number(m_Index) + " Question " +  QString::number(m_MinValue, 'f', 1) + " = value";
+        }
+        case GameEnums::AIQuestionType_Greater:
+        {
+            return "Index " + QString::number(m_Index) + " Question " +  QString::number(m_MinValue, 'f', 1) + " < value";
+        }
+        case GameEnums::AIQuestionType_Smaler:
+        {
+            return "Index " + QString::number(m_Index) + " Question " +  QString::number(m_MinValue, 'f', 1) + " > value";
+        }
+    }
+}
+
+void Question::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
     pStream << m_MinValue;
     pStream << m_MaxValue;
+    pStream << m_Index;
     pStream << static_cast<qint32>(m_QuestionType);
 }
 
-void Question::deserialize(QDataStream& pStream)
+void Question::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
     pStream >> m_MinValue;
     pStream >> m_MaxValue;
+    pStream >> m_Index;
     qint32 type = 0;
     pStream >> type;
     m_QuestionType = static_cast<GameEnums::AIQuestionType>(type);

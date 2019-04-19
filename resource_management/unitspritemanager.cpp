@@ -82,6 +82,18 @@ bool UnitSpriteManager::loadUnit(const QString& unitID)
     return false;
 }
 
+qint32 UnitSpriteManager::getUnitIndex(QString id)
+{
+    for (qint32 i = 0; i < m_loadedUnits.size(); i++)
+    {
+        if (m_loadedUnits[i] == id)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
 void UnitSpriteManager::reset()
 {
     Mainapp* pMainapp = Mainapp::getInstance();

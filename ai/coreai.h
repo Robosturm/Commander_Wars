@@ -7,6 +7,8 @@
 
 #include "gameinput/basegameinputif.h"
 
+#include "ai/question.h"
+
 class GameAction;
 class Unit;
 class UnitPathFindingSystem;
@@ -56,11 +58,25 @@ public slots:
      * @param ret
      */
     void getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVector3D>& ret, QVector<QPoint>& moveTargetFields);
-protected:
 
+
+    /**
+     * @brief getTrainingData reads the training data from a training file for a pipeline either decision tree or neural network
+     * @param file
+     * @param trainingData
+     * @param questions
+     */
+    static void getTrainingData(QString file, QVector<QVector<float>>& trainingData, QVector<QVector<spQuestion>>& questions);
+protected:
+    static const QString ACTION_BUILD_UNITS;
     static const QString ACTION_CAPTURE;
     static const QString ACTION_FIRE;
     static const QString ACTION_NEXT_PLAYER;
+    static const QString ACTION_ACTIVATE_POWER_CO_0;
+    static const QString ACTION_ACTIVATE_POWER_CO_1;
+    static const QString ACTION_ACTIVATE_SUPERPOWER_CO_0;
+    static const QString ACTION_ACTIVATE_SUPERPOWER_CO_1;
+
 private:
     bool finish{false};
 };

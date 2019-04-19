@@ -57,6 +57,17 @@ void COSpriteManager::loadAll()
     }
 }
 
+qint32 COSpriteManager::getCOIndex(QString id)
+{
+    for (qint32 i = 0; i < m_loadedCOs.size(); i++)
+    {
+        if (m_loadedCOs[i] == id)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
 
 bool COSpriteManager::loadCO(const QString& coID)
 {

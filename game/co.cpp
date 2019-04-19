@@ -783,7 +783,7 @@ void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bo
     pApp->getInterpreter()->doFunction(coID, function1, args1);
 }
 
-void CO::serialize(QDataStream& pStream)
+void CO::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
     pStream << coID;
@@ -791,10 +791,10 @@ void CO::serialize(QDataStream& pStream)
     pStream << superpowerStars;
     pStream << powerFilled;
     pStream << static_cast<qint32>(m_PowerMode);
-    m_Variables.serialize(pStream);
+    m_Variables.serializeObject(pStream);
 }
 
-void CO::deserialize(QDataStream& pStream)
+void CO::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
@@ -807,7 +807,7 @@ void CO::deserialize(QDataStream& pStream)
     m_PowerMode = static_cast<GameEnums::PowerMode>(value);
     if (version > 1)
     {
-        m_Variables.deserialize(pStream);
+        m_Variables.deserializeObject(pStream);
     }
     init();
 }

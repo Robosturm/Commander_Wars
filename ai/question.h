@@ -9,6 +9,7 @@
 #include "coreengine/fileserializable.h"
 
 #include "game/GameEnums.h"
+#include "qstring.h"
 
 class Question;
 typedef oxygine::intrusive_ptr<Question> spQuestion;
@@ -23,15 +24,18 @@ public:
 
         virtual ~Question() = default;
 
-        virtual void serialize(QDataStream& pStream)  override;
-        virtual void deserialize(QDataStream& pStream)  override;
+        virtual void serializeObject(QDataStream& pStream)  override;
+        virtual void deserializeObject(QDataStream& pStream)  override;
         virtual qint32 getVersion() override
         {
             return 1;
         }
+        qint32 getIndex() const;
+        QString print();
 public slots:
         bool matches(float value);
         bool matches(QVector<float> &rData);
+
 private:
         float m_MinValue;
         float m_MaxValue;

@@ -477,7 +477,7 @@ void Building::setHp(const qint32 &Hp)
     m_Hp = Hp;
 }
 
-void Building::serialize(QDataStream& pStream)
+void Building::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
     pStream << m_BuildingID.toStdString().c_str();
@@ -491,10 +491,10 @@ void Building::serialize(QDataStream& pStream)
     }
     pStream << m_Hp;
     pStream << fireCount;
-    m_Variables.serialize(pStream);
+    m_Variables.serializeObject(pStream);
 }
 
-void Building::deserialize(QDataStream& pStream)
+void Building::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
@@ -517,6 +517,6 @@ void Building::deserialize(QDataStream& pStream)
     }
     if (version > 2)
     {
-        m_Variables.deserialize(pStream);
+        m_Variables.deserializeObject(pStream);
     }
 }

@@ -473,19 +473,19 @@ void GameRules::setRankingSystem(bool RankingSystem)
     m_RankingSystem = RankingSystem;
 }
 
-void GameRules::serialize(QDataStream& pStream)
+void GameRules::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
     pStream << static_cast<qint32>(m_VictoryRules.size());
     for (qint32 i = 0; i < m_VictoryRules.size(); i++)
     {
-        m_VictoryRules[i]->serialize(pStream);
+        m_VictoryRules[i]->serializeObject(pStream);
     }
 
     pStream << static_cast<qint32>(m_Weathers.size());
     for (qint32 i = 0; i < m_Weathers.size(); i++)
     {
-        m_Weathers[i]->serialize(pStream);
+        m_Weathers[i]->serializeObject(pStream);
         pStream << m_WeatherChances[i];
     }
     pStream << m_weatherDuration;
@@ -498,7 +498,7 @@ void GameRules::serialize(QDataStream& pStream)
     pStream << static_cast<qint32>(m_FogMode);
 }
 
-void GameRules::deserialize(QDataStream& pStream)
+void GameRules::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
@@ -507,13 +507,13 @@ void GameRules::deserialize(QDataStream& pStream)
     for (qint32 i = 0; i < size; i++)
     {
         m_VictoryRules.append(new VictoryRule());
-        m_VictoryRules[i]->deserialize(pStream);
+        m_VictoryRules[i]->deserializeObject(pStream);
     }
     pStream >> size;
     for (qint32 i = 0; i < size; i++)
     {
         m_Weathers.append(new Weather());
-        m_Weathers[i]->deserialize(pStream);
+        m_Weathers[i]->deserializeObject(pStream);
         qint32 chance = 0;
         pStream >> chance;
         m_WeatherChances.append(chance);

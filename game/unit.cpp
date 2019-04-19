@@ -1438,7 +1438,7 @@ bool Unit::isStealthed(Player* pPlayer)
     return false;
 }
 
-void Unit::serialize(QDataStream& pStream)
+void Unit::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
     pStream << m_UnitID.toStdString().c_str();
@@ -1453,14 +1453,14 @@ void Unit::serialize(QDataStream& pStream)
     pStream << units;
     for (qint32 i = 0; i < units; i++)
     {
-        m_TransportUnits[i]->serialize(pStream);
+        m_TransportUnits[i]->serializeObject(pStream);
     }
     pStream << capturePoints;
     pStream << m_Hidden;
-    m_Variables.serialize(pStream);
+    m_Variables.serializeObject(pStream);
 }
 
-void Unit::deserialize(QDataStream& pStream)
+void Unit::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
@@ -1499,7 +1499,7 @@ void Unit::deserialize(QDataStream& pStream)
         for (qint32 i = 0; i < units; i++)
         {
             m_TransportUnits.append(new Unit());
-            m_TransportUnits[i]->deserialize(pStream);
+            m_TransportUnits[i]->deserializeObject(pStream);
         }
     }
     if (version > 2)
@@ -1514,7 +1514,7 @@ void Unit::deserialize(QDataStream& pStream)
     }
     if (version > 4)
     {
-        m_Variables.deserialize(pStream);
+        m_Variables.deserializeObject(pStream);
     }
 }
 

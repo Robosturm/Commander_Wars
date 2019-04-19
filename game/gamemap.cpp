@@ -52,7 +52,7 @@ GameMap::GameMap(QString map, bool onlyLoad)
     QFile file(map);
     file.open(QIODevice::ReadOnly);
     QDataStream pStream(&file);
-    deserialize(pStream);
+    deserializeObject(pStream);
     if (!onlyLoad)
     {
         updateSprites();
@@ -573,7 +573,7 @@ bool GameMap::canBePlaced(const QString& terrainID, qint32 x, qint32 y)
     }
 }
 
-void GameMap::serialize(QDataStream& pStream)
+void GameMap::serializeObject(QDataStream& pStream)
 {
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
@@ -590,7 +590,7 @@ void GameMap::serialize(QDataStream& pStream)
         {
             currentPlayerIdx = i;
         }
-        players[i]->serialize(pStream);
+        players[i]->serializeObject(pStream);
     }
 
 
@@ -602,13 +602,13 @@ void GameMap::serialize(QDataStream& pStream)
         for (qint32 x = 0; x < width; x++)
         {
             // serialize
-            fields.at(y)->at(x)->serialize(pStream);
+            fields.at(y)->at(x)->serializeObject(pStream);
         }
     }
-    m_Rules->serialize(pStream);
+    m_Rules->serializeObject(pStream);
 }
 
-void GameMap::deserialize(QDataStream& pStream)
+void GameMap::deserializeObject(QDataStream& pStream)
 {
     clearMap();
 
@@ -630,7 +630,7 @@ void GameMap::deserialize(QDataStream& pStream)
         // create new player
         players.append(new Player());
         // get player data from stream
-        players[i]->deserialize(pStream);
+        players[i]->deserializeObject(pStream);
     }
 
     qint32 currentPlayerIdx = 0;
@@ -648,7 +648,7 @@ void GameMap::deserialize(QDataStream& pStream)
         {
             spTerrain pTerrain = Terrain::createTerrain("", x, y);
             fields[y]->append(pTerrain);
-            pTerrain->deserialize(pStream);
+            pTerrain->deserializeObject(pStream);
             this->addChild(pTerrain);
             pTerrain->setPosition(x * Imagesize, y * Imagesize);
             pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
@@ -658,7 +658,7 @@ void GameMap::deserialize(QDataStream& pStream)
     m_Rules = new  GameRules();
     if (version > 2)
     {
-        m_Rules->deserialize(pStream);
+        m_Rules->deserializeObject(pStream);
     }
     for (qint32 i = 0; i < playerCount; i++)
     {

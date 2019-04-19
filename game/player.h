@@ -33,12 +33,12 @@ public:
      * @brief serialize stores the object
      * @param pStream
      */
-    virtual void serialize(QDataStream& pStream) override;
+    virtual void serializeObject(QDataStream& pStream) override;
     /**
      * @brief deserialize restores the object
      * @param pStream
      */
-    virtual void deserialize(QDataStream& pStream) override;
+    virtual void deserializeObject(QDataStream& pStream) override;
     /**
      * @brief getVersion version of the file
      * @return
@@ -165,6 +165,11 @@ public slots:
      * @return
      */
     QmlVectorUnit* getUnits();
+    /**
+     * @brief getEnemyUnits
+     * @return
+     */
+    QmlVectorUnit* getEnemyUnits();
     /**
      * @brief getBuildings
      * @return

@@ -12,12 +12,12 @@ public:
      * @brief serialize stores the object
      * @param pStream
      */
-    virtual void serialize(QDataStream& pStream) = 0;
+    virtual void serializeObject(QDataStream& pStream) = 0;
     /**
      * @brief deserialize restores the object
      * @param pStream
      */
-    virtual void deserialize(QDataStream& pStream) = 0;
+    virtual void deserializeObject(QDataStream& pStream) = 0;
     /**
      * @brief getVersion version of the file
      * @return

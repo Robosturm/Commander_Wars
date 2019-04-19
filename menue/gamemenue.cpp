@@ -189,7 +189,7 @@ void GameMenue::saveMap(QString filename)
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
         GameMap* pMap = GameMap::getInstance();
-        pMap->serialize(stream);
+        pMap->serializeObject(stream);
         file.close();
     }
     pApp->continueThread();

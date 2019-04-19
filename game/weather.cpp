@@ -18,19 +18,19 @@ Weather::Weather()
     Interpreter::setCppOwnerShip(this);
 }
 
-void Weather::serialize(QDataStream& pStream)
+void Weather::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
     pStream << m_WeatherId;
-    m_Variables.serialize(pStream);
+    m_Variables.serializeObject(pStream);
 }
 
-void Weather::deserialize(QDataStream& pStream)
+void Weather::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
     pStream >> m_WeatherId;
-    m_Variables.deserialize(pStream);
+    m_Variables.deserializeObject(pStream);
 }
 
 QString Weather::getWeatherName()

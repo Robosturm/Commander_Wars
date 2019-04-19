@@ -20,11 +20,23 @@ public:
         DecisionNode(spQuestion pQuestion, spDecisionNode pNodeTrue, spDecisionNode pNodeFalse);
         virtual ~DecisionNode();
 
-        virtual void serialize(QDataStream& pStream)  override;
-        virtual void deserialize(QDataStream& pStream)  override;
+        virtual void serializeObject(QDataStream& pStream)  override;
+        virtual void deserializeObject(QDataStream& pStream)  override;
         virtual qint32 getVersion() override
         {
             return 1;
+        }
+        inline DecisionNode* getNodeTrue()
+        {
+            return m_pNodeTrue.get();
+        }
+        inline DecisionNode* getNodeFalse()
+        {
+            return m_pNodeFalse.get();
+        }
+        inline Question* getQuestion()
+        {
+            return m_pQuestion.get();
         }
 public slots:
         virtual float getDecision(QVector<float>& input);

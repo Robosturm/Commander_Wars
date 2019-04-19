@@ -761,7 +761,7 @@ qint32 Terrain::getBonusVision(Unit* pUnit)
     }
 }
 
-void Terrain::serialize(QDataStream& pStream)
+void Terrain::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
     pStream << terrainID.toStdString().c_str();
@@ -772,7 +772,7 @@ void Terrain::serialize(QDataStream& pStream)
     else
     {
         pStream << true;
-        m_pBaseTerrain->serialize(pStream);
+        m_pBaseTerrain->serializeObject(pStream);
     }
     if (m_Building.get() == nullptr)
     {
@@ -783,7 +783,7 @@ void Terrain::serialize(QDataStream& pStream)
         if (m_Building->getTerrain() == this)
         {
             pStream << true;
-            m_Building->serialize(pStream);
+            m_Building->serializeObject(pStream);
         }
         else
         {
@@ -797,12 +797,12 @@ void Terrain::serialize(QDataStream& pStream)
     else
     {
         pStream << true;
-        m_Unit->serialize(pStream);
+        m_Unit->serializeObject(pStream);
     }
     pStream << hp;
 }
 
-void Terrain::deserialize(QDataStream& pStream)
+void Terrain::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
@@ -815,7 +815,7 @@ void Terrain::deserialize(QDataStream& pStream)
     if (hasBaseTerrain)
     {
         m_pBaseTerrain = createTerrain("", x, y);
-        m_pBaseTerrain->deserialize(pStream);
+        m_pBaseTerrain->deserializeObject(pStream);
         m_pBaseTerrain->setPriority(static_cast<qint16>(DrawPriority::Terrain));
         m_pBaseTerrain->setPosition(0, 0);
         this->addChild(m_pBaseTerrain);
@@ -825,7 +825,7 @@ void Terrain::deserialize(QDataStream& pStream)
     if (hasBuilding)
     {
         m_Building = new Building("");
-        m_Building->deserialize(pStream);
+        m_Building->deserializeObject(pStream);
         m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
         m_Building->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
         this->addChild(m_Building);
@@ -836,7 +836,7 @@ void Terrain::deserialize(QDataStream& pStream)
     if (hasUnit)
     {
         m_Unit = new Unit("", nullptr);
-        m_Unit->deserialize(pStream);
+        m_Unit->deserializeObject(pStream);
         m_Unit->setPriority(static_cast<qint16>(DrawPriority::Unit));
         m_Unit->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
         this->addChild(m_Unit);

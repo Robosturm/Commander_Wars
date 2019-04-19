@@ -182,6 +182,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
     m_pRuleSelection->setPosition(10, 20);
     addChild(m_pRuleSelection);
 
+    connect(this, &MapSelectionMapsMenue::sigShowSelectCO, this, &MapSelectionMapsMenue::showSelectCO, Qt::QueuedConnection);
     hideCOSelection();
     hideRuleSelection();
 }
@@ -546,6 +547,24 @@ void MapSelectionMapsMenue::hideCOSelection()
     m_playerAIs.clear();
     pApp->continueThread();
 }
+
+void MapSelectionMapsMenue::showSelectCO(qint32 player, quint8 co)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    QString coid = "";
+    if (m_pCurrentMap->getPlayer(player)->getCO(co) != nullptr)
+    {
+        coid = m_pCurrentMap->getPlayer(player)->getCO(co)->getCoID();
+    }
+    spCOSelectionDialog dialog = new COSelectionDialog(coid, m_pCurrentMap->getPlayer(player)->getColor(), player);
+    this->addChild(dialog);
+    m_pPlayerSelection->setVisible(false);
+    connect(dialog.get(), &COSelectionDialog::editFinished, this , &MapSelectionMapsMenue::playerCO1Changed, Qt::QueuedConnection);
+    connect(dialog.get(), &COSelectionDialog::canceled, this , &MapSelectionMapsMenue::playerCOCanceled, Qt::QueuedConnection);
+    pApp->continueThread();
+}
+
 void MapSelectionMapsMenue::showCOSelection()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -677,17 +696,8 @@ void MapSelectionMapsMenue::showCOSelection()
             playerCO1Changed("", i);
         }
         spriteCO1->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
-        {
-            QString coid = "";
-            if (m_pCurrentMap->getPlayer(i)->getCO(0) != nullptr)
-            {
-                coid = m_pCurrentMap->getPlayer(i)->getCO(0)->getCoID();
-            }
-            spCOSelectionDialog dialog = new COSelectionDialog(coid, m_pCurrentMap->getPlayer(i)->getColor(), i);
-            this->addChild(dialog);
-            m_pPlayerSelection->setVisible(false);
-            connect(dialog.get(), &COSelectionDialog::editFinished, this , &MapSelectionMapsMenue::playerCO1Changed, Qt::QueuedConnection);
-            connect(dialog.get(), &COSelectionDialog::canceled, this , &MapSelectionMapsMenue::playerCOCanceled, Qt::QueuedConnection);
+        {           
+            emit sigShowSelectCO(i, 0);
         });
 
         oxygine::spSprite spriteCO2 = new oxygine::Sprite();
@@ -705,17 +715,8 @@ void MapSelectionMapsMenue::showCOSelection()
             playerCO2Changed("", i);
         }
         spriteCO2->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
-        {
-            QString coid = "";
-            if (m_pCurrentMap->getPlayer(i)->getCO(1) != nullptr)
-            {
-                coid = m_pCurrentMap->getPlayer(i)->getCO(1)->getCoID();
-            }
-            spCOSelectionDialog dialog = new COSelectionDialog(coid, m_pCurrentMap->getPlayer(i)->getColor(), i);
-            this->addChild(dialog);
-            m_pPlayerSelection->setVisible(false);
-            connect(dialog.get(), &COSelectionDialog::editFinished, this , &MapSelectionMapsMenue::playerCO2Changed, Qt::QueuedConnection);
-            connect(dialog.get(), &COSelectionDialog::canceled, this , &MapSelectionMapsMenue::playerCOCanceled, Qt::QueuedConnection);
+        {           
+            emit sigShowSelectCO(i, 1);
         });
 
         bool up = false;

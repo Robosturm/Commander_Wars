@@ -493,7 +493,7 @@ void EditorMenue::saveMap(QString filename)
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&file);
         GameMap* pMap = GameMap::getInstance();
-        pMap->serialize(stream);
+        pMap->serializeObject(stream);
         file.close();
     }
     pApp->continueThread();
@@ -512,7 +512,7 @@ void EditorMenue::loadMap(QString filename)
             QFile file(filename);
             file.open(QIODevice::ReadOnly);
             QDataStream stream(&file);
-            GameMap::getInstance()->deserialize(stream);
+            GameMap::getInstance()->deserializeObject(stream);
             file.close();
             GameMap::getInstance()->updateSprites();
             m_EditorSelection->createPlayerSelection();

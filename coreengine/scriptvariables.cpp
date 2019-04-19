@@ -12,17 +12,17 @@ ScriptVariables::ScriptVariables()
     Interpreter::setCppOwnerShip(this);
 }
 
-void ScriptVariables::serialize(QDataStream& pStream)
+void ScriptVariables::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
     pStream << static_cast<qint32>(m_Variables.size());
     for (qint32 i = 0; i < m_Variables.size(); i++)
     {
-        m_Variables[i]->serialize(pStream);
+        m_Variables[i]->serializeObject(pStream);
     }
 }
 
-void ScriptVariables::deserialize(QDataStream& pStream)
+void ScriptVariables::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
@@ -31,7 +31,7 @@ void ScriptVariables::deserialize(QDataStream& pStream)
     for (qint32 i = 0; i < size; i++)
     {
         ScriptVariable* pVar = new ScriptVariable();
-        pVar->deserialize(pStream);
+        pVar->deserializeObject(pStream);
         m_Variables.append(pVar);
     }
 }

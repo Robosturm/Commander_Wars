@@ -34,6 +34,12 @@ public slots:
         }
     }
     /**
+     * @brief getBuildingIndex
+     * @param id
+     * @return
+     */
+    qint32 getBuildingIndex(QString id);
+    /**
      * @brief getBuildingCount
      * @return the amount of buildings loaded at the current time
      */
