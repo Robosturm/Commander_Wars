@@ -382,7 +382,6 @@ void HumanPlayerInput::menuItemSelected(QString itemID, qint32 cost)
         // set the id
         m_pGameAction->setActionID(itemID);
         m_pGameAction->setCosts(m_pGameAction->getCosts() + cost);
-        // check if the action needs further information
     }
     // we want to append some data to the action
     else
@@ -392,6 +391,7 @@ void HumanPlayerInput::menuItemSelected(QString itemID, qint32 cost)
         m_pGameAction->setCosts(m_pGameAction->getCosts() + cost);
         m_pGameAction->setInputStep(m_pGameAction->getInputStep() + 1);
     }
+    // check if the action needs further information
     if (m_pGameAction->isFinalStep())
     {
         // if not perform action

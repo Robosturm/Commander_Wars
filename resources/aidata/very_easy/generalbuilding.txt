@@ -1,0 +1,21 @@
+// Fonds                           | Fonds per Building                 |  Units      | Direct / Indirects            | Infantry   | Result
+type NUMBER:4000_>|4000_<_10000|10000_<   NUMBER:4000_>|4000_<_10000|10000_<    NUMBER:10_<  NUMBER:0.8_>|0.8_<_1.2|1.2_<    NUMBER:5_<   UNIT
+3000                                 3000                                  7            1.0                             4            INFANTRY
+3000                                 3000                                  7            0.7                             4            INFANTRY
+3000                                 3000                                  7            1.3                             4            INFANTRY
+11000                                3000                                  11           1.0                             4            INFANTRY
+11000                                3000                                  7            1.0                             4            INFANTRY
+11000                                3000                                  11           1.0                             7            INFANTRY
+11000                                3000                                  7            1.0                             7            INFANTRY
+11000                                3000                                  11           1.0                             4            MECH
+11000                                3000                                  11           1.0                             4            MECH
+11000                                3000                                  11           1.3                             4            MECH
+11000                                3000                                  11           0.7                             4            MECH
+11000                                3000                                  11           1.0                             4            MOTORBIKE
+11000                                3000                                  11           1.0                             4            MOTORBIKE
+11000                                3000                                  11           1.3                             4            MOTORBIKE
+11000                                3000                                  11           0.7                             4            MOTORBIKE
+11000                                3000                                  11           1.0                             4            SNIPER
+11000                                3000                                  11           1.0                             4            SNIPER
+11000                                3000                                  11           1.3                             4            SNIPER
+11000                                3000                                  11           0.7                             4            SNIPER

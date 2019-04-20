@@ -27,6 +27,7 @@ public:
      * @brief process
      */
     virtual void process() = 0;
+
 signals:
     /**
      * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
@@ -34,6 +35,16 @@ signals:
      */
     void performAction(GameAction* pAction);
 public slots:
+    /**
+     * @brief getEnableBuildingAttack
+     * @return
+     */
+    bool getEnableBuildingAttack() const;
+    /**
+     * @brief setEnableBuildingAttack
+     * @param value
+     */
+    void setEnableBuildingAttack(bool value);
     void nextAction();
     /**
      * @brief getBestTarget
@@ -68,6 +79,9 @@ public slots:
      */
     static void getTrainingData(QString file, QVector<QVector<float>>& trainingData, QVector<QVector<spQuestion>>& questions);
 protected:
+    void addMenuItemData(GameAction* pGameAction, QString itemID, qint32 cost);
+    void addSelectedFieldData(GameAction* pGameAction, QPoint point);
+
     static const QString ACTION_BUILD_UNITS;
     static const QString ACTION_CAPTURE;
     static const QString ACTION_FIRE;
@@ -79,6 +93,7 @@ protected:
 
 private:
     bool finish{false};
+    bool enableBuildingAttack{true};
 };
 
 #endif // COREAI_H

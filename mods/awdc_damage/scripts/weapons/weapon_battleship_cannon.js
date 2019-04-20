@@ -55,7 +55,7 @@ var Constructor = function()
 			// ranged land units
 			case "ARTILLERY":
                 return 70;
-			case "ANITANKCANNON":
+			case "ANTITANKCANNON":
                 return 55;
 			case "MISSILE":
                 return 75;

@@ -4,6 +4,8 @@
 
 #include "menue/gamemenue.h"
 
+#include "game/gameanimationfactory.h"
+
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
 #include "resource_management/cospritemanager.h"
@@ -62,6 +64,23 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
 
     setPositionTop(false);
     textTimer.start();
+    addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
+    {
+        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        if (pTouchEvent != nullptr)
+        {
+            if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
+            {
+                emit sigRightClick();
+            }
+        }
+    });
+    connect(this, &GameAnimationDialog::sigRightClick, this, &GameAnimationDialog::rightClick, Qt::QueuedConnection);
+}
+
+void GameAnimationDialog::rightClick()
+{
+    GameAnimationFactory::finishAllAnimations();
 }
 
 void GameAnimationDialog::startFinishTimer()

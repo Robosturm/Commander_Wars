@@ -9,9 +9,9 @@ var Constructor = function()
     {
         return 1;
     };
-	this.loadBaseTerrain = function(terrain)
+    this.loadBaseTerrain = function(terrain)
     {
-		terrain.loadBaseTerrain("PLAINS");
+        terrain.loadBaseTerrain("PLAINS");
     };
     this.loadBaseSprite = function(terrain)
     {
@@ -19,7 +19,7 @@ var Constructor = function()
     };
     this.getMiniMapIcon = function()
     {
-        return "plains";
+        return "minimap_plains";
     };
 };
 Constructor.prototype = TERRAIN;

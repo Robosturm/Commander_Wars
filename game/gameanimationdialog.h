@@ -15,7 +15,11 @@ public:
     GameAnimationDialog(quint32 frameTime);
 
     virtual void restart() override;
+signals:
+    void sigStartFinishTimer();
+    void sigRightClick();
 public slots:
+    void rightClick();
     virtual bool onFinished() override;
     /**
      * @brief setPositionTop wether dialog appears on top or bottom of the game
@@ -46,8 +50,7 @@ public slots:
      * @param speed
      */
     void setTextSpeed(qint32 speed);
-signals:
-    void sigStartFinishTimer();
+
 protected:
     virtual void update(const oxygine::UpdateState& us) override;
     void startFinishTimer();

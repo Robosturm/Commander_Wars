@@ -126,8 +126,23 @@ void CoreAI::getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVect
             }
             else
             {
-                // attacking a building or terrain
-                // do nothing for now
+                if (ret.size() == 0)
+                {
+                    ret.append(QVector3D(target.x(), target.y(), damage.x()));
+                    moveTargetFields.append(pAction->getActionTarget());
+                }
+                else if (ret[0].z() == damage.x())
+                {
+                    ret.append(QVector3D(target.x(), target.y(), damage.x()));
+                    moveTargetFields.append(pAction->getActionTarget());
+                }
+                else if (damage.x() > ret[0].z())
+                {
+                    ret.clear();
+                    moveTargetFields.clear();
+                    ret.append(QVector3D(target.x(), target.y(), damage.x()));
+                    moveTargetFields.append(pAction->getActionTarget());
+                }
             }
         }
         delete pMarkedFieldData;
@@ -300,4 +315,29 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
             }
         }
     }
+}
+
+bool CoreAI::getEnableBuildingAttack() const
+{
+    return enableBuildingAttack;
+}
+
+void CoreAI::setEnableBuildingAttack(bool value)
+{
+    enableBuildingAttack = value;
+}
+
+void CoreAI::addMenuItemData(GameAction* pGameAction, QString itemID, qint32 cost)
+{
+    pGameAction->writeDataString(itemID);
+    // increase costs and input step
+    pGameAction->setCosts(pGameAction->getCosts() + cost);
+    pGameAction->setInputStep(pGameAction->getInputStep() + 1);
+}
+
+void CoreAI::addSelectedFieldData(GameAction* pGameAction, QPoint point)
+{
+    pGameAction->writeDataInt32(point.x());
+    pGameAction->writeDataInt32(point.y());
+    pGameAction->setInputStep(pGameAction->getInputStep() + 1);
 }

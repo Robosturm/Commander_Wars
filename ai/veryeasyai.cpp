@@ -12,9 +12,13 @@
 
 #include "game/unitpathfindingsystem.h"
 #include "resource_management/cospritemanager.h"
+#include "resource_management/unitspritemanager.h"
 
 VeryEasyAI::VeryEasyAI()
-    : m_COPowerTree("resources/aidata/veryeasycopower.tree", "resources/aidata/veryeasycopower.txt")
+    : m_COPowerTree("resources/aidata/very_easy/copower.tree", "resources/aidata/very_easy/copower.txt"),
+      m_GeneralBuildingTree("resources/aidata/very_easy/generalbuilding.tree", "resources/aidata/very_easy/generalbuilding.txt"),
+      m_AirportBuildingTree("resources/aidata/very_easy/airportbuilding.tree", "resources/aidata/very_easy/airportbuilding.txt"),
+      m_HarbourBuildingTree("resources/aidata/very_easy/harbourbuilding.tree", "resources/aidata/very_easy/harbourbuilding.txt")
 {
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
@@ -34,6 +38,7 @@ void VeryEasyAI::process()
     else if (captureBuildings(pUnits)){}
     else if (fireWithIndirectUnits(pUnits)){}
     else if (fireWithDirectUnits(pUnits)){}
+    else if (buildUnits(pBuildings, pUnits)){}
     else
     {
         turnMode = TurnTime::endOfTurn;
@@ -299,11 +304,7 @@ bool VeryEasyAI::attack(Unit* pUnit)
             {
                 pAction->setMovepath(QVector<QPoint>());
             }
-            volatile Unit* pDef = GameMap::getInstance()->getTerrain(target.x(), target.y())->getUnit();
-
-            pAction->writeDataInt32(static_cast<qint32>(target.x()));
-            pAction->writeDataInt32(static_cast<qint32>(target.y()));
-            pAction->setInputStep(pAction->getInputStep() + 1);
+            CoreAI::addSelectedFieldData(pAction, QPoint(target.x(), target.y()));
             if (pAction->isFinalStep())
             {
                 emit performAction(pAction);
@@ -317,6 +318,96 @@ bool VeryEasyAI::attack(Unit* pUnit)
         else
         {
             delete pAction;
+        }
+    }
+    return false;
+}
+
+bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits)
+{
+    QVector<float> data;
+    qint32 productionBuildings = 0;
+    for (qint32 i = 0; i < pBuildings->size(); i++)
+    {
+        Building* pBuilding = pBuildings->at(i);
+        QStringList actions = pBuilding->getActionList();
+        if (actions.contains(ACTION_BUILD_UNITS))
+        {
+            productionBuildings++;
+        }
+    }
+    qint32 infantryUnits = 0;
+    qint32 indirectUnits = 0;
+    qint32 directUnits = 0;
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pUnit = pUnits->at(i);
+        if (pUnit->getActionList().contains(ACTION_CAPTURE))
+        {
+            infantryUnits++;
+        }
+        if (pUnit->getMaxRange() > 1)
+        {
+            indirectUnits++;
+        }
+        else
+        {
+            directUnits++;
+        }
+    }
+    data.append(m_pPlayer->getFonds());
+    data.append(m_pPlayer->getFonds() / static_cast<float>(productionBuildings));
+    data.append(pUnits->size());
+    data.append(directUnits / static_cast<float>(indirectUnits));
+    data.append(infantryUnits);
+
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    for (qint32 i = 0; i < pBuildings->size(); i++)
+    {
+        Building* pBuilding = pBuildings->at(i);
+        QStringList actions = pBuilding->getActionList();
+        if (actions.contains(ACTION_BUILD_UNITS))
+        {
+            GameAction* pAction = new GameAction(ACTION_BUILD_UNITS);
+            pAction->setTarget(QPoint(pBuilding->getX(), pBuilding->getY()));
+            if (pAction->canBePerformed())
+            {
+                // we're allowed to build units here
+                MenuData* pData = pAction->getMenuStepData();
+                qint32 selectedUnit = -1;
+                if (pBuilding->getBuildingID() == "AIRPORT")
+                {
+                    selectedUnit = static_cast<qint32>(m_AirportBuildingTree.getDecision(data));
+                }
+                else if (pBuilding->getBuildingID() == "HARBOUR")
+                {
+                    selectedUnit = static_cast<qint32>(m_HarbourBuildingTree.getDecision(data));
+                }
+                else
+                {
+                    selectedUnit = static_cast<qint32>(m_GeneralBuildingTree.getDecision(data));
+                }
+                if (selectedUnit >= 0)
+                {
+                    QString unitID = pUnitSpriteManager->getUnitID(selectedUnit);
+                    qint32 menuIndex = pData->getActionIDs().indexOf(unitID);
+                    if (pData->getEnabledList()[menuIndex])
+                    {
+                        CoreAI::addMenuItemData(pAction, unitID, pData->getCostList()[menuIndex]);
+                        // produce the unit
+                        if (pAction->isFinalStep())
+                        {
+                            emit performAction(pAction);
+                            return true;
+                        }
+                    }
+                }
+                delete pData;
+            }
+            else
+            {
+                delete pAction;
+            }
         }
     }
     return false;

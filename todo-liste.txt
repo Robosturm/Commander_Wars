@@ -2,9 +2,8 @@
 
 - ai
 - victory screen
-
-- game statistics
-	- game recording
+	- game statistics
+		- game recording
 	
 - import awds maps
 

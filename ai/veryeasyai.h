@@ -48,11 +48,12 @@ protected:
     bool fireWithIndirectUnits(QmlVectorUnit* pUnits);
     bool fireWithDirectUnits(QmlVectorUnit* pUnits);
     bool attack(Unit* pUnit);
+    bool buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits);
     void finishTurn();
 private:
     DecisionTree m_COPowerTree;
 
-    DecisionTree m_BaseBuildingTree;
+    DecisionTree m_GeneralBuildingTree;
     DecisionTree m_AirportBuildingTree;
     DecisionTree m_HarbourBuildingTree;
 

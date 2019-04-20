@@ -40,7 +40,7 @@ var Constructor = function()
 
 			case "ARTILLERY":
 				return WEAPON.softDamage;
-			case "ANITANKCANNON":
+            case "ANTITANKCANNON":
 				return WEAPON.lowDamage;
 			case "MISSILE":
 				return WEAPON.mediumDamage;
