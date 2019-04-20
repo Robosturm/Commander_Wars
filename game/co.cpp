@@ -522,6 +522,7 @@ void CO::activatePower()
         GameMenue::getInstance()->updatePlayerinfo();
     }
 }
+
 void CO::activateSuperpower()
 {
     m_PowerMode = GameEnums::PowerMode_Superpower;

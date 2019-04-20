@@ -41,7 +41,7 @@
                 return WEAPON.softDamage;
 				
 			// heavy tanks
-			case "HEAVY_HOVERCRAFT":
+            case "HEAVY_HOVERCRAFT":
                 return WEAPON.softCounterDamage;
 			case "HEAVY_TANK":
                 return WEAPON.softCounterDamage;

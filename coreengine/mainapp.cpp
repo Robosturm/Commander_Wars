@@ -196,9 +196,13 @@ void Mainapp::quitGame()
 
 void Mainapp::update()
 {
-    if (m_SuspendCount <= 0)
+    m_sleeping = false;
+    if (m_SuspendCount > 0)
     {
-        m_sleeping = false;
+        m_sleeping = true;
+    }
+    else
+    {
         // Update engine-internal components
         // If input events are available, they are passed to Stage::instance.handleEvent
         // If the function returns true, it means that the user requested the application to terminate
@@ -222,14 +226,8 @@ void Mainapp::update()
         {
             exit();
         }
-
         m_Timer.start(5);
     }
-    else
-    {
-        m_sleeping = true;
-    }
-
 }
 
 void Mainapp::setup()

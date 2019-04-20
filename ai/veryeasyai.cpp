@@ -24,9 +24,6 @@ VeryEasyAI::VeryEasyAI()
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
-
-
-    m_GeneralBuildingTree.printTree();
 }
 
 void VeryEasyAI::process()
@@ -39,6 +36,7 @@ void VeryEasyAI::process()
     // make the ai to stuff
     if (useCOPower(pUnits, pEnemyUnits)){}
     else if (useBuilding(pBuildings)){}
+    else if (buildCOUnit(pUnits)){}
     else if (captureBuildings(pUnits)){}
     else if (fireWithIndirectUnits(pUnits)){}
     else if (fireWithDirectUnits(pUnits)){}
@@ -207,6 +205,50 @@ bool VeryEasyAI::useBuilding(QmlVectorBuilding* pBuildings)
     }
     return false;
 
+}
+
+bool VeryEasyAI::buildCOUnit(QmlVectorUnit* pUnits)
+{
+    QVector<float> data;
+    data.append(-1);
+    data.append(-1);
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        GameAction* pAction = new GameAction();
+        for (quint8 i2 = 0; i2 < 2; i2++)
+        {
+            Unit* pUnit = pUnits->at(i);
+
+            if (i2 == 0)
+            {
+                pAction->setActionID(ACTION_CO_UNIT_0);
+            }
+            else
+            {
+                pAction->setActionID(ACTION_CO_UNIT_1);
+            }
+            CO* pCO = m_pPlayer->getCO(i2);
+            if (pCO != nullptr)
+            {
+                data[0] = pCOSpriteManager->getCOIndex(pCO->getCoID());
+            }
+            data[1] = pUnitSpriteManager->getUnitIndex(pUnit->getUnitID());
+            float ret = m_COUnitTree.getDecision(data);
+            if (ret == 1.0f)
+            {
+                pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+                if (pAction->canBePerformed())
+                {
+                    emit performAction(pAction);
+                    return true;
+                }
+            }
+        }
+        delete pAction;
+    }
+    return false;
 }
 
 bool VeryEasyAI::captureBuildings(QmlVectorUnit* pUnits)

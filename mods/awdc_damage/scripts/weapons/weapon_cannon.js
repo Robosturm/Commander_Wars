@@ -37,7 +37,7 @@ var Constructor = function()
                 return 65;
 			case "LIGHT_TANK":
                 return 60;
-            case "HOVERTANK":
+            case "HOVERCRAFT":
                 return 60;
 				
 			// heavy tanks

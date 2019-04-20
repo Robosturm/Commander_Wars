@@ -57,7 +57,10 @@ Unit::~Unit()
         pCO = m_pOwner->getCO(1);
         if (pCO != nullptr)
         {
-            pCO->setCOUnit(nullptr);
+            if (pCO->getCOUnit() == this)
+            {
+                pCO->setCOUnit(nullptr);
+            }
         }
     }
 }

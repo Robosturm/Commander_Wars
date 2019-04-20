@@ -41,7 +41,7 @@ var Constructor = function()
                 return WEAPON.softDamage;
 				
 			// heavy tanks
-			case "HEAVY_HOVERCRAFT":
+            case "HEAVY_HOVERCRAFT":
                 return WEAPON.mediumDamage;
 			case "HEAVY_TANK":
                 return WEAPON.mediumDamage;

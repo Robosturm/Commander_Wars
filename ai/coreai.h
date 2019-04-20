@@ -90,6 +90,8 @@ protected:
     static const QString ACTION_ACTIVATE_POWER_CO_1;
     static const QString ACTION_ACTIVATE_SUPERPOWER_CO_0;
     static const QString ACTION_ACTIVATE_SUPERPOWER_CO_1;
+    static const QString ACTION_CO_UNIT_0;
+    static const QString ACTION_CO_UNIT_1;
 
 private:
     bool finish{false};

@@ -27,12 +27,6 @@ class CO : public QObject, public oxygine::Actor, public FileSerializable
 public:
     explicit CO(QString coID, Player* owner);
     /**
-     * @brief setCOUnit
-     * @param pUnit
-     * @return
-     */
-    void setCOUnit(Unit* pUnit);
-    /**
      * @brief serialize stores the object
      * @param pStream
      */
@@ -269,6 +263,12 @@ public slots:
      * @return
      */
     Unit* getCOUnit();
+    /**
+     * @brief setCOUnit
+     * @param pUnit
+     * @return
+     */
+    void setCOUnit(Unit* pUnit);
     /**
      * @brief getCORange
      * @return

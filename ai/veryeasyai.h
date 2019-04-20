@@ -44,6 +44,7 @@ public:
 protected:
     bool useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits);
     bool useBuilding(QmlVectorBuilding* pBuildings);
+    bool buildCOUnit(QmlVectorUnit* pUnits);
     bool captureBuildings(QmlVectorUnit* pUnits);
     bool fireWithIndirectUnits(QmlVectorUnit* pUnits);
     bool fireWithDirectUnits(QmlVectorUnit* pUnits);

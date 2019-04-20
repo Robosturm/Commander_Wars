@@ -37,7 +37,7 @@ var Constructor = function()
                 return WEAPON.softCounterDamage;
 			case "LIGHT_TANK":
                 return 75;
-			case "HOVERTANK":
+			case "HOVERCRAFT":
                 return 75;
 				
 			// heavy tanks
