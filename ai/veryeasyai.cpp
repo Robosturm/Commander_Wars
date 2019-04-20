@@ -8,6 +8,8 @@
 
 #include "game/unit.h"
 
+#include "game/gamemap.h"
+
 #include "game/unitpathfindingsystem.h"
 #include "resource_management/cospritemanager.h"
 
@@ -297,6 +299,8 @@ bool VeryEasyAI::attack(Unit* pUnit)
             {
                 pAction->setMovepath(QVector<QPoint>());
             }
+            volatile Unit* pDef = GameMap::getInstance()->getTerrain(target.x(), target.y())->getUnit();
+
             pAction->writeDataInt32(static_cast<qint32>(target.x()));
             pAction->writeDataInt32(static_cast<qint32>(target.y()));
             pAction->setInputStep(pAction->getInputStep() + 1);

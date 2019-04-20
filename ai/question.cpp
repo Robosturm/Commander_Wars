@@ -16,6 +16,7 @@ Question::Question(float minValue, float maxValue, qint32 index, GameEnums::AIQu
       m_QuestionType(QuestionType)
 {
 }
+
 bool Question::matches(float value)
 {
     switch (m_QuestionType)

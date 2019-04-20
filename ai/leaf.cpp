@@ -43,23 +43,6 @@ float Leaf::getDecision(QVector<float>&)
 	return m_Answers[0];
 }
 
-void Leaf::serializeObject(QDataStream& pStream)
-{
-    pStream << false; // --> 0 for node and 1 for leaf
-    pStream << getVersion();
-    pStream << m_AnswersChances.size();
-    for (qint32 i = 0; i < m_AnswersChances.size(); i++)
-    {
-        pStream << m_AnswersChances[i];
-    }
-    pStream << m_Answers.size();
-    for (qint32 i = 0; i < m_Answers.size(); i++)
-    {
-        pStream << m_Answers[i];
-    }
-    pStream << totalChance;
-}
-
 QString Leaf::print()
 {
     QString ret = "Answer ";
@@ -71,24 +54,43 @@ QString Leaf::print()
     return ret;
 }
 
+void Leaf::serializeObject(QDataStream& pStream)
+{
+    pStream << false; // --> 0 for node and 1 for leaf
+    pStream << getVersion();
+    pStream << static_cast<qint32>(m_AnswersChances.size());
+    for (qint32 i = 0; i < m_AnswersChances.size(); i++)
+    {
+        pStream << m_AnswersChances[i];
+    }
+    pStream << static_cast<qint32>(m_Answers.size());
+    for (qint32 i = 0; i < m_Answers.size(); i++)
+    {
+        pStream << m_Answers[i];
+    }
+    pStream << totalChance;
+}
+
+
+
 void Leaf::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
     qint32 size = 0;
-    pStream << size;
+    pStream >> size;
     for (qint32 i = 0; i < size; i++)
     {
         qint32 item = 0;
-        pStream << item;
+        pStream >> item;
         m_AnswersChances.append(item);
     }
     size = 0;
-    pStream << size;
+    pStream >> size;
     for (qint32 i = 0; i < size; i++)
     {
-        qint32 item = 0;
-        pStream << item;
+        float item = 0;
+        pStream >> item;
         m_Answers.append(item);
     }
 

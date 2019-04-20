@@ -32,7 +32,7 @@ public:
     }
 public slots:
     float getDecision(QVector<float>& input);
-    void printTree(DecisionNode* pNode, QString spacing = "");
+    void printTree(DecisionNode* pNode = nullptr, QString spacing = "");
 protected:
     void seperateTrueFalse(QVector<QVector<float>>& trainingData, spQuestion question, QVector<QVector<float>>& trueData, QVector<QVector<float>>& falseData);
     float giniImpurity(QVector<QVector<float>>& trainingData);

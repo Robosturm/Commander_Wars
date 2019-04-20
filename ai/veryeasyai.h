@@ -51,6 +51,11 @@ protected:
     void finishTurn();
 private:
     DecisionTree m_COPowerTree;
+
+    DecisionTree m_BaseBuildingTree;
+    DecisionTree m_AirportBuildingTree;
+    DecisionTree m_HarbourBuildingTree;
+
     TurnTime turnMode{TurnTime::startOfTurn};
 };
 

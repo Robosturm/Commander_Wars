@@ -46,9 +46,11 @@ public slots:
      * @param speed
      */
     void setTextSpeed(qint32 speed);
+signals:
+    void sigStartFinishTimer();
 protected:
     virtual void update(const oxygine::UpdateState& us) override;
-
+    void startFinishTimer();
 private:
     QString m_Text;
     qint32 writePosition{0};

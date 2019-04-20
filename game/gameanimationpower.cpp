@@ -98,7 +98,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, bool sup
             textField->setY(pApp->getSettings()->getHeight());
         }
         oxygine::spTweenQueue queue = new oxygine::TweenQueue();
-        oxygine::spTween tween2 = oxygine::createTween(TweenWait(), frameTime * 2 * i);
+        oxygine::spTween tween2 = oxygine::createTween(TweenWait(), frameTime * 2 * i + 1);
         oxygine::spTween tween3 = oxygine::createTween(TweenToggleVisibility(0, 1.0f), 1);
         oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenY(pApp->getSettings()->getHeight() / 2 - heigth / 2 * scale), frameTime * 4);
         queue->add(tween2);

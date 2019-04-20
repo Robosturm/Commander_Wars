@@ -15,6 +15,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
 
+    connect(this, &GameAnimationDialog::sigStartFinishTimer, this, &GameAnimationDialog::startFinishTimer, Qt::QueuedConnection);
     connect(&finishTimer, &QTimer::timeout, this, &GameAnimationDialog::onFinished, Qt::QueuedConnection);
 
     Settings* pSetting = Mainapp::getInstance()->getSettings();
@@ -63,6 +64,12 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     textTimer.start();
 }
 
+void GameAnimationDialog::startFinishTimer()
+{
+    finishTimer.setSingleShot(true);
+    finishTimer.start(autoFinishMs);
+}
+
 void GameAnimationDialog::update(const oxygine::UpdateState& us)
 {
     if (textTimer.elapsed() > textSpeed)
@@ -73,8 +80,7 @@ void GameAnimationDialog::update(const oxygine::UpdateState& us)
             writePosition = m_Text.size();
             if (autoFinishMs >= 0 && !finishTimer.isActive())
             {
-                finishTimer.setSingleShot(true);
-                finishTimer.start(autoFinishMs);
+                emit sigStartFinishTimer();
             }
         }
         m_TextField->setText(m_Text.mid(0, writePosition).toStdString().c_str());

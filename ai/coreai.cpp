@@ -240,37 +240,58 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
                         {
                             qint32 index = pCOSpriteManager->getCOIndex(items[i]);
                             trainingData[item].append(index);
-                            questions[item].append(new Question(index, i));
+                            if (i < types.size() - 1)
+                            {
+                                questions[item].append(new Question(index, i));
+                            }
                         }
                         else if (types[i] == "BUILDING")
                         {
                             qint32 index = pBuildingSpriteManager->getBuildingIndex(items[i]);
                             trainingData[item].append(index);
-                            questions[item].append(new Question(index, i));
+                            if (i < types.size() - 1)
+                            {
+                                questions[item].append(new Question(index, i));
+                            }
                         }
                         else if (types[i] == "UNIT")
                         {
                             qint32 index = pUnitSpriteManager->getUnitIndex(items[i]);
                             trainingData[item].append(index);
-                            questions[item].append(new Question(index, i));
+                            if (i < types.size() - 1)
+                            {
+                                questions[item].append(new Question(index, i));
+                            }
                         }
                         else if (types[i] == "NUMBER")
                         {
                             float value = items[i].toFloat();
-                            qint32 questionCount = numberQuestions.size();
-                            for (qint32 i = 0; i < questionCount; i++)
+                            trainingData[item].append(value);
+                            if (i < types.size() - 1)
                             {
-                                if (numberQuestions[i]->getIndex() == i &&
-                                    numberQuestions[i]->matches(value))
+                                qint32 questionCount = numberQuestions.size();
+                                spQuestion curQuestion = nullptr;
+                                for (qint32 i2 = 0; i2 < questionCount; i2++)
                                 {
-                                    trainingData[item].append(value);
-                                    questions[item].append(numberQuestions[i]);
-                                    break;
+                                    if (numberQuestions[i2]->getIndex() == i)
+                                    {
+                                        if (curQuestion.get() == nullptr)
+                                        {
+                                            curQuestion = numberQuestions[i2];
+                                        }
+                                        else if (numberQuestions[i2]->matches(value))
+                                        {
+                                            curQuestion = numberQuestions[i2];
+                                        }
+                                    }
                                 }
-                                else if (i == questionCount - 1)
+                                if (curQuestion.get() == nullptr)
                                 {
-                                    trainingData[item].append(value);
                                     questions[item].append(new Question(value, i));
+                                }
+                                else
+                                {
+                                    questions[item].append(curQuestion);
                                 }
                             }
                         }

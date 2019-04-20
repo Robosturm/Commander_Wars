@@ -31,7 +31,7 @@ DecisionTree::DecisionTree(QString treeFile, QString trainingDataFile)
     QFile trainingFile(trainingDataFile);
 
     trainingFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
-    QCryptographicHash myHash(QCryptographicHash::Sha256);
+    QCryptographicHash myHash(QCryptographicHash::Md4);
     myHash.addData(&trainingFile);
     QByteArray hash = myHash.result();
     trainingFile.close();
@@ -68,7 +68,7 @@ DecisionTree::DecisionTree(QString treeFile, QString trainingDataFile)
         QDataStream stream(&file);
         for (qint32 i = 0; i < hash.size(); i++)
         {
-            stream << hash[i];
+            stream << static_cast<qint8>(hash[i]);
         }
         serializeObject(stream);
     }

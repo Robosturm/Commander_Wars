@@ -133,30 +133,33 @@ var Constructor = function()
                                luckMode)
     {
         var baseDamage = Global[attackerWeapon].getBaseDamage(defender);
-        var offensive = 100 + attacker.getBonusOffensive(attackerPosition, defender, defender.getPosition(), isDefender);
-        var defensive = 100 + defender.getBonusDefensive(defenderPosition, attacker, attackerPosition);
-        var attackerHp = attackerBaseHp + attacker.getAttackHpBonus(attackerPosition);
-        var damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive);
-        if (luckMode !== GameEnums.LuckDamageMode_Off)
+        var damage = baseDamage;
+        if (baseDamage > 0)
         {
-            var luck = attackerBaseHp / 2 + attacker.getBonusLuck(attackerPosition);
-            var misfortune = attacker.getBonusMisfortune(attackerPosition);
-            if (luckMode === GameEnums.LuckDamageMode_On)
+            var offensive = 100 + attacker.getBonusOffensive(attackerPosition, defender, defender.getPosition(), isDefender);
+            var defensive = 100 + defender.getBonusDefensive(defenderPosition, attacker, attackerPosition);
+            var attackerHp = attackerBaseHp + attacker.getAttackHpBonus(attackerPosition);
+            var damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive);
+            if (luckMode !== GameEnums.LuckDamageMode_Off)
             {
-                damage += globals.randInt(-misfortune, luck);
+                var luck = attackerBaseHp / 2 + attacker.getBonusLuck(attackerPosition);
+                var misfortune = attacker.getBonusMisfortune(attackerPosition);
+                if (luckMode === GameEnums.LuckDamageMode_On)
+                {
+                    damage += globals.randInt(-misfortune, luck);
+                }
+                else if (luckMode === GameEnums.LuckDamageMode_Average)
+                {
+                    damage += (-misfortune + luck) / 2;
+                }
             }
-            else if (luckMode === GameEnums.LuckDamageMode_Average)
+            damage -= defender.getDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,
+                                                  defenderPosition, isDefender);
+            // avoid healing through negativ damage caused by misfortune
+            if (baseDamage >= 0 && damage < 0)
             {
-                damage += (-misfortune + luck) / 2;
+                damage = 0;
             }
-        }
-        damage -= defender.getDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,
-                                    defenderPosition, isDefender);
-
-        // avoid healing through negativ damage caused by misfortune
-        if (baseDamage >= 0 && damage < 0)
-        {
-            damage = 0;
         }
         return damage;
     };
