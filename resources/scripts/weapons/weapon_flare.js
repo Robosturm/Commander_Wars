@@ -25,7 +25,7 @@ var Constructor = function()
                 return WEAPON.HighDamage;
             case "LIGHT_TANK":
                 return WEAPON.HighDamage;
-            case "HOVERTANK":
+            case "HOVERCRAFT":
                 return WEAPON.lowDamage;
             case "FLARE":
                 return WEAPON.mediumDamage;
