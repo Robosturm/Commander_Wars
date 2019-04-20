@@ -15,7 +15,7 @@ DecisionTree::DecisionTree(spDecisionNode pRootNode)
 {
 }
 
-DecisionTree::DecisionTree(QVector<QVector<float>>& trainingData, QVector<QVector<spQuestion>>& questions)
+DecisionTree::DecisionTree(QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions)
 {
 	m_pRootNode = train(trainingData, questions);
 }
@@ -59,7 +59,7 @@ DecisionTree::DecisionTree(QString treeFile, QString trainingDataFile)
     if (needsTraining)
     {
         QVector<QVector<float>> trainingData;
-        QVector<QVector<spQuestion>> questions;
+        QVector<QVector<spDecisionQuestion>> questions;
         CoreAI::getTrainingData(trainingDataFile, trainingData, questions);
         m_pRootNode = train(trainingData, questions);
 
@@ -83,22 +83,23 @@ float DecisionTree::getDecision(QVector<float>& input)
 	return m_pRootNode->getDecision(input);
 }
 
-spDecisionNode DecisionTree::train(QVector<QVector<float>>& trainingData, QVector<QVector<spQuestion>>& questions)
+spDecisionNode DecisionTree::train(QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions)
 {
 	float gain = 0;
-    spQuestion pQuestion = findBestSplit(trainingData, gain, questions);
+    spDecisionQuestion pQuestion = findBestSplit(trainingData, gain, questions);
 	if (gain <= 0.0f)
 	{
 		return new Leaf(trainingData);
 	}
-	QVector<QVector<float>> trueData;
-	QVector<QVector<float>> falseData;
-	seperateTrueFalse(trainingData, pQuestion, trueData, falseData);
+    QVector<QVector<QVector<float>>> splitData;
+    seperateData(trainingData, pQuestion, splitData);
 
-    spDecisionNode pNodeTrue = train(trueData, questions);
-    spDecisionNode pNodeFalse = train(falseData, questions);
-
-	return new DecisionNode(pQuestion, pNodeTrue, pNodeFalse);
+    QVector<spDecisionNode> pNodes;
+    for (qint32 i = 0; i < splitData.size(); i++)
+    {
+        pNodes.append(train(splitData[i], questions));
+    }
+    return new DecisionNode(pQuestion, pNodes);
 }
 
 QVector<qint32> DecisionTree::countClassItems(QVector<QVector<float>>& trainingData)
@@ -122,18 +123,20 @@ QVector<qint32> DecisionTree::countClassItems(QVector<QVector<float>>& trainingD
 	return ret;
 }
 
-void DecisionTree::seperateTrueFalse(QVector<QVector<float>>& trainingData, spQuestion question, QVector<QVector<float>>& trueData, QVector<QVector<float>>& falseData)
+void DecisionTree::seperateData(QVector<QVector<float>>& trainingData, spDecisionQuestion question, QVector<QVector<QVector<float>>>& splitData)
 {
+    for (qint32 i = 0; i < question->getSize(); i++)
+    {
+        splitData.append(QVector<QVector<float>>());
+    }
+
 	for (qint32 i = 0; i < trainingData.size(); i++)
 	{
-		if (question->matches(trainingData[i]))
-		{
-			trueData.append(trainingData[i]);
-		}
-		else
-		{
-			falseData.append(trainingData[i]);
-		}
+        qint32 answer = question->matches(trainingData[i]);
+        if (answer >= 0 && answer < splitData.size())
+        {
+            splitData[answer].append(trainingData[i]);
+        }
 	}
 }
 
@@ -149,41 +152,61 @@ float DecisionTree::giniImpurity(QVector<QVector<float>>& trainingData)
 	return impurity;
 }
 
-float DecisionTree::infoGain(QVector<QVector<float>>& trainingDataLeft, QVector<QVector<float>>& trainingDataRight, float currentUncertainty)
+float DecisionTree::infoGain(QVector<QVector<QVector<float>>>& splitTrainingData, float currentUncertainty)
 {
-	float p = static_cast<float>(trainingDataLeft.size()) / (static_cast<float>(trainingDataLeft.size() + static_cast<float>(trainingDataRight.size())));
-	return currentUncertainty - p * giniImpurity(trainingDataLeft) - (1 - p) * giniImpurity(trainingDataRight);
+    float count = 0;
+    for (qint32 i = 0; i < splitTrainingData.size(); i++)
+    {
+        count += splitTrainingData[i].size();
+    }
+    float ret = currentUncertainty;
+    for (qint32 i = 0; i < splitTrainingData.size(); i++)
+    {
+        float p = static_cast<float>(splitTrainingData[i].size()) / count;
+        ret -= p * giniImpurity(splitTrainingData[i]);
+    }
+    return ret;
 }
 
-spQuestion DecisionTree::findBestSplit(QVector<QVector<float>>& trainingData, float& bestGain, QVector<QVector<spQuestion>>& questions)
+spDecisionQuestion DecisionTree::findBestSplit(QVector<QVector<float>>& trainingData, float& bestGain, QVector<QVector<spDecisionQuestion>>& questions)
 {
-    spQuestion bestQuestion = nullptr;
-	float currentUncertainty = giniImpurity(trainingData);
-	float n_features = trainingData[0].size() - 1;
-	bestGain = 0;
-	for (qint32 col = 0; col < n_features; col++)
-	{
-		for (qint32 i = 0; i < questions[col].size(); i++)
-		{
-			// try splitting the dataset
-			QVector<QVector<float>> trueData;
-			QVector<QVector<float>> falseData;
-			seperateTrueFalse(trainingData, questions[col][i], trueData, falseData);
-			// Skip this split if it doesn't divide the dataset.
-			if ((trueData.size() == 0) || 
-				(falseData.size() == 0))
-			{
-				continue;
-			}
-			// Calculate the information gain from this split
-            float gain = infoGain(trueData, falseData, currentUncertainty);
-			if (gain > bestGain)
-			{
-				bestGain = gain;
-				bestQuestion = questions[col][i];
-			}
-		}
-	}
+    spDecisionQuestion bestQuestion = nullptr;
+    if (trainingData.size() > 0)
+    {
+        float currentUncertainty = giniImpurity(trainingData);
+        float n_features = trainingData[0].size() - 1;
+        bestGain = 0;
+        for (qint32 col = 0; col < n_features; col++)
+        {
+            for (qint32 i = 0; i < questions[col].size(); i++)
+            {
+                // try splitting the dataset
+                QVector<QVector<QVector<float>>> splitData;
+                seperateData(trainingData, questions[col][i], splitData);
+
+                // Skip this split if it doesn't divide the dataset.
+                qint32 count = 0;
+                for (qint32 i = 0; i < splitData.size(); i++)
+                {
+                    if (splitData[i].size() > 0)
+                    {
+                        count++;
+                    }
+                }
+                if (count == 0)
+                {
+                    continue;
+                }
+                // Calculate the information gain from this split
+                float gain = infoGain(splitData, currentUncertainty);
+                if (gain > bestGain)
+                {
+                    bestGain = gain;
+                    bestQuestion = questions[col][i];
+                }
+            }
+        }
+    }
 	return bestQuestion;
 }
 
@@ -200,7 +223,7 @@ void DecisionTree::deserializeObject(QDataStream& pStream)
     // never assume this as a leaf -> pointless
     bool isNode = false;
     pStream >> isNode;
-    m_pRootNode = new DecisionNode(nullptr, nullptr, nullptr);
+    m_pRootNode = new DecisionNode();
     m_pRootNode->deserializeObject(pStream);
 }
 
@@ -217,8 +240,9 @@ void DecisionTree::printTree(DecisionNode* pNode, QString spacing)
         return;
     }
     Console::print(spacing + pNode->getQuestion()->print(), Console::eDEBUG);
-    Console::print(spacing + "--> True:", Console::eDEBUG);
-    printTree(pNode->getNodeTrue() , spacing + "    ");
-    Console::print(spacing + "--> False:", Console::eDEBUG);
-    printTree(pNode->getNodeFalse() , spacing + "    ");
+    for (qint32 i = 0; i < pNode->getNodeSize(); i++)
+    {
+        Console::print(spacing + "--> " + QString::number(i) + ":", Console::eDEBUG);
+        printTree(pNode->getNode(i) , spacing + "    ");
+    }
 }

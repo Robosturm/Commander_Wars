@@ -52,7 +52,7 @@ protected:
     void finishTurn();
 private:
     DecisionTree m_COPowerTree;
-
+    DecisionTree m_COUnitTree;
     DecisionTree m_GeneralBuildingTree;
     DecisionTree m_AirportBuildingTree;
     DecisionTree m_HarbourBuildingTree;

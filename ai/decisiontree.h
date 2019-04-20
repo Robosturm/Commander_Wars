@@ -6,7 +6,7 @@
 #include <QString>
 
 #include "decisionnode.h"
-#include "question.h"
+#include "decisionquestion.h"
 
 #include "coreengine/fileserializable.h"
 
@@ -15,12 +15,12 @@ class DecisionTree : public QObject, public FileSerializable
 	Q_OBJECT
 public:
     DecisionTree(spDecisionNode pRootNode);
-    DecisionTree(QVector<QVector<float>>& trainingData, QVector<QVector<spQuestion>>& questions);
+    DecisionTree(QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
     DecisionTree(QString treeFile, QString trainingDataFile);
 
     virtual ~DecisionTree();
 
-    spDecisionNode train(QVector<QVector<float>>& trainingData, QVector<QVector<spQuestion>>& questions);
+    spDecisionNode train(QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
 
     static QVector<qint32> countClassItems(QVector<QVector<float>>& trainingData);
 
@@ -34,10 +34,10 @@ public slots:
     float getDecision(QVector<float>& input);
     void printTree(DecisionNode* pNode = nullptr, QString spacing = "");
 protected:
-    void seperateTrueFalse(QVector<QVector<float>>& trainingData, spQuestion question, QVector<QVector<float>>& trueData, QVector<QVector<float>>& falseData);
+    void seperateData(QVector<QVector<float>>& trainingData, spDecisionQuestion question, QVector<QVector<QVector<float>>>& splitData);
     float giniImpurity(QVector<QVector<float>>& trainingData);
-    float infoGain(QVector<QVector<float>>& trainingDataLeft, QVector<QVector<float>>& trainingDataRight, float currentUncertainty);
-    spQuestion findBestSplit(QVector<QVector<float>>& trainingData, float& bestGain, QVector<QVector<spQuestion>>& questions);
+    float infoGain(QVector<QVector<QVector<float>>>& splitTrainingData, float currentUncertainty);
+    spDecisionQuestion findBestSplit(QVector<QVector<float>>& trainingData, float& bestGain, QVector<QVector<spDecisionQuestion>>& questions);
 private:
         spDecisionNode m_pRootNode;
 };

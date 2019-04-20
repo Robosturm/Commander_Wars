@@ -16,6 +16,7 @@
 
 VeryEasyAI::VeryEasyAI()
     : m_COPowerTree("resources/aidata/very_easy/copower.tree", "resources/aidata/very_easy/copower.txt"),
+      m_COUnitTree("resources/aidata/very_easy/counit.tree", "resources/aidata/very_easy/counit.txt"),
       m_GeneralBuildingTree("resources/aidata/very_easy/generalbuilding.tree", "resources/aidata/very_easy/generalbuilding.txt"),
       m_AirportBuildingTree("resources/aidata/very_easy/airportbuilding.tree", "resources/aidata/very_easy/airportbuilding.txt"),
       m_HarbourBuildingTree("resources/aidata/very_easy/harbourbuilding.tree", "resources/aidata/very_easy/harbourbuilding.txt")
@@ -23,6 +24,9 @@ VeryEasyAI::VeryEasyAI()
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
+
+
+    m_GeneralBuildingTree.printTree();
 }
 
 void VeryEasyAI::process()
@@ -391,7 +395,7 @@ bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits
                 {
                     QString unitID = pUnitSpriteManager->getUnitID(selectedUnit);
                     qint32 menuIndex = pData->getActionIDs().indexOf(unitID);
-                    if (pData->getEnabledList()[menuIndex])
+                    if (menuIndex >= 0 && pData->getEnabledList()[menuIndex])
                     {
                         CoreAI::addMenuItemData(pAction, unitID, pData->getCostList()[menuIndex]);
                         // produce the unit

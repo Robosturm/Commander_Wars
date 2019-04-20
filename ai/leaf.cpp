@@ -40,7 +40,14 @@ float Leaf::getDecision(QVector<float>&)
             }
         }
     }
-	return m_Answers[0];
+    if (m_Answers.size() > 0)
+    {
+        return m_Answers[0];
+    }
+    else
+    {
+        return -1;
+    }
 }
 
 QString Leaf::print()
@@ -50,7 +57,6 @@ QString Leaf::print()
     {
         ret += QString::number(m_Answers[i], 'f', 1) + " ";
     }
-
     return ret;
 }
 
@@ -70,8 +76,6 @@ void Leaf::serializeObject(QDataStream& pStream)
     }
     pStream << totalChance;
 }
-
-
 
 void Leaf::deserializeObject(QDataStream& pStream)
 {

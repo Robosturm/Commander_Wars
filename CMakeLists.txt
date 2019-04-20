@@ -156,6 +156,7 @@ set(${PROJECT_NAME}_SRCS
         ai/leaf.cpp
         ai/decisionnode.cpp
         ai/question.cpp
+        ai/decisionquestion.cpp
         ai/decisiontree.cpp
         ai/coreai.cpp
         ai/veryeasyai.cpp

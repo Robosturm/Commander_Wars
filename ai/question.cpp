@@ -40,7 +40,7 @@ bool Question::matches(float value)
         }
         case GameEnums::AIQuestionType_Greater:
         {
-            if (value > m_MaxValue)
+            if (value >= m_MaxValue)
             {
                 return true;
             }
@@ -48,7 +48,7 @@ bool Question::matches(float value)
         }
         case GameEnums::AIQuestionType_Smaler:
         {
-            if (value <= m_MinValue)
+            if (value < m_MinValue)
             {
                 return true;
             }

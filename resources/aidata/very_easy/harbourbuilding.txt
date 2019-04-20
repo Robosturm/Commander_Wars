@@ -1,5 +1,5 @@
 // Fonds                           | Fonds per Building                 |  Units      | Direct / Indirects            | Infantry   | Result
-type NUMBER:15000_>|15000_<_21000|21000_<   NUMBER:15000_>|15000_<_21000|21000_< NUMBER:6_<   NUMBER:0.8_>|0.8_<_1.2|1.2_<    NUMBER:5_<   UNIT
+type NUMBER:15000_>|15000_<_21000|21000_<   NUMBER:15000_>|15000_<_21000|21000_< NUMBER:6_<|6_>   NUMBER:0.8_>|0.8_<_1.2|1.2_<    NUMBER:5_<|5_>   UNIT
 // NONE
 21000                                21000                                 7            1.0                              7            NONE
 5000                                 5000                                  7            1.0                              7            NONE

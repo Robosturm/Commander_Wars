@@ -7,7 +7,7 @@
 
 #include "gameinput/basegameinputif.h"
 
-#include "ai/question.h"
+#include "ai/decisionquestion.h"
 
 class GameAction;
 class Unit;
@@ -77,7 +77,7 @@ public slots:
      * @param trainingData
      * @param questions
      */
-    static void getTrainingData(QString file, QVector<QVector<float>>& trainingData, QVector<QVector<spQuestion>>& questions);
+    static void getTrainingData(QString file, QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
 protected:
     void addMenuItemData(GameAction* pGameAction, QString itemID, qint32 cost);
     void addSelectedFieldData(GameAction* pGameAction, QPoint point);

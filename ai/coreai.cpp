@@ -163,7 +163,7 @@ QRectF CoreAI::calcUnitDamage(GameAction* pAction, QPoint target)
     return erg.toVariant().toRectF();
 }
 
-void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData, QVector<QVector<spQuestion>>& questions)
+void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions)
 {
     QFile trainingFile(file);
     trainingFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
@@ -175,7 +175,7 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
 
-    QVector<spQuestion> numberQuestions;
+    QVector<spDecisionQuestion> readQuestions;
 
     while (!stream.atEnd())
     {
@@ -193,6 +193,8 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
                 QStringList items = line.split(" ");
                 for (qint32 i = 1; i < items.size(); i++)
                 {
+                    readQuestions.append(new DecisionQuestion());
+                    qint32 index = types.size();
                     QString typeLine = items[i];
                     if (typeLine.startsWith("NUMBER:"))
                     {
@@ -203,8 +205,7 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
                              QTextStream stream(&numberFile);
                              typeLine = stream.readLine();
                         }
-                        QStringList questionString = typeLine.split(":")[1].split("|");
-                        qint32 index = types.size();
+                        QStringList questionString = typeLine.split(":")[1].split("|");                        
                         for (qint32 i2 = 0; i2 < questionString.size(); i2++)
                         {
                             QStringList questionData = questionString[i2].split("_");
@@ -213,28 +214,49 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
                                 float value = questionData[0].toFloat();
                                 if (questionData[1] == "<")
                                 {
-                                    numberQuestions.append(new Question(value, index, GameEnums::AIQuestionType_Greater));
+                                    readQuestions[i - 1]->appendQuestion(new Question(value, index, GameEnums::AIQuestionType_Greater));
                                 }
                                 else if (questionData[1] == ">")
                                 {
-                                    numberQuestions.append(new Question(value, index, GameEnums::AIQuestionType_Smaler));
+                                    readQuestions[i - 1]->appendQuestion(new Question(value, index, GameEnums::AIQuestionType_Smaler));
                                 }
                                 else if (questionData[1] == "=")
                                 {
-                                    numberQuestions.append(new Question(value, index, GameEnums::AIQuestionType_Equal));
+                                    readQuestions[i - 1]->appendQuestion(new Question(value, index, GameEnums::AIQuestionType_Equal));
                                 }
                             }
                             else if (questionData.size() == 3)
                             {
                                 float value1 = questionData[0].toFloat();
                                 float value2 = questionData[2].toFloat();
-                                numberQuestions.append(new Question(value1, value2, index, GameEnums::AIQuestionType_Between));
+                                readQuestions[i - 1]->appendQuestion(new Question(value1, value2, index, GameEnums::AIQuestionType_Between));
                             }
                         }
                         types.append("NUMBER");
                     }
                     else
                     {
+                        if (items[i] == "CO")
+                        {
+                            for (qint32 i2 = 0; i2 < pCOSpriteManager->getCOCount(); i2++)
+                            {
+                                readQuestions[i - 1]->appendQuestion(new Question(i2, index, GameEnums::AIQuestionType_Equal));
+                            }
+                        }
+                        else if (items[i] == "BUILDING")
+                        {
+                            for (qint32 i2 = 0; i2 < pBuildingSpriteManager->getBuildingCount(); i2++)
+                            {
+                                readQuestions[i - 1]->appendQuestion(new Question(i2, index, GameEnums::AIQuestionType_Equal));
+                            }
+                        }
+                        else if (items[i] == "UNIT")
+                        {
+                            for (qint32 i2 = 0; i2 < pUnitSpriteManager->getUnitCount(); i2++)
+                            {
+                                readQuestions[i - 1]->appendQuestion(new Question(i2, index, GameEnums::AIQuestionType_Equal));
+                            }
+                        }
                         types.append(items[i]);
                     }
                 }
@@ -246,7 +268,7 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
                 if (items.size() == types.size())
                 {
                     trainingData.append(QVector<float>());
-                    questions.append(QVector<spQuestion>());
+                    questions.append(QVector<spDecisionQuestion>());
                     qint32 item = trainingData.size() - 1;
                     for (qint32 i = 0; i < types.size(); i++)
                     {
@@ -257,7 +279,7 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
                             trainingData[item].append(index);
                             if (i < types.size() - 1)
                             {
-                                questions[item].append(new Question(index, i));
+                                questions[item].append(readQuestions[i]);
                             }
                         }
                         else if (types[i] == "BUILDING")
@@ -266,7 +288,7 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
                             trainingData[item].append(index);
                             if (i < types.size() - 1)
                             {
-                                questions[item].append(new Question(index, i));
+                                questions[item].append(readQuestions[i]);
                             }
                         }
                         else if (types[i] == "UNIT")
@@ -275,7 +297,7 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
                             trainingData[item].append(index);
                             if (i < types.size() - 1)
                             {
-                                questions[item].append(new Question(index, i));
+                                questions[item].append(readQuestions[i]);
                             }
                         }
                         else if (types[i] == "NUMBER")
@@ -284,30 +306,7 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
                             trainingData[item].append(value);
                             if (i < types.size() - 1)
                             {
-                                qint32 questionCount = numberQuestions.size();
-                                spQuestion curQuestion = nullptr;
-                                for (qint32 i2 = 0; i2 < questionCount; i2++)
-                                {
-                                    if (numberQuestions[i2]->getIndex() == i)
-                                    {
-                                        if (curQuestion.get() == nullptr)
-                                        {
-                                            curQuestion = numberQuestions[i2];
-                                        }
-                                        else if (numberQuestions[i2]->matches(value))
-                                        {
-                                            curQuestion = numberQuestions[i2];
-                                        }
-                                    }
-                                }
-                                if (curQuestion.get() == nullptr)
-                                {
-                                    questions[item].append(new Question(value, i));
-                                }
-                                else
-                                {
-                                    questions[item].append(curQuestion);
-                                }
+                                questions[item].append(readQuestions[i]);
                             }
                         }
                     }

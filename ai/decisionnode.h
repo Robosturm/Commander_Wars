@@ -5,7 +5,7 @@
 
 #include "oxygine-framework.h"
 
-#include "question.h"
+#include "decisionquestion.h"
 
 #include "coreengine/fileserializable.h"
 
@@ -17,7 +17,7 @@ class DecisionNode : public QObject, public FileSerializable, public oxygine::re
     Q_OBJECT
 public:
         DecisionNode() = default;
-        DecisionNode(spQuestion pQuestion, spDecisionNode pNodeTrue, spDecisionNode pNodeFalse);
+        DecisionNode(spDecisionQuestion pQuestion, QVector<spDecisionNode> pNodes);
         virtual ~DecisionNode();
 
         virtual void serializeObject(QDataStream& pStream)  override;
@@ -26,24 +26,24 @@ public:
         {
             return 1;
         }
-        inline DecisionNode* getNodeTrue()
+
+        inline qint32 getNodeSize()
         {
-            return m_pNodeTrue.get();
+            return m_pNodes.size();
         }
-        inline DecisionNode* getNodeFalse()
+        inline DecisionNode* getNode(qint32 index)
         {
-            return m_pNodeFalse.get();
+            return m_pNodes[index].get();
         }
-        inline Question* getQuestion()
+        inline DecisionQuestion* getQuestion()
         {
             return m_pQuestion.get();
         }
 public slots:
         virtual float getDecision(QVector<float>& input);
 private:
-        spQuestion m_pQuestion;
-        spDecisionNode m_pNodeTrue;
-        spDecisionNode m_pNodeFalse;
+        spDecisionQuestion m_pQuestion;
+        QVector<spDecisionNode> m_pNodes;
 };
 
 #endif

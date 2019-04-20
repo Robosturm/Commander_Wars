@@ -2,10 +2,9 @@
 
 #include "leaf.h"
 
-DecisionNode::DecisionNode(spQuestion pQuestion, spDecisionNode pNodeTrue, spDecisionNode pNodeFalse)
+DecisionNode::DecisionNode(spDecisionQuestion pQuestion, QVector<spDecisionNode> pNodes)
 	: m_pQuestion(pQuestion),
-	  m_pNodeTrue(pNodeTrue),
-	  m_pNodeFalse(pNodeFalse)
+      m_pNodes(pNodes)
 {
 }
 
@@ -15,14 +14,12 @@ DecisionNode::~DecisionNode()
 
 float DecisionNode::getDecision(QVector<float>& input)
 {
-	if (m_pQuestion->matches(input))
-	{
-		return m_pNodeTrue->getDecision(input);
-	}
-	else
-	{
-		return m_pNodeFalse->getDecision(input);
-	}
+    qint32 result = m_pQuestion->matches(input);
+    if (result >= 0 && result < m_pNodes.size())
+    {
+        return m_pNodes[result]->getDecision(input);
+    }
+    return -1.0f;
 }
 
 void DecisionNode::serializeObject(QDataStream& pStream)
@@ -30,37 +27,34 @@ void DecisionNode::serializeObject(QDataStream& pStream)
     pStream << true; // --> 0 for node and 1 for leaf
     pStream << getVersion();
     m_pQuestion->serializeObject(pStream);
-    m_pNodeTrue->serializeObject(pStream);
-    m_pNodeFalse->serializeObject(pStream);
+    pStream << static_cast<qint32>(m_pNodes.size());
+    for (qint32 i = 0; i < m_pNodes.size(); i++)
+    {
+        m_pNodes[i]->serializeObject(pStream);
+    }
 }
 
 void DecisionNode::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
-    m_pQuestion = new Question(0, 0);
+    m_pQuestion = new DecisionQuestion;
     m_pQuestion->deserializeObject(pStream);
-    bool isNode = false;
-    pStream >> isNode;
-    if (isNode)
+    qint32 size = 0;
+    pStream >> size;
+    for (qint32 i = 0; i < size; i++)
     {
-        m_pNodeTrue = new DecisionNode();
-        m_pNodeTrue->deserializeObject(pStream);
-    }
-    else
-    {
-        m_pNodeTrue = new Leaf();
-        m_pNodeTrue->deserializeObject(pStream);
-    }
-    pStream >> isNode;
-    if (isNode)
-    {
-        m_pNodeFalse = new DecisionNode();
-        m_pNodeFalse->deserializeObject(pStream);
-    }
-    else
-    {
-        m_pNodeFalse = new Leaf();
-        m_pNodeFalse->deserializeObject(pStream);
+        bool isNode = false;
+        pStream >> isNode;
+        if (isNode)
+        {
+            m_pNodes.append(new DecisionNode());
+            m_pNodes[i]->deserializeObject(pStream);
+        }
+        else
+        {
+            m_pNodes.append(new Leaf());
+            m_pNodes[i]->deserializeObject(pStream);
+        }
     }
 }
