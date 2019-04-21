@@ -28,15 +28,19 @@ PathFindingSystem::~PathFindingSystem()
 
 void PathFindingSystem::explore()
 {
-    bool finshed = false;
     m_OpenList.append(new Node(m_StartPoint.x(), m_StartPoint.y(), 0, getRemainingCost(m_StartPoint.x(), m_StartPoint.y(), 0)));
     // explore till we reached the end
-    while ((m_OpenList.size() > 0) && (finshed == false))
+    while ((m_OpenList.size() > 0))
     {
         Node* pCurrentNode = m_OpenList.last();
         // move node to close list
         m_OpenList.removeLast();
         m_ClosedList.append(pCurrentNode);
+        if (finished(pCurrentNode->x, pCurrentNode->y))
+        {
+            m_FinishNode = m_ClosedList.size() - 1;
+            break;
+        }
         for (qint32 i = 0; i < 4; i++)
         {
             qint32 x = pCurrentNode->x;
@@ -75,13 +79,16 @@ void PathFindingSystem::explore()
                     break;
                 }
             }
-            for (qint32 i2 = 0; i2 < m_OpenList.size(); i2++)
+            if (!skipNode)
             {
-                if ((m_OpenList.at(i2)->x == x) && (m_OpenList.at(i2)->y == y))
+                for (qint32 i2 = 0; i2 < m_OpenList.size(); i2++)
                 {
-                    m_OpenList.at(i2)->previousNodes.append(pCurrentNode);
-                    skipNode = true;
-                    break;
+                    if ((m_OpenList.at(i2)->x == x) && (m_OpenList.at(i2)->y == y))
+                    {
+                        m_OpenList.at(i2)->previousNodes.append(pCurrentNode);
+                        skipNode = true;
+                        break;
+                    }
                 }
             }
             if (!skipNode)
@@ -105,7 +112,7 @@ void PathFindingSystem::explore()
                             (m_OpenList.at(i3)->currentCost >= nextNode->currentCost))
                         {
                             // exit
-                            m_OpenList.insert(i3 + 1, nextNode);
+                            m_OpenList.insert(i3, nextNode);
                             inserted = true;
                             break;
                         }
@@ -156,6 +163,15 @@ QmlVectorPoint* PathFindingSystem::getAllQmlVectorPoints()
     return ret;
 }
 
+QVector<QPoint> PathFindingSystem::getTargetPath()
+{
+    if (m_FinishNode >= 0)
+    {
+        return getPath(m_ClosedList[m_FinishNode]->x, m_ClosedList[m_FinishNode]->y);
+    }
+    return QVector<QPoint>();
+}
+
 QVector<QPoint> PathFindingSystem::getPath(qint32 x, qint32 y)
 {
     QVector<QPoint> points;
@@ -175,6 +191,18 @@ QVector<QPoint> PathFindingSystem::getPath(qint32 x, qint32 y)
         }
     }
     return points;
+}
+
+qint32 PathFindingSystem::getTargetCosts(qint32 x, qint32 y)
+{
+    for (qint32 i = 0; i < m_ClosedList.size(); i++)
+    {
+        if ((m_ClosedList[i]->x == x) && (m_ClosedList[i]->y == y))
+        {
+            return m_ClosedList[i]->currentCost;
+        }
+    }
+    return -1;
 }
 
 bool PathFindingSystem::isReachable(qint32 x, qint32 y)

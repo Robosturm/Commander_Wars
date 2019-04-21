@@ -8,6 +8,10 @@
 
 #include "resource_management/gamemanager.h"
 
+#include "resource_management/weaponmanager.h"
+
+#include "resource_management/movementtablemanager.h"
+
 #include "game/gamemap.h"
 
 #include "coreengine/console.h"
@@ -401,6 +405,49 @@ QString Unit::getTerrainAnimationBackground()
     {
         return "";
     }
+}
+
+bool Unit::canMoveOver(qint32 x, qint32 y)
+{
+    GameMap* pMap = GameMap::getInstance();
+    if (MovementTableManager::getInstance()->getBaseMovementPoints(getMovementType(), pMap->getTerrain(x, y)) > 0)
+    {
+        return true;
+    }
+    return  false;
+}
+
+bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange)
+{
+    WeaponManager* pWeaponManager = WeaponManager::getInstance();
+    if (m_pOwner->getFieldVisible(pDefender->getX(), pDefender->getY()))
+    {
+        if (!pDefender->isStealthed(m_pOwner, ignoreOutOfVisionRange))
+        {
+            if (!pDefender->getHidden() ||
+                (pDefender->getHidden() && pDefender->getMovementType() == getMovementType()))
+            {
+                if (m_pOwner->isEnemyUnit(pDefender) == true)
+                {
+                    if (hasAmmo1())
+                    {
+                        if (pWeaponManager->getBaseDamage(weapon1ID, pDefender) > 0)
+                        {
+                            return true;
+                        }
+                    }
+                    if (hasAmmo2())
+                    {
+                        if (pWeaponManager->getBaseDamage(weapon2ID, pDefender) > 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return false;
 }
 
 Terrain* Unit::getTerrain()
@@ -1404,7 +1451,7 @@ void Unit::setHidden(bool Hidden)
     }
 }
 
-bool Unit::isStealthed(Player* pPlayer)
+bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange)
 {
     if (pPlayer->checkAlliance(m_pOwner) == GameEnums::Alliance_Enemy)
     {
@@ -1412,7 +1459,7 @@ bool Unit::isStealthed(Player* pPlayer)
         qint32 x = getX();
         qint32 y = getY();
         // can we see the unit?
-        if (!pPlayer->getFieldVisible(x, y))
+        if (!pPlayer->getFieldVisible(x, y) && !ignoreOutOfVisionRange)
         {
             return true;
         }

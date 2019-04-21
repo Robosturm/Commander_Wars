@@ -40,6 +40,12 @@ public:
      * @return the costs needed when using the given path
      */
     qint32 getCosts(QVector<QPoint> path);
+    /**
+     * @brief getClosestReachableMovePath
+     * @param target
+     * @return
+     */
+    QVector<QPoint> getClosestReachableMovePath(QPoint target);
 private:
     Unit* m_pUnit;
 };

@@ -432,6 +432,14 @@ QString Building::getTerrainAnimationForeground()
     }
 }
 
+bool Building::canRepair(Unit* pUnit)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getConstructionList";
+    QJSValue erg = pApp->getInterpreter()->doFunction(m_BuildingID, function1);
+    return erg.toVariant().toStringList().contains(pUnit->getUnitID());
+}
+
 QString Building::getTerrainAnimationBackground()
 {
     Mainapp* pApp = Mainapp::getInstance();

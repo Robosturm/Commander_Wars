@@ -86,3 +86,52 @@ qint32 UnitPathFindingSystem::getCosts(QVector<QPoint> path)
     }
     return totalCosts;
 }
+
+QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target)
+{
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < m_ClosedList.size(); i++)
+    {
+        if ((m_ClosedList[i]->x == target.x()) && (m_ClosedList[i]->y == target.y()))
+        {
+            QList<Node*> usedNodes;
+            QList<Node*> nextNodes;
+            QList<Node*> currentNodes;
+            currentNodes.append(m_ClosedList[i]);
+            while (currentNodes.size() > 0 || nextNodes.size() > 0)
+            {
+                if (currentNodes.size() == 0)
+                {
+                    // swap nodes
+                    currentNodes.append(nextNodes);
+                    nextNodes.clear();
+                }
+                Node* pCurrentNode = currentNodes.first();
+                currentNodes.removeFirst();
+                usedNodes.append(pCurrentNode);
+                if (pMap->getTerrain(pCurrentNode->x, pCurrentNode->y)->getUnit() == nullptr)
+                {
+                    return getPath(pCurrentNode->x, pCurrentNode->y);
+                }
+                else
+                {
+                    // add previous nodes
+                    for (qint32 i2 = 0; i2 < pCurrentNode->previousNodes.size(); i2++)
+                    {
+                        nextNodes.append(pCurrentNode->previousNodes[i2]);
+                    }
+                    // add next nodes which we didn't added yet.
+                    for (qint32 i2 = 0; i2 < pCurrentNode->nextNodes.size(); i2++)
+                    {
+                        if (!usedNodes.contains(pCurrentNode->nextNodes[i2]))
+                        {
+                            nextNodes.append(pCurrentNode->nextNodes[i2]);
+                        }
+                    }
+                }
+            }
+            break;
+        }
+    }
+    return QVector<QPoint>();
+}

@@ -35,8 +35,13 @@ signals:
      * @param value
      */
     void sigScrollValueChanged(float value);
+    /**
+     * @brief sigChangeScrollValue
+     * @param value
+     */
+    void sigChangeScrollValue(float value);
 public slots:
-
+    void changeScrollValue(float value);
 private:
     float m_Scrollvalue{0.0f};
     qint32 m_Width;

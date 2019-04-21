@@ -21,6 +21,7 @@
 #include <qfile.h>
 #include <qtextstream.h>
 
+const QString CoreAI::ACTION_WAIT = "ACTION_WAIT";
 const QString CoreAI::ACTION_BUILD_UNITS = "ACTION_BUILD_UNITS";
 const QString CoreAI::ACTION_CAPTURE = "ACTION_CAPTURE";
 const QString CoreAI::ACTION_FIRE = "ACTION_FIRE";

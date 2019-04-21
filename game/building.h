@@ -205,6 +205,12 @@ public slots:
      * @return
      */
     QString getTerrainAnimationBackground();
+    /**
+     * @brief canRepair
+     * @param pUnit
+     * @return
+     */
+    bool canRepair(Unit* pUnit);
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     /**

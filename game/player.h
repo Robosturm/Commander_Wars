@@ -171,6 +171,11 @@ public slots:
      */
     QmlVectorUnit* getEnemyUnits();
     /**
+     * @brief getEnemyBuildings
+     * @return
+     */
+    QmlVectorBuilding* getEnemyBuildings();
+    /**
      * @brief getBuildings
      * @return
      */

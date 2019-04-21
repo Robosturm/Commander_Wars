@@ -82,6 +82,7 @@ protected:
     void addMenuItemData(GameAction* pGameAction, QString itemID, qint32 cost);
     void addSelectedFieldData(GameAction* pGameAction, QPoint point);
 
+    static const QString ACTION_WAIT;
     static const QString ACTION_BUILD_UNITS;
     static const QString ACTION_CAPTURE;
     static const QString ACTION_FIRE;

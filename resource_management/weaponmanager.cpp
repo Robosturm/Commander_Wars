@@ -47,6 +47,24 @@ void WeaponManager::reset()
     m_loadedWeapons.clear();
 }
 
+float WeaponManager::getBaseDamage(const QString& weaponID, Unit* pDefender)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getBaseDamage";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pDefender);
+    args1 << obj1;
+    QJSValue erg = pApp->getInterpreter()->doFunction(weaponID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toNumber();
+    }
+    else
+    {
+        return 0.0f;
+    }
+}
+
 void WeaponManager::loadAll()
 {
     reset();

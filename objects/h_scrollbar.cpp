@@ -146,6 +146,7 @@ H_Scrollbar::H_Scrollbar(qint32 heigth, qint32 contentHeigth)
             }
         }
     });
+    connect(this, &H_Scrollbar::sigChangeScrollValue, this, &H_Scrollbar::changeScrollValue, Qt::QueuedConnection);
 }
 
 void H_Scrollbar::setContentHeigth(qint32 heigth)
@@ -178,23 +179,28 @@ void H_Scrollbar::update(const oxygine::UpdateState& us)
         {
             if (m_ContentHeigth > m_Heigth)
             {
-                m_Scrollvalue += m_scroll * 10.0f / static_cast<float>(m_ContentHeigth);
-                if (m_Scrollvalue < 0)
-                {
-                    m_Scrollvalue = 0;
-                }
-                else if (m_Scrollvalue > 1.0f)
-                {
-                    m_Scrollvalue = 1.0f;
-                }
-                else
-                {
-                    // all fine do nothing
-                }
-                m_slider->setY(20 + m_Scrollvalue * (m_Heigth - m_slider->getHeight() - 20 - 20));
-                emit sigScrollValueChanged(m_Scrollvalue);
+                emit sigChangeScrollValue(m_scroll * 10.0f / static_cast<float>(m_ContentHeigth));
                 m_ScrollTimer.start();
             }
         }
     }
+}
+
+void H_Scrollbar::changeScrollValue(float value)
+{
+    m_Scrollvalue += value;
+    if (m_Scrollvalue < 0)
+    {
+        m_Scrollvalue = 0;
+    }
+    else if (m_Scrollvalue > 1.0f)
+    {
+        m_Scrollvalue = 1.0f;
+    }
+    else
+    {
+        // all fine do nothing
+    }
+    m_slider->setY(20 + m_Scrollvalue * (m_Heigth - m_slider->getHeight() - 20 - 20));
+    emit sigScrollValueChanged(m_Scrollvalue);
 }

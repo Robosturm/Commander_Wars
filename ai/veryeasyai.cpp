@@ -11,6 +11,9 @@
 #include "game/gamemap.h"
 
 #include "game/unitpathfindingsystem.h"
+
+#include "ai/targetedunitpathfindingsystem.h"
+
 #include "resource_management/cospritemanager.h"
 #include "resource_management/unitspritemanager.h"
 
@@ -31,15 +34,21 @@ void VeryEasyAI::process()
     QmlVectorBuilding* pBuildings = m_pPlayer->getBuildings();
     pBuildings->randomize();
     QmlVectorUnit* pUnits = m_pPlayer->getUnits();
-    QmlVectorUnit* pEnemyUnits = m_pPlayer->getEnemyUnits();
     pUnits->randomize();
-    // make the ai to stuff
+
+    QmlVectorUnit* pEnemyUnits = m_pPlayer->getEnemyUnits();
+    pEnemyUnits->randomize();
+    QmlVectorBuilding* pEnemyBuildings = m_pPlayer->getEnemyBuildings();
+    pEnemyBuildings->randomize();
+
+    // make the ai do stuff
     if (useCOPower(pUnits, pEnemyUnits)){}
     else if (useBuilding(pBuildings)){}
     else if (buildCOUnit(pUnits)){}
     else if (captureBuildings(pUnits)){}
     else if (fireWithIndirectUnits(pUnits)){}
     else if (fireWithDirectUnits(pUnits)){}
+    else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings)){}
     else if (buildUnits(pBuildings, pUnits)){}
     else
     {
@@ -54,8 +63,11 @@ void VeryEasyAI::process()
         }
 
     }
-    delete pEnemyUnits;
+    delete pBuildings;
     delete pUnits;
+
+    delete pEnemyBuildings;
+    delete pEnemyUnits;
 }
 
 bool VeryEasyAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
@@ -369,6 +381,132 @@ bool VeryEasyAI::attack(Unit* pUnit)
     return false;
 }
 
+bool VeryEasyAI::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
+                           QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)
+{
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pUnit = pUnits->at(i);
+        // can we use the unit?
+        if (!pUnit->getHasMoved())
+        {
+            QVector<QPoint> targets;
+            GameAction* pAction = new GameAction(ACTION_CAPTURE);
+            // find possible targets for this unit
+            pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+            if (pUnit->getActionList().contains(ACTION_CAPTURE))
+            {
+                for (qint32 i2 = 0; i2 < pEnemyBuildings->size(); i2++)
+                {
+                    Building* pBuilding = pEnemyBuildings->at(i2);
+                    QPoint point(pBuilding->getX(), pBuilding->getY());
+                    if (pUnit->canMoveOver(pBuilding->getX(), pBuilding->getY()))
+                    {
+                        pAction->setMovepath(QVector<QPoint>(1, point));
+                        if (pAction->canBePerformed())
+                        {
+                            targets.append(QPoint(pBuilding->getX(), pBuilding->getY()));
+                        }
+                    }
+                }
+            }
+            for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
+            {
+                Unit* pEnemy = pEnemyUnits->at(i2);
+                if (pUnit->isAttackable(pEnemy, true))
+                {
+                    qint32 firerange = pUnit->getMaxRange();
+                    QmlVectorPoint* pTargetFields = Mainapp::getCircle(firerange, firerange);
+                    for (qint32 i3 = 0; i3 < pTargetFields->size(); i3++)
+                    {
+                        qint32 x = pTargetFields->at(i3).x() + pEnemy->getX();
+                        qint32 y = pTargetFields->at(i3).y() + pEnemy->getY();
+                        if (pMap->onMap(x, y) &&
+                            pMap->getTerrain(x, y)->getUnit() == nullptr)
+                        {
+                            if (pUnit->canMoveOver(x, y))
+                            {
+                                QPoint possibleTarget(x, y);
+                                if (!targets.contains(possibleTarget))
+                                {
+                                    targets.append(possibleTarget);
+                                }
+                            }
+                        }
+                    }
+                    delete pTargetFields;
+                }
+            }
+            if (targets.size() == 0)
+            {
+                for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
+                {
+                    Unit* pEnemy = pEnemyUnits->at(i2);
+                    if (pUnit->isAttackable(pEnemy, true))
+                    {
+                        qint32 firerange = pUnit->getMaxRange();
+                        QmlVectorPoint* pTargetFields = Mainapp::getCircle(firerange, firerange);
+                        for (qint32 i3 = 0; i3 < pTargetFields->size(); i3++)
+                        {
+                            qint32 x = pTargetFields->at(i3).x() + pEnemy->getX();
+                            qint32 y = pTargetFields->at(i3).y() + pEnemy->getY();
+                            if (pMap->onMap(x, y))
+                            {
+                                Unit* pTargetUnit = pMap->getTerrain(x, y)->getUnit();
+                                if (pUnit->canMoveOver(x, y) &&
+                                    pTargetUnit != nullptr &&
+                                    pTargetUnit->getOwner()->checkAlliance(m_pPlayer) == GameEnums::Alliance_Friend)
+                                {
+                                    QPoint possibleTarget(x, y);
+                                    if (!targets.contains(possibleTarget))
+                                    {
+                                        targets.append(possibleTarget);
+                                    }
+                                }
+                            }
+                        }
+                        delete pTargetFields;
+                    }
+                }
+            }
+            if (targets.size() == 0)
+            {
+                if ((pUnit->getMaxAmmo1() > 0 && !pUnit->hasAmmo1()) ||
+                    (pUnit->getMaxAmmo2() > 0 && !pUnit->hasAmmo2()))
+                {
+                    for (qint32 i2 = 0; i2 < pBuildings->size(); i2++)
+                    {
+                        Building* pBuilding = pBuildings->at(i2);
+                        QPoint point(pBuilding->getX(), pBuilding->getY());
+                        if (pMap->getTerrain(point.x(), point.y())->getUnit() == nullptr &&
+                            pBuilding->canRepair(pUnit))
+                        {
+                            targets.append(QPoint(pBuilding->getX(), pBuilding->getY()));
+                        }
+                    }
+                }
+            }
+
+            TargetedUnitPathFindingSystem pfs(pUnit, targets);
+            pfs.explore();
+            qint32 movepoints = pUnit->getMovementPoints();
+            QPoint targetFields = pfs.getReachableTargetField(movepoints);
+            if (targetFields.x() >= 0)
+            {
+                UnitPathFindingSystem turnPfs(pUnit);
+                turnPfs.explore();
+                pAction->setMovepath(turnPfs.getClosestReachableMovePath(targetFields));
+                pAction->setActionID(ACTION_WAIT);
+                emit performAction(pAction);
+                return true;
+            }
+            delete pAction;
+        }
+    }
+    return false;
+}
+
 bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits)
 {
     QVector<float> data;
@@ -404,7 +542,14 @@ bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits
     data.append(m_pPlayer->getFonds());
     data.append(m_pPlayer->getFonds() / static_cast<float>(productionBuildings));
     data.append(pUnits->size());
-    data.append(directUnits / static_cast<float>(indirectUnits));
+    if (indirectUnits > 0)
+    {
+        data.append(directUnits / static_cast<float>(indirectUnits));
+    }
+    else
+    {
+        data.append(1.0f);
+    }
     data.append(infantryUnits);
 
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();

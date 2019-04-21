@@ -22,6 +22,8 @@ MenuData::MenuData()
 
 void MenuData::addData(QString text, QString actionID, QString icon, qint32 costs, bool enabled)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     texts.append(text);
     actionIDs.append(actionID);
     costList.append(costs);
@@ -46,6 +48,7 @@ void MenuData::addData(QString text, QString actionID, QString icon, qint32 cost
             // check buildings?
         }
     }
+    pApp->continueThread();
 }
 
 oxygine::spSprite MenuData::getIconSprite(QString icon)

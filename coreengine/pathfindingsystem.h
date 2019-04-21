@@ -2,7 +2,6 @@
 #define PATHFINDINGSYSTEM_H
 
 #include <QObject>
-#include <QSharedPointer>
 #include <QVector>
 #include <QPoint>
 #include "coreengine/qmlvector.h"
@@ -85,9 +84,21 @@ public:
      * @brief get the Path to the given field as vector of qpoints. an empty vector means unreachable
      * @param x
      * @param y
-     * @return the first point is the target and the last poin is the start
+     * @return the first point is the target and the last point is the start
      */
     QVector<QPoint> getPath(qint32 x, qint32 y);
+    /**
+     * @brief getTargetPath
+     * @return
+     */
+    QVector<QPoint> getTargetPath();
+    /**
+     * @brief getCosts
+     * @param x
+     * @param y
+     * @return
+     */
+    qint32 getTargetCosts(qint32 x, qint32 y);
     /**
      * @brief getClosedList pointer to all closed nodes -> found nodes
      * @return
@@ -114,6 +125,13 @@ public slots:
      * @return
      */
     QmlVectorPoint* getAllQmlVectorPoints();
+    /**
+     * @brief getFields searches for all fields in the range of min and max ignoring all movement costs
+     * @param min minimum search range
+     * @param max maximum search range
+     * @return shared pointer to the points
+     */
+    static QVector<QPoint> getFields(qint32 startX, qint32 startY, qint32 min, qint32 max);
 protected:
     QPoint m_StartPoint;
     /**
@@ -125,18 +143,7 @@ protected:
      */
     QList<Node*> m_OpenList;
 
-
-signals:
-
-public slots:
-
-    /**
-     * @brief getFields searches for all fields in the range of min and max ignoring all movement costs
-     * @param min minimum search range
-     * @param max maximum search range
-     * @return shared pointer to the points
-     */
-    static QVector<QPoint> getFields(qint32 startX, qint32 startY, qint32 min, qint32 max);
+    qint32 m_FinishNode = -1;
 };
 
 #endif // PATHFINDINGSYSTEM_H

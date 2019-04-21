@@ -909,11 +909,11 @@ void GameMap::nextTurn()
     }
     m_Rules->startOfTurn();
     m_CurrentPlayer->earnMoney();
-    m_CurrentPlayer->loadCOMusic();
     startOfTurn(m_CurrentPlayer.get());
     checkFuel(m_CurrentPlayer.get());
     GameMenue::getInstance()->updatePlayerinfo();
 
+    m_CurrentPlayer->loadCOMusic();
     pApp->getAudioThread()->playRandom();
 
     GameAnimationFactory::createGameAnimationNextDay(m_CurrentPlayer.get());

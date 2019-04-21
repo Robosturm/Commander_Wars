@@ -559,6 +559,29 @@ QmlVectorUnit* Player::getEnemyUnits()
     return ret;
 }
 
+QmlVectorBuilding* Player::getEnemyBuildings()
+{
+    GameMap* pMap = GameMap::getInstance();
+    qint32 heigth = pMap->getMapHeight();
+    qint32 width = pMap->getMapWidth();
+    QmlVectorBuilding* ret = new QmlVectorBuilding();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+            if (pBuilding != nullptr)
+            {
+                if (isEnemy(pBuilding->getOwner()))
+                {
+                   ret->append(pBuilding);
+                }
+            }
+        }
+    }
+    return ret;
+}
+
 QmlVectorBuilding* Player::getBuildings()
 {
     return GameMap::getInstance()->getBuildings(this);

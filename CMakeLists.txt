@@ -107,6 +107,7 @@ set(${PROJECT_NAME}_SRCS
         coreengine/scriptvariables.cpp
         coreengine/scriptvariable.cpp
         coreengine/workerthread.cpp
+        coreengine/dijkstramap.cpp
 
         # network engine
         network/tcpclient.cpp
@@ -160,6 +161,7 @@ set(${PROJECT_NAME}_SRCS
         ai/decisiontree.cpp
         ai/coreai.cpp
         ai/veryeasyai.cpp
+        ai/targetedunitpathfindingsystem.cpp
 )
 
 

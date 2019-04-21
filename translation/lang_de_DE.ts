@@ -105,12 +105,12 @@
 <context>
     <name>ACTION_FIRE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="79"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="63"/>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="290"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="255"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>

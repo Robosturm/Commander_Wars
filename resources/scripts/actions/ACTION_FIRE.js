@@ -28,25 +28,9 @@ var Constructor = function()
                     var defUnit = defTerrain.getUnit();
                     if (defUnit !== null)
                     {
-                        if (ACTION_FIRE.isAttackableUnit(action, defUnit))
+                        if (unit.isAttackable(defUnit))
                         {
-                            if (unit.getOwner().isEnemyUnit(defUnit) === true)
-                            {
-                                if (unit.hasAmmo1())
-                                {
-                                    if (Global[unit.getWeapon1ID()].getBaseDamage(defUnit) > 0)
-                                    {
-                                        return true;
-                                    }
-                                }
-                                if (unit.hasAmmo2())
-                                {
-                                    if (Global[unit.getWeapon2ID()].getBaseDamage(defUnit) > 0)
-                                    {
-                                        return true;
-                                    }
-                                }
-                            }
+                            return true
                         }
                     }
                     if (((defBuilding !== null) && (defBuilding.getHp() > 0) &&
@@ -163,22 +147,6 @@ var Constructor = function()
         }
         return damage;
     };
-    this.isAttackableUnit = function(action, defUnit)
-    {
-        var unit = action.getTargetUnit();
-        if (unit.getOwner().getFieldVisible(defUnit.getX(), defUnit.getY()))
-        {
-            if (!defUnit.isStealthed(unit.getOwner()))
-            {
-                if (!defUnit.getHidden() ||
-                    (defUnit.getHidden && unit.getMovementType() === defUnit.getMovementType()))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    };
 
     this.calcBattleDamage = function(action, x, y, luckMode)
     {
@@ -195,53 +163,50 @@ var Constructor = function()
             var dmg2 = -1;
             if (defUnit !== null)
             {
-                if (ACTION_FIRE.isAttackableUnit(action, defUnit))
+                if (unit.isAttackable(defUnit))
                 {
-                    if (unit.getOwner().isEnemyUnit(defUnit) === true)
+                    if (unit.hasAmmo1())
                     {
-                        if (unit.hasAmmo1())
+                        dmg1 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon1ID(), actionTargetField ,defUnit, luckMode);
+                    }
+                    if (unit.hasAmmo2())
+                    {
+                        dmg2 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon2ID(), actionTargetField ,defUnit, luckMode);
+                    }
+                    if ((dmg1 > 0) || (dmg2 > 0))
+                    {
+                        if (dmg1 >= dmg2)
                         {
-                            dmg1 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon1ID(), actionTargetField ,defUnit, luckMode);
+                            result.x = dmg1;
+                            result.y = 0;
                         }
-                        if (unit.hasAmmo2())
+                        else
                         {
-                            dmg2 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon2ID(), actionTargetField ,defUnit, luckMode);
+                            result.x = dmg2;
+                            result.y = 1;
                         }
-                        if ((dmg1 > 0) || (dmg2 > 0))
+                    }
+                    if (Math.abs(actionTargetField.x - x) + Math.abs(actionTargetField.y - y) === 1)
+                    {
+                        var defDamage = -1;
+                        var defWeapon = 0;
+                        if (defUnit.hasAmmo1())
                         {
-                            if (dmg1 >= dmg2)
+                            defDamage = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon1ID(), result.x, luckMode);
+                        }
+                        if (defUnit.hasAmmo2())
+                        {
+                            var defDamage2 = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon2ID(), result.x, luckMode);
+                            if (defDamage2 > defDamage)
                             {
-                                result.x = dmg1;
-                                result.y = 0;
-                            }
-                            else
-                            {
-                                result.x = dmg2;
-                                result.y = 1;
+                                defDamage = defDamage2;
+                                defWeapon = 1;
                             }
                         }
-                        if (Math.abs(actionTargetField.x - x) + Math.abs(actionTargetField.y - y) === 1)
+                        if (defDamage >= 0)
                         {
-                            var defDamage = -1;
-                            var defWeapon = 0;
-                            if (defUnit.hasAmmo1())
-                            {
-                                defDamage = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon1ID(), result.x, luckMode);
-                            }
-                            if (defUnit.hasAmmo2())
-                            {
-                                var defDamage2 = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon2ID(), result.x, luckMode);
-                                if (defDamage2 > defDamage)
-                                {
-                                    defDamage = defDamage2;
-                                    defWeapon = 1;
-                                }
-                            }
-                            if (defDamage >= 0)
-                            {
-                                result.width = defDamage
-                                result.height = defWeapon
-                            }
+                            result.width = defDamage
+                            result.height = defWeapon
                         }
                     }
                 }

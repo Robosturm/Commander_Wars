@@ -4,6 +4,8 @@
 #include "QString"
 #include "QStringList"
 
+class Unit;
+
 class WeaponManager
 {
 public:
@@ -25,7 +27,17 @@ public:
      * @brief reset deletes all data
      */
     void reset();
-
+    /**
+     * @brief getBaseDamage
+     * @param weaponID
+     * @param pDefender
+     * @return
+     */
+    float getBaseDamage(const QString& weaponID, Unit* pDefender);
+    /**
+     * @brief getWeaponCount
+     * @return
+     */
     qint32 getWeaponCount()
     {
         return m_loadedWeapons.size();

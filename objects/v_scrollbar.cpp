@@ -144,6 +144,8 @@ V_Scrollbar::V_Scrollbar(qint32 width, qint32 contentWidth)
             }
         }
     });
+
+    connect(this, &V_Scrollbar::sigChangeScrollValue, this, &V_Scrollbar::changeScrollValue, Qt::QueuedConnection);
 }
 
 void V_Scrollbar::setContentWidth(qint32 width)
@@ -176,13 +178,18 @@ void V_Scrollbar::update(const oxygine::UpdateState& us)
         {
             if (m_ContentWidth > m_Width)
             {
-                setScrollvalue(m_Scrollvalue + m_scroll * 10.0f / static_cast<float>(m_ContentWidth));
-                emit sigScrollValueChanged(m_Scrollvalue);
+                emit sigChangeScrollValue(m_Scrollvalue + m_scroll * 10.0f / static_cast<float>(m_ContentWidth));
                 m_ScrollTimer.start();
             }
         }
     }
     oxygine::Actor::update(us);
+}
+
+void V_Scrollbar::changeScrollValue(float value)
+{
+    setScrollvalue(value);
+    emit sigScrollValueChanged(m_Scrollvalue);
 }
 
 float V_Scrollbar::getScrollvalue() const

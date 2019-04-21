@@ -167,7 +167,7 @@ public slots:
      * @param pPlayer
      * @return
      */
-    bool isStealthed(Player* pPlayer);
+    bool isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange = false);
 
     GameEnums::UnitRanks getUnitRank() const;
     void setUnitRank(const GameEnums::UnitRanks &UnitRank);
@@ -405,6 +405,19 @@ public slots:
      * @return
      */
     QString getTerrainAnimationBackground();
+    /**
+     * @brief isAttackable
+     * @param pDefender
+     * @return
+     */
+    bool isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange = false);
+    /**
+     * @brief canMoveOver
+     * @param x
+     * @param y
+     * @return
+     */
+    bool canMoveOver(qint32 x, qint32 y);
 protected:
     /**
      * @brief updateIconTweens creates the visibility toogle tweens for all icons

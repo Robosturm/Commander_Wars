@@ -57,12 +57,12 @@ CO_DRAKE     1                 0               6                 0              
 CO_DRAKE     1                 0               6                 0                 3               3               6               11000                    0           1
 CO_DRAKE     1                 0               0                 0                 6               6               3               9000                     0           0
 CO_DRAKE     1                 0               0                 0                 6               6               6               9000                     0           1
-CO_DRAKE     1                 0               0                 0                 6               6               6               9000                     0           2
-CO_DRAKE     1                 0               6                 0                 3               3               6               9000                     0           2
-CO_DRAKE     1                 0               6                 0                 3               3               6               11000                    0           2
-CO_DRAKE     1                 0               6                 0                 3               3               6               11000                    1           2
-CO_DRAKE     1                 0               6                 0                 3               3               6               11000                    2           2
-CO_DRAKE     1                 0               0                 0                 6               6               3               9000                     0           2
+CO_DRAKE     2                 0               0                 0                 6               6               6               9000                     0           2
+CO_DRAKE     2                 0               6                 0                 3               3               6               9000                     0           2
+CO_DRAKE     2                 0               6                 0                 3               3               6               11000                    0           2
+CO_DRAKE     2                 0               6                 0                 3               3               6               11000                    1           2
+CO_DRAKE     2                 0               6                 0                 3               3               6               11000                    2           2
+CO_DRAKE     2                 0               0                 0                 6               6               3               9000                     0           2
 // EAGLE
 CO_EAGLE     1                 0               7                 0                 6               6               6               11000                    2           1
 CO_EAGLE     1                 0               7                 0                 6               3               6               11000                    2           1
@@ -176,12 +176,12 @@ CO_HAWKE     1                 0               6                 6              
 CO_HAWKE     1                 0               6                 0                 3               3               6               11000                    0           1
 CO_HAWKE     1                 0               0                 0                 6               6               3               9000                     0           0
 CO_HAWKE     1                 0               0                 0                 6               6               6               9000                     0           1
-CO_HAWKE     1                 0               0                 8                 6               6               6               9000                     0           2
-CO_HAWKE     1                 0               6                 0                 3               3               6               9000                     0           2
-CO_HAWKE     1                 0               6                 0                 3               3               6               11000                    0           2
-CO_HAWKE     1                 0               6                 0                 3               6               6               11000                    1           2
-CO_HAWKE     1                 0               6                 6                 3               3               6               11000                    2           2
-CO_HAWKE     1                 0               0                 0                 6               6               3               9000                     0           2
+CO_HAWKE     2                 0               0                 8                 6               6               6               9000                     0           2
+CO_HAWKE     2                 0               6                 0                 3               3               6               9000                     0           2
+CO_HAWKE     2                 0               6                 0                 3               3               6               11000                    0           2
+CO_HAWKE     2                 0               6                 0                 3               6               6               11000                    1           2
+CO_HAWKE     2                 0               6                 6                 3               3               6               11000                    2           2
+CO_HAWKE     2                 0               0                 0                 6               6               3               9000                     0           2
 // JAKE
 CO_JAKE      0                 0               4                 3                 4               6               6               11000                    0           0
 CO_JAKE      1                 0               7                 7                 3               6               4               11000                    0           1
@@ -401,12 +401,12 @@ CO_OLAF      1                 0               6                 6              
 CO_OLAF      1                 0               6                 0                 3               3               6               11000                    0           1
 CO_OLAF      1                 0               0                 0                 6               6               3               9000                     0           0
 CO_OLAF      1                 0               0                 0                 6               6               6               9000                     0           1
-CO_OLAF      1                 0               0                 8                 6               6               6               9000                     0           2
-CO_OLAF      1                 0               6                 0                 3               3               6               9000                     0           2
-CO_OLAF      1                 0               6                 0                 3               3               6               11000                    0           2
-CO_OLAF      1                 0               6                 0                 3               6               6               11000                    1           2
-CO_OLAF      1                 0               6                 6                 3               3               6               11000                    2           2
-CO_OLAF      1                 0               0                 0                 6               6               3               9000                     0           2
+CO_OLAF      2                 0               0                 8                 6               6               6               9000                     0           2
+CO_OLAF      2                 0               6                 0                 3               3               6               9000                     0           2
+CO_OLAF      2                 0               6                 0                 3               3               6               11000                    0           2
+CO_OLAF      2                 0               6                 0                 3               6               6               11000                    1           2
+CO_OLAF      2                 0               6                 6                 3               3               6               11000                    2           2
+CO_OLAF      2                 0               0                 0                 6               6               3               9000                     0           2
 // RACHEL
 CO_RACHEL    0                 0               3                 3                 6               3               6               11000                    0           0
 CO_RACHEL    0                 0               7                 3                 3               3               7               9000                     0           0
@@ -454,12 +454,12 @@ CO_ROBOSTURM 1                 0               6                 6              
 CO_ROBOSTURM 1                 0               6                 0                 3               3               6               11000                    0           1
 CO_ROBOSTURM 1                 0               0                 0                 6               6               3               9000                     0           0
 CO_ROBOSTURM 1                 0               0                 0                 6               6               6               9000                     0           1
-CO_ROBOSTURM 1                 0               0                 8                 6               6               6               9000                     0           2
-CO_ROBOSTURM 1                 0               6                 0                 3               3               6               9000                     0           2
-CO_ROBOSTURM 1                 0               6                 0                 3               3               6               11000                    0           2
-CO_ROBOSTURM 1                 0               6                 0                 3               6               6               11000                    1           2
-CO_ROBOSTURM 1                 0               6                 6                 3               3               6               11000                    2           2
-CO_ROBOSTURM 1                 0               0                 0                 6               6               3               9000                     0           2
+CO_ROBOSTURM 2                 0               0                 8                 6               6               6               9000                     0           2
+CO_ROBOSTURM 2                 0               6                 0                 3               3               6               9000                     0           2
+CO_ROBOSTURM 2                 0               6                 0                 3               3               6               11000                    0           2
+CO_ROBOSTURM 2                 0               6                 0                 3               6               6               11000                    1           2
+CO_ROBOSTURM 2                 0               6                 6                 3               3               6               11000                    2           2
+CO_ROBOSTURM 2                 0               0                 0                 6               6               3               9000                     0           2
 // SAMI
 CO_SAMI      0                 0               7                 7                 6               3               3               11000                    0           0
 CO_SAMI      0                 0               7                 7                 7               7               7               9000                     0           0
