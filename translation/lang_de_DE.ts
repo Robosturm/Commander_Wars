@@ -116,6 +116,14 @@
     </message>
 </context>
 <context>
+    <name>ACTION_FLARE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="24"/>
+        <source>Flare</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_JOIN</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="31"/>

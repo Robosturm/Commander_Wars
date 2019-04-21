@@ -60,13 +60,13 @@ var Constructor = function()
 				
 			// ranged land units
 			case "ARTILLERY":
-				return 50;
+                return 45;
 			case "ANTITANKCANNON":
                 return 1;
 			case "MISSILE":
-                return 45;
+                return 65;
             case "ROCKETTHROWER":
-				return 45;
+                return 65;
 			default:
 				return -1;
         }

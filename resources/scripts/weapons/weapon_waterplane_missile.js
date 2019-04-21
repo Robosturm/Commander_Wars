@@ -12,90 +12,90 @@ var Constructor = function()
     {
         switch(unit.getUnitID())
         {
-			// infantry
-			case "INFANTRY":
-				return WEAPON.HighDamage;
-			case "MECH":
-				return WEAPON.HighDamage;
-			case "MOTORBIKE":
-				return WEAPON.HighDamage;
-			case "SNIPER":
-				return WEAPON.HighDamage;
+            // infantry
+            case "INFANTRY":
+                return 90;
+            case "MECH":
+                return 85;
+            case "MOTORBIKE":
+                return 85;
+            case "SNIPER":
+                return 85;
 
-			// supporter
-			case "APC":
-				return WEAPON.HighDamage;
-			case "FLARE":
-				return WEAPON.HighDamage;
-			case "RECON":
-				return WEAPON.HighDamage;
+            // supporter
+            case "APC":
+                return 75;
+            case "FLARE":
+                return 80;
+            case "RECON":
+                return 80;
 
-			// tanks
-			case "FLAK":
-                return WEAPON.softCounterDamage;
-			case "HOVERFLAK":
-                return WEAPON.softCounterDamage;
-			case "LIGHT_TANK":
+            // tanks
+            case "FLAK":
+                return 45;
+            case "HOVERFLAK":
+                return 45;
+            case "LIGHT_TANK":
                 return 75;
-			case "HOVERCRAFT":
+            case "HOVERCRAFT":
                 return 75;
-				
-			// heavy tanks
+
+            // heavy tanks
             case "HEAVY_HOVERCRAFT":
-				return WEAPON.softDamage;
-			case "HEAVY_TANK":
-				return WEAPON.softDamage;
-			case "NEOTANK":
-				return WEAPON.softDamage;
-				
-			// very heavy tanks
-			case "MEGATANK":
-                return WEAPON.mediumDamage;
-				
-			// ranged land units
-			case "ARTILLERY":
-                return WEAPON.softDamage;
-			case "ANTITANKCANNON":
-				return WEAPON.mediumDamage;
-			case "MISSILE":
-				return WEAPON.softDamage;
+                return 65;
+            case "HEAVY_TANK":
+                return 65;
+            case "NEOTANK":
+                return 65;
+
+            // very heavy tanks
+            case "MEGATANK":
+                return 55;
+
+            // ranged land units
+            case "ARTILLERY":
+                return 70;
+            case "ANTITANKCANNON":
+                return 50;
+            case "MISSILE":
+                return 70;
             case "ROCKETTHROWER":
-				return WEAPON.softDamage;				
-			
-			case "DUSTER":
-				return WEAPON.mediumDamage;
-			case "FIGHTER":
-				return WEAPON.mediumDamage;
-			case "BOMBER":
-				return WEAPON.mediumDamage;
-			case "STEALTHBOMBER":
-				return WEAPON.mediumDamage;
-			case "TRANSPORTPLANE":
-				return WEAPON.mediumDamage;
-			case "WATERPLANE":
-				return WEAPON.mediumDamage;
-			case "K_HELI":
-				return WEAPON.HighDamage;
-			case "T_HELI":
-				return WEAPON.HighDamage;
-				
-			// ships
-			case "BATTLESHIP":
-				return WEAPON.mediumDamage;
-			case "CANNONBOAT":
-				return 105;				
-			case "CRUISER":
-				return WEAPON.mediumDamage;
-			case "DESTROYER":
-				return WEAPON.mediumDamage;
-			case "SUBMARINE":
-				return WEAPON.mediumDamage;				
-			case "LANDER":
-				return WEAPON.softDamage;
-			case "AIRCRAFTCARRIER":
-                return WEAPON.mediumDamage;
-			default:
-				return -1;
+                return 80;
+
+            case "DUSTER":
+                return 65;
+            case "FIGHTER":
+                return 45;
+            case "BOMBER":
+                return 55;
+            case "STEALTHBOMBER":
+                return 55;
+            case "TRANSPORTPLANE":
+                return 75;
+            case "WATERPLANE":
+                return 55;
+            case "K_HELI":
+                return 85;
+            case "T_HELI":
+                return 95;
+
+            // ships
+            case "BATTLESHIP":
+                return 45;
+            case "CANNONBOAT":
+                return 105;
+            case "CRUISER":
+                return 40;
+            case "DESTROYER":
+                return 40;
+            case "SUBMARINE":
+                return 55;
+            case "LANDER":
+                return 85;
+            case "AIRCRAFTCARRIER":
+                return 65;
+            default:
+                return -1;
         }
     };
 };

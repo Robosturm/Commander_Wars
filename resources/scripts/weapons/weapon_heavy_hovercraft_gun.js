@@ -22,9 +22,9 @@ var Constructor = function()
 
 			// tanks
 			case "FLAK":
-                return 70;
+                return 90;
 			case "HOVERFLAK":
-                return 70;
+                return 90;
 			case "LIGHT_TANK":
                 return 70;
             case "HOVERCRAFT":
@@ -32,41 +32,41 @@ var Constructor = function()
 				
 			// heavy tanks
             case "HEAVY_HOVERCRAFT":
-                return WEAPON.mediumDamage;
+                return 55;
 			case "HEAVY_TANK":
-                return 45;
+                return 55;
 			case "NEOTANK":
-                return WEAPON.HighDamage;
+                return 55;
 				
 			// very heavy tanks
 			case "MEGATANK":
-				return WEAPON.softCounterDamage;
+                return 35;
 				
 			// ranged land units
 			case "ARTILLERY":
-                return WEAPON.HighDamage;
+                return 85;
 			case "ANTITANKCANNON":
-				return WEAPON.softCounterDamage;
+                return 35;
 			case "MISSILE":
-                return 95;
+                return 90;
             case "ROCKETTHROWER":
-                return 95;
+                return 90;
 			
 			// ships
 			case "BATTLESHIP":
-				return WEAPON.lowDamage;
+                return 10;
 			case "CANNONBOAT":
-				return WEAPON.mediumDamage;
+                return 55;
 			case "CRUISER":
-				return WEAPON.lowDamage;
+                return 12;
 			case "DESTROYER":
-				return WEAPON.lowDamage;
+                return 12;
 			case "SUBMARINE":
-				return WEAPON.lowDamage;
+                return 12;
 			case "LANDER":
-				return WEAPON.lowDamage;
+                return 22;
 			case "AIRCRAFTCARRIER":
-				return WEAPON.lowDamage;
+                return 10;
 			default:
 				return -1;
         }

@@ -12,63 +12,63 @@ var Constructor = function()
     {
         switch(unit.getUnitID())
         {
-			// supporter
-			case "APC":
-				return 90;
-			case "FLARE":
-				return 90;
-			case "RECON":
-				return 95;
+            // supporter
+            case "APC":
+                return 90;
+            case "FLARE":
+                return 90;
+            case "RECON":
+                return 95;
 
-			// tanks
-			case "FLAK":
+            // tanks
+            case "FLAK":
                 return 90;
-			case "HOVERFLAK":
+            case "HOVERFLAK":
                 return 90;
-			case "LIGHT_TANK":
+            case "LIGHT_TANK":
                 return 70;
             case "HOVERCRAFT":
                 return 70;
-				
-			// heavy tanks
-			case "HEAVY_HOVERCRAFT":
-                return 45;
-			case "HEAVY_TANK":
-                return WEAPON.HighDamage;
-			case "NEOTANK":
-                return WEAPON.mediumDamage;
-				
-			// very heavy tanks
-			case "MEGATANK":
-				return WEAPON.softCounterDamage;
-				
-			// ranged land units
-			case "ARTILLERY":
-                return WEAPON.HighDamage;
-			case "ANTITANKCANNON":
-				return WEAPON.softCounterDamage;
-			case "MISSILE":
-                return 95;
+
+            // heavy tanks
+            case "HEAVY_HOVERCRAFT":
+                return 55;
+            case "HEAVY_TANK":
+                return 55;
+            case "NEOTANK":
+                return 55;
+
+            // very heavy tanks
+            case "MEGATANK":
+                return 35;
+
+            // ranged land units
+            case "ARTILLERY":
+                return 85;
+            case "ANTITANKCANNON":
+                return 35;
+            case "MISSILE":
+                return 90;
             case "ROCKETTHROWER":
-                return 95;
-			
-			// ships
-			case "BATTLESHIP":
-				return WEAPON.lowDamage;
-			case "CANNONBOAT":
-				return WEAPON.mediumDamage;
-			case "CRUISER":
-				return WEAPON.lowDamage;
-			case "DESTROYER":
-				return WEAPON.lowDamage;
-			case "SUBMARINE":
-				return WEAPON.lowDamage;
-			case "LANDER":
-				return WEAPON.lowDamage;
-			case "AIRCRAFTCARRIER":
-				return WEAPON.lowDamage;
-			default:
-				return -1;
+                return 90;
+
+            // ships
+            case "BATTLESHIP":
+                return 10;
+            case "CANNONBOAT":
+                return 55;
+            case "CRUISER":
+                return 12;
+            case "DESTROYER":
+                return 12;
+            case "SUBMARINE":
+                return 12;
+            case "LANDER":
+                return 22;
+            case "AIRCRAFTCARRIER":
+                return 10;
+            default:
+                return -1;
         }
     };
 };

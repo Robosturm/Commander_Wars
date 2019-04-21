@@ -10,21 +10,21 @@ var Constructor = function()
         {
             // ships
             case "BATTLESHIP":
-                return WEAPON.softCounterDamage;
+                return 38;
             case "CANNONBOAT":
                 return 85;
 				
             case "CRUISER":
-                return WEAPON.softCounterDamage;
+                return 28;
             case "DESTROYER":
-                return WEAPON.lowDamage;
+                return 28;
             case "SUBMARINE":
-                return WEAPON.HighDamage;
+                return 95;
 				
             case "LANDER":
-                return WEAPON.softDamage;
+                return 40;
             case "AIRCRAFTCARRIER":
-                return WEAPON.mediumDamage;
+                return 38;
 			default:
 				return -1;
         }

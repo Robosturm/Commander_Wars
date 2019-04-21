@@ -10,17 +10,17 @@ var Constructor = function()
         {
 			// air
 			case "DUSTER":
-				return WEAPON.HighDamage;
+                return 80;
 			case "FIGHTER":
-				return WEAPON.mediumDamage;
+                return 55;
 			case "BOMBER":
-				return WEAPON.softDamage;
+                return 65;
 			case "STEALTHBOMBER":
-				return WEAPON.softDamage;
+                return 65;
 			case "TRANSPORTPLANE":
 				return 120;
 			case "WATERPLANE":
-				return WEAPON.mediumDamage;
+                return 65;
 			case "K_HELI":
 				return 120;
 			case "T_HELI":

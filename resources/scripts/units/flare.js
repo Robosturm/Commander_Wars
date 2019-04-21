@@ -2,8 +2,8 @@ var Constructor = function()
 {
     this.init = function(unit)
     {
-        unit.setAmmo1(6);
-        unit.setMaxAmmo1(6);
+        unit.setAmmo1(3);
+        unit.setMaxAmmo1(3);
         unit.setWeapon1ID("WEAPON_FLARE");
 
         unit.setAmmo2(10);
@@ -40,7 +40,7 @@ var Constructor = function()
     };
     this.getBaseCost = function()
     {
-        return 6000;
+        return 5000;
     };
     this.getName = function()
     {
@@ -49,6 +49,11 @@ var Constructor = function()
     this.canMoveAndFire = function()
     {
         return true;
+    };
+    this.getActions = function()
+    {
+        // returns a string id list of the actions this unit can perform
+        return "ACTION_FLARE,ACTION_FIRE,ACTION_JOIN,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
     };
 }
 

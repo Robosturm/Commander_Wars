@@ -15,60 +15,60 @@ var Constructor = function()
         switch(unit.getUnitID())
         {
 			// infantry
-			case "INFANTRY":
-				return WEAPON.lowDamage;
-			case "MECH":
-				return WEAPON.lowDamage;
-			case "MOTORBIKE":
-				return WEAPON.lowDamage;
-			case "SNIPER":
-				return WEAPON.lowDamage;
+            case "INFANTRY":
+                return 75;
+            case "MECH":
+                return 65;
+            case "MOTORBIKE":
+                return 65;
+            case "SNIPER":
+                return 65;
 
-			// supporter
-			case "APC":
-				return WEAPON.HighDamage;
-			case "FLARE":
-				return WEAPON.HighDamage;
-			case "RECON":
-				return WEAPON.HighDamage;
+            // supporter
+            case "APC":
+                return 65;
+            case "FLARE":
+                return 75;
+            case "RECON":
+                return 75;
 
 			// tanks
-			case "FLAK":
-				return WEAPON.HighDamage;
-			case "HOVERFLAK":
-				return WEAPON.HighDamage;
-			case "LIGHT_TANK":
-				return WEAPON.HighDamage;
+            case "FLAK":
+                return 75;
+            case "HOVERFLAK":
+                return 75;
+            case "LIGHT_TANK":
+                return 75;
             case "HOVERCRAFT":
-				return WEAPON.HighDamage;
+                return 75;
 				
 			// heavy tanks
             case "HEAVY_HOVERCRAFT":
-                return WEAPON.softDamage;
-			case "HEAVY_TANK":
-                return WEAPON.softDamage;
-			case "NEOTANK":
-                return WEAPON.softDamage;
+                return 65;
+            case "HEAVY_TANK":
+                return 65;
+            case "NEOTANK":
+                return 65;
 				
 			// very heavy tanks
 			case "MEGATANK":
-				return WEAPON.mediumDamage;
+                return 55;
 				
 			// heli copter
 			case "T_HELI":
-				return WEAPON.mediumDamage;
+                return 55;
 			case "K_HELI":
 				return 45;
 				
 			// ranged land units
-			case "ARTILLERY":
-                return WEAPON.softDamage;
+            case "ARTILLERY":
+                return 65;
             case "ANTITANKCANNON":
-				return WEAPON.mediumDamage;
-			case "MISSILE":
-                return WEAPON.softDamage;
+                return 55;
+            case "MISSILE":
+                return 70;
             case "ROCKETTHROWER":
-                return WEAPON.softDamage;
+                return 70;
 			
 			default:
 				return -1;

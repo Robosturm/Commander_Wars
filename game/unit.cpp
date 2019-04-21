@@ -1459,12 +1459,15 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange)
         qint32 x = getX();
         qint32 y = getY();
         // can we see the unit?
-        if (!pPlayer->getFieldVisible(x, y) && !ignoreOutOfVisionRange)
+        bool visibleField = pPlayer->getFieldVisible(x, y);
+        if (!visibleField && !ignoreOutOfVisionRange)
         {
             return true;
         }
         // a unit can be stealth by itself or by the terrain it's on.
-        if (getHidden() || (m_pTerrain->getVisionHide(pPlayer) && useTerrainDefense() && pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off))
+        if (getHidden() ||
+            (m_pTerrain->getVisionHide(pPlayer) && useTerrainDefense() && !visibleField &&
+             pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off))
         {
             QmlVectorPoint* pPoints = Mainapp::getCircle(1, 1);
             for (qint32 i = 0; i < pPoints->size(); i++)

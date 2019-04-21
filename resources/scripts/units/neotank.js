@@ -10,9 +10,9 @@ var Constructor = function()
         unit.setMaxAmmo2(10);
         unit.setWeapon2ID("WEAPON_NEOTANK_MG");
 
-        unit.setFuel(50);
-        unit.setMaxFuel(50);
-        unit.setBaseMovementPoints(5);
+        unit.setFuel(70);
+        unit.setMaxFuel(70);
+        unit.setBaseMovementPoints(6);
         unit.setMinRange(1);
         unit.setMaxRange(1);
         unit.setVision(2);
@@ -40,7 +40,7 @@ var Constructor = function()
     };
     this.getBaseCost = function()
     {
-        return 12000;
+        return 13500;
     };
     this.getName = function()
     {

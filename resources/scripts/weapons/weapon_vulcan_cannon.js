@@ -12,77 +12,77 @@ var Constructor = function()
     {
         switch(unit.getUnitID())
         {
-			// infantry
-			case "INFANTRY":
-				return 150;
-			case "MECH":
-				return 150;
-			case "MOTORBIKE":
-				return 150;
-			case "SNIPER":
-				return 150;
+            // infantry
+            case "INFANTRY":
+                return 150;
+            case "MECH":
+                return 150;
+            case "MOTORBIKE":
+                return 150;
+            case "SNIPER":
+                return 150;
 
-			// supporter
-			case "APC":
-				return WEAPON.mediumDamage;
-			case "FLARE":
-				return WEAPON.mediumDamage;
-			case "RECON":
-				return WEAPON.mediumDamage;
+            // supporter
+            case "APC":
+                return 50;
+            case "FLARE":
+                return 45;
+            case "RECON":
+                return 60;
 
-			// tanks
-			case "FLAK":
-				return WEAPON.mediumDamage;
-			case "HOVERFLAK":
-				return WEAPON.mediumDamage;
-			case "LIGHT_TANK":
-				return WEAPON.lowDamage;
+            // tanks
+            case "FLAK":
+                return 45;
+            case "HOVERFLAK":
+                return 45;
+            case "LIGHT_TANK":
+                return 15;
             case "HOVERCRAFT":
-				return WEAPON.HighDamage;
-				
-			// heavy tanks
+                return 15;
+
+            // heavy tanks
             case "HEAVY_HOVERCRAFT":
-				return WEAPON.lowDamage;
-			case "HEAVY_TANK":
-				return WEAPON.lowDamage;
-			case "NEOTANK":
-				return WEAPON.lowDamage;
-				
-			// very heavy tanks
-			case "MEGATANK":
-				return 5;
-				
-			// heli copter
-			case "T_HELI":
-				return 120;
-			case "K_HELI":
-				return 105;
-				
-			//air
-			case "DUSTER":
-				return 75;
-			case "FIGHTER":
-				return 75;
-			case "BOMBER":
-				return 75;
-			case "STEALTHBOMBER":
-				return 75;
-			case "TRANSPORTPLANE":
-				return 75;
-			case "WATERPLANE":
-				return 75;
-				
-			// ranged land units
-			case "ARTILLERY":
-				return WEAPON.mediumDamage;
-			case "ANTITANKCANNON":
-                return WEAPON.lowDamage;
-			case "MISSILE":
-                return WEAPON.mediumDamage;
+                return 10;
+            case "HEAVY_TANK":
+                return 10;
+            case "NEOTANK":
+                return 10;
+
+            // very heavy tanks
+            case "MEGATANK":
+                return 5;
+
+            // heli copter
+            case "T_HELI":
+                return 120;
+            case "K_HELI":
+                return 105;
+
+            //air
+            case "DUSTER":
+                return 75;
+            case "FIGHTER":
+                return 75;
+            case "BOMBER":
+                return 75;
+            case "STEALTHBOMBER":
+                return 75;
+            case "TRANSPORTPLANE":
+                return 75;
+            case "WATERPLANE":
+                return 75;
+
+            // ranged land units
+            case "ARTILLERY":
+                return 50;
+            case "ANTITANKCANNON":
+                return 25;
+            case "MISSILE":
+                return 55;
             case "ROCKETTHROWER":
-				return WEAPON.mediumDamage;
-			default:
-				return -1;
+                return 55;
+            default:
+                return -1;
         }
     };
 };

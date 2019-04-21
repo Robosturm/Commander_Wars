@@ -56,9 +56,9 @@ var Constructor = function()
 				
 			// heli copter
 			case "T_HELI":
-                return 45;
-			case "K_HELI":
                 return 55;
+			case "K_HELI":
+                return 45;
 				
 			// ranged land units
 			case "ARTILLERY":

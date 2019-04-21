@@ -14,13 +14,13 @@ var Constructor = function()
         {
 			// infantry
 			case "INFANTRY":
-				return WEAPON.softDamage;
+                return 75;
 			case "MECH":
-				return WEAPON.softDamage;
+                return 70;
 			case "MOTORBIKE":
-				return WEAPON.softDamage;
+                return 70;
 			case "SNIPER":
-				return WEAPON.softDamage;
+                return 70;
 
 			// supporter
 			case "APC":
@@ -54,9 +54,9 @@ var Constructor = function()
 				
 			// heli copter
 			case "T_HELI":
-				return WEAPON.softCounterDamage;
+                return 40;
 			case "K_HELI":
-				return WEAPON.lowDamage;
+                return 18;
 				
 			// ranged land units
 			case "ARTILLERY":
@@ -64,9 +64,9 @@ var Constructor = function()
 			case "ANTITANKCANNON":
                 return 1;
 			case "MISSILE":
-                return WEAPON.softCounterDamage;
+                return 55;
             case "ROCKETTHROWER":
-				return WEAPON.softCounterDamage;
+                return 55;
 			default:
 				return -1;
         }

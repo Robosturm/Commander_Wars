@@ -1,14 +1,5 @@
 var WEAPON =
 {
-    // locals for reuse in derived class
-    HighDamage : 85,
-    mediumDamage : 55,
-    lowDamage : 15,
-
-    softCounterDamage : 35,
-    softDamage : 65,
-
-
     getName : function()
     {
         return "";

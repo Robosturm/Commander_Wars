@@ -13,45 +13,44 @@ var Constructor = function()
         switch(unit.getUnitID())
         {
 			// supporter
-			case "APC":
-				return 85;
-			case "RECON":
-				return 75;
+            case "APC":
+                return 75;
+            case "FLARE":
+                return 80;
+            case "RECON":
+                return 85;
 
 			// tanks
 			case "FLAK":
-                return WEAPON.HighDamage;
+                return 75;
 			case "HOVERFLAK":
-                return WEAPON.HighDamage;
-
+                return 75;
             case "LIGHT_TANK":
-                return WEAPON.lowDamage;
+                return 55;
             case "HOVERCRAFT":
-                return WEAPON.mediumDamage;
-            case "FLARE":
-                return WEAPON.HighDamage;
+                return 55;
 				
 			// heavy tanks
             case "HEAVY_HOVERCRAFT":
-                return WEAPON.softCounterDamage;
+                return 35;
 			case "HEAVY_TANK":
-                return WEAPON.softCounterDamage;
+                return 35;
 			case "NEOTANK":
-                return WEAPON.softCounterDamage;
+                return 35;
 				
 			// very heavy tanks
 			case "MEGATANK":
-				return WEAPON.lowDamage;
+                return 20;
 				
 			// ranged land units
 			case "ARTILLERY":
                 return 70;
 			case "ANTITANKCANNON":
-				return WEAPON.lowDamage;
+                return 30;
 			case "MISSILE":
-                return WEAPON.HighDamage;
+                return 85;
             case "ROCKETTHROWER":
-                return WEAPON.HighDamage;
+                return 85;
 			
 			// ships
 			case "BATTLESHIP":
@@ -65,7 +64,7 @@ var Constructor = function()
 			case "SUBMARINE":
 				return 10;
 			case "LANDER":
-				return 10;
+                return 18;
 			case "AIRCRAFTCARRIER":
 				return 10;
 			default:

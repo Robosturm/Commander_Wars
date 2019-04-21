@@ -13,13 +13,13 @@ var Constructor = function()
         switch(unit.getUnitID())
         {
         case "INFANTRY":
-            return WEAPON.lowDamage;
+            return 65;
         case "MECH":
-            return WEAPON.HighDamage;
+            return 55;
         case "MOTORBIKE":
-            return WEAPON.mediumDamage;
+            return 55;
         case "SNIPER":
-            return WEAPON.HighDamage;
+            return 75;
 
         case "APC":
             return 20;
@@ -53,13 +53,13 @@ var Constructor = function()
             return 10;
 
         case "ARTILLERY":
-            return WEAPON.lowDamage;
+            return 15;
         case "ANTITANKCANNON":
             return 45;
         case "MISSILE":
-            return WEAPON.softCounterDamage;
+            return 35;
         case "ROCKETTHROWER":
-            return WEAPON.softCounterDamage;
+            return 35;
         default:
             return -1;
         }

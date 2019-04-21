@@ -41,7 +41,7 @@ var Constructor = function()
 			case "ARTILLERY":
                 return 65;
 			case "ANTITANKCANNON":
-                return 20;
+                return 35;
 			case "MISSILE":
                 return 55;
             case "ROCKETTHROWER":

@@ -24,11 +24,11 @@ var Constructor = function()
 
 			// supporter
 			case "APC":
-				return WEAPON.softCounterDamage;
+                return 20;
 			case "FLARE":
-				return WEAPON.softCounterDamage;
+                return 30;
 			case "RECON":
-				return WEAPON.softCounterDamage;
+                return 30;
 
 			// tanks
 			case "FLAK":
@@ -54,9 +54,9 @@ var Constructor = function()
 				
 			// heli copter
 			case "T_HELI":
-				return WEAPON.HighDamage;
+                return 85;
 			case "K_HELI":
-				return WEAPON.softDamage;
+                return 65;
 				
 			// ranged land units
 			case "ARTILLERY":
