@@ -22,7 +22,7 @@ OptionMenue::OptionMenue()
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
-    Console::print("Entering Main Menue", Console::eDEBUG);
+    Console::print("Entering Option Menue", Console::eDEBUG);
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
@@ -93,7 +93,7 @@ void OptionMenue::exitMenue()
     }
     else
     {
-        Console::print("Leaving Editor Menue", Console::eDEBUG);
+        Console::print("Leaving Option Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new Mainwindow());
         oxygine::Actor::detach();
     }
@@ -140,7 +140,7 @@ void OptionMenue::changeScreenSize(qint32 width, qint32 heigth)
     pApp->getSettings()->setWidth(width);
     pApp->getSettings()->setHeight(heigth);
     pApp->getSettings()->saveSettings();
-    Console::print("Leaving Editor Menue", Console::eDEBUG);
+    Console::print("Leaving Option Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new OptionMenue());
     oxygine::Actor::detach();
     pApp->continueThread();
@@ -282,7 +282,6 @@ void OptionMenue::showSettings()
         pSettings->setSoundVolume(value);
     });
     m_pOptions->addItem(pSlider);
-    // qApp->screens()[0]->size();
     pApp->continueThread();
 }
 

@@ -298,6 +298,14 @@
     </message>
 </context>
 <context>
+    <name>CreditsMenue</name>
+    <message>
+        <location filename="../menue/creditsmenue.cpp" line="38"/>
+        <source>Exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DESTROYEDWELD</name>
     <message>
         <location filename="../resources/scripts/terrain/DESTROYEDWELD.js" line="6"/>
@@ -525,27 +533,32 @@
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="47"/>
+        <location filename="../menue/mainwindow.cpp" line="48"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="58"/>
+        <location filename="../menue/mainwindow.cpp" line="59"/>
         <source>Load Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="69"/>
+        <location filename="../menue/mainwindow.cpp" line="70"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="80"/>
+        <location filename="../menue/mainwindow.cpp" line="81"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="91"/>
+        <location filename="../menue/mainwindow.cpp" line="92"/>
+        <source>Credits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mainwindow.cpp" line="103"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>

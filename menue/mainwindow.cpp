@@ -11,6 +11,7 @@
 #include "menue/editormenue.h"
 #include "menue/optionmenue.h"
 #include "menue/mapselectionmapsmenue.h"
+#include "menue/creditsmenue.h"
 
 #include "objects/filedialog.h"
 
@@ -87,6 +88,17 @@ Mainwindow::Mainwindow()
     connect(this, &Mainwindow::sigEnterOptionmenue, this, &Mainwindow::enterOptionmenue, Qt::QueuedConnection);
     btnI++;
 
+    // credits button
+    oxygine::spButton pButtonCredtis = ObjectManager::createButton(tr("Credits"));
+    pButtonCredtis->attachTo(this);
+    setButtonPosition(pButtonCredtis, btnI);
+    pButtonCredtis->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigEnterCreditsmenue();
+    });
+    connect(this, &Mainwindow::sigEnterCreditsmenue, this, &Mainwindow::enterCreditsmenue, Qt::QueuedConnection);
+    btnI++;
+
     // quit button
     oxygine::spButton pQuit = ObjectManager::createButton(tr("Quit"));
     pQuit->attachTo(this);
@@ -101,7 +113,7 @@ Mainwindow::Mainwindow()
 
 void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
 {
-    static const qint32 buttonCount = 6;
+    static const qint32 buttonCount = 7;
     float buttonHeigth = pButton->getHeight() + 30;
     Mainapp* pApp = Mainapp::getInstance();
     pButton->setPosition(pApp->getSettings()->getWidth() / 2.0f - pButton->getWidth() / 2.0f, pApp->getSettings()->getHeight() / 2.0f - buttonCount  / 2.0f * buttonHeigth + buttonHeigth * btnI);
@@ -135,6 +147,15 @@ void Mainwindow::enterOptionmenue()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     oxygine::getStage()->addChild(new OptionMenue());
+    leaveMenue();
+    pApp->continueThread();
+}
+
+void Mainwindow::enterCreditsmenue()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    oxygine::getStage()->addChild(new CreditsMenue());
     leaveMenue();
     pApp->continueThread();
 }

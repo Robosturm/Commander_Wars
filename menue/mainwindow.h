@@ -16,6 +16,7 @@ public slots:
     void enterEditor();
     void enterOptionmenue();
     void enterLoadGame();
+    void enterCreditsmenue();
     void loadGame(QString filename);
 
     void leaveMenue();
@@ -24,6 +25,7 @@ signals:
     void sigEnterSingleplayer();
     void sigEnterEditor();
     void sigEnterOptionmenue();
+    void sigEnterCreditsmenue();
     void sigQuit();
     void sigEnterLoadGame();
 protected:
