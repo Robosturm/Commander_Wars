@@ -795,6 +795,27 @@ void GameMap::updateUnitIcons()
     pApp->continueThread();
 }
 
+qint32 GameMap::getWinnerTeam()
+{
+    qint32 winnerTeam = -1;
+    for (qint32 i = 0; i < players.size(); i++)
+    {
+        if (!players[i]->getIsDefeated())
+        {
+            if (winnerTeam >= 0)
+            {
+                winnerTeam = -1;
+                break;
+            }
+            else
+            {
+                winnerTeam = players[i]->getTeam();
+            }
+        }
+    }
+    return winnerTeam;
+}
+
 qint32 GameMap::getCurrentDay() const
 {
     return currentDay;

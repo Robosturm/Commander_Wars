@@ -98,6 +98,16 @@ var Constructor = function()
 
         if (captured)
         {
+            if (building.getBuildingID() === "HQ")
+            {
+                map.getGameRecorder().addSpecialEvent(unit.getOwner().getPlayerID(),
+                                                      GameEnums.GameRecord_SpecialEvents_HQCaptured);
+                if (building.getOwner() !== null)
+                {
+                    map.getGameRecorder().addSpecialEvent(building.getOwner().getPlayerID(),
+                                                          GameEnums.GameRecord_SpecialEvents_HQLost);
+                }
+            }
             building.setUnitOwner(unit);
         }
         // disable unit commandments for this turn

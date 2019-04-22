@@ -104,6 +104,7 @@ int main(int argc, char* argv[])
     qRegisterMetaType<GameEnums::Fog>("GameEnums::Fog");
     qRegisterMetaType<GameEnums::COMood>("GameEnums::COMood");
     qRegisterMetaType<GameEnums::LuckDamageMode>("GameEnums::LuckDamageMode");
+    qRegisterMetaType<GameEnums::GameRecord_SpecialEvents>("GameEnums::GameRecord_SpecialEvents");
     qRegisterMetaType<SDL_Event>("SDL_Event");
 
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");

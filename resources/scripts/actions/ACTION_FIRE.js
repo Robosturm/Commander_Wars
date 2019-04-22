@@ -328,6 +328,8 @@ var Constructor = function()
             var defUnitY = defUnit.getY();
             var costs = defUnit.getCosts();
             var damage = ACTION_FIRE.postAnimationAttackerDamage / 10.0;
+            // we're attacking
+            map.getGameRecorder().attacked(ACTION_FIRE.postAnimationUnit.getOwner().getPlayerID(), ACTION_FIRE.postAnimationAttackerDamage);
             var power = 0;
             // gain power based
             if (damage > defUnit.getHp())
@@ -353,6 +355,8 @@ var Constructor = function()
             if (defUnit.getHp() <= 0)
             {
                 defUnit.killUnit();
+                // we destroyed a unit nice
+                map.getGameRecorder().destroyedUnit(ACTION_FIRE.postAnimationUnit.getOwner().getPlayerID());
                 defUnit = null;
                 if (ACTION_FIRE.postAnimationUnit.getUnitRank() < GameEnums.UnitRank_Veteran)
                 {
@@ -397,6 +401,8 @@ var Constructor = function()
                 if (ACTION_FIRE.postAnimationUnit.getHp() <= 0)
                 {
                     ACTION_FIRE.postAnimationUnit.killUnit();
+                    // we destroyed a unit
+                    map.getGameRecorder().destroyedUnit(defOwner.getPlayerID());
                     ACTION_FIRE.postAnimationUnit = null;
                     if (defUnit !== null)
                     {

@@ -62,6 +62,16 @@ void DayToDayRecord::addSpecialEvent(qint32 player, qint32 day, GameEnums::GameR
     m_SpecialEvents.append(new SpecialEvent(player, day, event));
 }
 
+PlayerRecord* DayToDayRecord::getPlayerRecord(qint32 player)
+{
+    if (player >= 0 &&
+        player < m_PlayerRecords.size())
+    {
+        return m_PlayerRecords[player].get();
+    }
+    return nullptr;
+}
+
 void DayToDayRecord::addPlayerRecord(qint32 player, qint32 day)
 {
     GameMap* pMap = GameMap::getInstance();

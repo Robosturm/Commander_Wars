@@ -92,7 +92,11 @@ var Constructor = function()
     {
         var player = terrain.getBuilding().getOwner();
         // get army name
-        var armyName = player.getArmy().toLowerCase();
+        var armyName = "os";
+        if (player !== null)
+        {
+            armyName = player.getArmy().toLowerCase();
+        }
         if (armyName === "bg")
         {
             armyName = "bh"

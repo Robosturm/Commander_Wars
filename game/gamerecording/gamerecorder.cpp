@@ -2,6 +2,10 @@
 
 #include "game/gamemap.h"
 
+#include "game/player.h"
+
+#include "game/co.h"
+
 #include "coreengine/mainapp.h"
 
 GameRecorder::GameRecorder()
@@ -120,110 +124,125 @@ void GameRecorder::addSpecialEvent(qint32 player, GameEnums::GameRecord_SpecialE
 
 GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePoints)
 {
-
-//        Dim SiegerTeam As Char = "q"
-//        If Objektverwalter.Spielfeld.Regeln.Spielende = True Then
-
-//            For I = 1 To Objektverwalter.Spielfeld.Regeln.Besiegt.Length - 1
-//                If Objektverwalter.Spielfeld.Regeln.Besiegt(I) = False Then
-//                    SiegerTeam = Objektverwalter.Spielfeld.Spieler(I).Team
-//                End If
-//            Next
-//        End If
-
+    GameMap* pMap = GameMap::getInstance();
+    qint32 winnerTeam = pMap->getWinnerTeam();
     qint32 score = 0;
-//        Dim MapSize As Integer = Spielfeld.GetSpielgroesse
-//        'Zeit
-//        Dim MTime As Integer = 0
-//        If Spielfeld.Regeln.MaxTime <= 0 Then
-//            MTime = (Spielfeld.Hoehe + Spielfeld.Breite) / 5 * 2
-//        Else
-//            MTime = Spielfeld.Regeln.MaxTime
-//        End If
-//        If Spielfeld.Runde < MTime Then
-//            PunkteVerteilung.X = 200 - (Spielfeld.Runde * (100 / MTime))
-//        Else
-//            PunkteVerteilung.X = 100 - ((Spielfeld.Runde - MTime) * (100 / (3 * MTime)))
-//        End If
-//        If PunkteVerteilung.X < 0 Then PunkteVerteilung.X = 0
-//        If Spielfeld.Spieler(Spieler).Team <> SiegerTeam And Not SiegerTeam = "q" Then
-//            Dim LostDay As Integer = 0
-//            For I = 0 To Aufzeichnungen.Count - 1
-//                If Aufzeichnungen(I).SpielerAufzeichnungen(Spieler - 1, 0) Is Nothing Then
-//                    LostDay = I
-//                    Exit For
-//                Else
-//                    If Aufzeichnungen(I).SpielerAufzeichnungen(Spieler - 1, 0).Basen < 0 Then
-//                        If I - 1 >= 0 Then
-//                            If Aufzeichnungen(I - 1).SpielerAufzeichnungen(Spieler - 1, 0).Basen > 0 Then
-//                                LostDay = I
-//                                Exit For
-//                            End If
-//                        Else
-//                            LostDay = 0
-//                            Exit For
-//                        End If
-//                    ElseIf I = Aufzeichnungen.Count - 1 Then
-//                        LostDay = Spielfeld.Runde
-//                    End If
-//                End If
-//            Next
-//            PunkteVerteilung.X *= (0.8) * LostDay / Spielfeld.Runde
-//        End If
-//        // Force
-//        Dim P1 As Integer = (Damage(Spieler - 1) + (DestroyedUnits(Spieler - 1) * 140))
-//        If AttackNumbers(Spieler - 1) > 0 Then
-//            P1 /= AttackNumbers(Spieler - 1)
-//        Else
-//            P1 = 0
-//        End If
-//        If P1 >= 100 Then
-//            PunkteVerteilung.Y += P1
-//        ElseIf P1 > 50 Then
-//            PunkteVerteilung.Y += (2 * P1) - 100
-//        Else
-//            PunkteVerteilung.Y += P1
-//        End If
-//        If PunkteVerteilung.Y < 0 Then PunkteVerteilung.Y = 0
-//        // technique
-//        Dim Truppenlimit As Integer = 0
-//        If Spielfeld.Regeln.MaxDeployedUnits <= 0 Then
-//            Truppenlimit = Math.DivRem(MapSize, 9, 0)
-//        Else
-//            Truppenlimit = Spielfeld.Regeln.MaxDeployedUnits
-//        End If
-//        'New Techscore calculation
-//        Dim TechScore1 As Single = 0
-//        Dim TechScore2 As Single = 0
-//        Dim TechScore3 As Single = 0
-//        If LostUnits(Spieler - 1) > 0 Then 'First the more Units you destroy while loosing less Units
-//            TechScore1 = (DestroyedUnits(Spieler - 1) / LostUnits(Spieler - 1)) * 1 / 2
-//        Else
-//            TechScore1 = 1.3
-//        End If
-//        If TechScore1 > 1.3 Then TechScore1 = 1.3 'Just to take it lower.
-//        Dim Deployed As Integer = DeployedUnits(Spieler - 1) 'You can loose 10% of your Army and still get a good Technique Score
-//        If Aufzeichnungen(0).SpielerAufzeichnungen(Spieler - 1, 0).Einheiten > 0 Then
-//            Deployed += Aufzeichnungen(0).SpielerAufzeichnungen(Spieler - 1, 0).Einheiten
-//        End If
-//        If Deployed > 0 Then
-//            TechScore2 = (1 - (LostUnits(Spieler - 1) / Deployed)) * 1.1
-//        Else
-//            TechScore2 = 1.3
-//        End If
-//        If TechScore2 > 1.3 Then TechScore2 = 1.3
-//        'You get less points if you produce to much Units
-//        If DeployedUnits(Spieler - 1) > 0 Then
-//            TechScore3 = Truppenlimit / DeployedUnits(Spieler - 1)
-//        Else
-//            TechScore3 = 2
-//        End If
-//        If TechScore3 > 1.3 Then TechScore3 = 1.3
-//        PunkteVerteilung.Z = TechScore1 * TechScore2 * TechScore3 * 100
-//        If PunkteVerteilung.Z < 0 Then PunkteVerteilung.Z = 0
-//        Punkte = PunkteVerteilung.X + PunkteVerteilung.Y + PunkteVerteilung.Z
-//        'Rang auswaehlen
-        return getRank(score);
+    qint32 mapSize = pMap->getMapWidth() * pMap->getMapHeight();
+    // calc speed points
+    qint32 mapTime = (pMap->getMapWidth() + pMap->getMapHeight()) * 2 / 5;
+    if (pMap->getCurrentDay() < mapTime)
+    {
+        scorePoints.setX(200 - (pMap->getCurrentDay() * 100 / mapTime));
+    }
+    else
+    {
+        scorePoints.setX(100 - ((pMap->getCurrentDay() - mapTime) * 100 / (3 * mapTime)));
+    }
+    if (scorePoints.x() < 0)
+    {
+        scorePoints.setX(0);
+    }
+    Player* pPlayer = pMap->getPlayer(player);
+    if (pPlayer->getTeam() != winnerTeam && winnerTeam >= 0)
+    {
+        qint32 lostDay = 0;
+        for (qint32 i = 0; i < m_Record.size(); i++)
+        {
+            if (i == m_Record.size() - 1)
+            {
+                lostDay = pMap->getCurrentDay();
+            }
+            else if (m_Record[i]->getPlayerRecord(player)->getUnits() == -1)
+            {
+                lostDay = i - 1;
+                break;
+            }
+        }
+        scorePoints.setX(0.8f * ((scorePoints.x() * lostDay) / pMap->getCurrentDay()));
+    }
+    // Force
+    qint32 power = (damageDealt[player] + (destroyedUnits[player] * 140));
+    if (attackNumbers[player] > 0)
+    {
+       power /= attackNumbers[player];
+    }
+    else
+    {
+        power = 0;
+    }
+    if (power >= 100)
+    {
+        scorePoints.setY(scorePoints.y() + power);
+    }
+    else if (power > 50)
+    {
+        scorePoints.setY(scorePoints.y() + (2 * power) - 100);
+    }
+    else
+    {
+        scorePoints.setY(scorePoints.y() + power);
+    }
+    if (scorePoints.y() < 0)
+    {
+        scorePoints.setY(0);
+    }
+
+    // technique
+    quint64 deployLimit = static_cast<quint64>(mapSize / 9);
+    float techScore1 = 0;
+    float techScore2 = 0;
+    float techScore3 = 0;
+    if (lostUnits[player] > 0)
+    {
+        techScore1 =(destroyedUnits[player] / lostUnits[player]) * 0.5f;
+    }
+    else
+    {
+        techScore1 = 1.3f;
+    }
+    if (techScore1 > 1.3f)
+    {
+        techScore1 = 1.3f;
+    }
+    quint64 deployed = deployedUnits[player];
+    quint64 startUnits = static_cast<quint64>(m_Record[0]->getPlayerRecord(player)->getUnits());
+    if (m_Record.size() > 0 &&
+        startUnits > 0)
+    {
+        deployed += startUnits;
+    }
+    if (deployed > 0)
+    {
+        techScore2 = (1 - (lostUnits[player] / deployed)) * 1.1f;
+    }
+    else
+    {
+        techScore2 = 1.3f;
+    }
+    if (techScore2 > 1.3f)
+    {
+        techScore2 = 1.3f;
+    }
+    if (deployedUnits[player] > 0)
+    {
+        techScore3 = deployLimit / deployedUnits[player];
+    }
+    else
+    {
+        techScore3 = 1.3f;
+    }
+    if (techScore3 > 1.3f)
+    {
+        techScore3 = 1.3f;
+    }
+
+    scorePoints.setZ(techScore1 * techScore2 * techScore3 * 100);
+    if (scorePoints.z() < 0)
+    {
+        scorePoints.setZ(0);
+    }
+    score = scorePoints.x() + scorePoints.y() + scorePoints.z();
+    return getRank(score);
 }
 
 

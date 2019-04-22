@@ -2,6 +2,7 @@
 #define GAMERECORDER_H
 
 #include <QObject>
+#include <qvector3d.h>
 
 #include "game/gamerecording/daytodayrecord.h"
 

@@ -53,6 +53,13 @@ public:
      * @param player
      */
     void addPlayerRecord(qint32 player, qint32 day);
+    /**
+     * @brief getPlayerRecord
+     * @param player
+     * @return
+     */
+    PlayerRecord* getPlayerRecord(qint32 player);
+
 private:
     QVector<spSpecialEvent> m_SpecialEvents;
     QVector<spPlayerRecord> m_PlayerRecords;

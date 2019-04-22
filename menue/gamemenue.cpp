@@ -3,7 +3,7 @@
 #include "game/player.h"
 #include "game/co.h"
 
-#include "menue/mainwindow.h"
+#include "menue/victorymenue.h"
 #include "coreengine/console.h"
 
 #include "gameinput/humanplayerinput.h"
@@ -160,8 +160,21 @@ void GameMenue::victory(qint32 team)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    GameMap* pMap = GameMap::getInstance();
+    // create victory
+    if (team >= 0)
+    {
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = pMap->getPlayer(i);
+            if (pPlayer->getTeam() != team)
+            {
+                pPlayer->defeatPlayer(nullptr);
+            }
+        }
+    }
     Console::print("Leaving Game Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new Mainwindow());
+    oxygine::getStage()->addChild(new VictoryMenue());
     oxygine::Actor::detach();
     pApp->continueThread();
 }

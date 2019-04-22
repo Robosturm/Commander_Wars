@@ -24,6 +24,8 @@ var Constructor = function()
     this.perform = function(action)
     {
         map.getCurrentPlayer().getCO(1).activateSuperpower();
+        map.getGameRecorder().addSpecialEvent(map.getCurrentPlayer().getPlayerID(),
+                                              GameEnums.GameRecord_SpecialEvents_SuperPower);
     };
     this.isFinalStep = function(action)
     {

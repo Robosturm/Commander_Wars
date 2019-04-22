@@ -84,12 +84,13 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
 
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
     m_pMiniMapBox = new oxygine::Box9Sprite();
-    m_pMiniMapBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_pMiniMapBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_pMiniMapBox->setResAnim(pAnim);
     m_pMiniMapBox->setPosition(width + 50, 50);
     m_pMiniMapBox->setSize(pApp->getSettings()->getWidth() - width - 100,
                            pApp->getSettings()->getHeight() - 210);
+    m_pMiniMapBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    m_pMiniMapBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+
 
     m_pMiniMapBox->addChild(m_MinimapSlider);
     addChild(m_pMiniMapBox);
@@ -97,12 +98,12 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
     // building count
     pAnim = pObjectManager->getResAnim("mapSelectionBuildingInfo");
     m_pBuildingBackground = new oxygine::Box9Sprite();
-    m_pBuildingBackground->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_pBuildingBackground->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_pBuildingBackground->setResAnim(pAnim);
     m_pBuildingBackground->setSize(pApp->getSettings()->getWidth() - width - 100, 60);
     m_pBuildingBackground->setPosition(m_pMiniMapBox->getX(),
                                      m_pMiniMapBox->getY() + m_pMiniMapBox->getHeight() + 20);
+    m_pBuildingBackground->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    m_pBuildingBackground->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     oxygine::TextStyle style = FontManager::getTimesFont10();
     style.color = oxygine::Color(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;

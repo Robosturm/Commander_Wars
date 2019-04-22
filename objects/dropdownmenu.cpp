@@ -13,9 +13,10 @@ DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items, bool up)
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("dropdownmenu");
     m_Textbox = new oxygine::Box9Sprite();
+    m_Textbox->setResAnim(pAnim);
     m_Textbox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_Textbox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-    m_Textbox->setResAnim(pAnim);
+
     m_Textfield = new oxygine::TextField();
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);
@@ -120,9 +121,9 @@ void DropDownmenu::addDropDownItem(QString text, qint32 id)
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
     oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
+    pBox->setResAnim(pAnim);
     pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-    pBox->setResAnim(pAnim);
     oxygine::spTextField textField = new oxygine::TextField();
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);

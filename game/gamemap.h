@@ -398,6 +398,11 @@ public slots:
      * @brief updateUnitIcons
      */
     void updateUnitIcons();
+    /**
+     * @brief getWinnerTeam
+     * @return -1 for no winner
+     */
+    qint32 getWinnerTeam();
 private:
     static spGameMap m_pInstance;
     QString mapName;

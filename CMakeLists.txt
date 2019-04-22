@@ -80,6 +80,7 @@ set(${PROJECT_NAME}_SRCS
         menue/optionmenue.cpp
         menue/mapselectionmapsmenue.cpp
         menue/creditsmenue.cpp
+        menue/victorymenue.cpp
 
         # ressource management
         resource_management/unitspritemanager.cpp

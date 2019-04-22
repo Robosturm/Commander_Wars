@@ -533,32 +533,32 @@
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="48"/>
+        <location filename="../menue/mainwindow.cpp" line="49"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="59"/>
+        <location filename="../menue/mainwindow.cpp" line="60"/>
         <source>Load Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="70"/>
+        <location filename="../menue/mainwindow.cpp" line="71"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="81"/>
+        <location filename="../menue/mainwindow.cpp" line="82"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="92"/>
+        <location filename="../menue/mainwindow.cpp" line="93"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="103"/>
+        <location filename="../menue/mainwindow.cpp" line="104"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -599,123 +599,123 @@
 <context>
     <name>MapSelectionMapsMenue</name>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="142"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="143"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="151"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="152"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="160"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="161"/>
         <source>Start Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="366"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="367"/>
         <source>Enviroment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="387"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="388"/>
         <source>Random Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="398"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="399"/>
         <source>Start Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="413"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="414"/>
         <source>Gameplay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="419"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="420"/>
         <source>Unit Ranking System: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="430"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="431"/>
         <source>No CO Powers: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="441"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="442"/>
         <source>Fog Of War: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="444"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="445"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="444"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="445"/>
         <source>Fog of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="457"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="458"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="582"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="583"/>
         <source>Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="582"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="583"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="582"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="583"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="582"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="583"/>
         <source>AI Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="582"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="583"/>
         <source>Startfonds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="582"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="583"/>
         <source>Income Modifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="582"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="641"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="583"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="642"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="609"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="610"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="614"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="615"/>
         <source>All Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="644"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="645"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="644"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="645"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -977,6 +977,14 @@
     <message>
         <location filename="../game/terrain.cpp" line="58"/>
         <source>Unable to load Terrain </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>VictoryMenue</name>
+    <message>
+        <location filename="../menue/victorymenue.cpp" line="55"/>
+        <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

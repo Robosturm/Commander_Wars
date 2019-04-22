@@ -41,6 +41,7 @@
 		<image file="battlesprites/background/back_hq+bm.png" />
 		<image file="battlesprites/background/back_hq+ge.png" />
 		<image file="battlesprites/background/back_hq+os.png" />
+		<image file="battlesprites/background/back_hq+yc.png" />
 		<image file="battlesprites/background/back_mountain.png" />
 		<image file="battlesprites/background/back_mountain+0.png" />
 		<image file="battlesprites/background/back_plains.png" />
@@ -132,13 +133,20 @@
 		<image file="minimap/minimap_blackholebuilding.png" />
 		
 		<!-- dialogue stuff -->
-		<image file="dialogfield.png" />		
+		<image file="dialogfield.png" />	
 		<image file="dialogfield+mask.png" />	
 		<image file="nextday.png" />				
 		<!-- powert stuff -->
 		<image file="power_background.png" guideX1="0" guideX2="480" guideY1="0" guideY2="320"/>
 		<image file="superpower_background.png" guideX1="0" guideX2="480" guideY1="0" guideY2="320"/>
 		
+		<!-- score rang images -->
+		<image file="victory_screen/s_rang.png" />
+		<image file="victory_screen/a_rang.png" />
+		<image file="victory_screen/b_rang.png" />
+		<image file="victory_screen/c_rang.png" />
+		<image file="victory_screen/d_rang.png" />
+		<image file="victory_screen/graph.png" />		
 	</atlas>
 </resources>
 

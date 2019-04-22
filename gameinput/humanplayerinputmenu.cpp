@@ -36,10 +36,10 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::spBox9Sprite pTopBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+top");
-    pTopBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pTopBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pTopBox->setResAnim(pAnim);
     pTopBox->setSize(pAnim->getSize());
+    pTopBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    pTopBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pTopBox->setWidth(width);
     this->addChild(pTopBox);
 
@@ -73,9 +73,9 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
         oxygine::spBox9Sprite pItemBox = new oxygine::Box9Sprite();
         pAnim = pGameManager->getResAnim("menu+middle");
         pItemBox->setResAnim(pAnim);
-        pItemBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-        pItemBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
         pItemBox->setSize(pAnim->getSize());
+        pItemBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+        pItemBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);        
         pItemBox->addChild(icons[i]);
         icons[i]->setPosition(3, 0);
         pItemBox->setHeight(GameMap::Imagesize);
@@ -125,12 +125,12 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     }
     oxygine::spBox9Sprite pBottomBox = new oxygine::Box9Sprite();
     pAnim = pGameManager->getResAnim("menu+bottom");
-    pBottomBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pBottomBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBottomBox->setResAnim(pAnim);
-    pBottomBox->setY(y);
     pBottomBox->setSize(pAnim->getSize());
     pBottomBox->setWidth(width);
+    pBottomBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    pBottomBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    pBottomBox->setY(y);
     this->addChild(pBottomBox);
     this->addChild(m_Cursor);
     this->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));

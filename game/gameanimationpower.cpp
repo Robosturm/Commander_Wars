@@ -27,9 +27,10 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, bool sup
     // first sprite for rotating
     oxygine::spBox9Sprite firstSpriteMask = new oxygine::Box9Sprite();
     firstSpriteMask->setResAnim(pAnimMask);
+    firstSpriteMask->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
     firstSpriteMask->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     firstSpriteMask->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
-    firstSpriteMask->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+
     firstSpriteMask->setColor(static_cast<quint8>(color.red()), static_cast<quint8>(color.green()), static_cast<quint8>(color.blue()), 255);
     // second sprite for rotating
     oxygine::spBox9Sprite secondSpriteMask = new oxygine::Box9Sprite();
