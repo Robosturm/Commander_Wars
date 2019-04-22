@@ -167,7 +167,7 @@ public slots:
      * @param pPlayer
      * @return
      */
-    bool isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange = false);
+    bool isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange = false, qint32 testX = -1, qint32 testY = -1);
 
     GameEnums::UnitRanks getUnitRank() const;
     void setUnitRank(const GameEnums::UnitRanks &UnitRank);

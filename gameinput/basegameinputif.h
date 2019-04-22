@@ -23,7 +23,7 @@ public:
         VeryEasy,
     };
 
-    explicit BaseGameInputIF();
+    explicit BaseGameInputIF(AiTypes aiType);
 
     void setPlayer(Player* pPlayer);
 
@@ -31,12 +31,15 @@ public:
 
     static void serializeInterface(QDataStream& pStream, BaseGameInputIF* input);
     static BaseGameInputIF* deserializeInterface(QDataStream& pStream);
+    AiTypes getAiType() const;
+
 signals:
 
 public slots:
 
 protected:
     Player* m_pPlayer{nullptr};
+    AiTypes m_AiType{AiTypes::Human};
 };
 
 #endif // BASEGAMEINPUTIF_H

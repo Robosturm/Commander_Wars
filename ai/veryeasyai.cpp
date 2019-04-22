@@ -18,7 +18,8 @@
 #include "resource_management/unitspritemanager.h"
 
 VeryEasyAI::VeryEasyAI()
-    : m_COPowerTree("resources/aidata/very_easy/copower.tree", "resources/aidata/very_easy/copower.txt"),
+    : CoreAI(BaseGameInputIF::AiTypes::VeryEasy),
+      m_COPowerTree("resources/aidata/very_easy/copower.tree", "resources/aidata/very_easy/copower.txt"),
       m_COUnitTree("resources/aidata/very_easy/counit.tree", "resources/aidata/very_easy/counit.txt"),
       m_GeneralBuildingTree("resources/aidata/very_easy/generalbuilding.tree", "resources/aidata/very_easy/generalbuilding.txt"),
       m_AirportBuildingTree("resources/aidata/very_easy/airportbuilding.tree", "resources/aidata/very_easy/airportbuilding.txt"),

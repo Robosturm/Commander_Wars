@@ -25,7 +25,12 @@
 
 #include "game/gamerules.h"
 
+#include "game/gamerecording/gamerecorder.h"
+
 class GameAction;
+
+class GameMap;
+typedef oxygine::intrusive_ptr<GameMap> spGameMap;
 
 class GameMap : public QObject, public FileSerializable, public oxygine::Actor
 {
@@ -49,6 +54,10 @@ public:
      */
     explicit GameMap(QString map, bool onlyLoad);
     virtual ~GameMap();
+    /**
+     * @brief deleteMap
+     */
+    void deleteMap();
     /**
      * @brief newMap
      * @param width
@@ -138,7 +147,7 @@ public:
      */
     inline static GameMap* getInstance()
     {
-        return m_pInstance;
+        return m_pInstance.get();
     }
     /**
      * @brief getTerrain smart pointer
@@ -180,7 +189,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 3;
+        return 4;
     }
     /**
      * @brief clearMap
@@ -193,10 +202,18 @@ signals:
     void signalSaveGame();
 public slots:
     /**
+     * @brief getGameRecorder
+     * @return
+     */
+    inline GameRecorder* getGameRecorder()
+    {
+        return m_Recorder.get();
+    }
+    /**
      * @brief getCurrentDay
      * @return
      */
-    quint32 getCurrentDay() const;
+    qint32 getCurrentDay() const;
     /**
      * @brief exitGame
      */
@@ -382,16 +399,18 @@ public slots:
      */
     void updateUnitIcons();
 private:
-    static GameMap* m_pInstance;
+    static spGameMap m_pInstance;
     QString mapName;
     QVector<QVector<spTerrain>*> fields;
     QVector<spPlayer> players;
     spPlayer m_CurrentPlayer;
-    quint32 currentDay{0};
+    qint32 currentDay{0};
     spGameRules m_Rules;
+    spGameRecorder m_Recorder{new GameRecorder()};
     static const QString m_JavascriptName;
     static const QString m_GameAnimationFactory;
     float m_zoom{1.0f};
+    bool loaded{false};
     void loadMapData();
 };
 

@@ -130,6 +130,7 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<ScriptVariables>("ScriptVariables");
     qmlRegisterInterface<Weather>("Weather");
     qmlRegisterInterface<TerrainFindingSystem>("TerrainFindingSystem");
+    qmlRegisterInterface<GameRecorder>("GameRecorder");
     // load ressources
     BackgroundManager::getInstance();
     BuildingSpriteManager::getInstance();
@@ -159,6 +160,11 @@ int main(int argc, char* argv[])
     // clean up section ahead
     // store current settings when closing
     app.getSettings()->saveSettings();
+
+    if (GameMap::getInstance() != nullptr)
+    {
+        GameMap::getInstance()->deleteMap();
+    }
 
     // If we get here, the user has requested the Application to terminate.
     // We dump and log all our created objects that have not been freed yet

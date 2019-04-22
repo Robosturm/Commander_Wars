@@ -275,7 +275,7 @@ void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
     {
         if (m_pCurrentMap != nullptr)
         {
-            delete m_pCurrentMap;
+            m_pCurrentMap->deleteMap();
             m_pCurrentMap = nullptr;
         }
         m_pCurrentMap = new GameMap(info.absoluteFilePath(), true);

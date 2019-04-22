@@ -17,7 +17,7 @@ class CoreAI : public BaseGameInputIF
 {
     Q_OBJECT
 public:
-    explicit CoreAI();
+    explicit CoreAI(BaseGameInputIF::AiTypes aiType);
     virtual ~CoreAI();
     /**
      * @brief init

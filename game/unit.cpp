@@ -1032,40 +1032,43 @@ bool Unit::getHpHidden(Player* pPlayer)
 
 void Unit::updateIcons(Player* pPlayer)
 {
-    qint32 hpValue = Mainapp::roundUp(hp);
-    // unload the icons
-    unloadIcon("1");
-    unloadIcon("2");
-    unloadIcon("3");
-    unloadIcon("4");
-    unloadIcon("5");
-    unloadIcon("6");
-    unloadIcon("7");
-    unloadIcon("8");
-    unloadIcon("9");
-    unloadIcon("hp+hidden");
-    unloadIcon("transport");
-    unloadIcon("transport+hidden");
-    if (!getHpHidden(pPlayer))
+    if (m_pTerrain != nullptr)
     {
-        if ((hpValue < 10) && (hpValue > 0))
+        qint32 hpValue = Mainapp::roundUp(hp);
+        // unload the icons
+        unloadIcon("1");
+        unloadIcon("2");
+        unloadIcon("3");
+        unloadIcon("4");
+        unloadIcon("5");
+        unloadIcon("6");
+        unloadIcon("7");
+        unloadIcon("8");
+        unloadIcon("9");
+        unloadIcon("hp+hidden");
+        unloadIcon("transport");
+        unloadIcon("transport+hidden");
+        if (!getHpHidden(pPlayer))
         {
-            loadIcon(QString::number(hpValue), 0, GameMap::Imagesize / 2);
+            if ((hpValue < 10) && (hpValue > 0))
+            {
+                loadIcon(QString::number(hpValue), 0, GameMap::Imagesize / 2);
+            }
         }
-    }
-    else
-    {
-        loadIcon("hp+hidden", 0, GameMap::Imagesize / 2);
-    }
-    GameMap* pMap = GameMap::getInstance();
-    if ((pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off) &&
-        (pPlayer->isEnemy(m_pOwner)) && getLoadingPlace() > 0)
-    {
-        loadIcon("transport+hidden", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
-    }
-    else if (m_TransportUnits.size() > 0)
-    {
-        loadIcon("transport", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+        else
+        {
+            loadIcon("hp+hidden", 0, GameMap::Imagesize / 2);
+        }
+        GameMap* pMap = GameMap::getInstance();
+        if ((pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off) &&
+            (pPlayer->isEnemy(m_pOwner)) && getLoadingPlace() > 0)
+        {
+            loadIcon("transport+hidden", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+        }
+        else if (m_TransportUnits.size() > 0)
+        {
+            loadIcon("transport", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+        }
     }
 }
 
@@ -1288,7 +1291,8 @@ void Unit::killUnit()
     {
         GameMap::getInstance()->removeChild(m_CORange);
     }
-
+    // record destruction of this unit
+    GameMap::getInstance()->getGameRecorder()->lostUnit(m_pOwner->getPlayerID());
     removeUnit();
 }
 
@@ -1456,13 +1460,18 @@ void Unit::setHidden(bool Hidden)
     }
 }
 
-bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange)
+bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 testX, qint32 testY)
 {
     if (pPlayer->checkAlliance(m_pOwner) == GameEnums::Alliance_Enemy)
     {
         GameMap* pMap = GameMap::getInstance();
         qint32 x = getX();
         qint32 y = getY();
+        if (pMap->onMap(testX, testY))
+        {
+            x = testX;
+            y = testY;
+        }
         // can we see the unit?
         bool visibleField = pPlayer->getFieldVisible(x, y);
         if (!visibleField && !ignoreOutOfVisionRange)
@@ -1485,11 +1494,13 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange)
                     {
                         if (pPlayer->checkAlliance(pVisionUnit->getOwner()) == GameEnums::Alliance_Friend)
                         {
+                            delete pPoints;
                             return false;
                         }
                     }
                 }
             }
+            delete pPoints;
             return true;
         }
     }

@@ -33,7 +33,8 @@ const QString CoreAI::ACTION_ACTIVATE_SUPERPOWER_CO_1 = "ACTION_ACTIVATE_SUPERPO
 const QString CoreAI::ACTION_CO_UNIT_0 = "ACTION_CO_UNIT_0";
 const QString CoreAI::ACTION_CO_UNIT_1 = "ACTION_CO_UNIT_1";
 
-CoreAI::CoreAI()
+CoreAI::CoreAI(BaseGameInputIF::AiTypes aiType)
+    : BaseGameInputIF(aiType)
 {
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();

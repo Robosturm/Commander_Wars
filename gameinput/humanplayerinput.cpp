@@ -24,6 +24,7 @@
 #include "gameinput/markedfielddata.h"
 
 HumanPlayerInput::HumanPlayerInput()
+    : BaseGameInputIF(BaseGameInputIF::AiTypes::Human)
 {    
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());

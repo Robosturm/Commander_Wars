@@ -120,14 +120,9 @@ QJSValue Interpreter::doFunction(const QString& obj, const QString& func, const 
 QJSValue Interpreter::doString(const QString& task)
 {
     QJSValue value = evaluate(task, "GameCode");
-
     if (value.isError())
     {
         Console::print(value.toString(), Console::eERROR);
-    }
-    else if (!value.isNull() && !value.isUndefined())
-    {
-        Console::print("Result = " + value.toString(), Console::eDEBUG);
     }
     return value;
 }

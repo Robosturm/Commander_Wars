@@ -7,7 +7,8 @@
 
 #include "coreengine/mainapp.h"
 
-BaseGameInputIF::BaseGameInputIF()
+BaseGameInputIF::BaseGameInputIF(AiTypes aiType)
+    : m_AiType(aiType)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -22,23 +23,8 @@ void BaseGameInputIF::setPlayer(Player* pPlayer)
 
 void BaseGameInputIF::serializeInterface(QDataStream& pStream, BaseGameInputIF* input)
 {
-
-    HumanPlayerInput* humanIf = dynamic_cast<HumanPlayerInput*>(input);
-     VeryEasyAI* veryEasyAi = dynamic_cast<VeryEasyAI*>(input);
-    if (humanIf != nullptr)
-    {
-        pStream << static_cast<qint32>(AiTypes::Human);
-        input->serializeObject(pStream);
-    }
-    else if (veryEasyAi != nullptr)
-    {
-        pStream << static_cast<qint32>(AiTypes::VeryEasy);
-        input->serializeObject(pStream);
-    }
-    else
-    {
-        pStream << static_cast<qint32>(AiTypes::Unkown);
-    }
+    pStream << static_cast<qint32>(input->getAiType());
+    input->serializeObject(pStream);
 }
 
 BaseGameInputIF* BaseGameInputIF::deserializeInterface(QDataStream& pStream)
@@ -65,8 +51,14 @@ BaseGameInputIF* BaseGameInputIF::deserializeInterface(QDataStream& pStream)
         case AiTypes::Unkown: // fall back case for damaged files
         {
             ret = new HumanPlayerInput();
+            ret->deserializeObject(pStream);
             break;
         }
     }
     return ret;
+}
+
+BaseGameInputIF::AiTypes BaseGameInputIF::getAiType() const
+{
+    return m_AiType;
 }

@@ -28,7 +28,7 @@
 const QString GameMap::m_JavascriptName = "map";
 const QString GameMap::m_GameAnimationFactory = "GameAnimationFactory";
 const qint32 GameMap::frameTime = 100;
-GameMap* GameMap::m_pInstance = nullptr;
+spGameMap GameMap::m_pInstance = nullptr;
 
 
 
@@ -40,6 +40,7 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     this->moveToThread(pApp->getWorkerthread());
     loadMapData();
     newMap(width, heigth, playerCount);
+    loaded = true;
 }
 
 GameMap::GameMap(QString map, bool onlyLoad)
@@ -53,6 +54,7 @@ GameMap::GameMap(QString map, bool onlyLoad)
     file.open(QIODevice::ReadOnly);
     QDataStream pStream(&file);
     deserializeObject(pStream);
+    loaded = true;
     if (!onlyLoad)
     {
         updateSprites();
@@ -64,6 +66,7 @@ GameMap::GameMap(QString map, bool onlyLoad)
 
 void GameMap::loadMapData()
 {
+    deleteMap();
     m_pInstance = this;
     Interpreter::setCppOwnerShip(this);
     Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
@@ -71,11 +74,17 @@ void GameMap::loadMapData()
     pInterpreter->setGlobal(m_GameAnimationFactory, pInterpreter->newQObject(GameAnimationFactory::getInstance()));
 }
 
-
+void GameMap::deleteMap()
+{
+    if (m_pInstance.get() != nullptr)
+    {
+        m_pInstance->detach();
+    }
+    m_pInstance = nullptr;
+}
 
 GameMap::~GameMap()
 {
-    m_pInstance = nullptr;
     // remove us from the interpreter again
     Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
     pInterpreter->deleteObject(m_JavascriptName);
@@ -606,6 +615,7 @@ void GameMap::serializeObject(QDataStream& pStream)
         }
     }
     m_Rules->serializeObject(pStream);
+    m_Recorder->serializeObject(pStream);
 }
 
 void GameMap::deserializeObject(QDataStream& pStream)
@@ -659,6 +669,10 @@ void GameMap::deserializeObject(QDataStream& pStream)
     if (version > 2)
     {
         m_Rules->deserializeObject(pStream);
+    }
+    if (version > 3)
+    {
+        m_Recorder->deserializeObject(pStream);
     }
     for (qint32 i = 0; i < playerCount; i++)
     {
@@ -781,7 +795,7 @@ void GameMap::updateUnitIcons()
     pApp->continueThread();
 }
 
-quint32 GameMap::getCurrentDay() const
+qint32 GameMap::getCurrentDay() const
 {
     return currentDay;
 }
@@ -906,11 +920,13 @@ void GameMap::nextTurn()
     if (nextDay)
     {
         startOfTurn(nullptr);
+        m_Recorder->newDay();
     }
     m_Rules->startOfTurn();
     m_CurrentPlayer->earnMoney();
     startOfTurn(m_CurrentPlayer.get());
     checkFuel(m_CurrentPlayer.get());
+    m_Recorder->updatePlayerData(m_CurrentPlayer->getPlayerID());
     GameMenue::getInstance()->updatePlayerinfo();
 
     m_CurrentPlayer->loadCOMusic();
@@ -921,5 +937,26 @@ void GameMap::nextTurn()
 
 Player* GameMap::getCurrentViewPlayer()
 {
-    return m_CurrentPlayer.get();
+    if (loaded && m_CurrentPlayer.get() != nullptr)
+    {
+        qint32 currentPlayerID = m_CurrentPlayer->getPlayerID();
+        for (qint32 i = currentPlayerID; i >= 0; i--)
+        {
+            if (players[i]->getBaseGameInput() != nullptr &&
+                players[i]->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
+            {
+                return players[i].get();
+            }
+        }
+        for (qint32 i = players.size() - 1; i > currentPlayerID; i--)
+        {
+            if (players[i]->getBaseGameInput() != nullptr &&
+                players[i]->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
+            {
+                return players[i].get();
+            }
+        }
+        return m_CurrentPlayer.get();
+    }
+    return nullptr;
 }
