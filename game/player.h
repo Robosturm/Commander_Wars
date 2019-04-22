@@ -128,6 +128,12 @@ public slots:
      */
     void earnMoney(float modifier = 1.0f);
     /**
+     * @brief calcIncome
+     * @param modifier
+     * @return
+     */
+    qint32 calcIncome(float modifier = 1.0f);
+    /**
      * @brief getCO
      * @param id index of the co 0 or 1
      * @return pointer to the co
@@ -215,6 +221,11 @@ public slots:
      * @param value
      */
     void setFondsModifier(float value);
+    /**
+     * @brief calculatePlayerStrength
+     * @return
+     */
+    qint32 calculatePlayerStrength();
     /**
      * @brief getBuildingCount
      * @return

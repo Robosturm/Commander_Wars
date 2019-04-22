@@ -417,6 +417,11 @@ bool Unit::canMoveOver(qint32 x, qint32 y)
     return  false;
 }
 
+qint32 Unit::getUnitValue()
+{
+    return static_cast<qint32>(getCosts() * hp / 10.0f);
+}
+
 bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange)
 {
     WeaponManager* pWeaponManager = WeaponManager::getInstance();

@@ -11,6 +11,7 @@
 
 #include "objects/checkbox.h"
 #include "objects/slider.h"
+#include "objects/dropdownmenu.h"
 
 #include <QDir>
 #include <QFileInfoList>
@@ -69,6 +70,7 @@ OptionMenue::OptionMenue()
         emit sigShowSettings();
     });
     connect(this, &OptionMenue::sigShowSettings, this, &OptionMenue::showSettings, Qt::QueuedConnection);
+    connect(this, &OptionMenue::sigChangeScreenSize, this, &OptionMenue::changeScreenSize, Qt::QueuedConnection);
 
     QSize size(pApp->getSettings()->getWidth() - 20,
                pApp->getSettings()->getHeight() - (20 + pButtonMods->getHeight()) * 2);
@@ -83,6 +85,8 @@ void OptionMenue::exitMenue()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    // save changed settings :)
+    pApp->getSettings()->saveSettings();
     if (restartNeeded)
     {
         restart();
@@ -93,6 +97,52 @@ void OptionMenue::exitMenue()
         oxygine::getStage()->addChild(new Mainwindow());
         oxygine::Actor::detach();
     }
+    pApp->continueThread();
+}
+
+void OptionMenue::changeScreenMode(qint32 mode)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    switch (mode)
+    {
+        case 1:
+        {
+            SDL_SetWindowBordered(oxygine::core::getWindow(), SDL_bool::SDL_FALSE);
+            SDL_SetWindowFullscreen(oxygine::core::getWindow(), 0);
+            pApp->getSettings()->setFullscreen(false);
+            pApp->getSettings()->setBorderless(true);
+            break;
+        }
+        case 2:
+        {
+            SDL_SetWindowFullscreen(oxygine::core::getWindow(), SDL_WINDOW_FULLSCREEN);
+            pApp->getSettings()->setFullscreen(true);
+            pApp->getSettings()->setBorderless(true);
+            break;
+        }
+        default:
+        {
+            SDL_SetWindowBordered(oxygine::core::getWindow(), SDL_bool::SDL_TRUE);
+            SDL_SetWindowFullscreen(oxygine::core::getWindow(), 0);
+            pApp->getSettings()->setFullscreen(false);
+            pApp->getSettings()->setBorderless(false);
+        }
+    }
+    pApp->continueThread();
+}
+
+void OptionMenue::changeScreenSize(qint32 width, qint32 heigth)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    SDL_SetWindowSize(oxygine::core::getWindow(), width, heigth);
+    pApp->getSettings()->setWidth(width);
+    pApp->getSettings()->setHeight(heigth);
+    pApp->getSettings()->saveSettings();
+    Console::print("Leaving Editor Menue", Console::eDEBUG);
+    oxygine::getStage()->addChild(new OptionMenue());
+    oxygine::Actor::detach();
     pApp->continueThread();
 }
 
@@ -110,9 +160,84 @@ void OptionMenue::showSettings()
     style.multiline = false;
 
     qint32 y = 10;
+    // cache all supported display modes
+    SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, nullptr};
+    qint32 modes = SDL_GetNumDisplayModes(0);
+    QVector<QSize> supportedSizes;
+    for  (qint32 i = 0; i < modes; i++)
+    {
+        if (SDL_GetDisplayMode(0, i, &mode) == 0)
+        {
+            QSize newSize(mode.w, mode.h);
+            if (!supportedSizes.contains(newSize) &&
+                newSize.width() >= 1152 &&
+                newSize.height() >= 864)
+            {
 
+                supportedSizes.append(newSize);
+            }
+        }
+        else
+        {
+            Console::print(QString("SDL_GetDisplayMode failed: ") + QString(SDL_GetError()), Console::eLogLevels::eERROR);
+        }
+    }
+    QVector<QString> displaySizes;
+    qint32 currentDisplayMode = 0;
+    for  (qint32 i = 0; i < supportedSizes.size(); i++)
+    {
+        if (supportedSizes[i].width() == pSettings->getWidth() &&
+            supportedSizes[i].height() == pSettings->getHeight())
+        {
+            currentDisplayMode = i;
+        }
+        displaySizes.append(QString::number(supportedSizes[i].width()) + " x " + QString::number(supportedSizes[i].height()));
+    }
     qint32 sliderOffset = 400;
+
     oxygine::spTextField pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Screen Settings").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    y += 40;
+
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Screen Resolution: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spDropDownmenu pScreenResolution = new DropDownmenu(400, displaySizes);
+    pScreenResolution->setPosition(sliderOffset - 130, y);
+    pScreenResolution->setCurrentItem(currentDisplayMode);
+    m_pOptions->addItem(pScreenResolution);
+    connect(pScreenResolution.get(), &DropDownmenu::sigItemChanged, [=](qint32)
+    {
+        QStringList itemData = pScreenResolution->getCurrentItemText().split(" x ");
+        emit sigChangeScreenSize(itemData[0].toInt(), itemData[1].toInt());
+    });
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Screen Mode: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    QVector<QString> items = {tr("Window"), tr("Bordered"), tr("Fullscreen")};
+    spDropDownmenu pScreenModes = new DropDownmenu(400, items);
+    pScreenModes->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pScreenModes);
+    connect(pScreenModes.get(), &DropDownmenu::sigItemChanged, this, &OptionMenue::changeScreenMode, Qt::QueuedConnection);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Audio Settings").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    y += 40;
+    pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
     pTextfield->setText(tr("Global Volume: ").toStdString().c_str());
     pTextfield->setPosition(10, y);

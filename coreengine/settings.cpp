@@ -67,17 +67,17 @@ void Settings::loadSettings(){
         Console::print(error, Console::eERROR);
         m_y = 50;
     }
-    m_width       = settings.value("width", 1024).toInt(&ok);
+    m_width       = settings.value("width", 1152).toInt(&ok);
     if(!ok){
         QString error = tr("Error in the Ini File: ") + "[Resolution] " + tr("Setting:") + " width";
         Console::print(error, Console::eERROR);
-        m_width = 1024;
+        m_width = 1152;
     }
-    m_height      = settings.value("height", 800).toInt(&ok);
+    m_height      = settings.value("height", 864).toInt(&ok);
     if(!ok){
         QString error = tr("Error in the Ini File: ") + "[Resolution] " + tr("Setting:") + " heigth";
         Console::print(error, Console::eERROR);
-        m_height = 800;
+        m_height = 864;
     }
     m_borderless  = settings.value("borderless",false).toBool();
     m_fullscreen  = settings.value("fullscreen",false).toBool();
@@ -238,4 +238,24 @@ bool Settings::getShowAnimations()
 void Settings::setShowAnimations(bool value)
 {
     showAnimations = value;
+}
+
+void Settings::setFullscreen(bool fullscreen)
+{
+    m_fullscreen = fullscreen;
+}
+
+void Settings::setBorderless(bool borderless)
+{
+    m_borderless = borderless;
+}
+
+void Settings::setWidth(const qint32 &width)
+{
+    m_width = width;
+}
+
+void Settings::setHeight(const qint32 &height)
+{
+    m_height = height;
 }

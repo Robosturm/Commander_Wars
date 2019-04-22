@@ -290,8 +290,9 @@ bool Player::getIsDefeated() const
     return isDefeated;
 }
 
-void Player::earnMoney(float modifier)
+qint32 Player::calcIncome(float modifier)
 {
+    qint32 ret = 0;
     GameMap* pMap = GameMap::getInstance();
     for (qint32 y = 0; y < pMap->getMapHeight(); y++)
     {
@@ -315,12 +316,17 @@ void Player::earnMoney(float modifier)
                         modifier += pCO->getBonusIncome(pBuilding.get(), income);
                     }
                     income = static_cast<qint32>(income) + modifier;
-                    fonds += income;
+                    ret += income;
                 }
             }
         }
     }
-    setFonds(fonds);
+    return ret;
+}
+
+void Player::earnMoney(float modifier)
+{
+    setFonds(fonds + calcIncome(modifier));
 }
 
 qint32 Player::getCostModifier(QString id, qint32 baseCost)
@@ -763,6 +769,26 @@ float Player::getFondsModifier() const
 void Player::setFondsModifier(float value)
 {
     fondsModifier = value;
+}
+
+qint32 Player::calculatePlayerStrength()
+{
+    qint32 ret = 0;
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 x = 0; x < pMap->getMapWidth(); x++)
+    {
+        for (qint32 y = 0; y < pMap->getMapHeight(); y++)
+        {
+            Terrain* pTerrain = pMap->getTerrain(x, y);
+            Unit* pUnit = pTerrain->getUnit();
+            if (pUnit != nullptr &&
+                pUnit->getOwner() == this)
+            {
+                ret += pUnit->getUnitValue();
+            }
+        }
+    }
+    return ret + calcIncome();
 }
 
 void Player::serializeObject(QDataStream& pStream)

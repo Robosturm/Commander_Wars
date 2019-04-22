@@ -418,6 +418,11 @@ public slots:
      * @return
      */
     bool canMoveOver(qint32 x, qint32 y);
+    /**
+     * @brief getUnitValue
+     * @return
+     */
+    qint32 getUnitValue();
 protected:
     /**
      * @brief updateIconTweens creates the visibility toogle tweens for all icons

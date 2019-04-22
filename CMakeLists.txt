@@ -138,6 +138,11 @@ set(${PROJECT_NAME}_SRCS
         game/gamerules.cpp
         game/victoryrule.cpp
         game/weather.cpp
+        # cool ingame recording
+        game/gamerecording/daytodayrecord.cpp
+        game/gamerecording/playerrecord.cpp
+        game/gamerecording/SpecialEvent.cpp
+        game/gamerecording/gamerecorder.cpp
 
         # game input
         gameinput/basegameinputif.cpp

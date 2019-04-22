@@ -209,7 +209,19 @@ bool VeryEasyAI::useBuilding(QmlVectorBuilding* pBuildings)
                 }
                 else
                 {
-                    // todo select
+                    if (pAction->getStepInputType() == "FIELD")
+                    {
+                        MarkedFieldData* pData = pAction->getMarkedFieldStepData();
+                        QVector<QPoint>* points = pData->getPoints();
+                        QPoint target = points->at(Mainapp::randInt(0, points->size() -1));
+                        delete pData;
+                        addSelectedFieldData(pAction, target);
+                        if (pAction->isFinalStep())
+                        {
+                            emit performAction(pAction);
+                            return true;
+                        }
+                    }
                 }
             }
             delete pAction;

@@ -739,7 +739,14 @@ void MapSelectionMapsMenue::showCOSelection()
         itemIndex = 3;
         spDropDownmenu playerAi = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, aiList, up);
         playerAi->setPosition(xPositions[itemIndex], y);
-        playerAi->setCurrentItem(0);
+        if (i > 0)
+        {
+            playerAi->setCurrentItem(1);
+        }
+        else
+        {
+             playerAi->setCurrentItem(0);
+        }
         m_playerAIs.append(playerAi);
         m_pPlayerSelection->addItem(playerAi);
 

@@ -85,7 +85,6 @@ namespace oxygine
 
             STDRenderer* renderer = STDRenderer::getCurrent();
 
-
             static std::vector<unsigned char> buff;
             buff.clear();
 

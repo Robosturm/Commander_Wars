@@ -122,6 +122,13 @@ public:
     bool getShowAnimations();
     void setShowAnimations(bool value);
 
+    static void setFullscreen(bool fullscreen);
+
+    static void setBorderless(bool borderless);
+
+    static void setWidth(const qint32 &width);
+    static void setHeight(const qint32 &height);
+
 private:
     // setting variables
     static qint32 m_x;

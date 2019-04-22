@@ -60,5 +60,10 @@ void GameEnums::registerEnums()
     value.setProperty("LuckDamageMode_On", LuckDamageMode_On);
     value.setProperty("LuckDamageMode_Average", LuckDamageMode_Average);
 
+    value.setProperty("GameRecord_SpecialEvents_Power", GameRecord_SpecialEvents_Power);
+    value.setProperty("GameRecord_SpecialEvents_SuperPower", GameRecord_SpecialEvents_SuperPower);
+    value.setProperty("GameRecord_SpecialEvents_HQCaptured", GameRecord_SpecialEvents_HQCaptured);
+    value.setProperty("GameRecord_SpecialEvents_HQLost", GameRecord_SpecialEvents_HQLost);
+
     pInterpreter->setGlobal("GameEnums", value);
 }

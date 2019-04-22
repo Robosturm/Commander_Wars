@@ -99,6 +99,15 @@ public:
     };
     Q_ENUM(LuckDamageMode)
 
+    enum GameRecord_SpecialEvents
+    {
+        GameRecord_SpecialEvents_Power,
+        GameRecord_SpecialEvents_SuperPower,
+        GameRecord_SpecialEvents_HQCaptured,
+        GameRecord_SpecialEvents_HQLost
+    };
+    Q_ENUM(GameRecord_SpecialEvents)
+
     static void registerEnums();
 private:
     explicit GameEnums() = default;
