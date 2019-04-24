@@ -59,6 +59,11 @@ public:
      * @return
      */
     PlayerRecord* getPlayerRecord(qint32 player);
+    qint32 getEventRecordCount()
+    {
+        return m_SpecialEvents.size();
+    }
+    SpecialEvent* getSpecialEvent(qint32 index);
 
 private:
     QVector<spSpecialEvent> m_SpecialEvents;

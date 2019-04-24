@@ -26,7 +26,7 @@ var Constructor = function()
     this.activatePower = function(co)
     {
         var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(true);
+        var powerNameAnimation = co.createPowerScreen(false);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
         var animation2 = GameAnimationFactory.createAnimation(0, 0);

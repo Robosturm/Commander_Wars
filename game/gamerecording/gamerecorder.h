@@ -56,6 +56,15 @@ public:
      * @return
      */
     Rang getRank(qint32 score);
+
+    DayToDayRecord* getDayRecord(qint32 index)
+    {
+        if (index >= 0 && index < m_Record.size())
+        {
+            return m_Record[index].get();
+        }
+        return nullptr;
+    }
 signals:
 
 public slots:

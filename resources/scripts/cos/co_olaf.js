@@ -42,7 +42,7 @@ var Constructor = function()
     this.activateSuperpower = function(co)
     {
         var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(false);
+        var powerNameAnimation = co.createPowerScreen(true);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
         var animation2 = GameAnimationFactory.createAnimation(0, 0);

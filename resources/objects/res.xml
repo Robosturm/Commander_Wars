@@ -63,7 +63,10 @@
 		<image file="co_selection+mask.png"/>
 		<!-- ingame stuff -->
 		<image file="barforeground.png"/>
-		
+	</atlas>
+	
+	<atlas clamp2edge="false"> 
+		<image file="line.png" trim="false" extend="false" border="0" />
 	</atlas>
 </resources>
 

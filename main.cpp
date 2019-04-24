@@ -21,6 +21,7 @@
 #include "ox/DebugActor.hpp"
 
 #include "menue/ingamemenue.h"
+#include "menue/victorymenue.h"
 
 #include "game/terrain.h"
 #include "game/player.h"
@@ -94,6 +95,7 @@ int main(int argc, char* argv[])
 
     // qt metatypes we need this for js and signal slot stuff
     qRegisterMetaType<Mainapp::NetworkSerives>("Mainapp::NetworkSerives");
+    qRegisterMetaType<VictoryMenue::GraphModes>("VictoryMenue::GraphModes");
     qRegisterMetaType<GameEnums::Alliance>("GameEnums::Alliance");
     qRegisterMetaType<GameEnums::UnitRanks>("GameEnums::UnitRanks");
     qRegisterMetaType<GameEnums::PowerMode>("GameEnums::PowerMode");
@@ -186,4 +188,3 @@ int main(int argc, char* argv[])
     }
     return returncode;
 }
-

@@ -862,7 +862,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="70"/>
+        <location filename="../main.cpp" line="71"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -983,8 +983,48 @@
 <context>
     <name>VictoryMenue</name>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="55"/>
+        <location filename="../menue/victorymenue.cpp" line="84"/>
         <source>Exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/victorymenue.cpp" line="159"/>
+        <location filename="../menue/victorymenue.cpp" line="271"/>
+        <source>Fonds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/victorymenue.cpp" line="168"/>
+        <location filename="../menue/victorymenue.cpp" line="276"/>
+        <source>Income</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/victorymenue.cpp" line="177"/>
+        <location filename="../menue/victorymenue.cpp" line="281"/>
+        <source>Buildings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/victorymenue.cpp" line="186"/>
+        <location filename="../menue/victorymenue.cpp" line="286"/>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/victorymenue.cpp" line="195"/>
+        <location filename="../menue/victorymenue.cpp" line="291"/>
+        <source>Player Strength</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/victorymenue.cpp" line="206"/>
+        <source>Ranking</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/victorymenue.cpp" line="239"/>
+        <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

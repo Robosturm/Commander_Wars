@@ -101,7 +101,10 @@
 		<image file="co1.png" />
 		<image file="missile_icon.png" />	
 		<image file="exitgame.png" />
-		<image file="savegame.png" />			
+		<image file="savegame.png" />
+
+		<image file="hq+captured.png" />
+		<image file="hq+lost.png" />		
 		
 		<!-- z information label -->
 		<image file="z_information_label.png" cols = "8" />

@@ -26,7 +26,7 @@ var Constructor = function()
     this.activatePower = function(co)
     {
         var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(true);
+        var powerNameAnimation = co.createPowerScreen(false);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
         CO_VON_BOLT.throwLaserray(co, 1, 2, powerNameAnimation);

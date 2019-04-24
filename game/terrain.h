@@ -269,11 +269,11 @@ private:
     /**
       * the building at this position
       */
-    spBuilding m_Building;
+    spBuilding m_Building{nullptr};
     /**
       * the unit at this position
       */
-    spUnit m_Unit;
+    spUnit m_Unit{nullptr};
     /**
       * hp of this unit
       */

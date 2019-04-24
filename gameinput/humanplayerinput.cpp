@@ -51,6 +51,10 @@ HumanPlayerInput::~HumanPlayerInput()
 
 void HumanPlayerInput::rightClick(qint32 x, qint32 y)
 {
+    if (!GameMap::getInstance()->onMap(x, y))
+    {
+        return;
+    }
     if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer)
     {
         Mainapp* pApp = Mainapp::getInstance();
@@ -208,7 +212,10 @@ void HumanPlayerInput::clearMarkedFields()
 
 void HumanPlayerInput::leftClick(qint32 x, qint32 y)
 {
-
+    if (!GameMap::getInstance()->onMap(x, y))
+    {
+        return;
+    }
     if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer)
     {
         Mainapp* pApp = Mainapp::getInstance();

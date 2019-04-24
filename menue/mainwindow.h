@@ -10,7 +10,6 @@ public:
     explicit Mainwindow();
     virtual ~Mainwindow();
 
-
 public slots:
     void enterSingleplayer();
     void enterEditor();

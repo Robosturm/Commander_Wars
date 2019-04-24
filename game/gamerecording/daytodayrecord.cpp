@@ -71,6 +71,15 @@ PlayerRecord* DayToDayRecord::getPlayerRecord(qint32 player)
     }
     return nullptr;
 }
+SpecialEvent* DayToDayRecord::getSpecialEvent(qint32 index)
+{
+    if (index >= 0 &&
+        index < m_SpecialEvents.size())
+    {
+        return m_SpecialEvents[index].get();
+    }
+    return nullptr;
+}
 
 void DayToDayRecord::addPlayerRecord(qint32 player, qint32 day)
 {
