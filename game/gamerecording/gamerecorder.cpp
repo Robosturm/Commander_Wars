@@ -194,7 +194,7 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
     float techScore3 = 0;
     if (lostUnits[player] > 0)
     {
-        techScore1 =(destroyedUnits[player] / lostUnits[player]) * 0.5f;
+        techScore1 =(destroyedUnits[player] / static_cast<float>(lostUnits[player])) * 0.5f;
     }
     else
     {
@@ -213,7 +213,7 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
     }
     if (deployed > 0)
     {
-        techScore2 = (1 - (lostUnits[player] / deployed)) * 1.1f;
+        techScore2 = (1.0f - (lostUnits[player] / static_cast<float>(deployed))) * 1.1f;
     }
     else
     {
@@ -225,7 +225,7 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
     }
     if (deployedUnits[player] > 0)
     {
-        techScore3 = deployLimit / deployedUnits[player];
+        techScore3 = deployLimit / static_cast<float>(deployedUnits[player]);
     }
     else
     {
