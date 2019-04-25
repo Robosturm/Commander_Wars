@@ -13,6 +13,7 @@
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
+#include "resource_management/cospritemanager.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
@@ -154,7 +155,7 @@ VictoryMenue::VictoryMenue()
     }
 
     m_ProgressTimer.setSingleShot(false);
-    m_ProgressTimer.start(500);
+    m_ProgressTimer.start(100);
     connect(&m_ProgressTimer, &QTimer::timeout, this, &VictoryMenue::updateGraph, Qt::QueuedConnection);
 
     spPanel panel = new Panel(true, QSize(pApp->getSettings()->getWidth() - pButtonExit->getWidth() - 30, 105), QSize(pApp->getSettings()->getWidth() - pButtonExit->getX() - 20, 40));
@@ -255,20 +256,145 @@ VictoryMenue::VictoryMenue()
     }
 
     // victory score
-    if (pMap->getWidth() >= 0)
+    qint32 winnerTeam = pMap->getWinnerTeam();
+    if (winnerTeam >= 0)
     {
-        m_VictoryPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() ,m_pGraphBackground->getHeight()),
-                                   QSize(pApp->getSettings()->getWidth() ,m_pGraphBackground->getHeight()));
+        COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+        m_VictoryPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 10, pApp->getSettings()->getHeight() - 115),
+                                   QSize(pApp->getSettings()->getWidth() - 10, pApp->getSettings()->getHeight() - 115));
         m_VictoryPanel->setPosition(5, 5);
+        addChild(m_VictoryPanel);
+        qint32 startX = pApp->getSettings()->getWidth() - 700;
+        if (startX < 800)
+        {
+            startX = 800;
+        }
+        oxygine::spTextField pHeaders = new oxygine::TextField();
+        pHeaders->setStyle(style);
+        pHeaders->setText(tr("Speed").toStdString().c_str());
+        pHeaders->setScale(1.5f);
+        pHeaders->setPosition(startX, 5);
+        m_VictoryPanel->addItem(pHeaders);
+        pHeaders = new oxygine::TextField();
+        pHeaders->setStyle(style);
+        pHeaders->setText(tr("Force").toStdString().c_str());
+        pHeaders->setScale(1.5f);
+        pHeaders->setPosition(startX + 175 * 1, 5);
+        m_VictoryPanel->addItem(pHeaders);
+        pHeaders = new oxygine::TextField();
+        pHeaders->setStyle(style);
+        pHeaders->setText(tr("Technique").toStdString().c_str());
+        pHeaders->setScale(1.5f);
+        pHeaders->setPosition(startX + 175 * 2, 5);
+        m_VictoryPanel->addItem(pHeaders);
+        pHeaders = new oxygine::TextField();
+        pHeaders->setStyle(style);
+        pHeaders->setText(tr("Total").toStdString().c_str());
+        pHeaders->setScale(1.5f);
+        pHeaders->setPosition(startX + 175 * 3, 5);
+        m_VictoryPanel->addItem(pHeaders);
+        m_VictoryPanel->setContentWidth(startX + 175 * 4 + 10);
+        qint32 y = 50;
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
             QVector3D score;
             pMap->getGameRecorder()->calculateRang(i, score);
             m_VictoryScores.append(score);
+
+            float scale = 2.0f;
+            Player* pPlayer = pMap->getPlayer(i);
+            for (quint8 i2 = 0; i2 < 2; i2++)
+            {
+                CO* pCO = pPlayer->getCO(i2);
+                if (pCO != nullptr)
+                {
+                    qint32 sentenceWidth = startX - 10;
+                    pAnim = pGameManager->getResAnim("dialogfield+mask");
+                    oxygine::spSprite  pTextMask = new oxygine::Sprite();
+                    pTextMask->setScaleY(scale);
+                    pTextMask->setWidth(sentenceWidth);
+                    pTextMask->setScaleX(pTextMask->getWidth() / pAnim->getWidth());
+                    pTextMask->setResAnim(pAnim);
+                    pTextMask->setPosition(5, 5 + y);
+                    QColor color = pPlayer->getColor();
+                    pTextMask->setColor(static_cast<quint8>(color.red()), static_cast<quint8>(color.green()), static_cast<quint8>(color.blue()), 255);
+                    m_VictoryPanel->addItem(pTextMask);
+
+                    oxygine::spSprite pWinLooseSprite = new oxygine::Sprite();
+                    pAnim = pGameManager->getResAnim("dialogfield");
+                    pWinLooseSprite->setScaleY(scale);
+                    pWinLooseSprite->setWidth(sentenceWidth);
+                    pWinLooseSprite->setScaleX(pWinLooseSprite->getWidth() / pAnim->getWidth());
+                    pWinLooseSprite->setResAnim(pAnim);
+                    pWinLooseSprite->setPosition(5, 5 + y);
+                    m_VictoryPanel->addItem(pWinLooseSprite);
+
+                    oxygine::spSprite pCOSprite = new oxygine::Sprite();
+                    pCOSprite->setScale(scale);
+                    pCOSprite->setPosition(5, 3 * scale + y);
+                    QString resAnim = pCO->getCoID().toLower() + "+face";
+                    pAnim = pCOSpriteManager->getResAnim(resAnim.toStdString().c_str());
+                    QString sentence = "";
+                    if (winnerTeam == pPlayer->getTeam())
+                    {
+                        sentence = pCO->getVictorySentence();
+                        pCOSprite->setResAnim(pAnim, static_cast<qint32>(GameEnums::COMood_Happy));
+                    }
+                    else
+                    {
+                        sentence = pCO->getDefeatSentence();
+                        pCOSprite->setResAnim(pAnim, static_cast<qint32>(GameEnums::COMood_Sad));
+                    }
+                    m_VictoryPanel->addItem(pCOSprite);
+
+                    float textScale = 1.7f;
+                    oxygine::spTextField winLooseText = new oxygine::TextField();
+                    style.multiline = true;
+                    winLooseText->setStyle(style);
+                    winLooseText->setSize((sentenceWidth - 10 - 48 * scale) / textScale - 2, pWinLooseSprite->getHeight());
+                    winLooseText->setScale(textScale);
+                    winLooseText->setPosition(48 * scale + 10, 4 * scale + y);
+                    winLooseText->setText(sentence.toStdString().c_str());
+                    m_VictoryPanel->addItem(winLooseText);
+                    y += 48 * scale + 10;
+                }
+                if (i2 == 0)
+                {
+                    style.multiline = false;
+                    m_VictoryTexts.append(QVector<oxygine::spTextField>());
+                    m_VictoryTexts[i].append(new oxygine::TextField);
+                    m_VictoryTexts[i][0]->setPosition(startX, y - 48 * scale);
+                    m_VictoryTexts[i][0]->setStyle(style);
+                    m_VictoryTexts[i][0]->setScale(1.5f);
+                    m_VictoryTexts[i][0]->setText("0");
+                    m_VictoryPanel->addItem(m_VictoryTexts[i][0]);
+                    m_VictoryTexts[i].append(new oxygine::TextField);
+                    m_VictoryTexts[i][1]->setPosition(startX + 175 * 1, y - 48 * scale);
+                    m_VictoryTexts[i][1]->setStyle(style);
+                    m_VictoryTexts[i][1]->setScale(1.5f);
+                    m_VictoryTexts[i][1]->setText("0");
+                    m_VictoryPanel->addItem(m_VictoryTexts[i][1]);
+                    m_VictoryTexts[i].append(new oxygine::TextField);
+                    m_VictoryTexts[i][2]->setPosition(startX + 175 * 2, y - 48 * scale);
+                    m_VictoryTexts[i][2]->setStyle(style);
+                    m_VictoryTexts[i][2]->setScale(1.5f);
+                    m_VictoryTexts[i][2]->setText("0");
+                    m_VictoryPanel->addItem(m_VictoryTexts[i][2]);
+                    m_VictoryTexts[i].append(new oxygine::TextField);
+                    m_VictoryTexts[i][3]->setPosition(startX + 175 * 3, y - 48 * scale);
+                    m_VictoryTexts[i][3]->setStyle(style);
+                    m_VictoryTexts[i][3]->setScale(1.5f);
+                    m_VictoryTexts[i][3]->setText("0");
+                    m_VictoryPanel->addItem(m_VictoryTexts[i][3]);
+                    if (pCO == nullptr)
+                    {
+                        y += 48 * scale + 10;
+                    }
+                }
+            }
+            m_VictoryPanel->setContentHeigth(y + 48 * scale + 10);
         }
-
     }
-
     showGraph(GraphModes::Fonds);
 }
 
@@ -500,9 +626,9 @@ void VictoryMenue::updateGraph()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameManager* pGameManager = GameManager::getInstance();
+    GameMap* pMap = GameMap::getInstance();
     if (m_CurrentGraphMode < GraphModes::Max)
     {
-        GameMap* pMap = GameMap::getInstance();
         // make sure we have some graph data to be added :)
         qint32 progress = m_GraphProgress[static_cast<qint32>(m_CurrentGraphMode)];
         if (progress < pMap->getCurrentDay())
@@ -646,6 +772,69 @@ void VictoryMenue::updateGraph()
                     }
                 }
                 showGraph(m_CurrentGraphMode);
+            }
+        }
+    }
+    else
+    {
+        if (progress < 100)
+        {
+            progress += 2;
+            // update values
+            for (qint32 i = 0; i < m_VictoryTexts.size(); i++)
+            {
+                m_VictoryTexts[i][0]->setText(QString::number(static_cast<qint32>(m_VictoryScores[i].x() * progress / 100)).toStdString().c_str());
+                m_VictoryTexts[i][1]->setText(QString::number(static_cast<qint32>(m_VictoryScores[i].y() * progress / 100)).toStdString().c_str());
+                m_VictoryTexts[i][2]->setText(QString::number(static_cast<qint32>(m_VictoryScores[i].z() * progress / 100)).toStdString().c_str());
+                float sum = m_VictoryScores[i].x() + m_VictoryScores[i].y() +m_VictoryScores[i].z();
+                m_VictoryTexts[i][3]->setText(QString::number(static_cast<qint32>(sum * progress / 100)).toStdString().c_str());
+
+
+            }
+            if (progress >= 100)
+            {
+                progress = 100;
+                // show CO-Rank
+                for (qint32 i = 0; i < m_VictoryTexts.size(); i++)
+                {
+                    oxygine::ResAnim* pAnim;
+                    qint32 sum = static_cast<qint32>(m_VictoryScores[i].x() + m_VictoryScores[i].y() +m_VictoryScores[i].z());
+                    GameRecorder::Rang rang = pMap->getGameRecorder()->getRank(sum);
+                    switch (rang)
+                    {
+                        case GameRecorder::Rang::S:
+                        {
+                            pAnim = GameManager::getInstance()->getResAnim("s_rang");
+                            break;
+                        }
+                        case GameRecorder::Rang::A:
+                        {
+                            pAnim = GameManager::getInstance()->getResAnim("a_rang");
+                            break;
+                        }
+                        case GameRecorder::Rang::B:
+                        {
+                            pAnim = GameManager::getInstance()->getResAnim("b_rang");
+                            break;
+                        }
+                        case GameRecorder::Rang::C:
+                        {
+                            pAnim = GameManager::getInstance()->getResAnim("c_rang");
+                            break;
+                        }
+                        case GameRecorder::Rang::D:
+                        {
+                            pAnim = GameManager::getInstance()->getResAnim("d_rang");
+                            break;
+                        }
+                    }
+
+                    oxygine::spSprite pRankSprite = new oxygine::Sprite();
+                    pRankSprite->setResAnim(pAnim);
+                    pRankSprite->setScale(1.5f);
+                    pRankSprite->setPosition(m_VictoryPanel->getContentWidth() - 100, m_VictoryTexts[i][0]->getY());
+                    m_VictoryPanel->addItem(pRankSprite);
+                }
             }
         }
     }

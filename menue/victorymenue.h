@@ -84,7 +84,9 @@ private:
     QVector<oxygine::spTextField> m_YGraphItems;
 
     QVector<QVector3D> m_VictoryScores;
+    QVector<QVector<oxygine::spTextField>> m_VictoryTexts;
     spPanel m_VictoryPanel;
+    qint32 progress = 0;
 
 };
 

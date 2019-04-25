@@ -59,7 +59,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
 
     m_COSprite = new oxygine::Sprite();
     m_COSprite->setScale(scale);
-    m_COSprite->setY(2);
+    m_COSprite->setY(3 * scale);
     addChild(m_COSprite);
 
     setPositionTop(false);

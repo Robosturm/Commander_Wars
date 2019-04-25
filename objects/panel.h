@@ -20,6 +20,10 @@ public:
     void removeItem(oxygine::spActor pActor);
     void setContentHeigth(qint32 heigth);
     void setContentWidth(qint32 width);
+
+    qint32 getContentHeigth();
+    qint32 getContentWidth();
+
     void clearContent();
 signals:
 

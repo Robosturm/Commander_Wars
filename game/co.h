@@ -331,6 +331,16 @@ public slots:
      */
     GameAnimationDialog* createPowerSentence();
     /**
+     * @brief getDefeatSentence
+     * @return
+     */
+    QString getDefeatSentence();
+    /**
+     * @brief getVictorySentence
+     * @return
+     */
+    QString getVictorySentence();
+    /**
      * @brief createPowerScreen
      * @return
      */

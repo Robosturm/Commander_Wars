@@ -89,6 +89,16 @@ void Panel::setContentWidth(qint32 width)
     m_VScrollbar->setContentWidth(width);
 }
 
+qint32 Panel::getContentHeigth()
+{
+    return m_ContentRect->getHeight();
+}
+
+qint32 Panel::getContentWidth()
+{
+   return m_ContentRect->getWidth();
+}
+
 void Panel::addItem(oxygine::spActor pActor)
 {
     m_ContentRect->addChild(pActor);

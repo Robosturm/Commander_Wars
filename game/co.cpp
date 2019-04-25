@@ -762,6 +762,22 @@ GameAnimationDialog* CO::createPowerSentence()
     return pGameAnimationDialog;
 }
 
+QString CO::getDefeatSentence()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QStringList sentences = pApp->getInterpreter()->doFunction(coID, "getDefeatSentences").toVariant().toStringList();
+    QString sentence = sentences[Mainapp::randInt(0, sentences.size() - 1)];
+    return sentence;
+}
+
+QString CO::getVictorySentence()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QStringList sentences = pApp->getInterpreter()->doFunction(coID, "getVictorySentences").toVariant().toStringList();
+    QString sentence = sentences[Mainapp::randInt(0, sentences.size() - 1)];
+    return sentence;
+}
+
  GameAnimationPower* CO::createPowerScreen(bool superpower)
  {
      GameAnimationPower* pGameAnimationPower = GameAnimationFactory::createAnimationPower(m_Owner->getColor(), superpower, coID);
