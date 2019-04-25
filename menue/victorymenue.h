@@ -82,6 +82,10 @@ private:
     spPanel m_PlayerSelectPanel;
 
     QVector<oxygine::spTextField> m_YGraphItems;
+
+    QVector<QVector3D> m_VictoryScores;
+    spPanel m_VictoryPanel;
+
 };
 
 #endif // VICTORYMENUE_H

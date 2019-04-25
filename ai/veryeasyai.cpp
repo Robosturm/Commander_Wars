@@ -486,7 +486,8 @@ bool VeryEasyAI::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
             if (targets.size() == 0)
             {
                 if ((pUnit->getMaxAmmo1() > 0 && !pUnit->hasAmmo1()) ||
-                    (pUnit->getMaxAmmo2() > 0 && !pUnit->hasAmmo2()))
+                    (pUnit->getMaxAmmo2() > 0 && !pUnit->hasAmmo2()) ||
+                    (pUnit->getMaxFuel() > 0 && static_cast<float>(pUnit->getFuel()) / static_cast<float>(pUnit->getMaxFuel()) < 1.0f / 3.0f))
                 {
                     for (qint32 i2 = 0; i2 < pBuildings->size(); i2++)
                     {

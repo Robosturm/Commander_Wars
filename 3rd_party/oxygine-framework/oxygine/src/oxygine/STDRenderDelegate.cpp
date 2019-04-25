@@ -23,9 +23,9 @@ namespace oxygine
         RenderState rs;
         if (!parent->internalRender(rs, parentRS))
             return;
-
-        Actor* actor = parent->getFirstChild().get();
-        while (actor)
+        // render fix changed actor to spActor  to avoid illegal deletion -> little bit slower but safer
+        spActor actor = parent->getFirstChild();
+        while (actor.get() != nullptr)
         {
             OX_ASSERT(actor->getParent());
             actor->render(rs);

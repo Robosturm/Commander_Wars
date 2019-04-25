@@ -533,32 +533,32 @@
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="49"/>
+        <location filename="../menue/mainwindow.cpp" line="52"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="60"/>
+        <location filename="../menue/mainwindow.cpp" line="63"/>
         <source>Load Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="71"/>
+        <location filename="../menue/mainwindow.cpp" line="74"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="82"/>
+        <location filename="../menue/mainwindow.cpp" line="85"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="93"/>
+        <location filename="../menue/mainwindow.cpp" line="96"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="104"/>
+        <location filename="../menue/mainwindow.cpp" line="107"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -983,48 +983,53 @@
 <context>
     <name>VictoryMenue</name>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="84"/>
+        <location filename="../menue/victorymenue.cpp" line="86"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="159"/>
-        <location filename="../menue/victorymenue.cpp" line="271"/>
+        <location filename="../menue/victorymenue.cpp" line="161"/>
+        <location filename="../menue/victorymenue.cpp" line="292"/>
         <source>Fonds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="168"/>
-        <location filename="../menue/victorymenue.cpp" line="276"/>
+        <location filename="../menue/victorymenue.cpp" line="170"/>
+        <location filename="../menue/victorymenue.cpp" line="297"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="177"/>
-        <location filename="../menue/victorymenue.cpp" line="281"/>
+        <location filename="../menue/victorymenue.cpp" line="179"/>
+        <location filename="../menue/victorymenue.cpp" line="302"/>
         <source>Buildings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="186"/>
-        <location filename="../menue/victorymenue.cpp" line="286"/>
+        <location filename="../menue/victorymenue.cpp" line="188"/>
+        <location filename="../menue/victorymenue.cpp" line="307"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="195"/>
-        <location filename="../menue/victorymenue.cpp" line="291"/>
+        <location filename="../menue/victorymenue.cpp" line="197"/>
+        <location filename="../menue/victorymenue.cpp" line="312"/>
         <source>Player Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="206"/>
+        <location filename="../menue/victorymenue.cpp" line="208"/>
         <source>Ranking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="239"/>
+        <location filename="../menue/victorymenue.cpp" line="241"/>
         <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/victorymenue.cpp" line="350"/>
+        <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3770,7 +3775,7 @@
     <name>co_robosturm</name>
     <message>
         <location filename="../resources/scripts/cos/co_robosturm.js" line="204"/>
-        <source>Black Hole was in need of new strong CO&apos;s so Kat invented a second Sturm. But he doesn&apos;t accept any orders and formed his own Army.</source>
+        <source>Black Hole was in need of new strong CO&apos;s so Lash invented a second Sturm. But he doesn&apos;t accept any orders and formed his own Army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

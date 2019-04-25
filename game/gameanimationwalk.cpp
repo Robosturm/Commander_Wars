@@ -25,12 +25,16 @@ GameAnimationWalk::GameAnimationWalk(Unit* pUnit, QVector<QPoint> movePath)
 
 bool GameAnimationWalk::onFinished()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     Player* pPlayer = GameMap::getInstance()->getCurrentViewPlayer();
     if (!m_pUnit->isStealthed(pPlayer))
     {
         m_pUnit->setUnitVisible(true);
     }
-    return GameAnimation::onFinished();
+    bool ret = GameAnimation::onFinished();
+    pApp->continueThread();
+    return ret;
 }
 
 GameEnums::Directions GameAnimationWalk::getMovementDirection(qint32 x, qint32 y, qint32 x2, qint32 y2)

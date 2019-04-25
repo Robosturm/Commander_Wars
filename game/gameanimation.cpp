@@ -108,6 +108,8 @@ void GameAnimation::addText(QString text, float offsetX, float offsetY, float sc
 
 bool GameAnimation::onFinished()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     if (m_loops < 0)
     {
        Mainapp::getInstance()->getAudioThread()->stopSound(m_soundFile);
@@ -121,6 +123,7 @@ bool GameAnimation::onFinished()
         Mainapp::getInstance()->getInterpreter()->doFunction(jsPostActionObject, jsPostActionFunction);
     }
     GameAnimationFactory::removeAnimation(this);
+    pApp->continueThread();
     return true;
 }
 

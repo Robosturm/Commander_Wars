@@ -145,8 +145,7 @@ private:
     Settings m_Settings;
     bool m_quit{false};
 
-    std::atomic<bool> m_sleeping{true};
-    std::atomic<quint32> m_SuspendCount{0};
+    QMutex m_Mutex{QMutex::RecursionMode::Recursive};
 };
 
 #endif // MAINAPP_H

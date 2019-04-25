@@ -201,7 +201,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("Black Hole was in need of new strong CO's so Kat invented a second Sturm. But he doesn't accept any orders and formed his own Army.");
+        return qsTr("Black Hole was in need of new strong CO's so Lash invented a second Sturm. But he doesn't accept any orders and formed his own Army.");
     };
     this.getHits = function()
     {

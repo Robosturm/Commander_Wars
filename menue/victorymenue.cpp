@@ -1,3 +1,5 @@
+#include <QtMath>
+
 #include "victorymenue.h"
 
 #include "menue/mainwindow.h"
@@ -109,32 +111,35 @@ VictoryMenue::VictoryMenue()
     for (qint32 i = 0; i < pMap->getCurrentDay(); i++)
     {
         DayToDayRecord* pDayRecord = pMap->getGameRecorder()->getDayRecord(i);
-        for (qint32 i2 = 0; i2 < pMap->getPlayerCount(); i2++)
+        if (pDayRecord != nullptr)
         {
-            qint32 fonds = pDayRecord->getPlayerRecord(i2)->getFonds();
-            qint32 income = pDayRecord->getPlayerRecord(i2)->getIncome();
-            qint32 buildings = pDayRecord->getPlayerRecord(i2)->getBuildings();
-            qint32 units = pDayRecord->getPlayerRecord(i2)->getUnits();
-            qint32 playerStrength = pDayRecord->getPlayerRecord(i2)->getPlayerStrength();
-            if (fonds > m_GraphMaxValues[static_cast<qint32>(GraphModes::Fonds)])
+            for (qint32 i2 = 0; i2 < pMap->getPlayerCount(); i2++)
             {
-                m_GraphMaxValues[static_cast<qint32>(GraphModes::Fonds)] = fonds;
-            }
-            if (income > m_GraphMaxValues[static_cast<qint32>(GraphModes::Income)])
-            {
-                m_GraphMaxValues[static_cast<qint32>(GraphModes::Income)] = income;
-            }
-            if (buildings > m_GraphMaxValues[static_cast<qint32>(GraphModes::Buildings)])
-            {
-                m_GraphMaxValues[static_cast<qint32>(GraphModes::Buildings)] = buildings;
-            }
-            if (units > m_GraphMaxValues[static_cast<qint32>(GraphModes::Units)])
-            {
-                m_GraphMaxValues[static_cast<qint32>(GraphModes::Units)] = units;
-            }
-            if (playerStrength > m_GraphMaxValues[static_cast<qint32>(GraphModes::PlayerStrength)])
-            {
-                m_GraphMaxValues[static_cast<qint32>(GraphModes::PlayerStrength)] = playerStrength;
+                qint32 fonds = pDayRecord->getPlayerRecord(i2)->getFonds();
+                qint32 income = pDayRecord->getPlayerRecord(i2)->getIncome();
+                qint32 buildings = pDayRecord->getPlayerRecord(i2)->getBuildings();
+                qint32 units = pDayRecord->getPlayerRecord(i2)->getUnits();
+                qint32 playerStrength = pDayRecord->getPlayerRecord(i2)->getPlayerStrength();
+                if (fonds > m_GraphMaxValues[static_cast<qint32>(GraphModes::Fonds)])
+                {
+                    m_GraphMaxValues[static_cast<qint32>(GraphModes::Fonds)] = fonds;
+                }
+                if (income > m_GraphMaxValues[static_cast<qint32>(GraphModes::Income)])
+                {
+                    m_GraphMaxValues[static_cast<qint32>(GraphModes::Income)] = income;
+                }
+                if (buildings > m_GraphMaxValues[static_cast<qint32>(GraphModes::Buildings)])
+                {
+                    m_GraphMaxValues[static_cast<qint32>(GraphModes::Buildings)] = buildings;
+                }
+                if (units > m_GraphMaxValues[static_cast<qint32>(GraphModes::Units)])
+                {
+                    m_GraphMaxValues[static_cast<qint32>(GraphModes::Units)] = units;
+                }
+                if (playerStrength > m_GraphMaxValues[static_cast<qint32>(GraphModes::PlayerStrength)])
+                {
+                    m_GraphMaxValues[static_cast<qint32>(GraphModes::PlayerStrength)] = playerStrength;
+                }
             }
         }
     }
@@ -236,7 +241,7 @@ VictoryMenue::VictoryMenue()
         pTextfield->setStyle(style);
         pTextfield->setX(5);
         pTextfield->setY(50 * i + 5);
-        pTextfield->setText((tr("Player: ") + QString::number(i)).toStdString().c_str());
+        pTextfield->setText((tr("Player: ") + QString::number(i + 1)).toStdString().c_str());
         spCheckbox pCheckbox = new Checkbox();
         pCheckbox->setChecked(true);
         pCheckbox->setPosition(15 + pTextfield->getTextRect().getWidth(), pTextfield->getY());
@@ -248,6 +253,22 @@ VictoryMenue::VictoryMenue()
         m_PlayerSelectPanel->addItem(pCheckbox);
         m_PlayerSelectPanel->addItem(pTextfield);
     }
+
+    // victory score
+    if (pMap->getWidth() >= 0)
+    {
+        m_VictoryPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() ,m_pGraphBackground->getHeight()),
+                                   QSize(pApp->getSettings()->getWidth() ,m_pGraphBackground->getHeight()));
+        m_VictoryPanel->setPosition(5, 5);
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        {
+            QVector3D score;
+            pMap->getGameRecorder()->calculateRang(i, score);
+            m_VictoryScores.append(score);
+        }
+
+    }
+
     showGraph(GraphModes::Fonds);
 }
 
@@ -258,6 +279,9 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
     m_CurrentGraphMode = mode;
     if (m_CurrentGraphMode < GraphModes::Max)
     {
+        m_PlayerSelectPanel->setVisible(true);
+        m_pGraphBackground->setVisible(true);
+        m_VictoryPanel->setVisible(false);
         for (qint32 i = 0; i < m_YGraphItems.size(); i++)
         {
             m_YGraphItems[i]->setText(QString::number(static_cast<qint32>(m_GraphMaxValues[static_cast<qint32>(m_CurrentGraphMode)]
@@ -297,7 +321,7 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
                 break;
             }
         }
-        m_Textfield->setX(pApp->getSettings()->getWidth() / 2.0f - m_Textfield->getTextRect().getWidth() / 2.0f);
+
 
         for (qint32 i = 0; i < m_PlayerGraphs.size(); i++)
         {
@@ -321,6 +345,16 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
             }
         }
     }
+    else
+    {
+        m_PlayerSelectPanel->setVisible(false);
+        m_pGraphBackground->setVisible(false);
+        m_VictoryPanel->setVisible(true);
+        m_Textfield->setText(tr("Victory").toStdString().c_str());
+
+    }
+    m_Textfield->setX(pApp->getSettings()->getWidth() / 2.0f - m_Textfield->getTextRect().getWidth() / 2.0f);
+
     pApp->continueThread();
 }
 
@@ -335,39 +369,129 @@ void VictoryMenue::exitMenue()
     pApp->continueThread();
 }
 
-oxygine::spPolygon VictoryMenue::createLine(QPointF end, qint32 width, QColor color)
+oxygine::spPolygon VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor color)
 {
     oxygine::spPolygon poly = new oxygine::Polygon();
     poly->setResAnim(ObjectManager::getInstance()->getResAnim("line"));
-    oxygine::vertexPCT2* vertices = new oxygine::vertexPCT2[4];
+    oxygine::vertexPCT2* vertices = new oxygine::vertexPCT2[8];
     // convert color to agbr value who smoked to much here?
     quint32 colorValue = static_cast <quint32>(color.alpha()) * 256u * 256u * 256u + static_cast <quint32>(color.blue()) * 256u * 256u +
                          static_cast <quint32>(color.green()) * 256u + static_cast <quint32>(color.red());
-    vertices[0].color = colorValue;
-    vertices[0].x = 0;
-    vertices[0].y = width;
-    vertices[0].z = 0;
-    vertices[0].u = 0;
-    vertices[0].v = 1;
-    vertices[1].color = colorValue;
-    vertices[1].x = 0;
-    vertices[1].y = 0;
-    vertices[1].z = 0;
-    vertices[1].u = 0;
-    vertices[1].v = 0;
-    vertices[2].color = colorValue;
-    vertices[2].x = end.x();
-    vertices[2].y = end.y() + width;
-    vertices[2].z = 0;
-    vertices[2].u = 1;
-    vertices[2].v = 1;
-    vertices[3].color = colorValue;
-    vertices[3].x = end.x();
-    vertices[3].y = end.y();
-    vertices[3].z = 0;
-    vertices[3].u = 1;
-    vertices[3].v = 0;
-    poly->setVertices(vertices, sizeof(oxygine::vertexPCT2) * 4, oxygine::vertexPCT2::FORMAT, true);
+
+    float m = static_cast<float>(end.y()) / static_cast<float>(end.x());
+    qint32 width = lineWidth;
+    if (end.y() != 0)
+    {
+        width = qSqrt(lineWidth * lineWidth * m * m / (m * m + 1));
+    }
+
+    if (end.y() < 0)
+    {
+        // first strip
+        vertices[0].color = colorValue;
+        vertices[0].x = 0;
+        vertices[0].y = lineWidth;
+        vertices[0].z = 0;
+        vertices[0].u = 0;
+        vertices[0].v = 1;
+        vertices[1].color = colorValue;
+        vertices[1].x = 0;
+        vertices[1].y = 0;
+        vertices[1].z = 0;
+        vertices[1].u = 0;
+        vertices[1].v = 0;
+        vertices[2].color = colorValue;
+        vertices[2].x = width;
+        vertices[2].y = lineWidth;
+        vertices[2].z = 0;
+        vertices[2].u = 1;
+        vertices[2].v = 1;
+        vertices[3].color = colorValue;
+        vertices[3].x = end.x() - width;
+        vertices[3].y = end.y();
+        vertices[3].z = 0;
+        vertices[3].u = 1;
+        vertices[3].v = 0;
+        // second strip
+        vertices[4].color = colorValue;
+        vertices[4].x = width;
+        vertices[4].y = lineWidth;
+        vertices[4].z = 0;
+        vertices[4].u = 0;
+        vertices[4].v = 1;
+        vertices[5].color = colorValue;
+        vertices[5].x = end.x() - width;
+        vertices[5].y = end.y();
+        vertices[5].z = 0;
+        vertices[5].u = 0;
+        vertices[5].v = 0;
+        vertices[6].color = colorValue;
+        vertices[6].x = end.x();
+        vertices[6].y = end.y() + lineWidth;
+        vertices[6].z = 0;
+        vertices[6].u = 1;
+        vertices[6].v = 1;
+        vertices[7].color = colorValue;
+        vertices[7].x = end.x();
+        vertices[7].y = end.y();
+        vertices[7].z = 0;
+        vertices[7].u = 1;
+        vertices[7].v = 0;
+    }
+    else
+    {
+        // first strip
+        vertices[0].color = colorValue;
+        vertices[0].x = end.x();
+        vertices[0].y = end.y();
+        vertices[0].z = 0;
+        vertices[0].u = 1;
+        vertices[0].v = 1;
+        vertices[1].color = colorValue;
+        vertices[1].x = 0;
+        vertices[1].y = lineWidth;
+        vertices[1].z = 0;
+        vertices[1].u = 0;
+        vertices[1].v = 1;
+        vertices[2].color = colorValue;
+        vertices[2].x = width;
+        vertices[2].y = 0;
+        vertices[2].z = 0;
+        vertices[2].u = 1;
+        vertices[2].v = 0;
+        vertices[3].color = colorValue;
+        vertices[3].x = 0;
+        vertices[3].y = 0;
+        vertices[3].z = 0;
+        vertices[3].u = 0;
+        vertices[3].v = 0;
+        // second strip
+        vertices[4].color = colorValue;
+        vertices[4].x = end.x();
+        vertices[4].y = end.y() + lineWidth;
+        vertices[4].z = 0;
+        vertices[4].u = 1;
+        vertices[4].v = 1;
+        vertices[5].color = colorValue;
+        vertices[5].x = end.x() - width;
+        vertices[5].y = end.y() + lineWidth;
+        vertices[5].z = 0;
+        vertices[5].u = 0;
+        vertices[5].v = 1;
+        vertices[6].color = colorValue;
+        vertices[6].x = end.x();
+        vertices[6].y = end.y();
+        vertices[6].z = 0;
+        vertices[6].u = 1;
+        vertices[6].v = 0;
+        vertices[7].color = colorValue;
+        vertices[7].x = 0;
+        vertices[7].y = lineWidth;
+        vertices[7].z = 0;
+        vertices[7].u = 0;
+        vertices[7].v = 0;
+    }
+    poly->setVertices(vertices, sizeof(oxygine::vertexPCT2) * 8, oxygine::vertexPCT2::FORMAT, true);
     return poly;
 }
 

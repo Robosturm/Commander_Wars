@@ -140,6 +140,8 @@ qint32 GameAnimationFactory::getAnimationCount()
 
 void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     for (qint32 i = 0; i < m_Animations.size(); i++)
     {
         if (m_Animations[i].get() == pAnimation)
@@ -154,10 +156,13 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation)
     {
         emit GameAnimationFactory::getInstance()->animationsFinished();
     }
+    pApp->continueThread();
 }
 
 void GameAnimationFactory::finishAllAnimations()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     qint32 i = 0;
     while (i < m_Animations.size())
     {
@@ -167,4 +172,5 @@ void GameAnimationFactory::finishAllAnimations()
             i++;
         }
     }
+    pApp->continueThread();
 }

@@ -569,15 +569,23 @@ void Terrain::loadBuilding(QString buildingID)
 
 void Terrain::setUnit(spUnit pUnit)
 {
+    // remove current unit on this field
     if (m_Unit.get() != nullptr)
     {
-        // delete it
-        this->removeChild(m_Unit);
+        m_Unit->detach();
         m_Unit = nullptr;
     }
     if (pUnit.get() != nullptr)
     {
+        // add unit to this terrain
         m_Unit = pUnit;
+        // remove it from last terrain
+        Terrain* pTerrain = m_Unit->getTerrain();
+        if (pTerrain != nullptr)
+        {
+            pTerrain->setUnit(nullptr);
+        }
+        // add Terrain to unit and unit to drawing actor
         pUnit->setPriority(static_cast<qint16>(DrawPriority::Unit));
         pUnit->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
         this->addChild(pUnit);

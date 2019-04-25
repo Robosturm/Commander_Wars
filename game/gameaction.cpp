@@ -182,14 +182,16 @@ CursorData* GameAction::getStepCursor()
 
 MenuData* GameAction::getMenuStepData()
 {
-   MenuData* data = new MenuData;
-   Mainapp* pApp = Mainapp::getInstance();
-   QString function1 = "getStepData";
-   QJSValueList args1;
-   args1 << pApp->getInterpreter()->newQObject(this);
-   args1 << pApp->getInterpreter()->newQObject(data);
-   QJSValue ret = pApp->getInterpreter()->doFunction(m_actionID, function1, args1);
-   return data;
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    MenuData* data = new MenuData;
+    QString function1 = "getStepData";
+    QJSValueList args1;
+    args1 << pApp->getInterpreter()->newQObject(this);
+    args1 << pApp->getInterpreter()->newQObject(data);
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_actionID, function1, args1);
+    pApp->continueThread();
+    return data;
 }
 
 MarkedFieldData* GameAction::getMarkedFieldStepData()

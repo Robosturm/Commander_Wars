@@ -196,38 +196,32 @@ void Mainapp::quitGame()
 
 void Mainapp::update()
 {
-    m_sleeping = false;
-    if (m_SuspendCount > 0)
+    m_Mutex.lock();
+    // Update engine-internal components
+    // If input events are available, they are passed to Stage::instance.handleEvent
+    // If the function returns true, it means that the user requested the application to terminate
+    bool done = oxygine::core::update();
+
+    // Update our stage
+    // Update all actors. Actor::update will also be called for all its children
+    oxygine::getStage()->update();
+
+    if (oxygine::core::beginRendering())
     {
-        m_sleeping = true;
+        oxygine::Color clearColor(181, 255, 32, 255);
+        oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::core::getDisplaySize());
+        // Render all actors inside the stage. Actor::render will also be called for all its children
+        oxygine::getStage()->render(clearColor, viewport);
+
+        oxygine::core::swapDisplayBuffers();
     }
-    else
+    m_Mutex.unlock();
+    // check for termination
+    if (done || m_quit)
     {
-        // Update engine-internal components
-        // If input events are available, they are passed to Stage::instance.handleEvent
-        // If the function returns true, it means that the user requested the application to terminate
-        bool done = oxygine::core::update();
-
-        // Update our stage
-        // Update all actors. Actor::update will also be called for all its children
-        oxygine::getStage()->update();
-
-        if (oxygine::core::beginRendering())
-        {
-            oxygine::Color clearColor(181, 255, 32, 255);
-            oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::core::getDisplaySize());
-            // Render all actors inside the stage. Actor::render will also be called for all its children
-            oxygine::getStage()->render(clearColor, viewport);
-
-            oxygine::core::swapDisplayBuffers();
-        }
-        // check for termination
-        if (done || m_quit)
-        {
-            exit();
-        }
-        m_Timer.start(5);
+        exit();
     }
+    m_Timer.start(1);
 }
 
 void Mainapp::setup()
@@ -239,21 +233,12 @@ void Mainapp::setup()
 
 void Mainapp::suspendThread()
 {
-    m_SuspendCount++;
-    while (!m_sleeping)
-    {
-        QThread::msleep(5);
-    }
+    m_Mutex.lock();
 }
 
 void Mainapp::continueThread()
 {
-    m_SuspendCount--;
-    if (m_SuspendCount <= 0)
-    {
-        m_SuspendCount = 0;
-        emit sigStart();
-    }
+    m_Mutex.unlock();
 }
 
 void Mainapp::start()

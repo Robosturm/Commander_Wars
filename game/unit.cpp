@@ -1249,7 +1249,6 @@ void Unit::moveUnit(QVector<QPoint> movePath)
 
         GameMap* pMap = GameMap::getInstance();
         spUnit pUnit = m_pTerrain->getSpUnit();
-        m_pTerrain->setUnit(nullptr);
         // teleport unit to target position
         pMap->getTerrain(movePath[0].x(), movePath[0].y())->setUnit(pUnit);
         if (m_CORange.get() != nullptr)
@@ -1263,6 +1262,7 @@ void Unit::moveUnit(QVector<QPoint> movePath)
                 createCORange(m_pOwner->getCO(1)->getCORange());
             }
         }
+        pUnit = nullptr;
     }
 }
 
@@ -1863,4 +1863,5 @@ void Unit::createCORange(qint32 coRange)
     }
     m_CORange->setPosition(GameMap::Imagesize * getX(), GameMap::Imagesize * getY());
     pMap->addChild(m_CORange);
+
 }
