@@ -200,7 +200,18 @@ public:
 signals:
     void signalExitGame();
     void signalSaveGame();
+    void sigQueueAction(GameAction* pAction);
 public slots:
+    /**
+     * @brief createAction
+     * @return
+     */
+    GameAction* createAction();
+    /**
+     * @brief queueAction
+     * @param pAction
+     */
+    void queueAction(GameAction* pAction);
     /**
      * @brief getGameRecorder
      * @return

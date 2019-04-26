@@ -232,6 +232,10 @@ public slots:
         // go to start again
         buffer.seek(0);
     }
+    /**
+     * @brief deleteAction
+     */
+    void deleteAction();
 private:
     QString m_actionID;
     /**

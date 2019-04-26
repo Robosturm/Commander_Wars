@@ -25,6 +25,11 @@ GameAction::GameAction(QString actionID)
     seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
 }
 
+void GameAction::deleteAction()
+{
+    delete this;
+}
+
 void GameAction::perform()
 {
     Mainapp* pApp = Mainapp::getInstance();

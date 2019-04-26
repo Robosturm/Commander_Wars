@@ -59,7 +59,10 @@ public slots:
     {
         buffer.seek(0);
         QString data;
-        actionData >> data;
+        if (buffer.size() > 0)
+        {
+            actionData >> data;
+        }
         return data;
     }
     /**
@@ -78,8 +81,11 @@ public slots:
     qint32 readDataInt32()
     {
         buffer.seek(0);
-        qint32 data;
-        actionData >> data;
+        qint32 data = 0;
+        if (buffer.size() > 0)
+        {
+            actionData >> data;
+        }
         return data;
     }
     /**
@@ -98,8 +104,11 @@ public slots:
     float readDataFloat()
     {
         buffer.seek(0);
-        float data;
-        actionData >> data;
+        float data = 0.0f;
+        if (buffer.size() > 0)
+        {
+            actionData >> data;
+        }
         return data;
     }
     /**
@@ -117,9 +126,13 @@ public slots:
      */
     bool readDataBool()
     {
+
         buffer.seek(0);
-        bool data;
-        actionData >> data;
+        bool data = false;
+        if (buffer.size() > 0)
+        {
+            actionData >> data;
+        }
         return data;
     }
 private:

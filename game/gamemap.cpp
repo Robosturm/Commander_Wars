@@ -97,6 +97,16 @@ GameMap::~GameMap()
     fields.clear();
 }
 
+GameAction* GameMap::createAction()
+{
+    return new GameAction();
+}
+
+void GameMap::queueAction(GameAction* pAction)
+{
+    emit sigQueueAction(pAction);
+}
+
 spTerrain GameMap::getSpTerrain(qint32 x, qint32 y)
 {
     if (onMap(x, y))

@@ -135,15 +135,18 @@ var Constructor = function()
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
     {
-        switch (co.getPowerMode())
+        if (gotAttacked === false)
         {
-            case GameEnums.PowerMode_Superpower:
-                co.getPlayer().addFonds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
-                break;
-            case GameEnums.PowerMode_Power:
-                break;
-            default:
-                break;
+            switch (co.getPowerMode())
+            {
+                case GameEnums.PowerMode_Superpower:
+                    co.getPlayer().addFonds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
+                    break;
+                case GameEnums.PowerMode_Power:
+                    break;
+                default:
+                    break;
+            }
         }
     };
 

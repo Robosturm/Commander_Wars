@@ -786,7 +786,7 @@ void Console::createfunnymessage(qint32 message){
             printmessage = "We'll be right back after this commercial break.";
             break;
         case 175:
-            printmessage = "What’s that behind you?";
+            printmessage = "What's that behind you?";
             break;
         case 176:
             printmessage = "What are you doing? Stop that!";
@@ -1035,22 +1035,22 @@ void Console::createfunnymessage(qint32 message){
             printmessage = "We have computers, and we may have other weapons of mass destruction.";
             break;
         case 258:
-            printmessage = "That’s what’s cool about working with computers.  They don’t argue, they remember everything, and they don’t drink all your beer.";
+            printmessage = "That's what's cool about working with computers.  They don't argue, they remember everything, and they don't drink all your beer.";
             break;
         case 259:
             printmessage = "If the automobile had followed the same development cycle as the computer, a Rolls-Royce would today cost $100, get a million miles per gallon, and explode once a year, killing everyone inside.";
             break;
         case 260:
-            printmessage = "I’ve noticed lately that the paranoid fear of computers becoming intelligent and taking over the world has almost entirely disappeared from the common culture.  Near as I can tell, this coincides with the release of MS-DOS.";
+            printmessage = "I've noticed lately that the paranoid fear of computers becoming intelligent and taking over the world has almost entirely disappeared from the common culture.  Near as I can tell, this coincides with the release of MS-DOS.";
             break;
         case 261:
             printmessage = "The question of whether computers can think is like the question of whether submarines can swim.";
             break;
         case 262:
-            printmessage = "It’s ridiculous to live 100 years and only be able to remember 30 million bytes.  You know, less than a compact disc.  The human condition is really becoming more obsolete every minute.";
+            printmessage = "It's ridiculous to live 100 years and only be able to remember 30 million bytes.  You know, less than a compact disc.  The human condition is really becoming more obsolete every minute.";
             break;
         case 263:
-            printmessage = "Never trust a computer you can’t throw out a window.";
+            printmessage = "Never trust a computer you can't throw out a window.";
             break;
         case 264:
             printmessage = "Hardware: The parts of a computer system that can be kicked.";
@@ -1065,16 +1065,16 @@ void Console::createfunnymessage(qint32 message){
             printmessage = "Any fool can use a computer.  Many do.";
             break;
         case 268:
-            printmessage = "There are only two industries that refer to their customers as ‘users’.";
+            printmessage = "There are only two industries that refer to their customers as ‘users'.";
             break;
         case 269:
             printmessage = "Programmers are in a race with the Universe to create bigger and better idiot-proof programs, while the Universe is trying to create bigger and better idiots.  So far the Universe is winning.";
             break;
         case 270:
-            printmessage = "That’s the thing about people who think they hate computers.  What they really hate is lousy programmers.";
+            printmessage = "That's the thing about people who think they hate computers.  What they really hate is lousy programmers.";
             break;
         case 271:
-            printmessage = "Don’t worry if it doesn’t work right.  If everything did, you’d be out of a job.";
+            printmessage = "Don't worry if it doesn't work right.  If everything did, you'd be out of a job.";
             break;
         case 272:
             printmessage = "Measuring programming progress by lines of code is like measuring aircraft building progress by weight.";
@@ -1098,7 +1098,7 @@ void Console::createfunnymessage(qint32 message){
             printmessage = "There are only two kinds of programming languages: those people always bitch about and those nobody uses.";
             break;
         case 279:
-            printmessage = "I think Microsoft named .Net so it wouldn’t show up in a Unix directory listing.";
+            printmessage = "I think Microsoft named .Net so it wouldn't show up in a Unix directory listing.";
             break;
         case 280:
             printmessage = "There is no programming language–no matter how structured–that will prevent programmers from making bad programs.";
@@ -1107,19 +1107,19 @@ void Console::createfunnymessage(qint32 message){
             printmessage = "Fifty years of programming language research, and we end up with C++?";
             break;
         case 282:
-            printmessage = "In C++ it’s harder to shoot yourself in the foot, but when you do, you blow off your whole leg.";
+            printmessage = "In C++ it's harder to shoot yourself in the foot, but when you do, you blow off your whole leg.";
             break;
         case 283:
             printmessage = "One of the main causes of the fall of the Roman Empire was that–lacking zero–they had no way to indicate successful termination of their C programs.";
             break;
         case 284:
-            printmessage = "Fine, Java MIGHT be a good example of what a programming language should be like.  But Java applications are good examples of what applications SHOULDN’T be like.";
+            printmessage = "Fine, Java MIGHT be a good example of what a programming language should be like.  But Java applications are good examples of what applications SHOULDN'T be like.";
             break;
         case 285:
             printmessage = "If Java had true garbage collection, most programs would delete themselves upon execution.";
             break;
         case 286:
-            printmessage = "Any code of your own that you haven’t looked at for six or more months might as well have been written by someone else.";
+            printmessage = "Any code of your own that you haven't looked at for six or more months might as well have been written by someone else.";
             break;
         case 287:
             printmessage = "The first 90% of the code accounts for the first 10% of the development time.  The remaining 10% of the code accounts for the other 90% of the development time.";
@@ -1128,7 +1128,7 @@ void Console::createfunnymessage(qint32 message){
             printmessage = "If debugging is the process of removing bugs, then programming must be the process of putting them in.";
             break;
         case 289:
-            printmessage = "I don’t care if it works on your machine!  We are not shipping your machine!";
+            printmessage = "I don't care if it works on your machine!  We are not shipping your machine!";
             break;
         case 290:
             printmessage = "There are two ways to write error-free programs; only the third one works.";
@@ -1188,13 +1188,13 @@ void Console::createfunnymessage(qint32 message){
             printmessage = "The gap between theory and practice is not as wide in theory as it is in practice.";
             break;
         case 309:
-            printmessage = "There are two major products that come out of Berkeley: LSD and UNIX. We don’t believe this to be a coincidence.";
+            printmessage = "There are two major products that come out of Berkeley: LSD and UNIX. We don't believe this to be a coincidence.";
             break;
         case 310:
             printmessage = "Debugging is twice as hard as writing the code in the first place.  Therefore, if you write the code as cleverly as possible, you are–by definition–not smart enough to debug it.";
             break;
         case 311:
-            printmessage = "If at first you don’t succeed, call it version 1.0";
+            printmessage = "If at first you don't succeed, call it version 1.0";
             break;
         case 312:
             printmessage = "Rules of Optimization: Rule(1) : Don() 't do it.    Rule 2 (for experts only): Don't do it yet.";

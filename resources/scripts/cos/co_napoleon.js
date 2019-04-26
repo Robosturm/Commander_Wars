@@ -61,21 +61,6 @@ var Constructor = function()
         audio.playRandom();
     };
 
-    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
-    {
-        switch (co.getPowerMode())
-        {
-            case GameEnums.PowerMode_Superpower:
-
-                break;
-            case GameEnums.PowerMode_Power:
-
-                break;
-            default:
-                break;
-        }
-    };
-
     this.activateSuperpower = function(co)
     {
         var dialogAnimation = co.createPowerSentence();
@@ -181,9 +166,9 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY)))
                 {
-                    if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY))
+                    if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
                     {
-                        return 45
+                        return 50
                     }
                     else
                     {
@@ -195,7 +180,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY)))
                 {
-                    if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY))
+                    if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
                     {
                         return 30
                     }
@@ -206,13 +191,13 @@ var Constructor = function()
                 }
                 break;
         }
-        if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY))
+        if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
         {
-            return 30
+            return 20
         }
         else
         {
-            return 15;
+            return 10;
         }
     };
 

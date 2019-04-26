@@ -123,7 +123,7 @@ var Constructor = function()
             var offensive = 100 + attacker.getBonusOffensive(attackerPosition, defender, defender.getPosition(), isDefender);
             var defensive = 100 + defender.getBonusDefensive(defenderPosition, attacker, attackerPosition);
             var attackerHp = attackerBaseHp + attacker.getAttackHpBonus(attackerPosition);
-            var damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive);
+            damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive);
             if (luckMode !== GameEnums.LuckDamageMode_Off)
             {
                 var luck = attackerBaseHp / 2 + attacker.getBonusLuck(attackerPosition);
@@ -139,8 +139,8 @@ var Constructor = function()
             }
             damage -= defender.getDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,
                                                   defenderPosition, isDefender);
-            // avoid healing through negativ damage caused by misfortune
-            if (baseDamage >= 0 && damage < 0)
+            // avoid healing through negativ damage caused by misfortune or other stuff
+            if (damage < 0)
             {
                 damage = 0;
             }
@@ -150,12 +150,17 @@ var Constructor = function()
 
     this.calcBattleDamage = function(action, x, y, luckMode)
     {
+        return ACTION_FIRE.calcBattleDamage2(action.getTargetUnit(),action.getActionTarget(),
+                                             x, y, luckMode);
+    };
+
+    this.calcBattleDamage2 = function(attacker, atkPos, x, y, luckMode)
+    {
         var result = Qt.rect(-1, -1, -1, -1);
         if (map.onMap(x, y))
         {
-            var unit = action.getTargetUnit();
-            var actionTargetField = action.getActionTarget();
-            var targetField = action.getTarget();
+            var unit = attacker;
+            var actionTargetField = atkPos;
             var defTerrain = map.getTerrain(x, y);
             var defBuilding = defTerrain.getBuilding();
             var defUnit = defTerrain.getUnit();
@@ -316,9 +321,27 @@ var Constructor = function()
         ACTION_FIRE.postAnimationDefenderDamage = action.readDataInt32();
         ACTION_FIRE.postAnimationDefenderWeapon = action.readDataInt32();
     };
+
     this.performPostAnimation = function()
     {
-        var defTerrain = map.getTerrain(ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY);
+        ACTION_FIRE.battle(ACTION_FIRE.postAnimationUnit, ACTION_FIRE.postAnimationAttackerDamage, ACTION_FIRE.postAnimationAttackerWeapon,
+                           ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY,
+                           ACTION_FIRE.postAnimationDefenderDamage, ACTION_FIRE.postAnimationDefenderWeapon,
+                           false);
+        // reset stuff
+        ACTION_FIRE.postAnimationUnit = null;
+        ACTION_FIRE.postAnimationAttackerDamage = -1;
+        ACTION_FIRE.postAnimationAttackerWeapon = -1;
+        ACTION_FIRE.postAnimationTargetX = -1;
+        ACTION_FIRE.postAnimationTargetY = -1;
+        ACTION_FIRE.postAnimationDefenderDamage = -1;
+        ACTION_FIRE.postAnimationDefenderWeapon = -1;
+    };
+    this.battle = function(attacker, attackerDamage, attackerWeapon,
+                                         defenderX, defenderY, defenderDamage, defenderWeapon,
+                           dontKillUnits)
+    {
+        var defTerrain = map.getTerrain(defenderX, defenderY);
         var defBuilding = defTerrain.getBuilding();
         var defUnit = defTerrain.getUnit();
         if (defUnit !== null)
@@ -327,83 +350,82 @@ var Constructor = function()
             var defUnitX = defUnit.getX();
             var defUnitY = defUnit.getY();
             var costs = defUnit.getCosts();
-            var damage = ACTION_FIRE.postAnimationAttackerDamage / 10.0;
-            // we're attacking
-            map.getGameRecorder().attacked(ACTION_FIRE.postAnimationUnit.getOwner().getPlayerID(), ACTION_FIRE.postAnimationAttackerDamage);
+            var damage = attackerDamage / 10.0;
+            var counterdamage = defenderDamage / 10.0;
             var power = 0;
-            // gain power based
+
+            // we're attacking do recording
+            map.getGameRecorder().attacked(attacker.getOwner().getPlayerID(), attackerDamage);
+            // gain power based on damage
             if (damage > defUnit.getHp())
             {
                 power = costs * defUnit.getHp() / 10;
                 damage = defUnit.getHp();
                 defUnit.getOwner().gainPowerstar(power, Qt.point(defUnit.getX(), defUnit.getY()));
-                ACTION_FIRE.postAnimationUnit.getOwner().gainPowerstar(power / 4,
-                                                                       Qt.point(ACTION_FIRE.postAnimationUnit.getX(), ACTION_FIRE.postAnimationUnit.getY()));
+                attacker.getOwner().gainPowerstar(power / 4, Qt.point(attacker.getX(), attacker.getY()));
             }
             else
             {
                 power = costs * damage / 10;
                 defUnit.getOwner().gainPowerstar(power, Qt.point(defUnit.getX(), defUnit.getY()));
-                ACTION_FIRE.postAnimationUnit.getOwner().gainPowerstar(power / 4,
-                                                                       Qt.point(ACTION_FIRE.postAnimationUnit.getX(), ACTION_FIRE.postAnimationUnit.getY()));
+                attacker.getOwner().gainPowerstar(power / 4, Qt.point(attacker.getX(), attacker.getY()));
             }
-            // set attacker damage
+            // reduce attacker ammo
             defUnit.setHp(defUnit.getHp() - damage);
-            // post battle action of the attacking unit
-            ACTION_FIRE.postAnimationUnit.getOwner().postBattleActions(ACTION_FIRE.postAnimationUnit, damage, defUnit, false);
-            defOwner.postBattleActions(ACTION_FIRE.postAnimationUnit, damage, defUnit, true);
-            if (defUnit.getHp() <= 0)
+            if (attackerWeapon === 0)
             {
-                defUnit.killUnit();
-                // we destroyed a unit nice
-                map.getGameRecorder().destroyedUnit(ACTION_FIRE.postAnimationUnit.getOwner().getPlayerID());
-                defUnit = null;
-                if (ACTION_FIRE.postAnimationUnit.getUnitRank() < GameEnums.UnitRank_Veteran)
-                {
-                    ACTION_FIRE.postAnimationUnit.setUnitRank(ACTION_FIRE.postAnimationUnit.getUnitRank() + 1);
-                }
-            }
-            if (ACTION_FIRE.postAnimationAttackerWeapon === 0)
-            {
-                ACTION_FIRE.postAnimationUnit.reduceAmmo1(1);
+                attacker.reduceAmmo1(1);
             }
             else
             {
-                ACTION_FIRE.postAnimationUnit.reduceAmmo2(1);
+                attacker.reduceAmmo2(1);
             }
-
             // set counter damage
-            if (ACTION_FIRE.postAnimationDefenderDamage > 0)
+            if (counterdamage > 0)
             {
-                ACTION_FIRE.postAnimationUnit.setHp(ACTION_FIRE.postAnimationUnit.getHp() - ACTION_FIRE.postAnimationDefenderDamage / 10.0);
-
-                costs = ACTION_FIRE.postAnimationUnit.getCosts();
-                damage = ACTION_FIRE.postAnimationDefenderDamage / 10.0;
+                attacker.setHp(attacker.getHp() - counterdamage);
+                costs = attacker.getCosts();
                 // gain power based
-                if (damage > ACTION_FIRE.postAnimationUnit.getHp())
+                if (counterdamage > attacker.getHp())
                 {
-                    power = costs * ACTION_FIRE.postAnimationUnit.getHp() / 10;
-                    damage = ACTION_FIRE.postAnimationUnit.getHp();
-                    ACTION_FIRE.postAnimationUnit.getOwner().gainPowerstar(power,
-                                                                           Qt.point(ACTION_FIRE.postAnimationUnit.getX(), ACTION_FIRE.postAnimationUnit.getY()));
+                    power = costs * attacker.getHp() / 10;
+                    counterdamage = attacker.getHp();
+                    attacker.getOwner().gainPowerstar(power, Qt.point(attacker.getX(), attacker.getY()));
                     defOwner.gainPowerstar(power / 4, Qt.point(defUnitX, defUnitY));
                 }
                 else
                 {
-                    power = costs * damage / 10;
-                    ACTION_FIRE.postAnimationUnit.getOwner().gainPowerstar(power,
-                                                                           Qt.point(ACTION_FIRE.postAnimationUnit.getX(), ACTION_FIRE.postAnimationUnit.getY()));
+                    power = costs * counterdamage / 10;
+                    attacker.getOwner().gainPowerstar(power, Qt.point(attacker.getX(), attacker.getY()));
                     defOwner.gainPowerstar(power / 4, Qt.point(defUnitX, defUnitY));
                 }
-                // post battle action of the defending unit
-                defOwner.postBattleActions(defUnit, damage, ACTION_FIRE.postAnimationUnit, false);
-                ACTION_FIRE.postAnimationUnit.getOwner().postBattleActions(defUnit, damage, ACTION_FIRE.postAnimationUnit, true);
-                if (ACTION_FIRE.postAnimationUnit.getHp() <= 0)
+                // reduce ammo
+                if (defenderWeapon === 0)
                 {
-                    ACTION_FIRE.postAnimationUnit.killUnit();
+                    defUnit.reduceAmmo1(1);
+                }
+                else
+                {
+                    defUnit.reduceAmmo2(1);
+                }
+            }
+
+            // post battle action of the attacking unit
+            attacker.getOwner().postBattleActions(attacker, damage, defUnit, false);
+            defOwner.postBattleActions(attacker, damage, defUnit, true);
+            // post battle action of the defending unit
+            defOwner.postBattleActions(defUnit, counterdamage, attacker, false);
+            attacker.getOwner().postBattleActions(defUnit, counterdamage, attacker, true);
+            // only kill units if we should else we stop here
+            if (dontKillUnits  === false)
+            {
+                // level up and defender destruction
+                if (attacker.getHp() <= 0)
+                {
+                    attacker.killUnit();
                     // we destroyed a unit
                     map.getGameRecorder().destroyedUnit(defOwner.getPlayerID());
-                    ACTION_FIRE.postAnimationUnit = null;
+                    attacker = null;
                     if (defUnit !== null)
                     {
                         if (defUnit.getUnitRank() < GameEnums.UnitRank_Veteran)
@@ -412,15 +434,16 @@ var Constructor = function()
                         }
                     }
                 }
-                if (defUnit !== null)
+                // level up and attacker destruction
+                if (defUnit.getHp() <= 0)
                 {
-                    if (ACTION_FIRE.postAnimationDefenderWeapon === 0)
+                    defUnit.killUnit();
+                    // we destroyed a unit nice
+                    map.getGameRecorder().destroyedUnit(attacker.getOwner().getPlayerID());
+                    defUnit = null;
+                    if (attacker.getUnitRank() < GameEnums.UnitRank_Veteran)
                     {
-                        defUnit.reduceAmmo1(1);
-                    }
-                    else
-                    {
-                        defUnit.reduceAmmo2(1);
+                        attacker.setUnitRank(attacker.getUnitRank() + 1);
                     }
                 }
             }
@@ -431,14 +454,14 @@ var Constructor = function()
             // not implemented yet.
             if ((defBuilding !== null) && (defBuilding.getHp() > 0))
             {
-                defBuilding.setHp(defBuilding.getHp() - ACTION_FIRE.postAnimationAttackerDamage);
-                if (ACTION_FIRE.postAnimationAttackerWeapon === 0)
+                defBuilding.setHp(defBuilding.getHp() - attackerDamage);
+                if (attackerWeapon === 0)
                 {
-                    ACTION_FIRE.postAnimationUnit.reduceAmmo1(1);
+                    attacker.reduceAmmo1(1);
                 }
                 else
                 {
-                    ACTION_FIRE.postAnimationUnit.reduceAmmo2(1);
+                    attacker.reduceAmmo2(1);
                 }
                 if (defBuilding.getHp() <= 0)
                 {
@@ -448,14 +471,14 @@ var Constructor = function()
             // check for damage against terrain
             else if (defTerrain.getHp() > 0)
             {
-                defTerrain.setHp(defTerrain.getHp() - ACTION_FIRE.postAnimationAttackerDamage);
-                if (ACTION_FIRE.postAnimationAttackerWeapon === 0)
+                defTerrain.setHp(defTerrain.getHp() - attackerDamage);
+                if (attackerWeapon === 0)
                 {
-                    ACTION_FIRE.postAnimationUnit.reduceAmmo1(1);
+                    attacker.reduceAmmo1(1);
                 }
                 else
                 {
-                    ACTION_FIRE.postAnimationUnit.reduceAmmo2(1);
+                    attacker.reduceAmmo2(1);
                 }
                 if (defTerrain.getHp() <= 0)
                 {
@@ -463,17 +486,7 @@ var Constructor = function()
                 }
             }
         }
-
-        // reset stuff
-        ACTION_FIRE.postAnimationUnit = null;
-        ACTION_FIRE.postAnimationAttackerDamage = -1;
-        ACTION_FIRE.postAnimationAttackerWeapon = -1;
-        ACTION_FIRE.postAnimationTargetX = -1;
-        ACTION_FIRE.postAnimationTargetY = -1;
-        ACTION_FIRE.postAnimationDefenderDamage = -1;
-        ACTION_FIRE.postAnimationDefenderWeapon = -1;
     };
-
 }
 
 

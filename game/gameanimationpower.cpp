@@ -109,10 +109,10 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, bool sup
         addChild(textField);
     }
     endTimer.setSingleShot(true);
-    qint32 time = text.size() * frameTime * 6 + frameTime * 5;
-    if (time < frameTime * 35)
+    qint32 time = text.size() * frameTime * 6 + frameTime * 2;
+    if (time < frameTime * 32)
     {
-        time = frameTime * 35;
+        time = frameTime * 32;
     }
     endTimer.setInterval(time);
     connect(&endTimer, &QTimer::timeout, this, &GameAnimationPower::onFinished, Qt::QueuedConnection);
