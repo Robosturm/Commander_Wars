@@ -15,6 +15,7 @@
 #include "resource_management/gamemanager.h"
 
 #include "game/gameanimationfactory.h"
+#include "menue/gamemenue.h"
 
 #include "coreengine/mainapp.h"
 
@@ -24,9 +25,6 @@ GameRules::GameRules()
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameRules::checkVictory, Qt::QueuedConnection);
-    connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameRules::createFogVision, Qt::QueuedConnection);
-
 }
 
 void GameRules::addVictoryRule(QString rule)
@@ -264,7 +262,8 @@ void GameRules::createWeatherSprites()
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < m_WeatherSprites.size(); i++)
     {
-        pMap->removeChild(m_WeatherSprites[i]);
+        m_WeatherSprites[i]->detach();
+        m_WeatherSprites[i] = nullptr;
     }
     m_WeatherSprites.clear();
     if (m_Weathers.size() > 0)

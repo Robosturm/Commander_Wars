@@ -24,13 +24,6 @@ public:
     {
         return &m_ZInformation;
     }
-
-
-
-
-
-
-
 public slots:
     void addPoint(QPoint point)
     {

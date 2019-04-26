@@ -21,7 +21,7 @@ class Mainapp : public QCoreApplication
 {
     Q_OBJECT
 public:
-
+    void start();
 public slots:
     void update();
     static void seed(quint32 seed);
@@ -59,15 +59,10 @@ public slots:
      * @brief quitGame quits this game
      */
     void quitGame();
-    /**
-     * @brief start
-     */
-    void start();
 signals:
     void sigText(SDL_Event event);
     void sigKeyDown(SDL_Event event);
     void sigKeyUp(SDL_Event event);
-    void sigStart();
 public:
     /**
       * @brief this enum contains all message recievers of the network

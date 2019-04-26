@@ -31,10 +31,12 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
         -DQT_DECLARATIVE_DEBUG
         -DQT_QML_DEBUG
         -DGAMEDEBUG
+        -DUSE_MEMORY_POOL
     )
 else("Release")
     add_definitions(
         -DGAMERELEASE
+        -DUSE_MEMORY_POOL
     )
 endif()
 

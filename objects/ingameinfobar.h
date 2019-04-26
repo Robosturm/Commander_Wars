@@ -19,6 +19,8 @@ public:
     {
         return m_pMinimap.get();
     }
+
+    void updateTerrainInfo(qint32 x, qint32 y, bool update);
 signals:
 
 public slots:

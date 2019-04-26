@@ -250,14 +250,21 @@ void Player::defeatPlayer(Player* pPLayer, bool units)
         for (qint32 x = 0; x < pMap->getMapWidth(); x++)
         {
             spBuilding pBuilding = pMap->getSpTerrain(x, y)->getSpBuilding();
+            spUnit pUnit = pMap->getSpTerrain(x, y)->getSpUnit();
             if (pBuilding.get() != nullptr)
             {
                 if (pBuilding->getOwner() == this)
                 {
                     pBuilding->setOwner(pPLayer);
+                    // reset capturing for buildings we earned at this moment
+                    if (pUnit.get() != nullptr &&
+                        pUnit->getOwner() == pPLayer)
+                    {
+                        pUnit->setCapturePoints(0);
+                    }
                 }
             }
-            spUnit pUnit = pMap->getSpTerrain(x, y)->getSpUnit();
+
             if (pUnit.get() != nullptr)
             {
                 if (pUnit->getOwner() == this)

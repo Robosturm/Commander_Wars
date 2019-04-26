@@ -1244,6 +1244,8 @@ void Unit::moveUnit(QVector<QPoint> movePath)
 {
     if (movePath.size() > 0)
     {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
         // reset capture points when moving  a unit
         setCapturePoints(0);
 
@@ -1263,6 +1265,7 @@ void Unit::moveUnit(QVector<QPoint> movePath)
             }
         }
         pUnit = nullptr;
+        pApp->continueThread();
     }
 }
 
@@ -1364,7 +1367,7 @@ void Unit::unloadIcon(QString iconID)
         {
             if (m_pIconSprites[i]->getResAnim() == pAnim)
             {
-                this->removeChild(m_pIconSprites[i]);
+                m_pIconSprites[i]->detach();
                 m_pIconSprites.removeAt(i);
                 break;
             }

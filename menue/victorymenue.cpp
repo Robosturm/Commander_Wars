@@ -279,21 +279,21 @@ VictoryMenue::VictoryMenue()
         pHeaders->setStyle(style);
         pHeaders->setText(tr("Force").toStdString().c_str());
         pHeaders->setScale(1.5f);
-        pHeaders->setPosition(startX + 175 * 1, 5);
+        pHeaders->setPosition(startX + 160 * 1, 5);
         m_VictoryPanel->addItem(pHeaders);
         pHeaders = new oxygine::TextField();
         pHeaders->setStyle(style);
         pHeaders->setText(tr("Technique").toStdString().c_str());
         pHeaders->setScale(1.5f);
-        pHeaders->setPosition(startX + 175 * 2, 5);
+        pHeaders->setPosition(startX + 160 * 2, 5);
         m_VictoryPanel->addItem(pHeaders);
         pHeaders = new oxygine::TextField();
         pHeaders->setStyle(style);
         pHeaders->setText(tr("Total").toStdString().c_str());
         pHeaders->setScale(1.5f);
-        pHeaders->setPosition(startX + 175 * 3, 5);
+        pHeaders->setPosition(startX + 160 * 3, 5);
         m_VictoryPanel->addItem(pHeaders);
-        m_VictoryPanel->setContentWidth(startX + 175 * 4 + 10);
+        m_VictoryPanel->setContentWidth(startX + 160 * 4 + 10);
         qint32 y = 50;
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
@@ -369,19 +369,19 @@ VictoryMenue::VictoryMenue()
                     m_VictoryTexts[i][0]->setText("0");
                     m_VictoryPanel->addItem(m_VictoryTexts[i][0]);
                     m_VictoryTexts[i].append(new oxygine::TextField);
-                    m_VictoryTexts[i][1]->setPosition(startX + 175 * 1, y - 48 * scale);
+                    m_VictoryTexts[i][1]->setPosition(startX + 160 * 1, y - 48 * scale);
                     m_VictoryTexts[i][1]->setStyle(style);
                     m_VictoryTexts[i][1]->setScale(1.5f);
                     m_VictoryTexts[i][1]->setText("0");
                     m_VictoryPanel->addItem(m_VictoryTexts[i][1]);
                     m_VictoryTexts[i].append(new oxygine::TextField);
-                    m_VictoryTexts[i][2]->setPosition(startX + 175 * 2, y - 48 * scale);
+                    m_VictoryTexts[i][2]->setPosition(startX + 160 * 2, y - 48 * scale);
                     m_VictoryTexts[i][2]->setStyle(style);
                     m_VictoryTexts[i][2]->setScale(1.5f);
                     m_VictoryTexts[i][2]->setText("0");
                     m_VictoryPanel->addItem(m_VictoryTexts[i][2]);
                     m_VictoryTexts[i].append(new oxygine::TextField);
-                    m_VictoryTexts[i][3]->setPosition(startX + 175 * 3, y - 48 * scale);
+                    m_VictoryTexts[i][3]->setPosition(startX + 160 * 3, y - 48 * scale);
                     m_VictoryTexts[i][3]->setStyle(style);
                     m_VictoryTexts[i][3]->setScale(1.5f);
                     m_VictoryTexts[i][3]->setText("0");
@@ -749,6 +749,17 @@ void VictoryMenue::updateGraph()
                             }
                             pSprite->setResAnim(pAnim);
                             pSprite->setScale(2.0f);
+                            if (startPoint.y() < 0)
+                            {
+                                if (progress >= 0)
+                                {
+                                    oxygine::spActor pActor = m_PlayerGraphs[static_cast<qint32>(m_CurrentGraphMode)][i]->getLastChild();
+                                    if (pActor.get() != nullptr)
+                                    {
+                                        startPoint.setY(pActor->getY());
+                                    }
+                                }
+                            }
                             pSprite->setPosition(startPoint.x() - pAnim->getWidth(), startPoint.y() - pAnim->getHeight());
                             m_PlayerGraphs[static_cast<qint32>(m_CurrentGraphMode)][i]->addChild(pSprite);
                         }
@@ -832,7 +843,7 @@ void VictoryMenue::updateGraph()
                     oxygine::spSprite pRankSprite = new oxygine::Sprite();
                     pRankSprite->setResAnim(pAnim);
                     pRankSprite->setScale(1.5f);
-                    pRankSprite->setPosition(m_VictoryPanel->getContentWidth() - 100, m_VictoryTexts[i][0]->getY());
+                    pRankSprite->setPosition(m_VictoryPanel->getContentWidth() - 120, m_VictoryTexts[i][0]->getY());
                     m_VictoryPanel->addItem(pRankSprite);
                 }
             }

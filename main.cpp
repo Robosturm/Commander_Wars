@@ -147,7 +147,7 @@ int main(int argc, char* argv[])
     UnitSpriteManager::getInstance();
 
 
-    app.getWorkerthread()->start();
+    app.getWorkerthread()->start(QThread::Priority::LowPriority);
     while (!app.getWorkerthread()->getStarted())
     {
         QThread::msleep(100);

@@ -32,6 +32,7 @@ public:
 signals:
     void sigRightClick(qint32 x, qint32 y);
     void sigLeftClick(qint32 x, qint32 y);    
+    void sigActionPerformed();
 public slots:
     /**
      * @brief actionPerformed

@@ -129,7 +129,7 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
     qint32 score = 0;
     qint32 mapSize = pMap->getMapWidth() * pMap->getMapHeight();
     // calc speed points
-    qint32 mapTime = (pMap->getMapWidth() + pMap->getMapHeight()) * 2 / 5;
+    qint32 mapTime = (pMap->getMapWidth() + pMap->getMapHeight()) * 3 / 5;
     if (pMap->getCurrentDay() < mapTime)
     {
         scorePoints.setX(200 - (pMap->getCurrentDay() * 100 / mapTime));
@@ -194,15 +194,15 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
     float techScore3 = 0;
     if (lostUnits[player] > 0)
     {
-        techScore1 =(destroyedUnits[player] / static_cast<float>(lostUnits[player])) * 0.5f;
+        techScore1 = (destroyedUnits[player] / static_cast<float>(lostUnits[player])) * 0.75f;
     }
     else
     {
-        techScore1 = 1.3f;
+        techScore1 = 2.0f;
     }
-    if (techScore1 > 1.3f)
+    if (techScore1 > 2.0f)
     {
-        techScore1 = 1.3f;
+        techScore1 = 2.0f;
     }
     quint64 deployed = deployedUnits[player];
     quint64 startUnits = static_cast<quint64>(m_Record[0]->getPlayerRecord(player)->getUnits());
@@ -213,15 +213,19 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
     }
     if (deployed > 0)
     {
-        techScore2 = (1.0f - (lostUnits[player] / static_cast<float>(deployed))) * 1.1f;
+        techScore2 = (1.0f - (lostUnits[player] / static_cast<float>(deployed))) * 2.0f;
     }
     else
     {
-        techScore2 = 1.3f;
+        techScore2 = 2.0f;
     }
-    if (techScore2 > 1.3f)
+    if (techScore2 > 2.0f)
     {
-        techScore2 = 1.3f;
+        techScore2 = 2.0f;
+    }
+    else if (techScore2 < 0)
+    {
+        techScore2 = 0;
     }
     if (deployedUnits[player] > 0)
     {
@@ -229,14 +233,14 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
     }
     else
     {
-        techScore3 = 1.3f;
+        techScore3 = 2.0f;
     }
-    if (techScore3 > 1.3f)
+    if (techScore3 > 2.0f)
     {
-        techScore3 = 1.3f;
+        techScore3 = 2.0f;
     }
 
-    scorePoints.setZ(techScore1 * techScore2 * techScore3 * 100);
+    scorePoints.setZ((techScore1 + techScore2 + techScore3)  * 100 / 3);
     if (scorePoints.z() < 0)
     {
         scorePoints.setZ(0);

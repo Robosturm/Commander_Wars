@@ -152,17 +152,15 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation)
             break;
         }
     }
+    pApp->continueThread();
     if (m_Animations.size() == 0)
     {
         emit GameAnimationFactory::getInstance()->animationsFinished();
     }
-    pApp->continueThread();
 }
 
 void GameAnimationFactory::finishAllAnimations()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     qint32 i = 0;
     while (i < m_Animations.size())
     {
@@ -172,5 +170,4 @@ void GameAnimationFactory::finishAllAnimations()
             i++;
         }
     }
-    pApp->continueThread();
 }

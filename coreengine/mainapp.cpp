@@ -24,7 +24,6 @@ Mainapp::Mainapp(int argc, char* argv[])
     // create update timer
     m_Timer.setSingleShot(true);
     connect(&m_Timer, &QTimer::timeout, this, &Mainapp::update, Qt::QueuedConnection);
-    connect(this, &Mainapp::sigStart, this, &Mainapp::start, Qt::QueuedConnection);
     m_pMainapp = this;
     m_Audiothread->start();
 
@@ -194,6 +193,11 @@ void Mainapp::quitGame()
     m_quit = true;
 }
 
+void Mainapp::start()
+{
+    m_Timer.start(1);
+}
+
 void Mainapp::update()
 {
     m_Mutex.lock();
@@ -221,7 +225,7 @@ void Mainapp::update()
     {
         exit();
     }
-    m_Timer.start(1);
+    m_Timer.start(13);
 }
 
 void Mainapp::setup()
@@ -239,11 +243,6 @@ void Mainapp::suspendThread()
 void Mainapp::continueThread()
 {
     m_Mutex.unlock();
-}
-
-void Mainapp::start()
-{
-    m_Timer.start(1);
 }
 
 void Mainapp::onEvent(oxygine::Event* ev)

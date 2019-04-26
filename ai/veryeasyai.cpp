@@ -381,15 +381,8 @@ bool VeryEasyAI::attack(Unit* pUnit)
                 emit performAction(pAction);
                 return true;
             }
-            else
-            {
-                delete pAction;
-            }
         }
-        else
-        {
-            delete pAction;
-        }
+        delete pAction;
     }
     return false;
 }
@@ -599,6 +592,7 @@ bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits
                     if (menuIndex >= 0 && pData->getEnabledList()[menuIndex])
                     {
                         CoreAI::addMenuItemData(pAction, unitID, pData->getCostList()[menuIndex]);
+                        delete pData;
                         // produce the unit
                         if (pAction->isFinalStep())
                         {
@@ -609,10 +603,7 @@ bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits
                 }
                 delete pData;
             }
-            else
-            {
-                delete pAction;
-            }
+            delete pAction;
         }
     }
     return false;

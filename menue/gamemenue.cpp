@@ -70,8 +70,6 @@ void GameMenue::loadGameMenue()
     connect(pMap, &GameMap::signalExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap, &GameMap::centerMap, Qt::QueuedConnection);
-    connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, m_IngameInfoBar.get(), &IngameInfoBar::updateMinimap, Qt::QueuedConnection);
-    connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, m_IngameInfoBar.get(), &IngameInfoBar::updatePlayerInfo, Qt::QueuedConnection);
     connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameMenue::actionPerformed, Qt::QueuedConnection);
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, m_IngameInfoBar.get(), &IngameInfoBar::updateCursorInfo, Qt::QueuedConnection);
 }
@@ -139,7 +137,13 @@ void GameMenue::actionPerformed()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     Mainapp::setUseSeed(false);
-    m_IngameInfoBar->updateCursorInfo(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+    m_IngameInfoBar->updateTerrainInfo(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), true);
+    m_IngameInfoBar->updateMinimap();
+    m_IngameInfoBar->updatePlayerInfo();
+    GameMap* pMap = GameMap::getInstance();
+    pMap->getGameRules()->checkVictory();
+    pMap->getGameRules()->createFogVision();
+    emit sigActionPerformed();
     pApp->continueThread();
 }
 
