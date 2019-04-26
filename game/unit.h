@@ -239,6 +239,12 @@ public slots:
      */
     void moveUnit(QVector<QPoint> movePath);
     /**
+     * @brief moveUnitToField
+     * @param x
+     * @param y
+     */
+    void moveUnitToField(qint32 x, qint32 y);
+    /**
      * @brief removeUnit removes this from game
      */
     void removeUnit();

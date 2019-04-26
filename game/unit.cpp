@@ -1244,29 +1244,34 @@ void Unit::moveUnit(QVector<QPoint> movePath)
 {
     if (movePath.size() > 0)
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
-        // reset capture points when moving  a unit
-        setCapturePoints(0);
-
-        GameMap* pMap = GameMap::getInstance();
-        spUnit pUnit = m_pTerrain->getSpUnit();
-        // teleport unit to target position
-        pMap->getTerrain(movePath[0].x(), movePath[0].y())->setUnit(pUnit);
-        if (m_CORange.get() != nullptr)
-        {
-            if (m_UnitRank == GameEnums::UnitRank_CO0)
-            {
-                createCORange(m_pOwner->getCO(0)->getCORange());
-            }
-            else
-            {
-                createCORange(m_pOwner->getCO(1)->getCORange());
-            }
-        }
-        pUnit = nullptr;
-        pApp->continueThread();
+        moveUnitToField(movePath[0].x(), movePath[0].y());
     }
+}
+
+void Unit::moveUnitToField(qint32 x, qint32 y)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    // reset capture points when moving  a unit
+    setCapturePoints(0);
+
+    GameMap* pMap = GameMap::getInstance();
+    spUnit pUnit = m_pTerrain->getSpUnit();
+    // teleport unit to target position
+    pMap->getTerrain(x, y)->setUnit(pUnit);
+    if (m_CORange.get() != nullptr)
+    {
+        if (m_UnitRank == GameEnums::UnitRank_CO0)
+        {
+            createCORange(m_pOwner->getCO(0)->getCORange());
+        }
+        else
+        {
+            createCORange(m_pOwner->getCO(1)->getCORange());
+        }
+    }
+    pUnit = nullptr;
+    pApp->continueThread();
 }
 
 void Unit::removeUnit()

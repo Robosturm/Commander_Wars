@@ -58,3 +58,8 @@ ScriptVariable* ScriptVariables::getVariable(QString id)
     }
     return nullptr;
 }
+
+void ScriptVariables::clear()
+{
+    m_Variables.clear();
+}

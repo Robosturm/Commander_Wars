@@ -2,8 +2,8 @@ var Constructor = function()
 {
     this.init = function(co)
     {
-        co.setPowerStars(3);
-        co.setSuperpowerStars(4);
+        co.setPowerStars(4);
+        co.setSuperpowerStars(3);
     };
 
     this.loadCOMusic = function(co)
@@ -18,7 +18,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/superpower.mp3");
                 break;
             default:
-                audio.addMusic("resources/music/cos/olaf.mp3")
+                audio.addMusic("resources/music/cos/zandra.mp3")
                 break;
         }
     };
@@ -33,7 +33,7 @@ var Constructor = function()
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation2);
-        map.getGameRules().changeWeather("WEATHER_SNOW", map.getPlayerCount() * 2);
+        map.getGameRules().changeWeather("WEATHER_SANDSTORM", map.getPlayerCount() * 2);
         audio.clearPlayList();
         CO_OLAF.loadCOMusic(co);
         audio.playRandom();
@@ -48,15 +48,15 @@ var Constructor = function()
         var animation2 = GameAnimationFactory.createAnimation(0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
-        map.getGameRules().changeWeather("WEATHER_SNOW", map.getPlayerCount() * 2);
+        map.getGameRules().changeWeather("WEATHER_SANDSTORM", map.getPlayerCount() * 2);
         powerNameAnimation.queueAnimation(animation2);
-        CO_OLAF.olafDamage(co, 2, animation2);
+        CO_ZANDRA.zandraDamage(co, 2, animation2);
         audio.clearPlayList();
-        CO_OLAF.loadCOMusic(co);
+        CO_ZANDRA.loadCOMusic(co);
         audio.playRandom();
     };
 
-    this.olafDamage = function(co, value, animation2)
+    this.zandraDamage = function(co, value, animation2)
     {
         var player = co.getPlayer();
         var counter = 0;
@@ -113,11 +113,11 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 2;
+        return 3;
     };
     this.getCOArmy = function()
     {
-        return "BM";
+        return "BD";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
@@ -125,20 +125,20 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                 {
-                    // apply snow buff :)
-                    return 40;
+                    // apply sandstorm buff :)
+                    return 55;
                 }
                 else
                 {
                     return 0;
                 }
             case GameEnums.PowerMode_Power:
-                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                 {
-                    // apply snow buff :)
-                    return 40;
+                    // apply sandstorm buff :)
+                    return 55;
                 }
                 else
                 {
@@ -147,28 +147,35 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY)))
                 {
-                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                     {
-                        // apply snow buff :)
-                        return 20;
+                        // apply sandstorm buff :)
+                        return 35;
                     }
                     return 0;
                 }
                 break;
         }
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
         {
             // apply snow buff :)
-            return 10;
+            return 25;
         }
         return 0;
     };
-    this.getMovementpointModifier = function(co, unit, posX, posY)
+    this.getFirerangeModifier = function(co, unit, posX, posY)
     {
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
         {
-            // apply snow buff :)
-            return -1;
+            switch (co.getPowerMode())
+            {
+                case GameEnums.PowerMode_Superpower:
+                    return 2;
+                case GameEnums.PowerMode_Power:
+                    return 2;
+                default:
+                    return 1;
+            }
         }
         else
         {
@@ -179,61 +186,61 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("He may be a pompous braggart, but his tactical prowess has earned him the respect of his peers and the admiration of his people. Old Man Winter");
+        return qsTr("A youthful Co that will protect her village at all cost. She is skilled in dealing with sandstorms.");
     };
     this.getHits = function()
     {
-        return qsTr("Warm boots");
+        return qsTr("Coconuts");
     };
     this.getMiss = function()
     {
-        return qsTr("Rain clouds");
+        return qsTr("Seafood");
     };
     this.getCODescription = function()
     {
-        return qsTr("Winter poses no problem for Olaf or his troops. Snow causes his firepower to rise, and his troops can move through it without any penalties.");
+        return qsTr("Zandra's units are unaffected by sandstorms. They fight even better during them.");
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Causes snow to fall for two days, causing his firepower to rise.");
+        return qsTr("Causes sandstorm to fall for two days. Increasing the firerange of indirects by 1 and increasing her firepower.");
     };
     this.getPowerName = function()
     {
-        return qsTr("Blizzard");
+        return qsTr("Sand Shift");
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("A mighty blizzard causes two HP of damage to all enemy troops. The snow will also cause his firepower to rise for two days.");
+        return qsTr("Causes sandstorm to fall for two days. Increasing the firerange of indirects by 1 and increasing her firepower. Also deals two hp damage to enemies.");
     };
     this.getSuperPowerName = function()
     {
-        return qsTr("Winter Fury");
+        return qsTr("Desert Gale");
     };
     this.getPowerSentences = function()
     {
-        return [qsTr("Oho ho ho.  Do you think your pitiful troops can stand the cold?"),
-                qsTr("Neither man nor machine can withstand the fury of nature!"),
-                qsTr("You're going to regret challenging me!"),
-                qsTr("Let the winds of war bring snow!"),
-                qsTr("I'll bury you!"),
-                qsTr("Your weapons are powerless before the might of nature!")];
+        return [qsTr("It's high time that you felt the wrath of the desert winds."),
+                qsTr("I feel the power coming in, on the far winds."),
+                qsTr("You'll regret challenging me."),
+                qsTr("Come, father of the four winds!"),
+                qsTr("Your eyes will fill with sand, as you scan this wasted land..."),
+                qsTr("Troops, attack now, before the winds halt their blessing!")];
     };
     this.getVictorySentences = function()
     {
-        return [qsTr("Olaf's troops know no match!"),
-                qsTr("I won! ...That is...we won!"),
-                qsTr("In the end, Olaf stands victorious!")];
+        return [qsTr("Everyone, hurry back to the village. Our job here is done."),
+                qsTr("These sacred lands will be protected for as long as I stand."),
+                qsTr("Thank you, Uncle, for giving me the strength I needed.")];
     };
     this.getDefeatSentences = function()
     {
-        return [qsTr("Unbelievable! We've been forced to withdraw? What's going on?"),
-                qsTr("Next time, I will give them a display of true might! Mark my words!")];
+        return [qsTr("I only lost because of the Snow around here."),
+                qsTr("What? I can't loose. We have a Global Heating.")];
     };
     this.getName = function()
     {
-        return qsTr("Olaf");
+        return qsTr("Zandra");
     };
 }
 
 Constructor.prototype = CO;
-var CO_OLAF = new Constructor();
+var CO_ZANDRA = new Constructor();

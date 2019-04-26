@@ -63,13 +63,13 @@
 		<image file="bm/co_alexander+info.png" />
 		<image file="bm/co_alexander+face.png" cols = "3" />
 		
-		<!-- BT -->
-		<image file="bt/co_tempest+nrm.png" />
-		<image file="bt/co_tempest+info.png" />
-		<image file="bt/co_tempest+face.png" cols = "3" />
-		<image file="bt/co_zandra+nrm.png" />
-		<image file="bt/co_zandra+info.png" />
-		<image file="bt/co_zandra+face.png" cols = "3" />
+		<!-- BD -->
+		<image file="bd/co_tempest+nrm.png" />
+		<image file="bd/co_tempest+info.png" />
+		<image file="bd/co_tempest+face.png" cols = "3" />
+		<image file="bd/co_zandra+nrm.png" />
+		<image file="bd/co_zandra+info.png" />
+		<image file="bd/co_zandra+face.png" cols = "3" />
 		
 		<!-- dm -->
 		<image file="dm/co_graves+nrm.png" />
@@ -106,15 +106,15 @@
 		<image file="ge/co_javier+face.png" cols = "3" />
 		
 		<!-- gs -->
-		<image file="ge/co_meiyo+nrm.png" />
-		<image file="ge/co_meiyo+info.png" />
-		<image file="ge/co_meiyo+face.png" cols = "3" />
-		<image file="ge/co_minamoto+nrm.png" />
-		<image file="ge/co_minamoto+info.png" />
-		<image file="ge/co_minamoto+face.png" cols = "3" />
-		<image file="ge/co_sanjuro+nrm.png" />
-		<image file="ge/co_sanjuro+info.png" />
-		<image file="ge/co_sanjuro+face.png" cols = "3" />
+		<image file="gs/co_meiyo+nrm.png" />
+		<image file="gs/co_meiyo+info.png" />
+		<image file="gs/co_meiyo+face.png" cols = "3" />
+		<image file="gs/co_minamoto+nrm.png" />
+		<image file="gs/co_minamoto+info.png" />
+		<image file="gs/co_minamoto+face.png" cols = "3" />
+		<image file="gs/co_sanjuro+nrm.png" />
+		<image file="gs/co_sanjuro+info.png" />
+		<image file="gs/co_sanjuro+face.png" cols = "3" />
 		
 		<!-- pf -->
 		<image file="pf/co_aira+nrm.png" />

@@ -178,9 +178,8 @@
 		<image file="infantry+ge+walk.png" cols = "4"  rows = "4" />
 		<image file="infantry+ge+walk+mask.png" cols = "4"  rows = "4" />	
 		
-		
-		<image file="infantry+js.png" cols = "4" />
-		<image file="infantry+js+mask.png" cols = "4" />
+		<image file="infantry+gs.png" cols = "4" />
+		<image file="infantry+gs+mask.png" cols = "4" />
 		
 		<image file="infantry+ma.png" cols = "4" />
 		<image file="infantry+ma+mask.png" cols = "4" />
@@ -242,8 +241,8 @@
 		<image file="mech+ge+walk+mask.png" cols = "4" rows = "4" />
 		<image file="mech+ge+walk.png" cols = "4"  rows = "4" />
 		
-		<image file="mech+js.png" cols = "4" />
-		<image file="mech+js+mask.png" cols = "4" />
+		<image file="mech+gs.png" cols = "4" />
+		<image file="mech+gs+mask.png" cols = "4" />
 		
 		<image file="mech+ma.png" cols = "4" />
 		<image file="mech+ma+mask.png" cols = "4" />
@@ -333,8 +332,8 @@
 		<image file="sniper+ge+walk+mask.png" cols = "4" rows = "4" />
 		<image file="sniper+ge+walk.png" cols = "4"  rows = "4" />
 			
-		<image file="sniper+js.png" cols = "4" />
-		<image file="sniper+js+mask.png" cols = "4" />
+		<image file="sniper+gs.png" cols = "4" />
+		<image file="sniper+gs+mask.png" cols = "4" />
 		
 		<image file="sniper+ma.png" cols = "4" />
 		<image file="sniper+ma+mask.png" cols = "4" />

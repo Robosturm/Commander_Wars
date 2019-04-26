@@ -47,6 +47,10 @@ public slots:
      */
     ScriptVariable* createVariable(QString id);
     ScriptVariable* getVariable(QString id);
+    /**
+     * @brief clear deletes all variables hold by this object.
+     */
+    void clear();
 private:
     QVector<spScriptVariable> m_Variables;
 };
