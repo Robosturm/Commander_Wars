@@ -48,14 +48,25 @@
 		<image file="mapSelectionSelectedMap.png" guideX1="1" guideX2="283" guideY1="1" guideY2="19"/>
 		<image file="mapSelectionBuildingInfo.png" guideX1="9" guideX2="20" guideY1="9" guideY2="32"/>
 		<!-- co selection -->
-		<image file="ac.png"/>
-		<image file="bg.png"/>
-		<image file="bh.png"/>
+		<image file="os.png"/>
 		<image file="bm.png"/>
 		<image file="ge.png"/>
-		<image file="ma.png"/>
-		<image file="os.png"/>
 		<image file="yc.png"/>
+		<image file="bh.png"/>
+		<image file="bg.png"/>
+		<image file="ma.png"/>
+		<image file="ac.png"/>
+		<image file="bt.png"/>
+		<image file="gs.png"/>
+		<image file="pf.png"/>
+		<image file="ti.png"/>
+		<image file="dm.png"/>
+		<!-- aw dc armies -->
+		<image file="ib.png"/>
+		<image file="lz.png"/>
+		<image file="nr.png"/>
+		<image file="dv.png"/>
+		
 		<image file="no_co.png"/>		
 		<image file="co_background.png"/>
 		<image file="co_cursor.png"/>
