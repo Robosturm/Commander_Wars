@@ -106,11 +106,16 @@ var UNIT =
         }
         var fonds = unit.getOwner().getFonds();
         // check if we can pay for all healing
-        for (var i = healingDone; i > 0; i--)
+        for (var i = healingDone; i >= 0; i--)
         {
-            if (i / 10 * costs <= fonds)
+            if (i * costs / 10  <= fonds)
             {
                 healingDone = i;
+                break;
+            }
+            else if (i == 0)
+            {
+                healingDone = 0;
                 break;
             }
         }

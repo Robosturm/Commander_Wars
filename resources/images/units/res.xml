@@ -56,6 +56,18 @@
 		<image file="artillery+walk.png" cols = "3" rows = "4"  />
 		<image file="artillery+walk+mask.png" cols = "3" rows = "4"  />
 
+		<!-- black boat -->
+		<image file="black_boat.png" cols = "4" />
+		<image file="black_boat+mask.png" cols = "4" />
+		<image file="black_boat+walk.png" cols = "4" rows = "4"  />
+		<image file="black_boat+walk+mask.png" cols = "4" rows = "4"  />
+		
+		<!-- black bomb -->
+		<image file="black_bomb.png" cols = "4" />
+		<image file="black_bomb+mask.png" cols = "4" />
+		<image file="black_bomb+walk.png" cols = "4" rows = "4"  />
+		<image file="black_bomb+walk+mask.png" cols = "4" rows = "4"  />		
+		
 		<!-- battleship -->
 		<image file="battleship.png" cols = "4" />
 		<image file="battleship+mask.png" cols = "4" />

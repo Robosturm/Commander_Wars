@@ -65,6 +65,8 @@ var Constructor = function()
                 return 12;
 			case "LANDER":
                 return 22;
+            case "BLACK_BOAT":
+                return 55;
 			case "AIRCRAFTCARRIER":
                 return 10;
 			default:

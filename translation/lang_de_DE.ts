@@ -103,6 +103,14 @@
     </message>
 </context>
 <context>
+    <name>ACTION_EXPLODE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_EXPLODE.js" line="25"/>
+        <source>Explode</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_FIRE</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="63"/>
@@ -189,6 +197,14 @@
         <location filename="../resources/scripts/actions/ACTION_RATION.js" line="111"/>
         <location filename="../resources/scripts/actions/ACTION_RATION.js" line="119"/>
         <source>RATION</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_REPAIR</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_REPAIR.js" line="26"/>
+        <source>Repair</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -989,31 +1005,31 @@
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="165"/>
-        <location filename="../menue/victorymenue.cpp" line="421"/>
+        <location filename="../menue/victorymenue.cpp" line="425"/>
         <source>Fonds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="174"/>
-        <location filename="../menue/victorymenue.cpp" line="426"/>
+        <location filename="../menue/victorymenue.cpp" line="430"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="183"/>
-        <location filename="../menue/victorymenue.cpp" line="431"/>
+        <location filename="../menue/victorymenue.cpp" line="435"/>
         <source>Buildings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="192"/>
-        <location filename="../menue/victorymenue.cpp" line="436"/>
+        <location filename="../menue/victorymenue.cpp" line="440"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="201"/>
-        <location filename="../menue/victorymenue.cpp" line="441"/>
+        <location filename="../menue/victorymenue.cpp" line="445"/>
         <source>Player Strength</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1048,7 +1064,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="479"/>
+        <location filename="../menue/victorymenue.cpp" line="485"/>
         <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1130,6 +1146,22 @@
     <message>
         <location filename="../resources/scripts/units/battleship.js" line="37"/>
         <source>Battleship</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>black_boat</name>
+    <message>
+        <location filename="../resources/scripts/units/black_boat.js" line="35"/>
+        <source>Black Boat</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>black_bomb</name>
+    <message>
+        <location filename="../resources/scripts/units/black_bomb.js" line="37"/>
+        <source>Black Bomb</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

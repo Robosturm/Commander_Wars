@@ -32,7 +32,7 @@ var Constructor = function()
     };
     this.getConstructionList = function()
     {
-        return ["CANNONBOAT", "LANDER", "CRUISER", "SUBMARINE", "DESTROYER", "BATTLESHIP", "AIRCRAFTCARRIER"];
+        return ["CANNONBOAT", "BLACK_BOAT", "LANDER", "CRUISER", "SUBMARINE", "DESTROYER", "BATTLESHIP", "AIRCRAFTCARRIER"];
     };
     this.getTerrainAnimationForeground = function(unit, terrain)
     {

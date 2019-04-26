@@ -75,6 +75,8 @@
                 return 35;
 			case "LANDER":
                 return 65;
+            case "BLACK_BOAT":
+                return 100;
 			case "AIRCRAFTCARRIER":
                 return 45;
 			default:

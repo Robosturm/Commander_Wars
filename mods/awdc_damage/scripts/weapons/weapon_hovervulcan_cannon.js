@@ -69,6 +69,8 @@ var Constructor = function()
 				return 75;
 			case "TRANSPORTPLANE":
 				return 75;
+            case "BLACK_BOMB":
+                return 75;
 			case "WATERPLANE":
 				return 75;
 				

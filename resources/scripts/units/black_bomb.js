@@ -5,34 +5,36 @@ var Constructor = function()
         unit.setAmmo1(0);
         unit.setMaxAmmo1(0);
         unit.setWeapon1ID("");
+
         unit.setAmmo2(0);
         unit.setMaxAmmo2(0);
         unit.setWeapon2ID("");
-        unit.setFuel(100);
-        unit.setMaxFuel(100);
-        unit.setBaseMovementPoints(6);
+
+        unit.setFuel(70);
+        unit.setMaxFuel(70);
+        unit.setBaseMovementPoints(9);
         unit.setMinRange(1);
         unit.setMaxRange(1);
-		unit.setVision(1);
+        unit.setVision(1);
     };
     // called for loading the main sprite
     this.loadSprites = function(unit)
     {
-        // none neutral player
-        unit.loadSprite("lander", false);
-        unit.loadSprite("lander+mask", true);
+        // load sprites
+        unit.loadSprite("black_bomb", false);
+        unit.loadSprite("black_bomb+mask", true);
     };
     this.getMovementType = function()
     {
-        return "MOVE_BOAT";
+        return "MOVE_AIR";
     };
     this.getBaseCost = function()
     {
-        return 10000;
+        return 20000;
     };
     this.getName = function()
     {
-        return qsTr("Lander");
+        return qsTr("Black Bomb");
     };
     this.startOfTurn = function(unit)
     {
@@ -43,13 +45,12 @@ var Constructor = function()
             fuelCosts = 0;
         }
         unit.setFuel(unit.getFuel() - fuelCosts);
-        UNIT.transporterRefilling(unit);
     };
     this.createExplosionAnimation = function(x, y)
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
-        animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
-        audio.playSound("explosion+water.wav");
+        animation.addSprite("explosion+air", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
+        audio.playSound("explosion+air.wav");
         return animation;
     };
     this.doWalkingAnimation = function(action)
@@ -57,22 +58,20 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
         var unitID = unit.getUnitID().toLowerCase();
-        animation.loadSprite(unitID + "+walk+mask", true, 1);
-        animation.loadSprite(unitID + "+walk", false, 1);
-        animation.setSound("moveship.wav", -2);
+        animation.loadSprite(unitID + "+walk+mask", true, 1.5);
+        animation.loadSprite(unitID + "+walk", false, 1.5);
+        animation.setSound("moveair.wav", -2);
         return animation;
     };
-    this.getLoadingPlace = function()
+    this.canMoveAndFire = function()
     {
-        return 2;
+        return true;
     };
-    this.getTransportUnits = function()
+    this.useTerrainDefense = function()
     {
-        return ["ANTITANKCANNON", "APC", "ARTILLERY", "FLAK", "FLARE",
-                "HEAVY_HOVERCRAFT", "HEAVY_TANK", "HOVERCRAFT", "HOVERFLAK",
-                "INFANTRY", "LIGHT_TANK", "MECH", "MEGATANK", "MISSILE",
-                "MOTORBIKE", "NEOTANK", "RECON", "ROCKETTRHOWER", "SNIPER"];
+        return false;
     };
+
     this.getTerrainAnimationBase = function(unit, terrain)
     {
         return "base_air";
@@ -80,14 +79,20 @@ var Constructor = function()
 
     this.getTerrainAnimationForeground = function(unit, terrain)
     {
-        return "fore_sea";
+        return "";
     };
 
     this.getTerrainAnimationBackground = function(unit, terrain)
     {
-        return "back_sea";
+        return "";
+    };
+
+    this.getActions = function()
+    {
+        // returns a string id list of the actions this unit can perform
+        return "ACTION_EXPLODE,ACTION_JOIN,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
     };
 }
 
 Constructor.prototype = UNIT;
-var LANDER = new Constructor();
+var BLACK_BOMB = new Constructor();

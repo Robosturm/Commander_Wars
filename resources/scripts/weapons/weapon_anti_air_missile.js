@@ -20,6 +20,8 @@ var Constructor = function()
 				return 150;
 			case "WATERPLANE":
 				return 150;
+            case "BLACK_BOMB":
+                return 150;
 			case "K_HELI":
 				return 170;
 			case "T_HELI":

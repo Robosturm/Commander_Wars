@@ -8,9 +8,9 @@ var Constructor = function()
         unit.setAmmo2(0);
         unit.setMaxAmmo2(0);
         unit.setWeapon2ID("");
-        unit.setFuel(100);
-        unit.setMaxFuel(100);
-        unit.setBaseMovementPoints(6);
+        unit.setFuel(60);
+        unit.setMaxFuel(60);
+        unit.setBaseMovementPoints(7);
         unit.setMinRange(1);
         unit.setMaxRange(1);
 		unit.setVision(1);
@@ -19,8 +19,8 @@ var Constructor = function()
     this.loadSprites = function(unit)
     {
         // none neutral player
-        unit.loadSprite("lander", false);
-        unit.loadSprite("lander+mask", true);
+        unit.loadSprite("black_boat", false);
+        unit.loadSprite("black_boat+mask", true);
     };
     this.getMovementType = function()
     {
@@ -28,11 +28,11 @@ var Constructor = function()
     };
     this.getBaseCost = function()
     {
-        return 10000;
+        return 7500;
     };
     this.getName = function()
     {
-        return qsTr("Lander");
+        return qsTr("Black Boat");
     };
     this.startOfTurn = function(unit)
     {
@@ -57,8 +57,8 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
         var unitID = unit.getUnitID().toLowerCase();
-        animation.loadSprite(unitID + "+walk+mask", true, 1);
-        animation.loadSprite(unitID + "+walk", false, 1);
+        animation.loadSprite(unitID + "+walk+mask", true, 1.5);
+        animation.loadSprite(unitID + "+walk", false, 1.5);
         animation.setSound("moveship.wav", -2);
         return animation;
     };
@@ -68,10 +68,7 @@ var Constructor = function()
     };
     this.getTransportUnits = function()
     {
-        return ["ANTITANKCANNON", "APC", "ARTILLERY", "FLAK", "FLARE",
-                "HEAVY_HOVERCRAFT", "HEAVY_TANK", "HOVERCRAFT", "HOVERFLAK",
-                "INFANTRY", "LIGHT_TANK", "MECH", "MEGATANK", "MISSILE",
-                "MOTORBIKE", "NEOTANK", "RECON", "ROCKETTRHOWER", "SNIPER"];
+        return ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER"];
     };
     this.getTerrainAnimationBase = function(unit, terrain)
     {
@@ -87,7 +84,13 @@ var Constructor = function()
     {
         return "back_sea";
     };
+
+    this.getActions = function()
+    {
+        // returns a string id list of the actions this unit can perform
+        return "ACTION_REPAIR,ACTION_JOIN,ACTION_LOAD,ACTION_UNLOAD,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
+    };
 }
 
 Constructor.prototype = UNIT;
-var LANDER = new Constructor();
+var BLACK_BOAT = new Constructor();

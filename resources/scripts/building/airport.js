@@ -33,7 +33,7 @@ var Constructor = function()
 
     this.getConstructionList = function()
     {
-        return ["T_HELI", "K_HELI", "DUSTER", "TRANSPORTPLANE", "BOMBER", "FIGHTER", "STEALTHBOMBER"];
+        return ["T_HELI", "K_HELI", "DUSTER", "TRANSPORTPLANE", "BOMBER", "FIGHTER", "STEALTHBOMBER", "BLACK_BOMB"];
     };
 
     this.getTerrainAnimationForeground = function(unit, terrain)

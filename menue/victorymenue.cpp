@@ -407,7 +407,11 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
     {
         m_PlayerSelectPanel->setVisible(true);
         m_pGraphBackground->setVisible(true);
-        m_VictoryPanel->setVisible(false);
+        if (m_VictoryPanel.get() != nullptr)
+        {
+            m_VictoryPanel->setVisible(false);
+        }
+
         for (qint32 i = 0; i < m_YGraphItems.size(); i++)
         {
             m_YGraphItems[i]->setText(QString::number(static_cast<qint32>(m_GraphMaxValues[static_cast<qint32>(m_CurrentGraphMode)]
@@ -473,11 +477,13 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
     }
     else
     {
-        m_PlayerSelectPanel->setVisible(false);
-        m_pGraphBackground->setVisible(false);
-        m_VictoryPanel->setVisible(true);
-        m_Textfield->setText(tr("Victory").toStdString().c_str());
-
+        if (m_VictoryPanel.get() != nullptr)
+        {
+            m_PlayerSelectPanel->setVisible(false);
+            m_pGraphBackground->setVisible(false);
+            m_VictoryPanel->setVisible(true);
+            m_Textfield->setText(tr("Victory").toStdString().c_str());
+        }
     }
     m_Textfield->setX(pApp->getSettings()->getWidth() / 2.0f - m_Textfield->getTextRect().getWidth() / 2.0f);
 

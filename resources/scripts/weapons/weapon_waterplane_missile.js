@@ -72,6 +72,8 @@ var Constructor = function()
                 return 55;
             case "TRANSPORTPLANE":
                 return 75;
+            case "BLACK_BOMB":
+                return 75;
             case "WATERPLANE":
                 return 55;
             case "K_HELI":
@@ -91,7 +93,7 @@ var Constructor = function()
             case "SUBMARINE":
                 return 55;
             case "LANDER":
-                return 85;
+                return 105;
             case "AIRCRAFTCARRIER":
                 return 65;
             default:

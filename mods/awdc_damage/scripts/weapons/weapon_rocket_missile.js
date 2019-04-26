@@ -67,6 +67,8 @@ var Constructor = function()
                 return 55;
 			case "CANNONBOAT":
 				return 105;
+            case "BLACK_BOAT":
+                return 105;
 			case "CRUISER":
                 return 55;
 			case "DESTROYER":
