@@ -598,12 +598,148 @@ CO_VON_BOLT  2                 0               4                 7              
 CO_VON_BOLT  2                 0               4                 3                 3               6               7               11000                    0           2
 CO_VON_BOLT  2                 0               7                 7                 6               6               6               11000                    0           2
 CO_VON_BOLT  2                 0               3                 3                 3               3               3                9000                    0           2
-
-
-peter
-melanthe
-sabaki
-sophie
-graves
-minamoto
-zandra
+// PETER
+CO_PETER     0                 0               7                 3                 6               3               6               11000                    0           0
+CO_PETER     0                 0               7                 7                 6               3               3               9000                     0           0
+CO_PETER     0                 0               3                 7                 6               3               7               9000                     0           0
+CO_PETER     0                 0               3                 7                 6               7               7               11000                    0           0
+CO_PETER     1                 0               4                 7                 3               6               6               11000                    0           1
+CO_PETER     1                 0               7                 3                 6               6               3               9000                     0           1
+CO_PETER     1                 0               4                 3                 3               6               3               11000                    1           0
+CO_PETER     1                 0               7                 7                 6               6               6               11000                    2           0
+CO_PETER     1                 0               4                 3                 7               6               7               11000                    0           1
+CO_PETER     1                 2               4                 7                 6               6               6               11000                    0           0
+CO_PETER     1                 0               7                 7                 3               6               7               11000                    0           1
+CO_PETER     2                 0               4                 7                 3               6               6               11000                    0           2
+CO_PETER     2                 0               4                 3                 6               6               3               9000                     0           2
+CO_PETER     2                 0               7                 7                 6               6               6               11000                    1           0
+CO_PETER     2                 0               4                 7                 6               6               3               11000                    2           0
+CO_PETER     2                 0               4                 3                 3               6               7               11000                    0           2
+CO_PETER     2                 0               7                 7                 6               6               6               11000                    0           2
+CO_PETER     2                 0               3                 3                 3               3               3                9000                    0           2
+// MELANTHE
+CO_MELANTHE  0                 0               4                 7                 6               6               6               11000                    0           0
+CO_MELANTHE  0                 0               4                 7                 6               6               6               11000                    1           0
+CO_MELANTHE  0                 0               4                 7                 6               6               6               11000                    2           0
+CO_MELANTHE  1                 0               7                 7                 0               3               0               0                        2           1
+CO_MELANTHE  1                 0               7                 7                 0               3               7               0                        0           1
+CO_MELANTHE  1                 0               7                 7                 5               3               0               0                        1           1
+CO_MELANTHE  1                 0               7                 7                 6               5               7               0                        2           1
+CO_MELANTHE  1                 0               7                 7                 0               3               0               11000                    0           1
+CO_MELANTHE  1                 0               7                 7                 4               5               7               0                        1           1
+CO_MELANTHE  1                 0               7                 4                 0               3               0               0                        2           0
+CO_MELANTHE  1                 2               7                 4                 0               3               0               0                        2           0
+CO_MELANTHE  1                 2               7                 7                 0               3               0               0                        2           0
+CO_MELANTHE  2                 0               7                 7                 7               3               7               11000                    0           2
+CO_MELANTHE  2                 0               7                 7                 5               6               7               0                        0           2
+CO_MELANTHE  2                 0               7                 7                 0               3               7               0                        0           2
+CO_MELANTHE  2                 0               7                 7                 0               3               0               0                        0           2
+CO_MELANTHE  2                 0               7                 3                 0               3               0               0                        0           0
+CO_MELANTHE  2                 0               7                 7                 0               3               0               0                        1           0
+// SABAKI
+CO_SABAKI    0                 0               4                 7                 6               6               6               11000                    0           0
+CO_SABAKI    0                 0               4                 7                 6               6               6               11000                    1           0
+CO_SABAKI    0                 0               4                 7                 6               6               6               11000                    2           0
+CO_SABAKI    1                 0               7                 7                 0               3               0               0                        2           1
+CO_SABAKI    1                 0               7                 7                 0               3               7               0                        0           1
+CO_SABAKI    1                 0               7                 7                 5               3               0               0                        1           1
+CO_SABAKI    1                 0               7                 7                 6               5               7               0                        2           1
+CO_SABAKI    1                 0               7                 7                 0               3               0               11000                    0           1
+CO_SABAKI    1                 0               7                 7                 4               5               7               0                        1           1
+CO_SABAKI    1                 0               7                 4                 0               3               0               0                        2           0
+CO_SABAKI    1                 2               7                 4                 0               3               0               0                        2           0
+CO_SABAKI    1                 2               7                 7                 0               3               0               0                        2           0
+CO_SABAKI    2                 0               7                 7                 7               3               7               11000                    0           2
+CO_SABAKI    2                 0               7                 7                 5               6               7               0                        0           2
+CO_SABAKI    2                 0               7                 7                 0               3               7               0                        0           2
+CO_SABAKI    2                 0               7                 7                 0               3               0               0                        0           2
+CO_SABAKI    2                 0               7                 3                 0               3               0               0                        0           0
+CO_SABAKI    2                 0               7                 7                 0               3               0               0                        1           0
+// ZANDRA
+CO_ZANDRA    1                 0               0                 6                 6               6               6               9000                     0           1
+CO_ZANDRA    1                 0               0                 0                 6               6               6               9000                     1           1
+CO_ZANDRA    1                 0               0                 0                 6               6               6               9000                     2           1
+CO_ZANDRA    1                 2               0                 0                 6               6               6               9000                     0           0
+CO_ZANDRA    1                 0               6                 6                 3               3               6               9000                     0           1
+CO_ZANDRA    1                 0               6                 0                 3               3               6               11000                    0           1
+CO_ZANDRA    1                 0               0                 0                 6               6               3               9000                     0           0
+CO_ZANDRA    1                 0               0                 0                 6               6               6               9000                     0           1
+CO_ZANDRA    2                 0               0                 8                 6               6               6               9000                     0           2
+CO_ZANDRA    2                 0               6                 0                 3               3               6               9000                     0           2
+CO_ZANDRA    2                 0               6                 0                 3               3               6               11000                    0           2
+CO_ZANDRA    2                 0               6                 0                 3               6               6               11000                    1           2
+CO_ZANDRA    2                 0               6                 6                 3               3               6               11000                    2           2
+CO_ZANDRA    2                 0               0                 0                 6               6               3               9000                     0           2
+// SOPHIE
+CO_SOPHIE    0                 0               4                 7                 6               6               6               11000                    0           0
+CO_SOPHIE    0                 0               4                 7                 6               6               6               11000                    1           0
+CO_SOPHIE    0                 0               4                 7                 6               6               6               11000                    2           0
+CO_SOPHIE    1                 0               7                 7                 0               3               0               0                        2           1
+CO_SOPHIE    1                 0               7                 7                 0               3               7               0                        0           1
+CO_SOPHIE    1                 0               7                 7                 5               3               0               0                        1           1
+CO_SOPHIE    1                 0               7                 7                 6               5               7               0                        2           1
+CO_SOPHIE    1                 0               7                 7                 0               3               0               11000                    0           1
+CO_SOPHIE    1                 0               7                 7                 4               5               7               0                        1           1
+CO_SOPHIE    1                 0               7                 4                 0               3               0               0                        2           0
+CO_SOPHIE    1                 2               7                 4                 0               3               0               0                        2           0
+CO_SOPHIE    1                 2               7                 7                 0               3               0               0                        2           0
+CO_SOPHIE    2                 0               7                 7                 7               3               7               11000                    0           2
+CO_SOPHIE    2                 0               7                 7                 5               6               7               0                        0           2
+CO_SOPHIE    2                 0               7                 7                 0               3               7               0                        0           2
+CO_SOPHIE    2                 0               7                 7                 0               3               0               0                        0           2
+CO_SOPHIE    2                 0               7                 3                 0               3               0               0                        0           0
+CO_SOPHIE    2                 0               7                 7                 0               3               0               0                        1           0
+// GRAVES
+CO_GRAVES    0                 0               3                 7                 6               3               6               11000                    0           0
+CO_GRAVES    0                 0               7                 3                 6               3               7               9000                     0           0
+CO_GRAVES    0                 0               7                 7                 3               3               7               11000                    0           0
+CO_GRAVES    0                 0               7                 3                 6               3               7               11000                    0           0
+CO_GRAVES    1                 0               4                 3                 7               6               3               11000                    0           1
+CO_GRAVES    1                 0               7                 3                 3               3               3               11000                    0           1
+CO_GRAVES    1                 0               7                 3                 3               3               7               11000                    1           0
+CO_GRAVES    1                 0               7                 3                 6               6               3               9000                     2           0
+CO_GRAVES    1                 0               7                 3                 3               6               7               9000                     0           1
+CO_GRAVES    1                 2               7                 3                 6               3               6               11000                    0           0
+CO_GRAVES    1                 0               7                 3                 7               6               3               11000                    0           1
+CO_GRAVES    2                 0               4                 7                 7               3               6               9000                     0           2
+CO_GRAVES    2                 0               7                 3                 6               3               9               9000                     0           2
+CO_GRAVES    2                 0               7                 3                 6               6               3               9000                     1           0
+CO_GRAVES    2                 0               7                 7                 3               6               3               9000                     2           0
+CO_GRAVES    2                 0               7                 7                 3               3               7               11000                    0           2
+CO_GRAVES    2                 0               7                 3                 3               6               3               11000                    0           2
+CO_GRAVES    2                 0               3                 3                 7               7               3               11000                    0           2
+// MINAMOTO
+CO_MINAMOTO  0                 0               0                 0                 0               0               0               0                        0           0
+CO_MINAMOTO  0                 2               0                 0                 0               0               0               0                        0           0
+CO_MINAMOTO  0                 2               6                 0                 0               0               0               0                        0           0
+CO_MINAMOTO  0                 0               6                 0                 0               0               0               0                        0           0
+CO_MINAMOTO  0                 0               6                 6                 0               0               0               0                        0           0
+CO_MINAMOTO  0                 2               6                 6                 0               0               0               0                        0           0
+CO_MINAMOTO  1                 0               10                7                 0               1               0               1000                     0           1
+CO_MINAMOTO  1                 2               10                7                 0               1               0               1000                     0           0
+CO_MINAMOTO  1                 0               4                 0                 7               7               10              15600                    0           1
+CO_MINAMOTO  1                 2               4                 0                 7               7               10              15600                    0           0
+CO_MINAMOTO  2                 0               10                7                 0               1               0               1000                     0           2
+CO_MINAMOTO  2                 0               10                7                 0               1               0               1000                     1           0
+CO_MINAMOTO  2                 0               4                 0                 7               7               10              15600                    0           2
+CO_MINAMOTO  2                 0               4                 0                 7               7               10              15600                    1           0
+CO_MINAMOTO  2                 0               4                 0                 7               7               10              15600                    2           0
+// SANJURO
+CO_SANJURO   0                 0               7                 3                 6               3               6               11000                    0           0
+CO_SANJURO   0                 0               7                 7                 6               3               3               9000                     0           0
+CO_SANJURO   0                 0               3                 7                 6               3               7               9000                     0           0
+CO_SANJURO   0                 0               3                 7                 6               7               7               11000                    0           0
+CO_SANJURO   1                 0               4                 7                 3               6               6               11000                    0           1
+CO_SANJURO   1                 0               7                 3                 6               6               3               9000                     0           1
+CO_SANJURO   1                 0               4                 3                 3               6               3               11000                    1           0
+CO_SANJURO   1                 0               7                 7                 6               6               6               11000                    2           0
+CO_SANJURO   1                 0               4                 3                 7               6               7               11000                    0           1
+CO_SANJURO   1                 2               4                 7                 6               6               6               11000                    0           0
+CO_SANJURO   1                 0               7                 7                 3               6               7               11000                    0           1
+CO_SANJURO   2                 0               4                 7                 3               6               6               11000                    0           2
+CO_SANJURO   2                 0               4                 3                 6               6               3               9000                     0           2
+CO_SANJURO   2                 0               7                 7                 6               6               6               11000                    1           0
+CO_SANJURO   2                 0               4                 7                 6               6               3               11000                    2           0
+CO_SANJURO   2                 0               4                 3                 3               6               7               11000                    0           2
+CO_SANJURO   2                 0               7                 7                 6               6               6               11000                    0           2
+CO_SANJURO   2                 0               3                 3                 3               3               3                9000                    0           2

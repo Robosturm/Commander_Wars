@@ -21,11 +21,6 @@
 
 #include "SDL.h"
 
-
-#include "resource_management/gamemanager.h"
-
-
-
 Mainwindow::Mainwindow()
 {
     Mainapp* pApp = Mainapp::getInstance();

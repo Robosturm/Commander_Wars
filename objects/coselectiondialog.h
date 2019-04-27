@@ -24,7 +24,6 @@ public:
     explicit COSelectionDialog(QString coid, QColor color, qint32 player);
     virtual ~COSelectionDialog() = default;
 signals:
-signals:
     void editFinished(QString coid, qint32 player);
     void canceled();
 public slots:

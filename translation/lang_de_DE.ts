@@ -291,6 +291,34 @@
     </message>
 </context>
 <context>
+    <name>ColorSelectionDialog</name>
+    <message>
+        <location filename="../objects/colorselectiondialog.cpp" line="28"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/colorselectiondialog.cpp" line="38"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/colorselectiondialog.cpp" line="59"/>
+        <source>Red: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/colorselectiondialog.cpp" line="72"/>
+        <source>Green: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/colorselectiondialog.cpp" line="85"/>
+        <source>Blue: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Console</name>
     <message>
         <location filename="../coreengine/console.cpp" line="92"/>
@@ -549,32 +577,32 @@
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="52"/>
+        <location filename="../menue/mainwindow.cpp" line="47"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="63"/>
+        <location filename="../menue/mainwindow.cpp" line="58"/>
         <source>Load Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="74"/>
+        <location filename="../menue/mainwindow.cpp" line="69"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="85"/>
+        <location filename="../menue/mainwindow.cpp" line="80"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="96"/>
+        <location filename="../menue/mainwindow.cpp" line="91"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="107"/>
+        <location filename="../menue/mainwindow.cpp" line="102"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -711,27 +739,27 @@
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="583"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="642"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="646"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="610"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="614"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="615"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="619"/>
         <source>All Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="645"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="649"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="645"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="649"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>

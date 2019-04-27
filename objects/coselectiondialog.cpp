@@ -24,7 +24,7 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player)
     this->addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
 
     m_COSelection = new COSelection();
     m_COSelection->colorChanged(color);

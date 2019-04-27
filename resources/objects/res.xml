@@ -17,6 +17,10 @@
 		<image file="editor+terrain.png"/>
 		<image file="editor+unit.png"/>
 		<image file="editor+building.png"/>
+		
+		<!-- color dialog -->
+		<image file="colordialogcursor_1.png"/>
+		<image file="colordialogcursor_2.png"/>		
 		<!-- editorselection -->
 		<image file="topbar+dropdown.png" guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>
 		<!-- textbox -->

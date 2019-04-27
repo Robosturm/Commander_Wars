@@ -87,6 +87,7 @@ public:
         Cursor,
         Animation,
         Objects,
+        Dialogs = 32000,
     };
 
     explicit Mainapp(int argc, char* argv[]);

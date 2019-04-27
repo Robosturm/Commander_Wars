@@ -73,6 +73,7 @@ set(${PROJECT_NAME}_SRCS
         objects/multislider.cpp
         objects/ingameinfobar.cpp
         objects/rotatingsprite.cpp
+        objects/colorselectiondialog.cpp
 
         #menues
         menue/mainwindow.cpp

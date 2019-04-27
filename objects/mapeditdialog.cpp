@@ -21,7 +21,7 @@ MapEditDialog::MapEditDialog(QString mapName, qint32 mapWidth, qint32 mapHeigth,
     this->addChild(pSpriteBox);
     pSpriteBox->setPosition(0, 0);
     pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
 
     // Label
     oxygine::spTextField text = new oxygine::TextField();

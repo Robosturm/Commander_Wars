@@ -8,6 +8,8 @@
 
 #include "coreengine/mainapp.h"
 
+#include "objects/colorselectiondialog.h"
+
 DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items, bool up)
     : m_ItemColors(items)
 {
@@ -25,6 +27,11 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items, bool u
     pAnim = pObjectManager->getResAnim("dropdownmenucolor");
     m_Colorfield = new oxygine::Sprite();
     m_Colorfield->setResAnim(pAnim);
+    m_Colorfield->addClickListener([=](oxygine::Event*)
+    {
+        emit sigShowColorDialog();
+    });
+    connect(this, &DropDownmenuColor::sigShowColorDialog, this, &DropDownmenuColor::showColorDialog, Qt::QueuedConnection);
     oxygine::spClipRectActor pClipActor = new oxygine::ClipRectActor();
     m_Colorfield->attachTo(pClipActor);
     m_Colorbox->addChild(pClipActor);
@@ -99,6 +106,12 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items, bool u
     }
 }
 
+void DropDownmenuColor::changeCurrentItem(QColor color)
+{
+    setCurrentItem(color);
+    emit sigItemChanged(m_currentItem);
+}
+
 void DropDownmenuColor::setCurrentItem(QColor color)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -159,4 +172,14 @@ void DropDownmenuColor::addDropDownItem(QColor color, qint32 id)
         m_Colorfield->setColor(color.red(), color.green(), color.blue(), 255);
         emit sigItemChanged(m_currentItem);
     });
+}
+
+void DropDownmenuColor::showColorDialog()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    spColorSelectionDialog pDialog = new ColorSelectionDialog(m_currentItem);
+    oxygine::getStage()->addChild(pDialog);
+    connect(pDialog.get(), &ColorSelectionDialog::editFinished, this, &DropDownmenuColor::changeCurrentItem, Qt::QueuedConnection);
+    pApp->continueThread();
 }
