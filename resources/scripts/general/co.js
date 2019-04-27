@@ -166,6 +166,11 @@ var CO =
         return 0;
     },
 
+    getIncomeReduction : function(co, building, income)
+    {
+        return 0;
+    },
+
     postBattleActions : function(co, attacker, atkDamage, defender, gotAttacked)
     {
         // called after damage was dealt to the defender unit.

@@ -1,6 +1,9 @@
 #ifndef VERYEASYAI_H
 #define VERYEASYAI_H
 
+#include "qvector.h"
+#include "ai/islandmap.h"
+
 #include "ai/coreai.h"
 #include "ai/decisiontree.h"
 
@@ -19,10 +22,7 @@ public:
     };
     VeryEasyAI();
 
-    /**
-     * @brief process
-     */
-    virtual void process() override;
+
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -41,6 +41,11 @@ public:
     {
         return 1;
     }
+public slots:
+    /**
+     * @brief process
+     */
+    virtual void process() override;
 protected:
     /**
      * @brief useCOPower
@@ -106,6 +111,12 @@ protected:
      * @brief finishTurn
      */
     void finishTurn();
+protected:
+    void appendCaptureTargets(GameAction* pAction, QStringList actions, Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QPoint>& targets);
+    void appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QPoint>& targets);
+    void appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QPoint>& targets);
+    void appendRepairTargets(Unit* pUnit, QmlVectorBuilding* pBuildings, QVector<QPoint>& targets);
+    void appendSupplyTargets(QmlVectorUnit* pUnits, QVector<QPoint>& targets);
 private:
     DecisionTree m_COPowerTree;
     DecisionTree m_COUnitTree;
@@ -114,6 +125,8 @@ private:
     DecisionTree m_HarbourBuildingTree;
 
     TurnTime turnMode{TurnTime::startOfTurn};
+
+    QVector<spIslandMap> m_IslandMaps;
 };
 
 #endif // VERYEASYAI_H

@@ -757,6 +757,27 @@ bool CO::inCORange(QPoint position)
     return false;
 }
 
+qint32 CO::getIncomeReduction(Building* pBuilding, qint32 income)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getIncomeReduction";
+    QJSValueList args1;
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj3;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pBuilding);
+    args1 << obj1;
+    args1 << income;
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 qint32 CO::getBonusIncome(Building* pBuilding, qint32 income)
 {
     Mainapp* pApp = Mainapp::getInstance();

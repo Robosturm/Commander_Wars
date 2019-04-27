@@ -83,8 +83,11 @@ protected:
     void addSelectedFieldData(GameAction* pGameAction, QPoint point);
 
     static const QString ACTION_WAIT;
+    static const QString ACTION_REPAIR;
+    static const QString ACTION_RATION;
     static const QString ACTION_BUILD_UNITS;
     static const QString ACTION_CAPTURE;
+    static const QString ACTION_MISSILE;
     static const QString ACTION_FIRE;
     static const QString ACTION_NEXT_PLAYER;
     static const QString ACTION_ACTIVATE_POWER_CO_0;

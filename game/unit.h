@@ -57,7 +57,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 5;
+        return 6;
     }
 
 
@@ -76,15 +76,27 @@ public:
      * E.g Transport sign and health point sign
      */
     void updateIcons(Player* pPlayer);
+
+
+signals:
+
+public slots:
     /**
      * @brief getHpHidden
      * @param pPlayer
      * @return
      */
     bool getHpHidden(Player* pPlayer);
-signals:
-
-public slots:
+    /**
+     * @brief getIgnoreUnitCollision
+     * @return
+     */
+    bool getIgnoreUnitCollision() const;
+    /**
+     * @brief setIgnoreUnitCollision
+     * @param IgnoreUnitCollision
+     */
+    void setIgnoreUnitCollision(bool IgnoreUnitCollision);
     /**
      * @brief getName
      * @return
@@ -487,6 +499,8 @@ private:
     GameEnums::UnitRanks m_UnitRank{GameEnums::UnitRank_None};
 
     bool m_Hidden{false};
+
+    bool m_IgnoreUnitCollision{false};
 
     qint32 minRange{1};
     qint32 maxRange{-1};

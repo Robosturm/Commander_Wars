@@ -55,6 +55,12 @@ public:
     explicit PathFindingSystem(qint32 startX, qint32 startY);
     virtual ~PathFindingSystem();
     /**
+     * @brief setStartPoint
+     * @param startX
+     * @param startY
+     */
+    void setStartPoint(qint32 startX, qint32 startY);
+    /**
      * @brief getRemainingCost
      * @param x
      * @param y

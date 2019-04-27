@@ -325,6 +325,13 @@ public slots:
      */
     qint32 getBonusIncome(Building* pBuilding, qint32 income);
     /**
+     * @brief getIncomeReduction
+     * @param pBuilding
+     * @param income
+     * @return
+     */
+    qint32 getIncomeReduction(Building* pBuilding, qint32 income);
+    /**
      * @brief getPerfectVision
      * @return
      */

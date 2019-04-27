@@ -1351,6 +1351,109 @@
     </message>
 </context>
 <context>
+    <name>co_alexander</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="144"/>
+        <source>A diligent politician who works only for the benefit of the citizens and the promotion of peace. Olafâ€™s son and future ruler of Blue Moon.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="148"/>
+        <source>Peace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="152"/>
+        <source>Cruelty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="156"/>
+        <source>Alexander captures revolt against capturing each day which increases the resistance 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="160"/>
+        <source>Alexander&apos;s troops capture at a faster rate, while enemy captures are forced to restart.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="164"/>
+        <source>Peace Riots</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="168"/>
+        <source>Enemies receive no income, and half of their current funs are diverted to Alexander.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="172"/>
+        <source>Inevitable Revolution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="176"/>
+        <source>Comrades, I beg of you to see from my eyes...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="177"/>
+        <source>There is more to war than simply bullets and explosions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="178"/>
+        <source>Express yourselves, my dear people, through actions rather than words!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="179"/>
+        <source>Now we shall see where their sympathies really belong.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="180"/>
+        <source>Perhaps this will get you to negotiate instead...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="181"/>
+        <source>You can only win a war if your people support you, and they prefer me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="185"/>
+        <source>Ironically, your shortcomings stemmed from within your own ranks.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="186"/>
+        <source>Ah, I see now! This is why the citizens were on my side all along.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="187"/>
+        <source>Only through unrivaled determination did I acheive success.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="191"/>
+        <source>Hssss! Today was... unlucky. A bad day. Nothing more.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="192"/>
+        <source>It&apos;s the blasted weather! That was the problem! Hssss!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexander.js" line="196"/>
+        <source>Alexander</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>co_andy</name>
     <message>
         <location filename="../resources/scripts/cos/co_andy.js" line="146"/>

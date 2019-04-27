@@ -46,8 +46,15 @@ public:
      * @return
      */
     QVector<QPoint> getClosestReachableMovePath(QPoint target);
+    /**
+     * @brief setMoveCosts
+     * @param moveCosts how far this pfs explodes
+     */
+    void setMoveCosts(const qint32 &moveCosts);
+
 private:
     Unit* m_pUnit;
+    qint32 m_MoveCosts;
 };
 
 #endif // UNITPATHFINDINGSYSTEM_H

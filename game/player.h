@@ -134,6 +134,13 @@ public slots:
      */
     qint32 calcIncome(float modifier = 1.0f);
     /**
+     * @brief getBonusIncome
+     * @param pBuilding
+     * @param income
+     * @return
+     */
+    qint32 getIncomeReduction(Building* pBuilding, qint32 income);
+    /**
      * @brief getCO
      * @param id index of the co 0 or 1
      * @return pointer to the co
@@ -206,7 +213,7 @@ public slots:
      * @param ownUnitValue value of own or allied units compared to enemy ones.
      * @return -1, -1 for no target found
      */
-    QPoint getRockettarget(qint32 radius, qint32 damage, float ownUnitValue = 1.0f, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money);
+    QPoint getRockettarget(qint32 radius, qint32 damage, float ownUnitValue = 1.2f, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money);
     /**
      * @brief defineArmy defines our army sprites based on the current co at position 0
      */

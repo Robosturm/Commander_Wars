@@ -11,7 +11,8 @@
 
 UnitPathFindingSystem::UnitPathFindingSystem(Unit* pUnit)
     : PathFindingSystem(pUnit->getX(), pUnit->getY()),
-      m_pUnit(pUnit)
+      m_pUnit(pUnit),
+      m_MoveCosts(m_pUnit->getMovementPoints())
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -23,7 +24,14 @@ qint32 UnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint32 curren
     GameMap* pMap = GameMap::getInstance();
     if (pMap->onMap(x, y))
     {
-        return m_pUnit->getMovementPoints() - currentCost;
+        if (m_MoveCosts > 0)
+        {
+            return m_MoveCosts - currentCost;
+        }
+        else
+        {
+            return 1;
+        }
     }
     else
     {
@@ -42,15 +50,18 @@ qint32 UnitPathFindingSystem::getCosts(qint32 x, qint32 y)
     GameMap* pMap = GameMap::getInstance();
     if (pMap->onMap(x, y))
     {
-        Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
-        // check for an enemy on the field
-        if (pUnit != nullptr)
+        if (!m_pUnit->getIgnoreUnitCollision())
         {
-            // ignore unit if it's not an enemy unit or if it's stealthed
-            if (m_pUnit->getOwner()->isEnemyUnit(pUnit) &&
-               (!pUnit->isStealthed(m_pUnit->getOwner())))
+            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+            // check for an enemy on the field
+            if (pUnit != nullptr)
             {
-                return -1;
+                // ignore unit if it's not an enemy unit or if it's stealthed
+                if (m_pUnit->getOwner()->isEnemyUnit(pUnit) &&
+                    (!pUnit->isStealthed(m_pUnit->getOwner())))
+                {
+                    return -1;
+                }
             }
         }
         qint32 baseCosts = pMovementTableManager->getBaseMovementPoints(m_pUnit->getMovementType(), pMap->getTerrain(x, y));
@@ -134,4 +145,9 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target
         }
     }
     return QVector<QPoint>();
+}
+
+void UnitPathFindingSystem::setMoveCosts(const qint32 &moveCosts)
+{
+    m_MoveCosts = moveCosts;
 }

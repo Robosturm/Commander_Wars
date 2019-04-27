@@ -303,6 +303,22 @@ bool Player::getIsDefeated() const
     return isDefeated;
 }
 
+qint32 Player::getIncomeReduction(Building* pBuilding, qint32 income)
+{
+    qint32 reduction = 0;
+    CO* pCO = getCO(0);
+    if (pCO != nullptr)
+    {
+        reduction += pCO->getIncomeReduction(pBuilding, income);
+    }
+    pCO = getCO(1);
+    if (pCO != nullptr)
+    {
+        reduction += pCO->getIncomeReduction(pBuilding, income);
+    }
+    return reduction;
+}
+
 qint32 Player::calcIncome(float modifier)
 {
     qint32 ret = 0;
@@ -329,6 +345,22 @@ qint32 Player::calcIncome(float modifier)
                         modifier += pCO->getBonusIncome(pBuilding.get(), income);
                     }
                     income = static_cast<qint32>(income) + modifier;
+
+                    modifier = 0;
+                    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+                    {
+                        Player* pPlayer = pMap->getPlayer(i);
+                        if (isEnemy(pPlayer))
+                        {
+                            modifier -= pPlayer->getIncomeReduction(pBuilding.get(), income);
+                        }
+                    }
+                    income += modifier;
+
+                    if (income < 0)
+                    {
+                        income = 0;
+                    }
                     ret += income;
                 }
             }
@@ -339,6 +371,8 @@ qint32 Player::calcIncome(float modifier)
 
 void Player::earnMoney(float modifier)
 {
+
+
     setFonds(fonds + calcIncome(modifier));
 }
 

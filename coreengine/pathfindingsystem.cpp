@@ -26,6 +26,11 @@ PathFindingSystem::~PathFindingSystem()
     }
 }
 
+void PathFindingSystem::setStartPoint(qint32 startX, qint32 startY)
+{
+    m_StartPoint = QPoint(startX, startY);
+}
+
 void PathFindingSystem::explore()
 {
     m_OpenList.append(new Node(m_StartPoint.x(), m_StartPoint.y(), 0, getRemainingCost(m_StartPoint.x(), m_StartPoint.y(), 0)));

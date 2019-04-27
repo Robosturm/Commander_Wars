@@ -172,6 +172,7 @@ set(${PROJECT_NAME}_SRCS
         ai/coreai.cpp
         ai/veryeasyai.cpp
         ai/targetedunitpathfindingsystem.cpp
+        ai/islandmap.cpp
 )
 
 

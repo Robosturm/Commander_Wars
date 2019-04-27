@@ -862,7 +862,10 @@ void GameMap::startOfTurn(Player* pPlayer)
             }
         }
     }
-    m_CurrentPlayer->startOfTurn();
+    if (pPlayer != nullptr)
+    {
+        pPlayer->startOfTurn();
+    }
     pApp->continueThread();
 }
 

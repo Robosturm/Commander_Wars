@@ -815,6 +815,10 @@ qint32 Unit::getCapturePoints() const
 void Unit::setCapturePoints(const qint32 &value)
 {
     capturePoints = value;
+    if (capturePoints < 0)
+    {
+        capturePoints = 0;
+    }
     if (capturePoints > 0)
     {
         loadIcon("capture", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
@@ -1130,12 +1134,26 @@ QString Unit::getUnitID()
 
 qint32 Unit::getX() const
 {
-    return m_pTerrain->getX();
+    if (m_pTerrain != nullptr)
+    {
+        return m_pTerrain->getX();
+    }
+    else
+    {
+        return -1;
+    }
 }
 
 qint32 Unit::getY() const
 {
-    return m_pTerrain->getY();
+    if (m_pTerrain != nullptr)
+    {
+       return m_pTerrain->getY();
+    }
+    else
+    {
+        return -1;
+    }
 }
 
 QPoint Unit::getPosition() const
@@ -1498,6 +1516,16 @@ void Unit::updateIconTweens()
     }
 }
 
+bool Unit::getIgnoreUnitCollision() const
+{
+    return m_IgnoreUnitCollision;
+}
+
+void Unit::setIgnoreUnitCollision(bool IgnoreUnitCollision)
+{
+    m_IgnoreUnitCollision = IgnoreUnitCollision;
+}
+
 bool Unit::getHidden() const
 {
     return m_Hidden;
@@ -1583,6 +1611,7 @@ void Unit::serializeObject(QDataStream& pStream)
     pStream << capturePoints;
     pStream << m_Hidden;
     m_Variables.serializeObject(pStream);
+    pStream << m_IgnoreUnitCollision;
 }
 
 void Unit::deserializeObject(QDataStream& pStream)
@@ -1640,6 +1669,10 @@ void Unit::deserializeObject(QDataStream& pStream)
     if (version > 4)
     {
         m_Variables.deserializeObject(pStream);
+    }
+    if (version > 5)
+    {
+        pStream >> m_IgnoreUnitCollision;
     }
 }
 
