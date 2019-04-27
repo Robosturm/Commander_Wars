@@ -110,16 +110,58 @@ var Constructor = function()
     {
         return "GS";
     };
+
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                 defender, defPosX, defPosY)
+    {
+        if (attacker !== null)
+        {
+            var variables = co.getVariables();
+            var buildedVar = variables.createVariable("SANJURO_BUILDED_" + defender.getUnitID());
+            var builded = buildedVar.readDataBool();
+            switch (co.getPowerMode())
+            {
+            case GameEnums.PowerMode_Superpower:
+                if (builded === true)
+                {
+                    return 30;
+                }
+                else
+                {
+                    return 0;
+                }
+            case GameEnums.PowerMode_Power:
+                return 0;
+            default:
+                break;
+            }
+        }
+        return 0;
+    };
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
         var variables = co.getVariables();
         var dmgModVar = variables.createVariable("SANJURO_DMG_MOD");
+        var builded = false
+        if (attacker !== null)
+        {
+            var buildedVar = variables.createVariable("SANJURO_BUILDED_" + attacker.getUnitID());
+            builded = buildedVar.readDataBool();
+        }
         var modifier = dmgModVar.readDataFloat();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                return modifier;
+                if (builded === true)
+                {
+                    return modifier + 50;
+                }
+                else
+                {
+                    return modifier;
+                }
             case GameEnums.PowerMode_Power:
                 return modifier;
             default:
@@ -138,10 +180,15 @@ var Constructor = function()
                 {
                     return modifier;
                 }
-
-                break;
         }
-        return 0;
+    };
+
+    this.buildedUnit = function(co, unit)
+    {
+        // called when someone builded a unit -> ACTION_BUILD_UNITS was performed
+        var variables = co.getVariables();
+        var buildedVar = variables.createVariable("SANJURO_BUILDED_" + unit.getUnitID());
+        buildedVar.writeDataBool(true);
     };
 
     this.startOfTurn = function(co)
@@ -194,9 +241,16 @@ var Constructor = function()
     {
         var variables = co.getVariables();
         var costModVar = variables.createVariable("SANJURO_COST_MOD");
+        var buildedVar = variables.createVariable("SANJURO_BUILDED_" + id);
+        var builded = buildedVar.readDataBool();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
+                if (builded === true)
+                {
+                    // reduce cost of following units of the same type
+                    return -(baseCost * costModVar.readDataFloat() + baseCost) * 0.5;
+                }
                 break;
             case GameEnums.PowerMode_Power:
                 break;
@@ -204,6 +258,19 @@ var Constructor = function()
                 break;
         }
         return baseCost * costModVar.readDataFloat();
+    };
+
+    this.getMovementpointModifier = function(co, unit, posX, posY)
+    {
+        var variables = co.getVariables();
+        var buildedVar = variables.createVariable("SANJURO_BUILDED_" + unit.getUnitID());
+        var builded = buildedVar.readDataBool();
+        if (builded === true)
+        {
+            // movement boost for builded units
+            return -999;
+        }
+        return 0;
     };
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)

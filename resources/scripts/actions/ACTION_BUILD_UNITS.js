@@ -42,11 +42,13 @@ var Constructor = function()
     {
         action.startReading();
         var unitID = action.readDataString();
-        var unit = map.spawnUnit(action.getTarget().x, action.getTarget().y, unitID, map.getCurrentPlayer());
+        var player = map.getCurrentPlayer();
+        var unit = map.spawnUnit(action.getTarget().x, action.getTarget().y, unitID, player);
         // pay for the unit
         map.getCurrentPlayer().addFonds(-action.getCosts());
-        map.getGameRecorder().buildUnit(map.getCurrentPlayer().getPlayerID());
+        map.getGameRecorder().buildUnit(player.getPlayerID());
         unit.setHasMoved(true);
+        player.buildedUnit(unit);
     };
 
     this.getStepInputType = function(action)
@@ -62,7 +64,7 @@ var Constructor = function()
     this.getStepData = function(action, data)
     {
         var building = action.getTargetBuilding();
-        var units = Global[building.getBuildingID()].getConstructionList();
+        var units = building.getConstructionList();
         for (i = 0; i < units.length; i++)
         {
             var name = Global[units[i]].getName();

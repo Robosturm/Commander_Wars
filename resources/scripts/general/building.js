@@ -85,17 +85,12 @@ var BUILDING =
         }
     },
 
-    getBuildList : function()
-    {
-        return "";
-    },
-
     getBaseIncome : function()
     {
         return 1000;
     },
 
-    getConstructionList : function()
+    getConstructionList : function(building)
     {
         return [];
     },
@@ -141,7 +136,7 @@ var BUILDING =
     {
         // default impl replenishes our units
         // gets called at the start of a turn
-        var constructionList = Global[building.getBuildingID()].getConstructionList();
+        var constructionList = building.getConstructionList();
         var unit = building.getTerrain().getUnit();
         if ((unit !== null) &&
             (unit.getOwner() === building.getOwner()) &&

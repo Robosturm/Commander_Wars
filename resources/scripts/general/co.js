@@ -16,6 +16,11 @@ var CO =
         return 0;
     },
 
+    buildedUnit : function(co, unit)
+    {
+        // called when someone builded a unit -> ACTION_BUILD_UNITS was performed
+    },
+
     getFirerangeModifier : function(co, unit, posX, posY)
     {
         return 0;

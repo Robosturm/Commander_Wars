@@ -284,6 +284,11 @@ public slots:
      * @brief loadCOMusic
      */
     void loadCOMusic();
+    /**
+     * @brief buildedUnit called after a unit was created do whatever you want with this information
+     * @param pUnit
+     */
+    void buildedUnit(Unit* pUnit);
 private:
     qint32 fonds{0};
     float fondsModifier{1.0f};

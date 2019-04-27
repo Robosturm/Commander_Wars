@@ -164,19 +164,23 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
                 {
-                    if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
-                    {
-                        return 50
-                    }
-                    else
-                    {
-                        return 40;
-                    }
+                    return 60
                 }
-                break;
+                else
+                {
+                    return 40;
+                }
             case GameEnums.PowerMode_Power:
+                if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+                {
+                    return 30
+                }
+                else
+                {
+                    return 20;
+                }
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY)))
                 {

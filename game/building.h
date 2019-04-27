@@ -134,6 +134,11 @@ public slots:
      */
     QStringList getActionList();
     /**
+     * @brief getConstructionList
+     * @return
+     */
+    QStringList getConstructionList();
+    /**
      * @brief startOfTurn
      */
     void startOfTurn();

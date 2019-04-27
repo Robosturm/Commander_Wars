@@ -21,7 +21,7 @@ var Constructor = function()
         return "ACTION_BUILD_UNITS";
     };
 
-    this.getConstructionList = function()
+    this.getConstructionList = function(building)
     {
         return ["PIPERUNNER"];
     };

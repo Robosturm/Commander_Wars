@@ -254,6 +254,17 @@ QStringList Building::getActionList()
     }
 }
 
+QStringList  Building::getConstructionList()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getConstructionList";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj1;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
+    return ret.toVariant().toStringList();
+}
+
 void Building::startOfTurn()
 {
     Mainapp* pApp = Mainapp::getInstance();

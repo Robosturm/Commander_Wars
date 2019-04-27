@@ -53,7 +53,7 @@ var Constructor = function()
     {
         return 4;
     };
-    this.getConstructionList = function()
+    this.getConstructionList = function(building)
     {
         return ["INFANTRY", "MECH", "MOTORBIKE", "RECON", "APC", "FLARE",
                 "ARTILLERY", "LIGHT_TANK", "FLAK", "ANTITANKCANNON",

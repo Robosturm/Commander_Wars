@@ -1176,7 +1176,7 @@
 <context>
     <name>building</name>
     <message>
-        <location filename="../resources/scripts/general/building.js" line="159"/>
+        <location filename="../resources/scripts/general/building.js" line="154"/>
         <source>RATION</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3581,102 +3581,102 @@
 <context>
     <name>co_napoleon</name>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="216"/>
         <source>The current second commander of the Metall Army. Believes Metall Army&apos;s ingenuity gives it a right to control the world.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="220"/>
         <source>Sudoku</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="224"/>
         <source>Horror Movies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="228"/>
         <source>Unit&apos;s have high defensive capabilities.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="232"/>
         <source>Units cannot take damage that is more than half of their starting HP in a single attack.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="236"/>
         <source>Blast Shield</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="240"/>
         <source>Units fight as though they were four HP stronger and inflict extra damage relative to their terrain cover.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="244"/>
         <source>Last Stand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="248"/>
         <source>Me and what army, you ask?  I have many more soldiers than you think.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="249"/>
         <source>Size does not matter in a battle of wills.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="246"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="250"/>
         <source>I can take any attack.  You would be wrong to test that statement.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="251"/>
         <source>You can give up now and avoid further bloodshed.  Either way, though, my troops simply won&apos;t die.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="252"/>
         <source>My casualties are not dead, but simply waiting to fight again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="253"/>
         <source>I need not worry about attrition.  On the other hand, you do.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="253"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="257"/>
         <source>The survival of the Metall Army is assured.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="258"/>
         <source>My casualties are recovering.  Yours are not so lucky.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="259"/>
         <source>Why were you so confident?  Success is earned, not granted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="263"/>
         <source>Our losses are unacceptable.  I will fix that.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="264"/>
         <source>Stand aside; I will deal with them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="268"/>
         <source>Napoleon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4557,102 +4557,102 @@
 <context>
     <name>co_sanjuro</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="298"/>
         <source>A respected mercenary from Golden Sun. Once he accepts a job, he sees it through to the end no matter how difficult or dangerous it becomes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="302"/>
         <source>Honest work</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="306"/>
         <source>Shady business</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="310"/>
         <source>A keen mind for his finances, he spends more for better equipment when there&apos;s a surplus and focuses on getting the best deal when he&apos;s pressed for money.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="314"/>
         <source>When his units take combat damage, he recieves a portion of the value of the damage in funds.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="318"/>
         <source>Heart of Gold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="252"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="322"/>
         <source>When a unit is built, units of the same type recieve a firepower and defense boost, unhindered by terrain, and production costs reduced by half.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="326"/>
         <source>Buying Power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="330"/>
         <source>My services are expensive, and worth every penny.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="261"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="331"/>
         <source>Consider this a free sample!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="332"/>
         <source>You&apos;re finished! Surrender now!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="333"/>
         <source>War is my livelihood. Can you handle my level of experience?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="334"/>
         <source>I was born for battle. I have no limits!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="265"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="335"/>
         <source>If you think this is strictly business, think again. The battlefield calls to me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="339"/>
         <source>I have a reputation to keep, you know.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="270"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="340"/>
         <source>Another job well done...where&apos;s the next fight?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="341"/>
         <source>Did you expect anything less from a hardened mercenary?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="345"/>
         <source>For this i get to less money</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="346"/>
         <source>Now, i know how the Romans felt like.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="350"/>
         <source>Sanjuro</source>
         <translation type="unfinished"></translation>
     </message>

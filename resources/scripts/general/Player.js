@@ -5,7 +5,7 @@ var PLAYER =
 
     getDefaultPlayerColors : function()
     {
-        return 20;
+        return 21;
     },
     getDefaultColor : function(index)
     {
@@ -31,7 +31,7 @@ var PLAYER =
                 color = "darkslateblue";
                 break;
             case 6:
-                color = "steelblue";
+                color = "lightsteelblue";
                 break;
             case 7:
                 color = "coral";
@@ -40,37 +40,40 @@ var PLAYER =
                 color = "peru";
                 break;
             case 9:
-                color = "silver";
-                break;
+                color = "gold";
+                break;                
             case 10:
                 color = "magenta";
-                break;
+                break;                
             case 11:
                 color = "teal";
-                break;
+                break;                
             case 12:
-                color = "indigo";
+                color = "purple";
                 break;
             case 13:
                 color = "cyan";
                 break;
             case 14:
-                color = "green";
+                color = "#00FF00";
                 break;
             case 15:
-                color = "red";
+                color = "#FF0000";
                 break;
             case 16:
                 color = "firebrick";
                 break;
             case 17:
-                color = "purple";
+                color = "#FFFF00";
                 break;
             case 18:
                 color = "goldenrod";
                 break;
             case 19:
-                color = "blue";
+                color = "#0000FF";
+                break;
+            case 20:
+                color = "silver";
                 break;
             default:
                 // create a cool random color

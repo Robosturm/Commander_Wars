@@ -31,7 +31,7 @@ var Constructor = function()
         return "ACTION_BUILD_UNITS";
     };
 
-    this.getConstructionList = function()
+    this.getConstructionList = function(building)
     {
         return ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER", "RECON", "APC", "FLARE",
                 "ARTILLERY", "LIGHT_TANK", "HOVERCRAFT", "FLAK", "HOVERFLAK",

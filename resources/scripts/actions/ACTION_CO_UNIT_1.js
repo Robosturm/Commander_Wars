@@ -14,7 +14,7 @@ var Constructor = function()
         if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) &&
             (building !== null))
         {
-            var constructionList = Global[building.getBuildingID()].getConstructionList();
+            var constructionList = building.getConstructionList();
             var co = unit.getOwner().getCO(1);
             if (((constructionList.indexOf(unit.getUnitID()) >= 0) || (building.getBuildingID() === "HQ")) &&
                 (unit.getUnitCosts() / 2 <= unit.getOwner().getFonds()) &&

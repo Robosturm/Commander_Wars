@@ -598,3 +598,12 @@ CO_VON_BOLT  2                 0               4                 7              
 CO_VON_BOLT  2                 0               4                 3                 3               6               7               11000                    0           2
 CO_VON_BOLT  2                 0               7                 7                 6               6               6               11000                    0           2
 CO_VON_BOLT  2                 0               3                 3                 3               3               3                9000                    0           2
+
+
+peter
+melanthe
+sabaki
+sophie
+graves
+minamoto
+zandra

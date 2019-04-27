@@ -582,7 +582,11 @@ void MapSelectionMapsMenue::showCOSelection()
     // add player labels at top
     QStringList items = {tr("Username"), tr("CO's"), tr("Color"), tr("AI Strength"), tr("Startfonds"), tr("Income Modifier"), tr("Team")};
     QVector<qint32> xPositions;
-    qint32 labelminStepSize = 150;
+    qint32 labelminStepSize = (pApp->getSettings()->getWidth() - 100) / items.size();
+    if (labelminStepSize < 150)
+    {
+        labelminStepSize = 150;
+    }
     qint32 curPos = 5;
 
     oxygine::spTextField pLabel;

@@ -405,6 +405,18 @@ qint32 CO::getMovementPointModifier(Unit* pUnit)
     }
 }
 
+void CO::buildedUnit(Unit* pUnit)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "buildedUnit";
+    QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
+    args1 << obj1;
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+}
+
 qint32 CO::getCostModifier(QString id, qint32 baseCost)
 {
     Mainapp* pApp = Mainapp::getInstance();

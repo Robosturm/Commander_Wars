@@ -362,6 +362,18 @@ void Player::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender
     }
 }
 
+void Player::buildedUnit(Unit* pUnit)
+{
+    if (playerCOs[0].get() != nullptr)
+    {
+       playerCOs[0]->buildedUnit(pUnit);
+    }
+    if (playerCOs[1].get() != nullptr)
+    {
+       playerCOs[1]->buildedUnit(pUnit);
+    }
+}
+
 void Player::addVisionField(qint32 x, qint32 y, qint32 duration)
 {
     m_FogVisionFields[x][y].setX(1);

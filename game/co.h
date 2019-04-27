@@ -55,6 +55,11 @@ public slots:
      */
     qint32 getMovementPointModifier(Unit* pUnit);
     /**
+     * @brief buildedUnit called after a unit was created do whatever you want with this information
+     * @param pUnit
+     */
+    void buildedUnit(Unit* pUnit);
+    /**
      * @brief getFirerangeModifier the bonus firerange of this co
      * @param pUnit the unit we want to get the bonus points from
      * @return
