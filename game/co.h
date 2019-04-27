@@ -162,6 +162,18 @@ public slots:
     float getDamageReduction(float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
                              Unit* pDefender, QPoint defPosition, bool isDefender);
     /**
+     * @brief getTrueDamage
+     * @param damage
+     * @param pAttacker
+     * @param position
+     * @param attackerBaseHp
+     * @param defPosition
+     * @param isDefender
+     * @return
+     */
+    float getTrueDamage(float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
+                        Unit* pDefender, QPoint defPosition, bool isDefender);
+    /**
      * @brief getCoID our co id
      * @return
      */
@@ -274,6 +286,12 @@ public slots:
      * @return
      */
     void setCOUnit(Unit* pUnit);
+    /**
+     * @brief getActionModifierList
+     * @param pUnit
+     * @return
+     */
+    QStringList getActionModifierList(Unit* pUnit);
     /**
      * @brief getCORange
      * @return

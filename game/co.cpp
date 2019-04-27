@@ -635,6 +635,36 @@ float CO::getDamageReduction(float damage, Unit* pAttacker, QPoint atkPosition, 
     }
 }
 
+float CO::getTrueDamage(float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
+                        Unit* pDefender, QPoint defPosition, bool isDefender)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getTrueDamage";
+    QJSValueList args1;
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj3;
+    args1 << damage;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pAttacker);
+    args1 << obj1;
+    args1 << atkPosition.x();
+    args1 << atkPosition.y();
+    args1 << attackerBaseHp;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(pDefender);
+    args1 << obj2;
+    args1 << defPosition.x();
+    args1 << defPosition.y();
+    args1 << isDefender;
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 GameEnums::PowerMode CO::getPowerMode() const
 {
     return m_PowerMode;
@@ -669,6 +699,19 @@ void CO::gainPowerstar(qint32 fondsDamage, QPoint position)
 Unit* CO::getCOUnit()
 {
     return m_pCOUnit;
+}
+
+QStringList CO::getActionModifierList(Unit* pUnit)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getActionModifierList";
+    QJSValueList args1;
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj3;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
+    args1 << obj1;
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    return erg.toVariant().toStringList();
 }
 
 qint32 CO::getCORange()

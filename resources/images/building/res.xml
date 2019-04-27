@@ -70,10 +70,10 @@
 		<image file="hq+ma+mask.png" cols = "2" />
 		<image file="hq+os.png" cols = "2" />
 		<image file="hq+os+mask.png" cols = "2" />
-		<image file="hq+pc.png" cols = "2" />
-		<image file="hq+pc+mask.png" cols = "2" />
-		<image file="hq+tg.png" cols = "2" />
-		<image file="hq+tg+mask.png" cols = "2" />
+		<image file="hq+pf.png" cols = "2" />
+		<image file="hq+pf+mask.png" cols = "2" />
+		<image file="hq+ti.png" cols = "2" />
+		<image file="hq+ti+mask.png" cols = "2" />
 		<image file="hq+yc.png" cols = "2" />
 		<image file="hq+yc+mask.png" cols = "2" />		
 		<image file="hq+neutral.png" />

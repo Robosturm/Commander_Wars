@@ -13,11 +13,6 @@ var Constructor = function()
                 "HOVERCRAFT", "HOVERFLAK", "K_HELI", "LIGHT_TANK", "MEGATANK",
                 "NEOTANK", "RECON", "STEALTHBOMBER", "SUBMARINE", "WATERPLANE"];
     };
-    this.getIndirectUnitIDS = function()
-    {
-        return ["AIRCRAFTCARRIER", "ANTITANKCANNON", "ARTILLERY", "BATTLESHIP",
-                "MISSILE", "PIPERUNNER", "ROCKETTHROWER"];
-    };
 
     this.loadCOMusic = function(co)
     {
@@ -130,7 +125,6 @@ var Constructor = function()
                                  defender, defPosX, defPosY, isDefender)
     {
         var tankUnits = CO_MAX.getDirectUnitIDS();
-        var indirectUnits = CO_MAX.getIndirectUnitIDS();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
@@ -156,7 +150,7 @@ var Constructor = function()
                 }
                 break;
         }
-        if (indirectUnits.indexOf(attacker.getUnitID()) >= 0)
+        if (attacker.getMinRange() > 1)
         {
             return -10;
         }

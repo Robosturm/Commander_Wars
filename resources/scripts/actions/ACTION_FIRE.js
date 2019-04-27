@@ -126,7 +126,7 @@ var Constructor = function()
             damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive);
             if (luckMode !== GameEnums.LuckDamageMode_Off)
             {
-                var luck = attackerBaseHp / 2 + attacker.getBonusLuck(attackerPosition);
+                var luck = attackerHp / 2 + attacker.getBonusLuck(attackerPosition);
                 var misfortune = attacker.getBonusMisfortune(attackerPosition);
                 if (luckMode === GameEnums.LuckDamageMode_On)
                 {
@@ -137,6 +137,8 @@ var Constructor = function()
                     damage += (-misfortune + luck) / 2;
                 }
             }
+            damage += attacker.getTrueDamage(damage, attacker, attackerPosition, attackerBaseHp,
+                                             defenderPosition, isDefender);
             damage -= defender.getDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,
                                                   defenderPosition, isDefender);
             // avoid healing through negativ damage caused by misfortune or other stuff
@@ -356,6 +358,7 @@ var Constructor = function()
 
             // we're attacking do recording
             map.getGameRecorder().attacked(attacker.getOwner().getPlayerID(), attackerDamage);
+
             // gain power based on damage
             if (damage > defUnit.getHp())
             {
@@ -370,8 +373,9 @@ var Constructor = function()
                 defUnit.getOwner().gainPowerstar(power, Qt.point(defUnit.getX(), defUnit.getY()));
                 attacker.getOwner().gainPowerstar(power / 4, Qt.point(attacker.getX(), attacker.getY()));
             }
+            // deal damage
+            defUnit.setHp(defUnit.getHp() - attackerDamage / 10.0);
             // reduce attacker ammo
-            defUnit.setHp(defUnit.getHp() - damage);
             if (attackerWeapon === 0)
             {
                 attacker.reduceAmmo1(1);
@@ -383,7 +387,6 @@ var Constructor = function()
             // set counter damage
             if (counterdamage > 0)
             {
-                attacker.setHp(attacker.getHp() - counterdamage);
                 costs = attacker.getCosts();
                 // gain power based
                 if (counterdamage > attacker.getHp())
@@ -399,6 +402,8 @@ var Constructor = function()
                     attacker.getOwner().gainPowerstar(power, Qt.point(attacker.getX(), attacker.getY()));
                     defOwner.gainPowerstar(power / 4, Qt.point(defUnitX, defUnitY));
                 }
+                // deal damage
+                attacker.setHp(attacker.getHp() - defenderDamage / 10.0);
                 // reduce ammo
                 if (defenderWeapon === 0)
                 {

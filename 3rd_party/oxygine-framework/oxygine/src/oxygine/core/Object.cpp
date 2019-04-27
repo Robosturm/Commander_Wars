@@ -241,7 +241,6 @@ namespace oxygine
         char refs[16] = "-";
         if (o)
         {
-            safe_sprintf(refs, "%d", o->_ref_counter);
 #if DYNAMIC_OBJECT_NAME
             if (o->__name)
                 name = *o->__name;

@@ -62,6 +62,12 @@ var CO =
         return 0;
     },
 
+    getTrueDamage : function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
+                             defender, defPosX, defPosY, isDefender)
+    {
+        return 0;
+    },
+
     getPerfectVision : function(co)
     {
         // return true if forest and reafs etc are disabled in fog of war see sonja
@@ -87,6 +93,12 @@ var CO =
     getBonusMisfortune : function(co, unit, posX, posY)
     {
         return 0;
+    },
+
+    getActionModifierList : function(co, unit)
+    {
+        // return empty list as default
+        return [];
     },
 
     activatePower : function(co)

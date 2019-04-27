@@ -1008,7 +1008,7 @@ namespace oxygine
             OX_ASSERT(actor->_parent == this);
             if (actor->_parent == this)
             {
-                setParent(actor.get(), 0);
+                setParent(actor.get(), nullptr);
                 _children.remove(actor);
             }
         }
@@ -1032,7 +1032,9 @@ namespace oxygine
     {
         Actor* parent = getParent();
         if (parent)
+        {
             parent->removeChild(this);
+        }
         return parent;
     }
 

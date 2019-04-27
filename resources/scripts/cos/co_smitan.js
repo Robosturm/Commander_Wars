@@ -3,15 +3,7 @@ var Constructor = function()
     this.init = function(co)
     {
         co.setPowerStars(3);
-        co.setSuperpowerStars(3);
-    };
-
-    this.getDirectUnitIDS = function()
-    {
-        return ["BOMBER", "CANNONBOAT", "CRUISER", "DESTROYER", "DUSTER",
-                "FIGHTER", "FLAK", "FLARE", "HEAVY_HOVERCRAFT", "HEAVY_TANK",
-                "HOVERCRAFT", "HOVERFLAK", "K_HELI", "LIGHT_TANK", "MEGATANK",
-                "NEOTANK", "RECON", "STEALTHBOMBER", "SUBMARINE", "WATERPLANE"];
+        co.setSuperpowerStars(5);
     };
 
     this.loadCOMusic = function(co)
@@ -26,7 +18,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/superpower.mp3");
                 break;
             default:
-                audio.addMusic("resources/music/cos/grit.mp3")
+                audio.addMusic("resources/music/cos/smitan.mp3")
                 break;
         }
     };
@@ -46,6 +38,9 @@ var Constructor = function()
             var unit = units.at(i);
             if (unit.getMinRange() > 1)
             {
+                var variables = unit.getVariables();
+                var variable = variables.createVariable("SMITAN_ATTACK_COUNT");
+                variable.writeDataInt32(1);
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
                 if (animations.length < 5)
                 {
@@ -69,7 +64,7 @@ var Constructor = function()
         units.remove();
 
         audio.clearPlayList();
-        CO_GRIT.loadCOMusic(co);
+        CO_SMITAN.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -88,6 +83,9 @@ var Constructor = function()
             var unit = units.at(i);
             if (unit.getMinRange() > 1)
             {
+                var variables = unit.getVariables();
+                var variable = variables.createVariable("SMITAN_ATTACK_COUNT");
+                variable.writeDataInt32(2);
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
                 if (animations.length < 5)
                 {
@@ -111,8 +109,57 @@ var Constructor = function()
         units.remove();
 
         audio.clearPlayList();
-        CO_GRIT.loadCOMusic(co);
+        CO_SMITAN.loadCOMusic(co);
         audio.playRandom();
+    };
+
+    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+    {
+        if (gotAttacked === false)
+        {
+            switch (co.getPowerMode())
+            {
+                case GameEnums.PowerMode_Superpower:
+                case GameEnums.PowerMode_Power:
+                    if (attacker.getMinRange() > 1)
+                    {
+                        var variables = attacker.getVariables();
+                        var variable = variables.getVariable("SMITAN_ATTACK_COUNT");
+                        var counter = variable.readDataInt32();
+                        counter--;
+                        variable.writeDataInt32(counter);
+                        // enable unit for another move
+                        attacker.setHasMoved(false);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    this.getActionModifierList = function(co, unit)
+    {
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Superpower:
+            case GameEnums.PowerMode_Power:
+                if (unit.getMinRange() > 1)
+                {
+                    var variables = unit.getVariables();
+                    var variable = variables.getVariable("SMITAN_ATTACK_COUNT");
+                    var counter = variable.readDataInt32();
+                    if (counter === 0)
+                    {
+                        // disable firing with this unit
+                        return ["-ACTION_FIRE"];
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+        return [];
     };
 
     this.getCOUnitRange = function(co)
@@ -122,36 +169,54 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var tankUnits = CO_GRIT.getDirectUnitIDS();
+        var inRangeCount = 0;
+        if (attacker.getMaxRange() === 1)
+        {
+            var units = co.getPlayer().getUnits();
+            for (var i = 0; i < units.size(); i++)
+            {
+                var unit = units.at(i);
+                var x = unit.getX();
+                var y = unit.getY();
+                var distance = Math.abs(x - defPosX) + Math.abs(y - defPosY);
+                if (unit.getMinRange() <= distance && distance <= unit.getMaxRange())
+                {
+                    inRangeCount += 1;
+                }
+            }
+        }
+
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                if (attacker.getMinRange() > 1)
+                if (attacker.getMaxRange() === 1)
                 {
-                    return 70;
+                    return inRangeCount * 20;
                 }
-                break;
+                else
+                {
+                    return 0;
+                }
             case GameEnums.PowerMode_Power:
-                if (attacker.getMinRange() > 1)
+                if (attacker.getMaxRange() === 1)
                 {
-                    return 50;
+                    return inRangeCount * 10;
                 }
-                break;
+                else
+                {
+                    return 0;
+                }
             default:
-                if (attacker.getMinRange() > 1)
+                if (attacker.getMaxRange() === 1)
                 {
                     if (co.inCORange(Qt.point(atkPosX, atkPosY)))
                     {
-                        return 30;
+                        return inRangeCount * 10;
                     }
-                    return 15;
+                    return inRangeCount * 5;
                 }
                 break;
-        }
-        if (tankUnits.indexOf(attacker.getUnitID()) >= 0)
-        {
-            return -20;
-        }
+        }        
         return 0;
     };
     this.getFirerangeModifier = function(co, unit, posX, posY)
@@ -161,87 +226,82 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 if (unit.getMinRange() > 1)
                 {
-                    return 3;
+                    return 2;
                 }
                 break;
             case GameEnums.PowerMode_Power:
                 if (unit.getMinRange() > 1)
                 {
-                    return 2;
+                    return 1;
                 }
                 break;
             default:
-                if (unit.getMinRange() > 1)
-                {
-                    return 1;
-                }
                 break;
         }
         return 0;
     };
     this.getCOArmy = function()
     {
-        return "BM";
+        return "GE";
     };
 
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A laid-back style masks his dependability. A peerless marksman. Works well with Olaf.");
+        return qsTr("A violent old commander of the Green Earth army who hates limitations.");
     };
     this.getHits = function()
     {
-        return qsTr("Cats");
+        return qsTr("Dominance, yelling");
     };
     this.getMiss = function()
     {
-        return qsTr("Rats");
+        return qsTr("(Victory by) Surrender");
     };
     this.getCODescription = function()
     {
-        return qsTr("Indirect-combat units cause more damage and have increased firerange. Weak in non-infantry direct combat.");
+        return qsTr("Direct units gain additional firepower against enemy units which may come under fire from indirect units.");
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Increases range of indirect units by one space. Firepower of these units also rise.");
+        return qsTr("Increases the range of indirect units by one space. Indirect units can move after firing.");
     };
     this.getPowerName = function()
     {
-        return qsTr("Snipe Attack");
+        return qsTr("Scramble Tactics");
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Increases range of indirect units by two spaces. Firepower of these units greatly rise.");
+        return qsTr("Increases the range of indirect units by two spaces. Indirect units can fire twice and move after firing.");
     };
     this.getSuperPowerName = function()
     {
-        return qsTr("Super Snipe");
+        return qsTr("Flare Drive");
     };
     this.getPowerSentences = function()
     {
-        return [qsTr("Once you're in my sights, there's no gettin' away!"),
-                qsTr("Reckon it's time to take you down!"),
-                qsTr("Where's the fool who wants to help me with target practice?"),
-                qsTr("Y'all can run, but you can't hide!"),
-                qsTr("Y'all gimme no choice... Time to bring in the big guns!"),
-                qsTr("Aw, shucks. I was hopin' it wouldn't come to this.")];
+        return [qsTr("Whites of their eyes? Pahaha!"),
+                qsTr("It's over! Get used to it!!"),
+                qsTr("Fire, you idiots!!"),
+                qsTr("What're you waiting for?! SHOOT them!!"),
+                qsTr("'Calm before the storm'? ... Nonsense."),
+                qsTr("No more games! All units, full power!!")];
     };
     this.getVictorySentences = function()
     {
-        return [qsTr("This ain't for show."),
-                qsTr("Maybe now I can get some shut-eye."),
-                qsTr("I hope this gets easier. That was harder'n college!")];
+        return [qsTr("Wasn't even any dust to settle."),
+                qsTr("Grah hah hah. Ooh, that was FUN.")];
     };
     this.getDefeatSentences = function()
     {
-        return [qsTr("Aw, possum spit!"),
-                qsTr("Just as I reckoned... This ain't gonna be no Sunday stroll.")];
+        return [qsTr("Grah! Ha! Ha. Ooh! What i lost"),
+                qsTr("This and that! And what...i've lost?")];
     };
     this.getName = function()
     {
-        return qsTr("Grit");
+        return qsTr("Smitan");
     };
 }
 
 Constructor.prototype = CO;
-var CO_GRIT = new Constructor();
+var CO_SMITAN = new Constructor();

@@ -187,11 +187,11 @@
 		<image file="infantry+ma+walk+mask.png" cols = "4"  rows = "4" />	
 		
 		
-		<image file="infantry+pc.png" cols = "4" />
-		<image file="infantry+pc+mask.png" cols = "4" />
+		<image file="infantry+pf.png" cols = "4" />
+		<image file="infantry+pf+mask.png" cols = "4" />
 		
-		<image file="infantry+tg.png" cols = "4" />
-		<image file="infantry+tg+mask.png" cols = "4" />
+		<image file="infantry+ti.png" cols = "4" />
+		<image file="infantry+ti+mask.png" cols = "4" />
 		
 		<image file="infantry+yc.png" cols = "4" />
 		<image file="infantry+yc+mask.png" cols = "4" />	
@@ -254,11 +254,11 @@
 		<image file="mech+os+walk+mask.png" cols = "4" rows = "4" />
 		<image file="mech+os+walk.png" cols = "4"  rows = "4" />
 		
-		<image file="mech+pc.png" cols = "4" />
-		<image file="mech+pc+mask.png" cols = "4" />
+		<image file="mech+pf.png" cols = "4" />
+		<image file="mech+pf+mask.png" cols = "4" />
 		
-		<image file="mech+tg.png" cols = "4" />
-		<image file="mech+tg+mask.png" cols = "4" />
+		<image file="mech+ti.png" cols = "4" />
+		<image file="mech+ti+mask.png" cols = "4" />
 		
 		<image file="mech+yc.png" cols = "4" />
 		<image file="mech+yc+mask.png" cols = "4" />
@@ -345,11 +345,11 @@
 		<image file="sniper+os+walk+mask.png" cols = "4" rows = "4" />
 		<image file="sniper+os+walk.png" cols = "4"  rows = "4" />
 		
-		<image file="sniper+pc.png" cols = "4" />
-		<image file="sniper+pc+mask.png" cols = "4" />
+		<image file="sniper+pf.png" cols = "4" />
+		<image file="sniper+pf+mask.png" cols = "4" />
 		
-		<image file="sniper+tg.png" cols = "4" />
-		<image file="sniper+tg+mask.png" cols = "4" />
+		<image file="sniper+ti.png" cols = "4" />
+		<image file="sniper+ti+mask.png" cols = "4" />
 		
 		<image file="sniper+yc.png" cols = "4" />
 		<image file="sniper+yc+mask.png" cols = "4" />

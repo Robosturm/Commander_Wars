@@ -2,31 +2,45 @@
 #include "../oxygine-include.h"
 #include "intrusive_ptr.h"
 
+#include <atomic>
+
 namespace oxygine
 {
     /** RefCounter **/
     class ref_counter
     {
     public:
-        int _ref_counter;
+        std::atomic<int> _ref_counter{0};
 
-        ref_counter(): _ref_counter(0) {}
-        virtual ~ref_counter() {}
+        ref_counter()
+            : _ref_counter(0)
+        {
+        }
+        virtual ~ref_counter()
+        {
+        }
 
         void addRef()
         {
-            ++_ref_counter;
+            _ref_counter++;
         }
 
         void releaseRef()
         {
-            if (0 == --_ref_counter)
+
+            _ref_counter--;
+            OX_ASSERT(_ref_counter >= 0);
+            if (_ref_counter == 0)
+            {
                 delete this;
+            }
         }
 
     private:
-        ref_counter(const ref_counter&);
-        const ref_counter& operator=(const ref_counter&);
+        ref_counter(const ref_counter&) = delete ;
+        const ref_counter& operator=(const ref_counter&) = delete ;
+        ref_counter(const ref_counter&&) = delete ;
+        const ref_counter&& operator=(const ref_counter&&) = delete ;
     };
 
 
@@ -44,7 +58,8 @@ namespace oxygine
     class AutoRefHolder
     {
     public:
-        AutoRefHolder(ref_counter* rc) : _rc(rc)
+        AutoRefHolder(ref_counter* rc)
+            : _rc(rc)
         {
             _rc->addRef();
         }

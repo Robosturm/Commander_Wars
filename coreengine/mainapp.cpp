@@ -49,6 +49,10 @@ void Mainapp::seed(quint32 seed)
 
 qint32 Mainapp::randInt(qint32 low, qint32 high)
 {
+    if (high <= low)
+    {
+        return low;
+    }
     if (m_useSeed)
     {
         return randGenerator.bounded(low, high + 1);

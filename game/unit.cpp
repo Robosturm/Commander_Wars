@@ -610,6 +610,25 @@ float Unit::getDamageReduction(float damage, Unit* pAttacker, QPoint position, q
     return bonus;
 }
 
+float Unit::getTrueDamage(float damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
+                          QPoint defPosition, bool isDefender)
+{
+    float bonus = 0;
+    CO* pCO = m_pOwner->getCO(0);
+    if (pCO != nullptr)
+    {
+        bonus += pCO->getTrueDamage(damage, pAttacker, position, attackerBaseHp,
+                                         this, defPosition, isDefender);
+    }
+    pCO = m_pOwner->getCO(1);
+    if (pCO != nullptr)
+    {
+        bonus += pCO->getTrueDamage(damage, pAttacker, position, attackerBaseHp,
+                                         this, defPosition, isDefender);
+    }
+    return bonus;
+}
+
 qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender)
 {
     qint32 bonus = 0;
@@ -1225,7 +1244,35 @@ QStringList Unit::getActionList()
     QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1);
     if (ret.isString())
     {
-        return ret.toString().split(",");
+        QStringList actionList = ret.toString().split(",");
+        CO* pCO = m_pOwner->getCO(0);
+        QStringList actionModifierList;
+        if (pCO != nullptr)
+        {
+            actionModifierList.append(pCO->getActionModifierList(this));
+        }
+        pCO = m_pOwner->getCO(1);
+        if (pCO != nullptr)
+        {
+            actionModifierList.append(pCO->getActionModifierList(this));
+        }
+        for (qint32 i = 0; i < actionModifierList.size(); i++)
+        {
+            QString action = actionModifierList[i];
+            if (action.startsWith("-"))
+            {
+                qint32 index = actionList.indexOf(action.replace("-", ""));
+                if (index >= 0)
+                {
+                    actionList.removeAt(index);
+                }
+            }
+            else
+            {
+                actionList.append(action);
+            }
+        }
+        return actionList;
     }
     else
     {
@@ -1301,6 +1348,7 @@ void Unit::killUnit()
     }
     // record destruction of this unit
     GameMap::getInstance()->getGameRecorder()->lostUnit(m_pOwner->getPlayerID());
+    detach();
     removeUnit();
 }
 

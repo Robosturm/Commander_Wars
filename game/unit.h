@@ -320,6 +320,18 @@ public slots:
     float getDamageReduction(float damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
                               QPoint defPosition, bool isDefender);
     /**
+     * @brief getTrueDamage
+     * @param damage
+     * @param pAttacker
+     * @param position
+     * @param attackerBaseHp
+     * @param defPosition
+     * @param isDefender
+     * @return
+     */
+    float getTrueDamage(float damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
+                              QPoint defPosition, bool isDefender);
+    /**
      * @brief getTerrainDefense
      * @return
      */
@@ -429,6 +441,7 @@ public slots:
      * @return
      */
     qint32 getUnitValue();
+
 protected:
     /**
      * @brief updateIconTweens creates the visibility toogle tweens for all icons
@@ -472,6 +485,7 @@ private:
     QVector<spUnit> m_TransportUnits;
     qint32 capturePoints{0};
     GameEnums::UnitRanks m_UnitRank{GameEnums::UnitRank_None};
+
     bool m_Hidden{false};
 
     qint32 minRange{1};

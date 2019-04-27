@@ -572,6 +572,7 @@ void Terrain::setUnit(spUnit pUnit)
     // remove current unit on this field
     if (m_Unit.get() != nullptr)
     {
+        m_Unit->setTerrain(nullptr);
         m_Unit->detach();
         m_Unit = nullptr;
     }

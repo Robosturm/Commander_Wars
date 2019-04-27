@@ -64,6 +64,12 @@ CO_DRAKE     2                 0               6                 0              
 CO_DRAKE     2                 0               6                 0                 3               3               6               11000                    2           2
 CO_DRAKE     2                 0               0                 0                 6               6               3               9000                     0           2
 // EAGLE
+CO_EAGLE     1                 0               7                 0                 6               6               6               11000                    0           0
+CO_EAGLE     1                 0               7                 0                 6               3               6               11000                    0           0
+CO_EAGLE     1                 0               7                 7                 6               6               3               9000                     0           0
+CO_EAGLE     1                 0               7                 0                 3               6               6               11000                    1           0
+CO_EAGLE     1                 0               7                 0                 6               6               6               9000                     1           0
+CO_EAGLE     1                 0               7                 0                 3               6               6               11000                    1           0
 CO_EAGLE     1                 0               7                 0                 6               6               6               11000                    2           1
 CO_EAGLE     1                 0               7                 0                 6               3               6               11000                    2           1
 CO_EAGLE     1                 0               7                 7                 6               6               3               9000                     2           1
@@ -743,3 +749,38 @@ CO_SANJURO   2                 0               4                 7              
 CO_SANJURO   2                 0               4                 3                 3               6               7               11000                    0           2
 CO_SANJURO   2                 0               7                 7                 6               6               6               11000                    0           2
 CO_SANJURO   2                 0               3                 3                 3               3               3                9000                    0           2
+// OZZY 
+CO_OZZY      0                 0               4                 3                 4               6               6               11000                    0           0
+CO_OZZY      1                 0               7                 7                 3               6               4               11000                    0           1
+CO_OZZY      1                 0               7                 4                 6               4               3               9000                     0           1
+CO_OZZY      1                 0               4                 7                 4               6               6               11000                    1           0
+CO_OZZY      1                 0               4                 7                 6               4               7               11000                    2           0
+CO_OZZY      1                 0               4                 4                 3               6               7               9000                     0           1
+CO_OZZY      1                 2               4                 7                 3               6               7               9000                     0           0
+CO_OZZY      1                 2               4                 4                 6               6               6               11000                    0           0
+CO_OZZY      1                 0               7                 7                 7               4               7               11000                    0           1
+CO_OZZY      2                 0               4                 7                 6               6               6               11000                    0           2
+CO_OZZY      2                 0               7                 3                 6               6               3               9000                     0           2
+CO_OZZY      2                 0               4                 7                 6               3               6               11000                    1           0
+CO_OZZY      2                 0               4                 4                 6               6               6               11000                    2           0
+CO_OZZY      2                 0               7                 4                 7               4               7               9000                     0           2
+CO_OZZY      2                 0               7                 7                 6               6               6               11000                    0           2
+// CONRAD
+CO_CONRAD    0                 0               7                 3                 6               3               6               11000                    0           0
+CO_CONRAD    0                 0               7                 7                 6               3               3               9000                     0           0
+CO_CONRAD    0                 0               3                 7                 6               3               7               9000                     0           0
+CO_CONRAD    0                 0               3                 7                 6               7               7               11000                    0           0
+CO_CONRAD    1                 0               4                 7                 3               6               6               11000                    0           1
+CO_CONRAD    1                 0               7                 3                 6               6               3               9000                     0           1
+CO_CONRAD    1                 0               4                 3                 3               6               3               11000                    1           0
+CO_CONRAD    1                 0               7                 7                 6               6               6               11000                    2           0
+CO_CONRAD    1                 0               4                 3                 7               6               7               11000                    0           1
+CO_CONRAD    1                 2               4                 7                 6               6               6               11000                    0           0
+CO_CONRAD    1                 0               7                 7                 3               6               7               11000                    0           1
+CO_CONRAD    2                 0               4                 7                 3               6               6               11000                    0           2
+CO_CONRAD    2                 0               4                 3                 6               6               3               9000                     0           2
+CO_CONRAD    2                 0               7                 7                 6               6               6               11000                    1           0
+CO_CONRAD    2                 0               4                 7                 6               6               3               11000                    2           0
+CO_CONRAD    2                 0               4                 3                 3               6               7               11000                    0           2
+CO_CONRAD    2                 0               7                 7                 6               6               6               11000                    0           2
+CO_CONRAD    2                 0               3                 3                 3               3               3                9000                    0           2

@@ -11,22 +11,31 @@ namespace oxygine
     template <class T>
     class intrusive_ptr
     {
-        T* _ptr;
+        T* _ptr{nullptr};
     public:
         typedef T element_type;
 
-        intrusive_ptr(): _ptr(0) {}
-        intrusive_ptr(const intrusive_ptr& s): _ptr(s._ptr)
+        intrusive_ptr()
+            : _ptr(nullptr)
         {
-            if (s._ptr)
+        }
+        intrusive_ptr(const intrusive_ptr& s)
+            : _ptr(s._ptr)
+        {
+            if (_ptr != nullptr)
+            {
                 intrusive_ptr_add_ref(s._ptr);
+            }
         }
 
         template<class U>
         intrusive_ptr(intrusive_ptr<U> const& rhs)
             : _ptr(rhs.get())
         {
-            if (_ptr != 0) intrusive_ptr_add_ref(_ptr);
+            if (_ptr != nullptr)
+            {
+                intrusive_ptr_add_ref(_ptr);
+            }
         }
 
         T* get() const
@@ -48,25 +57,51 @@ namespace oxygine
 
         intrusive_ptr& operator = (const intrusive_ptr& s)
         {
-            intrusive_ptr(s).swap(*this);
+            // if the new ptr is not nothing increase it's ref
+            T* ptr = s.get();
+            if (ptr != nullptr)
+            {
+                intrusive_ptr_add_ref(ptr);
+            }
+            // if we own a pointer release it
+            if (_ptr != nullptr)
+            {
+                intrusive_ptr_release(_ptr);
+            }
+            // and swap the pointer
+            _ptr = ptr;
             return *this;
         }
 
         intrusive_ptr& operator = (T* ptr)
         {
-            intrusive_ptr(ptr).swap(*this);
+            // if the new ptr is not nothing increase it's ref
+            if (ptr != nullptr)
+            {
+                intrusive_ptr_add_ref(ptr);
+            }
+            // if we own a pointer release it
+            if (_ptr != nullptr)
+            {
+                intrusive_ptr_release(_ptr);
+            }
+            // then add it to us
+            _ptr = ptr;
             return *this;
         }
 
-        intrusive_ptr(T* p): _ptr(p)
+        intrusive_ptr(T* p)
+            : _ptr(p)
         {
-            if (p)
+            if (p != nullptr)
+            {
                 intrusive_ptr_add_ref(p);
+            }
         }
 
         bool operator!() const
         {
-            return _ptr == 0;
+            return _ptr == nullptr;
         }
 
         void swap(intrusive_ptr& s)
@@ -77,13 +112,15 @@ namespace oxygine
         }
         operator bool ()const
         {
-            return _ptr != 0;
+            return _ptr != nullptr;
         }
 
         ~intrusive_ptr()
         {
-            if (_ptr)
+            if (_ptr != nullptr)
+            {
                 intrusive_ptr_release(_ptr);
+            }
         }
     };
 
