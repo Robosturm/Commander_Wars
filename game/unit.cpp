@@ -610,18 +610,18 @@ float Unit::getDamageReduction(float damage, Unit* pAttacker, QPoint position, q
     return bonus;
 }
 
-qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition)
+qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender)
 {
     qint32 bonus = 0;
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
-        bonus += pCO->getDeffensiveBonus(pAttacker, atkPosition, this, position);
+        bonus += pCO->getDeffensiveBonus(pAttacker, atkPosition, this, position, isDefender);
     }
     pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
-        bonus += pCO->getDeffensiveBonus(pAttacker, atkPosition, this, position);
+        bonus += pCO->getDeffensiveBonus(pAttacker, atkPosition, this, position, isDefender);
     }
     GameMap* pMap = GameMap::getInstance();
     qint32 mapHeigth = pMap->getMapHeight();

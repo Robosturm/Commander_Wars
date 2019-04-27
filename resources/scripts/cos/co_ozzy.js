@@ -18,7 +18,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/superpower.mp3");
                 break;
             default:
-                audio.addMusic("resources/music/cos/javier.mp3")
+                audio.addMusic("resources/music/cos/ozzy.mp3")
                 break;
         }
     };
@@ -32,6 +32,7 @@ var Constructor = function()
         var units = co.getPlayer().getUnits();
         var animations = [];
         var counter = 0;
+
         units.randomize();
         for (var i = 0; i < units.size(); i++)
         {
@@ -55,11 +56,12 @@ var Constructor = function()
                     counter = 0;
                 }
             }
+
         }
         units.remove();
 
         audio.clearPlayList();
-        CO_JAVIER.loadCOMusic(co);
+        CO_OZZY.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -78,6 +80,7 @@ var Constructor = function()
             var unit = units.at(i);
 
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+
             if (animations.length < 5)
             {
                 animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5, globals.randInt(0, 400));
@@ -99,7 +102,7 @@ var Constructor = function()
         units.remove();
 
         audio.clearPlayList();
-        CO_JAVIER.loadCOMusic(co);
+        CO_OZZY.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -109,129 +112,109 @@ var Constructor = function()
     };
     this.getCOArmy = function()
     {
-        return "GE";
+        return "AC";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var towers = co.getPlayer().getBuildingCount("TOWER");
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                return towers * 25;
-            case GameEnums.PowerMode_Power:
-                return towers * 15;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                if (isDefender)
                 {
-                    return towers * 5;
+                    return 100;
+                }
+                return 0;
+            case GameEnums.PowerMode_Power:
+            default:
+                break;
+        }
+        return 0;
+    };
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                           defender, defPosX, defPosY, isDefender)
+    {
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Superpower:
+                return 200;
+            case GameEnums.PowerMode_Power:
+                if (isDefender)
+                {
+                    return 100;
                 }
                 else
                 {
-                    return towers * 2.5;
+                    return 60;
                 }
-        }
-    };
-    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
-    {
-        var rangedAttacked = (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1);
-        var towers = co.getPlayer().getBuildingCount("TOWER");
-        var ret = 0;
-        switch (co.getPowerMode())
-        {
-            case GameEnums.PowerMode_Superpower:
-                if (rangedAttacked)
-                {
-                    ret += 60;
-                }
-                ret += towers * 5;
-                break;
-            case GameEnums.PowerMode_Power:
-                if (rangedAttacked)
-                {
-                    ret += 40;
-                }
-                ret += towers * 5;
-                break;
             default:
-                if (rangedAttacked)
+                if (co.inCORange(Qt.point(atkPosX, atkPosY)))
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
-                    {
-                        ret += 20;
-                        ret += towers * 5;
-                    }
-                    else
-                    {
-                        ret += 10;
-                        ret += towers * 2.5;
-                    }
+                    return 30;
                 }
                 break;
         }
-        return ret;
+        return 10;
     };
 
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A Green Earth commander who values chivalry and honor above all else. Often orders his units to charge.");
+        return qsTr("A psychoanalyist who specializes in defensive tactics when he's not playing his guitar. A habitual womanizer.");
     };
     this.getHits = function()
     {
-        return qsTr("Honor");
+        return qsTr("Mind Games");
     };
     this.getMiss = function()
     {
-        return qsTr("Retreating");
+        return qsTr("Waiting");
     };
     this.getCODescription = function()
     {
-        return qsTr("Units possess superior defenses vs. indirect attacks and Comtowers have a higher impact.");
+        return qsTr("Ozzy's defensive tactics lowers the amount of damage his units take.");
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Improves defense vs. indirect attacks and firepower slightly rises the more Comtower he owns.");
+        return qsTr("Units gain a modest defense boost. Enemy counterattacks are less effective.");
     };
     this.getPowerName = function()
     {
-        return qsTr("Tower Shield");
+        return qsTr("Hammer On");
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Units have even greater defenses vs. indirect attacks and firepower increases at a high rate the more Comtowers he owns.");
+        return qsTr("Defense rises dramatically. Counterattack strength is doubled.");
     };
     this.getSuperPowerName = function()
     {
-        return qsTr("Tower of Power");
+        return qsTr("Grand Finale");
     };
     this.getPowerSentences = function()
     {
-        return [qsTr("Away put your weapons! You shall not be needing them where you are going!"),
-                qsTr("Charge into the toothy maw! For now is the time for a glorious hindspanking!"),
-                qsTr("Mighty spire of communication, imbue my blade with stabby might!"),
-                qsTr("Your maidenfolk shall soon howl great lamentations!"),
-                qsTr("This day shall be the greatest of days, unless tomorrow is even greater!"),
-                qsTr("Foe, you are mad if you seek to pierce my steely hide!")];
+        return [qsTr("IT'S BEEN A LONG TIME SINCE I ROCK 'N ROLLED, MMM-HMM!"),
+                qsTr("So when're you gunna start fighting?"),
+                qsTr("Time to unleash the MAGIC...the SPANISH CASTLE magic..."),
+                qsTr("Jet Black, Johnny B...Killer Queen...Dizzy Lizzy, 'n Major Tom..."),
+                qsTr("Let's crank up the gain a little bit, shall we?"),
+                qsTr("You're still there? Guess I'd better start trying.")];
     };
     this.getVictorySentences = function()
     {
-        return [qsTr("No sharpness can penetrate my steely hide!"),
-                qsTr("Consider your hindquarters righteously spanked!"),
-                qsTr("You still live, for Javier is masterful but merciful!")];
+        return [qsTr("Finally. Can I get back to my guitar now?"),
+                qsTr("So nobody ever told you how it was gunna be, eh?"),
+                qsTr("I could say something cliche here, but I think I've done enough already.")];
     };
     this.getDefeatSentences = function()
     {
-        return [qsTr("Well done! Your reputation is well deserved."),
-                qsTr("I am honored to have served with the noblest knights history has ever seen.")];
+        return [qsTr("That doesn't rock."),
+                qsTr("That wasn't one of my best concerts.")];
     };
     this.getName = function()
     {
-        return qsTr("Javier");
+        return qsTr("Ozzy");
     };
-
 }
 
 Constructor.prototype = CO;
-var CO_JAVIER = new Constructor();
+var CO_OZZY = new Constructor();

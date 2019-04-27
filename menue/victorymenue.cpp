@@ -45,7 +45,7 @@ VictoryMenue::VictoryMenue()
     sprite->setScaleY(pApp->getSettings()->getHeight() / pBackground->getHeight());
 
     pApp->getAudioThread()->clearPlayList();
-    pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");
+    pApp->getAudioThread()->loadFolder("resources/music/victorymenue");
     pApp->getAudioThread()->playRandom();
 
     GameManager* pGameManager = GameManager::getInstance();

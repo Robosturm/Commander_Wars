@@ -329,7 +329,7 @@ public slots:
      * @param position
      * @return defense bonus at this position
      */
-    qint32 getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition);
+    qint32 getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender);
     /**
      * @brief useTerrainDefense
      * @return

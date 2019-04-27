@@ -32,7 +32,7 @@ CreditsMenue::CreditsMenue()
     sprite->setScaleY(pApp->getSettings()->getHeight() / pBackground->getHeight());
 
     pApp->getAudioThread()->clearPlayList();
-    pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");
+    pApp->getAudioThread()->loadFolder("resources/music/credits_options");
     pApp->getAudioThread()->playRandom();
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));

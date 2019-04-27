@@ -52,7 +52,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
     sprite->setScaleY(pApp->getSettings()->getHeight() / pBackground->getHeight());
 
     pApp->getAudioThread()->clearPlayList();
-    pApp->getAudioThread()->loadFolder("resources/music/hauptmenue");
+    pApp->getAudioThread()->loadFolder("resources/music/mapselection");
     pApp->getAudioThread()->playRandom();
 
     qint32 width = 0;

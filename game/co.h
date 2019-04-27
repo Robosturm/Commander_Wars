@@ -147,7 +147,7 @@ public slots:
      * @param pDefender our unit that gets attacked
      * @return bonus
      */
-    qint32 getDeffensiveBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition);
+    qint32 getDeffensiveBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender);
     /**
      * @brief getDamageReduction
      * @param damage

@@ -30,6 +30,10 @@ EditorMenue::EditorMenue()
     m_Topbar = new Topbar(0, pApp->getSettings()->getWidth() -  m_EditorSelection->getWidth());
     this->addChild(m_Topbar);
 
+    pApp->getAudioThread()->clearPlayList();
+    pApp->getAudioThread()->loadFolder("resources/music/mapeditor");
+    pApp->getAudioThread()->playRandom();
+
     m_Topbar->addGroup(tr("Menu"));
     m_Topbar->addGroup(tr("Map Info"));
     m_Topbar->addItem(tr("Save Map"), "SAVEMAP", 0);

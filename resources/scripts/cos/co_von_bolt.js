@@ -112,7 +112,7 @@ var Constructor = function()
         return 10;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY)
+                                 defender, defPosX, defPosY, isDefender)
     {
         switch (co.getPowerMode())
         {

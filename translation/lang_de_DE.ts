@@ -360,67 +360,67 @@
 <context>
     <name>EditorMenue</name>
     <message>
-        <location filename="../menue/editormenue.cpp" line="33"/>
+        <location filename="../menue/editormenue.cpp" line="37"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="34"/>
+        <location filename="../menue/editormenue.cpp" line="38"/>
         <source>Map Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="35"/>
+        <location filename="../menue/editormenue.cpp" line="39"/>
         <source>Save Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="36"/>
+        <location filename="../menue/editormenue.cpp" line="40"/>
         <source>Load Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="37"/>
+        <location filename="../menue/editormenue.cpp" line="41"/>
         <source>Import CoW Txt Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="38"/>
+        <location filename="../menue/editormenue.cpp" line="42"/>
         <source>Exit Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="40"/>
+        <location filename="../menue/editormenue.cpp" line="44"/>
         <source>New Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="41"/>
+        <location filename="../menue/editormenue.cpp" line="45"/>
         <source>Edit Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="42"/>
+        <location filename="../menue/editormenue.cpp" line="46"/>
         <source>Flip Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="43"/>
+        <location filename="../menue/editormenue.cpp" line="47"/>
         <source>Flip Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="44"/>
+        <location filename="../menue/editormenue.cpp" line="48"/>
         <source>Rotate Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="45"/>
+        <location filename="../menue/editormenue.cpp" line="49"/>
         <source>Rotate Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="46"/>
+        <location filename="../menue/editormenue.cpp" line="50"/>
         <source>Random Map</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3912,6 +3912,109 @@
     <message>
         <location filename="../resources/scripts/cos/co_olaf.js" line="234"/>
         <source>Olaf</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_ozzy</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="163"/>
+        <source>A psychoanalyist who specializes in defensive tactics when he&apos;s not playing his guitar. A habitual womanizer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="167"/>
+        <source>Mind Games</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="171"/>
+        <source>Waiting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="175"/>
+        <source>Ozzy&apos;s defensive tactics lowers the amount of damage his units take.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="179"/>
+        <source>Units gain a modest defense boost. Enemy counterattacks are less effective.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="183"/>
+        <source>Hammer On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="187"/>
+        <source>Defense rises dramatically. Counterattack strength is doubled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="191"/>
+        <source>Grand Finale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="195"/>
+        <source>IT&apos;S BEEN A LONG TIME SINCE I ROCK &apos;N ROLLED, MMM-HMM!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="196"/>
+        <source>So when&apos;re you gunna start fighting?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="197"/>
+        <source>Time to unleash the MAGIC...the SPANISH CASTLE magic...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="198"/>
+        <source>Jet Black, Johnny B...Killer Queen...Dizzy Lizzy, &apos;n Major Tom...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="199"/>
+        <source>Let&apos;s crank up the gain a little bit, shall we?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="200"/>
+        <source>You&apos;re still there? Guess I&apos;d better start trying.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="204"/>
+        <source>Finally. Can I get back to my guitar now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="205"/>
+        <source>So nobody ever told you how it was gunna be, eh?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="206"/>
+        <source>I could say something cliche here, but I think I&apos;ve done enough already.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="210"/>
+        <source>That doesn&apos;t rock.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="211"/>
+        <source>That wasn&apos;t one of my best concerts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ozzy.js" line="215"/>
+        <source>Ozzy</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -578,7 +578,7 @@ qint32 CO::getOffensiveBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender
     }
 }
 
-qint32 CO::getDeffensiveBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition)
+qint32 CO::getDeffensiveBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getDeffensiveBonus";
@@ -593,6 +593,7 @@ qint32 CO::getDeffensiveBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefend
     args1 << obj2;
     args1 << defPosition.x();
     args1 << defPosition.y();    
+    args1 << isDefender;
     QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
     if (erg.isNumber())
     {

@@ -8,6 +8,11 @@
 		<image file="co_random+nrm.png" />
 		<image file="co_random+info.png" />
 		<image file="co_random+face.png" cols = "3" />
+		<image file="hit.png" />
+		<image file="miss.png" />
+		<image file="power.png" />
+		<image file="superpower.png" />
+		<image file="skill.png" />
 		
 		<!-- AC -->
 		<image file="ac/co_mary+nrm.png" />

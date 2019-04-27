@@ -121,7 +121,7 @@ var Constructor = function()
         if (baseDamage > 0)
         {
             var offensive = 100 + attacker.getBonusOffensive(attackerPosition, defender, defender.getPosition(), isDefender);
-            var defensive = 100 + defender.getBonusDefensive(defenderPosition, attacker, attackerPosition);
+            var defensive = 100 + defender.getBonusDefensive(defenderPosition, attacker, attackerPosition, isDefender);
             var attackerHp = attackerBaseHp + attacker.getAttackHpBonus(attackerPosition);
             damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, defensive);
             if (luckMode !== GameEnums.LuckDamageMode_Off)
