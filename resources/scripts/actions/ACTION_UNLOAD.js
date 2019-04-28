@@ -82,7 +82,7 @@ var Constructor = function()
                 var dataString = action.readDataString();
                 if (i === step - 1)
                 {
-                    if (dataString === "WAIT")
+                    if (dataString === "ACTION_WAIT")
                     {
                         return true;
                     }
@@ -154,7 +154,7 @@ var Constructor = function()
                     }
                 }
             }
-            data.addData(qsTr("Wait"), "WAIT", "wait");
+            data.addData(qsTr("Wait"), "ACTION_WAIT", "wait");
         }
         else
         {

@@ -1680,102 +1680,102 @@
 <context>
     <name>co_conrad</name>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="211"/>
         <source>A damage analyst from Green Earth who favors precise tactics. Very intelligent, but inexperienced.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="215"/>
         <source>Techno</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="219"/>
         <source>Blackouts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="223"/>
         <source>Pre-battle damage estimations are completely accurate. Firepower increases as more units are within vision range. Weak counters.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="227"/>
         <source>Unit vision is extended. Firepower increases even more as more units are within vision range.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="231"/>
         <source>Calculated Strike</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="235"/>
         <source>Conrad&apos;s first attack deals +50% luck damage. If Conrad would deal over 100%, the damage is rolled over to the next engagement.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="239"/>
         <source>Precision Assault</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="243"/>
         <source>You might be more experienced, but that doesn&apos;t mean I can&apos;t teach you a thing or two!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="244"/>
         <source>I won&apos;t go down that easily! This battle isn&apos;t even close to finished!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="246"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="245"/>
         <source>The chances of you pulling through are pretty slim. Believe me, I would know!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="246"/>
         <source>My attack plan is perfect! Even I can&apos;t mess it up!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="247"/>
         <source>Your strategy doesn&apos;t add up. Mine practically multiplies!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="248"/>
         <source>Don&apos;t make me angry! ...It makes me screw up my numbers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="253"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="252"/>
         <source>Solid tactics get solid results!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="253"/>
         <source>That was easier than I expected. Were my numbers off?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="254"/>
         <source>Either I&apos;m getting better, or you guys are getting worse!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="258"/>
         <source>What i didn&apos;t see that.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="259"/>
         <source>How could you hide from me.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_conrad.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_conrad.js" line="263"/>
         <source>Conrad</source>
         <translation type="unfinished"></translation>
     </message>

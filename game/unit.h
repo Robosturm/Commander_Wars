@@ -128,6 +128,19 @@ public slots:
      * @param value
      */
     void setBaseMovementPoints(const qint32 &value);
+    /**
+     * @brief getBaseMovementCosts
+     * @param x
+     * @param y
+     */
+    qint32 getBaseMovementCosts(qint32 x, qint32 y);
+    /**
+     * @brief getMovementCosts
+     * @param x
+     * @param y
+     */
+    qint32 getMovementCosts(qint32 x, qint32 y);
+
     float getHp() const;
     void setHp(const float &value);
     qint32 getHpRounded() const;
@@ -314,6 +327,16 @@ public slots:
      * @return number of units loaded by this unit
      */
     qint32 getLoadedUnitCount();
+    /**
+     * @brief getTransportUnits
+     * @return
+     */
+    QStringList getTransportUnits();
+    /**
+     * @brief canTransportUnit
+     * @return checks if we have space and if the unit can be transported by this unit.
+     */
+    bool canTransportUnit(Unit* pUnit);
     /**
      * @brief getBonusOffensive
      * @param position

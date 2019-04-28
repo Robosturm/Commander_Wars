@@ -523,6 +523,32 @@ qint32 Unit::getLoadedUnitCount()
     return m_TransportUnits.size();
 }
 
+QStringList  Unit::getTransportUnits()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getTransportUnits";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj1;
+    QJSValue erg = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    return erg.toVariant().toStringList();
+}
+
+bool Unit::canTransportUnit(Unit* pUnit)
+{
+    QStringList transportableUnits = getTransportUnits();
+    // can we carry the unit
+    if (transportableUnits.contains(pUnit->getUnitID()))
+    {
+        // do we have space left?
+        if (getLoadedUnitCount() < getLoadingPlace())
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender)
 {
     qint32 bonus = 0;
@@ -837,6 +863,33 @@ qint32 Unit::getBaseMovementPoints() const
 void Unit::setBaseMovementPoints(const qint32 &value)
 {
     baseMovementPoints = value;
+}
+
+qint32 Unit::getBaseMovementCosts(qint32 x, qint32 y)
+{
+    GameMap* pMap = GameMap::getInstance();
+    return MovementTableManager::getInstance()->getBaseMovementPoints(getMovementType(), pMap->getTerrain(x, y));
+}
+
+qint32 Unit::getMovementCosts(qint32 x, qint32 y)
+{
+    qint32 baseCosts = getBaseMovementCosts(x, y);
+    qint32 costs = baseCosts + m_pOwner->getMovementpointModifier(this, QPoint(x, y));
+    if (baseCosts > 0)
+    {
+        if ((costs <= 0) && (baseCosts > 0))
+        {
+            return 1;
+        }
+        else
+        {
+            return costs;
+        }
+    }
+    else
+    {
+        return -1;
+    }
 }
 
 void Unit::initUnit()
@@ -1307,7 +1360,7 @@ void Unit::moveUnitAction(GameAction* pAction)
 
 void Unit::moveUnit(QVector<QPoint> movePath)
 {
-    if (movePath.size() > 0)
+    if (movePath.size() > 1)
     {
         moveUnitToField(movePath[0].x(), movePath[0].y());
     }

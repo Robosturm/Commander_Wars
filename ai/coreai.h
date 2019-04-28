@@ -81,7 +81,7 @@ public slots:
 protected:
     void addMenuItemData(GameAction* pGameAction, QString itemID, qint32 cost);
     void addSelectedFieldData(GameAction* pGameAction, QPoint point);
-
+    // static string list of actions so we only define them once
     static const QString ACTION_WAIT;
     static const QString ACTION_REPAIR;
     static const QString ACTION_RATION;
@@ -89,6 +89,8 @@ protected:
     static const QString ACTION_CAPTURE;
     static const QString ACTION_MISSILE;
     static const QString ACTION_FIRE;
+    static const QString ACTION_UNLOAD;
+    static const QString ACTION_LOAD;
     static const QString ACTION_NEXT_PLAYER;
     static const QString ACTION_ACTIVATE_POWER_CO_0;
     static const QString ACTION_ACTIVATE_POWER_CO_1;

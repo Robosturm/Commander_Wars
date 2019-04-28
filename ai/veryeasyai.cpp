@@ -45,26 +45,19 @@ void VeryEasyAI::process()
     pEnemyBuildings->randomize();
 
     // create island maps at the start of turn
-    if (turnMode == TurnTime::startOfTurn)
+    if (rebuildIslandMaps)
     {
+        rebuildIslandMaps = false;
         // delete island maps of the last turn
         m_IslandMaps.clear();
         // and create a new one
         for (qint32 i = 0; i < pUnits->size(); i++)
         {
-            bool found = false;
-            QString movementType = pUnits->at(i)->getMovementType();
-            for (qint32 i2 = 0; i2 < m_IslandMaps.size(); i2++)
+            Unit* pUnit = pUnits->at(i);
+            createIslandMap(pUnit->getMovementType(), pUnit->getUnitID());
+            for (qint32 i2 = 0; i2 < pUnit->getLoadedUnitCount(); i2++)
             {
-                if (m_IslandMaps[i2]->getMovementType() == movementType)
-                {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found)
-            {
-                m_IslandMaps.append(new IslandMap(pUnits->at(i)->getUnitID(), m_pPlayer));
+                createIslandMap(pUnit->getLoadedUnit(i2)->getMovementType(), pUnit->getLoadedUnit(i2)->getUnitID());
             }
         }
     }
@@ -77,6 +70,8 @@ void VeryEasyAI::process()
     else if (fireWithIndirectUnits(pUnits)){}
     else if (fireWithDirectUnits(pUnits)){}
     else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings)){}
+    else if (loadUnits(pUnits)){}
+    else if (moveTransporters(pUnits, pEnemyUnits, pEnemyBuildings)){}
     else if (buildUnits(pBuildings, pUnits)){}
     else
     {
@@ -210,6 +205,7 @@ bool VeryEasyAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
 void VeryEasyAI::finishTurn()
 {
     turnMode = TurnTime::startOfTurn;
+    rebuildIslandMaps = true;
     GameAction* pAction = new GameAction(ACTION_NEXT_PLAYER);
     emit performAction(pAction);
 }
@@ -328,7 +324,15 @@ bool VeryEasyAI::captureBuildings(QmlVectorUnit* pUnits)
                     QVector<QPoint> targets = pfs.getAllNodePoints();
                     for (qint32 i2 = 0; i2 < targets.size(); i2++)
                     {
-                        pAction->setMovepath(pfs.getPath(targets[i2].x(), targets[i2].y()));
+                        if (pUnit->getX() == targets[i2].x() &&
+                            pUnit->getY() == targets[i2].y())
+                        {
+                            pAction->setMovepath(QVector<QPoint>());
+                        }
+                        else
+                        {
+                            pAction->setMovepath(pfs.getPath(targets[i2].x(), targets[i2].y()));
+                        }
                         if (pAction->canBePerformed())
                         {
                             emit performAction(pAction);
@@ -339,7 +343,15 @@ bool VeryEasyAI::captureBuildings(QmlVectorUnit* pUnits)
                     pAction->setActionID(ACTION_MISSILE);
                     for (qint32 i2 = 0; i2 < targets.size(); i2++)
                     {
-                        pAction->setMovepath(pfs.getPath(targets[i2].x(), targets[i2].y()));
+                        if (pUnit->getX() == targets[i2].x() &&
+                            pUnit->getY() == targets[i2].y())
+                        {
+                            pAction->setMovepath(QVector<QPoint>());
+                        }
+                        else
+                        {
+                            pAction->setMovepath(pfs.getPath(targets[i2].x(), targets[i2].y()));
+                        }
                         if (pAction->canBePerformed())
                         {
                             // select a target for the rocket and launch it
@@ -418,6 +430,11 @@ bool VeryEasyAI::attack(Unit* pUnit)
                 pAction->setMovepath(QVector<QPoint>());
             }
             CoreAI::addSelectedFieldData(pAction, QPoint(target.x(), target.y()));
+            if (GameMap::getInstance()->getTerrain(target.x(), target.y())->getUnit() == nullptr)
+            {
+                rebuildIslandMaps = true;
+            }
+
             if (pAction->isFinalStep())
             {
                 emit performAction(pAction);
@@ -439,6 +456,7 @@ bool VeryEasyAI::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
         if (!pUnit->getHasMoved())
         {
             QVector<QPoint> targets;
+            QVector<QPoint> transporterTargets;
             GameAction* pAction = new GameAction(ACTION_CAPTURE);
             QStringList actions = pUnit->getActionList();
             // find possible targets for this unit
@@ -446,6 +464,11 @@ bool VeryEasyAI::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
 
             // find some cool targets
             appendCaptureTargets(pAction, actions, pUnit, pEnemyBuildings, targets);
+            if (targets.size() > 0)
+            {
+                appendCaptureTransporterTargets(pAction, pUnit, pUnits, pEnemyBuildings, transporterTargets);
+                targets.append(transporterTargets);
+            }
             appendAttackTargets(pUnit, pEnemyUnits, targets);
             if (targets.size() == 0)
             {
@@ -455,32 +478,358 @@ bool VeryEasyAI::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
             {
                 appendRepairTargets(pUnit, pBuildings, targets);
             }
-
-            TargetedUnitPathFindingSystem pfs(pUnit, targets);
-            pfs.explore();
-            qint32 movepoints = pUnit->getMovementPoints();
-            QPoint targetFields = pfs.getReachableTargetField(movepoints);
-            if (targetFields.x() >= 0)
+            if (moveUnit(pAction, pUnit, actions, targets, transporterTargets))
             {
-                UnitPathFindingSystem turnPfs(pUnit);
-                turnPfs.explore();
-                pAction->setMovepath(turnPfs.getClosestReachableMovePath(targetFields));
-                if (actions.contains(ACTION_RATION))
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool VeryEasyAI::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)
+{
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pUnit = pUnits->at(i);
+        // can we use the unit?
+        if (!pUnit->getHasMoved() && pUnit->getLoadingPlace() > 0)
+        {
+            // wooohooo it's a transporter
+            if (pUnit->getLoadedUnitCount() > 0)
+            {
+                GameAction* pAction = new GameAction(ACTION_WAIT);
+                QStringList actions = pUnit->getActionList();
+                pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+                // find possible targets for this unit
+                QVector<QPoint> targets;
+                // can one of our units can capture buildings?
+                for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
                 {
-                    pAction->setActionID(ACTION_RATION);
-                    if (pAction->canBePerformed())
+                    Unit* pLoaded = pUnit->getLoadedUnit(i);
+                    if (pLoaded->getActionList().contains(ACTION_CAPTURE))
                     {
-                        emit performAction(pAction);
+                        appendUnloadTargetsForCapturing(pUnit, pEnemyBuildings, targets);
+                        break;
                     }
                 }
-                pAction->setActionID(ACTION_WAIT);
+                // if not find closest unloading field
+                if (targets.size() == 0)
+                {
+                    appendNearestUnloadTargets(pUnit, pEnemyUnits, pEnemyBuildings, targets);
+                }
+                if (moveUnit(pAction, pUnit, actions, targets, targets, true))
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                GameAction* pAction = new GameAction(ACTION_WAIT);
+                QStringList actions = pUnit->getActionList();
+                // find possible targets for this unit
+                pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+                // we need to move to a loading place
+                QVector<QPoint> targets;
+                QVector<QPoint> transporterTargets;
+                appendLoadingTargets(pUnit, pUnits, pEnemyUnits, targets);
+                if (moveUnit(pAction, pUnit, actions, targets, transporterTargets))
+                {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+bool VeryEasyAI::loadUnits(QmlVectorUnit* pUnits)
+{
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pUnit = pUnits->at(i);
+        // can we use the unit?
+        if (!pUnit->getHasMoved())
+        {
+            QVector<QPoint> targets;
+            QVector<QPoint> transporterTargets;
+            GameAction* pAction = new GameAction(ACTION_LOAD);
+            QStringList actions = pUnit->getActionList();
+            // find possible targets for this unit
+            pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+
+            // find some cool targets
+            appendTransporterTargets(pUnit, pUnits, transporterTargets);
+            targets.append(transporterTargets);
+            // till now the selected targets are a little bit lame cause we only search for reachable transporters
+            // but not for reachable loading places.
+            if (moveUnit(pAction, pUnit, actions, targets, transporterTargets))
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool VeryEasyAI::moveUnit(GameAction* pAction, Unit* pUnit, QStringList& actions,
+                          QVector<QPoint>& targets, QVector<QPoint>& transporterTargets, bool unload)
+{
+    TargetedUnitPathFindingSystem pfs(pUnit, targets);
+    pfs.explore();
+    qint32 movepoints = pUnit->getMovementPoints();
+    QPoint targetFields = pfs.getReachableTargetField(movepoints);
+    if (targetFields.x() >= 0)
+    {
+        UnitPathFindingSystem turnPfs(pUnit);
+        turnPfs.explore();
+
+        if (transporterTargets.contains(targetFields))
+        {
+            if (unload)
+            {
+                pAction->setMovepath(turnPfs.getPath(targetFields.x(), targetFields.y()));
+                pAction->setActionID(ACTION_UNLOAD);
+                // this isn't ideal since we unload the units in a random order and not the best fitting order
+                // but we're lazy here for the very easy ai
+                while (true)
+                {
+                    MenuData* pDataMenu = pAction->getMenuStepData();
+                    QStringList actions = pDataMenu->getActionIDs();
+                    qint32 costs = pDataMenu->getCostList()[0];
+                    delete pDataMenu;
+                    if (actions.size() == 1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        addMenuItemData(pAction, actions[0], costs);
+                    }
+                    MarkedFieldData* pFields = pAction->getMarkedFieldStepData();
+                    qint32 field = Mainapp::randInt(0, pFields->getPoints()->size() - 1);
+                    addSelectedFieldData(pAction, pFields->getPoints()->at(field));
+                    delete pFields;
+                }
+                addMenuItemData(pAction, ACTION_WAIT, 0);
                 emit performAction(pAction);
                 return true;
+            }
+            else
+            {
+                pAction->setMovepath(turnPfs.getPath(targetFields.x(), targetFields.y()));
+                pAction->setActionID(ACTION_LOAD);
+                emit performAction(pAction);
+                return true;
+            }
+        }
+        else
+        {
+            pAction->setMovepath(turnPfs.getClosestReachableMovePath(targetFields));
+            if (actions.contains(ACTION_RATION))
+            {
+                pAction->setActionID(ACTION_RATION);
+                if (pAction->canBePerformed())
+                {
+                    emit performAction(pAction);
+                    return true;
+                }
+            }
+            pAction->setActionID(ACTION_WAIT);
+            emit performAction(pAction);
+            return true;
+        }
+    }
+    delete pAction;
+    return false;
+}
+
+bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits)
+{
+    QVector<float> data;
+    qint32 productionBuildings = 0;
+    for (qint32 i = 0; i < pBuildings->size(); i++)
+    {
+        Building* pBuilding = pBuildings->at(i);
+        QStringList actions = pBuilding->getActionList();
+        if (actions.contains(ACTION_BUILD_UNITS))
+        {
+            productionBuildings++;
+        }
+    }
+    qint32 infantryUnits = 0;
+    qint32 indirectUnits = 0;
+    qint32 directUnits = 0;
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pUnit = pUnits->at(i);
+        if (pUnit->getActionList().contains(ACTION_CAPTURE))
+        {
+            infantryUnits++;
+        }
+        if (pUnit->getMaxRange() > 1)
+        {
+            indirectUnits++;
+        }
+        else
+        {
+            directUnits++;
+        }
+    }
+    data.append(m_pPlayer->getFonds());
+    data.append(m_pPlayer->getFonds() / static_cast<float>(productionBuildings));
+    data.append(pUnits->size());
+    if (indirectUnits > 0)
+    {
+        data.append(directUnits / static_cast<float>(indirectUnits));
+    }
+    else
+    {
+        data.append(1.0f);
+    }
+    data.append(infantryUnits);
+
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    for (qint32 i = 0; i < pBuildings->size(); i++)
+    {
+        Building* pBuilding = pBuildings->at(i);
+        QStringList actions = pBuilding->getActionList();
+        if (actions.contains(ACTION_BUILD_UNITS))
+        {
+            GameAction* pAction = new GameAction(ACTION_BUILD_UNITS);
+            pAction->setTarget(QPoint(pBuilding->getX(), pBuilding->getY()));
+            if (pAction->canBePerformed())
+            {
+                // we're allowed to build units here
+                MenuData* pData = pAction->getMenuStepData();
+                qint32 selectedUnit = -1;
+                if (pBuilding->getBuildingID() == "AIRPORT")
+                {
+                    selectedUnit = static_cast<qint32>(m_AirportBuildingTree.getDecision(data));
+                }
+                else if (pBuilding->getBuildingID() == "HARBOUR")
+                {
+                    selectedUnit = static_cast<qint32>(m_HarbourBuildingTree.getDecision(data));
+                }
+                else
+                {
+                    selectedUnit = static_cast<qint32>(m_GeneralBuildingTree.getDecision(data));
+                }
+                if (selectedUnit >= 0)
+                {
+                    QString unitID = pUnitSpriteManager->getUnitID(selectedUnit);
+                    qint32 menuIndex = pData->getActionIDs().indexOf(unitID);
+                    if (menuIndex >= 0 && pData->getEnabledList()[menuIndex])
+                    {
+                        CoreAI::addMenuItemData(pAction, unitID, pData->getCostList()[menuIndex]);
+                        delete pData;
+                        // produce the unit
+                        if (pAction->isFinalStep())
+                        {
+                            emit performAction(pAction);
+                            return true;
+                        }
+                    }
+                }
+                delete pData;
             }
             delete pAction;
         }
     }
     return false;
+}
+
+void VeryEasyAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QVector<QPoint>& targets)
+{
+    qint32 unitIslandIdx = getIslandIndex(pUnit);
+    qint32 unitIsland = getIsland(pUnit);
+    GameMap* pMap = GameMap::getInstance();
+    qint32 width = pMap->getMapWidth();
+    qint32 heigth = pMap->getMapHeight();
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pLoadingUnit = pUnits->at(i);
+        if (pLoadingUnit != pUnit)
+        {
+            // can we transport it?
+            if (pUnit->canTransportUnit(pLoadingUnit))
+            {
+                bool found = false;
+                // check if we have anything to do here :)
+                for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
+                {
+                    Unit* pEnemy = pEnemyUnits->at(i2);
+                    if (onSameIsland(pLoadingUnit, pEnemy) &&
+                        pLoadingUnit->isAttackable(pEnemy, true))
+                    {
+                        // this unit can do stuff skip it
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    // check for capturing or missiles next
+                }
+                if (!found)
+                {
+                    // no targets for this unit :(
+                    found = false;
+                    qint32 loadingIslandIdx = getIslandIndex(pLoadingUnit);
+                    qint32 loadingIsland = getIsland(pLoadingUnit);
+                    qint32 loadingUnitX = pLoadingUnit->getX();
+                    qint32 loadingUnitY = pLoadingUnit->getY();
+                    qint32 radius = loadingUnitX;
+                    // find nearest loading field of this unit
+                    // by searching in circles around it first detect the maximum radius required for this map
+                    if (width - loadingUnitX > radius)
+                    {
+                        radius = width - loadingUnitX;
+                    }
+                    if (loadingUnitY > radius)
+                    {
+                        radius = loadingUnitY;
+                    }
+                    if (heigth - loadingUnitY > radius)
+                    {
+                        radius = heigth - loadingUnitY;
+                    }
+                    // find closest field to the loading unit we can reach and add it
+                    for (qint32 r = 0; r < radius; r++)
+                    {
+                        // check fields in a radius around it
+                        QmlVectorPoint* fields = Mainapp::getCircle(r, r);
+                        for (qint32 i3 = 0; i3 < fields->size(); i3++)
+                        {
+                            qint32 x = loadingUnitX + fields->at(i3).x();
+                            qint32 y = loadingUnitY + fields->at(i3).y();
+                            // is it a map point?
+                            if (pMap->onMap(x, y))
+                            {
+                                // can be reached by both units and is empty
+                                // and not added yet
+                                if ((m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland) &&
+                                    (m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland) &&
+                                    (pMap->getTerrain(x, y)->getUnit() == nullptr) &&
+                                    (!targets.contains(QPoint(x, y))))
+                                {
+                                    // append it and and skip further searching
+                                    found = true;
+                                    targets.append(QPoint(x, y));
+                                }
+                            }
+                        }
+                        delete fields;
+                        // a loading field for this unit was
+                        if (found)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 void VeryEasyAI::appendCaptureTargets(GameAction* pAction, QStringList actions, Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QPoint>& targets)
@@ -590,114 +939,364 @@ void VeryEasyAI::appendRepairTargets(Unit* pUnit, QmlVectorBuilding* pBuildings,
     }
 }
 
-void VeryEasyAI::appendSupplyTargets(QmlVectorUnit* pUnits, QVector<QPoint>& targets)
+void VeryEasyAI::appendSupplyTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QPoint>& targets)
 {
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pSupplyUnit = pUnits->at(i);
-        if ((pSupplyUnit->getMaxAmmo1() > 0 && pSupplyUnit->hasAmmo1() < pSupplyUnit->getMaxAmmo1()) ||
-            (pSupplyUnit->getMaxAmmo2() > 0 && pSupplyUnit->hasAmmo2() < pSupplyUnit->getMaxAmmo2()) ||
-            (pSupplyUnit->getMaxFuel() > 0 && static_cast<float>(pSupplyUnit->getFuel()) / static_cast<float>(pSupplyUnit->getMaxFuel()) < 0.5f))
+        if (pSupplyUnit != pUnit)
         {
-            targets.append(QPoint(pSupplyUnit->getX(), pSupplyUnit->getY()));
+            if ((pSupplyUnit->getMaxAmmo1() > 0 && pSupplyUnit->hasAmmo1() < pSupplyUnit->getMaxAmmo1()) ||
+                (pSupplyUnit->getMaxAmmo2() > 0 && pSupplyUnit->hasAmmo2() < pSupplyUnit->getMaxAmmo2()) ||
+                (pSupplyUnit->getMaxFuel() > 0 && static_cast<float>(pSupplyUnit->getFuel()) / static_cast<float>(pSupplyUnit->getMaxFuel()) < 0.5f))
+            {
+                targets.append(QPoint(pSupplyUnit->getX(), pSupplyUnit->getY()));
+            }
         }
     }
 }
 
-bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits)
+void VeryEasyAI::appendTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QPoint>& targets)
 {
-    QVector<float> data;
-    qint32 productionBuildings = 0;
-    for (qint32 i = 0; i < pBuildings->size(); i++)
-    {
-        Building* pBuilding = pBuildings->at(i);
-        QStringList actions = pBuilding->getActionList();
-        if (actions.contains(ACTION_BUILD_UNITS))
-        {
-            productionBuildings++;
-        }
-    }
-    qint32 infantryUnits = 0;
-    qint32 indirectUnits = 0;
-    qint32 directUnits = 0;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
-        Unit* pUnit = pUnits->at(i);
-        if (pUnit->getActionList().contains(ACTION_CAPTURE))
+        Unit* pTransporterUnit = pUnits->at(i);
+        if (pTransporterUnit != pUnit)
         {
-            infantryUnits++;
-        }
-        if (pUnit->getMaxRange() > 1)
-        {
-            indirectUnits++;
-        }
-        else
-        {
-            directUnits++;
-        }
-    }
-    data.append(m_pPlayer->getFonds());
-    data.append(m_pPlayer->getFonds() / static_cast<float>(productionBuildings));
-    data.append(pUnits->size());
-    if (indirectUnits > 0)
-    {
-        data.append(directUnits / static_cast<float>(indirectUnits));
-    }
-    else
-    {
-        data.append(1.0f);
-    }
-    data.append(infantryUnits);
-
-    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    for (qint32 i = 0; i < pBuildings->size(); i++)
-    {
-        Building* pBuilding = pBuildings->at(i);
-        QStringList actions = pBuilding->getActionList();
-        if (actions.contains(ACTION_BUILD_UNITS))
-        {
-            GameAction* pAction = new GameAction(ACTION_BUILD_UNITS);
-            pAction->setTarget(QPoint(pBuilding->getX(), pBuilding->getY()));
-            if (pAction->canBePerformed())
+            if (pTransporterUnit->canTransportUnit(pUnit))
             {
-                // we're allowed to build units here
-                MenuData* pData = pAction->getMenuStepData();
-                qint32 selectedUnit = -1;
-                if (pBuilding->getBuildingID() == "AIRPORT")
+                targets.append(QPoint(pTransporterUnit->getX(), pTransporterUnit->getY()));
+            }
+        }
+    }
+}
+
+void VeryEasyAI::appendCaptureTransporterTargets(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorBuilding* pEnemyBuildings, QVector<QPoint>& targets)
+{
+    qint32 unitIslandIdx = getIslandIndex(pUnit);
+    qint32 unitIsland = getIsland(pUnit);
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pTransporterUnit = pUnits->at(i);
+        if (pTransporterUnit != pUnit)
+        {
+            if (pTransporterUnit->canTransportUnit(pUnit))
+            {
+                bool goodTransporter = false;
+                // check captures on this island
+                qint32 transporterIslandIdx = getIslandIndex(pTransporterUnit);
+                qint32 transporterIsland = getIsland(pTransporterUnit);
+                for (qint32 i2 = 0; i2 < pEnemyBuildings->size(); i2++)
                 {
-                    selectedUnit = static_cast<qint32>(m_AirportBuildingTree.getDecision(data));
-                }
-                else if (pBuilding->getBuildingID() == "HARBOUR")
-                {
-                    selectedUnit = static_cast<qint32>(m_HarbourBuildingTree.getDecision(data));
-                }
-                else
-                {
-                    selectedUnit = static_cast<qint32>(m_GeneralBuildingTree.getDecision(data));
-                }
-                if (selectedUnit >= 0)
-                {
-                    QString unitID = pUnitSpriteManager->getUnitID(selectedUnit);
-                    qint32 menuIndex = pData->getActionIDs().indexOf(unitID);
-                    if (menuIndex >= 0 && pData->getEnabledList()[menuIndex])
+                    qint32 x = pEnemyBuildings->at(i2)->getX();
+                    qint32 y = pEnemyBuildings->at(i2)->getY();
+                    // check if both can move there on this island
+                    // so we avoid loading and unloading a unit recursivly cause we think we need to transport it to another island
+                    // eventhough it has something to do here
+                    if ((m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland) &&
+                        (m_IslandMaps[transporterIslandIdx]->getIsland(x, y) == transporterIsland) &&
+                        (pMap->getTerrain(x, y)->getUnit() == nullptr))
                     {
-                        CoreAI::addMenuItemData(pAction, unitID, pData->getCostList()[menuIndex]);
-                        delete pData;
-                        // produce the unit
-                        if (pAction->isFinalStep())
+                        // can capture here?
+                        // if so it's a good transporter which makes it faster to reach our goal
+                        pAction->setActionID(ACTION_CAPTURE);
+                        pAction->setMovepath(QVector<QPoint>(1, QPoint(x, y)));
+                        if (pAction->canBePerformed())
                         {
-                            emit performAction(pAction);
-                            return true;
+                            goodTransporter = true;
+                            break;
+                        }
+                        pAction->setActionID(ACTION_MISSILE);
+                        if (pAction->canBePerformed())
+                        {
+                            goodTransporter = true;
+                            break;
                         }
                     }
                 }
-                delete pData;
+                if (goodTransporter)
+                {
+                    targets.append(QPoint(pTransporterUnit->getX(), pTransporterUnit->getY()));
+                }
             }
-            delete pAction;
+        }
+    }
+}
+
+void VeryEasyAI::appendNearestUnloadTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings, QVector<QPoint>& targets)
+{
+    QVector<QVector<qint32>> checkedIslands;
+    QVector<qint32> loadedUnitIslandIdx;
+
+    qint32 unitIslandIdx = getIslandIndex(pUnit);
+    qint32 unitIsland = getIsland(pUnit);
+    QVector<Unit*> captureUnits;
+    for (qint32 i2 = 0; i2 < pUnit->getLoadedUnitCount(); i2++)
+    {
+        Unit* pLoadedUnit = pUnit->getLoadedUnit(i2);
+        if (pLoadedUnit->getActionList().contains(ACTION_CAPTURE))
+        {
+            captureUnits.append(pLoadedUnit);
+        }
+        loadedUnitIslandIdx.append(getIslandIndex(pLoadedUnit));
+        checkedIslands.append(QVector<qint32>());
+    }
+    QmlVectorPoint* pUnloadArea = Mainapp::getCircle(1, 1);
+    // check for enemis
+    for (qint32 i = 0; i < pEnemyUnits->size(); i++)
+    {
+        Unit* pEnemy = pEnemyUnits->at(i);
+        for (qint32 i2 = 0; i2 < pUnit->getLoadedUnitCount(); i2++)
+        {
+            Unit* pLoadedUnit = pUnit->getLoadedUnit(i2);
+            qint32 targetIsland = m_IslandMaps[loadedUnitIslandIdx[i2]]->getIsland(pEnemy->getX(), pEnemy->getY());
+            // check if we could reach the enemy if we would be on his island
+            // and we didn't checked this island yet -> improves the speed
+            if (targetIsland >= 0 && !checkedIslands[i2].contains(targetIsland))
+            {
+                // could we beat his ass? -> i mean can we attack him
+                // if so this is a great island
+                if (pLoadedUnit->isAttackable(pEnemy, true))
+                {
+                    checkIslandForUnloading(pLoadedUnit, checkedIslands[i2], unitIslandIdx, unitIsland,
+                                            loadedUnitIslandIdx[i2], targetIsland, pUnloadArea, targets);
+                }
+            }
+        }
+    }
+    // check for capturable buildings
+    if (captureUnits.size() > 0)
+    {
+        for (qint32 i = 0; i < pEnemyBuildings->size(); i++)
+        {
+            Building* pEnemyBuilding = pEnemyBuildings->at(i);
+            for (qint32 i2 = 0; i2 < captureUnits.size(); i2++)
+            {
+                Unit* pLoadedUnit = captureUnits[i2];
+                qint32 targetIsland = m_IslandMaps[loadedUnitIslandIdx[i2]]->getIsland(pEnemyBuilding->getX(), pEnemyBuilding->getY());
+                // check if we could reach the enemy if we would be on his island
+                // and we didn't checked this island yet -> improves the speed
+                if (targetIsland >= 0 && !checkedIslands[i2].contains(targetIsland))
+                {
+                    // can we capture it?
+                    GameAction testAction;
+                    testAction.setTargetUnit(pLoadedUnit);
+                    // store has moved
+                    bool hasMoved = pLoadedUnit->getHasMoved();
+                    // simulate a not moved unit for checking if we can capture the building or fire a missile from it.
+                    pLoadedUnit->setHasMoved(false);
+                    bool captureBuilding = false;
+                    testAction.setActionID(ACTION_CAPTURE);
+                    QPoint point(pEnemyBuilding->getX(), pEnemyBuilding->getY());
+                    testAction.setMovepath(QVector<QPoint>(1, point));
+                    if (testAction.canBePerformed())
+                    {
+                        captureBuilding = true;
+                    }
+                    else
+                    {
+                        testAction.setActionID(ACTION_MISSILE);
+                        if (testAction.canBePerformed())
+                        {
+                            captureBuilding = true;
+                        }
+                    }
+                    pLoadedUnit->setHasMoved(hasMoved);
+                    if (captureBuilding)
+                    {
+                        checkIslandForUnloading(pLoadedUnit, checkedIslands[i2], unitIslandIdx, unitIsland,
+                                                loadedUnitIslandIdx[i2], targetIsland, pUnloadArea, targets);
+                    }
+                }
+            }
+        }
+    }
+    delete pUnloadArea;
+}
+
+void VeryEasyAI::checkIslandForUnloading(Unit* pLoadedUnit, QVector<qint32>& checkedIslands,
+                                         qint32 unitIslandIdx, qint32 unitIsland,
+                                         qint32 loadedUnitIslandIdx, qint32 targetIsland,
+                                         QmlVectorPoint* pUnloadArea, QVector<QPoint>& targets)
+{
+    GameMap* pMap = GameMap::getInstance();
+    qint32 width = pMap->getMapWidth();
+    qint32 heigth = pMap->getMapHeight();
+    checkedIslands.append(loadedUnitIslandIdx);
+    for (qint32 x = 0; x < width; x++)
+    {
+        for (qint32 y = 0; y < heigth; y++)
+        {
+            // check if this is the same island as we search for
+            // check if it's the same island our transporter is on if so we can reach the field
+            // the unloading area is also free
+            if (m_IslandMaps[loadedUnitIslandIdx]->getIsland(x, y) == targetIsland &&
+                m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland &&
+                pMap->getTerrain(x, y)->getUnit() == nullptr)
+            {
+                // and on top of that we have same free fields to unload the unit
+                for (qint32 i3 = 0; i3 < pUnloadArea->size(); i3++)
+                {
+                    qint32 unloadX = x + pUnloadArea->at(i3).x();
+                    qint32 unloadY = y + pUnloadArea->at(i3).y();
+                    if (pMap->onMap(unloadX, unloadY) &&
+                        pMap->getTerrain(unloadX, unloadY)->getUnit() == nullptr &&
+                        pLoadedUnit->getBaseMovementCosts(unloadX, unloadY) > 0 &&
+                        !targets.contains(QPoint(x, y)))
+                    {
+                        targets.append(QPoint(x, y));
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+void VeryEasyAI::appendUnloadTargetsForCapturing(Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QPoint>& targets)
+{
+    GameMap* pMap = GameMap::getInstance();
+
+    qint32 unitIslandIdx = getIslandIndex(pUnit);
+    qint32 unitIsland = getIsland(pUnit);
+
+    QVector<Unit*> capturUnits;
+    for (qint32 i2 = 0; i2 < pUnit->getLoadedUnitCount(); i2++)
+    {
+        Unit* pLoadedUnit = pUnit->getLoadedUnit(i2);
+        if (pLoadedUnit->getActionList().contains(ACTION_CAPTURE))
+        {
+            capturUnits.append(pLoadedUnit);
+        }
+    }
+    if (capturUnits.size() > 0)
+    {
+        QmlVectorPoint* pUnloadArea = Mainapp::getCircle(1, 1);
+        GameAction testAction;
+        testAction.setTargetUnit(capturUnits[0]);
+        // store has moved
+        bool hasMoved = capturUnits[0]->getHasMoved();
+        // simulate a not moved unit for checking if we can capture the building or fire a missile from it.
+        capturUnits[0]->setHasMoved(false);
+        for (qint32 i = 0; i < pEnemyBuildings->size(); i++)
+        {
+            Building* pBuilding = pEnemyBuildings->at(i);
+            QPoint point(pBuilding->getX(), pBuilding->getY());
+            if (pUnit->canMoveOver(pBuilding->getX(), pBuilding->getY()))
+            {
+                bool captureBuilding = false;
+                testAction.setActionID(ACTION_CAPTURE);
+                testAction.setMovepath(QVector<QPoint>(1, point));
+                if (testAction.canBePerformed())
+                {
+                    captureBuilding = true;
+                }
+                else
+                {
+                    testAction.setActionID(ACTION_MISSILE);
+                    if (testAction.canBePerformed())
+                    {
+                        captureBuilding = true;
+                    }
+                }
+                // we can capture it :)
+                if (captureBuilding)
+                {
+                    // check unload fields
+                    for (qint32 i2 = 0; i2 < pUnloadArea->size(); i2++)
+                    {
+                        qint32 x = point.x() + pUnloadArea->at(i2).x();
+                        qint32 y = point.y() + pUnloadArea->at(i2).y();
+                        if (!targets.contains(QPoint(x, y)))
+                        {
+                            if (pMap->onMap(x, y))
+                            {
+                                // we can reach this unload field?
+                                if (m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland)
+                                {
+                                    for (qint32 i3 = 0; i3 < capturUnits.size(); i3++)
+                                    {
+                                        if (capturUnits[i]->canMoveOver(x, y))
+                                        {
+                                            targets.append(QPoint(x, y));
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        capturUnits[0]->setHasMoved(hasMoved);
+        delete pUnloadArea;
+    }
+}
+
+void VeryEasyAI::createIslandMap(QString movementType, QString unitID)
+{
+    bool found = false;
+
+    for (qint32 i2 = 0; i2 < m_IslandMaps.size(); i2++)
+    {
+        if (m_IslandMaps[i2]->getMovementType() == movementType)
+        {
+            found = true;
+            break;
+        }
+    }
+    if (!found)
+    {
+        m_IslandMaps.append(new IslandMap(unitID, m_pPlayer));
+    }
+}
+
+bool VeryEasyAI::onSameIsland(Unit* pUnit1, Unit* pUnit2)
+{
+    for (auto i = 0; i < m_IslandMaps.size(); i++)
+    {
+        if (m_IslandMaps[i]->getMovementType() == pUnit1->getMovementType())
+        {
+            if (m_IslandMaps[i]->getIsland(pUnit1->getX(), pUnit1->getY()) ==
+                m_IslandMaps[i]->getIsland(pUnit2->getX(), pUnit2->getY()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
     return false;
 }
+
+qint32 VeryEasyAI::getIsland(Unit* pUnit)
+{
+    for (qint32 i = 0; i < m_IslandMaps.size(); i++)
+    {
+        if (m_IslandMaps[i]->getMovementType() == pUnit->getMovementType())
+        {
+            return m_IslandMaps[i]->getIsland(pUnit->getX(), pUnit->getY());
+        }
+    }
+    return -1;
+}
+
+qint32 VeryEasyAI::getIslandIndex(Unit* pUnit)
+{
+    for (qint32 i = 0; i < m_IslandMaps.size(); i++)
+    {
+        if (m_IslandMaps[i]->getMovementType() == pUnit->getMovementType())
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
 
 void VeryEasyAI::serializeObject(QDataStream&)
 {

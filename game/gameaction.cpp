@@ -30,6 +30,11 @@ void GameAction::deleteAction()
     delete this;
 }
 
+void GameAction::setTargetUnit(Unit *pTargetUnit)
+{
+    m_pTargetUnit = pTargetUnit;
+}
+
 void GameAction::perform()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -51,7 +56,11 @@ QString GameAction::getActionID()
 
 Unit* GameAction::getTargetUnit()
 {
-    return GameMap::getInstance()->getTerrain(m_target.x(), m_target.y())->getUnit();
+    if (m_pTargetUnit == nullptr)
+    {
+        return GameMap::getInstance()->getTerrain(m_target.x(), m_target.y())->getUnit();
+    }
+    return m_pTargetUnit;
 }
 
 Building* GameAction::getTargetBuilding()

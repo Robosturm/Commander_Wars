@@ -174,7 +174,6 @@ var Constructor = function()
                 var variables = co.getVariables();
                 var dmgModVar = variables.createVariable("CONRAD_DMG_MOD");
                 var defenderDamage = defender.getHp() * 10;
-                GameConsole.print("Overdamage: " + defenderDamage.toString(), 0);
                 // overkill case
                 if (defenderDamage < 0)
                 {

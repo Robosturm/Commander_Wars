@@ -38,7 +38,7 @@ public:
      */
     static QString getActionIcon(QString actionID);
 
-
+    void setTargetUnit(Unit *pTargetUnit);
 
 signals:
 
@@ -261,6 +261,8 @@ private:
     QDataStream actionData{&buffer};
 
     quint32 seed;
+
+    Unit* m_pTargetUnit{nullptr};
 };
 
 #endif // GAMEACTION_H

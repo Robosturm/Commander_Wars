@@ -82,79 +82,82 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
             setVisible(false);
         }
         pSprite->setScale(scaling);
-        for (qint32 i = m_movePath.size() - 2; i >= 0; i--)
+        if (m_movePath.size() > 1)
         {
-            qint32 x = 0;
-            qint32 y = 0;
-            GameEnums::Directions direction = GameEnums::Directions_None;
-            if (i == m_movePath.size() - 1)
+            for (qint32 i = m_movePath.size() - 2; i >= 0; i--)
             {
-                direction = getMovementDirection(m_pUnit->getX(), m_pUnit->getY(), m_movePath[i].x(), m_movePath[i].y());
-            }
-            else
-            {
-                direction = getMovementDirection(m_movePath[i + 1].x(), m_movePath[i + 1].y(), m_movePath[i].x(), m_movePath[i].y());
-            }
-            x = m_movePath[i].x() * GameMap::Imagesize - static_cast<qint32>((pAnim->getWidth() * scaling - GameMap::Imagesize) / 2.0f);
-            y = m_movePath[i].y() * GameMap::Imagesize - static_cast<qint32>((pAnim->getHeight() * scaling - GameMap::Imagesize) / 2.0f);
+                qint32 x = 0;
+                qint32 y = 0;
+                GameEnums::Directions direction = GameEnums::Directions_None;
+                if (i == m_movePath.size() - 1)
+                {
+                    direction = getMovementDirection(m_pUnit->getX(), m_pUnit->getY(), m_movePath[i].x(), m_movePath[i].y());
+                }
+                else
+                {
+                    direction = getMovementDirection(m_movePath[i + 1].x(), m_movePath[i + 1].y(), m_movePath[i].x(), m_movePath[i].y());
+                }
+                x = m_movePath[i].x() * GameMap::Imagesize - static_cast<qint32>((pAnim->getWidth() * scaling - GameMap::Imagesize) / 2.0f);
+                y = m_movePath[i].y() * GameMap::Imagesize - static_cast<qint32>((pAnim->getHeight() * scaling - GameMap::Imagesize) / 2.0f);
 
-            oxygine::Tween* tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(x, y)), GameMap::frameTime * pAnim->getRows(), 1);
-            // toggle visibility of the unit
-            if (i - 1 >= 0)
-            {
-                bool isVisible = true;
-                if (m_pUnit->isStealthed(pPlayer, false, m_movePath[i - 1].x(), m_movePath[i - 1].y()))
+                oxygine::Tween* tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(x, y)), GameMap::frameTime * pAnim->getRows(), 1);
+                // toggle visibility of the unit
+                if (i - 1 >= 0)
                 {
-                    isVisible = false;
+                    bool isVisible = true;
+                    if (m_pUnit->isStealthed(pPlayer, false, m_movePath[i - 1].x(), m_movePath[i - 1].y()))
+                    {
+                        isVisible = false;
+                    }
+                    tween1->addDoneCallback([=](oxygine::Event *)
+                    {
+                        this->setVisible(isVisible);
+                    });
                 }
-                tween1->addDoneCallback([=](oxygine::Event *)
-                {
-                    this->setVisible(isVisible);
-                });
-            }
 
-            queueMoving->add(tween1);
+                queueMoving->add(tween1);
 
-            int row = 0;
-            switch (direction)
-            {
-                case GameEnums::Directions_North:
+                int row = 0;
+                switch (direction)
                 {
-                    row = 1;
-                    break;
+                    case GameEnums::Directions_North:
+                    {
+                        row = 1;
+                        break;
+                    }
+                    case GameEnums::Directions_South:
+                    {
+                        row = 0;
+                        break;
+                    }
+                    case GameEnums::Directions_East:
+                    {
+                        row = 2;
+                        break;
+                    }
+                    case GameEnums::Directions_West:
+                    {
+                        row = 3;
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
                 }
-                case GameEnums::Directions_South:
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, row), GameMap::frameTime * pAnim->getRows(), 1);
+                queueAnimating->add(tween);
+                if (i == 0)
                 {
-                    row = 0;
-                    break;
+                    queueMoving->addDoneCallback([=](oxygine::Event *)->void
+                    {
+                        emit sigFinished();
+                    });
                 }
-                case GameEnums::Directions_East:
-                {
-                    row = 2;
-                    break;
-                }
-                case GameEnums::Directions_West:
-                {
-                    row = 3;
-                    break;
-                }
-                default:
-                {
-                    break;
-                }
-            }
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, row), GameMap::frameTime * pAnim->getRows(), 1);
-            queueAnimating->add(tween);
-            if (i == 0)
-            {
-                queueMoving->addDoneCallback([=](oxygine::Event *)->void
-                {
-                    emit sigFinished();
-                });
             }
         }
         //
-        if (m_movePath.size() == 0)
+        if (m_movePath.size() < 1)
         {
             queueMoving->addDoneCallback([=](oxygine::Event *)->void
             {
