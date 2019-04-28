@@ -132,6 +132,14 @@
     </message>
 </context>
 <context>
+    <name>ACTION_HOELLIUM_WAIT</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_HOELLIUM_WAIT.js" line="27"/>
+        <source>Wait</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_JOIN</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="31"/>
@@ -5896,7 +5904,7 @@
 <context>
     <name>hoellium</name>
     <message>
-        <location filename="../resources/scripts/units/hoellium.js" line="42"/>
+        <location filename="../resources/scripts/units/hoellium.js" line="43"/>
         <source>Oozium</source>
         <translation type="unfinished"></translation>
     </message>

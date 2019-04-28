@@ -52,6 +52,9 @@ var Constructor = function()
             case "MEGATANK":
                 return 1;
 
+            case "HOELLIUM":
+                return 20;
+
             // heli copter
             case "T_HELI":
                 return 40;

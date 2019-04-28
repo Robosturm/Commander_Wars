@@ -38,6 +38,9 @@ var Constructor = function()
 			case "MEGATANK":
                 return 35;
 
+            case "HOELLIUM":
+                return 25;
+
 			case "ARTILLERY":
                 return 65;
 			case "ANTITANKCANNON":

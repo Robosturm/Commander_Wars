@@ -52,6 +52,9 @@ var Constructor = function()
             case "MEGATANK":
                 return 55;
 
+            case "HOELLIUM":
+                return 20;
+
             // ranged land units
             case "ARTILLERY":
                 return 70;

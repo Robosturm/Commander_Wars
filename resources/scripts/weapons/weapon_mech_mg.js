@@ -47,6 +47,9 @@ var Constructor = function()
         case "MEGATANK":
             return 1;
 
+        case "HOELLIUM":
+            return 20;
+
         case "T_HELI":
             return 30;
         case "K_HELI":

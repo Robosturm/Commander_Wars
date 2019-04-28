@@ -10,9 +10,9 @@ var Constructor = function()
         unit.setMaxAmmo2(10);
         unit.setWeapon2ID("WEAPON_FLARE_MG");
 
-        unit.setFuel(70);
-        unit.setMaxFuel(70);
-        unit.setBaseMovementPoints(6);
+        unit.setFuel(60);
+        unit.setMaxFuel(60);
+        unit.setBaseMovementPoints(5);
         unit.setMinRange(1);
         unit.setMaxRange(1);
         unit.setVision(2);

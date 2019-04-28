@@ -51,6 +51,9 @@ var Constructor = function()
 			// very heavy tanks
 			case "MEGATANK":
                 return 35;
+
+            case "HOELLIUM":
+                return 15;
 				
 			// heli copter
 			case "T_HELI":

@@ -61,6 +61,9 @@
                 return 80;
             case "ROCKETTHROWER":
                 return 80;
+
+            case "HOELLIUM":
+                return 5;
 			
 			// ships
 			case "BATTLESHIP":

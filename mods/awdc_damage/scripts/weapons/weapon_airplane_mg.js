@@ -51,6 +51,9 @@ var Constructor = function()
 			// very heavy tanks
 			case "MEGATANK":
 				return 1;
+
+            case "HOELLIUM":
+                return 20;
 				
 			// ranged land units
 			case "ARTILLERY":
