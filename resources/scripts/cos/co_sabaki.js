@@ -136,7 +136,12 @@ var Constructor = function()
                     break;
 
             }
-            attacker.setHp(attacker.getHp() + atkDamage * healPercent);
+            // damage can be negativ if we can't do a counter attack the damge is -1
+            // avoid loosing hp cause of our passive or power
+            if (atkDamage > 0)
+            {
+                attacker.setHp(attacker.getHp() + atkDamage * healPercent);
+            }
         }
     };
     

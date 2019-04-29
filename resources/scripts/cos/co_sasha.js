@@ -140,7 +140,12 @@ var Constructor = function()
             switch (co.getPowerMode())
             {
                 case GameEnums.PowerMode_Superpower:
-                    co.getPlayer().addFonds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
+                    // damage can be negativ if we can't do a counter attack the damge is -1
+                    // avoid loosing money cause of our super power
+                    if (atkDamage > 0)
+                    {
+                        co.getPlayer().addFonds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
+                    }
                     break;
                 case GameEnums.PowerMode_Power:
                     break;

@@ -28,7 +28,7 @@ var PLAYER =
                 color = "#6038a0";
                 break;
             case 5:
-                color = "#3F3FB4";
+                color = "#3F3FC4";
                 break;
             case 6:
                 color = "lightsteelblue";
