@@ -424,7 +424,7 @@ bool VeryEasyAI::attack(Unit* pUnit)
         QVector<QVector3D> ret;
         QVector<QPoint> moveTargetFields;
         CoreAI::getBestTarget(pUnit, pAction, &pfs, ret, moveTargetFields);
-        if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue() / 5)
+        if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue() / 4.0f)
         {
             qint32 selection = Mainapp::randInt(0, ret.size() - 1);
             QVector3D target = ret[selection];
@@ -546,7 +546,11 @@ bool VeryEasyAI::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUn
                 // we need to move to a loading place
                 QVector<QPoint> targets;
                 QVector<QPoint> transporterTargets;
-                appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, targets);
+                appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, targets);
+                if (targets.size() == 0)
+                {
+                    appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, true, targets);
+                }
                 if (moveUnit(pAction, pUnit, actions, targets, transporterTargets))
                 {
                     return true;
@@ -610,7 +614,9 @@ bool VeryEasyAI::loadUnits(QmlVectorUnit* pUnits)
     {
         Unit* pUnit = pUnits->at(i);
         // can we use the unit?
-        if (!pUnit->getHasMoved())
+        if (!pUnit->getHasMoved() &&
+            // we don't support multi transporting for the ai for now this will break the system trust me
+            pUnit->getLoadingPlace() <= 0)
         {
             QVector<QPoint> targets;
             QVector<QPoint> transporterTargets;
@@ -690,6 +696,24 @@ bool VeryEasyAI::moveUnit(GameAction* pAction, Unit* pUnit, QStringList& actions
             if (actions.contains(ACTION_RATION))
             {
                 pAction->setActionID(ACTION_RATION);
+                if (pAction->canBePerformed())
+                {
+                    emit performAction(pAction);
+                    return true;
+                }
+            }
+            if (actions.contains(ACTION_STEALTH))
+            {
+                pAction->setActionID(ACTION_STEALTH);
+                if (pAction->canBePerformed())
+                {
+                    emit performAction(pAction);
+                    return true;
+                }
+            }
+            if (actions.contains(ACTION_UNSTEALTH))
+            {
+                pAction->setActionID(ACTION_UNSTEALTH);
                 if (pAction->canBePerformed())
                 {
                     emit performAction(pAction);
@@ -813,7 +837,7 @@ bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits
     return false;
 }
 
-void VeryEasyAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings, QVector<QPoint>& targets)
+void VeryEasyAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings, bool ignoreCaptureTargets, QVector<QPoint>& targets)
 {
     qint32 unitIslandIdx = getIslandIndex(pUnit);
     qint32 unitIsland = getIsland(pUnit);
@@ -829,32 +853,40 @@ void VeryEasyAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVec
             if (pUnit->canTransportUnit(pLoadingUnit))
             {
                 bool found = false;
-                // check if we have anything to do here :)
-                for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
+                bool canCapture = pLoadingUnit->getActionList().contains(ACTION_CAPTURE);
+                if (ignoreCaptureTargets && canCapture)
                 {
-                    Unit* pEnemy = pEnemyUnits->at(i2);
-                    if (onSameIsland(pLoadingUnit, pEnemy) &&
-                        pLoadingUnit->isAttackable(pEnemy, true))
-                    {
-                        // this unit can do stuff skip it
-                        found = true;
-                        break;
-                    }
+                    // no targets found -> try to speed up those infis
                 }
-                if (!found)
+                else
                 {
-                    // check for capturing or missiles next
-                    if (pLoadingUnit->getActionList().contains(ACTION_CAPTURE))
+                    // check if we have anything to do here :)
+                    for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
                     {
-                        for (qint32 i2 = 0; i2 < pEnemyBuildings->size(); i2++)
+                        Unit* pEnemy = pEnemyUnits->at(i2);
+                        if (onSameIsland(pLoadingUnit, pEnemy) &&
+                            pLoadingUnit->isAttackable(pEnemy, true))
                         {
-                            Building* pBuilding = pEnemyBuildings->at(i2);
-                            if (onSameIsland(pLoadingUnit, pBuilding) &&
-                                pBuilding->isCaptureOrMissileBuilding())
+                            // this unit can do stuff skip it
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found)
+                    {
+                        // check for capturing or missiles next
+                        if (canCapture)
+                        {
+                            for (qint32 i2 = 0; i2 < pEnemyBuildings->size(); i2++)
                             {
-                                // this unit can do stuff skip it
-                                found = true;
-                                break;
+                                Building* pBuilding = pEnemyBuildings->at(i2);
+                                if (onSameIsland(pLoadingUnit, pBuilding) &&
+                                    pBuilding->isCaptureOrMissileBuilding())
+                                {
+                                    // this unit can do stuff skip it
+                                    found = true;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -1095,6 +1127,7 @@ void VeryEasyAI::appendCaptureTransporterTargets(Unit* pUnit, QmlVectorUnit* pUn
                 }
                 if (goodTransporter)
                 {
+
                     targets.append(QPoint(pTransporterUnit->getX(), pTransporterUnit->getY()));
                 }
             }
@@ -1240,7 +1273,8 @@ void VeryEasyAI::appendUnloadTargetsForCapturing(Unit* pUnit, QmlVectorBuilding*
             if (pUnit->canMoveOver(pBuilding->getX(), pBuilding->getY()))
             {
                 // we can capture it :)
-                if (pBuilding->isCaptureOrMissileBuilding())
+                if (pBuilding->isCaptureOrMissileBuilding() &&
+                    pBuilding->getTerrain()->getUnit() == nullptr)
                 {
                     // check unload fields
                     for (qint32 i2 = 0; i2 < pUnloadArea->size(); i2++)

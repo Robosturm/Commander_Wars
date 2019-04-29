@@ -21,6 +21,8 @@ public:
     static const QString ACTION_WAIT;
     static const QString ACTION_REPAIR;
     static const QString ACTION_RATION;
+    static const QString ACTION_UNSTEALTH;
+    static const QString ACTION_STEALTH;
     static const QString ACTION_BUILD_UNITS;
     static const QString ACTION_CAPTURE;
     static const QString ACTION_MISSILE;

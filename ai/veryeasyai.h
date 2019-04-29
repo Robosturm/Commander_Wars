@@ -147,7 +147,7 @@ protected:
     void appendSupplyTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QPoint>& targets);
     void appendTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QPoint>& targets);
     void appendCaptureTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorBuilding* pEnemyBuildings, QVector<QPoint>& targets);
-    void appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings, QVector<QPoint>& targets);
+    void appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings, bool ignoreCaptureTargets, QVector<QPoint>& targets);
 
     void checkIslandForUnloading(Unit* pLoadedUnit, QVector<qint32>& checkedIslands,
                                  qint32 unitIslandIdx, qint32 unitIsland,

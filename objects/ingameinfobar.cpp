@@ -21,7 +21,7 @@ IngameInfoBar::IngameInfoBar()
     this->moveToThread(pApp->getWorkerthread());
 
     qint32 width = 300;
-    qint32 cursorInfoHeigth = 310;
+    qint32 cursorInfoHeigth = 330;
     qint32 gameInfoHeigth = 290;
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
@@ -474,11 +474,13 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 
         qint32 y2 = 120;
 
+        float unitInfoScale = 0.7f;
+        qint32 yAdvance = 2;
 
         pTextfield = new oxygine::TextField();
         pTextfield->setPosition(10, y2);
         pTextfield->setStyle(style);
-        pTextfield->setScale(0.8f);
+        pTextfield->setScale(unitInfoScale);
         QString name = "";
         if (pBuilding != nullptr)
         {
@@ -493,40 +495,83 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 
 
 
-        y2 += 20;
+        y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
 
-        if (pUnit != nullptr)
+        // show building information
+        if (pBuilding != nullptr)
         {
-            if (pBuilding != nullptr)
+            if (pBuilding->getOwner() != nullptr)
             {
                 pTextfield = new oxygine::TextField();
                 pTextfield->setPosition(10, y2);
                 pTextfield->setStyle(style);
-                pTextfield->setScale(0.8f);
+                pTextfield->setScale(unitInfoScale);
+                pTextfield->setText((tr("Owner: Player ") + QString::number(pBuilding->getOwner()->getPlayerID() + 1)).toStdString().c_str());
+                m_pCursorInfoBox->addChild(pTextfield);
+                y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+            }
+            else
+            {
+                pTextfield = new oxygine::TextField();
+                pTextfield->setPosition(10, y2);
+                pTextfield->setStyle(style);
+                pTextfield->setScale(unitInfoScale);
+                pTextfield->setText(tr("Owner: Neutral").toStdString().c_str());
+                m_pCursorInfoBox->addChild(pTextfield);
+                y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+            }
+            if (pUnit == nullptr)
+            {
+                pTextfield = new oxygine::TextField();
+                pTextfield->setPosition(10, y2);
+                pTextfield->setStyle(style);
+                pTextfield->setScale(unitInfoScale);
+                pTextfield->setText((tr("Resistance: ") +
+                                     QString::number(20)).toStdString().c_str());
+                m_pCursorInfoBox->addChild(pTextfield);
+                y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+            }
+            else
+            {
+                pTextfield = new oxygine::TextField();
+                pTextfield->setPosition(10, y2);
+                pTextfield->setStyle(style);
+                pTextfield->setScale(unitInfoScale);
                 pTextfield->setText((tr("Resistance: ") +
                                      QString::number(20 - pUnit->getCapturePoints())).toStdString().c_str());
                 m_pCursorInfoBox->addChild(pTextfield);
-                y2 += 20;
+                y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
             }
+        }
+        // show unit information
+        if (pUnit != nullptr)
+        {
+            pTextfield = new oxygine::TextField();
+            pTextfield->setPosition(10, y2);
+            pTextfield->setStyle(style);
+            pTextfield->setScale(unitInfoScale);
+            pTextfield->setText(pUnit->getName().toStdString().c_str());
+            m_pCursorInfoBox->addChild(pTextfield);
+            y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
 
             pTextfield = new oxygine::TextField();
             pTextfield->setPosition(10, y2);
             pTextfield->setStyle(style);
-            pTextfield->setScale(0.8f);
-            pTextfield->setText(pUnit->getName().toStdString().c_str());
+            pTextfield->setScale(unitInfoScale);
+            pTextfield->setText((tr("Owner: Player ") + QString::number(pUnit->getOwner()->getPlayerID() + 1)).toStdString().c_str());
             m_pCursorInfoBox->addChild(pTextfield);
-            y2 += 20;
+            y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
 
             if (!pUnit->getWeapon1ID().isEmpty())
             {
                 pTextfield = new oxygine::TextField();
                 pTextfield->setPosition(10, y2);
                 pTextfield->setStyle(style);
-                pTextfield->setScale(0.8f);
+                pTextfield->setScale(unitInfoScale);
                 pTextfield->setText((tr("Weapon 1: ") +
                                      WeaponManager::getInstance()->getWeaponName(pUnit->getWeapon1ID())).toStdString().c_str());
                 m_pCursorInfoBox->addChild(pTextfield);
-                y2 += 20;
+                y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
             }
 
             if (!pUnit->getWeapon2ID().isEmpty())
@@ -534,50 +579,74 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 pTextfield = new oxygine::TextField();
                 pTextfield->setPosition(10, y2);
                 pTextfield->setStyle(style);
-                pTextfield->setScale(0.8f);
+                pTextfield->setScale(unitInfoScale);
                 pTextfield->setText((tr("Weapon 2: ") +
                                      WeaponManager::getInstance()->getWeaponName(pUnit->getWeapon2ID())).toStdString().c_str());
                 m_pCursorInfoBox->addChild(pTextfield);
-                y2 += 20;
+                y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
             }
 
             pTextfield = new oxygine::TextField();
             pTextfield->setPosition(10, y2);
             pTextfield->setStyle(style);
-            pTextfield->setScale(0.8f);
+            pTextfield->setScale(unitInfoScale);
             pTextfield->setText((tr("Move: ") +
                                  MovementTableManager::getInstance()->getMovementName(pUnit->getMovementType())).toStdString().c_str());
             m_pCursorInfoBox->addChild(pTextfield);
-            y2 += 20;
+            y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
 
             pTextfield = new oxygine::TextField();
             pTextfield->setPosition(10, y2);
             pTextfield->setStyle(style);
-            pTextfield->setScale(0.8f);
+            pTextfield->setScale(unitInfoScale);
             pTextfield->setText((tr("Movementpoints: ") +
                                  QString::number(pUnit->getMovementPoints())).toStdString().c_str());
             m_pCursorInfoBox->addChild(pTextfield);
-            y2 += 20;
+            y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
 
             pTextfield = new oxygine::TextField();
             pTextfield->setPosition(10, y2);
             pTextfield->setStyle(style);
-            pTextfield->setScale(0.8f);
+            pTextfield->setScale(unitInfoScale);
             pTextfield->setText((tr("Vision: ") +
                                  QString::number(pUnit->getVision(QPoint(pUnit->getX(), pUnit->getY())))).toStdString().c_str());
             m_pCursorInfoBox->addChild(pTextfield);
-            y2 += 20;
-        }
-        else if (pBuilding != nullptr)
-        {
-            pTextfield = new oxygine::TextField();
-            pTextfield->setPosition(10, y2);
-            pTextfield->setStyle(style);
-            pTextfield->setScale(0.8f);
-            pTextfield->setText((tr("Resistance: ") +
-                                 QString::number(20)).toStdString().c_str());
-            m_pCursorInfoBox->addChild(pTextfield);
-            y2 += 20;
+            y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+
+            if (pUnit->getLoadingPlace() > 0)
+            {
+                if (!pUnit->getTransportHidden(pPlayer))
+                {
+                    pTextfield = new oxygine::TextField();
+                    pTextfield->setPosition(10, y2);
+                    pTextfield->setStyle(style);
+                    pTextfield->setScale(unitInfoScale);
+                    pTextfield->setText(tr("Loaded Units").toStdString().c_str());
+                    m_pCursorInfoBox->addChild(pTextfield);
+                    y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+                    for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
+                    {
+                        pTextfield = new oxygine::TextField();
+                        pTextfield->setPosition(10, y2);
+                        pTextfield->setStyle(style);
+                        pTextfield->setScale(unitInfoScale);
+                        pTextfield->setText((pUnit->getLoadedUnit(i)->getName()).toStdString().c_str());
+                        m_pCursorInfoBox->addChild(pTextfield);
+                        y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+                    }
+                }
+                else
+                {
+                    pTextfield = new oxygine::TextField();
+                    pTextfield->setPosition(10, y2);
+                    pTextfield->setStyle(style);
+                    pTextfield->setScale(unitInfoScale);
+                    pTextfield->setText(tr("Loaded Units: ?").toStdString().c_str());
+                    m_pCursorInfoBox->addChild(pTextfield);
+                    y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
+                }
+            }
+
         }
     }
     pApp->continueThread();

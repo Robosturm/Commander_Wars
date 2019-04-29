@@ -77,10 +77,15 @@ public:
      */
     void updateIcons(Player* pPlayer);
 
-
 signals:
 
 public slots:
+    /**
+     * @brief getTransportHidden
+     * @param pPlayer
+     * @return if the transported units of this unit are hidden from the given player
+     */
+    bool getTransportHidden(Player* pPlayer);
     /**
      * @brief getHpHidden
      * @param pPlayer

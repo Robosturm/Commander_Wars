@@ -1135,9 +1135,7 @@ void Unit::updateIcons(Player* pPlayer)
         {
             loadIcon("hp+hidden", 0, GameMap::Imagesize / 2);
         }
-        GameMap* pMap = GameMap::getInstance();
-        if ((pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off) &&
-            (pPlayer->isEnemy(m_pOwner)) && getLoadingPlace() > 0)
+        if (getTransportHidden(pPlayer))
         {
             loadIcon("transport+hidden", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
         }
@@ -1146,6 +1144,17 @@ void Unit::updateIcons(Player* pPlayer)
             loadIcon("transport", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
         }
     }
+}
+
+bool Unit::getTransportHidden(Player* pPlayer)
+{
+    GameMap* pMap = GameMap::getInstance();
+    if ((pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off) &&
+        (pPlayer->isEnemy(m_pOwner)) && getLoadingPlace() > 0)
+    {
+        return true;
+    }
+    return false;
 }
 
 QString Unit::getMovementType()
