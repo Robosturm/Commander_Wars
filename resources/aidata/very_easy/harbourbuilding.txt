@@ -1,60 +1,68 @@
-// Fonds                           | Fonds per Building                 |  Units      | Direct / Indirects            | Infantry   | Result
-type NUMBER:15000_>|15000_<_21000|21000_<   NUMBER:15000_>|15000_<_21000|21000_< NUMBER:6_<|6_>   NUMBER:0.8_>|0.8_<_3.5|3.5_<    NUMBER:5_<|5_>   UNIT
+// Fonds                                 | Fonds per Building                       |  Units          | Direct / Indirects             | Infantry      | Transporter    | Result
+type NUMBER:15000_>|15000_<_21000|21000_<  NUMBER:15000_>|15000_<_21000|21000_<        NUMBER:6_<|6_>   NUMBER:0.8_>|0.8_<_3.5|3.5_<    NUMBER:5_<|5_>   NUMBER:3_<|3_>   UNIT
 // NONE
-21000                                21000                                 7            1.0                              7            NONE
-5000                                 5000                                  7            1.0                              7            NONE
-5000                                 5000                                  7            1.0                              7            NONE
-5000                                 5000                                  7            1.0                              7            NONE
-5000                                 5000                                  7            4.5                              7            NONE
-5000                                 5000                                  7            0.7                              7            NONE
-5000                                 5000                                  4            1.0                              7            NONE
-5000                                 5000                                  4            4.5                              7            NONE
-5000                                 5000                                  4            0.7                              7            NONE
+21000                                      21000                                        7               1.0                                    7         4                NONE
+5000                                       5000                                         7               1.0                                    7         2                NONE
+5000                                       5000                                         7               1.0                                    7         4                NONE
+5000                                       5000                                         7               1.0                                    7         2                NONE
+5000                                       5000                                         7               4.5                                    7         4                NONE
+5000                                       5000                                         7               0.7                                    7         2                NONE
+5000                                       5000                                         4               1.0                                    7         4                NONE
+5000                                       5000                                         4               4.5                                    7         2                NONE
+5000                                       5000                                         4               0.7                                    7         4                NONE
+// lander
+5000                                       5000                                         7               1.0                                    7         2                LANDER
+5000                                       5000                                         7               4.5                                    7         2                LANDER
+5000                                       5000                                         7               0.7                                    7         2                LANDER
+18000                                      5000                                         7               1.0                                    7         2                LANDER
+18000                                      5000                                         7               4.5                                    7         2                LANDER
+18000                                      5000                                         7               0.7                                    7         2                LANDER
+18000                                      18000                                        7               0.7                                    7         4                LANDER
 // CRUISER
-18000                                18000                                 7            0.7                              6            CRUISER
-18000                                18000                                 7            1.0                              6            CRUISER
-18000                                18000                                 5            1.0                              6            CRUISER
-18000                                18000                                 5            1.0                              4            CRUISER
-18000                                18000                                 5            0.7                              6            CRUISER
-25000                                25000                                 5            1.0                              6            CRUISER
-25000                                25000                                 5            1.0                              4            CRUISER
-25000                                25000                                 5            0.7                              6            CRUISER
+18000                                      18000                                        7               0.7                                    6         4                CRUISER
+18000                                      18000                                        7               1.0                                    6         4                CRUISER
+18000                                      18000                                        5               1.0                                    6         4                CRUISER
+18000                                      18000                                        5               1.0                                    4         4                CRUISER
+18000                                      18000                                        5               0.7                                    6         4                CRUISER
+25000                                      25000                                        5               1.0                                    6         4                CRUISER
+25000                                      25000                                        5               1.0                                    4         4                CRUISER
+25000                                      25000                                        5               0.7                                    6         4                CRUISER
 // SUBMARINE
-18000                                18000                                 7            0.7                              6            SUBMARINE
-18000                                18000                                 7            1.0                              6            SUBMARINE
-18000                                18000                                 5            1.0                              6            SUBMARINE
-18000                                18000                                 5            1.0                              4            SUBMARINE
-18000                                18000                                 5            0.7                              6            SUBMARINE
-25000                                25000                                 5            1.0                              6            SUBMARINE
-25000                                25000                                 5            1.0                              4            SUBMARINE
-25000                                25000                                 5            0.7                              6            SUBMARINE
+18000                                      18000                                        7               0.7                                    6         4                SUBMARINE
+18000                                      18000                                        7               1.0                                    6         4                SUBMARINE
+18000                                      18000                                        5               1.0                                    6         4                SUBMARINE
+18000                                      18000                                        5               1.0                                    4         4                SUBMARINE
+18000                                      18000                                        5               0.7                                    6         4                SUBMARINE
+25000                                      25000                                        5               1.0                                    6         4                SUBMARINE
+25000                                      25000                                        5               1.0                                    4         4                SUBMARINE
+25000                                      25000                                        5               0.7                                    6         4                SUBMARINE
 // SUBMARINE
-18000                                18000                                 7            0.7                              6            DESTROYER
-18000                                18000                                 7            1.0                              6            DESTROYER
-18000                                18000                                 5            1.0                              6            DESTROYER
-18000                                18000                                 5            1.0                              4            DESTROYER
-18000                                18000                                 5            0.7                              6            DESTROYER
-25000                                25000                                 5            1.0                              6            DESTROYER
-25000                                25000                                 5            1.0                              4            DESTROYER
-25000                                25000                                 5            0.7                              6            DESTROYER
+18000                                      18000                                        7               0.7                                    6         4                DESTROYER
+18000                                      18000                                        7               1.0                                    6         4                DESTROYER
+18000                                      18000                                        5               1.0                                    6         4                DESTROYER
+18000                                      18000                                        5               1.0                                    4         4                DESTROYER
+18000                                      18000                                        5               0.7                                    6         4                DESTROYER
+25000                                      25000                                        5               1.0                                    6         4                DESTROYER
+25000                                      25000                                        5               1.0                                    4         4                DESTROYER
+25000                                      25000                                        5               0.7                                    6         4                DESTROYER
 // BATTLESHIP
-25000                                25000                                 7            4.5                              6            BATTLESHIP
-25000                                25000                                 7            1.0                              6            BATTLESHIP
-25000                                25000                                 5            1.0                              6            BATTLESHIP
-25000                                25000                                 5            1.0                              4            BATTLESHIP
-25000                                25000                                 5            4.5                              6            BATTLESHIP
-25000                                25000                                 7            0.7                              6            BATTLESHIP
-25000                                25000                                 5            0.7                              6            BATTLESHIP
-25000                                25000                                 5            0.7                              4            BATTLESHIP
-25000                                25000                                 5            0.7                              6            BATTLESHIP
+25000                                      25000                                        7               4.5                                    6         4                BATTLESHIP
+25000                                      25000                                        7               1.0                                    6         4                BATTLESHIP
+25000                                      25000                                        5               1.0                                    6         4                BATTLESHIP
+25000                                      25000                                        5               1.0                                    4         4                BATTLESHIP
+25000                                      25000                                        5               4.5                                    6         4                BATTLESHIP
+25000                                      25000                                        7               0.7                                    6         4                BATTLESHIP
+25000                                      25000                                        5               0.7                                    6         4                BATTLESHIP
+25000                                      25000                                        5               0.7                                    4         4                BATTLESHIP
+25000                                      25000                                        5               0.7                                    6         4                BATTLESHIP
 // AIRCRAFTCARRIER
-25000                                25000                                 7            4.5                              6            AIRCRAFTCARRIER
-25000                                25000                                 7            1.0                              6            AIRCRAFTCARRIER
-25000                                25000                                 5            1.0                              6            AIRCRAFTCARRIER
-25000                                25000                                 5            1.0                              4            AIRCRAFTCARRIER
-25000                                25000                                 5            4.5                              6            AIRCRAFTCARRIER
-25000                                25000                                 7            0.7                              6            AIRCRAFTCARRIER
-25000                                25000                                 7            0.7                              6            AIRCRAFTCARRIER
-25000                                25000                                 5            0.7                              6            AIRCRAFTCARRIER
-25000                                25000                                 5            0.7                              4            AIRCRAFTCARRIER
-25000                                25000                                 5            0.7                              6            AIRCRAFTCARRIER
+25000                                      25000                                        7               4.5                                    6         4                AIRCRAFTCARRIER
+25000                                      25000                                        7               1.0                                    6         4                AIRCRAFTCARRIER
+25000                                      25000                                        5               1.0                                    6         4                AIRCRAFTCARRIER
+25000                                      25000                                        5               1.0                                    4         4                AIRCRAFTCARRIER
+25000                                      25000                                        5               4.5                                    6         4                AIRCRAFTCARRIER
+25000                                      25000                                        7               0.7                                    6         4                AIRCRAFTCARRIER
+25000                                      25000                                        7               0.7                                    6         4                AIRCRAFTCARRIER
+25000                                      25000                                        5               0.7                                    6         4                AIRCRAFTCARRIER
+25000                                      25000                                        5               0.7                                    4         4                AIRCRAFTCARRIER
+25000                                      25000                                        5               0.7                                    6         4                AIRCRAFTCARRIER

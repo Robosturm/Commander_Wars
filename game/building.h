@@ -216,6 +216,11 @@ public slots:
      * @return
      */
     bool canRepair(Unit* pUnit);
+    /**
+     * @brief isCaptureOrMissileBuilding
+     * @return
+     */
+    bool isCaptureOrMissileBuilding();
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     /**

@@ -57,7 +57,7 @@
 <context>
     <name>ACTION_CAPTURE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="41"/>
+        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="47"/>
         <source>Capture</source>
         <translation type="unfinished"></translation>
     </message>
@@ -179,7 +179,7 @@
 <context>
     <name>ACTION_MISSILE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="27"/>
+        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="34"/>
         <source>Missile</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4490,6 +4490,11 @@
 <context>
     <name>co_roboandy</name>
     <message>
+        <location filename="../resources/scripts/cos/co_roboandy.js" line="188"/>
+        <source>Lash was asked by the military to create artificial intelligence able to direct troops. However, being given orders by a computer freaked out the soldiers. So she fixed the problem by putting it in the original Robo-Andy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_roboandy.js" line="192"/>
         <source>Puppet Shows</source>
         <translation type="unfinished"></translation>
@@ -4497,11 +4502,6 @@
     <message>
         <location filename="../resources/scripts/cos/co_roboandy.js" line="196"/>
         <source>Housework</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_roboandy.js" line="188"/>
-        <source>Lash was asked by the military to create artificial intelligence able to direct troops. However, being given orders by a computer freaked out the soldiers. So she fixed the problem by putting it in the original Robo-Andy.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

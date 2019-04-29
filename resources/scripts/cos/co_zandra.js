@@ -167,20 +167,20 @@ var Constructor = function()
     {
         if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
         {
-            switch (co.getPowerMode())
+            if (attacker.getMinRange() > 1)
             {
+                switch (co.getPowerMode())
+                {
                 case GameEnums.PowerMode_Superpower:
                     return 2;
                 case GameEnums.PowerMode_Power:
                     return 2;
                 default:
                     return 1;
+                }
             }
         }
-        else
-        {
-            return 0;
-        }
+        return 0;
     };
 
     // CO - Intel

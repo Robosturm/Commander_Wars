@@ -1,63 +1,69 @@
-// Fonds                           | Fonds per Building                 |  Units      | Direct / Indirects            | Infantry   | Result
-type NUMBER:6000_>|6000_<_20000|20000_<   NUMBER:7000_>|7000_<_18000|18000_<    NUMBER:6_<|6_>   NUMBER:0.8_>|0.8_<_3.5|3.5_<    NUMBER:5_<|5_>   UNIT
+// Fonds                                | Fonds per Building                   |  Units          | Direct / Indirects            | Infantry        | Transporter     | Result
+type NUMBER:6000_>|6000_<_20000|20000_<   NUMBER:7000_>|7000_<_18000|18000_<      NUMBER:6_<|6_>   NUMBER:0.8_>|0.8_<_3.5|3.5_<    NUMBER:5_<|5_>    NUMBER:1_<|1_>    UNIT
 // NONE
-21000                                21000                                 7            1.0                              7            NONE
-5000                                 5000                                  7            1.0                              7            NONE
-5000                                 5000                                  7            1.0                              7            NONE
-5000                                 5000                                  7            1.0                              7            NONE
-5000                                 5000                                  7            4.5                              7            NONE
-5000                                 5000                                  7            0.7                              7            NONE
-5000                                 5000                                  4            1.0                              7            NONE
-5000                                 5000                                  4            4.5                              7            NONE
-5000                                 5000                                  4            0.7                              7            NONE
+21000                                    21000                                      7              1.0                                  7            0                 NONE
+5000                                     5000                                       7              1.0                                  7            2                 NONE
+5000                                     5000                                       7              1.0                                  7            0                 NONE
+5000                                     5000                                       7              1.0                                  7            0                 NONE
+5000                                     5000                                       7              4.5                                  7            2                 NONE
+5000                                     5000                                       7              0.7                                  7            0                 NONE
+5000                                     5000                                       4              1.0                                  7            2                 NONE
+5000                                     5000                                       4              4.5                                  7            0                 NONE
+5000                                     5000                                       4              0.7                                  7            2                 NONE
+
+// T_HELI
+5000                                     5000                                       7              1.0                                  6            0                 T_HELI
+5000                                     5000                                       5              1.0                                  6            0                 T_HELI
+9000                                     9000                                       5              1.0                                  6            2                 T_HELI
+9000                                     9000                                       7              1.0                                  6            2                 T_HELI
 // K_HELI
-9000                                 9000                                  7            1.0                              6            K_HELI
-9000                                 9000                                  5            1.0                              6            K_HELI
-9000                                 9000                                  5            1.0                              4            K_HELI
-9000                                 9000                                  7            0.7                              6            K_HELI
-9000                                 9000                                  5            4.5                              6            K_HELI
+9000                                     9000                                       7              1.0                                  6            2                 K_HELI
+9000                                     9000                                       5              1.0                                  6            2                 K_HELI
+9000                                     9000                                       5              1.0                                  4            2                 K_HELI
+9000                                     9000                                       7              0.7                                  6            2                 K_HELI
+9000                                     9000                                       5              4.5                                  6            2                 K_HELI
 // DUSTER
-9000                                 9000                                  7            1.0                              6            DUSTER
-9000                                 9000                                  5            1.0                              6            DUSTER
-9000                                 9000                                  5            1.0                              4            DUSTER
-9000                                 9000                                  7            0.7                              6            DUSTER
-9000                                 9000                                  5            4.5                              6            DUSTER
+9000                                     9000                                       7              1.0                                  6            2                 DUSTER
+9000                                     9000                                       5              1.0                                  6            2                 DUSTER
+9000                                     9000                                       5              1.0                                  4            2                 DUSTER
+9000                                     9000                                       7              0.7                                  6            2                 DUSTER
+9000                                     9000                                       5              4.5                                  6            2                 DUSTER
 // BOMBER
-21000                                21000                                 7            1.0                              6            BOMBER
-21000                                21000                                 7            4.5                              6            BOMBER
-21000                                21000                                 7            0.7                              6            BOMBER
-21000                                21000                                 7            1.0                              3            BOMBER
-21000                                21000                                 7            4.5                              3            BOMBER
-21000                                21000                                 7            0.7                              3            BOMBER
-21000                                21000                                 3            1.0                              6            BOMBER
-21000                                21000                                 3            4.5                              6            BOMBER
-21000                                21000                                 3            0.7                              6            BOMBER
-21000                                21000                                 3            1.0                              3            BOMBER
-21000                                21000                                 3            4.5                              3            BOMBER
-21000                                21000                                 3            0.7                              3            BOMBER
+21000                                    21000                                      7              1.0                                  6            2                 BOMBER
+21000                                    21000                                      7              4.5                                  6            2                 BOMBER
+21000                                    21000                                      7              0.7                                  6            2                 BOMBER
+21000                                    21000                                      7              1.0                                  3            2                 BOMBER
+21000                                    21000                                      7              4.5                                  3            2                 BOMBER
+21000                                    21000                                      7              0.7                                  3            2                 BOMBER
+21000                                    21000                                      3              1.0                                  6            2                 BOMBER
+21000                                    21000                                      3              4.5                                  6            2                 BOMBER
+21000                                    21000                                      3              0.7                                  6            2                 BOMBER
+21000                                    21000                                      3              1.0                                  3            2                 BOMBER
+21000                                    21000                                      3              4.5                                  3            2                 BOMBER
+21000                                    21000                                      3              0.7                                  3            2                 BOMBER
 // FIGHTER
-21000                                21000                                 7            1.0                              6            FIGHTER
-21000                                21000                                 7            4.5                              6            FIGHTER
-21000                                21000                                 7            0.7                              6            FIGHTER
-21000                                21000                                 7            1.0                              3            FIGHTER
-21000                                21000                                 7            4.5                              3            FIGHTER
-21000                                21000                                 7            0.7                              3            FIGHTER
-21000                                21000                                 3            1.0                              6            FIGHTER
-21000                                21000                                 3            4.5                              6            FIGHTER
-21000                                21000                                 3            0.7                              6            FIGHTER
-21000                                21000                                 3            1.0                              3            FIGHTER
-21000                                21000                                 3            4.5                              3            FIGHTER
-21000                                21000                                 3            0.7                              3            FIGHTER
+21000                                    21000                                      7              1.0                                  6            2                 FIGHTER
+21000                                    21000                                      7              4.5                                  6            2                 FIGHTER
+21000                                    21000                                      7              0.7                                  6            2                 FIGHTER
+21000                                    21000                                      7              1.0                                  3            2                 FIGHTER
+21000                                    21000                                      7              4.5                                  3            2                 FIGHTER
+21000                                    21000                                      7              0.7                                  3            2                 FIGHTER
+21000                                    21000                                      3              1.0                                  6            2                 FIGHTER
+21000                                    21000                                      3              4.5                                  6            2                 FIGHTER
+21000                                    21000                                      3              0.7                                  6            2                 FIGHTER
+21000                                    21000                                      3              1.0                                  3            2                 FIGHTER
+21000                                    21000                                      3              4.5                                  3            2                 FIGHTER
+21000                                    21000                                      3              0.7                                  3            2                 FIGHTER
 // FIGHTER
-21000                                21000                                 7            1.0                              6            STEALTHBOMBER
-21000                                21000                                 7            4.5                              6            STEALTHBOMBER
-21000                                21000                                 7            0.7                              6            STEALTHBOMBER
-21000                                21000                                 7            1.0                              3            STEALTHBOMBER
-21000                                21000                                 7            4.5                              3            STEALTHBOMBER
-21000                                21000                                 7            0.7                              3            STEALTHBOMBER
-21000                                21000                                 3            1.0                              6            STEALTHBOMBER
-21000                                21000                                 3            4.5                              6            STEALTHBOMBER
-21000                                21000                                 3            0.7                              6            STEALTHBOMBER
-21000                                21000                                 3            1.0                              3            STEALTHBOMBER
-21000                                21000                                 3            4.5                              3            STEALTHBOMBER
-21000                                21000                                 3            0.7                              3            STEALTHBOMBER
+21000                                    21000                                      7              1.0                                  6            2                 STEALTHBOMBER
+21000                                    21000                                      7              4.5                                  6            2                 STEALTHBOMBER
+21000                                    21000                                      7              0.7                                  6            2                 STEALTHBOMBER
+21000                                    21000                                      7              1.0                                  3            2                 STEALTHBOMBER
+21000                                    21000                                      7              4.5                                  3            2                 STEALTHBOMBER
+21000                                    21000                                      7              0.7                                  3            2                 STEALTHBOMBER
+21000                                    21000                                      3              1.0                                  6            2                 STEALTHBOMBER
+21000                                    21000                                      3              4.5                                  6            2                 STEALTHBOMBER
+21000                                    21000                                      3              0.7                                  6            2                 STEALTHBOMBER
+21000                                    21000                                      3              1.0                                  3            2                 STEALTHBOMBER
+21000                                    21000                                      3              4.5                                  3            2                 STEALTHBOMBER
+21000                                    21000                                      3              0.7                                  3            2                 STEALTHBOMBER

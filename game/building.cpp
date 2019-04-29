@@ -16,6 +16,8 @@
 
 #include "coreengine/qmlvector.h"
 
+#include "ai/coreai.h"
+
 Building::Building(const QString& BuildingID)
     : m_BuildingID(BuildingID),
       m_pOwner(nullptr),
@@ -449,6 +451,21 @@ bool Building::canRepair(Unit* pUnit)
     QString function1 = "getConstructionList";
     QJSValue erg = pApp->getInterpreter()->doFunction(m_BuildingID, function1);
     return erg.toVariant().toStringList().contains(pUnit->getUnitID());
+}
+
+bool Building::isCaptureOrMissileBuilding()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getCapturableBuildings";
+    QJSValue erg = pApp->getInterpreter()->doFunction(CoreAI::ACTION_CAPTURE, function1);
+    bool capturable = erg.toVariant().toStringList().contains(m_BuildingID);
+    if (!capturable)
+    {
+        function1 = "getMissileBuildings";
+        erg = pApp->getInterpreter()->doFunction(CoreAI::ACTION_MISSILE, function1);
+        capturable = erg.toVariant().toStringList().contains(m_BuildingID);
+    }
+    return capturable;
 }
 
 QString Building::getTerrainAnimationBackground()

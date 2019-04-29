@@ -10,8 +10,7 @@ var Constructor = function()
         {
             return false;
         }
-        var capturableBuildings =["AIRPORT", "FACTORY", "HARBOUR", "HQ", "LABOR", "MINE",
-                                  "PIPESTATION", "RADAR", "TOWER", "TOWN"];
+        var capturableBuildings = ACTION_CAPTURE.getCapturableBuildings();
         if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
             (action.getMovementTarget() === null))
         {
@@ -36,6 +35,13 @@ var Constructor = function()
             return false;
         }
     };
+
+    this.getCapturableBuildings = function()
+    {
+        return ["AIRPORT", "FACTORY", "HARBOUR", "HQ", "LABOR", "MINE",
+                "PIPESTATION", "RADAR", "TOWER", "TOWN"];
+    };
+
     this.getActionText = function()
     {
         return qsTr("Capture");

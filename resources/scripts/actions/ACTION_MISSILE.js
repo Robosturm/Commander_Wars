@@ -10,18 +10,25 @@ var Constructor = function()
         {
             return false;
         }
+        var missileBuildings = ACTION_MISSILE.getMissileBuildings();
         if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
             (action.getMovementTarget() === null))
         {
             var building = action.getMovementBuilding();
             if ((building !== null) &&
-                (building.getBuildingID() === "SILO_ROCKET"))
+                (missileBuildings.indexOf(building.getBuildingID()) >= 0))
             {
                 return true;
             }
         }
         return false;
     };
+
+    this.getMissileBuildings = function()
+    {
+        return ["SILO_ROCKET"];
+    };
+
     this.getActionText = function()
     {
         return qsTr("Missile");

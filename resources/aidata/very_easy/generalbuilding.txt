@@ -1,222 +1,463 @@
-// Fonds                           | Fonds per Building                 |  Units      | Direct / Indirects            | Infantry   | Result
-type NUMBER:4000_>|4000_<_10000|10000_<   NUMBER:4000_>|4000_<_10000|10000_<    NUMBER:10_<|10_> NUMBER:0.8_>|0.8_<_3.5|3.5_< NUMBER:5_<|5_>   UNIT
-// INFANTRY BUILDING
-3000                                 3000                                  7            1.0                             4            INFANTRY
-3000                                 3000                                  7            0.7                             4            INFANTRY
-3000                                 3000                                  7            4.5                             4            INFANTRY
-11000                                3000                                  11           1.0                             4            INFANTRY
-11000                                3000                                  7            1.0                             4            INFANTRY
-11000                                3000                                  11           1.0                             7            INFANTRY
-11000                                3000                                  7            1.0                             7            INFANTRY
-11000                                3000                                  11           1.0                             4            MECH
-11000                                3000                                  11           1.0                             4            MECH
-11000                                3000                                  11           4.5                             4            MECH
-11000                                3000                                  11           0.7                             4            MECH
-11000                                3000                                  11           1.0                             7            MECH
-11000                                3000                                  11           1.0                             7            MECH
-11000                                3000                                  11           1.0                             7            MOTORBIKE
-11000                                3000                                  11           1.0                             7            MOTORBIKE
-11000                                3000                                  11           1.0                             4            MOTORBIKE
-11000                                3000                                  11           1.0                             4            MOTORBIKE
-11000                                3000                                  11           4.5                             4            MOTORBIKE
-11000                                3000                                  11           0.7                             4            MOTORBIKE
-11000                                3000                                  11           1.0                             4            SNIPER
-11000                                3000                                  11           1.0                             4            SNIPER
-11000                                3000                                  11           4.5                             4            SNIPER
-11000                                3000                                  11           0.7                             4            SNIPER
-// MID UNIT BUILDING
-7000                                 7000                                  7            0.7                             7            RECON
-11000                                3000                                  11           1.0                             7            LIGHT_TANK
-11000                                3000                                  11           1.0                             7            LIGHT_TANK
-7000                                 3000                                  11           0.7                             7            LIGHT_TANK
-7000                                 3000                                  11           0.7                             7            LIGHT_TANK
-7000                                 3000                                  11           1.0                             7            LIGHT_TANK
-11000                                7000                                  11           1.0                             7            LIGHT_TANK
-11000                                7000                                  11           1.0                             7            LIGHT_TANK
-7000                                 7000                                  11           0.7                             7            LIGHT_TANK
-7000                                 7000                                  11           0.7                             7            LIGHT_TANK
-7000                                 7000                                  11           1.0                             7            LIGHT_TANK
-11000                                11000                                 11           1.0                             7            LIGHT_TANK
-11000                                11000                                 11           0.7                             7            LIGHT_TANK
-11000                                11000                                 11           0.7                             7            LIGHT_TANK
-11000                                11000                                 11           1.0                             7            LIGHT_TANK
-11000                                11000                                 11           0.7                             7            LIGHT_TANK
-11000                                11000                                 11           0.7                             7            LIGHT_TANK
-11000                                7000                                  7            1.0                             7            LIGHT_TANK
-11000                                7000                                  7            1.0                             7            LIGHT_TANK
-7000                                 7000                                  7            0.7                             7            LIGHT_TANK
-7000                                 7000                                  7            0.7                             7            LIGHT_TANK
-7000                                 7000                                  7            1.0                             7            LIGHT_TANK
-11000                                11000                                 7            1.0                             7            LIGHT_TANK
-11000                                11000                                 7            0.7                             7            LIGHT_TANK
-11000                                11000                                 7            0.7                             7            LIGHT_TANK
-11000                                11000                                 7            1.0                             7            LIGHT_TANK
-11000                                11000                                 7            0.7                             7            LIGHT_TANK
-11000                                11000                                 7            0.7                             7            LIGHT_TANK
-11000                                11000                                 7            0.7                             7            FLARE
-11000                                11000                                 7            0.7                             7            FLARE
-11000                                7000                                  11           1.0                             7            HOVERCRAFT
-11000                                7000                                  11           1.0                             7            HOVERCRAFT
-7000                                 7000                                  11           0.7                             7            HOVERCRAFT
-7000                                 7000                                  11           0.7                             7            HOVERCRAFT
-7000                                 7000                                  11           1.0                             7            HOVERCRAFT
-11000                                11000                                 11           1.0                             7            HOVERCRAFT
-11000                                11000                                 11           0.7                             7            HOVERCRAFT
-11000                                11000                                 11           0.7                             7            HOVERCRAFT
-11000                                11000                                 11           1.0                             7            HOVERCRAFT
-11000                                11000                                 11           0.7                             7            HOVERCRAFT
-11000                                11000                                 11           0.7                             7            HOVERCRAFT
-11000                                7000                                  7            1.0                             7            HOVERCRAFT
-11000                                7000                                  7            1.0                             7            HOVERCRAFT
-7000                                 7000                                  7            0.7                             7            HOVERCRAFT
-7000                                 7000                                  7            0.7                             7            HOVERCRAFT
-7000                                 7000                                  7            1.0                             7            HOVERCRAFT
-11000                                11000                                 7            1.0                             7            HOVERCRAFT
-11000                                11000                                 7            0.7                             7            HOVERCRAFT
-11000                                11000                                 7            0.7                             7            HOVERCRAFT
-11000                                11000                                 7            1.0                             7            HOVERCRAFT
-11000                                11000                                 7            0.7                             7            HOVERCRAFT
-11000                                11000                                 7            0.7                             7            HOVERCRAFT
-11000                                7000                                  11           1.0                             7            FLAK
-11000                                7000                                  11           1.0                             7            FLAK
-7000                                 7000                                  11           0.7                             7            FLAK
-7000                                 7000                                  11           0.7                             7            FLAK
-7000                                 7000                                  11           1.0                             7            FLAK
-11000                                11000                                 11           1.0                             7            FLAK
-11000                                11000                                 11           0.7                             7            FLAK
-11000                                11000                                 11           0.7                             7            FLAK
-11000                                11000                                 11           1.0                             7            FLAK
-11000                                11000                                 11           0.7                             7            FLAK
-11000                                11000                                 11           0.7                             7            FLAK
-11000                                7000                                  7            1.0                             7            FLAK
-11000                                7000                                  7            1.0                             7            FLAK
-7000                                 7000                                  7            0.7                             7            FLAK
-7000                                 7000                                  7            0.7                             7            FLAK
-7000                                 7000                                  7            1.0                             7            FLAK
-11000                                11000                                 7            1.0                             7            FLAK
-11000                                11000                                 7            0.7                             7            FLAK
-11000                                11000                                 7            0.7                             7            FLAK
-11000                                11000                                 7            1.0                             7            FLAK
-11000                                11000                                 7            0.7                             7            FLAK
-11000                                11000                                 7            0.7                             7            FLAK
-11000                                3000                                  11           1.0                             7            FLAK
-11000                                3000                                  11           1.0                             7            FLAK
-7000                                 3000                                  11           0.7                             7            FLAK
-7000                                 3000                                  11           0.7                             7            FLAK
-7000                                 3000                                  11           1.0                             7            FLAK
-11000                                7000                                  11           1.0                             7            HOVERFLAK
-11000                                7000                                  11           1.0                             7            HOVERFLAK
-7000                                 7000                                  11           0.7                             7            HOVERFLAK
-7000                                 7000                                  11           0.7                             7            HOVERFLAK
-7000                                 7000                                  11           1.0                             7            HOVERFLAK
-11000                                11000                                 11           1.0                             7            HOVERFLAK
-11000                                11000                                 11           0.7                             7            HOVERFLAK
-11000                                11000                                 11           0.7                             7            HOVERFLAK
-11000                                11000                                 11           1.0                             7            HOVERFLAK
-11000                                11000                                 11           0.7                             7            HOVERFLAK
-11000                                11000                                 11           0.7                             7            HOVERFLAK
-11000                                7000                                  7            1.0                             7            HOVERFLAK
-11000                                7000                                  7            1.0                             7            HOVERFLAK
-7000                                 7000                                  7            0.7                             7            HOVERFLAK
-7000                                 7000                                  7            0.7                             7            HOVERFLAK
-7000                                 7000                                  7            1.0                             7            HOVERFLAK
-11000                                11000                                 7            1.0                             7            HOVERFLAK
-11000                                11000                                 7            0.7                             7            HOVERFLAK
-11000                                11000                                 7            0.7                             7            HOVERFLAK
-11000                                11000                                 7            1.0                             7            HOVERFLAK
-11000                                11000                                 7            0.7                             7            HOVERFLAK
-11000                                11000                                 7            0.7                             7            HOVERFLAK
-11000                                7000                                  11           1.0                             7            ARTILLERY
-11000                                7000                                  11           1.0                             7            ARTILLERY
-7000                                 7000                                  11           4.5                             7            ARTILLERY
-7000                                 7000                                  11           4.5                             7            ARTILLERY
-7000                                 7000                                  11           1.0                             7            ARTILLERY
-11000                                11000                                 11           1.0                             7            ARTILLERY
-11000                                11000                                 11           4.5                             7            ARTILLERY
-11000                                11000                                 11           4.5                             7            ARTILLERY
-11000                                11000                                 11           1.0                             7            ARTILLERY
-11000                                11000                                 11           4.5                             7            ARTILLERY
-11000                                11000                                 11           4.5                             7            ARTILLERY
-11000                                7000                                  7            1.0                             7            ARTILLERY
-11000                                7000                                  7            1.0                             7            ARTILLERY
-7000                                 7000                                  7            4.5                             7            ARTILLERY
-7000                                 7000                                  7            4.5                             7            ARTILLERY
-7000                                 7000                                  7            1.0                             7            ARTILLERY
-11000                                11000                                 7            1.0                             7            ARTILLERY
-11000                                11000                                 7            4.5                             7            ARTILLERY
-11000                                11000                                 7            4.5                             7            ARTILLERY
-11000                                11000                                 7            1.0                             7            ARTILLERY
-11000                                11000                                 7            4.5                             7            ARTILLERY
-11000                                11000                                 7            4.5                             7            ARTILLERY
-11000                                3000                                  11           1.0                             7            ARTILLERY
-11000                                3000                                  11           1.0                             7            ARTILLERY
-7000                                 3000                                  11           4.5                             7            ARTILLERY
-7000                                 3000                                  11           4.5                             7            ARTILLERY
-7000                                 3000                                  11           1.0                             7            ARTILLERY
-
-// HIGH TIER UNITS
-11000                                11000                                 11           1.0                             7            ROCKETTHROWER
-11000                                11000                                 11           1.0                             7            ROCKETTHROWER
-11000                                11000                                 11           4.5                             7            ROCKETTHROWER
-11000                                11000                                 11           4.5                             7            ROCKETTHROWER
-11000                                11000                                 11           1.0                             7            ROCKETTHROWER
-11000                                11000                                 11           1.0                             7            ROCKETTHROWER
-11000                                11000                                 11           4.5                             7            ROCKETTHROWER
-11000                                11000                                 11           4.5                             7            ROCKETTHROWER
-11000                                11000                                 11           1.0                             7            ROCKETTHROWER
-11000                                11000                                 11           4.5                             7            ROCKETTHROWER
-11000                                11000                                 11           4.5                             7            ROCKETTHROWER
-11000                                11000                                 11           1.0                             7            ANTITANKCANNON
-11000                                11000                                 11           1.0                             7            ANTITANKCANNON
-11000                                11000                                 11           4.5                             7            ANTITANKCANNON
-11000                                11000                                 11           4.5                             7            ANTITANKCANNON
-11000                                11000                                 11           1.0                             7            ANTITANKCANNON
-11000                                11000                                 11           1.0                             7            ANTITANKCANNON
-11000                                11000                                 11           4.5                             7            ANTITANKCANNON
-11000                                11000                                 11           4.5                             7            ANTITANKCANNON
-11000                                11000                                 11           1.0                             7            ANTITANKCANNON
-11000                                11000                                 11           4.5                             7            ANTITANKCANNON
-11000                                11000                                 11           4.5                             7            ANTITANKCANNON
-11000                                11000                                 11           1.0                             7            HEAVY_TANK
-11000                                11000                                 11           1.0                             7            HEAVY_TANK
-11000                                11000                                 11           0.7                             7            HEAVY_TANK
-11000                                11000                                 11           0.7                             7            HEAVY_TANK
-11000                                11000                                 11           1.0                             7            HEAVY_TANK
-11000                                11000                                 11           1.0                             7            HEAVY_TANK
-11000                                11000                                 11           0.7                             7            HEAVY_TANK
-11000                                11000                                 11           0.7                             7            HEAVY_TANK
-11000                                11000                                 11           1.0                             7            HEAVY_TANK
-11000                                11000                                 11           0.7                             7            HEAVY_TANK
-11000                                11000                                 11           0.7                             7            HEAVY_TANK
-11000                                11000                                 11           1.0                             7            NEOTANK
-11000                                11000                                 11           1.0                             7            NEOTANK
-11000                                11000                                 11           0.7                             7            NEOTANK
-11000                                11000                                 11           0.7                             7            NEOTANK
-11000                                11000                                 11           1.0                             7            NEOTANK
-11000                                11000                                 11           1.0                             7            NEOTANK
-11000                                11000                                 11           0.7                             7            NEOTANK
-11000                                11000                                 11           0.7                             7            NEOTANK
-11000                                11000                                 11           1.0                             7            NEOTANK
-11000                                11000                                 11           0.7                             7            NEOTANK
-11000                                11000                                 11           0.7                             7            NEOTANK
-11000                                11000                                 11           1.0                             7            HEAVY_HOVERCRAFT
-11000                                11000                                 11           1.0                             7            HEAVY_HOVERCRAFT
-11000                                11000                                 11           0.7                             7            HEAVY_HOVERCRAFT
-11000                                11000                                 11           0.7                             7            HEAVY_HOVERCRAFT
-11000                                11000                                 11           1.0                             7            HEAVY_HOVERCRAFT
-11000                                11000                                 11           1.0                             7            HEAVY_HOVERCRAFT
-11000                                11000                                 11           0.7                             7            HEAVY_HOVERCRAFT
-11000                                11000                                 11           0.7                             7            HEAVY_HOVERCRAFT
-11000                                11000                                 11           1.0                             7            HEAVY_HOVERCRAFT
-11000                                11000                                 11           0.7                             7            HEAVY_HOVERCRAFT
-11000                                11000                                 11           0.7                             7            HEAVY_HOVERCRAFT
-11000                                11000                                 11           0.7                             7            MISSILE
-11000                                11000                                 11           0.7                             7            MISSILE
-11000                                11000                                 11           1.0                             7            MISSILE
-11000                                11000                                 11           0.7                             7            MISSILE
-11000                                11000                                 11           0.7                             7            MISSILE
-11000                                11000                                 11           0.7                             7            MEGATANK
-11000                                11000                                 11           0.7                             7            MEGATANK
-11000                                11000                                 11           1.0                             7            MEGATANK
-11000                                11000                                 11           0.7                             7            MEGATANK
-11000                                11000                                 11           0.7                             7            MEGATANK
+// Fonds                               | Fonds per Building                     |  Units           | Direct / Indirects             | Infantry      | TRANSPORTER    | Result
+type NUMBER:4000_>|4000_<_10000|10000_<  NUMBER:4000_>|4000_<_10000|10000_<        NUMBER:10_<|10_>  NUMBER:0.8_>|0.8_<_3.5|3.5_<   NUMBER:5_<|5_>    NUMBER:1_<|1_>   UNIT
+// INFANTRY BUILDING                                                               
+3000                                     3000                                      7                 1.0                            4                 0                INFANTRY
+3000                                     3000                                      7                 0.7                            4                 0                INFANTRY
+3000                                     3000                                      7                 4.5                            4                 0                INFANTRY
+11000                                    3000                                      11                1.0                            4                 0                INFANTRY
+11000                                    3000                                      7                 1.0                            4                 0                INFANTRY
+11000                                    3000                                      11                1.0                            7                 0                INFANTRY
+11000                                    3000                                      7                 1.0                            7                 0                INFANTRY
+3000                                     3000                                      7                 1.0                            4                 2                INFANTRY
+3000                                     3000                                      7                 0.7                            4                 2                INFANTRY
+3000                                     3000                                      7                 4.5                            4                 2                INFANTRY
+11000                                    3000                                      11                1.0                            4                 2                INFANTRY
+11000                                    3000                                      7                 1.0                            4                 2                INFANTRY
+11000                                    3000                                      11                1.0                            7                 2                INFANTRY
+11000                                    3000                                      7                 1.0                            7                 2                INFANTRY
+11000                                    3000                                      11                1.0                            4                 0                MECH
+11000                                    3000                                      11                1.0                            4                 0                MECH
+11000                                    3000                                      11                4.5                            4                 0                MECH
+11000                                    3000                                      11                0.7                            4                 0                MECH
+11000                                    3000                                      11                1.0                            7                 0                MECH
+11000                                    3000                                      11                1.0                            7                 0                MECH
+11000                                    3000                                      11                1.0                            4                 2                MECH
+11000                                    3000                                      11                1.0                            4                 2                MECH
+11000                                    3000                                      11                4.5                            4                 2                MECH
+11000                                    3000                                      11                0.7                            4                 2                MECH
+11000                                    3000                                      11                1.0                            7                 2                MECH
+11000                                    3000                                      11                1.0                            7                 2                MECH
+11000                                    3000                                      11                1.0                            7                 0                MOTORBIKE
+11000                                    3000                                      11                1.0                            7                 0                MOTORBIKE
+11000                                    3000                                      11                1.0                            4                 0                MOTORBIKE
+11000                                    3000                                      11                1.0                            4                 0                MOTORBIKE
+11000                                    3000                                      11                4.5                            4                 0                MOTORBIKE
+11000                                    3000                                      11                0.7                            4                 0                MOTORBIKE
+11000                                    3000                                      11                1.0                            7                 2                MOTORBIKE
+11000                                    3000                                      11                1.0                            7                 2                MOTORBIKE
+11000                                    3000                                      11                1.0                            4                 2                MOTORBIKE
+11000                                    3000                                      11                1.0                            4                 2                MOTORBIKE
+11000                                    3000                                      11                4.5                            4                 2                MOTORBIKE
+11000                                    3000                                      11                0.7                            4                 2                MOTORBIKE
+11000                                    3000                                      11                1.0                            4                 0                SNIPER
+11000                                    3000                                      11                1.0                            4                 0                SNIPER
+11000                                    3000                                      11                4.5                            4                 0                SNIPER
+11000                                    3000                                      11                0.7                            4                 0                SNIPER
+11000                                    3000                                      11                1.0                            4                 2                SNIPER
+11000                                    3000                                      11                1.0                            4                 2                SNIPER
+11000                                    3000                                      11                4.5                            4                 2                SNIPER
+11000                                    3000                                      11                0.7                            4                 2                SNIPER
+// APC
+7000                                     7000                                      7                 0.7                            7                 0                APC
+7000                                     7000                                      7                 1.0                            7                 0                APC
+7000                                     7000                                      7                 4.5                            7                 0                APC
+7000                                     7000                                      11                0.7                            7                 0                APC
+7000                                     7000                                      11                1.0                            7                 0                APC
+7000                                     7000                                      11                4.5                            7                 0                APC
+// MID UNIT BUILDING                                                                                                                                                  
+7000                                     7000                                      7                 0.7                            7                 0                RECON
+7000                                     7000                                      7                 1.0                            7                 0                RECON
+7000                                     7000                                      11                1.0                            7                 0                RECON
+11000                                    3000                                      11                1.0                            7                 0                LIGHT_TANK
+11000                                    3000                                      11                1.0                            7                 0                LIGHT_TANK
+7000                                     3000                                      11                0.7                            7                 0                LIGHT_TANK
+7000                                     3000                                      11                0.7                            7                 0                LIGHT_TANK
+7000                                     3000                                      11                1.0                            7                 0                LIGHT_TANK
+11000                                    7000                                      11                1.0                            7                 0                LIGHT_TANK
+11000                                    7000                                      11                1.0                            7                 0                LIGHT_TANK
+7000                                     7000                                      11                0.7                            7                 0                LIGHT_TANK
+7000                                     7000                                      11                0.7                            7                 0                LIGHT_TANK
+7000                                     7000                                      11                1.0                            7                 0                LIGHT_TANK
+11000                                    11000                                     11                1.0                            7                 0                LIGHT_TANK
+11000                                    11000                                     11                0.7                            7                 0                LIGHT_TANK
+11000                                    11000                                     11                0.7                            7                 0                LIGHT_TANK
+11000                                    11000                                     11                1.0                            7                 0                LIGHT_TANK
+11000                                    11000                                     11                0.7                            7                 0                LIGHT_TANK
+11000                                    11000                                     11                0.7                            7                 0                LIGHT_TANK
+11000                                    7000                                      7                 1.0                            7                 0                LIGHT_TANK
+11000                                    7000                                      7                 1.0                            7                 0                LIGHT_TANK
+7000                                     7000                                      7                 0.7                            7                 0                LIGHT_TANK
+7000                                     7000                                      7                 0.7                            7                 0                LIGHT_TANK
+7000                                     7000                                      7                 1.0                            7                 0                LIGHT_TANK
+11000                                    11000                                     7                 1.0                            7                 0                LIGHT_TANK
+11000                                    11000                                     7                 0.7                            7                 0                LIGHT_TANK
+11000                                    11000                                     7                 0.7                            7                 0                LIGHT_TANK
+11000                                    11000                                     7                 1.0                            7                 0                LIGHT_TANK
+11000                                    11000                                     7                 0.7                            7                 0                LIGHT_TANK
+11000                                    11000                                     7                 0.7                            7                 0                LIGHT_TANK
+11000                                    3000                                      11                1.0                            7                 2                LIGHT_TANK
+11000                                    3000                                      11                1.0                            7                 2                LIGHT_TANK
+7000                                     3000                                      11                0.7                            7                 2                LIGHT_TANK
+7000                                     3000                                      11                0.7                            7                 2                LIGHT_TANK
+7000                                     3000                                      11                1.0                            7                 2                LIGHT_TANK
+11000                                    7000                                      11                1.0                            7                 2                LIGHT_TANK
+11000                                    7000                                      11                1.0                            7                 2                LIGHT_TANK
+7000                                     7000                                      11                0.7                            7                 2                LIGHT_TANK
+7000                                     7000                                      11                0.7                            7                 2                LIGHT_TANK
+7000                                     7000                                      11                1.0                            7                 2                LIGHT_TANK
+11000                                    11000                                     11                1.0                            7                 2                LIGHT_TANK
+11000                                    11000                                     11                0.7                            7                 2                LIGHT_TANK
+11000                                    11000                                     11                0.7                            7                 2                LIGHT_TANK
+11000                                    11000                                     11                1.0                            7                 2                LIGHT_TANK
+11000                                    11000                                     11                0.7                            7                 2                LIGHT_TANK
+11000                                    11000                                     11                0.7                            7                 2                LIGHT_TANK
+11000                                    7000                                      7                 1.0                            7                 2                LIGHT_TANK
+11000                                    7000                                      7                 1.0                            7                 2                LIGHT_TANK
+7000                                     7000                                      7                 0.7                            7                 2                LIGHT_TANK
+7000                                     7000                                      7                 0.7                            7                 2                LIGHT_TANK
+7000                                     7000                                      7                 1.0                            7                 2                LIGHT_TANK
+11000                                    11000                                     7                 1.0                            7                 2                LIGHT_TANK
+11000                                    11000                                     7                 0.7                            7                 2                LIGHT_TANK
+11000                                    11000                                     7                 0.7                            7                 2                LIGHT_TANK
+11000                                    11000                                     7                 1.0                            7                 2                LIGHT_TANK
+11000                                    11000                                     7                 0.7                            7                 2                LIGHT_TANK
+11000                                    11000                                     7                 0.7                            7                 2                LIGHT_TANK
+11000                                    11000                                     7                 0.7                            7                 0                FLARE
+11000                                    11000                                     7                 0.7                            7                 0                FLARE
+11000                                    11000                                     7                 0.7                            7                 2                FLARE
+11000                                    11000                                     7                 0.7                            7                 2                FLARE
+11000                                    7000                                      11                1.0                            7                 2                HOVERCRAFT
+11000                                    7000                                      11                1.0                            7                 2                HOVERCRAFT
+7000                                     7000                                      11                0.7                            7                 2                HOVERCRAFT
+7000                                     7000                                      11                0.7                            7                 2                HOVERCRAFT
+7000                                     7000                                      11                1.0                            7                 2                HOVERCRAFT
+11000                                    11000                                     11                1.0                            7                 2                HOVERCRAFT
+11000                                    11000                                     11                0.7                            7                 2                HOVERCRAFT
+11000                                    11000                                     11                0.7                            7                 2                HOVERCRAFT
+11000                                    11000                                     11                1.0                            7                 2                HOVERCRAFT
+11000                                    11000                                     11                0.7                            7                 2                HOVERCRAFT
+11000                                    11000                                     11                0.7                            7                 2                HOVERCRAFT
+11000                                    7000                                      7                 1.0                            7                 2                HOVERCRAFT
+11000                                    7000                                      7                 1.0                            7                 2                HOVERCRAFT
+7000                                     7000                                      7                 0.7                            7                 2                HOVERCRAFT
+7000                                     7000                                      7                 0.7                            7                 2                HOVERCRAFT
+7000                                     7000                                      7                 1.0                            7                 2                HOVERCRAFT
+11000                                    11000                                     7                 1.0                            7                 2                HOVERCRAFT
+11000                                    11000                                     7                 0.7                            7                 2                HOVERCRAFT
+11000                                    11000                                     7                 0.7                            7                 2                HOVERCRAFT
+11000                                    11000                                     7                 1.0                            7                 2                HOVERCRAFT
+11000                                    11000                                     7                 0.7                            7                 2                HOVERCRAFT
+11000                                    11000                                     7                 0.7                            7                 2                HOVERCRAFT
+11000                                    7000                                      11                1.0                            7                 0                HOVERCRAFT
+11000                                    7000                                      11                1.0                            7                 0                HOVERCRAFT
+7000                                     7000                                      11                0.7                            7                 0                HOVERCRAFT
+7000                                     7000                                      11                0.7                            7                 0                HOVERCRAFT
+7000                                     7000                                      11                1.0                            7                 0                HOVERCRAFT
+11000                                    11000                                     11                1.0                            7                 0                HOVERCRAFT
+11000                                    11000                                     11                0.7                            7                 0                HOVERCRAFT
+11000                                    11000                                     11                0.7                            7                 0                HOVERCRAFT
+11000                                    11000                                     11                1.0                            7                 0                HOVERCRAFT
+11000                                    11000                                     11                0.7                            7                 0                HOVERCRAFT
+11000                                    11000                                     11                0.7                            7                 0                HOVERCRAFT
+11000                                    7000                                      7                 1.0                            7                 0                HOVERCRAFT
+11000                                    7000                                      7                 1.0                            7                 0                HOVERCRAFT
+7000                                     7000                                      7                 0.7                            7                 0                HOVERCRAFT
+7000                                     7000                                      7                 0.7                            7                 0                HOVERCRAFT
+7000                                     7000                                      7                 1.0                            7                 0                HOVERCRAFT
+11000                                    11000                                     7                 1.0                            7                 0                HOVERCRAFT
+11000                                    11000                                     7                 0.7                            7                 0                HOVERCRAFT
+11000                                    11000                                     7                 0.7                            7                 0                HOVERCRAFT
+11000                                    11000                                     7                 1.0                            7                 0                HOVERCRAFT
+11000                                    11000                                     7                 0.7                            7                 0                HOVERCRAFT
+11000                                    11000                                     7                 0.7                            7                 0                HOVERCRAFT
+11000                                    7000                                      11                1.0                            7                 0                FLAK
+11000                                    7000                                      11                1.0                            7                 0                FLAK
+7000                                     7000                                      11                0.7                            7                 0                FLAK
+7000                                     7000                                      11                0.7                            7                 0                FLAK
+7000                                     7000                                      11                1.0                            7                 0                FLAK
+11000                                    11000                                     11                1.0                            7                 0                FLAK
+11000                                    11000                                     11                0.7                            7                 0                FLAK
+11000                                    11000                                     11                0.7                            7                 0                FLAK
+11000                                    11000                                     11                1.0                            7                 0                FLAK
+11000                                    11000                                     11                0.7                            7                 0                FLAK
+11000                                    11000                                     11                0.7                            7                 0                FLAK
+11000                                    7000                                      7                 1.0                            7                 0                FLAK
+11000                                    7000                                      7                 1.0                            7                 0                FLAK
+7000                                     7000                                      7                 0.7                            7                 0                FLAK
+7000                                     7000                                      7                 0.7                            7                 0                FLAK
+7000                                     7000                                      7                 1.0                            7                 0                FLAK
+11000                                    11000                                     7                 1.0                            7                 0                FLAK
+11000                                    11000                                     7                 0.7                            7                 0                FLAK
+11000                                    11000                                     7                 0.7                            7                 0                FLAK
+11000                                    11000                                     7                 1.0                            7                 0                FLAK
+11000                                    11000                                     7                 0.7                            7                 0                FLAK
+11000                                    11000                                     7                 0.7                            7                 0                FLAK
+11000                                    3000                                      11                1.0                            7                 0                FLAK
+11000                                    3000                                      11                1.0                            7                 0                FLAK
+7000                                     3000                                      11                0.7                            7                 0                FLAK
+7000                                     3000                                      11                0.7                            7                 0                FLAK
+7000                                     3000                                      11                1.0                            7                 0                FLAK
+11000                                    7000                                      11                1.0                            7                 2                FLAK
+11000                                    7000                                      11                1.0                            7                 2                FLAK
+7000                                     7000                                      11                0.7                            7                 2                FLAK
+7000                                     7000                                      11                0.7                            7                 2                FLAK
+7000                                     7000                                      11                1.0                            7                 2                FLAK
+11000                                    11000                                     11                1.0                            7                 2                FLAK
+11000                                    11000                                     11                0.7                            7                 2                FLAK
+11000                                    11000                                     11                0.7                            7                 2                FLAK
+11000                                    11000                                     11                1.0                            7                 2                FLAK
+11000                                    11000                                     11                0.7                            7                 2                FLAK
+11000                                    11000                                     11                0.7                            7                 2                FLAK
+11000                                    7000                                      7                 1.0                            7                 2                FLAK
+11000                                    7000                                      7                 1.0                            7                 2                FLAK
+7000                                     7000                                      7                 0.7                            7                 2                FLAK
+7000                                     7000                                      7                 0.7                            7                 2                FLAK
+7000                                     7000                                      7                 1.0                            7                 2                FLAK
+11000                                    11000                                     7                 1.0                            7                 2                FLAK
+11000                                    11000                                     7                 0.7                            7                 2                FLAK
+11000                                    11000                                     7                 0.7                            7                 2                FLAK
+11000                                    11000                                     7                 1.0                            7                 2                FLAK
+11000                                    11000                                     7                 0.7                            7                 2                FLAK
+11000                                    11000                                     7                 0.7                            7                 2                FLAK
+11000                                    3000                                      11                1.0                            7                 2                FLAK
+11000                                    3000                                      11                1.0                            7                 2                FLAK
+7000                                     3000                                      11                0.7                            7                 2                FLAK
+7000                                     3000                                      11                0.7                            7                 2                FLAK
+7000                                     3000                                      11                1.0                            7                 2                FLAK
+11000                                    7000                                      11                1.0                            7                 2                HOVERFLAK
+11000                                    7000                                      11                1.0                            7                 2                HOVERFLAK
+7000                                     7000                                      11                0.7                            7                 2                HOVERFLAK
+7000                                     7000                                      11                0.7                            7                 2                HOVERFLAK
+7000                                     7000                                      11                1.0                            7                 2                HOVERFLAK
+11000                                    11000                                     11                1.0                            7                 2                HOVERFLAK
+11000                                    11000                                     11                0.7                            7                 2                HOVERFLAK
+11000                                    11000                                     11                0.7                            7                 2                HOVERFLAK
+11000                                    11000                                     11                1.0                            7                 2                HOVERFLAK
+11000                                    11000                                     11                0.7                            7                 2                HOVERFLAK
+11000                                    11000                                     11                0.7                            7                 2                HOVERFLAK
+11000                                    7000                                      7                 1.0                            7                 2                HOVERFLAK
+11000                                    7000                                      7                 1.0                            7                 2                HOVERFLAK
+7000                                     7000                                      7                 0.7                            7                 2                HOVERFLAK
+7000                                     7000                                      7                 0.7                            7                 2                HOVERFLAK
+7000                                     7000                                      7                 1.0                            7                 2                HOVERFLAK
+11000                                    11000                                     7                 1.0                            7                 2                HOVERFLAK
+11000                                    11000                                     7                 0.7                            7                 2                HOVERFLAK
+11000                                    11000                                     7                 0.7                            7                 2                HOVERFLAK
+11000                                    11000                                     7                 1.0                            7                 2                HOVERFLAK
+11000                                    11000                                     7                 0.7                            7                 2                HOVERFLAK
+11000                                    11000                                     7                 0.7                            7                 2                HOVERFLAK
+11000                                    7000                                      11                1.0                            7                 0                HOVERFLAK
+11000                                    7000                                      11                1.0                            7                 0                HOVERFLAK
+7000                                     7000                                      11                0.7                            7                 0                HOVERFLAK
+7000                                     7000                                      11                0.7                            7                 0                HOVERFLAK
+7000                                     7000                                      11                1.0                            7                 0                HOVERFLAK
+11000                                    11000                                     11                1.0                            7                 0                HOVERFLAK
+11000                                    11000                                     11                0.7                            7                 0                HOVERFLAK
+11000                                    11000                                     11                0.7                            7                 0                HOVERFLAK
+11000                                    11000                                     11                1.0                            7                 0                HOVERFLAK
+11000                                    11000                                     11                0.7                            7                 0                HOVERFLAK
+11000                                    11000                                     11                0.7                            7                 0                HOVERFLAK
+11000                                    7000                                      7                 1.0                            7                 0                HOVERFLAK
+11000                                    7000                                      7                 1.0                            7                 0                HOVERFLAK
+7000                                     7000                                      7                 0.7                            7                 0                HOVERFLAK
+7000                                     7000                                      7                 0.7                            7                 0                HOVERFLAK
+7000                                     7000                                      7                 1.0                            7                 0                HOVERFLAK
+11000                                    11000                                     7                 1.0                            7                 0                HOVERFLAK
+11000                                    11000                                     7                 0.7                            7                 0                HOVERFLAK
+11000                                    11000                                     7                 0.7                            7                 0                HOVERFLAK
+11000                                    11000                                     7                 1.0                            7                 0                HOVERFLAK
+11000                                    11000                                     7                 0.7                            7                 0                HOVERFLAK
+11000                                    11000                                     7                 0.7                            7                 0                HOVERFLAK
+11000                                    7000                                      11                1.0                            7                 0                ARTILLERY
+11000                                    7000                                      11                1.0                            7                 0                ARTILLERY
+7000                                     7000                                      11                4.5                            7                 0                ARTILLERY
+7000                                     7000                                      11                4.5                            7                 0                ARTILLERY
+7000                                     7000                                      11                1.0                            7                 0                ARTILLERY
+11000                                    11000                                     11                1.0                            7                 0                ARTILLERY
+11000                                    11000                                     11                4.5                            7                 0                ARTILLERY
+11000                                    11000                                     11                4.5                            7                 0                ARTILLERY
+11000                                    11000                                     11                1.0                            7                 0                ARTILLERY
+11000                                    11000                                     11                4.5                            7                 0                ARTILLERY
+11000                                    11000                                     11                4.5                            7                 0                ARTILLERY
+11000                                    7000                                      7                 1.0                            7                 0                ARTILLERY
+11000                                    7000                                      7                 1.0                            7                 0                ARTILLERY
+7000                                     7000                                      7                 4.5                            7                 0                ARTILLERY
+7000                                     7000                                      7                 4.5                            7                 0                ARTILLERY
+7000                                     7000                                      7                 1.0                            7                 0                ARTILLERY
+11000                                    11000                                     7                 1.0                            7                 0                ARTILLERY
+11000                                    11000                                     7                 4.5                            7                 0                ARTILLERY
+11000                                    11000                                     7                 4.5                            7                 0                ARTILLERY
+11000                                    11000                                     7                 1.0                            7                 0                ARTILLERY
+11000                                    11000                                     7                 4.5                            7                 0                ARTILLERY
+11000                                    11000                                     7                 4.5                            7                 0                ARTILLERY
+11000                                    3000                                      11                1.0                            7                 0                ARTILLERY
+11000                                    3000                                      11                1.0                            7                 0                ARTILLERY
+7000                                     3000                                      11                4.5                            7                 0                ARTILLERY
+7000                                     3000                                      11                4.5                            7                 0                ARTILLERY
+7000                                     3000                                      11                1.0                            7                 0                ARTILLERY
+11000                                    7000                                      11                1.0                            7                 2                ARTILLERY
+11000                                    7000                                      11                1.0                            7                 2                ARTILLERY
+7000                                     7000                                      11                4.5                            7                 2                ARTILLERY
+7000                                     7000                                      11                4.5                            7                 2                ARTILLERY
+7000                                     7000                                      11                1.0                            7                 2                ARTILLERY
+11000                                    11000                                     11                1.0                            7                 2                ARTILLERY
+11000                                    11000                                     11                4.5                            7                 2                ARTILLERY
+11000                                    11000                                     11                4.5                            7                 2                ARTILLERY
+11000                                    11000                                     11                1.0                            7                 2                ARTILLERY
+11000                                    11000                                     11                4.5                            7                 2                ARTILLERY
+11000                                    11000                                     11                4.5                            7                 2                ARTILLERY
+11000                                    7000                                      7                 1.0                            7                 2                ARTILLERY
+11000                                    7000                                      7                 1.0                            7                 2                ARTILLERY
+7000                                     7000                                      7                 4.5                            7                 2                ARTILLERY
+7000                                     7000                                      7                 4.5                            7                 2                ARTILLERY
+7000                                     7000                                      7                 1.0                            7                 2                ARTILLERY
+11000                                    11000                                     7                 1.0                            7                 2                ARTILLERY
+11000                                    11000                                     7                 4.5                            7                 2                ARTILLERY
+11000                                    11000                                     7                 4.5                            7                 2                ARTILLERY
+11000                                    11000                                     7                 1.0                            7                 2                ARTILLERY
+11000                                    11000                                     7                 4.5                            7                 2                ARTILLERY
+11000                                    11000                                     7                 4.5                            7                 2                ARTILLERY
+11000                                    3000                                      11                1.0                            7                 2                ARTILLERY
+11000                                    3000                                      11                1.0                            7                 2                ARTILLERY
+7000                                     3000                                      11                4.5                            7                 2                ARTILLERY
+7000                                     3000                                      11                4.5                            7                 2                ARTILLERY
+7000                                     3000                                      11                1.0                            7                 2                ARTILLERY
+// HIGH TIER UNITS                                                                                                                                                    
+11000                                    11000                                     11                1.0                            7                 0                ROCKETTHROWER
+11000                                    11000                                     11                1.0                            7                 0                ROCKETTHROWER
+11000                                    11000                                     11                4.5                            7                 0                ROCKETTHROWER
+11000                                    11000                                     11                4.5                            7                 0                ROCKETTHROWER
+11000                                    11000                                     11                1.0                            7                 0                ROCKETTHROWER
+11000                                    11000                                     11                1.0                            7                 0                ROCKETTHROWER
+11000                                    11000                                     11                4.5                            7                 0                ROCKETTHROWER
+11000                                    11000                                     11                4.5                            7                 0                ROCKETTHROWER
+11000                                    11000                                     11                1.0                            7                 0                ROCKETTHROWER
+11000                                    11000                                     11                4.5                            7                 0                ROCKETTHROWER
+11000                                    11000                                     11                4.5                            7                 0                ROCKETTHROWER
+11000                                    11000                                     11                1.0                            7                 2                ROCKETTHROWER
+11000                                    11000                                     11                1.0                            7                 2                ROCKETTHROWER
+11000                                    11000                                     11                4.5                            7                 2                ROCKETTHROWER
+11000                                    11000                                     11                4.5                            7                 2                ROCKETTHROWER
+11000                                    11000                                     11                1.0                            7                 2                ROCKETTHROWER
+11000                                    11000                                     11                1.0                            7                 2                ROCKETTHROWER
+11000                                    11000                                     11                4.5                            7                 2                ROCKETTHROWER
+11000                                    11000                                     11                4.5                            7                 2                ROCKETTHROWER
+11000                                    11000                                     11                1.0                            7                 2                ROCKETTHROWER
+11000                                    11000                                     11                4.5                            7                 2                ROCKETTHROWER
+11000                                    11000                                     11                4.5                            7                 2                ROCKETTHROWER
+11000                                    11000                                     11                1.0                            7                 2                ANTITANKCANNON
+11000                                    11000                                     11                1.0                            7                 2                ANTITANKCANNON
+11000                                    11000                                     11                4.5                            7                 2                ANTITANKCANNON
+11000                                    11000                                     11                4.5                            7                 2                ANTITANKCANNON
+11000                                    11000                                     11                1.0                            7                 2                ANTITANKCANNON
+11000                                    11000                                     11                1.0                            7                 2                ANTITANKCANNON
+11000                                    11000                                     11                4.5                            7                 2                ANTITANKCANNON
+11000                                    11000                                     11                4.5                            7                 2                ANTITANKCANNON
+11000                                    11000                                     11                1.0                            7                 2                ANTITANKCANNON
+11000                                    11000                                     11                4.5                            7                 2                ANTITANKCANNON
+11000                                     7000                                     11                4.5                            7                 2                ANTITANKCANNON
+11000                                    11000                                     11                1.0                            7                 0                ANTITANKCANNON
+11000                                    11000                                     11                1.0                            7                 0                ANTITANKCANNON
+11000                                    11000                                     11                4.5                            7                 0                ANTITANKCANNON
+11000                                    11000                                     11                4.5                            7                 0                ANTITANKCANNON
+11000                                    11000                                     11                1.0                            7                 0                ANTITANKCANNON
+11000                                    11000                                     11                1.0                            7                 0                ANTITANKCANNON
+11000                                    11000                                     11                4.5                            7                 0                ANTITANKCANNON
+11000                                    11000                                     11                4.5                            7                 0                ANTITANKCANNON
+11000                                    11000                                     11                1.0                            7                 0                ANTITANKCANNON
+11000                                    11000                                     11                4.5                            7                 0                ANTITANKCANNON
+11000                                     7000                                     11                4.5                            7                 0                ANTITANKCANNON
+11000                                     7000                                     11                1.0                            7                 0                HEAVY_TANK
+11000                                     7000                                     11                1.0                            7                 0                HEAVY_TANK
+11000                                     7000                                     11                0.7                            7                 0                HEAVY_TANK
+11000                                    11000                                     11                0.7                            7                 0                HEAVY_TANK
+11000                                    11000                                     11                1.0                            7                 0                HEAVY_TANK
+11000                                    11000                                     11                1.0                            7                 0                HEAVY_TANK
+11000                                    11000                                     11                0.7                            7                 0                HEAVY_TANK
+11000                                    11000                                     11                0.7                            7                 0                HEAVY_TANK
+11000                                    11000                                     11                1.0                            7                 0                HEAVY_TANK
+11000                                    11000                                     11                1.0                            7                 0                HEAVY_TANK
+11000                                    11000                                     11                0.7                            7                 0                HEAVY_TANK
+11000                                    11000                                     11                0.7                            7                 0                HEAVY_TANK
+11000                                    11000                                     11                1.0                            7                 0                HEAVY_TANK
+11000                                    11000                                     11                0.7                            7                 0                HEAVY_TANK
+11000                                    11000                                     11                0.7                            7                 0                HEAVY_TANK
+11000                                     7000                                     11                1.0                            7                 2                HEAVY_TANK
+11000                                     7000                                     11                1.0                            7                 2                HEAVY_TANK
+11000                                     7000                                     11                0.7                            7                 2                HEAVY_TANK
+11000                                    11000                                     11                0.7                            7                 2                HEAVY_TANK
+11000                                    11000                                     11                1.0                            7                 2                HEAVY_TANK
+11000                                    11000                                     11                1.0                            7                 2                HEAVY_TANK
+11000                                    11000                                     11                0.7                            7                 2                HEAVY_TANK
+11000                                    11000                                     11                0.7                            7                 2                HEAVY_TANK
+11000                                    11000                                     11                1.0                            7                 2                HEAVY_TANK
+11000                                    11000                                     11                1.0                            7                 2                HEAVY_TANK
+11000                                    11000                                     11                0.7                            7                 2                HEAVY_TANK
+11000                                    11000                                     11                0.7                            7                 2                HEAVY_TANK
+11000                                    11000                                     11                1.0                            7                 2                HEAVY_TANK
+11000                                    11000                                     11                0.7                            7                 2                HEAVY_TANK
+11000                                    11000                                     11                0.7                            7                 2                HEAVY_TANK
+11000                                     7000                                     11                1.0                            7                 2                NEOTANK
+11000                                     7000                                     11                1.0                            7                 2                NEOTANK
+11000                                     7000                                     11                0.7                            7                 2                NEOTANK
+11000                                     7000                                     11                0.7                            7                 2                NEOTANK
+11000                                    11000                                     11                1.0                            7                 2                NEOTANK
+11000                                    11000                                     11                1.0                            7                 2                NEOTANK
+11000                                    11000                                     11                0.7                            7                 2                NEOTANK
+11000                                    11000                                     11                0.7                            7                 2                NEOTANK
+11000                                    11000                                     11                1.0                            7                 2                NEOTANK
+11000                                    11000                                     11                1.0                            7                 2                NEOTANK
+11000                                    11000                                     11                0.7                            7                 2                NEOTANK
+11000                                    11000                                     11                0.7                            7                 2                NEOTANK
+11000                                    11000                                     11                1.0                            7                 2                NEOTANK
+11000                                    11000                                     11                0.7                            7                 2                NEOTANK
+11000                                    11000                                     11                0.7                            7                 2                NEOTANK
+11000                                    11000                                     11                1.0                            7                 0                NEOTANK
+11000                                    11000                                     11                1.0                            7                 0                NEOTANK
+11000                                    11000                                     11                0.7                            7                 0                NEOTANK
+11000                                    11000                                     11                0.7                            7                 0                NEOTANK
+11000                                    11000                                     11                1.0                            7                 0                NEOTANK
+11000                                    11000                                     11                1.0                            7                 0                NEOTANK
+11000                                    11000                                     11                0.7                            7                 0                NEOTANK
+11000                                    11000                                     11                0.7                            7                 0                NEOTANK
+11000                                    11000                                     11                1.0                            7                 0                NEOTANK
+11000                                    11000                                     11                0.7                            7                 0                NEOTANK
+11000                                    11000                                     11                0.7                            7                 0                NEOTANK
+11000                                    11000                                     11                1.0                            7                 0                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                1.0                            7                 0                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                0.7                            7                 0                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                0.7                            7                 0                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                1.0                            7                 0                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                1.0                            7                 0                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                0.7                            7                 0                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                0.7                            7                 0                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                1.0                            7                 0                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                0.7                            7                 0                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                0.7                            7                 0                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                1.0                            7                 2                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                1.0                            7                 2                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                0.7                            7                 2                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                0.7                            7                 2                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                1.0                            7                 2                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                1.0                            7                 2                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                0.7                            7                 2                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                0.7                            7                 2                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                1.0                            7                 2                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                4.5                            7                 2                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                4.5                            7                 2                HEAVY_HOVERCRAFT
+11000                                    11000                                     11                4.5                            7                 0                MISSILE
+11000                                    11000                                     11                4.5                            7                 0                MISSILE
+11000                                    11000                                     11                1.0                            7                 0                MISSILE
+11000                                    11000                                     11                4.5                            7                 0                MISSILE
+11000                                    11000                                     11                4.5                            7                 0                MISSILE
+11000                                    11000                                     11                0.7                            7                 0                MEGATANK
+11000                                    11000                                     11                0.7                            7                 0                MEGATANK
+11000                                    11000                                     11                1.0                            7                 0                MEGATANK
+11000                                    11000                                     11                0.7                            7                 0                MEGATANK
+11000                                    11000                                     11                0.7                            7                 0                MEGATANK
+11000                                    11000                                     11                0.7                            7                 2                MEGATANK
+11000                                    11000                                     11                0.7                            7                 2                MEGATANK
+11000                                    11000                                     11                1.0                            7                 2                MEGATANK
+11000                                    11000                                     11                0.7                            7                 2                MEGATANK
+11000                                    11000                                     11                0.7                            7                 2                MEGATANK
+11000                                    11000                                     11                0.7                            7                 2                MEGATANK
+11000                                    11000                                     11                0.7                            7                 2                MEGATANK
+11000                                    11000                                     11                1.0                            7                 2                MEGATANK
+11000                                    11000                                     11                1.0                            7                 2                MEGATANK
+11000                                    11000                                     11                1.0                            7                 2                MEGATANK
+11000                                     7000                                     11                0.7                            7                 2                MEGATANK
+11000                                     7000                                     11                0.7                            7                 2                MEGATANK
+11000                                     7000                                     11                0.7                            7                 2                MEGATANK
+11000                                     7000                                     11                1.0                            7                 2                MEGATANK
+11000                                     7000                                     11                1.0                            7                 2                MEGATANK
+11000                                     7000                                     11                1.0                            7                 2                MEGATANK

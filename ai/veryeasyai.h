@@ -10,6 +10,7 @@
 class QmlVectorUnit;
 class QmlVectorBuilding;
 class QmlVectorPoint;
+class Building;
 
 class VeryEasyAI : public CoreAI
 {
@@ -133,14 +134,14 @@ protected:
     void finishTurn();
 protected:
     // helper functions to get targets for unit actions
-    void appendCaptureTargets(GameAction* pAction, QStringList actions, Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QPoint>& targets);
+    void appendCaptureTargets(QStringList actions, Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QPoint>& targets);
     void appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QPoint>& targets);
     void appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QPoint>& targets);
     void appendRepairTargets(Unit* pUnit, QmlVectorBuilding* pBuildings, QVector<QPoint>& targets);
     void appendSupplyTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QPoint>& targets);
     void appendTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QPoint>& targets);
-    void appendCaptureTransporterTargets(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorBuilding* pEnemyBuildings, QVector<QPoint>& targets);
-    void appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QVector<QPoint>& targets);
+    void appendCaptureTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorBuilding* pEnemyBuildings, QVector<QPoint>& targets);
+    void appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings, QVector<QPoint>& targets);
 
     void checkIslandForUnloading(Unit* pLoadedUnit, QVector<qint32>& checkedIslands,
                                  qint32 unitIslandIdx, qint32 unitIsland,
@@ -166,6 +167,13 @@ protected:
      * @return
      */
     bool onSameIsland(Unit* pUnit1, Unit* pUnit2);
+    /**
+     * @brief onSameIsland checks if unit1 can reach the building. This may be vice versa but isn't checked here
+     * @param pUnit1
+     * @param pBuilding
+     * @return
+     */
+    bool onSameIsland(Unit* pUnit1, Building* pBuilding);
     /**
      * @brief getIsland
      * @param pUnit1
