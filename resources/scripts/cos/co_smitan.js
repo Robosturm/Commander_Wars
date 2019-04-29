@@ -124,7 +124,7 @@ var Constructor = function()
                     if (attacker.getMinRange() > 1)
                     {
                         var variables = attacker.getVariables();
-                        var variable = variables.getVariable("SMITAN_ATTACK_COUNT");
+                        var variable = variables.createVariable("SMITAN_ATTACK_COUNT");
                         var counter = variable.readDataInt32();
                         counter--;
                         variable.writeDataInt32(counter);
@@ -147,9 +147,9 @@ var Constructor = function()
                 if (unit.getMinRange() > 1)
                 {
                     var variables = unit.getVariables();
-                    var variable = variables.getVariable("SMITAN_ATTACK_COUNT");
+                    var variable = variables.createVariable("SMITAN_ATTACK_COUNT");
                     var counter = variable.readDataInt32();
-                    if (counter === 0)
+                    if (counter <= 0)
                     {
                         // disable firing with this unit
                         return ["-ACTION_FIRE"];

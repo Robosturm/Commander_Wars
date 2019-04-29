@@ -472,7 +472,7 @@ public slots:
      */
     bool canMoveOver(qint32 x, qint32 y);
     /**
-     * @brief getUnitValue
+     * @brief getUnitValue the value of the unit -> which is unit cost * hp / 10
      * @return
      */
     qint32 getUnitValue();

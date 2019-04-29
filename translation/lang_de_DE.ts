@@ -6216,7 +6216,7 @@
 <context>
     <name>town</name>
     <message>
-        <location filename="../resources/scripts/building/town.js" line="27"/>
+        <location filename="../resources/scripts/building/town.js" line="28"/>
         <source>Town</source>
         <translation type="unfinished"></translation>
     </message>

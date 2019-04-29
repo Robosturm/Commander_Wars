@@ -251,6 +251,7 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
                             {
                                 readQuestions[i - 1]->appendQuestion(new Question(i2, index, GameEnums::AIQuestionType_Equal));
                             }
+                            readQuestions[i - 1]->appendQuestion(new Question(-1, index, GameEnums::AIQuestionType_Equal));
                         }
                         else if (items[i] == "BUILDING")
                         {
@@ -258,6 +259,7 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
                             {
                                 readQuestions[i - 1]->appendQuestion(new Question(i2, index, GameEnums::AIQuestionType_Equal));
                             }
+                            readQuestions[i - 1]->appendQuestion(new Question(-1, index, GameEnums::AIQuestionType_Equal));
                         }
                         else if (items[i] == "UNIT")
                         {
@@ -265,6 +267,7 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
                             {
                                 readQuestions[i - 1]->appendQuestion(new Question(i2, index, GameEnums::AIQuestionType_Equal));
                             }
+                            readQuestions[i - 1]->appendQuestion(new Question(-1, index, GameEnums::AIQuestionType_Equal));
                         }
                         types.append(items[i]);
                     }

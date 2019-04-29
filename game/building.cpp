@@ -468,6 +468,15 @@ bool Building::isCaptureOrMissileBuilding()
     return capturable;
 }
 
+bool Building::isProductionBuilding()
+{
+    if (getActionList().contains(CoreAI::ACTION_BUILD_UNITS))
+    {
+        return true;
+    }
+    return false;
+}
+
 QString Building::getTerrainAnimationBackground()
 {
     Mainapp* pApp = Mainapp::getInstance();

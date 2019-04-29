@@ -105,6 +105,12 @@ protected:
 
     bool moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
     /**
+     * @brief moveAwayFromProduction
+     * @param pUnits
+     * @return
+     */
+    bool moveAwayFromProduction(QmlVectorUnit* pUnits);
+    /**
      * @brief loadUnits
      * @param pUnits
      * @return

@@ -221,6 +221,11 @@ public slots:
      * @return
      */
     bool isCaptureOrMissileBuilding();
+    /**
+     * @brief isProductionBuilding
+     * @return
+     */
+    bool isProductionBuilding();
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     /**
