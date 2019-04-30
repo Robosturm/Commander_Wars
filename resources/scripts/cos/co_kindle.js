@@ -67,7 +67,7 @@ var Constructor = function()
         audio.playRandom();
     };
 
-    this.kindleDamage = function(co, value, animations)
+    this.kindleDamage = function(co, value, animations, powerNameAnimation)
     {
         var player = co.getPlayer();
         var units = player.getUnits();

@@ -158,7 +158,7 @@ int main(int argc, char* argv[])
     // This is the main game loop.
     app.start();
     qint32 returncode = app.exec();
-
+    app.getWorkerthread()->exit(0);
     /*************************************************************************************************/
     // clean up section ahead
     // store current settings when closing

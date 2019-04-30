@@ -35,7 +35,7 @@ var Constructor = function()
         powerNameAnimation.queueAnimation(animation2);
         map.getGameRules().changeWeather("WEATHER_SANDSTORM", map.getPlayerCount() * 2);
         audio.clearPlayList();
-        CO_OLAF.loadCOMusic(co);
+        CO_ZANDRA.loadCOMusic(co);
         audio.playRandom();
     };
 

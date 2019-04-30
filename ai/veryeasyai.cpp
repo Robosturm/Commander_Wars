@@ -424,7 +424,12 @@ bool VeryEasyAI::attack(Unit* pUnit)
         QVector<QVector3D> ret;
         QVector<QPoint> moveTargetFields;
         CoreAI::getBestTarget(pUnit, pAction, &pfs, ret, moveTargetFields);
-        if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue() / 4.0f)
+        float minDamage = -pUnit->getUnitValue() / 4.0f;
+        if (minDamage > - 500.0f)
+        {
+            minDamage = -500.0f;
+        }
+        if (ret.size() > 0 && ret[0].z() >= minDamage)
         {
             qint32 selection = Mainapp::randInt(0, ret.size() - 1);
             QVector3D target = ret[selection];
