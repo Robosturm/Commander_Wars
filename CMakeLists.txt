@@ -74,6 +74,7 @@ set(${PROJECT_NAME}_SRCS
         objects/ingameinfobar.cpp
         objects/rotatingsprite.cpp
         objects/colorselectiondialog.cpp
+        objects/buildlistdialog.cpp
 
         #menues
         menue/mainwindow.cpp

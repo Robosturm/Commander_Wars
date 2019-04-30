@@ -26,6 +26,7 @@
 #include "objects/checkbox.h"
 #include "objects/coselectiondialog.h"
 #include "objects/spinbox.h"
+#include "objects/buildlistdialog.h"
 
 #include "QFileInfo"
 
@@ -184,6 +185,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
     addChild(m_pRuleSelection);
 
     connect(this, &MapSelectionMapsMenue::sigShowSelectCO, this, &MapSelectionMapsMenue::showSelectCO, Qt::QueuedConnection);
+    connect(this, &MapSelectionMapsMenue::buttonShowPlayerBuildList, this, &MapSelectionMapsMenue::slotShowPlayerBuildList, Qt::QueuedConnection);
     hideCOSelection();
     hideRuleSelection();
 }
@@ -807,8 +809,6 @@ void MapSelectionMapsMenue::showCOSelection()
         {
             emit buttonShowPlayerBuildList(i);
         });
-        connect(this, &MapSelectionMapsMenue::buttonShowPlayerBuildList, this, &MapSelectionMapsMenue::slotShowPlayerBuildList, Qt::QueuedConnection);
-
         y += 15 + playerIncomeSpinBox->getHeight();
     }
     m_pPlayerSelection->setContentHeigth(y);
@@ -847,15 +847,26 @@ void MapSelectionMapsMenue::playerIncomeChanged(float value, qint32 playerIdx)
 
 void MapSelectionMapsMenue::slotShowAllBuildList()
 {
-
+    // use player 0 as default for showing all
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    spBuildListDialog dialog = new BuildListDialog(0, m_pCurrentMap->getPlayer(0)->getBuildList());
+    this->addChild(dialog);
+    connect(dialog.get(), &BuildListDialog::editFinished, this , &MapSelectionMapsMenue::slotChangeAllBuildList, Qt::QueuedConnection);
+    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::slotShowPlayerBuildList(qint32 player)
 {
-
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    spBuildListDialog dialog = new BuildListDialog(player, m_pCurrentMap->getPlayer(player)->getBuildList());
+    this->addChild(dialog);
+    connect(dialog.get(), &BuildListDialog::editFinished, this , &MapSelectionMapsMenue::slotChangePlayerBuildList, Qt::QueuedConnection);
+    pApp->continueThread();
 }
 
-void MapSelectionMapsMenue::slotChangeAllBuildList(QStringList buildList)
+void MapSelectionMapsMenue::slotChangeAllBuildList(qint32, QStringList buildList)
 {
     for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
     {

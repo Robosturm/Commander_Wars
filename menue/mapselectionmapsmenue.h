@@ -72,7 +72,7 @@ public slots:
     void slotAllCOsRandom();
     void slotShowAllBuildList();
     void slotShowPlayerBuildList(qint32 player);
-    void slotChangeAllBuildList(QStringList buildList);
+    void slotChangeAllBuildList(qint32, QStringList buildList);
     void slotChangePlayerBuildList(qint32 player, QStringList buildList);
 
     // general slots
