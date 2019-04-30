@@ -209,6 +209,10 @@ float SpinBox::checkInput()
 
     bool ok = false;
     float value = m_Text.toFloat(&ok);
+    if (m_Text == "∞")
+    {
+        value = m_InfinityValue;
+    }
     if (!m_focused)
     {
         if (!ok)
@@ -230,19 +234,36 @@ float SpinBox::checkInput()
 
 void SpinBox::setValue(float value)
 {
-    switch (m_Mode)
+    if (value == m_InfinityValue)
     {
-        case Mode::Int:
+        m_Text = "∞";
+    }
+    else
+    {
+        switch (m_Mode)
         {
-            m_Text = QString::number(static_cast<qint32>(value));
-            break;
-        }
-        case Mode::Float:
-        {
-            m_Text = QString::number(static_cast<double>(value));
-            break;
+            case Mode::Int:
+            {
+                m_Text = QString::number(static_cast<qint32>(value));
+                break;
+            }
+            case Mode::Float:
+            {
+                m_Text = QString::number(static_cast<double>(value));
+                break;
+            }
         }
     }
+}
+
+float SpinBox::getInfinityValue() const
+{
+    return m_InfinityValue;
+}
+
+void SpinBox::setInfinityValue(float InfinityValue)
+{
+    m_InfinityValue = InfinityValue;
 }
 
 float SpinBox::getSpinSpeed() const

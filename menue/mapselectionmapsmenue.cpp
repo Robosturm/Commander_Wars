@@ -453,6 +453,18 @@ void MapSelectionMapsMenue::showRuleSelection()
         m_pCurrentMap->getGameRules()->setFogMode(static_cast<GameEnums::Fog>(value));
     });
     m_pRuleSelection->addItem(fogOfWar);
+    y += 50;
+    textField = new oxygine::TextField();
+    textField->setStyle(style);
+    textField->setText(tr("Unit Limit: ").toStdString().c_str());
+    textField->setPosition(30, y);
+    m_pRuleSelection->addItem(textField);
+    spSpinBox pSpinbox = new SpinBox(150, 0, 9999);
+    pSpinbox->setInfinityValue(0.0f);
+    pSpinbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
+    m_pRuleSelection->addItem(pSpinbox);
+    pSpinbox->setCurrentValue(m_pCurrentMap->getGameRules()->getUnitLimit());
+    connect(pSpinbox.get(), &SpinBox::sigValueChanged, m_pCurrentMap->getGameRules(), &GameRules::setUnitLimit, Qt::QueuedConnection);
 
     y += 50;
     textField = new oxygine::TextField();
@@ -465,7 +477,7 @@ void MapSelectionMapsMenue::showRuleSelection()
     {
         QString ruleID = pGameRuleManager->getVictoryRuleID(i);
         spVictoryRule pRule = new VictoryRule(ruleID);
-        QString inputType = pRule->getRuleType();
+        QString inputType = pRule->getRuleType().toLower();
         if (inputType == "checkbox")
         {
             bool defaultValue = pRule->getDefaultValue();
@@ -500,7 +512,7 @@ void MapSelectionMapsMenue::showRuleSelection()
         {
             qint32 defaultValue = pRule->getDefaultValue();
             qint32 startValue = pRule->getInfiniteValue();
-            if (defaultValue == startValue)
+            if (defaultValue != startValue)
             {
                 m_pCurrentMap->getGameRules()->addVictoryRule(pRule);
             }
@@ -512,6 +524,7 @@ void MapSelectionMapsMenue::showRuleSelection()
             m_pRuleSelection->addItem(textField);
             spSpinBox pSpinbox = new SpinBox(200, startValue, 9999);
             pSpinbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
+            pSpinbox->setInfinityValue(startValue);
             m_pRuleSelection->addItem(pSpinbox);
             pSpinbox->setCurrentValue(defaultValue);
             connect(pSpinbox.get(), &SpinBox::sigValueChanged, [=](float value)
@@ -526,7 +539,6 @@ void MapSelectionMapsMenue::showRuleSelection()
                     spVictoryRule pRule = new VictoryRule(ruleID);
                     pRule->setRuleValue(newValue);
                     m_pCurrentMap->getGameRules()->addVictoryRule(pRule);
-
                 }
             });
         }

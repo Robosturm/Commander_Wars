@@ -40,6 +40,9 @@ public:
     float getSpinSpeed() const;
     void setSpinSpeed(float SpinSpeed);
 
+    float getInfinityValue() const;
+    void setInfinityValue(float InfinityValue);
+
 signals:
     void sigValueChanged(float value);
 public slots:
@@ -63,6 +66,7 @@ private:
     QString m_Text;
     QTime toggle;
     qint32 curmsgpos{0};
+    float m_InfinityValue{-1.0f};
     float m_MinValue{0.0f};
     float m_MaxValue{100.0f};
     float m_spinDirection{0.0f};

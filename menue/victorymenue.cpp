@@ -295,13 +295,25 @@ VictoryMenue::VictoryMenue()
         m_VictoryPanel->addItem(pHeaders);
         m_VictoryPanel->setContentWidth(startX + 160 * 4 + 10);
         qint32 y = 50;
+        float scale = 2.0f;
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
             QVector3D score;
             pMap->getGameRecorder()->calculateRang(i, score);
+            if (score.x() < 0)
+            {
+                score.setX(0);
+            }
+            if (score.y() < 0)
+            {
+                score.setY(0);
+            }
+            if (score.z() < 0)
+            {
+                score.setZ(0);
+            }
             m_VictoryScores.append(score);
 
-            float scale = 2.0f;
             Player* pPlayer = pMap->getPlayer(i);
             for (quint8 i2 = 0; i2 < 2; i2++)
             {
@@ -358,8 +370,13 @@ VictoryMenue::VictoryMenue()
                     m_VictoryPanel->addItem(winLooseText);
                     y += 48 * scale + 10;
                 }
+
                 if (i2 == 0)
                 {
+                    if (pCO == nullptr)
+                    {
+                        y += 48 * scale + 10;
+                    }
                     style.multiline = false;
                     m_VictoryTexts.append(QVector<oxygine::spTextField>());
                     m_VictoryTexts[i].append(new oxygine::TextField);
@@ -386,14 +403,10 @@ VictoryMenue::VictoryMenue()
                     m_VictoryTexts[i][3]->setScale(1.5f);
                     m_VictoryTexts[i][3]->setText("0");
                     m_VictoryPanel->addItem(m_VictoryTexts[i][3]);
-                    if (pCO == nullptr)
-                    {
-                        y += 48 * scale + 10;
-                    }
                 }
-            }
-            m_VictoryPanel->setContentHeigth(y + 48 * scale + 10);
+            }            
         }
+        m_VictoryPanel->setContentHeigth(y + 48 * scale + 10);
     }
     showGraph(GraphModes::Fonds);
 }
@@ -805,8 +818,6 @@ void VictoryMenue::updateGraph()
                 m_VictoryTexts[i][2]->setText(QString::number(static_cast<qint32>(m_VictoryScores[i].z() * progress / 100)).toStdString().c_str());
                 float sum = m_VictoryScores[i].x() + m_VictoryScores[i].y() +m_VictoryScores[i].z();
                 m_VictoryTexts[i][3]->setText(QString::number(static_cast<qint32>(sum * progress / 100)).toStdString().c_str());
-
-
             }
             if (progress >= 100)
             {

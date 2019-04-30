@@ -56,15 +56,11 @@ var Constructor = function()
     // checks if the selected player is declared defeated by this rule
     this.checkDefeat = function(rule, player)
     {
-        var playerCount = map.getPlayerCount();
-        for (var i = 0; i < playerCount; i++)
+        if (VICTORYRULE_NOUNITS.checkUnitCount(rule, player))
         {
-            if (VICTORYRULE_NOUNITS.checkUnitCount(rule, player))
+            if (player.getUnitCount() <= 0)
             {
-                if (player.getUnitCount() <= 0)
-                {
-                    return GameEnums.DefeatType_Defeated;
-                }
+                return GameEnums.DefeatType_Defeated;
             }
         }
         return GameEnums.DefeatType_Alive;

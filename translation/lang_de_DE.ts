@@ -750,70 +750,75 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="460"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="459"/>
+        <source>Unit Limit: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="472"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="585"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="597"/>
         <source>Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="585"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="597"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="585"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="597"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="585"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="597"/>
         <source>AI Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="585"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="597"/>
         <source>Startfonds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="585"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="597"/>
         <source>Income Modifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="585"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="658"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="597"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="670"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="585"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="645"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="805"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="597"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="657"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="817"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="616"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="628"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="621"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="633"/>
         <source>All Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="661"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="673"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="661"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="673"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1087,31 +1092,31 @@
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="165"/>
-        <location filename="../menue/victorymenue.cpp" line="425"/>
+        <location filename="../menue/victorymenue.cpp" line="438"/>
         <source>Fonds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="174"/>
-        <location filename="../menue/victorymenue.cpp" line="430"/>
+        <location filename="../menue/victorymenue.cpp" line="443"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="183"/>
-        <location filename="../menue/victorymenue.cpp" line="435"/>
+        <location filename="../menue/victorymenue.cpp" line="448"/>
         <source>Buildings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="192"/>
-        <location filename="../menue/victorymenue.cpp" line="440"/>
+        <location filename="../menue/victorymenue.cpp" line="453"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="201"/>
-        <location filename="../menue/victorymenue.cpp" line="445"/>
+        <location filename="../menue/victorymenue.cpp" line="458"/>
         <source>Player Strength</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1146,7 +1151,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="485"/>
+        <location filename="../menue/victorymenue.cpp" line="498"/>
         <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6288,6 +6293,14 @@
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_nounits.js" line="5"/>
         <source>No Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>victoryrule_turnlimit</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="5"/>
+        <source>Turn Limit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

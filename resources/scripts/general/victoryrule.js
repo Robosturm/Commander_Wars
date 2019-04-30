@@ -33,6 +33,15 @@ var VICTORYRULE =
         var variable = variables.createVariable(variableName);
         variable.writeDataInt32(value);
     },
+
+    getRuleValue : function(rule)
+    {
+        var variableName = "SpinboxValue";
+        var variables = rule.getVariables();
+        var variable = variables.createVariable(variableName);
+        return variable.readDataInt32();
+    },
+
     // checks if the selected player is declared defeated by this rule
     checkDefeat : function(rule, player)
     {

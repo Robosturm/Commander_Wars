@@ -56,15 +56,11 @@ var Constructor = function()
     // checks if the selected player is declared defeated by this rule
     this.checkDefeat = function(rule, player)
     {
-        var playerCount = map.getPlayerCount();
-        for (var i = 0; i < playerCount; i++)
+        if (VICTORYRULE_NOHQ.checkHQCount(rule, player))
         {
-            if (VICTORYRULE_NOHQ.checkHQCount(rule, player))
+            if (player.getBuildingCount("HQ") <= 0)
             {
-                if (player.getBuildingCount("HQ") <= 0)
-                {
-                    return GameEnums.DefeatType_ByCurrentPlayer;
-                }
+                return GameEnums.DefeatType_ByCurrentPlayer;
             }
         }
         return GameEnums.DefeatType_Alive;
