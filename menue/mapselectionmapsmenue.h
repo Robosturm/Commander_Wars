@@ -47,6 +47,8 @@ signals:
     void buttonStartGame();
     void buttonAllCOsRandom();
     void sigShowSelectCO(qint32 player, quint8 co);
+    void buttonShowAllBuildList();
+    void buttonShowPlayerBuildList(qint32 player);
 public slots:
     // slots for changing the map
     void mapSelectionItemClicked(QString item);
@@ -68,6 +70,10 @@ public slots:
     void playerCO2Changed(QString coid, qint32 playerIdx);
     void playerCOCanceled();
     void slotAllCOsRandom();
+    void slotShowAllBuildList();
+    void slotShowPlayerBuildList(qint32 player);
+    void slotChangeAllBuildList(QStringList buildList);
+    void slotChangePlayerBuildList(qint32 player, QStringList buildList);
 
     // general slots
     void slotButtonBack();

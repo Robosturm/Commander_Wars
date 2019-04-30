@@ -768,8 +768,15 @@
     </message>
     <message>
         <location filename="../menue/mapselectionmapsmenue.cpp" line="583"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="646"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="656"/>
         <source>Team</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="583"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="643"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="803"/>
+        <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -783,12 +790,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="649"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="659"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="649"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="659"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>

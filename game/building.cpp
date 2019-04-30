@@ -264,7 +264,19 @@ QStringList  Building::getConstructionList()
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
     args1 << obj1;
     QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
-    return ret.toVariant().toStringList();
+    QStringList buildList = ret.toVariant().toStringList();
+    QStringList playerBuildList = m_pOwner->getBuildList();
+    QStringList returnList;
+    for (qint32 i = 0; i < buildList.size(); i++)
+    {
+        QString unitID = buildList[i];
+        if (playerBuildList.contains(unitID))
+        {
+            returnList.append(unitID);
+        }
+
+    }
+    return returnList;
 }
 
 void Building::startOfTurn()

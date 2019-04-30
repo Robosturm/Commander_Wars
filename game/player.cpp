@@ -414,6 +414,16 @@ void Player::buildedUnit(Unit* pUnit)
     }
 }
 
+QStringList Player::getBuildList() const
+{
+    return m_BuildList;
+}
+
+void Player::setBuildList(const QStringList &BuildList)
+{
+    m_BuildList = BuildList;
+}
+
 void Player::addVisionField(qint32 x, qint32 y, qint32 duration)
 {
     m_FogVisionFields[x][y].setX(1);
@@ -896,8 +906,7 @@ void Player::serializeObject(QDataStream& pStream)
              pStream << m_FogVisionFields[x][y].y();
          }
      }
-
-
+     pStream << m_BuildList;
 }
 void Player::deserializeObject(QDataStream& pStream)
 {
@@ -959,6 +968,20 @@ void Player::deserializeObject(QDataStream& pStream)
                     m_FogVisionFields[x][y].setY(value);
                 }
             }
+        }
+    }
+    m_BuildList.clear();
+    if (version > 6)
+    {
+        pStream >> m_BuildList;
+    }
+    else
+    {
+        // for older versions we allow all loaded units to be buildable
+        UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+        for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+        {
+            m_BuildList.append(pUnitSpriteManager->getUnitID(i));
         }
     }
 }

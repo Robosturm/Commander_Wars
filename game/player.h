@@ -45,7 +45,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 6;
+        return 7;
     }
     /**
      * @brief getBaseGameInput pointer to the ai or human player interface
@@ -60,7 +60,6 @@ public:
      * @param pBaseGameInput
      */
     void setBaseGameInput(BaseGameInputIF *pBaseGameInput);
-
 signals:
 
 public slots:
@@ -296,6 +295,16 @@ public slots:
      * @param pUnit
      */
     void buildedUnit(Unit* pUnit);
+    /**
+     * @brief getBuildList
+     * @return
+     */
+    QStringList getBuildList() const;
+    /**
+     * @brief setBuildList
+     * @param BuildList
+     */
+    void setBuildList(const QStringList &BuildList);
 private:
     qint32 fonds{0};
     float fondsModifier{1.0f};
@@ -310,6 +319,10 @@ private:
     spBaseGameInputIF m_pBaseGameInput{nullptr};
     bool isDefeated{false};
     QVector<QVector<QPoint>> m_FogVisionFields;
+    /**
+     * @brief m_BuildList contains all units we're allowed to build
+     */
+    QStringList m_BuildList;
 };
 
 #endif // PLAYER_H

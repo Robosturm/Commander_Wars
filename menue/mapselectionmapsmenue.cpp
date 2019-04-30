@@ -580,7 +580,7 @@ void MapSelectionMapsMenue::showCOSelection()
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
     // add player labels at top
-    QStringList items = {tr("Username"), tr("CO's"), tr("Color"), tr("AI Strength"), tr("Startfonds"), tr("Income Modifier"), tr("Team")};
+    QStringList items = {tr("Username"), tr("CO's"), tr("Color"), tr("AI Strength"), tr("Startfonds"), tr("Income Modifier"), tr("Team"), tr("Build List")};
     QVector<qint32> xPositions;
     qint32 labelminStepSize = (pApp->getSettings()->getWidth() - 100) / items.size();
     if (labelminStepSize < 150)
@@ -606,7 +606,7 @@ void MapSelectionMapsMenue::showCOSelection()
         curPos += width;
     }
     xPositions.append(curPos);
-    m_pPlayerSelection->setContentWidth(curPos);
+    m_pPlayerSelection->setContentWidth(curPos + 50);
     qint32 y = pLabel->getTextRect().getHeight() + 10 + 25;
     // all player
     pLabel = new oxygine::TextField();
@@ -638,6 +638,16 @@ void MapSelectionMapsMenue::showCOSelection()
     allIncomeSpinBox->setSpinSpeed(0.1f);
     m_pPlayerSelection->addItem(allIncomeSpinBox);
     connect(allIncomeSpinBox.get(), SIGNAL(sigValueChanged(float)), this, SLOT(allPlayerIncomeChanged(float)), Qt::QueuedConnection);
+
+    itemIndex = 7;
+    oxygine::spButton pButtonAllBuildList = ObjectManager::createButton(tr("Build List"));
+    pButtonAllBuildList->setPosition(xPositions[itemIndex], y);
+    m_pPlayerSelection->addItem(pButtonAllBuildList);
+    pButtonAllBuildList->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit buttonShowAllBuildList();
+    });
+    connect(this, &MapSelectionMapsMenue::buttonShowAllBuildList, this, &MapSelectionMapsMenue::slotShowAllBuildList, Qt::QueuedConnection);
 
     y += 10 + allIncomeSpinBox->getHeight();
     QVector<QString> teamList;
@@ -789,6 +799,16 @@ void MapSelectionMapsMenue::showCOSelection()
             playerTeamChanged(value, i);
         }, Qt::QueuedConnection);
 
+        itemIndex = 7;
+        oxygine::spButton pButtonPlayerBuildList = ObjectManager::createButton(tr("Build List"));
+        pButtonPlayerBuildList->setPosition(xPositions[itemIndex], y);
+        m_pPlayerSelection->addItem(pButtonPlayerBuildList);
+        pButtonPlayerBuildList->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        {
+            emit buttonShowPlayerBuildList(i);
+        });
+        connect(this, &MapSelectionMapsMenue::buttonShowPlayerBuildList, this, &MapSelectionMapsMenue::slotShowPlayerBuildList, Qt::QueuedConnection);
+
         y += 15 + playerIncomeSpinBox->getHeight();
     }
     m_pPlayerSelection->setContentHeigth(y);
@@ -824,6 +844,33 @@ void MapSelectionMapsMenue::playerIncomeChanged(float value, qint32 playerIdx)
     m_pCurrentMap->getPlayer(playerIdx)->setFondsModifier(static_cast<qint32>(value));
     pApp->continueThread();
 }
+
+void MapSelectionMapsMenue::slotShowAllBuildList()
+{
+
+}
+
+void MapSelectionMapsMenue::slotShowPlayerBuildList(qint32 player)
+{
+
+}
+
+void MapSelectionMapsMenue::slotChangeAllBuildList(QStringList buildList)
+{
+    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+    {
+        m_pCurrentMap->getPlayer(i)->setBuildList(buildList);
+    }
+}
+
+void MapSelectionMapsMenue::slotChangePlayerBuildList(qint32 player, QStringList buildList)
+{
+    if (player >= 0 && player < m_pCurrentMap->getPlayerCount())
+    {
+        m_pCurrentMap->getPlayer(player)->setBuildList(buildList);
+    }
+}
+
 void MapSelectionMapsMenue::playerStartFondsChanged(float value, qint32 playerIdx)
 {
     Mainapp* pApp = Mainapp::getInstance();
