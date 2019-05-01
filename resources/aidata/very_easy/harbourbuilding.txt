@@ -1,18 +1,5 @@
 // Fonds                                 | Fonds per Building                       |  Units          | Direct / Indirects             | Infantry      | Transporter    | Result
 type NUMBER:15000_>|15000_<_21000|21000_<  NUMBER:15000_>|15000_<_21000|21000_<        NUMBER:6_<|6_>   NUMBER:0.8_>|0.8_<_3.5|3.5_<    NUMBER:5_<|5_>   NUMBER:3_<|3_>   UNIT
-// NONE
-21000                                      21000                                        7               1.0                                    7         4                NONE
-5000                                       5000                                         7               1.0                                    7         2                NONE
-5000                                       5000                                         7               1.0                                    7         4                NONE
-5000                                       5000                                         7               1.0                                    7         2                NONE
-5000                                       5000                                         7               4.5                                    7         4                NONE
-5000                                       5000                                         7               0.7                                    7         2                NONE
-5000                                       5000                                         4               1.0                                    7         4                NONE
-5000                                       5000                                         4               4.5                                    7         2                NONE
-5000                                       5000                                         4               0.7                                    7         4                NONE
-18000                                      5000                                         7               1.0                                    7         2                NONE
-18000                                      5000                                         7               4.5                                    7         2                NONE
-18000                                      5000                                         7               0.7                                    7         2                NONE
 // lander
 5000                                       5000                                         7               1.0                                    4         2                LANDER
 5000                                       5000                                         7               4.5                                    4         2                LANDER

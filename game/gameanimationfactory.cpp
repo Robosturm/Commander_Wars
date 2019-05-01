@@ -159,6 +159,15 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation)
     }
 }
 
+void GameAnimationFactory::clearAllAnimations()
+{
+    for (qint32 i = 0; i < m_Animations.size(); i++)
+    {
+        m_Animations[i]->detach();
+    }
+    m_Animations.clear();
+}
+
 void GameAnimationFactory::finishAllAnimations()
 {
     qint32 i = 0;

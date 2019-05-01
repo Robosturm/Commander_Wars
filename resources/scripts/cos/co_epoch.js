@@ -192,10 +192,7 @@ var Constructor = function()
         {
             if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
             {
-                if (directUnits.indexOf(unit.getUnitID()) >= 0)
-                {
-                    return 1;
-                }
+                return 1;
             }
         }
         return 0;

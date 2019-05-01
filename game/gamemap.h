@@ -207,6 +207,11 @@ signals:
     void sigQueueAction(GameAction* pAction);
 public slots:
     /**
+     * @brief getAllUnitIDs
+     * @return
+     */
+    QStringList getAllUnitIDs();
+    /**
      * @brief createAction
      * @return
      */

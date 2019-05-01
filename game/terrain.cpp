@@ -505,31 +505,34 @@ void Terrain::setBuilding(Building* pBuilding)
 
 void Terrain::removeBuilding()
 {
-    if (m_Building->getTerrain() == this)
+    if (m_Building.get() != nullptr)
     {
-        // delete it
-        this->removeChild(m_Building);
-        qint32 width = m_Building->getBuildingWidth();
-        qint32 heigth = m_Building->getBuildingHeigth();
-        GameMap* pMap = GameMap::getInstance();
-        // delete pointers
-        for (qint32 x1 = 0; x1 < width; x1++)
+        if (m_Building->getTerrain() == this)
         {
-            for (qint32 y1 = 0; y1 < heigth; y1++)
+            // delete it
+            this->removeChild(m_Building);
+            qint32 width = m_Building->getBuildingWidth();
+            qint32 heigth = m_Building->getBuildingHeigth();
+            GameMap* pMap = GameMap::getInstance();
+            // delete pointers
+            for (qint32 x1 = 0; x1 < width; x1++)
             {
-                // delete down stream on all other fields
-                if (!((x1 == 0) && (y1 == 0)))
+                for (qint32 y1 = 0; y1 < heigth; y1++)
                 {
-                    pMap->getTerrain(x - x1, y - y1)->removeDownstream();
+                    // delete down stream on all other fields
+                    if (!((x1 == 0) && (y1 == 0)))
+                    {
+                        pMap->getTerrain(x - x1, y - y1)->removeDownstream();
+                    }
                 }
             }
+            m_Building = nullptr;
         }
-        m_Building = nullptr;
-    }
-    else
-    {
-        // remove building from base terrain instead of us
-        m_Building->getTerrain()->removeBuilding();
+        else
+        {
+            // remove building from base terrain instead of us
+            m_Building->getTerrain()->removeBuilding();
+        }
     }
 }
 

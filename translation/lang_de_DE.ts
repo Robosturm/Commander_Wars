@@ -47,6 +47,30 @@
     </message>
 </context>
 <context>
+    <name>ACTION_BLACKHOLEFACTORY_DOOR1</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="23"/>
+        <source>Build Door 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_BLACKHOLEFACTORY_DOOR2</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR2.js" line="23"/>
+        <source>Build Door 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_BLACKHOLEFACTORY_DOOR3</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR3.js" line="23"/>
+        <source>Build Door 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_BUILD_UNITS</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BUILD_UNITS.js" line="22"/>
@@ -59,6 +83,14 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="47"/>
         <source>Capture</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_COINFO</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_COINFO.js" line="10"/>
+        <source>CO Info</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2098,97 +2130,97 @@
 <context>
     <name>co_epoch</name>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="207"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="204"/>
         <source>The first prototype for the Robot Commanding Officer Series invented by Lash.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="211"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="208"/>
         <source>Tests</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="212"/>
         <source>Upgrades</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="216"/>
         <source>Epoch is blessed with simple programming so it has only basic command abilities. Powers charge at an unmatched speed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="223"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="220"/>
         <source>Firepower is increased and unit HP is hidden from opponents.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="227"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="224"/>
         <source>Short Circuit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="231"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="228"/>
         <source>Direct combat units gain one movement and indirect combat units recieve one extra range. Hides HP from opponents. Firepower is increased.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="235"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="232"/>
         <source>Shocker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="239"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="236"/>
         <source>Error: Overcharged. initiate saftey mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="237"/>
         <source>Power surge detected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="238"/>
         <source>Overload! Release Energy!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="239"/>
         <source>System Over. Overload equals very yes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="240"/>
         <source>Blackout!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="241"/>
         <source>Register your firmware for continued use!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="245"/>
         <source>Epoch Succesful. Upgrade irrelevant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="246"/>
         <source>Test Completed. Anaylsing battle log...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="247"/>
         <source>Victory recorded in database and filed under category &apos;insulting&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="251"/>
         <source>Noooo... No upgrade please.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="255"/>
         <source>Epoch</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6780,6 +6812,14 @@
     <message>
         <location filename="../resources/scripts/building/zblackhole_cannon_W.js" line="28"/>
         <source>Black Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zblackhole_factory</name>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_factory.js" line="30"/>
+        <source>Black Hole Factory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

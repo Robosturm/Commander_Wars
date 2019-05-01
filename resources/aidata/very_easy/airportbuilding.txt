@@ -1,16 +1,5 @@
 // Fonds                                | Fonds per Building                   |  Units          | Direct / Indirects            | Infantry        | Transporter     | Result
 type NUMBER:6000_>|6000_<_20000|20000_<   NUMBER:7000_>|7000_<_18000|18000_<      NUMBER:6_<|6_>   NUMBER:0.8_>|0.8_<_3.5|3.5_<    NUMBER:5_<|5_>    NUMBER:1_<|1_>    UNIT
-// NONE
-21000                                    21000                                      7              1.0                                  7            0                 NONE
-5000                                     5000                                       7              1.0                                  7            2                 NONE
-5000                                     5000                                       7              1.0                                  7            0                 NONE
-5000                                     5000                                       7              1.0                                  7            0                 NONE
-5000                                     5000                                       7              4.5                                  7            2                 NONE
-5000                                     5000                                       7              0.7                                  7            0                 NONE
-5000                                     5000                                       4              1.0                                  7            2                 NONE
-5000                                     5000                                       4              4.5                                  7            0                 NONE
-5000                                     5000                                       4              0.7                                  7            2                 NONE
-
 // T_HELI
 5000                                     5000                                       7              1.0                                  6            0                 T_HELI
 5000                                     5000                                       5              1.0                                  6            0                 T_HELI

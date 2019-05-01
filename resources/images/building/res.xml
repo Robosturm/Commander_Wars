@@ -87,8 +87,6 @@
 		<image file="black_cannon+N+mask.png" cols = "2" />
 		<image file="black_cannon+W.png" cols = "2" />
 		<image file="black_cannon+W+mask.png" cols = "2" />
-		<image file="blackhole_factory.png" cols = "2" />
-		<image file="blackhole_factory+mask.png" cols = "2" />
 		<image file="crystall.png" />
 		<image file="crystall+mask.png" />
 		<image file="laser.png" cols = "2" />
@@ -116,7 +114,10 @@
 		<image file="monolith+mask.png" cols = "2" />
 		<image file="omega+base.png" cols = "2" />
 		<image file="omega+base+mask.png" cols = "2" />
-		<image file="omega+base+neutral.png" />
+		<image file="omega+base+neutral.png" />	
+		<image file="blackhole+factory.png" cols = "2" />
+		<image file="blackhole+factory+mask.png" cols = "2" />		
+		<image file="blackhole+factory+neutral.png" />
 		<image file="volcan.png" />
 		<image file="black_building_destroyed.png" />
 		

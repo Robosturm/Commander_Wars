@@ -288,6 +288,7 @@ void GameMenue::startGame(qint32 startPlayer)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    GameAnimationFactory::clearAllAnimations();
     GameMap* pMap = GameMap::getInstance();
     pMap->startGame(startPlayer);
     if (startPlayer == 0)

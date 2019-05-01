@@ -85,7 +85,7 @@ EditorSelection::EditorSelection()
         pSprite->setResAnim(pAnim);
         pSprite->setPriority(-100);
         pSprite->setScaleX(1 / building->getScaleX() * GameMap::Imagesize / pAnim->getWidth());
-        pSprite->setScaleY(1 / building->getScaleY() * GameMap::Imagesize / pAnim->getWidth());
+        pSprite->setScaleY(1 / building->getScaleY() * GameMap::Imagesize / pAnim->getHeight());
         if (width > 1)
         {
             pSprite->setX(-GameMap::Imagesize * (width - 1));

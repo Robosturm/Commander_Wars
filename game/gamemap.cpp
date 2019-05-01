@@ -97,6 +97,11 @@ GameMap::~GameMap()
     fields.clear();
 }
 
+QStringList GameMap::getAllUnitIDs()
+{
+    return UnitSpriteManager::getInstance()->getLoadedUnits();
+}
+
 GameAction* GameMap::createAction()
 {
     return new GameAction();
@@ -531,10 +536,12 @@ void GameMap::replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool 
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
+        spTerrain pTerrainOld = fields.at(y)->at(x);
+        pTerrainOld->removeBuilding();
+
         spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y);
         if (useTerrainAsBaseTerrain)
-        {
-            spTerrain pTerrainOld = fields.at(y)->at(x);
+        {            
             this->removeChild(pTerrainOld);
             pTerrain->setBaseTerrain(pTerrainOld);
             fields.at(y)->replace(x, pTerrain);
@@ -544,7 +551,6 @@ void GameMap::replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool 
         }
         else
         {
-            spTerrain pTerrainOld = fields.at(y)->at(x);
             this->removeChild(pTerrainOld);
             fields.at(y)->replace(x, pTerrain);
             this->addChild(pTerrain);

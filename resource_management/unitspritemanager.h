@@ -2,6 +2,7 @@
 #define UNITSPRITEMANAGER_H
 
 #include "QString"
+#include "QStringList"
 #include "oxygine-framework.h"
 
 class UnitSpriteManager : public oxygine::Resources
@@ -57,6 +58,14 @@ public:
      * @param unitID
      */
     bool existsUnit(QString unitID);
+    /**
+      * @brief getLoadedUnits
+      * @return
+      */
+    inline QStringList getLoadedUnits()
+    {
+        return m_loadedUnits;
+    }
 private:
     explicit UnitSpriteManager();
     virtual ~UnitSpriteManager() = default;

@@ -37,6 +37,10 @@ public:
      * @param pGameAnimation
      */
     void startQueuedAnimation(GameAnimation* pGameAnimation);
+    /**
+     * @brief clearAllAnimations
+     */
+    static void clearAllAnimations();
 signals:
     void animationsFinished();
 public slots:

@@ -282,10 +282,10 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                 if (possibleActions.size() > 0)
                 {
                     if ((possibleActions.size() == 1) &&
-                        (!m_pGameAction->isFinalStep(actions[0])))
+                        (!m_pGameAction->isFinalStep(possibleActions[0])))
                     {
                         // skip show select action menu
-                        m_pGameAction->setActionID(actions[0]);
+                        m_pGameAction->setActionID(possibleActions[0]);
                         getNextStepData();
                     }
                     else
