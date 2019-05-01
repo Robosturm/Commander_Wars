@@ -158,13 +158,16 @@ var Constructor = function()
     };
     this.getFirerangeModifier = function(co, unit, posX, posY)
     {
-        return -1;
+        if (unit.getMinRange() > 1)
+        {
+            return -1;
+        }
     };
     this.getCOArmy = function()
     {
         return "OS";
     };
-    this.getMovementPointModifier = function(co, unit)
+    this.getMovementpointModifier = function(co, unit, posX, posY)
     {
         var tankUnits = CO_MAX.getDirectUnitIDS();
         if (co.getPowerMode() === GameEnums.PowerMode_Power)

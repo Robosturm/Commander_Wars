@@ -35,20 +35,25 @@ EditorMenue::EditorMenue()
     pApp->getAudioThread()->playRandom();
 
     m_Topbar->addGroup(tr("Menu"));
-    m_Topbar->addGroup(tr("Map Info"));
     m_Topbar->addItem(tr("Save Map"), "SAVEMAP", 0);
     m_Topbar->addItem(tr("Load Map"), "LOADMAP", 0);
     m_Topbar->addItem(tr("Import CoW Txt Map"), "IMPORTCOWTXT", 0);
     m_Topbar->addItem(tr("Exit Editor"), "EXIT", 0);
 
+    m_Topbar->addGroup(tr("Map Info"));
     m_Topbar->addItem(tr("New Map"), "NEWMAP", 1);
     m_Topbar->addItem(tr("Edit Map"), "EDITMAP", 1);
+    // m_Topbar->addItem(tr("Optimize Players"), "OPTIMIZEPLAYERS", 1);
     m_Topbar->addItem(tr("Flip Map X"), "FLIPX", 1);
     m_Topbar->addItem(tr("Flip Map Y"), "FLIPY", 1);
     m_Topbar->addItem(tr("Rotate Map X"), "ROTATEX", 1);
     m_Topbar->addItem(tr("Rotate Map Y"), "ROTATEY", 1);
     m_Topbar->addItem(tr("Random Map"), "RANDOMMAP", 1);
 
+    m_Topbar->addGroup(tr("Editor Mode"));
+    m_Topbar->addItem(tr("Place Selection"), "PLACESELECTION", 2);
+    m_Topbar->addItem(tr("Delete Units"), "DELETEUNITS", 2);
+    m_Topbar->addItem(tr("Edit Units"), "EDITUNITS", 2);
 
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
     {
@@ -169,6 +174,18 @@ void EditorMenue::clickedTopbar(QString itemID)
         GameMap* pGameMap = GameMap::getInstance();
         pGameMap->randomMap(30, 40, 4);
     }
+    else if (itemID == "PLACESELECTION")
+    {
+        m_EditorMode = EditorModes::PlaceEditorSelection;
+    }
+    else if (itemID == "DELETEUNITS")
+    {
+        m_EditorMode = EditorModes::RemoveUnits;
+    }
+    else if (itemID == "EDITUNITS")
+    {
+        m_EditorMode = EditorModes::EditUnits;
+    }
     pApp->continueThread();
 }
 
@@ -184,6 +201,7 @@ void EditorMenue::KeyInput(SDL_Event event)
             Console::print("Leaving Editor Menue", Console::eDEBUG);
             oxygine::getStage()->addChild(new Mainwindow());
             oxygine::Actor::detach();
+            break;
         }
         default:
         {
@@ -198,42 +216,59 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    // resolve cursor move
-    switch (m_EditorSelection->getCurrentMode())
+    switch (m_EditorMode)
     {
-        case EditorSelection::EditorMode::Terrain:
+        case EditorModes::RemoveUnits:
         {
-            if (canTerrainBePlaced(x, y))
-            {
-                m_Cursor->changeCursor("cursor+default");
-            }
-            else
-            {
-                m_Cursor->changeCursor("cursor+unable");
-            }
+            m_Cursor->changeCursor("cursor+delete");
             break;
         }
-        case EditorSelection::EditorMode::Building:
+        case EditorModes::EditUnits:
         {
-            if (canBuildingBePlaced(x, y))
-            {
-                m_Cursor->changeCursor("cursor+default");
-            }
-            else
-            {
-                m_Cursor->changeCursor("cursor+unable");
-            }
+            m_Cursor->changeCursor("cursor+attack");
             break;
         }
-        case EditorSelection::EditorMode::Unit:
+        case EditorModes::PlaceEditorSelection:
         {
-            if (canUnitBePlaced(x, y))
+            // resolve cursor move
+            switch (m_EditorSelection->getCurrentMode())
             {
-                m_Cursor->changeCursor("cursor+default");
-            }
-            else
-            {
-                m_Cursor->changeCursor("cursor+unable");
+                case EditorSelection::EditorMode::Terrain:
+                {
+                    if (canTerrainBePlaced(x, y))
+                    {
+                        m_Cursor->changeCursor("cursor+default");
+                    }
+                    else
+                    {
+                        m_Cursor->changeCursor("cursor+unable");
+                    }
+                    break;
+                }
+                case EditorSelection::EditorMode::Building:
+                {
+                    if (canBuildingBePlaced(x, y))
+                    {
+                        m_Cursor->changeCursor("cursor+default");
+                    }
+                    else
+                    {
+                        m_Cursor->changeCursor("cursor+unable");
+                    }
+                    break;
+                }
+                case EditorSelection::EditorMode::Unit:
+                {
+                    if (canUnitBePlaced(x, y))
+                    {
+                        m_Cursor->changeCursor("cursor+default");
+                    }
+                    else
+                    {
+                        m_Cursor->changeCursor("cursor+unable");
+                    }
+                    break;
+                }
             }
             break;
         }
@@ -249,6 +284,7 @@ void EditorMenue::onMapClickedRight()
     GameMap* pMap = GameMap::getInstance();
     QString terrainID = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY())->getTerrainID();
     m_EditorSelection->selectTerrain(terrainID);
+    m_EditorMode = EditorModes::PlaceEditorSelection;
     pApp->continueThread();
 }
 
@@ -257,21 +293,41 @@ void EditorMenue::onMapClickedLeft()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     // resolve click
-    switch (m_EditorSelection->getCurrentMode())
+    switch (m_EditorMode)
     {
-        case EditorSelection::EditorMode::Terrain:
+        case EditorModes::RemoveUnits:
         {
-            placeTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+            Unit* pUnit = GameMap::getInstance()->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY())->getUnit();
+            if (pUnit != nullptr)
+            {
+                pUnit->killUnit();
+            }
             break;
         }
-        case EditorSelection::EditorMode::Building:
+        case EditorModes::EditUnits:
         {
-            placeBuilding(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
             break;
         }
-        case EditorSelection::EditorMode::Unit:
+        case EditorModes::PlaceEditorSelection:
         {
-            placeUnit(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+            switch (m_EditorSelection->getCurrentMode())
+            {
+                case EditorSelection::EditorMode::Terrain:
+                {
+                    placeTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                    break;
+                }
+                case EditorSelection::EditorMode::Building:
+                {
+                    placeBuilding(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                    break;
+                }
+                case EditorSelection::EditorMode::Unit:
+                {
+                    placeUnit(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                    break;
+                }
+            }
             break;
         }
     }
@@ -290,7 +346,8 @@ bool EditorMenue::canTerrainBePlaced(qint32 x, qint32 y)
     {
         if (pMap->canBePlaced(terrainID, x, y))
         {
-            if (pMap->getTerrain(x, y)->getTerrainID() != terrainID)
+            if (pMap->getTerrain(x, y)->getTerrainID() != terrainID ||
+                m_EditorSelection->getSizeMode() == EditorSelection::PlacementSize::Small)
             {
                 ret = true;
             }

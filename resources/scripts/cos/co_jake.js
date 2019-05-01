@@ -127,9 +127,11 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
-        switch (co.getPowerMode())
+        if (map.onMap(atkPosX, atkPosY))
         {
+            var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Superpower:
                 if (terrainID === "PLAINS")
                 {
@@ -151,10 +153,11 @@ var Constructor = function()
                     }
                 }
                 break;
-        }
-        if (terrainID === "PLAINS")
-        {
-            return 10;
+            }
+            if (terrainID === "PLAINS")
+            {
+                return 10;
+            }
         }
         return 0;
     };
@@ -180,7 +183,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getMovementPointModifier = function(co, unit)
+    this.getMovementpointModifier = function(co, unit, posX, posY)
     {
         var vehicleUnits = CO_JAKE.getVehicleUnitIDS();
         if (co.getPowerMode() === GameEnums.PowerMode_Superpower)

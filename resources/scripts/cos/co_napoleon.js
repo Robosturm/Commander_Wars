@@ -107,19 +107,22 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
-        switch (co.getPowerMode())
+        if (map.onMap(atkPosX, atkPosY))
         {
-        case GameEnums.PowerMode_Superpower:
-            return terrainDefense * 10;
-        case GameEnums.PowerMode_Power:
-            return 0;
-        default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+            var terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
+            switch (co.getPowerMode())
             {
+            case GameEnums.PowerMode_Superpower:
+                return terrainDefense * 10;
+            case GameEnums.PowerMode_Power:
                 return 0;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                {
+                    return 0;
+                }
+                break;
             }
-            break;
         }
         return 0;
     };

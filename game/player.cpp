@@ -35,6 +35,7 @@ void Player::init()
     QJSValue objArg = pApp->getInterpreter()->newQObject(this);
     args << objArg;
     pApp->getInterpreter()->doFunction("PLAYER", function, args);
+    team = getPlayerID();
 }
 
 void Player::loadVisionFields()
@@ -576,16 +577,16 @@ void Player::gainPowerstar(qint32 fondsDamage, QPoint position)
     }
 }
 
-qint32 Player::getMovementpointModifier(Unit* pUnit, QPoint position)
+qint32 Player::getMovementcostModifier(Unit* pUnit, QPoint position)
 {
     qint32 modifier = 0;
     if (playerCOs[0].get() != nullptr)
     {
-       modifier += playerCOs[0]->getMovementpointModifier(pUnit, position);
+       modifier += playerCOs[0]->getMovementcostModifier(pUnit, position);
     }
     if (playerCOs[1].get() != nullptr)
     {
-       modifier += playerCOs[1]->getMovementpointModifier(pUnit, position);
+       modifier += playerCOs[1]->getMovementcostModifier(pUnit, position);
     }
     GameMap* pMap = GameMap::getInstance();
     modifier += pMap->getGameRules()->getCurrentWeather()->getMovementCostModifier();
@@ -684,6 +685,18 @@ void Player::setBaseGameInput(BaseGameInputIF *pBaseGameInput)
 {
     m_pBaseGameInput = pBaseGameInput;
     m_pBaseGameInput->setPlayer(this);
+}
+
+spCO Player::getspCO(quint8 id)
+{
+    if (id <= 1)
+    {
+        return playerCOs[id];
+    }
+    else
+    {
+        return nullptr;
+    }
 }
 
 CO* Player::getCO(quint8 id)

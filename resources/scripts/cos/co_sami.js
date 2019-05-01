@@ -162,19 +162,24 @@ var Constructor = function()
         }
     };
 
-    this.getMovementPointModifier = function(co, unit)
+    this.getMovementpointModifier = function(co, unit, posX, posY)
     {
-        var unitTransportIDs = ["APC", "LANDER", "T_HELI", "TRANSPORTPLANE"];
+        var unitTransportIDs = ["APC", "LANDER", "T_HELI", "TRANSPORTPLANE", "BLACK_BOOT"];
         if (unitTransportIDs.indexOf(unit.getUnitID()) >= 0)
         {
             return 1;
         }
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+        var unitInfantryIDs = ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
+        if (unitInfantryIDs.indexOf(unit.getUnitID()) >= 0)
         {
-            var unitInfantryIDs = ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
-            if (unitInfantryIDs.indexOf(unit.getUnitID()) >= 0)
+            switch (co.getPowerMode())
             {
-                return 2;
+                case GameEnums.PowerMode_Superpower:
+                    return 2;
+                case GameEnums.PowerMode_Power:
+                    return 1;
+                default:
+                    return 0;
             }
         }
         return 0;

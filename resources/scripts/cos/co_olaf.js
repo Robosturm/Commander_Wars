@@ -163,7 +163,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getMovementpointModifier = function(co, unit, posX, posY)
+    this.getMovementcostModifier = function(co, unit, posX, posY)
     {
         if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
         {

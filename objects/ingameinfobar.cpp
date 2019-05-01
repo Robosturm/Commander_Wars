@@ -600,7 +600,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             pTextfield->setStyle(style);
             pTextfield->setScale(unitInfoScale);
             pTextfield->setText((tr("Movementpoints: ") +
-                                 QString::number(pUnit->getMovementPoints())).toStdString().c_str());
+                                 QString::number(pUnit->getMovementpoints(QPoint(x, y)))).toStdString().c_str());
             m_pCursorInfoBox->addChild(pTextfield);
             y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
 

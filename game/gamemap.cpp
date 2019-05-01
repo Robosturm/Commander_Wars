@@ -255,6 +255,13 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
             return nullptr;
         }
     }
+
+    qint32 unitLimit = m_Rules->getUnitLimit();
+    qint32 unitCount = pPlayer->getUnitCount();
+    if (unitLimit > 0 && unitCount >= unitLimit)
+    {
+        return nullptr;
+    }
     spUnit pUnit = new Unit(unitID, pPlayer.get());
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
     QString movementType = pUnit->getMovementType();
@@ -701,6 +708,16 @@ void GameMap::saveGame()
     emit signalSaveGame();
 }
 
+void GameMap::showCOInfo()
+{
+    emit signalShowCOInfo();
+}
+
+void GameMap::startGame(qint32 startPlayer)
+{
+    m_Recorder = new GameRecorder();
+}
+
 void GameMap::clearMap()
 {
     // delete all data
@@ -812,12 +829,13 @@ qint32 GameMap::getWinnerTeam()
     {
         if (!players[i]->getIsDefeated())
         {
-            if (winnerTeam >= 0)
+            if (winnerTeam >= 0 &&
+                winnerTeam != players[i]->getTeam())
             {
                 winnerTeam = -1;
                 break;
             }
-            else
+            else if (winnerTeam < 0)
             {
                 winnerTeam = players[i]->getTeam();
             }

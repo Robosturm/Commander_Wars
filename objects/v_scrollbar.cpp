@@ -165,7 +165,7 @@ void V_Scrollbar::setContentWidth(qint32 width)
     }
     m_Scrollvalue = 0;
     m_slider->setSize(sliderWidth, 18);
-    emit sigScrollValueChanged(m_Scrollvalue);
+    changeScrollValue(m_Scrollvalue);
     pApp->continueThread();
 }
 

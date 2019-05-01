@@ -12,7 +12,7 @@
 UnitPathFindingSystem::UnitPathFindingSystem(Unit* pUnit)
     : PathFindingSystem(pUnit->getX(), pUnit->getY()),
       m_pUnit(pUnit),
-      m_MoveCosts(m_pUnit->getMovementPoints())
+      m_Movepoints(m_pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY())))
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -24,9 +24,9 @@ qint32 UnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint32 curren
     GameMap* pMap = GameMap::getInstance();
     if (pMap->onMap(x, y))
     {
-        if (m_MoveCosts > 0)
+        if (m_Movepoints > 0)
         {
-            return m_MoveCosts - currentCost;
+            return m_Movepoints - currentCost;
         }
         else
         {
@@ -46,7 +46,6 @@ bool UnitPathFindingSystem::finished(qint32, qint32)
 
 qint32 UnitPathFindingSystem::getCosts(qint32 x, qint32 y)
 {
-    MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
     GameMap* pMap = GameMap::getInstance();
     if (pMap->onMap(x, y))
     {
@@ -131,7 +130,7 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target
     return QVector<QPoint>();
 }
 
-void UnitPathFindingSystem::setMoveCosts(const qint32 &moveCosts)
+void UnitPathFindingSystem::setMovepoints(const qint32 &movepoints)
 {
-    m_MoveCosts = moveCosts;
+    m_Movepoints = movepoints;
 }

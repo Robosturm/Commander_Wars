@@ -122,11 +122,11 @@ var Constructor = function()
     };
     this.getAirUnitIDS = function()
     {
-        return ["BOMBER", "FIGHTER", "DUSTER", "K_HELI", "T_HELI", "STEALTHBOMBER", "TRANSPORTPLANE", "WATERPLANE"];
+        return ["BOMBER", "BLACK_BOMB", "FIGHTER", "DUSTER", "K_HELI", "T_HELI", "STEALTHBOMBER", "TRANSPORTPLANE", "WATERPLANE"];
     };
     this.getSeaUnitIDS = function()
     {
-        return ["AIRCRAFTCARRIER", "CRUISER", "BATTLESHIP", "CANNONBOAT", "DESTROYER", "SUBMARINE"];
+        return ["AIRCRAFTCARRIER", "CRUISER", "BATTLESHIP", "CANNONBOAT", "BLACK_BOAT", "DESTROYER", "SUBMARINE"];
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
@@ -167,9 +167,9 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getMovementPointModifier = function(co, unit)
+    this.getMovementpointModifier = function(co, unit, posX, posY)
     {
-        var seaUnits = CO_EAGLE.getSeaUnitIDS();
+        var seaUnits = CO_DRAKE.getSeaUnitIDS();
         if (seaUnits.indexOf(unit.getUnitID()) >= 0)
         {
             return 1;

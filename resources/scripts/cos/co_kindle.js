@@ -176,9 +176,11 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var building = map.getTerrain(atkPosX, atkPosY).getBuilding();
-        switch (co.getPowerMode())
+        if (map.onMap(atkPosX, atkPosY))
         {
+            var building = map.getTerrain(atkPosX, atkPosY).getBuilding();
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Superpower:
                 var ret = 0;
                 if (building !== null)
@@ -202,10 +204,11 @@ var Constructor = function()
                     }
                 }
                 break;
-        }
-        if (building !== null)
-        {
-            return 20;
+            }
+            if (building !== null)
+            {
+                return 20;
+            }
         }
         return 0;
     };

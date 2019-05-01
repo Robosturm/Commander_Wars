@@ -135,7 +135,7 @@ var Constructor = function()
         }
         return 15;
     };
-    this.getMovementpointModifier = function(co, unit, posX, posY)
+    this.getMovementcostModifier = function(co, unit, posX, posY)
     {
         if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
         {
@@ -166,7 +166,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function()
     {
-        return qsTr("A small Meteor fall from space and deal 4 HP of damage tp all affected units.");
+        return qsTr("A small Meteor fall from space and deal 4 HP of damage to all affected units.");
     };
     this.getPowerName = function()
     {

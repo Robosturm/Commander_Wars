@@ -660,7 +660,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
                     else
                     {
                         points.push_front(QPoint(x, y));
-                        if (m_pUnitPathFindingSystem->getCosts(points) - fieldCosts > m_pGameAction->getTargetUnit()->getMovementPoints() )
+                        if (m_pUnitPathFindingSystem->getCosts(points) - fieldCosts > m_pGameAction->getTargetUnit()->getMovementpoints(QPoint(x, y)))
                         {
                             // not reachable this way get the ideal path
                             points = m_pUnitPathFindingSystem->getPath(x, y);

@@ -57,6 +57,10 @@ public slots:
      */
     void saveGame();
     /**
+     * @brief showCOInfo
+     */
+    void showCOInfo();
+    /**
      * @brief saveMap
      * @param file
      */

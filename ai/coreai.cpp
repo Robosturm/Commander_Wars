@@ -70,6 +70,7 @@ void CoreAI::nextAction()
 
 void CoreAI::getBestTarget(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QPoint>& moveTargetFields)
 {
+    pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())));
     getAttacksFromField(pUnit, pAction, ret, moveTargetFields);
     if (pUnit->canMoveAndFire(QPoint(pUnit->getX(), pUnit->getY())))
     {
@@ -79,7 +80,7 @@ void CoreAI::getBestTarget(Unit* pUnit, GameAction* pAction, UnitPathFindingSyst
         {
             if (pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr)
             {
-                pAction->setMovepath(pPfs->getPath(targets[i2].x(), targets[i2].y()));
+                pAction->setMovepath(QVector<QPoint>(1, targets[i2]));
                 getAttacksFromField(pUnit, pAction, ret, moveTargetFields);
             }
         }
@@ -100,62 +101,59 @@ void CoreAI::getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVect
             QRectF damage = calcUnitDamage(pAction, target);
             Terrain* pTerrain = pMap->getTerrain(target.x(), target.y());
             Unit* pDef = pTerrain->getUnit();
-            if (damage.x() >= 0)
+            if (pDef != nullptr)
             {
-                if (pDef != nullptr)
+                float atkDamage = damage.x() / 10.0f;
+                if (atkDamage > pDef->getHp())
                 {
-                    float atkDamage = damage.x() / 10.0f;
-                    if (atkDamage > pDef->getHp())
-                    {
-                        atkDamage = pDef->getHp();
-                    }
-                    float fondsDamage = pDef->getUnitCosts() * atkDamage / 10.0f;
-                    if (damage.width() > 0)
-                    {
-                        atkDamage = damage.width() / 10.0f;
-                        if (atkDamage > pUnit->getHp())
-                        {
-                            atkDamage = pUnit->getHp();
-                        }
-                        fondsDamage -= pUnit->getUnitCosts() * atkDamage / 10.0f;
-                    }
-                    if (ret.size() == 0)
-                    {
-                        ret.append(QVector3D(target.x(), target.y(), fondsDamage));
-                        moveTargetFields.append(pAction->getActionTarget());
-                    }
-                    else if (ret[0].z() == fondsDamage)
-                    {
-                        ret.append(QVector3D(target.x(), target.y(), fondsDamage));
-                        moveTargetFields.append(pAction->getActionTarget());
-                    }
-                    else if (fondsDamage > ret[0].z())
-                    {
-                        ret.clear();
-                        moveTargetFields.clear();
-                        ret.append(QVector3D(target.x(), target.y(), fondsDamage));
-                        moveTargetFields.append(pAction->getActionTarget());
-                    }
+                    atkDamage = pDef->getHp();
                 }
-                else
+                float fondsDamage = pDef->getUnitCosts() * atkDamage / 10.0f;
+                if (damage.width() >= 0.0)
                 {
-                    if (ret.size() == 0)
+                    atkDamage = damage.width() / 10.0f;
+                    if (atkDamage > pUnit->getHp())
                     {
-                        ret.append(QVector3D(target.x(), target.y(), damage.x()));
-                        moveTargetFields.append(pAction->getActionTarget());
+                        atkDamage = pUnit->getHp();
                     }
-                    else if (ret[0].z() == damage.x())
-                    {
-                        ret.append(QVector3D(target.x(), target.y(), damage.x()));
-                        moveTargetFields.append(pAction->getActionTarget());
-                    }
-                    else if (damage.x() > ret[0].z())
-                    {
-                        ret.clear();
-                        moveTargetFields.clear();
-                        ret.append(QVector3D(target.x(), target.y(), damage.x()));
-                        moveTargetFields.append(pAction->getActionTarget());
-                    }
+                    fondsDamage -= pUnit->getUnitCosts() * atkDamage / 10.0f;
+                }
+                if (ret.size() == 0)
+                {
+                    ret.append(QVector3D(target.x(), target.y(), fondsDamage));
+                    moveTargetFields.append(pAction->getActionTarget());
+                }
+                else if (ret[0].z() == fondsDamage)
+                {
+                    ret.append(QVector3D(target.x(), target.y(), fondsDamage));
+                    moveTargetFields.append(pAction->getActionTarget());
+                }
+                else if (fondsDamage > ret[0].z())
+                {
+                    ret.clear();
+                    moveTargetFields.clear();
+                    ret.append(QVector3D(target.x(), target.y(), fondsDamage));
+                    moveTargetFields.append(pAction->getActionTarget());
+                }
+            }
+            else
+            {
+                if (ret.size() == 0)
+                {
+                    ret.append(QVector3D(target.x(), target.y(), damage.x()));
+                    moveTargetFields.append(pAction->getActionTarget());
+                }
+                else if (ret[0].z() == damage.x())
+                {
+                    ret.append(QVector3D(target.x(), target.y(), damage.x()));
+                    moveTargetFields.append(pAction->getActionTarget());
+                }
+                else if (damage.x() > ret[0].z())
+                {
+                    ret.clear();
+                    moveTargetFields.clear();
+                    ret.append(QVector3D(target.x(), target.y(), damage.x()));
+                    moveTargetFields.append(pAction->getActionTarget());
                 }
             }
         }

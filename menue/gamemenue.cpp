@@ -12,6 +12,8 @@
 
 #include "objects/filedialog.h"
 
+#include "objects/coinfodialog.h"
+
 #include <QFile>
 
 GameMenue* GameMenue::m_pInstance = nullptr;
@@ -69,6 +71,7 @@ void GameMenue::loadGameMenue()
     connect(pMap->getGameRules(), &GameRules::signalVictory, this, &GameMenue::victory, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
+    connect(pMap, &GameMap::signalShowCOInfo, this, &GameMenue::showCOInfo, Qt::QueuedConnection);
     connect(pMap, &GameMap::sigQueueAction, this, &GameMenue::performAction, Qt::QueuedConnection);
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap, &GameMap::centerMap, Qt::QueuedConnection);
     connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameMenue::actionPerformed, Qt::QueuedConnection);
@@ -184,6 +187,69 @@ void GameMenue::victory(qint32 team)
     pApp->continueThread();
 }
 
+void GameMenue::showCOInfo()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
+    GameMap* pMap = GameMap::getInstance();
+    addChild(new COInfoDialog(pMap->getCurrentPlayer()->getspCO(0), pMap->getspPlayer(pMap->getCurrentPlayer()->getPlayerID()), [=](spCO& pCurrentCO, spPlayer& pPlayer, qint32 direction)
+    {
+        if (direction > 0)
+        {
+            if (pCurrentCO.get() == pPlayer->getCO(1) ||
+                pPlayer->getCO(1) == nullptr)
+            {
+                // roll over case
+                if (pPlayer->getPlayerID() == pMap->getPlayerCount() - 1)
+                {
+                    pPlayer = pMap->getspPlayer(0);
+                    pCurrentCO = pPlayer->getspCO(0);
+                }
+                else
+                {
+                    pPlayer = pMap->getspPlayer(pPlayer->getPlayerID() + 1);
+                    pCurrentCO = pPlayer->getspCO(0);
+                }
+            }
+            else
+            {
+                pCurrentCO = pPlayer->getspCO(1);
+            }
+        }
+        else
+        {
+            if (pCurrentCO.get() == pPlayer->getCO(0) ||
+                pPlayer->getCO(0) == nullptr)
+            {
+                // select player
+                if (pPlayer->getPlayerID() == 0)
+                {
+                    pPlayer = pMap->getspPlayer(pMap->getPlayerCount() - 1);
+                }
+                else
+                {
+                    pPlayer = pMap->getspPlayer(pPlayer->getPlayerID() - 1);
+                }
+                // select co
+                if ( pPlayer->getCO(1) != nullptr)
+                {
+                    pCurrentCO = pPlayer->getspCO(1);
+                }
+                else
+                {
+                    pCurrentCO = pPlayer->getspCO(0);
+                }
+            }
+            else
+            {
+                pCurrentCO = pPlayer->getspCO(0);
+            }
+        }
+    }, true));
+    pApp->continueThread();
+}
+
 void GameMenue::saveGame()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -223,6 +289,7 @@ void GameMenue::startGame(qint32 startPlayer)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
+    pMap->startGame(startPlayer);
     if (startPlayer == 0)
     {
         pMap->setCurrentPlayer(GameMap::getInstance()->getPlayerCount() - 1);

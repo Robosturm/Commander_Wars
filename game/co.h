@@ -49,11 +49,12 @@ signals:
 
 public slots:
     /**
-     * @brief getMovementPointModifier the bonus movementpoints of this co
-     * @param pUnit the unit we want to get the bonus points from
+     * @brief getMovementpointModifier the bonus movementpoints of this co
+     * @param pUnit
+     * @param position
      * @return
      */
-    qint32 getMovementPointModifier(Unit* pUnit);
+    qint32 getMovementpointModifier(Unit* pUnit, QPoint position);
     /**
      * @brief buildedUnit called after a unit was created do whatever you want with this information
      * @param pUnit
@@ -73,12 +74,12 @@ public slots:
      */
     bool getHpHidden(Unit* pUnit, QPoint position);
     /**
-     * @brief getMovementpointModifier
+     * @brief getMovementcostModifier
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getMovementpointModifier(Unit* pUnit, QPoint position);
+    qint32 getMovementcostModifier(Unit* pUnit, QPoint position);
     /**
      * @brief getAttackHpBonus
      * @param pUnit

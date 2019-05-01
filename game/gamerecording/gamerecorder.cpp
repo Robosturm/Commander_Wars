@@ -129,7 +129,7 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
     qint32 score = 0;
     qint32 mapSize = pMap->getMapWidth() * pMap->getMapHeight();
     // calc speed points
-    qint32 mapTime = (pMap->getMapWidth() + pMap->getMapHeight()) * 3 / 5;
+    qint32 mapTime = (pMap->getMapWidth() + pMap->getMapHeight());
     if (pMap->getCurrentDay() < mapTime)
     {
         scorePoints.setX(200 - (pMap->getCurrentDay() * 100 / mapTime));

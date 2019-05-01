@@ -11,7 +11,7 @@ var CO =
         // put the co music in here.
     },
 
-    getMovementPointModifier : function(co, unit)
+    getMovementpointModifier : function(co, unit, posX, posY)
     {
         return 0;
     },
@@ -126,7 +126,7 @@ var CO =
         return 0;
     },
 
-    getMovementpointModifier : function(co, unit, posX, posY)
+    getMovementcostModifier : function(co, unit, posX, posY)
     {
         return 0;
     },

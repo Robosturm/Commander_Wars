@@ -102,6 +102,7 @@
 		<image file="missile_icon.png" />	
 		<image file="exitgame.png" />
 		<image file="savegame.png" />
+		<image file="co_info.png" />	
 
 		<image file="hq+captured.png" />
 		<image file="hq+lost.png" />		

@@ -575,7 +575,15 @@ void MapSelectionMapsMenue::showSelectCO(qint32 player, quint8 co)
     spCOSelectionDialog dialog = new COSelectionDialog(coid, m_pCurrentMap->getPlayer(player)->getColor(), player);
     this->addChild(dialog);
     m_pPlayerSelection->setVisible(false);
-    connect(dialog.get(), &COSelectionDialog::editFinished, this , &MapSelectionMapsMenue::playerCO1Changed, Qt::QueuedConnection);
+    if (co == 0)
+    {
+        connect(dialog.get(), &COSelectionDialog::editFinished, this , &MapSelectionMapsMenue::playerCO1Changed, Qt::QueuedConnection);
+    }
+    else
+    {
+        connect(dialog.get(), &COSelectionDialog::editFinished, this , &MapSelectionMapsMenue::playerCO2Changed, Qt::QueuedConnection);
+    }
+
     connect(dialog.get(), &COSelectionDialog::canceled, this , &MapSelectionMapsMenue::playerCOCanceled, Qt::QueuedConnection);
     pApp->continueThread();
 }

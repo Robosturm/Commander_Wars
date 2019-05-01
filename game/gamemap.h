@@ -195,11 +195,15 @@ public:
      * @brief clearMap
      */
     void clearMap();
-
-
+    /**
+     * @brief startGame
+     * @param startPlayer
+     */
+    void startGame(qint32 startPlayer);
 signals:
     void signalExitGame();
     void signalSaveGame();
+    void signalShowCOInfo();
     void sigQueueAction(GameAction* pAction);
 public slots:
     /**
@@ -233,6 +237,10 @@ public slots:
      * @brief saveGame
      */
     void saveGame();
+    /**
+     * @brief showCOInfo
+     */
+    void showCOInfo();
     /**
      * @brief getBuildingCount
      * @param buildingID

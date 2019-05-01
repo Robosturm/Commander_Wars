@@ -649,7 +649,7 @@ bool VeryEasyAI::moveUnit(GameAction* pAction, Unit* pUnit, QStringList& actions
 {
     TargetedUnitPathFindingSystem pfs(pUnit, targets);
     pfs.explore();
-    qint32 movepoints = pUnit->getMovementPoints();
+    qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY()));
     QPoint targetFields = pfs.getReachableTargetField(movepoints);
     if (targetFields.x() >= 0)
     {

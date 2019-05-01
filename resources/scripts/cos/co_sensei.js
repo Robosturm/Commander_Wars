@@ -157,9 +157,9 @@ var Constructor = function()
         return 0;
     };
 
-    this.getMovementPointModifier = function(co, unit)
+    this.getMovementpointModifier = function(co, unit, posX, posY)
     {
-        var unitTransportIDs = ["APC", "LANDER", "T_HELI", "TRANSPORTPLANE"];
+        var unitTransportIDs = ["APC", "LANDER", "T_HELI", "TRANSPORTPLANE", "BLACK_BOOT"];
         if (unitTransportIDs.indexOf(unit.getUnitID()) >= 0)
         {
             return 1;

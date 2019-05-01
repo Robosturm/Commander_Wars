@@ -166,7 +166,7 @@ var Constructor = function()
         }
         return 0;
     };
-    this.getMovementPointModifier = function(co, unit)
+    this.getMovementpointModifier = function(co, unit, posX, posY)
     {
         if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
         {

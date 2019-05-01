@@ -228,11 +228,11 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Enemy counterattacks deal less damage to Sophie’s units.");
+        return qsTr("Enemy counterattacks deal less damage to Sophie's units.");
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Enemy counterattacks deal no damage to Sophie’s units.");
+        return qsTr("Enemy counterattacks deal no damage to Sophie's units.");
     };
     this.getPowerName = function()
     {

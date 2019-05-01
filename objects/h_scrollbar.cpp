@@ -166,7 +166,7 @@ void H_Scrollbar::setContentHeigth(qint32 heigth)
     }
     m_Scrollvalue = 0;
     m_slider->setSize(18, sliderHeight);
-    emit sigScrollValueChanged(m_Scrollvalue);
+    changeScrollValue(m_Scrollvalue);
     pApp->continueThread();
 }
 

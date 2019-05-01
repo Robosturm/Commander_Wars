@@ -6,20 +6,6 @@ var Constructor = function()
         co.setSuperpowerStars(4);
     };
 
-    this.getDirectUnitIDS = function()
-    {
-        return ["BOMBER", "CANNONBOAT", "CRUISER", "DESTROYER", "DUSTER",
-                "FIGHTER", "FLAK", "FLARE", "HEAVY_HOVERCRAFT", "HEAVY_TANK",
-                "HOVERCRAFT", "HOVERFLAK", "K_HELI", "LIGHT_TANK", "MEGATANK",
-                "NEOTANK", "RECON", "STEALTHBOMBER", "SUBMARINE", "WATERPLANE",
-                "INFANTRY", "MECH", "MOTORBIKE"];
-    };
-    this.getIndirectUnitIDS = function()
-    {
-        return ["AIRCRAFTCARRIER", "ANTITANKCANNON", "ARTILLERY", "BATTLESHIP",
-                "MISSILE", "PIPERUNNER", "ROCKETTHROWER", "SNIPER"];
-    };
-
     this.activatePower = function(co)
     {
         var dialogAnimation = co.createPowerSentence();
@@ -186,30 +172,30 @@ var Constructor = function()
     };
     this.getFirerangeModifier = function(co, unit, posX, posY)
     {
-        var indirectUnits = CO_EPOCH.getIndirectUnitIDS();
-        switch (co.getPowerMode())
+        if (unit.getMinRange() > 1)
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Superpower:
-                if (indirectUnits.indexOf(unit.getUnitID()) >= 0)
-                {
-                    return 1;
-                }
-                break;
+                return 1;
             case GameEnums.PowerMode_Power:
                 break;
             default:
                 break;
+            }
         }
         return 0;
     };
-    this.getMovementPointModifier = function(co, unit)
+    this.getMovementpointModifier = function(co, unit, posX, posY)
     {
-        var directUnits = CO_EPOCH.getDirectUnitIDS();
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+        if (unit.getMaxRange() === 1)
         {
-            if (directUnits.indexOf(unit.getUnitID()) >= 0)
+            if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
             {
-                return 1;
+                if (directUnits.indexOf(unit.getUnitID()) >= 0)
+                {
+                    return 1;
+                }
             }
         }
         return 0;

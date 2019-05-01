@@ -119,10 +119,17 @@ public slots:
      */
     bool getFirstStrike(QPoint position);
     /**
-     * @brief getMovementPoints the movement points this unit can move
+     * @brief getMovementpoints the movement points this unit can move
+     * @param position
      * @return
      */
-    qint32 getMovementPoints();
+    qint32 getMovementpoints(QPoint position);
+    /**
+     * @brief getBonusMovementpoints
+     * @param position
+     * @return
+     */
+    qint32 getBonusMovementpoints(QPoint position);
     /**
      * @brief getBaseMovementPoints the base movement points of this unit
      * @return
@@ -188,6 +195,7 @@ public slots:
 
     qint32 getMaxRange();
     qint32 getMaxRange(QPoint position);
+    qint32 getBonusMaxRange(QPoint position);
     void setMaxRange(const qint32 &value);
 
     bool getHidden() const;

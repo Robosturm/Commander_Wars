@@ -114,7 +114,7 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        if (attacker !== null)
+        if (defender !== null)
         {
             var variables = co.getVariables();
             var buildedVar = variables.createVariable("SANJURO_BUILDED_" + defender.getUnitID());
@@ -153,33 +153,33 @@ var Constructor = function()
         var modifier = dmgModVar.readDataFloat();
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Superpower:
-                if (builded === true)
-                {
-                    return modifier + 50;
-                }
-                else
-                {
-                    return modifier;
-                }
-            case GameEnums.PowerMode_Power:
+        case GameEnums.PowerMode_Superpower:
+            if (builded === true)
+            {
+                return modifier + 50;
+            }
+            else
+            {
                 return modifier;
-            default:
-                if (modifier > 0)
-                {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
-                    {
-                        return modifier;
-                    }
-                    else
-                    {
-                        return modifier / 2;
-                    }
-                }
-                else
+            }
+        case GameEnums.PowerMode_Power:
+            return modifier;
+        default:
+            if (modifier > 0)
+            {
+                if (co.inCORange(Qt.point(atkPosX, atkPosY)))
                 {
                     return modifier;
                 }
+                else
+                {
+                    return modifier / 2;
+                }
+            }
+            else
+            {
+                return modifier;
+            }
         }
     };
 
@@ -260,7 +260,7 @@ var Constructor = function()
         return baseCost * costModVar.readDataFloat();
     };
 
-    this.getMovementpointModifier = function(co, unit, posX, posY)
+    this.getMovementcostModifier = function(co, unit, posX, posY)
     {
         var variables = co.getVariables();
         var buildedVar = variables.createVariable("SANJURO_BUILDED_" + unit.getUnitID());

@@ -13,7 +13,14 @@ class EditorMenue : public InGameMenue
 {
     Q_OBJECT
 public:
-    EditorMenue();
+    enum class EditorModes
+    {
+        PlaceEditorSelection,
+        RemoveUnits,
+        EditUnits,
+    };
+    explicit EditorMenue();
+    virtual ~EditorMenue() = default;
 
 signals:
     void sigOnMapClickedLeft();
@@ -113,6 +120,7 @@ public slots:
     void changeMap(QString mapName, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount);
 private:
     spEditorSelection m_EditorSelection{nullptr};
+    EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};
     spTopbar m_Topbar;
 };
 

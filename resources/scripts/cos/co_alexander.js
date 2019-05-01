@@ -141,7 +141,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A diligent politician who works only for the benefit of the citizens and the promotion of peace. Olaf’s son and future ruler of Blue Moon.");
+        return qsTr("A diligent politician who works only for the benefit of the citizens and the promotion of peace. Olaf's son and future ruler of Blue Moon.");
     };
     this.getHits = function()
     {

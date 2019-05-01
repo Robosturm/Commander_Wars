@@ -292,7 +292,7 @@ qint32 Unit::getMaxRange()
     return getMaxRange(QPoint(getX(), getY()));
 }
 
-qint32 Unit::getMaxRange(QPoint position)
+qint32 Unit::getBonusMaxRange(QPoint position)
 {
     qint32 rangeModifier = 0;
     CO* pCO = m_pOwner->getCO(0);
@@ -307,7 +307,14 @@ qint32 Unit::getMaxRange(QPoint position)
     }
     GameMap* pMap = GameMap::getInstance();
     rangeModifier += pMap->getGameRules()->getCurrentWeather()->getFirerangeModifier();
-    qint32 points = maxRange + rangeModifier;
+
+    return rangeModifier;
+}
+
+qint32 Unit::getMaxRange(QPoint position)
+{
+
+    qint32 points = maxRange + getBonusMaxRange(position);
 
     if (points < minRange)
     {
@@ -610,7 +617,7 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
 qint32 Unit::getTerrainDefense()
 {
     GameMap* pMap = GameMap::getInstance();
-    if (useTerrainDefense())
+    if (useTerrainDefense() && m_pTerrain != nullptr)
     {
         return pMap->getTerrain(getX(), getY())->getDefense(this);
     }
@@ -874,7 +881,7 @@ qint32 Unit::getBaseMovementCosts(qint32 x, qint32 y)
 qint32 Unit::getMovementCosts(qint32 x, qint32 y)
 {
     qint32 baseCosts = getBaseMovementCosts(x, y);
-    qint32 costs = baseCosts + m_pOwner->getMovementpointModifier(this, QPoint(x, y));
+    qint32 costs = baseCosts + m_pOwner->getMovementcostModifier(this, QPoint(x, y));
     if (baseCosts > 0)
     {
         if ((costs <= 0) && (baseCosts > 0))
@@ -1292,20 +1299,25 @@ bool Unit::getFirstStrike(QPoint position)
     return false;
 }
 
-qint32 Unit::getMovementPoints()
+qint32 Unit::getBonusMovementpoints(QPoint position)
 {
     qint32 movementModifier = 0;
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
-        movementModifier += pCO->getMovementPointModifier(this);
+        movementModifier += pCO->getMovementpointModifier(this, position);
     }
     pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
-        movementModifier += pCO->getMovementPointModifier(this);
+        movementModifier += pCO->getMovementpointModifier(this, position);
     }
-    qint32 points = baseMovementPoints + movementModifier;
+    return movementModifier;
+}
+
+qint32 Unit::getMovementpoints(QPoint position)
+{
+    qint32 points = baseMovementPoints + getBonusMovementpoints(position);
     if (points < 0)
     {
         points = 0;
@@ -1427,7 +1439,11 @@ void Unit::killUnit()
         GameMap::getInstance()->removeChild(m_CORange);
     }
     // record destruction of this unit
-    GameMap::getInstance()->getGameRecorder()->lostUnit(m_pOwner->getPlayerID());
+    GameRecorder* pRecorder = GameMap::getInstance()->getGameRecorder();
+    if (pRecorder != nullptr)
+    {
+        GameMap::getInstance()->getGameRecorder()->lostUnit(m_pOwner->getPlayerID());
+    }
     detach();
     removeUnit();
 }

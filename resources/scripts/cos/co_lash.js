@@ -113,23 +113,26 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        if (attacker.useTerrainDefense())
+        if (map.onMap(atkPosX, atkPosY))
         {
-            var terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
-            switch (co.getPowerMode())
+            if (attacker.useTerrainDefense())
             {
-            case GameEnums.PowerMode_Superpower:
-                return terrainDefense * 10;
-            case GameEnums.PowerMode_Power:
-                return terrainDefense * 10;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                var terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
+                switch (co.getPowerMode())
                 {
+                case GameEnums.PowerMode_Superpower:
                     return terrainDefense * 10;
+                case GameEnums.PowerMode_Power:
+                    return terrainDefense * 10;
+                default:
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                    {
+                        return terrainDefense * 10;
+                    }
+                    break;
                 }
-                break;
+                return terrainDefense * 5;
             }
-            return terrainDefense * 5;
         }
         return 0;
     };
@@ -145,7 +148,7 @@ var Constructor = function()
                 return 0;
         }
     };
-    this.getMovementpointModifier = function(co, unit, posX, posY)
+    this.getMovementcostModifier = function(co, unit, posX, posY)
     {
         switch (co.getPowerMode())
         {

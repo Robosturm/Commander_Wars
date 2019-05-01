@@ -174,18 +174,18 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY)))
                 {
-                    return 40;
+                    return 30;
                 }
                 break;
         }
-        return 20;
+        return 15;
     };
 
     this.getCOArmy = function()
     {
         return "MA";
     };
-    this.getMovementPointModifier = function(co, unit)
+    this.getMovementpointModifier = function(co, unit, posX, posY)
     {
         if (co.getPowerMode() === GameEnums.PowerMode_Power)
         {

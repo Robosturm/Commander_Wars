@@ -8,6 +8,11 @@
 
 #include "resource_management/cospritemanager.h"
 
+#include "objects/coinfodialog.h"
+
+#include "game/co.h"
+
+
 COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player)
     : QObject(),
       m_player(player)
@@ -58,6 +63,47 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player)
         emit canceled();
         this->getParent()->removeChild(this);
     });
+
+    // show co info button
+    m_ShowCOInfoButton = pObjectManager->createButton(tr("Show CO Info"), 150);
+    m_ShowCOInfoButton->setPosition(pApp->getSettings()->getWidth() / 2 - m_ShowCOInfoButton->getWidth() / 2, pApp->getSettings()->getHeight() - 30 - m_ShowCOInfoButton->getHeight());
+    pSpriteBox->addChild(m_ShowCOInfoButton);
+    m_ShowCOInfoButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        emit sigShowCOInfo();
+    });
+    connect(this, &COSelectionDialog::sigShowCOInfo, this, &COSelectionDialog::showCOInfo, Qt::QueuedConnection);
+}
+
+void COSelectionDialog::showCOInfo()
+{
+    QString coid = m_currentCOID;
+    if (coid.isEmpty())
+    {
+        coid = COSpriteManager::getInstance()->getCOID(0);
+    }
+    Player* pPlayer = GameMap::getInstance()->getPlayer(m_player);
+    spCO co = new CO(coid, pPlayer);
+    addChild(new COInfoDialog(co, pPlayer, [=](spCO& pCurrentCO, spPlayer&, qint32 direction)
+    {
+        COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+        qint32 index = pCOSpriteManager->getCOIndex(pCurrentCO->getCoID());
+        index += direction;
+        QString coid;
+        if (index < 0)
+        {
+            coid = pCOSpriteManager->getCOID(pCOSpriteManager->getCOCount() - 1);
+        }
+        else if (index >= pCOSpriteManager->getCOCount())
+        {
+            coid = pCOSpriteManager->getCOID(0);
+        }
+        else
+        {
+            coid = pCOSpriteManager->getCOID(index);
+        }
+        pCurrentCO = new CO(coid, pPlayer);
+    }, false));
 }
 
 void COSelectionDialog::selectedCOIDChanged(QString coid)

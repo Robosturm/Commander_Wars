@@ -184,23 +184,27 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
+        if (map.onMap(atkPosX, atkPosY))
         {
-            switch (co.getPowerMode())
+            if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
             {
-            case GameEnums.PowerMode_Superpower:
-                return 20;
-            case GameEnums.PowerMode_Power:
-                return 20;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                switch (co.getPowerMode())
                 {
+                case GameEnums.PowerMode_Superpower:
                     return 20;
+                case GameEnums.PowerMode_Power:
+                    return 20;
+                default:
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                    {
+                        return 20;
+                    }
+                    break;
                 }
-                break;
+                return 10;
             }
-            return 10;
         }
+        return 0;
     };
 
     // CO - Intel

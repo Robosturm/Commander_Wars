@@ -107,11 +107,11 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY)))
                 {
-                    return 0;
+                    return -5;
                 }
                 break;
         }
-        return -10;
+        return -15;
     };
 
     // CO - Intel

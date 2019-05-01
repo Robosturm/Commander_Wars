@@ -60,6 +60,12 @@ public:
      * @param pBaseGameInput
      */
     void setBaseGameInput(BaseGameInputIF *pBaseGameInput);
+    /**
+     * @brief getCO
+     * @param id index of the co 0 or 1
+     * @return pointer to the co
+     */
+    spCO getspCO(quint8 id);
 signals:
 
 public slots:
@@ -197,12 +203,12 @@ public slots:
      */
     void updateVisualCORange();
     /**
-     * @brief getMovementpointModifier
+     * @brief getMovementcostModifier
      * @param pUnit
      * @param position
      * @return
      */
-    qint32 getMovementpointModifier(Unit* pUnit, QPoint position);
+    qint32 getMovementcostModifier(Unit* pUnit, QPoint position);
     /**
      * @brief getRockettarget finds the most valuable target for damaging units in a diamond.
      * If multiple targets with the same value are found.

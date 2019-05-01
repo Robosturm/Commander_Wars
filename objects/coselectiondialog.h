@@ -13,6 +13,8 @@
 
 #include "objects/coselection.h"
 
+#include "game/gamemap.h"
+
 class COSelectionDialog;
 typedef oxygine::intrusive_ptr<COSelectionDialog> spCOSelectionDialog;
 
@@ -26,10 +28,13 @@ public:
 signals:
     void editFinished(QString coid, qint32 player);
     void canceled();
+    void sigShowCOInfo();
 public slots:
     void selectedCOIDChanged(QString coid);
+    void showCOInfo();
 private:
     oxygine::spButton m_OkButton;
+    oxygine::spButton m_ShowCOInfoButton;
     oxygine::spButton m_ExitButton;
     spCOSelection m_COSelection;
     oxygine::spSprite m_pCurrentCO;

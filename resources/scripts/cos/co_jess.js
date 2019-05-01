@@ -175,7 +175,7 @@ var Constructor = function()
         return 0;
     };
 
-    this.getMovementPointModifier = function(co, unit)
+    this.getMovementpointModifier = function(co, unit, posX, posY)
     {
         var airUnits = CO_JESS.getAirUnitIDS();
         var seaUnits = CO_JESS.getSeaUnitIDS();

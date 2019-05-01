@@ -304,15 +304,58 @@
     </message>
 </context>
 <context>
+    <name>COInfoDialog</name>
+    <message>
+        <location filename="../objects/coinfodialog.cpp" line="42"/>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/coinfodialog.cpp" line="51"/>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/coinfodialog.cpp" line="61"/>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/coinfodialog.cpp" line="86"/>
+        <source>CO Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/coinfodialog.cpp" line="118"/>
+        <source>Hit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/coinfodialog.cpp" line="136"/>
+        <source>Miss</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/coinfodialog.cpp" line="154"/>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>COSelectionDialog</name>
     <message>
-        <location filename="../objects/coselectiondialog.cpp" line="43"/>
+        <location filename="../objects/coselectiondialog.cpp" line="48"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coselectiondialog.cpp" line="53"/>
+        <location filename="../objects/coselectiondialog.cpp" line="58"/>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/coselectiondialog.cpp" line="68"/>
+        <source>Show CO Info</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -391,27 +434,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="38"/>
+        <location filename="../menue/editormenue.cpp" line="43"/>
         <source>Map Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="39"/>
+        <location filename="../menue/editormenue.cpp" line="38"/>
         <source>Save Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="40"/>
+        <location filename="../menue/editormenue.cpp" line="39"/>
         <source>Load Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="41"/>
+        <location filename="../menue/editormenue.cpp" line="40"/>
         <source>Import CoW Txt Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="42"/>
+        <location filename="../menue/editormenue.cpp" line="41"/>
         <source>Exit Editor</source>
         <translation type="unfinished"></translation>
     </message>
@@ -426,28 +469,48 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="46"/>
+        <location filename="../menue/editormenue.cpp" line="47"/>
         <source>Flip Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="47"/>
+        <location filename="../menue/editormenue.cpp" line="48"/>
         <source>Flip Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="48"/>
+        <location filename="../menue/editormenue.cpp" line="49"/>
         <source>Rotate Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="49"/>
+        <location filename="../menue/editormenue.cpp" line="50"/>
         <source>Rotate Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="50"/>
+        <location filename="../menue/editormenue.cpp" line="51"/>
         <source>Random Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="53"/>
+        <source>Editor Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="54"/>
+        <source>Place Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="55"/>
+        <source>Delete Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="56"/>
+        <source>Edit Units</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -624,32 +687,32 @@
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="47"/>
+        <location filename="../menue/mainwindow.cpp" line="48"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="58"/>
+        <location filename="../menue/mainwindow.cpp" line="59"/>
         <source>Load Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="69"/>
+        <location filename="../menue/mainwindow.cpp" line="70"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="80"/>
+        <location filename="../menue/mainwindow.cpp" line="81"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="91"/>
+        <location filename="../menue/mainwindow.cpp" line="92"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="102"/>
+        <location filename="../menue/mainwindow.cpp" line="103"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -760,65 +823,65 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="597"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="605"/>
         <source>Username</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="597"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="605"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="597"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="605"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="597"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="605"/>
         <source>AI Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="597"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="605"/>
         <source>Startfonds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="597"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="605"/>
         <source>Income Modifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="597"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="670"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="605"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="678"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="597"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="657"/>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="817"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="605"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="665"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="825"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="628"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="636"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="633"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="641"/>
         <source>All Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="673"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="681"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="673"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="681"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1413,7 +1476,7 @@
     <name>co_alexander</name>
     <message>
         <location filename="../resources/scripts/cos/co_alexander.js" line="144"/>
-        <source>A diligent politician who works only for the benefit of the citizens and the promotion of peace. Olafâ€™s son and future ruler of Blue Moon.</source>
+        <source>A diligent politician who works only for the benefit of the citizens and the promotion of peace. Olaf&apos;s son and future ruler of Blue Moon.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2035,97 +2098,97 @@
 <context>
     <name>co_epoch</name>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="207"/>
         <source>The first prototype for the Robot Commanding Officer Series invented by Lash.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="211"/>
         <source>Tests</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="215"/>
         <source>Upgrades</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="219"/>
         <source>Epoch is blessed with simple programming so it has only basic command abilities. Powers charge at an unmatched speed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="223"/>
         <source>Firepower is increased and unit HP is hidden from opponents.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="227"/>
         <source>Short Circuit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="231"/>
         <source>Direct combat units gain one movement and indirect combat units recieve one extra range. Hides HP from opponents. Firepower is increased.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="235"/>
         <source>Shocker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="253"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="239"/>
         <source>Error: Overcharged. initiate saftey mode.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="240"/>
         <source>Power surge detected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="241"/>
         <source>Overload! Release Energy!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="242"/>
         <source>System Over. Overload equals very yes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="243"/>
         <source>Blackout!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="244"/>
         <source>Register your firmware for continued use!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="248"/>
         <source>Epoch Succesful. Upgrade irrelevant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="249"/>
         <source>Test Completed. Anaylsing battle log...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="250"/>
         <source>Victory recorded in database and filed under category &apos;insulting&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="268"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="254"/>
         <source>Noooo... No upgrade please.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_epoch.js" line="272"/>
+        <location filename="../resources/scripts/cos/co_epoch.js" line="258"/>
         <source>Epoch</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2741,102 +2804,102 @@
 <context>
     <name>co_jake</name>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="199"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="202"/>
         <source>A young, energetic Orange Star CO who is a top-notch tank commander.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="203"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="206"/>
         <source>Clubbin&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="207"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="210"/>
         <source>Easy listening</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="211"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="214"/>
         <source>Fights well in the open. Firepower of all units increased on plains.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="218"/>
         <source>Firepower is increased on plains. Firing range of indirect-combat units is increased by one.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="222"/>
         <source>Beat Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="223"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="226"/>
         <source>Firepower is greatly increased on plains. Firing range of indirect units is increased by one, and movement of direct units by two</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="227"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="230"/>
         <source>Block Rock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="231"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="234"/>
         <source>Give it up, fool!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="235"/>
         <source>Prepare to get served.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="236"/>
         <source>Prepare for a subpoena of pain! Yeah, that&apos;s lawyer style!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="237"/>
         <source>This is how I roll!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="235"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="238"/>
         <source>Wassup now?!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="239"/>
         <source>Here...have a taste!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="243"/>
         <source>Get the plates, &apos;cause you just got served!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="244"/>
         <source>Owned!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="245"/>
         <source>You got dropped like a phat beat!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="246"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="249"/>
         <source>I got spanked out there! This combat is the real deal...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="250"/>
         <source>Dude, we so don&apos;t have time for this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_jake.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_jake.js" line="254"/>
         <source>Jake</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3256,102 +3319,102 @@
 <context>
     <name>co_kindle</name>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="217"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="220"/>
         <source>Jugger and Koal&apos;s commanding officer. Has a blunt, queen-like personality.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="224"/>
         <source>Anything chic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="228"/>
         <source>Anything passe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="232"/>
         <source>An upper-crust CO who excels at urban warfare. Firepower of all units increased on properties.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="236"/>
         <source>Inflicts three HP of damage to enemy units on properties. Also increases firepower of all units on a property.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="240"/>
         <source>Urban Blight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="244"/>
         <source>The more properties she controls, the more firepower she gains. Also greatly increases firepower of all units on a property.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="248"/>
         <source>High Society</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="252"/>
         <source>So, you want to see me get serious? Very well! You asked for it!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="253"/>
         <source>Even the prettiest rose has thorns!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="254"/>
         <source>I am Kindle, Gorgeous AND Clever!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="252"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="255"/>
         <source>Let us play a more dangerous game, shall we? I grow weary of this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="253"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="256"/>
         <source>Aha ha ha! Beg for mercy, rat!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="257"/>
         <source>Still putting up a fight? Unbelievable!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="261"/>
         <source>Winning is almost as wonderful as I am. Aha ha ha!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="262"/>
         <source>I won again? This is getting so boring.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="263"/>
         <source>Aha ha ha! Pathetic.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="267"/>
         <source>Losing to you corn-fed country folk is enough to give me frown lines.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="265"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="268"/>
         <source>That was a bit of a disappointment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_kindle.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_kindle.js" line="272"/>
         <source>Kindle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3359,102 +3422,102 @@
 <context>
     <name>co_koal</name>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="164"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="167"/>
         <source>A commander of the Black Hole army who is always planning his next destructive act.Endless March</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="168"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="171"/>
         <source>Proverbs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="172"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="175"/>
         <source>Fondue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="176"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="179"/>
         <source>A master of road-based battles. Firepower of all units increased on roads.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="180"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="183"/>
         <source>Movement range for all units is increased by one space. Units have more firepower on roads.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="184"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="187"/>
         <source>Forced March</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="188"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="191"/>
         <source>Movement range for all units is increased by two spaces. Greatly increases firepower of units on roads.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="192"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="195"/>
         <source>Trail of Woe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="196"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="199"/>
         <source>I will crush your units, one by one!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="197"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="200"/>
         <source>I am a warrior and a scholar. My victory is all but certain.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="198"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="201"/>
         <source>Heh heh heh. I&apos;ll not surrender! Bend your knees and beg for mercy!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="199"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="202"/>
         <source>Heh heh heh... None shall escape.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="200"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="203"/>
         <source>My speed knows no equal!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="201"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="204"/>
         <source>Heh heh heh... Fate has smiled on me this day!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="205"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="208"/>
         <source>I have no equal on the field of war!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="206"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="209"/>
         <source>Wallow in your shame, swine! Wallow, I say</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="207"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="210"/>
         <source>Victory is no accident.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="211"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="214"/>
         <source>He! He! He!...??? What?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="215"/>
         <source>One time you win and another time you loose.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_koal.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_koal.js" line="219"/>
         <source>Koal</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3462,102 +3525,102 @@
 <context>
     <name>co_lash</name>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="165"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="168"/>
         <source>The wunderkind of the Black Hole forces. She&apos;s small but fierce. Designed most of Black Hole&apos;s recent weaponry.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="169"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="172"/>
         <source>Getting her way</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="173"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="176"/>
         <source>Not getting it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="177"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="180"/>
         <source>Skilled at taking advantage of terrain features. Can turn terrain effects into firepower bonuses.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="181"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="184"/>
         <source>All units&apos; movements are unhindered by terrain.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="185"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="188"/>
         <source>Terrain Tactics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="189"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="192"/>
         <source>Terrain effects are doubled and used to increase firepower. Additionally, all units&apos; movements are unhindered by terrain.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="193"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="196"/>
         <source>Prime Tactics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="197"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="200"/>
         <source>Ooh!  You&apos;re so annoying!  I&apos;m gonna have to get rid of you now!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="198"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="201"/>
         <source>You&apos;re no fun... I don&apos;t like you at all!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="199"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="202"/>
         <source>I&apos;ve had enough!  I&apos;m bored now!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="200"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="203"/>
         <source>Oooo, you&apos;re driving me nuts!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="201"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="204"/>
         <source>You want to match wits with me? You&apos;re so silly!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="202"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="205"/>
         <source>Tee hee! C&apos;mon! Let&apos;s play!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="206"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="209"/>
         <source>Hee hee hee... Hm? Broken already?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="207"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="210"/>
         <source>Tee hee hee! You&apos;re a loser!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="208"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="211"/>
         <source>Huh? That&apos;s all you got? Wow, you&apos;re no fun!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="215"/>
         <source>Boo! Nothing&apos;s going right! That&apos;s enough. I&apos;m going home!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="213"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="216"/>
         <source>Oh, well. I guess I&apos;ll have to find someplace new to play. Toodles!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="217"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="220"/>
         <source>Lash</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3565,102 +3628,102 @@
 <context>
     <name>co_max</name>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="191"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="194"/>
         <source>A brave and loyal friend, not to mention a strong fighter, Max hates any kind of treachery, preferring a good, old-fashioned brawl.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="195"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="198"/>
         <source>Weight Training</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="199"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="202"/>
         <source>Studying</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="203"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="206"/>
         <source>Non-infantry direct-combat units are tops.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="207"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="210"/>
         <source>Firepower and movement of all non-infantry direct-combat units rises.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="211"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="214"/>
         <source>Max Force</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="218"/>
         <source>Firepower and movement of all non-infantry direct-combat units rises greatly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="222"/>
         <source>Max Blast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="223"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="226"/>
         <source>Roll, tanks, roll!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="227"/>
         <source>Now you&apos;re gonna get hurt!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="228"/>
         <source>Hey!  Give up while you still can!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="226"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="229"/>
         <source>Wanna test might?  I won&apos;t lose!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="227"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="230"/>
         <source>That&apos;s enough!  Get outta the road!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="231"/>
         <source>Alright, the gloves are comin&apos; off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="235"/>
         <source>That was a piece of cake!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="236"/>
         <source>Ha! It&apos;ll take more than that to beat me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="237"/>
         <source>I&apos;m on a roll!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="241"/>
         <source>Ouch... I let my guard down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="239"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="242"/>
         <source>Oh, man! Not good! What are we supposed to do now!?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="246"/>
         <source>Max</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3668,102 +3731,102 @@
 <context>
     <name>co_melanthe</name>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="209"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="213"/>
         <source>A genius scientist that harbors a great hatred for humankind. Believes plants to be superior life forms.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="213"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="217"/>
         <source>Botany</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="217"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="221"/>
         <source>Bovines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="225"/>
         <source>Effects of natural terrain are increased by one star and firepower is increased on natural terrain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="229"/>
         <source>Units on natural terrain restore three HP of health. Effects of natural terrain are increased by one star.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="233"/>
         <source>Synthetic Seedlings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="237"/>
         <source>Enemies on natural terrain suffer two HP of damage. In addition, allied units on natural terrain restore four HP of health. Effects of natural terrain are increased by one star.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="241"/>
         <source>Agent Dreadroot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="245"/>
         <source>Biological warfare is overrated; botanical warfare is supreme.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="246"/>
         <source>The power of nature is on my side!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="247"/>
         <source>&apos;Blades of grass&apos; has a new meaning now, doesn&apos;t it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="248"/>
         <source>Don&apos;t breathe in... heh heh heh.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="249"/>
         <source>Ground up the enemy into fertilizer!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="246"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="250"/>
         <source>Don&apos;t have allergies? You will now.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="254"/>
         <source>The seeds of success have been sown.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="255"/>
         <source>The enemy was a lawn, and I its mower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="252"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="256"/>
         <source>Now that... that was fun.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="260"/>
         <source>What Humans have defeated the almighty Nature.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="261"/>
         <source>Nobody destroys the Nature. Next time...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_melanthe.js" line="261"/>
+        <location filename="../resources/scripts/cos/co_melanthe.js" line="265"/>
         <source>Melanthe</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3874,102 +3937,102 @@
 <context>
     <name>co_napoleon</name>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="219"/>
         <source>The current second commander of the Metall Army. Believes Metall Army&apos;s ingenuity gives it a right to control the world.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="223"/>
         <source>Sudoku</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="227"/>
         <source>Horror Movies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="231"/>
         <source>Unit&apos;s have high defensive capabilities.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="235"/>
         <source>Units cannot take damage that is more than half of their starting HP in a single attack.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="239"/>
         <source>Blast Shield</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="243"/>
         <source>Units fight as though they were four HP stronger and inflict extra damage relative to their terrain cover.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="247"/>
         <source>Last Stand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="251"/>
         <source>Me and what army, you ask?  I have many more soldiers than you think.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="252"/>
         <source>Size does not matter in a battle of wills.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="253"/>
         <source>I can take any attack.  You would be wrong to test that statement.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="251"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="254"/>
         <source>You can give up now and avoid further bloodshed.  Either way, though, my troops simply won&apos;t die.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="252"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="255"/>
         <source>My casualties are not dead, but simply waiting to fight again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="253"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="256"/>
         <source>I need not worry about attrition.  On the other hand, you do.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="260"/>
         <source>The survival of the Metall Army is assured.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="261"/>
         <source>My casualties are recovering.  Yours are not so lucky.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="262"/>
         <source>Why were you so confident?  Success is earned, not granted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="266"/>
         <source>Our losses are unacceptable.  I will fix that.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="267"/>
         <source>Stand aside; I will deal with them.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_napoleon.js" line="268"/>
+        <location filename="../resources/scripts/cos/co_napoleon.js" line="271"/>
         <source>Napoleon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4850,102 +4913,102 @@
 <context>
     <name>co_sami</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="186"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="191"/>
         <source>A strong-willed Orange Star special forces captain who loves long hair. Despite having short hair. Whatever, IS.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="190"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="195"/>
         <source>Chocolate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="194"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="199"/>
         <source>Cowards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="198"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="203"/>
         <source>As an infantry specialist, her foot soldiers do more damage and capture faster. Non-infantry direct-combat units have weaker firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="202"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="207"/>
         <source>Infantry units receive a movement bonus of one space. Their attack also increases. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="206"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="211"/>
         <source>Double Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="210"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="215"/>
         <source>All foot soldiers&apos;s capturing rate is doubled. Their movement is increased by two spaces and their attack increases greatly. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="214"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="219"/>
         <source>Victory March</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="218"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="223"/>
         <source>You&apos;re not bad!  Now it&apos;s my turn!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="224"/>
         <source>All right!  Time to end this!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="225"/>
         <source>Infantry... Assault!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="226"/>
         <source>Ready or not, here I come!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="222"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="227"/>
         <source>All right, it&apos;s make-or-break time!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="223"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="228"/>
         <source>Move out, grunts!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="227"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="232"/>
         <source>Mission accomplished! Awaiting orders!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="233"/>
         <source>Commandos always complete their mission.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="234"/>
         <source>Score one for the grunts!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="238"/>
         <source>Things would be easier if we had more infantry units...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="239"/>
         <source>Next time&apos;s for real. I won&apos;t lose focus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="243"/>
         <source>Sami</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5479,12 +5542,12 @@
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sophie.js" line="231"/>
-        <source>Enemy counterattacks deal less damage to Sophieâ€™s units.</source>
+        <source>Enemy counterattacks deal less damage to Sophie&apos;s units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sophie.js" line="235"/>
-        <source>Enemy counterattacks deal no damage to Sophieâ€™s units.</source>
+        <source>Enemy counterattacks deal no damage to Sophie&apos;s units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5587,7 +5650,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_sturm.js" line="169"/>
-        <source>A small Meteor fall from space and deal 4 HP of damage tp all affected units.</source>
+        <source>A small Meteor fall from space and deal 4 HP of damage to all affected units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
