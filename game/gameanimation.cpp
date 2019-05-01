@@ -60,6 +60,11 @@ void GameAnimation::addSprite(QString spriteID, float offsetX, float offsetY, qi
 
 void GameAnimation::addSprite2(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay)
 {
+    addSprite3(spriteID, offsetX, offsetY, QColor(255, 255, 255), sleepAfterFinish, scaleX, scaleY, delay);
+}
+
+void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay)
+{
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID.toStdString());
     if (pAnim != nullptr)
@@ -77,6 +82,12 @@ void GameAnimation::addSprite2(QString spriteID, float offsetX, float offsetY, q
         pSprite->setScaleX(scaleX);
         pSprite->setScaleY(scaleY);
         pSprite->addTween(queuedAnim);
+        if (color != Qt::white)
+        {
+            oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), color.alpha()));
+            oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
+            pSprite->addTween(tween);
+        }
         this->addChild(pSprite);
         pSprite->setPosition(offsetX, offsetY);
 

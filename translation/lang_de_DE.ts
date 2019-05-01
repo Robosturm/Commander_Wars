@@ -265,6 +265,14 @@
     </message>
 </context>
 <context>
+    <name>ACTION_TALON_GUN</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_TALON_GUN.js" line="18"/>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_TRAP</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_TRAP.js" line="30"/>
@@ -1187,31 +1195,31 @@
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="165"/>
-        <location filename="../menue/victorymenue.cpp" line="438"/>
+        <location filename="../menue/victorymenue.cpp" line="440"/>
         <source>Fonds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="174"/>
-        <location filename="../menue/victorymenue.cpp" line="443"/>
+        <location filename="../menue/victorymenue.cpp" line="445"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="183"/>
-        <location filename="../menue/victorymenue.cpp" line="448"/>
+        <location filename="../menue/victorymenue.cpp" line="450"/>
         <source>Buildings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="192"/>
-        <location filename="../menue/victorymenue.cpp" line="453"/>
+        <location filename="../menue/victorymenue.cpp" line="455"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/victorymenue.cpp" line="201"/>
-        <location filename="../menue/victorymenue.cpp" line="458"/>
+        <location filename="../menue/victorymenue.cpp" line="460"/>
         <source>Player Strength</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1246,7 +1254,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="498"/>
+        <location filename="../menue/victorymenue.cpp" line="500"/>
         <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6924,6 +6932,22 @@
     <message>
         <location filename="../resources/scripts/building/zomega_base.js" line="26"/>
         <source>Omega Base</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ztalon_gun</name>
+    <message>
+        <location filename="../resources/scripts/building/ztalon_gun.js" line="32"/>
+        <source>Talon Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ztalon_gun_destroyed</name>
+    <message>
+        <location filename="../resources/scripts/building/ztalon_gun_destroyed.js" line="37"/>
+        <source>Ruins</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

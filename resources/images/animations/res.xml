@@ -39,6 +39,11 @@
 		<image file="soldier+yc.png" cols = "5" />
 		<image file="soldier+yc+mask.png" cols = "5" />
 		
+				<!-- talon gun fire -->
+		<image file="talon+gun+hit.png" cols = "10" />
+		<image file="talon+gun+fire.png" cols = "11" />
+		<image file="talon+gun+fire+mask.png" cols = "11" />
+		
 		<!-- animations -->
 		<image file="explosion+land.png" cols = "9" />
 		<image file="explosion+air.png" cols = "8" />
@@ -56,7 +61,7 @@
 		<image file="volcan_hit.png" cols = "3" />
 		<image file="volcan_fireball.png" />		
 		<image file="blackhole_shot_down.png" cols = "4" />
-		
+				
 		<!-- static -->
 		<image file="ration.png" />
 		<image file="trap.png" />

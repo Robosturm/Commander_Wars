@@ -44,6 +44,17 @@ public slots:
      */
     void addSprite2(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish = 0, float scaleX = 1.0f, float scaleY = 1.0f, qint32 delay = 0);
     /**
+      * @brief addSprite3
+      * @param spriteID
+      * @param offsetX
+      * @param offsetY
+      * @param sleepAfterFinish
+      * @param scaleX
+      * @param scaleY
+      * @param delay
+      */
+    void addSprite3(QString spriteID, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish = 0, float scaleX = 1.0f, float scaleY = 1.0f, qint32 delay = 0);
+    /**
      * @brief addText
      * @param text
      */

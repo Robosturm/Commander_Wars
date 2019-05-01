@@ -143,7 +143,9 @@ void GameAnimationDialog::setPositionTop(bool value)
 
 void GameAnimationDialog::setColor(QColor color)
 {
-    m_TextMask->setColor(static_cast<quint8>(color.red()), static_cast<quint8>(color.green()), static_cast<quint8>(color.blue()), 255);
+    oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), color.alpha()));
+    oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
+    m_TextMask->addTween(tween);
 }
 
 void GameAnimationDialog::setDialog(QString text)

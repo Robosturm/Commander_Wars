@@ -329,7 +329,9 @@ VictoryMenue::VictoryMenue()
                     pTextMask->setResAnim(pAnim);
                     pTextMask->setPosition(5, 5 + y);
                     QColor color = pPlayer->getColor();
-                    pTextMask->setColor(static_cast<quint8>(color.red()), static_cast<quint8>(color.green()), static_cast<quint8>(color.blue()), 255);
+                    oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), color.alpha()));
+                    oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
+                    pTextMask->addTween(tween);
                     m_VictoryPanel->addItem(pTextMask);
 
                     oxygine::spSprite pWinLooseSprite = new oxygine::Sprite();
