@@ -42,6 +42,24 @@
 		<image file="ac/co_sophie+nrm.png" />
 		<image file="ac/co_sophie+info.png" />
 		<image file="ac/co_sophie+face.png" cols = "3" />
+		<set scale_factor = "0.35" />	
+		<image file="ac/co_brenner+nrm.png" />
+		<set scale_factor = "0.4" />	
+		<image file="ac/co_lin+nrm.png" />
+		<set scale_factor = "0.39" />	
+		<image file="ac/co_will+nrm.png" />
+		<set scale_factor = "0.43" />	
+		<image file="ac/co_isabella+nrm.png" />
+		<set scale_factor = "1.0f" />	
+		<image file="ac/co_brenner+info.png" />
+		<image file="ac/co_brenner+face.png" cols = "3" />
+		<image file="ac/co_lin+info.png" />
+		<image file="ac/co_lin+face.png" cols = "3" />
+		<image file="ac/co_will+info.png" />
+		<image file="ac/co_will+face.png" cols = "3" />
+		<image file="ac/co_isabella+info.png" />
+		<image file="ac/co_isabella+face.png" cols = "3" />
+		<image file="ac/co_davis+face.png" cols = "3" />
 		
 		<!-- OS -->
 		<image file="os/co_andy+nrm.png" />
@@ -65,6 +83,7 @@
 		<image file="os/co_rachel+nrm.png" />
 		<image file="os/co_rachel+info.png" />
 		<image file="os/co_rachel+face.png" cols = "3" />
+		<image file="os/co_officier_os+face.png" cols = "3" />		
 		
 		<!-- BM -->
 		<image file="bm/co_colin+nrm.png" />
@@ -82,6 +101,8 @@
 		<image file="bm/co_alexander+nrm.png" />
 		<image file="bm/co_alexander+info.png" />
 		<image file="bm/co_alexander+face.png" cols = "3" />
+		<image file="bm/co_officier_bm+face.png" cols = "3" />
+		
 		
 		<!-- BD -->
 		<image file="bd/co_tempest+nrm.png" />
@@ -89,7 +110,20 @@
 		<image file="bd/co_tempest+face.png" cols = "3" />
 		<image file="bd/co_zandra+nrm.png" />
 		<image file="bd/co_zandra+info.png" />
-		<image file="bd/co_zandra+face.png" cols = "3" />
+		<image file="bd/co_zandra+face.png" cols = "3" />		
+		<set scale_factor = "0.84" />	
+		<image file="bd/co_forsythe+nrm.png" />
+		<set scale_factor = "0.64" />	
+		<image file="bd/co_gage+nrm.png" />
+		<set scale_factor = "0.39" />	
+		<image file="bd/co_tasha+nrm.png" />
+		<set scale_factor = "1.0f" />	
+		<image file="bd/co_forsythe+info.png" />
+		<image file="bd/co_forsythe+face.png" cols = "3" />
+		<image file="bd/co_tasha+info.png" />
+		<image file="bd/co_tasha+face.png" cols = "3" />
+		<image file="bd/co_gage+info.png" />
+		<image file="bd/co_gage+face.png" cols = "3" />
 		
 		<!-- dm -->
 		<image file="dm/co_graves+nrm.png" />
@@ -104,6 +138,21 @@
 		<image file="dm/co_varlot+nrm.png" />
 		<image file="dm/co_varlot+info.png" />
 		<image file="dm/co_varlot+face.png" cols = "3" />
+		<set scale_factor = "1.0" />	
+		<image file="dm/co_caulder+nrm.png" />
+		<set scale_factor = "0.67" />	
+		<image file="dm/co_penny+nrm.png" />
+		<set scale_factor = "0.435" />	
+		<image file="dm/co_tabitha+nrm.png" />
+		<set scale_factor = "1.0" />	
+		<image file="dm/co_caulder+info.png" />
+		<image file="dm/co_caulder+face.png" cols = "3" />
+		<image file="dm/co_penny+info.png" />
+		<image file="dm/co_penny+face.png" cols = "3" />
+		<image file="dm/co_tabitha+info.png" />
+		<image file="dm/co_tabitha+face.png" cols = "3" />
+		<image file="dm/co_beast+face.png" cols = "3" />
+		
 		
 		<!-- GE -->
 		<image file="ge/co_eagle+nrm.png" />
@@ -124,6 +173,7 @@
 		<image file="ge/co_javier+nrm.png" />
 		<image file="ge/co_javier+info.png" />
 		<image file="ge/co_javier+face.png" cols = "3" />
+		<image file="ge/co_officier_ge+face.png" cols = "3" />		
 		
 		<!-- gs -->
 		<image file="gs/co_meiyo+nrm.png" />
@@ -159,7 +209,16 @@
 		<image file="ti/co_joey+face.png" cols = "3" />
 		<image file="ti/co_walter+nrm.png" />
 		<image file="ti/co_walter+info.png" />
-		<image file="ti/co_walter+face.png" cols = "3" />
+		<image file="ti/co_walter+face.png" cols = "3" />		
+		<set scale_factor = "0.35" />	
+		<image file="ti/co_greyfield+nrm.png" />
+		<set scale_factor = "0.366" />	
+		<image file="ti/co_waylon+nrm.png" />
+		<set scale_factor = "1.0" />	
+		<image file="ti/co_greyfield+info.png" />
+		<image file="ti/co_greyfield+face.png" cols = "3" />
+		<image file="ti/co_waylon+info.png" />
+		<image file="ti/co_waylon+face.png" cols = "3" />
 		
 		<!-- YC -->
 		<image file="yc/co_kanbei+nrm.png" />
@@ -174,7 +233,8 @@
 		<image file="yc/co_sonja+nrm.png" />
 		<image file="yc/co_sonja+info.png" />
 		<image file="yc/co_sonja+face.png" cols = "3" />
-		
+		<image file="yc/co_officier_yc+face.png" cols = "3" />
+				
 		<!-- BH -->
 		<image file="bh/co_sturm+nrm.png" />
 		<image file="bh/co_sturm+info.png" />
@@ -191,6 +251,7 @@
 		<image file="bh/co_lash+nrm.png" />
 		<image file="bh/co_lash+info.png" />
 		<image file="bh/co_lash+face.png" cols = "3" />
+		<image file="bh/co_officier_bh+face.png" cols = "3" />		
 		
 		<!-- BG -->
 		<image file="bg/co_kindle+nrm.png" />

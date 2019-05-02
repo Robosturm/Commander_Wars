@@ -194,7 +194,7 @@ public slots:
     void setMinRange(const qint32 &value);
 
     qint32 getMaxRange();
-    qint32 getMaxRange(QPoint position);
+    qint32 getMaxRangeAtPosition(QPoint position);
     qint32 getBonusMaxRange(QPoint position);
     void setMaxRange(const qint32 &value);
 

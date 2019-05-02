@@ -289,7 +289,7 @@ void Unit::setVision(const qint32 &value)
 
 qint32 Unit::getMaxRange()
 {
-    return getMaxRange(QPoint(getX(), getY()));
+    return getMaxRangeAtPosition(QPoint(getX(), getY()));
 }
 
 qint32 Unit::getBonusMaxRange(QPoint position)
@@ -311,7 +311,7 @@ qint32 Unit::getBonusMaxRange(QPoint position)
     return rangeModifier;
 }
 
-qint32 Unit::getMaxRange(QPoint position)
+qint32 Unit::getMaxRangeAtPosition(QPoint position)
 {
 
     qint32 points = maxRange + getBonusMaxRange(position);

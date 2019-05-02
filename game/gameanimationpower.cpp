@@ -52,6 +52,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, bool sup
     addChild(rotSprite);
 
     QString resAnim = coid.toLower() + "+nrm";
+
     oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(resAnim.toStdString().c_str());
     oxygine::spSprite m_CO = new oxygine::Sprite();
     m_CO->setResAnim(pAnim);

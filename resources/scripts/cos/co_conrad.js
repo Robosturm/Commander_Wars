@@ -208,7 +208,7 @@ var Constructor = function()
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A damage analyst from Green Earth who favors precise tactics. Very intelligent, but inexperienced.");
+        return qsTr("A damage analyst from Teal Isles who favors precise tactics. Very intelligent, but inexperienced.");
     };
     this.getHits = function()
     {
