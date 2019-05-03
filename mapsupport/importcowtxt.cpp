@@ -37,7 +37,9 @@ static const QString terrainIdMapping[terrainCount][2] = {{"SEE", "SEA"},
                                               {"OEDLAND", "WASTELAND"},
                                               {"SCHWEISSNAHT", "WELD"}};
 
-static const qint32 buildingCount = 18;
+static const qint32 buildingCount = 29;
+static const qint32 building3x3Start = 19;
+static const qint32 building4x4Start = 27;
 static const QString buildingIdMapping[buildingCount][2] = {{"FLUGHAFEN", "AIRPORT"},
                                                             {"BASIS", "FACTORY"},
                                                             {"WERFT", "HARBOUR"},
@@ -55,7 +57,18 @@ static const QString buildingIdMapping[buildingCount][2] = {{"FLUGHAFEN", "AIRPO
                                                             {"MINIGESCHUETZ+N", "ZMINICANNON_N"},
                                                             {"MINIGESCHUETZ+S", "ZMINICANNON_S"},
                                                             {"MINIGESCHUETZ+W", "ZMINICANNON_W"},
-                                                            {"MINIGESCHUETZ+O", "ZMINICANNON_E"},};
+                                                            {"MINIGESCHUETZ+O", "ZLASER"},
+                                                            {"LASER", "ZMINICANNON_E"},
+                                                            {"SCHOCKLASER+O", "ZDEATHRAY_E"},
+                                                            {"SCHOCKLASER+S", "ZDEATHRAY_S"},
+                                                            {"SCHOCKLASER+N", "ZDEATHRAY_N"},
+                                                            {"SCHOCKLASER+W", "ZDEATHRAY_W"},
+                                                            {"SCHWARZE GESCHUETZ+O", "ZBLACKHOLE_CANNON_E"},
+                                                            {"SCHWARZE GESCHUETZ+S", "ZBLACKHOLE_CANNON_S"},
+                                                            {"SCHWARZE GESCHUETZ+N", "ZBLACKHOLE_CANNON_N"},
+                                                            {"SCHWARZE GESCHUETZ+W", "ZBLACKHOLE_CANNON_W"},
+                                                            {"FESTUNG", "ZFORTRESS"},
+                                                            {"VULKAN", "ZVOLCAN"},};
 
 
 static const qint32 unitCount = 38;
@@ -183,7 +196,20 @@ void GameMap::importTxtMap(QString file)
                             }
                             pBuilding->setFireCount(data[7].toInt());
                             pBuilding->setHp(data[8].toInt());
-                            pTerrain->setBuilding(pBuilding);
+                            if (i < building3x3Start)
+                            {
+                                pTerrain->setBuilding(pBuilding);
+                            }
+                            else if (i < building4x4Start)
+                            {
+                                Terrain* pTargetTerrain = getTerrain(pTerrain->getX() + 1, pTerrain->getY() + 1);
+                                pTargetTerrain->setBuilding(pBuilding);
+                            }
+                            else
+                            {
+                                Terrain* pTargetTerrain = getTerrain(pTerrain->getX() + 2, pTerrain->getY() + 1);
+                                pTargetTerrain->setBuilding(pBuilding);
+                            }
                             break;
                         }
                         else if (i == buildingCount - 1)

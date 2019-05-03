@@ -192,9 +192,12 @@ void MapSelection::changeFolder(QString folder)
             }
         }
         m_currentFolder = newFolder;
-        updateSelection(0);        
-        currentItem = files[currentIdx];
-        emit itemChanged(currentItem);
+        updateSelection(0);
+        if (currentIdx < files.size())
+        {
+            currentItem = files[currentIdx];
+            emit itemChanged(currentItem);
+        }
     }
     pApp->continueThread();
 }
