@@ -7098,6 +7098,22 @@
     </message>
 </context>
 <context>
+    <name>temporary_airport</name>
+    <message>
+        <location filename="../resources/scripts/building/temporary_airport.js" line="26"/>
+        <source>Temporary Airport</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>temporary_harbour</name>
+    <message>
+        <location filename="../resources/scripts/building/temporary_harbour.js" line="25"/>
+        <source>Temporary Harbour</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>tower</name>
     <message>
         <location filename="../resources/scripts/building/tower.js" line="35"/>

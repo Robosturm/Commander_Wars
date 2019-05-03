@@ -1,6 +1,8 @@
 #include <QTextStream>
 #include <QFile>
 
+#include "coreengine/console.h"
+
 #include "game/gamemap.h"
 
 #include "game/player.h"
@@ -35,7 +37,7 @@ static const QString terrainIdMapping[terrainCount][2] = {{"SEE", "SEA"},
                                               {"OEDLAND", "WASTELAND"},
                                               {"SCHWEISSNAHT", "WELD"}};
 
-static const qint32 buildingCount = 12;
+static const qint32 buildingCount = 18;
 static const QString buildingIdMapping[buildingCount][2] = {{"FLUGHAFEN", "AIRPORT"},
                                                             {"BASIS", "FACTORY"},
                                                             {"WERFT", "HARBOUR"},
@@ -47,10 +49,16 @@ static const QString buildingIdMapping[buildingCount][2] = {{"FLUGHAFEN", "AIRPO
                                                             {"RAKETENSILO", "SILO"},
                                                             {"RAKETENSILO+RAKETE", "SILO_ROCKET"},
                                                             {"TURM", "TOWER"},
-                                                            {"STADT", "TOWN"}};
+                                                            {"STADT", "TOWN"},
+                                                            {"TEMPFLUGHAFEN", "TEMPORARY_AIRPORT"},
+                                                            {"TEMPWERFT", "TEMPORARY_HARBOUR"},
+                                                            {"MINIGESCHUETZ+N", "ZMINICANNON_N"},
+                                                            {"MINIGESCHUETZ+S", "ZMINICANNON_S"},
+                                                            {"MINIGESCHUETZ+W", "ZMINICANNON_W"},
+                                                            {"MINIGESCHUETZ+O", "ZMINICANNON_E"},};
 
 
-static const qint32 unitCount = 36;
+static const qint32 unitCount = 38;
 static const QString unitIdMapping[unitCount][2] = {{"FLTR", "AIRCRAFTCARRIER"},
                                                     {"PANZERABWEHRKANONE", "ANTITANKCANNON"},
                                                     {"TTP", "APC"},
@@ -86,7 +94,9 @@ static const QString unitIdMapping[unitCount][2] = {{"FLTR", "AIRCRAFTCARRIER"},
                                                     {"U-BOOT", "SUBMARINE"},
                                                     {"T-HELI", "T_HELI"},
                                                     {"T-FLUGZEUG", "TRANSPORTPLANE"},
-                                                    {"WASSERFLUGZEUG", "WATERPLANE"}};
+                                                    {"WASSERFLUGZEUG", "WATERPLANE"},
+                                                    {"S-BOOT", "BLACK_BOAT"},
+                                                    {"S-BOMBE", "BLACK_BOMB"}};
 
 void GameMap::importTxtMap(QString file)
 {
@@ -147,6 +157,10 @@ void GameMap::importTxtMap(QString file)
                             getTerrain(data[1].toInt(), data[2].toInt())->setHp(data[5].toInt());
                             break;
                         }
+                        else if (i == terrainCount - 1)
+                        {
+                            Console::print("Error unable to import terrain: " + terraindID, Console::eLogLevels::eERROR);
+                        }
                     }
                 }
             }
@@ -172,6 +186,10 @@ void GameMap::importTxtMap(QString file)
                             pTerrain->setBuilding(pBuilding);
                             break;
                         }
+                        else if (i == buildingCount - 1)
+                        {
+                            Console::print("Error unable to import building: " + buildingID, Console::eLogLevels::eERROR);
+                        }
                     }
                 }
             }
@@ -191,6 +209,11 @@ void GameMap::importTxtMap(QString file)
                             pUnit->setFuel(data[6].toInt());
                             pUnit->setHp(data[7].toInt());
                             pTerrain->setUnit(pUnit);
+                            break;
+                        }
+                        else if (i == unitCount - 1)
+                        {
+                            Console::print("Error unable to import unit: " + unitID, Console::eLogLevels::eERROR);
                         }
                     }
                 }
