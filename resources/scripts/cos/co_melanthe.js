@@ -48,9 +48,12 @@ var Constructor = function()
             var unit = units.at(i);
             if (CO_MELANTHE.isNature(unit.getX(), unit.getY()) === true)
             {
-                unit.setHp(unit.getHpRounded() + heal);
-
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+
+                animation.writeDataInt32(unit.getX());
+                animation.writeDataInt32(unit.getY());
+                animation.writeDataInt32(heal);
+                animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
                 if (animations.length < 5)
                 {
                     animation.addSprite("power3", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
@@ -89,17 +92,11 @@ var Constructor = function()
 
                         if (CO_MELANTHE.isNature(unit.getX(), unit.getY()) === true)
                         {
-                            var hp = unit.getHpRounded();
-                            if (hp <= damage)
-                            {
-                                // set hp to very very low
-                                unit.setHp(0.001);
-                            }
-                            else
-                            {
-                                unit.setHp(hp - damage);
-                            }
                             animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                            animation.writeDataInt32(unit.getX());
+                            animation.writeDataInt32(unit.getY());
+                            animation.writeDataInt32(damage);
+                            animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
                             if (animations.length < 5)
                             {
                                 animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));

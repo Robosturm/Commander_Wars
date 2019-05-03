@@ -23,7 +23,7 @@ var Constructor = function()
     };
     this.postAnimationTrapSignX = -1;
     this.postAnimationTrapSignY = -1;
-    this.performPostAnimation = function()
+    this.performPostAnimation = function(postAnimation)
     {
         var animation = GameAnimationFactory.createAnimation(ACTION_TRAP.postAnimationTrapSignX, ACTION_TRAP.postAnimationTrapSignY);
         animation.addSprite("trap", map.getImageSize() / 2, map.getImageSize() / 3, 400);

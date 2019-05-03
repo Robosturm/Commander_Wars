@@ -47,7 +47,7 @@ var Constructor = function()
     this.postAnimationX = null;
     this.postAnimationY = null;
     this.postAnimationBuilding = null;
-    this.performPostAnimation = function()
+    this.performPostAnimation = function(postAnimation)
     {
         var x = ACTION_DEATHRAY_FIRE.postAnimationX;
         var y = ACTION_DEATHRAY_FIRE.postAnimationY;

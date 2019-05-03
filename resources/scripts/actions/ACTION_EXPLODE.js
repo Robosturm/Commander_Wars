@@ -75,7 +75,7 @@ var Constructor = function()
         ACTION_EXPLODE.postAnimationTargetX = action.readDataInt32();
         ACTION_EXPLODE.postAnimationTargetY = action.readDataInt32();
     };
-    this.performPostAnimation = function()
+    this.performPostAnimation = function(postAnimation)
     {
         var owner = ACTION_EXPLODE.postAnimationUnit.getOwner();
         var x = ACTION_EXPLODE.postAnimationTargetX;

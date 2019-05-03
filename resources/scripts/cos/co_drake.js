@@ -77,21 +77,42 @@ var Constructor = function()
                             counter = 0;
                         }
                     }
-                    var hp = unit.getHpRounded();
-                    if (hp <= value)
-                    {
-                        // set hp to very very low
-                        unit.setHp(0.001);
-                    }
-                    else
-                    {
-                        unit.setHp(hp - value);
-                    }
-                    // reduce fuel
-                    unit.setFuel(unit.getFuel() / 2);
+                    animation.writeDataInt32(unit.getX());
+                    animation.writeDataInt32(unit.getY());
+                    animation.writeDataInt32(value);
+                    animation.setEndOfAnimationCall("CO_DRAKE", "postAnimationDamage");
+
                 }
                 units.remove();
             }
+        }
+    };
+
+    this.postAnimationDamage = function(postAnimation)
+    {
+        postAnimation.seekBuffer();
+        var x = postAnimation.readDataInt32();
+        var y = postAnimation.readDataInt32();
+        var damage = postAnimation.readDataInt32();
+        if (map.onMap(x, y))
+        {
+            var unit = map.getTerrain(x, y).getUnit();
+            if (unit !== null)
+            {
+                var hp = unit.getHpRounded();
+                if (hp <= damage)
+                {
+                    // set hp to very very low
+                    unit.setHp(0.001);
+                }
+                else
+                {
+                    unit.setHp(hp - damage);
+                }
+                // reduce fuel
+                unit.setFuel(unit.getFuel() / 2);
+            }
+
         }
     };
 

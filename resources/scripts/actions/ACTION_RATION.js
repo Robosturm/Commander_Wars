@@ -75,7 +75,7 @@ var Constructor = function()
         ACTION_RATION.postAnimationUnit.moveUnitAction(action);
         ACTION_RATION.postAnimationUnit.setHasMoved(true);
     };
-	this.performPostAnimation = function()
+    this.performPostAnimation = function(postAnimation)
     {
         ACTION_RATION.giveRation(ACTION_RATION.postAnimationUnit);
         ACTION_RATION.postAnimationUnit = null;

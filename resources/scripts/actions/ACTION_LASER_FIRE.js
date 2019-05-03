@@ -90,7 +90,7 @@ var Constructor = function()
         ACTION_LASER_FIRE.postAnimationActionX = x;
         ACTION_LASER_FIRE.postAnimationActionY = y;
     };
-    this.performPostAnimation = function()
+    this.performPostAnimation = function(postAnimation)
     {
         var x = ACTION_LASER_FIRE.postAnimationActionX;
         var y = ACTION_LASER_FIRE.postAnimationActionY;

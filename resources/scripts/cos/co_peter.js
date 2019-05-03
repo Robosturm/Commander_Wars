@@ -102,16 +102,10 @@ var Constructor = function()
                                 counter = 0;
                             }
                         }
-                        var hp = unit.getHpRounded();
-                        if (hp <= value)
-                        {
-                            // set hp to very very low
-                            unit.setHp(0.001);
-                        }
-                        else
-                        {
-                            unit.setHp(hp - value);
-                        }
+                        animation.writeDataInt32(unit.getX());
+                        animation.writeDataInt32(unit.getY());
+                        animation.writeDataInt32(value);
+                        animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
                     }
                 }
                 units.remove();

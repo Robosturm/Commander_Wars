@@ -92,28 +92,13 @@ var Constructor = function()
                 for (i = 0; i < units.size(); i++)
                 {
                     unit = units.at(i);
-
-                    var hp = unit.getHpRounded();
-                    if (hp <= value)
-                    {
-                        // set hp to very very low
-                        unit.setHp(0.001);
-                    }
-                    else
-                    {
-                        unit.setHp(hp - value);
-                    }
-                    // reduce ammo
-                    if (unit.getMaxAmmo2() > 0)
-                    {
-                        unit.reduceAmmo2(unit.getAmmo2() / 2);
-                    }
-                    if (unit.getMaxAmmo1() > 0)
-                    {
-                        unit.reduceAmmo1(unit.getAmmo1() / 2);
-                    }
-
                     animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+
+                    animation.writeDataInt32(unit.getX());
+                    animation.writeDataInt32(unit.getY());
+                    animation.writeDataInt32(value);
+                    animation.setEndOfAnimationCall("CO_ROBOSTURM", "postAnimationDamage");
+
                     if (animations.length < 5)
                     {
                         animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
@@ -134,6 +119,44 @@ var Constructor = function()
                 }
                 units.remove();
             }
+        }
+    };
+
+    this.postAnimationDamage = function(postAnimation)
+    {
+        postAnimation.seekBuffer();
+        var x = postAnimation.readDataInt32();
+        var y = postAnimation.readDataInt32();
+        var damage = postAnimation.readDataInt32();
+        if (map.onMap(x, y))
+        {
+            var unit = map.getTerrain(x, y).getUnit();
+            if (unit !== null)
+            {
+                if (damage > 0)
+                {
+                    var hp = unit.getHpRounded();
+                    if (hp <= damage)
+                    {
+                        // set hp to very very low
+                        unit.setHp(0.001);
+                    }
+                    else
+                    {
+                        unit.setHp(hp - damage);
+                    }
+                }
+                // reduce ammo
+                if (unit.getMaxAmmo2() > 0)
+                {
+                    unit.reduceAmmo2(unit.getAmmo2() / 2);
+                }
+                if (unit.getMaxAmmo1() > 0)
+                {
+                    unit.reduceAmmo1(unit.getAmmo1() / 2);
+                }
+            }
+
         }
     };
 

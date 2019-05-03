@@ -324,7 +324,7 @@ var Constructor = function()
         ACTION_FIRE.postAnimationDefenderWeapon = action.readDataInt32();
     };
 
-    this.performPostAnimation = function()
+    this.performPostAnimation = function(postAnimation)
     {
         ACTION_FIRE.battle(ACTION_FIRE.postAnimationUnit, ACTION_FIRE.postAnimationAttackerDamage, ACTION_FIRE.postAnimationAttackerWeapon,
                            ACTION_FIRE.postAnimationTargetX, ACTION_FIRE.postAnimationTargetY,

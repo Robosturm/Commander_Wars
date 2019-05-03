@@ -22,6 +22,11 @@ var Constructor = function()
             unit.setHp(unit.getHpRounded() + 2);
 
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            animation.writeDataInt32(unit.getX());
+            animation.writeDataInt32(unit.getY());
+            animation.writeDataInt32(2);
+            animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
+
             if (animations.length < 5)
             {
                 animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
@@ -60,9 +65,13 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            unit.setHp(unit.getHpRounded() + 5);
 
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            animation.writeDataInt32(unit.getX());
+            animation.writeDataInt32(unit.getY());
+            animation.writeDataInt32(5);
+            animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
+
             if (animations.length < 5)
             {
                 animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5, globals.randInt(0, 400));

@@ -83,7 +83,7 @@ var Constructor = function()
         ACTION_FLARE.postAnimationTargetY = action.readDataInt32();
         ACTION_FLARE.postAnimationPlayer = unit.getOwner();
     };
-    this.performPostAnimation = function()
+    this.performPostAnimation = function(postAnimation)
     {
         var fields = globals.getCircle(0, 2);
         for (var i = 0; i < fields.size(); i++)

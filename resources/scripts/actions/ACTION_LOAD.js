@@ -48,7 +48,7 @@ var Constructor = function()
         var animation = Global[ACTION_LOAD.postAnimationUnit.getUnitID()].doWalkingAnimation(action);
         animation.setEndOfAnimationCall("ACTION_LOAD", "performPostAnimation");
     };
-    this.performPostAnimation = function()
+    this.performPostAnimation = function(postAnimation)
     {
         ACTION_LOAD.postAnimationUnit.setHasMoved(true);
         ACTION_LOAD.postAnimationTargetUnit.loadUnit(ACTION_LOAD.postAnimationUnit);

@@ -99,7 +99,7 @@ var Constructor = function()
         ACTION_REPAIR.postAnimationTargetX = action.readDataInt32();
         ACTION_REPAIR.postAnimationTargetY = action.readDataInt32();
     };
-    this.performPostAnimation = function()
+    this.performPostAnimation = function(postAnimation)
     {
         var terrain = map.getTerrain(ACTION_REPAIR.postAnimationTargetX, ACTION_REPAIR.postAnimationTargetY);
         var repairUnit = terrain.getUnit();

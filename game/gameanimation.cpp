@@ -22,6 +22,7 @@ GameAnimation::GameAnimation(quint32 frameTime)
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     connect(this, SIGNAL(sigFinished()), this, SLOT(onFinished()), Qt::QueuedConnection);
+    buffer.open(QIODevice::ReadWrite);
 }
 
 void GameAnimation::restart()
@@ -131,7 +132,10 @@ bool GameAnimation::onFinished()
     }
     if ((!jsPostActionObject.isEmpty()) && (!jsPostActionObject.isEmpty()))
     {
-        Mainapp::getInstance()->getInterpreter()->doFunction(jsPostActionObject, jsPostActionFunction);
+        QJSValueList args1;
+        QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+        args1 << obj1;
+        Mainapp::getInstance()->getInterpreter()->doFunction(jsPostActionObject, jsPostActionFunction, args1);
     }
     GameAnimationFactory::removeAnimation(this);
     pApp->continueThread();

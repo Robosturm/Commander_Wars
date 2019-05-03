@@ -48,7 +48,7 @@ var Constructor = function()
         var animation = Global[ACTION_JOIN.postAnimationUnit.getUnitID()].doWalkingAnimation(action);
         animation.setEndOfAnimationCall("ACTION_JOIN", "performPostAnimation");
     };
-    this.performPostAnimation = function()
+    this.performPostAnimation = function(postAnimation)
     {
         // todo join units
         var ammo1 = ACTION_JOIN.postAnimationUnit.getAmmo1() + ACTION_JOIN.postAnimationTargetUnit.getAmmo1();

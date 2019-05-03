@@ -212,7 +212,7 @@ var Constructor = function()
             }
         }
     };
-    this.performPostAnimation = function()
+    this.performPostAnimation = function(postAnimation)
     {
         // unloading the units here :)
         for (var i = 0; i < ACTION_UNLOAD.postAnimationTransportUnits.length; i++)

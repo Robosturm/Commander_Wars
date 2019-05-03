@@ -2,10 +2,10 @@
 #define GAMEANIMATION_H
 
 #include <QObject>
-
 #include <QVector>
-
 #include <QColor>
+#include <QBuffer>
+#include <QDataStream>
 
 #include "oxygine-framework.h"
 
@@ -95,6 +95,99 @@ public slots:
      * @param twoSided
      */
     void addTweenColor(qint32 spriteIdx, QColor startColor, QColor endColor, qint32 duration, bool twoSided, qint32 delay = 0);
+
+    /************ post animation stuff **************************/
+    /**
+     * @brief seekBuffer seeks the variable buffer to 0
+     */
+    void seekBuffer()
+    {
+        buffer.seek(0);
+    }
+    /**
+     * @brief writeDataString adds a string to the action data
+     * @param data
+     */
+    void writeDataString(QString data)
+    {
+        actionData << data;
+    }
+    /**
+     * @brief readDataString
+     * @return reads a string from the action data
+     */
+    QString readDataString()
+    {
+        QString data;
+        if (buffer.size() > 0)
+        {
+            actionData >> data;
+        }
+        return data;
+    }
+    /**
+     * @brief writeDataInt32 adds a int32 to the action data
+     * @param data
+     */
+    void writeDataInt32(qint32 data)
+    {
+        actionData << data;
+    }
+    /**
+     * @brief readDataInt32
+     * @return reads a int32 from the action data
+     */
+    qint32 readDataInt32()
+    {
+        qint32 data = 0;
+        if (buffer.size() > 0)
+        {
+            actionData >> data;
+        }
+        return data;
+    }
+    /**
+     * @brief writeDataFloat adds a float to the action data
+     * @param data
+     */
+    void writeDataFloat(float data)
+    {
+        actionData << data;
+    }
+    /**
+     * @brief readDataFloat
+     * @return reads a float from the action data
+     */
+    float readDataFloat()
+    {
+        float data = 0.0f;
+        if (buffer.size() > 0)
+        {
+            actionData >> data;
+        }
+        return data;
+    }
+    /**
+     * @brief writeDataFloat adds a float to the action data
+     * @param data
+     */
+    void writeDataBool(bool data)
+    {
+        actionData << data;
+    }
+    /**
+     * @brief readDataBool
+     * @return reads a float from the action data
+     */
+    bool readDataBool()
+    {
+        bool data = false;
+        if (buffer.size() > 0)
+        {
+            actionData >> data;
+        }
+        return data;
+    }
 protected:
     virtual void update(const oxygine::UpdateState& us) override;
 private:
@@ -106,6 +199,12 @@ private:
     QString m_soundFile;
     qint32 m_loops;
     bool m_SoundStarted{false};
+
+    /**
+     * @brief animation data needed to perform this action
+     */
+    QBuffer buffer;
+    QDataStream actionData{&buffer};
 };
 
 #endif // GAMEANIMATION_H

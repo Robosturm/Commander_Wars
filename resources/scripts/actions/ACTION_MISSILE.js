@@ -85,7 +85,7 @@ var Constructor = function()
         ACTION_MISSILE.postAnimationTargetY = action.readDataInt32();
         ACTION_MISSILE.postAnimationUnit = unit;
     };
-    this.performPostAnimation = function()
+    this.performPostAnimation = function(postAnimation)
     {
         var radius = 2;
         var damage = 3;

@@ -82,7 +82,7 @@ var Constructor = function()
         targetFields.remove();
     };
     this.targetFields = [];
-    this.postAnimationDamage = function()
+    this.postAnimationDamage = function(postAnimation)
     {
         for (var i = 0; i < ZVOLCAN.targetFields.length; i++)
         {

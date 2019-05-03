@@ -40,11 +40,6 @@ else("Release")
     )
 endif()
 
-# disbale cxx 1 future for qt.
-add_definitions(
-    #-DQT_FEATURE_cxx11_future=-1
-)
-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OXYGINE_CXX_FLAGS} -DCMAKE_C_FLAGS=\"-mwindows\"")
 
 # source list we start slow here with the main cpp

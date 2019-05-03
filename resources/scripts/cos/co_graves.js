@@ -86,23 +86,46 @@ var Constructor = function()
                             counter = 0;
                         }
                     }
-                    var hp = unit.getHpRounded();
-                    if (hp <= value)
-                    {
-                        // set hp to very very low
-                        unit.setHp(0.001);
-                    }
-                    else
-                    {
-                        unit.setHp(hp - value);
-                    }
-                    if (unit.getHpRounded() <= stunLevel)
-                    {
-                        unit.setHasMoved(true);
-                    }
+                    animation.writeDataInt32(unit.getX());
+                    animation.writeDataInt32(unit.getY());
+                    animation.writeDataInt32(value);
+                    animation.writeDataInt32(stunLevel);
+                    animation.setEndOfAnimationCall("CO_GRAVES", "postAnimationDamage");
+
                 }
                 units.remove();
             }
+        }
+    };
+
+    this.postAnimationDamage = function(postAnimation)
+    {
+        postAnimation.seekBuffer();
+        var x = postAnimation.readDataInt32();
+        var y = postAnimation.readDataInt32();
+        var damage = postAnimation.readDataInt32();
+        var stunLevel = postAnimation.readDataInt32();
+        if (map.onMap(x, y))
+        {
+            var unit = map.getTerrain(x, y).getUnit();
+            if (unit !== null)
+            {
+                var hp = unit.getHpRounded();
+                if (hp <= damage)
+                {
+                    // set hp to very very low
+                    unit.setHp(0.001);
+                }
+                else
+                {
+                    unit.setHp(hp - damage);
+                }
+                if (unit.getHpRounded() <= stunLevel)
+                {
+                    unit.setHasMoved(true);
+                }
+            }
+
         }
     };
 

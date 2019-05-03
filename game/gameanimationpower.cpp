@@ -42,7 +42,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, bool sup
     secondSpriteMask->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     secondSpriteMask->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
     oxygine::spTween tween2 = oxygine::createTween(tweenColor, 1);
-    firstSpriteMask->addTween(tween2);
+    secondSpriteMask->addTween(tween2);
 
     // rotating sprite
     spRotatingSprite rotSprite = new RotatingSprite();
@@ -115,10 +115,10 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, bool sup
         addChild(textField);
     }
     endTimer.setSingleShot(true);
-    qint32 time = text.size() * frameTime * 6 + frameTime * 2;
-    if (time < frameTime * 32)
+    qint32 time = text.size() * frameTime * 4;
+    if (time < frameTime * 30)
     {
-        time = frameTime * 32;
+        time = frameTime * 30;
     }
     endTimer.setInterval(time);
     connect(&endTimer, &QTimer::timeout, this, &GameAnimationPower::onFinished, Qt::QueuedConnection);
