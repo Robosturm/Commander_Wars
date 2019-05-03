@@ -17,12 +17,14 @@ signals:
     void sigExitMenue();
     void sigShowMods();
     void sigShowSettings();
+    void sigShowGameplayAndKeys();
     void sigChangeScreenSize(qint32 width, qint32 heigth);
 public slots:
     void exitMenue();
     void showMods();
     void restart();
     void showSettings();
+    void showGameplayAndKeys();
     void changeScreenMode(qint32 mode);
     void changeScreenSize(qint32 width, qint32 heigth);
 private:

@@ -962,52 +962,67 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="200"/>
+        <location filename="../menue/optionmenue.cpp" line="75"/>
+        <source>Gameplay &amp; Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="175"/>
+        <source>Gameplay Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="182"/>
+        <source>Show Ingame Animations: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="249"/>
         <source>Screen Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="208"/>
+        <location filename="../menue/optionmenue.cpp" line="257"/>
         <source>Screen Resolution: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="224"/>
+        <location filename="../menue/optionmenue.cpp" line="273"/>
         <source>Screen Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="227"/>
+        <location filename="../menue/optionmenue.cpp" line="276"/>
         <source>Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="227"/>
+        <location filename="../menue/optionmenue.cpp" line="276"/>
         <source>Bordered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="227"/>
+        <location filename="../menue/optionmenue.cpp" line="276"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="236"/>
+        <location filename="../menue/optionmenue.cpp" line="285"/>
         <source>Audio Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="242"/>
+        <location filename="../menue/optionmenue.cpp" line="291"/>
         <source>Global Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="258"/>
+        <location filename="../menue/optionmenue.cpp" line="307"/>
         <source>Music Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="274"/>
+        <location filename="../menue/optionmenue.cpp" line="323"/>
         <source>Sound Volume: </source>
         <translation type="unfinished"></translation>
     </message>

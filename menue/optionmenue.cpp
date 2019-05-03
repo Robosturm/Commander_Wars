@@ -72,6 +72,15 @@ OptionMenue::OptionMenue()
     connect(this, &OptionMenue::sigShowSettings, this, &OptionMenue::showSettings, Qt::QueuedConnection);
     connect(this, &OptionMenue::sigChangeScreenSize, this, &OptionMenue::changeScreenSize, Qt::QueuedConnection);
 
+    oxygine::spButton pButtonGameplayAndKeys = ObjectManager::createButton(tr("Gameplay & Keys"));
+    pButtonGameplayAndKeys->attachTo(this);
+    pButtonGameplayAndKeys->setPosition(pApp->getSettings()->getWidth()  / 2.0f - pButtonExit->getWidth() / 2.0f, 10);
+    pButtonGameplayAndKeys->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigShowGameplayAndKeys();
+    });
+    connect(this, &OptionMenue::sigShowGameplayAndKeys, this, &OptionMenue::showGameplayAndKeys, Qt::QueuedConnection);
+
     QSize size(pApp->getSettings()->getWidth() - 20,
                pApp->getSettings()->getHeight() - (20 + pButtonMods->getHeight()) * 2);
     m_pOptions = new  Panel(true,  size, size);
@@ -143,6 +152,46 @@ void OptionMenue::changeScreenSize(qint32 width, qint32 heigth)
     Console::print("Leaving Option Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new OptionMenue());
     oxygine::Actor::detach();
+    pApp->continueThread();
+}
+
+void OptionMenue::showGameplayAndKeys()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    m_pOptions->clearContent();
+    Settings* pSettings = pApp->getSettings();
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+
+    qint32 y = 10;
+    qint32 sliderOffset = 400;
+
+    oxygine::spTextField pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Gameplay Settings").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Show Ingame Animations: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spCheckbox pEnableAnimations = new Checkbox();
+    pEnableAnimations->setChecked(pSettings->getShowAnimations());
+    pEnableAnimations->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pEnableAnimations);
+    connect(pEnableAnimations.get(), &Checkbox::checkChanged, [=](bool value)
+    {
+        pSettings->setShowAnimations(value);
+    });
+    y += 40;
+
     pApp->continueThread();
 }
 
