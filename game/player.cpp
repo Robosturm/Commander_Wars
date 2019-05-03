@@ -24,7 +24,12 @@ Player::Player()
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_pBaseGameInput = nullptr;
-
+    // for older versions we allow all loaded units to be buildable
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+    {
+        m_BuildList.append(pUnitSpriteManager->getUnitID(i));
+    }
 }
 
 void Player::init()

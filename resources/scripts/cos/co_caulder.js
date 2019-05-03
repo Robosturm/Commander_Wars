@@ -2,12 +2,13 @@ var Constructor = function()
 {
     this.init = function(co)
     {
-        co.setPowerStars(3);
-        co.setSuperpowerStars(3);
+        co.setPowerStars(6);
+        co.setSuperpowerStars(4);
     };
 
     this.activatePower = function(co)
     {
+
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(false);
         dialogAnimation.queueAnimation(powerNameAnimation);
@@ -19,22 +20,21 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
             animation.writeDataInt32(unit.getX());
             animation.writeDataInt32(unit.getY());
-            animation.writeDataInt32(2);
+            animation.writeDataInt32(5);
             animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
 
             if (animations.length < 5)
             {
-                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
+                animation.addSprite("power9", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
                 powerNameAnimation.queueAnimation(animation);
                 animations.push(animation);
             }
             else
             {
-                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                animation.addSprite("power9", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
                 animations[counter].queueAnimation(animation);
                 animations[counter] = animation;
                 counter++;
@@ -47,7 +47,7 @@ var Constructor = function()
         units.remove();
 
         audio.clearPlayList();
-        CO_ANDY.loadCOMusic(co);
+        CO_CAULDER.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -64,22 +64,20 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
             animation.writeDataInt32(unit.getX());
             animation.writeDataInt32(unit.getY());
-            animation.writeDataInt32(5);
+            animation.writeDataInt32(10);
             animation.setEndOfAnimationCall("ANIMATION", "postAnimationHeal");
-
             if (animations.length < 5)
             {
-                animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5, globals.randInt(0, 400));
+                animation.addSprite("power11", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5, globals.randInt(0, 400));
                 powerNameAnimation.queueAnimation(animation);
                 animations.push(animation);
             }
             else
             {
-                animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5);
+                animation.addSprite("power11", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5);
                 animations[counter].queueAnimation(animation);
                 animations[counter] = animation;
                 counter++;
@@ -92,7 +90,7 @@ var Constructor = function()
         units.remove();
 
         audio.clearPlayList();
-        CO_ANDY.loadCOMusic(co);
+        CO_CAULDER.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -108,7 +106,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/superpower.mp3");
                 break;
             default:
-                audio.addMusic("resources/music/cos/andy.mp3")
+                audio.addMusic("resources/music/cos/caulder.mp3")
                 break;
         }
     };
@@ -119,95 +117,137 @@ var Constructor = function()
     };
     this.getCOArmy = function()
     {
-        return "OS";
+        return "DM";
     };
+
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                 defender, defPosX, defPosY, isDefender)
+    {
+            switch (co.getPowerMode())
+            {
+                case GameEnums.PowerMode_Superpower:
+                    return 50;
+                case GameEnums.PowerMode_Power:
+                    return 30;
+                default:
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                    {
+                        return 50;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+            }
+    };
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                return 20;
+                return 50;
             case GameEnums.PowerMode_Power:
-                return 10;
+                return 30;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY)))
                 {
-                    return 10;
+                    return 50;
                 }
-                break;
+                else
+                {
+                    return -15;
+                }
         }
-        return 0;
     };
-    this.getMovementpointModifier = function(co, unit, posX, posY)
+
+    this.startOfTurn = function(co)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+        var counit = co.getCOUnit();
+        var coRange = co.getCORange();
+        if (counit !== null)
         {
-            return 1;
+            UNIT.repairUnit(counit, 5);
+            var fields = globals.getCircle(1, coRange);
+            var x = counit.getX();
+            var y = counit.getY();
+            var animation = null;
+            for (var i = 0; i < fields.size(); i++)
+            {
+                var point = fields.at(i);
+                if (map.onMap(x + point.x, y + point.y))
+                {
+                    var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
+                    if ((unit !== null) &&
+                            (unit.getOwner() === counit.getOwner()))
+                    {
+                        UNIT.repairUnit(unit, 5);
+                        animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                        animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                    }
+                }
+            }
+            fields.remove();
         }
-        return 0;
     };
 
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A whiz with a wrench, this mechanical boy wonder earned fame as the hero who saved Macro Land in the last great war.");
+        return qsTr("Head of IDS the research department of Dark Matter. Conducts in inhuman experiments. All he wants is to be free to satisfy his curiosity.");
     };
     this.getHits = function()
     {
-        return qsTr("Mechanics");
+        return qsTr("Unrestricted experiments");
     };
     this.getMiss = function()
     {
-        return qsTr("Waking up too early");
+        return qsTr("Ethics");
     };
     this.getCODescription = function()
     {
-        return qsTr("No real weaknesses. Proficient with air, sea and land units. Ready to fight wherever and whenever.");
+        return qsTr("His units are superior in his CO-Zone but weaker outside. On top his troops heal 5 Hp each turn inside his CO-Zone.");
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Restores two HP to all units.");
+        return qsTr("All his units gain five Hp and get a offense and defense buff.");
     };
     this.getPowerName = function()
     {
-        return qsTr("Hyper Repair");
+        return qsTr("Mass Regeneration");
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Restores five HP to all units. Firepower rises, and unit movement increases by one space.");
+        return qsTr("All his units heal to full and gain a massive offense and defense buff.");
     };
     this.getSuperPowerName = function()
     {
-        return qsTr("Hyper Upgrade");
+        return qsTr("Perfect Healing");
     };
     this.getPowerSentences = function()
     {
-        return [qsTr("I've got parts to spare!"),
-                qsTr("I'm not giving up!"),
-                qsTr("Time to roll up my sleeves!"),
-                qsTr("I haven't even cranked the engine yet!"),
-                qsTr("Pass me my wrench!!"),
-                qsTr("It's time for a tune-up!"),
-                qsTr("Never give up, and never lose! I'm on my way!"),
-                qsTr("I'm not worried! I can fix anything!")];
+        return [qsTr("Ahhh watch this experiment. I wonder what it does..."),
+                qsTr("March my clones march and kill them all."),
+                qsTr("You and your ethnics make you weak. Watch the power of science..."),
+                qsTr("I am simply curious.")];
     };
     this.getVictorySentences = function()
     {
-        return [qsTr("We won! Wooooooohooo!"),
-                qsTr("I can fix anything!"),
-                qsTr("I did it! Did you see that!?")];
+        return [qsTr("Interesting. Very Interesting"),
+                qsTr("Quite satisfactory."),
+                qsTr("I am simply curious.")];
     };
     this.getDefeatSentences = function()
     {
-        return [qsTr("Oh, come on!"),
-                qsTr("Next time I see you, you're in trouble!")];
+        return [qsTr("Only a failed experiment nothing to worry about!"),
+                qsTr("Argh i'm useless as well? Impossible!")];
     };
     this.getName = function()
     {
-        return qsTr("Andy");
+        return qsTr("Caulder");
     };
 }
 
 Constructor.prototype = CO;
-var CO_ANDY = new Constructor();
+var CO_CAULDER = new Constructor();

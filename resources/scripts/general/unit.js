@@ -113,7 +113,7 @@ var UNIT =
                 healingDone = i;
                 break;
             }
-            else if (i == 0)
+            else if (i === 0)
             {
                 healingDone = 0;
                 break;

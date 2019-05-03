@@ -233,6 +233,7 @@ void COInfoDialog::showCO()
     QString coPowerDesc = "";
     QString coSuperpower = "";
     QString coSuperpowerDesc = "";
+    qint32 corange = m_CurrentCO->getCORange();
 
     Interpreter* pInterpreter = pApp->getInterpreter();
     QJSValue value = pInterpreter->doFunction(coid, "getName");
@@ -273,7 +274,7 @@ void COInfoDialog::showCO()
         coDesc = value.toString();
     }
     m_InfoSprite->setY(m_MissSprite->getY() + 50);
-    m_InfoText->setText(coDesc.toStdString().c_str());
+    m_InfoText->setText((coDesc + "\n\n" + tr("CO-Zone-Range: ") + QString::number(corange)).toStdString().c_str());
     m_InfoText->setY(m_InfoSprite->getY() + 50);
 
     value = pInterpreter->doFunction(coid, "getPowerDescription");

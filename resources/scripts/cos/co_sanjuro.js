@@ -42,7 +42,7 @@ var Constructor = function()
         units.remove();
 
         audio.clearPlayList();
-        CO_ADDER.loadCOMusic(co);
+        CO_SANJURO.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -81,7 +81,7 @@ var Constructor = function()
         units.remove();
 
         audio.clearPlayList();
-        CO_ADDER.loadCOMusic(co);
+        CO_SANJURO.loadCOMusic(co);
         audio.playRandom();
     };
 

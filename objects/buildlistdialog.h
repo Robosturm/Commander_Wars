@@ -2,8 +2,11 @@
 #define BUILDLISTDIALOG_H
 
 #include <QObject>
+#include <QVector>
 
 #include "oxygine-framework.h"
+
+#include "objects/checkbox.h"
 
 class BuildListDialog;
 typedef oxygine::intrusive_ptr<BuildListDialog> spBuildListDialog;
@@ -21,8 +24,10 @@ public slots:
 
 private:
     oxygine::spButton m_OkButton;
+    oxygine::spButton m_ToggleAll;
     oxygine::spButton m_ExitButton;
-
+    QVector<spCheckbox> m_Checkboxes;
+    bool toggle{true};
     QStringList m_CurrentBuildList;
     qint32 m_Player;
 };

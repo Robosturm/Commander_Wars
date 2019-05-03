@@ -11,7 +11,6 @@
 #include "game/gamemap.h"
 
 #include "objects/panel.h"
-#include "objects/checkbox.h"
 
 BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     : QObject(),
@@ -52,6 +51,19 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
         this->getParent()->removeChild(this);
     });
 
+    m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 150);
+    m_ToggleAll->setPosition(pApp->getSettings()->getWidth() / 2 - m_ToggleAll->getWidth() / 2 , pApp->getSettings()->getHeight() - 30 - m_ToggleAll->getHeight());
+    pSpriteBox->addChild(m_ToggleAll);
+    m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        toggle = !toggle;
+        for (qint32 i = 0; i < m_Checkboxes.size(); i++)
+        {
+            m_Checkboxes[i]->setChecked(toggle);
+            emit m_Checkboxes[i]->checkChanged(toggle);
+        }
+    });
+
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -89,6 +101,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
         pUnit->setScale(pUnit->getScale() * 1.25f);
         spCheckbox pCheckbox = new Checkbox();
         pCheckbox->setPosition(x + 220, y);
+        m_Checkboxes.append(pCheckbox);
 
         if (m_CurrentBuildList.contains(unitID))
         {

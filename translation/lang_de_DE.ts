@@ -328,17 +328,22 @@
 <context>
     <name>BuildListDialog</name>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="36"/>
+        <location filename="../objects/buildlistdialog.cpp" line="35"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="46"/>
+        <location filename="../objects/buildlistdialog.cpp" line="45"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="68"/>
+        <location filename="../objects/buildlistdialog.cpp" line="54"/>
+        <source>Un/Select All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/buildlistdialog.cpp" line="80"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
@@ -378,6 +383,11 @@
     <message>
         <location filename="../objects/coinfodialog.cpp" line="154"/>
         <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/coinfodialog.cpp" line="277"/>
+        <source>CO-Zone-Range: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1633,112 +1643,112 @@
 <context>
     <name>co_andy</name>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="155"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="154"/>
         <source>A whiz with a wrench, this mechanical boy wonder earned fame as the hero who saved Macro Land in the last great war.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="159"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="158"/>
         <source>Mechanics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="163"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="162"/>
         <source>Waking up too early</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="167"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="166"/>
         <source>No real weaknesses. Proficient with air, sea and land units. Ready to fight wherever and whenever.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="171"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="170"/>
         <source>Restores two HP to all units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="175"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="174"/>
         <source>Hyper Repair</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="179"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="178"/>
         <source>Restores five HP to all units. Firepower rises, and unit movement increases by one space.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="183"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="182"/>
         <source>Hyper Upgrade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="187"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="186"/>
         <source>I&apos;ve got parts to spare!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="188"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="187"/>
         <source>I&apos;m not giving up!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="189"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="188"/>
         <source>Time to roll up my sleeves!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="190"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="189"/>
         <source>I haven&apos;t even cranked the engine yet!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="191"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="190"/>
         <source>Pass me my wrench!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="192"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="191"/>
         <source>It&apos;s time for a tune-up!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="193"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="192"/>
         <source>Never give up, and never lose! I&apos;m on my way!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="194"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="193"/>
         <source>I&apos;m not worried! I can fix anything!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="198"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="197"/>
         <source>We won! Wooooooohooo!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="199"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="198"/>
         <source>I can fix anything!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="200"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="199"/>
         <source>I did it! Did you see that!?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="204"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="203"/>
         <source>Oh, come on!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="205"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="204"/>
         <source>Next time I see you, you&apos;re in trouble!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="209"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="208"/>
         <source>Andy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1828,6 +1838,95 @@
     <message>
         <location filename="../resources/scripts/cos/co_brenner.js" line="194"/>
         <source>Brenner</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_caulder</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="198"/>
+        <source>Head of IDS the research department of Dark Matter. Conducts in inhuman experiments. All he wants is to be free to satisfy his curiosity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="202"/>
+        <source>Unrestricted experiments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="206"/>
+        <source>Ethics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="210"/>
+        <source>His units are superior in his CO-Zone but weaker outside. On top his troops heal 5 Hp each turn inside his CO-Zone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="214"/>
+        <source>All his units gain five Hp and get a offense and defense buff.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="218"/>
+        <source>Mass Regeneration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="222"/>
+        <source>All his units heal to full and gain a massive offense and defense buff.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="226"/>
+        <source>Perfect Healing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="230"/>
+        <source>Ahhh watch this experiment. I wonder what it does...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="231"/>
+        <source>March my clones march and kill them all.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="232"/>
+        <source>You and your ethnics make you weak. Watch the power of science...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="239"/>
+        <source>I am simply curious.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="237"/>
+        <source>Interesting. Very Interesting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="238"/>
+        <source>Quite satisfactory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="243"/>
+        <source>Only a failed experiment nothing to worry about!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="244"/>
+        <source>Argh i&apos;m useless as well? Impossible!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_caulder.js" line="248"/>
+        <source>Caulder</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
