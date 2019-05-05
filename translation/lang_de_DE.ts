@@ -150,7 +150,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="262"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="265"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -477,89 +477,208 @@
     </message>
 </context>
 <context>
+    <name>DialogModifyUnit</name>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="40"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="60"/>
+        <source>Unit: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="69"/>
+        <source>HP: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="72"/>
+        <source>HP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="85"/>
+        <source>Fuel: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="88"/>
+        <source>Fuel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="102"/>
+        <source>Ammo 1: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="105"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="122"/>
+        <source>Ammo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="119"/>
+        <source>Ammo 2: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="135"/>
+        <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="142"/>
+        <source>Player </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="157"/>
+        <source>AI-Mode: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="160"/>
+        <source>Normal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="160"/>
+        <source>Offensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="160"/>
+        <source>Defensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="160"/>
+        <source>Hold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="173"/>
+        <source>Unit Rank: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="176"/>
+        <source>Soldier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="176"/>
+        <source>Lieutenant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="176"/>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="176"/>
+        <source>Veteran</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EditorMenue</name>
     <message>
-        <location filename="../menue/editormenue.cpp" line="37"/>
+        <location filename="../menue/editormenue.cpp" line="42"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="43"/>
+        <location filename="../menue/editormenue.cpp" line="47"/>
         <source>Map Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="38"/>
+        <location filename="../menue/editormenue.cpp" line="43"/>
         <source>Save Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="39"/>
+        <location filename="../menue/editormenue.cpp" line="44"/>
         <source>Load Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="40"/>
+        <location filename="../menue/editormenue.cpp" line="57"/>
+        <source>Editor Commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="61"/>
+        <source>Optimize Players</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="63"/>
+        <source>Import/Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="64"/>
         <source>Import CoW Txt Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="41"/>
+        <location filename="../menue/editormenue.cpp" line="45"/>
         <source>Exit Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="44"/>
+        <location filename="../menue/editormenue.cpp" line="48"/>
         <source>New Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="45"/>
+        <location filename="../menue/editormenue.cpp" line="49"/>
         <source>Edit Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="47"/>
+        <location filename="../menue/editormenue.cpp" line="51"/>
         <source>Flip Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="48"/>
+        <location filename="../menue/editormenue.cpp" line="52"/>
         <source>Flip Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="49"/>
+        <location filename="../menue/editormenue.cpp" line="53"/>
         <source>Rotate Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="50"/>
+        <location filename="../menue/editormenue.cpp" line="54"/>
         <source>Rotate Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="51"/>
+        <location filename="../menue/editormenue.cpp" line="55"/>
         <source>Random Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="53"/>
-        <source>Editor Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="54"/>
+        <location filename="../menue/editormenue.cpp" line="58"/>
         <source>Place Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="55"/>
+        <location filename="../menue/editormenue.cpp" line="59"/>
         <source>Delete Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="56"/>
+        <location filename="../menue/editormenue.cpp" line="60"/>
         <source>Edit Units</source>
         <translation type="unfinished"></translation>
     </message>
@@ -987,52 +1106,82 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="249"/>
+        <location filename="../menue/optionmenue.cpp" line="185"/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="185"/>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="185"/>
+        <source>Own</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="185"/>
+        <source>Ally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="185"/>
+        <source>Enemy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="198"/>
+        <source>Animation Speed: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="265"/>
         <source>Screen Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="257"/>
+        <location filename="../menue/optionmenue.cpp" line="273"/>
         <source>Screen Resolution: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="273"/>
+        <location filename="../menue/optionmenue.cpp" line="289"/>
         <source>Screen Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="276"/>
+        <location filename="../menue/optionmenue.cpp" line="292"/>
         <source>Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="276"/>
+        <location filename="../menue/optionmenue.cpp" line="292"/>
         <source>Bordered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="276"/>
+        <location filename="../menue/optionmenue.cpp" line="292"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="285"/>
+        <location filename="../menue/optionmenue.cpp" line="301"/>
         <source>Audio Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="291"/>
+        <location filename="../menue/optionmenue.cpp" line="307"/>
         <source>Global Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="307"/>
+        <location filename="../menue/optionmenue.cpp" line="323"/>
         <source>Music Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="323"/>
+        <location filename="../menue/optionmenue.cpp" line="339"/>
         <source>Sound Volume: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1149,30 +1298,34 @@
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="50"/>
-        <location filename="../coreengine/settings.cpp" line="60"/>
-        <location filename="../coreengine/settings.cpp" line="66"/>
-        <location filename="../coreengine/settings.cpp" line="72"/>
-        <location filename="../coreengine/settings.cpp" line="78"/>
-        <location filename="../coreengine/settings.cpp" line="90"/>
-        <location filename="../coreengine/settings.cpp" line="96"/>
-        <location filename="../coreengine/settings.cpp" line="107"/>
-        <location filename="../coreengine/settings.cpp" line="114"/>
-        <location filename="../coreengine/settings.cpp" line="121"/>
+        <location filename="../coreengine/settings.cpp" line="51"/>
+        <location filename="../coreengine/settings.cpp" line="61"/>
+        <location filename="../coreengine/settings.cpp" line="67"/>
+        <location filename="../coreengine/settings.cpp" line="73"/>
+        <location filename="../coreengine/settings.cpp" line="79"/>
+        <location filename="../coreengine/settings.cpp" line="91"/>
+        <location filename="../coreengine/settings.cpp" line="97"/>
+        <location filename="../coreengine/settings.cpp" line="108"/>
+        <location filename="../coreengine/settings.cpp" line="115"/>
+        <location filename="../coreengine/settings.cpp" line="122"/>
+        <location filename="../coreengine/settings.cpp" line="133"/>
+        <location filename="../coreengine/settings.cpp" line="140"/>
         <source>Error in the Ini File: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/settings.cpp" line="50"/>
-        <location filename="../coreengine/settings.cpp" line="60"/>
-        <location filename="../coreengine/settings.cpp" line="66"/>
-        <location filename="../coreengine/settings.cpp" line="72"/>
-        <location filename="../coreengine/settings.cpp" line="78"/>
-        <location filename="../coreengine/settings.cpp" line="90"/>
-        <location filename="../coreengine/settings.cpp" line="96"/>
-        <location filename="../coreengine/settings.cpp" line="107"/>
-        <location filename="../coreengine/settings.cpp" line="114"/>
-        <location filename="../coreengine/settings.cpp" line="121"/>
+        <location filename="../coreengine/settings.cpp" line="51"/>
+        <location filename="../coreengine/settings.cpp" line="61"/>
+        <location filename="../coreengine/settings.cpp" line="67"/>
+        <location filename="../coreengine/settings.cpp" line="73"/>
+        <location filename="../coreengine/settings.cpp" line="79"/>
+        <location filename="../coreengine/settings.cpp" line="91"/>
+        <location filename="../coreengine/settings.cpp" line="97"/>
+        <location filename="../coreengine/settings.cpp" line="108"/>
+        <location filename="../coreengine/settings.cpp" line="115"/>
+        <location filename="../coreengine/settings.cpp" line="122"/>
+        <location filename="../coreengine/settings.cpp" line="133"/>
+        <location filename="../coreengine/settings.cpp" line="140"/>
         <source>Setting:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4854,6 +5007,90 @@
     <message>
         <location filename="../resources/scripts/cos/co_ozzy.js" line="215"/>
         <source>Ozzy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_penny</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="167"/>
+        <source>Yougest child of Caulder. She is still too young ro know right from wrong.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="171"/>
+        <source>Mr. Bear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="175"/>
+        <source>Broken &quot;Toys&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="179"/>
+        <source>Her troops are immune to all weather effects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="183"/>
+        <source>Changes the weather to a random one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="187"/>
+        <source>Stormfront</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="191"/>
+        <source>Changes the weather to a random one and her troops get a buff depending on the new weather.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="195"/>
+        <source>Weatherchaos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="199"/>
+        <location filename="../resources/scripts/cos/co_penny.js" line="207"/>
+        <source>Tee he he!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="200"/>
+        <source>Nice weather we&apos;re having</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="201"/>
+        <source>Giggle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="205"/>
+        <source>Daddy will be pleased!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="206"/>
+        <source>Wow! I&apos;m getting the hang of this!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="211"/>
+        <source>Mr. Bear we lost our toys.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="212"/>
+        <source>You don&apos;t get Mr. Bear. He&apos;s mine!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_penny.js" line="216"/>
+        <source>Penny</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

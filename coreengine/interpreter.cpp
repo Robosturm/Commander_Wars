@@ -81,7 +81,7 @@ QJSValue Interpreter::doFunction(const QString& func, QJSValueList& args)
     }
     else
     {
-        QString error = "Error: attemp to call a non function value.";
+        QString error = "Error: attemp to call a non function value. Call:" + func;
         Console::print(error, Console::eERROR);
     }
     return ret;
@@ -105,13 +105,13 @@ QJSValue Interpreter::doFunction(const QString& obj, const QString& func, const 
         }
         else
         {
-            QString error = "Error: attemp to call a non function value.";
+            QString error = "Error: attemp to call a non function value. Call:" + obj + "." + func;
             Console::print(error, Console::eERROR);
         }
     }
     else
     {
-        QString error = "Error: attemp to call a non object value in order to call a function.";
+        QString error = "Error: attemp to call a non object value in order to call a function. Call:" + obj + "." + func;
         Console::print(error, Console::eERROR);
     }
     return ret;

@@ -100,7 +100,7 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
                 x = m_movePath[i].x() * GameMap::Imagesize - static_cast<qint32>((pAnim->getWidth() * scaling - GameMap::Imagesize) / 2.0f);
                 y = m_movePath[i].y() * GameMap::Imagesize - static_cast<qint32>((pAnim->getHeight() * scaling - GameMap::Imagesize) / 2.0f);
 
-                oxygine::Tween* tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(x, y)), GameMap::frameTime * pAnim->getRows(), 1);
+                oxygine::Tween* tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(x, y)), static_cast<qint32>(m_frameTime) * pAnim->getRows(), 1);
                 // toggle visibility of the unit
                 if (i - 1 >= 0)
                 {
@@ -145,7 +145,7 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
                         break;
                     }
                 }
-                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, row), GameMap::frameTime * pAnim->getRows(), 1);
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, row), static_cast<qint32>(m_frameTime) * pAnim->getRows(), 1);
                 queueAnimating->add(tween);
                 if (i == 0)
                 {
@@ -157,7 +157,7 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
             }
         }
         //
-        if (m_movePath.size() < 1)
+        if (m_movePath.size() <= 1)
         {
             queueMoving->addDoneCallback([=](oxygine::Event *)->void
             {

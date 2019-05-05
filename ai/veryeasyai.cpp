@@ -271,37 +271,39 @@ bool VeryEasyAI::buildCOUnit(QmlVectorUnit* pUnits)
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
-        GameAction* pAction = new GameAction();
-        for (quint8 i2 = 0; i2 < 2; i2++)
+        Unit* pUnit = pUnits->at(i);
+        if (!pUnit->getHasMoved())
         {
-            Unit* pUnit = pUnits->at(i);
-
-            if (i2 == 0)
+            GameAction* pAction = new GameAction();
+            for (quint8 i2 = 0; i2 < 2; i2++)
             {
-                pAction->setActionID(ACTION_CO_UNIT_0);
-            }
-            else
-            {
-                pAction->setActionID(ACTION_CO_UNIT_1);
-            }
-            CO* pCO = m_pPlayer->getCO(i2);
-            if (pCO != nullptr)
-            {
-                data[0] = pCOSpriteManager->getCOIndex(pCO->getCoID());
-            }
-            data[1] = pUnitSpriteManager->getUnitIndex(pUnit->getUnitID());
-            float ret = m_COUnitTree.getDecision(data);
-            if (ret == 1.0f)
-            {
-                pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
-                if (pAction->canBePerformed())
+                if (i2 == 0)
                 {
-                    emit performAction(pAction);
-                    return true;
+                    pAction->setActionID(ACTION_CO_UNIT_0);
+                }
+                else
+                {
+                    pAction->setActionID(ACTION_CO_UNIT_1);
+                }
+                CO* pCO = m_pPlayer->getCO(i2);
+                if (pCO != nullptr)
+                {
+                    data[0] = pCOSpriteManager->getCOIndex(pCO->getCoID());
+                }
+                data[1] = pUnitSpriteManager->getUnitIndex(pUnit->getUnitID());
+                float ret = m_COUnitTree.getDecision(data);
+                if (ret == 1.0f)
+                {
+                    pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+                    if (pAction->canBePerformed())
+                    {
+                        emit performAction(pAction);
+                        return true;
+                    }
                 }
             }
+            delete pAction;
         }
-        delete pAction;
     }
     return false;
 }
@@ -442,7 +444,7 @@ bool VeryEasyAI::attack(Unit* pUnit)
                 pAction->setMovepath(QVector<QPoint>());
             }
             CoreAI::addSelectedFieldData(pAction, QPoint(target.x(), target.y()));
-            // attacing none unt targets may modify the islands for a unit -> rebuild all for the love of god
+            // attacing none unit targets may modify the islands for a unit -> rebuild all for the love of god
             if (GameMap::getInstance()->getTerrain(target.x(), target.y())->getUnit() == nullptr)
             {
                 rebuildIslandMaps = true;
@@ -978,37 +980,7 @@ void VeryEasyAI::appendCaptureTargets(QStringList actions, Unit* pUnit, QmlVecto
     }
 }
 
-void VeryEasyAI::appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QPoint>& targets)
-{
-    GameMap* pMap = GameMap::getInstance();
-    for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
-    {
-        Unit* pEnemy = pEnemyUnits->at(i2);
-        if (pUnit->isAttackable(pEnemy, true))
-        {
-            qint32 firerange = pUnit->getMaxRange();
-            QmlVectorPoint* pTargetFields = Mainapp::getCircle(firerange, firerange);
-            for (qint32 i3 = 0; i3 < pTargetFields->size(); i3++)
-            {
-                qint32 x = pTargetFields->at(i3).x() + pEnemy->getX();
-                qint32 y = pTargetFields->at(i3).y() + pEnemy->getY();
-                if (pMap->onMap(x, y) &&
-                    pMap->getTerrain(x, y)->getUnit() == nullptr)
-                {
-                    if (pUnit->canMoveOver(x, y))
-                    {
-                        QPoint possibleTarget(x, y);
-                        if (!targets.contains(possibleTarget))
-                        {
-                            targets.append(possibleTarget);
-                        }
-                    }
-                }
-            }
-            delete pTargetFields;
-        }
-    }
-}
+
 
 void VeryEasyAI::appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QPoint>& targets)
 {

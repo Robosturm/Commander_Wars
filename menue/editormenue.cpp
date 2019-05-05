@@ -16,14 +16,19 @@
 
 #include "objects/mapeditdialog.h"
 
+#include "objects/dialogmodifyunit.h"
+
 #include "game/terrainfindingsystem.h"
 #include "game/co.h"
+
+EditorMenue* EditorMenue::m_pInstance = nullptr;
 
 EditorMenue::EditorMenue()
     : InGameMenue (20, 20)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
+    m_pInstance = this;
 
     m_EditorSelection = new EditorSelection();
     this->addChild(m_EditorSelection);
@@ -37,7 +42,6 @@ EditorMenue::EditorMenue()
     m_Topbar->addGroup(tr("Menu"));
     m_Topbar->addItem(tr("Save Map"), "SAVEMAP", 0);
     m_Topbar->addItem(tr("Load Map"), "LOADMAP", 0);
-    m_Topbar->addItem(tr("Import CoW Txt Map"), "IMPORTCOWTXT", 0);
     m_Topbar->addItem(tr("Exit Editor"), "EXIT", 0);
 
     m_Topbar->addGroup(tr("Map Info"));
@@ -50,10 +54,14 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Rotate Map Y"), "ROTATEY", 1);
     m_Topbar->addItem(tr("Random Map"), "RANDOMMAP", 1);
 
-    m_Topbar->addGroup(tr("Editor Mode"));
+    m_Topbar->addGroup(tr("Editor Commands"));
     m_Topbar->addItem(tr("Place Selection"), "PLACESELECTION", 2);
     m_Topbar->addItem(tr("Delete Units"), "DELETEUNITS", 2);
     m_Topbar->addItem(tr("Edit Units"), "EDITUNITS", 2);
+    m_Topbar->addItem(tr("Optimize Players"), "OPTIMIZEPLAYERS", 2);
+
+    m_Topbar->addGroup(tr("Import/Export"));
+    m_Topbar->addItem(tr("Import CoW Txt Map"), "IMPORTCOWTXT", 3);
 
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
     {
@@ -96,6 +104,11 @@ EditorMenue::EditorMenue()
     connect(m_Cursor.get(), SIGNAL(sigCursorMoved(qint32,qint32)), this, SLOT(cursorMoved(qint32,qint32)), Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigKeyDown, this, &EditorMenue::KeyInput, Qt::QueuedConnection);
     connect(m_Topbar.get(), SIGNAL(sigItemClicked(QString)), this, SLOT(clickedTopbar(QString)), Qt::QueuedConnection);
+}
+
+EditorMenue::~EditorMenue()
+{
+    m_pInstance = nullptr;
 }
 
 void EditorMenue::clickedTopbar(QString itemID)
@@ -225,7 +238,7 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
         }
         case EditorModes::EditUnits:
         {
-            m_Cursor->changeCursor("cursor+attack");
+            m_Cursor->changeCursor("cursor+edit");
             break;
         }
         case EditorModes::PlaceEditorSelection:
@@ -282,8 +295,33 @@ void EditorMenue::onMapClickedRight()
     pApp->suspendThread();
     // resolve click
     GameMap* pMap = GameMap::getInstance();
-    QString terrainID = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY())->getTerrainID();
-    m_EditorSelection->selectTerrain(terrainID);
+    switch (m_EditorSelection->getCurrentMode())
+    {
+        case EditorSelection::EditorMode::Terrain:
+        {
+            QString terrainID = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY())->getTerrainID();
+            m_EditorSelection->selectTerrain(terrainID);
+            break;
+        }
+        case EditorSelection::EditorMode::Building:
+        {
+            Building* pBuilding = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY())->getBuilding();
+            if (pBuilding != nullptr)
+            {
+                m_EditorSelection->selectBuilding(pBuilding->getBuildingID());
+            }
+            break;
+        }
+        case EditorSelection::EditorMode::Unit:
+        {
+            Unit* pUnit = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY())->getUnit();
+            if (pUnit != nullptr)
+            {
+                m_EditorSelection->selectUnit(pUnit->getUnitID());
+            }
+            break;
+        }
+    }
     m_EditorMode = EditorModes::PlaceEditorSelection;
     pApp->continueThread();
 }
@@ -306,6 +344,11 @@ void EditorMenue::onMapClickedLeft()
         }
         case EditorModes::EditUnits:
         {
+            Unit* pUnit = GameMap::getInstance()->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY())->getUnit();
+            if (pUnit != nullptr)
+            {
+                addChild(new DialogModifyUnit(pUnit));
+            }
             break;
         }
         case EditorModes::PlaceEditorSelection:

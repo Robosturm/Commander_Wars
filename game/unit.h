@@ -57,7 +57,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 6;
+        return 7;
     }
 
 
@@ -80,6 +80,16 @@ public:
 signals:
 
 public slots:
+    /**
+     * @brief getAiMode
+     * @return
+     */
+    GameEnums::GameAi getAiMode() const;
+    /**
+     * @brief setAiMode
+     * @param AiMode
+     */
+    void setAiMode(const GameEnums::GameAi &AiMode);
     /**
      * @brief getTransportHidden
      * @param pPlayer
@@ -541,6 +551,8 @@ private:
     qint32 minRange{1};
     qint32 maxRange{-1};
     qint32 vision{1};
+
+    GameEnums::GameAi m_AiMode{GameEnums::GameAi::GameAi_Normal};
 
     ScriptVariables m_Variables;
 };

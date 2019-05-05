@@ -190,8 +190,9 @@ public slots:
     }
 protected:
     virtual void update(const oxygine::UpdateState& us) override;
-private:
     quint32 m_frameTime{0};
+private:
+
     QVector<GameAnimation*> m_QueuedAnimations;
     QString jsPostActionObject{""};
     QString jsPostActionFunction{""};

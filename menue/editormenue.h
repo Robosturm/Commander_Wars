@@ -20,8 +20,12 @@ public:
         EditUnits,
     };
     explicit EditorMenue();
-    virtual ~EditorMenue() = default;
+    virtual ~EditorMenue();
 
+    static inline EditorMenue* getInstance()
+    {
+        return m_pInstance;
+    }
 signals:
     void sigOnMapClickedLeft();
     void sigOnMapClickedRight();
@@ -122,6 +126,8 @@ private:
     spEditorSelection m_EditorSelection{nullptr};
     EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};
     spTopbar m_Topbar;
+
+    static EditorMenue* m_pInstance;
 };
 
 #endif // EDITORMENUE_H

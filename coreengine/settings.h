@@ -6,6 +6,8 @@
 
 #include "oxygine-framework.h"
 
+#include "game/GameEnums.h"
+
 class GLGraphicsView;
 
 class Settings : public QObject
@@ -116,11 +118,11 @@ public:
             m_activeMods.removeOne(mod);
         }
     }
-    float getMouseSensitivity();
-    void setMouseSensitivity(float value);
+    static float getMouseSensitivity();
+    static void setMouseSensitivity(float value);
 
-    bool getShowAnimations();
-    void setShowAnimations(bool value);
+    static GameEnums::AnimationMode getShowAnimations();
+    static void setShowAnimations(GameEnums::AnimationMode value);
 
     static void setFullscreen(bool fullscreen);
 
@@ -128,6 +130,9 @@ public:
 
     static void setWidth(const qint32 &width);
     static void setHeight(const qint32 &height);
+
+    static quint32 getAnimationSpeed();
+    static void setAnimationSpeed(const quint32 &value);
 
 private:
     // setting variables
@@ -153,7 +158,8 @@ private:
     static bool m_Server;
 
     // ingame options
-    static bool showAnimations;
+    static GameEnums::AnimationMode showAnimations;
+    static quint32 animationSpeed;
 
     // internal members
     static Settings* m_pInstance;

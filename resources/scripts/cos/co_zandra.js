@@ -152,7 +152,7 @@ var Constructor = function()
         }
         if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
         {
-            // apply snow buff :)
+            // apply sandstorm buff :)
             return 25;
         }
         return 0;

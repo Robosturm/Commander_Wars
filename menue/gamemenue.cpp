@@ -87,11 +87,10 @@ void GameMenue::performAction(GameAction* pGameAction)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-
+    GameMap* pMap = GameMap::getInstance();
     QVector<QPoint> path = pGameAction->getMovePath();
     if (path.size() > 0)
     {
-        GameMap* pMap = GameMap::getInstance();
         QVector<QPoint> trapPath;
         for (qint32 i = path.size() - 1; i >= 0; i--)
         {
@@ -126,11 +125,53 @@ void GameMenue::performAction(GameAction* pGameAction)
     {
         GameAnimationFactory::getInstance()->removeAnimation(nullptr);
     }
-    else if (!Mainapp::getInstance()->getSettings()->getShowAnimations())
+    else
     {
-        while (GameAnimationFactory::getAnimationCount() > 0)
+        bool skipAnimations = false;
+        switch (Settings::getShowAnimations())
         {
-            GameAnimationFactory::finishAllAnimations();
+            case GameEnums::AnimationMode_None:
+            {
+                skipAnimations = true;
+                break;
+            }
+            case GameEnums::AnimationMode_All:
+            {
+                break;
+            }
+            case GameEnums::AnimationMode_Own:
+            {
+                if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != BaseGameInputIF::AiTypes::Human)
+                {
+                    skipAnimations = true;
+                }
+                break;
+            }
+            case GameEnums::AnimationMode_Ally:
+            {
+                Player * pPlayer1 = pMap->getCurrentPlayer();
+                Player * pPlayer2 = pMap->getCurrentViewPlayer();
+                if (pPlayer2->isEnemy(pPlayer1))
+                {
+                    skipAnimations = true;
+                }
+                break;
+            }
+            case GameEnums::AnimationMode_Enemy:
+            {
+                if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
+                {
+                    skipAnimations = true;
+                }
+                break;
+            }
+        }
+        if (skipAnimations)
+        {
+            while (GameAnimationFactory::getAnimationCount() > 0)
+            {
+                GameAnimationFactory::finishAllAnimations();
+            }
         }
     }
     pApp->continueThread();

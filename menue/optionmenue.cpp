@@ -182,13 +182,29 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setText(tr("Show Ingame Animations: ").toStdString().c_str());
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
-    spCheckbox pEnableAnimations = new Checkbox();
-    pEnableAnimations->setChecked(pSettings->getShowAnimations());
-    pEnableAnimations->setPosition(sliderOffset - 130, y);
-    m_pOptions->addItem(pEnableAnimations);
-    connect(pEnableAnimations.get(), &Checkbox::checkChanged, [=](bool value)
+    QVector<QString> items = {tr("None"), tr("All"), tr("Own"), tr("Ally"), tr("Enemy")};
+    spDropDownmenu pAnimationMode = new DropDownmenu(300, items);
+    pAnimationMode->setCurrentItem(static_cast<qint32>(pSettings->getShowAnimations()));
+    pAnimationMode->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pAnimationMode);
+    connect(pAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
-        pSettings->setShowAnimations(value);
+        pSettings->setShowAnimations(static_cast<GameEnums::AnimationMode>(value));
+    });
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Animation Speed: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSlider pAnimationSpeed = new Slider(pApp->getSettings()->getWidth() - 20 - sliderOffset, 1, 100, "");
+    pAnimationSpeed->setPosition(sliderOffset - 130, y);
+    pAnimationSpeed->setCurrentValue(static_cast<qint32>(pSettings->getAnimationSpeed()));
+    m_pOptions->addItem(pAnimationSpeed);
+    connect(pAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        pSettings->setAnimationSpeed(static_cast<quint32>(value));
     });
     y += 40;
 

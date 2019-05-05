@@ -12,6 +12,10 @@
 class GameAction;
 class Unit;
 class UnitPathFindingSystem;
+class QmlVectorUnit;
+class QmlVectorBuilding;
+class QmlVectorPoint;
+class Building;
 
 class CoreAI : public BaseGameInputIF
 {
@@ -89,8 +93,13 @@ public slots:
      * @param ret
      */
     void getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVector3D>& ret, QVector<QPoint>& moveTargetFields);
-
-
+    /**
+     * @brief appendAttackTargets
+     * @param pUnit
+     * @param pEnemyUnits
+     * @param targets
+     */
+    void appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QPoint>& targets);
     /**
      * @brief getTrainingData reads the training data from a training file for a pipeline either decision tree or neural network
      * @param file
@@ -102,7 +111,14 @@ protected:
     void addMenuItemData(GameAction* pGameAction, QString itemID, qint32 cost);
     void addSelectedFieldData(GameAction* pGameAction, QPoint point);
 
-
+    /**
+     * @brief processPredefinedAi
+     * @return
+     */
+    bool processPredefinedAi();
+    void processPredefinedAiHold(Unit* pUnit);
+    void processPredefinedAiDefensive(Unit* pUnit);
+    void processPredefinedAiOffensive(Unit* pUnit, QmlVectorUnit* pEnemyUnits);
 private:
     bool finish{false};
     bool enableBuildingAttack{true};

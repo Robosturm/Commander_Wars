@@ -71,6 +71,7 @@ set(${PROJECT_NAME}_SRCS
         objects/colorselectiondialog.cpp
         objects/buildlistdialog.cpp
         objects/coinfodialog.cpp
+        objects/dialogmodifyunit.cpp
 
         #menues
         menue/mainwindow.cpp
@@ -170,6 +171,7 @@ set(${PROJECT_NAME}_SRCS
         ai/veryeasyai.cpp
         ai/targetedunitpathfindingsystem.cpp
         ai/islandmap.cpp
+        ai/coreai_predefinedai.cpp
 )
 
 

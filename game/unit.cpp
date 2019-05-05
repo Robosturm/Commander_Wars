@@ -22,6 +22,8 @@
 
 #include "game/building.h"
 
+#include "menue/editormenue.h"
+
 #include "coreengine/tweentogglevisibility.h"
 
 Unit::Unit()
@@ -931,7 +933,7 @@ qint32 Unit::getFuel() const
 void Unit::setFuel(const qint32 &value)
 {
     fuel = value;
-    if (static_cast<float>(fuel) / static_cast<float>(maxFuel) <= 1.0f / 3.0f)
+    if (maxFuel > 0 && static_cast<float>(fuel) / static_cast<float>(maxFuel) <= 1.0f / 3.0f)
     {
         loadIcon("fuel", GameMap::Imagesize / 2, 0);
     }
@@ -1594,6 +1596,46 @@ void Unit::updateIconTweens()
     }
 }
 
+GameEnums::GameAi Unit::getAiMode() const
+{
+    return m_AiMode;
+}
+
+void Unit::setAiMode(const GameEnums::GameAi &AiMode)
+{
+    m_AiMode = AiMode;
+    unloadIcon("defensive");
+    unloadIcon("hold");
+    unloadIcon("normal");
+    unloadIcon("offensive");
+    if (EditorMenue::getInstance() != nullptr)
+    {
+        switch (m_AiMode)
+        {
+            case GameEnums::GameAi_Hold:
+            {
+                loadIcon("hold", 0, 0);
+                break;
+            }
+            case GameEnums::GameAi_Offensive:
+            {
+                loadIcon("offensive", 0, 0);
+                break;
+            }
+            case GameEnums::GameAi_Defensive:
+            {
+                loadIcon("defensive", 0, 0);
+                break;
+            }
+            case GameEnums::GameAi_Normal:
+            {
+                loadIcon("normal", 0, 0);
+                break;
+            }
+        }
+    }
+}
+
 bool Unit::getIgnoreUnitCollision() const
 {
     return m_IgnoreUnitCollision;
@@ -1690,6 +1732,7 @@ void Unit::serializeObject(QDataStream& pStream)
     pStream << m_Hidden;
     m_Variables.serializeObject(pStream);
     pStream << m_IgnoreUnitCollision;
+    pStream << static_cast<qint32>(m_AiMode);
 }
 
 void Unit::deserializeObject(QDataStream& pStream)
@@ -1751,6 +1794,15 @@ void Unit::deserializeObject(QDataStream& pStream)
     if (version > 5)
     {
         pStream >> m_IgnoreUnitCollision;
+    }
+    if (version > 6)
+    {
+        pStream >> value;
+        setAiMode(static_cast<GameEnums::GameAi>(value));
+    }
+    else
+    {
+        setAiMode(GameEnums::GameAi_Normal);
     }
 }
 

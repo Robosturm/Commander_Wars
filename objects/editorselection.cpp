@@ -26,6 +26,8 @@ EditorSelection::EditorSelection()
     m_BoxPlacementSize = createV9Box(0, startHPlacementSize, pApp->getSettings()->getWidth() / 4.0f, selectionHeight);
     m_BoxSelectedPlayer = createV9Box(0, startHSelectedPlayer, pApp->getSettings()->getWidth() / 4.0f, selectionHeight);
     m_BoxPlacementSelection = createV9Box(0, startHTerrain, pApp->getSettings()->getWidth() / 4.0f, pApp->getSettings()->getHeight() - startHTerrain);
+    qint32 xCount = (m_BoxPlacementSelection->getWidth() - GameMap::Imagesize - frameSize - frameSize) / (GameMap::Imagesize * xFactor) + 1;
+    m_selectedIndex.setZ(xCount);
     createBoxPlacementSize();
     createBoxSelectionMode();
     createPlayerSelection();
@@ -533,8 +535,6 @@ void EditorSelection::ClickedPlacementSelection(qint32 x, qint32 y)
             qint32 yHit = curY % static_cast<qint32>(GameMap::Imagesize * yFactor);
             if (yHit <= GameMap::Imagesize)
             {
-                qint32 xCount = (m_BoxPlacementSelection->getWidth() - GameMap::Imagesize - frameSize - frameSize) / (GameMap::Imagesize * xFactor) + 1;
-                m_selectedIndex.setZ(xCount);
                 yHit = curY / (GameMap::Imagesize * yFactor);
                 // valid click?
                 bool valid = false;
@@ -542,7 +542,7 @@ void EditorSelection::ClickedPlacementSelection(qint32 x, qint32 y)
                 {
                     case EditorMode::Terrain:
                     {
-                        if (xHit + yHit * xCount < m_Terrains.size())
+                        if (xHit + yHit * m_selectedIndex.z() < m_Terrains.size())
                         {
                             valid = true;
                         }
@@ -550,7 +550,7 @@ void EditorSelection::ClickedPlacementSelection(qint32 x, qint32 y)
                     }
                     case EditorMode::Building:
                     {
-                        if (xHit + yHit * xCount < m_Buildings.size())
+                        if (xHit + yHit * m_selectedIndex.z() < m_Buildings.size())
                         {
                             valid = true;
                         }
@@ -558,7 +558,7 @@ void EditorSelection::ClickedPlacementSelection(qint32 x, qint32 y)
                     }
                     case EditorMode::Unit:
                     {
-                        if (xHit + yHit * xCount < m_Units.size())
+                        if (xHit + yHit * m_selectedIndex.z() < m_Units.size())
                         {
                             valid = true;
                         }
@@ -597,6 +597,47 @@ void EditorSelection::selectTerrain(const QString& terrainID)
     }
      pApp->continueThread();
 }
+
+void EditorSelection::selectBuilding(const QString& buildingID)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    for (qint32 i = 0; i < m_Buildings.size(); i++)
+    {
+        if (m_Buildings[i]->getBuildingID() == buildingID)
+        {
+            if (m_selectedIndex.z() > 0)
+            {
+                // calc position
+                m_selectedIndex.setX(i % static_cast<qint32>(m_selectedIndex.z()));
+                m_selectedIndex.setY(i / static_cast<qint32>(m_selectedIndex.z()));
+                m_CurrentSelector->setPosition(frameSize + m_selectedIndex.x() * GameMap::Imagesize * xFactor, startH + GameMap::Imagesize * yFactor * m_selectedIndex.y());
+            }
+        }
+    }
+     pApp->continueThread();
+}
+
+void EditorSelection::selectUnit(const QString& unitID)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    for (qint32 i = 0; i < m_Units.size(); i++)
+    {
+        if (m_Units[i]->getUnitID() == unitID)
+        {
+            if (m_selectedIndex.z() > 0)
+            {
+                // calc position
+                m_selectedIndex.setX(i % static_cast<qint32>(m_selectedIndex.z()));
+                m_selectedIndex.setY(i / static_cast<qint32>(m_selectedIndex.z()));
+                m_CurrentSelector->setPosition(frameSize + m_selectedIndex.x() * GameMap::Imagesize * xFactor, startH + GameMap::Imagesize * yFactor * m_selectedIndex.y());
+            }
+        }
+    }
+     pApp->continueThread();
+}
+
 
 EditorSelection::PlacementSize EditorSelection::getSizeMode() const
 {

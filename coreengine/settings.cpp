@@ -27,7 +27,8 @@ qint32 Settings::m_GamePort          = 5603;
 bool Settings::m_Server           = true;
 
 // ingame options
-bool Settings::showAnimations = true;
+GameEnums::AnimationMode Settings::showAnimations = GameEnums::AnimationMode_All;
+quint32 Settings::animationSpeed = 1;
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -126,7 +127,20 @@ void Settings::loadSettings(){
     settings.endGroup();
 
     settings.beginGroup("Game");
-    showAnimations  = settings.value("ShowAnimations", true).toBool();
+    showAnimations  = static_cast<GameEnums::AnimationMode>(settings.value("ShowAnimations", 1).toInt(&ok));
+    if (!ok || showAnimations < GameEnums::AnimationMode_None || showAnimations > GameEnums::AnimationMode_Enemy)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " ShowAnimations";
+        Console::print(error, Console::eERROR);
+        animationSpeed = GameEnums::AnimationMode_All;
+    }
+    animationSpeed  = settings.value("AnimationSpeed", 1u).toUInt(&ok);
+    if(!ok || animationSpeed <= 0 ||  animationSpeed > 100u)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " AnimationSpeed";
+        Console::print(error, Console::eERROR);
+        animationSpeed = 1u;
+    }
     settings.endGroup();
 
     // network
@@ -180,7 +194,8 @@ void Settings::saveSettings(){
     settings.endGroup();
 
     settings.beginGroup("Game");
-    settings.setValue("ShowAnimations",                 showAnimations);
+    settings.setValue("ShowAnimations",                 static_cast<qint32>(showAnimations));
+    settings.setValue("AnimationSpeed",                 animationSpeed);
     settings.endGroup();
 
     // network
@@ -230,12 +245,12 @@ void Settings::setMouseSensitivity(float value)
     m_mouseSensitivity = value;
 }
 
-bool Settings::getShowAnimations()
+GameEnums::AnimationMode Settings::getShowAnimations()
 {
     return showAnimations;
 }
 
-void Settings::setShowAnimations(bool value)
+void Settings::setShowAnimations(GameEnums::AnimationMode value)
 {
     showAnimations = value;
 }
@@ -258,4 +273,14 @@ void Settings::setWidth(const qint32 &width)
 void Settings::setHeight(const qint32 &height)
 {
     m_height = height;
+}
+
+quint32 Settings::getAnimationSpeed()
+{
+    return animationSpeed;
+}
+
+void Settings::setAnimationSpeed(const quint32 &value)
+{
+    animationSpeed = value;
 }

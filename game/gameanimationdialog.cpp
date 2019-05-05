@@ -11,7 +11,8 @@
 #include "resource_management/cospritemanager.h"
 
 GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
-    : GameAnimation (frameTime)
+    : GameAnimation (frameTime),
+      textSpeed(100 / static_cast<qint32>(Settings::getAnimationSpeed()))
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -168,7 +169,7 @@ void GameAnimationDialog::setFinishDelay(qint32 valueMs)
 
 void GameAnimationDialog::setTextSpeed(qint32 speed)
 {
-    textSpeed = speed;
+    textSpeed = speed / static_cast<qint32>(Settings::getAnimationSpeed());
 }
 
 void GameAnimationDialog::restart()

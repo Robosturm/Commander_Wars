@@ -29,6 +29,9 @@ public:
     float getScrollvalue() const;
     void setScrollvalue(float Scrollvalue);
 
+    float getScrollspeed() const;
+    void setScrollspeed(float Scrollspeed);
+
 signals:
     /**
      * @brief sigScrollValueChanged emitted when the scroll value changes between 0.0f and 1.0f
@@ -47,6 +50,7 @@ private:
     qint32 m_Width;
     qint32 m_ContentWidth;
     qint32 m_scroll{0};
+    float m_Scrollspeed{1.0f};
     bool m_sliding{false};
     oxygine::spBox9Sprite  m_slider;
     QTime m_ScrollTimer;

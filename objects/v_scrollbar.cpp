@@ -178,7 +178,7 @@ void V_Scrollbar::update(const oxygine::UpdateState& us)
         {
             if (m_ContentWidth > m_Width)
             {
-                emit sigChangeScrollValue(m_Scrollvalue + m_scroll * 10.0f / static_cast<float>(m_ContentWidth));
+                emit sigChangeScrollValue(m_Scrollvalue + m_scroll * m_Scrollspeed * 10.0f / static_cast<float>(m_ContentWidth));
                 m_ScrollTimer.start();
             }
         }
@@ -190,6 +190,16 @@ void V_Scrollbar::changeScrollValue(float value)
 {
     setScrollvalue(value);
     emit sigScrollValueChanged(m_Scrollvalue);
+}
+
+float V_Scrollbar::getScrollspeed() const
+{
+    return m_Scrollspeed;
+}
+
+void V_Scrollbar::setScrollspeed(float Scrollspeed)
+{
+    m_Scrollspeed = Scrollspeed;
 }
 
 float V_Scrollbar::getScrollvalue() const

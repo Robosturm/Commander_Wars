@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.9.0, 2019-05-03T18:32:57. -->
+<!-- Written by QtCreator 4.9.0, 2019-05-04T15:31:59. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -75,7 +75,7 @@
      <value type="QString">CMAKE_BUILD_TYPE:STRING=Debug</value>
      <value type="QString">CMAKE_CXX_COMPILER:STRING=%{Compiler:Executable:Cxx}</value>
      <value type="QString">CMAKE_C_COMPILER:STRING=%{Compiler:Executable:C}</value>
-     <value type="QString">CMAKE_INSTALL_PREFIX:PATH=D:\Programmierung\Commander_Wars\builds\install</value>
+     <value type="QString">CMAKE_INSTALL_PREFIX:PATH=D:/Programmierung/Commander_Wars/builds/install</value>
      <value type="QString">CMAKE_PREFIX_PATH:STRING=%{Qt:QT_INSTALL_PREFIX}</value>
      <value type="QString">QT_QMAKE_EXECUTABLE:STRING=%{Qt:qmakeExecutable}</value>
     </valuelist>

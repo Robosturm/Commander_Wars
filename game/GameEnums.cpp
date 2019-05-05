@@ -65,5 +65,16 @@ void GameEnums::registerEnums()
     value.setProperty("GameRecord_SpecialEvents_HQCaptured", GameRecord_SpecialEvents_HQCaptured);
     value.setProperty("GameRecord_SpecialEvents_HQLost", GameRecord_SpecialEvents_HQLost);
 
+    value.setProperty("GameAi_Normal", GameAi_Normal);
+    value.setProperty("GameAi_Offensive", GameAi_Offensive);
+    value.setProperty("GameAi_Defensive", GameAi_Defensive);
+    value.setProperty("GameAi_Hold", GameAi_Hold);
+
+    value.setProperty("AnimationMode_None", AnimationMode_None);
+    value.setProperty("AnimationMode_All", AnimationMode_All);
+    value.setProperty("AnimationMode_Own", AnimationMode_Own);
+    value.setProperty("AnimationMode_Ally", AnimationMode_Ally);
+    value.setProperty("AnimationMode_Enemy", AnimationMode_Enemy);
+
     pInterpreter->setGlobal("GameEnums", value);
 }

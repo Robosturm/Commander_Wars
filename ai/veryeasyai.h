@@ -141,7 +141,6 @@ protected:
 protected:
     // helper functions to get targets for unit actions
     void appendCaptureTargets(QStringList actions, Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QPoint>& targets);
-    void appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QPoint>& targets);
     void appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QPoint>& targets);
     void appendRepairTargets(Unit* pUnit, QmlVectorBuilding* pBuildings, QVector<QPoint>& targets);
     void appendSupplyTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QPoint>& targets);

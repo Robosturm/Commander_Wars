@@ -12,7 +12,7 @@ class Slider : public V_Scrollbar
 {
     Q_OBJECT
 public:
-    explicit Slider(qint32 width, qint32 minValue, qint32 maxValue);
+    explicit Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit = "%");
 
     qint32 getCurrentValue() const;
     void setCurrentValue(const qint32 &CurrentValue);
@@ -26,6 +26,7 @@ private:
     qint32 m_minValue{0};
     qint32 m_maxValue{0};
     qint32 m_CurrentValue{0};
+    QString m_Unit;
 };
 
 #endif // SLIDER_H

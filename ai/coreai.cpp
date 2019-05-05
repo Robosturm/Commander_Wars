@@ -1,4 +1,6 @@
-#include "coreai.h"
+#include "ai/coreai.h"
+
+#include "ai/targetedunitpathfindingsystem.h"
 
 #include "coreengine/mainapp.h"
 
@@ -11,6 +13,10 @@
 #include "game/gameaction.h"
 
 #include "game/unitpathfindingsystem.h"
+
+#include "game/player.h"
+
+#include "game/co.h"
 
 #include "menue/gamemenue.h"
 
@@ -63,8 +69,11 @@ void CoreAI::nextAction()
     // check if it's our turn
     if (m_pPlayer == GameMap::getInstance()->getCurrentPlayer())
     {
-        // if so execute next action
-        process();
+        if (!processPredefinedAi())
+        {
+            // if so execute next action
+            process();
+        }
     }
 }
 
@@ -83,6 +92,38 @@ void CoreAI::getBestTarget(Unit* pUnit, GameAction* pAction, UnitPathFindingSyst
                 pAction->setMovepath(QVector<QPoint>(1, targets[i2]));
                 getAttacksFromField(pUnit, pAction, ret, moveTargetFields);
             }
+        }
+    }
+}
+
+void CoreAI::appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QPoint>& targets)
+{
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
+    {
+        Unit* pEnemy = pEnemyUnits->at(i2);
+        if (pUnit->isAttackable(pEnemy, true))
+        {
+            qint32 firerange = pUnit->getMaxRange();
+            QmlVectorPoint* pTargetFields = Mainapp::getCircle(firerange, firerange);
+            for (qint32 i3 = 0; i3 < pTargetFields->size(); i3++)
+            {
+                qint32 x = pTargetFields->at(i3).x() + pEnemy->getX();
+                qint32 y = pTargetFields->at(i3).y() + pEnemy->getY();
+                if (pMap->onMap(x, y) &&
+                    pMap->getTerrain(x, y)->getUnit() == nullptr)
+                {
+                    if (pUnit->canMoveOver(x, y))
+                    {
+                        QPoint possibleTarget(x, y);
+                        if (!targets.contains(possibleTarget))
+                        {
+                            targets.append(possibleTarget);
+                        }
+                    }
+                }
+            }
+            delete pTargetFields;
         }
     }
 }

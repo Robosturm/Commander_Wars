@@ -66,7 +66,7 @@ private:
 
     oxygine::spTextField m_TextField;
     QTime textTimer;
-    qint32 textSpeed{100};
+    qint32 textSpeed;
 
     float textScale{1.7f};
 };

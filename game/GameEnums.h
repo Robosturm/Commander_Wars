@@ -108,6 +108,24 @@ public:
     };
     Q_ENUM(GameRecord_SpecialEvents)
 
+    enum GameAi
+    {
+        GameAi_Normal,
+        GameAi_Offensive,
+        GameAi_Defensive,
+        GameAi_Hold
+    };
+    Q_ENUM(GameAi)
+
+    enum AnimationMode
+    {
+        AnimationMode_None,
+        AnimationMode_All,
+        AnimationMode_Own,
+        AnimationMode_Ally,
+        AnimationMode_Enemy,
+    };
+
     static void registerEnums();
 private:
     explicit GameEnums() = default;

@@ -388,7 +388,7 @@ qint32 CO::getFuelCostModifier(Unit* pUnit, QPoint position, qint32 costs)
 qint32 CO::getMovementcostModifier(Unit* pUnit, QPoint position)
 {
     Mainapp* pApp = Mainapp::getInstance();
-    QString function1 = "getMovementpointModifier";
+    QString function1 = "getMovementcostModifier";
     QJSValueList args1;
     QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
     args1 << obj2;
