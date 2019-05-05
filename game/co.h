@@ -301,9 +301,10 @@ public slots:
     /**
      * @brief inCORange
      * @param position
+     * @param pUnit
      * @return
      */
-    bool inCORange(QPoint position);
+    bool inCORange(QPoint position, Unit* pUnit);
     /**
      * @brief getFuelCostModifier
      * @param pUnit

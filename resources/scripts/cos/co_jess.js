@@ -159,7 +159,7 @@ var Constructor = function()
                     (seaUnits.indexOf(attacker.getUnitID()) < 0) &&
                     (infantryUnits.indexOf(attacker.getUnitID()) < 0))
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
                         return 30;
                     }

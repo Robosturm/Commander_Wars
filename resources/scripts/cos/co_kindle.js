@@ -196,7 +196,7 @@ var Constructor = function()
                 }
                 break;
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (building !== null)
                     {

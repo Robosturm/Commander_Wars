@@ -118,7 +118,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return 55;
             default:
-                if (co.inCORange(Qt.point(posX, posY)))
+                if (co.inCORange(Qt.point(posX, posY), unit))
                 {
                     return 30;
                 }
@@ -136,7 +136,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return 25;
             default:
-                if (co.inCORange(Qt.point(posX, posY)))
+                if (co.inCORange(Qt.point(posX, posY), unit))
                 {
                     return 15;
                 }

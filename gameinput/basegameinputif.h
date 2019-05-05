@@ -19,7 +19,7 @@ public:
     enum class AiTypes
     {
         Unkown = -1,
-        Human,
+        Human = 0,
         VeryEasy,
     };
 

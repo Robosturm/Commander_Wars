@@ -75,7 +75,9 @@ QJSValue Interpreter::doFunction(const QString& func, QJSValueList& args)
         ret = funcPointer.call(args);
         if (ret.isError())
         {
-            QString error = ret.toString();
+            QString error = ret.toString() + " in File: " +
+                            ret.property("fileName").toString() + " at Line: " +
+                            ret.property("lineNumber").toString();
             Console::print(error, Console::eERROR);
         }
     }
@@ -99,7 +101,9 @@ QJSValue Interpreter::doFunction(const QString& obj, const QString& func, const 
             ret = funcPointer.call(args);
             if (ret.isError())
             {
-                QString error = ret.toString();
+                QString error = ret.toString() + " in File: " +
+                                ret.property("fileName").toString() + " at Line: " +
+                                ret.property("lineNumber").toString();
                 Console::print(error, Console::eERROR);
             }
         }

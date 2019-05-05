@@ -117,7 +117,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return 0;
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     return 0;
                 }
@@ -185,7 +185,7 @@ var Constructor = function()
                     return 20;
                 }
             default:
-                if (co.inCORange(Qt.point(defPosX, defPosY)))
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
                     if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
                     {

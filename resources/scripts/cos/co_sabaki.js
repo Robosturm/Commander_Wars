@@ -125,7 +125,7 @@ var Constructor = function()
                     healPercent = 0.5;
                     break;
                 default:
-                    if (co.inCORange(Qt.point(attacker.getX(), attacker.getY())))
+                    if (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker))
                     {
                         healPercent = 0.2;
                     }

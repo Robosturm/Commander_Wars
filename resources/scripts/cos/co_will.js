@@ -145,7 +145,7 @@ var Constructor = function()
             default:
                 if (attacker.getMaxRange() === 1 && seaAirUnits.indexOf(attacker.getUnitID()) < 0)
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
                         return 20;
                     }

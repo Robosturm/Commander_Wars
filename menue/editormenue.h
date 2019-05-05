@@ -26,6 +26,10 @@ public:
     {
         return m_pInstance;
     }
+    /**
+     * @brief optimizePlayers
+     */
+    void optimizePlayers();
 signals:
     void sigOnMapClickedLeft();
     void sigOnMapClickedRight();
@@ -122,6 +126,10 @@ public slots:
      * @param playerCount
      */
     void changeMap(QString mapName, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount);
+    /**
+     * @brief playersChanged
+     */
+    void playersChanged();
 private:
     spEditorSelection m_EditorSelection{nullptr};
     EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};

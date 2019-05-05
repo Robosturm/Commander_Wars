@@ -140,7 +140,7 @@ var Constructor = function()
                 if (seaAirUnits.indexOf(attacker.getUnitID()) < 0)
                 {
 
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
                         return 30;
                     }
@@ -173,7 +173,7 @@ var Constructor = function()
                 }
                 return 0;
             default:
-                if (co.inCORange(Qt.point(defPosX, defPosY)))
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
                     if (seaAirUnits.indexOf(defender.getUnitID()) < 0)
                     {

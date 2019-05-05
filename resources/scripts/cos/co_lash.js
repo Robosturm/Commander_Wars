@@ -125,7 +125,7 @@ var Constructor = function()
                 case GameEnums.PowerMode_Power:
                     return terrainDefense * 10;
                 default:
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
                         return terrainDefense * 10;
                     }

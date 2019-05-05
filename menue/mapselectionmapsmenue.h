@@ -19,6 +19,8 @@
 
 #include "objects/multislider.h"
 
+#include "objects/playerselection.h"
+
 class GameMap;
 
 class MapSelectionMapsMenue : public QObject, public oxygine::Actor
@@ -39,16 +41,12 @@ public:
     void showMapSelection();
     void hideRuleSelection();
     void showRuleSelection();
-    void hideCOSelection();
-    void showCOSelection();
+    void hidePlayerSelection();
+    void showPlayerSelection();
 signals:
     void buttonBack();
     void buttonNext();
     void buttonStartGame();
-    void buttonAllCOsRandom();
-    void sigShowSelectCO(qint32 player, quint8 co);
-    void buttonShowAllBuildList();
-    void buttonShowPlayerBuildList(qint32 player);
 public slots:
     // slots for changing the map
     void mapSelectionItemClicked(QString item);
@@ -57,23 +55,6 @@ public slots:
     // slots for changing the rules
     void startWeatherChanged(qint32 value);
     void weatherChancesChanged();
-
-    // slots for changing player data
-    void allPlayerIncomeChanged(float value);
-    void playerIncomeChanged(float value, qint32 playerIdx);
-    void allPlayerStartFondsChanged(float value);
-    void playerStartFondsChanged(float value, qint32 playerIdx);
-    void playerTeamChanged(qint32 value, qint32 playerIdx);
-    void playerColorChanged(QColor value, qint32 playerIdx);
-    void showSelectCO(qint32 player, quint8 co);
-    void playerCO1Changed(QString coid, qint32 playerIdx);
-    void playerCO2Changed(QString coid, qint32 playerIdx);
-    void playerCOCanceled();
-    void slotAllCOsRandom();
-    void slotShowAllBuildList();
-    void slotShowPlayerBuildList(qint32 player);
-    void slotChangeAllBuildList(qint32, QStringList buildList);
-    void slotChangePlayerBuildList(qint32 player, QStringList buildList);
 
     // general slots
     void slotButtonBack();
@@ -97,13 +78,7 @@ private:
     spPanel m_pRuleSelection;
     spMultislider m_pWeatherSlider;
 
-    // player selection
-    spPanel m_pPlayerSelection;
-    QVector<oxygine::spSprite> m_playerCO1;
-    QVector<oxygine::spSprite> m_playerCO2;
-    QVector<spSpinBox> m_playerIncomes;
-    QVector<spSpinBox> m_playerStartFonds;
-    QVector<spDropDownmenu> m_playerAIs;
+    spPlayerSelection m_pPlayerSelection;
 
     MapSelectionStep m_MapSelectionStep{MapSelectionStep::selectMap};
 };

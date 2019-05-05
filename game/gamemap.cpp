@@ -238,6 +238,11 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput)
     }
 }
 
+void GameMap::removePlayer(qint32 index)
+{
+    players.removeAt(index);
+}
+
 Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint32 range)
 {
     qint32 heigth = getMapHeight();

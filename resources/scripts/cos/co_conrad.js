@@ -128,7 +128,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return visionCount * 5;
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     return visionCount * 2;
                 }

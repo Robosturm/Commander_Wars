@@ -72,6 +72,8 @@ set(${PROJECT_NAME}_SRCS
         objects/buildlistdialog.cpp
         objects/coinfodialog.cpp
         objects/dialogmodifyunit.cpp
+        objects/playerselection.cpp
+        objects/playerselectiondialog.cpp
 
         #menues
         menue/mainwindow.cpp

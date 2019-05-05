@@ -150,7 +150,7 @@ var Constructor = function()
             default:
                 if (airUnits.indexOf(attacker.getUnitID()) >= 0)
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
                         return 20;
                     }
@@ -184,7 +184,7 @@ var Constructor = function()
             default:
                 if (airUnits.indexOf(defender.getUnitID()) >= 0)
                 {
-                    if (co.inCORange(Qt.point(defPosX, defPosY)))
+                    if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                     {
                         return 30;
                     }

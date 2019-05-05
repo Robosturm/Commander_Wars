@@ -679,7 +679,7 @@ void CO::setPowerMode(const GameEnums::PowerMode &PowerMode)
 
 void CO::gainPowerstar(qint32 fondsDamage, QPoint position)
 {
-    if (!inCORange(position))
+    if (!inCORange(position, nullptr))
     {
         // reduce power meter gain when not in co range
         fondsDamage /= 4;
@@ -742,7 +742,7 @@ qint32 CO::getCORange()
     return ret;
 }
 
-bool CO::inCORange(QPoint position)
+bool CO::inCORange(QPoint position, Unit* pUnit)
 {
     if (position.x() < 0 && position.y() < 0)
     {
@@ -752,6 +752,10 @@ bool CO::inCORange(QPoint position)
     else if (m_pCOUnit != nullptr)
     {
         if ((qAbs(m_pCOUnit->getX() - position.x()) + qAbs(m_pCOUnit->getY() - position.y())) <= getCORange())
+        {
+            return true;
+        }
+        else if (pUnit == m_pCOUnit)
         {
             return true;
         }

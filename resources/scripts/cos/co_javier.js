@@ -122,7 +122,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return towers * 15;
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     return towers * 5;
                 }
@@ -157,7 +157,7 @@ var Constructor = function()
             default:
                 if (rangedAttacked)
                 {
-                    if (co.inCORange(Qt.point(defPosX, defPosY)))
+                    if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                     {
                         ret += 20;
                         ret += towers * 5;

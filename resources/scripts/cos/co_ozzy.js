@@ -148,7 +148,7 @@ var Constructor = function()
                     return 60;
                 }
             default:
-                if (co.inCORange(Qt.point(defPosX, defPosY)))
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
                     return 30;
                 }

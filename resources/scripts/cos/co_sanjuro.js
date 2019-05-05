@@ -167,7 +167,7 @@ var Constructor = function()
         default:
             if (modifier > 0)
             {
-                if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     return modifier;
                 }

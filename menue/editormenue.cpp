@@ -18,6 +18,8 @@
 
 #include "objects/dialogmodifyunit.h"
 
+#include "objects/playerselectiondialog.h"
+
 #include "game/terrainfindingsystem.h"
 #include "game/co.h"
 
@@ -58,6 +60,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Place Selection"), "PLACESELECTION", 2);
     m_Topbar->addItem(tr("Delete Units"), "DELETEUNITS", 2);
     m_Topbar->addItem(tr("Edit Units"), "EDITUNITS", 2);
+    m_Topbar->addItem(tr("Edit Players"), "EDITPLAYERS", 2);
     m_Topbar->addItem(tr("Optimize Players"), "OPTIMIZEPLAYERS", 2);
 
     m_Topbar->addGroup(tr("Import/Export"));
@@ -199,6 +202,62 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         m_EditorMode = EditorModes::EditUnits;
     }
+    else if (itemID == "OPTIMIZEPLAYERS")
+    {
+        optimizePlayers();
+    }
+    else if (itemID == "EDITPLAYERS")
+    {
+        spPlayerSelectionDialog pDiaolog = new PlayerSelectionDialog();
+        addChild(pDiaolog);
+        connect(pDiaolog.get(), &PlayerSelectionDialog::sigPlayersChanged, this, &EditorMenue::playersChanged, Qt::QueuedConnection);
+    }
+    pApp->continueThread();
+}
+
+void EditorMenue::playersChanged()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    m_EditorSelection->createPlayerSelection();
+    pApp->continueThread();
+}
+
+void EditorMenue::optimizePlayers()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    GameMap* pMap = GameMap::getInstance();
+    QVector<bool> foundPlayers(pMap->getPlayerCount(), false);
+    qint32 mapWidth = pMap->getMapWidth();
+    qint32 mapHeigth = pMap->getMapHeight();
+    for (qint32 x = 0; x < mapWidth; x++)
+    {
+        for (qint32 y = 0; y < mapHeigth; y++)
+        {
+            Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+            if (pBuilding != nullptr && pBuilding->getOwner() != nullptr)
+            {
+                foundPlayers[pBuilding->getOwner()->getPlayerID()] = true;
+            }
+            if (pUnit != nullptr)
+            {
+                foundPlayers[pUnit->getOwner()->getPlayerID()] = true;
+            }
+        }
+    }
+    for (qint32 i = foundPlayers.size() - 1; i >= 0; i--)
+    {
+        if (pMap->getPlayerCount() > 2)
+        {
+            if (foundPlayers[i] == false)
+            {
+                pMap->removePlayer(i);
+            }
+        }
+    }
+    m_EditorSelection->createPlayerSelection();
     pApp->continueThread();
 }
 
@@ -619,7 +678,9 @@ void EditorMenue::loadMap(QString filename)
             QDataStream stream(&file);
             GameMap::getInstance()->deserializeObject(stream);
             file.close();
-            GameMap::getInstance()->updateSprites();
+            GameMap* pMap = GameMap::getInstance();
+            pMap->updateSprites();
+            pMap->centerMap(pMap->getMapWidth() / 2, pMap->getMapHeight() / 2);
             m_EditorSelection->createPlayerSelection();
         }
     }

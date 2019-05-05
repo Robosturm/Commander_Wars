@@ -139,7 +139,7 @@ var Constructor = function()
                     return 0;
                 }
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
                     {

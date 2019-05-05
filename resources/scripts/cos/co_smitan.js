@@ -209,7 +209,7 @@ var Constructor = function()
             default:
                 if (attacker.getMaxRange() === 1)
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
                         return inRangeCount * 10;
                     }

@@ -152,7 +152,7 @@ var Constructor = function()
             default:
                 if (nearMountains === true)
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
 
                         return 25;

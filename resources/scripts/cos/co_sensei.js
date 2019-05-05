@@ -134,7 +134,7 @@ var Constructor = function()
             default:
                 if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
                         return 30;
                     }
@@ -142,7 +142,7 @@ var Constructor = function()
                 }
                 else if (attacker.getUnitID() === "K_HELI")
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
                         return 50;
                     }

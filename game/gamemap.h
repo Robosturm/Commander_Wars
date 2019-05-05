@@ -200,6 +200,11 @@ public:
      * @param startPlayer
      */
     void startGame(qint32 startPlayer);
+    /**
+     * @brief removePlayer removes a player from the map only use this in the editor menue
+     * @param index
+     */
+    void removePlayer(qint32 index);
 signals:
     void signalExitGame();
     void signalSaveGame();

@@ -8,6 +8,7 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/cospritemanager.h"
+
 #include "resource_management/gamerulemanager.h"
 
 #include "game/gamemap.h"
@@ -16,17 +17,12 @@
 
 #include "game/co.h"
 
-#include "gameinput/humanplayerinput.h"
-#include "ai/veryeasyai.h"
-
 #include "menue/mainwindow.h"
 #include "menue/gamemenue.h"
 
-#include "objects/dropdownmenucolor.h"
 #include "objects/checkbox.h"
-#include "objects/coselectiondialog.h"
 #include "objects/spinbox.h"
-#include "objects/buildlistdialog.h"
+
 
 #include "QFileInfo"
 
@@ -169,14 +165,10 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
     connect(this, SIGNAL(buttonStartGame()), this, SLOT(startGame()), Qt::QueuedConnection);
 
     qint32 yPos = 10;
-    m_pPlayerSelection = new Panel(true,
-                                   QSize(pApp->getSettings()->getWidth() - 20,
-                                         pApp->getSettings()->getHeight() - yPos - 20 - pButtonBack->getHeight()),
-                                   QSize(pApp->getSettings()->getWidth() - 70, 100));
+    m_pPlayerSelection = new PlayerSelection(pApp->getSettings()->getWidth() - 20,
+                                             pApp->getSettings()->getHeight() - yPos - 20 - pButtonBack->getHeight());
     m_pPlayerSelection->setPosition(10, yPos);
-    this->addChild(m_pPlayerSelection);
-
-
+    addChild(m_pPlayerSelection);
 
     QSize size(pApp->getSettings()->getWidth() - 20,
                pApp->getSettings()->getHeight() - 40 * 2);
@@ -184,9 +176,8 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
     m_pRuleSelection->setPosition(10, 20);
     addChild(m_pRuleSelection);
 
-    connect(this, &MapSelectionMapsMenue::sigShowSelectCO, this, &MapSelectionMapsMenue::showSelectCO, Qt::QueuedConnection);
-    connect(this, &MapSelectionMapsMenue::buttonShowPlayerBuildList, this, &MapSelectionMapsMenue::slotShowPlayerBuildList, Qt::QueuedConnection);
-    hideCOSelection();
+
+    hidePlayerSelection();
     hideRuleSelection();
 }
 
@@ -218,7 +209,7 @@ void MapSelectionMapsMenue::slotButtonBack()
         case MapSelectionStep::selectPlayer:
         {
             showRuleSelection();
-            hideCOSelection();
+            hidePlayerSelection();
             m_MapSelectionStep = MapSelectionStep::selectRules;
             break;
         }
@@ -245,7 +236,7 @@ void MapSelectionMapsMenue::slotButtonNext()
         case MapSelectionStep::selectRules:
         {
             hideRuleSelection();
-            showCOSelection();
+            showPlayerSelection();
             m_MapSelectionStep = MapSelectionStep::selectPlayer;
             break;
         }
@@ -547,441 +538,21 @@ void MapSelectionMapsMenue::showRuleSelection()
     pApp->continueThread();
 }
 
-void MapSelectionMapsMenue::hideCOSelection()
+void MapSelectionMapsMenue::showPlayerSelection()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    m_pPlayerSelection->setVisible(false);
-    m_pButtonStart->setVisible(false);
-    m_pButtonNext->setVisible(true);
-    m_pPlayerSelection->clearContent();
-    m_playerCO1.clear();
-    m_playerCO2.clear();
-    m_playerIncomes.clear();
-    m_playerStartFonds.clear();
-    m_playerAIs.clear();
-    pApp->continueThread();
-}
-
-void MapSelectionMapsMenue::showSelectCO(qint32 player, quint8 co)
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    QString coid = "";
-    if (m_pCurrentMap->getPlayer(player)->getCO(co) != nullptr)
-    {
-        coid = m_pCurrentMap->getPlayer(player)->getCO(co)->getCoID();
-    }
-    spCOSelectionDialog dialog = new COSelectionDialog(coid, m_pCurrentMap->getPlayer(player)->getColor(), player);
-    this->addChild(dialog);
-    m_pPlayerSelection->setVisible(false);
-    if (co == 0)
-    {
-        connect(dialog.get(), &COSelectionDialog::editFinished, this , &MapSelectionMapsMenue::playerCO1Changed, Qt::QueuedConnection);
-    }
-    else
-    {
-        connect(dialog.get(), &COSelectionDialog::editFinished, this , &MapSelectionMapsMenue::playerCO2Changed, Qt::QueuedConnection);
-    }
-
-    connect(dialog.get(), &COSelectionDialog::canceled, this , &MapSelectionMapsMenue::playerCOCanceled, Qt::QueuedConnection);
-    pApp->continueThread();
-}
-
-void MapSelectionMapsMenue::showCOSelection()
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    m_pPlayerSelection->setVisible(true);
     m_pButtonStart->setVisible(true);
     m_pButtonNext->setVisible(false);
-    // font style
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-
-    // add player labels at top
-    QStringList items = {tr("Username"), tr("CO's"), tr("Color"), tr("AI Strength"), tr("Startfonds"), tr("Income Modifier"), tr("Team"), tr("Build List")};
-    QVector<qint32> xPositions;
-    qint32 labelminStepSize = (pApp->getSettings()->getWidth() - 100) / items.size();
-    if (labelminStepSize < 150)
-    {
-        labelminStepSize = 150;
-    }
-    qint32 curPos = 5;
-
-    oxygine::spTextField pLabel;
-    for (qint32 i = 0; i < items.size(); i++)
-    {
-        xPositions.append(curPos);
-        pLabel = new oxygine::TextField();
-        pLabel->setStyle(style);
-        pLabel->setText(items[i].toStdString().c_str());
-        qint32 width = pLabel->getTextRect().getWidth() + 10;
-        pLabel->setPosition(curPos, 5);
-        m_pPlayerSelection->addItem(pLabel);
-        if (width < labelminStepSize)
-        {
-            width = labelminStepSize;
-        }
-        curPos += width;
-    }
-    xPositions.append(curPos);
-    m_pPlayerSelection->setContentWidth(curPos + 50);
-    qint32 y = pLabel->getTextRect().getHeight() + 10 + 25;
-    // all player
-    pLabel = new oxygine::TextField();
-    pLabel->setStyle(style);
-    pLabel->setText(tr("All").toStdString().c_str());
-    pLabel->setPosition(xPositions[0], y);
-    m_pPlayerSelection->addItem(pLabel);
-
-    qint32 itemIndex = 1;
-    oxygine::spButton pButtonAllCOs = ObjectManager::createButton(tr("All Random"));
-    pButtonAllCOs->setPosition(xPositions[itemIndex] - 40, y);
-    m_pPlayerSelection->addItem(pButtonAllCOs);
-    pButtonAllCOs->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit buttonAllCOsRandom();
-    });
-    connect(this, &MapSelectionMapsMenue::buttonAllCOsRandom, this, &MapSelectionMapsMenue::slotAllCOsRandom, Qt::QueuedConnection);
-
-    itemIndex = 4;
-    spSpinBox allStartFondsSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
-    allStartFondsSpinBox->setPosition(xPositions[itemIndex], y);
-    m_pPlayerSelection->addItem(allStartFondsSpinBox);
-    connect(allStartFondsSpinBox.get(), SIGNAL(sigValueChanged(float)), this, SLOT(allPlayerStartFondsChanged(float)), Qt::QueuedConnection);
-
-    itemIndex = 5;
-    spSpinBox allIncomeSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 10, SpinBox::Mode::Float);
-    allIncomeSpinBox->setPosition(xPositions[itemIndex], y);
-    allIncomeSpinBox->setCurrentValue(1.0f);
-    allIncomeSpinBox->setSpinSpeed(0.1f);
-    m_pPlayerSelection->addItem(allIncomeSpinBox);
-    connect(allIncomeSpinBox.get(), SIGNAL(sigValueChanged(float)), this, SLOT(allPlayerIncomeChanged(float)), Qt::QueuedConnection);
-
-    itemIndex = 7;
-    oxygine::spButton pButtonAllBuildList = ObjectManager::createButton(tr("Build List"));
-    pButtonAllBuildList->setPosition(xPositions[itemIndex], y);
-    m_pPlayerSelection->addItem(pButtonAllBuildList);
-    pButtonAllBuildList->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit buttonShowAllBuildList();
-    });
-    connect(this, &MapSelectionMapsMenue::buttonShowAllBuildList, this, &MapSelectionMapsMenue::slotShowAllBuildList, Qt::QueuedConnection);
-
-    y += 10 + allIncomeSpinBox->getHeight();
-    QVector<QString> teamList;
-    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
-    {
-        teamList.append(tr("Team") + " " + QString::number(i + 1));
-    }
-
-    QVector<QString> aiList = {tr("Human"), tr("Very Easy")};
-
-    QString function = "getDefaultPlayerColors";
-    QJSValueList args;
-    QJSValue ret = pApp->getInterpreter()->doFunction("PLAYER", function, args);
-    qint32 colorCount = ret.toInt();
-    QVector<QColor> playerColors;
-
-    for (qint32 i = 0; i < colorCount; i++)
-    {
-        Mainapp* pApp = Mainapp::getInstance();
-        QString function = "getDefaultColor";
-        QJSValueList args;
-        args << i;
-        ret = pApp->getInterpreter()->doFunction("PLAYER", function, args);
-        playerColors.append(QColor(ret.toString()));
-    }
-    bool allPlayer1 = true;
-    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
-    {
-        if (m_pCurrentMap->getPlayer(i)->getTeam() != 0)
-        {
-            allPlayer1 = false;
-            break;
-        }
-    }
-    // assume players had no real team assigned
-    // reassign each a unique team
-    if (allPlayer1)
-    {
-        for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
-        {
-           m_pCurrentMap->getPlayer(i)->setTeam(i);
-        }
-    }
-
-    // add player selection information
-    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
-    {
-        itemIndex = 1;
-        oxygine::spSprite spriteCO1 = new oxygine::Sprite();
-        spriteCO1->setPosition(xPositions[itemIndex], y);
-        spriteCO1->setSize(32, 12);
-        spriteCO1->setScale(2.0f);
-        m_pPlayerSelection->addItem(spriteCO1);
-        m_playerCO1.append(spriteCO1);
-        if (m_pCurrentMap->getPlayer(i)->getCO(0) != nullptr)
-        {
-            playerCO1Changed(m_pCurrentMap->getPlayer(i)->getCO(0)->getCoID(), i);
-        }
-        else
-        {
-            playerCO1Changed("", i);
-        }
-        spriteCO1->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
-        {           
-            emit sigShowSelectCO(i, 0);
-        });
-
-        oxygine::spSprite spriteCO2 = new oxygine::Sprite();
-        spriteCO2->setPosition(xPositions[itemIndex], y + 24);
-        spriteCO2->setSize(32, 12);
-        spriteCO2->setScale(2.0f);
-        m_pPlayerSelection->addItem(spriteCO2);
-        m_playerCO2.append(spriteCO2);
-        if (m_pCurrentMap->getPlayer(i)->getCO(1) != nullptr)
-        {
-            playerCO2Changed(m_pCurrentMap->getPlayer(i)->getCO(1)->getCoID(), i);
-        }
-        else
-        {
-            playerCO2Changed("", i);
-        }
-        spriteCO2->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
-        {           
-            emit sigShowSelectCO(i, 1);
-        });
-
-        bool up = false;
-        if ((m_pCurrentMap->getPlayerCount() - i <= 5) &&
-            (i > 5))
-        {
-            up = true;
-        }
-
-        itemIndex = 2;
-        spDropDownmenuColor playerColor = new DropDownmenuColor(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, playerColors, up);
-        playerColor->setPosition(xPositions[itemIndex], y);
-        playerColor->setCurrentItem(m_pCurrentMap->getPlayer(i)->getColor());
-        m_pPlayerSelection->addItem(playerColor);
-        connect(playerColor.get(), &DropDownmenuColor::sigItemChanged, this, [=](QColor value)
-        {
-            playerColorChanged(value, i);
-        }, Qt::QueuedConnection);
-
-        itemIndex = 3;
-        spDropDownmenu playerAi = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, aiList, up);
-        playerAi->setPosition(xPositions[itemIndex], y);
-        if (i > 0)
-        {
-            playerAi->setCurrentItem(1);
-        }
-        else
-        {
-             playerAi->setCurrentItem(0);
-        }
-        m_playerAIs.append(playerAi);
-        m_pPlayerSelection->addItem(playerAi);
-
-        itemIndex = 4;
-        spSpinBox playerStartFondsSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
-        playerStartFondsSpinBox->setPosition(xPositions[itemIndex], y);
-        playerStartFondsSpinBox->setCurrentValue(m_pCurrentMap->getPlayer(i)->getFonds());
-        m_pPlayerSelection->addItem(playerStartFondsSpinBox);
-        m_playerStartFonds.append(playerStartFondsSpinBox);
-        connect(playerStartFondsSpinBox.get(), &SpinBox::sigValueChanged, this, [=](float value)
-        {
-            playerStartFondsChanged(value, i);
-        }, Qt::QueuedConnection);
-
-        itemIndex = 5;
-        spSpinBox playerIncomeSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 10, SpinBox::Mode::Float);
-        playerIncomeSpinBox->setPosition(xPositions[itemIndex], y);
-        playerIncomeSpinBox->setCurrentValue(m_pCurrentMap->getPlayer(i)->getFondsModifier());
-        playerIncomeSpinBox->setSpinSpeed(0.1f);
-        m_pPlayerSelection->addItem(playerIncomeSpinBox);
-        m_playerIncomes.append(playerIncomeSpinBox);
-        connect(playerIncomeSpinBox.get(), &SpinBox::sigValueChanged, this, [=](float value)
-        {
-            playerIncomeChanged(value, i);
-        }, Qt::QueuedConnection);
-
-        itemIndex = 6;
-
-        spDropDownmenu playerTeam = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, teamList, up);
-        playerTeam->setPosition(xPositions[itemIndex], y);
-        playerTeam->setCurrentItem(m_pCurrentMap->getPlayer(i)->getTeam());
-        m_pPlayerSelection->addItem(playerTeam);
-        connect(playerTeam.get(), &DropDownmenu::sigItemChanged, this, [=](qint32 value)
-        {
-            playerTeamChanged(value, i);
-        }, Qt::QueuedConnection);
-
-        itemIndex = 7;
-        oxygine::spButton pButtonPlayerBuildList = ObjectManager::createButton(tr("Build List"));
-        pButtonPlayerBuildList->setPosition(xPositions[itemIndex], y);
-        m_pPlayerSelection->addItem(pButtonPlayerBuildList);
-        pButtonPlayerBuildList->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-        {
-            emit buttonShowPlayerBuildList(i);
-        });
-        y += 15 + playerIncomeSpinBox->getHeight();
-    }
-    m_pPlayerSelection->setContentHeigth(y);
-    pApp->continueThread();
-}
-
-void MapSelectionMapsMenue::allPlayerIncomeChanged(float value)
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
-    {
-        m_pCurrentMap->getPlayer(i)->setFondsModifier(value);
-        m_playerIncomes[i]->setCurrentValue(value);
-    }
-    pApp->continueThread();
-}
-void MapSelectionMapsMenue::allPlayerStartFondsChanged(float value)
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
-    {
-        m_pCurrentMap->getPlayer(i)->setFonds(static_cast<qint32>(value));
-        m_playerStartFonds[i]->setCurrentValue(value);
-    }
-    pApp->continueThread();
-}
-void MapSelectionMapsMenue::playerIncomeChanged(float value, qint32 playerIdx)
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    m_pCurrentMap->getPlayer(playerIdx)->setFondsModifier(static_cast<qint32>(value));
-    pApp->continueThread();
-}
-
-void MapSelectionMapsMenue::slotShowAllBuildList()
-{
-    // use player 0 as default for showing all
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    spBuildListDialog dialog = new BuildListDialog(0, m_pCurrentMap->getPlayer(0)->getBuildList());
-    this->addChild(dialog);
-    connect(dialog.get(), &BuildListDialog::editFinished, this , &MapSelectionMapsMenue::slotChangeAllBuildList, Qt::QueuedConnection);
-    pApp->continueThread();
-}
-
-void MapSelectionMapsMenue::slotShowPlayerBuildList(qint32 player)
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    spBuildListDialog dialog = new BuildListDialog(player, m_pCurrentMap->getPlayer(player)->getBuildList());
-    this->addChild(dialog);
-    connect(dialog.get(), &BuildListDialog::editFinished, this , &MapSelectionMapsMenue::slotChangePlayerBuildList, Qt::QueuedConnection);
-    pApp->continueThread();
-}
-
-void MapSelectionMapsMenue::slotChangeAllBuildList(qint32, QStringList buildList)
-{
-    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
-    {
-        m_pCurrentMap->getPlayer(i)->setBuildList(buildList);
-    }
-}
-
-void MapSelectionMapsMenue::slotChangePlayerBuildList(qint32 player, QStringList buildList)
-{
-    if (player >= 0 && player < m_pCurrentMap->getPlayerCount())
-    {
-        m_pCurrentMap->getPlayer(player)->setBuildList(buildList);
-    }
-}
-
-void MapSelectionMapsMenue::playerStartFondsChanged(float value, qint32 playerIdx)
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    m_pCurrentMap->getPlayer(playerIdx)->setFonds(static_cast<qint32>(value));
-    pApp->continueThread();
-}
-void MapSelectionMapsMenue::playerTeamChanged(qint32 value, qint32 playerIdx)
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    m_pCurrentMap->getPlayer(playerIdx)->setTeam(value);
-    pApp->continueThread();
-}
-void MapSelectionMapsMenue::playerColorChanged(QColor value, qint32 playerIdx)
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    m_pCurrentMap->getPlayer(playerIdx)->setColor(value);
-    pApp->continueThread();
-}
-void MapSelectionMapsMenue::playerCO1Changed(QString coid, qint32 playerIdx)
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    m_pCurrentMap->getPlayer(playerIdx)->setCO(coid, 0);
-    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    oxygine::ResAnim* pAnim = nullptr;
-    if (coid.isEmpty())
-    {
-        pAnim = pCOSpriteManager->getResAnim("no_co+info");
-    }
-    else
-    {
-        pAnim = pCOSpriteManager->getResAnim((coid + "+info").toStdString().c_str());
-    }
-    m_playerCO1[playerIdx]->setResAnim(pAnim);
     m_pPlayerSelection->setVisible(true);
-    pApp->continueThread();
+    m_pPlayerSelection->showPlayerSelection();
 }
 
-void MapSelectionMapsMenue::playerCO2Changed(QString coid, qint32 playerIdx)
+void MapSelectionMapsMenue::hidePlayerSelection()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    m_pCurrentMap->getPlayer(playerIdx)->setCO(coid, 1);
-    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    oxygine::ResAnim* pAnim = nullptr;
-    if (coid.isEmpty())
-    {
-        pAnim = pCOSpriteManager->getResAnim("no_co+info");
-    }
-    else
-    {
-        pAnim = pCOSpriteManager->getResAnim((coid + "+info").toStdString().c_str());
-    }
-    m_playerCO2[playerIdx]->setResAnim(pAnim);
-    m_pPlayerSelection->setVisible(true);
-    pApp->continueThread();
+    m_pButtonStart->setVisible(false);
+    m_pButtonNext->setVisible(true);
+    m_pPlayerSelection->setVisible(false);
 }
 
-void MapSelectionMapsMenue::playerCOCanceled()
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    m_pPlayerSelection->setVisible(true);
-    pApp->continueThread();
-}
-
-void MapSelectionMapsMenue::slotAllCOsRandom()
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
-    {
-        playerCO1Changed("CO_RANDOM", i);
-        playerCO2Changed("CO_RANDOM", i);
-    }
-    pApp->continueThread();
-}
 
 void MapSelectionMapsMenue::startGame()
 {
@@ -1015,24 +586,7 @@ void MapSelectionMapsMenue::startGame()
                 pPlayer->setCO(pCOSpriteManager->getCOID(Mainapp::randInt(0, pCOSpriteManager->getCOCount() - 1)), 1);
             }
         }
-        switch (m_playerAIs[i]->getCurrentItem())
-        {
-            case 0:
-            {
-                pPlayer->setBaseGameInput(new HumanPlayerInput());
-                break;
-            }
-            case 1:
-            {
-                pPlayer->setBaseGameInput(new VeryEasyAI());
-                break;
-            }
-            default:
-            {
-                pPlayer->setBaseGameInput(new HumanPlayerInput());
-                break;
-            }
-        }
+        // define army of this player
         pPlayer->defineArmy();
     }
 
