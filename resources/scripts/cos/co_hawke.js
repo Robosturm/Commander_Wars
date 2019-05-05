@@ -187,7 +187,8 @@ var Constructor = function()
     };
     this.getPowerSentences = function()
     {
-        return [qsTr("This is the end.|Farewell."),
+        return [qsTr("This is the end."),
+                qsTr("Farewell."),
                 qsTr("I give you credit for pushing me this far."),
                 qsTr("You have inspired me to take action."),
                 qsTr("To be defeated is to lose everything. Are you prepared for that outcome?"),

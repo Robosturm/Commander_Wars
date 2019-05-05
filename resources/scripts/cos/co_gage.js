@@ -6,9 +6,26 @@ var Constructor = function()
         co.setSuperpowerStars(3);
     };
 
-    this.getAirUnitIDS = function()
+    this.loadCOMusic = function(co)
     {
-        return ["BOMBER", "FIGHTER", "BLACK_BOMB", "DUSTER", "K_HELI", "T_HELI", "STEALTHBOMBER", "TRANSPORTPLANE", "WATERPLANE"];
+        // put the co music in here.
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3");
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3");
+                break;
+            default:
+                audio.addMusic("resources/music/cos/gage.mp3")
+                break;
+        }
+    };
+
+    this.getSeaUnitIDS = function()
+    {
+        return ["AIRCRAFTCARRIER", "CRUISER", "BATTLESHIP", "CANNONBOAT", "BLACK_BOAT", "DESTROYER", "SUBMARINE"];
     };
 
     this.activatePower = function(co)
@@ -20,24 +37,23 @@ var Constructor = function()
         var units = co.getPlayer().getUnits();
         var animations = [];
         var counter = 0;
-        var airUnitIDs = CO_WAYLON.getAirUnitIDS();
         units.randomize();
+        var seaUnits = CO_GAGE.getSeaUnitIDS();
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (airUnitIDs.indexOf(unit.getUnitID())  >= 0)
+            if (unit.getMinRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
             {
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-
                 if (animations.length < 5)
                 {
-                    animation.addSprite("power2", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5, globals.randInt(0, 400));
+                    animation.addSprite("power9", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
                     powerNameAnimation.queueAnimation(animation);
                     animations.push(animation);
                 }
                 else
                 {
-                    animation.addSprite("power2", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5);
+                    animation.addSprite("power9", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
                     animations[counter].queueAnimation(animation);
                     animations[counter] = animation;
                     counter++;
@@ -51,7 +67,7 @@ var Constructor = function()
         units.remove();
 
         audio.clearPlayList();
-        CO_WAYLON.loadCOMusic(co);
+        CO_GRIT.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -64,15 +80,14 @@ var Constructor = function()
         var units = co.getPlayer().getUnits();
         var animations = [];
         var counter = 0;
-        var airUnitIDs = CO_WAYLON.getAirUnitIDS();
         units.randomize();
+        var seaUnits = CO_GAGE.getSeaUnitIDS();
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (airUnitIDs.indexOf(unit.getUnitID())  >= 0)
+            if (unit.getMinRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
             {
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-
                 if (animations.length < 5)
                 {
                     animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5, globals.randInt(0, 400));
@@ -95,162 +110,158 @@ var Constructor = function()
         units.remove();
 
         audio.clearPlayList();
-        CO_WAYLON.loadCOMusic(co);
+        CO_GAGE.loadCOMusic(co);
         audio.playRandom();
-    };
-
-    this.loadCOMusic = function(co)
-    {
-        // put the co music in here.
-        switch (co.getPowerMode())
-        {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/bh_power.mp3");
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/bh_superpower.mp3");
-                break;
-            default:
-                audio.addMusic("resources/music/cos/waylon.mp3")
-                break;
-        }
     };
 
     this.getCOUnitRange = function(co)
     {
         return 2;
     };
-    this.getCOArmy = function()
-    {
-        return "TI";
-    };
-
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var airUnits = CO_WAYLON.getAirUnitIDS();
-
+        var seaUnits = CO_GAGE.getSeaUnitIDS();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getMinRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
                 {
-                    return 60;
+                    return 40;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getMinRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
                 {
                     return 20;
                 }
-                else
-                {
-                    return 0;
-                }
+                break;
             default:
-                if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getMinRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
                 {
                     if (co.inCORange(Qt.point(atkPosX, atkPosY)))
                     {
                         return 20;
                     }
+                    return 5;
+                }
+                break;
+        }
+        return 0;
+    };
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                 defender, defPosX, defPosY, isDefender)
+    {
+        var seaUnits = CO_GAGE.getSeaUnitIDS();
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Superpower:
+                if (attacker.getMinRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
+                {
+                    return 20;
+                }
+                break;
+            case GameEnums.PowerMode_Power:
+                if (attacker.getMinRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
+                {
+                    return 10;
+                }
+                break;
+            default:
+                if (attacker.getMinRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
+                {
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                    {
+                        return 10;
+                    }
                 }
                 break;
         }
         return 0;
     };
 
-    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+    this.getFirerangeModifier = function(co, unit, posX, posY)
     {
-        var airUnits = CO_WAYLON.getAirUnitIDS();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                if (airUnits.indexOf(defender.getUnitID()) >= 0)
+                if (unit.getMinRange() > 1)
                 {
-                    return 270;
+                    return 3;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (airUnits.indexOf(defender.getUnitID()) >= 0)
+                if (unit.getMinRange() > 1)
                 {
-                    return 200;
+                    return 2;
                 }
-                else
-                {
-                    return 0;
-                }
+                break;
             default:
-                if (airUnits.indexOf(defender.getUnitID()) >= 0)
-                {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
-                    {
-                        return 30;
-                    }
-                    return 15;
-                }
                 break;
         }
         return 0;
+    };
+    this.getCOArmy = function()
+    {
+        return "BD";
     };
 
     // CO - Intel
     this.getBio = function()
     {
-        return qsTr("A Teal Isle Commander. Destructive, egotistical and extremely vain.");
+        return qsTr("Brown Desert Army soldier. A man of few words but a consummate professional");
     };
     this.getHits = function()
     {
-        return qsTr("Living the good life");
+        return qsTr("Getting things done");
     };
     this.getMiss = function()
     {
-        return qsTr("Responsibility");
+        return qsTr("Talking");
     };
     this.getCODescription = function()
     {
-        return qsTr("Air units have higher firepower and defense.");
+        return qsTr("Indirect-combat units and sea units cause more damage and have increased firerange.");
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Air units increase firepower and highly increases defense.");
+        return qsTr("Increases range of indirect units by two space. Firepower of sea and indirect units also rise.");
     };
     this.getPowerName = function()
     {
-        return qsTr("Bad Company");
+        return qsTr("Longshot");
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Air units increase firepower and highly increases defense.");
+        return qsTr("Increases range of indirect units by three spaces. Firepower of sea and indirect units greatly rise.");
     };
     this.getSuperPowerName = function()
     {
-        return qsTr("Wingman");
+        return qsTr("Snipershot");
     };
     this.getPowerSentences = function()
     {
-        return [qsTr("I'm over here! C'mon give me your best shot."),
-                qsTr("You think you can get the better of me? You've got a lot to learn."),
-                qsTr("Woo-hoo!"),
-                qsTr("All i want is total air supremacy! Then i'll pick off your forces.")];
+        return [qsTr("Our business is war. We should no emotions let us distract from our task."),
+                qsTr("At this distance it should be with'n firerange..."),
+                qsTr("Prepare to open fire!"),
+                qsTr("It is not my job to think about that.")];
     };
     this.getVictorySentences = function()
     {
-        return [qsTr("The end of the world? Fine by me..."),
-                qsTr("Woo-hoo!"),
-                qsTr("How'd you like that?")];
+        return [qsTr("Now let us prepare for the next battle."),
+                qsTr("I have carried out my duties"),
+                qsTr("It is not my job to think about that.")];
     };
     this.getDefeatSentences = function()
     {
-        return [qsTr("This is not the freedom i want!"),
-                qsTr("The eagle has landed.")];
+        return [qsTr("Missed shot!"),
+                qsTr("What i didn't hit you?")];
     };
     this.getName = function()
     {
-        return qsTr("Waylon");
+        return qsTr("Gage");
     };
 }
 
 Constructor.prototype = CO;
-var CO_WAYLON = new Constructor();
+var CO_GAGE = new Constructor();
