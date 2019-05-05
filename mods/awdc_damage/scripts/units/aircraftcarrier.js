@@ -2,8 +2,8 @@ var Constructor = function()
 {
     this.init = function(unit)
     {
-        unit.setAmmo1(9);
-        unit.setMaxAmmo1(9);
+        unit.setAmmo1(4);
+        unit.setMaxAmmo1(4);
         unit.setWeapon1ID("WEAPON_CARRIER_ANTI_AIR_MISSILE");
 
         unit.setAmmo2(0);
@@ -13,9 +13,13 @@ var Constructor = function()
         unit.setFuel(100);
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(5);
-        unit.setMinRange(3);
-        unit.setMaxRange(8);
+        unit.setMinRange(1);
+        unit.setMaxRange(1);
 		unit.setVision(4);
+    };
+	this.canMoveAndFire = function()
+    {
+        return true;
     };
     // called for loading the main sprite
     this.loadSprites = function(unit)

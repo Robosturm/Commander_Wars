@@ -73,6 +73,7 @@ void VeryEasyAI::process()
     else if (useBuilding(pBuildings)){}
     else if (buildCOUnit(pUnits)){}
     else if (captureBuildings(pUnits)){}
+    else if (CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
     else if (fireWithIndirectUnits(pUnits)){}
     else if (fireWithDirectUnits(pUnits)){}
     else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings)){}
@@ -1247,7 +1248,7 @@ void VeryEasyAI::appendUnloadTargetsForCapturing(Unit* pUnit, QmlVectorBuilding*
         {
             Building* pBuilding = pEnemyBuildings->at(i);
             QPoint point(pBuilding->getX(), pBuilding->getY());
-            if (pUnit->canMoveOver(pBuilding->getX(), pBuilding->getY()))
+            if (capturUnits[0]->canMoveOver(pBuilding->getX(), pBuilding->getY()))
             {
                 // we can capture it :)
                 if (pBuilding->isCaptureOrMissileBuilding() &&

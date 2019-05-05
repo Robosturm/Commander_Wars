@@ -25,7 +25,7 @@ var Constructor = function()
 
     this.getSeaUnitIDS = function()
     {
-        return ["AIRCRAFTCARRIER", "CRUISER", "BATTLESHIP", "CANNONBOAT", "BLACK_BOAT", "DESTROYER", "SUBMARINE"];
+        return ["AIRCRAFTCARRIER", "CRUISER", "BATTLESHIP", "CANNONBOAT", "BLACK_BOAT", "LANDER", "DESTROYER", "SUBMARINE"];
     };
 
     this.activatePower = function(co)
@@ -125,19 +125,19 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                if (attacker.getMinRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
+                if (attacker.getMinRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
                 {
                     return 40;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (attacker.getMinRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
+                if (attacker.getMinRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
                 {
                     return 20;
                 }
                 break;
             default:
-                if (attacker.getMinRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
+                if (attacker.getMinRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
                 {
                     if (co.inCORange(Qt.point(atkPosX, atkPosY)))
                     {
@@ -156,21 +156,21 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                if (attacker.getMinRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
+                if (defender.getMinRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
                 {
                     return 20;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (attacker.getMinRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
+                if (defender.getMinRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
                 {
                     return 10;
                 }
                 break;
             default:
-                if (attacker.getMinRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
+                if (defender.getMinRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                    if (co.inCORange(Qt.point(defPosX, defPosY)))
                     {
                         return 10;
                     }

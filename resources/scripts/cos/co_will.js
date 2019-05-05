@@ -127,7 +127,7 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var seaAirUnits = CO_LIN.getSeaAirUnitIDS();
+        var seaAirUnits = CO_WILL.getSeaAirUnitIDS();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
@@ -161,7 +161,7 @@ var Constructor = function()
 
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
-        var seaAirUnits = CO_LIN.getSeaAirUnitIDS();
+        var seaAirUnits = CO_WILL.getSeaAirUnitIDS();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
@@ -196,7 +196,7 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Her units are slightly stronger.");
+        return qsTr("His direct ground units are slightly stronger.");
     };
     this.getPowerDescription = function()
     {

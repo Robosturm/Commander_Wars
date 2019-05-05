@@ -28,6 +28,7 @@
 #include <qtextstream.h>
 
 const QString CoreAI::ACTION_WAIT = "ACTION_WAIT";
+const QString CoreAI::ACTION_HOELLIUM_WAIT = "ACTION_HOELLIUM_WAIT";
 const QString CoreAI::ACTION_REPAIR = "ACTION_REPAIR";
 const QString CoreAI::ACTION_RATION = "ACTION_RATION";
 const QString CoreAI::ACTION_UNSTEALTH = "ACTION_UNSTEALTH";
@@ -75,6 +76,43 @@ void CoreAI::nextAction()
             process();
         }
     }
+}
+
+bool CoreAI::moveOoziums(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
+{
+    //
+    QVector<QPoint> targets;
+    for (qint32 i = 0; i < pEnemyUnits->size(); i++)
+    {
+        Unit* pUnit = pEnemyUnits->at(i);
+        targets.append(QPoint(pUnit->getX(), pUnit->getY()));
+    }
+
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pUnit = pUnits->at(i);
+        if (!pUnit->getHasMoved())
+        {
+            if (pUnit->getActionList().contains(ACTION_HOELLIUM_WAIT))
+            {
+                TargetedUnitPathFindingSystem pfs(pUnit, targets);
+                pfs.explore();
+                qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY()));
+                QPoint targetFields = pfs.getReachableTargetField(movepoints);
+                if (targetFields.x() >= 0)
+                {
+                    UnitPathFindingSystem turnPfs(pUnit);
+                    turnPfs.explore();
+                    GameAction* pAction = new GameAction(ACTION_HOELLIUM_WAIT);
+                    pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+                    pAction->setMovepath(turnPfs.getClosestReachableMovePath(targetFields));
+                    emit performAction(pAction);
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }
 
 void CoreAI::getBestTarget(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QPoint>& moveTargetFields)

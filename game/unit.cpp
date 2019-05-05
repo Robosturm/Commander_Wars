@@ -504,6 +504,21 @@ void Unit::loadUnit(Unit* pUnit)
     updateIcons(GameMap::getInstance()->getCurrentViewPlayer());
 }
 
+Unit* Unit::spawnUnit(QString unitID)
+{
+    GameMap* pMap = GameMap::getInstance();
+    qint32 unitLimit = pMap->getGameRules()->getUnitLimit();
+    qint32 unitCount = m_pOwner->getUnitCount();
+    if (unitLimit > 0 && unitCount >= unitLimit)
+    {
+        return nullptr;
+    }
+    spUnit pUnit = new Unit(unitID, m_pOwner);
+    m_TransportUnits.append(pUnit);
+    updateIcons(GameMap::getInstance()->getCurrentViewPlayer());
+    return pUnit.get();
+}
+
 Unit* Unit::getLoadedUnit(qint32 index)
 {
     if ((index >= 0) && (index < m_TransportUnits.size()))
@@ -1805,6 +1820,8 @@ void Unit::deserializeObject(QDataStream& pStream)
         setAiMode(GameEnums::GameAi_Normal);
     }
 }
+
+
 
 void Unit::createCORange(qint32 coRange)
 {

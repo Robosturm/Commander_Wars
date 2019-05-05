@@ -81,6 +81,12 @@ signals:
 
 public slots:
     /**
+     * @brief spawnUnit
+     * @param unitID
+     * @return
+     */
+    Unit* spawnUnit(QString unitID);
+    /**
      * @brief getAiMode
      * @return
      */

@@ -184,7 +184,7 @@ var Constructor = function()
             default:
                 if (airUnits.indexOf(defender.getUnitID()) >= 0)
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                    if (co.inCORange(Qt.point(defPosX, defPosY)))
                     {
                         return 20;
                     }

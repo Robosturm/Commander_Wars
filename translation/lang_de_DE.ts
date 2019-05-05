@@ -2692,6 +2692,179 @@
     </message>
 </context>
 <context>
+    <name>co_forsythe</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="153"/>
+        <source>Brown Desert Commander who was called out of retirement to defend his nation. Wants Brown Desert to be free to live in peace.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="157"/>
+        <source>Honor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="161"/>
+        <source>Killers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="165"/>
+        <source>He has a large CO-Zone which boosts both offensive and defensive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="169"/>
+        <source>Increases offensive and defensive.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="173"/>
+        <source>Power of Honor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="177"/>
+        <source>Increases offensive and defensive even more.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="181"/>
+        <source>Knights of the Desert</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="185"/>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="192"/>
+        <source>I am a soldier not a killer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="186"/>
+        <source>We fight here to free our people.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="187"/>
+        <source>Even in war there are rules, which should not be broken...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="191"/>
+        <source>I have beaten you 20 years ago and i beaten you now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="193"/>
+        <source>Death before dishonour.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="197"/>
+        <source>We&apos;ll fought young man.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="198"/>
+        <source>Great fight. Take your victory with honor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_forsythe.js" line="202"/>
+        <source>Forsythe</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_gage</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="212"/>
+        <source>Brown Desert Army soldier. A man of few words but a consummate professional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="216"/>
+        <source>Getting things done</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="220"/>
+        <source>Talking</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="224"/>
+        <source>Indirect-combat units and sea units cause more damage and have increased firerange.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="228"/>
+        <source>Increases range of indirect units by two space. Firepower of sea and indirect units also rise.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="232"/>
+        <source>Longshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="236"/>
+        <source>Increases range of indirect units by three spaces. Firepower of sea and indirect units greatly rise.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="240"/>
+        <source>Snipershot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="244"/>
+        <source>Our business is war. We should no emotions let us distract from our task.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="245"/>
+        <source>At this distance it should be with&apos;n firerange...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="246"/>
+        <source>Prepare to open fire!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_gage.js" line="253"/>
+        <source>It is not my job to think about that.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="251"/>
+        <source>Now let us prepare for the next battle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="252"/>
+        <source>I have carried out my duties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="257"/>
+        <source>Missed shot!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="258"/>
+        <source>What i didn&apos;t hit you?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_gage.js" line="262"/>
+        <source>Gage</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>co_graves</name>
     <message>
         <location filename="../resources/scripts/cos/co_graves.js" line="173"/>
@@ -3235,56 +3408,61 @@
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_hawke.js" line="190"/>
-        <source>This is the end.|Farewell.</source>
+        <source>This is the end.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_hawke.js" line="191"/>
-        <source>I give you credit for pushing me this far.</source>
+        <source>Farewell.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_hawke.js" line="192"/>
-        <source>You have inspired me to take action.</source>
+        <source>I give you credit for pushing me this far.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_hawke.js" line="193"/>
-        <source>To be defeated is to lose everything. Are you prepared for that outcome?</source>
+        <source>You have inspired me to take action.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_hawke.js" line="194"/>
+        <source>To be defeated is to lose everything. Are you prepared for that outcome?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="195"/>
         <source>You leave me no choice.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hawke.js" line="198"/>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="199"/>
         <source>Will you sacrifice all? Then perhaps you can win.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hawke.js" line="199"/>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="200"/>
         <source>Sad...you were no match for me.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hawke.js" line="200"/>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="201"/>
         <source>There is no chance.  My victory was assured.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hawke.js" line="204"/>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="205"/>
         <source>That&apos;s it then. We shall withdraw.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hawke.js" line="205"/>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="206"/>
         <source>... This is one situation I never expected myself to be in.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hawke.js" line="209"/>
+        <location filename="../resources/scripts/cos/co_hawke.js" line="210"/>
         <source>Hawke</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6571,6 +6749,95 @@
     </message>
 </context>
 <context>
+    <name>co_tasha</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="214"/>
+        <source>Brown Desert soldier. Burns with desire to avenge her late brother. Aims to make Teal Isles pay for what they did.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="218"/>
+        <source>Her brother John, Revenge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="222"/>
+        <source>Teal Isles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="226"/>
+        <source>Air units have higher firepower and defense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="230"/>
+        <source>Air units have higher firepower and defense and all units can move 1 space farther.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="234"/>
+        <source>Sonic Boom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="238"/>
+        <source>Air units have impressive firepower and higher defense and all units can move 2 space farther</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="242"/>
+        <source>Fox One</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="246"/>
+        <source>All units follow my lead.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="247"/>
+        <source>The time for revenge is at hand!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="248"/>
+        <source>I will fight on, even if it costs my life!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="255"/>
+        <source>I will have my revenge!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="253"/>
+        <source>It&apos;s not about tactics - it&apos;s about passion!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="254"/>
+        <source>Revenge will be mine!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="259"/>
+        <source>This is not the end. I will fight for John.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="260"/>
+        <source>Next time... Next time i will avenge you John...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_tasha.js" line="264"/>
+        <source>Tasha</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>co_von_bolt</name>
     <message>
         <location filename="../resources/scripts/cos/co_von_bolt.js" line="136"/>
@@ -6777,7 +7044,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_will.js" line="199"/>
-        <source>Her units are slightly stronger.</source>
+        <source>His direct ground units are slightly stronger.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

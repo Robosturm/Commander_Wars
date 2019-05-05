@@ -109,7 +109,7 @@ var Constructor = function()
                 }
                 break;
         }
-        return 10;
+        return 5;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
@@ -121,13 +121,13 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return 20;
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                if (co.inCORange(Qt.point(defPosX, defPosY)))
                 {
                     return 20;
                 }
                 break;
         }
-        return 10;
+        return 5;
     };
 
     // CO - Intel

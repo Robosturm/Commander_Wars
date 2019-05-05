@@ -23,6 +23,7 @@ class CoreAI : public BaseGameInputIF
 public:
     // static string list of actions so we only define them once
     static const QString ACTION_WAIT;
+    static const QString ACTION_HOELLIUM_WAIT;
     static const QString ACTION_REPAIR;
     static const QString ACTION_RATION;
     static const QString ACTION_UNSTEALTH;
@@ -59,6 +60,12 @@ signals:
      */
     void performAction(GameAction* pAction);
 public slots:
+    /**
+     * @brief moveOoziums moves all those sweet nice ooziums :)
+     * @param pUnits
+     * @param pEnemyUnits
+     */
+    bool moveOoziums(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits);
     /**
      * @brief getEnableBuildingAttack
      * @return

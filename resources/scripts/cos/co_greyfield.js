@@ -8,7 +8,7 @@ var Constructor = function()
 
     this.getSeaUnitIDS = function()
     {
-        return ["AIRCRAFTCARRIER", "CRUISER", "BATTLESHIP", "CANNONBOAT", "BLACK_BOAT", "DESTROYER", "SUBMARINE",
+        return ["AIRCRAFTCARRIER", "CRUISER", "BATTLESHIP", "CANNONBOAT", "BLACK_BOAT", "LANDER", "DESTROYER", "SUBMARINE",
                 "K_HELI", "T_HELI", "WATERPLANE"];
     };
 
@@ -181,7 +181,7 @@ var Constructor = function()
             default:
                 if (seaUnits.indexOf(defender.getUnitID()) >= 0)
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                    if (co.inCORange(Qt.point(defPosX, defPosY)))
                     {
                         return 40;
                     }

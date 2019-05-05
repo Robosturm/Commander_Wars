@@ -185,7 +185,7 @@ var Constructor = function()
                     return 20;
                 }
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                if (co.inCORange(Qt.point(defPosX, defPosY)))
                 {
                     if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
                     {

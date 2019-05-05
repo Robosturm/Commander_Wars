@@ -579,6 +579,7 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
         {
             spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
             spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner());
+            pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);
             GameMap* pMap = GameMap::getInstance();
             pMap->getTerrain(curX, curY)->setUnit(pUnit);
         }

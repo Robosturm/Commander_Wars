@@ -173,7 +173,7 @@ var Constructor = function()
                 }
                 return 0;
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY)))
+                if (co.inCORange(Qt.point(defPosX, defPosY)))
                 {
                     if (seaAirUnits.indexOf(defender.getUnitID()) < 0)
                     {
