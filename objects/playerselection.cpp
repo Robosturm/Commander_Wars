@@ -277,6 +277,8 @@ void PlayerSelection::showPlayerSelection()
             if (i > 0)
             {
                 playerAi->setCurrentItem(1);
+                Player* pPlayer = pMap->getPlayer(i);
+                pPlayer->setBaseGameInput(new VeryEasyAI());
             }
             else
             {

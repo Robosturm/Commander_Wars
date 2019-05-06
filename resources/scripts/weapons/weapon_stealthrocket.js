@@ -6,7 +6,7 @@ var Constructor = function()
     };
     this.getEnviromentDamage = function(enviromentId)
     {
-        return 25;
+        return 70;
     };
     this.getBaseDamage = function(unit)
     {

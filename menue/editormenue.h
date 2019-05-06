@@ -117,7 +117,7 @@ public slots:
      * @param mapHeigth
      * @param playerCount
      */
-    void newMap(QString mapName, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount);
+    void newMap(QString mapName, QString mapAuthor, QString mapDescription, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount);
     /**
      * @brief changeMap
      * @param mapName
@@ -125,7 +125,7 @@ public slots:
      * @param mapHeigth
      * @param playerCount
      */
-    void changeMap(QString mapName, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount);
+    void changeMap(QString mapName, QString mapAuthor, QString mapDescription, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount);
     /**
      * @brief playersChanged
      */

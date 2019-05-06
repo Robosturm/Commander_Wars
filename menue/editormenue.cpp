@@ -153,16 +153,17 @@ void EditorMenue::clickedTopbar(QString itemID)
     }
     else if (itemID == "NEWMAP")
     {
-        spMapEditDialog mapEditDialog = new MapEditDialog("", 20, 20, 2);
+        spMapEditDialog mapEditDialog = new MapEditDialog("", "", "", 20, 20, 2);
         this->addChild(mapEditDialog);
-        connect(mapEditDialog.get(), SIGNAL(editFinished(QString, qint32, qint32, qint32)), this, SLOT(newMap(QString, qint32, qint32, qint32)), Qt::QueuedConnection);
+        connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::newMap, Qt::QueuedConnection);
         this->addChild(mapEditDialog);
     }
     else if (itemID == "EDITMAP")
     {
         GameMap* pGameMap = GameMap::getInstance();
-        spMapEditDialog mapEditDialog = new MapEditDialog(pGameMap->getMapName(), pGameMap->getMapWidth(), pGameMap->getMapHeight(), pGameMap->getPlayerCount());
-        connect(mapEditDialog.get(), SIGNAL(editFinished(QString, qint32, qint32, qint32)), this, SLOT(changeMap(QString, qint32, qint32, qint32)), Qt::QueuedConnection);
+        spMapEditDialog mapEditDialog = new MapEditDialog(pGameMap->getMapName(), pGameMap->getMapAuthor(), pGameMap->getMapDescription(),
+                                                          pGameMap->getMapWidth(), pGameMap->getMapHeight(), pGameMap->getPlayerCount());
+        connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::changeMap, Qt::QueuedConnection);
         this->addChild(mapEditDialog);
     }
     else if (itemID == "FLIPX")
@@ -704,25 +705,29 @@ void EditorMenue::importCoWTxTMap(QString filename)
     pApp->continueThread();
 }
 
-void EditorMenue::newMap(QString mapName, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount)
+void EditorMenue::newMap(QString mapName, QString mapAuthor, QString mapDescription, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
 
     GameMap* pMap = GameMap::getInstance();
     pMap->setMapName(mapName);
+    pMap->setMapAuthor(mapAuthor);
+    pMap->setMapDescription(mapDescription);
     pMap->newMap(mapWidth, mapHeigth, playerCount);
     m_EditorSelection->createPlayerSelection();
     pApp->continueThread();
 }
 
-void EditorMenue::changeMap(QString mapName, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount)
+void EditorMenue::changeMap(QString mapName, QString mapAuthor, QString mapDescription, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
 
     GameMap* pMap = GameMap::getInstance();
     pMap->setMapName(mapName);
+    pMap->setMapAuthor(mapAuthor);
+    pMap->setMapDescription(mapDescription);
     pMap->changeMap(mapWidth, mapHeigth, playerCount);
     m_EditorSelection->createPlayerSelection();
 

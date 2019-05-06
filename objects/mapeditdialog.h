@@ -19,17 +19,19 @@ class MapEditDialog : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit MapEditDialog(QString mapName, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount);
+    explicit MapEditDialog(QString mapName, QString author, QString description, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount);
     virtual ~MapEditDialog() = default;
 
 signals:
-    void editFinished(QString mapName, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount);
+    void editFinished(QString mapName, QString author, QString description, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount);
 public slots:
 
 private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_ExitButton;
     spTextbox m_MapName;
+    spTextbox m_MapAuthor;
+    spTextbox m_MapDescription;
     spSpinBox m_MapWidth;
     spSpinBox m_MapHeigth;
     spSpinBox m_MapPlayerCount;

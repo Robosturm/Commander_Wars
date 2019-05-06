@@ -617,6 +617,8 @@ void GameMap::serializeObject(QDataStream& pStream)
     // store header
     pStream << getVersion();
     pStream << mapName;
+    pStream << mapAuthor;
+    pStream << mapDescription;
     pStream << width;
     pStream << heigth;
     pStream << getPlayerCount();
@@ -656,6 +658,11 @@ void GameMap::deserializeObject(QDataStream& pStream)
     if (version > 1)
     {
         pStream >> mapName;
+    }
+    if (version > 4)
+    {
+        pStream >> mapAuthor;
+        pStream >> mapDescription;
     }
     qint32 heigth = 0;
     qint32 width = 0;
@@ -853,6 +860,26 @@ qint32 GameMap::getWinnerTeam()
         }
     }
     return winnerTeam;
+}
+
+QString GameMap::getMapDescription() const
+{
+    return mapDescription;
+}
+
+void GameMap::setMapDescription(const QString &value)
+{
+    mapDescription = value;
+}
+
+QString GameMap::getMapAuthor() const
+{
+    return mapAuthor;
+}
+
+void GameMap::setMapAuthor(const QString &value)
+{
+    mapAuthor = value;
 }
 
 qint32 GameMap::getCurrentDay() const

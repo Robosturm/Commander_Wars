@@ -6,7 +6,7 @@
 
 #include "resource_management/fontmanager.h"
 
-MapEditDialog::MapEditDialog(QString mapName, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount)
+MapEditDialog::MapEditDialog(QString mapName, QString author, QString description, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount)
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -23,53 +23,75 @@ MapEditDialog::MapEditDialog(QString mapName, qint32 mapWidth, qint32 mapHeigth,
     pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
 
+    float y = 30;
+    qint32 width = 250;
     // Label
     oxygine::spTextField text = new oxygine::TextField();
     oxygine::TextStyle style = FontManager::getMainFont();
     text->setStyle(style);
-    text->setText(tr("Map name:").toStdString().c_str());
-    text->setPosition(30, 30);
+    text->setText(tr("Map name:").toStdString().c_str());    
+    text->setPosition(30, y);
     pSpriteBox->addChild(text);
-    qint32 width = text->getTextRect().getWidth();
     m_MapName = new Textbox(pApp->getSettings()->getWidth() - 60 - width);
     m_MapName->setPosition(text->getX() + width, text->getY());
     m_MapName->setCurrentText(mapName);
     pSpriteBox->addChild(m_MapName);
+    y += 40;
 
-    float y = m_MapName->getY() + m_MapName->getHeight();
+    // Label
+    text = new oxygine::TextField();
+    text->setStyle(style);
+    text->setText(tr("Map Author:").toStdString().c_str());
+    text->setPosition(30, y);
+    pSpriteBox->addChild(text);
+    m_MapAuthor = new Textbox(pApp->getSettings()->getWidth() - 60 - width);
+    m_MapAuthor->setPosition(text->getX() + width, text->getY());
+    m_MapAuthor->setCurrentText(author);
+    pSpriteBox->addChild(m_MapAuthor);
+    y += 40;
+
+    // Label
+    text = new oxygine::TextField();
+    text->setStyle(style);
+    text->setText(tr("Map Description:").toStdString().c_str());
+    text->setPosition(30, y);
+    pSpriteBox->addChild(text);
+    m_MapDescription = new Textbox(pApp->getSettings()->getWidth() - 60 - width);
+    m_MapDescription->setPosition(text->getX() + width, text->getY());
+    m_MapDescription->setCurrentText(description);
+    pSpriteBox->addChild(m_MapDescription);
+    y += 40;
+
     // Label
     text = new oxygine::TextField();
     text->setStyle(style);
     text->setText(tr("Map width:").toStdString().c_str());
     text->setPosition(30, 5 + y );
     pSpriteBox->addChild(text);
-    width = text->getTextRect().getWidth();
     m_MapWidth = new SpinBox(300, 1, 999, SpinBox::Mode::Float);
     m_MapWidth->setPosition(text->getX() + width, text->getY());
     m_MapWidth->setCurrentValue(mapWidth);
     pSpriteBox->addChild(m_MapWidth);
 
     // Label
-    y = m_MapWidth->getY() + m_MapWidth->getHeight();
+    y += 40;
     text = new oxygine::TextField();
     text->setStyle(style);
     text->setText(tr("Map heigth:").toStdString().c_str());
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
-    width = text->getTextRect().getWidth();
     m_MapHeigth = new SpinBox(300, 1, 999, SpinBox::Mode::Float);
     m_MapHeigth->setPosition(text->getX() + width, text->getY());
     m_MapHeigth->setCurrentValue(mapHeigth);
     pSpriteBox->addChild(m_MapHeigth);
 
     // Label
-    y = m_MapHeigth->getY() + m_MapHeigth->getHeight();
+    y += 40;
     text = new oxygine::TextField();
     text->setStyle(style);
     text->setText(tr("Map Player:").toStdString().c_str());
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
-    width = text->getTextRect().getWidth();
     m_MapPlayerCount = new SpinBox(300, 2, 40, SpinBox::Mode::Float);
     m_MapPlayerCount->setPosition(text->getX() + width, text->getY());
     m_MapPlayerCount->setCurrentValue(playerCount);
@@ -81,7 +103,8 @@ MapEditDialog::MapEditDialog(QString mapName, qint32 mapWidth, qint32 mapHeigth,
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        emit editFinished(m_MapName->getCurrentText(), static_cast<qint32>(m_MapWidth->getCurrentValue()),
+        emit editFinished(m_MapName->getCurrentText(), m_MapAuthor->getCurrentText(),
+                          m_MapDescription->getCurrentText(), static_cast<qint32>(m_MapWidth->getCurrentValue()),
                           static_cast<qint32>(m_MapHeigth->getCurrentValue()), static_cast<qint32>(m_MapPlayerCount->getCurrentValue()));
         this->getParent()->removeChild(this);
     });

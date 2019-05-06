@@ -69,6 +69,10 @@ private:
     GameMap* m_pCurrentMap{nullptr};
     // map selection
     spMapSelection m_pMapSelection;
+    spPanel m_MapInfo;
+    oxygine::spTextField m_MapName;
+    oxygine::spTextField m_MapAuthor;
+    oxygine::spTextField m_MapDescription;
     spMinimap m_pMinimap;
     oxygine::spSlidingActor m_MinimapSlider;
     oxygine::spBox9Sprite m_pMiniMapBox;

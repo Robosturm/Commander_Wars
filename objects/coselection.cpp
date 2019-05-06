@@ -99,7 +99,6 @@ COSelection::COSelection()
     m_COName->setPosition(163, 15 + m_BackgroundMask->getY());
     addChild(m_COName);
 
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     m_COPower = new oxygine::TextField();
     m_COPower->setStyle(style);
     m_COPower->setPosition(165, 154 + m_BackgroundMask->getY());

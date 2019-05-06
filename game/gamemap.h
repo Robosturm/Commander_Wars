@@ -189,7 +189,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 4;
+        return 5;
     }
     /**
      * @brief clearMap
@@ -205,12 +205,33 @@ public:
      * @param index
      */
     void removePlayer(qint32 index);
+
 signals:
     void signalExitGame();
     void signalSaveGame();
     void signalShowCOInfo();
     void sigQueueAction(GameAction* pAction);
 public slots:
+    /**
+     * @brief getMapAuthor
+     * @return
+     */
+    QString getMapAuthor() const;
+    /**
+     * @brief setMapAuthor
+     * @param value
+     */
+    void setMapAuthor(const QString &value);
+    /**
+     * @brief getMapDescription
+     * @return
+     */
+    QString getMapDescription() const;
+    /**
+     * @brief setMapDescription
+     * @param value
+     */
+    void setMapDescription(const QString &value);
     /**
      * @brief getAllUnitIDs
      * @return
@@ -435,6 +456,8 @@ public slots:
 private:
     static spGameMap m_pInstance;
     QString mapName;
+    QString mapAuthor;
+    QString mapDescription;
     QVector<QVector<spTerrain>*> fields;
     QVector<spPlayer> players;
     spPlayer m_CurrentPlayer;

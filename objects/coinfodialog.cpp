@@ -105,7 +105,6 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
     m_COBio->setPosition(10, m_COBio->getY() + 120);
     m_pPanel->addItem(m_COBio);
 
-
     m_HitSprite = new oxygine::Box9Sprite();
     m_HitSprite->setResAnim(pCOSpriteManager->getResAnim("hit"));
     m_HitSprite->setSize(100, 16);

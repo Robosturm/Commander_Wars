@@ -371,22 +371,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="118"/>
+        <location filename="../objects/coinfodialog.cpp" line="117"/>
         <source>Hit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="136"/>
+        <location filename="../objects/coinfodialog.cpp" line="135"/>
         <source>Miss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="154"/>
+        <location filename="../objects/coinfodialog.cpp" line="153"/>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="277"/>
+        <location filename="../objects/coinfodialog.cpp" line="276"/>
         <source>CO-Zone-Range: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -894,32 +894,42 @@
 <context>
     <name>MapEditDialog</name>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="30"/>
+        <location filename="../objects/mapeditdialog.cpp" line="32"/>
         <source>Map name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="43"/>
-        <source>Map width:</source>
+        <location filename="../objects/mapeditdialog.cpp" line="44"/>
+        <source>Map Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/mapeditdialog.cpp" line="56"/>
+        <source>Map Description:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/mapeditdialog.cpp" line="68"/>
+        <source>Map width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/mapeditdialog.cpp" line="80"/>
         <source>Map heigth:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="69"/>
+        <location filename="../objects/mapeditdialog.cpp" line="92"/>
         <source>Map Player:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="79"/>
+        <location filename="../objects/mapeditdialog.cpp" line="101"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="90"/>
+        <location filename="../objects/mapeditdialog.cpp" line="113"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -927,72 +937,87 @@
 <context>
     <name>MapSelectionMapsMenue</name>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="140"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="110"/>
+        <source>Map Name: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="120"/>
+        <source>Map Author: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="130"/>
+        <source>Map Description </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="185"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="149"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="194"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="158"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="203"/>
         <source>Start Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="360"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="412"/>
         <source>Enviroment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="381"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="433"/>
         <source>Random Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="392"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="444"/>
         <source>Start Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="407"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="459"/>
         <source>Gameplay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="413"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="465"/>
         <source>Unit Ranking System: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="424"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="476"/>
         <source>No CO Powers: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="435"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="487"/>
         <source>Fog Of War: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="438"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="490"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="438"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="490"/>
         <source>Fog of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="450"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="502"/>
         <source>Unit Limit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="463"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="515"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1222,7 +1247,7 @@
     <message>
         <location filename="../objects/playerselection.cpp" line="93"/>
         <location filename="../objects/playerselection.cpp" line="153"/>
-        <location filename="../objects/playerselection.cpp" line="332"/>
+        <location filename="../objects/playerselection.cpp" line="334"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>

@@ -6,6 +6,8 @@
 
 #include "gameinput/basegameinputif.h"
 
+#include "gameinput/humanplayerinput.h"
+
 #include "game/building.h"
 
 #include "game/unit.h"
@@ -965,6 +967,11 @@ void Player::deserializeObject(QDataStream& pStream)
         {
             pStream >> isDefeated;
             m_pBaseGameInput = BaseGameInputIF::deserializeInterface(pStream);
+            m_pBaseGameInput->setPlayer(this);
+        }
+        else
+        {
+            m_pBaseGameInput = new HumanPlayerInput();
             m_pBaseGameInput->setPlayer(this);
         }
         if (version > 5)
