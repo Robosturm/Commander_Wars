@@ -173,7 +173,7 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
     pLabel->setText(tr("Unit Rank: ").toStdString().c_str());
     pLabel->setPosition(10, y);
     pPanel->addItem(pLabel);
-    items = {tr("Soldier"), tr("Lieutenant"), tr("General"), tr("Veteran")};
+    items = {tr("Soldier"), tr("Lieutenant"), tr("General"), tr("Veteran"), tr("CO 1"), tr("CO 2")};
     pDropdownmenu = new DropDownmenu(200, items);
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(static_cast<qint32>(m_pUnit->getUnitRank()));

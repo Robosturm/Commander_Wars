@@ -584,6 +584,16 @@
         <source>Veteran</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="176"/>
+        <source>CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="176"/>
+        <source>CO 2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditorMenue</name>
@@ -625,11 +635,6 @@
     <message>
         <location filename="../menue/editormenue.cpp" line="66"/>
         <source>Import/Export</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="67"/>
-        <source>Import CoW Txt Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -688,8 +693,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="67"/>
+        <source>Import CoW Txt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="68"/>
-        <source>Import AWDS Aws Map</source>
+        <source>Import AWDS Aws</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="69"/>
+        <source>Import AWDC Aw4</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

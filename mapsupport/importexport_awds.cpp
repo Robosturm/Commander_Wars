@@ -1,5 +1,4 @@
 #include <QDataStream>
-#include <QTextStream>
 #include <QFile>
 
 #include "coreengine/console.h"
@@ -26,7 +25,6 @@ void GameMap::importAWDSMap(QString file)
         QFile data(file);
         data.open(QFile::ReadOnly);
         QDataStream stream(&data);
-        QTextStream textStream(&data);
         for (qint32 i = 0; i < 10; i++)
         {
             stream >> sign;
@@ -1617,5 +1615,1116 @@ void GameMap::importAWDSMap(QString file)
 }
 void GameMap::exportAWDSMap(QString)
 {
-
+//    If Objektverwalter.Spielfeld.Spieler.Length <= 6 Then
+//                Using Writer As New IO.FileStream(File, IO.FileMode.OpenOrCreate, IO.FileAccess.Write, IO.FileShare.Write)
+//                    'Zuerst mal den Start weglesen brauchen wir nicht!
+//                    Writer.WriteByte(4 * 16 + 1)
+//                    Writer.WriteByte(5 * 16 + 7)
+//                    Writer.WriteByte(5 * 16 + 3)
+//                    Writer.WriteByte(4 * 16 + 13)
+//                    Writer.WriteByte(6 * 16 + 1)
+//                    Writer.WriteByte(7 * 16 + 0)
+//                    Writer.WriteByte(3 * 16 + 0)
+//                    Writer.WriteByte(3 * 16 + 0)
+//                    Writer.WriteByte(3 * 16 + 1)
+//                    Writer.WriteByte(0)
+//                    Writer.WriteByte(Objektverwalter.Spielfeld.Breite)
+//                    Writer.WriteByte(Objektverwalter.Spielfeld.Hoehe)
+//                    'Terrain Style
+//                    Writer.WriteByte(0)
+//                    For X = 0 To Objektverwalter.Spielfeld.Breite - 1
+//                        For Y = 0 To Objektverwalter.Spielfeld.Hoehe - 1
+//                            If Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).isGebaeude Then
+//                                Select Case Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude.GebaeudeID
+//                                    Case "HQ"
+//                                        Select Case Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude.Spieler
+//                                            Case 0
+//                                            Case 0
+//                                                Writer.WriteByte(94)
+//                                                Writer.WriteByte(1)
+//                                            Case 1
+//                                                Writer.WriteByte(44)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(54)
+//                                                Writer.WriteByte(1)
+//                                            Case 3
+//                                                Writer.WriteByte(64)
+//                                                Writer.WriteByte(1)
+//                                            Case 4
+//                                                Writer.WriteByte(74)
+//                                                Writer.WriteByte(1)
+//                                            Case 5
+//                                                Writer.WriteByte(84)
+//                                                Writer.WriteByte(1)
+//                                        End Select
+//                                    Case "STADT"
+//                                        Select Case Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude.Spieler
+//                                            Case 0
+//                                                Writer.WriteByte(95)
+//                                                Writer.WriteByte(1)
+//                                            Case 1
+//                                                Writer.WriteByte(45)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(55)
+//                                                Writer.WriteByte(1)
+//                                            Case 3
+//                                                Writer.WriteByte(65)
+//                                                Writer.WriteByte(1)
+//                                            Case 4
+//                                                Writer.WriteByte(75)
+//                                                Writer.WriteByte(1)
+//                                            Case 5
+//                                                Writer.WriteByte(85)
+//                                                Writer.WriteByte(1)
+//                                        End Select
+//                                    Case "BASIS"
+//                                        Select Case Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude.Spieler
+//                                            Case 0
+//                                                Writer.WriteByte(96)
+//                                                Writer.WriteByte(1)
+//                                            Case 1
+//                                                Writer.WriteByte(46)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(56)
+//                                                Writer.WriteByte(1)
+//                                            Case 3
+//                                                Writer.WriteByte(66)
+//                                                Writer.WriteByte(1)
+//                                            Case 4
+//                                                Writer.WriteByte(76)
+//                                                Writer.WriteByte(1)
+//                                            Case 5
+//                                                Writer.WriteByte(86)
+//                                                Writer.WriteByte(1)
+//                                        End Select
+//                                    Case "FLUGHAFEN"
+//                                        Select Case Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude.Spieler
+//                                            Case 0
+//                                                Writer.WriteByte(97)
+//                                                Writer.WriteByte(1)
+//                                            Case 1
+//                                                Writer.WriteByte(47)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(57)
+//                                                Writer.WriteByte(1)
+//                                            Case 3
+//                                                Writer.WriteByte(67)
+//                                                Writer.WriteByte(1)
+//                                            Case 4
+//                                                Writer.WriteByte(77)
+//                                                Writer.WriteByte(1)
+//                                            Case 5
+//                                                Writer.WriteByte(87)
+//                                                Writer.WriteByte(1)
+//                                        End Select
+//                                    Case "WERFT"
+//                                        Select Case Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude.Spieler
+//                                            Case 0
+//                                                Writer.WriteByte(98)
+//                                                Writer.WriteByte(1)
+//                                            Case 1
+//                                                Writer.WriteByte(48)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(58)
+//                                                Writer.WriteByte(1)
+//                                            Case 3
+//                                                Writer.WriteByte(68)
+//                                                Writer.WriteByte(1)
+//                                            Case 4
+//                                                Writer.WriteByte(78)
+//                                                Writer.WriteByte(1)
+//                                            Case 5
+//                                                Writer.WriteByte(88)
+//                                                Writer.WriteByte(1)
+//                                        End Select
+//                                    Case "TURM"
+//                                        Select Case Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude.Spieler
+//                                            Case 0
+//                                                Writer.WriteByte(99)
+//                                                Writer.WriteByte(1)
+//                                            Case 1
+//                                                Writer.WriteByte(49)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(59)
+//                                                Writer.WriteByte(1)
+//                                            Case 3
+//                                                Writer.WriteByte(69)
+//                                                Writer.WriteByte(1)
+//                                            Case 4
+//                                                Writer.WriteByte(79)
+//                                                Writer.WriteByte(1)
+//                                            Case 5
+//                                                Writer.WriteByte(89)
+//                                                Writer.WriteByte(1)
+//                                        End Select
+//                                    Case "LABOR"
+//                                        Select Case Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude.Spieler
+//                                            Case 0
+//                                                Writer.WriteByte(100)
+//                                                Writer.WriteByte(1)
+//                                            Case 1
+//                                                Writer.WriteByte(50)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(60)
+//                                                Writer.WriteByte(1)
+//                                            Case 3
+//                                                Writer.WriteByte(70)
+//                                                Writer.WriteByte(1)
+//                                            Case 4
+//                                                Writer.WriteByte(80)
+//                                                Writer.WriteByte(1)
+//                                            Case 5
+//                                                Writer.WriteByte(90)
+//                                                Writer.WriteByte(1)
+//                                        End Select
+//                                    Case "RAKETENSILO+RAKETE", "RAKETENSILO"
+//                                        Writer.WriteByte(94)
+//                                        Writer.WriteByte(1)
+//                                        'Spezialgebaeude
+//                                    Case "MINIGESCHUETZ+N"
+//                                        Writer.WriteByte(8 * 16 + 4)
+//                                        Writer.WriteByte(3)
+//                                    Case "MINIGESCHUETZ+W"
+//                                        Writer.WriteByte(8 * 16 + 5)
+//                                        Writer.WriteByte(3)
+//                                    Case "LASER"
+//                                        Writer.WriteByte(8 * 16 + 6)
+//                                        Writer.WriteByte(3)
+//                                    Case "MINIGESCHUETZ+O"
+//                                        Writer.WriteByte(9 * 16 + 8)
+//                                        Writer.WriteByte(3)
+//                                    Case "MINIGESCHUETZ+S"
+//                                        Writer.WriteByte(9 * 16 + 9)
+//                                        Writer.WriteByte(3)
+//                                    Case "KRISTALL"
+//                                        Writer.WriteByte(9 * 16 + 11)
+//                                        Writer.WriteByte(3)
+//                                    Case "SCHWARZE GESCHUETZ+N"
+//                                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
+//                                        Select Case G.Rechteck.X - X
+//                                            Case 1
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 1
+//                                                        Writer.WriteByte(10 * 16 + 15)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(12 * 16 + 3)
+//                                                        Writer.WriteByte(3)
+//                                                    Case -1
+//                                                        Writer.WriteByte(13 * 16 + 7)
+//                                                        Writer.WriteByte(3)
+//                                                End Select
+//                                            Case 0
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 1
+//                                                        Writer.WriteByte(11 * 16 + 0)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(12 * 16 + 4)
+//                                                        Writer.WriteByte(3)
+//                                                    Case -1
+//                                                        Writer.WriteByte(13 * 16 + 8)
+//                                                        Writer.WriteByte(3)
+//                                                End Select
+//                                            Case -1
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 1
+//                                                        Writer.WriteByte(11 * 16 + 1)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(12 * 16 + 5)
+//                                                        Writer.WriteByte(3)
+//                                                    Case -1
+//                                                        Writer.WriteByte(13 * 16 + 9)
+//                                                        Writer.WriteByte(3)
+//                                                End Select
+//                                        End Select
+//                                    Case "SCHWARZE GESCHUETZ+S"
+//                                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
+//                                        Select Case G.Rechteck.X - X
+//                                            Case 1
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 1
+//                                                        Writer.WriteByte(10 * 16 + 12)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(12 * 16 + 0)
+//                                                        Writer.WriteByte(3)
+//                                                    Case -1
+//                                                        Writer.WriteByte(13 * 16 + 4)
+//                                                        Writer.WriteByte(3)
+//                                                End Select
+//                                            Case 0
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 1
+//                                                        Writer.WriteByte(10 * 16 + 13)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(12 * 16 + 1)
+//                                                        Writer.WriteByte(3)
+//                                                    Case -1
+//                                                        Writer.WriteByte(13 * 16 + 5)
+//                                                        Writer.WriteByte(3)
+//                                                End Select
+//                                            Case -1
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 1
+//                                                        Writer.WriteByte(10 * 16 + 14)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(12 * 16 + 2)
+//                                                        Writer.WriteByte(3)
+//                                                    Case -1
+//                                                        Writer.WriteByte(13 * 16 + 6)
+//                                                        Writer.WriteByte(3)
+//                                                End Select
+//                                        End Select
+//                                    Case "SCHOCKLASER+S"
+//                                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
+//                                        Select Case G.Rechteck.X - X
+//                                            Case 1
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 1
+//                                                        Writer.WriteByte(14 * 16 + 8)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(15 * 16 + 12)
+//                                                        Writer.WriteByte(3)
+//                                                    Case -1
+//                                                        Writer.WriteByte(1 * 16 + 0)
+//                                                        Writer.WriteByte(4)
+//                                                End Select
+//                                            Case 0
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 1
+//                                                        Writer.WriteByte(14 * 16 + 9)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(15 * 16 + 13)
+//                                                        Writer.WriteByte(3)
+//                                                    Case -1
+//                                                        Writer.WriteByte(1 * 16 + 1)
+//                                                        Writer.WriteByte(4)
+//                                                End Select
+//                                            Case -1
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 1
+//                                                        Writer.WriteByte(14 * 16 + 10)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(15 * 16 + 14)
+//                                                        Writer.WriteByte(3)
+//                                                    Case -1
+//                                                        Writer.WriteByte(1 * 16 + 2)
+//                                                        Writer.WriteByte(4)
+//                                                End Select
+//                                        End Select
+//                                    Case "MONOLITH"
+//                                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
+//                                        Select Case G.Rechteck.X - X
+//                                            Case 1
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 1
+//                                                        Writer.WriteByte(14 * 16 + 11)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(15 * 16 + 15)
+//                                                        Writer.WriteByte(3)
+//                                                    Case -1
+//                                                        Writer.WriteByte(1 * 16 + 3)
+//                                                        Writer.WriteByte(4)
+//                                                End Select
+//                                            Case 0
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 1
+//                                                        Writer.WriteByte(14 * 16 + 12)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(0 * 16 + 0)
+//                                                        Writer.WriteByte(4)
+//                                                    Case -1
+//                                                        Writer.WriteByte(1 * 16 + 4)
+//                                                        Writer.WriteByte(4)
+//                                                End Select
+//                                            Case -1
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 1
+//                                                        Writer.WriteByte(14 * 16 + 13)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(0 * 16 + 1)
+//                                                        Writer.WriteByte(4)
+//                                                    Case -1
+//                                                        Writer.WriteByte(1 * 16 + 5)
+//                                                        Writer.WriteByte(4)
+//                                                End Select
+//                                        End Select
+//                                    Case "VULKAN"
+//                                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
+//                                        Select Case G.Rechteck.X - X
+//                                            Case 1
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 2
+//                                                        Writer.WriteByte(8 * 16 + 11)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 1
+//                                                        Writer.WriteByte(9 * 16 + 15)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(11 * 16 + 3)
+//                                                        Writer.WriteByte(3)
+//                                                    Case -1
+//                                                        Writer.WriteByte(12 * 16 + 7)
+//                                                        Writer.WriteByte(3)
+//                                                End Select
+//                                            Case 0
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 2
+//                                                        Writer.WriteByte(8 * 16 + 12)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 1
+//                                                        Writer.WriteByte(9 * 16 + 16)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(11 * 16 + 4)
+//                                                        Writer.WriteByte(3)
+//                                                    Case -1
+//                                                        Writer.WriteByte(12 * 16 + 8)
+//                                                        Writer.WriteByte(3)
+//                                                End Select
+//                                            Case -1
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 2
+//                                                        Writer.WriteByte(8 * 16 + 13)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 1
+//                                                        Writer.WriteByte(9 * 16 + 17)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(11 * 16 + 5)
+//                                                        Writer.WriteByte(3)
+//                                                    Case -1
+//                                                        Writer.WriteByte(12 * 16 + 9)
+//                                                        Writer.WriteByte(3)
+//                                                End Select
+//                                            Case -2
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 2
+//                                                        Writer.WriteByte(8 * 16 + 14)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 1
+//                                                        Writer.WriteByte(9 * 16 + 18)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(11 * 16 + 6)
+//                                                        Writer.WriteByte(3)
+//                                                    Case -1
+//                                                        Writer.WriteByte(12 * 16 + 10)
+//                                                        Writer.WriteByte(3)
+//                                                End Select
+//                                        End Select
+//                                    Case "FESTUNG"
+//                                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
+//                                        Select Case G.Rechteck.X - X
+//                                            Case 1
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 2
+//                                                        Writer.WriteByte(13 * 16 + 11)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 1
+//                                                        Writer.WriteByte(14 * 16 + 15)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(0 * 16 + 3)
+//                                                        Writer.WriteByte(4)
+//                                                    Case -1
+//                                                        Writer.WriteByte(1 * 16 + 7)
+//                                                        Writer.WriteByte(4)
+//                                                End Select
+//                                            Case 0
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 2
+//                                                        Writer.WriteByte(13 * 16 + 12)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 1
+//                                                        Writer.WriteByte(15 * 16 + 0)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(0 * 16 + 4)
+//                                                        Writer.WriteByte(4)
+//                                                    Case -1
+//                                                        Writer.WriteByte(1 * 16 + 8)
+//                                                        Writer.WriteByte(4)
+//                                                End Select
+//                                            Case -1
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 2
+//                                                        Writer.WriteByte(13 * 16 + 13)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 1
+//                                                        Writer.WriteByte(15 * 16 + 1)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(0 * 16 + 5)
+//                                                        Writer.WriteByte(4)
+//                                                    Case -1
+//                                                        Writer.WriteByte(1 * 16 + 9)
+//                                                        Writer.WriteByte(4)
+//                                                End Select
+//                                            Case -2
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 2
+//                                                        Writer.WriteByte(13 * 16 + 14)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 1
+//                                                        Writer.WriteByte(15 * 16 + 2)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(0 * 16 + 6)
+//                                                        Writer.WriteByte(4)
+//                                                    Case -1
+//                                                        Writer.WriteByte(1 * 16 + 10)
+//                                                        Writer.WriteByte(4)
+//                                                End Select
+//                                        End Select
+//                                    Case "OMEGARAKETE"
+//                                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
+//                                        Select Case G.Rechteck.X - X
+//                                            Case 1
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 2
+//                                                        Writer.WriteByte(8 * 16 + 15)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 1
+//                                                        Writer.WriteByte(10 * 16 + 3)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(11 * 16 + 7)
+//                                                        Writer.WriteByte(3)
+//                                                    Case -1
+//                                                        Writer.WriteByte(12 * 16 + 11)
+//                                                        Writer.WriteByte(3)
+//                                                End Select
+//                                            Case 0
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 2
+//                                                        Writer.WriteByte(9 * 16 + 0)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 1
+//                                                        Writer.WriteByte(10 * 16 + 4)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(11 * 16 + 8)
+//                                                        Writer.WriteByte(3)
+//                                                    Case -1
+//                                                        Writer.WriteByte(12 * 16 + 12)
+//                                                        Writer.WriteByte(3)
+//                                                End Select
+//                                            Case -1
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 2
+//                                                        Writer.WriteByte(9 * 16 + 1)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 1
+//                                                        Writer.WriteByte(10 * 16 + 5)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(11 * 16 + 9)
+//                                                        Writer.WriteByte(3)
+//                                                    Case -1
+//                                                        Writer.WriteByte(12 * 16 + 13)
+//                                                        Writer.WriteByte(3)
+//                                                End Select
+//                                            Case -2
+//                                                Select Case G.Rechteck.Y - Y
+//                                                    Case 2
+//                                                        Writer.WriteByte(9 * 16 + 2)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 1
+//                                                        Writer.WriteByte(10 * 16 + 6)
+//                                                        Writer.WriteByte(3)
+//                                                    Case 0
+//                                                        Writer.WriteByte(11 * 16 + 10)
+//                                                        Writer.WriteByte(3)
+//                                                    Case -1
+//                                                        Writer.WriteByte(12 * 16 + 14)
+//                                                        Writer.WriteByte(3)
+//                                                End Select
+//                                        End Select
+//                                    Case Else
+//                                        Writer.WriteByte(0)
+//                                        Writer.WriteByte(0)
+//                                End Select
+//                            Else
+//                                Select Case Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).LandschaftsID
+//                                    Case "KAPUTTESCHWEISSNAHT"
+//                                        Writer.WriteByte(10 * 16 + 7)
+//                                        Writer.WriteByte(0)
+//                                    Case "EBENE"
+//                                        Writer.WriteByte(0)
+//                                        Writer.WriteByte(0)
+//                                    Case "STRASSE"
+//                                        Writer.WriteByte(1)
+//                                        Writer.WriteByte(0)
+//                                    Case "BRUECKE"
+//                                        Dim Ausr As String = Objektverwalter.LandschaftenBilder(Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).ID).getAusrichtung(X, Y, Objektverwalter.Spielfeld)
+//                                        If Ausr = "+N+S" Then
+//                                            Writer.WriteByte(2)
+//                                            Writer.WriteByte(0)
+//                                        Else
+//                                            Writer.WriteByte(32)
+//                                            Writer.WriteByte(0)
+//                                        End If
+//                                    Case "FLUSS"
+//                                        Writer.WriteByte(3)
+//                                        Writer.WriteByte(0)
+//                                    Case "SEE"
+//                                        Writer.WriteByte(3 * 16 + 12)
+//                                        Writer.WriteByte(0)
+//                                    Case "PIPELINE"
+//                                        Writer.WriteByte(16)
+//                                        Writer.WriteByte(0)
+//                                    Case "RIFF"
+//                                        Writer.WriteByte(30)
+//                                        Writer.WriteByte(0)
+//                                    Case "STRAND"
+//                                        Writer.WriteByte(39)
+//                                        Writer.WriteByte(0)
+//                                    Case "WALD"
+//                                        Writer.WriteByte(90)
+//                                        Writer.WriteByte(0)
+//                                    Case "BERG"
+//                                        Writer.WriteByte(150)
+//                                        Writer.WriteByte(0)
+//                                    Case "EBENE+SCHROTT"
+//                                        Writer.WriteByte(167)
+//                                        Writer.WriteByte(0)
+//                                    Case "SCHWEISSNAHT"
+//                                        Writer.WriteByte(226)
+//                                        Writer.WriteByte(0)
+//                                    Case Else
+//                                        Writer.WriteByte(0)
+//                                        Writer.WriteByte(0)
+//                                End Select
+//                            End If
+//                        Next
+//                    Next
+//                    ''Die Einheiten erschaffen
+//                    For X = 0 To Objektverwalter.Spielfeld.Breite - 1
+//                        For Y = 0 To Objektverwalter.Spielfeld.Hoehe - 1
+//                            If Objektverwalter.Spielfeld.Einheiten(X, Y, 0) Is Nothing Then
+//                                Writer.WriteByte(Byte.MaxValue)
+//                                Writer.WriteByte(Byte.MaxValue)
+//                            Else
+//                                Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).EinheitenID
+//                                    Case "INF"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(244)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(28)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(68)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(108)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(148)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "MECH"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(8)
+//                                                Writer.WriteByte(2)
+//                                            Case 2
+//                                                Writer.WriteByte(48)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(88)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(128)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(168)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "TTP"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(10)
+//                                                Writer.WriteByte(2)
+//                                            Case 2
+//                                                Writer.WriteByte(50)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(90)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(130)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(170)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "HOELLIUM"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(0)
+//                                                Writer.WriteByte(2)
+//                                            Case 2
+//                                                Writer.WriteByte(40)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(80)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(120)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(160)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "SPAEHER"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(246)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(30)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(70)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(110)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(150)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "JGPZ"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(9)
+//                                                Writer.WriteByte(2)
+//                                            Case 2
+//                                                Writer.WriteByte(49)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(89)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(129)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(169)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "KPZ"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(245)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(29)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(69)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(109)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(149)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "TITANPZ"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(253)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(37)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(77)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(117)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(157)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "MEGAPZ"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(254)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(38)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(78)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(118)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(158)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "ART"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(247)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(31)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(71)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(111)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(151)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "RKW"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(11)
+//                                                Writer.WriteByte(2)
+//                                            Case 2
+//                                                Writer.WriteByte(51)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(91)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(131)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(171)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "LAEUFER"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(255)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(39)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(79)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(119)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(159)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "MISSILE"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(12)
+//                                                Writer.WriteByte(2)
+//                                            Case 2
+//                                                Writer.WriteByte(52)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(92)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(132)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(172)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "FLAK"                            'Flak OS
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(248)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(32)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(72)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(112)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(152)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "T-HELI"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(14)
+//                                                Writer.WriteByte(2)
+//                                            Case 2
+//                                                Writer.WriteByte(54)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(94)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(134)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(174)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "JAEGER" '249 'Jaeger OS
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(249)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(33)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(73)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(113)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(153)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "K-HELI" ' 250 'K-Heli OS
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(250)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(34)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(74)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(114)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(154)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "SCHLFF"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(251)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(35)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(75)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(115)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(155)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "L-BOOT"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(252)
+//                                                Writer.WriteByte(1)
+//                                            Case 2
+//                                                Writer.WriteByte(36)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(76)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(116)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(156)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "BOMBER"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(13)
+//                                                Writer.WriteByte(2)
+//                                            Case 2
+//                                                Writer.WriteByte(53)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(93)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(133)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(173)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "KREUZER"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(15)
+//                                                Writer.WriteByte(2)
+//                                            Case 2
+//                                                Writer.WriteByte(55)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(95)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(135)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(175)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "U-BOOT"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(16)
+//                                                Writer.WriteByte(2)
+//                                            Case 2
+//                                                Writer.WriteByte(56)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(96)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(136)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(176)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "S-BOOT"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(17)
+//                                                Writer.WriteByte(2)
+//                                            Case 2
+//                                                Writer.WriteByte(57)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(97)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(137)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(177)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "FLTR"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(18)
+//                                                Writer.WriteByte(2)
+//                                            Case 2
+//                                                Writer.WriteByte(58)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(98)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(138)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(178)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "TARNK"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(19)
+//                                                Writer.WriteByte(2)
+//                                            Case 2
+//                                                Writer.WriteByte(59)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(99)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(139)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(179)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case "S-BOMBE"
+//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
+//                                            Case 1
+//                                                Writer.WriteByte(20)
+//                                                Writer.WriteByte(2)
+//                                            Case 2
+//                                                Writer.WriteByte(70)
+//                                                Writer.WriteByte(2)
+//                                            Case 3
+//                                                Writer.WriteByte(100)
+//                                                Writer.WriteByte(2)
+//                                            Case 4
+//                                                Writer.WriteByte(140)
+//                                                Writer.WriteByte(2)
+//                                            Case 5
+//                                                Writer.WriteByte(180)
+//                                                Writer.WriteByte(2)
+//                                        End Select
+//                                    Case Else
+//                                        Writer.WriteByte(Byte.MaxValue)
+//                                        Writer.WriteByte(Byte.MaxValue)
+//                                End Select
+//                            End If
+//                        Next
+//                    Next
+//                    Writer.WriteByte(Objektverwalter.Spielfeld.Kartenname.Length)
+//                    Writer.WriteByte(0)
+//                    Writer.WriteByte(0)
+//                    Writer.WriteByte(0)
+//                    'Jetzt kommt der Karten Name
+//                    Dim S() As Char = Objektverwalter.Spielfeld.Kartenname.ToCharArray
+//                    For I = 0 To S.Length - 1
+//                        Writer.WriteByte(CByte(AscW(S(I))))
+//                    Next
+//                    Writer.WriteByte(Objektverwalter.Spielfeld.Autor.Length)
+//                    Writer.WriteByte(0)
+//                    Writer.WriteByte(0)
+//                    Writer.WriteByte(0)
+//                    S = Objektverwalter.Spielfeld.Autor.ToCharArray
+//                    For I = 0 To S.Length - 1
+//                        Writer.WriteByte(CByte(AscW(S(I))))
+//                    Next
+//                    ''Jetzt kommt vier Zeichen nichts
+//                    Writer.WriteByte(Objektverwalter.Spielfeld.Beschreibung.Length)
+//                    Writer.WriteByte(0)
+//                    Writer.WriteByte(0)
+//                    Writer.WriteByte(0)
+//                    S = Objektverwalter.Spielfeld.Beschreibung.ToCharArray
+//                    For I = 0 To S.Length - 1
+//                        Writer.WriteByte(CByte(AscW(S(I))))
+//                    Next
+//                End Using
+//            End If
 }

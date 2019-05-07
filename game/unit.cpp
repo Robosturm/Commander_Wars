@@ -189,6 +189,14 @@ void Unit::updateSprites()
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
     args1 << obj1;
     pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    if (m_UnitRank == GameEnums::UnitRank_CO0)
+    {
+        makeCOUnit(0);
+    }
+    else if (m_UnitRank == GameEnums::UnitRank_CO1)
+    {
+        makeCOUnit(1);
+    }
     setHasMoved(m_Moved);
 }
 
@@ -1780,6 +1788,9 @@ void Unit::deserializeObject(QDataStream& pStream)
     qint32 value = 0;
     pStream >> value;
     setUnitRank(static_cast<GameEnums::UnitRanks>(value));
+    quint32 playerID = 0;
+    pStream >> playerID;
+    m_pOwner = GameMap::getInstance()->getPlayer(playerID);
     if (m_UnitRank == GameEnums::UnitRank_CO0)
     {
         makeCOUnit(0);
@@ -1788,9 +1799,6 @@ void Unit::deserializeObject(QDataStream& pStream)
     {
         makeCOUnit(1);
     }
-    quint32 playerID = 0;
-    pStream >> playerID;
-    m_pOwner = GameMap::getInstance()->getPlayer(playerID);
     if (version > 1)
     {
         pStream >> m_Moved;

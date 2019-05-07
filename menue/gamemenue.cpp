@@ -343,7 +343,7 @@ void GameMenue::startGame(qint32 startPlayer)
     GameRules* pRules = pMap->getGameRules();
     pRules->changeWeather(pRules->getWeather(pRules->getStartWeather())->getWeatherId(), pMap->getPlayerCount() + 1);
     pMap->nextTurn();
-    m_IngameInfoBar->updatePlayerInfo();
+    updatePlayerinfo();
     pApp->continueThread();
 }
 
