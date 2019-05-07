@@ -431,6 +431,27 @@ public slots:
      * @brief importTxtMap imports a map in old CoW text-format
      */
     void importTxtMap(QString file);
+    /**
+     * @brief importAWDSMap
+     * @param file
+     */
+    void importAWDSMap(QString file);
+    /**
+     * @brief exportAWDSMap
+     * @param file
+     */
+    void exportAWDSMap(QString file);
+    /**
+     * @brief importAWDCMap
+     * @param file
+     */
+    void importAWDCMap(QString file);
+    /**
+     * @brief exportAWDCMap
+     * @param file
+     */
+    void exportAWDCMap(QString file);
+
 
     QString getMapName() const;
     void setMapName(const QString &value);

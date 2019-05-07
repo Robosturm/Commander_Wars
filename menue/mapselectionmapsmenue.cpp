@@ -133,7 +133,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
     style.multiline = true;
     m_MapDescription = new oxygine::TextField();
     m_MapDescription->setStyle(style);
-    m_MapDescription->setWidth(m_MapInfo->getContentWidth() - 40);
+    m_MapDescription->setWidth(m_MapInfo->getContentWidth() - 80);
     m_MapDescription->setPosition(10, 130);
     m_MapInfo->addItem(m_MapDescription);
 

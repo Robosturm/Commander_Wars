@@ -162,6 +162,8 @@ set(${PROJECT_NAME}_SRCS
         mapsupport/importcowtxt.cpp
         mapsupport/refactorMap.cpp
         mapsupport/randomMap.cpp
+        mapsupport/importexport_awds.cpp
+        mapsupport/importexport_awdc.cpp
 
         # ai
         ai/leaf.cpp

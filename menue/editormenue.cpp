@@ -64,7 +64,8 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Optimize Players"), "OPTIMIZEPLAYERS", 2);
 
     m_Topbar->addGroup(tr("Import/Export"));
-    m_Topbar->addItem(tr("Import CoW Txt Map"), "IMPORTCOWTXT", 3);
+    m_Topbar->addItem(tr("Import CoW Txt"), "IMPORTCOWTXT", 3);
+    m_Topbar->addItem(tr("Import AWDS Aws"), "IMPORTAWDSAWS", 3);
 
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
     {
@@ -150,6 +151,15 @@ void EditorMenue::clickedTopbar(QString itemID)
         spFileDialog saveDialog = new FileDialog(path, wildcards);
         this->addChild(saveDialog);
         connect(saveDialog.get(), SIGNAL(sigFileSelected(QString)), this, SLOT(importCoWTxTMap(QString)), Qt::QueuedConnection);
+    }
+    else if (itemID == "IMPORTAWDSAWS")
+    {
+        QVector<QString> wildcards;
+        wildcards.append("*.aws");
+        QString path = QCoreApplication::applicationDirPath() + "/maps";
+        spFileDialog saveDialog = new FileDialog(path, wildcards);
+        this->addChild(saveDialog);
+        connect(saveDialog.get(), SIGNAL(sigFileSelected(QString)), this, SLOT(importAWDSAwsMap(QString)), Qt::QueuedConnection);
     }
     else if (itemID == "NEWMAP")
     {
@@ -682,6 +692,23 @@ void EditorMenue::loadMap(QString filename)
             GameMap* pMap = GameMap::getInstance();
             pMap->updateSprites();
             pMap->centerMap(pMap->getMapWidth() / 2, pMap->getMapHeight() / 2);
+            m_EditorSelection->createPlayerSelection();
+        }
+    }
+    pApp->continueThread();
+}
+
+void EditorMenue::importAWDSAwsMap(QString filename)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
+    if (filename.endsWith(".aws"))
+    {
+        QFile file(filename);
+        if (file.exists())
+        {
+            GameMap::getInstance()->importAWDSMap(filename);
             m_EditorSelection->createPlayerSelection();
         }
     }

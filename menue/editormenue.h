@@ -111,6 +111,11 @@ public slots:
      */
     void importCoWTxTMap(QString filename);
     /**
+     * @brief importAWDSAwsMap
+     * @param filename
+     */
+    void importAWDSAwsMap(QString filename);
+    /**
      * @brief newMap
      * @param mapName
      * @param mapWidth

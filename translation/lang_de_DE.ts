@@ -687,6 +687,11 @@
         <source>Edit Units</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="68"/>
+        <source>Import AWDS Aws Map</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FIRE</name>
