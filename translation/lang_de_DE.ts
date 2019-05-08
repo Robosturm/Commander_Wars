@@ -484,113 +484,113 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="60"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="61"/>
         <source>Unit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="69"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="70"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="72"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="73"/>
         <source>HP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="85"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="86"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="88"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="89"/>
         <source>Fuel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="102"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="103"/>
         <source>Ammo 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="105"/>
-        <location filename="../objects/dialogmodifyunit.cpp" line="122"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="106"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="123"/>
         <source>Ammo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="119"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="120"/>
         <source>Ammo 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="135"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="136"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="142"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="143"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="157"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="158"/>
         <source>AI-Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="160"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="161"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="160"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="161"/>
         <source>Offensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="160"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="161"/>
         <source>Defensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="160"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="161"/>
         <source>Hold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="173"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="174"/>
         <source>Unit Rank: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="176"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="177"/>
         <source>Soldier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="176"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="177"/>
         <source>Lieutenant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="176"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="177"/>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="176"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="177"/>
         <source>Veteran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="176"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="177"/>
         <source>CO 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="176"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="177"/>
         <source>CO 2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1359,34 +1359,58 @@
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="51"/>
-        <location filename="../coreengine/settings.cpp" line="61"/>
-        <location filename="../coreengine/settings.cpp" line="67"/>
-        <location filename="../coreengine/settings.cpp" line="73"/>
-        <location filename="../coreengine/settings.cpp" line="79"/>
-        <location filename="../coreengine/settings.cpp" line="91"/>
-        <location filename="../coreengine/settings.cpp" line="97"/>
-        <location filename="../coreengine/settings.cpp" line="108"/>
-        <location filename="../coreengine/settings.cpp" line="115"/>
-        <location filename="../coreengine/settings.cpp" line="122"/>
-        <location filename="../coreengine/settings.cpp" line="133"/>
-        <location filename="../coreengine/settings.cpp" line="140"/>
+        <location filename="../coreengine/settings.cpp" line="64"/>
+        <location filename="../coreengine/settings.cpp" line="74"/>
+        <location filename="../coreengine/settings.cpp" line="80"/>
+        <location filename="../coreengine/settings.cpp" line="86"/>
+        <location filename="../coreengine/settings.cpp" line="92"/>
+        <location filename="../coreengine/settings.cpp" line="104"/>
+        <location filename="../coreengine/settings.cpp" line="110"/>
+        <location filename="../coreengine/settings.cpp" line="117"/>
+        <location filename="../coreengine/settings.cpp" line="124"/>
+        <location filename="../coreengine/settings.cpp" line="131"/>
+        <location filename="../coreengine/settings.cpp" line="138"/>
+        <location filename="../coreengine/settings.cpp" line="145"/>
+        <location filename="../coreengine/settings.cpp" line="152"/>
+        <location filename="../coreengine/settings.cpp" line="159"/>
+        <location filename="../coreengine/settings.cpp" line="166"/>
+        <location filename="../coreengine/settings.cpp" line="173"/>
+        <location filename="../coreengine/settings.cpp" line="180"/>
+        <location filename="../coreengine/settings.cpp" line="187"/>
+        <location filename="../coreengine/settings.cpp" line="194"/>
+        <location filename="../coreengine/settings.cpp" line="205"/>
+        <location filename="../coreengine/settings.cpp" line="212"/>
+        <location filename="../coreengine/settings.cpp" line="219"/>
+        <location filename="../coreengine/settings.cpp" line="230"/>
+        <location filename="../coreengine/settings.cpp" line="237"/>
         <source>Error in the Ini File: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/settings.cpp" line="51"/>
-        <location filename="../coreengine/settings.cpp" line="61"/>
-        <location filename="../coreengine/settings.cpp" line="67"/>
-        <location filename="../coreengine/settings.cpp" line="73"/>
-        <location filename="../coreengine/settings.cpp" line="79"/>
-        <location filename="../coreengine/settings.cpp" line="91"/>
-        <location filename="../coreengine/settings.cpp" line="97"/>
-        <location filename="../coreengine/settings.cpp" line="108"/>
-        <location filename="../coreengine/settings.cpp" line="115"/>
-        <location filename="../coreengine/settings.cpp" line="122"/>
-        <location filename="../coreengine/settings.cpp" line="133"/>
-        <location filename="../coreengine/settings.cpp" line="140"/>
+        <location filename="../coreengine/settings.cpp" line="64"/>
+        <location filename="../coreengine/settings.cpp" line="74"/>
+        <location filename="../coreengine/settings.cpp" line="80"/>
+        <location filename="../coreengine/settings.cpp" line="86"/>
+        <location filename="../coreengine/settings.cpp" line="92"/>
+        <location filename="../coreengine/settings.cpp" line="104"/>
+        <location filename="../coreengine/settings.cpp" line="110"/>
+        <location filename="../coreengine/settings.cpp" line="117"/>
+        <location filename="../coreengine/settings.cpp" line="124"/>
+        <location filename="../coreengine/settings.cpp" line="131"/>
+        <location filename="../coreengine/settings.cpp" line="138"/>
+        <location filename="../coreengine/settings.cpp" line="145"/>
+        <location filename="../coreengine/settings.cpp" line="152"/>
+        <location filename="../coreengine/settings.cpp" line="159"/>
+        <location filename="../coreengine/settings.cpp" line="166"/>
+        <location filename="../coreengine/settings.cpp" line="173"/>
+        <location filename="../coreengine/settings.cpp" line="180"/>
+        <location filename="../coreengine/settings.cpp" line="187"/>
+        <location filename="../coreengine/settings.cpp" line="194"/>
+        <location filename="../coreengine/settings.cpp" line="205"/>
+        <location filename="../coreengine/settings.cpp" line="212"/>
+        <location filename="../coreengine/settings.cpp" line="219"/>
+        <location filename="../coreengine/settings.cpp" line="230"/>
+        <location filename="../coreengine/settings.cpp" line="237"/>
         <source>Setting:</source>
         <translation type="unfinished"></translation>
     </message>

@@ -192,7 +192,7 @@ void Mainwindow::loadGame(QString filename)
             pMap->updateUnitIcons();
             pMap->getGameRules()->createFogVision();
             pApp->getAudioThread()->playRandom();
-
+            GameMenue::getInstance()->updatePlayerinfo();
             leaveMenue();
         }
     }

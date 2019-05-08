@@ -19,7 +19,7 @@ public:
     explicit DialogModifyUnit(Unit* pUnit);
     virtual ~DialogModifyUnit() = default;
 signals:
-
+    void sigFinished();
 public slots:
 private:
     Unit* m_pUnit{nullptr};

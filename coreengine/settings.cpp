@@ -14,8 +14,21 @@ qint32 Settings::m_width             = 1024;
 qint32 Settings::m_height            = 800;
 bool Settings::m_borderless       = false;
 bool Settings::m_fullscreen       = false;
-SDL_Keycode Settings::m_key_escape    = SDLK_ESCAPE;
-SDL_Keycode Settings::m_key_console   = SDLK_F1;
+SDL_Keycode Settings::m_key_escape      = SDLK_ESCAPE;
+SDL_Keycode Settings::m_key_console     = SDLK_F1;
+SDL_Keycode Settings::m_key_up          = SDLK_w;
+SDL_Keycode Settings::m_key_down        = SDLK_s;
+SDL_Keycode Settings::m_key_right       = SDLK_d;
+SDL_Keycode Settings::m_key_left        = SDLK_a;
+SDL_Keycode Settings::m_key_confirm     = SDLK_SPACE;
+SDL_Keycode Settings::m_key_cancel      = SDLK_b;
+SDL_Keycode Settings::m_key_next        = SDLK_e;
+SDL_Keycode Settings::m_key_previous    = SDLK_q;
+SDL_Keycode Settings::m_key_quicksave1  = SDLK_F9;
+SDL_Keycode Settings::m_key_quicksave2  = SDLK_F11;
+SDL_Keycode Settings::m_key_quickload1  = SDLK_F10;
+SDL_Keycode Settings::m_key_quickload2  = SDLK_F12;
+
 QString Settings::m_language      = "en";
 // Sound
 qint32 Settings::m_TotalVolume       = 100;
@@ -33,7 +46,7 @@ quint32 Settings::animationSpeed = 1;
 // add mod path
 QStringList Settings::m_activeMods;
 // this Object
-Settings* Settings::m_pInstance = NULL;
+Settings* Settings::m_pInstance = nullptr;
 
 Settings::Settings()
 {
@@ -97,6 +110,90 @@ void Settings::loadSettings(){
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_console";
         Console::print(error, Console::eERROR);
         m_key_console = SDLK_F1;
+    }
+    m_key_up = static_cast<SDL_Keycode>(settings.value("key_up", SDLK_w).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_up";
+        Console::print(error, Console::eERROR);
+        m_key_up = SDLK_w;
+    }
+    m_key_down = static_cast<SDL_Keycode>(settings.value("key_down", SDLK_s).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_down";
+        Console::print(error, Console::eERROR);
+        m_key_down = SDLK_s;
+    }
+    m_key_right = static_cast<SDL_Keycode>(settings.value("key_right", SDLK_d).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_right";
+        Console::print(error, Console::eERROR);
+        m_key_right = SDLK_d;
+    }
+    m_key_left = static_cast<SDL_Keycode>(settings.value("key_left", SDLK_a).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_left";
+        Console::print(error, Console::eERROR);
+        m_key_left = SDLK_a;
+    }
+    m_key_confirm = static_cast<SDL_Keycode>(settings.value("key_confirm", SDLK_SPACE).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_confirm";
+        Console::print(error, Console::eERROR);
+        m_key_confirm = SDLK_SPACE;
+    }
+    m_key_cancel = static_cast<SDL_Keycode>(settings.value("key_cancel", SDLK_b).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_cancel";
+        Console::print(error, Console::eERROR);
+        m_key_cancel = SDLK_b;
+    }
+    m_key_next = static_cast<SDL_Keycode>(settings.value("key_next", SDLK_e).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_next";
+        Console::print(error, Console::eERROR);
+        m_key_next = SDLK_e;
+    }
+    m_key_previous = static_cast<SDL_Keycode>(settings.value("key_previous", SDLK_q).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_previous";
+        Console::print(error, Console::eERROR);
+        m_key_previous = SDLK_q;
+    }
+    m_key_quicksave1 = static_cast<SDL_Keycode>(settings.value("key_quicksave1", SDLK_F9).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_quicksave1";
+        Console::print(error, Console::eERROR);
+        m_key_quicksave1 = SDLK_F9;
+    }
+    m_key_quicksave2 = static_cast<SDL_Keycode>(settings.value("key_quicksave2", SDLK_F11).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_quicksave2";
+        Console::print(error, Console::eERROR);
+        m_key_quicksave2 = SDLK_F11;
+    }
+    m_key_quickload1 = static_cast<SDL_Keycode>(settings.value("key_quickload1", SDLK_F10).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_quickload1";
+        Console::print(error, Console::eERROR);
+        m_key_quickload1 = SDLK_F10;
+    }
+    m_key_quickload2 = static_cast<SDL_Keycode>(settings.value("key_quickload2", SDLK_F12).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_quickload2";
+        Console::print(error, Console::eERROR);
+        m_key_quickload2 = SDLK_F12;
     }
     settings.endGroup();
 
@@ -184,6 +281,18 @@ void Settings::saveSettings(){
     settings.beginGroup("Keys");
     settings.setValue("key_escape",                 m_key_escape);
     settings.setValue("key_console",                m_key_console);
+    settings.setValue("key_up",                     m_key_up);
+    settings.setValue("key_down",                   m_key_down);
+    settings.setValue("key_right",                  m_key_right);
+    settings.setValue("key_left",                   m_key_left);
+    settings.setValue("key_confirm",                m_key_confirm);
+    settings.setValue("key_cancel",                 m_key_cancel);
+    settings.setValue("key_next",                   m_key_next);
+    settings.setValue("key_previous",               m_key_previous);
+    settings.setValue("key_quicksave1",             m_key_quicksave1);
+    settings.setValue("key_quicksave2",             m_key_quicksave2);
+    settings.setValue("key_quickload1",             m_key_quickload1);
+    settings.setValue("key_quickload2",             m_key_quickload2);
     settings.endGroup();
 
     // Sound
@@ -283,4 +392,124 @@ quint32 Settings::getAnimationSpeed()
 void Settings::setAnimationSpeed(const quint32 &value)
 {
     animationSpeed = value;
+}
+
+SDL_Keycode Settings::getKey_up()
+{
+    return m_key_up;
+}
+
+void Settings::setKey_up(const SDL_Keycode &key_up)
+{
+    m_key_up = key_up;
+}
+
+SDL_Keycode Settings::getKey_down()
+{
+    return m_key_down;
+}
+
+void Settings::setKey_down(const SDL_Keycode &key_down)
+{
+    m_key_down = key_down;
+}
+
+SDL_Keycode Settings::getKey_right()
+{
+    return m_key_right;
+}
+
+void Settings::setKey_right(const SDL_Keycode &key_right)
+{
+    m_key_right = key_right;
+}
+
+SDL_Keycode Settings::getKey_left()
+{
+    return m_key_left;
+}
+
+void Settings::setKey_left(const SDL_Keycode &key_left)
+{
+    m_key_left = key_left;
+}
+
+SDL_Keycode Settings::getKey_confirm()
+{
+    return m_key_confirm;
+}
+
+void Settings::setKey_confirm(const SDL_Keycode &key_confirm)
+{
+    m_key_confirm = key_confirm;
+}
+
+SDL_Keycode Settings::getKey_cancel()
+{
+    return m_key_cancel;
+}
+
+void Settings::setKey_cancel(const SDL_Keycode &key_cancel)
+{
+    m_key_cancel = key_cancel;
+}
+
+SDL_Keycode Settings::getKey_next()
+{
+    return m_key_next;
+}
+
+void Settings::setKey_next(const SDL_Keycode &key_next)
+{
+    m_key_next = key_next;
+}
+
+SDL_Keycode Settings::getKey_previous()
+{
+    return m_key_previous;
+}
+
+void Settings::setKey_previous(const SDL_Keycode &key_previous)
+{
+    m_key_previous = key_previous;
+}
+
+SDL_Keycode Settings::getKey_quicksave1()
+{
+    return m_key_quicksave1;
+}
+
+void Settings::setKey_quicksave1(const SDL_Keycode &key_quicksave1)
+{
+    m_key_quicksave1 = key_quicksave1;
+}
+
+SDL_Keycode Settings::getKey_quicksave2()
+{
+    return m_key_quicksave2;
+}
+
+void Settings::setKey_quicksave2(const SDL_Keycode &key_quicksave2)
+{
+    m_key_quicksave2 = key_quicksave2;
+}
+
+SDL_Keycode Settings::getKey_quickload1()
+{
+    return m_key_quickload1;
+}
+
+void Settings::setKey_quickload1(const SDL_Keycode &key_quickload1)
+{
+    m_key_quickload1 = key_quickload1;
+}
+
+SDL_Keycode Settings::getKey_quickload2()
+{
+    return m_key_quickload2;
+}
+
+void Settings::setKey_quickload2(const SDL_Keycode &key_quickload2)
+{
+    m_key_quickload2 = key_quickload2;
 }

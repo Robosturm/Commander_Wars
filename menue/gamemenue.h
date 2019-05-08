@@ -30,8 +30,6 @@ public:
      */
     void startGame(qint32 startPlayer);
 signals:
-    void sigRightClick(qint32 x, qint32 y);
-    void sigLeftClick(qint32 x, qint32 y);    
     void sigActionPerformed();
 public slots:
     /**
@@ -69,6 +67,11 @@ public slots:
      * @brief exitGame
      */
     void exitGame();
+    /**
+     * @brief keyInput
+     * @param event
+     */
+    virtual void keyInput(SDL_Event event) override;
 protected:
     void loadGameMenue();
 private:

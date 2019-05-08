@@ -34,6 +34,7 @@ signals:
     void sigOnMapClickedLeft();
     void sigOnMapClickedRight();
 public slots:
+    void editFinishedCanceled();
     /**
      * @brief cursorMoved called when the cursor moved
      */
@@ -41,11 +42,11 @@ public slots:
     /**
      * @brief onMapClickedLeft left click on the map
      */
-    void onMapClickedLeft();
+    void onMapClickedLeft(qint32 x, qint32 y);
     /**
      * @brief onMapClickedRight right click on the map
      */
-    void onMapClickedRight();
+    void onMapClickedRight(qint32 x, qint32 y);
     /**
      * @brief placeTerrain places  the terrain here
      * @param x

@@ -134,6 +134,42 @@ public:
     static quint32 getAnimationSpeed();
     static void setAnimationSpeed(const quint32 &value);
 
+    static SDL_Keycode getKey_up();
+    static void setKey_up(const SDL_Keycode &key_up);
+
+    static SDL_Keycode getKey_down();
+    static void setKey_down(const SDL_Keycode &key_down);
+
+    static SDL_Keycode getKey_right();
+    static void setKey_right(const SDL_Keycode &key_right);
+
+    static SDL_Keycode getKey_left();
+    static void setKey_left(const SDL_Keycode &key_left);
+
+    static SDL_Keycode getKey_confirm();
+    static void setKey_confirm(const SDL_Keycode &key_confirm);
+
+    static SDL_Keycode getKey_cancel();
+    static void setKey_cancel(const SDL_Keycode &key_cancel);
+
+    static SDL_Keycode getKey_next();
+    static void setKey_next(const SDL_Keycode &key_next);
+
+    static SDL_Keycode getKey_previous();
+    static void setKey_previous(const SDL_Keycode &key_previous);
+
+    static SDL_Keycode getKey_quicksave1();
+    static void setKey_quicksave1(const SDL_Keycode &key_quicksave1);
+
+    static SDL_Keycode getKey_quicksave2();
+    static void setKey_quicksave2(const SDL_Keycode &key_quicksave2);
+
+    static SDL_Keycode getKey_quickload1();
+    static void setKey_quickload1(const SDL_Keycode &key_quickload1);
+
+    static SDL_Keycode getKey_quickload2();
+    static void setKey_quickload2(const SDL_Keycode &key_quickload2);
+
 private:
     // setting variables
     static qint32 m_x;
@@ -146,6 +182,18 @@ private:
 
     static SDL_Keycode m_key_escape;
     static SDL_Keycode m_key_console;
+    static SDL_Keycode m_key_up;
+    static SDL_Keycode m_key_down;
+    static SDL_Keycode m_key_right;
+    static SDL_Keycode m_key_left;
+    static SDL_Keycode m_key_confirm;
+    static SDL_Keycode m_key_cancel;
+    static SDL_Keycode m_key_next;
+    static SDL_Keycode m_key_previous;
+    static SDL_Keycode m_key_quicksave1;
+    static SDL_Keycode m_key_quicksave2;
+    static SDL_Keycode m_key_quickload1;
+    static SDL_Keycode m_key_quickload2;
 
     static QString m_language;
     // Sound

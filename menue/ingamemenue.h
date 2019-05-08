@@ -18,17 +18,24 @@ public:
     virtual ~InGameMenue();
 
     Cursor* getCursor();
+    bool getFocused() const;
+    void setFocused(bool Focused);
+    void calcNewMousePosition(qint32 x, qint32 y);
 signals:
     void sigMouseWheel(qint32 direction);
     void sigMoveMap(qint32 x, qint32 y);
+    void sigRightClick(qint32 x, qint32 y);
+    void sigLeftClick(qint32 x, qint32 y);
+    void sigMouseMove(qint32 x, qint32 y);
 public slots:
     void mouseWheel(qint32 direction);
     void MoveMap(qint32 x, qint32 y);
-
+    virtual void keyInput(SDL_Event event);
 protected:
     void loadBackground();
     void loadHandling();
     bool m_moveMap{false};
+    bool m_Focused{true};
     QPoint m_MoveMapMousePoint;
 
     spCursor m_Cursor{new Cursor()};

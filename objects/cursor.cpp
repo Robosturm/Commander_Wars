@@ -46,42 +46,24 @@ void Cursor::updatePosition(qint32 mousePosX, qint32 mousePosY)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap* pGameMap = GameMap::getInstance();
-    qint32 x = (mousePosX - pGameMap->getPosition().x) / (GameMap::Imagesize * pGameMap->getZoom());
-    qint32 y = (mousePosY - pGameMap->getPosition().y) / (GameMap::Imagesize * pGameMap->getZoom());
-    onMap = true;
-    // check if the mouse is still on the map
-    if (x < 0)
+    GameMap* pMap = GameMap::getInstance();
+    qint32 x = (mousePosX - pMap->getPosition().x) / (GameMap::Imagesize * pMap->getZoom());
+    qint32 y = (mousePosY - pMap->getPosition().y) / (GameMap::Imagesize * pMap->getZoom());
+    onMap = pMap->onMap(x, y);
+    if (onMap)
     {
-        x = 0;
-        onMap = false;
-    }
-    if (y < 0)
-    {
-        y = 0;
-        onMap = false;
-    }
-    if (x >= pGameMap->getMapWidth())
-    {
-        x = pGameMap->getMapWidth() - 1;
-        onMap = false;
-    }
-    if (y >= pGameMap->getMapHeight())
-    {
-        y = pGameMap->getMapHeight() - 1;
-        onMap = false;
-    }
-    // play tick sound when changing the field
-    if ((x != m_MapPointX) ||
-        (y != m_MapPointY))
-    {
-        Mainapp::getInstance()->getAudioThread()->playSound("switchfield.wav");
-    }
+        // play tick sound when changing the field
+        if ((x != m_MapPointX) ||
+            (y != m_MapPointY))
+        {
+            Mainapp::getInstance()->getAudioThread()->playSound("switchfield.wav");
+        }
 
-    m_MapPointX = x;
-    m_MapPointY = y;
-    this->setPosition(x * GameMap::Imagesize, y * GameMap::Imagesize);
-    // provide cursor move signal
-    emit sigCursorMoved(m_MapPointX, m_MapPointY);
+        m_MapPointX = x;
+        m_MapPointY = y;
+        this->setPosition(x * GameMap::Imagesize, y * GameMap::Imagesize);
+        // provide cursor move signal
+        emit sigCursorMoved(m_MapPointX, m_MapPointY);
+    }
     pApp->continueThread();
 }

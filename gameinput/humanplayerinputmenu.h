@@ -27,10 +27,18 @@ public:
     void setMenuPosition(qint32 x, qint32 y);
 signals:
     void sigItemSelected(QString actionID, qint32 cost);
+    void sigCanceled(qint32 x, qint32 y);
 public slots:
-
+    void leftClick(qint32 x, qint32 y);
+    void keyInput(SDL_Event event);
+    void mouseMove(qint32 x, qint32 y);
 private:
     oxygine::spSprite m_Cursor;
+    qint32 startY{0};
+    qint32 itemHeigth{0};
+    qint32 currentAction{0};
+    QStringList m_ActionIDs;
+    QVector<qint32> m_CostList;
 };
 
 #endif // HUMANPLAYERINPUTMENU_H

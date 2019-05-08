@@ -24,6 +24,7 @@ public:
 
 signals:
     void editFinished(QString mapName, QString author, QString description, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount);
+    void sigCanceled();
 public slots:
 
 private:

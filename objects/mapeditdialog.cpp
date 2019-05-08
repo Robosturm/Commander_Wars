@@ -116,5 +116,6 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         this->getParent()->removeChild(this);
+        emit sigCanceled();
     });
 }

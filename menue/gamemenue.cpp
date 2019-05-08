@@ -37,22 +37,6 @@ void GameMenue::loadGameMenue()
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_pInstance = this;
-
-    GameMap::getInstance()->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
-    {
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
-        if (pTouchEvent != nullptr)
-        {
-            if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
-            {
-                emit sigRightClick(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
-            }
-            else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
-            {
-                emit sigLeftClick(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
-            }
-        }
-    });
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
@@ -197,6 +181,7 @@ void GameMenue::updatePlayerinfo()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_pPlayerinfo->updateData();
+    m_IngameInfoBar->updatePlayerInfo();
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
@@ -347,3 +332,62 @@ void GameMenue::startGame(qint32 startPlayer)
     pApp->continueThread();
 }
 
+void GameMenue::keyInput(SDL_Event event)
+{
+    InGameMenue::keyInput(event);
+    if (m_Focused)
+    {
+        // for debugging
+        SDL_Keycode cur = event.key.keysym.sym;
+        if (cur == Settings::getKey_next())
+        {
+
+        }
+        else if (cur == Settings::getKey_previous())
+        {
+
+        }
+        else if (cur == Settings::getKey_quicksave1())
+        {
+            saveMap("savegames/quicksave1.sav");
+        }
+        else if (cur == Settings::getKey_quicksave2())
+        {
+            saveMap("savegames/quicksave2.sav");
+        }
+        else if (cur == Settings::getKey_quickload1())
+        {
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->suspendThread();
+            Console::print("Leaving Game Menue", Console::eDEBUG);
+            oxygine::Actor::detach();
+
+            oxygine::getStage()->addChild(new GameMenue("savegames/quicksave1.sav"));
+            pApp->getAudioThread()->clearPlayList();
+            GameMap* pMap = GameMap::getInstance();
+            pMap->getCurrentPlayer()->loadCOMusic();
+            pMap->updateUnitIcons();
+            pMap->getGameRules()->createFogVision();
+            pApp->getAudioThread()->playRandom();
+            GameMenue::getInstance()->updatePlayerinfo();
+            pApp->continueThread();
+        }
+        else if (cur == Settings::getKey_quickload2())
+        {
+
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->suspendThread();
+            Console::print("Leaving Game Menue", Console::eDEBUG);
+            oxygine::Actor::detach();
+            oxygine::getStage()->addChild(new GameMenue("savegames/quicksave2.sav"));
+            pApp->getAudioThread()->clearPlayList();
+            GameMap* pMap = GameMap::getInstance();
+            pMap->getCurrentPlayer()->loadCOMusic();
+            pMap->updateUnitIcons();
+            pMap->getGameRules()->createFogVision();
+            pApp->getAudioThread()->playRandom();
+            GameMenue::getInstance()->updatePlayerinfo();
+            pApp->continueThread();
+        }
+    }
+}

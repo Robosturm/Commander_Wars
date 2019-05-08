@@ -83,8 +83,7 @@ void HumanPlayerInput::rightClick(qint32 x, qint32 y)
                     if (m_pGameAction->getInputStep() == 0)
                     {
                         // go one step back :)
-                        m_CurrentMenu->getParent()->removeChild(m_CurrentMenu);
-                        m_CurrentMenu = nullptr;
+                        clearMenu();
                         createMarkedMoveFields();
                     }
                 }
@@ -177,6 +176,8 @@ void HumanPlayerInput::clearMenu()
 {
     if (m_CurrentMenu.get() != nullptr)
     {
+        GameMenue* pMenue = GameMenue::getInstance();
+        pMenue->setFocused(true);
         m_CurrentMenu->getParent()->removeChild(m_CurrentMenu);
         m_CurrentMenu = nullptr;
     }
@@ -428,7 +429,10 @@ void HumanPlayerInput::getNextStepData()
         m_CurrentMenu = new HumanPlayerInputMenu(pData->getTexts(), pData->getActionIDs(), pData->getIconList(), pData->getCostList(), pData->getEnabledList());
         m_CurrentMenu->setMenuPosition(m_pGameAction->getActionTarget().x() * GameMap::Imagesize, m_pGameAction->getActionTarget().y() * GameMap::Imagesize);
         pMap->addChild(m_CurrentMenu);
-        connect(m_CurrentMenu.get(), SIGNAL(sigItemSelected(QString, qint32)), this, SLOT(menuItemSelected(QString, qint32)), Qt::QueuedConnection);
+        GameMenue* pMenue = GameMenue::getInstance();
+        pMenue->setFocused(false);
+        connect(m_CurrentMenu.get(), &HumanPlayerInputMenu::sigItemSelected, this, &HumanPlayerInput::menuItemSelected, Qt::QueuedConnection);
+        connect(m_CurrentMenu.get(), &HumanPlayerInputMenu::sigCanceled, this, &HumanPlayerInput::rightClick, Qt::QueuedConnection);
         delete pData;
     }
     else if (stepType.toUpper() == "FIELD")
@@ -453,8 +457,6 @@ void HumanPlayerInput::finishAction()
     cleanUpInput();
 }
 
-
-
 void HumanPlayerInput::createActionMenu(QStringList actionIDs, qint32 x, qint32 y)
 {
     clearMarkedFields();
@@ -466,9 +468,11 @@ void HumanPlayerInput::createActionMenu(QStringList actionIDs, qint32 x, qint32 
     }
     m_CurrentMenu = new HumanPlayerInputMenu(data.getTexts(), actionIDs, data.getIconList());
     m_CurrentMenu->setMenuPosition(x * GameMap::Imagesize, y * GameMap::Imagesize);
-
     pMap->addChild(m_CurrentMenu);
-    connect(m_CurrentMenu.get(), SIGNAL(sigItemSelected(QString, qint32)), this, SLOT(menuItemSelected(QString, qint32)), Qt::QueuedConnection);
+    GameMenue* pMenue = GameMenue::getInstance();
+    pMenue->setFocused(false);
+    connect(m_CurrentMenu.get(), &HumanPlayerInputMenu::sigItemSelected, this, &HumanPlayerInput::menuItemSelected, Qt::QueuedConnection);
+    connect(m_CurrentMenu.get(), &HumanPlayerInputMenu::sigCanceled, this, &HumanPlayerInput::rightClick, Qt::QueuedConnection);
 }
 
 void HumanPlayerInput::selectUnit(qint32 x, qint32 y)

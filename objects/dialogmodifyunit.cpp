@@ -43,6 +43,7 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         this->getParent()->removeChild(this);
+        emit sigFinished();
     });
 
     oxygine::TextStyle style = FontManager::getMainFont();

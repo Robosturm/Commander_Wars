@@ -68,25 +68,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Import AWDS Aws"), "IMPORTAWDSAWS", 3);
     m_Topbar->addItem(tr("Import AWDC Aw4"), "IMPORTAWDCAW4", 3);
 
-    GameMap::getInstance()->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
-    {
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
-        if (pTouchEvent != nullptr)
-        {
-            if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
-            {
-                emit sigOnMapClickedLeft();
-            }
-            else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
-            {
-                emit sigOnMapClickedRight();
-            }
-            else
-            {
-                // ignore case
-            }
-        }
-    });
+
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
@@ -94,7 +76,7 @@ EditorMenue::EditorMenue()
         {
             if (pTouchEvent->getPointer()->isPressed(oxygine::MouseButton::MouseButton_Left))
             {
-                emit sigOnMapClickedLeft();
+                emit sigLeftClick(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
             }
             else
             {
@@ -104,8 +86,8 @@ EditorMenue::EditorMenue()
     });
 
     // connecting stuff
-    connect(this, SIGNAL(sigOnMapClickedLeft()), this, SLOT(onMapClickedLeft()), Qt::QueuedConnection);
-    connect(this, SIGNAL(sigOnMapClickedRight()), this, SLOT(onMapClickedRight()), Qt::QueuedConnection);
+    connect(this, &EditorMenue::sigLeftClick, this, &EditorMenue::onMapClickedLeft, Qt::QueuedConnection);
+    connect(this, &EditorMenue::sigRightClick, this, &EditorMenue::onMapClickedRight, Qt::QueuedConnection);
     connect(m_Cursor.get(), SIGNAL(sigCursorMoved(qint32,qint32)), this, SLOT(cursorMoved(qint32,qint32)), Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigKeyDown, this, &EditorMenue::KeyInput, Qt::QueuedConnection);
     connect(m_Topbar.get(), SIGNAL(sigItemClicked(QString)), this, SLOT(clickedTopbar(QString)), Qt::QueuedConnection);
@@ -131,52 +113,64 @@ void EditorMenue::clickedTopbar(QString itemID)
         QVector<QString> wildcards;
         wildcards.append("*.map");
         QString path = QCoreApplication::applicationDirPath() + "/maps";
-        spFileDialog saveDialog = new FileDialog(path, wildcards, GameMap::getInstance()->getMapName());
-        this->addChild(saveDialog);
-        connect(saveDialog.get(), SIGNAL(sigFileSelected(QString)), this, SLOT(saveMap(QString)), Qt::QueuedConnection);
+        spFileDialog fileDialog = new FileDialog(path, wildcards, GameMap::getInstance()->getMapName());
+        this->addChild(fileDialog);
+        connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::saveMap, Qt::QueuedConnection);
+        connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+
+        setFocused(false);
     }
     else if (itemID == "LOADMAP")
     {
         QVector<QString> wildcards;
         wildcards.append("*.map");
         QString path = QCoreApplication::applicationDirPath() + "/maps";
-        spFileDialog saveDialog = new FileDialog(path, wildcards);
-        this->addChild(saveDialog);
-        connect(saveDialog.get(), SIGNAL(sigFileSelected(QString)), this, SLOT(loadMap(QString)), Qt::QueuedConnection);
+        spFileDialog fileDialog = new FileDialog(path, wildcards);
+        this->addChild(fileDialog);
+        connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::loadMap, Qt::QueuedConnection);
+        connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+        setFocused(false);
     }
     else if (itemID == "IMPORTCOWTXT")
     {
         QVector<QString> wildcards;
         wildcards.append("*.txt");
         QString path = QCoreApplication::applicationDirPath() + "/maps";
-        spFileDialog saveDialog = new FileDialog(path, wildcards);
-        this->addChild(saveDialog);
-        connect(saveDialog.get(), SIGNAL(sigFileSelected(QString)), this, SLOT(importCoWTxTMap(QString)), Qt::QueuedConnection);
+        spFileDialog fileDialog = new FileDialog(path, wildcards);
+        this->addChild(fileDialog);
+        connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importCoWTxTMap, Qt::QueuedConnection);
+        connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+        setFocused(false);
     }
     else if (itemID == "IMPORTAWDSAWS")
     {
         QVector<QString> wildcards;
         wildcards.append("*.aws");
         QString path = QCoreApplication::applicationDirPath() + "/maps";
-        spFileDialog saveDialog = new FileDialog(path, wildcards);
-        this->addChild(saveDialog);
-        connect(saveDialog.get(), SIGNAL(sigFileSelected(QString)), this, SLOT(importAWDSAwsMap(QString)), Qt::QueuedConnection);
+        spFileDialog fileDialog = new FileDialog(path, wildcards);
+        this->addChild(fileDialog);
+        connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDSAwsMap, Qt::QueuedConnection);
+        connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+        setFocused(false);
     }
     else if (itemID == "IMPORTAWDCAW4")
     {
         QVector<QString> wildcards;
         wildcards.append("*.aw4");
         QString path = QCoreApplication::applicationDirPath() + "/maps";
-        spFileDialog saveDialog = new FileDialog(path, wildcards);
-        this->addChild(saveDialog);
-        connect(saveDialog.get(), SIGNAL(sigFileSelected(QString)), this, SLOT(importAWDCAw4Map(QString)), Qt::QueuedConnection);
+        spFileDialog fileDialog = new FileDialog(path, wildcards);
+        this->addChild(fileDialog);
+        connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDCAw4Map, Qt::QueuedConnection);
+        connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+        setFocused(false);
     }
     else if (itemID == "NEWMAP")
     {
         spMapEditDialog mapEditDialog = new MapEditDialog("", "", "", 20, 20, 2);
-        this->addChild(mapEditDialog);
         connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::newMap, Qt::QueuedConnection);
+        connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
         this->addChild(mapEditDialog);
+        setFocused(false);
     }
     else if (itemID == "EDITMAP")
     {
@@ -184,7 +178,9 @@ void EditorMenue::clickedTopbar(QString itemID)
         spMapEditDialog mapEditDialog = new MapEditDialog(pGameMap->getMapName(), pGameMap->getMapAuthor(), pGameMap->getMapDescription(),
                                                           pGameMap->getMapWidth(), pGameMap->getMapHeight(), pGameMap->getPlayerCount());
         connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::changeMap, Qt::QueuedConnection);
+        connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
         this->addChild(mapEditDialog);
+        setFocused(false);
     }
     else if (itemID == "FLIPX")
     {
@@ -229,9 +225,10 @@ void EditorMenue::clickedTopbar(QString itemID)
     }
     else if (itemID == "EDITPLAYERS")
     {
-        spPlayerSelectionDialog pDiaolog = new PlayerSelectionDialog();
-        addChild(pDiaolog);
-        connect(pDiaolog.get(), &PlayerSelectionDialog::sigPlayersChanged, this, &EditorMenue::playersChanged, Qt::QueuedConnection);
+        spPlayerSelectionDialog pDialog = new PlayerSelectionDialog();
+        addChild(pDialog);
+        connect(pDialog.get(), &PlayerSelectionDialog::sigPlayersChanged, this, &EditorMenue::playersChanged, Qt::QueuedConnection);
+        setFocused(false);
     }
     pApp->continueThread();
 }
@@ -241,6 +238,7 @@ void EditorMenue::playersChanged()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_EditorSelection->createPlayerSelection();
+    setFocused(true);
     pApp->continueThread();
 }
 
@@ -369,7 +367,7 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
     pApp->continueThread();
 }
 
-void EditorMenue::onMapClickedRight()
+void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
@@ -379,13 +377,13 @@ void EditorMenue::onMapClickedRight()
     {
         case EditorSelection::EditorMode::Terrain:
         {
-            QString terrainID = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY())->getTerrainID();
+            QString terrainID = pMap->getTerrain(x, y)->getTerrainID();
             m_EditorSelection->selectTerrain(terrainID);
             break;
         }
         case EditorSelection::EditorMode::Building:
         {
-            Building* pBuilding = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY())->getBuilding();
+            Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
             if (pBuilding != nullptr)
             {
                 m_EditorSelection->selectBuilding(pBuilding->getBuildingID());
@@ -394,7 +392,7 @@ void EditorMenue::onMapClickedRight()
         }
         case EditorSelection::EditorMode::Unit:
         {
-            Unit* pUnit = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY())->getUnit();
+            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
             if (pUnit != nullptr)
             {
                 m_EditorSelection->selectUnit(pUnit->getUnitID());
@@ -406,7 +404,7 @@ void EditorMenue::onMapClickedRight()
     pApp->continueThread();
 }
 
-void EditorMenue::onMapClickedLeft()
+void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
@@ -415,7 +413,7 @@ void EditorMenue::onMapClickedLeft()
     {
         case EditorModes::RemoveUnits:
         {
-            Unit* pUnit = GameMap::getInstance()->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY())->getUnit();
+            Unit* pUnit = GameMap::getInstance()->getTerrain(x, y)->getUnit();
             if (pUnit != nullptr)
             {
                 pUnit->killUnit();
@@ -424,10 +422,13 @@ void EditorMenue::onMapClickedLeft()
         }
         case EditorModes::EditUnits:
         {
-            Unit* pUnit = GameMap::getInstance()->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY())->getUnit();
+            Unit* pUnit = GameMap::getInstance()->getTerrain(x, y)->getUnit();
             if (pUnit != nullptr)
             {
-                addChild(new DialogModifyUnit(pUnit));
+                spDialogModifyUnit pDialog = new DialogModifyUnit(pUnit);
+                addChild(pDialog);
+                connect(pDialog.get(), &DialogModifyUnit::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+                setFocused(false);
             }
             break;
         }
@@ -437,17 +438,17 @@ void EditorMenue::onMapClickedLeft()
             {
                 case EditorSelection::EditorMode::Terrain:
                 {
-                    placeTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                    placeTerrain(x, y);
                     break;
                 }
                 case EditorSelection::EditorMode::Building:
                 {
-                    placeBuilding(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                    placeBuilding(x, y);
                     break;
                 }
                 case EditorSelection::EditorMode::Unit:
                 {
-                    placeUnit(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                    placeUnit(x, y);
                     break;
                 }
             }
@@ -455,6 +456,11 @@ void EditorMenue::onMapClickedLeft()
         }
     }
     pApp->continueThread();
+}
+
+void EditorMenue::editFinishedCanceled()
+{
+    setFocused(true);
 }
 
 bool EditorMenue::canTerrainBePlaced(qint32 x, qint32 y)
@@ -681,6 +687,7 @@ void EditorMenue::saveMap(QString filename)
         pMap->serializeObject(stream);
         file.close();
     }
+    setFocused(true);
     pApp->continueThread();
 }
 
@@ -705,6 +712,7 @@ void EditorMenue::loadMap(QString filename)
             m_EditorSelection->createPlayerSelection();
         }
     }
+    setFocused(true);
     pApp->continueThread();
 }
 
@@ -722,6 +730,7 @@ void EditorMenue::importAWDCAw4Map(QString filename)
             m_EditorSelection->createPlayerSelection();
         }
     }
+    setFocused(true);
     pApp->continueThread();
 }
 
@@ -740,6 +749,7 @@ void EditorMenue::importAWDSAwsMap(QString filename)
             m_EditorSelection->createPlayerSelection();
         }
     }
+    setFocused(true);
     pApp->continueThread();
 }
 
@@ -757,6 +767,7 @@ void EditorMenue::importCoWTxTMap(QString filename)
             m_EditorSelection->createPlayerSelection();
         }
     }
+    setFocused(true);
     pApp->continueThread();
 }
 
@@ -771,6 +782,7 @@ void EditorMenue::newMap(QString mapName, QString mapAuthor, QString mapDescript
     pMap->setMapDescription(mapDescription);
     pMap->newMap(mapWidth, mapHeigth, playerCount);
     m_EditorSelection->createPlayerSelection();
+    setFocused(true);
     pApp->continueThread();
 }
 
@@ -785,6 +797,6 @@ void EditorMenue::changeMap(QString mapName, QString mapAuthor, QString mapDescr
     pMap->setMapDescription(mapDescription);
     pMap->changeMap(mapWidth, mapHeigth, playerCount);
     m_EditorSelection->createPlayerSelection();
-
+    setFocused(true);
     pApp->continueThread();
 }
