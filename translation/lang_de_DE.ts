@@ -987,57 +987,57 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="412"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="420"/>
         <source>Enviroment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="433"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="441"/>
         <source>Random Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="444"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="452"/>
         <source>Start Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="459"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="467"/>
         <source>Gameplay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="465"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="473"/>
         <source>Unit Ranking System: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="476"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="484"/>
         <source>No CO Powers: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="487"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="495"/>
         <source>Fog Of War: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="490"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="498"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="490"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="498"/>
         <source>Fog of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="502"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="510"/>
         <source>Unit Limit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="515"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="523"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1063,112 +1063,177 @@
 <context>
     <name>OptionMenue</name>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="44"/>
+        <location filename="../menue/optionmenue.cpp" line="45"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="56"/>
+        <location filename="../menue/optionmenue.cpp" line="57"/>
         <source>Mods</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="65"/>
+        <location filename="../menue/optionmenue.cpp" line="66"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="75"/>
+        <location filename="../menue/optionmenue.cpp" line="76"/>
         <source>Gameplay &amp; Keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="175"/>
+        <location filename="../menue/optionmenue.cpp" line="176"/>
         <source>Gameplay Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="182"/>
+        <location filename="../menue/optionmenue.cpp" line="183"/>
         <source>Show Ingame Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="185"/>
+        <location filename="../menue/optionmenue.cpp" line="186"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="185"/>
+        <location filename="../menue/optionmenue.cpp" line="186"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="185"/>
+        <location filename="../menue/optionmenue.cpp" line="186"/>
         <source>Own</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="185"/>
+        <location filename="../menue/optionmenue.cpp" line="186"/>
         <source>Ally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="185"/>
+        <location filename="../menue/optionmenue.cpp" line="186"/>
         <source>Enemy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="198"/>
+        <location filename="../menue/optionmenue.cpp" line="199"/>
         <source>Animation Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/optionmenue.cpp" line="214"/>
+        <source>Ingame Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="221"/>
+        <source>Key Up: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="243"/>
+        <source>Key Down: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="232"/>
+        <source>Key Left: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="254"/>
+        <source>Key Right: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/optionmenue.cpp" line="265"/>
+        <source>Key Confirm: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="276"/>
+        <source>Key Cancel: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="287"/>
+        <source>Key Next: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="298"/>
+        <source>Key Previous: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="309"/>
+        <source>Key Quicksave 1: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="320"/>
+        <source>Key Quickload 1: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="331"/>
+        <source>Key Quicksave 2: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="342"/>
+        <source>Key Quickload 2: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="407"/>
         <source>Screen Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="273"/>
+        <location filename="../menue/optionmenue.cpp" line="415"/>
         <source>Screen Resolution: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="289"/>
+        <location filename="../menue/optionmenue.cpp" line="431"/>
         <source>Screen Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="292"/>
+        <location filename="../menue/optionmenue.cpp" line="434"/>
         <source>Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="292"/>
+        <location filename="../menue/optionmenue.cpp" line="434"/>
         <source>Bordered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="292"/>
+        <location filename="../menue/optionmenue.cpp" line="434"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="301"/>
+        <location filename="../menue/optionmenue.cpp" line="443"/>
         <source>Audio Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="307"/>
+        <location filename="../menue/optionmenue.cpp" line="449"/>
         <source>Global Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="323"/>
+        <location filename="../menue/optionmenue.cpp" line="465"/>
         <source>Music Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="339"/>
+        <location filename="../menue/optionmenue.cpp" line="481"/>
         <source>Sound Volume: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1353,6 +1418,115 @@
     <message>
         <location filename="../resources/scripts/terrain/STREET.js" line="6"/>
         <source>Street</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SelectKey</name>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="18"/>
+        <source>Press Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="41"/>
+        <location filename="../objects/selectkey.cpp" line="123"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="45"/>
+        <source>Space</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="49"/>
+        <source>F2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="53"/>
+        <source>F3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="57"/>
+        <source>F4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="61"/>
+        <source>F5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="65"/>
+        <source>F6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="69"/>
+        <source>F7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="73"/>
+        <source>F8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="77"/>
+        <source>F9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="81"/>
+        <source>F10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="85"/>
+        <source>F11</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="89"/>
+        <source>F12</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="93"/>
+        <source>Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="97"/>
+        <source>Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="101"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="105"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="109"/>
+        <source>Return</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="113"/>
+        <source>Tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/selectkey.cpp" line="127"/>
+        <source>Key </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

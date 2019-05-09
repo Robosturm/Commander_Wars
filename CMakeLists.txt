@@ -74,6 +74,7 @@ set(${PROJECT_NAME}_SRCS
         objects/dialogmodifyunit.cpp
         objects/playerselection.cpp
         objects/playerselectiondialog.cpp
+        objects/selectkey.cpp
 
         #menues
         menue/mainwindow.cpp
@@ -148,6 +149,8 @@ set(${PROJECT_NAME}_SRCS
         game/gamerecording/playerrecord.cpp
         game/gamerecording/SpecialEvent.cpp
         game/gamerecording/gamerecorder.cpp
+        # cool ingame script support
+        game/gamescript.cpp
 
         # game input
         gameinput/basegameinputif.cpp
@@ -184,6 +187,9 @@ add_custom_target(scripts SOURCES ${JavaScripts})
 
 FILE(GLOB_RECURSE ModScripts "mods/*.js")
 add_custom_target(modscripts SOURCES ${ModScripts})
+
+FILE(GLOB_RECURSE TemplateScripts "templates/*.js")
+add_custom_target(templatescripts SOURCES ${TemplateScripts})
 
 # create translation here :)
 set(LUPDATE_OPTIONS "" CACHE STRING "specifies options passed to lupdate")
@@ -286,6 +292,7 @@ endif()
 install(DIRECTORY resources DESTINATION ".")
 install(DIRECTORY maps DESTINATION ".")
 install(DIRECTORY mods DESTINATION ".")
+install(DIRECTORY templates DESTINATION ".")
 install(DIRECTORY savegames DESTINATION ".")
 install(FILES ${${PROJECT_NAME}_INSTALL_LIBS} DESTINATION ".")
 # install exe

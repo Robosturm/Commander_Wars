@@ -59,6 +59,16 @@ void Interpreter::openScript(const QString& script)
         }
 }
 
+void Interpreter::loadScript(QString content, QString script)
+{
+    QJSValue value = evaluate(content, script);
+    if (value.isError())
+    {
+        QString error = value.toString() + " in File:" + script;
+        Console::print(error, Console::eERROR);
+    }
+}
+
 Interpreter::~Interpreter()
 {
     // free memory

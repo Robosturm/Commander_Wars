@@ -172,7 +172,11 @@ void GameMenue::actionPerformed()
     GameMap* pMap = GameMap::getInstance();
     pMap->getGameRules()->checkVictory();
     pMap->getGameRules()->createFogVision();
-    emit sigActionPerformed();
+    pMap->getGameScript()->actionDone();
+    if (GameAnimationFactory::getAnimationCount() == 0)
+    {
+        emit sigActionPerformed();
+    }
     pApp->continueThread();
 }
 
@@ -195,6 +199,7 @@ void GameMenue::victory(qint32 team)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
+    bool exit = true;
     // create victory
     if (team >= 0)
     {
@@ -206,10 +211,14 @@ void GameMenue::victory(qint32 team)
                 pPlayer->defeatPlayer(nullptr);
             }
         }
+        exit = pMap->getGameScript()->victory(team);
     }
-    Console::print("Leaving Game Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new VictoryMenue());
-    oxygine::Actor::detach();
+    if (exit)
+    {
+        Console::print("Leaving Game Menue", Console::eDEBUG);
+        oxygine::getStage()->addChild(new VictoryMenue());
+        oxygine::Actor::detach();
+    }
     pApp->continueThread();
 }
 

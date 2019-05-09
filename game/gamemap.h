@@ -27,6 +27,8 @@
 
 #include "game/gamerecording/gamerecorder.h"
 
+#include "game/gamescript.h"
+
 class GameAction;
 
 class GameMap;
@@ -189,7 +191,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 5;
+        return 6;
     }
     /**
      * @brief clearMap
@@ -212,6 +214,11 @@ signals:
     void signalShowCOInfo();
     void sigQueueAction(GameAction* pAction);
 public slots:
+    /**
+     * @brief getGameScript
+     * @return
+     */
+    GameScript* getGameScript();
     /**
      * @brief getMapAuthor
      * @return
@@ -485,6 +492,7 @@ private:
     qint32 currentDay{0};
     spGameRules m_Rules;
     spGameRecorder m_Recorder{new GameRecorder()};
+    spGameScript m_GameScript;
     static const QString m_JavascriptName;
     static const QString m_GameAnimationFactory;
     float m_zoom{1.0f};

@@ -12,6 +12,7 @@
 #include "objects/checkbox.h"
 #include "objects/slider.h"
 #include "objects/dropdownmenu.h"
+#include "objects/selectkey.h"
 
 #include <QDir>
 #include <QFileInfoList>
@@ -208,6 +209,147 @@ void OptionMenue::showGameplayAndKeys()
     });
     y += 40;
 
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Ingame Keys").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Key Up: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSelectKey pSelectKey = new SelectKey(Settings::getKey_up());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_up, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Key Left: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pSelectKey = new SelectKey(Settings::getKey_left());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_left, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Key Down: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pSelectKey = new SelectKey(Settings::getKey_down());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_down, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Key Right: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pSelectKey = new SelectKey(Settings::getKey_right());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_right, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Key Confirm: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pSelectKey = new SelectKey(Settings::getKey_confirm());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_confirm, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Key Cancel: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pSelectKey = new SelectKey(Settings::getKey_cancel());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_cancel, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Key Next: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pSelectKey = new SelectKey(Settings::getKey_next());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_next, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Key Previous: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pSelectKey = new SelectKey(Settings::getKey_previous());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_previous, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Key Quicksave 1: ").toStdString().c_str());
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_quicksave1());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_quicksave1, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Key Quickload 1: ").toStdString().c_str());
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_quickload1());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_quickload1, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Key Quicksave 2: ").toStdString().c_str());
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_quicksave2());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_quicksave2, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Key Quickload 2: ").toStdString().c_str());
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_quickload2());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_quickload2, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+
+    m_pOptions->setContentHeigth(20 + y);
     pApp->continueThread();
 }
 

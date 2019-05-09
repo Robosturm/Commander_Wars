@@ -272,9 +272,16 @@ void MapSelectionMapsMenue::slotButtonNext()
         {
             if (m_pCurrentMap != nullptr)
             {
-                hideMapSelection();
-                showRuleSelection();
-                m_MapSelectionStep = MapSelectionStep::selectRules;
+                if (m_pCurrentMap->getGameScript()->immediateStart())
+                {
+                    startGame();
+                }
+                else
+                {
+                    hideMapSelection();
+                    showRuleSelection();
+                    m_MapSelectionStep = MapSelectionStep::selectRules;
+                }
             }
             break;
         }
@@ -318,6 +325,7 @@ void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
             m_pCurrentMap = nullptr;
         }
         m_pCurrentMap = new GameMap(info.absoluteFilePath(), true);
+        m_pCurrentMap->getGameScript()->init();
         m_pMinimap->updateMinimap(m_pCurrentMap);
         m_MinimapSlider->setContent(m_pMinimap);
         m_MinimapSlider->snap();
@@ -643,6 +651,7 @@ void MapSelectionMapsMenue::startGame()
     }
 
     GameMap* pMap = GameMap::getInstance();
+    pMap->getGameScript()->gameStart();
     pMap->updateSprites();
     // start game
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);

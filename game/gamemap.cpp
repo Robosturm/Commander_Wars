@@ -646,6 +646,7 @@ void GameMap::serializeObject(QDataStream& pStream)
     }
     m_Rules->serializeObject(pStream);
     m_Recorder->serializeObject(pStream);
+    m_GameScript->serializeObject(pStream);
 }
 
 void GameMap::deserializeObject(QDataStream& pStream)
@@ -709,6 +710,15 @@ void GameMap::deserializeObject(QDataStream& pStream)
     {
         m_Recorder->deserializeObject(pStream);
     }
+    if (version > 5)
+    {
+        m_GameScript->deserializeObject(pStream);
+    }
+    else
+    {
+        m_GameScript = new GameScript();
+    }
+
     for (qint32 i = 0; i < playerCount; i++)
     {
         players[i]->loadVisionFields();
@@ -860,6 +870,11 @@ qint32 GameMap::getWinnerTeam()
         }
     }
     return winnerTeam;
+}
+
+GameScript* GameMap::getGameScript()
+{
+    return m_GameScript.get();
 }
 
 QString GameMap::getMapDescription() const

@@ -21,6 +21,7 @@ public:
     static void saveSettings();
     static void setup();
 
+public slots:
     inline qint32 getX()
     {
         return m_x;
