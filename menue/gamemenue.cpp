@@ -339,15 +339,7 @@ void GameMenue::keyInput(SDL_Event event)
     {
         // for debugging
         SDL_Keycode cur = event.key.keysym.sym;
-        if (cur == Settings::getKey_next())
-        {
-
-        }
-        else if (cur == Settings::getKey_previous())
-        {
-
-        }
-        else if (cur == Settings::getKey_quicksave1())
+        if (cur == Settings::getKey_quicksave1())
         {
             saveMap("savegames/quicksave1.sav");
         }

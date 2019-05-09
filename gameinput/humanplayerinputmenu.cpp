@@ -148,6 +148,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     this->setWidth(width);
     GameMenue* pGameMenue = GameMenue::getInstance();
     connect(pGameMenue, &GameMenue::sigMouseMove, this, &HumanPlayerInputMenu::mouseMove, Qt::QueuedConnection);
+    mouseMove(0, 0);
 }
 
 void HumanPlayerInputMenu::leftClick(qint32, qint32)

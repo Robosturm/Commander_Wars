@@ -126,10 +126,15 @@ public slots:
     void rightClick(qint32 x, qint32 y);
     void leftClick(qint32 x, qint32 y);
     void cursorMoved(qint32 x, qint32 y);
+    void keyInput(SDL_Event event);
     void menuItemSelected(QString itemID, qint32 cost);
     void markedFieldSelected(QPoint point);
     QStringList getEmptyActionList();
 protected:
+    void nextMarkedField();
+    void previousMarkedField();
+    void nextSelectOption();
+    void previousSelectOption();
 private:
     GameAction* m_pGameAction{nullptr};
     UnitPathFindingSystem* m_pUnitPathFindingSystem{nullptr};
