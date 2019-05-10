@@ -297,14 +297,18 @@ public slots:
     qint32 getMapHeight() const;
     /**
      * @brief spawnUnit
-     * @param x
-     * @param y
-     * @param unitID
-     * @param owner
-     * @param range
-     * @return
+     * @param x coordinates starting at 0
+     * @param y coordinates starting at 0
+     * @param unitID type, id of the unit checkout the unit scripts to get the id's
+     * @param owner get a player from the map
+     * @param range the unit will be spawned on an empty field that can be crossed by the unit. This range is the test range where the game tries to spawn the unit. From 0 to anything
+     * @return the spawned unit
      */
     Unit* spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint32 range = 0);
+    /**
+     * @brief refillAll refills all units ammo and fuel
+     */
+    void refillAll();
     /**
      * @brief updateTerrainSprites updates the terrain sprites refreshes them to fit the current map
      * @param xInput around given coordinates -1 whole map

@@ -902,6 +902,23 @@ qint32 GameMap::getCurrentDay() const
     return currentDay;
 }
 
+void GameMap::refillAll()
+{
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            spUnit pUnit = fields.at(y)->at(x)->getSpUnit();
+            if (pUnit.get() != nullptr)
+            {
+                pUnit->refill();
+            }
+        }
+    }
+}
+
 void GameMap::startOfTurn(Player* pPlayer)
 {
     Mainapp* pApp = Mainapp::getInstance();
