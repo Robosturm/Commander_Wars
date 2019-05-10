@@ -241,7 +241,7 @@ void Terrain::loadBaseSprite(QString spriteID)
     }
 }
 
-QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder, bool useBuildingID)
+QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder, bool useBuildingID, qint32 recursionCount)
 {
     QStringList searchList = list.split(",");
     QString ret = "";
@@ -354,7 +354,14 @@ QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool black
             }
             else if (useBaseTerrainID)
             {
-                neighbourID = pGameMap->getTerrain(curX, curY)->getBaseTerrainID();
+                if (recursionCount > 0)
+                {
+                    neighbourID = pGameMap->getTerrain(curX, curY)->getBaseTerrainID(recursionCount);
+                }
+                else
+                {
+                    neighbourID = pGameMap->getTerrain(curX, curY)->getBaseTerrainID();
+                }
             }
             else
             {

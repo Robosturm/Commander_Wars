@@ -88,6 +88,7 @@ public:
         Animation,
         Objects,
         Dialogs = 32000,
+        Console
     };
 
     explicit Mainapp(int argc, char* argv[]);

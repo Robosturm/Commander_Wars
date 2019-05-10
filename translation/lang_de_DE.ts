@@ -4840,6 +4840,99 @@
     </message>
 </context>
 <context>
+    <name>co_meiyo</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="283"/>
+        <source>The Supreme Commander of Golden Sun. A veteran of a lot of battles who relies on experienced troops.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="287"/>
+        <source>Veterans</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="291"/>
+        <source>Recruits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="295"/>
+        <source>Firepower rises the higher a rank of a unit is. However unexperienced units are weaker.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="299"/>
+        <source>Units with a higher rank have even higher defence and offense.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="303"/>
+        <source>Training Camp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="307"/>
+        <source>Units with a higher rank have even higher defence and offense. All units gain one rank.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="311"/>
+        <source>War Training</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="315"/>
+        <source>Get those recruits out of my way!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="316"/>
+        <source>An army of veterans awaits you...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="317"/>
+        <source>I know how to train soldiers!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="318"/>
+        <source>An old soldier without wounds is the most dangerous.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="322"/>
+        <source>A knight needs to be strong and experienced!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="323"/>
+        <source>The better prepared knight one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="324"/>
+        <source>Experience always wins.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="328"/>
+        <source>You getting better recuit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="329"/>
+        <source>Tsss! Some recruits have one! A catastroph.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="333"/>
+        <source>Meiyo</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>co_melanthe</name>
     <message>
         <location filename="../resources/scripts/cos/co_melanthe.js" line="210"/>

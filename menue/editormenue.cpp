@@ -625,6 +625,15 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
             Building* pBuilding = new Building(pCurrentBuilding->getBuildingID());
             pBuilding->setOwner(pCurrentBuilding->getOwner());
             pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
+            if (points.size() < 14)
+            {
+                pMap->updateTerrain(x, y);
+                pMap->updateSprites(x, y);
+            }
+            else
+            {
+                pMap->updateSprites();
+            }
         }
     }
     pApp->continueThread();

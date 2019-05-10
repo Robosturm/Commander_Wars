@@ -149,7 +149,7 @@ public slots:
      * @param searchType use GameMap::Directions here
      * @return
      */
-    QString getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder = true, bool useBuildingID = false);
+    QString getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder = true, bool useBuildingID = false, qint32 recursionCount = -1);
     /**
      * @brief loadOverlaySprite loads overlay sprites of this terrain
      * @param spriteID
@@ -164,6 +164,23 @@ public slots:
         if (m_pBaseTerrain.get() != nullptr)
         {
             return m_pBaseTerrain->getBaseTerrainID();
+        }
+        else
+        {
+            return terrainID;
+        }
+    }
+    /**
+     * @brief getBaseTerrainID recursivly
+     * @param count maximum recursion
+     * @return
+     */
+    inline QString getBaseTerrainID(qint32 count)
+    {
+        if (m_pBaseTerrain.get() != nullptr &&
+           ((count > 0) || (count < 0)))
+        {
+            return m_pBaseTerrain->getBaseTerrainID(count - 1);
         }
         else
         {
