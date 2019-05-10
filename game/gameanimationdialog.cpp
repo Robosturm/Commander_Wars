@@ -74,14 +74,33 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
             {
                 emit sigRightClick();
             }
+            else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
+            {
+                emit sigLeftClick();
+            }
         }
     });
     connect(this, &GameAnimationDialog::sigRightClick, this, &GameAnimationDialog::rightClick, Qt::QueuedConnection);
+    connect(this, &GameAnimationDialog::sigLeftClick, this, &GameAnimationDialog::onFinished, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigKeyDown, this, &GameAnimationDialog::keyInput, Qt::QueuedConnection);
 }
 
 void GameAnimationDialog::rightClick()
 {
     GameAnimationFactory::finishAllAnimations();
+}
+
+void GameAnimationDialog::keyInput(SDL_Event event)
+{
+    if (!m_stopped)
+    {
+        // for debugging
+        SDL_Keycode cur = event.key.keysym.sym;
+        if (cur == Settings::getKey_confirm())
+        {
+            onFinished();
+        }
+    }
 }
 
 void GameAnimationDialog::startFinishTimer()
@@ -174,5 +193,6 @@ void GameAnimationDialog::setTextSpeed(qint32 speed)
 
 void GameAnimationDialog::restart()
 {
+    m_stopped = false;
     GameMenue::getInstance()->addChild(this);
 }

@@ -492,7 +492,7 @@ private:
     qint32 currentDay{0};
     spGameRules m_Rules;
     spGameRecorder m_Recorder{new GameRecorder()};
-    spGameScript m_GameScript;
+    spGameScript m_GameScript{new GameScript()};
     static const QString m_JavascriptName;
     static const QString m_GameAnimationFactory;
     float m_zoom{1.0f};

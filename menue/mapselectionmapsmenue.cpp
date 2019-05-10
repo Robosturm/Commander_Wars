@@ -398,16 +398,8 @@ void MapSelectionMapsMenue::showRuleSelection()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_pRuleSelection->setVisible(true);
-    GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
-    if (m_pCurrentMap->getGameRules()->getWeatherCount() != pGameRuleManager->getWeatherCount())
-    {
-        qint32 weatherChance = 100 / pGameRuleManager->getWeatherCount();
-        for (qint32 i = 0; i < pGameRuleManager->getWeatherCount(); i++)
-        {
-            m_pCurrentMap->getGameRules()->addWeather(pGameRuleManager->getWeatherID(i), weatherChance);
-        }
-    }
     m_pRuleSelection->clearContent();
+    GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
     qint32 y = 20;
     // font style
     oxygine::TextStyle style = FontManager::getMainFont();

@@ -15,11 +15,14 @@ public:
     GameAnimationDialog(quint32 frameTime);
 
     virtual void restart() override;
+    void finishDialog();
 signals:
     void sigStartFinishTimer();
     void sigRightClick();
+    void sigLeftClick();
 public slots:
     void rightClick();
+    void keyInput(SDL_Event event);
     virtual bool onFinished() override;
     /**
      * @brief setPositionTop wether dialog appears on top or bottom of the game

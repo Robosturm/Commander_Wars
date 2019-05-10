@@ -2,11 +2,13 @@
 
 #include "coreengine/mainapp.h"
 
+#include "objects/filedialog.h"
+
 #include "resource_management/objectmanager.h"
 
 #include "resource_management/fontmanager.h"
 
-MapEditDialog::MapEditDialog(QString mapName, QString author, QString description, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount)
+MapEditDialog::MapEditDialog(QString mapName, QString author, QString description, QString scriptFile, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount)
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -65,6 +67,30 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     // Label
     text = new oxygine::TextField();
     text->setStyle(style);
+    text->setText(tr("Map Script:").toStdString().c_str());
+    text->setPosition(30, y);
+    pSpriteBox->addChild(text);
+    m_ScriptButton = pObjectManager->createButton(tr("Select File"), 150);
+    m_ScriptButton->setPosition(pApp->getSettings()->getWidth() - m_ScriptButton->getWidth() - 30, y);
+    pSpriteBox->addChild(m_ScriptButton);
+    m_MapScriptFile = new Textbox(m_ScriptButton->getX() - text->getX() - width);
+    m_MapScriptFile->setPosition(text->getX() + width, text->getY());
+    m_MapScriptFile->setCurrentText(scriptFile);
+    pSpriteBox->addChild(m_MapScriptFile);
+    m_ScriptButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        QVector<QString> wildcards;
+        wildcards.append("*.js");
+        QString path = QCoreApplication::applicationDirPath() + "/maps";
+        spFileDialog fileDialog = new FileDialog(path, wildcards);
+        this->addChild(fileDialog);
+        connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &MapEditDialog::scriptFileChanged, Qt::QueuedConnection);
+    });
+    y += 40;
+
+    // Label
+    text = new oxygine::TextField();
+    text->setStyle(style);
     text->setText(tr("Map width:").toStdString().c_str());
     text->setPosition(30, 5 + y );
     pSpriteBox->addChild(text);
@@ -104,8 +130,9 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit editFinished(m_MapName->getCurrentText(), m_MapAuthor->getCurrentText(),
-                          m_MapDescription->getCurrentText(), static_cast<qint32>(m_MapWidth->getCurrentValue()),
-                          static_cast<qint32>(m_MapHeigth->getCurrentValue()), static_cast<qint32>(m_MapPlayerCount->getCurrentValue()));
+                          m_MapDescription->getCurrentText(), m_MapScriptFile->getCurrentText(),
+                          static_cast<qint32>(m_MapWidth->getCurrentValue()), static_cast<qint32>(m_MapHeigth->getCurrentValue()),
+                          static_cast<qint32>(m_MapPlayerCount->getCurrentValue()));
         this->getParent()->removeChild(this);
     });
 
@@ -118,4 +145,11 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
         this->getParent()->removeChild(this);
         emit sigCanceled();
     });
+}
+
+void MapEditDialog::scriptFileChanged(QString file)
+{
+    file = file.replace(QCoreApplication::applicationDirPath() + "/", "");
+    file = file.replace(QCoreApplication::applicationDirPath(), "");
+    m_MapScriptFile->setCurrentText(file);
 }

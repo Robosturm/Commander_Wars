@@ -18,6 +18,7 @@ signals:
     void sigRightClick();
 public slots:
     void rightClick();
+    virtual bool onFinished() override;
 private:
     QTimer endTimer;
 };

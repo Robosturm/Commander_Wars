@@ -13,6 +13,7 @@
 #include "resource_management/cospritemanager.h"
 
 #include "resource_management/gamemanager.h"
+#include "resource_management/gamerulemanager.h"
 
 #include "game/gameanimationfactory.h"
 #include "menue/gamemenue.h"
@@ -25,6 +26,16 @@ GameRules::GameRules()
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
+    GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
+    if (getWeatherCount() != pGameRuleManager->getWeatherCount())
+    {
+        qint32 weatherChance = 100 / pGameRuleManager->getWeatherCount();
+        for (qint32 i = 0; i < pGameRuleManager->getWeatherCount(); i++)
+        {
+            addWeather(pGameRuleManager->getWeatherID(i), weatherChance);
+        }
+    }
+    m_StartWeather = 0;
 }
 
 void GameRules::addVictoryRule(QString rule)
@@ -215,7 +226,7 @@ void GameRules::startOfTurn()
         }
         else
         {
-            changeWeather(m_Weathers[m_StartWeather]->getWeatherId() , playerCount);
+            changeWeather(m_Weathers[getStartWeather()]->getWeatherId() , playerCount);
         }
     }
     pMap->getCurrentPlayer()->updatePlayerVision(true);
@@ -449,6 +460,10 @@ void GameRules::showHideStealthUnit(Player* pPlayer, Unit* pUnit)
 
 qint32 GameRules::getStartWeather() const
 {
+    if (m_StartWeather < 0 || m_StartWeather >= m_Weathers.size())
+    {
+        return 0;
+    }
     return m_StartWeather;
 }
 
@@ -520,6 +535,10 @@ void GameRules::deserializeObject(QDataStream& pStream)
     pStream >> m_weatherDuration;
     pStream >> m_CurrentWeather;
     pStream >> m_StartWeather;
+    if (m_StartWeather < 0 || m_StartWeather >= m_Weathers.size())
+    {
+        m_StartWeather = 0;
+    }
     pStream >> m_randomWeather;
     pStream >> m_RankingSystem;
     pStream >> m_NoPower;

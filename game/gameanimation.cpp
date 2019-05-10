@@ -29,7 +29,13 @@ GameAnimation::GameAnimation(quint32 frameTime)
 
 void GameAnimation::restart()
 {
+    m_stopped = false;
     GameMap::getInstance()->addChild(this);
+}
+
+void GameAnimation::stop()
+{
+    m_stopped = true;
 }
 
 void GameAnimation::setRotation(float angle)

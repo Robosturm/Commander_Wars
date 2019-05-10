@@ -57,6 +57,16 @@ public:
      * @brief actionDone call function after an action has been finished
      */
     void actionDone();
+    /**
+     * @brief turnStart called on the start of each player
+     * @param turn current day
+     * @param player current player id
+     */
+    void turnStart(qint32 turn, qint32 player);
+
+    QString getScriptFile() const;
+    void setScriptFile(const QString &value);
+
 signals:
 
 public slots:

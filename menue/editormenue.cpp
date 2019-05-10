@@ -166,7 +166,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     }
     else if (itemID == "NEWMAP")
     {
-        spMapEditDialog mapEditDialog = new MapEditDialog("", "", "", 20, 20, 2);
+        spMapEditDialog mapEditDialog = new MapEditDialog("", "", "", "", 20, 20, 2);
         connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::newMap, Qt::QueuedConnection);
         connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
         this->addChild(mapEditDialog);
@@ -176,7 +176,8 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         GameMap* pGameMap = GameMap::getInstance();
         spMapEditDialog mapEditDialog = new MapEditDialog(pGameMap->getMapName(), pGameMap->getMapAuthor(), pGameMap->getMapDescription(),
-                                                          pGameMap->getMapWidth(), pGameMap->getMapHeight(), pGameMap->getPlayerCount());
+                                                          pGameMap->getGameScript()->getScriptFile(), pGameMap->getMapWidth(),
+                                                          pGameMap->getMapHeight(), pGameMap->getPlayerCount());
         connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::changeMap, Qt::QueuedConnection);
         connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
         this->addChild(mapEditDialog);
@@ -238,6 +239,8 @@ void EditorMenue::playersChanged()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_EditorSelection->createPlayerSelection();
+    GameMap* pMap = GameMap::getInstance();
+    pMap->updateSprites();
     setFocused(true);
     pApp->continueThread();
 }
@@ -771,7 +774,7 @@ void EditorMenue::importCoWTxTMap(QString filename)
     pApp->continueThread();
 }
 
-void EditorMenue::newMap(QString mapName, QString mapAuthor, QString mapDescription, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount)
+void EditorMenue::newMap(QString mapName, QString mapAuthor, QString mapDescription, QString scriptFile, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
@@ -780,13 +783,15 @@ void EditorMenue::newMap(QString mapName, QString mapAuthor, QString mapDescript
     pMap->setMapName(mapName);
     pMap->setMapAuthor(mapAuthor);
     pMap->setMapDescription(mapDescription);
+    pMap->getGameScript()->setScriptFile(scriptFile);
     pMap->newMap(mapWidth, mapHeigth, playerCount);
+
     m_EditorSelection->createPlayerSelection();
     setFocused(true);
     pApp->continueThread();
 }
 
-void EditorMenue::changeMap(QString mapName, QString mapAuthor, QString mapDescription, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount)
+void EditorMenue::changeMap(QString mapName, QString mapAuthor, QString mapDescription, QString scriptFile, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
@@ -795,7 +800,8 @@ void EditorMenue::changeMap(QString mapName, QString mapAuthor, QString mapDescr
     pMap->setMapName(mapName);
     pMap->setMapAuthor(mapAuthor);
     pMap->setMapDescription(mapDescription);
-    pMap->changeMap(mapWidth, mapHeigth, playerCount);
+    pMap->getGameScript()->setScriptFile(scriptFile);
+    pMap->changeMap(mapWidth, mapHeigth, playerCount);   
     m_EditorSelection->createPlayerSelection();
     setFocused(true);
     pApp->continueThread();

@@ -212,6 +212,10 @@ void GameMenue::victory(qint32 team)
             }
         }
         exit = pMap->getGameScript()->victory(team);
+        if (GameAnimationFactory::getAnimationCount() == 0)
+        {
+            exit = true;
+        }
     }
     if (exit)
     {

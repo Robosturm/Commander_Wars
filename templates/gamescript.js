@@ -19,6 +19,10 @@ var Constructor = function()
     {
         // function called after all animations are finished
     };
+    this.turnStart = function(turn, player)
+    {
+        // called at the start of each players turn
+    };
 }
 
 Constructor.prototype = BASEGAMESCRIPT;

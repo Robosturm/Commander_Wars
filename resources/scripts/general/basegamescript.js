@@ -18,5 +18,8 @@ var BASEGAMESCRIPT =
     {
         // function called after all animations are finished
     },
-
+    turnStart : function(turn, player)
+    {
+        // called at the start of each players turn
+    },
 };

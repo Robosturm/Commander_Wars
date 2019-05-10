@@ -191,6 +191,9 @@ add_custom_target(modscripts SOURCES ${ModScripts})
 FILE(GLOB_RECURSE TemplateScripts "templates/*.js")
 add_custom_target(templatescripts SOURCES ${TemplateScripts})
 
+FILE(GLOB_RECURSE GameScripts "maps/*.js")
+add_custom_target(gamescripts SOURCES ${GameScripts})
+
 # create translation here :)
 set(LUPDATE_OPTIONS "" CACHE STRING "specifies options passed to lupdate")
 # created translation files

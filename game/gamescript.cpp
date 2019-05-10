@@ -31,10 +31,10 @@ void GameScript::deserializeObject(QDataStream& pStream)
     pStream >> version;
     pStream >> script;
     pStream >> scriptFile;
-    if (!scriptFile.isEmpty())
+    if (!script.isEmpty())
     {
         Mainapp* pApp = Mainapp::getInstance();
-        pApp->getInterpreter()->loadScript(scriptFile, scriptName);
+        pApp->getInterpreter()->loadScript(script, scriptName);
         loaded = true;
     }
     m_Variables.deserializeObject(pStream);
@@ -44,21 +44,22 @@ void GameScript::deserializeObject(QDataStream& pStream)
 void GameScript::init()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    if (!script.isEmpty())
+    if (!scriptFile.isEmpty())
     {
-        if (QFile::exists(script))
+        if (QFile::exists(scriptFile))
         {
-            QFile file(script);
+            QFile file(scriptFile);
             file.open(QIODevice::ReadOnly);
             QTextStream stream(&file);
-            scriptFile = stream.readAll();
+            script = stream.readAll();
             file.close();
-            pApp->getInterpreter()->loadScript(scriptFile, scriptName);
+            pApp->getInterpreter()->loadScript(script, scriptName);
             loaded = true;
         }
         else
         {
             scriptFile = "";
+            script = "";
             pApp->getInterpreter()->deleteObject(scriptName);
             loaded = false;
         }
@@ -116,4 +117,27 @@ void GameScript::actionDone()
         QString function1 = "actionDone";
         pApp->getInterpreter()->doFunction(scriptName, function1);
     }
+}
+
+void GameScript::turnStart(qint32 turn, qint32 player)
+{
+    if (loaded)
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        QString function1 = "turnStart";
+        QJSValueList args;
+        args << turn;
+        args << player;
+        pApp->getInterpreter()->doFunction(scriptName, function1, args);
+    }
+}
+
+QString GameScript::getScriptFile() const
+{
+    return scriptFile;
+}
+
+void GameScript::setScriptFile(const QString &value)
+{
+    scriptFile = value;
 }

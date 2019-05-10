@@ -113,3 +113,14 @@ void GameAnimationNextDay::restart()
     GameMenue::getInstance()->addChild(this);
     endTimer.start();
 }
+
+bool GameAnimationNextDay::onFinished()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    GameMap* pMap = GameMap::getInstance();
+    pMap->getGameScript()->turnStart(pMap->getCurrentDay(), pMap->getCurrentPlayer()->getPlayerID());
+    bool ret = GameAnimation::onFinished();
+    pApp->continueThread();
+    return ret;
+}

@@ -19,7 +19,7 @@ public:
     virtual ~GameAnimation() = default;
 
     virtual void restart();
-    virtual void stop(){};
+    virtual void stop();
 signals:
     void sigFinished();
 public slots:
@@ -191,6 +191,7 @@ public slots:
 protected:
     virtual void update(const oxygine::UpdateState& us) override;
     quint32 m_frameTime{0};
+    bool m_stopped{false};
 private:
 
     QVector<GameAnimation*> m_QueuedAnimations;
@@ -206,6 +207,7 @@ private:
      */
     QBuffer buffer;
     QDataStream actionData{&buffer};
+
 };
 
 #endif // GAMEANIMATION_H
