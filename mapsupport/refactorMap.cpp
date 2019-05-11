@@ -100,6 +100,7 @@ void GameMap::changeMap(qint32 width, qint32 heigth, qint32 playerCount)
         while (playerCount > players.size())
         {
             players.append(new Player());
+            players[players.size() - 1]->init();
         }
     }
     else if (playerCount < currentPlayerCount)
