@@ -314,6 +314,7 @@ void GameMenue::saveMap(QString filename)
         GameMap* pMap = GameMap::getInstance();
         pMap->serializeObject(stream);
         file.close();
+        Settings::setLastSaveGame(filename);
     }
     pApp->continueThread();
 }

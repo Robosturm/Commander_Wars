@@ -74,7 +74,7 @@ private:
      */
     QTimer m_ProgressTimer;
 
-    qint32 lineLength{0};
+    float lineLength{0};
 
     oxygine::spBox9Sprite m_pGraphBackground;
 

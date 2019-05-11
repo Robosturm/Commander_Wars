@@ -76,7 +76,7 @@ public slots:
      * @param value
      */
     void setEnableBuildingAttack(bool value);
-    void nextAction();
+    virtual void nextAction();
     /**
      * @brief getBestTarget
      * @param pUnit

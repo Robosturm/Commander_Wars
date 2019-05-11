@@ -13,6 +13,8 @@
 #include "objects/slider.h"
 #include "objects/dropdownmenu.h"
 #include "objects/selectkey.h"
+#include "objects/spinbox.h"
+#include "objects/textbox.h"
 
 #include <QDir>
 #include <QFileInfoList>
@@ -83,7 +85,7 @@ OptionMenue::OptionMenue()
     connect(this, &OptionMenue::sigShowGameplayAndKeys, this, &OptionMenue::showGameplayAndKeys, Qt::QueuedConnection);
 
     QSize size(pApp->getSettings()->getWidth() - 20,
-               pApp->getSettings()->getHeight() - (20 + pButtonMods->getHeight()) * 2);
+               pApp->getSettings()->getHeight() - static_cast<qint32>(20 + pButtonMods->getHeight()) * 2);
     m_pOptions = new  Panel(true,  size, size);
     m_pOptions->setPosition(10, 20 + pButtonMods->getHeight());
     addChild(m_pOptions);
@@ -489,6 +491,80 @@ void OptionMenue::showSettings()
         pSettings->setSoundVolume(value);
     });
     m_pOptions->addItem(pSlider);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Network Settings").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Server Adress: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spTextbox pTextbox = new Textbox(pApp->getSettings()->getWidth() - 20 - sliderOffset);
+    pTextbox->setCurrentText(Settings::getServerAdress());
+    connect(pTextbox.get(), &Textbox::sigTextChanged, [=](QString value)
+    {
+        Settings::setServerAdress(value);
+        restartNeeded = true;
+    });
+    pTextbox->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pTextbox);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Lobby port: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSpinBox portBox = new SpinBox(200, 0, std::numeric_limits<quint16>::max());
+    portBox->setCurrentValue(Settings::getServerPort());
+    portBox->setPosition(sliderOffset - 130, y);
+    connect(portBox.get(), &SpinBox::sigValueChanged, [=](float value)
+    {
+        Settings::setServerPort(static_cast<quint16>(value));
+        restartNeeded = true;
+    });
+    m_pOptions->addItem(portBox);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Server: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spCheckbox pCheckbox = new Checkbox();
+    pCheckbox->setChecked(Settings::getServer());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+    {
+        Settings::setServer(value);
+        restartNeeded = true;
+    });
+    pCheckbox->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pCheckbox);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Game port: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    portBox = new SpinBox(200, 0, std::numeric_limits<quint16>::max());
+    portBox->setCurrentValue(Settings::getGamePort());
+    portBox->setPosition(sliderOffset - 130, y);
+    connect(portBox.get(), &SpinBox::sigValueChanged, [=](float value)
+    {
+        Settings::setGamePort(static_cast<quint16>(value));
+        restartNeeded = true;
+    });
+    m_pOptions->addItem(portBox);
+    y += 40;
+
+    m_pOptions->setContentHeigth(20 + y);
     pApp->continueThread();
 }
 

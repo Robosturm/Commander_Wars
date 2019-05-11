@@ -17,6 +17,7 @@ public slots:
     void enterLoadGame();
     void enterCreditsmenue();
     void loadGame(QString filename);
+    void lastSaveGame();
 
     void leaveMenue();
     void quitGame();
@@ -27,6 +28,7 @@ signals:
     void sigEnterCreditsmenue();
     void sigQuit();
     void sigEnterLoadGame();
+    void sigLastSaveGame();
 protected:
     void setButtonPosition(oxygine::spButton pButton, qint32 btnI);
 };

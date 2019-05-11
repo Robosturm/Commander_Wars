@@ -148,7 +148,7 @@ var CO =
 
     gainPowerstar : function(co, fondsDamage, x, y)
     {
-        co.setPowerFilled(co.getPowerFilled() + fondsDamage / 10000)
+        co.setPowerFilled(co.getPowerFilled() + fondsDamage / 15000)
     },
 
     getCOUnitRange : function(co)

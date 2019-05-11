@@ -179,6 +179,10 @@ set(${PROJECT_NAME}_SRCS
         ai/targetedunitpathfindingsystem.cpp
         ai/islandmap.cpp
         ai/coreai_predefinedai.cpp
+        ai/proxyai.cpp
+
+        # multiplayer
+        multiplayer/lobbymenu.cpp
 )
 
 

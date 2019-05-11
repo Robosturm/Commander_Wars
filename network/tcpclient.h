@@ -16,7 +16,7 @@ public:
 
 
 public slots:
-    virtual void connectTCP(const QString& adress) override;
+    virtual void connectTCP(const QString& adress, quint16 port) override;
     virtual void disconnectTCP() override;
     /**
      * @brief sendData send Data with this Connection
@@ -24,7 +24,7 @@ public slots:
      */
     virtual void sendData(QByteArray data, Mainapp::NetworkSerives service, bool blocking) override;
 
-    virtual void sessionOpened() override;
+    virtual void sessionOpened(quint16 port) override;
 signals:
     void sig_sendData(QByteArray data, Mainapp::NetworkSerives service, bool blocking);
 

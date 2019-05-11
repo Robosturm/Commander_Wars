@@ -7,12 +7,11 @@
 
 
 TCPClient::TCPClient()
-    : pRXTask(NULL),
-      pTXTask(NULL),
-      pSocket(NULL)
+    : pRXTask(nullptr),
+      pTXTask(nullptr),
+      pSocket(nullptr)
 {
     isServer = false;
-
 }
 
 TCPClient::~TCPClient()
@@ -20,15 +19,14 @@ TCPClient::~TCPClient()
     disconnectTCP();
 }
 
-void TCPClient::connectTCP(const QString& adress)
+void TCPClient::connectTCP(const QString& adress, quint16 port)
 {
     disconnectTCP();
-    Mainapp* pApp = Mainapp::getInstance();
     // Launch Socket
     pSocket = new QTcpSocket(this);
     QObject::connect(pSocket, SIGNAL(disconnected()), this, SLOT(disconnectTCP()));
     QObject::connect(pSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(displayError(QAbstractSocket::SocketError)));
-    pSocket->connectToHost(adress, pApp->getSettings()->getGamePort());
+    pSocket->connectToHost(adress, port);
     pSocket->moveToThread(this);
 
     // Start RX-Task
@@ -47,23 +45,23 @@ void TCPClient::connectTCP(const QString& adress)
 
 void TCPClient::disconnectTCP()
 {
-    if (pRXTask != NULL)
+    if (pRXTask != nullptr)
     {
         delete pRXTask;
-        pRXTask = NULL;
+        pRXTask = nullptr;
     }
-    if (pTXTask != NULL)
+    if (pTXTask != nullptr)
     {
         delete pTXTask;
-        pTXTask = NULL;
+        pTXTask = nullptr;
     }
-    if (pSocket != NULL)
+    if (pSocket != nullptr)
     {
         pSocket->abort();
         // realize correct deletion
         pSocket->deleteLater();
     }
-    pSocket = NULL;
+    pSocket = nullptr;
 }
 
 void TCPClient::sendData(QByteArray data, Mainapp::NetworkSerives service, bool blocking)
@@ -71,18 +69,6 @@ void TCPClient::sendData(QByteArray data, Mainapp::NetworkSerives service, bool 
     emit sig_sendData(data, service, blocking);
 }
 
-void TCPClient::sessionOpened()
+void TCPClient::sessionOpened(quint16)
 {
-    QNetworkConfiguration config = networkSession->configuration();
-    QString id;
-    if (config.type() == QNetworkConfiguration::UserChoice)
-    {
-        id = networkSession->sessionProperty(QLatin1String("UserChoiceConfiguration")).toString();
-    }
-    else
-    {
-        id = config.identifier();
-    }
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->getSettings()->setNetworkData(id);
 }

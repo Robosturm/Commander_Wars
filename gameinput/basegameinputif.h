@@ -21,6 +21,7 @@ public:
         Unkown = -1,
         Human = 0,
         VeryEasy,
+        ProxyAi = 200,
     };
 
     explicit BaseGameInputIF(AiTypes aiType);

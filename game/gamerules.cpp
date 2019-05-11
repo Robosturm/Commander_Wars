@@ -526,11 +526,24 @@ void GameRules::deserializeObject(QDataStream& pStream)
     pStream >> size;
     for (qint32 i = 0; i < size; i++)
     {
-        m_Weathers.append(new Weather());
-        m_Weathers[i]->deserializeObject(pStream);
+        spWeather pWeather = new Weather();
+        pWeather->deserializeObject(pStream);
         qint32 chance = 0;
         pStream >> chance;
-        m_WeatherChances.append(chance);
+        for (qint32 i2 = 0; i2 < m_Weathers.size(); i2++)
+        {
+            if (m_Weathers[i2]->getWeatherId() == pWeather->getWeatherId())
+            {
+                m_Weathers[i] = pWeather;
+                m_WeatherChances[i2] = chance;
+                break;
+            }
+            else if (i2 == m_Weathers.size() - 1)
+            {
+                m_Weathers.append(pWeather);
+                m_WeatherChances.append(chance);
+            }
+        }
     }
     pStream >> m_weatherDuration;
     pStream >> m_CurrentWeather;

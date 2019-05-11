@@ -21,6 +21,17 @@ public:
     static void saveSettings();
     static void setup();
 
+    static quint16 getServerPort();
+    static void setServerPort(const quint16 &ServerPort);
+
+    static QString getServerAdress();
+    static void setServerAdress(const QString &ServerAdress);
+
+    static void setServer(bool Server);
+
+    static QString getLastSaveGame();
+    static void setLastSaveGame(const QString &LastSaveGame);
+
 public slots:
     inline qint32 getX()
     {
@@ -81,23 +92,15 @@ public slots:
         return m_SoundVolume;
     }
 
-    inline QString getNetworkData()
-    {
-        return m_NetworkData;
-    }
-    inline void setNetworkData(QString value)
-    {
-        m_NetworkData = value;
-    }
-    inline qint32 getGamePort()
+    static inline quint16 getGamePort()
     {
         return m_GamePort;
     }
-    inline void setGamePort(qint32 value)
+    static inline void setGamePort(quint16 value)
     {
         m_GamePort = value;
     }
-    inline bool getServer()
+    static inline bool getServer()
     {
         return m_Server;
     }
@@ -202,13 +205,15 @@ private:
     static qint32 m_MusicVolume;
     static qint32 m_SoundVolume;
     // Network
-    static QString m_NetworkData;
-    static qint32 m_GamePort;
+    static quint16 m_GamePort;
+    static quint16 m_ServerPort;
+    static QString m_ServerAdress;
     static bool m_Server;
 
     // ingame options
     static GameEnums::AnimationMode showAnimations;
     static quint32 animationSpeed;
+    static QString m_LastSaveGame;
 
     // internal members
     static Settings* m_pInstance;

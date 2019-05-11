@@ -10,13 +10,14 @@
 TCPServer::TCPServer()
     : pTCPServer(nullptr)
 {
+    moveToThread(this);
     isServer = true;
     isConnected = true;
 }
 
 
 
-void TCPServer::connectTCP(const QString&)
+void TCPServer::connectTCP(const QString&, quint16)
 {
 }
 
@@ -84,26 +85,11 @@ void TCPServer::onConnect()
     Console::print(tr("New Client connection."), Console::eDEBUG);
 }
 
-void TCPServer::sessionOpened()
+void TCPServer::sessionOpened(quint16 port)
 {
-    QNetworkConfiguration config = networkSession->configuration();
-    QString id;
-    if (config.type() == QNetworkConfiguration::UserChoice)
-    {
-        id = networkSession->sessionProperty(QLatin1String("UserChoiceConfiguration")).toString();
-    }
-    else
-    {
-        id = config.identifier();
-    }
-
-    Mainapp* pApp = Mainapp::getInstance();
-
-    pApp->getSettings()->setNetworkData(id);
-
     pTCPServer = new QTcpServer(this);
     pTCPServer->moveToThread(this);
-    pTCPServer->listen(QHostAddress::Any, static_cast<quint16>(pApp->getSettings()->getGamePort()));
+    pTCPServer->listen(QHostAddress::Any, port);
     QObject::connect(pTCPServer, SIGNAL(newConnection()), this, SLOT(onConnect()));
 
     Console::print(tr("Server is running"), Console::eDEBUG);

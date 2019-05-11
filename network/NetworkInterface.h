@@ -27,14 +27,11 @@ public:
           isConnected(false)
     {
         Mainapp* pApp = Mainapp::getInstance();
+        this->moveToThread(this);
         QObject::connect(this, SIGNAL(sig_connect(QString)), this, SLOT(connectTCP(QString)));
         QNetworkConfigurationManager manager;
         // If the saved network configuration is not currently discovered use the system default
-        QNetworkConfiguration config = manager.configurationFromIdentifier(pApp->getSettings()->getNetworkData());
-        if ((config.state() & QNetworkConfiguration::Discovered) != QNetworkConfiguration::Discovered)
-        {
-            config = manager.defaultConfiguration();
-        }
+        QNetworkConfiguration config = manager.defaultConfiguration();
         networkSession = new QNetworkSession(config, this);
         QObject::connect(networkSession, SIGNAL(opened()), this, SLOT(sessionOpened()));
         this->moveToThread(this);
@@ -80,7 +77,7 @@ public:
     }
 
 public slots:
-    virtual void connectTCP(const QString& adress) = 0;
+    virtual void connectTCP(const QString& adress, quint16 port) = 0;
     virtual void disconnectTCP() = 0;
     /**
      * @brief sendData send Data with this Connection
@@ -88,7 +85,7 @@ public slots:
      */
     virtual void sendData(QByteArray data, Mainapp::NetworkSerives service, bool blocking) = 0;
 
-    virtual void sessionOpened() = 0;
+    virtual void sessionOpened(quint16 port) = 0;
 
     void displayError(QAbstractSocket::SocketError socketError)
     {

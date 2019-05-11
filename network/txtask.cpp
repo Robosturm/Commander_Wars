@@ -21,7 +21,7 @@ void TxTask::send(QByteArray data, Mainapp::NetworkSerives service, bool blockin
 {
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_5_11);
+    out.setVersion(QDataStream::Qt_5_12);
     // write default-buffersize
     out << static_cast<qint32>(0);
 

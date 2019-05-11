@@ -144,7 +144,7 @@ var Constructor = function()
 	this.gainPowerstar = function(co, fondsDamage, x, y)
     {
 		// adder gains more power than other co's
-        co.setPowerFilled(co.getPowerFilled() + fondsDamage / 10000 * 1.2)
+        co.setPowerFilled(co.getPowerFilled() + (fondsDamage / 15000) * 1.2)
     };
 
     // CO - Intel

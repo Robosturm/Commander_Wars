@@ -432,6 +432,12 @@ CO_RACHEL    2                 0               7                 7              
 CO_RACHEL    2                 0               7                 7                 3               3               3               9000                     0           2
 CO_RACHEL    2                 0               3                 3                 3               6               3               11000                    0           2
 CO_RACHEL    2                 0               3                 7                 7               7               3               11000                    0           2
+CO_RACHEL    2                 0               0                 8                 6               6               6               9000                     0           2
+CO_RACHEL    2                 0               6                 0                 3               3               6               9000                     0           2
+CO_RACHEL    2                 0               6                 0                 3               3               6               11000                    0           2
+CO_RACHEL    2                 0               6                 0                 3               6               6               11000                    1           2
+CO_RACHEL    2                 0               6                 6                 3               3               6               11000                    2           2
+CO_RACHEL    2                 0               0                 0                 6               6               3               9000                     0           2
 // ROBOANDY
 CO_ROBOANDY  0                 0               3                 3                 6               3               3               11000                    0           0
 CO_ROBOANDY  0                 0               7                 3                 3               7               7               9000                     0           0
@@ -1066,3 +1072,22 @@ CO_FORSYTHE  2                 0               4                 7              
 CO_FORSYTHE  2                 0               4                 3                 3               6               7               11000                    0           2
 CO_FORSYTHE  2                 0               7                 7                 6               6               6               11000                    0           2
 CO_FORSYTHE  2                 0               3                 3                 3               3               3                9000                    0           2
+// MEIYO  
+CO_MEIYO     0                 0               7                 3                 6               3               6               11000                    0           0
+CO_MEIYO     0                 0               7                 7                 6               3               3               9000                     0           0
+CO_MEIYO     0                 0               3                 7                 6               3               7               9000                     0           0
+CO_MEIYO     0                 0               3                 7                 6               7               7               11000                    0           0
+CO_MEIYO     1                 0               4                 7                 3               6               6               11000                    0           1
+CO_MEIYO     1                 0               7                 3                 6               6               3               9000                     0           1
+CO_MEIYO     1                 0               4                 3                 3               6               3               11000                    1           0
+CO_MEIYO     1                 0               7                 7                 6               6               6               11000                    2           0
+CO_MEIYO     1                 0               4                 3                 7               6               7               11000                    0           1
+CO_MEIYO     1                 2               4                 7                 6               6               6               11000                    0           0
+CO_MEIYO     1                 0               7                 7                 3               6               7               11000                    0           1
+CO_MEIYO     2                 0               4                 7                 3               6               6               11000                    0           2
+CO_MEIYO     2                 0               4                 3                 6               6               3               9000                     0           2
+CO_MEIYO     2                 0               7                 7                 6               6               6               11000                    1           0
+CO_MEIYO     2                 0               4                 7                 6               6               3               11000                    2           0
+CO_MEIYO     2                 0               4                 3                 3               6               7               11000                    0           2
+CO_MEIYO     2                 0               7                 7                 6               6               6               11000                    0           2
+CO_MEIYO     2                 0               3                 3                 3               3               3                9000                    0           2

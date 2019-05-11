@@ -35,13 +35,15 @@ qint32 Settings::m_TotalVolume       = 100;
 qint32 Settings::m_MusicVolume       = 80;
 qint32 Settings::m_SoundVolume       = 80;
 // Network
-QString Settings::m_NetworkData   = "";
-qint32 Settings::m_GamePort          = 5603;
-bool Settings::m_Server           = true;
+quint16 Settings::m_GamePort          = 9001;
+quint16 Settings::m_ServerPort        = 9002;
+QString Settings::m_ServerAdress      = "";
+bool Settings::m_Server               = false;
 
 // ingame options
 GameEnums::AnimationMode Settings::showAnimations = GameEnums::AnimationMode_All;
 quint32 Settings::animationSpeed = 1;
+QString Settings::m_LastSaveGame = "";
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -238,17 +240,23 @@ void Settings::loadSettings(){
         Console::print(error, Console::eERROR);
         animationSpeed = 1u;
     }
+    m_LastSaveGame = settings.value("LastSaveGame", "").toString();
     settings.endGroup();
 
     // network
     settings.beginGroup("Network");
-    m_NetworkData = settings.value("NetworkConfiguration", "").toString();
-    m_GamePort = settings.value("GamePort", 5603).toInt();
-    if (m_GamePort < 0)
+    m_ServerAdress = settings.value("ServerAdress", "").toString();
+    m_GamePort = settings.value("GamePort", 9001).toUInt(&ok);
+    if (!ok)
     {
-        m_GamePort = 5603;
+        m_GamePort = 9001;
     }
-    m_Server  = settings.value("Server", true).toBool();
+    m_ServerPort = settings.value("ServerPort", 9002).toUInt(&ok);
+    if (!ok)
+    {
+        m_GamePort = 9002;
+    }
+    m_Server  = settings.value("Server", false).toBool();
     settings.endGroup();
 
     // mods
@@ -305,12 +313,14 @@ void Settings::saveSettings(){
     settings.beginGroup("Game");
     settings.setValue("ShowAnimations",                 static_cast<qint32>(showAnimations));
     settings.setValue("AnimationSpeed",                 animationSpeed);
+    settings.setValue("LastSaveGame",                   m_LastSaveGame);
     settings.endGroup();
 
     // network
     settings.beginGroup("Network");
-    settings.setValue("NetworkConfiguration",      m_NetworkData);
+    settings.setValue("ServerAdress",              m_ServerAdress);
     settings.setValue("GamePort",                  m_GamePort);
+    settings.setValue("ServerPort",                m_ServerPort);
     settings.setValue("Server",                    m_Server);
     settings.endGroup();
 
@@ -512,4 +522,39 @@ SDL_Keycode Settings::getKey_quickload2()
 void Settings::setKey_quickload2(const SDL_Keycode &key_quickload2)
 {
     m_key_quickload2 = key_quickload2;
+}
+
+QString Settings::getLastSaveGame()
+{
+    return m_LastSaveGame;
+}
+
+void Settings::setLastSaveGame(const QString &LastSaveGame)
+{
+    m_LastSaveGame = LastSaveGame;
+}
+
+void Settings::setServer(bool Server)
+{
+    m_Server = Server;
+}
+
+void Settings::setServerAdress(const QString &ServerAdress)
+{
+    m_ServerAdress = ServerAdress;
+}
+
+QString Settings::getServerAdress()
+{
+    return m_ServerAdress;
+}
+
+quint16 Settings::getServerPort()
+{
+    return m_ServerPort;
+}
+
+void Settings::setServerPort(const quint16 &ServerPort)
+{
+    m_ServerPort = ServerPort;
 }

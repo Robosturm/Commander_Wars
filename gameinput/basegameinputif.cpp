@@ -4,6 +4,7 @@
 
 #include "humanplayerinput.h"
 #include "ai/veryeasyai.h"
+#include "ai/proxyai.h"
 
 #include "coreengine/mainapp.h"
 
@@ -58,6 +59,12 @@ BaseGameInputIF* BaseGameInputIF::deserializeInterface(QDataStream& pStream)
         case AiTypes::Unkown: // fall back case for damaged files or unset ai's
         {
             ret = new HumanPlayerInput();
+            break;
+        }
+        case AiTypes::ProxyAi:
+        {
+            ret = new ProxyAi();
+            ret->deserializeObject(pStream);
             break;
         }
     }

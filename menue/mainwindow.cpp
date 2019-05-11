@@ -44,6 +44,21 @@ Mainwindow::Mainwindow()
     pApp->getAudioThread()->playRandom();
 
     qint32 btnI = 0;
+    QString lastSaveGame = Settings::getLastSaveGame();
+    if (QFile::exists(lastSaveGame) && lastSaveGame.endsWith(".sav"))
+    {
+        // create the ui for the main menue here :)
+        oxygine::spButton pButtonLastSaveGame = ObjectManager::createButton(tr("Continue"));
+        setButtonPosition(pButtonLastSaveGame, btnI);
+        pButtonLastSaveGame->attachTo(this);
+        pButtonLastSaveGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        {
+            emit this->sigLastSaveGame();
+        });
+        connect(this, SIGNAL(sigLastSaveGame()), this, SLOT(lastSaveGame()), Qt::QueuedConnection);
+        btnI++;
+    }
+
     // create the ui for the main menue here :)
     oxygine::spButton pButtonSingleplayer = ObjectManager::createButton(tr("Singleplayer"));
     setButtonPosition(pButtonSingleplayer, btnI);
@@ -113,7 +128,7 @@ Mainwindow::Mainwindow()
 
 void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
 {
-    static const qint32 buttonCount = 7;
+    static const qint32 buttonCount = 8;
     float buttonHeigth = pButton->getHeight() + 30;
     Mainapp* pApp = Mainapp::getInstance();
     pButton->setPosition(pApp->getSettings()->getWidth() / 2.0f - pButton->getWidth() / 2.0f, pApp->getSettings()->getHeight() / 2.0f - buttonCount  / 2.0f * buttonHeigth + buttonHeigth * btnI);
@@ -172,6 +187,11 @@ void Mainwindow::enterLoadGame()
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &Mainwindow::loadGame, Qt::QueuedConnection);
     pApp->continueThread();
+}
+
+void Mainwindow::lastSaveGame()
+{
+    loadGame(Settings::getLastSaveGame());
 }
 
 void Mainwindow::loadGame(QString filename)

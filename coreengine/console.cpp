@@ -1262,15 +1262,6 @@ void Console::TextInput(SDL_Event event)
     }
 }
 
-void Console::recieveNetworkMessage(QByteArray data, Mainapp::NetworkSerives serive)
-{
-    if (serive == Mainapp::NetworkSerives::Console)
-    {
-        QString msg(data);
-        print("Network Client: " + msg, eLogLevels::eDEBUG);
-    }
-}
-
 void Console::KeyInput(SDL_Event event)
 {
     // for debugging

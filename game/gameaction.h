@@ -10,8 +10,9 @@
 #include "gameinput/menudata.h"
 #include "gameinput/markedfielddata.h"
 #include "gameinput/cursordata.h"
+#include "coreengine/fileserializable.h"
 
-class GameAction : public QObject
+class GameAction : public QObject, public FileSerializable
 {
     Q_OBJECT
 
@@ -39,7 +40,24 @@ public:
     static QString getActionIcon(QString actionID);
 
     void setTargetUnit(Unit *pTargetUnit);
-
+    /**
+     * @brief serialize stores the object
+     * @param pStream
+     */
+    virtual void serializeObject(QDataStream& pStream) override;
+    /**
+     * @brief deserialize restores the object
+     * @param pStream
+     */
+    virtual void deserializeObject(QDataStream& pStream) override;
+    /**
+     * @brief getVersion version of the file
+     * @return
+     */
+    virtual qint32 getVersion() override
+    {
+        return 1;
+    }
 signals:
 
 public slots:

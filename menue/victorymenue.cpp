@@ -147,11 +147,11 @@ VictoryMenue::VictoryMenue()
 
     if (pMap->getCurrentDay() > 1)
     {
-        lineLength = static_cast<qint32>(m_pGraphBackground->getWidth() / (pMap->getCurrentDay() - 1));
+        lineLength = m_pGraphBackground->getWidth() / static_cast<float>(pMap->getCurrentDay() - 1);
     }
     else
     {
-        lineLength = static_cast<qint32>(m_pGraphBackground->getWidth());
+        lineLength = m_pGraphBackground->getWidth();
     }
 
     m_ProgressTimer.setSingleShot(false);

@@ -19,9 +19,9 @@ RxTask::~RxTask()
 void RxTask::recieveData()
 {
         QDataStream pStream(m_pSocket);
-        pStream.setVersion(QDataStream::Qt_5_11);
+        pStream.setVersion(QDataStream::Qt_5_12);
 
-        qint32 bytes = 0;
+        qint64 bytes = 0;
 
         if (dataSize == 0)
         {
@@ -56,7 +56,7 @@ void RxTask::recieveData()
 
         // read Object        
         dataSize = 0;
-        if ((m_serive < Mainapp::NetworkSerives::Console) || (m_serive >= Mainapp::NetworkSerives::Max))
+        if ((m_serive < Mainapp::NetworkSerives::Game) || (m_serive >= Mainapp::NetworkSerives::Max))
         {
             // don't send an event :)
         }

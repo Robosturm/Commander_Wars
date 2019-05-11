@@ -289,3 +289,52 @@ void GameAction::setInputStep(const qint32 &value)
 {
     inputStep = value;
 }
+
+void GameAction::serializeObject(QDataStream& stream)
+{
+    stream << getVersion();
+    stream << m_actionID;
+    stream << m_target;
+    stream << static_cast<qint32>(m_Movepath.size());
+    for (qint32 i = 0; i < m_Movepath.size(); i++)
+    {
+        stream << m_Movepath[i];
+    }
+    stream << inputStep;
+    stream << costs;
+    QByteArray data = buffer.data();
+    stream << static_cast<qint32>(data.size());
+    for (qint32 i = 0; i < data.size(); i++)
+    {
+        stream << static_cast<qint8>(data[i]);
+    }
+    stream << seed;
+}
+
+void GameAction::deserializeObject(QDataStream& stream)
+{
+    qint32 version;
+    stream >> version;
+    stream >> m_actionID;
+    stream >> m_target;
+    qint32 size = 0;
+    stream >> size;
+    for (qint32 i = 0; i < size; i++)
+    {
+        QPoint point;
+        stream >> point;
+        m_Movepath.append(point);
+    }
+    stream >> inputStep;
+    stream >> costs;
+    stream >> size;
+    buffer.seek(0);
+    for (qint32 i = 0; i < size; i++)
+    {
+        qint8 value = 0;
+        stream >> value;
+
+        actionData << value;
+    }
+    stream >> seed;
+}

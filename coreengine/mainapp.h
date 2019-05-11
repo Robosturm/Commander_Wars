@@ -21,6 +21,33 @@ class Mainapp : public QCoreApplication
 {
     Q_OBJECT
 public:
+    /**
+      * @brief this enum contains all message recievers of the network
+      */
+    enum class NetworkSerives
+    {
+        Game,
+        Lobby,
+        Chat,
+        Max,
+    };
+    /**
+     * @brief The ZOrder enum for z-order of actors directly attached to the game map or the menu
+     */
+    enum class ZOrder
+    {
+        Background = -32000,
+        Terrain = -30000,
+        CORange = 30000,
+        FogFields,
+        MarkedFields,
+        Weather,
+        Cursor,
+        Animation,
+        Objects,
+        Dialogs = 32000,
+        Console
+    };
     void start();
 public slots:
     void update();
@@ -64,32 +91,7 @@ signals:
     void sigKeyDown(SDL_Event event);
     void sigKeyUp(SDL_Event event);
 public:
-    /**
-      * @brief this enum contains all message recievers of the network
-      */
-    enum class NetworkSerives
-    {
-        Console = 0,
-        Game,
-        Max,
-    };
-    /**
-     * @brief The ZOrder enum for z-order of actors directly attached to the game map or the menu
-     */
-    enum class ZOrder
-    {
-        Background = -32000,
-        Terrain = -30000,        
-        CORange = 30000,
-        FogFields,
-        MarkedFields,
-        Weather,
-        Cursor,
-        Animation,
-        Objects,
-        Dialogs = 32000,
-        Console
-    };
+
 
     explicit Mainapp(int argc, char* argv[]);
     virtual ~Mainapp();

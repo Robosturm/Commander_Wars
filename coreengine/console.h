@@ -70,12 +70,6 @@ public slots:
      * @param event
      */
     void TextInput(SDL_Event event);
-    /**
-     * @brief recieveNetworkMessage called when we recieve a console network message
-     * @param data the string we recieved
-     * @param serive
-     */
-    void recieveNetworkMessage(QByteArray data, Mainapp::NetworkSerives serive);
 private:
     static eLogLevels LogLevel;
     static QString curmsg;
