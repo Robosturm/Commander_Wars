@@ -61,9 +61,10 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
         m_spinDirection = -1 * m_SpinSpeed;
-        float value = m_Text.toFloat();
+        float value = getCurrentValue();
         value += m_spinDirection;
         setCurrentValue(value);
+        checkInput();
         toggle.start();
         emit sigValueChanged(getCurrentValue());
     });
@@ -90,9 +91,10 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
         m_spinDirection = 1 * m_SpinSpeed;
-        float value = m_Text.toFloat();
+        float value = getCurrentValue();
         value += m_spinDirection;
         setCurrentValue(value);
+        checkInput();
         toggle.start();
         emit sigValueChanged(getCurrentValue());
     });
@@ -191,17 +193,38 @@ void SpinBox::update(const oxygine::UpdateState& us)
     }
     else
     {
-        if (toggle.elapsed() > BLINKFREQG)
+        if (m_spinDirection != 0.0f)
         {
-            float value = m_Text.toFloat();
-            value += m_spinDirection;
-            setValue(value);
-            toggle.start();
+            if (toggle.elapsed() > BLINKFREQG)
+            {
+                float value = getCurrentValue();
+                value += m_spinDirection;
+                setValue(value);
+                toggle.start();
+            }
+            checkInput();
         }
-        checkInput();
-        m_Textfield->setText(m_Text.toStdString().c_str());
     }
     oxygine::Actor::update(us);
+}
+
+float SpinBox::getCurrentValue()
+{
+    float value = 0;
+    if (m_Text == "∞")
+    {
+        value = m_InfinityValue;
+    }
+    else
+    {
+        bool ok = false;
+        value = m_Text.toFloat(&ok);
+        if (!ok)
+        {
+            value = m_InfinityValue;
+        }
+    }
+    return value;
 }
 
 float SpinBox::checkInput()
@@ -212,6 +235,7 @@ float SpinBox::checkInput()
     if (m_Text == "∞")
     {
         value = m_InfinityValue;
+        ok = true;
     }
     if (!m_focused)
     {
@@ -254,6 +278,7 @@ void SpinBox::setValue(float value)
             }
         }
     }
+    m_Textfield->setText(m_Text.toStdString().c_str());
 }
 
 float SpinBox::getInfinityValue() const

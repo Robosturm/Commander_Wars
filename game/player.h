@@ -66,6 +66,8 @@ public:
      * @return pointer to the co
      */
     spCO getspCO(quint8 id);
+
+
 signals:
 
 public slots:
@@ -74,6 +76,11 @@ public slots:
      * @return
      */
     bool getIsDefeated() const;
+    /**
+     * @brief setIsDefeated if true defeats the player but doesn't remove units or buildings
+     * @param value
+     */
+    void setIsDefeated(bool value);
     /**
      * @brief swapCOs swaps co 0 and 1
      */

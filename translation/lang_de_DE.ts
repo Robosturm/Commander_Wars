@@ -1423,7 +1423,7 @@
     <message>
         <location filename="../objects/playerselection.cpp" line="93"/>
         <location filename="../objects/playerselection.cpp" line="153"/>
-        <location filename="../objects/playerselection.cpp" line="334"/>
+        <location filename="../objects/playerselection.cpp" line="338"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1459,7 +1459,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="71"/>
+        <location filename="../main.cpp" line="74"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8081,6 +8081,14 @@
     <message>
         <location filename="../resources/scripts/units/transportplane.js" line="37"/>
         <source>Transportplane</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>victoryrule_buildinglimit</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_buildinglimit.js" line="5"/>
+        <source>Capture Victory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

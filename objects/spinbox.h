@@ -27,10 +27,7 @@ public:
      * @brief getCurrentValue
      * @return the current value of the spin box
      */
-    inline float getCurrentValue()
-    {
-        return m_Text.toFloat();
-    }
+    float getCurrentValue();
     virtual void update(const oxygine::UpdateState& us) override;
     /**
      * @brief setCurrentValue changes the value of this spin box

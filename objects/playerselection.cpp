@@ -199,6 +199,10 @@ void PlayerSelection::showPlayerSelection()
                 allHuman = false;
             }
         }
+        else
+        {
+            pPlayer->setBaseGameInput(new HumanPlayerInput());
+        }
     }
     // assume players had no real team assigned
     // reassign each a unique team

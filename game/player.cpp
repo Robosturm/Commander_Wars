@@ -432,6 +432,11 @@ void Player::setBuildList(const QStringList &BuildList)
     m_BuildList = BuildList;
 }
 
+void Player::setIsDefeated(bool value)
+{
+    isDefeated = value;
+}
+
 void Player::addVisionField(qint32 x, qint32 y, qint32 duration)
 {
     m_FogVisionFields[x][y].setX(1);

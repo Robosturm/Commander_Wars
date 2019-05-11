@@ -10,7 +10,6 @@
 #include <QQmlApplicationEngine>
 #include <QJSEngine>
 
-
 #include "coreengine/console.h"
 
 #include "coreengine/scriptvariable.h"
@@ -60,6 +59,10 @@
 int main(int argc, char* argv[])
 {
     /*************************************************************************************************/
+
+#ifdef GAMEDEBUG
+    qQmlEnableDebuggingHelper.startTcpDebugServer(3768);
+#endif
 
     Mainapp app(argc, argv);
 
