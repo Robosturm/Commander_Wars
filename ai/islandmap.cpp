@@ -25,7 +25,7 @@ IslandMap::IslandMap(QString unitID, Player* pOwner)
     {
         m_Islands.append(QVector<qint32>(heigth, -1));
     }
-    spUnit pUnit = new Unit(unitID, pOwner);
+    spUnit pUnit = new Unit(unitID, pOwner, false);
     pUnit->setIgnoreUnitCollision(true);
     m_MovementType = pUnit->getMovementType();
     qint32 currentIsland = 0;

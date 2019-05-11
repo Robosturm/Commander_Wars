@@ -109,7 +109,7 @@ EditorSelection::EditorSelection()
     spTerrain sea = Terrain::createTerrain("SEA", -1, -1);
     for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
     {
-        spUnit unit = new Unit(pUnitSpriteManager->getUnitID(i), m_Players.at(1)->getOwner());
+        spUnit unit = new Unit(pUnitSpriteManager->getUnitID(i), m_Players.at(1)->getOwner(), false);
         m_Units.append(unit);
         oxygine::spSprite pSprite = new oxygine::Sprite();
         QString movementType = m_Units.at(i)->getMovementType();

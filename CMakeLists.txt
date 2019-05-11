@@ -75,6 +75,8 @@ set(${PROJECT_NAME}_SRCS
         objects/playerselection.cpp
         objects/playerselectiondialog.cpp
         objects/selectkey.cpp
+        objects/dialogusername.cpp
+        objects/chat.cpp
 
         #menues
         menue/mainwindow.cpp

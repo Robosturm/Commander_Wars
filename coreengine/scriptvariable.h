@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QBuffer>
 #include <QDataStream>
+#include <QVector>
+#include <QPoint>
 #include "fileserializable.h"
 
 #include "oxygine-framework.h"
@@ -37,10 +39,101 @@ public:
     {
         return 1;
     }
+    /**
+     * @brief writes a vector of the given type
+     */
+    template<typename VectorType>
+    void writeVector(QVector<VectorType> vector)
+    {
+        buffer.seek(0);
+        actionData << static_cast<qint32>(vector.size());
+        for (qint32 i = 0; i < vector.size(); i++)
+        {
+            actionData << vector[i];
+        }
+    }
+    /**
+     * @brief reads a vector of the given type
+     */
+    template<typename VectorType>
+    QVector<VectorType> readVector()
+    {
+        buffer.seek(0);
+        QVector<VectorType> ret;
+        if (buffer.size() > 0)
+        {
+            qint32 size = 0;
+            actionData >> size;
+            for (qint32 i = 0; i < size; i++)
+            {
+                VectorType type;
+                actionData >> type;
+                ret.append(type);
+            }
+        }
+        return ret;
+    }
+    template<typename type>
+    /**
+     * @brief writeData writes a data from the action data
+     * @param data
+     */
+    void writeData(type data)
+    {
+        buffer.seek(0);
+        actionData << data;
+    }
+    /**
+     * @brief readData
+     * @return reads a data from the action data
+     */
+    template<typename type>
+    qint32 readData()
+    {
+        buffer.seek(0);
+        type data = 0;
+        if (buffer.size() > 0)
+        {
+            actionData >> data;
+        }
+        return data;
+    }
 public slots:
     inline QString getId()
     {
         return m_Id;
+    }
+    /**
+     * @brief writeDataVectorPoint
+     * @param data writes a Qector<QPoint> to the action data
+     */
+    void writeDataVectorPoint(QVector<QPoint> data)
+    {
+        writeVector(data);
+    }
+    /**
+     * @brief readDataVectorPoint
+     * @return reads a QVector<QPoint> from the action data
+     */
+    QVector<QPoint> readDataVectorPoint()
+    {
+        return readVector<QPoint>();
+    }
+    /**
+     * @brief writeDataVectorUint32
+     * @param data writes a QVector<quint32> to the action data
+     */
+    void writeDataVectorUint32(QVector<quint32> data)
+    {
+        writeVector(data);
+    }
+    /**
+     * @brief readDataVectorUint32
+     * @return reads a QVector<quint32> from the action data
+     */
+    QVector<quint32> readDataVectorUint32()
+    {
+        return readVector<quint32>();
     }
     /**
      * @brief writeDataString adds a string to the action data
@@ -71,8 +164,7 @@ public slots:
      */
     void writeDataInt32(qint32 data)
     {
-        buffer.seek(0);
-        actionData << data;
+        writeData(data);
     }
     /**
      * @brief readDataInt32
@@ -80,13 +172,23 @@ public slots:
      */
     qint32 readDataInt32()
     {
-        buffer.seek(0);
-        qint32 data = 0;
-        if (buffer.size() > 0)
-        {
-            actionData >> data;
-        }
-        return data;
+        return readData<qint32>();
+    }
+    /**
+     * @brief writeDataUint64 adds a uint64 to the action data
+     * @param data
+     */
+    void writeDataUint32(quint32 data)
+    {
+        writeData(data);
+    }
+    /**
+     * @brief readDataUint32
+     * @return reads a quint32 from the action data
+     */
+    quint32 readDataUint32()
+    {
+        return readData<quint32>();
     }
     /**
      * @brief writeDataFloat adds a float to the action data
@@ -94,8 +196,7 @@ public slots:
      */
     void writeDataFloat(float data)
     {
-        buffer.seek(0);
-        actionData << data;
+        writeData(data);
     }
     /**
      * @brief readDataFloat
@@ -103,13 +204,7 @@ public slots:
      */
     float readDataFloat()
     {
-        buffer.seek(0);
-        float data = 0.0f;
-        if (buffer.size() > 0)
-        {
-            actionData >> data;
-        }
-        return data;
+        return readData<float>();
     }
     /**
      * @brief writeDataFloat adds a float to the action data
@@ -117,8 +212,7 @@ public slots:
      */
     void writeDataBool(bool data)
     {
-        buffer.seek(0);
-        actionData << data;
+        writeData(data);
     }
     /**
      * @brief readDataBool
@@ -126,14 +220,7 @@ public slots:
      */
     bool readDataBool()
     {
-
-        buffer.seek(0);
-        bool data = false;
-        if (buffer.size() > 0)
-        {
-            actionData >> data;
-        }
-        return data;
+        return readData<bool>();
     }
 private:
     QString m_Id;

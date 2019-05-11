@@ -854,7 +854,7 @@ void Terrain::deserializeObject(QDataStream& pStream)
     pStream >> hasUnit;
     if (hasUnit)
     {
-        m_Unit = new Unit("", nullptr);
+        m_Unit = new Unit("", nullptr, false);
         m_Unit->deserializeObject(pStream);
         m_Unit->setPriority(static_cast<qint16>(DrawPriority::Unit));
         m_Unit->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));

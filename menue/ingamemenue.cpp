@@ -145,7 +145,10 @@ void InGameMenue::loadHandling()
     });
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event *pEvent )->void
     {
-        SDL_ShowCursor(SDL_DISABLE);
+        if (!Settings::getShowCursor())
+        {
+            SDL_ShowCursor(SDL_DISABLE);
+        }
     });
 
     connect(pApp, &Mainapp::sigKeyDown, this, &InGameMenue::keyInput, Qt::QueuedConnection);

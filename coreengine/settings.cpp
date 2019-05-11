@@ -44,6 +44,8 @@ bool Settings::m_Server               = false;
 GameEnums::AnimationMode Settings::showAnimations = GameEnums::AnimationMode_All;
 quint32 Settings::animationSpeed = 1;
 QString Settings::m_LastSaveGame = "";
+QString Settings::m_Username = "";
+bool Settings::m_ShowCursor = true;
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -233,7 +235,7 @@ void Settings::loadSettings(){
         Console::print(error, Console::eERROR);
         animationSpeed = GameEnums::AnimationMode_All;
     }
-    animationSpeed  = settings.value("AnimationSpeed", 1u).toUInt(&ok);
+    animationSpeed = settings.value("AnimationSpeed", 1u).toUInt(&ok);
     if(!ok || animationSpeed <= 0 ||  animationSpeed > 100u)
     {
         QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " AnimationSpeed";
@@ -241,6 +243,8 @@ void Settings::loadSettings(){
         animationSpeed = 1u;
     }
     m_LastSaveGame = settings.value("LastSaveGame", "").toString();
+    m_Username = settings.value("Username", "").toString();
+    m_ShowCursor = settings.value("ShowCursor", true).toBool();
     settings.endGroup();
 
     // network
@@ -314,6 +318,8 @@ void Settings::saveSettings(){
     settings.setValue("ShowAnimations",                 static_cast<qint32>(showAnimations));
     settings.setValue("AnimationSpeed",                 animationSpeed);
     settings.setValue("LastSaveGame",                   m_LastSaveGame);
+    settings.setValue("Username",                       m_Username);
+    settings.setValue("ShowCursor",                     m_ShowCursor);
     settings.endGroup();
 
     // network
@@ -522,6 +528,26 @@ SDL_Keycode Settings::getKey_quickload2()
 void Settings::setKey_quickload2(const SDL_Keycode &key_quickload2)
 {
     m_key_quickload2 = key_quickload2;
+}
+
+bool Settings::getShowCursor()
+{
+    return m_ShowCursor;
+}
+
+void Settings::setShowCursor(bool ShowCursor)
+{
+    m_ShowCursor = ShowCursor;
+}
+
+QString Settings::getUsername()
+{
+    return m_Username;
+}
+
+void Settings::setUsername(const QString &Username)
+{
+    m_Username = Username;
 }
 
 QString Settings::getLastSaveGame()

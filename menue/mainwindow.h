@@ -18,11 +18,13 @@ public slots:
     void enterCreditsmenue();
     void loadGame(QString filename);
     void lastSaveGame();
+    void enterMultiplayer();
 
     void leaveMenue();
     void quitGame();
 signals:
     void sigEnterSingleplayer();
+    void sigEnterMultiplayer();
     void sigEnterEditor();
     void sigEnterOptionmenue();
     void sigEnterCreditsmenue();

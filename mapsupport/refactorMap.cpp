@@ -140,7 +140,7 @@ void GameMap::flipX()
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
             if (pCurrentUnit.get() != nullptr)
             {
-                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner());
+                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
                 pTerrain->setUnit(pUnit);
             }
         }
@@ -175,7 +175,7 @@ void GameMap::rotateX()
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
             if (pCurrentUnit.get() != nullptr)
             {
-                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner());
+                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
                 pTerrain->setUnit(pUnit);
             }
         }
@@ -211,7 +211,7 @@ void GameMap::flipY()
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
             if (pCurrentUnit.get() != nullptr)
             {
-                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner());
+                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
                 pTerrain->setUnit(pUnit);
             }
         }
@@ -247,7 +247,7 @@ void GameMap::rotateY()
             spUnit pCurrentUnit = flipTerrain->getSpUnit();
             if (pCurrentUnit.get() != nullptr)
             {
-                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner());
+                spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
                 pTerrain->setUnit(pUnit);
             }
         }

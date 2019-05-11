@@ -191,7 +191,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 6;
+        return 7;
     }
     /**
      * @brief clearMap
@@ -207,6 +207,11 @@ public:
      * @param index
      */
     void removePlayer(qint32 index);
+    /**
+     * @brief getUniqueIdCounter
+     * @return a new unique id
+     */
+    quint32 getUniqueIdCounter();
 
 signals:
     void signalExitGame();
@@ -214,6 +219,19 @@ signals:
     void signalShowCOInfo();
     void sigQueueAction(GameAction* pAction);
 public slots:
+    /**
+     * @brief getUnit
+     * @param uniqueID
+     * @return
+     */
+    Unit* getUnit(quint32 uniqueID);
+    /**
+     * @brief getUnit
+     * @param pUnit the transporting unit
+     * @param uniqueID the unit it should transport
+     * @return the found unit
+     */
+    Unit* getUnit(Unit* pUnit, quint32 uniqueID);
     /**
      * @brief getGameScript
      * @return
@@ -309,6 +327,11 @@ public slots:
      * @brief refillAll refills all units ammo and fuel
      */
     void refillAll();
+    /**
+     * @brief refillTransportedUnits
+     * @param pUnit
+     */
+    void refillTransportedUnits(Unit* pUnit);
     /**
      * @brief updateTerrainSprites updates the terrain sprites refreshes them to fit the current map
      * @param xInput around given coordinates -1 whole map
@@ -502,6 +525,8 @@ private:
     float m_zoom{1.0f};
     bool loaded{false};
     void loadMapData();
+
+    quint32 m_UniqueIdCounter{0};
 };
 
 #endif // GAMEMAP_H

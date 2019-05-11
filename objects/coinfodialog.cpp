@@ -329,7 +329,7 @@ void COInfoDialog::showCO()
         m_UnitDataActors.append(new oxygine::Actor());
         m_UnitDataActors[i]->setPosition(x, y);
         m_pPanel->addItem(m_UnitDataActors[i]);
-        spUnit pUnit = new Unit(unitID, m_pCurrentPlayer.get());
+        spUnit pUnit = new Unit(unitID, m_pCurrentPlayer.get(), false);
         // gather basic co information
         qint32 offBonus = 0;
         qint32 defBonus = 0;

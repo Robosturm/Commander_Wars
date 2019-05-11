@@ -32,6 +32,12 @@ public:
     static QString getLastSaveGame();
     static void setLastSaveGame(const QString &LastSaveGame);
 
+    static QString getUsername();
+    static void setUsername(const QString &Username);
+
+    static bool getShowCursor();
+    static void setShowCursor(bool ShowCursor);
+
 public slots:
     inline qint32 getX()
     {
@@ -208,12 +214,14 @@ private:
     static quint16 m_GamePort;
     static quint16 m_ServerPort;
     static QString m_ServerAdress;
+    static QString m_Username;
     static bool m_Server;
 
     // ingame options
     static GameEnums::AnimationMode showAnimations;
     static quint32 animationSpeed;
     static QString m_LastSaveGame;
+    static bool m_ShowCursor;
 
     // internal members
     static Settings* m_pInstance;

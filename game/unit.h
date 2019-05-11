@@ -28,7 +28,7 @@ public:
      */
     explicit Unit();
 
-    explicit Unit(QString unitID, Player* pOwner);
+    explicit Unit(QString unitID, Player* pOwner, bool aquireId);
 
     virtual ~Unit();
     /**
@@ -57,7 +57,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 7;
+        return 8;
     }
 
 
@@ -77,9 +77,15 @@ public:
      */
     void updateIcons(Player* pPlayer);
 
+
 signals:
 
 public slots:
+    /**
+     * @brief getUniqueID
+     * @return returns the map wide unique id of this unit.
+     */
+    quint32 getUniqueID() const;
     /**
      * @brief spawnUnit
      * @param unitID
@@ -272,6 +278,7 @@ public slots:
      * @brief refill fills up all ammo and fuel to max
      */
     void refill();
+
     /**
      * @brief setHasMoved  changes if the unit has been moved or not
      * @param value
@@ -557,6 +564,7 @@ private:
     qint32 minRange{1};
     qint32 maxRange{-1};
     qint32 vision{1};
+    quint32 m_UniqueID{0};
 
     GameEnums::GameAi m_AiMode{GameEnums::GameAi::GameAi_Normal};
 

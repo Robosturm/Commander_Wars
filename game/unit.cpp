@@ -33,7 +33,7 @@ Unit::Unit()
     Interpreter::setCppOwnerShip(this);
 }
 
-Unit::Unit(QString unitID, Player* pOwner)
+Unit::Unit(QString unitID, Player* pOwner, bool aquireId)
     : QObject(),
       m_UnitID(unitID),
       m_pOwner(pOwner)
@@ -45,7 +45,11 @@ Unit::Unit(QString unitID, Player* pOwner)
     {
         initUnit();
         updateSprites();
-    }
+        if (aquireId)
+        {
+            m_UniqueID = GameMap::getInstance()->getUniqueIdCounter();
+        }
+    }        
 }
 
 Unit::~Unit()
@@ -521,7 +525,7 @@ Unit* Unit::spawnUnit(QString unitID)
     {
         return nullptr;
     }
-    spUnit pUnit = new Unit(unitID, m_pOwner);
+    spUnit pUnit = new Unit(unitID, m_pOwner, true);
     m_TransportUnits.append(pUnit);
     updateIcons(GameMap::getInstance()->getCurrentViewPlayer());
     return pUnit.get();
@@ -1630,6 +1634,11 @@ void Unit::updateIconTweens()
     }
 }
 
+quint32 Unit::getUniqueID() const
+{
+    return m_UniqueID;
+}
+
 GameEnums::GameAi Unit::getAiMode() const
 {
     return m_AiMode;
@@ -1767,6 +1776,7 @@ void Unit::serializeObject(QDataStream& pStream)
     m_Variables.serializeObject(pStream);
     pStream << m_IgnoreUnitCollision;
     pStream << static_cast<qint32>(m_AiMode);
+    pStream << m_UniqueID;
 }
 
 void Unit::deserializeObject(QDataStream& pStream)
@@ -1837,6 +1847,14 @@ void Unit::deserializeObject(QDataStream& pStream)
     else
     {
         setAiMode(GameEnums::GameAi_Normal);
+    }
+    if (version > 7)
+    {
+        pStream >> m_UniqueID;
+    }
+    if (m_UniqueID == 0)
+    {
+        m_UniqueID = GameMap::getInstance()->getUniqueIdCounter();
     }
 }
 

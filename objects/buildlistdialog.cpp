@@ -90,7 +90,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     {
         QString unitID = pUnitSpriteManager->getUnitID(i);
 
-        spUnit pUnit = new Unit(unitID, pMap->getPlayer(player));
+        spUnit pUnit = new Unit(unitID, pMap->getPlayer(player), false);
 
         pLabel = new oxygine::TextField();
         pLabel->setStyle(style);

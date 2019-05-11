@@ -166,7 +166,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     }
     else if (itemID == "NEWMAP")
     {
-        spMapEditDialog mapEditDialog = new MapEditDialog("", "", "", "", 20, 20, 2);
+        spMapEditDialog mapEditDialog = new MapEditDialog("", Settings::getUsername(), "", "", 20, 20, 2);
         connect(mapEditDialog.get(), &MapEditDialog::editFinished, this, &EditorMenue::newMap, Qt::QueuedConnection);
         connect(mapEditDialog.get(), &MapEditDialog::sigCanceled, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
         this->addChild(mapEditDialog);
@@ -676,7 +676,7 @@ void EditorMenue::placeUnit(qint32 x, qint32 y)
         if (canUnitBePlaced(curX, curY))
         {
             spUnit pCurrentUnit = m_EditorSelection->getCurrentSpUnit();
-            spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner());
+            spUnit pUnit = new Unit(pCurrentUnit->getUnitID(), pCurrentUnit->getOwner(), false);
             pUnit->setAiMode(GameEnums::GameAi::GameAi_Normal);
             GameMap* pMap = GameMap::getInstance();
             pMap->getTerrain(curX, curY)->setUnit(pUnit);

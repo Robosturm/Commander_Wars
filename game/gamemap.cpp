@@ -72,6 +72,18 @@ void GameMap::loadMapData()
     Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
     pInterpreter->setGlobal(m_JavascriptName, pInterpreter->newQObject(this));
     pInterpreter->setGlobal(m_GameAnimationFactory, pInterpreter->newQObject(GameAnimationFactory::getInstance()));
+    mapAuthor = Settings::getUsername();
+}
+
+quint32 GameMap::getUniqueIdCounter()
+{
+    m_UniqueIdCounter++;
+    // gurantee that the counter is never 0
+    if (m_UniqueIdCounter == 0)
+    {
+        m_UniqueIdCounter++;
+    }
+    return m_UniqueIdCounter;
 }
 
 void GameMap::deleteMap()
@@ -272,7 +284,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
     {
         return nullptr;
     }
-    spUnit pUnit = new Unit(unitID, pPlayer.get());
+    spUnit pUnit = new Unit(unitID, pPlayer.get(), true);
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
     QString movementType = pUnit->getMovementType();
     if (onMap(x, y))
@@ -621,6 +633,7 @@ void GameMap::serializeObject(QDataStream& pStream)
     pStream << mapDescription;
     pStream << width;
     pStream << heigth;
+    pStream << m_UniqueIdCounter;
     pStream << getPlayerCount();
     qint32 currentPlayerIdx = 0;
     for (qint32 i = 0; i < players.size(); i++)
@@ -669,6 +682,14 @@ void GameMap::deserializeObject(QDataStream& pStream)
     qint32 width = 0;
     pStream >> width;
     pStream >> heigth;
+    if (version > 6)
+    {
+        pStream >> m_UniqueIdCounter;
+    }
+    else
+    {
+        m_UniqueIdCounter = 0;
+    }
     qint32 playerCount = 0;
     pStream >> playerCount;
     for (qint32 i = 0; i < playerCount; i++)
@@ -914,8 +935,18 @@ void GameMap::refillAll()
             if (pUnit.get() != nullptr)
             {
                 pUnit->refill();
+                refillTransportedUnits(pUnit.get());
             }
         }
+    }
+}
+
+void GameMap::refillTransportedUnits(Unit* pUnit)
+{
+    for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
+    {
+        pUnit->getLoadedUnit(i)->refill();
+        refillTransportedUnits(pUnit->getLoadedUnit(i));
     }
 }
 
@@ -976,6 +1007,56 @@ void GameMap::checkFuel(Player* pPlayer)
             }
         }
     }
+}
+
+Unit* GameMap::getUnit(quint32 uniqueID)
+{
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            Unit* pUnit = fields.at(y)->at(x)->getUnit();
+            if (pUnit != nullptr)
+            {
+                if (pUnit->getUniqueID() == uniqueID)
+                {
+                    return pUnit;
+                }
+                else if (pUnit->getLoadedUnitCount() > 0)
+                {
+                    pUnit = getUnit(pUnit, uniqueID);
+                    if (pUnit != nullptr)
+                    {
+                        return pUnit;
+                    }
+                }
+            }
+        }
+    }
+    return nullptr;
+}
+
+Unit* GameMap::getUnit(Unit* pUnit, quint32 uniqueID)
+{
+    for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
+    {
+        Unit* pLoadedUnit = pUnit->getLoadedUnit(i);
+        if (pLoadedUnit->getUniqueID() == uniqueID)
+        {
+            return pLoadedUnit;
+        }
+        else
+        {
+            Unit* pUnit2 = getUnit(pLoadedUnit, uniqueID);
+            if (pUnit2 != nullptr)
+            {
+                return pUnit2;
+            }
+        }
+    }
+    return nullptr;
 }
 
 QmlVectorUnit* GameMap::getUnits(Player* pPlayer)

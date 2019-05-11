@@ -3,15 +3,23 @@
 
 #include <QObject>
 
-class LobbyMenu : public QObject
+#include "oxygine-framework.h"
+
+#include "objects/panel.h"
+
+class LobbyMenu : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit LobbyMenu(QObject *parent = nullptr);
+    explicit LobbyMenu();
 
-signals:
-
+signals:    
+    void sigExitMenue();
 public slots:
+    void exitMenue();
+
+private:
+    spPanel m_pGamesPanel;
 };
 
 #endif // LOBBYMENU_H

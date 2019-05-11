@@ -320,7 +320,7 @@ var Constructor = function()
     this.getVictorySentences = function()
     {
         return [qsTr("A knight needs to be strong and experienced!"),
-                qsTr("The better prepared knight one."),
+                qsTr("The better prepared knight wins."),
                 qsTr("Experience always wins.")];
     };
     this.getDefeatSentences = function()

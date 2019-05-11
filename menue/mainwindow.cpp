@@ -12,8 +12,10 @@
 #include "menue/optionmenue.h"
 #include "menue/mapselectionmapsmenue.h"
 #include "menue/creditsmenue.h"
+#include "multiplayer/lobbymenu.h"
 
 #include "objects/filedialog.h"
+#include "objects/dialogusername.h"
 
 #include <QFile>
 
@@ -67,7 +69,18 @@ Mainwindow::Mainwindow()
     {
         emit this->sigEnterSingleplayer();
     });
-    connect(this, SIGNAL(sigEnterSingleplayer()), this, SLOT(enterSingleplayer()), Qt::QueuedConnection);
+    connect(this, &Mainwindow::sigEnterSingleplayer, this, &Mainwindow::enterSingleplayer, Qt::QueuedConnection);
+    btnI++;
+
+    // create the ui for the main menue here :)
+    oxygine::spButton pButtonMultiplayer = ObjectManager::createButton(tr("Multiplayer"));
+    setButtonPosition(pButtonMultiplayer, btnI);
+    pButtonMultiplayer->attachTo(this);
+    pButtonMultiplayer->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit this->sigEnterMultiplayer();
+    });
+    connect(this, &Mainwindow::sigEnterMultiplayer, this, &Mainwindow::enterMultiplayer, Qt::QueuedConnection);
     btnI++;
 
     // load button
@@ -124,6 +137,11 @@ Mainwindow::Mainwindow()
     });
     connect(this, SIGNAL(sigQuit()), this, SLOT(quitGame()), Qt::QueuedConnection);
     btnI++;
+
+    if (Settings::getUsername().isEmpty())
+    {
+        addChild(new DialogUsername());
+    }
 }
 
 void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
@@ -144,6 +162,15 @@ void Mainwindow::enterSingleplayer()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     oxygine::getStage()->addChild(new MapSelectionMapsMenue());
+    leaveMenue();
+    pApp->continueThread();
+}
+
+void Mainwindow::enterMultiplayer()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    oxygine::getStage()->addChild(new LobbyMenu());
     leaveMenue();
     pApp->continueThread();
 }

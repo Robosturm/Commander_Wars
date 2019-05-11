@@ -240,7 +240,7 @@ void GameMap::importTxtMap(QString file)
                         if (unitIdMapping[i][0] == unitID)
                         {
                             qint32 player = data[8].toInt();
-                            spUnit pUnit = new Unit(unitIdMapping[i][1], getPlayer(player - 1));
+                            spUnit pUnit = new Unit(unitIdMapping[i][1], getPlayer(player - 1), false);
                             pUnit->setFuel(data[6].toInt());
                             pUnit->setHp(data[7].toInt());
                             pTerrain->setUnit(pUnit);

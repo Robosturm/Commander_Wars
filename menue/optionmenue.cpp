@@ -213,6 +213,21 @@ void OptionMenue::showGameplayAndKeys()
 
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
+    pTextfield->setText(tr("Show Windows Cursor: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spCheckbox pCheckbox = new Checkbox();
+    pCheckbox->setChecked(Settings::getShowCursor());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+    {
+        Settings::setShowCursor(value);
+    });
+    pCheckbox->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pCheckbox);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
     pTextfield->setText(tr("Ingame Keys").toStdString().c_str());
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
@@ -502,10 +517,32 @@ void OptionMenue::showSettings()
 
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
-    pTextfield->setText(tr("Server Adress: ").toStdString().c_str());
+    pTextfield->setText(tr("Username: ").toStdString().c_str());
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spTextbox pTextbox = new Textbox(pApp->getSettings()->getWidth() - 20 - sliderOffset);
+    pTextbox->setCurrentText(Settings::getUsername());
+    connect(pTextbox.get(), &Textbox::sigTextChanged, [=](QString value)
+    {
+        if (value.isEmpty())
+        {
+           pTextbox->setCurrentText(Settings::getUsername());
+        }
+        else
+        {
+            Settings::setUsername(value);
+        }
+    });
+    pTextbox->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pTextbox);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Server Adress: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pTextbox = new Textbox(pApp->getSettings()->getWidth() - 20 - sliderOffset);
     pTextbox->setCurrentText(Settings::getServerAdress());
     connect(pTextbox.get(), &Textbox::sigTextChanged, [=](QString value)
     {
