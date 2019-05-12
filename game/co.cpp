@@ -537,9 +537,9 @@ void CO::activatePower()
     }
 }
 
-void CO::activateSuperpower()
+void CO::activateSuperpower(GameEnums::PowerMode powerMode)
 {
-    m_PowerMode = GameEnums::PowerMode_Superpower;
+    m_PowerMode = powerMode;
     powerFilled = 0;
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "activateSuperpower";
@@ -861,9 +861,9 @@ QString CO::getVictorySentence()
     return sentence;
 }
 
- GameAnimationPower* CO::createPowerScreen(bool superpower)
+ GameAnimationPower* CO::createPowerScreen(GameEnums::PowerMode powerMode)
  {
-     GameAnimationPower* pGameAnimationPower = GameAnimationFactory::createAnimationPower(m_Owner->getColor(), superpower, coID);
+     GameAnimationPower* pGameAnimationPower = GameAnimationFactory::createAnimationPower(m_Owner->getColor(), powerMode, coID);
      return pGameAnimationPower;
  }
 

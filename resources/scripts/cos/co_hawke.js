@@ -26,7 +26,7 @@ var Constructor = function()
     this.activatePower = function(co)
     {
         var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(false);
+        var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
         CO_HAWKE.hawkeDamage(co, 1, powerNameAnimation);
@@ -113,10 +113,10 @@ var Constructor = function()
         }
     };
 
-    this.activateSuperpower = function(co)
+    this.activateSuperpower = function(co, powerMode)
     {
         var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(true);
+        var powerNameAnimation = co.createPowerScreen(powerMode);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
         CO_HAWKE.hawkeDamage(co, 2, powerNameAnimation);

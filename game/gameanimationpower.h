@@ -2,13 +2,14 @@
 #define GAMEANIMATIONPOWER_H
 
 #include "game/gameanimation.h"
+#include "game/GameEnums.h"
 #include <QTimer>
 
 class GameAnimationPower : public GameAnimation
 {
     Q_OBJECT
 public:
-    GameAnimationPower(quint32 frameTime, QColor color, bool superpower, QString coid);
+    GameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, QString coid);
     virtual void restart() override;
     virtual void stop() override;
 

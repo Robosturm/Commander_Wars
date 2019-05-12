@@ -7,6 +7,7 @@
 #include "game/co.h"
 
 GameAction::GameAction()
+    : m_target(-1, -1)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -16,7 +17,8 @@ GameAction::GameAction()
 }
 
 GameAction::GameAction(QString actionID)
-    : m_actionID(actionID)
+    : m_actionID(actionID),
+      m_target(-1, -1)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -56,7 +58,7 @@ QString GameAction::getActionID()
 
 Unit* GameAction::getTargetUnit()
 {
-    if (m_pTargetUnit == nullptr)
+    if (m_pTargetUnit == nullptr && GameMap::getInstance()->onMap(m_target.x(), m_target.y()))
     {
         return GameMap::getInstance()->getTerrain(m_target.x(), m_target.y())->getUnit();
     }
@@ -65,7 +67,15 @@ Unit* GameAction::getTargetUnit()
 
 Building* GameAction::getTargetBuilding()
 {
-    return GameMap::getInstance()->getTerrain(m_target.x(), m_target.y())->getBuilding();
+    if (GameMap::getInstance()->onMap(m_target.x(), m_target.y()))
+    {
+        return GameMap::getInstance()->getTerrain(m_target.x(), m_target.y())->getBuilding();
+    }
+    else
+    {
+        return nullptr;
+    }
+
 }
 
 void GameAction::setMovepath(QVector<QPoint> points)

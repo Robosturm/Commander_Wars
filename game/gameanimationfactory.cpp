@@ -93,9 +93,9 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(Unit* pUnit, Gam
     return pGameAnimationWalk;
 }
 
-GameAnimationPower* GameAnimationFactory::createAnimationPower(QColor color, bool superpower, QString coid, quint32 frameTime)
+GameAnimationPower* GameAnimationFactory::createAnimationPower(QColor color, GameEnums::PowerMode powerMode, QString coid, quint32 frameTime)
 {
-    GameAnimationPower* pAnim = new GameAnimationPower(frameTime, color, superpower, coid);
+    GameAnimationPower* pAnim = new GameAnimationPower(frameTime, color, powerMode, coid);
     pAnim->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     GameMenue::getInstance()->addChild(pAnim);
     m_Animations.append(pAnim);

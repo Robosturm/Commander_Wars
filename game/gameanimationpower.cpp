@@ -14,13 +14,14 @@
 
 #include "game/gameanimationfactory.h"
 
-GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, bool superpower, QString coid)
+GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, QString coid)
     : GameAnimation (frameTime)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     oxygine::ResAnim* pAnimMask = GameManager::getInstance()->getResAnim("power_background");
-    if (superpower)
+    if (powerMode == GameEnums::PowerMode_Superpower ||
+        powerMode == GameEnums::PowerMode_Tagpower)
     {
         pAnimMask = GameManager::getInstance()->getResAnim("superpower_background");
     }
@@ -65,7 +66,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, bool sup
 
     // cool text incoming
     QString text;
-    if (superpower)
+    if (powerMode == GameEnums::PowerMode_Superpower)
     {
         QJSValue ret = pApp->getInterpreter()->doFunction(coid, "getSuperPowerName");
         if (ret.isString())

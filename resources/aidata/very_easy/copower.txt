@@ -12,10 +12,7 @@ CO_ADDER     1                 2               10                7              
 CO_ADDER     1                 0               4                 0                 7               7               10              15600                    0           1
 CO_ADDER     1                 2               4                 0                 7               7               10              15600                    0           0
 CO_ADDER     2                 0               10                7                 0               1               0               1000                     0           2
-CO_ADDER     2                 0               10                7                 0               1               0               1000                     1           0
 CO_ADDER     2                 0               4                 0                 7               7               10              15600                    0           2
-CO_ADDER     2                 0               4                 0                 7               7               10              15600                    1           0
-CO_ADDER     2                 0               4                 0                 7               7               10              15600                    2           0
 // ANDY
 CO_ANDY      0                 0               4                 7                 6               6               6               11000                    0           0
 CO_ANDY      0                 0               4                 7                 6               6               6               11000                    1           0
@@ -33,8 +30,7 @@ CO_ANDY      2                 0               7                 7              
 CO_ANDY      2                 0               7                 7                 5               6               7               0                        0           2
 CO_ANDY      2                 0               7                 7                 0               3               7               0                        0           2
 CO_ANDY      2                 0               7                 7                 0               3               0               0                        0           2
-CO_ANDY      2                 0               7                 3                 0               3               0               0                        0           0
-CO_ANDY      2                 0               7                 7                 0               3               0               0                        1           0
+CO_ANDY      2                 0               4                 4                 0               3               0               0                        0           2
 // COLIN
 CO_COLIN     0                 0               0                 0                 6               6               0               11000                    0           0
 CO_COLIN     1                 0               0                 0                 6               6               0               11000                    0           1
@@ -46,8 +42,8 @@ CO_COLIN     1                 2               0                 0              
 CO_COLIN     1                 2               0                 0                 6               6               0               9000                     0           0
 CO_COLIN     2                 0               6                 0                 6               6               0               11000                    0           2
 CO_COLIN     2                 0               6                 0                 6               6               0               11000                    0           2
-CO_COLIN     2                 0               6                 0                 6               6               0               9000                     0           0
-CO_COLIN     2                 0               0                 0                 6               6               0               9000                     0           0
+CO_COLIN     2                 0               3                 0                 3               3               0               11000                    0           2
+CO_COLIN     2                 0               3                 0                 3               3               0               7000                     0           2
 // Drake
 CO_DRAKE     1                 0               0                 0                 6               6               6               9000                     0           1
 CO_DRAKE     1                 0               0                 0                 6               6               6               9000                     1           1
@@ -79,12 +75,6 @@ CO_EAGLE     1                 0               7                 0              
 CO_EAGLE     1                 0               7                 7                 6               6               3               9000                     1           0
 CO_EAGLE     1                 0               0                 0                 6               6               6               11000                    1           0
 CO_EAGLE     1                 0               0                 0                 6               6               6               11000                    0           0
-CO_EAGLE     2                 0               7                 0                 6               6               6               11000                    0           0
-CO_EAGLE     2                 0               7                 0                 6               6               6               11000                    1           0
-CO_EAGLE     2                 0               3                 0                 3               6               6               11000                    0           0
-CO_EAGLE     2                 0               7                 0                 7               3               7               9000                     0           0
-CO_EAGLE     2                 0               3                 0                 3               6               6               11000                    0           0
-CO_EAGLE     2                 0               7                 7                 7               3               7               9000                     0           0
 CO_EAGLE     2                 0               7                 0                 6               6               6               11000                    2           2
 CO_EAGLE     2                 0               7                 0                 6               6               6               9000                     2           2
 CO_EAGLE     2                 0               9                 6                 6               6               3               11000                    2           2
@@ -101,8 +91,6 @@ CO_EPOCH     1                 2               4                 7              
 CO_EPOCH     1                 0               7                 7                 3               6               7               11000                    0           1
 CO_EPOCH     2                 0               4                 7                 6               6               6               11000                    0           2
 CO_EPOCH     2                 0               4                 3                 6               6               3               9000                     0           2
-CO_EPOCH     2                 0               4                 7                 6               6               6               11000                    1           0
-CO_EPOCH     2                 0               4                 7                 6               6               6               11000                    2           0
 CO_EPOCH     2                 0               4                 7                 3               6               7               11000                    0           2
 CO_EPOCH     2                 0               7                 7                 6               6               6               11000                    0           2
 //FLAK
@@ -117,8 +105,6 @@ CO_FLAK      1                 2               4                 7              
 CO_FLAK      1                 0               7                 7                 3               6               7               11000                    0           1
 CO_FLAK      2                 0               4                 7                 6               6               6               11000                    0           2
 CO_FLAK      2                 0               4                 3                 6               6               3               9000                     0           2
-CO_FLAK      2                 0               4                 7                 6               3               6               11000                    1           0
-CO_FLAK      2                 0               4                 4                 6               6               6               11000                    2           0
 CO_FLAK      2                 0               7                 4                 7               6               7               9000                     0           2
 CO_FLAK      2                 0               7                 7                 6               6               6               11000                    0           2
 // GRIMM
@@ -133,8 +119,6 @@ CO_GRIMM     1                 2               4                 4              
 CO_GRIMM     1                 0               7                 7                 7               4               7               11000                    0           1
 CO_GRIMM     2                 0               4                 7                 6               6               6               11000                    0           2
 CO_GRIMM     2                 0               7                 3                 6               6               3               9000                     0           2
-CO_GRIMM     2                 0               4                 7                 6               3               6               11000                    1           0
-CO_GRIMM     2                 0               4                 4                 6               6               6               11000                    2           0
 CO_GRIMM     2                 0               7                 4                 7               4               7               9000                     0           2
 CO_GRIMM     2                 0               7                 7                 6               6               6               11000                    0           2
 //GRIT
@@ -152,11 +136,8 @@ CO_GRIT      1                 2               4                 7              
 CO_GRIT      1                 0               7                 7                 7               6               7               11000                    0           1
 CO_GRIT      2                 0               4                 7                 6               6               6               11000                    0           2
 CO_GRIT      2                 0               4                 3                 6               6               3               9000                     0           2
-CO_GRIT      2                 0               4                 7                 3               3               6               11000                    1           0
-CO_GRIT      2                 0               4                 4                 3               6               6               11000                    2           0
 CO_GRIT      2                 0               7                 4                 7               6               7               9000                     0           2
 CO_GRIT      2                 0               7                 7                 6               6               6               11000                    0           2
-CO_GRIT      2                 0               7                 7                 3               6               3               11000                    0           0
 // HACHI
 CO_HACHI     0                 0               0                 0                 6               6               0               11000                    0           0
 CO_HACHI     1                 0               0                 0                 6               6               0               11000                    0           1
@@ -171,8 +152,6 @@ CO_HACHI     2                 0               6                 0              
 CO_HACHI     2                 0               6                 7                 3               6               7               11000                    0           2
 CO_HACHI     2                 0               6                 7                 6               3               0               11000                    0           2
 CO_HACHI     2                 0               6                 7                 3               6               0               11000                    0           2
-CO_HACHI     2                 0               6                 0                 6               6               0               9000                     0           0
-CO_HACHI     2                 0               0                 0                 6               6               0               9000                     0           0
 // HAWKE
 CO_HAWKE     1                 0               0                 6                 6               6               6               9000                     0           1
 CO_HAWKE     1                 0               0                 0                 6               6               6               9000                     1           1
@@ -200,8 +179,6 @@ CO_JAKE      1                 2               4                 4              
 CO_JAKE      1                 0               7                 7                 7               4               7               11000                    0           1
 CO_JAKE      2                 0               4                 7                 6               6               6               11000                    0           2
 CO_JAKE      2                 0               7                 3                 6               6               3               9000                     0           2
-CO_JAKE      2                 0               4                 7                 6               3               6               11000                    1           0
-CO_JAKE      2                 0               4                 4                 6               6               6               11000                    2           0
 CO_JAKE      2                 0               7                 4                 7               4               7               9000                     0           2
 CO_JAKE      2                 0               7                 7                 6               6               6               11000                    0           2
 // JAVIER
@@ -215,8 +192,6 @@ CO_JAVIER    1                 2               4                 7              
 CO_JAVIER    1                 0               7                 7                 3               6               7               11000                    0           1
 CO_JAVIER    2                 0               4                 7                 6               6               6               11000                    0           2
 CO_JAVIER    2                 0               4                 3                 6               6               3               9000                     0           2
-CO_JAVIER    2                 0               4                 7                 6               6               6               11000                    1           0
-CO_JAVIER    2                 0               4                 7                 6               6               6               11000                    2           0
 CO_JAVIER    2                 0               4                 7                 3               6               7               11000                    0           2
 CO_JAVIER    2                 0               7                 7                 6               6               6               11000                    0           2
 // JESS
@@ -235,8 +210,6 @@ CO_JESS      1                 2               4                 7              
 CO_JESS      1                 0               7                 7                 7               6               7               11000                    0           1
 CO_JESS      2                 0               4                 7                 6               6               6               11000                    0           2
 CO_JESS      2                 0               4                 3                 6               6               3               9000                     0           2
-CO_JESS      2                 0               4                 7                 3               3               6               11000                    1           0
-CO_JESS      2                 0               4                 4                 6               3               6               11000                    2           0
 CO_JESS      2                 0               7                 4                 7               6               7               9000                     0           2
 CO_JESS      2                 0               7                 7                 6               6               6               11000                    0           2
 CO_JESS      2                 0               7                 7                 3               6               6               11000                    0           2
@@ -254,8 +227,6 @@ CO_JUGGER    1                 2               4                 7              
 CO_JUGGER    1                 0               7                 7                 3               6               7               11000                    0           1
 CO_JUGGER    2                 0               4                 7                 3               6               6               11000                    0           2
 CO_JUGGER    2                 0               4                 3                 6               6               3               9000                     0           2
-CO_JUGGER    2                 0               7                 7                 6               6               6               11000                    1           0
-CO_JUGGER    2                 0               4                 7                 6               6               3               11000                    2           0
 CO_JUGGER    2                 0               4                 3                 3               6               7               11000                    0           2
 CO_JUGGER    2                 0               7                 7                 6               6               6               11000                    0           2
 CO_JUGGER    2                 0               3                 3                 3               3               3                9000                    0           2
@@ -273,8 +244,6 @@ CO_KANBEI    1                 2               4                 7              
 CO_KANBEI    1                 0               7                 7                 3               6               7               11000                    0           1
 CO_KANBEI    2                 0               4                 7                 3               6               6               11000                    0           2
 CO_KANBEI    2                 0               4                 3                 6               6               3               9000                     0           2
-CO_KANBEI    2                 0               7                 7                 6               6               6               11000                    1           0
-CO_KANBEI    2                 0               4                 7                 6               6               3               11000                    2           0
 CO_KANBEI    2                 0               4                 3                 3               6               7               11000                    0           2
 CO_KANBEI    2                 0               7                 7                 6               6               6               11000                    0           2
 CO_KANBEI    2                 0               3                 3                 3               3               3                9000                    0           2
@@ -297,8 +266,6 @@ CO_KINDLE    1                 2               4                 7              
 CO_KINDLE    1                 0               7                 7                 3               6               7               11000                    0           1
 CO_KINDLE    2                 0               4                 7                 3               6               6               11000                    0           2
 CO_KINDLE    2                 0               4                 3                 6               6               3               9000                     0           2
-CO_KINDLE    2                 0               7                 7                 6               6               6               11000                    1           0
-CO_KINDLE    2                 0               4                 7                 6               6               3               11000                    2           0
 CO_KINDLE    2                 0               4                 3                 3               6               7               11000                    0           2
 CO_KINDLE    2                 0               7                 7                 6               6               6               11000                    0           2
 CO_KINDLE    2                 0               3                 3                 3               3               3                9000                    0           2
@@ -316,8 +283,6 @@ CO_KOAL      1                 2               4                 7              
 CO_KOAL      1                 0               7                 7                 3               6               7               11000                    0           1
 CO_KOAL      2                 0               4                 7                 3               6               6               11000                    0           2
 CO_KOAL      2                 0               4                 3                 6               6               3               9000                     0           2
-CO_KOAL      2                 0               7                 7                 6               6               6               11000                    1           0
-CO_KOAL      2                 0               4                 7                 6               6               3               11000                    2           0
 CO_KOAL      2                 0               4                 3                 3               6               7               11000                    0           2
 CO_KOAL      2                 0               7                 7                 6               6               6               11000                    0           2
 CO_KOAL      2                 0               3                 3                 3               3               3                9000                    0           2
@@ -335,8 +300,6 @@ CO_LASH      1                 2               4                 3              
 CO_LASH      1                 0               7                 7                 7               6               7               11000                    0           1
 CO_LASH      2                 0               4                 7                 3               3               6               11000                    0           2
 CO_LASH      2                 0               4                 3                 6               6               9               9000                     0           2
-CO_LASH      2                 0               7                 7                 6               6               6               9000                     1           0
-CO_LASH      2                 0               7                 7                 6               6               3               11000                    2           0
 CO_LASH      2                 0               4                 7                 3               6               7               11000                    0           2
 CO_LASH      2                 0               7                 7                 3               6               6               11000                    0           2
 CO_LASH      2                 0               3                 3                 3               7               3                9000                    0           2
@@ -355,8 +318,6 @@ CO_MAX       1                 2               4                 7              
 CO_MAX       1                 0               7                 7                 7               6               7               11000                    0           1
 CO_MAX       2                 0               4                 7                 6               6               6               11000                    0           2
 CO_MAX       2                 0               4                 3                 6               6               3               9000                     0           2
-CO_MAX       2                 0               4                 7                 3               3               6               11000                    1           0
-CO_MAX       2                 0               4                 4                 6               3               6               11000                    2           0
 CO_MAX       2                 0               7                 4                 7               6               7               9000                     0           2
 CO_MAX       2                 0               7                 7                 6               6               6               11000                    0           2
 CO_MAX       2                 0               7                 7                 3               6               6               11000                    0           2
@@ -374,8 +335,6 @@ CO_NAPOLEON  1                 2               7                 3              
 CO_NAPOLEON  1                 0               7                 3                 7               6               7               11000                    0           1
 CO_NAPOLEON  2                 0               4                 7                 7               3               6               11000                    0           2
 CO_NAPOLEON  2                 0               4                 3                 6               3               9               9000                     0           2
-CO_NAPOLEON  2                 0               7                 7                 6               6               3               9000                     1           0
-CO_NAPOLEON  2                 0               7                 7                 6               6               3               9000                     2           0
 CO_NAPOLEON  2                 0               7                 7                 3               6               7               11000                    0           2
 CO_NAPOLEON  2                 0               7                 3                 3               6               6               11000                    0           2
 CO_NAPOLEON  2                 0               3                 3                 7               7               3                9000                    0           2
@@ -393,8 +352,6 @@ CO_NELL      1                 2               7                 3              
 CO_NELL      1                 0               7                 3                 7               6               3               11000                    0           1
 CO_NELL      2                 0               4                 7                 7               3               6               9000                     0           2
 CO_NELL      2                 0               7                 3                 6               3               9               9000                     0           2
-CO_NELL      2                 0               7                 3                 6               6               3               9000                     1           0
-CO_NELL      2                 0               7                 7                 3               6               3               9000                     2           0
 CO_NELL      2                 0               7                 7                 3               3               7               11000                    0           2
 CO_NELL      2                 0               7                 3                 3               6               3               11000                    0           2
 CO_NELL      2                 0               3                 3                 7               7               3               11000                    0           2
@@ -427,8 +384,6 @@ CO_RACHEL    1                 2               7                 3              
 CO_RACHEL    1                 0               7                 3                 7               6               3               9000                     0           1
 CO_RACHEL    2                 0               7                 7                 7               3               6               9000                     0           2
 CO_RACHEL    2                 0               7                 7                 6               3               9               9000                     0           2
-CO_RACHEL    2                 0               7                 3                 3               6               3               9000                     1           0
-CO_RACHEL    2                 0               7                 7                 3               3               3               9000                     2           0
 CO_RACHEL    2                 0               7                 7                 3               3               3               9000                     0           2
 CO_RACHEL    2                 0               3                 3                 3               6               3               11000                    0           2
 CO_RACHEL    2                 0               3                 7                 7               7               3               11000                    0           2
@@ -452,8 +407,6 @@ CO_ROBOANDY  1                 2               7                 7              
 CO_ROBOANDY  1                 0               3                 3                 7               6               3               9000                     0           1
 CO_ROBOANDY  2                 0               7                 7                 7               3               6               11000                    0           2
 CO_ROBOANDY  2                 0               7                 7                 6               3               3               9000                     0           2
-CO_ROBOANDY  2                 0               7                 3                 3               3               3               9000                     1           0
-CO_ROBOANDY  2                 0               7                 7                 7               3               3               9000                     2           0
 CO_ROBOANDY  2                 0               7                 7                 3               3               3               9000                     0           2
 CO_ROBOANDY  2                 0               3                 7                 3               6               3               11000                    0           2
 CO_ROBOANDY  2                 0               7                 7                 7               7               3               11000                    0           2
@@ -486,8 +439,6 @@ CO_SAMI      1                 2               3                 3              
 CO_SAMI      1                 0               3                 3                 3               3               3               9000                     0           1
 CO_SAMI      2                 0               7                 7                 7               3               3               9000                     0           2
 CO_SAMI      2                 0               3                 3                 6               3               3               9000                     0           2
-CO_SAMI      2                 0               7                 7                 7               3               3               9000                     1           0
-CO_SAMI      2                 0               7                 7                 3               7               3               9000                     2           0
 CO_SAMI      2                 0               7                 7                 3               7               7               9000                     0           2
 CO_SAMI      2                 0               3                 7                 3               6               7                9000                    0           2
 CO_SAMI      2                 0               7                 7                 7               7               3               11000                    0           2
@@ -505,8 +456,6 @@ CO_SASHA     1                 2               7                 3              
 CO_SASHA     1                 0               7                 3                 7               6               7               11000                    0           1
 CO_SASHA     2                 0               4                 7                 7               3               6               11000                    0           2
 CO_SASHA     2                 0               4                 3                 6               3               9               9000                     0           2
-CO_SASHA     2                 0               7                 7                 6               6               3               9000                     1           0
-CO_SASHA     2                 0               7                 7                 6               6               3               9000                     2           0
 CO_SASHA     2                 0               7                 7                 3               6               7               11000                    0           2
 CO_SASHA     2                 0               7                 3                 3               6               6               11000                    0           2
 CO_SASHA     2                 0               3                 3                 7               7               3                9000                    0           2
@@ -524,8 +473,6 @@ CO_SENSEI    1                 2               4                 7              
 CO_SENSEI    1                 0               7                 7                 3               6               7               11000                    0           1
 CO_SENSEI    2                 0               4                 7                 3               6               6               11000                    0           2
 CO_SENSEI    2                 0               4                 3                 6               6               3               9000                     0           2
-CO_SENSEI    2                 0               7                 7                 6               6               6               11000                    1           0
-CO_SENSEI    2                 0               4                 7                 6               6               3               11000                    2           0
 CO_SENSEI    2                 0               4                 3                 3               6               7               11000                    0           2
 CO_SENSEI    2                 0               7                 7                 6               6               6               11000                    0           2
 CO_SENSEI    2                 0               3                 3                 3               3               3                9000                    0           2
@@ -543,8 +490,6 @@ CO_SONJA     1                 2               4                 7              
 CO_SONJA     1                 0               7                 7                 3               6               7               11000                    0           1
 CO_SONJA     2                 0               4                 7                 3               6               6               11000                    0           2
 CO_SONJA     2                 0               4                 3                 6               6               3               9000                     0           2
-CO_SONJA     2                 0               7                 7                 6               6               6               11000                    1           0
-CO_SONJA     2                 0               4                 7                 6               6               3               11000                    2           0
 CO_SONJA     2                 0               4                 3                 3               6               7               11000                    0           2
 CO_SONJA     2                 0               7                 7                 6               6               6               11000                    0           2
 CO_SONJA     2                 0               3                 3                 3               3               3                9000                    0           2
@@ -559,8 +504,6 @@ CO_STURM     1                 2               4                 7              
 CO_STURM     1                 0               7                 7                 3               6               7               11000                    0           1
 CO_STURM     2                 0               4                 7                 6               6               6               11000                    0           2
 CO_STURM     2                 0               4                 3                 6               6               3               9000                     0           2
-CO_STURM     2                 0               4                 7                 6               6               6               11000                    1           0
-CO_STURM     2                 0               4                 7                 6               6               6               11000                    2           0
 CO_STURM     2                 0               4                 7                 3               6               7               11000                    0           2
 CO_STURM     2                 0               7                 7                 6               6               6               11000                    0           2
 CO_STURM     0                 0               3                 7                 6               3               7               9000                     0           0
@@ -574,8 +517,6 @@ CO_STURM     1                 2               4                 7              
 CO_STURM     1                 0               7                 7                 3               6               7               11000                    0           1
 CO_STURM     2                 0               4                 7                 3               6               6               11000                    0           2
 CO_STURM     2                 0               4                 3                 6               6               3               9000                     0           2
-CO_STURM     2                 0               7                 7                 6               6               6               11000                    1           0
-CO_STURM     2                 0               4                 7                 6               6               3               11000                    2           0
 CO_STURM     2                 0               4                 3                 3               6               7               11000                    0           2
 CO_STURM     2                 0               7                 7                 6               6               6               11000                    0           2
 CO_STURM     2                 0               3                 3                 3               3               3                9000                    0           2
@@ -590,8 +531,6 @@ CO_VON_BOLT  1                 2               4                 7              
 CO_VON_BOLT  1                 0               7                 7                 3               6               7               11000                    0           1
 CO_VON_BOLT  2                 0               4                 7                 6               6               6               11000                    0           2
 CO_VON_BOLT  2                 0               4                 3                 6               6               3               9000                     0           2
-CO_VON_BOLT  2                 0               4                 7                 6               6               6               11000                    1           0
-CO_VON_BOLT  2                 0               4                 7                 6               6               6               11000                    2           0
 CO_VON_BOLT  2                 0               4                 7                 3               6               7               11000                    0           2
 CO_VON_BOLT  2                 0               7                 7                 6               6               6               11000                    0           2
 CO_VON_BOLT  0                 0               3                 7                 6               3               7               9000                     0           0
@@ -605,8 +544,6 @@ CO_VON_BOLT  1                 2               4                 7              
 CO_VON_BOLT  1                 0               7                 7                 3               6               7               11000                    0           1
 CO_VON_BOLT  2                 0               4                 7                 3               6               6               11000                    0           2
 CO_VON_BOLT  2                 0               4                 3                 6               6               3               9000                     0           2
-CO_VON_BOLT  2                 0               7                 7                 6               6               6               11000                    1           0
-CO_VON_BOLT  2                 0               4                 7                 6               6               3               11000                    2           0
 CO_VON_BOLT  2                 0               4                 3                 3               6               7               11000                    0           2
 CO_VON_BOLT  2                 0               7                 7                 6               6               6               11000                    0           2
 CO_VON_BOLT  2                 0               3                 3                 3               3               3                9000                    0           2
@@ -624,8 +561,6 @@ CO_PETER     1                 2               4                 7              
 CO_PETER     1                 0               7                 7                 3               6               7               11000                    0           1
 CO_PETER     2                 0               4                 7                 3               6               6               11000                    0           2
 CO_PETER     2                 0               4                 3                 6               6               3               9000                     0           2
-CO_PETER     2                 0               7                 7                 6               6               6               11000                    1           0
-CO_PETER     2                 0               4                 7                 6               6               3               11000                    2           0
 CO_PETER     2                 0               4                 3                 3               6               7               11000                    0           2
 CO_PETER     2                 0               7                 7                 6               6               6               11000                    0           2
 CO_PETER     2                 0               3                 3                 3               3               3                9000                    0           2
@@ -646,8 +581,6 @@ CO_MELANTHE  2                 0               7                 7              
 CO_MELANTHE  2                 0               7                 7                 5               6               7               0                        0           2
 CO_MELANTHE  2                 0               7                 7                 0               3               7               0                        0           2
 CO_MELANTHE  2                 0               7                 7                 0               3               0               0                        0           2
-CO_MELANTHE  2                 0               7                 3                 0               3               0               0                        0           0
-CO_MELANTHE  2                 0               7                 7                 0               3               0               0                        1           0
 // SABAKI
 CO_SABAKI    0                 0               4                 7                 6               6               6               11000                    0           0
 CO_SABAKI    0                 0               4                 7                 6               6               6               11000                    1           0
@@ -665,8 +598,6 @@ CO_SABAKI    2                 0               7                 7              
 CO_SABAKI    2                 0               7                 7                 5               6               7               0                        0           2
 CO_SABAKI    2                 0               7                 7                 0               3               7               0                        0           2
 CO_SABAKI    2                 0               7                 7                 0               3               0               0                        0           2
-CO_SABAKI    2                 0               7                 3                 0               3               0               0                        0           0
-CO_SABAKI    2                 0               7                 7                 0               3               0               0                        1           0
 // ZANDRA
 CO_ZANDRA    1                 0               0                 6                 6               6               6               9000                     0           1
 CO_ZANDRA    1                 0               0                 0                 6               6               6               9000                     1           1
@@ -699,8 +630,8 @@ CO_SOPHIE    2                 0               7                 7              
 CO_SOPHIE    2                 0               7                 7                 5               6               7               0                        0           2
 CO_SOPHIE    2                 0               7                 7                 0               3               7               0                        0           2
 CO_SOPHIE    2                 0               7                 7                 0               3               0               0                        0           2
-CO_SOPHIE    2                 0               7                 3                 0               3               0               0                        0           0
-CO_SOPHIE    2                 0               7                 7                 0               3               0               0                        1           0
+CO_SOPHIE    2                 0               3                 0                 3               3               0               11000                    0           2
+CO_SOPHIE    2                 0               3                 0                 3               3               0               7000                     0           2
 // GRAVES
 CO_GRAVES    0                 0               3                 7                 6               3               6               11000                    0           0
 CO_GRAVES    0                 0               7                 3                 6               3               7               9000                     0           0
@@ -715,8 +646,6 @@ CO_GRAVES    1                 2               7                 3              
 CO_GRAVES    1                 0               7                 3                 7               6               3               11000                    0           1
 CO_GRAVES    2                 0               4                 7                 7               3               6               9000                     0           2
 CO_GRAVES    2                 0               7                 3                 6               3               9               9000                     0           2
-CO_GRAVES    2                 0               7                 3                 6               6               3               9000                     1           0
-CO_GRAVES    2                 0               7                 7                 3               6               3               9000                     2           0
 CO_GRAVES    2                 0               7                 7                 3               3               7               11000                    0           2
 CO_GRAVES    2                 0               7                 3                 3               6               3               11000                    0           2
 CO_GRAVES    2                 0               3                 3                 7               7               3               11000                    0           2
@@ -732,10 +661,12 @@ CO_MINAMOTO  1                 2               10                7              
 CO_MINAMOTO  1                 0               4                 0                 7               7               10              15600                    0           1
 CO_MINAMOTO  1                 2               4                 0                 7               7               10              15600                    0           0
 CO_MINAMOTO  2                 0               10                7                 0               1               0               1000                     0           2
-CO_MINAMOTO  2                 0               10                7                 0               1               0               1000                     1           0
 CO_MINAMOTO  2                 0               4                 0                 7               7               10              15600                    0           2
-CO_MINAMOTO  2                 0               4                 0                 7               7               10              15600                    1           0
-CO_MINAMOTO  2                 0               4                 0                 7               7               10              15600                    2           0
+CO_MINAMOTO  2                 0               4                 7                 7               3               6               9000                     0           2
+CO_MINAMOTO  2                 0               7                 3                 6               3               9               9000                     0           2
+CO_MINAMOTO  2                 0               7                 7                 3               3               7               11000                    0           2
+CO_MINAMOTO  2                 0               7                 3                 3               6               3               11000                    0           2
+CO_MINAMOTO  2                 0               3                 3                 7               7               3               11000                    0           2
 // SANJURO
 CO_SANJURO   0                 0               7                 3                 6               3               6               11000                    0           0
 CO_SANJURO   0                 0               7                 7                 6               3               3               9000                     0           0
@@ -750,11 +681,11 @@ CO_SANJURO   1                 2               4                 7              
 CO_SANJURO   1                 0               7                 7                 3               6               7               11000                    0           1
 CO_SANJURO   2                 0               4                 7                 3               6               6               11000                    0           2
 CO_SANJURO   2                 0               4                 3                 6               6               3               9000                     0           2
-CO_SANJURO   2                 0               7                 7                 6               6               6               11000                    1           0
-CO_SANJURO   2                 0               4                 7                 6               6               3               11000                    2           0
 CO_SANJURO   2                 0               4                 3                 3               6               7               11000                    0           2
 CO_SANJURO   2                 0               7                 7                 6               6               6               11000                    0           2
 CO_SANJURO   2                 0               3                 3                 3               3               3                9000                    0           2
+CO_SANJURO   2                 0               3                 0                 3               3               0               11000                    0           2
+CO_SANJURO   2                 0               3                 0                 3               3               0               7000                     0           2
 // OZZY 
 CO_OZZY      0                 0               4                 3                 4               6               6               11000                    0           0
 CO_OZZY      1                 0               7                 7                 3               6               4               11000                    0           1
@@ -767,8 +698,8 @@ CO_OZZY      1                 2               4                 4              
 CO_OZZY      1                 0               7                 7                 7               4               7               11000                    0           1
 CO_OZZY      2                 0               4                 7                 6               6               6               11000                    0           2
 CO_OZZY      2                 0               7                 3                 6               6               3               9000                     0           2
-CO_OZZY      2                 0               4                 7                 6               3               6               11000                    1           0
-CO_OZZY      2                 0               4                 4                 6               6               6               11000                    2           0
+CO_OZZY      2                 0               4                 7                 6               3               6               11000                    0           2
+CO_OZZY      2                 0               4                 4                 6               6               6               11000                    0           2
 CO_OZZY      2                 0               7                 4                 7               4               7               9000                     0           2
 CO_OZZY      2                 0               7                 7                 6               6               6               11000                    0           2
 // CONRAD
@@ -785,8 +716,8 @@ CO_CONRAD    1                 2               4                 7              
 CO_CONRAD    1                 0               7                 7                 3               6               7               11000                    0           1
 CO_CONRAD    2                 0               4                 7                 3               6               6               11000                    0           2
 CO_CONRAD    2                 0               4                 3                 6               6               3               9000                     0           2
-CO_CONRAD    2                 0               7                 7                 6               6               6               11000                    1           0
-CO_CONRAD    2                 0               4                 7                 6               6               3               11000                    2           0
+CO_CONRAD    2                 0               7                 7                 6               6               6               11000                    0           2
+CO_CONRAD    2                 0               4                 7                 6               6               3               11000                    0           2
 CO_CONRAD    2                 0               4                 3                 3               6               7               11000                    0           2
 CO_CONRAD    2                 0               7                 7                 6               6               6               11000                    0           2
 CO_CONRAD    2                 0               3                 3                 3               3               3                9000                    0           2
@@ -805,8 +736,8 @@ CO_SMITAN    1                 2               4                 7              
 CO_SMITAN    1                 0               7                 7                 7               6               7               11000                    0           1
 CO_SMITAN    2                 0               4                 7                 6               6               6               11000                    0           2
 CO_SMITAN    2                 0               4                 3                 6               6               3               9000                     0           2
-CO_SMITAN    2                 0               4                 7                 3               3               6               11000                    1           0
-CO_SMITAN    2                 0               4                 4                 3               6               6               11000                    2           0
+CO_SMITAN    2                 0               4                 7                 3               3               6               11000                    0           2
+CO_SMITAN    2                 0               4                 4                 3               6               6               11000                    0           2
 CO_SMITAN    2                 0               7                 4                 7               6               7               9000                     0           2
 CO_SMITAN    2                 0               7                 7                 6               6               6               11000                    0           2
 CO_SMITAN    2                 0               7                 7                 3               6               3               11000                    0           0
@@ -824,8 +755,8 @@ CO_ALEXANDER 1                 2               4                 7              
 CO_ALEXANDER 1                 0               7                 7                 3               6               7               11000                    0           1
 CO_ALEXANDER 2                 0               4                 7                 3               6               6               11000                    0           2
 CO_ALEXANDER 2                 0               4                 3                 6               6               3               9000                     0           2
-CO_ALEXANDER 2                 0               7                 7                 6               6               6               11000                    1           0
-CO_ALEXANDER 2                 0               4                 7                 6               6               3               11000                    2           0
+CO_ALEXANDER 2                 0               7                 7                 6               6               6               11000                    0           2
+CO_ALEXANDER 2                 0               4                 7                 6               6               3               11000                    0           2
 CO_ALEXANDER 2                 0               4                 3                 3               6               7               11000                    0           2
 CO_ALEXANDER 2                 0               7                 7                 6               6               6               11000                    0           2
 CO_ALEXANDER 2                 0               3                 3                 3               3               3                9000                    0           2
@@ -843,8 +774,8 @@ CO_LIN       1                 2               4                 7              
 CO_LIN       1                 0               7                 7                 3               6               7               11000                    0           1
 CO_LIN       2                 0               4                 7                 3               6               6               11000                    0           2
 CO_LIN       2                 0               4                 3                 6               6               3               9000                     0           2
-CO_LIN       2                 0               7                 7                 6               6               6               11000                    1           0
-CO_LIN       2                 0               4                 7                 6               6               3               11000                    2           0
+CO_LIN       2                 0               7                 7                 6               6               6               11000                    0           2
+CO_LIN       2                 0               4                 7                 6               6               3               11000                    0           2
 CO_LIN       2                 0               4                 3                 3               6               7               11000                    0           2
 CO_LIN       2                 0               7                 7                 6               6               6               11000                    0           2
 CO_LIN       2                 0               3                 3                 3               3               3                9000                    0           2
@@ -860,8 +791,8 @@ CO_ISABELLA  1                 2               4                 4              
 CO_ISABELLA  1                 0               7                 7                 7               4               7               11000                    0           1
 CO_ISABELLA  2                 0               4                 7                 6               6               6               11000                    0           2
 CO_ISABELLA  2                 0               7                 3                 6               6               3               9000                     0           2
-CO_ISABELLA  2                 0               4                 7                 6               3               6               11000                    1           0
-CO_ISABELLA  2                 0               4                 4                 6               6               6               11000                    2           0
+CO_ISABELLA  2                 0               4                 7                 6               3               6               11000                    0           2
+CO_ISABELLA  2                 0               4                 4                 6               6               6               11000                    0           2
 CO_ISABELLA  2                 0               7                 4                 7               4               7               9000                     0           2
 CO_ISABELLA  2                 0               7                 7                 6               6               6               11000                    0           2
 // BRENNER
@@ -882,7 +813,7 @@ CO_BRENNER   2                 0               7                 7              
 CO_BRENNER   2                 0               7                 7                 0               3               7               0                        0           2
 CO_BRENNER   2                 0               7                 7                 0               3               0               0                        0           2
 CO_BRENNER   2                 0               7                 3                 0               3               0               0                        0           0
-CO_BRENNER   2                 0               7                 7                 0               3               0               0                        1           0
+CO_BRENNER   2                 0               7                 7                 0               3               0               0                        0           2
 // WILL
 CO_WILL      0                 0               0                 0                 0               0               0               0                        0           0
 CO_WILL      0                 2               0                 0                 0               0               0               0                        0           0
@@ -895,10 +826,10 @@ CO_WILL      1                 2               10                7              
 CO_WILL      1                 0               4                 0                 7               7               10              15600                    0           1
 CO_WILL      1                 2               4                 0                 7               7               10              15600                    0           0
 CO_WILL      2                 0               10                7                 0               1               0               1000                     0           2
-CO_WILL      2                 0               10                7                 0               1               0               1000                     1           0
+CO_WILL      2                 0               10                7                 0               1               0               1000                     0           2
 CO_WILL      2                 0               4                 0                 7               7               10              15600                    0           2
-CO_WILL      2                 0               4                 0                 7               7               10              15600                    1           0
-CO_WILL      2                 0               4                 0                 7               7               10              15600                    2           0
+CO_WILL      2                 0               4                 0                 7               7               10              15600                    0           2
+CO_WILL      2                 0               4                 0                 7               7               10              15600                    0           2
 // TABITHA
 CO_TABITHA   0                 0               4                 7                 6               6               6               11000                    0           0
 CO_TABITHA   1                 0               4                 7                 6               6               6               11000                    0           1
@@ -925,8 +856,8 @@ CO_TABITHA   1                 2               4                 7              
 CO_TABITHA   1                 0               7                 7                 3               6               7               11000                    0           1
 CO_TABITHA   2                 0               4                 7                 3               6               6               11000                    0           2
 CO_TABITHA   2                 0               4                 3                 6               6               3               9000                     0           2
-CO_TABITHA   2                 0               7                 7                 6               6               6               11000                    1           0
-CO_TABITHA   2                 0               4                 7                 6               6               3               11000                    2           0
+CO_TABITHA   2                 0               7                 7                 6               6               6               11000                    0           2
+CO_TABITHA   2                 0               4                 7                 6               6               3               11000                    0           2
 CO_TABITHA   2                 0               4                 3                 3               6               7               11000                    0           2
 CO_TABITHA   2                 0               7                 7                 6               6               6               11000                    0           2
 CO_TABITHA   2                 0               3                 3                 3               3               3                9000                    0           2
@@ -946,8 +877,8 @@ CO_GREYFIELD 1                 2               4                 7              
 CO_GREYFIELD 1                 0               7                 7                 7               6               7               11000                    0           1
 CO_GREYFIELD 2                 0               4                 7                 6               6               6               11000                    0           2
 CO_GREYFIELD 2                 0               4                 3                 6               6               3               9000                     0           2
-CO_GREYFIELD 2                 0               4                 7                 3               3               6               11000                    1           0
-CO_GREYFIELD 2                 0               4                 4                 6               3               6               11000                    2           0
+CO_GREYFIELD 2                 0               4                 7                 3               3               6               11000                    0           2
+CO_GREYFIELD 2                 0               4                 4                 6               3               6               11000                    0           2
 CO_GREYFIELD 2                 0               7                 4                 7               6               7               9000                     0           2
 CO_GREYFIELD 2                 0               7                 7                 6               6               6               11000                    0           2
 CO_GREYFIELD 2                 0               7                 7                 3               6               6               11000                    0           2
@@ -967,8 +898,8 @@ CO_WAYLON    1                 2               4                 7              
 CO_WAYLON    1                 0               7                 7                 7               6               7               11000                    0           1
 CO_WAYLON    2                 0               4                 7                 6               6               6               11000                    0           2
 CO_WAYLON    2                 0               4                 3                 6               6               3               9000                     0           2
-CO_WAYLON    2                 0               4                 7                 3               3               6               11000                    1           0
-CO_WAYLON    2                 0               4                 4                 6               3               6               11000                    2           0
+CO_WAYLON    2                 0               4                 7                 3               3               6               11000                    0           2
+CO_WAYLON    2                 0               4                 4                 6               3               6               11000                    0           2
 CO_WAYLON    2                 0               7                 4                 7               6               7               9000                     0           2
 CO_WAYLON    2                 0               7                 7                 6               6               6               11000                    0           2
 CO_WAYLON    2                 0               7                 7                 3               6               6               11000                    0           2
@@ -988,8 +919,8 @@ CO_PENNY     1                 2               4                 7              
 CO_PENNY     1                 0               7                 7                 7               6               7               11000                    0           1
 CO_PENNY     2                 0               4                 7                 6               6               6               11000                    0           2
 CO_PENNY     2                 0               4                 3                 6               6               3               9000                     0           2
-CO_PENNY     2                 0               4                 7                 3               3               6               11000                    1           0
-CO_PENNY     2                 0               4                 4                 6               3               6               11000                    2           0
+CO_PENNY     2                 0               4                 7                 3               3               6               11000                    0           2
+CO_PENNY     2                 0               4                 4                 6               3               6               11000                    0           2
 CO_PENNY     2                 0               7                 4                 7               6               7               9000                     0           2
 CO_PENNY     2                 0               7                 7                 6               6               6               11000                    0           2
 CO_PENNY     2                 0               7                 7                 3               6               6               11000                    0           2
@@ -1011,7 +942,7 @@ CO_CAULDER   2                 0               7                 7              
 CO_CAULDER   2                 0               7                 7                 0               3               7               0                        0           2
 CO_CAULDER   2                 0               7                 7                 0               3               0               0                        0           2
 CO_CAULDER   2                 0               7                 3                 0               3               0               0                        0           0
-CO_CAULDER   2                 0               7                 7                 0               3               0               0                        1           0
+CO_CAULDER   2                 0               7                 7                 0               3               0               0                        0           2
 // TASHA 
 CO_TASHA     0                 0               7                 3                 6               4               6               11000                    0           0
 CO_TASHA     0                 0               3                 7                 6               4               6               11000                    0           0
@@ -1028,8 +959,8 @@ CO_TASHA     1                 2               4                 7              
 CO_TASHA     1                 0               7                 7                 7               6               7               11000                    0           1
 CO_TASHA     2                 0               4                 7                 6               6               6               11000                    0           2
 CO_TASHA     2                 0               4                 3                 6               6               3               9000                     0           2
-CO_TASHA     2                 0               4                 7                 3               3               6               11000                    1           0
-CO_TASHA     2                 0               4                 4                 6               3               6               11000                    2           0
+CO_TASHA     2                 0               4                 7                 3               3               6               11000                    0           2
+CO_TASHA     2                 0               4                 4                 6               3               6               11000                    0           2
 CO_TASHA     2                 0               7                 4                 7               6               7               9000                     0           2
 CO_TASHA     2                 0               7                 7                 6               6               6               11000                    0           2
 CO_TASHA     2                 0               7                 7                 3               6               6               11000                    0           2
@@ -1048,11 +979,12 @@ CO_GAGE      1                 2               4                 7              
 CO_GAGE      1                 0               7                 7                 7               6               7               11000                    0           1
 CO_GAGE      2                 0               4                 7                 6               6               6               11000                    0           2
 CO_GAGE      2                 0               4                 3                 6               6               3               9000                     0           2
-CO_GAGE      2                 0               4                 7                 3               3               6               11000                    1           0
-CO_GAGE      2                 0               4                 4                 3               6               6               11000                    2           0
+CO_GAGE      2                 0               4                 7                 3               3               6               11000                    0           2
+CO_GAGE      2                 0               4                 4                 3               6               6               11000                    0           2
 CO_GAGE      2                 0               7                 4                 7               6               7               9000                     0           2
 CO_GAGE      2                 0               7                 7                 6               6               6               11000                    0           2
-CO_GAGE      2                 0               7                 7                 3               6               3               11000                    0           0
+CO_GAGE      2                 0               3                 0                 3               3               0               11000                    0           2
+CO_GAGE      2                 0               3                 0                 3               3               0               7000                     0           2
 // FORSYTHE
 CO_FORSYTHE  0                 0               7                 3                 6               3               6               11000                    0           0
 CO_FORSYTHE  0                 0               7                 7                 6               3               3               9000                     0           0
@@ -1067,8 +999,8 @@ CO_FORSYTHE  1                 2               4                 7              
 CO_FORSYTHE  1                 0               7                 7                 3               6               7               11000                    0           1
 CO_FORSYTHE  2                 0               4                 7                 3               6               6               11000                    0           2
 CO_FORSYTHE  2                 0               4                 3                 6               6               3               9000                     0           2
-CO_FORSYTHE  2                 0               7                 7                 6               6               6               11000                    1           0
-CO_FORSYTHE  2                 0               4                 7                 6               6               3               11000                    2           0
+CO_FORSYTHE  2                 0               7                 7                 6               6               6               11000                    0           2
+CO_FORSYTHE  2                 0               4                 7                 6               6               3               11000                    0           2
 CO_FORSYTHE  2                 0               4                 3                 3               6               7               11000                    0           2
 CO_FORSYTHE  2                 0               7                 7                 6               6               6               11000                    0           2
 CO_FORSYTHE  2                 0               3                 3                 3               3               3                9000                    0           2
@@ -1086,8 +1018,8 @@ CO_MEIYO     1                 2               4                 7              
 CO_MEIYO     1                 0               7                 7                 3               6               7               11000                    0           1
 CO_MEIYO     2                 0               4                 7                 3               6               6               11000                    0           2
 CO_MEIYO     2                 0               4                 3                 6               6               3               9000                     0           2
-CO_MEIYO     2                 0               7                 7                 6               6               6               11000                    1           0
-CO_MEIYO     2                 0               4                 7                 6               6               3               11000                    2           0
+CO_MEIYO     2                 0               7                 7                 6               6               6               11000                    0           2
+CO_MEIYO     2                 0               4                 7                 6               6               3               11000                    0           2
 CO_MEIYO     2                 0               4                 3                 3               6               7               11000                    0           2
 CO_MEIYO     2                 0               7                 7                 6               6               6               11000                    0           2
 CO_MEIYO     2                 0               3                 3                 3               3               3                9000                    0           2

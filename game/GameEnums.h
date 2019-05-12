@@ -18,7 +18,8 @@ public:
     {
         PowerMode_Off,
         PowerMode_Power,
-        PowerMode_Superpower
+        PowerMode_Superpower,
+        PowerMode_Tagpower
     };
     Q_ENUM(PowerMode)
 

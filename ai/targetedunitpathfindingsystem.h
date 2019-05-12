@@ -6,7 +6,7 @@
 class TargetedUnitPathFindingSystem : public UnitPathFindingSystem
 {
 public:
-    explicit TargetedUnitPathFindingSystem(Unit* pUnit, QVector<QPoint>& targets);
+    explicit TargetedUnitPathFindingSystem(Unit* pUnit, QVector<QVector3D>& targets);
     /**
      * @brief getRemainingCost
      * @param x
@@ -28,7 +28,7 @@ public:
      */
     QPoint getReachableTargetField(qint32 movepoints);
 private:
-    QVector<QPoint> m_Targets;
+    QVector<QVector3D> m_Targets;
 };
 
 #endif // TARGETEDUNITPATHFINDINGSYSTEM_H

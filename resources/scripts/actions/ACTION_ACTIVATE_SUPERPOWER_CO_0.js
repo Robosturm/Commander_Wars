@@ -23,7 +23,7 @@ var Constructor = function()
     };
     this.perform = function(action)
     {
-        map.getCurrentPlayer().getCO(0).activateSuperpower();
+        map.getCurrentPlayer().getCO(0).activateSuperpower(GameEnums.PowerMode_Superpower);
         map.getGameRecorder().addSpecialEvent(map.getCurrentPlayer().getPlayerID(),
                                               GameEnums.GameRecord_SpecialEvents_SuperPower);
     };

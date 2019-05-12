@@ -64,14 +64,15 @@ void CoreAI::processPredefinedAiHold(Unit* pUnit)
     GameAction* pAction = new GameAction(ACTION_FIRE);
     pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
     QVector<QVector3D> ret;
-    QVector<QPoint> moveTargetFields;
+    QVector<QVector3D> moveTargetFields;
     pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())));
     getAttacksFromField(pUnit, pAction, ret, moveTargetFields);
     if (ret.size() > 0)
     {
         qint32 selection = Mainapp::randInt(0, ret.size() - 1);
         QVector3D target = ret[selection];
-        CoreAI::addSelectedFieldData(pAction, QPoint(target.x(), target.y()));
+        CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()),
+                                                     static_cast<qint32>(target.y())));
         if (pAction->isFinalStep())
         {
             emit performAction(pAction);
@@ -96,7 +97,7 @@ void CoreAI::processPredefinedAiDefensive(Unit* pUnit)
     UnitPathFindingSystem pfs(pUnit);
     pfs.explore();
     QVector<QVector3D> ret;
-    QVector<QPoint> moveTargetFields;
+    QVector<QVector3D> moveTargetFields;
     getBestTarget(pUnit, pAction, &pfs, ret, moveTargetFields);
     float minDamage = -pUnit->getUnitValue() / 4.0f;
     if (minDamage > - 500.0f)
@@ -107,11 +108,15 @@ void CoreAI::processPredefinedAiDefensive(Unit* pUnit)
     {
         qint32 selection = Mainapp::randInt(0, ret.size() - 1);
         QVector3D target = ret[selection];
-        if (moveTargetFields[selection] != pAction->getTarget())
+        QPoint point = pAction->getTarget();
+        if (static_cast<qint32>(moveTargetFields[selection].x()) != point.x() ||
+            static_cast<qint32>(moveTargetFields[selection].y()) != point.y())
         {
-            pAction->setMovepath(pfs.getPath(moveTargetFields[selection].x(), moveTargetFields[selection].y()));
+            pAction->setMovepath(pfs.getPath(static_cast<qint32>(moveTargetFields[selection].x()),
+                                             static_cast<qint32>(moveTargetFields[selection].y())));
         }
-        CoreAI::addSelectedFieldData(pAction, QPoint(target.x(), target.y()));
+        CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()),
+                                                     static_cast<qint32>(target.y())));
         if (pAction->isFinalStep())
         {
             emit performAction(pAction);
@@ -138,22 +143,26 @@ void CoreAI::processPredefinedAiOffensive(Unit* pUnit, QmlVectorUnit* pEnemyUnit
     UnitPathFindingSystem pfs(pUnit);
     pfs.explore();
     QVector<QVector3D> ret;
-    QVector<QPoint> moveTargetFields;
+    QVector<QVector3D> moveTargetFields;
     CoreAI::getBestTarget(pUnit, pAction, &pfs, ret, moveTargetFields);
     bool performed = false;
     if (ret.size() > 0)
     {
         qint32 selection = Mainapp::randInt(0, ret.size() - 1);
         QVector3D target = ret[selection];
-        if (moveTargetFields[selection] != pAction->getTarget())
+        QPoint point = pAction->getTarget();
+        if (static_cast<qint32>(moveTargetFields[selection].x()) != point.x() ||
+            static_cast<qint32>(moveTargetFields[selection].y()) != point.y())
         {
-            pAction->setMovepath(pfs.getPath(moveTargetFields[selection].x(), moveTargetFields[selection].y()));
+            pAction->setMovepath(pfs.getPath(static_cast<qint32>(moveTargetFields[selection].x()),
+                                             static_cast<qint32>(moveTargetFields[selection].y())));
         }
         else
         {
             pAction->setMovepath(QVector<QPoint>());
         }
-        CoreAI::addSelectedFieldData(pAction, QPoint(target.x(), target.y()));
+        CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()),
+                                                     static_cast<qint32>(target.y())));
         if (pAction->isFinalStep())
         {
             emit performAction(pAction);
@@ -163,7 +172,7 @@ void CoreAI::processPredefinedAiOffensive(Unit* pUnit, QmlVectorUnit* pEnemyUnit
     if (!performed)
     {
         // no target move aggressive to the target field
-        QVector<QPoint> targets;
+        QVector<QVector3D> targets;
         pAction->setActionID(ACTION_WAIT);
         appendAttackTargets(pUnit, pEnemyUnits, targets);
         TargetedUnitPathFindingSystem targetPfs(pUnit, targets);

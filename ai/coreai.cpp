@@ -78,14 +78,27 @@ void CoreAI::nextAction()
     }
 }
 
+bool CoreAI::contains(QVector<QVector3D>& points, QPoint point)
+{
+    for (qint32 i = 0; i < points.size(); i++)
+    {
+        if (static_cast<qint32>(points[i].x()) == point.x() &&
+            static_cast<qint32>(points[i].y()) == point.y())
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 bool CoreAI::moveOoziums(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
 {
     //
-    QVector<QPoint> targets;
+    QVector<QVector3D> targets;
     for (qint32 i = 0; i < pEnemyUnits->size(); i++)
     {
         Unit* pUnit = pEnemyUnits->at(i);
-        targets.append(QPoint(pUnit->getX(), pUnit->getY()));
+        targets.append(QVector3D(pUnit->getX(), pUnit->getY(), 1));
     }
 
     for (qint32 i = 0; i < pUnits->size(); i++)
@@ -115,7 +128,7 @@ bool CoreAI::moveOoziums(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
     return false;
 }
 
-void CoreAI::getBestTarget(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QPoint>& moveTargetFields)
+void CoreAI::getBestTarget(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields)
 {
     pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())));
     getAttacksFromField(pUnit, pAction, ret, moveTargetFields);
@@ -134,7 +147,7 @@ void CoreAI::getBestTarget(Unit* pUnit, GameAction* pAction, UnitPathFindingSyst
     }
 }
 
-void CoreAI::appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QPoint>& targets)
+void CoreAI::appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets)
 {
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
@@ -153,7 +166,7 @@ void CoreAI::appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVecto
                 {
                     if (pUnit->canMoveOver(x, y))
                     {
-                        QPoint possibleTarget(x, y);
+                        QVector3D possibleTarget(x, y, 1);
                         if (!targets.contains(possibleTarget))
                         {
                             targets.append(possibleTarget);
@@ -166,7 +179,7 @@ void CoreAI::appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVecto
     }
 }
 
-void CoreAI::getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVector3D>& ret, QVector<QPoint>& moveTargetFields)
+void CoreAI::getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields)
 {
     GameMap* pMap = GameMap::getInstance();
     // much easier case
@@ -182,7 +195,7 @@ void CoreAI::getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVect
             Unit* pDef = pTerrain->getUnit();
             if (pDef != nullptr)
             {
-                float atkDamage = damage.x() / 10.0f;
+                float atkDamage = static_cast<float>(damage.x()) / 10.0f;
                 if (atkDamage > pDef->getHp())
                 {
                     atkDamage = pDef->getHp();
@@ -190,7 +203,7 @@ void CoreAI::getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVect
                 float fondsDamage = pDef->getUnitCosts() * atkDamage / 10.0f;
                 if (damage.width() >= 0.0)
                 {
-                    atkDamage = damage.width() / 10.0f;
+                    atkDamage = static_cast<float>(damage.width()) / 10.0f;
                     if (atkDamage > pUnit->getHp())
                     {
                         atkDamage = pUnit->getHp();
@@ -200,39 +213,45 @@ void CoreAI::getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVect
                 if (ret.size() == 0)
                 {
                     ret.append(QVector3D(target.x(), target.y(), fondsDamage));
-                    moveTargetFields.append(pAction->getActionTarget());
+                    QPoint point = pAction->getActionTarget();
+                    moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
                 }
-                else if (ret[0].z() == fondsDamage)
+                else if (static_cast<float>(ret[0].z()) == fondsDamage)
                 {
                     ret.append(QVector3D(target.x(), target.y(), fondsDamage));
-                    moveTargetFields.append(pAction->getActionTarget());
+                    QPoint point = pAction->getActionTarget();
+                    moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
                 }
                 else if (fondsDamage > ret[0].z())
                 {
                     ret.clear();
                     moveTargetFields.clear();
                     ret.append(QVector3D(target.x(), target.y(), fondsDamage));
-                    moveTargetFields.append(pAction->getActionTarget());
+                    QPoint point = pAction->getActionTarget();
+                    moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
                 }
             }
             else
             {
                 if (ret.size() == 0)
                 {
-                    ret.append(QVector3D(target.x(), target.y(), damage.x()));
-                    moveTargetFields.append(pAction->getActionTarget());
+                    ret.append(QVector3D(target.x(), target.y(), static_cast<float>(damage.x())));
+                    QPoint point = pAction->getActionTarget();
+                    moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
                 }
-                else if (ret[0].z() == damage.x())
+                else if (ret[0].z() == static_cast<float>(damage.x()))
                 {
-                    ret.append(QVector3D(target.x(), target.y(), damage.x()));
-                    moveTargetFields.append(pAction->getActionTarget());
+                    ret.append(QVector3D(target.x(), target.y(), static_cast<float>(damage.x())));
+                    QPoint point = pAction->getActionTarget();
+                    moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
                 }
-                else if (damage.x() > ret[0].z())
+                else if (static_cast<float>(damage.x()) > ret[0].z())
                 {
                     ret.clear();
                     moveTargetFields.clear();
-                    ret.append(QVector3D(target.x(), target.y(), damage.x()));
-                    moveTargetFields.append(pAction->getActionTarget());
+                    ret.append(QVector3D(target.x(), target.y(), static_cast<float>(damage.x())));
+                    QPoint point = pAction->getActionTarget();
+                    moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
                 }
             }
         }

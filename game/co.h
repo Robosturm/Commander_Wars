@@ -134,7 +134,7 @@ public slots:
     /**
      * @brief activateSuperpower called when the super power is activated
      */
-    void activateSuperpower();
+    void activateSuperpower(GameEnums::PowerMode powerMode);
     /**
      * @brief getOffensiveBonus
      * @param pAttacker the attacking unit our unit
@@ -376,7 +376,7 @@ public slots:
      * @brief createPowerScreen
      * @return
      */
-    GameAnimationPower* createPowerScreen(bool superpower);
+    GameAnimationPower* createPowerScreen(GameEnums::PowerMode powerMode);
 private:
     Player* m_Owner;
     QString coID;

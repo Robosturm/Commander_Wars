@@ -15,7 +15,7 @@ var Constructor = function()
     this.activatePower = function(co)
     {
         var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(false);
+        var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
         var units = co.getPlayer().getUnits();
@@ -54,10 +54,10 @@ var Constructor = function()
         audio.playRandom();
     };
 
-    this.activateSuperpower = function(co)
+    this.activateSuperpower = function(co, powerMode)
     {
         var dialogAnimation = co.createPowerSentence();
-        var powerNameAnimation = co.createPowerScreen(true);
+        var powerNameAnimation = co.createPowerScreen(powerMode);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
         var units = co.getPlayer().getUnits();
@@ -136,7 +136,7 @@ var Constructor = function()
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
                 {
                     return 20;
                 }

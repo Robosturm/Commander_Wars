@@ -60,7 +60,7 @@ public slots:
      * @param frameTime
      * @return
      */
-    static GameAnimationPower* createAnimationPower(QColor color, bool superpower, QString coid, quint32 frameTime = GameMap::frameTime);
+    static GameAnimationPower* createAnimationPower(QColor color, GameEnums::PowerMode powerMode, QString coid, quint32 frameTime = GameMap::frameTime);
     /**
      * @brief createGameAnimationDialog
      * @param text

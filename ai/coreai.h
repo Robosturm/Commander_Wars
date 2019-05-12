@@ -52,7 +52,13 @@ public:
      * @brief process
      */
     virtual void process() = 0;
-
+    /**
+     * @brief contains
+     * @param points
+     * @param point
+     * @return
+     */
+    static bool contains(QVector<QVector3D>& points, QPoint point);
 signals:
     /**
      * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
@@ -84,7 +90,7 @@ public slots:
      * @param pPfs
      * @return target unit x, y and z = fonddamage
      */
-    void getBestTarget(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QPoint>& moveTargetFields);
+    void getBestTarget(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields);
     /**
      * @brief calcUnitDamage
      * @param pUnit
@@ -99,14 +105,14 @@ public slots:
      * @param pAction
      * @param ret
      */
-    void getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVector3D>& ret, QVector<QPoint>& moveTargetFields);
+    void getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields);
     /**
      * @brief appendAttackTargets
      * @param pUnit
      * @param pEnemyUnits
      * @param targets
      */
-    void appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QPoint>& targets);
+    void appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets);
     /**
      * @brief getTrainingData reads the training data from a training file for a pipeline either decision tree or neural network
      * @param file

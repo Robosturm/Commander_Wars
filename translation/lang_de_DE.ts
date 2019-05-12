@@ -1382,8 +1382,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/playerinfo.cpp" line="222"/>
+        <location filename="../game/playerinfo.cpp" line="231"/>
         <source>Superpower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/playerinfo.cpp" line="255"/>
+        <source>Tagpower</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

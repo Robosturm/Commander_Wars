@@ -51,11 +51,11 @@ Console::Console()
     this->moveToThread(pApp->getWorkerthread());
     // move console to top
     oxygine::Actor::setPriority(static_cast<qint16>(Mainapp::ZOrder::Console));
-    oxygine::spSprite sprite = new oxygine::ColorRectSprite();
-    sprite->setPosition(0, 0);
-    sprite->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
-    sprite->attachTo(this);
-    sprite->setColor(oxygine::Color(0,0,0, 180));
+    m_pBackgroundsprite = new oxygine::ColorRectSprite();
+    m_pBackgroundsprite->setPosition(0, 0);
+    m_pBackgroundsprite->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    m_pBackgroundsprite->attachTo(this);
+    m_pBackgroundsprite->setColor(oxygine::Color(0,0,0, 180));
 
     m_text = new oxygine::TextField();
     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getTimesFont10()).withColor(oxygine::Color(255,127,39)).alignLeft();
@@ -225,6 +225,11 @@ void Console::toggleView()
 {
     show = !show;
     oxygine::Actor::setVisible(show);
+    if (show)
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        m_pBackgroundsprite->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    }
     toggled = true;
 }
 
