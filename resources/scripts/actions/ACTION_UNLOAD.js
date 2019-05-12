@@ -226,6 +226,7 @@ var Constructor = function()
                                                                     ACTION_UNLOAD.postAnimationTransportUnitsPosY[i]));
             }
         }
+        audio.playSound("unload.wav");
         ACTION_UNLOAD.postAnimationUnit = null;
         ACTION_UNLOAD.postAnimationTransportUnits = [];
         ACTION_UNLOAD.postAnimationTransportUnitsPosX = [];

@@ -78,7 +78,10 @@ void AudioThread::SlotSetVolume(qint32 value)
 {
     if (m_Player != nullptr)
     {
-        m_Player->setVolume(static_cast<qint32>(value  * static_cast<float>(Mainapp::getInstance()->getSettings()->getTotalVolume()) / 100.0f));
+        qreal sound = (static_cast<qreal>(value) / 100.0 *
+                       static_cast<qreal>(Mainapp::getInstance()->getSettings()->getTotalVolume()) / 100.0);
+        qreal volume = QAudio::convertVolume(sound, QAudio::LogarithmicVolumeScale, QAudio::LinearVolumeScale);
+        m_Player->setVolume(qRound(volume * 100));
     }
 }
 
@@ -170,13 +173,16 @@ void AudioThread::SlotLoadFolder(QString folder)
 
 void AudioThread::SlotPlaySound(QString file, qint32 loops, QString folder)
 {
-    float sound = (static_cast<float>(Mainapp::getInstance()->getSettings()->getSoundVolume()) / 100.0f *
-                   static_cast<float>(Mainapp::getInstance()->getSettings()->getTotalVolume()) / 100.0f);
+    qreal sound = (static_cast<qreal>(Mainapp::getInstance()->getSettings()->getSoundVolume()) / 100.0 *
+                   static_cast<qreal>(Mainapp::getInstance()->getSettings()->getTotalVolume()) / 100.0);
     QUrl url = QUrl::fromLocalFile(folder + file);
     if (url.isValid())
     {
         QSoundEffect* pSoundEffect = new QSoundEffect();
-        pSoundEffect->setVolume(static_cast<qreal>(sound));
+        qreal value = QAudio::convertVolume(sound,
+                                            QAudio::LogarithmicVolumeScale,
+                                            QAudio::LinearVolumeScale);
+        pSoundEffect->setVolume(value);
         pSoundEffect->setSource(url);
         pSoundEffect->setLoopCount(loops);
         m_Sounds.push_back(pSoundEffect);

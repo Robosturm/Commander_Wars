@@ -117,7 +117,7 @@ var Constructor = function()
 
         var animation = GameAnimationFactory.createAnimation(ACTION_MISSILE.postAnimationTargetX - radius, ACTION_MISSILE.postAnimationTargetY - radius - 1);
         animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 1.5, 0);
-        audio.playSound("explosion+land.wav");
+        audio.playSound("missle_explosion.wav");
         // replace silo with rocket with
         ACTION_MISSILE.postAnimationUnit.getTerrain().loadBuilding("SILO");
 

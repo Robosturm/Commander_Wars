@@ -67,6 +67,7 @@ void HumanPlayerInput::rightClick(qint32 x, qint32 y)
         }
         else if (m_pGameAction != nullptr)
         {
+            Mainapp::getInstance()->getAudioThread()->playSound("cancel.wav");
             if (m_pGameAction->getInputStep() > 0)
             {
                 // todo implement go back steps
@@ -97,6 +98,7 @@ void HumanPlayerInput::rightClick(qint32 x, qint32 y)
         }
         else
         {
+            Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
             showAttackableFields(x, y);
         }
         pApp->continueThread();
@@ -284,6 +286,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                 }
                 if (possibleActions.size() > 0)
                 {
+                    Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
                     if ((possibleActions.size() == 1) &&
                         (!m_pGameAction->isFinalStep(possibleActions[0])))
                     {
@@ -312,6 +315,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                     }
                     if (possibleActions.size() > 0)
                     {
+                        Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
                         createActionMenu(possibleActions, x, y);
                     }
                     else
@@ -480,7 +484,7 @@ void HumanPlayerInput::createActionMenu(QStringList actionIDs, qint32 x, qint32 
 void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
 {
     Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
-
+    Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
     GameMap* pMap = GameMap::getInstance();
     m_pUnitPathFindingSystem = new UnitPathFindingSystem(pMap->getTerrain(x, y)->getUnit());
     m_pUnitPathFindingSystem->explore();

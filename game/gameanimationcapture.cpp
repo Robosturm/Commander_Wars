@@ -5,6 +5,7 @@
 #include "game/gamemap.h"
 
 #include "coreengine/console.h"
+#include "coreengine/audiothread.h"
 
 const qint32 GameAnimationCapture::capturingFactor = 10;
 const qint32 GameAnimationCapture::jumpSprites = 3;
@@ -92,6 +93,10 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, QColor startColor
             oxygine::spTween tween6 = oxygine::createTween(tweenColor1, 1);
             queueAnimating->add(tween5);
             queueMoving->add(tween6);
+            tween6->addDoneCallback([=](oxygine::Event *)
+            {
+                Mainapp::getInstance()->getAudioThread()->playSound("capture.wav");
+            });
             oxygine::spTween tween3 = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f), capturingFactor * static_cast<qint32>(m_frameTime), 1, false);
             queueAnimating->add(tween3);
 

@@ -110,6 +110,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
         this->addChild(pItemBox);
         pItemBox->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event *pEvent)->void
         {
+            Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
             pEvent->stopPropagation();
             m_Cursor->setY(y + GameMap::Imagesize / 2 - m_Cursor->getScaledHeight() / 2);
             currentAction = i;
@@ -125,6 +126,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
                     if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
                     {
                         pEvent->stopPropagation();
+                        Mainapp::getInstance()->getAudioThread()->playSound("okay.wav");
                         emit sigItemSelected(action, costs);
                     }
                 }
@@ -179,6 +181,7 @@ void HumanPlayerInputMenu::keyInput(SDL_Event event)
     {
         if (currentAction > 0)
         {
+            Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
             currentAction--;
         }
     }
@@ -186,15 +189,18 @@ void HumanPlayerInputMenu::keyInput(SDL_Event event)
     {
         if (currentAction < m_ActionIDs.size() - 1)
         {
+            Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
             currentAction++;
         }
     }
     else if (cur == Settings::getKey_left())
     {
+        Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
         currentAction = 0;
     }
     else if (cur == Settings::getKey_right())
     {
+        Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
         currentAction = m_ActionIDs.size() - 1;
     }
     else if (cur == Settings::getKey_confirm())

@@ -66,5 +66,9 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width)
     {
         ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
     });
+    pButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        Mainapp::getInstance()->getAudioThread()->playSound("button.wav");
+    });
     return pButton;
 }

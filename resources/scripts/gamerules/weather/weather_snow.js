@@ -16,6 +16,11 @@ var Constructor = function()
         return "weather_symbol_snow";
     };
 
+    this.activate = function(weather)
+    {
+        audio.playSound("snow.wav");
+    };
+
     this.getMovementCostModifier = function()
     {
 

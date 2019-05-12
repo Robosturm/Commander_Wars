@@ -52,6 +52,7 @@ var Constructor = function()
     {
         ACTION_LOAD.postAnimationUnit.setHasMoved(true);
         ACTION_LOAD.postAnimationTargetUnit.loadUnit(ACTION_LOAD.postAnimationUnit);
+        audio.playSound("load.wav");
         ACTION_LOAD.postAnimationUnit.removeUnit();
         ACTION_LOAD.postAnimationTargetUnit = null;
         ACTION_LOAD.postAnimationUnit = null;
