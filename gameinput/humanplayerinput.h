@@ -130,6 +130,7 @@ public slots:
     void menuItemSelected(QString itemID, qint32 cost);
     void markedFieldSelected(QPoint point);
     QStringList getEmptyActionList();
+    void autoEndTurn();
 protected:
     void nextMarkedField();
     void previousMarkedField();

@@ -23,6 +23,8 @@
 
 #include "gameinput/markedfielddata.h"
 
+#include "ai/coreai.h"
+
 HumanPlayerInput::HumanPlayerInput()
     : BaseGameInputIF(BaseGameInputIF::AiTypes::Human)
 {    
@@ -37,6 +39,7 @@ void HumanPlayerInput::init()
     GameMenue* pMenue = GameMenue::getInstance();
     connect(pMenue, &GameMenue::sigRightClick, this, &HumanPlayerInput::rightClick, Qt::QueuedConnection);
     connect(pMenue, &GameMenue::sigLeftClick, this, &HumanPlayerInput::leftClick, Qt::QueuedConnection);
+    connect(pMenue, &GameMenue::sigActionPerformed, this, &HumanPlayerInput::autoEndTurn, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInput::keyInput, Qt::QueuedConnection);
     connect(pMenue->getCursor(), &Cursor::sigCursorMoved, this, &HumanPlayerInput::cursorMoved, Qt::QueuedConnection);
     connect(this, &HumanPlayerInput::performAction, pMenue, &GameMenue::performAction, Qt::QueuedConnection);
@@ -1115,6 +1118,49 @@ void HumanPlayerInput::previousSelectOption()
         }
         y--;
         x = width - 1;
+    }
+}
+
+void HumanPlayerInput::autoEndTurn()
+{
+    CO* pCO0 = m_pPlayer->getCO(0);
+    CO* pCO1 = m_pPlayer->getCO(1);
+    if (Settings::getAutoEndTurn() &&
+        GameMap::getInstance()->getCurrentPlayer() == m_pPlayer &&
+        GameAnimationFactory::getAnimationCount() == 0 &&
+        (pCO0 == nullptr || (!pCO0->canUsePower() && !pCO0->canUseSuperpower())) &&
+        (pCO1 == nullptr || (!pCO1->canUsePower() && !pCO1->canUseSuperpower())))
+    {
+        GameMap* pMap = GameMap::getInstance();
+        qint32 heigth = pMap->getMapHeight();
+        qint32 width = pMap->getMapWidth();
+        for (qint32 y = 0; y < heigth; y++)
+        {
+            for (qint32 x = 0; x < width; x++)
+            {
+                Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+                if (pUnit != nullptr && pUnit->getOwner() == m_pPlayer && !pUnit->getHasMoved())
+                {
+                    return;
+                }
+                if (pBuilding != nullptr && pBuilding->getOwner() == m_pPlayer)
+                {
+                    GameAction action;
+                    action.setTarget(QPoint(x, y));
+                    QStringList actions = pBuilding->getActionList();
+                    for (qint32 i = 0; i < actions.size(); i++)
+                    {
+                        if (action.canBePerformed(actions[i]))
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+        GameAction* pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
+        emit performAction(pAction);
     }
 }
 

@@ -33,7 +33,7 @@ QString Settings::m_language      = "en";
 // Sound
 qint32 Settings::m_TotalVolume       = 100;
 qint32 Settings::m_MusicVolume       = 80;
-qint32 Settings::m_SoundVolume       = 80;
+qint32 Settings::m_SoundVolume       = 100;
 // Network
 quint16 Settings::m_GamePort          = 9001;
 quint16 Settings::m_ServerPort        = 9002;
@@ -46,6 +46,7 @@ quint32 Settings::animationSpeed = 1;
 QString Settings::m_LastSaveGame = "";
 QString Settings::m_Username = "";
 bool Settings::m_ShowCursor = true;
+bool Settings::m_AutoEndTurn = false;
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -217,12 +218,12 @@ void Settings::loadSettings(){
         Console::print(error, Console::eERROR);
         m_MusicVolume = 80;
     }
-    m_SoundVolume      = settings.value("SoundVolume", 80).toInt(&ok);
+    m_SoundVolume      = settings.value("SoundVolume", 100).toInt(&ok);
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Sound] " + tr("Setting:") + " SoundVolume";
         Console::print(error, Console::eERROR);
-        m_SoundVolume = 80;
+        m_SoundVolume = 100;
     }
 
     settings.endGroup();
@@ -245,6 +246,7 @@ void Settings::loadSettings(){
     m_LastSaveGame = settings.value("LastSaveGame", "").toString();
     m_Username = settings.value("Username", "").toString();
     m_ShowCursor = settings.value("ShowCursor", true).toBool();
+    m_AutoEndTurn = settings.value("AutoEndTurn", false).toBool();
     settings.endGroup();
 
     // network
@@ -320,6 +322,7 @@ void Settings::saveSettings(){
     settings.setValue("LastSaveGame",                   m_LastSaveGame);
     settings.setValue("Username",                       m_Username);
     settings.setValue("ShowCursor",                     m_ShowCursor);
+    settings.setValue("AutoEndTurn",                    m_AutoEndTurn);
     settings.endGroup();
 
     // network
@@ -528,6 +531,16 @@ SDL_Keycode Settings::getKey_quickload2()
 void Settings::setKey_quickload2(const SDL_Keycode &key_quickload2)
 {
     m_key_quickload2 = key_quickload2;
+}
+
+bool Settings::getAutoEndTurn()
+{
+    return m_AutoEndTurn;
+}
+
+void Settings::setAutoEndTurn(bool AutoEndTurn)
+{
+    m_AutoEndTurn = AutoEndTurn;
 }
 
 bool Settings::getShowCursor()

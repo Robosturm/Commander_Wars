@@ -85,36 +85,39 @@ QVector<QPoint> GameAction::getMovePath()
 
 bool GameAction::canBePerformed(QString actionID, bool emptyField)
 {
-    GameMap* pMap = GameMap::getInstance();
-    Unit* pUnit = getTargetUnit();
-    Building* pBuilding = getTargetBuilding();
-    if (!emptyField)
+    if (!actionID.isEmpty())
     {
-        if (pUnit != nullptr)
+        GameMap* pMap = GameMap::getInstance();
+        Unit* pUnit = getTargetUnit();
+        Building* pBuilding = getTargetBuilding();
+        if (!emptyField)
         {
-            if ((pUnit->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID()) &&
-                (!pUnit->getHasMoved()))
+            if (pUnit != nullptr)
             {
-                return false;
+                if ((pUnit->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID()) &&
+                    (!pUnit->getHasMoved()))
+                {
+                    return false;
+                }
+            }
+            if ((pBuilding != nullptr) && (pUnit == nullptr))
+            {
+                if ((pBuilding->getOwner() == nullptr) ||
+                    (pBuilding->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID()))
+                {
+                    return false;
+                }
             }
         }
-        if ((pBuilding != nullptr) && (pUnit == nullptr))
+        Mainapp* pApp = Mainapp::getInstance();
+        QString function1 = "canBePerformed";
+        QJSValueList args1;
+        args1 << pApp->getInterpreter()->newQObject(this);
+        QJSValue ret = pApp->getInterpreter()->doFunction(actionID, function1, args1);
+        if (ret.isBool())
         {
-            if ((pBuilding->getOwner() == nullptr) ||
-                (pBuilding->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID()))
-            {
-                return false;
-            }
+            return ret.toBool();
         }
-    }
-    Mainapp* pApp = Mainapp::getInstance();
-    QString function1 = "canBePerformed";
-    QJSValueList args1;
-    args1 << pApp->getInterpreter()->newQObject(this);
-    QJSValue ret = pApp->getInterpreter()->doFunction(actionID, function1, args1);
-    if (ret.isBool())
-    {
-        return ret.toBool();
     }
     return false;
 }

@@ -38,6 +38,9 @@ public:
     static bool getShowCursor();
     static void setShowCursor(bool ShowCursor);
 
+    static bool getAutoEndTurn();
+    static void setAutoEndTurn(bool AutoEndTurn);
+
 public slots:
     inline qint32 getX()
     {
@@ -222,6 +225,7 @@ private:
     static quint32 animationSpeed;
     static QString m_LastSaveGame;
     static bool m_ShowCursor;
+    static bool m_AutoEndTurn;
 
     // internal members
     static Settings* m_pInstance;

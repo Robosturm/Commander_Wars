@@ -213,10 +213,25 @@ void OptionMenue::showGameplayAndKeys()
 
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
-    pTextfield->setText(tr("Show Windows Cursor: ").toStdString().c_str());
+    pTextfield->setText(tr("Auto End Turn: ").toStdString().c_str());
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spCheckbox pCheckbox = new Checkbox();
+    pCheckbox->setChecked(Settings::getAutoEndTurn());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+    {
+        Settings::setAutoEndTurn(value);
+    });
+    pCheckbox->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pCheckbox);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Show Windows Cursor: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pCheckbox = new Checkbox();
     pCheckbox->setChecked(Settings::getShowCursor());
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
     {
