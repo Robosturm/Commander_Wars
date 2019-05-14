@@ -957,81 +957,83 @@ void HumanPlayerInput::nextSelectOption()
     qint32 x = startX + 1;
     qint32 y = startY;
     bool found = false;
-    while (y  < heigth && !found)
+    if (pMap->onMap(startX, startY))
     {
-        while (x < width && !found)
+        while (y  < heigth && !found)
         {
-            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
-            Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
-            if (pUnit != nullptr &&
-                pUnit->getOwner() == m_pPlayer &&
-                !pUnit->getHasMoved())
+            while (x < width && !found)
             {
-                pGameMenue->calcNewMousePosition(x, y);
-                found = true;
-            }
-            else if ((pBuilding != nullptr) &&
-                     (pBuilding->getOwner() == m_pPlayer))
-            {
-                GameAction action;
-                action.setTarget(QPoint(x, y));
-                QStringList actions = pBuilding->getActionList();
-                for (qint32 i = 0; i < actions.size(); i++)
+                Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+                if (pUnit != nullptr &&
+                    pUnit->getOwner() == m_pPlayer &&
+                    !pUnit->getHasMoved())
                 {
-                    if (action.canBePerformed(actions[i]))
+                    pGameMenue->calcNewMousePosition(x, y);
+                    found = true;
+                }
+                else if ((pBuilding != nullptr) &&
+                         (pBuilding->getOwner() == m_pPlayer))
+                {
+                    GameAction action;
+                    action.setTarget(QPoint(x, y));
+                    QStringList actions = pBuilding->getActionList();
+                    for (qint32 i = 0; i < actions.size(); i++)
                     {
-                        pGameMenue->calcNewMousePosition(x, y);
-                        found = true;
-                        break;
+                        if (action.canBePerformed(actions[i]))
+                        {
+                            pGameMenue->calcNewMousePosition(x, y);
+                            found = true;
+                            break;
+                        }
                     }
                 }
+                x++;
             }
-            x++;
+            y++;
+            x = 0;
         }
-        y++;
         x = 0;
-    }
-    x = 0;
-    y = 0;
-    while (y  < heigth && !found )
-    {
-        while (x < width && !found)
+        y = 0;
+        while (y  < heigth && !found )
         {
-            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
-            Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
-            if (pUnit != nullptr &&
-                pUnit->getOwner() == m_pPlayer &&
-                !pUnit->getHasMoved())
+            while (x < width && !found)
             {
-                pGameMenue->calcNewMousePosition(x, y);
-                found = true;
-            }
-            else if ((pBuilding != nullptr) &&
-                     (pBuilding->getOwner() == m_pPlayer))
-            {
-                GameAction action;
-                action.setTarget(QPoint(x, y));
-                QStringList actions = pBuilding->getActionList();
-                for (qint32 i = 0; i < actions.size(); i++)
+                Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+                if (pUnit != nullptr &&
+                    pUnit->getOwner() == m_pPlayer &&
+                    !pUnit->getHasMoved())
                 {
-                    if (action.canBePerformed(actions[i]))
+                    pGameMenue->calcNewMousePosition(x, y);
+                    found = true;
+                }
+                else if ((pBuilding != nullptr) &&
+                         (pBuilding->getOwner() == m_pPlayer))
+                {
+                    GameAction action;
+                    action.setTarget(QPoint(x, y));
+                    QStringList actions = pBuilding->getActionList();
+                    for (qint32 i = 0; i < actions.size(); i++)
                     {
-                        pGameMenue->calcNewMousePosition(x, y);
-                        found = true;
-                        break;
+                        if (action.canBePerformed(actions[i]))
+                        {
+                            pGameMenue->calcNewMousePosition(x, y);
+                            found = true;
+                            break;
+                        }
                     }
                 }
+                x++;
+                if ((y == startY && x == startX))
+                {
+                    found = true;
+                }
             }
-            x++;
-            if ((y == startY && x == startX))
-            {
-                found = true;
-            }
+            y++;
+            x = 0;
         }
-        y++;
-        x = 0;
     }
-
 }
 
 void HumanPlayerInput::previousSelectOption()
@@ -1045,79 +1047,82 @@ void HumanPlayerInput::previousSelectOption()
     qint32 x = startX - 1;
     qint32 y = startY;
     bool found = false;
-    while (y  >= 0 && !found)
+    if (pMap->onMap(startX, startY))
     {
-        while (x >= 0 && !found)
+        while (y  >= 0 && !found)
         {
-            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
-            Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
-            if (pUnit != nullptr &&
-                pUnit->getOwner() == m_pPlayer &&
-                !pUnit->getHasMoved())
+            while (x >= 0 && !found)
             {
-                pGameMenue->calcNewMousePosition(x, y);
-                found = true;
-            }
-            else if ((pBuilding != nullptr) &&
-                     (pBuilding->getOwner() == m_pPlayer))
-            {
-                GameAction action;
-                action.setTarget(QPoint(x, y));
-                QStringList actions = pBuilding->getActionList();
-                for (qint32 i = 0; i < actions.size(); i++)
+                Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+                if (pUnit != nullptr &&
+                    pUnit->getOwner() == m_pPlayer &&
+                    !pUnit->getHasMoved())
                 {
-                    if (action.canBePerformed(actions[i]))
+                    pGameMenue->calcNewMousePosition(x, y);
+                    found = true;
+                }
+                else if ((pBuilding != nullptr) &&
+                         (pBuilding->getOwner() == m_pPlayer))
+                {
+                    GameAction action;
+                    action.setTarget(QPoint(x, y));
+                    QStringList actions = pBuilding->getActionList();
+                    for (qint32 i = 0; i < actions.size(); i++)
                     {
-                        pGameMenue->calcNewMousePosition(x, y);
-                        found = true;
-                        break;
+                        if (action.canBePerformed(actions[i]))
+                        {
+                            pGameMenue->calcNewMousePosition(x, y);
+                            found = true;
+                            break;
+                        }
                     }
                 }
+                x--;
             }
-            x--;
+            y--;
+            x = width - 1;
         }
-        y--;
         x = width - 1;
-    }
-    x = width - 1;
-    y = heigth - 1;
-    while (y  >= 0 && !found )
-    {
-        while (x >= 0 && !found)
+        y = heigth - 1;
+        while (y  >= 0 && !found )
         {
-            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
-            Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
-            if (pUnit != nullptr &&
-                pUnit->getOwner() == m_pPlayer &&
-                !pUnit->getHasMoved())
+            while (x >= 0 && !found)
             {
-                pGameMenue->calcNewMousePosition(x, y);
-                found = true;
-            }
-            else if ((pBuilding != nullptr) &&
-                     (pBuilding->getOwner() == m_pPlayer))
-            {
-                GameAction action;
-                action.setTarget(QPoint(x, y));
-                QStringList actions = pBuilding->getActionList();
-                for (qint32 i = 0; i < actions.size(); i++)
+                Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+                if (pUnit != nullptr &&
+                    pUnit->getOwner() == m_pPlayer &&
+                    !pUnit->getHasMoved())
                 {
-                    if (action.canBePerformed(actions[i]))
+                    pGameMenue->calcNewMousePosition(x, y);
+                    found = true;
+                }
+                else if ((pBuilding != nullptr) &&
+                         (pBuilding->getOwner() == m_pPlayer))
+                {
+                    GameAction action;
+                    action.setTarget(QPoint(x, y));
+                    QStringList actions = pBuilding->getActionList();
+                    for (qint32 i = 0; i < actions.size(); i++)
                     {
-                        pGameMenue->calcNewMousePosition(x, y);
-                        found = true;
-                        break;
+                        if (action.canBePerformed(actions[i]))
+                        {
+                            pGameMenue->calcNewMousePosition(x, y);
+                            found = true;
+                            break;
+                        }
                     }
                 }
+                if ((y == startY && x == startX))
+                {
+                    found = true;
+                }
+                x--;
             }
-            if ((y == startY && x == startX))
-            {
-                found = true;
-            }
-            x--;
+            y--;
+            x = width - 1;
         }
-        y--;
-        x = width - 1;
     }
 }
 

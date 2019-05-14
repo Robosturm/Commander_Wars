@@ -101,6 +101,54 @@ qint32 VictoryRule::getDefaultValue()
     }
 }
 
+qint32 VictoryRule::getRuleValue()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getRuleValue";
+    QJSValueList args;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args << obj1;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1, args);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+QString VictoryRule::getRuleDescription()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getRuleDescription";
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
+qint32 VictoryRule::getRuleProgress()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getRuleProgress";
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 void VictoryRule::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();

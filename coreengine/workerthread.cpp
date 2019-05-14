@@ -42,17 +42,26 @@ void WorkerThread::run()
     pConsole->init();
     GameEnums::registerEnums();
     // load General-Base Scripts
-    QString path =  QCoreApplication::applicationDirPath() + "/resources/scripts/general";
-    QStringList filter;
-    filter << "*.js";
-    QDirIterator* dirIter = new QDirIterator(path, filter, QDir::Files, QDirIterator::Subdirectories);
-    while (dirIter->hasNext())
+    QStringList searchPaths;
+    searchPaths.append("/resources/scripts/general");
+    // make sure to overwrite existing js stuff
+    for (qint32 i = 0; i < pApp->getSettings()->getMods().size(); i++)
     {
-        dirIter->next();
-        QString file = dirIter->fileInfo().absoluteFilePath();
-        m_pInterpreter->openScript(file);
+        searchPaths.append(pApp->getSettings()->getMods().at(i) + "/scripts/general");
     }
-    delete dirIter;
+    for (qint32 i = 0; i < searchPaths.size(); i++)
+    {
+        QString path = QCoreApplication::applicationDirPath() + searchPaths[i];
+        QStringList filter;
+        filter << "*.js";
+        QDirIterator dirIter(path, filter, QDir::Files, QDirIterator::Subdirectories);
+        while (dirIter.hasNext())
+        {
+            dirIter.next();
+            QString file = dirIter.fileInfo().absoluteFilePath();
+            m_pInterpreter->openScript(file);
+        }
+    }
     oxygine::getStage()->addChild(new Mainwindow());
 
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();

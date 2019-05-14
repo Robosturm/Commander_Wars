@@ -546,6 +546,7 @@ void CO::activateSuperpower(GameEnums::PowerMode powerMode)
     QJSValueList args1;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
     args1 << obj1;
+    args1 << powerMode;
     pApp->getInterpreter()->doFunction(coID, function1, args1);
     if (GameMenue::getInstance() != nullptr)
     {

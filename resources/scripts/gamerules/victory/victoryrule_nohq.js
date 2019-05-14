@@ -1,5 +1,9 @@
 var Constructor = function()
 {
+    this.getRuleDescription = function()
+    {
+        return qsTr("A player looses when he looses his last HQ. All buildings will be owned by the current player.")
+    };
     this.getRuleName = function()
     {
         return qsTr("No HQ's");
@@ -64,6 +68,10 @@ var Constructor = function()
             }
         }
         return GameEnums.DefeatType_Alive;
+    };
+    this.getRuleProgress = function(player)
+    {
+        return player.getBuildingCount("HQ");
     };
 };
 

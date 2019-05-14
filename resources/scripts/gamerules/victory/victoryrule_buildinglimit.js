@@ -1,5 +1,10 @@
 var Constructor = function()
 {
+    this.getRuleDescription = function()
+    {
+        return qsTr("The player who reaches the number of buildings wins.")
+    };
+
     this.getRuleName = function()
     {
         return qsTr("Capture Victory");
@@ -57,6 +62,10 @@ var Constructor = function()
 		}
 		// all players loose if the time limit is exceeded
         return GameEnums.DefeatType_Alive;
+    };
+    this.getRuleProgress = function(player)
+    {
+        return player.getBuildingCount();
     };
 };
 

@@ -169,6 +169,18 @@ public slots:
      * @param pUnit
      */
     void showHideStealthUnit(Player* pPlayer, Unit* pUnit);
+    /**
+     * @brief getVictoryRuleSize
+     * @return
+     */
+    inline qint32 getVictoryRuleSize()
+    {
+        return m_VictoryRules.size();
+    }
+    inline VictoryRule* getVictoryRule(qint32 index)
+    {
+        return m_VictoryRules[index].get();
+    }
 private:
     QVector<spVictoryRule> m_VictoryRules;
 

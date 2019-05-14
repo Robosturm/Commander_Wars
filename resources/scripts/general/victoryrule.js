@@ -1,5 +1,15 @@
 var VICTORYRULE =
 {
+    getRuleDescription : function()
+    {
+        return "";
+    },
+
+    getRuleProgress : function(player)
+    {
+        return 0;
+    },
+
     // shown name in the game
     getRuleName : function()
     {

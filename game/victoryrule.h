@@ -45,6 +45,9 @@ public slots:
     qint32 getDefaultValue();
     QString getRuleType();
     QString getRuleName();
+    qint32 getRuleValue();
+    QString getRuleDescription();
+    qint32 getRuleProgress();
     QString getRuleID() const;
     ScriptVariables* getVariables()
     {

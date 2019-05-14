@@ -1,5 +1,9 @@
 var Constructor = function()
 {
+    this.getRuleDescription = function()
+    {
+        return qsTr("All player loose when the time is up.")
+    };
     this.getRuleName = function()
     {
         return qsTr("Turn Limit");
@@ -36,6 +40,10 @@ var Constructor = function()
 		}
 		// all players loose if the time limit is exceeded
 		return GameEnums.DefeatType_Defeated;
+    };
+    this.getRuleProgress = function(player)
+    {
+        return map.getCurrentDay();
     };
 };
 

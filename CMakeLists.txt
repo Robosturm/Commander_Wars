@@ -77,6 +77,7 @@ set(${PROJECT_NAME}_SRCS
         objects/selectkey.cpp
         objects/dialogusername.cpp
         objects/chat.cpp
+        objects/dialogvictoryconditions.cpp
 
         #menues
         menue/mainwindow.cpp

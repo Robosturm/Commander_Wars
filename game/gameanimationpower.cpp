@@ -14,6 +14,9 @@
 
 #include "game/gameanimationfactory.h"
 
+#include "game/player.h"
+#include "game/co.h"
+
 GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, QString coid)
     : GameAnimation (frameTime)
 {
@@ -53,20 +56,55 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     addChild(rotSprite);
 
     QString resAnim = coid.toLower() + "+nrm";
-
     oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(resAnim.toStdString().c_str());
     oxygine::spSprite m_CO = new oxygine::Sprite();
     m_CO->setResAnim(pAnim);
-    m_CO->setScale((pApp->getSettings()->getHeight() - 300) / pAnim->getHeight());
+    m_CO->setScale((pApp->getSettings()->getHeight() - 400) / pAnim->getHeight());
     m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
     m_CO->setPosition(pApp->getSettings()->getWidth() - m_CO->getScaledWidth() - 20, - m_CO->getScaledHeight());
     oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenY(pApp->getSettings()->getHeight() / 2 -  m_CO->getScaledHeight() / 2), static_cast<qint32>(m_frameTime) * 30);
     m_CO->addTween(tween1);
     addChild(m_CO);
 
+
+
     // cool text incoming
     QString text;
-    if (powerMode == GameEnums::PowerMode_Superpower)
+    if (powerMode == GameEnums::PowerMode_Tagpower)
+    {
+        GameMap* pMap = GameMap::getInstance();
+        QJSValueList args;
+        QJSValue obj1 = pApp->getInterpreter()->newQObject(pMap->getCurrentPlayer()->getCO(0));
+        args << obj1;
+        CO* pCO1 = pMap->getCurrentPlayer()->getCO(1);
+        QJSValue obj2 = pApp->getInterpreter()->newQObject(pCO1);
+        args << obj2;
+        QJSValue ret = pApp->getInterpreter()->doFunction("TAGPOWER", "getTagname", args);
+        if (ret.isString())
+        {
+            text = ret.toString();
+        }
+        ret = pApp->getInterpreter()->doFunction("TAGPOWER", "getTagpower", args);
+        if (ret.isNumber())
+        {
+            qint32 value = 100 + ret.toInt();
+            text += "   Synergy: " + QString::number(value) + " %";
+        }
+        if (pCO1 != nullptr)
+        {
+            resAnim = pCO1->getCoID().toLower() + "+nrm";
+            pAnim = COSpriteManager::getInstance()->getResAnim(resAnim.toStdString().c_str());
+            m_CO = new oxygine::Sprite();
+            m_CO->setResAnim(pAnim);
+            m_CO->setScale((pApp->getSettings()->getHeight() - 400) / pAnim->getHeight());
+            m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
+            m_CO->setPosition(pApp->getSettings()->getWidth() - m_CO->getScaledWidth() * 2 - 40, pApp->getSettings()->getHeight());
+            tween1 = oxygine::createTween(oxygine::Actor::TweenY(pApp->getSettings()->getHeight() / 2 -  m_CO->getScaledHeight() / 2), static_cast<qint32>(m_frameTime) * 30);
+            m_CO->addTween(tween1);
+            addChild(m_CO);
+        }
+    }
+    else if (powerMode == GameEnums::PowerMode_Superpower)
     {
         QJSValue ret = pApp->getInterpreter()->doFunction(coid, "getSuperPowerName");
         if (ret.isString())
@@ -99,7 +137,12 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
         textField->setPosition(xPos, 0);
         textField->setScale(scale);
         textField->setStyle(style);
-        xPos += textField->getTextRect().getWidth() * scale;
+        qint32 size = textField->getTextRect().getWidth() * scale;
+        if (size <= 0)
+        {
+            size = (xPos - 10) / (i + 1);
+        }
+        xPos += size;
         textField->setVisible(false);
         if (Mainapp::isEven(i))
         {

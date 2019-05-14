@@ -609,6 +609,14 @@
     </message>
 </context>
 <context>
+    <name>DialogVictoryConditions</name>
+    <message>
+        <location filename="../objects/dialogvictoryconditions.cpp" line="34"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EditorMenue</name>
     <message>
         <location filename="../menue/editormenue.cpp" line="44"/>
@@ -1713,6 +1721,14 @@
     <message>
         <location filename="../network/tcpserver.cpp" line="95"/>
         <source>Server is running</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Tagpower</name>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="6"/>
+        <source>Tagpower</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8098,6 +8114,11 @@
     <name>victoryrule_buildinglimit</name>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_buildinglimit.js" line="5"/>
+        <source>The player who reaches the number of buildings wins.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_buildinglimit.js" line="10"/>
         <source>Capture Victory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8106,6 +8127,11 @@
     <name>victoryrule_nohq</name>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_nohq.js" line="5"/>
+        <source>A player looses when he looses his last HQ. All buildings will be owned by the current player.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_nohq.js" line="9"/>
         <source>No HQ&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8114,6 +8140,11 @@
     <name>victoryrule_nounits</name>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_nounits.js" line="5"/>
+        <source>A player looses when he looses his last unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_nounits.js" line="9"/>
         <source>No Units</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8122,6 +8153,11 @@
     <name>victoryrule_turnlimit</name>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="5"/>
+        <source>All player loose when the time is up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="9"/>
         <source>Turn Limit</source>
         <translation type="unfinished"></translation>
     </message>
