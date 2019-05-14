@@ -588,16 +588,34 @@ bool Unit::canTransportUnit(Unit* pUnit)
 qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender)
 {
     qint32 bonus = 0;
-    CO* pCO = m_pOwner->getCO(0);
-    if (pCO != nullptr)
+    CO* pCO0 = m_pOwner->getCO(0);
+    if (pCO0 != nullptr)
     {
-        bonus += pCO->getOffensiveBonus(this, position, pDefender, defPosition, isDefender);
+        bonus += pCO0->getOffensiveBonus(this, position, pDefender, defPosition, isDefender);
     }
-    pCO = m_pOwner->getCO(1);
-    if (pCO != nullptr)
+    CO* pCO1 = m_pOwner->getCO(1);
+    if (pCO1 != nullptr)
     {
-        bonus += pCO->getOffensiveBonus(this, position, pDefender, defPosition, isDefender);
+        bonus += pCO1->getOffensiveBonus(this, position, pDefender, defPosition, isDefender);
     }
+
+    if (pCO0 != nullptr && pCO1 != nullptr &&
+        pCO0->getPowerMode() == GameEnums::PowerMode_Tagpower)
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        QString function1 = "getTagpower";
+        QJSValueList args1;
+        QJSValue obj1 = pApp->getInterpreter()->newQObject(pCO0);
+        args1 << obj1;
+        QJSValue obj2 = pApp->getInterpreter()->newQObject(pCO1);
+        args1 << obj2;
+        QJSValue erg = pApp->getInterpreter()->doFunction("TAGPOWER", function1, args1);
+        if (erg.isNumber())
+        {
+            bonus += erg.toNumber();
+        }
+    }
+
     GameMap* pMap = GameMap::getInstance();
     qint32 mapHeigth = pMap->getMapHeight();
     qint32 mapWidth = pMap->getMapWidth();
