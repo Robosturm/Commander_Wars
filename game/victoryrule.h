@@ -9,6 +9,8 @@
 
 #include "oxygine-framework.h"
 
+class Player;
+
 class VictoryRule;
 typedef oxygine::intrusive_ptr<VictoryRule> spVictoryRule;
 
@@ -47,7 +49,7 @@ public slots:
     QString getRuleName();
     qint32 getRuleValue();
     QString getRuleDescription();
-    qint32 getRuleProgress();
+    qint32 getRuleProgress(Player* pPlayer);
     QString getRuleID() const;
     ScriptVariables* getVariables()
     {

@@ -69,7 +69,7 @@ var Constructor = function()
         }
         return GameEnums.DefeatType_Alive;
     };
-    this.getRuleProgress = function(player)
+    this.getRuleProgress = function(rule, player)
     {
         return player.getUnitCount();
     };

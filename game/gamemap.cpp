@@ -757,6 +757,11 @@ void GameMap::saveGame()
     emit signalSaveGame();
 }
 
+void GameMap::victoryInfo()
+{
+    emit signalVictoryInfo();
+}
+
 void GameMap::showCOInfo()
 {
     emit signalShowCOInfo();

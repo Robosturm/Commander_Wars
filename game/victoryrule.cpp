@@ -134,11 +134,16 @@ QString VictoryRule::getRuleDescription()
     }
 }
 
-qint32 VictoryRule::getRuleProgress()
+qint32 VictoryRule::getRuleProgress(Player* pPlayer)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getRuleProgress";
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1);
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(pPlayer);
+    args1 << obj2;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1, args1);
     if (ret.isNumber())
     {
         return ret.toInt();

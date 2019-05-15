@@ -41,7 +41,7 @@ var Constructor = function()
 		// all players loose if the time limit is exceeded
 		return GameEnums.DefeatType_Defeated;
     };
-    this.getRuleProgress = function(player)
+    this.getRuleProgress = function(rule, player)
     {
         return map.getCurrentDay();
     };

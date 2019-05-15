@@ -12,6 +12,8 @@
 #include "game/gamemap.h"
 #include "game/gamerules.h"
 #include "game/victoryrule.h"
+#include "game/player.h"
+#include "game/co.h"
 
 DialogVictoryConditions::DialogVictoryConditions()
     : QObject()
@@ -37,13 +39,14 @@ DialogVictoryConditions::DialogVictoryConditions()
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         this->getParent()->removeChild(this);
+        emit sigFinished();
     });
 
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    style.multiline = false;
+    style.multiline = true;
     // no the fun begins create checkboxes and stuff and a panel down here
     spPanel pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110),
                                      QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110));
@@ -52,9 +55,68 @@ DialogVictoryConditions::DialogVictoryConditions()
 
     GameMap* pMap = GameMap::getInstance();
     GameRules* pRules = pMap->getGameRules();
-    for (qint32 i = 0; i < pRules->getWeatherCount(); i++)
+
+    qint32 y = 10;
+    oxygine::spTextField pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Victory Info").toStdString().c_str());
+    pTextfield->setScale(2.0f);
+    pTextfield->setPosition(pApp->getSettings()->getWidth() / 2 - pTextfield->getTextRect().getWidth(), y);
+    pPanel->addItem(pTextfield);
+    y += 50;
+    QString info = pMap->getGameScript()->getVictoryInfo();
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(info.toStdString().c_str());
+    pTextfield->setWidth(pApp->getSettings()->getWidth() - 60);
+    pTextfield->setPosition(10, y);
+    pPanel->addItem(pTextfield);
+    y += 10 + pTextfield->getTextRect().getHeight();
+    for (qint32 i = 0; i < pRules->getVictoryRuleSize(); i++)
     {
         VictoryRule* pVictoryRule = pRules->getVictoryRule(i);
+        info = pVictoryRule->getRuleDescription();
 
+        pTextfield = new oxygine::TextField();
+        pTextfield->setStyle(style);
+        pTextfield->setWidth(pApp->getSettings()->getWidth() - 60);
+        pTextfield->setText(info.toStdString().c_str());
+        pTextfield->setPosition(10, y);
+        pPanel->addItem(pTextfield);
+        y += 30 + pTextfield->getTextRect().getHeight();
+
+        qint32 x = 10;
+        qint32 stepWidth = 250;
+        for (qint32 i2 = 0; i2 < pMap->getPlayerCount(); i2++)
+        {
+            Player* pPlayer = pMap->getPlayer(i2);
+            if (pPlayer->getIsDefeated() == false)
+            {
+                qint32 ruleValue = pVictoryRule->getRuleValue();
+
+                qint32 playerValue = pVictoryRule->getRuleProgress(pPlayer);
+                info = tr("Player ") + QString::number(i2 + 1) + ": " + QString::number(playerValue) + "/" + QString::number(ruleValue);
+                spBuilding building = new Building("HQ");
+                // building->setScale(1.5f);
+                building->setOwner(pPlayer);
+                building->setPosition(x, y);
+                pPanel->addItem(building);
+
+                pTextfield = new oxygine::TextField();
+                pTextfield->setStyle(style);
+                pTextfield->setText(info.toStdString().c_str());
+                pTextfield->setPosition(x + GameMap::getImageSize() + 5, y - 15);
+                pPanel->addItem(pTextfield);
+                x += stepWidth;
+                if (x + stepWidth > pApp->getSettings()->getWidth() - 70 && i2 < pMap->getPlayerCount() - 1)
+                {
+                    x = 10;
+                    y += 60;
+                }
+            }
+        }
+        y += 40;
     }
+    pPanel->setContentHeigth(y + 40);
 }

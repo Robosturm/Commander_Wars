@@ -6,6 +6,11 @@ var BASEGAMESCRIPT =
         return false;
     },
 
+    getVictoryInfo : function()
+    {
+        return qsTr("No additional Victory Conditions are active.");
+    },
+
     victory : function()
     {
         // called when a player wins

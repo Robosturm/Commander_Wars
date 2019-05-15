@@ -5,7 +5,7 @@ var VICTORYRULE =
         return "";
     },
 
-    getRuleProgress : function(player)
+    getRuleProgress : function(rule, player)
     {
         return 0;
     },

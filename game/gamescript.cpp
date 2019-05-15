@@ -66,6 +66,21 @@ void GameScript::init()
     }
 }
 
+QString GameScript::getVictoryInfo()
+{
+    if (loaded)
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        QString function1 = "getVictoryInfo";
+        QJSValue ret = pApp->getInterpreter()->doFunction(scriptName, function1);
+        if (ret.isString())
+        {
+            return ret.toString();
+        }
+    }
+    return tr("This is a normal game with the following Victory Conditions.");
+}
+
 bool GameScript::immediateStart()
 {
     if (loaded)

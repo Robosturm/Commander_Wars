@@ -83,7 +83,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
 
     m_MinimapSlider->setPosition(10, 10);
     m_MinimapSlider->setSize(pApp->getSettings()->getWidth() - width - 100 - 20,
-                             pApp->getSettings()->getHeight() - 210 - 20);
+                             pApp->getSettings()->getHeight() / 2 - 235);
     m_MinimapSlider->setContent(m_pMinimap);
 
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
@@ -573,11 +573,8 @@ void MapSelectionMapsMenue::showRuleSelection()
             connect(pSpinbox.get(), &SpinBox::sigValueChanged, [=](float value)
             {
                 qint32 newValue = static_cast<qint32>(value);
-                if (newValue == startValue)
-                {
-                    m_pCurrentMap->getGameRules()->removeVictoryRule(ruleID);
-                }
-                else
+                m_pCurrentMap->getGameRules()->removeVictoryRule(ruleID);
+                if (newValue != startValue)
                 {
                     spVictoryRule pRule = new VictoryRule(ruleID);
                     pRule->setRuleValue(newValue);

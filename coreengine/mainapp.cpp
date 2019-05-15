@@ -255,15 +255,44 @@ void Mainapp::onEvent(oxygine::Event* ev)
 
     if (event->type == SDL_KEYDOWN)
     {
-        emit sigKeyDown(*event);
+        if (Console::getInstance()->getVisible())
+        {
+            emit sigConsoleKeyDown(*event);
+        }
+        else
+        {
+            SDL_Keycode cur = event->key.keysym.sym;
+            if (cur == getSettings()->getKeyConsole())
+            {
+                Console::getInstance()->toggleView();
+            }
+            else
+            {
+                emit sigKeyDown(*event);
+            }
+        }
     }
     if (event->type == SDL_TEXTINPUT)
     {
-        emit sigText(*event);
+        if (Console::getInstance()->getVisible())
+        {
+            emit sigConsoleText(*event);
+        }
+        else
+        {
+            emit sigText(*event);
+        }
     }
     else if (event->type == SDL_KEYUP)
     {
-        emit sigKeyUp(*event);
+        if (Console::getInstance()->getVisible())
+        {
+            emit sigConsoleKeyUp(*event);
+        }
+        else
+        {
+            emit sigKeyUp(*event);
+        }
     }
 }
 

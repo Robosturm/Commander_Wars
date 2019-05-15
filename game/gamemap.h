@@ -216,6 +216,7 @@ public:
 signals:
     void signalExitGame();
     void signalSaveGame();
+    void signalVictoryInfo();
     void signalShowCOInfo();
     void sigQueueAction(GameAction* pAction);
 public slots:
@@ -293,6 +294,10 @@ public slots:
      * @brief saveGame
      */
     void saveGame();
+    /**
+     * @brief victoryInfo
+     */
+    void victoryInfo();
     /**
      * @brief showCOInfo
      */

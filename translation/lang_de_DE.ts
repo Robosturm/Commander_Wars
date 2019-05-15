@@ -302,6 +302,14 @@
     </message>
 </context>
 <context>
+    <name>ACTION_VICTORYINFO</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_VICTORYINFO.js" line="10"/>
+        <source>Victory Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_WAIT</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="25"/>
@@ -611,8 +619,18 @@
 <context>
     <name>DialogVictoryConditions</name>
     <message>
-        <location filename="../objects/dialogvictoryconditions.cpp" line="34"/>
+        <location filename="../objects/dialogvictoryconditions.cpp" line="36"/>
         <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogvictoryconditions.cpp" line="62"/>
+        <source>Victory Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogvictoryconditions.cpp" line="99"/>
+        <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -763,6 +781,14 @@
     <message>
         <location filename="../objects/filedialog.cpp" line="79"/>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GameScript</name>
+    <message>
+        <location filename="../game/gamescript.cpp" line="81"/>
+        <source>This is a normal game with the following Victory Conditions.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1882,6 +1908,14 @@
     <message>
         <location filename="../resources/scripts/units/artillery.js" line="48"/>
         <source>Artillery</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>basegamescript</name>
+    <message>
+        <location filename="../resources/scripts/general/basegamescript.js" line="11"/>
+        <source>No additional Victory Conditions are active.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

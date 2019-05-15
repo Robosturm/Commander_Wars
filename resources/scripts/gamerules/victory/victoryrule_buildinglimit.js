@@ -63,7 +63,7 @@ var Constructor = function()
 		// all players loose if the time limit is exceeded
         return GameEnums.DefeatType_Alive;
     };
-    this.getRuleProgress = function(player)
+    this.getRuleProgress = function(rule, player)
     {
         return player.getBuildingCount();
     };

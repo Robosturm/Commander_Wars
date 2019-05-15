@@ -81,8 +81,8 @@ void Console::init()
 
     Mainapp* pMainapp = Mainapp::getInstance();
 
-    connect(pMainapp, &Mainapp::sigKeyDown, m_pConsole, &Console::KeyInput, Qt::QueuedConnection);
-    connect(pMainapp, &Mainapp::sigText, m_pConsole, &Console::TextInput, Qt::QueuedConnection);
+    connect(pMainapp, &Mainapp::sigConsoleKeyDown, m_pConsole, &Console::KeyInput, Qt::QueuedConnection);
+    connect(pMainapp, &Mainapp::sigConsoleText, m_pConsole, &Console::TextInput, Qt::QueuedConnection);
     datalocker = new QMutex();
     //Setup Lua
     QString consoleName = "console";

@@ -90,6 +90,10 @@ signals:
     void sigText(SDL_Event event);
     void sigKeyDown(SDL_Event event);
     void sigKeyUp(SDL_Event event);
+
+    void sigConsoleText(SDL_Event event);
+    void sigConsoleKeyDown(SDL_Event event);
+    void sigConsoleKeyUp(SDL_Event event);
 public:
 
 

@@ -19,7 +19,7 @@ public:
     virtual ~DialogVictoryConditions() = default;
 
 signals:
-
+    void sigFinished();
 public slots:
 
 private:

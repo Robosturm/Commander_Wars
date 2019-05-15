@@ -67,6 +67,7 @@ public:
     QString getScriptFile() const;
     void setScriptFile(const QString &value);
 
+    QString getVictoryInfo();
 signals:
 
 public slots:

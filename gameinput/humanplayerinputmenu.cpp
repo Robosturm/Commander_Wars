@@ -171,6 +171,7 @@ void HumanPlayerInputMenu::setMenuPosition(qint32 x, qint32 y)
         y = pMap->getMapHeight() * GameMap::Imagesize - getHeight() - GameMap::Imagesize / 2;
     }
     this->setPosition(x, y);
+    mouseMove(0, 0);
 }
 
 void HumanPlayerInputMenu::keyInput(SDL_Event event)

@@ -14,6 +14,8 @@
 
 #include "objects/coinfodialog.h"
 
+#include "objects/dialogvictoryconditions.h"
+
 #include <QFile>
 
 GameMenue* GameMenue::m_pInstance = nullptr;
@@ -55,6 +57,7 @@ void GameMenue::loadGameMenue()
     connect(pMap->getGameRules(), &GameRules::signalVictory, this, &GameMenue::victory, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
+    connect(pMap, &GameMap::signalVictoryInfo, this, &GameMenue::victoryInfo, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalShowCOInfo, this, &GameMenue::showCOInfo, Qt::QueuedConnection);
     connect(pMap, &GameMap::sigQueueAction, this, &GameMenue::performAction, Qt::QueuedConnection);
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap, &GameMap::centerMap, Qt::QueuedConnection);
@@ -65,6 +68,11 @@ void GameMenue::loadGameMenue()
 GameMenue::~GameMenue()
 {
     m_pInstance = nullptr;
+}
+
+void GameMenue::editFinishedCanceled()
+{
+    setFocused(true);
 }
 
 void GameMenue::performAction(GameAction* pGameAction)
@@ -232,7 +240,7 @@ void GameMenue::showCOInfo()
     pApp->suspendThread();
 
     GameMap* pMap = GameMap::getInstance();
-    addChild(new COInfoDialog(pMap->getCurrentPlayer()->getspCO(0), pMap->getspPlayer(pMap->getCurrentPlayer()->getPlayerID()), [=](spCO& pCurrentCO, spPlayer& pPlayer, qint32 direction)
+    spCOInfoDialog pCOInfoDialog = new COInfoDialog(pMap->getCurrentPlayer()->getspCO(0), pMap->getspPlayer(pMap->getCurrentPlayer()->getPlayerID()), [=](spCO& pCurrentCO, spPlayer& pPlayer, qint32 direction)
     {
         if (direction > 0)
         {
@@ -285,7 +293,10 @@ void GameMenue::showCOInfo()
                 pCurrentCO = pPlayer->getspCO(0);
             }
         }
-    }, true));
+    }, true);
+    addChild(pCOInfoDialog);
+    setFocused(false);
+    connect(pCOInfoDialog.get(), &COInfoDialog::quit, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
     pApp->continueThread();
 }
 
@@ -299,6 +310,19 @@ void GameMenue::saveGame()
     spFileDialog saveDialog = new FileDialog(path, wildcards, GameMap::getInstance()->getMapName());
     this->addChild(saveDialog);
     connect(saveDialog.get(), &FileDialog::sigFileSelected, this, &GameMenue::saveMap, Qt::QueuedConnection);
+    setFocused(false);
+    connect(saveDialog.get(), &FileDialog::sigCancel, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
+    pApp->continueThread();
+}
+
+void GameMenue::victoryInfo()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    spDialogVictoryConditions pVictoryConditions = new DialogVictoryConditions();
+    addChild(pVictoryConditions);
+    setFocused(false);
+    connect(pVictoryConditions.get(), &DialogVictoryConditions::sigFinished, this, &GameMenue::editFinishedCanceled, Qt::QueuedConnection);
     pApp->continueThread();
 }
 
@@ -316,6 +340,7 @@ void GameMenue::saveMap(QString filename)
         file.close();
         Settings::setLastSaveGame(filename);
     }
+    setFocused(true);
     pApp->continueThread();
 }
 

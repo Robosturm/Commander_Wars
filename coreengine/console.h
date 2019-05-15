@@ -70,6 +70,10 @@ public slots:
      * @param event
      */
     void TextInput(SDL_Event event);
+    /**
+     * @brief toggleView
+     */
+    void toggleView();
 private:
     static eLogLevels LogLevel;
     static QString curmsg;
@@ -86,7 +90,6 @@ private:
     static QMutex *datalocker;
     oxygine::spSprite m_pBackgroundsprite;
     oxygine::spTextField m_text;
-    void toggleView();
 
     Console();
     virtual  ~Console() = default;

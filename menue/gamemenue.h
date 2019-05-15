@@ -55,6 +55,10 @@ public slots:
      */
     void saveGame();
     /**
+     * @brief victoryInfo
+     */
+    void victoryInfo();
+    /**
      * @brief showCOInfo
      */
     void showCOInfo();
@@ -72,6 +76,10 @@ public slots:
      * @param event
      */
     virtual void keyInput(SDL_Event event) override;
+    /**
+     * @brief editFinishedCanceled
+     */
+    void editFinishedCanceled();
 protected:
     void loadGameMenue();
 private:
