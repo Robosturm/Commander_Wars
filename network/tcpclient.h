@@ -3,8 +3,9 @@
 
 #include "network/NetworkInterface.h"
 
-class RxTask;
-class TxTask;
+#include "network/rxtask.h"
+#include "network/txtask.h"
+
 class QTcpSocket;
 
 class TCPClient : public NetworkInterface
@@ -22,15 +23,11 @@ public slots:
      * @brief sendData send Data with this Connection
      * @param data
      */
-    virtual void sendData(QByteArray data, Mainapp::NetworkSerives service, bool blocking) override;
-
-    virtual void sessionOpened(quint16 port) override;
-signals:
-    void sig_sendData(QByteArray data, Mainapp::NetworkSerives service, bool blocking);
+    virtual void sendData(QByteArray data, Mainapp::NetworkSerives service, bool forwardData) override;
 
 private:
-    RxTask* pRXTask;
-    TxTask* pTXTask;
+    spRxTask pRXTask;
+    spTxTask pTXTask;
     QTcpSocket* pSocket;
 };
 

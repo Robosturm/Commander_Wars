@@ -25,6 +25,15 @@ public:
     qint32 getContentWidth();
 
     void clearContent();
+
+    inline H_Scrollbar* getH_Scrollbar()
+    {
+        return m_HScrollbar.get();
+    }
+    inline V_Scrollbar* getV_Scrollbar()
+    {
+        return m_VScrollbar.get();
+    }
 signals:
 
 public slots:

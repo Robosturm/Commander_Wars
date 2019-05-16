@@ -13,12 +13,19 @@
 #include "coreengine/settings.h"
 #include "coreengine/console.h"
 
+#include "oxygine-framework.h"
+
 class Serializable;
+class QTcpSocket;
+
+
+class NetworkInterface;
+typedef oxygine::intrusive_ptr<NetworkInterface> spNetworkInterface;
 
 /**
  * @brief The NetworkInterface class use this in the Context of a Network-Task
  */
-class NetworkInterface : public QThread
+class NetworkInterface : public QThread, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -26,23 +33,13 @@ public:
         : isServer(false),
           isConnected(false)
     {
-        Mainapp* pApp = Mainapp::getInstance();
         this->moveToThread(this);
-        QObject::connect(this, SIGNAL(sig_connect(QString)), this, SLOT(connectTCP(QString)));
-        QNetworkConfigurationManager manager;
-        // If the saved network configuration is not currently discovered use the system default
-        QNetworkConfiguration config = manager.defaultConfiguration();
-        networkSession = new QNetworkSession(config, this);
-        QObject::connect(networkSession, SIGNAL(opened()), this, SLOT(sessionOpened()));
-        this->moveToThread(this);
-        networkSession->open();
-
-        connect(this, SIGNAL(recieveData(QByteArray,Mainapp::NetworkSerives)), Console::getInstance(), SLOT(recieveNetworkMessage(QByteArray,Mainapp::NetworkSerives)));
+        QObject::connect(this, &NetworkInterface::sig_connect, this, &NetworkInterface::connectTCP, Qt::QueuedConnection);
     }
 
     virtual ~NetworkInterface()
     {
-        delete networkSession;
+
     }
 
     QString getIPAdresse()
@@ -83,9 +80,7 @@ public slots:
      * @brief sendData send Data with this Connection
      * @param data
      */
-    virtual void sendData(QByteArray data, Mainapp::NetworkSerives service, bool blocking) = 0;
-
-    virtual void sessionOpened(quint16 port) = 0;
+    virtual void sendData(QByteArray data, Mainapp::NetworkSerives service, bool forwardData) = 0;
 
     void displayError(QAbstractSocket::SocketError socketError)
     {
@@ -103,23 +98,21 @@ public slots:
             Console::print(tr("Error inside the Socket happened."), Console::eERROR);
         }
     }
-
-    void acquireBlock()
-    {
-        m_Blocking.release();
-    }
-
+    virtual void forwardData(QTcpSocket*, QByteArray, Mainapp::NetworkSerives){}
 protected:
     QNetworkSession *networkSession;
     bool isServer;
     bool isConnected;
-    QSemaphore m_Blocking;
 
     virtual void run()
     {
-        while (true) {
-            exec();
-        }
+        QNetworkConfigurationManager manager;
+        // If the saved network configuration is not currently discovered use the system default
+        QNetworkConfiguration config = manager.defaultConfiguration();
+        networkSession = new QNetworkSession(config, this);
+        networkSession->open();
+        exec();
+        disconnectTCP();
     }
 signals:
     /**
@@ -127,7 +120,9 @@ signals:
      * @param data
      */
     void recieveData(QByteArray data, Mainapp::NetworkSerives service);
-    void sig_connect(const QString& adress);
+    void sig_connect(const QString& adress, quint16 port);
+    void sigConnected();
+    void sig_sendData(QByteArray data, Mainapp::NetworkSerives service, bool forwardData);
 
 };
 

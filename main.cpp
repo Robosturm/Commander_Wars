@@ -5,7 +5,7 @@
 #include "coreengine/audiothread.h"
 
 #include "coreengine/mainapp.h"
-
+#include "network/tcpserver.h"
 
 #include <QQmlApplicationEngine>
 #include <QJSEngine>
@@ -167,6 +167,12 @@ int main(int argc, char* argv[])
     /*************************************************************************************************/
     // clean up section ahead
     // store current settings when closing
+    if (app.getGameServer() != nullptr)
+    {
+        app.getGameServer()->quit();
+        app.getGameServer()->wait();
+        delete app.getGameServer();
+    }
     app.getSettings()->saveSettings();
 
     if (GameMap::getInstance() != nullptr)

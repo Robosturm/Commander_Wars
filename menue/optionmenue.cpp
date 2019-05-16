@@ -562,7 +562,6 @@ void OptionMenue::showSettings()
     connect(pTextbox.get(), &Textbox::sigTextChanged, [=](QString value)
     {
         Settings::setServerAdress(value);
-        restartNeeded = true;
     });
     pTextbox->setPosition(sliderOffset - 130, y);
     m_pOptions->addItem(pTextbox);
@@ -579,7 +578,6 @@ void OptionMenue::showSettings()
     connect(portBox.get(), &SpinBox::sigValueChanged, [=](float value)
     {
         Settings::setServerPort(static_cast<quint16>(value));
-        restartNeeded = true;
     });
     m_pOptions->addItem(portBox);
     y += 40;
@@ -611,7 +609,6 @@ void OptionMenue::showSettings()
     connect(portBox.get(), &SpinBox::sigValueChanged, [=](float value)
     {
         Settings::setGamePort(static_cast<quint16>(value));
-        restartNeeded = true;
     });
     m_pOptions->addItem(portBox);
     y += 40;

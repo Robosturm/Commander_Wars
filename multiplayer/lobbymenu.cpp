@@ -9,12 +9,22 @@
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 
+#include "objects/chat.h"
+
+#include "network/tcpserver.h"
+
 LobbyMenu::LobbyMenu()
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Console::print("Entering Option Menue", Console::eDEBUG);
+
+    if (!Settings::getServer())
+    {
+        m_pTCPClient = new TCPClient();
+        emit m_pTCPClient->sig_connect(Settings::getServerAdress(), Settings::getServerPort());
+    }
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background
@@ -66,9 +76,29 @@ LobbyMenu::LobbyMenu()
     });
 
     m_pGamesPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 20, pApp->getSettings()->getHeight() / 2 - 40),
-                          QSize(pApp->getSettings()->getWidth() - 20, pApp->getSettings()->getHeight() / 2 - 40));
+                          QSize(pApp->getSettings()->getWidth() - 20, pApp->getSettings()->getHeight() / 2 - 80));
     m_pGamesPanel->setPosition(10, 10);
     addChild(m_pGamesPanel);
+
+    NetworkInterface* pInterface = m_pTCPClient;
+    if (Settings::getServer())
+    {
+        pInterface = pApp->getGameServer();
+    }
+
+    spChat pChat = new Chat(pInterface, QSize(pApp->getSettings()->getWidth() - 20, pApp->getSettings()->getHeight() / 2 - 80));
+    pChat->setPosition(10, m_pGamesPanel->getHeight() + 20);
+    addChild(pChat);
+}
+
+LobbyMenu::~LobbyMenu()
+{
+    if (!Settings::getServer())
+    {
+        m_pTCPClient->quit();
+        m_pTCPClient->wait();
+        delete m_pTCPClient;
+    }
 }
 
 void LobbyMenu::exitMenue()

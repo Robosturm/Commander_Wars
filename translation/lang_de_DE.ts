@@ -418,6 +418,14 @@
     </message>
 </context>
 <context>
+    <name>Chat</name>
+    <message>
+        <location filename="../objects/chat.cpp" line="33"/>
+        <source>Send</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ColorSelectionDialog</name>
     <message>
         <location filename="../objects/colorselectiondialog.cpp" line="28"/>
@@ -448,22 +456,22 @@
 <context>
     <name>Console</name>
     <message>
-        <location filename="../coreengine/console.cpp" line="92"/>
+        <location filename="../coreengine/console.cpp" line="90"/>
         <source>Enter &quot;help()&quot; for console info.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="93"/>
+        <location filename="../coreengine/console.cpp" line="91"/>
         <source>Starting Game...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="94"/>
+        <location filename="../coreengine/console.cpp" line="92"/>
         <source>Prepare to Fight...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="95"/>
+        <location filename="../coreengine/console.cpp" line="93"/>
         <source>Read this message while waiting...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -912,22 +920,22 @@
 <context>
     <name>LobbyMenu</name>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="35"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="45"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="44"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="54"/>
         <source>Host Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="52"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="62"/>
         <source>Join Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="60"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="70"/>
         <source>Join Adress</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1135,17 +1143,17 @@
 <context>
     <name>NetworkInterface</name>
     <message>
-        <location filename="../network/NetworkInterface.h" line="97"/>
+        <location filename="../network/NetworkInterface.h" line="92"/>
         <source>The host was not found. Please check the host name and port settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/NetworkInterface.h" line="100"/>
+        <location filename="../network/NetworkInterface.h" line="95"/>
         <source>The connection was refused by the peer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/NetworkInterface.h" line="103"/>
+        <location filename="../network/NetworkInterface.h" line="98"/>
         <source>Error inside the Socket happened.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1353,17 +1361,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="573"/>
+        <location filename="../menue/optionmenue.cpp" line="572"/>
         <source>Lobby port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="589"/>
+        <location filename="../menue/optionmenue.cpp" line="587"/>
         <source>Server: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="605"/>
+        <location filename="../menue/optionmenue.cpp" line="603"/>
         <source>Game port: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1727,7 +1735,7 @@
 <context>
     <name>TCPClient</name>
     <message>
-        <location filename="../network/tcpclient.cpp" line="43"/>
+        <location filename="../network/tcpclient.cpp" line="42"/>
         <source>Client is running</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1735,17 +1743,18 @@
 <context>
     <name>TCPServer</name>
     <message>
-        <location filename="../network/tcpserver.cpp" line="51"/>
+        <location filename="../network/tcpserver.cpp" line="52"/>
+        <location filename="../network/tcpserver.cpp" line="79"/>
         <source>Client disconnected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/tcpserver.cpp" line="85"/>
+        <location filename="../network/tcpserver.cpp" line="109"/>
         <source>New Client connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/tcpserver.cpp" line="95"/>
+        <location filename="../network/tcpserver.cpp" line="28"/>
         <source>Server is running</source>
         <translation type="unfinished"></translation>
     </message>

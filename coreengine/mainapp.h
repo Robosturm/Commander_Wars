@@ -13,9 +13,11 @@
 #include "coreengine/workerthread.h"
 #include "coreengine/settings.h"
 
+
 #include "coreengine/qmlvector.h"
 
 class NetworkInterface;
+class TCPServer;
 
 class Mainapp : public QCoreApplication
 {
@@ -26,6 +28,7 @@ public:
       */
     enum class NetworkSerives
     {
+        None = -1,
         Game,
         Lobby,
         Chat,
@@ -129,6 +132,10 @@ public:
     static void setUseSeed(bool useSeed);
 
     WorkerThread *getWorkerthread() const;
+    inline TCPServer* getGameServer()
+    {
+        return m_pGameServer;
+    }
 
     void suspendThread();
     void continueThread();
@@ -142,6 +149,7 @@ private:
     static QRandomGenerator randGenerator;
     static bool m_useSeed;
 
+    TCPServer* m_pGameServer{nullptr};
 
     AudioThread* m_Audiothread{nullptr};
     WorkerThread* m_Workerthread{nullptr};

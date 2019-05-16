@@ -10,6 +10,7 @@
 
 #include "game/player.h"
 #include "game/co.h"
+#include "network/tcpserver.h"
 
 Mainapp* Mainapp::m_pMainapp = nullptr;
 QRandomGenerator Mainapp::randGenerator;
@@ -199,6 +200,11 @@ void Mainapp::quitGame()
 
 void Mainapp::start()
 {
+    if (Settings::getServer())
+    {
+        m_pGameServer = new TCPServer();
+        emit m_pGameServer->sig_connect("", Settings::getServerPort());
+    }
     m_Timer.start(1);
 }
 

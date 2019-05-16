@@ -13,46 +13,70 @@ TCPServer::TCPServer()
     moveToThread(this);
     isServer = true;
     isConnected = true;
+    start();
 }
 
 
 
-void TCPServer::connectTCP(const QString&, quint16)
+void TCPServer::connectTCP(const QString&, quint16 port)
 {
+    pTCPServer = new QTcpServer(this);
+    pTCPServer->moveToThread(this);
+    pTCPServer->listen(QHostAddress::Any, port);
+    QObject::connect(pTCPServer, SIGNAL(newConnection()), this, SLOT(onConnect()));
+
+    Console::print(tr("Server is running"), Console::eDEBUG);
 }
 
 TCPServer::~TCPServer()
 {
-    disconnectTCP();
-    delete pTCPServer;
 }
 
 void TCPServer::disconnectTCP()
 {
     QMutexLocker locker(&TaskMutex);
+    if (pTCPServer != nullptr)
+    {
+        pTCPServer->close();
+        delete pTCPServer;
+        pTCPServer = nullptr;
+    }
+    while (pTCPSockets.size() > 0)
+    {
+        if (pTCPSockets[0]->isOpen())
+        {
+
+            // realize correct deletion
+            pTCPSockets[0]->disconnect();
+            pTCPSockets[0]->close();
+            Console::print(tr("Client disconnected."), Console::eDEBUG);
+        }
+        pRXTasks.removeAt(0);
+        pTXTasks.removeAt(0);
+        delete pTCPSockets[0];
+        pTCPSockets.removeAt(0);
+    }    
+    delete networkSession;
+    networkSession = nullptr;
+}
+
+void TCPServer::disconnectSocket()
+{
+    QMutexLocker locker(&TaskMutex);
     qint32 i = 0;
     while (i < pTCPSockets.size())
     {
-        if (pTCPSockets[i]->isOpen())
+        if (pTCPSockets[i]->state() == QAbstractSocket::SocketState::ClosingState ||
+            pTCPSockets[i]->state() == QAbstractSocket::SocketState::UnconnectedState)
         {
-            delete pRXTasks[i];
-            pRXTasks[i] = nullptr;
-            pRXTasks.removeAt(i);
-
-            delete pTXTasks[i];
-            pTXTasks[i] = nullptr;
-            pTXTasks.removeAt(i);
-
             // realize correct deletion
-            pTCPSockets[i]->deleteLater();
-            pTCPSockets[i] = nullptr;
+            pTCPSockets[i]->disconnect();
+            pTCPSockets[i]->close();
+            pRXTasks.removeAt(i);
+            pTXTasks.removeAt(i);
+            delete pTCPSockets[i];
             pTCPSockets.removeAt(i);
-
             Console::print(tr("Client disconnected."), Console::eDEBUG);
-        }
-        else
-        {
-            i++;
         }
     }
 }
@@ -67,39 +91,39 @@ void TCPServer::onConnect()
 
     pSocket->moveToThread(this);
 
-    QObject::connect(pSocket, SIGNAL(disconnected()), this, SLOT(disconnectTCP()));
-    QObject::connect(pSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(displayError(QAbstractSocket::SocketError)));
+    QObject::connect(pSocket, &QTcpSocket::disconnected, this, &TCPServer::disconnectSocket, Qt::QueuedConnection);
+    QObject::connect(pSocket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error), this, &TCPServer::displayError);
 
     // Start RX-Task
     RxTask* pRXTask = new RxTask(pSocket, this);
     pRXTask->moveToThread(this);
     pRXTasks.append(pRXTask);
-    QObject::connect(pSocket, SIGNAL(readyRead()), pRXTask, SLOT(recieveData()));
+    QObject::connect(pSocket, &QTcpSocket::readyRead, pRXTask, &RxTask::recieveData);
 
     // start TX-Task
     TxTask* pTXTask = new TxTask(pSocket, this);
     pTXTask->moveToThread(this);
     pTXTasks.append(pTXTask);
-    QObject::connect(this, SIGNAL(sig_sendData(QByteArray, Mainapp::NetworkSerives, bool)), pTXTask, SLOT(send(QByteArray, Mainapp::NetworkSerives, bool)));
+    QObject::connect(this, &TCPServer::sig_sendData, pTXTask, &TxTask::send);
 
     Console::print(tr("New Client connection."), Console::eDEBUG);
+    emit sigConnected();
 }
 
-void TCPServer::sessionOpened(quint16 port)
+void TCPServer::sendData(QByteArray data, Mainapp::NetworkSerives service, bool forwardData)
 {
-    pTCPServer = new QTcpServer(this);
-    pTCPServer->moveToThread(this);
-    pTCPServer->listen(QHostAddress::Any, port);
-    QObject::connect(pTCPServer, SIGNAL(newConnection()), this, SLOT(onConnect()));
-
-    Console::print(tr("Server is running"), Console::eDEBUG);
+    QMutexLocker locker(&TaskMutex);
+    emit sig_sendData(data, service, forwardData);
 }
 
-void TCPServer::sendData(QByteArray data, Mainapp::NetworkSerives service, bool blocking)
+void TCPServer::forwardData(QTcpSocket* pSocket, QByteArray data, Mainapp::NetworkSerives service)
 {
-    if (blocking)
+    QMutexLocker locker(&TaskMutex);
+    for (qint32 i = 0; i < pTCPSockets.size(); i++)
     {
-        m_Blocking.acquire(pTXTasks.size());
+        if (pTCPSockets[i] != pSocket)
+        {
+            pTXTasks[i]->send(data, service, false);
+        }
     }
-    emit sig_sendData(data, service, blocking);
 }

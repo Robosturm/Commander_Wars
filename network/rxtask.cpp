@@ -1,13 +1,14 @@
 #include <QTcpSocket>
 #include <QDataStream>
 
-#include "network/RxTask.h"
+#include "network/rxtask.h"
+
 #include "network/NetworkInterface.h"
+
 RxTask::RxTask(QTcpSocket* pSocket, NetworkInterface* CommIF)
     : m_pSocket(pSocket),
       pIF(CommIF),
-      dataSize(0),
-      m_serive(Mainapp::NetworkSerives::Max)
+      dataSize(0)
 {
 }
 
@@ -35,22 +36,27 @@ void RxTask::recieveData()
             pStream >> dataSize;
         }
 
-        bytes = m_pSocket->bytesAvailable();
-        if (bytes < static_cast<qint32>(sizeof(qint32)))
+        if (m_serive == Mainapp::NetworkSerives::None)
         {
-            // not enough data recieved
-            return;
+            bytes = m_pSocket->bytesAvailable();
+            if (bytes < static_cast<qint32>(sizeof(qint32)))
+            {
+                // not enough data recieved
+                return;
+            }
+            qint32 service;
+            pStream >> service;
+            m_serive = static_cast<Mainapp::NetworkSerives>(service);
         }
-        qint32 service;
-        pStream >> service;
-        m_serive = static_cast<Mainapp::NetworkSerives>(service);
 
         bytes = m_pSocket->bytesAvailable();
-        if (bytes < static_cast<qint32>(dataSize))
+        if (bytes < static_cast<qint32>(dataSize) + static_cast<qint32>(sizeof(bool)))
         {
             // check if object was recieved
             return;
         }
+        bool forwardData = false;
+        pStream >> forwardData;
         QByteArray data;
         pStream >> data;
 
@@ -62,9 +68,14 @@ void RxTask::recieveData()
         }
         else
         {
+            if (pIF->getIsServer() && forwardData)
+            {
+                pIF->forwardData(m_pSocket, data, m_serive);
+            }
             // note only one Service can recieve a message!!!
             // since the service needs to delete the object.
             // otherwise you get some nice null-pointer exeptions
             emit pIF->recieveData(data, m_serive);
         }
+        m_serive = Mainapp::NetworkSerives::None;
 }

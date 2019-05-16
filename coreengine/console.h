@@ -87,7 +87,7 @@ private:
     static bool toggled;
     static QList<QString> output;
     static qint32 outputSize;
-    static QMutex *datalocker;
+    static QMutex datalocker;
     oxygine::spSprite m_pBackgroundsprite;
     oxygine::spTextField m_text;
 

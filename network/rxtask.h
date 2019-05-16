@@ -4,11 +4,16 @@
 #include <QObject>
 #include "coreengine/mainapp.h"
 
+#include "oxygine-framework.h"
+
 class QTcpSocket;
 class Serializable;
 class NetworkInterface;
 
-class RxTask : public QObject
+class RxTask;
+typedef oxygine::intrusive_ptr<RxTask> spRxTask;
+
+class RxTask : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
@@ -20,7 +25,7 @@ private:
    QTcpSocket* m_pSocket;
    NetworkInterface* pIF;
    qint32 dataSize;
-   Mainapp::NetworkSerives m_serive;
+   Mainapp::NetworkSerives m_serive{Mainapp::NetworkSerives::None};
 };
 
 #endif // RXTASK_H

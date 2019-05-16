@@ -12,63 +12,55 @@ TCPClient::TCPClient()
       pSocket(nullptr)
 {
     isServer = false;
+    start();
 }
 
 TCPClient::~TCPClient()
 {
-    disconnectTCP();
 }
 
 void TCPClient::connectTCP(const QString& adress, quint16 port)
 {
-    disconnectTCP();
     // Launch Socket
     pSocket = new QTcpSocket(this);
-    QObject::connect(pSocket, SIGNAL(disconnected()), this, SLOT(disconnectTCP()));
-    QObject::connect(pSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(displayError(QAbstractSocket::SocketError)));
-    pSocket->connectToHost(adress, port);
     pSocket->moveToThread(this);
+    QObject::connect(pSocket, &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
+    QObject::connect(pSocket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error), this, &TCPClient::displayError);
+    pSocket->connectToHost(adress, port);
 
     // Start RX-Task
     pRXTask = new RxTask(pSocket, this);
     pRXTask->moveToThread(this);
-    QObject::connect(pSocket, SIGNAL(readyRead()), pRXTask, SLOT(recieveData()));
+    QObject::connect(pSocket, &QTcpSocket::readyRead, pRXTask.get(), &RxTask::recieveData);
 
     // start TX-Task
     pTXTask = new TxTask(pSocket, this);
     pTXTask->moveToThread(this);
-    QObject::connect(this, SIGNAL(sig_sendData(QByteArray,Mainapp::NetworkSerives, bool)), pTXTask, SLOT(send(QByteArray,Mainapp::NetworkSerives, bool)));
+    QObject::connect(this, &TCPClient::sig_sendData, pTXTask.get(), &TxTask::send);
 
     isConnected = true;
     Console::print(tr("Client is running"), Console::eDEBUG);
+    emit sigConnected();
 }
 
 void TCPClient::disconnectTCP()
 {
-    if (pRXTask != nullptr)
-    {
-        delete pRXTask;
-        pRXTask = nullptr;
-    }
-    if (pTXTask != nullptr)
-    {
-        delete pTXTask;
-        pTXTask = nullptr;
-    }
     if (pSocket != nullptr)
     {
-        pSocket->abort();
-        // realize correct deletion
-        pSocket->deleteLater();
+        pRXTask->disconnect();
+        pRXTask = nullptr;
+        pTXTask->disconnect();
+        pTXTask = nullptr;
+        pSocket->disconnect();
+        pSocket->close();
+        delete pSocket;
+        pSocket = nullptr;
+        delete networkSession;
+        networkSession = nullptr;
     }
-    pSocket = nullptr;
 }
 
-void TCPClient::sendData(QByteArray data, Mainapp::NetworkSerives service, bool blocking)
+void TCPClient::sendData(QByteArray data, Mainapp::NetworkSerives service, bool forwardData)
 {
-    emit sig_sendData(data, service, blocking);
-}
-
-void TCPClient::sessionOpened(quint16)
-{
+    emit sig_sendData(data, service, forwardData);
 }

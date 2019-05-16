@@ -22,7 +22,6 @@ Console::eLogLevels Console::LogLevel = Console::eINFO;
 bool Console::show = false;
 bool Console::toggled = false;
 QList<QString> Console::output;
-QMutex* Console::datalocker = nullptr;
 Console* Console::m_pConsole = nullptr;
 QString Console::curmsg = nullptr;
 qint32 Console::curmsgpos = 0;
@@ -30,7 +29,7 @@ QTime Console::toggle;
 qint32 Console::curlastmsgpos = 0;
 QList<QString> Console::lastmsgs;
 qint32 Console::outputSize = 100;
-
+QMutex Console::datalocker;
 
 // Console Libary
 const QString Console::functions[] =
@@ -83,7 +82,6 @@ void Console::init()
 
     connect(pMainapp, &Mainapp::sigConsoleKeyDown, m_pConsole, &Console::KeyInput, Qt::QueuedConnection);
     connect(pMainapp, &Mainapp::sigConsoleText, m_pConsole, &Console::TextInput, Qt::QueuedConnection);
-    datalocker = new QMutex();
     //Setup Lua
     QString consoleName = "console";
     pMainapp->getInterpreter()->pushObject(consoleName, m_pConsole);
@@ -123,7 +121,7 @@ void Console::print(const QString& message, qint8 LogLevel)
 
 void Console::print(const QString& message, eLogLevels MsgLogLevel)
 {
-    QMutexLocker locker(datalocker);
+    QMutexLocker locker(&datalocker);
 
     if (MsgLogLevel >= Console::LogLevel)
     {
@@ -180,7 +178,7 @@ void Console::update(const oxygine::UpdateState& us)
     if(show)
     {
         Mainapp* pApp = Mainapp::getInstance();
-        QMutexLocker locker(datalocker);
+        QMutexLocker locker(&datalocker);
         qint32 screenheight = pApp->getSettings()->getHeight();
         qint32 h = FontManager::getTimesFont10()->getSize();
         // pre calc message start
