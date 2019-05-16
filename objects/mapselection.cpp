@@ -133,8 +133,8 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     pArrowDown->setPosition(width / 2 - pAnim->getWidth() * 2, y + 5);
     this->addChild(pArrowDown);
     changeFolder(folder);
-    connect(this, SIGNAL(changeSelection(qint32)), this, SLOT(updateSelection(qint32)), Qt::QueuedConnection);
-    connect(this, SIGNAL(itemClicked(QString)), this, SLOT(changeFolder(QString)), Qt::QueuedConnection);
+    connect(this, &MapSelection::changeSelection, this, &MapSelection::updateSelection, Qt::QueuedConnection);
+    connect(this, &MapSelection::itemClicked, this, &MapSelection::changeFolder, Qt::QueuedConnection);
 }
 
 MapSelection::~MapSelection()

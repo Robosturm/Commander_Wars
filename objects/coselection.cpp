@@ -83,7 +83,7 @@ COSelection::COSelection()
 
     addChild(m_Cursor);
 
-    connect(this, SIGNAL(armySelectedChange(QString)), this, SLOT(armyChanged(QString)));
+    connect(this, &COSelection::armySelectedChange, this, &COSelection::armyChanged, Qt::QueuedConnection);
     armyChanged(m_Armies[0]);
 
     oxygine::TextStyle style = FontManager::getMainFont();

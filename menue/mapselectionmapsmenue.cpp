@@ -179,8 +179,8 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
     m_pBuildingBackground->addChild(slider);
     addChild(m_pBuildingBackground);
 
-    connect(m_pMapSelection.get(), SIGNAL(itemChanged(QString)), this, SLOT(mapSelectionItemChanged(QString)), Qt::QueuedConnection);
-    connect(m_pMapSelection.get(), SIGNAL(itemClicked(QString)), this, SLOT(mapSelectionItemClicked(QString)), Qt::QueuedConnection);
+    connect(m_pMapSelection.get(), &MapSelection::itemChanged, this, &MapSelectionMapsMenue::mapSelectionItemChanged, Qt::QueuedConnection);
+    connect(m_pMapSelection.get(), &MapSelection::itemClicked, this, &MapSelectionMapsMenue::mapSelectionItemClicked, Qt::QueuedConnection);
 
     oxygine::spButton pButtonBack = ObjectManager::createButton(tr("Back"));
     pButtonBack->setPosition(10, pApp->getSettings()->getHeight() - 10 - pButtonBack->getHeight());
@@ -189,7 +189,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
     {
         emit buttonBack();
     });
-    connect(this, SIGNAL(buttonBack()), this, SLOT(slotButtonBack()), Qt::QueuedConnection);
+    connect(this, &MapSelectionMapsMenue::buttonBack, this, &MapSelectionMapsMenue::slotButtonBack, Qt::QueuedConnection);
 
     m_pButtonNext = ObjectManager::createButton(tr("Next"));
     m_pButtonNext->setPosition(pApp->getSettings()->getWidth() - 10 - pButtonBack->getWidth(), pApp->getSettings()->getHeight() - 10 - pButtonBack->getHeight());
@@ -198,7 +198,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
     {
         emit buttonNext();
     });
-    connect(this, SIGNAL(buttonNext()), this, SLOT(slotButtonNext()), Qt::QueuedConnection);
+    connect(this, &MapSelectionMapsMenue::buttonNext, this, &MapSelectionMapsMenue::slotButtonNext, Qt::QueuedConnection);
 
     m_pButtonStart = ObjectManager::createButton(tr("Start Game"));
     m_pButtonStart->setPosition(pApp->getSettings()->getWidth() - 10 - pButtonBack->getWidth(), pApp->getSettings()->getHeight() - 10 - pButtonBack->getHeight());
@@ -207,7 +207,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
     {
         emit buttonStartGame();
     });
-    connect(this, SIGNAL(buttonStartGame()), this, SLOT(startGame()), Qt::QueuedConnection);
+    connect(this, &MapSelectionMapsMenue::buttonStartGame, this, &MapSelectionMapsMenue::startGame, Qt::QueuedConnection);
 
     qint32 yPos = 10;
     m_pPlayerSelection = new PlayerSelection(pApp->getSettings()->getWidth() - 20,

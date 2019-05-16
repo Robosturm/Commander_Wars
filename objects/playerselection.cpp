@@ -139,7 +139,7 @@ void PlayerSelection::showPlayerSelection()
     spSpinBox allStartFondsSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
     allStartFondsSpinBox->setPosition(xPositions[itemIndex], y);
     m_pPlayerSelection->addItem(allStartFondsSpinBox);
-    connect(allStartFondsSpinBox.get(), SIGNAL(sigValueChanged(float)), this, SLOT(allPlayerStartFondsChanged(float)), Qt::QueuedConnection);
+    connect(allStartFondsSpinBox.get(), &SpinBox::sigValueChanged, this, &PlayerSelection::allPlayerStartFondsChanged, Qt::QueuedConnection);
 
     itemIndex = 5;
     spSpinBox allIncomeSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 10, SpinBox::Mode::Float);
@@ -147,7 +147,7 @@ void PlayerSelection::showPlayerSelection()
     allIncomeSpinBox->setCurrentValue(1.0f);
     allIncomeSpinBox->setSpinSpeed(0.1f);
     m_pPlayerSelection->addItem(allIncomeSpinBox);
-    connect(allIncomeSpinBox.get(), SIGNAL(sigValueChanged(float)), this, SLOT(allPlayerIncomeChanged(float)), Qt::QueuedConnection);
+    connect(allIncomeSpinBox.get(), &SpinBox::sigValueChanged, this, &PlayerSelection::allPlayerIncomeChanged, Qt::QueuedConnection);
 
     itemIndex = 7;
     oxygine::spButton pButtonAllBuildList = ObjectManager::createButton(tr("Build List"));

@@ -27,7 +27,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     m_CurrentFolder->setPosition(30, 30);
     pSpriteBox->addChild(m_CurrentFolder);
     m_CurrentFolder->setCurrentText(startFolder);
-    connect(m_CurrentFolder.get(), SIGNAL(sigTextChanged(QString)), this, SLOT(showFolder(QString)), Qt::QueuedConnection);
+    connect(m_CurrentFolder.get(), &Textbox::sigTextChanged, this, &FileDialog::showFolder, Qt::QueuedConnection);
     // folder file selection
     m_MainPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 210), QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 300));
     m_MainPanel->setPosition(30, 30 + m_CurrentFolder->getHeight() + 10);
@@ -74,7 +74,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     m_DropDownmenu = new DropDownmenu(m_CurrentFile->getWidth(), wildcards, true);
     pSpriteBox->addChild(m_DropDownmenu);
     m_DropDownmenu->setPosition(30, m_CurrentFile->getY() + m_CurrentFile->getHeight() + 10);
-    connect(m_DropDownmenu.get(), SIGNAL(sigItemChanged(qint32)), this, SLOT(filterChanged(qint32)), Qt::QueuedConnection);
+    connect(m_DropDownmenu.get(), &DropDownmenu::sigItemChanged, this, &FileDialog::filterChanged, Qt::QueuedConnection);
     // cancel button
     m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
     m_CancelButton->setPosition(m_DropDownmenu->getWidth() + 30 + 10, m_DropDownmenu->getY());
@@ -128,7 +128,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
             emit sigShowFolder("");
         }
     });
-    connect(this, SIGNAL(sigShowFolder(QString)), this, SLOT(showFolder(QString)), Qt::QueuedConnection);
+    connect(this, &FileDialog::sigShowFolder, this, &FileDialog::showFolder, Qt::QueuedConnection);
     showFolder(startFolder);
 }
 

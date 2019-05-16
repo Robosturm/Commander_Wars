@@ -68,8 +68,8 @@ EditorSelection::EditorSelection()
             emit sigClickedPlacementSelection(pTouchEvent->getPointer()->getPosition().x, pTouchEvent->getPointer()->getPosition().y);
         }
     });
-    connect(this, SIGNAL(sigClickedPlacementSelection(qint32,qint32)), this, SLOT(ClickedPlacementSelection(qint32,qint32)), Qt::QueuedConnection);
-    connect(this, SIGNAL(sigUpdateSelectedPlayer()), this, SLOT(updateSelectedPlayer()));
+    connect(this, &EditorSelection::sigClickedPlacementSelection, this, &EditorSelection::ClickedPlacementSelection, Qt::QueuedConnection);
+    connect(this, &EditorSelection::sigUpdateSelectedPlayer, this, &EditorSelection::updateSelectedPlayer);
 
     // load other sprites not shown in the starting screen
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();

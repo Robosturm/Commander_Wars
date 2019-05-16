@@ -57,7 +57,7 @@ Mainwindow::Mainwindow()
         {
             emit this->sigLastSaveGame();
         });
-        connect(this, SIGNAL(sigLastSaveGame()), this, SLOT(lastSaveGame()), Qt::QueuedConnection);
+        connect(this, &Mainwindow::sigLastSaveGame, this, &Mainwindow::lastSaveGame, Qt::QueuedConnection);
         btnI++;
     }
 
@@ -102,7 +102,7 @@ Mainwindow::Mainwindow()
     {
         emit this->sigEnterEditor();
     });
-    connect(this, SIGNAL(sigEnterEditor()), this, SLOT(enterEditor()), Qt::QueuedConnection);
+    connect(this, &Mainwindow::sigEnterEditor, this, &Mainwindow::enterEditor, Qt::QueuedConnection);
     btnI++;
 
     // option button
@@ -135,7 +135,7 @@ Mainwindow::Mainwindow()
     {
         emit this->sigQuit();
     });
-    connect(this, SIGNAL(sigQuit()), this, SLOT(quitGame()), Qt::QueuedConnection);
+    connect(this, &Mainwindow::sigQuit, this, &Mainwindow::quitGame, Qt::QueuedConnection);
     btnI++;
 
     if (Settings::getUsername().isEmpty())

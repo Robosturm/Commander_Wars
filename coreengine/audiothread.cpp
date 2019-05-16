@@ -14,14 +14,14 @@ AudioThread::AudioThread()
     Interpreter::setCppOwnerShip(this);
     // move signals and slots to Audio Thread
     this->moveToThread(this);
-    connect(this, SIGNAL(SignalPlayMusic(int)), this, SLOT(SlotPlayMusic(int)), Qt::QueuedConnection);
-    connect(this, SIGNAL(SignalSetVolume(int)), this, SLOT(SlotSetVolume(int)), Qt::QueuedConnection);
-    connect(this, SIGNAL(SignalAddMusic(QString)), this, SLOT(SlotAddMusic(QString)), Qt::QueuedConnection);
-    connect(this, SIGNAL(SignalClearPlayList()), this, SLOT(SlotClearPlayList()), Qt::QueuedConnection);
-    connect(this, SIGNAL(SignalPlayRandom()), this, SLOT(SlotPlayRandom()), Qt::QueuedConnection);
-    connect(this, SIGNAL(SignalLoadFolder(QString)), this, SLOT(SlotLoadFolder(QString)), Qt::QueuedConnection);
-    connect(this, SIGNAL(SignalPlaySound(QString, qint32, QString)), this, SLOT(SlotPlaySound(QString, qint32, QString)), Qt::QueuedConnection);
-    connect(this, SIGNAL(SignalStopSound(QString, QString)), this, SLOT(SlotStopSound(QString, QString)), Qt::QueuedConnection);
+    connect(this, &AudioThread::SignalPlayMusic,        this, &AudioThread::SlotPlayMusic, Qt::QueuedConnection);
+    connect(this, &AudioThread::SignalSetVolume,        this, &AudioThread::SlotSetVolume, Qt::QueuedConnection);
+    connect(this, &AudioThread::SignalAddMusic,         this, &AudioThread::SlotAddMusic, Qt::QueuedConnection);
+    connect(this, &AudioThread::SignalClearPlayList,    this, &AudioThread::SlotClearPlayList, Qt::QueuedConnection);
+    connect(this, &AudioThread::SignalPlayRandom,       this, &AudioThread::SlotPlayRandom, Qt::QueuedConnection);
+    connect(this, &AudioThread::SignalLoadFolder,       this, &AudioThread::SlotLoadFolder, Qt::QueuedConnection);
+    connect(this, &AudioThread::SignalPlaySound,        this, &AudioThread::SlotPlaySound, Qt::QueuedConnection);
+    connect(this, &AudioThread::SignalStopSound,        this, &AudioThread::SlotStopSound, Qt::QueuedConnection);
 }
 
 AudioThread::~AudioThread()

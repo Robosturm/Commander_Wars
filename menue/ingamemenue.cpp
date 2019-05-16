@@ -69,7 +69,7 @@ void InGameMenue::loadHandling()
             }
         }
     });
-    connect(this, SIGNAL(sigMouseWheel(qint32)), this, SLOT(mouseWheel(qint32)), Qt::QueuedConnection);
+    connect(this, &InGameMenue::sigMouseWheel, this, &InGameMenue::mouseWheel, Qt::QueuedConnection);
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
@@ -122,7 +122,7 @@ void InGameMenue::loadHandling()
             }
         }
     });
-    connect(this, SIGNAL(sigMoveMap(qint32,qint32)), this, SLOT(MoveMap(qint32,qint32)), Qt::QueuedConnection);
+    connect(this, &InGameMenue::sigMoveMap, this, &InGameMenue::MoveMap, Qt::QueuedConnection);
 
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
     {

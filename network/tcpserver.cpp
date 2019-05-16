@@ -23,7 +23,7 @@ void TCPServer::connectTCP(const QString&, quint16 port)
     pTCPServer = new QTcpServer(this);
     pTCPServer->moveToThread(this);
     pTCPServer->listen(QHostAddress::Any, port);
-    QObject::connect(pTCPServer, SIGNAL(newConnection()), this, SLOT(onConnect()));
+    QObject::connect(pTCPServer, &QTcpServer::newConnection, this, &TCPServer::onConnect);
 
     Console::print(tr("Server is running"), Console::eDEBUG);
 }

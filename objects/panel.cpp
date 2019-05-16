@@ -14,12 +14,12 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize)
     m_HScrollbar = new H_Scrollbar(size.height() - 33, contentSize.height());
     this->addChild(m_HScrollbar);
     m_HScrollbar->setX(size.width() - m_HScrollbar->getWidth());
-    connect(m_HScrollbar.get(), SIGNAL(sigScrollValueChanged(float)), this, SLOT(scrolledY(float)), Qt::QueuedConnection);
+    connect(m_HScrollbar.get(), &H_Scrollbar::sigScrollValueChanged, this, &Panel::scrolledY, Qt::QueuedConnection);
 
     m_VScrollbar = new V_Scrollbar(size.width() - 33, contentSize.width());
     this->addChild(m_VScrollbar);
     m_VScrollbar->setY(size.height() - m_VScrollbar->getHeight());
-    connect(m_VScrollbar.get(), SIGNAL(sigScrollValueChanged(float)), this, SLOT(scrolledX(float)), Qt::QueuedConnection);
+    connect(m_VScrollbar.get(), &V_Scrollbar::sigScrollValueChanged, this, &Panel::scrolledX, Qt::QueuedConnection);
 
     m_ClipRect = new oxygine::ClipRectActor();
     if (useBox)
