@@ -1,4 +1,4 @@
-#include "dialogusername.h"
+#include "dialogtextinput.h"
 
 #include "coreengine/mainapp.h"
 
@@ -6,7 +6,7 @@
 
 #include "resource_management/fontmanager.h"
 
-DialogUsername::DialogUsername()
+DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInput)
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -29,14 +29,14 @@ DialogUsername::DialogUsername()
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     oxygine::spTextField pText = new oxygine::TextField();
-    pText->setText(tr("Select your Username").toStdString().c_str());
+    pText->setText(text.toStdString().c_str());
     pText->setStyle(style);
     pText->setPosition(pApp->getSettings()->getWidth() / 2 - pText->getTextRect().getWidth() / 2, pApp->getSettings()->getHeight() / 2 - 40);
     pSpriteBox->addChild(pText);
 
     m_pTextbox = new Textbox(300);
     m_pTextbox->setPosition(pApp->getSettings()->getWidth() / 2 - m_pTextbox->getWidth() / 2, pApp->getSettings()->getHeight() / 2);
-    m_pTextbox->setCurrentText(Settings::getUsername());
+    m_pTextbox->setCurrentText(startInput);
     pSpriteBox->addChild(m_pTextbox);
 
     // ok button
@@ -45,11 +45,22 @@ DialogUsername::DialogUsername()
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        QString username = m_pTextbox->getCurrentText();
-        if (!username.isEmpty())
+        QString currentText = m_pTextbox->getCurrentText();
+        if (!currentText.isEmpty())
         {
-            Settings::setUsername(username);
+            emit sigTextChanged(currentText);
             this->getParent()->removeChild(this);
         }
     });
+    if (showCancel)
+    {
+        m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
+        m_CancelButton->setPosition(30, pApp->getSettings()->getHeight() - 30 - m_CancelButton->getHeight());
+        pSpriteBox->addChild(m_CancelButton);
+        m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        {
+            emit sigCancel();
+            this->getParent()->removeChild(this);
+        });
+    }
 }

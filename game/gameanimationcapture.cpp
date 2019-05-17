@@ -6,6 +6,7 @@
 
 #include "coreengine/console.h"
 #include "coreengine/audiothread.h"
+#include "coreengine/mainapp.h"
 
 const qint32 GameAnimationCapture::capturingFactor = 10;
 const qint32 GameAnimationCapture::jumpSprites = 3;

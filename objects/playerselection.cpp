@@ -12,7 +12,6 @@
 
 #include "objects/buildlistdialog.h"
 #include "objects/coselectiondialog.h"
-#include "objects/dropdownmenucolor.h"
 
 #include "gameinput/humanplayerinput.h"
 #include "ai/veryeasyai.h"
@@ -43,9 +42,12 @@ void PlayerSelection::resetPlayerSelection()
     m_pPlayerSelection->clearContent();
     m_playerCO1.clear();
     m_playerCO2.clear();
+    m_playerColors.clear();
     m_playerIncomes.clear();
     m_playerStartFonds.clear();
     m_playerAIs.clear();
+    m_playerTeams.clear();
+    m_playerBuildlist.clear();
     pApp->continueThread();
 }
 
@@ -134,12 +136,21 @@ void PlayerSelection::showPlayerSelection()
         emit buttonAllCOsRandom();
     });
     connect(this, &PlayerSelection::buttonAllCOsRandom, this, &PlayerSelection::slotAllCOsRandom, Qt::QueuedConnection);
+    if (m_pNetworkInterface.get() != nullptr)
+    {
+        pButtonAllCOs->setEnabled(false);
+    }
 
     itemIndex = 4;
     spSpinBox allStartFondsSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
     allStartFondsSpinBox->setPosition(xPositions[itemIndex], y);
     m_pPlayerSelection->addItem(allStartFondsSpinBox);
     connect(allStartFondsSpinBox.get(), &SpinBox::sigValueChanged, this, &PlayerSelection::allPlayerStartFondsChanged, Qt::QueuedConnection);
+    if (m_pNetworkInterface.get() != nullptr &&
+        !m_pNetworkInterface->getIsServer())
+    {
+        allStartFondsSpinBox->setEnabled(false);
+    }
 
     itemIndex = 5;
     spSpinBox allIncomeSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 10, SpinBox::Mode::Float);
@@ -148,6 +159,11 @@ void PlayerSelection::showPlayerSelection()
     allIncomeSpinBox->setSpinSpeed(0.1f);
     m_pPlayerSelection->addItem(allIncomeSpinBox);
     connect(allIncomeSpinBox.get(), &SpinBox::sigValueChanged, this, &PlayerSelection::allPlayerIncomeChanged, Qt::QueuedConnection);
+    if (m_pNetworkInterface.get() != nullptr &&
+        !m_pNetworkInterface->getIsServer())
+    {
+        allIncomeSpinBox->setEnabled(false);
+    }
 
     itemIndex = 7;
     oxygine::spButton pButtonAllBuildList = ObjectManager::createButton(tr("Build List"));
@@ -158,6 +174,11 @@ void PlayerSelection::showPlayerSelection()
         emit buttonShowAllBuildList();
     });
     connect(this, &PlayerSelection::buttonShowAllBuildList, this, &PlayerSelection::slotShowAllBuildList, Qt::QueuedConnection);
+    if (m_pNetworkInterface.get() != nullptr &&
+        !m_pNetworkInterface->getIsServer())
+    {
+        pButtonAllBuildList->setEnabled(false);
+    }
 
     y += 10 + allIncomeSpinBox->getHeight();
     QVector<QString> teamList;
@@ -167,6 +188,17 @@ void PlayerSelection::showPlayerSelection()
     }
 
     QVector<QString> aiList = {tr("Human"), tr("Very Easy")};
+    if (m_pNetworkInterface.get() != nullptr)
+    {
+        if (m_pNetworkInterface->getIsServer())
+        {
+            aiList = {tr("Human"), tr("Very Easy"), tr("Open")};
+        }
+        else
+        {
+            aiList = {tr("Human"), tr("Open")};
+        }
+    }
 
     QString function = "getDefaultPlayerColors";
     QJSValueList args;
@@ -256,8 +288,6 @@ void PlayerSelection::showPlayerSelection()
             emit sigShowSelectCO(i, 1);
         });
 
-        spriteCO2->setEnabled(false);
-
         bool up = false;
         if ((pMap->getPlayerCount() - i <= 5) &&
             (i > 5))
@@ -274,6 +304,7 @@ void PlayerSelection::showPlayerSelection()
         {
             playerColorChanged(value, i);
         }, Qt::QueuedConnection);
+        m_playerColors.append(playerColor);
 
         itemIndex = 3;
         spDropDownmenu playerAi = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, aiList, up);
@@ -312,6 +343,11 @@ void PlayerSelection::showPlayerSelection()
         {
             playerStartFondsChanged(value, i);
         }, Qt::QueuedConnection);
+        if (m_pNetworkInterface.get() != nullptr &&
+            !m_pNetworkInterface->getIsServer())
+        {
+            playerStartFondsSpinBox->setEnabled(false);
+        }
 
         itemIndex = 5;
         spSpinBox playerIncomeSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 10, SpinBox::Mode::Float);
@@ -324,9 +360,13 @@ void PlayerSelection::showPlayerSelection()
         {
             playerIncomeChanged(value, i);
         }, Qt::QueuedConnection);
+        if (m_pNetworkInterface.get() != nullptr &&
+            !m_pNetworkInterface->getIsServer())
+        {
+            playerIncomeSpinBox->setEnabled(false);
+        }
 
         itemIndex = 6;
-
         spDropDownmenu playerTeam = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, teamList, up);
         playerTeam->setPosition(xPositions[itemIndex], y);
         playerTeam->setCurrentItem(pMap->getPlayer(i)->getTeam());
@@ -335,6 +375,12 @@ void PlayerSelection::showPlayerSelection()
         {
             playerTeamChanged(value, i);
         }, Qt::QueuedConnection);
+        m_playerTeams.append(playerTeam);
+        if (m_pNetworkInterface.get() != nullptr &&
+            !m_pNetworkInterface->getIsServer())
+        {
+            playerTeam->setEnabled(false);
+        }
 
         itemIndex = 7;
         oxygine::spButton pButtonPlayerBuildList = ObjectManager::createButton(tr("Build List"));
@@ -344,6 +390,12 @@ void PlayerSelection::showPlayerSelection()
         {
             emit buttonShowPlayerBuildList(i);
         });
+        m_playerBuildlist.append(pButtonPlayerBuildList);
+        if (m_pNetworkInterface.get() != nullptr &&
+            !m_pNetworkInterface->getIsServer())
+        {
+            pButtonPlayerBuildList->setEnabled(false);
+        }
         y += 15 + playerIncomeSpinBox->getHeight();
     }
     m_pPlayerSelection->setContentHeigth(y);
@@ -533,7 +585,15 @@ void PlayerSelection::selectAI(qint32 player)
         }
         default:
         {
-            pPlayer->setBaseGameInput(new HumanPlayerInput());
+            if (m_pNetworkInterface.get() != nullptr)
+            {
+                pPlayer->setBaseGameInput(nullptr);
+            }
+            else
+            {
+                pPlayer->setBaseGameInput(new HumanPlayerInput());
+            }
+
             break;
         }
     }

@@ -75,7 +75,7 @@ set(${PROJECT_NAME}_SRCS
         objects/playerselection.cpp
         objects/playerselectiondialog.cpp
         objects/selectkey.cpp
-        objects/dialogusername.cpp
+        objects/dialogtextinput.cpp
         objects/chat.cpp
         objects/dialogvictoryconditions.cpp
 
@@ -186,6 +186,7 @@ set(${PROJECT_NAME}_SRCS
 
         # multiplayer
         multiplayer/lobbymenu.cpp
+        multiplayer/multiplayermenu.cpp
 )
 
 

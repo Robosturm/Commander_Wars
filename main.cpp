@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
     app.setup();
 
     // qt metatypes we need this for js and signal slot stuff
-    qRegisterMetaType<Mainapp::NetworkSerives>("Mainapp::NetworkSerives");
+    qRegisterMetaType<NetworkInterface::NetworkSerives>("NetworkInterface::NetworkSerives");
     qRegisterMetaType<VictoryMenue::GraphModes>("VictoryMenue::GraphModes");
     qRegisterMetaType<GameEnums::Alliance>("GameEnums::Alliance");
     qRegisterMetaType<GameEnums::UnitRanks>("GameEnums::UnitRanks");
@@ -113,6 +113,7 @@ int main(int argc, char* argv[])
     qRegisterMetaType<GameEnums::GameAi>("GameEnums::GameAi");
     qRegisterMetaType<GameEnums::AnimationMode>("GameEnums::AnimationMode");
     qRegisterMetaType<SDL_Event>("SDL_Event");
+    qRegisterMetaType<std::shared_ptr<QTcpSocket>>("std::shared_ptr<QTcpSocket>");
 
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
     qmlRegisterInterface<Terrain>("Terrain");

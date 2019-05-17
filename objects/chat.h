@@ -19,17 +19,17 @@ class Chat : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit Chat(NetworkInterface* pInterface, QSize size);
+    explicit Chat(spNetworkInterface pInterface, QSize size);
 
     virtual void update(const oxygine::UpdateState& us) override;
 signals:
     void sigSendText(QString message);
 public slots:
-    void dataRecieved(QByteArray data, Mainapp::NetworkSerives service);
+    void dataRecieved(std::shared_ptr<QTcpSocket>, QByteArray data, NetworkInterface::NetworkSerives service);
     void sendData(QString message);
 private:
     QVector<QString> messages;
-    NetworkInterface* m_pInterface{nullptr};
+    spNetworkInterface m_pInterface{nullptr};
     spPanel m_Panel;
     oxygine::spTextField m_Chat;
     spTextbox m_ChatInput;

@@ -6,7 +6,7 @@
 #include "network/txtask.h"
 #include "network/NetworkInterface.h"
 
-TxTask::TxTask(QTcpSocket* pSocket, NetworkInterface* CommIF)
+TxTask::TxTask(std::shared_ptr<QTcpSocket> pSocket, NetworkInterface* CommIF)
  : m_pSocket(pSocket),
    pIF(CommIF)
 {
@@ -17,9 +17,11 @@ TxTask::~TxTask()
 
 }
 
-void TxTask::send(QByteArray data, Mainapp::NetworkSerives service, bool forwardData)
+void TxTask::send(std::shared_ptr<QTcpSocket> pSocket, QByteArray data, NetworkInterface::NetworkSerives service, bool forwardData)
 {
-    if (m_pSocket->isOpen())
+    bool open = m_pSocket->isOpen();
+    if (open &&
+        (pSocket.get() == m_pSocket.get() || pSocket.get() == nullptr))
     {
         QByteArray block;
         QDataStream out(&block, QIODevice::WriteOnly);

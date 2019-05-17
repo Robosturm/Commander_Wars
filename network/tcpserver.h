@@ -4,8 +4,6 @@
 #include <QVector>
 #include <QMutex>
 
-
-
 #include "network/NetworkInterface.h"
 
 class TxTask;
@@ -17,12 +15,16 @@ class QNetworkSession;
 #include "network/rxtask.h"
 #include "network/txtask.h"
 
+class TCPServer;
+typedef oxygine::intrusive_ptr<TCPServer> spTCPServer;
+
 class TCPServer : public NetworkInterface
 {
     Q_OBJECT
 public:
     TCPServer();
     virtual ~TCPServer();
+
 public slots:
     virtual void connectTCP(const QString& adress, quint16 port) override;
     virtual void disconnectTCP() override;
@@ -33,14 +35,14 @@ public slots:
      * @brief sendData send Data with this Connection
      * @param data
      */
-    virtual void sendData(QByteArray data, Mainapp::NetworkSerives service, bool forwardData) override;
-    virtual void forwardData(QTcpSocket* pSocket, QByteArray data, Mainapp::NetworkSerives service) override;
+    virtual void sendData(std::shared_ptr<QTcpSocket>, QByteArray data, NetworkSerives service, bool forwardData) override;
+    virtual void forwardData(std::shared_ptr<QTcpSocket>, QByteArray data, NetworkSerives service) override;
 
 private:
     QMutex TaskMutex;
     QVector<spRxTask> pRXTasks;
     QVector<spTxTask> pTXTasks;
-    QVector<QTcpSocket*> pTCPSockets;
+    QVector<std::shared_ptr<QTcpSocket>> pTCPSockets;
     QTcpServer* pTCPServer;
 };
 

@@ -5,7 +5,7 @@
 
 #include "network/NetworkInterface.h"
 
-RxTask::RxTask(QTcpSocket* pSocket, NetworkInterface* CommIF)
+RxTask::RxTask(std::shared_ptr<QTcpSocket> pSocket, NetworkInterface* CommIF)
     : m_pSocket(pSocket),
       pIF(CommIF),
       dataSize(0)
@@ -19,7 +19,7 @@ RxTask::~RxTask()
 
 void RxTask::recieveData()
 {
-        QDataStream pStream(m_pSocket);
+        QDataStream pStream(m_pSocket.get());
         pStream.setVersion(QDataStream::Qt_5_12);
 
         qint64 bytes = 0;
@@ -36,7 +36,7 @@ void RxTask::recieveData()
             pStream >> dataSize;
         }
 
-        if (m_serive == Mainapp::NetworkSerives::None)
+        if (m_serive == NetworkInterface::NetworkSerives::None)
         {
             bytes = m_pSocket->bytesAvailable();
             if (bytes < static_cast<qint32>(sizeof(qint32)))
@@ -46,7 +46,7 @@ void RxTask::recieveData()
             }
             qint32 service;
             pStream >> service;
-            m_serive = static_cast<Mainapp::NetworkSerives>(service);
+            m_serive = static_cast<NetworkInterface::NetworkSerives>(service);
         }
 
         bytes = m_pSocket->bytesAvailable();
@@ -62,7 +62,7 @@ void RxTask::recieveData()
 
         // read Object        
         dataSize = 0;
-        if ((m_serive < Mainapp::NetworkSerives::Game) || (m_serive >= Mainapp::NetworkSerives::Max))
+        if ((m_serive < NetworkInterface::NetworkSerives::Game) || (m_serive >= NetworkInterface::NetworkSerives::Max))
         {
             // don't send an event :)
         }
@@ -75,7 +75,7 @@ void RxTask::recieveData()
             // note only one Service can recieve a message!!!
             // since the service needs to delete the object.
             // otherwise you get some nice null-pointer exeptions
-            emit pIF->recieveData(data, m_serive);
+            emit pIF->recieveData(m_pSocket, data, m_serive);
         }
-        m_serive = Mainapp::NetworkSerives::None;
+        m_serive = NetworkInterface::NetworkSerives::None;
 }

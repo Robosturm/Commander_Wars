@@ -2,13 +2,12 @@
 #define RXTASK_H
 
 #include <QObject>
-#include "coreengine/mainapp.h"
 
 #include "oxygine-framework.h"
 
+#include "network/NetworkInterface.h"
+
 class QTcpSocket;
-class Serializable;
-class NetworkInterface;
 
 class RxTask;
 typedef oxygine::intrusive_ptr<RxTask> spRxTask;
@@ -17,15 +16,15 @@ class RxTask : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
-    RxTask(QTcpSocket* pSocket, NetworkInterface* CommIF);
+    RxTask(std::shared_ptr<QTcpSocket> pSocket, NetworkInterface* CommIF);
     virtual ~RxTask();
 public slots:
     void recieveData();
 private:
-   QTcpSocket* m_pSocket;
+   std::shared_ptr<QTcpSocket> m_pSocket;
    NetworkInterface* pIF;
    qint32 dataSize;
-   Mainapp::NetworkSerives m_serive{Mainapp::NetworkSerives::None};
+   NetworkInterface::NetworkSerives m_serive{NetworkInterface::NetworkSerives::None};
 };
 
 #endif // RXTASK_H

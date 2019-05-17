@@ -7,17 +7,14 @@
 #include <QNetworkSession>
 #include <QVector>
 #include <QAbstractSocket>
+#include <QTcpSocket>
 #include <QSemaphore>
-
-#include "coreengine/mainapp.h"
-#include "coreengine/settings.h"
-#include "coreengine/console.h"
 
 #include "oxygine-framework.h"
 
-class Serializable;
-class QTcpSocket;
+#include "coreengine/console.h"
 
+class Serializable;
 
 class NetworkInterface;
 typedef oxygine::intrusive_ptr<NetworkInterface> spNetworkInterface;
@@ -29,6 +26,19 @@ class NetworkInterface : public QThread, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
+    /**
+      * @brief this enum contains all message recievers of the network
+      */
+    enum class NetworkSerives
+    {
+        None = -1,
+        Game,
+        Lobby,
+        Chat,
+        Multiplayer,
+        Max,
+    };
+
     NetworkInterface()
         : isServer(false),
           isConnected(false)
@@ -42,7 +52,7 @@ public:
 
     }
 
-    QString getIPAdresse()
+    static QString getIPAdresse()
     {
         QString ipAddress;
         QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
@@ -73,6 +83,16 @@ public:
         return isConnected;
     }
 
+signals:
+    /**
+     * @brief recieveData emitted when Data is recieved
+     * @param data
+     */
+    void recieveData(std::shared_ptr<QTcpSocket> pSocket, QByteArray data, NetworkSerives service);
+    void sig_connect(const QString& adress, quint16 port);
+    void sigConnected(std::shared_ptr<QTcpSocket> pSocket);
+    void sigDisconnected(std::shared_ptr<QTcpSocket> pSocket);
+    void sig_sendData(std::shared_ptr<QTcpSocket> pSocket, QByteArray data, NetworkSerives service, bool forwardData);
 public slots:
     virtual void connectTCP(const QString& adress, quint16 port) = 0;
     virtual void disconnectTCP() = 0;
@@ -80,7 +100,7 @@ public slots:
      * @brief sendData send Data with this Connection
      * @param data
      */
-    virtual void sendData(QByteArray data, Mainapp::NetworkSerives service, bool forwardData) = 0;
+    virtual void sendData(std::shared_ptr<QTcpSocket> pSocket, QByteArray data, NetworkSerives service, bool forwardData) = 0;
 
     void displayError(QAbstractSocket::SocketError socketError)
     {
@@ -98,7 +118,7 @@ public slots:
             Console::print(tr("Error inside the Socket happened."), Console::eERROR);
         }
     }
-    virtual void forwardData(QTcpSocket*, QByteArray, Mainapp::NetworkSerives){}
+    virtual void forwardData(std::shared_ptr<QTcpSocket>, QByteArray, NetworkSerives){}
 protected:
     QNetworkSession *networkSession;
     bool isServer;
@@ -114,15 +134,6 @@ protected:
         exec();
         disconnectTCP();
     }
-signals:
-    /**
-     * @brief recieveData emitted when Data is recieved
-     * @param data
-     */
-    void recieveData(QByteArray data, Mainapp::NetworkSerives service);
-    void sig_connect(const QString& adress, quint16 port);
-    void sigConnected();
-    void sig_sendData(QByteArray data, Mainapp::NetworkSerives service, bool forwardData);
 
 };
 

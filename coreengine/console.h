@@ -6,8 +6,6 @@
 
 #include "oxygine-framework.h"
 
-#include "coreengine/mainapp.h"
-
 class QString;
 class QMutex;
 class QKeyEvent;

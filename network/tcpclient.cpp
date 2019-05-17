@@ -22,16 +22,16 @@ TCPClient::~TCPClient()
 void TCPClient::connectTCP(const QString& adress, quint16 port)
 {
     // Launch Socket
-    pSocket = new QTcpSocket(this);
+    pSocket = std::shared_ptr<QTcpSocket>(new QTcpSocket(this));
     pSocket->moveToThread(this);
-    QObject::connect(pSocket, &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
-    QObject::connect(pSocket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error), this, &TCPClient::displayError);
+    QObject::connect(pSocket.get(), &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
+    QObject::connect(pSocket.get(), QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error), this, &TCPClient::displayError);
     pSocket->connectToHost(adress, port);
 
     // Start RX-Task
     pRXTask = new RxTask(pSocket, this);
     pRXTask->moveToThread(this);
-    QObject::connect(pSocket, &QTcpSocket::readyRead, pRXTask.get(), &RxTask::recieveData);
+    QObject::connect(pSocket.get(), &QTcpSocket::readyRead, pRXTask.get(), &RxTask::recieveData);
 
     // start TX-Task
     pTXTask = new TxTask(pSocket, this);
@@ -40,7 +40,7 @@ void TCPClient::connectTCP(const QString& adress, quint16 port)
 
     isConnected = true;
     Console::print(tr("Client is running"), Console::eDEBUG);
-    emit sigConnected();
+    emit sigConnected(pSocket);
 }
 
 void TCPClient::disconnectTCP()
@@ -53,14 +53,14 @@ void TCPClient::disconnectTCP()
         pTXTask = nullptr;
         pSocket->disconnect();
         pSocket->close();
-        delete pSocket;
         pSocket = nullptr;
         delete networkSession;
         networkSession = nullptr;
     }
+    emit sigDisconnected(nullptr);
 }
 
-void TCPClient::sendData(QByteArray data, Mainapp::NetworkSerives service, bool forwardData)
+void TCPClient::sendData(std::shared_ptr<QTcpSocket> pSocket, QByteArray data, NetworkSerives service, bool forwardData)
 {
-    emit sig_sendData(data, service, forwardData);
+    emit sig_sendData(pSocket, data, service, forwardData);
 }

@@ -39,7 +39,7 @@ public:
     virtual void process() override {}
 public slots:
     virtual void nextAction() override;
-    void recieveData(QByteArray data, Mainapp::NetworkSerives service);
+    void recieveData(QByteArray data, NetworkInterface::NetworkSerives service);
 private:
     QList<GameAction*> m_ActionBuffer;
     bool actionRunning{false};

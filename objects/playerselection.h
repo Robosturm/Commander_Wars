@@ -10,6 +10,9 @@
 #include "objects/spinbox.h"
 
 #include "objects/dropdownmenu.h"
+#include "objects/dropdownmenucolor.h"
+
+#include "network/NetworkInterface.h"
 
 class PlayerSelection;
 typedef oxygine::intrusive_ptr<PlayerSelection> spPlayerSelection;
@@ -51,11 +54,17 @@ public slots:
 private:
     // player selection
     spPanel m_pPlayerSelection;
+
     QVector<oxygine::spSprite> m_playerCO1;
     QVector<oxygine::spSprite> m_playerCO2;
+    QVector<spDropDownmenuColor> m_playerColors;
     QVector<spSpinBox> m_playerIncomes;
     QVector<spSpinBox> m_playerStartFonds;
     QVector<spDropDownmenu> m_playerAIs;
+    QVector<spDropDownmenu> m_playerTeams;
+    QVector<oxygine::spButton> m_playerBuildlist;
+
+    spNetworkInterface m_pNetworkInterface{nullptr};
 };
 
 #endif // PLAYERSELECTION_H

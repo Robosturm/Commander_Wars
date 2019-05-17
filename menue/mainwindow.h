@@ -10,18 +10,6 @@ public:
     explicit Mainwindow();
     virtual ~Mainwindow();
 
-public slots:
-    void enterSingleplayer();
-    void enterEditor();
-    void enterOptionmenue();
-    void enterLoadGame();
-    void enterCreditsmenue();
-    void loadGame(QString filename);
-    void lastSaveGame();
-    void enterMultiplayer();
-
-    void leaveMenue();
-    void quitGame();
 signals:
     void sigEnterSingleplayer();
     void sigEnterMultiplayer();
@@ -31,6 +19,18 @@ signals:
     void sigQuit();
     void sigEnterLoadGame();
     void sigLastSaveGame();
+public slots:
+    void enterSingleplayer();
+    void enterEditor();
+    void enterOptionmenue();
+    void enterLoadGame();
+    void enterCreditsmenue();
+    void loadGame(QString filename);
+    void lastSaveGame();
+    void enterMultiplayer();
+    void changeUsername(QString name);
+    void leaveMenue();
+    void quitGame();
 protected:
     void setButtonPosition(oxygine::spButton pButton, qint32 btnI);
 };

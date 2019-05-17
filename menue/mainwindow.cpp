@@ -15,7 +15,7 @@
 #include "multiplayer/lobbymenu.h"
 
 #include "objects/filedialog.h"
-#include "objects/dialogusername.h"
+#include "objects/dialogtextinput.h"
 
 #include <QFile>
 
@@ -140,8 +140,15 @@ Mainwindow::Mainwindow()
 
     if (Settings::getUsername().isEmpty())
     {
-        addChild(new DialogUsername());
+        spDialogTextInput pDialogTextInput = new DialogTextInput(tr("Select Username"), false, "");
+        addChild(pDialogTextInput);
+        connect(pDialogTextInput.get(), &DialogTextInput::sigTextChanged, this, &Mainwindow::changeUsername, Qt::QueuedConnection);
     }
+}
+
+void Mainwindow::changeUsername(QString name)
+{
+    Settings::setUsername(name);
 }
 
 void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)

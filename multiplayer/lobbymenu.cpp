@@ -6,10 +6,14 @@
 
 #include "menue/mainwindow.h"
 
+#include "multiplayer/multiplayermenu.h"
+
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 
 #include "objects/chat.h"
+
+#include "objects/dialogtextinput.h"
 
 #include "network/tcpserver.h"
 
@@ -18,7 +22,7 @@ LobbyMenu::LobbyMenu()
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
-    Console::print("Entering Option Menue", Console::eDEBUG);
+    Console::print("Entering Lobby Menue", Console::eDEBUG);
 
     if (!Settings::getServer())
     {
@@ -56,31 +60,34 @@ LobbyMenu::LobbyMenu()
     pButtonHost->setPosition(pApp->getSettings()->getWidth() - pButtonHost->getWidth() - 10, pApp->getSettings()->getHeight() - pButtonExit->getHeight() - 10);
     pButtonHost->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        // todo impl callback
+        emit sigHost();
     });
+    connect(this, &LobbyMenu::sigHost, this, &LobbyMenu::host, Qt::QueuedConnection);
 
     oxygine::spButton pButtonJoin = ObjectManager::createButton(tr("Join Game"));
     pButtonJoin->attachTo(this);
     pButtonJoin->setPosition(pApp->getSettings()->getWidth() / 2 + 10, pApp->getSettings()->getHeight() - pButtonExit->getHeight() - 10);
     pButtonJoin->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        // todo impl callback
+        emit sigJoinGame();
     });
+    connect(this, &LobbyMenu::sigJoinGame, this, &LobbyMenu::joinGame, Qt::QueuedConnection);
 
     oxygine::spButton pButtonJoinAdress = ObjectManager::createButton(tr("Join Adress"));
     pButtonJoinAdress->attachTo(this);
     pButtonJoinAdress->setPosition(pApp->getSettings()->getWidth() / 2 - 10 - pButtonJoinAdress->getWidth(), pApp->getSettings()->getHeight() - pButtonExit->getHeight() - 10);
     pButtonJoinAdress->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        // todo impl callback
+        emit sigJoinAdress();
     });
+    connect(this, &LobbyMenu::sigJoinAdress, this, &LobbyMenu::joinAdress, Qt::QueuedConnection);
 
     m_pGamesPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 20, pApp->getSettings()->getHeight() / 2 - 40),
                           QSize(pApp->getSettings()->getWidth() - 20, pApp->getSettings()->getHeight() / 2 - 80));
     m_pGamesPanel->setPosition(10, 10);
     addChild(m_pGamesPanel);
 
-    NetworkInterface* pInterface = m_pTCPClient;
+    spNetworkInterface pInterface = m_pTCPClient;
     if (Settings::getServer())
     {
         pInterface = pApp->getGameServer();
@@ -97,7 +104,7 @@ LobbyMenu::~LobbyMenu()
     {
         m_pTCPClient->quit();
         m_pTCPClient->wait();
-        delete m_pTCPClient;
+        m_pTCPClient = nullptr;
     }
 }
 
@@ -107,6 +114,43 @@ void LobbyMenu::exitMenue()
     pApp->suspendThread();
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
+    oxygine::Actor::detach();
+    pApp->continueThread();
+}
+
+void LobbyMenu::host()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    Console::print("Leaving Lobby Menue", Console::eDEBUG);
+    oxygine::getStage()->addChild(new Multiplayermenu("", true));
+    oxygine::Actor::detach();
+    pApp->continueThread();
+}
+
+void LobbyMenu::joinGame()
+{
+
+}
+
+void LobbyMenu::joinAdress()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
+    spDialogTextInput pDialogTextInput = new DialogTextInput(tr("Enter Host Adress"), true, "");
+    addChild(pDialogTextInput);
+    connect(pDialogTextInput.get(), &DialogTextInput::sigTextChanged, this, &LobbyMenu::join, Qt::QueuedConnection);
+
+    pApp->continueThread();
+}
+
+void LobbyMenu::join(QString adress)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    Console::print("Leaving Lobby Menue", Console::eDEBUG);
+    oxygine::getStage()->addChild(new Multiplayermenu(adress, false));
     oxygine::Actor::detach();
     pApp->continueThread();
 }

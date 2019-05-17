@@ -28,12 +28,12 @@ void ProxyAi::deserializeObject(QDataStream&)
 {
 }
 
-void ProxyAi::recieveData(QByteArray data, Mainapp::NetworkSerives service)
+void ProxyAi::recieveData(QByteArray data, NetworkInterface::NetworkSerives service)
 {
     QMutexLocker locker(&m_ActionMutex);
     if (m_pPlayer == GameMap::getInstance()->getCurrentPlayer())
     {
-        if (service == Mainapp::NetworkSerives::Game)
+        if (service == NetworkInterface::NetworkSerives::Game)
         {
             QDataStream stream(data);
             GameAction* pAction = new GameAction();

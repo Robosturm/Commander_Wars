@@ -18,12 +18,18 @@ public:
 
 signals:    
     void sigExitMenue();
+    void sigHost();
+    void sigJoinGame();
+    void sigJoinAdress();
 public slots:
-    void exitMenue();
-
+    void exitMenue();    
+    void host();
+    void joinGame();
+    void join(QString adress);
+    void joinAdress();
 private:
     spPanel m_pGamesPanel;
-    TCPClient* m_pTCPClient{nullptr};
+    spNetworkInterface m_pTCPClient{nullptr};
 };
 
 #endif // LOBBYMENU_H

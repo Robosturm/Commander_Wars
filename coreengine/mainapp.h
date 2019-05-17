@@ -13,27 +13,14 @@
 #include "coreengine/workerthread.h"
 #include "coreengine/settings.h"
 
-
 #include "coreengine/qmlvector.h"
 
-class NetworkInterface;
-class TCPServer;
+#include "network/tcpserver.h"
 
 class Mainapp : public QCoreApplication
 {
     Q_OBJECT
 public:
-    /**
-      * @brief this enum contains all message recievers of the network
-      */
-    enum class NetworkSerives
-    {
-        None = -1,
-        Game,
-        Lobby,
-        Chat,
-        Max,
-    };
     /**
      * @brief The ZOrder enum for z-order of actors directly attached to the game map or the menu
      */
@@ -86,7 +73,7 @@ public:
     WorkerThread *getWorkerthread() const;
     inline TCPServer* getGameServer()
     {
-        return m_pGameServer;
+        return m_pGameServer.get();
     }
 
     void suspendThread();
@@ -148,7 +135,7 @@ private:
     static QRandomGenerator randGenerator;
     static bool m_useSeed;
 
-    TCPServer* m_pGameServer{nullptr};
+    spTCPServer m_pGameServer{nullptr};
 
     AudioThread* m_Audiothread{nullptr};
     WorkerThread* m_Workerthread{nullptr};

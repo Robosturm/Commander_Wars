@@ -7,9 +7,9 @@
 #include "resource_management/fontmanager.h"
 #include "resource_management/objectmanager.h"
 
+#include "coreengine/mainapp.h"
 
-
-Chat::Chat(NetworkInterface* pInterface, QSize size)
+Chat::Chat(spNetworkInterface pInterface, QSize size)
     : QObject(),
       m_pInterface(pInterface)
 {
@@ -43,9 +43,9 @@ Chat::Chat(NetworkInterface* pInterface, QSize size)
         emit sigSendText(m_ChatInput->getCurrentText());
     });
 
-    if (m_pInterface != nullptr)
+    if (m_pInterface.get() != nullptr)
     {
-        connect(m_pInterface, &NetworkInterface::recieveData, this, &Chat::dataRecieved, Qt::QueuedConnection);
+        connect(m_pInterface.get(), &NetworkInterface::recieveData, this, &Chat::dataRecieved, Qt::QueuedConnection);
     }
 }
 
@@ -61,9 +61,9 @@ void Chat::update(const oxygine::UpdateState& us)
     oxygine::Actor::update(us);
 }
 
-void Chat::dataRecieved(QByteArray data, Mainapp::NetworkSerives service)
+void Chat::dataRecieved(std::shared_ptr<QTcpSocket>, QByteArray data, NetworkInterface::NetworkSerives service)
 {
-    if (service == Mainapp::NetworkSerives::Chat)
+    if (service == NetworkInterface::NetworkSerives::Chat)
     {
         QString message(data);
         addMessage(message);
@@ -98,9 +98,9 @@ void Chat::sendData(QString message)
         {
             messages.pop_front();
         }
-        if (m_pInterface != nullptr)
+        if (m_pInterface.get() != nullptr)
         {
-            m_pInterface->sendData(text.toStdString().c_str(), Mainapp::NetworkSerives::Chat, true);
+            m_pInterface->sendData(nullptr, text.toStdString().c_str(), NetworkInterface::NetworkSerives::Chat, true);
         }
         m_ChatInput->setCurrentText("");
     }

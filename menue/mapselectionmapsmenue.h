@@ -57,12 +57,11 @@ public slots:
     void weatherChancesChanged();
 
     // general slots
-    void slotButtonBack();
-    void slotButtonNext();
-    void startGame();
+    virtual void slotButtonBack();
+    virtual void slotButtonNext();
+    virtual void startGame();
 protected:
 
-private:
     // buttons
     oxygine::spButton m_pButtonNext;
     oxygine::spButton m_pButtonStart;
