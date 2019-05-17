@@ -30,6 +30,8 @@ public:
     QString getCurrentItemText();
 
     void setCurrentItem(qint32 index);
+
+    virtual void setEnabled(bool value) override;
 signals:
     void sigItemChanged(qint32 item);
 public slots:
@@ -37,6 +39,7 @@ public slots:
 private:
     oxygine::spBox9Sprite m_Textbox;
     oxygine::spTextField m_Textfield;
+    oxygine::spButton m_pArrowDown;
     QVector<QString> m_ItemTexts;
     QVector<oxygine::spBox9Sprite> m_Items;
     spPanel m_Panel;

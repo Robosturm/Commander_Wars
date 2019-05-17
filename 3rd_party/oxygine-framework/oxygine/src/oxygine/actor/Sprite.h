@@ -15,10 +15,10 @@ namespace oxygine
     {
         INHERITED(VStyleActor);
     public:
-        DECLARE_COPYCLONE_NEW(Sprite);
+        DECLARE_COPYCLONE_NEW(Sprite)
 
         Sprite();
-        ~Sprite();
+        virtual ~Sprite() override;
 
         const AnimationFrame&   getAnimFrame() const {return _frame;}
         RectF                   getDestRect() const override;

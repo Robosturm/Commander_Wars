@@ -65,21 +65,21 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items, bool u
     this->addChild(m_Panel);
 
 
-    oxygine::spButton pArrowDown = new oxygine::Button();
-    m_Colorbox->addChild(pArrowDown);
-    pArrowDown->setPosition(m_Colorbox->getWidth() - 45, 10);
+    m_pArrowDown = new oxygine::Button();
+    m_Colorbox->addChild(m_pArrowDown);
+    m_pArrowDown->setPosition(m_Colorbox->getWidth() - 45, 10);
     // pButton->setPosition(200, 200);
-    pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
-    pArrowDown->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    m_pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
+    m_pArrowDown->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
-        pArrowDown->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), 300);
+        m_pArrowDown->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), 300);
     });
-    pArrowDown->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        pArrowDown->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+        m_pArrowDown->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
     });
-    pArrowDown->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         if (m_Panel->getVisible())
         {
@@ -104,6 +104,16 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items, bool u
     {
         addDropDownItem(m_ItemColors[i], i);
     }
+}
+
+
+void DropDownmenuColor::setEnabled(bool value)
+{
+    oxygine::Actor::setEnabled(value);
+    m_pArrowDown->setEnabled(value);
+    m_Colorbox->setEnabled(value);
+    m_Colorfield->setEnabled(value);
+    m_Panel->setVisible(false);
 }
 
 void DropDownmenuColor::changeCurrentItem(QColor color)

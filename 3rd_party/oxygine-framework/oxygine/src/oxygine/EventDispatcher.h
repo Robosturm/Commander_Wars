@@ -28,7 +28,13 @@ namespace oxygine
     {
         INHERITED(Object);
     public:
-        EventDispatcher(const EventDispatcher& ed): inherited(ed), _lastID(0), _listeners(0) {}
+        EventDispatcher(const EventDispatcher& ed)
+            :
+              inherited(ed),
+              _lastID(0),
+              _listeners(nullptr)
+        {
+        }
         EventDispatcher();
         ~EventDispatcher();
 
@@ -64,6 +70,9 @@ namespace oxygine
         const EventCallback& getListenerByIndex(int index) const { return (*_listeners)[index].cb; }
 
 
+        bool getEnabled() const;
+        virtual void setEnabled(bool enabled);
+
     protected:
 
         struct listenerbase
@@ -81,5 +90,7 @@ namespace oxygine
 
         typedef std::vector<listener> listeners;
         listeners* _listeners;
+
+        bool m_enabled{true};
     };
 }

@@ -25,6 +25,8 @@ public:
     QColor getCurrentItem();
 
     void setCurrentItem(QColor color);
+
+    virtual void setEnabled(bool value) override;
 signals:
     void sigItemChanged(QColor color);
     void sigShowColorDialog();
@@ -38,6 +40,7 @@ public slots:
 private:
     oxygine::spBox9Sprite m_Colorbox;
     oxygine::spSprite m_Colorfield;
+    oxygine::spButton m_pArrowDown;
     QVector<QColor> m_ItemColors;
     QVector<oxygine::spBox9Sprite> m_Items;
     spPanel m_Panel;

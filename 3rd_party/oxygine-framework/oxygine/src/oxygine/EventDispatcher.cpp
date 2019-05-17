@@ -5,11 +5,13 @@
 #include <malloc.h>
 #endif
 
-#define USE_ALLOCA
+// #define USE_ALLOCA
 
 namespace oxygine
 {
-    EventDispatcher::EventDispatcher(): _lastID(0), _listeners(0)
+    EventDispatcher::EventDispatcher()
+        : _lastID(0),
+          _listeners(nullptr)
     {
 
     }
@@ -160,19 +162,22 @@ namespace oxygine
     void EventDispatcher::removeAllEventListeners()
     {
         delete _listeners;
-        _listeners = 0;
+        _listeners = nullptr;
     }
 
 
     void EventDispatcher::dispatchEvent(Event* event)
     {
         if (!event->target)
+        {
             event->target = this;
+        }
 
         __doCheck();
-        if (!_listeners)
+        if (!_listeners || !m_enabled)
+        {
             return;
-
+        }
 
         size_t size = _listeners->size();
         size_t num = 0;
@@ -224,5 +229,15 @@ namespace oxygine
         if (!_listeners)
             return 0;
         return (int)_listeners->size();
+    }
+
+    bool EventDispatcher::getEnabled() const
+    {
+        return m_enabled;
+    }
+
+    void EventDispatcher::setEnabled(bool enabled)
+    {
+        m_enabled = enabled;
     }
 }

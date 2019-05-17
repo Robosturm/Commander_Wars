@@ -256,6 +256,8 @@ void PlayerSelection::showPlayerSelection()
             emit sigShowSelectCO(i, 1);
         });
 
+        spriteCO2->setEnabled(false);
+
         bool up = false;
         if ((pMap->getPlayerCount() - i <= 5) &&
             (i > 5))

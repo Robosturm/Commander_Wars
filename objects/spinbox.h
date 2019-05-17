@@ -40,6 +40,7 @@ public:
     float getInfinityValue() const;
     void setInfinityValue(float InfinityValue);
 
+    virtual void setEnabled(bool value) override;
 signals:
     void sigValueChanged(float value);
 public slots:
@@ -60,6 +61,8 @@ private:
     bool m_focused{false};
     oxygine::spBox9Sprite m_Textbox;
     oxygine::spTextField m_Textfield;
+    oxygine::spButton m_pArrowDown;
+    oxygine::spButton m_pArrowUp;
     QString m_Text;
     QTime toggle;
     qint32 curmsgpos{0};

@@ -137,4 +137,17 @@ namespace oxygine
         setMaterial(_mat->cloneDefaultShader());
     }
 
+    void VStyleActor::setEnabled(bool value)
+    {
+        Actor::setEnabled(value);
+        if (value)
+        {
+            setAddColor(0, 0, 0, 0);
+        }
+        else
+        {
+            setAddColor(75, 75, 75, 0);
+        }
+    }
+
 }

@@ -47,18 +47,18 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     spinBox->setSize(width - m_Textbox->getWidth(), 40);
     spinBox->setX(m_Textbox->getWidth());
 
-    oxygine::spButton pArrowDown = new oxygine::Button();
-    pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+down"));
-    pArrowDown->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    m_pArrowDown = new oxygine::Button();
+    m_pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+down"));
+    m_pArrowDown->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
-        pArrowDown->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), 300);
+        m_pArrowDown->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), 300);
     });
-    pArrowDown->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        pArrowDown->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+        m_pArrowDown->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
     });
-    pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
         m_spinDirection = -1 * m_SpinSpeed;
         float value = getCurrentValue();
@@ -68,27 +68,27 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
         toggle.start();
         emit sigValueChanged(getCurrentValue());
     });
-    pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
     {
         m_spinDirection = 0;
     });
-    spinBox->addChild(pArrowDown);
-    pArrowDown->setPosition(9, spinBox->getHeight() - pArrowDown->getHeight() - 8);
+    spinBox->addChild(m_pArrowDown);
+    m_pArrowDown->setPosition(9, spinBox->getHeight() - m_pArrowDown->getHeight() - 8);
 
-    oxygine::spButton pArrowUp = new oxygine::Button();
+    m_pArrowUp = new oxygine::Button();
     // pButton->setPosition(200, 200);
-    pArrowUp->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+down"));
-    pArrowUp->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    pArrowUp->setFlippedY(true);
-    pArrowUp->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    m_pArrowUp->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+down"));
+    m_pArrowUp->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    m_pArrowUp->setFlippedY(true);
+    m_pArrowUp->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
-        pArrowUp->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), 300);
+        m_pArrowUp->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), 300);
     });
-    pArrowUp->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    m_pArrowUp->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        pArrowUp->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+        m_pArrowUp->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
     });
-    pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
+    m_pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
         m_spinDirection = 1 * m_SpinSpeed;
         float value = getCurrentValue();
@@ -98,12 +98,12 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
         toggle.start();
         emit sigValueChanged(getCurrentValue());
     });
-    pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
+    m_pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_UP, [ = ](oxygine::Event*)
     {
         m_spinDirection = 0;
     });
-    spinBox->addChild(pArrowUp);
-    pArrowUp->setPosition(9, 8);
+    spinBox->addChild(m_pArrowUp);
+    m_pArrowUp->setPosition(9, 8);
 
     this->addChild(spinBox);
 
@@ -136,6 +136,16 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
 
     connect(pApp, &Mainapp::sigKeyDown, this, &SpinBox::SpinBox::KeyInput, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigText, this, &SpinBox::TextInput, Qt::QueuedConnection);
+}
+
+
+void SpinBox::setEnabled(bool value)
+{
+    oxygine::Actor::setEnabled(value);
+    m_pArrowDown->setEnabled(value);
+    m_pArrowUp->setEnabled(value);
+    m_Textbox->setEnabled(value);
+    m_focused = false;
 }
 
 void SpinBox::setCurrentValue(float value)

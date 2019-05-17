@@ -53,21 +53,21 @@ DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items, bool up)
     this->addChild(m_Panel);
 
 
-    oxygine::spButton pArrowDown = new oxygine::Button();
-    m_Textbox->addChild(pArrowDown);
-    pArrowDown->setPosition(m_Textbox->getWidth() - 45, 10);
+    m_pArrowDown = new oxygine::Button();
+    m_Textbox->addChild(m_pArrowDown);
+    m_pArrowDown->setPosition(m_Textbox->getWidth() - 45, 10);
     // pButton->setPosition(200, 200);
-    pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
-    pArrowDown->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    m_pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+down"));
+    m_pArrowDown->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
-        pArrowDown->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), 300);
+        m_pArrowDown->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), 300);
     });
-    pArrowDown->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        pArrowDown->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+        m_pArrowDown->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
     });
-    pArrowDown->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    m_pArrowDown->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         if (m_Panel->getVisible())
         {
@@ -92,6 +92,14 @@ DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items, bool up)
     {
         addDropDownItem(m_ItemTexts[i], i);
     }
+}
+
+void DropDownmenu::setEnabled(bool value)
+{
+    oxygine::Actor::setEnabled(value);
+    m_pArrowDown->setEnabled(value);
+    m_Textbox->setEnabled(value);
+    m_Panel->setVisible(false);
 }
 
 qint32 DropDownmenu::getCurrentItem() const

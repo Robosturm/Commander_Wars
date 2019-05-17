@@ -1475,7 +1475,7 @@
     <message>
         <location filename="../objects/playerselection.cpp" line="93"/>
         <location filename="../objects/playerselection.cpp" line="153"/>
-        <location filename="../objects/playerselection.cpp" line="338"/>
+        <location filename="../objects/playerselection.cpp" line="340"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>

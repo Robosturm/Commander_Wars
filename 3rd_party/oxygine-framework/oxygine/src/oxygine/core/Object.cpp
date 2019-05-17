@@ -112,7 +112,9 @@ namespace oxygine
         *n = name;
     }
 
-    ObjectBase::ObjectBase(const ObjectBase& src): __id(0), __name(0)
+    ObjectBase::ObjectBase(const ObjectBase& src)
+        : __name(nullptr),
+          __id(0)
     {
         __addToDebugList(this);
 
@@ -146,7 +148,7 @@ namespace oxygine
         __userData64 = 0;
 
 #if DYNAMIC_OBJECT_NAME
-        __name = 0;
+        __name = nullptr;
 #endif
         __addToDebugList(this);
 
@@ -173,7 +175,7 @@ namespace oxygine
 
             __name->~string();
             fastFree(__name);
-            __name = 0;
+            __name = nullptr;
         }
 #else
         __name.clear();

@@ -51,54 +51,6 @@ public:
         Dialogs = 32000,
         Console
     };
-    void start();
-public slots:
-    void update();
-    static void seed(quint32 seed);
-    static qint32 randInt(qint32 low, qint32 high);
-    /**
-     * @brief roundUp rounds all numbers up. 9.1 -> 10
-     * @param value
-     * @return the rounded up integer value
-     */
-    static qint32 roundUp(float value);
-    static qint32 roundDown(float value);
-    static bool isEven(qint32 value);
-    /**
-     * @brief getCircle
-     * @param min radius
-     * @param max radius
-     * @return vector containing all fields in the given radius. Note: the Object needs to be deleted by the reciever
-     */
-    static QmlVectorPoint* getCircle(qint32 min, qint32 max);
-    /**
-     * @brief getShotFields
-     * @param min
-     * @param max
-     * @param xDirection
-     * @param yDirection
-     * @return
-     */
-    static QmlVectorPoint* getShotFields(qint32 min, qint32 max, qint32 xDirection = 0, qint32 yDirection = 0);
-    /**
-     * @brief getEmptyPointArray
-     * @return
-     */
-    static QmlVectorPoint* getEmptyPointArray();
-    /**
-     * @brief quitGame quits this game
-     */
-    void quitGame();
-signals:
-    void sigText(SDL_Event event);
-    void sigKeyDown(SDL_Event event);
-    void sigKeyUp(SDL_Event event);
-
-    void sigConsoleText(SDL_Event event);
-    void sigConsoleKeyDown(SDL_Event event);
-    void sigConsoleKeyUp(SDL_Event event);
-public:
-
 
     explicit Mainapp(int argc, char* argv[]);
     virtual ~Mainapp();
@@ -139,6 +91,53 @@ public:
 
     void suspendThread();
     void continueThread();
+    void start();
+signals:
+    void sigText(SDL_Event event);
+    void sigKeyDown(SDL_Event event);
+    void sigKeyUp(SDL_Event event);
+
+    void sigConsoleText(SDL_Event event);
+    void sigConsoleKeyDown(SDL_Event event);
+    void sigConsoleKeyUp(SDL_Event event);
+
+public slots:
+    void update();
+    static void seed(quint32 seed);
+    static qint32 randInt(qint32 low, qint32 high);
+    /**
+     * @brief roundUp rounds all numbers up. 9.1 -> 10
+     * @param value
+     * @return the rounded up integer value
+     */
+    static qint32 roundUp(float value);
+    static qint32 roundDown(float value);
+    static bool isEven(qint32 value);
+    /**
+     * @brief getCircle
+     * @param min radius
+     * @param max radius
+     * @return vector containing all fields in the given radius. Note: the Object needs to be deleted by the reciever
+     */
+    static QmlVectorPoint* getCircle(qint32 min, qint32 max);
+    /**
+     * @brief getShotFields
+     * @param min
+     * @param max
+     * @param xDirection
+     * @param yDirection
+     * @return
+     */
+    static QmlVectorPoint* getShotFields(qint32 min, qint32 max, qint32 xDirection = 0, qint32 yDirection = 0);
+    /**
+     * @brief getEmptyPointArray
+     * @return
+     */
+    static QmlVectorPoint* getEmptyPointArray();
+    /**
+     * @brief quitGame quits this game
+     */
+    void quitGame();
 
 protected:
     void onEvent(oxygine::Event* ev);

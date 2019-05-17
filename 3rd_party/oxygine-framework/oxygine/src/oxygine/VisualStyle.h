@@ -31,7 +31,7 @@ namespace oxygine
     {
         INHERITED(Actor);
     public:
-        DECLARE_COPYCLONE_NEW(VStyleActor);
+        DECLARE_COPYCLONE_NEW(VStyleActor)
         VStyleActor();
 
         void serialize(serializedata* data) override;
@@ -46,6 +46,8 @@ namespace oxygine
         void                    setBlendMode(blend_mode mode);
         void                    setAddColor(const Color& color);
         void                    setAddColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a = 0);
+
+        virtual void setEnabled(bool value) override;
 
         typedef Property<Color, const Color&, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor> TweenColor;
         typedef Property<Color, const Color&, VStyleActor, &VStyleActor::getAddColor, &VStyleActor::setAddColor> TweenAddColor;

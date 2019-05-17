@@ -76,7 +76,7 @@ namespace oxygine
     class NullMaterialX : public Material
     {
     public:
-        MATX(NullMaterialX);
+        MATX(NullMaterialX)
         static bool cmp(const NullMaterialX& a, const NullMaterialX& b) { return false; }
         void rehash(size_t& hash) const override {}
     };
@@ -85,7 +85,7 @@ namespace oxygine
     class STDMaterial: public Material
     {
     public:
-        MATX(STDMaterial);
+        MATX(STDMaterial)
 
         spNativeTexture    _base;
         spNativeTexture    _alpha;

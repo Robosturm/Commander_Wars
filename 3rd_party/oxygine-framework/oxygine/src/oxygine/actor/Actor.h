@@ -49,7 +49,7 @@ namespace oxygine
         void copyFrom(const Actor& src, cloneOptions opt = 0);
 
         Actor();
-        virtual ~Actor();
+        virtual ~Actor() override;
 
         /**returns first child*/
         spActor             getFirstChild() const {return _children._first;}
@@ -123,7 +123,7 @@ namespace oxygine
 
 
         /**computes global actor transformation*/
-        Transform           computeGlobalTransform(Actor* parent = 0) const;
+        Transform           computeGlobalTransform(Actor* parent = nullptr) const;
         /**computes actor Bounds rectangle. Iterates children*/
         RectF               computeBounds(const Transform& transform = Transform::getIdentity()) const;
         /**computes actor Bounds rectangle in Parent Space. Iterates children*/
@@ -255,7 +255,7 @@ namespace oxygine
         /**Renders this actor and children.*/
         virtual void render(const RenderState& rs);
         virtual void handleEvent(Event* event);
-        virtual void doRender(const RenderState& rs) {}
+        virtual void doRender(const RenderState&) {}
 
         //converts position in parent space to local space
         virtual Vector2 parent2local(const Vector2& pos) const;
@@ -263,11 +263,11 @@ namespace oxygine
         virtual Vector2 local2parent(const Vector2& pos = Vector2(0, 0)) const;
 
         //converts local position to Stage
-        Vector2 local2stage(const Vector2& pos = Vector2(0, 0), Actor* stage = 0) const;
-        Vector2 local2stage(float x, float y, Actor* stage = 0) const;
+        Vector2 local2stage(const Vector2& pos = Vector2(0, 0), Actor* stage = nullptr) const;
+        Vector2 local2stage(float x, float y, Actor* stage = nullptr) const;
         //converts global position (position in Stage space) to local space
-        Vector2 stage2local(const Vector2& pos = Vector2(0, 0), Actor* stage = 0) const;
-        Vector2 stage2local(float x, float y, Actor* stage = 0) const;
+        Vector2 stage2local(const Vector2& pos = Vector2(0, 0), Actor* stage = nullptr) const;
+        Vector2 stage2local(float x, float y, Actor* stage = nullptr) const;
 
         typedef Property2Args<float, Vector2, const Vector2&, Actor, &Actor::getPosition, &Actor::setPosition>  TweenPosition;
         typedef Property<float, float, Actor, &Actor::getX, &Actor::setX>                                       TweenX;
@@ -404,22 +404,22 @@ namespace oxygine
 
     /*Runs callback in time ms.Stage used as default actor*/
     spTween setTimeout(timeMS dur, const EventCallback& cb, Actor* root);
-    spTween setTimeout(timeMS dur, const EventCallback& cb, spActor root = 0);
+    spTween setTimeout(timeMS dur, const EventCallback& cb, spActor root = nullptr);
 
-    Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = 0);
-    Vector2 convert_local2stage(const Actor* child, const Vector2& pos, const Actor* root = 0);
-    Vector2 convert_stage2local(spActor child, const Vector2& pos, spActor root = 0);
-    Vector2 convert_stage2local(const Actor* child, const Vector2& pos, const Actor* root = 0);
+    Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = nullptr);
+    Vector2 convert_local2stage(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
+    Vector2 convert_stage2local(spActor child, const Vector2& pos, spActor root = nullptr);
+    Vector2 convert_stage2local(const Actor* child, const Vector2& pos, const Actor* root = nullptr);
 
 
     /*Tests 2 actors intersection and returns contact point in space of object1.*/
-    bool testIntersection(spActor obj1, spActor obj2, spActor commonParent = 0, Vector2* contact = 0);
+    bool testIntersection(spActor obj1, spActor obj2, spActor commonParent = nullptr, Vector2* contact = nullptr);
 
 
     RectF getActorTransformedDestRect(Actor* actor, const Transform& tr);
 
     /**changes actor parent but with the same position on the screen*/
-    void    reattachActor(spActor actor, spActor newParent, spActor root = 0);
+    void    reattachActor(spActor actor, spActor newParent, spActor root = nullptr);
 
     void decompose(const Transform& t, Vector2& pos, float& angle, Vector2& scale);
     void setDecomposedTransform(Actor* actor, const Transform& t);
@@ -434,7 +434,7 @@ namespace oxygine
 
         void init(Actor&) {}
         void done(Actor&) {}
-        void update(Actor&, float p, const UpdateState& us) {}
+        void update(Actor&, float , const UpdateState& ) {}
     };
 }
 
