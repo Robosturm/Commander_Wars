@@ -389,7 +389,7 @@ public slots:
      * @return
      */
     float getDamageReduction(float damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
-                              QPoint defPosition, bool isDefender);
+                              QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getTrueDamage
      * @param damage

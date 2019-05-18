@@ -176,7 +176,7 @@ public slots:
      * @return
      */
     float getDamageReduction(float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
-                             Unit* pDefender, QPoint defPosition, bool isDefender);
+                             Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode);
     /**
      * @brief getTrueDamage
      * @param damage
@@ -189,6 +189,13 @@ public slots:
      */
     float getTrueDamage(float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
                         Unit* pDefender, QPoint defPosition, bool isDefender);
+    /**
+     * @brief getMovementFuelCostModifier
+     * @param pUnit
+     * @param fuelCost
+     * @return
+     */
+    qint32 getMovementFuelCostModifier(Unit* pUnit, qint32 fuelCost);
     /**
      * @brief getCoID our co id
      * @return

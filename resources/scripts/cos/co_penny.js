@@ -102,7 +102,7 @@ var Constructor = function()
     this.getFirerangeModifier = function(co, unit, posX, posY)
     {
         if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM" &&
-            unit.getMinRange() > 1)
+            unit.getMaxRange() > 1)
         {
             if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
             {
@@ -114,15 +114,15 @@ var Constructor = function()
     };
     this.getMovementcostModifier = function(co, unit, posX, posY)
     {
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        if (unit.getOwner === co.getOwner())
         {
-            // apply snow buff :)
-            return -1;
+            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+            {
+                // apply snow buff :)
+                return -1;
+            }
         }
-        else
-        {
-            return 0;
-        }
+        return 0;
     };
 
     this.getMovementpointModifier = function(co, unit, posX, posY)

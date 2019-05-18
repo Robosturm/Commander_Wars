@@ -42,7 +42,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (unit.getMinRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
+            if (unit.getMaxRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
             {
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
                 if (animations.length < 5)
@@ -85,7 +85,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (unit.getMinRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
+            if (unit.getMaxRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
             {
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
                 if (animations.length < 5)
@@ -125,19 +125,19 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                if (attacker.getMinRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getMaxRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
                 {
                     return 40;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (attacker.getMinRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getMaxRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
                 {
                     return 20;
                 }
                 break;
             default:
-                if (attacker.getMinRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getMaxRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
                 {
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
@@ -156,19 +156,19 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                if (defender.getMinRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
+                if (defender.getMaxRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
                 {
                     return 20;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (defender.getMinRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
+                if (defender.getMaxRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
                 {
                     return 10;
                 }
                 break;
             default:
-                if (defender.getMinRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
+                if (defender.getMaxRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
                 {
                     if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                     {
@@ -185,13 +185,13 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                if (unit.getMinRange() > 1)
+                if (unit.getMaxRange() > 1)
                 {
                     return 3;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (unit.getMinRange() > 1)
+                if (unit.getMaxRange() > 1)
                 {
                     return 2;
                 }

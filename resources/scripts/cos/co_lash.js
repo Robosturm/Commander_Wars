@@ -150,16 +150,18 @@ var Constructor = function()
     };
     this.getMovementcostModifier = function(co, unit, posX, posY)
     {
-        switch (co.getPowerMode())
+        if (unit.getOwner === co.getOwner())
         {
+            switch (co.getPowerMode())
+            {
             case GameEnums.PowerMode_Superpower:
                 return -999;
             case GameEnums.PowerMode_Power:
                 return -999;
             default:
-                return 0;
+            }
         }
-
+        return 0;
     };
 
     // CO - Intel

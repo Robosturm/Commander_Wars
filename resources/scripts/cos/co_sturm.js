@@ -137,14 +137,18 @@ var Constructor = function()
     };
     this.getMovementcostModifier = function(co, unit, posX, posY)
     {
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+        if (unit.getOwner === co.getOwner())
         {
-            return 0;
+            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+            {
+                return 0;
+            }
+            else
+            {
+                return -999;
+            }
         }
-        else
-        {
-            return -999;
-        }
+        return 0;
     };
 
     // CO - Intel

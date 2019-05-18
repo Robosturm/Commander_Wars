@@ -13,33 +13,10 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var units = co.getOwner().getUnits();
-        var animations = [];
-        var counter = 0;
-        units.randomize();
-        for (var i = 0; i < units.size(); i++)
-        {
-            var unit = units.at(i);
-            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-            if (animations.length < 5)
-            {
-                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
-                powerNameAnimation.queueAnimation(animation);
-                animations.push(animation);
-            }
-            else
-            {
-                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
-                animations[counter].queueAnimation(animation);
-                animations[counter] = animation;
-                counter++;
-                if (counter >= animations.length)
-                {
-                    counter = 0;
-                }
-            }
-        }
-        units.remove();
+        var animation = GameAnimationFactory.createAnimation(0, 0);
+        animation.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
+        animation.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
+        powerNameAnimation.queueAnimation(animation);
 
         audio.clearPlayList();
         CO_MARY.loadCOMusic(co);

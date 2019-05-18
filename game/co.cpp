@@ -407,6 +407,27 @@ qint32 CO::getMovementcostModifier(Unit* pUnit, QPoint position)
     }
 }
 
+qint32 CO::getMovementFuelCostModifier(Unit* pUnit, qint32 fuelCost)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getMovementFuelCostModifier";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(pUnit);
+    args1 << obj2;
+    args1 << fuelCost;
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 void CO::buildedUnit(Unit* pUnit)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -685,7 +706,7 @@ qint32 CO::getDeffensiveReduction(Unit* pAttacker, QPoint atkPosition, Unit* pDe
 }
 
 float CO::getDamageReduction(float damage, Unit* pAttacker, QPoint atkPosition, qint32 attackerBaseHp,
-                             Unit* pDefender, QPoint defPosition, bool isDefender)
+                             Unit* pDefender, QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getDamageReduction";
@@ -703,6 +724,7 @@ float CO::getDamageReduction(float damage, Unit* pAttacker, QPoint atkPosition, 
     args1 << defPosition.x();
     args1 << defPosition.y();
     args1 << isDefender;
+    args1 << luckMode;
     QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
     if (erg.isNumber())
     {

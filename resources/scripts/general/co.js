@@ -57,7 +57,7 @@ var CO =
     },
 
     getDamageReduction : function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                  defender, defPosX, defPosY, isDefender)
+                                  defender, defPosX, defPosY, isDefender, luckMode)
     {
         return 0;
     },
@@ -111,6 +111,7 @@ var CO =
 
     getFuelCostModifier : function(co, unit, posX, posY, costs)
     {
+        // modifies the fuel cost at the start of a turn
         return 0;
     },
 
@@ -140,6 +141,7 @@ var CO =
 
     canBeRepaired : function(co, unit, posX, posY)
     {
+        // called from all co's for a unit -> so you can apply boni from own co and mali from enemy co's here
         return true;
     },
 
@@ -150,6 +152,15 @@ var CO =
 
     getMovementcostModifier : function(co, unit, posX, posY)
     {
+        // called from all co's for a unit -> so you can apply boni from own co and mali from enemy co's here
+        return 0;
+    },
+
+    getMovementFuelCostModifier : function(co, unit, fuelCost)
+    {
+        // modifies the fuel cost when moving
+        // called from all co's for a unit -> so you can apply boni from own co and mali from enemy co's here
+        // fuelCost are the costs needed for the current movement
         return 0;
     },
 
@@ -180,6 +191,8 @@ var CO =
 
     getAdditionalBuildingActions : function(co, building)
     {
+        // called from all co's for a building -> so you can boni from own co and mali from enemy co's here
+        // - before an action id will disable the action -> see Mary
         return "";
     },
 

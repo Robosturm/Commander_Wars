@@ -142,7 +142,7 @@ var Constructor = function()
     };
 
     this.getDamageReduction = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
-                                  defender, defPosX, defPosY, isDefender)
+                                  defender, defPosX, defPosY, isDefender, luckMode)
     {
         switch (co.getPowerMode())
         {

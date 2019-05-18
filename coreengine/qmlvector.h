@@ -69,6 +69,10 @@ public slots:
         delete this;
     }
     void randomize();
+    /**
+     * @brief sortExpensive most expensive units are sorted in first
+     */
+    void sortExpensive();
 private:
     QVector<Unit*> m_Vector;
 };

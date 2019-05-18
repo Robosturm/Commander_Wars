@@ -46,3 +46,9 @@ var Constructor = function()
 
 Constructor.prototype = ACTION;
 var ACTION_WAIT = new Constructor();
+
+Constructor = function()
+{
+}
+Constructor.prototype = ACTION_WAIT;
+var ACTION_WAIT = new Constructor();

@@ -172,7 +172,7 @@ var Constructor = function()
     };
     this.getFirerangeModifier = function(co, unit, posX, posY)
     {
-        if (unit.getMinRange() > 1)
+        if (unit.getMaxRange() > 1)
         {
             switch (co.getPowerMode())
             {

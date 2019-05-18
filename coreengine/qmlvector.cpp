@@ -30,6 +30,33 @@ void QmlVectorUnit::randomize()
     m_Vector.swap(randVector);
 }
 
+void QmlVectorUnit::sortExpensive()
+{
+    QVector<Unit*> sortedVector;
+    QVector<qint32> costs;
+    for (qint32 i = 0; i < m_Vector.size(); i++)
+    {
+        costs.append(m_Vector[i]->getUnitValue());
+    }
+    while (m_Vector.size() > 0)
+    {
+        qint32 item = 0;
+        qint32 value = 0;
+        for (qint32 i = 0; i < m_Vector.size(); i++)
+        {
+            if (costs[i] > value)
+            {
+                item = i;
+                value = costs[i];
+            }
+        }
+        sortedVector.append(m_Vector[item]);
+        m_Vector.removeAt(item);
+        costs.removeAt(item);
+    }
+    m_Vector.swap(sortedVector);
+}
+
 QmlVectorBuilding::QmlVectorBuilding()
     : QObject()
 {

@@ -36,7 +36,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (unit.getMinRange() > 1)
+            if (unit.getMaxRange() > 1)
             {
                 var variables = unit.getVariables();
                 var variable = variables.createVariable("SMITAN_ATTACK_COUNT");
@@ -81,7 +81,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (unit.getMinRange() > 1)
+            if (unit.getMaxRange() > 1)
             {
                 var variables = unit.getVariables();
                 var variable = variables.createVariable("SMITAN_ATTACK_COUNT");
@@ -121,7 +121,7 @@ var Constructor = function()
             {
                 case GameEnums.PowerMode_Superpower:
                 case GameEnums.PowerMode_Power:
-                    if (attacker.getMinRange() > 1)
+                    if (attacker.getMaxRange() > 1)
                     {
                         var variables = attacker.getVariables();
                         var variable = variables.createVariable("SMITAN_ATTACK_COUNT");
@@ -144,7 +144,7 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                if (unit.getMinRange() > 1)
+                if (unit.getMaxRange() > 1)
                 {
                     var variables = unit.getVariables();
                     var variable = variables.createVariable("SMITAN_ATTACK_COUNT");
@@ -179,9 +179,12 @@ var Constructor = function()
                 var x = unit.getX();
                 var y = unit.getY();
                 var distance = Math.abs(x - defPosX) + Math.abs(y - defPosY);
-                if (unit.getMinRange() <= distance && distance <= unit.getMaxRange())
+                if (attacker.getMaxRange() > 1)
                 {
-                    inRangeCount += 1;
+                    if (unit.getMinRange() <= distance && distance <= unit.getMaxRange())
+                    {
+                        inRangeCount += 1;
+                    }
                 }
             }
         }
@@ -224,13 +227,13 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                if (unit.getMinRange() > 1)
+                if (unit.getMaxRange() > 1)
                 {
                     return 2;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (unit.getMinRange() > 1)
+                if (unit.getMaxRange() > 1)
                 {
                     return 1;
                 }

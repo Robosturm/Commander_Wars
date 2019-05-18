@@ -721,20 +721,20 @@ qint32 Unit::getTerrainDefense()
 }
 
 float Unit::getDamageReduction(float damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
-                          QPoint defPosition, bool isDefender)
+                          QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
 {
     float bonus = 0;
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
         bonus += pCO->getDamageReduction(damage, pAttacker, position, attackerBaseHp,
-                                         this, defPosition, isDefender);
+                                         this, defPosition, isDefender, luckMode);
     }
     pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
         bonus += pCO->getDamageReduction(damage, pAttacker, position, attackerBaseHp,
-                                         this, defPosition, isDefender);
+                                         this, defPosition, isDefender, luckMode);
     }
     return bonus;
 }
@@ -994,7 +994,17 @@ qint32 Unit::getBaseMovementCosts(qint32 x, qint32 y)
 qint32 Unit::getMovementCosts(qint32 x, qint32 y)
 {
     qint32 baseCosts = getBaseMovementCosts(x, y);
-    qint32 costs = baseCosts + m_pOwner->getMovementcostModifier(this, QPoint(x, y));
+    qint32 costs = baseCosts;
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        Player* pPlayer = pMap->getPlayer(i);
+        if (pPlayer->isEnemy(m_pOwner) ||
+            m_pOwner == pPlayer)
+        {
+            costs += pPlayer->getMovementcostModifier(this, QPoint(x, y));
+        }
+    }
     if (baseCosts > 0)
     {
         if ((costs <= 0) && (baseCosts > 0))
@@ -1043,7 +1053,10 @@ qint32 Unit::getFuel() const
 
 void Unit::setFuel(const qint32 &value)
 {
-    fuel = value;
+    if (maxFuel > 0)
+    {
+        fuel = value;
+    }
     if (fuel < 0 && maxFuel > 0)
     {
         fuel = maxFuel;
@@ -1499,7 +1512,36 @@ QStringList Unit::getActionList()
 void Unit::moveUnitAction(GameAction* pAction)
 {
     // reduce fuel
-    setFuel(fuel - pAction->getCosts());
+    GameMap* pMap = GameMap::getInstance();
+    qint32 fuelCost = pAction->getCosts();
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        Player* pPlayer = pMap->getPlayer(i);
+        if (pPlayer->isEnemy(m_pOwner) ||
+            m_pOwner == pPlayer)
+        {
+            CO* pCO = pPlayer->getCO(0);
+            if (pCO != nullptr)
+            {
+                fuelCost += pCO->getMovementFuelCostModifier(this, fuelCost);
+            }
+            pCO = pPlayer->getCO(1);
+            if (pCO != nullptr)
+            {
+                fuelCost += pCO->getMovementFuelCostModifier(this, fuelCost);
+            }
+        }
+    }
+    if (fuelCost < 0)
+    {
+        fuelCost = 0;
+    }
+    qint32 value = fuel - fuelCost;
+    if (value < 0)
+    {
+        value = 0;
+    }
+    setFuel(value);
     moveUnit(pAction->getMovePath());
 }
 

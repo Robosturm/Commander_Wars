@@ -800,7 +800,8 @@ void HumanPlayerInput::deleteArrow()
 
 void HumanPlayerInput::keyInput(SDL_Event event)
 {
-    if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer &&
+    if (GameMenue::getInstance() != nullptr &&
+        GameMap::getInstance()->getCurrentPlayer() == m_pPlayer &&
         GameMenue::getInstance()->getFocused())
     {
         if (GameAnimationFactory::getAnimationCount() == 0)

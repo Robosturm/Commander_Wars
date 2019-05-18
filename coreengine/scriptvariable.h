@@ -46,7 +46,9 @@ public:
     void writeList(QList <ListType> list)
     {
         // delete the buffer content
+        buffer.close();
         buffer.setData(QByteArray());
+        buffer.open(QIODevice::ReadWrite);
         buffer.seek(0);
         actionData << static_cast<qint32>(list.size());
         for (qint32 i = 0; i < list.size(); i++)
@@ -83,7 +85,9 @@ public:
     void writeData(type data)
     {
         // delete the buffer content
+        buffer.close();
         buffer.setData(QByteArray());
+        buffer.open(QIODevice::ReadWrite);
         buffer.seek(0);
         actionData << data;
     }

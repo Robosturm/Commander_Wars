@@ -139,7 +139,7 @@ var Constructor = function()
                 }
                 break;
         }
-        if (attacker.getMinRange() > 1)
+        if (attacker.getMaxRange() > 1)
         {
             return -10;
         }
@@ -147,7 +147,7 @@ var Constructor = function()
     };
     this.getFirerangeModifier = function(co, unit, posX, posY)
     {
-        if (unit.getMinRange() > 1)
+        if (unit.getMaxRange() > 1)
         {
             return -1;
         }

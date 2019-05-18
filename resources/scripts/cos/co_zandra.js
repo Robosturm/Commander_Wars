@@ -161,7 +161,7 @@ var Constructor = function()
     {
         if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
         {
-            if (unit.getMinRange() > 1)
+            if (unit.getMaxRange() > 1)
             {
                 switch (co.getPowerMode())
                 {

@@ -262,13 +262,16 @@ var Constructor = function()
 
     this.getMovementcostModifier = function(co, unit, posX, posY)
     {
-        var variables = co.getVariables();
-        var buildedVar = variables.createVariable("SANJURO_BUILDED_" + unit.getUnitID());
-        var builded = buildedVar.readDataBool();
-        if (builded === true)
+        if (unit.getOwner === co.getOwner())
         {
-            // movement boost for builded units
-            return -999;
+            var variables = co.getVariables();
+            var buildedVar = variables.createVariable("SANJURO_BUILDED_" + unit.getUnitID());
+            var builded = buildedVar.readDataBool();
+            if (builded === true)
+            {
+                // movement boost for builded units
+                return -999;
+            }
         }
         return 0;
     };

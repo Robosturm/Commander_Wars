@@ -143,7 +143,7 @@ var Constructor = function()
             damage += attacker.getTrueDamage(damage, attacker, attackerPosition, attackerBaseHp,
                                              defenderPosition, isDefender);
             damage -= defender.getDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,
-                                                  defenderPosition, isDefender);
+                                                  defenderPosition, isDefender, luckMode);
             // avoid healing through negativ damage caused by misfortune or other stuff
             if (damage < 0)
             {
