@@ -85,7 +85,7 @@ public slots:
      * @brief getUniqueID
      * @return returns the map wide unique id of this unit.
      */
-    quint32 getUniqueID() const;
+    qint32 getUniqueID() const;
     /**
      * @brief spawnUnit
      * @param unitID
@@ -512,7 +512,11 @@ public slots:
      * @return
      */
     qint32 getUnitValue();
-
+    /**
+     * @brief canBeRepaired
+     * @return
+     */
+    bool canBeRepaired(QPoint position);
 protected:
     /**
      * @brief updateIconTweens creates the visibility toogle tweens for all icons
@@ -564,7 +568,7 @@ private:
     qint32 minRange{1};
     qint32 maxRange{-1};
     qint32 vision{1};
-    quint32 m_UniqueID{0};
+    qint32 m_UniqueID{0};
 
     GameEnums::GameAi m_AiMode{GameEnums::GameAi::GameAi_Normal};
 

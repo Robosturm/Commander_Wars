@@ -75,7 +75,7 @@ void GameMap::loadMapData()
     mapAuthor = Settings::getUsername();
 }
 
-quint32 GameMap::getUniqueIdCounter()
+qint32 GameMap::getUniqueIdCounter()
 {
     m_UniqueIdCounter++;
     // gurantee that the counter is never 0

@@ -29,7 +29,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var units = co.getPlayer().getUnits();
+        var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
         units.randomize();
@@ -67,7 +67,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var units = co.getPlayer().getUnits();
+        var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
         units.randomize();
@@ -142,7 +142,7 @@ var Constructor = function()
 
     this.startOfTurn = function(co)
     {
-        var units = co.getPlayer().getUnits();
+        var units = co.getOwner().getUnits();
         for (var i = 0; i < units.size(); i++)
         {
             // creates the variable or returns the existing one

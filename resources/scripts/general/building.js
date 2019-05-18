@@ -142,16 +142,20 @@ var BUILDING =
             (unit.getOwner() === building.getOwner()) &&
             (constructionList.indexOf(unit.getUnitID()) >= 0))
         {
-            // our unit and a repairable one
-            // replenish it
-            unit.refill();
+
             var x = unit.getX();
             var y = unit.getY();
-            var repairAmount = 2 + unit.getRepairBonus(Qt.point(x, y));
-            UNIT.repairUnit(unit, repairAmount);
-            var animation = GameAnimationFactory.createAnimation(x, y);
-            animation.addSprite("ration", map.getImageSize() / 2, map.getImageSize() / 3, 1400);
-            animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 15, map.getImageSize() / 3, 0.7);
+            if (unit.canBeRepaired(Qt.point(x, y)))
+            {
+                // our unit and a repairable one
+                // replenish it
+                unit.refill();
+                var repairAmount = 2 + unit.getRepairBonus(Qt.point(x, y));
+                UNIT.repairUnit(unit, repairAmount);
+                var animation = GameAnimationFactory.createAnimation(x, y);
+                animation.addSprite("ration", map.getImageSize() / 2, map.getImageSize() / 3, 1400);
+                animation.addText(qsTr("RATION"), map.getImageSize() / 2 + 15, map.getImageSize() / 3, 0.7);
+            }
         }
     },
 

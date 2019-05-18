@@ -737,7 +737,7 @@ void VictoryMenue::updateGraph()
                     for (qint32 event = 0; event < pStartRecord->getEventRecordCount(); event++)
                     {
                         SpecialEvent* pEvent = pStartRecord->getSpecialEvent(event);
-                        if (pEvent->getPlayer() == i)
+                        if (pEvent->getOwner() == i)
                         {
                             oxygine::spSprite pSprite = new oxygine::Sprite();
                             oxygine::ResAnim* pAnim = nullptr;

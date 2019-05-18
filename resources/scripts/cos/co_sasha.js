@@ -34,9 +34,9 @@ var Constructor = function()
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation2);
 
-        var player = co.getPlayer();
+        var player = co.getOwner();
         // i prefer this version you could change it to 10% per fonds easily
-        var reduction = co.getPlayer().getFonds() / 5000.0;
+        var reduction = co.getOwner().getFonds() / 5000.0;
         var playerCounter = map.getPlayerCount();
         for (var i2 = 0; i2 < playerCounter; i2++)
         {
@@ -67,7 +67,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var units = co.getPlayer().getUnits();
+        var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
         units.randomize();
@@ -144,7 +144,7 @@ var Constructor = function()
                     // avoid loosing money cause of our super power
                     if (atkDamage > 0)
                     {
-                        co.getPlayer().addFonds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
+                        co.getOwner().addFonds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
                     }
                     break;
                 case GameEnums.PowerMode_Power:

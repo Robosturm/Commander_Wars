@@ -1990,7 +1990,7 @@
 <context>
     <name>building</name>
     <message>
-        <location filename="../resources/scripts/general/building.js" line="154"/>
+        <location filename="../resources/scripts/general/building.js" line="157"/>
         <source>RATION</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3710,102 +3710,102 @@
 <context>
     <name>co_hachi</name>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="119"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="120"/>
         <source>Owner of the Battle Maps shop. Rumored to be Orange Star&apos;s former commander-in-chief.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="123"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="124"/>
         <source>Tea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="127"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="128"/>
         <source>Medicine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="131"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="132"/>
         <source>Uses secret trade routes to get slightly lower deployment costs for all units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="135"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="136"/>
         <source>Speaks with such authority that he obtains even lower deployment costs.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="139"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="140"/>
         <source>Barter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="143"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="144"/>
         <source>Merchant pals gather from around the globe and help him deploy ground units from any allied city and even cheaper.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="147"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="148"/>
         <source>Merchant Union</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="151"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="152"/>
         <source>This brings back memories!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="152"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="153"/>
         <source>Runnin&apos; away won&apos;t prove anything! Stand your ground, soldier!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="153"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="154"/>
         <source>No need to get all worked up!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="154"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="155"/>
         <source>Hey, I&apos;m no retiree!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="155"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="156"/>
         <source>I may be old, but I can still rumble!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="156"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="157"/>
         <source>This is my best seller!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="160"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="161"/>
         <source>Battles cost too much!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="161"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="162"/>
         <source>Rematches are free!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="162"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="163"/>
         <source>Thank you, come again!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="166"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="167"/>
         <source>I&apos;m getting too old for this.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="167"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="168"/>
         <source>Shop&apos;s closing for today...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_hachi.js" line="171"/>
+        <location filename="../resources/scripts/cos/co_hachi.js" line="172"/>
         <source>Hachi</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4910,6 +4910,109 @@
     <message>
         <location filename="../resources/scripts/cos/co_lin.js" line="267"/>
         <source>Lin</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_mary</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="305"/>
+        <source>A ruthless commander recruited into the Amber Corona army.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="309"/>
+        <source>Cocktails</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="313"/>
+        <source>Excuses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="317"/>
+        <source>Attacked units won&apos;t repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="321"/>
+        <source>Deployment and repairs from properties are disabled and she gets an offensive bonus.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="325"/>
+        <source>Highway of Pain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="329"/>
+        <source>Terrain stars now reduces the foe&apos;s defense and Mary&apos;s capture bonus is greatly increased. All units gain substantial firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="333"/>
+        <source>Bloody Mary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="337"/>
+        <source>Keep marching guys, the victory is close!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="338"/>
+        <source>No pain! NO GLORY!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="339"/>
+        <source>A drop of blood is a drop of effort...you must be proud of your troops.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="340"/>
+        <source>People call me Bloody Mary....and no, you can&apos;t drink me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="341"/>
+        <source>We will fight until your last soldier is dead!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="342"/>
+        <source>I am a soldier, I fight where I am told, and I win where I fight.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="346"/>
+        <source>Heh, looks like all my effort paid off in the end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="347"/>
+        <source>Lets go, people. Lets have a drink to celebrate this victory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="348"/>
+        <source>All right troops, now you can rest, your job here is done.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="352"/>
+        <source>You were better.... This time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="353"/>
+        <source>That is impossible. I need a drink now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_mary.js" line="357"/>
+        <source>Mary</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

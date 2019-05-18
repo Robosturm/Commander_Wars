@@ -29,7 +29,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var units = co.getPlayer().getUnits();
+        var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
         units.randomize();
@@ -64,7 +64,7 @@ var Constructor = function()
 
     this.peterDamage = function(co, value, animation2)
     {
-        var player = co.getPlayer();
+        var player = co.getOwner();
         var counter = 0;
         var playerCounter = map.getPlayerCount();
         var animation = null;

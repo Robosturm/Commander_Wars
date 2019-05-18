@@ -18,7 +18,7 @@ SpecialEvent::SpecialEvent(qint32 player, qint32 day, GameEnums::GameRecord_Spec
     Interpreter::setCppOwnerShip(this);
 }
 
-qint32 SpecialEvent::getPlayer() const
+qint32 SpecialEvent::getOwner() const
 {
     return m_Player;
 }

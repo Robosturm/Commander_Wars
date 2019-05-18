@@ -29,7 +29,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var units = co.getPlayer().getUnits();
+        var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
         units.randomize();
@@ -107,7 +107,7 @@ var Constructor = function()
             // return weak counter damage of conrad
             return -20;
         }
-        var units = co.getPlayer().getUnits();
+        var units = co.getOwner().getUnits();
         var visionCount = 0;
         for (var i = 0; i < units.size(); i++)
         {

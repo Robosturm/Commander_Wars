@@ -29,7 +29,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var units = co.getPlayer().getUnits();
+        var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
         units.randomize();
@@ -74,7 +74,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var units = co.getPlayer().getUnits();
+        var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
         units.randomize();
@@ -172,7 +172,7 @@ var Constructor = function()
         var inRangeCount = 0;
         if (attacker.getMaxRange() === 1)
         {
-            var units = co.getPlayer().getUnits();
+            var units = co.getOwner().getUnits();
             for (var i = 0; i < units.size(); i++)
             {
                 var unit = units.at(i);

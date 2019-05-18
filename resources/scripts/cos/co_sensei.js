@@ -49,7 +49,7 @@ var Constructor = function()
 
     this.spawnUnits = function(co, unitID, hp, powerNameAnimation)
     {
-        var buildings = co.getPlayer().getBuildings();
+        var buildings = co.getOwner().getBuildings();
         var animations = [];
         var counter = 0;
         buildings.randomize();
@@ -60,7 +60,7 @@ var Constructor = function()
             {
                 if (map.getTerrain(building.getX(), building.getY()).getUnit() === null)
                 {
-                    map.spawnUnit(building.getX(), building.getY(), unitID, co.getPlayer());
+                    map.spawnUnit(building.getX(), building.getY(), unitID, co.getOwner());
                     map.getTerrain(building.getX(), building.getY()).getUnit().setHp(hp);
                     var animation = GameAnimationFactory.createAnimation(building.getX(), building.getY());
                     if (animations.length < 5)

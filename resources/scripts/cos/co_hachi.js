@@ -81,7 +81,8 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                if (building.getBuildingID() === "TOWN")
+                if (building.getBuildingID() === "TOWN" &&
+                    building.getOwner() === co.getOwner())
                 {
                     return "ACTION_BUILD_UNITS";
                 }

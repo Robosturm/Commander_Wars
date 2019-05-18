@@ -50,7 +50,7 @@ var Constructor = function()
     this.throwMeteor = function(co, damage, powerNameAnimation)
     {
         // let a meteor fall :D
-        var meteorTarget = co.getPlayer().getRockettarget(2, damage);
+        var meteorTarget = co.getOwner().getRockettarget(2, damage);
         // create cool meteor animation :)
         var animation = GameAnimationFactory.createAnimation(meteorTarget.x + 2, meteorTarget.y - 4);
         animation.addSprite("meteor", 0, 0, 2500, 3.0);

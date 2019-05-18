@@ -34,7 +34,7 @@ var Constructor = function()
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation2);
 
-        var player = co.getPlayer();
+        var player = co.getOwner();
         var playerCounter = map.getPlayerCount();
         for (var i2 = 0; i2 < playerCounter; i2++)
         {
@@ -55,7 +55,7 @@ var Constructor = function()
 
     this.startOfTurn = function(co)
     {
-        var player = co.getPlayer();
+        var player = co.getOwner();
         var buildings = player.getBuildings();
         for (var i = 0; i < buildings.size(); i++)
         {

@@ -211,7 +211,7 @@ public:
      * @brief getUniqueIdCounter
      * @return a new unique id
      */
-    quint32 getUniqueIdCounter();
+    qint32 getUniqueIdCounter();
 
 signals:
     void signalExitGame();
@@ -531,7 +531,7 @@ private:
     bool loaded{false};
     void loadMapData();
 
-    quint32 m_UniqueIdCounter{0};
+    qint32 m_UniqueIdCounter{0};
 };
 
 #endif // GAMEMAP_H

@@ -13,7 +13,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var units = co.getPlayer().getUnits();
+        var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
         units.randomize();
@@ -52,7 +52,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var units = co.getPlayer().getUnits();
+        var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
         units.randomize();
@@ -193,7 +193,7 @@ var Constructor = function()
 
     this.startOfTurn = function(co)
     {
-        var player = co.getPlayer();
+        var player = co.getOwner();
         var fonds = player.getFonds();
         var income = player.calcIncome();
         var costModifier = 0.0;
@@ -288,7 +288,7 @@ var Constructor = function()
                     // avoid loosing money cause of our passive or power
                     if (atkDamage > 0)
                     {
-                        co.getPlayer().addFonds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
+                        co.getOwner().addFonds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
                     }
                     break;
                 default:

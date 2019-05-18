@@ -29,7 +29,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var units = co.getPlayer().getUnits();
+        var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
         units.randomize();
@@ -69,7 +69,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var units = co.getPlayer().getUnits();
+        var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
         units.randomize();
@@ -114,7 +114,7 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var towers = co.getPlayer().getBuildingCount("TOWER");
+        var towers = co.getOwner().getBuildingCount("TOWER");
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
@@ -136,7 +136,7 @@ var Constructor = function()
                                  defender, defPosX, defPosY, isDefender)
     {
         var rangedAttacked = (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1);
-        var towers = co.getPlayer().getBuildingCount("TOWER");
+        var towers = co.getOwner().getBuildingCount("TOWER");
         var ret = 0;
         switch (co.getPowerMode())
         {

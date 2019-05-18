@@ -1,0 +1,362 @@
+var Constructor = function()
+{
+    this.init = function(co)
+    {
+        co.setPowerStars(3);
+        co.setSuperpowerStars(3);
+    };
+
+    this.activatePower = function(co)
+    {
+
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
+        var units = co.getOwner().getUnits();
+        var animations = [];
+        var counter = 0;
+        units.randomize();
+        for (var i = 0; i < units.size(); i++)
+        {
+            var unit = units.at(i);
+            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            if (animations.length < 5)
+            {
+                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
+                powerNameAnimation.queueAnimation(animation);
+                animations.push(animation);
+            }
+            else
+            {
+                animation.addSprite("power0", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                animations[counter].queueAnimation(animation);
+                animations[counter] = animation;
+                counter++;
+                if (counter >= animations.length)
+                {
+                    counter = 0;
+                }
+            }
+        }
+        units.remove();
+
+        audio.clearPlayList();
+        CO_MARY.loadCOMusic(co);
+        audio.playRandom();
+    };
+
+    this.activateSuperpower = function(co, powerMode)
+    {
+        var dialogAnimation = co.createPowerSentence();
+        var powerNameAnimation = co.createPowerScreen(powerMode);
+        dialogAnimation.queueAnimation(powerNameAnimation);
+
+        var units = co.getOwner().getUnits();
+        var animations = [];
+        var counter = 0;
+        units.randomize();
+        for (var i = 0; i < units.size(); i++)
+        {
+            var unit = units.at(i);
+            var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+            if (animations.length < 5)
+            {
+                animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5, globals.randInt(0, 400));
+                powerNameAnimation.queueAnimation(animation);
+                animations.push(animation);
+            }
+            else
+            {
+                animation.addSprite("power12", -map.getImageSize() * 2, -map.getImageSize() * 2, 0, 1.5);
+                animations[counter].queueAnimation(animation);
+                animations[counter] = animation;
+                counter++;
+                if (counter >= animations.length)
+                {
+                    counter = 0;
+                }
+            }
+        }
+        units.remove();
+
+        audio.clearPlayList();
+        CO_MARY.loadCOMusic(co);
+        audio.playRandom();
+    };
+
+    this.loadCOMusic = function(co)
+    {
+        // put the co music in here.
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Power:
+                audio.addMusic("resources/music/cos/power.mp3");
+                break;
+            case GameEnums.PowerMode_Superpower:
+                audio.addMusic("resources/music/cos/superpower.mp3");
+                break;
+            default:
+                audio.addMusic("resources/music/cos/mary.mp3")
+                break;
+        }
+    };
+
+    this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
+    {
+        var destroyed = false;
+        var x = -1;
+        var y = -1;
+        var unitID = 0;
+        if (gotAttacked )
+        {
+            if (attacker.getHp() <= 0)
+            {
+                destroyed = true;
+                x = attacker.getX();
+                y = attacker.getY();
+            }
+            else
+            {
+                unitID = attacker.getUniqueID();
+            }
+        }
+        else
+        {
+            if (defender.getHp() <= 0)
+            {
+                destroyed = true;
+                x = defender.getX();
+                y = defender.getY();
+            }
+            else
+            {
+                unitID = defender.getUniqueID();
+            }
+        }
+        // store variable data
+
+        var variables = co.getVariables();
+        if (destroyed)
+        {
+            var building = map.getTerrain(x, y).getBuilding();
+            if (building !== null)
+            {
+                // store capture bonus
+                var xVariable = variables.createVariable("POSXBUILDINGS");
+                var yVariable = variables.createVariable("POSYBUILDINGS");
+                var pointsX = xVariable.readDataListInt32();
+                var pointsY = yVariable.readDataListInt32();
+                var found = false;
+                for (var i = 0; i < pointsX.length; i++)
+                {
+                    if (pointsX[i] === x &&
+                        pointsY[i] === y)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if (found === false)
+                {
+                    pointsX.push(x);
+                    pointsY.push(y);
+                    xVariable.writeDataListInt32(pointsX);
+                    yVariable.writeDataListInt32(pointsY);
+                }
+            }
+        }
+        else
+        {
+            // store repair block
+            var repairVariable = variables.createVariable("UNITREPAIR");
+            var repairs = repairVariable.readDataListInt32();
+            repairs.push(unitID);
+            repairVariable.writeDataListInt32(repairs);
+        }
+    };
+
+    this.startOfTurn = function(co)
+    {
+        // reset repair stop
+        var variables = co.getVariables();
+        var repairVariable = variables.createVariable("UNITREPAIR");
+        var empty = [];
+        repairVariable.writeDataListInt32(empty);
+    };
+
+    this.canBeRepaired = function(co, unit, posX, posY)
+    {
+        // disanle enemy repairs
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Power:
+                return false;
+            case GameEnums.PowerMode_Superpower:
+            default:
+                var variables = co.getVariables();
+                var repairVariable = variables.createVariable("UNITREPAIR");
+                var repairs = repairVariable.readDataListInt32();
+                var unitId = unit.getUniqueID();
+                if (repairs.indexOf(unitId) >= 0)
+                {
+                    return false;
+                }
+        }
+        return true;
+    };
+
+    this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                 defender, defPosX, defPosY, isDefender)
+    {
+        // get cop and scop offensive bonus
+        switch (co.getPowerMode())
+        {
+        case GameEnums.PowerMode_Superpower:
+            return 30;
+        case GameEnums.PowerMode_Power:
+            return 20;
+        default:
+            return 0;
+        }
+    };
+
+    this.getDeffensiveReduction = function(co, attacker, atkPosX, atkPosY,
+                                  defender, defPosX, defPosY, isDefender)
+    {
+        // reduce enemy defense
+        if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+        {
+            if (co.getOwner().isEnemyUnit(defender) &&
+                    defender.useTerrainDefense())
+            {
+                return defender.getTerrainDefense() * 15;
+            }
+        }
+        return 0;
+    };
+
+    this.getAdditionalBuildingActions = function(co, building)
+    {
+        switch (co.getPowerMode())
+        {
+            case GameEnums.PowerMode_Superpower:
+                return ""
+            case GameEnums.PowerMode_Power:
+                // disable enemy production line
+                if (co.getOwner().isEnemy(building.getOwner()))
+                {
+                    return "-ACTION_BUILD_UNITS";
+                }
+                break;
+            default:
+                break;
+        }
+        return "";
+    };
+
+    this.getCaptureBonus = function(co, unit, posX, posY)
+    {
+        var applyBonus = false;
+        // store capture bonus
+        var variables = co.getVariables();
+        var xVariable = variables.createVariable("POSXBUILDINGS");
+        var yVariable = variables.createVariable("POSYBUILDINGS");
+        var pointsX = xVariable.readDataListInt32();
+        var pointsY = yVariable.readDataListInt32();
+        for (var i = 0; i < pointsX.length; i++)
+        {
+            if (pointsX[i] === posX &&
+                pointsX[i] === posX)
+            {
+                // apply capture bonus and remove it from the list
+                applyBonus = true;
+                pointsX.splice(i, 1);
+                pointsY.splice(i, 1);
+                xVariable.writeDataListInt32(pointsX);
+                yVariable.writeDataListInt32(pointsY);
+                break;
+            }
+        }
+        if (co.getPowerMode() === GameEnums.PowerMode_Superpower &&
+            applyBonus === true)
+        {
+            return 15;
+        }
+        else if (applyBonus === true)
+        {
+            return 5;
+        }
+        return 0;
+    };
+
+    this.getCOUnitRange = function(co)
+    {
+        return 3;
+    };
+    this.getCOArmy = function()
+    {
+        return "AC";
+    };
+
+    // CO - Intel
+    this.getBio = function()
+    {
+        return qsTr("A ruthless commander recruited into the Amber Corona army.");
+    };
+    this.getHits = function()
+    {
+        return qsTr("Cocktails");
+    };
+    this.getMiss = function()
+    {
+        return qsTr("Excuses");
+    };
+    this.getCODescription = function()
+    {
+        return qsTr("Attacked units won't repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.");
+    };
+    this.getPowerDescription = function()
+    {
+        return qsTr("Deployment and repairs from properties are disabled and she gets an offensive bonus.");
+    };
+    this.getPowerName = function()
+    {
+        return qsTr("Highway of Pain");
+    };
+    this.getSuperPowerDescription = function()
+    {
+        return qsTr("Terrain stars now reduces the foe's defense and Mary's capture bonus is greatly increased. All units gain substantial firepower.");
+    };
+    this.getSuperPowerName = function()
+    {
+        return qsTr("Bloody Mary");
+    };
+    this.getPowerSentences = function()
+    {
+        return [qsTr("Keep marching guys, the victory is close!"),
+                qsTr("No pain! NO GLORY!"),
+                qsTr("A drop of blood is a drop of effort...you must be proud of your troops."),
+                qsTr("People call me Bloody Mary....and no, you can't drink me."),
+                qsTr("We will fight until your last soldier is dead!"),
+                qsTr("I am a soldier, I fight where I am told, and I win where I fight.")];
+    };
+    this.getVictorySentences = function()
+    {
+        return [qsTr("Heh, looks like all my effort paid off in the end"),
+                qsTr("Lets go, people. Lets have a drink to celebrate this victory."),
+                qsTr("All right troops, now you can rest, your job here is done.")];
+    };
+    this.getDefeatSentences = function()
+    {
+        return [qsTr("You were better.... This time"),
+                qsTr("That is impossible. I need a drink now.")];
+    };
+    this.getName = function()
+    {
+        return qsTr("Mary");
+    };
+}
+
+Constructor.prototype = CO;
+var CO_MARY = new Constructor();

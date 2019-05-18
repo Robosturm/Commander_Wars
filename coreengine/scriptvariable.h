@@ -42,31 +42,33 @@ public:
     /**
      * @brief writes a vector of the given type
      */
-    template<typename VectorType>
-    void writeVector(QVector<VectorType> vector)
+    template<typename ListType>
+    void writeList(QList <ListType> list)
     {
+        // delete the buffer content
+        buffer.setData(QByteArray());
         buffer.seek(0);
-        actionData << static_cast<qint32>(vector.size());
-        for (qint32 i = 0; i < vector.size(); i++)
+        actionData << static_cast<qint32>(list.size());
+        for (qint32 i = 0; i < list.size(); i++)
         {
-            actionData << vector[i];
+            actionData << list[i];
         }
     }
     /**
      * @brief reads a vector of the given type
      */
-    template<typename VectorType>
-    QVector<VectorType> readVector()
+    template<typename ListType>
+    QList<ListType> readList()
     {
         buffer.seek(0);
-        QVector<VectorType> ret;
+        QList<ListType> ret;
         if (buffer.size() > 0)
         {
             qint32 size = 0;
             actionData >> size;
             for (qint32 i = 0; i < size; i++)
             {
-                VectorType type;
+                ListType type;
                 actionData >> type;
                 ret.append(type);
             }
@@ -80,6 +82,8 @@ public:
      */
     void writeData(type data)
     {
+        // delete the buffer content
+        buffer.setData(QByteArray());
         buffer.seek(0);
         actionData << data;
     }
@@ -98,43 +102,29 @@ public:
         }
         return data;
     }
+
 public slots:
     inline QString getId()
     {
         return m_Id;
     }
     /**
-     * @brief writeDataVectorPoint
-     * @param data writes a Qector<QPoint> to the action data
+     * @brief writeDataListInt32
+     * @param data writes a QList<qint32> to the action data
      */
-    void writeDataVectorPoint(QVector<QPoint> data)
+    void writeDataListInt32(QList<qint32> data)
     {
-        writeVector(data);
+        writeList(data);
     }
     /**
-     * @brief readDataVectorPoint
-     * @return reads a QVector<QPoint> from the action data
+     * @brief readDataListInt
+     * @return reads a QList<int> from the action data
      */
-    QVector<QPoint> readDataVectorPoint()
+    QList<int> readDataListInt32()
     {
-        return readVector<QPoint>();
+        return readList<qint32>();
     }
-    /**
-     * @brief writeDataVectorUint32
-     * @param data writes a QVector<quint32> to the action data
-     */
-    void writeDataVectorUint32(QVector<quint32> data)
-    {
-        writeVector(data);
-    }
-    /**
-     * @brief readDataVectorUint32
-     * @return reads a QVector<quint32> from the action data
-     */
-    QVector<quint32> readDataVectorUint32()
-    {
-        return readVector<quint32>();
-    }
+
     /**
      * @brief writeDataString adds a string to the action data
      * @param data

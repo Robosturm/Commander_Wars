@@ -499,6 +499,28 @@ qint32 CO::getRepairBonus(Unit* pUnit, QPoint position)
     }
 }
 
+bool CO::canBeRepaired(Unit* pUnit, QPoint position)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "canBeRepaired";
+    QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pUnit);
+    args1 << obj1;
+    args1 << position.x();
+    args1 << position.y();
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isBool())
+    {
+        return erg.toBool();
+    }
+    else
+    {
+        return false;
+    }
+}
+
 qint32 CO::getCaptureBonus(Unit* pUnit, QPoint position)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -581,6 +603,33 @@ qint32 CO::getOffensiveBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender
     }
 }
 
+qint32 CO::getOffensiveReduction(Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getOffensiveReduction";
+    QJSValueList args1;
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj3;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pAttacker);
+    args1 << obj1;
+    args1 << atkPosition.x();
+    args1 << atkPosition.y();
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(pDefender);
+    args1 << obj2;
+    args1 << defPosition.x();
+    args1 << defPosition.y();
+    args1 << isDefender;
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 qint32 CO::getDeffensiveBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -596,6 +645,33 @@ qint32 CO::getDeffensiveBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefend
     args1 << obj2;
     args1 << defPosition.x();
     args1 << defPosition.y();    
+    args1 << isDefender;
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+qint32 CO::getDeffensiveReduction(Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getDeffensiveReduction";
+    QJSValueList args1;
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj3;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pAttacker);
+    args1 << obj1;
+    args1 << atkPosition.x();
+    args1 << atkPosition.y();
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(pDefender);
+    args1 << obj2;
+    args1 << defPosition.x();
+    args1 << defPosition.y();
     args1 << isDefender;
     QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
     if (erg.isNumber())

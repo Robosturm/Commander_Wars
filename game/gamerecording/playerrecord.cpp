@@ -53,7 +53,7 @@ qint32 PlayerRecord::getDay() const
     return m_Day;
 }
 
-qint32 PlayerRecord::getPlayer() const
+qint32 PlayerRecord::getOwner() const
 {
     return m_Player;
 }

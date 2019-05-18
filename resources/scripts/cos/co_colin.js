@@ -17,7 +17,7 @@ var Constructor = function()
         animation.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation);
 
-        var player = co.getPlayer();
+        var player = co.getOwner();
         player.addFonds(player.getFonds() * 0.5);
         audio.clearPlayList();
         CO_COLIN.loadCOMusic(co);
@@ -30,7 +30,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var units = co.getPlayer().getUnits();
+        var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
         units.randomize();
@@ -100,7 +100,7 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                var bonus = attacker.getOwner().getFonds() / 1000 * 3.33;
+                var bonus = attacker.getOwner().getFonds() / 1000 * 3.33 - 15;
                 return bonus;
             case GameEnums.PowerMode_Power:
                 break;

@@ -29,7 +29,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var units = co.getPlayer().getUnits();
+        var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
 
@@ -69,7 +69,7 @@ var Constructor = function()
 
     this.kindleDamage = function(co, value, animations, powerNameAnimation)
     {
-        var player = co.getPlayer();
+        var player = co.getOwner();
         var units = player.getUnits();
         var counter = 0;
         var unit = null;
@@ -132,7 +132,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var units = co.getPlayer().getUnits();
+        var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
         units.randomize();
@@ -187,7 +187,7 @@ var Constructor = function()
                 {
                     ret = 130;
                 }
-                ret += co.getPlayer().getBuildingCount() * 3;
+                ret += co.getOwner().getBuildingCount() * 3;
                 return ret;
             case GameEnums.PowerMode_Power:
                 if (building !== null)

@@ -143,12 +143,27 @@ public slots:
      */
     qint32 getOffensiveBonus(Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender);
     /**
+     * @brief getOffensiveReduction
+     * @param pAttacker the attacking unit our unit
+     * @param pDefender the defending unit the unit we attack
+     * @return
+     */
+    qint32 getOffensiveReduction(Unit* pAttacker, QPoint atkPosition,Unit* pDefender,  QPoint defPosition, bool isDefender);
+    /**
      * @brief getDeffensiveBonus the deffensive bonus of our unit
      * @param pAttacker the unit attacking us
      * @param pDefender our unit that gets attacked
      * @return bonus
      */
     qint32 getDeffensiveBonus(Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender);
+    /**
+     * @brief getDeffensiveBonus the deffensive bonus of our unit
+     * @param pAttacker the unit attacking us
+     * @param pDefender our unit that gets attacked
+     * @return bonus
+     */
+    qint32 getDeffensiveReduction(Unit* pAttacker, QPoint atkPosition, Unit* pDefender, QPoint defPosition, bool isDefender);
+
     /**
      * @brief getDamageReduction
      * @param damage
@@ -232,6 +247,13 @@ public slots:
      */
     qint32 getRepairBonus(Unit* pUnit, QPoint position);
     /**
+     * @brief canBeRepaired
+     * @param pUnit
+     * @param position
+     * @return
+     */
+    bool canBeRepaired(Unit* pUnit, QPoint position);
+    /**
      * @brief getCaptureBonus
      * @param pUnit
      * @param position
@@ -272,7 +294,7 @@ public slots:
      * @brief getPlayer
      * @return
      */
-    inline Player* getPlayer()
+    inline Player* getOwner()
     {
         return m_Owner;
     }

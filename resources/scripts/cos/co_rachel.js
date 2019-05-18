@@ -29,7 +29,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var units = co.getPlayer().getUnits();
+        var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
         units.randomize();
@@ -78,7 +78,7 @@ var Constructor = function()
     this.throwRocket = function(co, damage, targetType, animation2)
     {
         // let a rocket fall :D
-        var rocketTarget = co.getPlayer().getRockettarget(2, damage, 1.2, targetType);
+        var rocketTarget = co.getOwner().getRockettarget(2, damage, 1.2, targetType);
         
         var animation = GameAnimationFactory.createAnimation(rocketTarget.x - 2, rocketTarget.y - 2 - 1);
         animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 1.5, 0);

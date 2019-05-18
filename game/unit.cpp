@@ -443,6 +443,36 @@ qint32 Unit::getUnitValue()
     return static_cast<qint32>(getCosts() * hp / 10.0f);
 }
 
+bool Unit::canBeRepaired(QPoint position)
+{
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        Player* pPlayer = pMap->getPlayer(i);
+        if (m_pOwner->isEnemy(pPlayer))
+        {
+            CO* pCO = pPlayer->getCO(0);
+            if (pCO != nullptr)
+            {
+                if (!pCO->canBeRepaired(this, position))
+                {
+                    return false;
+                }
+            }
+            pCO = pPlayer->getCO(1);
+            if (pCO != nullptr)
+            {
+                if (!pCO->canBeRepaired(this, position))
+                {
+                    return false;
+                }
+            }
+        }
+    }
+
+    return true;
+}
+
 bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange)
 {
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
@@ -588,6 +618,7 @@ bool Unit::canTransportUnit(Unit* pUnit)
 qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender)
 {
     qint32 bonus = 0;
+    GameMap* pMap = GameMap::getInstance();
     CO* pCO0 = m_pOwner->getCO(0);
     if (pCO0 != nullptr)
     {
@@ -597,6 +628,24 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
     if (pCO1 != nullptr)
     {
         bonus += pCO1->getOffensiveBonus(this, position, pDefender, defPosition, isDefender);
+    }
+
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        Player* pPlayer = pMap->getPlayer(i);
+        if (m_pOwner->isEnemy(pPlayer))
+        {
+            pCO0 = pPlayer->getCO(0);
+            if (pCO0 != nullptr)
+            {
+                bonus -= pCO0->getOffensiveReduction(this, position, pDefender, defPosition, isDefender);
+            }
+            pCO1 = pPlayer->getCO(1);
+            if (pCO1 != nullptr)
+            {
+                bonus -= pCO1->getOffensiveReduction(this, position, pDefender, defPosition, isDefender);
+            }
+        }
     }
 
     if (pCO0 != nullptr && pCO1 != nullptr &&
@@ -616,7 +665,7 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
         }
     }
 
-    GameMap* pMap = GameMap::getInstance();
+
     qint32 mapHeigth = pMap->getMapHeight();
     qint32 mapWidth = pMap->getMapWidth();
     for (qint32 x = 0; x < mapWidth; x++)
@@ -711,6 +760,7 @@ float Unit::getTrueDamage(float damage, Unit* pAttacker, QPoint position, qint32
 
 qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender)
 {
+    GameMap* pMap = GameMap::getInstance();
     qint32 bonus = 0;
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
@@ -722,7 +772,23 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
     {
         bonus += pCO->getDeffensiveBonus(pAttacker, atkPosition, this, position, isDefender);
     }
-    GameMap* pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        Player* pPlayer = pMap->getPlayer(i);
+        if (m_pOwner->isEnemy(pPlayer))
+        {
+            pCO = pPlayer->getCO(0);
+            if (pCO != nullptr)
+            {
+                bonus -= pCO->getDeffensiveReduction(pAttacker, atkPosition, this, position, isDefender);
+            }
+            pCO = pPlayer->getCO(1);
+            if (pCO != nullptr)
+            {
+                bonus -= pCO->getDeffensiveReduction(pAttacker, atkPosition, this, position, isDefender);
+            }
+        }
+    }
     qint32 mapHeigth = pMap->getMapHeight();
     qint32 mapWidth = pMap->getMapWidth();
     for (qint32 x = 0; x < mapWidth; x++)
@@ -1652,7 +1718,7 @@ void Unit::updateIconTweens()
     }
 }
 
-quint32 Unit::getUniqueID() const
+qint32 Unit::getUniqueID() const
 {
     return m_UniqueID;
 }

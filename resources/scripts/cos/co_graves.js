@@ -49,7 +49,7 @@ var Constructor = function()
 
     this.gravesDamage = function(co, value, stunLevel, animation2)
     {
-        var player = co.getPlayer();
+        var player = co.getOwner();
         var counter = 0;
         var playerCounter = map.getPlayerCount();
         var animation = null;

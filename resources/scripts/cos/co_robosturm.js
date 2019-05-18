@@ -50,7 +50,7 @@ var Constructor = function()
     this.power = function(co, value, powerNameAnimation)
     {
 
-        var player = co.getPlayer();
+        var player = co.getOwner();
         var units = player.getUnits();
         var animations = [];
         var counter = 0;

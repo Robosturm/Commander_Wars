@@ -50,7 +50,7 @@ var Constructor = function()
     this.throwLaserray = function(co, damage, range, powerNameAnimation)
     {
         // let a meteor fall :D
-        var meteorTarget = co.getPlayer().getRockettarget(range, damage);
+        var meteorTarget = co.getOwner().getRockettarget(range, damage);
 
         var animation2 = GameAnimationFactory.createAnimation(0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());

@@ -41,7 +41,7 @@ public:
 
 
     qint32 getDay() const;
-    qint32 getPlayer() const;
+    qint32 getOwner() const;
     qint32 getFonds() const;
     qint32 getIncome() const;
     qint32 getBuildings() const;

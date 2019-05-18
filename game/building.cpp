@@ -220,35 +220,77 @@ QStringList Building::getActionList()
     QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
     if (ret.isString())
     {
-        QString retString = ret.toString();
-
+        QStringList retList = ret.toString().split(",");
+        QStringList actionModifierList;
         CO* pCO = m_pOwner->getCO(0);
         if (pCO != nullptr)
         {
             QString result = pCO->getAdditionalBuildingActions(this);
-            if (retString.isEmpty())
+            if (!result.isEmpty())
             {
-                retString = result;
-            }
-            else if (!result.isEmpty())
-            {
-                retString += "," + result;
+                actionModifierList += result.split(",");
             }
         }
         pCO = m_pOwner->getCO(1);
         if (pCO != nullptr)
         {
             QString result = pCO->getAdditionalBuildingActions(this);
-            if (retString.isEmpty())
+            if (!result.isEmpty())
             {
-                retString = result;
-            }
-            else if (!result.isEmpty())
-            {
-                retString += "," + result;
+                actionModifierList += result.split(",");
             }
         }
-        return retString.split(",");
+
+        GameMap* pMap = GameMap::getInstance();
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = pMap->getPlayer(i);
+            if (m_pOwner->isEnemy(pPlayer))
+            {
+                pCO = pPlayer->getCO(0);
+                if (pCO != nullptr)
+                {
+                    QString result = pCO->getAdditionalBuildingActions(this);
+                    if (!result.isEmpty())
+                    {
+                        actionModifierList += result.split(",");
+                    }
+                }
+                pCO = pPlayer->getCO(1);
+                if (pCO != nullptr)
+                {
+                    QString result = pCO->getAdditionalBuildingActions(this);
+                    if (!result.isEmpty())
+                    {
+                        actionModifierList += result.split(",");
+                    }
+                }
+            }
+        }
+        for (qint32 i = 0; i < actionModifierList.size(); i++)
+        {
+            QString action = actionModifierList[i];
+            if (!action.startsWith("-"))
+            {
+                if (!retList.contains(action))
+                {
+                    retList.append(action);
+                }
+            }
+        }
+        for (qint32 i = 0; i < actionModifierList.size(); i++)
+        {
+            QString action = actionModifierList[i];
+            if (action.startsWith("-"))
+            {
+                qint32 index = retList.indexOf(action.replace("-", ""));
+                if (index >= 0)
+                {
+                    retList.removeAt(index);
+                }
+            }
+        }
+        return retList;
     }
     else
     {

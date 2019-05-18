@@ -343,7 +343,7 @@ var Constructor = function()
         ACTION_FIRE.postAnimationDefenderWeapon = -1;
     };
     this.battle = function(attacker, attackerDamage, attackerWeapon,
-                                         defenderX, defenderY, defenderDamage, defenderWeapon,
+                           defenderX, defenderY, defenderDamage, defenderWeapon,
                            dontKillUnits)
     {
         var defTerrain = map.getTerrain(defenderX, defenderY);

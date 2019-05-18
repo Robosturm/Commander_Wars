@@ -120,8 +120,30 @@ var CO =
         return 0;
     },
 
+    getOffensiveReduction : function(co, attacker, atkPosX, atkPosY,
+                                 defender, defPosX, defPosY, isDefender)
+    {
+        return 0;
+    },
+
     getDeffensiveBonus : function(co, attacker, atkPosX, atkPosY,
                                   defender, defPosX, defPosY, isDefender)
+    {
+        return 0;
+    },
+
+    getDeffensiveReduction : function(co, attacker, atkPosX, atkPosY,
+                                  defender, defPosX, defPosY, isDefender)
+    {
+        return 0;
+    },
+
+    canBeRepaired : function(co, unit, posX, posY)
+    {
+        return true;
+    },
+
+    getCostModifier : function(co, id, baseCost)
     {
         return 0;
     },
