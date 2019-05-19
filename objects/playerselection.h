@@ -39,7 +39,7 @@ public:
      * @param socketID
      * @param player -1 for any player
      */
-    void sendPlayerRequest(quint64 socketID, qint32 player);
+    void sendPlayerRequest(quint64 socketID, qint32 player, BaseGameInputIF::AiTypes aiType);
     void playerDataChanged();
     void updateCOData(qint32 playerIdx);
 signals:
@@ -48,6 +48,10 @@ signals:
     void buttonShowAllBuildList();
     void buttonShowPlayerBuildList(qint32 player);
     void sigAiChanged(qint32 player);
+    /**
+     * @brief sigDisconnect emitted when we need to leave the game cause we don't own a player
+     */
+    void sigDisconnect();
 public slots:
     // slots for changing player data
     void allPlayerIncomeChanged(float value);
@@ -101,6 +105,11 @@ protected:
      * @param stream
      */
     void recievedCOData(quint64, QDataStream& stream);
+    /**
+     * @brief recievedColorData
+     * @param stream
+     */
+    void recievedColorData(quint64, QDataStream& stream);
 private:
     // player selection
     spPanel m_pPlayerSelection;

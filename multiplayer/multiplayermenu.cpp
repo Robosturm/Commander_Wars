@@ -41,6 +41,7 @@ Multiplayermenu::Multiplayermenu(QString adress, bool host)
         // quit on host connection lost
         connect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
         connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
+        connect(m_pPlayerSelection.get(), &PlayerSelection::sigDisconnect, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
     }
     else
     {
@@ -173,7 +174,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                     m_pCurrentMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(static_cast<BaseGameInputIF::AiTypes>(aiType)));
                     m_pPlayerSelection->updatePlayerData(i);
                 }
-                m_pPlayerSelection->sendPlayerRequest(socketID, -1);
+                m_pPlayerSelection->sendPlayerRequest(socketID, -1, BaseGameInputIF::AiTypes::Human);
             }
         }
         else if (messageType == "REQUESTMAP")
@@ -219,7 +220,7 @@ void Multiplayermenu::disconnected(quint64 socketID)
 {
     if (m_Host)
     {
-        // todo impl
+
     }
     else
     {
@@ -259,7 +260,6 @@ void Multiplayermenu::slotButtonBack()
         }
         m_pHostAdresse->setVisible(false);
         MapSelectionMapsMenue::slotButtonBack();
-
     }
 }
 

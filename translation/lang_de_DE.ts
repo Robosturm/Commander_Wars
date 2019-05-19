@@ -1153,7 +1153,7 @@
 <context>
     <name>Multiplayermenu</name>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="56"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="57"/>
         <source>Host Adress: </source>
         <translation type="unfinished"></translation>
     </message>
