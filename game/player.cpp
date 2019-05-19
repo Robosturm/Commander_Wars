@@ -600,8 +600,11 @@ qint32 Player::getMovementcostModifier(Unit* pUnit, QPoint position)
     {
        modifier += playerCOs[1]->getMovementcostModifier(pUnit, position);
     }
-    GameMap* pMap = GameMap::getInstance();
-    modifier += pMap->getGameRules()->getCurrentWeather()->getMovementCostModifier();
+    if (pUnit->getOwner() == this)
+    {
+        GameMap* pMap = GameMap::getInstance();
+        modifier += pMap->getGameRules()->getCurrentWeather()->getMovementCostModifier();
+    }
     return modifier;
 }
 

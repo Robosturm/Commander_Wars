@@ -4410,6 +4410,109 @@
     </message>
 </context>
 <context>
+    <name>co_julia</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="148"/>
+        <source>A devoted CO who embraces Dark Matter&apos;s ideals and wishes to unite the world. She excels at utilizing propaganda to demoralize her enemies.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="152"/>
+        <source>The morning paper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="156"/>
+        <source>The comics section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="160"/>
+        <source>Units have reduced offensive power. However, firepower is unaffected by loss of HP.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="164"/>
+        <source>Half of enemy units can&apos;t move next turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="168"/>
+        <source>Rallying Cry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="172"/>
+        <source>All enemy units can&apos;t move next turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="176"/>
+        <source>Media Mayhem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="180"/>
+        <source>Your defeat is tomorrow&apos;s headline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="181"/>
+        <source>Start the presses!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="182"/>
+        <source>I don&apos;t receive the news. I make the news.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="183"/>
+        <source>I am the only voice of the people.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="184"/>
+        <source>Let us see how devoted your people are to your cause.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="185"/>
+        <source>You will come to embrace our ideals.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="189"/>
+        <source>The proof of our might will forever be etched in your minds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="190"/>
+        <source>How foolish it was of you to try to defy us.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="191"/>
+        <source>This victory will be pleasing news to our citizens.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="195"/>
+        <source>The news will still call this a victory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="196"/>
+        <source>I will change the news...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="200"/>
+        <source>Julia</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>co_kanbei</name>
     <message>
         <location filename="../resources/scripts/cos/co_kanbei.js" line="165"/>
