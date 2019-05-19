@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include "QFileInfo"
+
 #include "oxygine-framework.h"
 
 #include "objects/mapselection.h"
@@ -77,6 +79,11 @@ protected:
     oxygine::spBox9Sprite m_pMiniMapBox;
     QVector<oxygine::spTextField> m_BuildingCountTexts;
     oxygine::spBox9Sprite m_pBuildingBackground;
+    /**
+     * @brief m_currentMapFile stores the current map info
+     */
+    QFileInfo m_currentMapFile;
+
     // rule selection
     spPanel m_pRuleSelection;
     spMultislider m_pWeatherSlider;

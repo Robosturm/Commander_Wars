@@ -121,7 +121,16 @@ void DropDownmenu::setCurrentItem(qint32 index)
 
 QString DropDownmenu::getCurrentItemText()
 {
-    return m_ItemTexts[m_currentItem];
+    return QString(m_Textfield->getText().c_str());
+}
+
+void DropDownmenu::setCurrentItemText(QString value)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    m_Textfield->setText(value.toStdString().c_str());
+    m_currentItem = -1;
+    pApp->continueThread();
 }
 
 void DropDownmenu::addDropDownItem(QString text, qint32 id)

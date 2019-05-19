@@ -88,11 +88,11 @@ signals:
      * @brief recieveData emitted when Data is recieved
      * @param data
      */
-    void recieveData(std::shared_ptr<QTcpSocket> pSocket, QByteArray data, NetworkSerives service);
+    void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
     void sig_connect(const QString& adress, quint16 port);
-    void sigConnected(std::shared_ptr<QTcpSocket> pSocket);
-    void sigDisconnected(std::shared_ptr<QTcpSocket> pSocket);
-    void sig_sendData(std::shared_ptr<QTcpSocket> pSocket, QByteArray data, NetworkSerives service, bool forwardData);
+    void sigConnected(quint64 socket);
+    void sigDisconnected(quint64 socket);
+    void sig_sendData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service, bool forwardData);
 public slots:
     virtual void connectTCP(const QString& adress, quint16 port) = 0;
     virtual void disconnectTCP() = 0;
@@ -100,8 +100,9 @@ public slots:
      * @brief sendData send Data with this Connection
      * @param data
      */
-    virtual void sendData(std::shared_ptr<QTcpSocket> pSocket, QByteArray data, NetworkSerives service, bool forwardData) = 0;
+    virtual void sendData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service, bool forwardData) = 0;
 
+    virtual QTcpSocket* getSocket(quint64 socketID) = 0;
     void displayError(QAbstractSocket::SocketError socketError)
     {
         switch (socketError)
@@ -118,7 +119,7 @@ public slots:
             Console::print(tr("Error inside the Socket happened."), Console::eERROR);
         }
     }
-    virtual void forwardData(std::shared_ptr<QTcpSocket>, QByteArray, NetworkSerives){}
+    virtual void forwardData(quint64, QByteArray, NetworkInterface::NetworkSerives){}
 protected:
     QNetworkSession *networkSession;
     bool isServer;

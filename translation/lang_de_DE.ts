@@ -1065,87 +1065,87 @@
 <context>
     <name>MapSelectionMapsMenue</name>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="110"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="107"/>
         <source>Map Name: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="120"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="117"/>
         <source>Map Author: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="130"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="127"/>
         <source>Map Description </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="185"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="182"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="194"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="191"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="203"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="200"/>
         <source>Start Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="412"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="410"/>
         <source>Enviroment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="433"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="431"/>
         <source>Random Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="444"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="442"/>
         <source>Start Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="459"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="457"/>
         <source>Gameplay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="465"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="463"/>
         <source>Unit Ranking System: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="476"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="474"/>
         <source>No CO Powers: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="487"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="485"/>
         <source>Fog Of War: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="490"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="488"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="490"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="488"/>
         <source>Fog of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="502"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="500"/>
         <source>Unit Limit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="515"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="513"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1153,7 +1153,7 @@
 <context>
     <name>Multiplayermenu</name>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="45"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="56"/>
         <source>Host Adress: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1161,17 +1161,17 @@
 <context>
     <name>NetworkInterface</name>
     <message>
-        <location filename="../network/NetworkInterface.h" line="112"/>
+        <location filename="../network/NetworkInterface.h" line="113"/>
         <source>The host was not found. Please check the host name and port settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/NetworkInterface.h" line="115"/>
+        <location filename="../network/NetworkInterface.h" line="116"/>
         <source>The connection was refused by the peer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/NetworkInterface.h" line="118"/>
+        <location filename="../network/NetworkInterface.h" line="119"/>
         <source>Error inside the Socket happened.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1455,74 +1455,69 @@
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="95"/>
-        <source>Username</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/playerselection.cpp" line="95"/>
+        <location filename="../objects/playerselection.cpp" line="142"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="95"/>
+        <location filename="../objects/playerselection.cpp" line="142"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="95"/>
+        <location filename="../objects/playerselection.cpp" line="142"/>
         <source>AI Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="95"/>
+        <location filename="../objects/playerselection.cpp" line="142"/>
         <source>Startfonds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="95"/>
+        <location filename="../objects/playerselection.cpp" line="142"/>
         <source>Income Modifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="95"/>
-        <location filename="../objects/playerselection.cpp" line="187"/>
+        <location filename="../objects/playerselection.cpp" line="142"/>
+        <location filename="../objects/playerselection.cpp" line="235"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="95"/>
-        <location filename="../objects/playerselection.cpp" line="169"/>
-        <location filename="../objects/playerselection.cpp" line="386"/>
+        <location filename="../objects/playerselection.cpp" line="142"/>
+        <location filename="../objects/playerselection.cpp" line="217"/>
+        <location filename="../objects/playerselection.cpp" line="484"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="126"/>
+        <location filename="../objects/playerselection.cpp" line="173"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="131"/>
+        <location filename="../objects/playerselection.cpp" line="178"/>
         <source>All Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="190"/>
-        <location filename="../objects/playerselection.cpp" line="195"/>
-        <location filename="../objects/playerselection.cpp" line="199"/>
+        <location filename="../objects/playerselection.cpp" line="238"/>
+        <location filename="../objects/playerselection.cpp" line="243"/>
+        <location filename="../objects/playerselection.cpp" line="247"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="190"/>
-        <location filename="../objects/playerselection.cpp" line="195"/>
+        <location filename="../objects/playerselection.cpp" line="238"/>
+        <location filename="../objects/playerselection.cpp" line="243"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="195"/>
-        <location filename="../objects/playerselection.cpp" line="199"/>
+        <location filename="../objects/playerselection.cpp" line="243"/>
+        <location filename="../objects/playerselection.cpp" line="247"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1770,18 +1765,19 @@
 <context>
     <name>TCPServer</name>
     <message>
-        <location filename="../network/tcpserver.cpp" line="52"/>
-        <location filename="../network/tcpserver.cpp" line="77"/>
+        <location filename="../network/tcpserver.cpp" line="50"/>
+        <location filename="../network/tcpserver.cpp" line="78"/>
+        <location filename="../network/tcpserver.cpp" line="107"/>
         <source>Client disconnected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/tcpserver.cpp" line="106"/>
+        <location filename="../network/tcpserver.cpp" line="145"/>
         <source>New Client connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/tcpserver.cpp" line="28"/>
+        <location filename="../network/tcpserver.cpp" line="29"/>
         <source>Server is running</source>
         <translation type="unfinished"></translation>
     </message>

@@ -26,7 +26,7 @@ void BaseGameInputIF::serializeInterface(QDataStream& pStream, BaseGameInputIF* 
 {
     if (input == nullptr)
     {
-        pStream << static_cast<qint32>(AiTypes::Unkown);
+        pStream << static_cast<qint32>(AiTypes::Open);
     }
     else
     {
@@ -37,34 +37,48 @@ void BaseGameInputIF::serializeInterface(QDataStream& pStream, BaseGameInputIF* 
 
 BaseGameInputIF* BaseGameInputIF::deserializeInterface(QDataStream& pStream)
 {
-    BaseGameInputIF* ret = nullptr;
+
     AiTypes type;
     qint32 typeInt;
     pStream >> typeInt;
     type = static_cast<AiTypes>(typeInt);
+    BaseGameInputIF* ret = createAi(type);
+    if (ret != nullptr)
+    {
+        ret->deserializeObject(pStream);
+    }
+    return ret;
+}
+
+BaseGameInputIF* BaseGameInputIF::createAi(BaseGameInputIF::AiTypes type)
+{
+    BaseGameInputIF* ret = nullptr;
     switch (type)
     {
         case AiTypes::Human:
         {
             ret = new HumanPlayerInput();
-            ret->deserializeObject(pStream);
             break;
         }
         case AiTypes::VeryEasy:
         {
             ret = new VeryEasyAI();
-            ret->deserializeObject(pStream);
             break;
         }
-        case AiTypes::Unkown: // fall back case for damaged files or unset ai's
-        {
-            ret = new HumanPlayerInput();
-            break;
-        }
+
         case AiTypes::ProxyAi:
         {
             ret = new ProxyAi();
-            ret->deserializeObject(pStream);
+            break;
+        }
+        case AiTypes::Open:
+        {
+            ret = nullptr;
+            break;
+        }
+        default: // fall back case for damaged files or unset ai's
+        {
+            ret = new HumanPlayerInput();
             break;
         }
     }

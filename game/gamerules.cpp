@@ -363,16 +363,13 @@ void GameRules::createFogVision()
             }
         }
     }
-
-
-    // get player for which we should create the vision
-    Player* pPlayer = pMap->getCurrentViewPlayer();
-    // todo get last human player :)
+    // update vision for each player
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         pMap->getPlayer(i)->updatePlayerVision(false);
     }
-
+    // get player for which we should create the vision
+    Player* pPlayer = pMap->getCurrentViewPlayer();
     for (qint32 x = 0; x < width; x++)
     {
         for (qint32 y = 0; y < heigth; y++)
@@ -514,6 +511,7 @@ void GameRules::serializeObject(QDataStream& pStream)
 
 void GameRules::deserializeObject(QDataStream& pStream)
 {
+    m_VictoryRules.clear();
     qint32 version = 0;
     pStream >> version;
     qint32 size = 0;

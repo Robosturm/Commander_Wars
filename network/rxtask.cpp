@@ -5,10 +5,11 @@
 
 #include "network/NetworkInterface.h"
 
-RxTask::RxTask(std::shared_ptr<QTcpSocket> pSocket, NetworkInterface* CommIF)
+RxTask::RxTask(std::shared_ptr<QTcpSocket> pSocket, quint64 socketID, NetworkInterface* CommIF)
     : m_pSocket(pSocket),
       pIF(CommIF),
-      dataSize(0)
+      dataSize(0),
+      m_SocketID(socketID)
 {
 }
 
@@ -70,12 +71,12 @@ void RxTask::recieveData()
         {
             if (pIF->getIsServer() && forwardData)
             {
-                pIF->forwardData(m_pSocket, data, m_serive);
+                pIF->forwardData(m_SocketID, data, m_serive);
             }
             // note only one Service can recieve a message!!!
             // since the service needs to delete the object.
             // otherwise you get some nice null-pointer exeptions
-            emit pIF->recieveData(m_pSocket, data, m_serive);
+            emit pIF->recieveData(m_SocketID, data, m_serive);
         }
         m_serive = NetworkInterface::NetworkSerives::None;
 }

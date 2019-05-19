@@ -16,7 +16,7 @@ class RxTask : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
-    RxTask(std::shared_ptr<QTcpSocket> pSocket, NetworkInterface* CommIF);
+    RxTask(std::shared_ptr<QTcpSocket> pSocket, quint64 socketID, NetworkInterface* CommIF);
     virtual ~RxTask();
 public slots:
     void recieveData();
@@ -24,6 +24,7 @@ private:
    std::shared_ptr<QTcpSocket> m_pSocket;
    NetworkInterface* pIF;
    qint32 dataSize;
+   quint64 m_SocketID;
    NetworkInterface::NetworkSerives m_serive{NetworkInterface::NetworkSerives::None};
 };
 

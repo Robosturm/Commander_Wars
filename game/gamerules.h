@@ -182,8 +182,8 @@ public slots:
         return m_VictoryRules[index].get();
     }
 private:
+    // victory conditions
     QVector<spVictoryRule> m_VictoryRules;
-
     // weather chances
     QVector<spWeather> m_Weathers;
     QVector<qint32> m_WeatherChances;

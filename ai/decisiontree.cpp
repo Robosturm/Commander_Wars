@@ -31,7 +31,7 @@ DecisionTree::DecisionTree(QString treeFile, QString trainingDataFile)
     QFile trainingFile(trainingDataFile);
 
     trainingFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
-    QCryptographicHash myHash(QCryptographicHash::Md4);
+    QCryptographicHash myHash(QCryptographicHash::Sha3_512);
     myHash.addData(&trainingFile);
     QByteArray hash = myHash.result();
     trainingFile.close();

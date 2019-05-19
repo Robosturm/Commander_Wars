@@ -23,8 +23,16 @@ public slots:
      * @brief sendData send Data with this Connection
      * @param data
      */
-    virtual void sendData(std::shared_ptr<QTcpSocket> pSocket, QByteArray data, NetworkSerives service, bool forwardData) override;
-
+    virtual void sendData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, bool forwardData) override;
+    /**
+     * @brief getSocket
+     * @param socketID
+     * @return
+     */
+    virtual QTcpSocket* getSocket(quint64) override
+    {
+        return pSocket.get();
+    }
 private:
     spRxTask pRXTask;
     spTxTask pTXTask;

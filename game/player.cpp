@@ -696,7 +696,10 @@ void Player::updateVisualCORange()
 void Player::setBaseGameInput(BaseGameInputIF *pBaseGameInput)
 {
     m_pBaseGameInput = pBaseGameInput;
-    m_pBaseGameInput->setPlayer(this);
+    if (m_pBaseGameInput.get() != nullptr)
+    {
+        m_pBaseGameInput->setPlayer(this);
+    }
 }
 
 spCO Player::getspCO(quint8 id)
@@ -972,7 +975,10 @@ void Player::deserializeObject(QDataStream& pStream)
         {
             pStream >> isDefeated;
             m_pBaseGameInput = BaseGameInputIF::deserializeInterface(pStream);
-            m_pBaseGameInput->setPlayer(this);
+            if (m_pBaseGameInput.get() != nullptr)
+            {
+                m_pBaseGameInput->setPlayer(this);
+            }
         }
         else
         {

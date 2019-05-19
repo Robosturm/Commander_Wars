@@ -61,7 +61,7 @@ void Chat::update(const oxygine::UpdateState& us)
     oxygine::Actor::update(us);
 }
 
-void Chat::dataRecieved(std::shared_ptr<QTcpSocket>, QByteArray data, NetworkInterface::NetworkSerives service)
+void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSerives service)
 {
     if (service == NetworkInterface::NetworkSerives::Chat)
     {
@@ -100,7 +100,7 @@ void Chat::sendData(QString message)
         }
         if (m_pInterface.get() != nullptr)
         {
-            m_pInterface->sendData(nullptr, text.toStdString().c_str(), NetworkInterface::NetworkSerives::Chat, true);
+            m_pInterface->sendData(0, text.toStdString().c_str(), NetworkInterface::NetworkSerives::Chat, true);
         }
         m_ChatInput->setCurrentText("");
     }

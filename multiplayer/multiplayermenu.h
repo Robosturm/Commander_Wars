@@ -16,16 +16,25 @@ public:
     explicit Multiplayermenu(QString adress, bool host);
     virtual ~Multiplayermenu() = default;
 
+    /**
+     * @brief existsMap
+     * @param fileName
+     * @param hash
+     */
+    bool existsMap(QString& fileName, QByteArray& hash);
 signals:
 
 public slots:
-    void playerJoined(std::shared_ptr<QTcpSocket> pSocket);
+
     // general slots
     virtual void slotButtonBack() override;
     virtual void slotButtonNext() override;
     virtual void startGame() override;
 
-    void disconnected(std::shared_ptr<QTcpSocket> pSocket);
+    // network slots
+    void playerJoined(quint64 socketID);
+    void disconnected(quint64 socketID);
+    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
 private:
     bool m_Host{false};
     spNetworkInterface m_NetworkInterface;

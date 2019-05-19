@@ -23,9 +23,6 @@
 #include "objects/checkbox.h"
 #include "objects/spinbox.h"
 
-
-#include "QFileInfo"
-
 MapSelectionMapsMenue::MapSelectionMapsMenue()
     : QObject()
 {
@@ -307,6 +304,7 @@ void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)
     QFileInfo info = m_pMapSelection->getCurrentFolder() + item;
     if (info.isFile())
     {
+        m_currentMapFile = info;
         emit buttonNext();
     }
     pApp->continueThread();

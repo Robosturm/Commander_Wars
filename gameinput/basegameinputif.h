@@ -18,11 +18,11 @@ class BaseGameInputIF : public QObject, public FileSerializable, public oxygine:
 public:
     enum class AiTypes
     {
-        Unkown = -1,
+        ProxyAi = -1,
         Human = 0,
         VeryEasy,
         Max,
-        ProxyAi = 200,
+        Open = 200
     };
 
     explicit BaseGameInputIF(AiTypes aiType);
@@ -34,7 +34,7 @@ public:
     static void serializeInterface(QDataStream& pStream, BaseGameInputIF* input);
     static BaseGameInputIF* deserializeInterface(QDataStream& pStream);
     AiTypes getAiType() const;
-
+    static BaseGameInputIF* createAi(BaseGameInputIF::AiTypes type);
 signals:
 
 public slots:

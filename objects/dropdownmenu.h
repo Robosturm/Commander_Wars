@@ -28,8 +28,15 @@ public:
      * @return
      */
     QString getCurrentItemText();
+    void setCurrentItemText(QString value);
 
     void setCurrentItem(qint32 index);
+
+    inline qint32 getItemCount()
+    {
+        return m_ItemTexts.size();
+    }
+
 
     virtual void setEnabled(bool value) override;
 signals:

@@ -29,18 +29,18 @@ void TCPClient::connectTCP(const QString& adress, quint16 port)
     pSocket->connectToHost(adress, port);
 
     // Start RX-Task
-    pRXTask = new RxTask(pSocket, this);
+    pRXTask = new RxTask(pSocket, 0, this);
     pRXTask->moveToThread(this);
     QObject::connect(pSocket.get(), &QTcpSocket::readyRead, pRXTask.get(), &RxTask::recieveData);
 
     // start TX-Task
-    pTXTask = new TxTask(pSocket, this);
+    pTXTask = new TxTask(pSocket, 0, this);
     pTXTask->moveToThread(this);
     QObject::connect(this, &TCPClient::sig_sendData, pTXTask.get(), &TxTask::send);
 
     isConnected = true;
     Console::print(tr("Client is running"), Console::eDEBUG);
-    emit sigConnected(pSocket);
+    emit sigConnected(0);
 }
 
 void TCPClient::disconnectTCP()
@@ -57,10 +57,10 @@ void TCPClient::disconnectTCP()
         delete networkSession;
         networkSession = nullptr;
     }
-    emit sigDisconnected(nullptr);
+    emit sigDisconnected(0);
 }
 
-void TCPClient::sendData(std::shared_ptr<QTcpSocket> pSocket, QByteArray data, NetworkSerives service, bool forwardData)
+void TCPClient::sendData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, bool forwardData)
 {
-    emit sig_sendData(pSocket, data, service, forwardData);
+    emit sig_sendData(socketID, data, service, forwardData);
 }
