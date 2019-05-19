@@ -274,7 +274,7 @@ void PlayerSelection::showPlayerSelection()
         }
         if (pPlayer->getBaseGameInput() != nullptr)
         {
-            if (pPlayer->getBaseGameInput()->getAiType() != BaseGameInputIF::AiTypes::Human)
+            if (pPlayer->getBaseGameInput()->getAiType() > BaseGameInputIF::AiTypes::Human)
             {
                 allHuman = false;
             }
