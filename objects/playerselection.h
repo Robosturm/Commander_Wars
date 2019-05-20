@@ -82,6 +82,7 @@ public slots:
      */
     void updatePlayerData(qint32 player);
 protected:
+    void createAi(qint32 player, BaseGameInputIF::AiTypes type);
     /**
      * @brief requestPlayer a client requested to get control of a player. We check the request and execute it if it's valid
      * @param socketID

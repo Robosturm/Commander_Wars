@@ -71,20 +71,19 @@ DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items, bool up)
     {
         if (m_Panel->getVisible())
         {
-            this->setPriority(this->getPriority() - 1);
+            this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
         }
         else
         {
-            this->setPriority(this->getPriority() + 1);
+            this->setPriority(static_cast<short>(Mainapp::ZOrder::FocusedObjects));
         }
-
         this->m_Panel->setVisible(!this->m_Panel->getVisible());
     });
     this->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
         if (m_Panel->getVisible())
         {
-            this->setPriority(this->getPriority() - 1);
+            this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
         }
         this->m_Panel->setVisible(false);
     });

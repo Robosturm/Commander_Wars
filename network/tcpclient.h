@@ -20,11 +20,6 @@ public slots:
     virtual void connectTCP(const QString& adress, quint16 port) override;
     virtual void disconnectTCP() override;
     /**
-     * @brief sendData send Data with this Connection
-     * @param data
-     */
-    virtual void sendData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, bool forwardData) override;
-    /**
      * @brief getSocket
      * @param socketID
      * @return

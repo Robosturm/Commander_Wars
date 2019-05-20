@@ -83,11 +83,11 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items, bool u
     {
         if (m_Panel->getVisible())
         {
-            this->setPriority(this->getPriority() - 1);
+            this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
         }
         else
         {
-            this->setPriority(this->getPriority() + 1);
+            this->setPriority(static_cast<short>(Mainapp::ZOrder::FocusedObjects));
         }
 
         this->m_Panel->setVisible(!this->m_Panel->getVisible());
@@ -96,7 +96,7 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items, bool u
     {
         if (m_Panel->getVisible())
         {
-            this->setPriority(this->getPriority() - 1);
+            this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
         }
         this->m_Panel->setVisible(false);
     });

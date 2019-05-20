@@ -38,12 +38,6 @@ public slots:
     virtual void disconnectTCP() override;
     void disconnectSocket();
     void onConnect();
-
-    /**
-     * @brief sendData send Data with this Connection
-     * @param data
-     */
-    virtual void sendData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, bool forwardData) override;
     virtual void forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service) override;
     virtual QTcpSocket* getSocket(quint64 socketID) override;
     void disconnectClient(quint64 socketID);

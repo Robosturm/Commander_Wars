@@ -2,7 +2,6 @@
 #define AUDIOTHREAD_H
 
 #include <QMediaPlayer>
-#include <QThread>
 #include <QObject>
 
 #include <QVector>
@@ -10,12 +9,24 @@
 
 class QMediaPlaylist;
 
-class AudioThread : public QThread        
+class AudioThread : public QObject
 {
     Q_OBJECT
 public:
     AudioThread();
     virtual ~AudioThread();
+
+    // Qt Signals and Slots
+signals:
+    void sigInitAudio();
+    void SignalPlayMusic(qint32 File);
+    void SignalSetVolume(qint32 value);
+    void SignalAddMusic(QString File);
+    void SignalClearPlayList();
+    void SignalPlayRandom();
+    void SignalLoadFolder(QString folder);
+    void SignalPlaySound(QString file, qint32 loops, QString folder);
+    void SignalStopSound(QString file, QString folder);
 public slots:
     /**
      * @brief playMusic
@@ -63,23 +74,7 @@ public slots:
      * @param folder
      */
     void stopSound(QString file, QString folder = "resources/sounds/");
-protected:
-    virtual void run()  override;
-private:
-    QMediaPlayer* m_Player;
-    QMediaPlaylist* m_playList;
-    QVector<QSoundEffect*> m_Sounds;
-    void initAudio();
-    // Qt Signals and Slots
-signals:
-    void SignalPlayMusic(qint32 File);
-    void SignalSetVolume(qint32 value);
-    void SignalAddMusic(QString File);
-    void SignalClearPlayList();
-    void SignalPlayRandom();
-    void SignalLoadFolder(QString folder);
-    void SignalPlaySound(QString file, qint32 loops, QString folder);
-    void SignalStopSound(QString file, QString folder);
+
 protected slots:
     // stops current Music and launches new one.
     void SlotPlayMusic(qint32 File);
@@ -92,6 +87,11 @@ protected slots:
     void SlotPlaySound(QString file, qint32 loops, QString folder);
     void SlotStopSound(QString file, QString folder);
     void SlotSoundEnded();
+     void initAudio();
+private:
+    QMediaPlayer* m_Player{nullptr};
+    QMediaPlaylist* m_playList{nullptr};
+    QVector<QSoundEffect*> m_Sounds;
 };
 
 #endif // AUDIOTHREAD_H

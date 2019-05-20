@@ -6,7 +6,7 @@
 
 #include "coreengine/interpreter.h"
 
-class WorkerThread : public QThread
+class WorkerThread : public QObject
 {
     Q_OBJECT
 public:
@@ -18,8 +18,10 @@ public:
     {
         return m_pInterpreter;
     }
-protected:
-    virtual void run()  override;
+signals:
+    void sigStart();
+protected slots:
+    void start();
 private:
     Interpreter* m_pInterpreter{nullptr};
     bool started{false};

@@ -12,30 +12,43 @@
 #include "game/co.h"
 #include "network/tcpserver.h"
 
-Mainapp* Mainapp::m_pMainapp = nullptr;
+Mainapp* Mainapp::m_pMainapp;
 QRandomGenerator Mainapp::randGenerator;
+QThread Mainapp::m_Workerthread;
+QThread Mainapp::m_AudioWorker;
+QThread Mainapp::m_Networkthread;
 bool Mainapp::m_useSeed{false};
 
 Mainapp::Mainapp(int argc, char* argv[])
-    : QCoreApplication(argc, argv),
-      m_Audiothread(new AudioThread()),
-      m_Workerthread(new WorkerThread())
+    : QCoreApplication(argc, argv)
 {
+    m_pMainapp = this;
     Interpreter::setCppOwnerShip(this);
+    quint32 seedValue = QRandomGenerator::global()->bounded(0u, std::numeric_limits<quint32>::max());
+    randGenerator.seed(seedValue);
     // create update timer
     m_Timer.setSingleShot(true);
     connect(&m_Timer, &QTimer::timeout, this, &Mainapp::update, Qt::QueuedConnection);
-    m_pMainapp = this;
-    m_Audiothread->start();
 
-    quint32 seedValue = QRandomGenerator::global()->bounded(0u, std::numeric_limits<quint32>::max());
-    randGenerator.seed(seedValue);
+    m_Audiothread.sigInitAudio();
+    m_AudioWorker.setObjectName("AudioThread");
+    m_Networkthread.setObjectName("NetworkThread");
+    m_Workerthread.setObjectName("WorkerThread");
+    m_AudioWorker.start(QThread::Priority::LowPriority);
+    m_Networkthread.start(QThread::Priority::NormalPriority);
+    m_Workerthread.start(QThread::Priority::HighPriority);
 }
 
 Mainapp::~Mainapp()
 {
-    m_Audiothread->deleteLater();
-    m_Workerthread->deleteLater();
+    m_Audiothread.deleteLater();
+    m_Worker.deleteLater();
+    m_Workerthread.quit();
+    m_Workerthread.wait();
+    m_AudioWorker.quit();
+    m_AudioWorker.wait();
+    m_Networkthread.quit();
+    m_Networkthread.wait();
 }
 
 Mainapp* Mainapp::getInstance()
@@ -200,6 +213,12 @@ void Mainapp::quitGame()
 
 void Mainapp::start()
 {
+    emit m_Worker.sigStart();
+    while (!m_Worker.getStarted())
+    {
+        QThread::msleep(100);
+    }
+    // only launch the server if the rest is ready for it ;)
     if (Settings::getServer())
     {
         m_pGameServer = new TCPServer();
@@ -300,11 +319,6 @@ void Mainapp::onEvent(oxygine::Event* ev)
             emit sigKeyUp(*event);
         }
     }
-}
-
-WorkerThread *Mainapp::getWorkerthread() const
-{
-    return m_Workerthread;
 }
 
 bool Mainapp::getUseSeed()

@@ -83,7 +83,7 @@ void Multiplayermenu::playerJoined(quint64 socketID)
             stream << fileName;
             stream << hash;
             // send map data to client
-            m_NetworkInterface->sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+            m_NetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
         }
         else
         {
@@ -114,14 +114,14 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                     QByteArray data;
                     QDataStream stream(&data, QIODevice::WriteOnly);
                     stream << QString("REQUESTRULE");
-                    m_NetworkInterface->sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+                    m_NetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
                 }
                 else
                 {
                     QByteArray sendData;
                     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                     sendStream << QString("REQUESTMAP");
-                    m_NetworkInterface->sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+                    m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
                 }
             }
         }
@@ -155,7 +155,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                     }
                     m_pCurrentMap->getPlayer(i)->serializeObject(sendStream);
                 }
-                m_NetworkInterface->sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+                m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
             }
         }
         else if (messageType == "SENDINITUPDATE")
@@ -226,9 +226,9 @@ void Multiplayermenu::disconnected(quint64 socketID)
     {
         if (m_NetworkInterface.get() != nullptr)
         {
-            m_NetworkInterface->quit();
-            m_NetworkInterface->wait();
-            m_NetworkInterface = nullptr;
+            emit m_NetworkInterface->sig_close();
+            m_pPlayerSelection->attachNetworkInterface(nullptr);
+            m_NetworkInterface = nullptr;            
         }
         Console::print("Leaving Map Selection Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new LobbyMenu());
@@ -242,8 +242,8 @@ void Multiplayermenu::slotButtonBack()
     {
         if (m_NetworkInterface.get() != nullptr)
         {
-            m_NetworkInterface->quit();
-            m_NetworkInterface->wait();
+            emit m_NetworkInterface->sig_close();
+            m_pPlayerSelection->attachNetworkInterface(nullptr);
             m_NetworkInterface = nullptr;
         }
         Console::print("Leaving Map Selection Menue", Console::eDEBUG);
@@ -254,8 +254,8 @@ void Multiplayermenu::slotButtonBack()
     {
         if (m_NetworkInterface.get() != nullptr)
         {
-            m_NetworkInterface->quit();
-            m_NetworkInterface->wait();
+            emit m_NetworkInterface->sig_close();
+            m_pPlayerSelection->attachNetworkInterface(nullptr);
             m_NetworkInterface = nullptr;
         }
         m_pHostAdresse->setVisible(false);

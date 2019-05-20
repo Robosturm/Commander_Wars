@@ -100,7 +100,7 @@ void Chat::sendData(QString message)
         }
         if (m_pInterface.get() != nullptr)
         {
-            m_pInterface->sendData(0, text.toStdString().c_str(), NetworkInterface::NetworkSerives::Chat, true);
+            m_pInterface->sig_sendData(0, text.toStdString().c_str(), NetworkInterface::NetworkSerives::Chat, true);
         }
         m_ChatInput->setCurrentText("");
     }

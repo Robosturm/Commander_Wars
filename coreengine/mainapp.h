@@ -4,6 +4,7 @@
 #include <atomic>
 #include <QTimer>
 #include <QTranslator>
+#include <QThread>
 #include <QCoreApplication>
 #include <QRandomGenerator>
 #include "QMutex"
@@ -34,7 +35,8 @@ public:
         Weather,
         Cursor,
         Animation,
-        Objects,
+        Objects = 31998,
+        FocusedObjects = 31999,
         Dialogs = 32000,
         Console
     };
@@ -51,12 +53,12 @@ public:
 
     inline Interpreter* getInterpreter()
     {
-        return m_Workerthread->getInterpreter();
+        return m_Worker.getInterpreter();
     }
 
     inline AudioThread* getAudioThread()
     {
-        return m_Audiothread;
+        return &m_Audiothread;
     }
 
     inline Settings* getSettings()
@@ -65,15 +67,28 @@ public:
     }
 
     void setup();
-
-    void setupNetwork();
     static bool getUseSeed();
     static void setUseSeed(bool useSeed);
 
-    WorkerThread *getWorkerthread() const;
+    inline static QThread* getWorkerthread()
+    {
+        return &m_Workerthread;
+    }
     inline TCPServer* getGameServer()
     {
         return m_pGameServer.get();
+    }
+    inline void stopGameServer()
+    {
+        m_pGameServer = nullptr;
+    }
+    inline static QThread* getNetworkThread()
+    {
+        return &m_Networkthread;
+    }
+    inline static QThread* getAudioWorker()
+    {
+        return &m_AudioWorker;
     }
 
     void suspendThread();
@@ -126,6 +141,7 @@ public slots:
      */
     void quitGame();
 
+
 protected:
     void onEvent(oxygine::Event* ev);
 private:
@@ -135,10 +151,14 @@ private:
     static QRandomGenerator randGenerator;
     static bool m_useSeed;
 
+    static QThread m_Workerthread;
+    static QThread m_AudioWorker;
+    static QThread m_Networkthread;
     spTCPServer m_pGameServer{nullptr};
+    AudioThread m_Audiothread;
+    WorkerThread m_Worker;
 
-    AudioThread* m_Audiothread{nullptr};
-    WorkerThread* m_Workerthread{nullptr};
+
     Settings m_Settings;
     bool m_quit{false};
 

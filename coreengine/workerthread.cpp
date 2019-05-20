@@ -22,15 +22,15 @@
 WorkerThread::WorkerThread()
 {
     Interpreter::setCppOwnerShip(this);
+    moveToThread(Mainapp::getWorkerthread());
+    connect(this, &WorkerThread::sigStart, this, &WorkerThread::start, Qt::QueuedConnection);
 }
 
 WorkerThread::~WorkerThread()
 {
-    terminate();
-    wait();
 }
 
-void WorkerThread::run()
+void WorkerThread::start()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
@@ -83,10 +83,6 @@ void WorkerThread::run()
 
     pApp->continueThread();
     started = true;
-    while (true)
-    {
-        exec();
-    }
 }
 
 bool WorkerThread::getStarted() const

@@ -11,31 +11,34 @@ TCPClient::TCPClient()
       pTXTask(nullptr),
       pSocket(nullptr)
 {
+    this->moveToThread(Mainapp::getInstance()->getNetworkThread());
     isServer = false;
-    start();
 }
 
 TCPClient::~TCPClient()
 {
+    disconnect();
+    disconnectTCP();
+    Console::print(tr("Client is closed"), Console::eDEBUG);
 }
 
 void TCPClient::connectTCP(const QString& adress, quint16 port)
 {
     // Launch Socket
     pSocket = std::shared_ptr<QTcpSocket>(new QTcpSocket(this));
-    pSocket->moveToThread(this);
+    pSocket->moveToThread(Mainapp::getInstance()->getNetworkThread());
     QObject::connect(pSocket.get(), &QTcpSocket::disconnected, this, &TCPClient::disconnectTCP, Qt::QueuedConnection);
     QObject::connect(pSocket.get(), QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::error), this, &TCPClient::displayError);
     pSocket->connectToHost(adress, port);
 
     // Start RX-Task
     pRXTask = new RxTask(pSocket, 0, this);
-    pRXTask->moveToThread(this);
+    pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
     QObject::connect(pSocket.get(), &QTcpSocket::readyRead, pRXTask.get(), &RxTask::recieveData);
 
     // start TX-Task
     pTXTask = new TxTask(pSocket, 0, this);
-    pTXTask->moveToThread(this);
+    pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
     QObject::connect(this, &TCPClient::sig_sendData, pTXTask.get(), &TxTask::send);
 
     isConnected = true;
@@ -54,13 +57,6 @@ void TCPClient::disconnectTCP()
         pSocket->disconnect();
         pSocket->close();
         pSocket = nullptr;
-        delete networkSession;
-        networkSession = nullptr;
     }
     emit sigDisconnected(0);
-}
-
-void TCPClient::sendData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, bool forwardData)
-{
-    emit sig_sendData(socketID, data, service, forwardData);
 }

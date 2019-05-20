@@ -13,7 +13,7 @@ AudioThread::AudioThread()
 {
     Interpreter::setCppOwnerShip(this);
     // move signals and slots to Audio Thread
-    this->moveToThread(this);
+    this->moveToThread(Mainapp::getAudioWorker());
     connect(this, &AudioThread::SignalPlayMusic,        this, &AudioThread::SlotPlayMusic, Qt::QueuedConnection);
     connect(this, &AudioThread::SignalSetVolume,        this, &AudioThread::SlotSetVolume, Qt::QueuedConnection);
     connect(this, &AudioThread::SignalAddMusic,         this, &AudioThread::SlotAddMusic, Qt::QueuedConnection);
@@ -22,6 +22,7 @@ AudioThread::AudioThread()
     connect(this, &AudioThread::SignalLoadFolder,       this, &AudioThread::SlotLoadFolder, Qt::QueuedConnection);
     connect(this, &AudioThread::SignalPlaySound,        this, &AudioThread::SlotPlaySound, Qt::QueuedConnection);
     connect(this, &AudioThread::SignalStopSound,        this, &AudioThread::SlotStopSound, Qt::QueuedConnection);
+    connect(this, &AudioThread::sigInitAudio,           this, &AudioThread::initAudio, Qt::QueuedConnection);
 }
 
 AudioThread::~AudioThread()
@@ -29,8 +30,6 @@ AudioThread::~AudioThread()
     m_Player->stop();
     delete m_Player;
     delete m_playList;
-    terminate();
-    wait();
 }
 
 void AudioThread::initAudio()
@@ -38,20 +37,11 @@ void AudioThread::initAudio()
     // everything needs to be created in the context of this thread
     m_Player = new QMediaPlayer();
     m_playList = new QMediaPlaylist();
-    m_Player->moveToThread(this);
-    m_playList->moveToThread(this);
+    m_Player->moveToThread(Mainapp::getInstance()->getAudioWorker());
+    m_playList->moveToThread(Mainapp::getInstance()->getAudioWorker());
     m_Player->setPlaylist(m_playList);
     SlotSetVolume(static_cast<qint32>(static_cast<float>(Mainapp::getInstance()->getSettings()->getMusicVolume())));
     connect(m_Player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(SlotMediaStatusChanged(QMediaPlayer::MediaStatus)));
-}
-
-void AudioThread::run()
-{
-    initAudio();
-    while (true)
-    {
-        exec();
-    }
 }
 
 void AudioThread::playMusic(qint32 File)
@@ -150,8 +140,6 @@ void AudioThread::SlotPlayRandom()
     qint32 newMedia = Mainapp::randInt(0, size - 1);
     m_playList->setCurrentIndex(newMedia);
     m_Player->play();
-    qint64 dur = m_Player->duration();
-    dur--;
 }
 
 void AudioThread::loadFolder(const QString& folder)

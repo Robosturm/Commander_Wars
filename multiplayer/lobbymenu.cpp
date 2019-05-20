@@ -102,8 +102,7 @@ LobbyMenu::~LobbyMenu()
 {
     if (!Settings::getServer())
     {
-        m_pTCPClient->quit();
-        m_pTCPClient->wait();
+        emit m_pTCPClient->sig_close();
         m_pTCPClient = nullptr;
     }
 }

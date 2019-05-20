@@ -940,7 +940,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/lobbymenu.cpp" line="141"/>
+        <location filename="../multiplayer/lobbymenu.cpp" line="140"/>
         <source>Enter Host Adress</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1161,17 +1161,22 @@
 <context>
     <name>NetworkInterface</name>
     <message>
-        <location filename="../network/NetworkInterface.h" line="113"/>
+        <location filename="../network/NetworkInterface.h" line="107"/>
+        <source>The server was closed by the peer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../network/NetworkInterface.h" line="110"/>
         <source>The host was not found. Please check the host name and port settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/NetworkInterface.h" line="116"/>
+        <location filename="../network/NetworkInterface.h" line="113"/>
         <source>The connection was refused by the peer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/NetworkInterface.h" line="119"/>
+        <location filename="../network/NetworkInterface.h" line="116"/>
         <source>Error inside the Socket happened.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1455,69 +1460,69 @@
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="142"/>
+        <location filename="../objects/playerselection.cpp" line="145"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="142"/>
+        <location filename="../objects/playerselection.cpp" line="145"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="142"/>
+        <location filename="../objects/playerselection.cpp" line="145"/>
         <source>AI Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="142"/>
+        <location filename="../objects/playerselection.cpp" line="145"/>
         <source>Startfonds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="142"/>
+        <location filename="../objects/playerselection.cpp" line="145"/>
         <source>Income Modifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="142"/>
-        <location filename="../objects/playerselection.cpp" line="235"/>
+        <location filename="../objects/playerselection.cpp" line="145"/>
+        <location filename="../objects/playerselection.cpp" line="238"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="142"/>
-        <location filename="../objects/playerselection.cpp" line="217"/>
-        <location filename="../objects/playerselection.cpp" line="484"/>
+        <location filename="../objects/playerselection.cpp" line="145"/>
+        <location filename="../objects/playerselection.cpp" line="220"/>
+        <location filename="../objects/playerselection.cpp" line="487"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="173"/>
+        <location filename="../objects/playerselection.cpp" line="176"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="178"/>
+        <location filename="../objects/playerselection.cpp" line="181"/>
         <source>All Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="238"/>
-        <location filename="../objects/playerselection.cpp" line="243"/>
-        <location filename="../objects/playerselection.cpp" line="247"/>
+        <location filename="../objects/playerselection.cpp" line="241"/>
+        <location filename="../objects/playerselection.cpp" line="246"/>
+        <location filename="../objects/playerselection.cpp" line="250"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="238"/>
-        <location filename="../objects/playerselection.cpp" line="243"/>
+        <location filename="../objects/playerselection.cpp" line="241"/>
+        <location filename="../objects/playerselection.cpp" line="246"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="243"/>
-        <location filename="../objects/playerselection.cpp" line="247"/>
+        <location filename="../objects/playerselection.cpp" line="246"/>
+        <location filename="../objects/playerselection.cpp" line="250"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1533,7 +1538,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="74"/>
+        <location filename="../main.cpp" line="80"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1757,7 +1762,12 @@
 <context>
     <name>TCPClient</name>
     <message>
-        <location filename="../network/tcpclient.cpp" line="42"/>
+        <location filename="../network/tcpclient.cpp" line="22"/>
+        <source>Client is closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../network/tcpclient.cpp" line="45"/>
         <source>Client is running</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1765,19 +1775,24 @@
 <context>
     <name>TCPServer</name>
     <message>
-        <location filename="../network/tcpserver.cpp" line="50"/>
-        <location filename="../network/tcpserver.cpp" line="78"/>
+        <location filename="../network/tcpserver.cpp" line="35"/>
+        <source>Server is closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../network/tcpserver.cpp" line="52"/>
+        <location filename="../network/tcpserver.cpp" line="82"/>
         <location filename="../network/tcpserver.cpp" line="107"/>
         <source>Client disconnected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/tcpserver.cpp" line="145"/>
+        <location filename="../network/tcpserver.cpp" line="147"/>
         <source>New Client connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/tcpserver.cpp" line="29"/>
+        <location filename="../network/tcpserver.cpp" line="28"/>
         <source>Server is running</source>
         <translation type="unfinished"></translation>
     </message>

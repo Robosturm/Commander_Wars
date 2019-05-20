@@ -59,6 +59,12 @@
 int main(int argc, char* argv[])
 {
     /*************************************************************************************************/
+    // setup network session support
+    QNetworkConfigurationManager manager;
+    // If the saved network configuration is not currently discovered use the system default
+    QNetworkConfiguration config = manager.defaultConfiguration();
+    QNetworkSession networkSession(config);
+    networkSession.open();
 
 #ifdef GAMEDEBUG
     qQmlEnableDebuggingHelper.startTcpDebugServer(3768);
@@ -152,17 +158,10 @@ int main(int argc, char* argv[])
     TerrainManager::getInstance();
     UnitSpriteManager::getInstance();
 
-
-    app.getWorkerthread()->start(QThread::Priority::LowPriority);
-    while (!app.getWorkerthread()->getStarted())
-    {
-        QThread::msleep(100);
-    }
-
-    oxygine::Stage::instance->setVisible(true);
     /*************************************************************************************************/
     // This is the main game loop.
     app.start();
+    oxygine::Stage::instance->setVisible(true);
     qint32 returncode = app.exec();
     app.getWorkerthread()->exit(0);
     /*************************************************************************************************/
@@ -170,10 +169,9 @@ int main(int argc, char* argv[])
     // store current settings when closing
     if (app.getGameServer() != nullptr)
     {
-        app.getGameServer()->quit();
-        app.getGameServer()->wait();
-        delete app.getGameServer();
+        app.stopGameServer();
     }
+    networkSession.close();
     app.getSettings()->saveSettings();
 
     if (GameMap::getInstance() != nullptr)
