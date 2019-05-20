@@ -211,6 +211,7 @@ void Textbox::KeyInput(SDL_Event event)
             {
                 m_focused = false;
                 emit sigTextChanged(m_Text);
+                emit sigEnterPressed(m_Text);
                 break;
             }
             case SDLK_BACKSPACE:

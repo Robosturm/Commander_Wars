@@ -53,12 +53,12 @@ public:
 
     inline Interpreter* getInterpreter()
     {
-        return m_Worker.getInterpreter();
+        return m_Worker->getInterpreter();
     }
 
     inline AudioThread* getAudioThread()
     {
-        return &m_Audiothread;
+        return m_Audiothread;
     }
 
     inline Settings* getSettings()
@@ -155,8 +155,8 @@ private:
     static QThread m_AudioWorker;
     static QThread m_Networkthread;
     spTCPServer m_pGameServer{nullptr};
-    AudioThread m_Audiothread;
-    WorkerThread m_Worker;
+    AudioThread* m_Audiothread{new AudioThread()};
+    WorkerThread* m_Worker{new WorkerThread()};
 
 
     Settings m_Settings;

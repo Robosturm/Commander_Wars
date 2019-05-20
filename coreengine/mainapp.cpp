@@ -30,7 +30,7 @@ Mainapp::Mainapp(int argc, char* argv[])
     m_Timer.setSingleShot(true);
     connect(&m_Timer, &QTimer::timeout, this, &Mainapp::update, Qt::QueuedConnection);
 
-    m_Audiothread.sigInitAudio();
+    emit m_Audiothread->sigInitAudio();
     m_AudioWorker.setObjectName("AudioThread");
     m_Networkthread.setObjectName("NetworkThread");
     m_Workerthread.setObjectName("WorkerThread");
@@ -41,8 +41,8 @@ Mainapp::Mainapp(int argc, char* argv[])
 
 Mainapp::~Mainapp()
 {
-    m_Audiothread.deleteLater();
-    m_Worker.deleteLater();
+    m_Audiothread->deleteLater();
+    m_Worker->deleteLater();
     m_Workerthread.quit();
     m_Workerthread.wait();
     m_AudioWorker.quit();
@@ -213,8 +213,8 @@ void Mainapp::quitGame()
 
 void Mainapp::start()
 {
-    emit m_Worker.sigStart();
-    while (!m_Worker.getStarted())
+    emit m_Worker->sigStart();
+    while (!m_Worker->getStarted())
     {
         QThread::msleep(100);
     }

@@ -112,7 +112,6 @@ void GameMenue::performAction(GameAction* pGameAction)
     pGameAction->perform();
     // clean up the action
     delete pGameAction;
-
     if (GameAnimationFactory::getAnimationCount() == 0)
     {
         GameAnimationFactory::getInstance()->removeAnimation(nullptr);
@@ -173,7 +172,6 @@ void GameMenue::actionPerformed()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    Mainapp::setUseSeed(false);
     m_IngameInfoBar->updateTerrainInfo(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), true);
     m_IngameInfoBar->updateMinimap();
     m_IngameInfoBar->updatePlayerInfo();
@@ -183,6 +181,7 @@ void GameMenue::actionPerformed()
     pMap->getGameScript()->actionDone();
     if (GameAnimationFactory::getAnimationCount() == 0)
     {
+        Mainapp::setUseSeed(false);
         emit sigActionPerformed();
     }
     pApp->continueThread();

@@ -32,16 +32,18 @@ Chat::Chat(spNetworkInterface pInterface, QSize size)
 
     m_Send = pObjectManager->createButton(tr("Send"), 150);
     m_Send->setPosition(size.width() - m_Send->getWidth(), size.height() - m_Send->getHeight());
+    m_Send->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigSendText(m_ChatInput->getCurrentText());
+    });
     connect(this, &Chat::sigSendText, this, &Chat::sendData, Qt::QueuedConnection);
     addChild(m_Send);
 
     m_ChatInput = new Textbox(size.width() - m_Send->getWidth() - 10);
     m_ChatInput->setPosition(0, size.height() - m_Send->getHeight());
+    connect(m_ChatInput.get(), &Textbox::sigEnterPressed, this, &Chat::sendData, Qt::QueuedConnection);
     addChild(m_ChatInput);
-    m_Send->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
-    {
-        emit sigSendText(m_ChatInput->getCurrentText());
-    });
+
 
     if (m_pInterface.get() != nullptr)
     {

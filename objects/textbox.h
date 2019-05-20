@@ -33,6 +33,7 @@ public:
     void setCurrentText(QString text);
 signals:
     void sigTextChanged(QString text);
+    void sigEnterPressed(QString text);
 public slots:
     void TextInput(SDL_Event event);
     void KeyInput(SDL_Event event);
