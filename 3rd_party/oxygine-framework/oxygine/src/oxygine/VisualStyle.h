@@ -56,10 +56,13 @@ namespace oxygine
         void                    resetMaterial();
         spSTDMaterial _mat;
 
+        Color getDisableColor() const;
+        void setDisableColor(const Color &value);
+
     protected:
         virtual void matChanged() {}
         VisualStyle _vstyle;
-
+        Color disableColor{75, 75, 75, 0};
 
     };
 

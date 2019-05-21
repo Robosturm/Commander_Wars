@@ -4,7 +4,10 @@
 #include "memory.h"
 
 #include <QObject>
+#include <QTimer>
 #include "oxygine-framework.h"
+
+#include "objects/chat.h"
 
 #include "menue/mapselectionmapsmenue.h"
 #include "network/NetworkInterface.h"
@@ -22,6 +25,14 @@ public:
      * @param hash
      */
     bool existsMap(QString& fileName, QByteArray& hash);
+    /**
+     * @brief createChat
+     */
+    void createChat();
+    /**
+     * @brief disconnectNetwork
+     */
+    void disconnectNetwork();
 signals:
 
 public slots:
@@ -35,10 +46,18 @@ public slots:
     void playerJoined(quint64 socketID);
     void disconnected(quint64 socketID);
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+protected slots:
+    void countdown();
+protected:
+    bool getGameReady();
+    void sendServerReady(bool value);
 private:
     bool m_Host{false};
     spNetworkInterface m_NetworkInterface;
     oxygine::spTextField m_pHostAdresse;
+    spChat m_Chat;
+    QTimer m_GameStartTimer;
+    qint32 counter{5};
 };
 
 #endif // MULTIPLAYERMENU_H

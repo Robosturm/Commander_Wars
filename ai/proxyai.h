@@ -8,6 +8,8 @@
 #include "coreai.h"
 #include "coreengine/mainapp.h"
 
+#include "network/NetworkInterface.h"
+
 class ProxyAi : public CoreAI
 {
     Q_OBJECT
@@ -37,9 +39,14 @@ public:
      * @brief process empty impl
      */
     virtual void process() override {}
+    /**
+     * @brief setInterface
+     * @param pNetworkInterface
+     */
+    void connectInterface(NetworkInterface* pNetworkInterface);
 public slots:
     virtual void nextAction() override;
-    void recieveData(QByteArray data, NetworkInterface::NetworkSerives service);
+    void recieveData(quint64 socket, QByteArray data, NetworkInterface::NetworkSerives service);
 private:
     QList<GameAction*> m_ActionBuffer;
     bool actionRunning{false};

@@ -59,6 +59,7 @@ protected:
     void setValue(float value);
 private:
     bool m_focused{false};
+    oxygine::spBox9Sprite m_pSpinBox;
     oxygine::spBox9Sprite m_Textbox;
     oxygine::spTextField m_Textfield;
     oxygine::spButton m_pArrowDown;

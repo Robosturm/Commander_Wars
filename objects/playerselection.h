@@ -11,6 +11,7 @@
 
 #include "objects/dropdownmenu.h"
 #include "objects/dropdownmenucolor.h"
+#include "objects/checkbox.h"
 
 #include "network/NetworkInterface.h"
 
@@ -42,6 +43,16 @@ public:
     void sendPlayerRequest(quint64 socketID, qint32 player, BaseGameInputIF::AiTypes aiType);
     void playerDataChanged();
     void updateCOData(qint32 playerIdx);
+    bool getReady(qint32 playerIdx);
+    bool getPlayerReady();
+    void setPlayerReady(bool value);
+    /**
+     * @brief sendPlayerReady
+     * @param socketID
+     * @param player
+     * @param value
+     */
+    void sendPlayerReady(quint64 socketID, QVector<qint32> player, bool value);
 signals:
     void buttonAllCOsRandom();
     void sigShowSelectCO(qint32 player, quint8 co);
@@ -111,6 +122,18 @@ protected:
      * @param stream
      */
     void recievedColorData(quint64, QDataStream& stream);
+    /**
+     * @brief recievePlayerReady
+     * @param socketID
+     * @param stream
+     */
+    void recievePlayerReady(quint64 socketID, QDataStream& stream);
+    /**
+     * @brief recievePlayerServerReady
+     * @param socketID
+     * @param stream
+     */
+    void recievePlayerServerReady(quint64 socketID, QDataStream& stream);
 private:
     // player selection
     spPanel m_pPlayerSelection;
@@ -121,6 +144,7 @@ private:
     QVector<spSpinBox> m_playerIncomes;
     QVector<spSpinBox> m_playerStartFonds;
     QVector<spDropDownmenu> m_playerAIs;
+    QVector<spCheckbox> m_pReadyBoxes;
     /**
      * @brief m_PlayerSockets holds which socket owns which player
      * For clients and local games this always contains 0
@@ -131,6 +155,8 @@ private:
     QVector<oxygine::spButton> m_playerBuildlist;
 
     spNetworkInterface m_pNetworkInterface{nullptr};
+
+    bool m_PlayerReady{false};
 };
 
 #endif // PLAYERSELECTION_H

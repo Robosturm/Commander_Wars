@@ -42,19 +42,19 @@ public:
     static void setAutoEndTurn(bool AutoEndTurn);
 
 public slots:
-    inline qint32 getX()
+    inline static qint32 getX()
     {
         return m_x;
     }
-    inline qint32 getY()
+    inline static qint32 getY()
     {
         return m_y;
     }
-    inline qint32 getWidth()
+    inline static qint32 getWidth()
     {
         return m_width;
     }
-    inline qint32 getHeight()
+    inline static qint32 getHeight()
     {
         return m_height;
     }

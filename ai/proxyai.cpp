@@ -1,7 +1,8 @@
 #include "proxyai.h"
 
-
 #include "game/gamemap.h"
+#include "game/player.h"
+#include "game/co.h"
 
 #include "QMutexLocker"
 
@@ -17,7 +18,11 @@ ProxyAi::ProxyAi()
 void ProxyAi::init()
 {
     CoreAI::init();
-    // todo connect to tcp socket
+}
+
+void ProxyAi::connectInterface(NetworkInterface* pNetworkInterface)
+{
+    connect(pNetworkInterface, &NetworkInterface::recieveData, this, &ProxyAi::recieveData, Qt::QueuedConnection);
 }
 
 void ProxyAi::serializeObject(QDataStream& )
@@ -28,14 +33,16 @@ void ProxyAi::deserializeObject(QDataStream&)
 {
 }
 
-void ProxyAi::recieveData(QByteArray data, NetworkInterface::NetworkSerives service)
+void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSerives service)
 {
-    QMutexLocker locker(&m_ActionMutex);
-    if (m_pPlayer == GameMap::getInstance()->getCurrentPlayer())
+    if (service == NetworkInterface::NetworkSerives::Game)
     {
-        if (service == NetworkInterface::NetworkSerives::Game)
+        QDataStream stream(data);
+        qint32 player = 0;
+        stream >> player;
+        if (m_pPlayer->getPlayerID() == player)
         {
-            QDataStream stream(data);
+            QMutexLocker locker(&m_ActionMutex);
             GameAction* pAction = new GameAction();
             pAction->deserializeObject(stream);
             m_ActionBuffer.append(pAction);

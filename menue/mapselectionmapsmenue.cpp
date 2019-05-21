@@ -23,7 +23,7 @@
 #include "objects/checkbox.h"
 #include "objects/spinbox.h"
 
-MapSelectionMapsMenue::MapSelectionMapsMenue()
+MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth)
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -207,13 +207,16 @@ MapSelectionMapsMenue::MapSelectionMapsMenue()
     connect(this, &MapSelectionMapsMenue::buttonStartGame, this, &MapSelectionMapsMenue::startGame, Qt::QueuedConnection);
 
     qint32 yPos = 10;
+    if (heigth <  0)
+    {
+        heigth = pApp->getSettings()->getHeight() - 40 * 2;
+    }
     m_pPlayerSelection = new PlayerSelection(pApp->getSettings()->getWidth() - 20,
-                                             pApp->getSettings()->getHeight() - yPos - 20 - pButtonBack->getHeight());
+                                             heigth);
     m_pPlayerSelection->setPosition(10, yPos);
     addChild(m_pPlayerSelection);
 
-    QSize size(pApp->getSettings()->getWidth() - 20,
-               pApp->getSettings()->getHeight() - 40 * 2);
+    QSize size(pApp->getSettings()->getWidth() - 20, pApp->getSettings()->getHeight() - 40 * 2);
     m_pRuleSelection = new  Panel(true,  size, size);
     m_pRuleSelection->setPosition(10, 20);
     addChild(m_pRuleSelection);

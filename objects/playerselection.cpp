@@ -80,7 +80,25 @@ void PlayerSelection::setPlayerAiName(qint32 player, QString name)
 
 BaseGameInputIF::AiTypes PlayerSelection::getPlayerAiType(qint32 player)
 {
-    return static_cast<BaseGameInputIF::AiTypes>(m_playerAIs[player]->getCurrentItem());
+    if (m_pNetworkInterface.get() == nullptr)
+    {
+        return static_cast<BaseGameInputIF::AiTypes>(m_playerAIs[player]->getCurrentItem());
+    }
+    else
+    {
+        if (m_playerAIs[player]->getCurrentItem() == m_playerAIs[player]->getItemCount() - 1)
+        {
+            return BaseGameInputIF::AiTypes::Open;
+        }
+        else if (m_playerAIs[player]->getCurrentItem() < 0)
+        {
+            return BaseGameInputIF::AiTypes::ProxyAi;
+        }
+        else
+        {
+            return static_cast<BaseGameInputIF::AiTypes>(m_playerAIs[player]->getCurrentItem());
+        }
+    }
 }
 
 
@@ -143,6 +161,10 @@ void PlayerSelection::showPlayerSelection()
 
     // add player labels at top
     QStringList items = {tr("CO's"), tr("Color"), tr("AI Strength"), tr("Startfonds"), tr("Income Modifier"), tr("Team"), tr("Build List")};
+    if (m_pNetworkInterface.get() != nullptr)
+    {
+        items.append(tr("Connected"));
+    }
     QVector<qint32> xPositions;
     qint32 labelminStepSize = (m_pPlayerSelection->getWidth() - 100) / items.size();
     if (labelminStepSize < 150)
@@ -217,7 +239,7 @@ void PlayerSelection::showPlayerSelection()
     }
 
     itemIndex = 6;
-    oxygine::spButton pButtonAllBuildList = ObjectManager::createButton(tr("Build List"));
+    oxygine::spButton pButtonAllBuildList = ObjectManager::createButton(tr("Build List"), 120);
     pButtonAllBuildList->setPosition(xPositions[itemIndex], y);
     m_pPlayerSelection->addItem(pButtonAllBuildList);
     pButtonAllBuildList->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -305,6 +327,7 @@ void PlayerSelection::showPlayerSelection()
         spriteCO1->setPosition(xPositions[itemIndex], y);
         spriteCO1->setSize(32, 12);
         spriteCO1->setScale(2.0f);
+        spriteCO1->setDisableColor(oxygine::Color(0, 0, 0, 0));
         m_pPlayerSelection->addItem(spriteCO1);
         m_playerCO1.append(spriteCO1);
 
@@ -336,6 +359,7 @@ void PlayerSelection::showPlayerSelection()
         spriteCO2->setPosition(xPositions[itemIndex], y + 24);
         spriteCO2->setSize(32, 12);
         spriteCO2->setScale(2.0f);
+        spriteCO2->setDisableColor(oxygine::Color(0, 0, 0, 0));
         m_pPlayerSelection->addItem(spriteCO2);
         m_playerCO2.append(spriteCO2);
                 spriteCO2->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
@@ -369,7 +393,7 @@ void PlayerSelection::showPlayerSelection()
             up = true;
         }
 
-        itemIndex = 1;
+        itemIndex++;
         spDropDownmenuColor playerColor = new DropDownmenuColor(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, playerColors, up);
         playerColor->setPosition(xPositions[itemIndex], y);
         playerColor->setCurrentItem(pMap->getPlayer(i)->getColor());
@@ -387,7 +411,7 @@ void PlayerSelection::showPlayerSelection()
             }
         }
 
-        itemIndex = 2;
+        itemIndex++;
         spDropDownmenu playerAi = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, aiList, up);
         playerAi->setPosition(xPositions[itemIndex], y);
         if (m_pNetworkInterface.get() != nullptr)
@@ -434,7 +458,7 @@ void PlayerSelection::showPlayerSelection()
         createAi(i, static_cast<BaseGameInputIF::AiTypes>(m_playerAIs[i]->getCurrentItem()));
         m_PlayerSockets.append(0);
 
-        itemIndex = 3;
+        itemIndex++;
         spSpinBox playerStartFondsSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
         playerStartFondsSpinBox->setPosition(xPositions[itemIndex], y);
         playerStartFondsSpinBox->setCurrentValue(pMap->getPlayer(i)->getFonds());
@@ -450,7 +474,7 @@ void PlayerSelection::showPlayerSelection()
             playerStartFondsSpinBox->setEnabled(false);
         }
 
-        itemIndex = 4;
+        itemIndex++;
         spSpinBox playerIncomeSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 10, SpinBox::Mode::Float);
         playerIncomeSpinBox->setPosition(xPositions[itemIndex], y);
         playerIncomeSpinBox->setCurrentValue(pMap->getPlayer(i)->getFondsModifier());
@@ -467,7 +491,7 @@ void PlayerSelection::showPlayerSelection()
             playerIncomeSpinBox->setEnabled(false);
         }
 
-        itemIndex = 5;
+        itemIndex++;
         spDropDownmenu playerTeam = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, teamList, up);
         playerTeam->setPosition(xPositions[itemIndex], y);
         playerTeam->setCurrentItem(pMap->getPlayer(i)->getTeam());
@@ -483,8 +507,8 @@ void PlayerSelection::showPlayerSelection()
             playerTeam->setEnabled(false);
         }
 
-        itemIndex = 6;
-        oxygine::spButton pButtonPlayerBuildList = ObjectManager::createButton(tr("Build List"));
+        itemIndex++;
+        oxygine::spButton pButtonPlayerBuildList = ObjectManager::createButton(tr("Build List"), 120);
         pButtonPlayerBuildList->setPosition(xPositions[itemIndex], y);
         m_pPlayerSelection->addItem(pButtonPlayerBuildList);
         pButtonPlayerBuildList->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
@@ -497,6 +521,17 @@ void PlayerSelection::showPlayerSelection()
         {
             pButtonPlayerBuildList->setEnabled(false);
         }
+
+        itemIndex++;
+        if (m_pNetworkInterface.get() != nullptr)
+        {
+            spCheckbox pCheckbox = new Checkbox();
+            pCheckbox->setPosition(xPositions[itemIndex] + labelminStepSize / 2 - pCheckbox->getWidth(), y);
+            pCheckbox->setEnabled(false);
+            m_pReadyBoxes.append(pCheckbox);
+            m_pPlayerSelection->addItem(pCheckbox);
+        }
+
         y += 15 + playerIncomeSpinBox->getHeight();
     }
     m_pPlayerSelection->setContentHeigth(y);
@@ -831,6 +866,67 @@ void PlayerSelection::recieveData(quint64 socketID, QByteArray data, NetworkInte
         {
             recievedColorData(socketID, stream);
         }
+        else if (messageType == "CLIENTREADY")
+        {
+            recievePlayerReady(socketID, stream);
+        }
+        else if (messageType == "SERVERREADY")
+        {
+            recievePlayerServerReady(socketID, stream);
+        }
+    }
+}
+
+void PlayerSelection::recievePlayerReady(quint64 socketID, QDataStream& stream)
+{
+    if (m_pNetworkInterface->getIsServer())
+    {
+        bool value = false;;
+        stream >> value;
+        QVector<qint32> player;
+        for  (qint32 i = 0; i < m_PlayerSockets.size(); i++)
+        {
+            if (m_PlayerSockets[i] == socketID)
+            {
+                m_pReadyBoxes[i]->setChecked(value);
+                player.append(i);
+            }
+        }
+        sendPlayerReady(socketID, player, value);
+    }
+}
+
+void PlayerSelection::sendPlayerReady(quint64 socketID, QVector<qint32> player, bool value)
+{
+    if (m_pNetworkInterface->getIsServer())
+    {
+        QByteArray sendData;
+        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+        sendStream << QString("SERVERREADY");
+        sendStream << value;
+        sendStream << static_cast<qint32>(player.size());
+        for  (qint32 i = 0; i < player.size(); i++)
+        {
+           sendStream << player[i];
+        }
+        dynamic_cast<TCPServer*>(m_pNetworkInterface.get())->sigForwardData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer);
+    }
+}
+
+void PlayerSelection::recievePlayerServerReady(quint64, QDataStream& stream)
+{
+    if (!m_pNetworkInterface->getIsServer())
+    {
+        bool value = false;
+        stream >> value;
+        qint32 size = 0;
+        stream >> size;
+        for  (qint32 i = 0; i < size; i++)
+        {
+            qint32 player = 0;
+            stream >> player;
+            m_pReadyBoxes[player]->setChecked(value);
+        }
     }
 }
 
@@ -1120,12 +1216,22 @@ void PlayerSelection::updatePlayerData(qint32 player)
                 m_playerColors[player]->setEnabled(true);
                 m_playerCO1[player]->setEnabled(true);
                 m_playerCO2[player]->setEnabled(true);
+
             }
             else
             {
                 m_playerColors[player]->setEnabled(false);
                 m_playerCO1[player]->setEnabled(false);
                 m_playerCO2[player]->setEnabled(false);
+            }
+            if (pPlayer->getBaseGameInput() != nullptr &&
+                pPlayer->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
+            {
+                m_pReadyBoxes[player]->setChecked(m_PlayerReady);
+            }
+            else
+            {
+                m_pReadyBoxes[player]->setChecked(false);
             }
         }
         else
@@ -1156,4 +1262,31 @@ void PlayerSelection::updatePlayerData(qint32 player)
         }
     }
     pApp->continueThread();
+}
+
+bool PlayerSelection::getReady(qint32 playerIdx)
+{
+    if (playerIdx >= 0 && playerIdx < m_pReadyBoxes.size())
+    {
+        return m_pReadyBoxes[playerIdx]->getChecked();
+    }
+    return false;
+}
+
+void PlayerSelection::setPlayerReady(bool value)
+{
+    m_PlayerReady = value;
+    for (qint32 i = 0; i < m_playerAIs.size(); i++)
+    {
+        if (static_cast<BaseGameInputIF::AiTypes>(m_playerAIs[i]->getCurrentItem()) >= BaseGameInputIF::AiTypes::Human &&
+            static_cast<BaseGameInputIF::AiTypes>(m_playerAIs[i]->getCurrentItem()) != BaseGameInputIF::AiTypes::Open)
+        {
+            m_pReadyBoxes[i]->setChecked(value);
+        }
+    }
+}
+
+bool PlayerSelection::getPlayerReady()
+{
+    return m_PlayerReady;
 }

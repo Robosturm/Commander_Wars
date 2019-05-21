@@ -41,6 +41,7 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items, bool u
     m_Colorfield->setScaleX((m_Colorbox->getWidth() - 20 - 45) / pAnim->getWidth());
     m_Colorfield->setScaleY((m_Colorbox->getHeight() - 20) / pAnim->getHeight());
     m_Colorfield->setColor(m_ItemColors[0].red(), m_ItemColors[0].green(), m_ItemColors[0].blue(), 255);
+    m_Colorfield->setDisableColor(oxygine::Color(0, 0, 0, 0));
     pClipActor->setWidth(m_Colorfield->getScaledWidth());
     pClipActor->setHeight(m_Colorfield->getScaledHeight());
     pClipActor->setX(10);

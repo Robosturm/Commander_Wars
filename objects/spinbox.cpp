@@ -40,12 +40,12 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     pClipActor->setX(10);
     this->addChild(m_Textbox);
 
-    oxygine::spBox9Sprite spinBox = new oxygine::Box9Sprite();
-    spinBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    spinBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-    spinBox->setResAnim(pAnim);
-    spinBox->setSize(width - m_Textbox->getWidth(), 40);
-    spinBox->setX(m_Textbox->getWidth());
+    m_pSpinBox = new oxygine::Box9Sprite();
+    m_pSpinBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    m_pSpinBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    m_pSpinBox->setResAnim(pAnim);
+    m_pSpinBox->setSize(width - m_Textbox->getWidth(), 40);
+    m_pSpinBox->setX(m_Textbox->getWidth());
 
     m_pArrowDown = new oxygine::Button();
     m_pArrowDown->setResAnim(ObjectManager::getInstance()->getResAnim("small_arrow+down"));
@@ -72,8 +72,8 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     {
         m_spinDirection = 0;
     });
-    spinBox->addChild(m_pArrowDown);
-    m_pArrowDown->setPosition(9, spinBox->getHeight() - m_pArrowDown->getHeight() - 8);
+    m_pSpinBox->addChild(m_pArrowDown);
+    m_pArrowDown->setPosition(9, m_pSpinBox->getHeight() - m_pArrowDown->getHeight() - 8);
 
     m_pArrowUp = new oxygine::Button();
     // pButton->setPosition(200, 200);
@@ -102,10 +102,10 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     {
         m_spinDirection = 0;
     });
-    spinBox->addChild(m_pArrowUp);
+    m_pSpinBox->addChild(m_pArrowUp);
     m_pArrowUp->setPosition(9, 8);
 
-    this->addChild(spinBox);
+    this->addChild(m_pSpinBox);
 
 
     this->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
@@ -145,6 +145,7 @@ void SpinBox::setEnabled(bool value)
     m_pArrowDown->setEnabled(value);
     m_pArrowUp->setEnabled(value);
     m_Textbox->setEnabled(value);
+    m_pSpinBox->setEnabled(value);
     m_focused = false;
 }
 

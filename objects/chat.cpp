@@ -53,7 +53,6 @@ Chat::Chat(spNetworkInterface pInterface, QSize size)
 
 void Chat::update(const oxygine::UpdateState& us)
 {
-    QMutexLocker locker(&datalocker);
     QString drawText;
     for(qint32 i = 0; i < messages.size();i++)
     {
@@ -74,7 +73,8 @@ void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSeriv
 
 void Chat::addMessage(QString message)
 {
-    QMutexLocker locker(&datalocker);
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     messages.append(message);
     if (messages.size() > bufferSize)
     {
@@ -88,6 +88,7 @@ void Chat::addMessage(QString message)
     {
         m_Panel->getH_Scrollbar()->changeScrollValue(1.0f);
     }
+    pApp->continueThread();
 }
 
 void Chat::sendData(QString message)

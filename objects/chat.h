@@ -3,8 +3,6 @@
 
 #include <QObject>
 
-#include <QMutex>
-
 #include "oxygine-framework.h"
 
 #include "network/NetworkInterface.h"
@@ -34,7 +32,6 @@ private:
     oxygine::spTextField m_Chat;
     spTextbox m_ChatInput;
     oxygine::spButton m_Send;
-    QMutex datalocker;
 
     void addMessage(QString message);
 

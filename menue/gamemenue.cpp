@@ -5,6 +5,7 @@
 
 #include "menue/victorymenue.h"
 #include "coreengine/console.h"
+#include "ai/proxyai.h"
 
 #include "gameinput/humanplayerinput.h"
 
@@ -68,6 +69,20 @@ void GameMenue::loadGameMenue()
 GameMenue::~GameMenue()
 {
     m_pInstance = nullptr;
+}
+
+void GameMenue::attachInterface(spNetworkInterface pNetworkInterface)
+{
+    m_pNetworkInterface = pNetworkInterface;
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        Player* pPlayer = pMap->getPlayer(i);
+        if (pPlayer->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::ProxyAi)
+        {
+            dynamic_cast<ProxyAi*>(pPlayer->getBaseGameInput())->connectInterface(m_pNetworkInterface.get());
+        }
+    }
 }
 
 void GameMenue::editFinishedCanceled()
@@ -365,7 +380,11 @@ void GameMenue::startGame(qint32 startPlayer)
     }
     GameRules* pRules = pMap->getGameRules();
     pRules->changeWeather(pRules->getWeather(pRules->getStartWeather())->getWeatherId(), pMap->getPlayerCount() + 1);
-    pMap->nextTurn();
+    if (m_pNetworkInterface.get() == nullptr || m_pNetworkInterface->getIsServer())
+    {
+        GameAction* pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
+        performAction(pAction);
+    }
     updatePlayerinfo();
     pApp->continueThread();
 }
@@ -373,7 +392,7 @@ void GameMenue::startGame(qint32 startPlayer)
 void GameMenue::keyInput(SDL_Event event)
 {
     InGameMenue::keyInput(event);
-    if (m_Focused)
+    if (m_Focused && m_pNetworkInterface.get() == nullptr)
     {
         // for debugging
         SDL_Keycode cur = event.key.keysym.sym;

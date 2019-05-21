@@ -8,6 +8,8 @@
 #include "game/playerinfo.h"
 #include "objects/ingameinfobar.h"
 
+#include "network/NetworkInterface.h"
+
 /**
  * @brief The GameMenue class handles the game :)
  */
@@ -23,7 +25,11 @@ public:
     {
         return m_pInstance;
     }
-
+    /**
+     * @brief attachInterface
+     * @param pNetworkInterface
+     */
+    void attachInterface(spNetworkInterface pNetworkInterface);
     /**
      * @brief startGame
      * @param startPlayer
@@ -86,6 +92,7 @@ private:
     spPlayerInfo m_pPlayerinfo;
     spIngameInfoBar m_IngameInfoBar;
     static GameMenue* m_pInstance;
+    spNetworkInterface m_pNetworkInterface;
 };
 
 #endif // GAMEMENUE_H

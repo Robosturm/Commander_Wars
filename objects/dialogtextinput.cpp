@@ -41,7 +41,8 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(pApp->getSettings()->getWidth() - m_OkButton->getWidth() - 30, pApp->getSettings()->getHeight() - 30 - m_OkButton->getHeight());
+    m_OkButton->setPosition(pApp->getSettings()->getWidth() / 2 + 10,
+                            pApp->getSettings()->getHeight() / 2 + 50);
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -55,7 +56,8 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
     if (showCancel)
     {
         m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
-        m_CancelButton->setPosition(30, pApp->getSettings()->getHeight() - 30 - m_CancelButton->getHeight());
+        m_CancelButton->setPosition(pApp->getSettings()->getWidth() / 2 - m_OkButton->getWidth() - 10,
+                                    pApp->getSettings()->getHeight() / 2 + 50);
         pSpriteBox->addChild(m_CancelButton);
         m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {

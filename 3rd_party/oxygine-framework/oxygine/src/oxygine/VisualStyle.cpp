@@ -137,6 +137,16 @@ namespace oxygine
         setMaterial(_mat->cloneDefaultShader());
     }
 
+    Color VStyleActor::getDisableColor() const
+    {
+        return disableColor;
+    }
+
+    void VStyleActor::setDisableColor(const Color &value)
+    {
+        disableColor = value;
+    }
+
     void VStyleActor::setEnabled(bool value)
     {
         Actor::setEnabled(value);
@@ -146,7 +156,7 @@ namespace oxygine
         }
         else
         {
-            setAddColor(75, 75, 75, 0);
+            setAddColor(disableColor);
         }
     }
 
