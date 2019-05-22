@@ -21,17 +21,101 @@
 
 GameMenue* GameMenue::m_pInstance = nullptr;
 
-GameMenue::GameMenue(qint32 startPlayer)
+GameMenue::GameMenue(spNetworkInterface pNetworkInterface)
     : InGameMenue()
 {
+    m_pNetworkInterface = pNetworkInterface;
+    if (m_pNetworkInterface.get() != nullptr)
+    {
+        GameMap* pMap = GameMap::getInstance();
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = pMap->getPlayer(i);
+            if (pPlayer->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::ProxyAi)
+            {
+                dynamic_cast<ProxyAi*>(pPlayer->getBaseGameInput())->connectInterface(m_pNetworkInterface.get());
+            }
+        }
+        connect(m_pNetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &GameMenue::disconnected, Qt::QueuedConnection);
+        connect(m_pNetworkInterface.get(), &NetworkInterface::recieveData, this, &GameMenue::recieveData, Qt::QueuedConnection);
+        if (!m_pNetworkInterface->getIsServer())
+        {
+            QByteArray sendData;
+            QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+            sendStream << QString("CLIENTINITGAME");
+            m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+        }
+    }
+    else
+    {
+        gameStarted = true;
+    }
     loadGameMenue();
-    startGame(startPlayer);
+    startGame();
 }
 
 GameMenue::GameMenue(QString map)
     : InGameMenue(-1, -1, map)
 {    
     loadGameMenue();
+}
+
+void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
+{
+    if (service == NetworkInterface::NetworkSerives::Multiplayer)
+    {
+        QDataStream stream(&data, QIODevice::ReadOnly);
+        QString messageType;
+        stream >> messageType;
+        if (messageType == "CLIENTINITGAME")
+        {
+            if (m_pNetworkInterface->getIsServer())
+            {
+                // the given client is ready
+                m_ReadySockets.append(socketID);
+                QVector<quint64> sockets = dynamic_cast<TCPServer*>(m_pNetworkInterface.get())->getConnectedSockets();
+                bool ready = true;
+                for (qint32 i = 0; i < sockets.size(); i++)
+                {
+                    if (!m_ReadySockets.contains(sockets[i]))
+                    {
+                        ready = false;
+                    }
+                }
+                if (ready)
+                {
+                    gameStarted = true;
+                    QByteArray sendData;
+                    QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+                    sendStream << QString("STARTGAME");
+                    emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+                    emit sigGameStarted();
+                    emit sigActionPerformed();
+                }
+            }
+        }
+        else if (messageType == "STARTGAME")
+        {
+            gameStarted = true;
+            emit sigGameStarted();
+            emit sigActionPerformed();
+        }
+    }
+}
+
+void GameMenue::disconnected(quint64 socketID)
+{
+    // for the moment disconnections are handled with an immediate leaving of the game :(
+    exitGame();
+}
+
+bool GameMenue::isNetworkGame()
+{
+     if (m_pNetworkInterface.get() != nullptr)
+     {
+         return true;
+     }
+     return false;
 }
 
 void GameMenue::loadGameMenue()
@@ -66,23 +150,14 @@ void GameMenue::loadGameMenue()
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, m_IngameInfoBar.get(), &IngameInfoBar::updateCursorInfo, Qt::QueuedConnection);
 }
 
+bool GameMenue::getGameStarted() const
+{
+    return gameStarted;
+}
+
 GameMenue::~GameMenue()
 {
     m_pInstance = nullptr;
-}
-
-void GameMenue::attachInterface(spNetworkInterface pNetworkInterface)
-{
-    m_pNetworkInterface = pNetworkInterface;
-    GameMap* pMap = GameMap::getInstance();
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
-    {
-        Player* pPlayer = pMap->getPlayer(i);
-        if (pPlayer->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::ProxyAi)
-        {
-            dynamic_cast<ProxyAi*>(pPlayer->getBaseGameInput())->connectInterface(m_pNetworkInterface.get());
-        }
-    }
 }
 
 void GameMenue::editFinishedCanceled()
@@ -363,28 +438,17 @@ void GameMenue::exitGame()
     victory(-1);
 }
 
-void GameMenue::startGame(qint32 startPlayer)
+void GameMenue::startGame()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameAnimationFactory::clearAllAnimations();
     GameMap* pMap = GameMap::getInstance();
-    pMap->startGame(startPlayer);
-    if (startPlayer == 0)
-    {
-        pMap->setCurrentPlayer(GameMap::getInstance()->getPlayerCount() - 1);
-    }
-    else
-    {
-        pMap->setCurrentPlayer(startPlayer - 1);
-    }
+    pMap->startGame();
+    pMap->setCurrentPlayer(GameMap::getInstance()->getPlayerCount() - 1);
     GameRules* pRules = pMap->getGameRules();
     pRules->changeWeather(pRules->getWeather(pRules->getStartWeather())->getWeatherId(), pMap->getPlayerCount() + 1);
-    if (m_pNetworkInterface.get() == nullptr || m_pNetworkInterface->getIsServer())
-    {
-        GameAction* pAction = new GameAction(CoreAI::ACTION_NEXT_PLAYER);
-        performAction(pAction);
-    }
+    pMap->nextTurn();
     updatePlayerinfo();
     pApp->continueThread();
 }
@@ -392,10 +456,10 @@ void GameMenue::startGame(qint32 startPlayer)
 void GameMenue::keyInput(SDL_Event event)
 {
     InGameMenue::keyInput(event);
+    // for debugging
+    SDL_Keycode cur = event.key.keysym.sym;
     if (m_Focused && m_pNetworkInterface.get() == nullptr)
     {
-        // for debugging
-        SDL_Keycode cur = event.key.keysym.sym;
         if (cur == Settings::getKey_quicksave1())
         {
             saveMap("savegames/quicksave1.sav");
@@ -437,6 +501,13 @@ void GameMenue::keyInput(SDL_Event event)
             pApp->getAudioThread()->playRandom();
             GameMenue::getInstance()->updatePlayerinfo();
             pApp->continueThread();
+        }
+    }
+    else if (m_Focused)
+    {
+        if (cur == SDLK_ESCAPE)
+        {
+            exitGame();
         }
     }
 }

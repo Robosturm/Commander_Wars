@@ -17,7 +17,7 @@ class GameMenue : public InGameMenue
 {
     Q_OBJECT
 public:
-    explicit GameMenue(qint32 startPlayer = 0);
+    explicit GameMenue(spNetworkInterface pNetworkInterface = nullptr);
     explicit GameMenue(QString map);
     virtual ~GameMenue();
 
@@ -34,9 +34,16 @@ public:
      * @brief startGame
      * @param startPlayer
      */
-    void startGame(qint32 startPlayer);
+    void startGame();
+    /**
+     * @brief getGameStarted
+     * @return always true for singleplayer games turns true on multiplayer games once all clients have started the game
+     */
+    bool getGameStarted() const;
+
 signals:
     void sigActionPerformed();
+    void sigGameStarted();
 public slots:
     /**
      * @brief actionPerformed
@@ -86,6 +93,23 @@ public slots:
      * @brief editFinishedCanceled
      */
     void editFinishedCanceled();
+    /**
+     * @brief recieveData
+     * @param socketID
+     * @param data
+     * @param service
+     */
+    void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+    /**
+     * @brief disconnected
+     * @param socketID
+     */
+    void disconnected(quint64 socketID);
+    /**
+     * @brief isNetworkGame
+     * @return
+     */
+    bool isNetworkGame();
 protected:
     void loadGameMenue();
 private:
@@ -93,6 +117,9 @@ private:
     spIngameInfoBar m_IngameInfoBar;
     static GameMenue* m_pInstance;
     spNetworkInterface m_pNetworkInterface;
+    bool gameStarted{false};
+
+    QVector<quint64> m_ReadySockets;
 };
 
 #endif // GAMEMENUE_H

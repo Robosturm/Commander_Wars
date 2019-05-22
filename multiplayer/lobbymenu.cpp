@@ -82,8 +82,8 @@ LobbyMenu::LobbyMenu()
     });
     connect(this, &LobbyMenu::sigJoinAdress, this, &LobbyMenu::joinAdress, Qt::QueuedConnection);
 
-    m_pGamesPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 20, pApp->getSettings()->getHeight() / 2 - 40),
-                          QSize(pApp->getSettings()->getWidth() - 20, pApp->getSettings()->getHeight() / 2 - 80));
+    m_pGamesPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 20, pApp->getSettings()->getHeight() - 380),
+                          QSize(pApp->getSettings()->getWidth() - 20, pApp->getSettings()->getHeight() - 380));
     m_pGamesPanel->setPosition(10, 10);
     addChild(m_pGamesPanel);
 
@@ -93,7 +93,7 @@ LobbyMenu::LobbyMenu()
         pInterface = pApp->getGameServer();
     }
 
-    spChat pChat = new Chat(pInterface, QSize(pApp->getSettings()->getWidth() - 20, pApp->getSettings()->getHeight() / 2 - 80));
+    spChat pChat = new Chat(pInterface, QSize(pApp->getSettings()->getWidth() - 20, 300));
     pChat->setPosition(10, m_pGamesPanel->getHeight() + 20);
     addChild(pChat);
 }

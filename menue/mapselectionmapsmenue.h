@@ -45,6 +45,7 @@ public:
     void showRuleSelection();
     void hidePlayerSelection();
     void showPlayerSelection();
+    void initPlayers();
 signals:
     void buttonBack();
     void buttonNext();
@@ -61,12 +62,16 @@ public slots:
     // general slots
     virtual void slotButtonBack();
     virtual void slotButtonNext();
+    /**
+     * @brief startGame starts a game for a single player mode
+     */
     virtual void startGame();
 protected:
 
     // buttons
     oxygine::spButton m_pButtonNext;
     oxygine::spButton m_pButtonStart;
+    oxygine::spButton m_pButtonBack;
     GameMap* m_pCurrentMap{nullptr};
     // map selection
     spMapSelection m_pMapSelection;

@@ -199,9 +199,8 @@ public:
     void clearMap();
     /**
      * @brief startGame
-     * @param startPlayer
      */
-    void startGame(qint32 startPlayer);
+    void startGame();
     /**
      * @brief removePlayer removes a player from the map only use this in the editor menue
      * @param index

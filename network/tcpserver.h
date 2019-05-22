@@ -33,6 +33,9 @@ signals:
      * @param service
      */
     void sigForwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+
+    void sigPauseListening();
+    void sigContinueListening();
 public slots:
     virtual void connectTCP(const QString& adress, quint16 port) override;
     virtual void disconnectTCP() override;
@@ -41,6 +44,10 @@ public slots:
     virtual void forwardData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service) override;
     virtual QTcpSocket* getSocket(quint64 socketID) override;
     void disconnectClient(quint64 socketID);
+
+    void pauseListening();
+    void continueListening();
+    QVector<quint64> getConnectedSockets();
 private:
     QMutex TaskMutex;
     QVector<spRxTask> pRXTasks;

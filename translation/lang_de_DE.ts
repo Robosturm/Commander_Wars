@@ -456,22 +456,22 @@
 <context>
     <name>Console</name>
     <message>
-        <location filename="../coreengine/console.cpp" line="90"/>
+        <location filename="../coreengine/console.cpp" line="92"/>
         <source>Enter &quot;help()&quot; for console info.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="91"/>
+        <location filename="../coreengine/console.cpp" line="93"/>
         <source>Starting Game...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="92"/>
+        <location filename="../coreengine/console.cpp" line="94"/>
         <source>Prepare to Fight...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="93"/>
+        <location filename="../coreengine/console.cpp" line="95"/>
         <source>Read this message while waiting...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1153,18 +1153,18 @@
 <context>
     <name>Multiplayermenu</name>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="42"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="330"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="43"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="362"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="60"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="61"/>
         <source>Host Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="326"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="358"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

@@ -68,7 +68,7 @@ void CoreAI::init()
 void CoreAI::nextAction()
 {
     // check if it's our turn
-    if (m_pPlayer == GameMap::getInstance()->getCurrentPlayer())
+    if (m_pPlayer == GameMap::getInstance()->getCurrentPlayer() && GameMenue::getInstance()->getGameStarted())
     {
         if (!processPredefinedAi())
         {

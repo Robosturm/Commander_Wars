@@ -10,6 +10,8 @@
 #include "coreengine/settings.h"
 #include "resource_management/fontmanager.h"
 
+#include "menue/gamemenue.h"
+
 #include "network/NetworkInterface.h"
 
 // values which differ from release to debug build
@@ -103,7 +105,10 @@ void Console::dotask(const QString& message)
     print(message, Console::eINFO);
     QString order = "GameConsole." + message;
     // ignore console argument and evaluate the String on the Top-Level
-    if (message.startsWith("game:"))
+    GameMenue* pGameMenue = GameMenue::getInstance();
+    if (message.startsWith("game:") &&
+        pGameMenue != nullptr &&
+        !pGameMenue->isNetworkGame())
     {
         order = order.replace("GameConsole.game:", "");
     }

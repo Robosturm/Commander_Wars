@@ -767,7 +767,7 @@ void GameMap::showCOInfo()
     emit signalShowCOInfo();
 }
 
-void GameMap::startGame(qint32 startPlayer)
+void GameMap::startGame()
 {
     m_Recorder = new GameRecorder();
 }

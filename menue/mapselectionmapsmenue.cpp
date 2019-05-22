@@ -179,17 +179,17 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth)
     connect(m_pMapSelection.get(), &MapSelection::itemChanged, this, &MapSelectionMapsMenue::mapSelectionItemChanged, Qt::QueuedConnection);
     connect(m_pMapSelection.get(), &MapSelection::itemClicked, this, &MapSelectionMapsMenue::mapSelectionItemClicked, Qt::QueuedConnection);
 
-    oxygine::spButton pButtonBack = ObjectManager::createButton(tr("Back"));
-    pButtonBack->setPosition(10, pApp->getSettings()->getHeight() - 10 - pButtonBack->getHeight());
-    pButtonBack->attachTo(this);
-    pButtonBack->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    m_pButtonBack = ObjectManager::createButton(tr("Back"));
+    m_pButtonBack->setPosition(10, pApp->getSettings()->getHeight() - 10 - m_pButtonBack->getHeight());
+    m_pButtonBack->attachTo(this);
+    m_pButtonBack->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit buttonBack();
     });
     connect(this, &MapSelectionMapsMenue::buttonBack, this, &MapSelectionMapsMenue::slotButtonBack, Qt::QueuedConnection);
 
     m_pButtonNext = ObjectManager::createButton(tr("Next"));
-    m_pButtonNext->setPosition(pApp->getSettings()->getWidth() - 10 - pButtonBack->getWidth(), pApp->getSettings()->getHeight() - 10 - pButtonBack->getHeight());
+    m_pButtonNext->setPosition(pApp->getSettings()->getWidth() - 10 - m_pButtonNext->getWidth(), pApp->getSettings()->getHeight() - 10 - m_pButtonNext->getHeight());
     m_pButtonNext->attachTo(this);
     m_pButtonNext->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -198,7 +198,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth)
     connect(this, &MapSelectionMapsMenue::buttonNext, this, &MapSelectionMapsMenue::slotButtonNext, Qt::QueuedConnection);
 
     m_pButtonStart = ObjectManager::createButton(tr("Start Game"));
-    m_pButtonStart->setPosition(pApp->getSettings()->getWidth() - 10 - pButtonBack->getWidth(), pApp->getSettings()->getHeight() - 10 - pButtonBack->getHeight());
+    m_pButtonStart->setPosition(pApp->getSettings()->getWidth() - 10 - m_pButtonStart->getWidth(), pApp->getSettings()->getHeight() - 10 - m_pButtonStart->getHeight());
     m_pButtonStart->attachTo(this);
     m_pButtonStart->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -603,11 +603,8 @@ void MapSelectionMapsMenue::hidePlayerSelection()
     m_pPlayerSelection->setVisible(false);
 }
 
-
-void MapSelectionMapsMenue::startGame()
+void MapSelectionMapsMenue::initPlayers()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     // fix some stuff for the players based on our current input
     for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
     {
@@ -639,7 +636,13 @@ void MapSelectionMapsMenue::startGame()
         // define army of this player
         pPlayer->defineArmy();
     }
+}
 
+void MapSelectionMapsMenue::startGame()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    initPlayers();
     GameMap* pMap = GameMap::getInstance();
     pMap->getGameScript()->gameStart();
     pMap->updateSprites();

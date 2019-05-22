@@ -10,6 +10,7 @@
 #include "coreengine/settings.h"
 
 #include "multiplayer/lobbymenu.h"
+#include "menue/gamemenue.h"
 
 #include "network/tcpclient.h"
 #include "network/tcpserver.h"
@@ -23,7 +24,7 @@
 #include "resource_management/fontmanager.h"
 
 Multiplayermenu::Multiplayermenu(QString adress, bool host)
-    : MapSelectionMapsMenue(Settings::getHeight() / 2 - 40),
+    : MapSelectionMapsMenue(Settings::getHeight() - 380),
       m_Host(host)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -184,7 +185,37 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         {
 
         }
+        else if (messageType == "INITGAME")
+        {
+            if (!m_NetworkInterface->getIsServer())
+            {
+                initClientGame(socketID, stream);
+            }
+        }
     }
+}
+
+void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
+{
+    quint32 seed;
+    stream >> seed;
+    Mainapp::seed(seed);
+    Mainapp::setUseSeed(true);
+    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+    {
+        m_pCurrentMap->getPlayer(i)->deserializeObject(stream);
+    }
+    initPlayers();
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    GameMap* pMap = GameMap::getInstance();
+    pMap->getGameScript()->gameStart();
+    pMap->updateSprites();
+    // start game
+    Console::print("Leaving Map Selection Menue", Console::eDEBUG);
+    oxygine::getStage()->addChild(new GameMenue(m_NetworkInterface));
+    oxygine::Actor::detach();
+    pApp->continueThread();
 }
 
 bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash)
@@ -219,10 +250,11 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash)
 
 }
 
-void Multiplayermenu::disconnected(quint64 socketID)
+void Multiplayermenu::disconnected(quint64)
 {
     if (m_Host)
     {
+        // handled in player selection
     }
     else
     {
@@ -271,8 +303,8 @@ void Multiplayermenu::createChat()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_Chat = new Chat(m_NetworkInterface, QSize(pApp->getSettings()->getWidth() - 20,
-                                                Settings::getHeight() / 2 - 40 * 2 - 10));
-    m_Chat->setPosition(10, Settings::getHeight() / 2 - 40 + 20);
+                                                300));
+    m_Chat->setPosition(10, Settings::getHeight() - 360);
     addChild(m_Chat);
     pApp->continueThread();
 }
@@ -358,18 +390,29 @@ void Multiplayermenu::startGame()
 
 void Multiplayermenu::sendServerReady(bool value)
 {
-    QVector<qint32> player;
-    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+    if (m_NetworkInterface->getIsServer())
     {
-        BaseGameInputIF::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
-        if (aiType != BaseGameInputIF::AiTypes::Open &&
-            aiType != BaseGameInputIF::AiTypes::ProxyAi)
+        if (value)
         {
-            player.append(i);
+            emit dynamic_cast<TCPServer*>(m_NetworkInterface.get())->sigPauseListening();
         }
+        else
+        {
+            emit dynamic_cast<TCPServer*>(m_NetworkInterface.get())->sigContinueListening();
+        }
+        QVector<qint32> player;
+        for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+        {
+            BaseGameInputIF::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
+            if (aiType != BaseGameInputIF::AiTypes::Open &&
+                aiType != BaseGameInputIF::AiTypes::ProxyAi)
+            {
+                player.append(i);
+            }
+        }
+        m_pPlayerSelection->setPlayerReady(value);
+        m_pPlayerSelection->sendPlayerReady(0, player, value);
     }
-    m_pPlayerSelection->setPlayerReady(value);
-    m_pPlayerSelection->sendPlayerReady(0, player, value);
 }
 
 void Multiplayermenu::countdown()
@@ -380,7 +423,30 @@ void Multiplayermenu::countdown()
         emit m_Chat->sigSendText((QString::number(counter) + "...").toStdString().c_str());
         if (counter == 0)
         {
+            initPlayers();
+            QByteArray data;
+            QDataStream stream(&data, QIODevice::WriteOnly);
+            stream << QString("INITGAME");
+            quint32 seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
+            Mainapp::seed(seed);
+            Mainapp::setUseSeed(true);
+            stream << seed;
+            for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+            {
+                m_pCurrentMap->getPlayer(i)->serializeObject(stream);
+            }
 
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->suspendThread();
+            GameMap* pMap = GameMap::getInstance();
+            pMap->getGameScript()->gameStart();
+            pMap->updateSprites();
+            // start game
+            Console::print("Leaving Map Selection Menue", Console::eDEBUG);
+            oxygine::getStage()->addChild(new GameMenue(m_NetworkInterface));
+            emit m_NetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+            oxygine::Actor::detach();
+            pApp->continueThread();
         }
     }
     else

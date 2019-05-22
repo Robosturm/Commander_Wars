@@ -172,3 +172,18 @@ void TCPServer::forwardData(quint64 socketID, QByteArray data, NetworkInterface:
         }
     }
 }
+
+void TCPServer::pauseListening()
+{
+    pTCPServer->pauseAccepting();
+}
+
+void TCPServer::continueListening()
+{
+    pTCPServer->resumeAccepting();
+}
+
+QVector<quint64> TCPServer::getConnectedSockets()
+{
+    return m_SocketIDs;
+}
