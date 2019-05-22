@@ -58,6 +58,8 @@ public:
     {
         return 1;
     }
+
+
 signals:
 
 public slots:
@@ -254,6 +256,16 @@ public slots:
      * @brief deleteAction
      */
     void deleteAction();
+    /**
+     * @brief getIsLocal
+     * @return
+     */
+    bool getIsLocal() const;
+    /**
+     * @brief setIsLocal
+     * @param value
+     */
+    void setIsLocal(bool value);
 private:
     QString m_actionID;
     /**
@@ -279,8 +291,12 @@ private:
     QDataStream actionData{&buffer};
 
     quint32 seed;
-
+    /**
+      * needed for ai simulations
+      */
     Unit* m_pTargetUnit{nullptr};
+
+    bool isLocal{false};
 };
 
 #endif // GAMEACTION_H

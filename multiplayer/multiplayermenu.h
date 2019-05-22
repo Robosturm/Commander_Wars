@@ -34,7 +34,7 @@ public:
      */
     void disconnectNetwork();
 signals:
-
+    void sigConnected();
 public slots:
 
     // general slots

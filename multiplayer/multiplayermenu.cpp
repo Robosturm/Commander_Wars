@@ -19,6 +19,8 @@
 #include "game/player.h"
 #include "game/co.h"
 
+#include "objects/dialogconnecting.h"
+
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -46,6 +48,10 @@ Multiplayermenu::Multiplayermenu(QString adress, bool host)
         connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
         connect(m_pPlayerSelection.get(), &PlayerSelection::sigDisconnect, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
 
+        spDialogConnecting pDialogConnecting = new DialogConnecting(tr("Connecting"));
+        addChild(pDialogConnecting);
+        connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
+        connect(this, &Multiplayermenu::sigConnected, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
     }
     else
     {
@@ -179,6 +185,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                     m_pPlayerSelection->updatePlayerData(i);
                 }
                 m_pPlayerSelection->sendPlayerRequest(socketID, -1, BaseGameInputIF::AiTypes::Human);
+                emit sigConnected();
             }
         }
         else if (messageType == "REQUESTMAP")

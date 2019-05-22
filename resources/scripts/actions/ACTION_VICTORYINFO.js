@@ -19,6 +19,7 @@ var Constructor = function()
     };
     this.isFinalStep = function(action)
     {
+        action.setIsLocal(true);
         return true;
     };
 }

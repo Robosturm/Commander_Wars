@@ -16,6 +16,7 @@
 #include "objects/coinfodialog.h"
 
 #include "objects/dialogvictoryconditions.h"
+#include "objects/dialogconnecting.h"
 
 #include <QFile>
 
@@ -45,6 +46,11 @@ GameMenue::GameMenue(spNetworkInterface pNetworkInterface)
             sendStream << QString("CLIENTINITGAME");
             m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
         }
+        spDialogConnecting pDialogConnecting = new DialogConnecting(tr("Waiting for Players"));
+        addChild(pDialogConnecting);
+        connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
+        connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
+
     }
     else
     {
@@ -197,6 +203,17 @@ void GameMenue::performAction(GameAction* pGameAction)
             }
         }
     }
+    // send action to other players if needed
+    if (!pGameAction->getIsLocal() && m_pNetworkInterface.get() != nullptr &&
+        pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != BaseGameInputIF::AiTypes::ProxyAi)
+    {
+        QByteArray data;
+        QDataStream stream(&data, QIODevice::WriteOnly);
+        stream << pMap->getCurrentPlayer()->getPlayerID();
+        pGameAction->serializeObject(stream);
+        emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Game, true);
+    }
+    // perform action
     Mainapp::seed(pGameAction->getSeed());
     Mainapp::setUseSeed(true);
     pGameAction->perform();
@@ -394,7 +411,14 @@ void GameMenue::saveGame()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     QVector<QString> wildcards;
-    wildcards.append("*.sav");
+    if (m_pNetworkInterface.get() != nullptr)
+    {
+        wildcards.append("*.msav");
+    }
+    else
+    {
+        wildcards.append("*.sav");
+    }
     QString path = QCoreApplication::applicationDirPath() + "/savegames";
     spFileDialog saveDialog = new FileDialog(path, wildcards, GameMap::getInstance()->getMapName());
     this->addChild(saveDialog);
@@ -419,7 +443,7 @@ void GameMenue::saveMap(QString filename)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    if (filename.endsWith(".sav"))
+    if (filename.endsWith(".sav") || filename.endsWith(".msav"))
     {
         QFile file(filename);
         file.open(QIODevice::WriteOnly | QIODevice::Truncate);

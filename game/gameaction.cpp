@@ -32,6 +32,16 @@ void GameAction::deleteAction()
     delete this;
 }
 
+bool GameAction::getIsLocal() const
+{
+    return isLocal;
+}
+
+void GameAction::setIsLocal(bool value)
+{
+    isLocal = value;
+}
+
 void GameAction::setTargetUnit(Unit *pTargetUnit)
 {
     m_pTargetUnit = pTargetUnit;
@@ -345,8 +355,9 @@ void GameAction::deserializeObject(QDataStream& stream)
     for (qint32 i = 0; i < size; i++)
     {
         qint8 value = 0;
+        // stream out of recieved data
         stream >> value;
-
+        // stream into action buffer
         actionData << value;
     }
     stream >> seed;

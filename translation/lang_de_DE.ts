@@ -493,6 +493,14 @@
     </message>
 </context>
 <context>
+    <name>DialogConnecting</name>
+    <message>
+        <location filename="../objects/dialogconnecting.cpp" line="39"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DialogModifyUnit</name>
     <message>
         <location filename="../objects/dialogmodifyunit.cpp" line="40"/>
@@ -789,6 +797,14 @@
     <message>
         <location filename="../objects/filedialog.cpp" line="79"/>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GameMenue</name>
+    <message>
+        <location filename="../menue/gamemenue.cpp" line="49"/>
+        <source>Waiting for Players</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1153,18 +1169,23 @@
 <context>
     <name>Multiplayermenu</name>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="43"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="362"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="45"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="369"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="61"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="51"/>
+        <source>Connecting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="67"/>
         <source>Host Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="358"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="365"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
