@@ -10,7 +10,6 @@ link_directories(${OXYGINE_LIBRARY_DIRS})
 add_subdirectory(3rd_party/oxygine-flow oxygine-flow)
 include_directories(${OXYGINE_FLOW_INCLUDE_DIRS})
 
-
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 

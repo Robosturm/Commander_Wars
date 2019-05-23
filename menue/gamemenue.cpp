@@ -46,6 +46,11 @@ GameMenue::GameMenue(spNetworkInterface pNetworkInterface)
             sendStream << QString("CLIENTINITGAME");
             m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
         }
+        else
+        {
+            m_PlayerSockets = dynamic_cast<TCPServer*>(m_pNetworkInterface.get())->getConnectedSockets();
+            connect(m_pNetworkInterface.get(), &NetworkInterface::sigConnected, this, &GameMenue::playerJoined, Qt::QueuedConnection);
+        }
         spDialogConnecting pDialogConnecting = new DialogConnecting(tr("Waiting for Players"));
         addChild(pDialogConnecting);
         connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
@@ -94,7 +99,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                     QByteArray sendData;
                     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                     sendStream << QString("STARTGAME");
-                    emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+                    emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
                     emit sigGameStarted();
                     emit sigActionPerformed();
                 }
@@ -102,15 +107,31 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         }
         else if (messageType == "STARTGAME")
         {
-            gameStarted = true;
-            emit sigGameStarted();
-            emit sigActionPerformed();
+            if (!m_pNetworkInterface->getIsServer())
+            {
+                gameStarted = true;
+                emit sigGameStarted();
+                emit sigActionPerformed();
+            }
+        }
+    }
+}
+
+void GameMenue::playerJoined(quint64 socketID)
+{
+    if (m_pNetworkInterface->getIsServer())
+    {
+        if (m_PlayerSockets.contains(socketID))
+        {
+            // reject connection by disconnecting
+            emit dynamic_cast<TCPServer*>(m_pNetworkInterface.get())->sigDisconnectClient(socketID);
         }
     }
 }
 
 void GameMenue::disconnected(quint64 socketID)
 {
+
     // for the moment disconnections are handled with an immediate leaving of the game :(
     exitGame();
 }
@@ -313,6 +334,14 @@ void GameMenue::victory(qint32 team)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
+
+    // todo move to correct position
+    if (m_pNetworkInterface.get() != nullptr)
+    {
+        emit m_pNetworkInterface->sig_close();
+        m_pNetworkInterface = nullptr;
+    }
+
     bool exit = true;
     // create victory
     if (team >= 0)

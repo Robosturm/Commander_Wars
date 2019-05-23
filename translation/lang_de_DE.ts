@@ -803,7 +803,7 @@
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="49"/>
+        <location filename="../menue/gamemenue.cpp" line="54"/>
         <source>Waiting for Players</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1170,7 +1170,7 @@
     <name>Multiplayermenu</name>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="45"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="369"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="371"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1185,7 +1185,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="365"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="367"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

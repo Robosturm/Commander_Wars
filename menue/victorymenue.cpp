@@ -509,9 +509,9 @@ void VictoryMenue::exitMenue()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    GameMap::deleteMap();
     Console::print("Leaving Victory Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
-    GameMap::getInstance()->deleteMap();
     oxygine::Actor::detach();
     pApp->continueThread();
 }

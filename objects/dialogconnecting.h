@@ -26,7 +26,7 @@ private:
      oxygine::spTextField m_Text;
      QString m_Message;
      QTimer m_Timer;
-     qint8 counter;
+     quint8 counter;
 };
 
 #endif // DIALOGCONNECTING_H

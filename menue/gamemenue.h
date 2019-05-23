@@ -110,6 +110,11 @@ public slots:
      * @return
      */
     bool isNetworkGame();
+    /**
+     * @brief playerJoined
+     * @param socketID
+     */
+    void playerJoined(quint64 socketID);
 protected:
     void loadGameMenue();
 private:
@@ -118,7 +123,7 @@ private:
     static GameMenue* m_pInstance;
     spNetworkInterface m_pNetworkInterface;
     bool gameStarted{false};
-
+    QVector<quint64> m_PlayerSockets;
     QVector<quint64> m_ReadySockets;
 };
 

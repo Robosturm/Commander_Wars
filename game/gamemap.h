@@ -59,7 +59,7 @@ public:
     /**
      * @brief deleteMap
      */
-    void deleteMap();
+    static void deleteMap();
     /**
      * @brief newMap
      * @param width

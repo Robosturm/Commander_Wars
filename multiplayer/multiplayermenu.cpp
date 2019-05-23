@@ -210,7 +210,9 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     Mainapp::setUseSeed(true);
     for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
     {
+        BaseGameInputIF::AiTypes aiType = m_pCurrentMap->getPlayer(i)->getBaseGameInput()->getAiType();
         m_pCurrentMap->getPlayer(i)->deserializeObject(stream);
+        m_pCurrentMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(aiType));
     }
     initPlayers();
     Mainapp* pApp = Mainapp::getInstance();
@@ -401,11 +403,11 @@ void Multiplayermenu::sendServerReady(bool value)
     {
         if (value)
         {
-            emit dynamic_cast<TCPServer*>(m_NetworkInterface.get())->sigPauseListening();
+            emit dynamic_cast<TCPServer*>(m_NetworkInterface.get())->pauseListening();
         }
         else
         {
-            emit dynamic_cast<TCPServer*>(m_NetworkInterface.get())->sigContinueListening();
+            emit dynamic_cast<TCPServer*>(m_NetworkInterface.get())->continueListening();
         }
         QVector<qint32> player;
         for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
