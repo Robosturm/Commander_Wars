@@ -24,7 +24,7 @@ public:
      * @param fileName
      * @param hash
      */
-    bool existsMap(QString& fileName, QByteArray& hash);
+    bool existsMap(QString& fileName, QByteArray& hash, QString& scriptFileName, QByteArray& scriptHash);
     /**
      * @brief createChat
      */
@@ -52,6 +52,7 @@ protected:
     bool getGameReady();
     void sendServerReady(bool value);
     void initClientGame(quint64 socketID, QDataStream &stream);
+    void loadMultiplayerMap(QString file);
 private:
     bool m_Host{false};
     spNetworkInterface m_NetworkInterface;
