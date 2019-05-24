@@ -39,8 +39,8 @@ public:
     explicit MapSelectionMapsMenue(qint32 heigth = -1);
     virtual ~MapSelectionMapsMenue();
     // functions for swapping between the inputs
-    void hideMapSelection();
-    void showMapSelection();
+    virtual void hideMapSelection();
+    virtual void showMapSelection();
     void hideRuleSelection();
     void showRuleSelection();
     void hidePlayerSelection();

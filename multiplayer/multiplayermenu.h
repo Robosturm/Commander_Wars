@@ -35,6 +35,7 @@ public:
     void disconnectNetwork();
 signals:
     void sigConnected();
+    void sigLoadSaveGame();
 public slots:
 
     // general slots
@@ -46,6 +47,12 @@ public slots:
     void playerJoined(quint64 socketID);
     void disconnected(quint64 socketID);
     void recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service);
+
+    virtual void hideMapSelection() override;
+    virtual void showMapSelection() override;
+
+    void showLoadSaveGameDialog();
+    void loadSaveGame(QString filename);
 protected slots:
     void countdown();
 protected:
@@ -60,6 +67,8 @@ private:
     spChat m_Chat;
     QTimer m_GameStartTimer;
     qint32 counter{5};
+    oxygine::spButton m_pButtonLoadSavegame;
+    bool saveGame{false};
 };
 
 #endif // MULTIPLAYERMENU_H

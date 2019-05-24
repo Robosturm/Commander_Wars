@@ -49,7 +49,11 @@ public:
      * @param heigth
      */
     explicit GameMap(qint32 width, qint32 heigth, qint32 playerCount);
-
+    /**
+     * @brief GameMap
+     * @param stream
+     */
+    explicit GameMap(QDataStream& stream);
     /**
      * @brief GameMap
      * @param map path to the map which should be loaded

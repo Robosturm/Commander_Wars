@@ -1179,23 +1179,28 @@
 <context>
     <name>Multiplayermenu</name>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="45"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="542"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="46"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="614"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="51"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="52"/>
         <source>Connecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="67"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="68"/>
         <source>Host Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="538"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="76"/>
+        <source>Load Savegame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="610"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2197,102 +2202,102 @@
 <context>
     <name>co_aira</name>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="81"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="199"/>
         <source>A reserved commander who is often found daydreaming. Likes to walk in the wind.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="85"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="203"/>
         <source>Cool Breezes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="89"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="207"/>
         <source>Surprises</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="93"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="211"/>
         <source>Aira never felt a need to specialize, so all units are average.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="97"/>
-        <source>Enemies expend 5 times more fuel for the next day.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="101"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="219"/>
         <source>Gust Storm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="105"/>
-        <source>Weak enemy units and air units suffer 3 HP of damage. All other enemy units have increased movement costs.</source>
+        <location filename="../resources/scripts/cos/co_aira.js" line="215"/>
+        <source>Enemies expend 6 times more fuel for the next day.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="109"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="223"/>
+        <source>The cheapest enemy units and air units suffer 3 HP of damage. All enemy units have increased movement costs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_aira.js" line="227"/>
         <source>Hurricannon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="113"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="231"/>
         <source>Amazing what a little gust can do...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="114"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="232"/>
         <source>How can one fight against what they can&apos;t see or damage?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="115"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="233"/>
         <source>This is the only surprise I don&apos;t mind...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="116"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="234"/>
         <source>The winds will move the tides of war.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="117"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="235"/>
         <source>A victory depends on whether my enemy can survive this weather.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="118"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="236"/>
         <source>I am certain that my determination is not what one would call sub par.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="122"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="240"/>
         <source>...Huh? Oh, right. I won. Woohoo?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="123"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="241"/>
         <source>I&apos;m glad I expected this. A surprise would have been unbearable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="124"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="242"/>
         <source>Victory blew in my direction today.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="128"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="246"/>
         <source>The wind blew in the wrong direction.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="129"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="247"/>
         <source>Hmm! Oh i have dreamed to much.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="133"/>
+        <location filename="../resources/scripts/cos/co_aira.js" line="251"/>
         <source>Aira</source>
         <translation type="unfinished"></translation>
     </message>

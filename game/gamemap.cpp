@@ -43,6 +43,17 @@ GameMap::GameMap(qint32 width, qint32 heigth, qint32 playerCount)
     loaded = true;
 }
 
+GameMap::GameMap(QDataStream& stream)
+    : m_CurrentPlayer(nullptr),
+      m_Rules(new GameRules())
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+    loadMapData();
+    deserializeObject(stream);
+    loaded = true;
+}
+
 GameMap::GameMap(QString map, bool onlyLoad)
     : m_CurrentPlayer(nullptr),
       m_Rules(new GameRules())

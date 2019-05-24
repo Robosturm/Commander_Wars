@@ -3,7 +3,7 @@ var Constructor = function()
     this.init = function(co)
     {
         co.setPowerStars(3);
-        co.setSuperpowerStars(7);
+        co.setSuperpowerStars(4);
     };
 
     this.activatePower = function(co)
@@ -13,7 +13,47 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-
+        var player = co.getOwner();
+        var counter = 0;
+        var playerCounter = map.getPlayerCount();
+        var animation = null;
+        var animations = [];
+        for (var i2 = 0; i2 < playerCounter; i2++)
+        {
+            var enemyPlayer = map.getPlayer(i2);
+            if ((enemyPlayer !== player) &&
+                (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
+            {
+                var units = enemyPlayer.getUnits();
+                units.randomize();
+                for (i = 0; i < units.size(); i++)
+                {
+                    var unit = units.at(i);
+                    animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                    if (animations.length < 5)
+                    {
+                        animation.addSprite("power14", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
+                        if (powerNameAnimation !== null)
+                        {
+                            powerNameAnimation.queueAnimation(animation);
+                        }
+                        animations.push(animation);
+                    }
+                    else
+                    {
+                        animation.addSprite("power14", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                        animations[counter].queueAnimation(animation);
+                        animations[counter] = animation;
+                        counter++;
+                        if (counter >= animations.length)
+                        {
+                            counter = 0;
+                        }
+                    }
+                }
+                units.remove();
+            }
+        }
 
         audio.clearPlayList();
         CO_AIRA.loadCOMusic(co);
@@ -26,9 +66,64 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
+        CO_AIRA.airaDamage(co, 3, powerNameAnimation);
+
         audio.clearPlayList();
         CO_AIRA.loadCOMusic(co);
         audio.playRandom();
+    };
+
+    this.airaDamage = function(co, value, animation2)
+    {
+        var player = co.getOwner();
+        var counter = 0;
+        var playerCounter = map.getPlayerCount();
+        var animation = null;
+        var animations = [];
+        for (var i2 = 0; i2 < playerCounter; i2++)
+        {
+            var enemyPlayer = map.getPlayer(i2);
+            if ((enemyPlayer !== player) &&
+                (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
+            {
+                var units = enemyPlayer.getUnits();
+                units.sortExpensive();
+                var size = units.size();
+                for (i = 0; i < size; i++)
+                {
+                    var unit = units.at(i);
+                    if (i >= size / 2 || unit.useTerrainDefense() === false)
+                    {
+                        animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                        if (animations.length < 5)
+                        {
+                            animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
+                            if (animation2 !== null)
+                            {
+                                animation2.queueAnimation(animation);
+                            }
+                            animations.push(animation);
+                        }
+                        else
+                        {
+                            animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                            animations[counter].queueAnimation(animation);
+                            animations[counter] = animation;
+                            counter++;
+                            if (counter >= animations.length)
+                            {
+                                counter = 0;
+                            }
+                        }
+                        animation.writeDataInt32(unit.getX());
+                        animation.writeDataInt32(unit.getY());
+                        animation.writeDataInt32(value);
+                        animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
+                    }
+                }
+                units.remove();
+            }
+        }
     };
 
     this.loadCOMusic = function(co)
@@ -56,6 +151,9 @@ var Constructor = function()
     {
         return "PF";
     };
+
+
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
@@ -71,6 +169,26 @@ var Constructor = function()
                     return 10;
                 }
                 break;
+        }
+        return 0;
+    };
+
+    this.getMovementFuelCostModifier = function(co, unit, fuelCost)
+    {
+        if (co.getPowerMode() === GameEnums.PowerMode_Power &&
+            co.getOwner().isEnemyUnit(unit) === true)
+        {
+            return fuelCost * 5;
+        }
+        return 0;
+    };
+
+    this.getMovementcostModifier = function(co, unit, posX, posY)
+    {
+        if (co.getPowerMode() === GameEnums.PowerMode_Superpower &&
+            co.getOwner().isEnemyUnit(unit) === true)
+        {
+            return 1;
         }
         return 0;
     };
@@ -94,7 +212,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Enemies expend 5 times more fuel for the next day.");
+        return qsTr("Enemies expend 6 times more fuel for the next day.");
     };
     this.getPowerName = function()
     {
@@ -102,7 +220,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Weak enemy units and air units suffer 3 HP of damage. All other enemy units have increased movement costs.");
+        return qsTr("The cheapest enemy units and air units suffer 3 HP of damage. All enemy units have increased movement costs.");
     };
     this.getSuperPowerName = function()
     {
