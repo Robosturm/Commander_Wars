@@ -82,6 +82,7 @@ void Multiplayermenu::playerJoined(quint64 socketID)
             QCryptographicHash myHash(QCryptographicHash::Sha3_512);
             QString file = m_currentMapFile.filePath();
             QString fileName = m_currentMapFile.fileName();
+            QString scriptFile = m_pCurrentMap->getGameScript()->getScriptFile();
             QFile mapFile(file);
             mapFile.open(QIODevice::ReadOnly);
             myHash.addData(&mapFile);
@@ -90,8 +91,20 @@ void Multiplayermenu::playerJoined(quint64 socketID)
             QByteArray data;
             QDataStream stream(&data, QIODevice::WriteOnly);
             stream << QString("MAPINFO");
+            stream << Mainapp::getGameVersion();
+            QStringList mods = Settings::getMods();
+            stream << static_cast<qint32>(mods.size());
+            for (qint32 i = 0; i < mods.size(); i++)
+            {
+                stream << mods[i];
+            }
             stream << fileName;
             stream << hash;
+            stream << scriptFile;
+            if (QFile::exists(scriptFile))
+            {
+                // create hash for script file
+            }
             // send map data to client
             m_NetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
         }
@@ -115,23 +128,60 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
         {
             if (!m_NetworkInterface->getIsServer())
             {
-                QString fileName;
-                stream >> fileName;
-                QByteArray hash;
-                stream >> hash;
-                if (existsMap(fileName, hash))
+                QString version;
+                stream >> version;
+                qint32 size = 0;
+                stream >> size;
+                QStringList mods;
+                for (qint32 i = 0; i < size; i++)
                 {
-                    QByteArray data;
-                    QDataStream stream(&data, QIODevice::WriteOnly);
-                    stream << QString("REQUESTRULE");
-                    m_NetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+                    QString mod;
+                    stream >> mod;
+                    mods.append(mod);
+                }
+                QStringList myMods = Settings::getMods();
+                bool sameMods = true;
+                if (myMods.size() != mods.size())
+                {
+                    sameMods = false;
                 }
                 else
                 {
-                    QByteArray sendData;
-                    QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-                    sendStream << QString("REQUESTMAP");
-                    m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+                    for (qint32 i = 0; i < myMods.size(); i++)
+                    {
+                        if (!mods.contains(myMods[i]))
+                        {
+                            sameMods = false;
+                        }
+                    }
+                }
+                if (version == Mainapp::getGameVersion() && sameMods)
+                {
+                    QString fileName;
+                    stream >> fileName;
+                    QByteArray hash;
+                    stream >> hash;
+                    QString scriptFile;
+                    stream >> scriptFile;
+                    if (existsMap(fileName, hash))
+                    {
+                        QByteArray data;
+                        QDataStream stream(&data, QIODevice::WriteOnly);
+                        stream << QString("REQUESTRULE");
+                        m_NetworkInterface->sig_sendData(socketID, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+                    }
+                    else
+                    {
+                        QByteArray sendData;
+                        QDataStream sendStream(&sendData, QIODevice::WriteOnly);
+                        sendStream << QString("REQUESTMAP");
+                        m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
+                    }
+                }
+                else
+                {
+                    // quit game with wrong version
+                    slotButtonBack();
                 }
             }
         }

@@ -1170,7 +1170,7 @@
     <name>Multiplayermenu</name>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="45"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="371"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="417"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1185,7 +1185,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="367"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="413"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

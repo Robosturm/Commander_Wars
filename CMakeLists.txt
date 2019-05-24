@@ -39,6 +39,12 @@ else("Release")
     )
 endif()
 
+add_definitions(
+    -DMAJOR=0
+    -DMINOR=3
+    -DREVISION=0
+)
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OXYGINE_CXX_FLAGS} -DCMAKE_C_FLAGS=\"-mwindows\"")
 
 # source list we start slow here with the main cpp

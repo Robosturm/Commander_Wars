@@ -141,7 +141,10 @@ public slots:
      */
     void quitGame();
 
-
+    static QString getGameVersion()
+    {
+        return "Version: " + QString::number(MAJOR) + "." + QString::number(MINOR) + "." + QString::number(REVISION);
+    }
 protected:
     void onEvent(oxygine::Event* ev);
 private:

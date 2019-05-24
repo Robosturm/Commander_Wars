@@ -113,18 +113,18 @@ public slots:
     {
         return m_Server;
     }
-    inline QStringList getMods()
+    static inline QStringList getMods()
     {
         return m_activeMods;
     }
-    void addMod(QString mod)
+    static void addMod(QString mod)
     {
         if (!m_activeMods.contains(mod))
         {
             m_activeMods.append(mod);
         }
     }
-    void removeMod(QString mod)
+    static void removeMod(QString mod)
     {
         if (m_activeMods.contains(mod))
         {

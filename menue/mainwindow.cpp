@@ -144,6 +144,17 @@ Mainwindow::Mainwindow()
         addChild(pDialogTextInput);
         connect(pDialogTextInput.get(), &DialogTextInput::sigTextChanged, this, &Mainwindow::changeUsername, Qt::QueuedConnection);
     }
+
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+    oxygine::spTextField pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(Mainapp::getGameVersion().toStdString().c_str());
+    pTextfield->setPosition(pApp->getSettings()->getWidth() - 10 - pTextfield->getTextRect().getWidth(), pApp->getSettings()->getHeight() - 10 - pTextfield->getTextRect().getHeight());
+    addChild(pTextfield);
 }
 
 void Mainwindow::changeUsername(QString name)
