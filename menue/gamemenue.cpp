@@ -11,6 +11,8 @@
 
 #include "game/gameanimationfactory.h"
 
+#include "resource_management/objectmanager.h"
+
 #include "objects/filedialog.h"
 
 #include "objects/coinfodialog.h"
@@ -166,9 +168,38 @@ void GameMenue::loadGameMenue()
     addChild(m_IngameInfoBar);
     addChild(m_pPlayerinfo);
 
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
+    oxygine::spBox9Sprite pButtonBox = new oxygine::Box9Sprite();
+    pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    pButtonBox->setResAnim(pAnim);
+    pButtonBox->setSize(286, 50);
+    pButtonBox->setPosition((pApp->getSettings()->getWidth() - m_IngameInfoBar->getWidth()) / 2 - pButtonBox->getWidth() / 2 + 50, -4);
+    pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+    addChild(pButtonBox);
+    oxygine::spButton saveGame = pObjectManager->createButton(tr("Save Game"), 130);
+    saveGame->setPosition(8, 4);
+    saveGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigSaveGame();
+    });
+    pButtonBox->addChild(saveGame);
+
+    oxygine::spButton exitGame = pObjectManager->createButton(tr("Exit Game"), 130);
+    exitGame->setPosition(148, 4);
+    exitGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigExitGame();
+    });
+    pButtonBox->addChild(exitGame);
+
+
     connect(pMap->getGameRules(), &GameRules::signalVictory, this, &GameMenue::victory, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
+    connect(this, &GameMenue::sigExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
+    connect(this, &GameMenue::sigSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalVictoryInfo, this, &GameMenue::victoryInfo, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalShowCOInfo, this, &GameMenue::showCOInfo, Qt::QueuedConnection);
     connect(pMap, &GameMap::sigQueueAction, this, &GameMenue::performAction, Qt::QueuedConnection);

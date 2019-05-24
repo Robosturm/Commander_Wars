@@ -62,6 +62,8 @@ IngameInfoBar::IngameInfoBar()
     m_pCursorInfoBox->setSize(width, cursorInfoHeigth);
     m_pCursorInfoBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
     addChild(m_pCursorInfoBox);
+
+    setSize(width, Settings::getHeight());
 }
 
 void IngameInfoBar::updatePlayerInfo()

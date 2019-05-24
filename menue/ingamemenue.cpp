@@ -139,11 +139,11 @@ void InGameMenue::loadHandling()
             }
         }
     });
-    GameMap::getInstance()->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event *pEvent )->void
+    GameMap::getInstance()->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event *)->void
     {
         SDL_ShowCursor(SDL_ENABLE);
     });
-    GameMap::getInstance()->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event *pEvent )->void
+    GameMap::getInstance()->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event *)->void
     {
         if (!Settings::getShowCursor())
         {
