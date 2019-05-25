@@ -92,6 +92,14 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
         connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
         {
             m_pUnit->setFuel(value);
+            if (value == m_pUnit->getMaxFuel())
+            {
+                m_pUnit->setModdingFlags(static_cast<Unit::ModdingFlags>(m_pUnit->getModdingFlags() & ~Unit::ModdingFlags::FlagFuel));
+            }
+            else
+            {
+                m_pUnit->setModdingFlags(static_cast<Unit::ModdingFlags>(m_pUnit->getModdingFlags() | Unit::ModdingFlags::FlagFuel));
+            }
         });
         pPanel->addItem(pSlider);
         y += 40;
@@ -109,6 +117,14 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
         connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
         {
             m_pUnit->setAmmo1(value);
+            if (value == m_pUnit->getMaxAmmo1())
+            {
+                m_pUnit->setModdingFlags(static_cast<Unit::ModdingFlags>(m_pUnit->getModdingFlags() & ~Unit::ModdingFlags::FlagAmmo1));
+            }
+            else
+            {
+                m_pUnit->setModdingFlags(static_cast<Unit::ModdingFlags>(m_pUnit->getModdingFlags() | Unit::ModdingFlags::FlagAmmo1));
+            }
         });
         pPanel->addItem(pSlider);
         y += 40;
@@ -126,6 +142,14 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
         connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
         {
             m_pUnit->setAmmo2(value);
+            if (value == m_pUnit->getMaxAmmo2())
+            {
+                m_pUnit->setModdingFlags(static_cast<Unit::ModdingFlags>(m_pUnit->getModdingFlags() & ~Unit::ModdingFlags::FlagAmmo2));
+            }
+            else
+            {
+                m_pUnit->setModdingFlags(static_cast<Unit::ModdingFlags>(m_pUnit->getModdingFlags() | Unit::ModdingFlags::FlagAmmo2));
+            }
         });
         pPanel->addItem(pSlider);
         y += 40;

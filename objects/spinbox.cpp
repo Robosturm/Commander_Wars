@@ -61,10 +61,9 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     m_pArrowDown->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
         m_spinDirection = -1 * m_SpinSpeed;
-        float value = getCurrentValue();
+        qreal value = getCurrentValue();
         value += m_spinDirection;
         setCurrentValue(value);
-        checkInput();
         toggle.start();
         emit sigValueChanged(getCurrentValue());
     });
@@ -91,10 +90,9 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     m_pArrowUp->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [ = ](oxygine::Event*)
     {
         m_spinDirection = 1 * m_SpinSpeed;
-        float value = getCurrentValue();
+        qreal value = getCurrentValue();
         value += m_spinDirection;
         setCurrentValue(value);
-        checkInput();
         toggle.start();
         emit sigValueChanged(getCurrentValue());
     });
@@ -123,7 +121,7 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
         if (m_focused)
         {
             m_focused = false;
-            float value = checkInput();
+            qreal value = checkInput();
             emit sigValueChanged(value);
         }
         else
@@ -149,9 +147,9 @@ void SpinBox::setEnabled(bool value)
     m_focused = false;
 }
 
-void SpinBox::setCurrentValue(float value)
+void SpinBox::setCurrentValue(qreal value)
 {
-    m_Text = QString::number(static_cast<double>(value));
+    setValue(value);
     checkInput();
 }
 
@@ -204,24 +202,26 @@ void SpinBox::update(const oxygine::UpdateState& us)
     }
     else
     {
-        if (m_spinDirection != 0.0f)
+        if (m_spinDirection != 0.0)
         {
             if (toggle.elapsed() > BLINKFREQG)
             {
-                float value = getCurrentValue();
+                qreal value = getCurrentValue();
                 value += m_spinDirection;
                 setValue(value);
                 toggle.start();
             }
             checkInput();
         }
+        QString drawText = m_Text;
+        m_Textfield->setText(drawText.toStdString().c_str());
     }
     oxygine::Actor::update(us);
 }
 
-float SpinBox::getCurrentValue()
+qreal SpinBox::getCurrentValue()
 {
-    float value = 0;
+    qreal value = 0;
     if (m_Text == "∞")
     {
         value = m_InfinityValue;
@@ -229,7 +229,7 @@ float SpinBox::getCurrentValue()
     else
     {
         bool ok = false;
-        value = m_Text.toFloat(&ok);
+        value = m_Text.toDouble(&ok);
         if (!ok)
         {
             value = m_InfinityValue;
@@ -238,36 +238,32 @@ float SpinBox::getCurrentValue()
     return value;
 }
 
-float SpinBox::checkInput()
+qreal SpinBox::checkInput()
 {
-
     bool ok = false;
-    float value = m_Text.toFloat(&ok);
+    qreal value = m_Text.toDouble(&ok);
     if (m_Text == "∞")
     {
         value = m_InfinityValue;
         ok = true;
     }
-    if (!m_focused)
+    if (!ok)
     {
-        if (!ok)
-        {
-            value = m_MinValue;
-        }
-        if (value < m_MinValue)
-        {
-            value = m_MinValue;
-        }
-        if (value > m_MaxValue)
-        {
-            value = m_MaxValue;
-        }
-        setValue(value);
+        value = m_MinValue;
     }
+    if (value < m_MinValue)
+    {
+        value = m_MinValue;
+    }
+    if (value > m_MaxValue)
+    {
+        value = m_MaxValue;
+    }
+    setValue(value);
     return value;
 }
 
-void SpinBox::setValue(float value)
+void SpinBox::setValue(qreal value)
 {
     if (value == m_InfinityValue)
     {
@@ -283,8 +279,9 @@ void SpinBox::setValue(float value)
                 break;
             }
             case Mode::Float:
+            case Mode::Real:
             {
-                m_Text = QString::number(static_cast<double>(value));
+                m_Text = QString::number(value, 'f');
                 break;
             }
         }
@@ -292,22 +289,22 @@ void SpinBox::setValue(float value)
     m_Textfield->setText(m_Text.toStdString().c_str());
 }
 
-float SpinBox::getInfinityValue() const
+qreal SpinBox::getInfinityValue() const
 {
     return m_InfinityValue;
 }
 
-void SpinBox::setInfinityValue(float InfinityValue)
+void SpinBox::setInfinityValue(qreal InfinityValue)
 {
     m_InfinityValue = InfinityValue;
 }
 
-float SpinBox::getSpinSpeed() const
+qreal SpinBox::getSpinSpeed() const
 {
     return m_SpinSpeed;
 }
 
-void SpinBox::setSpinSpeed(float SpinSpeed)
+void SpinBox::setSpinSpeed(qreal SpinSpeed)
 {
     m_SpinSpeed = SpinSpeed;
 }
@@ -398,7 +395,7 @@ void SpinBox::KeyInput(SDL_Event event)
             case SDLK_RETURN:
             {
                 m_focused = false;
-                float value = checkInput();
+                qreal value = checkInput();
                 emit sigValueChanged(value);
                 break;
             }

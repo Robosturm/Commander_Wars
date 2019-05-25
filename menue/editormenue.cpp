@@ -20,6 +20,8 @@
 
 #include "objects/playerselectiondialog.h"
 
+#include "objects/dialograndommap.h"
+
 #include "game/terrainfindingsystem.h"
 #include "game/co.h"
 
@@ -205,8 +207,10 @@ void EditorMenue::clickedTopbar(QString itemID)
     }
     else if (itemID == "RANDOMMAP")
     {
-        GameMap* pGameMap = GameMap::getInstance();
-        pGameMap->randomMap(30, 40, 4);
+        spDialogRandomMap pDialogRandomMap = new DialogRandomMap();
+        addChild(pDialogRandomMap);
+        connect(pDialogRandomMap.get(), &DialogRandomMap::sigFinished, this, &EditorMenue::createRandomMap, Qt::QueuedConnection);
+        setFocused(false);
     }
     else if (itemID == "PLACESELECTION")
     {
@@ -231,6 +235,26 @@ void EditorMenue::clickedTopbar(QString itemID)
         connect(pDialog.get(), &PlayerSelectionDialog::sigPlayersChanged, this, &EditorMenue::playersChanged, Qt::QueuedConnection);
         setFocused(false);
     }
+    pApp->continueThread();
+}
+
+void EditorMenue::createRandomMap(QString mapName, QString author, QString description,
+                     qint32 width,qint32 heigth, qint32 playerCount,
+                     bool roadSupport, qint32 seed,
+                     float forestchance, float mountainChance, float seachance, float buildingchance)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    GameMap* pGameMap = GameMap::getInstance();
+    pGameMap->randomMap(width, heigth, playerCount, roadSupport, seed,
+                        forestchance / 100.0f, mountainChance / 100.0f,
+                        seachance / 100.0f, buildingchance / 100.0f);
+    pGameMap->setMapName(mapName);
+    pGameMap->setMapAuthor(author);
+    pGameMap->setMapDescription(description);
+    pGameMap->updateSprites();
+    m_EditorSelection->createPlayerSelection();
+    setFocused(true);
     pApp->continueThread();
 }
 

@@ -23,6 +23,14 @@ public:
         Icons = 20
     };
 
+    enum ModdingFlags
+    {
+        None = 0x0,
+        FlagAmmo1 = 0x1,
+        FlagAmmo2 = 0x2,
+        FlagFuel = 0x4,
+    };
+
     /**
      * @brief Unit only for deserialization
      */
@@ -57,7 +65,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 8;
+        return 9;
     }
 
 
@@ -76,8 +84,20 @@ public:
      * E.g Transport sign and health point sign
      */
     void updateIcons(Player* pPlayer);
-
-
+    /**
+     * @brief setModdingFlags
+     * @param value
+     */
+    void setModdingFlags(ModdingFlags value);
+    /**
+     * @brief getModdingFlags
+     * @return
+     */
+    Unit::ModdingFlags getModdingFlags() const;
+    /**
+     * @brief applyMod
+     */
+    void applyMod();
 signals:
 
 public slots:
@@ -569,10 +589,9 @@ private:
     qint32 maxRange{-1};
     qint32 vision{1};
     qint32 m_UniqueID{0};
-
     GameEnums::GameAi m_AiMode{GameEnums::GameAi::GameAi_Normal};
-
     ScriptVariables m_Variables;
+    ModdingFlags m_ModdingFlags{ModdingFlags::None};
 };
 
 #endif // UNIT_H

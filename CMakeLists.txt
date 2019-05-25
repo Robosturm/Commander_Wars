@@ -85,6 +85,7 @@ set(${PROJECT_NAME}_SRCS
         objects/dialogvictoryconditions.cpp
         objects/dialogconnecting.cpp
         objects/dialogmessagebox.cpp
+        objects/dialograndommap.cpp
 
         #menues
         menue/mainwindow.cpp

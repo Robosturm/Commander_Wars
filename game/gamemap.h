@@ -119,7 +119,7 @@ public:
      * @param terrainRadius
      * @param randInt
      */
-    void placeGroup(qint32 startX, qint32 startY, qint32 count, QString terrainID, qint32 terrainRadius, QRandomGenerator& randInt);
+    qint32 placeGroup(qint32 startX, qint32 startY, qint32 count, QString terrainID, qint32 terrainRadius, QRandomGenerator& randInt);
     /**
      * @brief addTerrainPoint
      * @param points
@@ -147,6 +147,13 @@ public:
      * @param noHarbour
      */
     void createBuildings(qint32 buildings, bool roadSupport, QRandomGenerator& randInt, bool noHarbour = false);
+    /**
+     * @brief isBuildingPlace
+     * @param x
+     * @param y
+     * @return
+     */
+    bool isBuildingPlace(qint32 x, qint32 y);
     /**
      * @brief getInstance
      * @return

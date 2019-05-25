@@ -141,6 +141,25 @@ public slots:
      * @brief playersChanged
      */
     void playersChanged();
+    /**
+     * @brief createRandomMap
+     * @param mapName
+     * @param author
+     * @param description
+     * @param width
+     * @param heigth
+     * @param playerCount
+     * @param roadSupport
+     * @param seed
+     * @param forestchance
+     * @param mountainChance
+     * @param seachance
+     * @param buildingchance
+     */
+    void createRandomMap(QString mapName, QString author, QString description,
+                         qint32 width,qint32 heigth, qint32 playerCount,
+                         bool roadSupport, qint32 seed,
+                         float forestchance, float mountainChance, float seachance, float buildingchance);
 private:
     spEditorSelection m_EditorSelection{nullptr};
     EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};

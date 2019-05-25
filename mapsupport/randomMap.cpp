@@ -24,6 +24,7 @@ qint32 GameMap::randomMap(qint32 width,qint32 heigth, qint32 playerCount,
                           bool roadSupport, qint32 seed,
                           float forestchance, float mountainChance, float seachance, float buildingchance)
 {
+    clearMap();
 
     qint32 startSeed = seed;
     if (seed < 0)
@@ -38,41 +39,43 @@ qint32 GameMap::randomMap(qint32 width,qint32 heigth, qint32 playerCount,
     // create Forest
     if ((width * heigth * forestchance < 1.0f) && (forestchance > 0.0f))
     {
-        placeGroup(randInt.bounded(0, width), randInt.bounded(0, heigth), 7, "FOREST", 2, randInt);
+        placeGroup(randInt.bounded(0, width), randInt.bounded(0, heigth), 1, "FOREST", 2, randInt);
     }
     else
     {
-        for (qint32 i = 1; i <= static_cast<qint32>(width * heigth * forestchance); i++)
+        qint32 chance = static_cast<qint32>(width * heigth * forestchance) / 2;
+        while (chance > 0)
         {
-            placeGroup(randInt.bounded(0, width), randInt.bounded(0, heigth), 7, "FOREST", 2, randInt);
+            qint32 groupSize = randInt.bounded(1, 10);
+            chance -= placeGroup(randInt.bounded(0, width), randInt.bounded(0, heigth), groupSize, "FOREST", 2, randInt);
         }
     }
     // create mountain
-    if ((width * heigth * mountainChance < 1.0f) && (forestchance > 0.0f))
+    if ((width * heigth * mountainChance < 1.0f) && (mountainChance > 0.0f))
     {
-        placeGroup(randInt.bounded(0, width), randInt.bounded(0, heigth), 10, "MOUNTAIN", 2, randInt);
+        placeGroup(randInt.bounded(0, width), randInt.bounded(0, heigth), 1, "MOUNTAIN", 2, randInt);
     }
     else
     {
-        for (qint32 i = 1; i <= static_cast<qint32>(width * heigth * mountainChance); i++)
+        qint32 chance = static_cast<qint32>(width * heigth * mountainChance);
+        while (chance > 0)
         {
-            placeGroup(randInt.bounded(0, width), randInt.bounded(0, heigth), 10, "MOUNTAIN", 2, randInt);
+            qint32 groupSize = randInt.bounded(1, 10);
+            chance -= placeGroup(randInt.bounded(0, width), randInt.bounded(0, heigth), groupSize, "MOUNTAIN", 2, randInt);
         }
     }
     // create sea
-    if ((width * heigth * seachance * 3.0f / 4.0f < 1.0f) && (forestchance > 0.0f))
+    if ((width * heigth * seachance < 1.0f) && (seachance > 0.0f))
     {
-        placeGroup(randInt.bounded(0, width), randInt.bounded(0, heigth), 30, "SEA", 1, randInt);
+        placeGroup(randInt.bounded(0, width), randInt.bounded(0, heigth), 1, "SEA", 1, randInt);
     }
     else
     {
-        for (qint32 i = 1; i <= static_cast<qint32>(width * heigth * seachance * 3.0f / 4.0f); i++)
+        qint32 chance = static_cast<qint32>(width * heigth * seachance) / 2;
+        while (chance > 0)
         {
-            placeGroup(randInt.bounded(0, width), randInt.bounded(0, heigth), 30, "SEA", 1, randInt);
-        }
-        for (qint32 i = 1; i <= static_cast<qint32>(width * heigth * seachance * 1.0f / 4.0f); i++)
-        {
-            placeGroup(randInt.bounded(0, width), randInt.bounded(0, heigth), 7, "SEA", 1, randInt);
+            qint32 groupSize = randInt.bounded(1, 10);
+            chance -= placeGroup(randInt.bounded(0, width), randInt.bounded(0, heigth), groupSize, "SEA", 1, randInt);
         }
     }
 
@@ -95,15 +98,19 @@ qint32 GameMap::randomMap(qint32 width,qint32 heigth, qint32 playerCount,
     return startSeed;
 }
 
-void GameMap::placeGroup(qint32 startX, qint32 startY, qint32 count, QString terrainID, qint32 terrainRadius, QRandomGenerator& randInt)
+qint32 GameMap::placeGroup(qint32 startX, qint32 startY, qint32 count, QString terrainID, qint32 terrainRadius, QRandomGenerator& randInt)
 {
     QVector<QPoint> points;
     points.push_back(QPoint(startX, startY));
+    qint32 placed = 0;
     while (count > 0)
     {
         // we need to place terrains
         qint32 pInd = randInt.bounded(0, points.size());
-
+        if (terrainID != getTerrain(points[pInd].x(), points[pInd].y())->getTerrainID())
+        {
+            placed++;
+        }
         replaceTerrain(terrainID, points[pInd].x(), points[pInd].y(), false, false);
 
         addTerrainPoint(points, points[pInd].x() + 1, points[pInd].y(), terrainID, terrainRadius - 1);
@@ -118,6 +125,7 @@ void GameMap::placeGroup(qint32 startX, qint32 startY, qint32 count, QString ter
             break; // no free fields avaible
         }
     }
+    return placed;
 }
 
 void GameMap::addTerrainPoint(QVector<QPoint>& points, qint32 x, qint32 y, QString terrainID, qint32 terrainRadius)
@@ -185,7 +193,7 @@ void GameMap::placeReaf(QRandomGenerator& randInt)
     }
     for (qint32 i = 0; i < reafOptions.size(); i++)
     {
-        if (randInt.bounded(0, 40) < 25)
+        if (randInt.bounded(0, 40) < 10)
         {
             replaceTerrain("REAF", reafOptions[i].x(), reafOptions[i].y());
         }
@@ -221,18 +229,19 @@ void GameMap::placeBeach(QRandomGenerator& randInt)
 
 void GameMap::createBuildings(qint32 buildings, bool roadSupport, QRandomGenerator& randInt, bool noHarbour)
 {
-    qint32  maxTries = 1000;
+    qint32 maximumBuildingTry = 1000;
+    qint32 maxTries = maximumBuildingTry;
     QVector<QPoint> playerPositions;
     qint32 mapWidth = getMapWidth();
     qint32 mapHeigth = getMapHeight();
-    qint32 minimalDistance = (mapWidth + mapHeigth) / (players.size());
+    qint32 minimalDistance = static_cast<qint32>((mapWidth * 2 + mapHeigth * 2) / (players.size()) * 0.7);
     for (qint32 i = 0; i < players.size(); i++)
     {
         QPoint position;
         for (qint32 i2 = 0; i2 < maxTries; i2++)
         {
             position = QPoint(randInt.bounded(0, mapWidth), randInt.bounded(0, mapHeigth));
-            if (!playerPositions.contains(position))
+            if (!playerPositions.contains(position) && isBuildingPlace(position.x(), position.y()))
             {
                 bool positionOk = true;
                 for (qint32 i3 = 0; i3 < i; i3++)
@@ -262,12 +271,12 @@ void GameMap::createBuildings(qint32 buildings, bool roadSupport, QRandomGenerat
     {
         qint32 x = -1;
         qint32 y = -1;
-        maxTries = 100;
+        maxTries = maximumBuildingTry;
         for (qint32 i2 = 0; i2 < maxTries; i2++)
         {
             x = randInt.bounded(-2, 3) + playerPositions.at(i).x();
             y = randInt.bounded(-2, 3) + playerPositions.at(i).y();
-            if (onMap(x ,y) && (getTerrain(x, y)->getBuilding() == nullptr))
+            if (isBuildingPlace(x, y))
             {
                 break;
             }
@@ -290,28 +299,25 @@ void GameMap::createBuildings(qint32 buildings, bool roadSupport, QRandomGenerat
     // number of factorys at start
     qint32 factoryCount = static_cast<qint32>(static_cast<float>(buildings) * 0.2f);
 
-    //        For I = 0 To 2
-    //            If BasenZahl - Basen.Length >= 0 Then
-    //                For I2 = 0 To Basen.Length - 1
-    //                    PlaceBuildingRandomUmOrt(Basen(I2), "BASIS", 3, I2 + 1, R)
-    //                Next
-    //                BasenZahl -= Basen.Length
-    //            Else
-    //                Exit For
-    //            End If
-    //        Next
-    // place factories
+    qint32 playerBuldings = static_cast<qint32>(factoryCount * 0.75f / players.size());
+
     for (qint32 i = 0; i < factoryCount; i++)
     {
         qint32 x = -1;
         qint32 y = -1;
-        maxTries = 100;
+        maxTries = maximumBuildingTry;
         for (qint32 i2 = 0; i2 < maxTries; i2++)
         {
             x = randInt.bounded(0, mapWidth);
             y = randInt.bounded(0, mapHeigth);
-            if (onMap(x ,y) &&
-                (getTerrain(x, y)->getBuilding() == nullptr))
+            if (i2 < playerBuldings)
+            {
+                qint32 player = i % players.size();
+                x = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(player).x();
+                y = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(player).y();
+            }
+
+            if (isBuildingPlace(x, y))
             {
                 break;
             }
@@ -330,30 +336,23 @@ void GameMap::createBuildings(qint32 buildings, bool roadSupport, QRandomGenerat
     }
 
     qint32 airportCount = static_cast<qint32>(static_cast<float>(buildings) * 0.1f);
-    //        For I = 0 To 1
-    //            If FlughafenZahl - Basen.Length >= 0 Then
-    //                For I2 = 0 To Basen.Length - 1
-    //                    PlaceBuildingRandomUmOrt(Basen(I2), "FLUGHAFEN", 3, I2 + 1, R)
-    //                Next
-    //                FlughafenZahl -= Basen.Length
-    //            Else
-    //                Exit For
-    //            End If
-    //        Next
-
-
-
+    playerBuldings = static_cast<qint32>(airportCount * 0.75f / players.size());
     for (qint32 i = 0; i < airportCount; i++)
     {
         qint32 x = -1;
         qint32 y = -1;
-        maxTries = 1000;
+        maxTries = maximumBuildingTry;
         for (qint32 i2 = 0; i2 < maxTries; i2++)
         {
             x = randInt.bounded(0, mapWidth);
             y = randInt.bounded(0, mapHeigth);
-            if (onMap(x ,y) &&
-                (getTerrain(x, y)->getBuilding() == nullptr))
+            if (i2 < playerBuldings)
+            {
+                qint32 player = i % players.size();
+                x = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(player).x();
+                y = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(player).y();
+            }
+            if (isBuildingPlace(x, y))
             {
                 break;
             }
@@ -372,21 +371,23 @@ void GameMap::createBuildings(qint32 buildings, bool roadSupport, QRandomGenerat
     }
 
     qint32 townCount = static_cast<qint32>(static_cast<float>(buildings) * 0.6f);
-
+    playerBuldings = static_cast<qint32>(townCount * 0.75f / players.size());
     for (qint32 i = 0; i < townCount; i++)
     {
         qint32 x = -1;
         qint32 y = -1;
-        maxTries = 1000;
+        maxTries = maximumBuildingTry;
         for (qint32 i2 = 0; i2 < maxTries; i2++)
         {
             x = randInt.bounded(0, mapWidth);
             y = randInt.bounded(0, mapHeigth);
-            if (onMap(x ,y) &&
-                (getTerrain(x, y)->getBuilding() == nullptr) &&
-                ((getTerrain(x, y)->getTerrainID() == "PLAINS") ||
-                 (getTerrain(x, y)->getTerrainID() == "FOREST") ||
-                 (getTerrain(x, y)->getTerrainID() == "MOUNTAIN")))
+            if (i2 < playerBuldings)
+            {
+                qint32 player = i % players.size();
+                x = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(player).x();
+                y = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(player).y();
+            }
+            if (isBuildingPlace(x, y))
             {
                 break;
             }
@@ -403,81 +404,17 @@ void GameMap::createBuildings(qint32 buildings, bool roadSupport, QRandomGenerat
             getTerrain(x, y)->setBuilding(pBuilding);
         }
     }
+}
 
-    //        'So wir haben alle Gebaeude plaziert
-    //        'So jetzt erstellen wir noch einen Strassenkreis
-    //        If Strassenkreis = True Then
-    //            For I = 0 To Basen.Length - 1
-    //                Dim Startpunkt As Point = Basen(I)
-    //                Dim EndPunkt As New Point
-    //                If I = Basen.Length - 1 Then
-    //                    EndPunkt = Basen(0)
-    //                Else
-    //                    EndPunkt = Basen(I + 1)
-    //                End If
-    //                CreateStrasse(Startpunkt, EndPunkt, R)
-    //                AktuallisiereStrassen()
-    //            Next
-    //        End If
-
-    //        'So viele Haefen werden plaziert
-    //        Dim HafenZahl As Integer = AnzahlderGebaeude * 0.1#
-    //        'Und dort koennen sie plaziert werden
-    //        Dim HafenMoeglichkeiten As New Stack(Of Point)
-    //        For X = 0 To Objektverwalter.Spielfeld.Breite - 1
-    //            For Y = 0 To Objektverwalter.Spielfeld.Hoehe - 1
-    //                If IsEinAngrenzendesFeld(X, Y, "SEE", ObjektSpielfeld.Bodenschlacht) = True Then
-    //                    If OhneGebaeude(X, Y, ObjektSpielfeld.Bodenschlacht) = True Then
-    //                        If GetLandschaftsID(X, Y, ObjektSpielfeld.Bodenschlacht) <> "SEE" Then
-    //                            HafenMoeglichkeiten.Push(New Point(X, Y))
-    //                        End If
-    //                    End If
-    //                End If
-    //            Next
-    //        Next
-    //        If Not KeineHaefen Then
-    //            'Jeder Spieler erhaelt maximal einen Hafen.
-    //            If HafenZahl - Basen.Length >= 0 Then
-    //                For I2 = 0 To Basen.Length - 1
-    //                    Dim Ort As Point
-    //                    Dim Stelle As Integer = -1
-    //                    Dim Durchlaeufe As Integer = 0
-    //                    If HafenMoeglichkeiten.Count <= 0 Then
-    //                        Do
-    //                            Ort = New Point(R.Next(Objektverwalter.Spielfeld.Breite - 1), R.Next(Objektverwalter.Spielfeld.Hoehe - 1))
-    //                            Durchlaeufe += 1
-    //                        Loop While OhneGebaeude(Ort.X, Ort.Y, ObjektSpielfeld.Bodenschlacht) = False And GetDistance(Basen(I2), Ort) > 10 Or Durchlaeufe < MaximaleVersuche
-    //                    Else
-    //                        Do
-    //                            Stelle = R.Next(HafenMoeglichkeiten.Count - 1)
-    //                            Ort = HafenMoeglichkeiten(Stelle)
-    //                            Durchlaeufe += 1
-    //                        Loop While GetDistance(Basen(I2), Ort) > 10 Or Durchlaeufe < MaximaleVersuche
-
-    //                    End If
-    //                    PlaceGebaeude(Ort.X, Ort.Y, "WERFT", I2 + 1)
-    //                    If HafenMoeglichkeiten.Count > 0 Then
-    //                        HafenMoeglichkeiten = PopFeld(HafenMoeglichkeiten, Stelle)
-    //                    End If
-    //                Next
-    //                HafenZahl -= Basen.Length
-    //            End If
-
-    //            For I = 1 To HafenZahl
-    //                Dim Ort As Point
-    //                Dim Stelle As Integer = -1
-    //                If HafenMoeglichkeiten.Count <= 0 Then
-    //                    Do
-    //                        Ort = New Point(R.Next(Objektverwalter.Spielfeld.Breite - 1), R.Next(Objektverwalter.Spielfeld.Hoehe - 1))
-    //                    Loop While OhneGebaeude(Ort.X, Ort.Y, ObjektSpielfeld.Bodenschlacht) = False
-    //                Else
-    //                    Stelle = R.Next(HafenMoeglichkeiten.Count - 1)
-    //                    Ort = HafenMoeglichkeiten(Stelle)
-    //                End If
-    //                PlaceGebaeude(Ort.X, Ort.Y, "WERFT", 0)
-    //                If HafenMoeglichkeiten.Count > 0 Then
-    //                    HafenMoeglichkeiten = PopFeld(HafenMoeglichkeiten, Stelle)
-    //                End If
-    //            Next
-    //        End If
+bool GameMap::isBuildingPlace(qint32 x, qint32 y)
+{
+    if (onMap(x ,y) &&
+        (getTerrain(x, y)->getBuilding() == nullptr) &&
+        ((getTerrain(x, y)->getTerrainID() == "PLAINS") ||
+         (getTerrain(x, y)->getTerrainID() == "FOREST") ||
+         (getTerrain(x, y)->getTerrainID() == "MOUNTAIN")))
+    {
+        return true;
+    }
+    return false;
 }

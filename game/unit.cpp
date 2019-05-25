@@ -57,7 +57,7 @@ Unit::~Unit()
     if (m_pOwner != nullptr)
     {
         CO* pCO = m_pOwner->getCO(0);
-        if (pCO != nullptr)
+        if (pCO != nullptr && pCO->getCOUnit() != nullptr)
         {
             if (pCO->getCOUnit() == this)
             {
@@ -65,13 +65,39 @@ Unit::~Unit()
             }
         }
         pCO = m_pOwner->getCO(1);
-        if (pCO != nullptr)
+        if (pCO != nullptr && pCO->getCOUnit() != nullptr)
         {
             if (pCO->getCOUnit() == this)
             {
                 pCO->setCOUnit(nullptr);
             }
         }
+    }
+}
+
+void Unit::setModdingFlags(ModdingFlags value)
+{
+    m_ModdingFlags = value;
+}
+
+Unit::ModdingFlags Unit::getModdingFlags() const
+{
+    return m_ModdingFlags;
+}
+
+void Unit::applyMod()
+{
+    if ((m_ModdingFlags & ModdingFlags::FlagAmmo1) == ModdingFlags::None)
+    {
+        setAmmo1(getMaxAmmo1());
+    }
+    if ((m_ModdingFlags & ModdingFlags::FlagAmmo2) == ModdingFlags::None)
+    {
+        setAmmo2(getMaxAmmo2());
+    }
+    if ((m_ModdingFlags & ModdingFlags::FlagFuel) == ModdingFlags::None)
+    {
+        setFuel(getMaxFuel());
     }
 }
 
@@ -1903,6 +1929,7 @@ void Unit::serializeObject(QDataStream& pStream)
     pStream << m_IgnoreUnitCollision;
     pStream << static_cast<qint32>(m_AiMode);
     pStream << m_UniqueID;
+    pStream << static_cast<quint8>(m_ModdingFlags);
 }
 
 void Unit::deserializeObject(QDataStream& pStream)
@@ -1981,6 +2008,12 @@ void Unit::deserializeObject(QDataStream& pStream)
     if (m_UniqueID == 0)
     {
         m_UniqueID = GameMap::getInstance()->getUniqueIdCounter();
+    }
+    if (version > 8)
+    {
+        quint8 value = 0;
+        pStream >> value;
+        m_ModdingFlags = static_cast<ModdingFlags>(value);
     }
 }
 

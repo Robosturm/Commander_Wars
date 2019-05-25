@@ -20,6 +20,7 @@ public:
     {
         Int,
         Float,
+        Real,
     };
 
     explicit SpinBox(qint32 width, qint32 min = 0, qint32 max = 100, Mode mode = Mode::Int);
@@ -27,22 +28,22 @@ public:
      * @brief getCurrentValue
      * @return the current value of the spin box
      */
-    float getCurrentValue();
+    qreal getCurrentValue();
     virtual void update(const oxygine::UpdateState& us) override;
     /**
      * @brief setCurrentValue changes the value of this spin box
      * @param text
      */
-    void setCurrentValue(float value);
-    float getSpinSpeed() const;
-    void setSpinSpeed(float SpinSpeed);
+    void setCurrentValue(qreal value);
+    qreal getSpinSpeed() const;
+    void setSpinSpeed(qreal SpinSpeed);
 
-    float getInfinityValue() const;
-    void setInfinityValue(float InfinityValue);
+    qreal getInfinityValue() const;
+    void setInfinityValue(qreal InfinityValue);
 
     virtual void setEnabled(bool value) override;
 signals:
-    void sigValueChanged(float value);
+    void sigValueChanged(qreal value);
 public slots:
     void TextInput(SDL_Event event);
     void KeyInput(SDL_Event event);
@@ -51,12 +52,12 @@ protected:
      * @brief checkInput checks if the input is correct and updates it if needed and returns the new value
      * @return current value
      */
-    float checkInput();
+    qreal checkInput();
     /**
      * @brief setValue
      * @param value
      */
-    void setValue(float value);
+    void setValue(qreal value);
 private:
     bool m_focused{false};
     oxygine::spBox9Sprite m_pSpinBox;
@@ -67,11 +68,11 @@ private:
     QString m_Text;
     QTime toggle;
     qint32 curmsgpos{0};
-    float m_InfinityValue{-1.0f};
-    float m_MinValue{0.0f};
-    float m_MaxValue{100.0f};
-    float m_spinDirection{0.0f};
-    float m_SpinSpeed{1.0f};
+    qreal m_InfinityValue{-1.0};
+    qreal m_MinValue{0.0};
+    qreal m_MaxValue{100.0};
+    qreal m_spinDirection{0.0};
+    qreal m_SpinSpeed{1.0};
     Mode m_Mode{Mode::Int};
 };
 

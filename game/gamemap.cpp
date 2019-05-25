@@ -781,6 +781,17 @@ void GameMap::showCOInfo()
 void GameMap::startGame()
 {
     m_Recorder = new GameRecorder();
+    for (qint32 y = 0; y < fields.size(); y++)
+    {
+        for (qint32 x = 0; x < fields.at(y)->size(); x++)
+        {
+            Unit* pUnit = fields.at(y)->at(x)->getUnit();
+            if (pUnit != nullptr)
+            {
+                pUnit->applyMod();
+            }
+        }
+    }
 }
 
 void GameMap::clearMap()
