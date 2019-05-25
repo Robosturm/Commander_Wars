@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include <QDataStream>
+
 #include "oxygine-framework.h"
 
 #include "network/NetworkInterface.h"
@@ -23,9 +25,8 @@ public slots:
 private:
    std::shared_ptr<QTcpSocket> m_pSocket;
    NetworkInterface* pIF;
-   qint32 dataSize;
    quint64 m_SocketID;
-   NetworkInterface::NetworkSerives m_serive{NetworkInterface::NetworkSerives::None};
+   QDataStream m_pStream;
 };
 
 #endif // RXTASK_H

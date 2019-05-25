@@ -28,8 +28,6 @@ void TxTask::send(quint64 socketID, QByteArray data, NetworkInterface::NetworkSe
         QDataStream out(&block, QIODevice::WriteOnly);
         out.setVersion(QDataStream::Qt_5_12);
         // write default-buffersize
-        out << static_cast<qint32>(data.size());
-
         out << static_cast<qint32>(service);
         out << forwardData;
         //write Object
