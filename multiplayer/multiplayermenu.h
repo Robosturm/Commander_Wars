@@ -59,7 +59,7 @@ protected:
     bool getGameReady();
     void sendServerReady(bool value);
     void initClientGame(quint64 socketID, QDataStream &stream);
-    void loadMultiplayerMap(QString file);
+    void loadMultiplayerMap();
 private:
     bool m_Host{false};
     spNetworkInterface m_NetworkInterface;

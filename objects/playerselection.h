@@ -53,6 +53,16 @@ public:
      * @param value
      */
     void sendPlayerReady(quint64 socketID, QVector<qint32> player, bool value);
+    /**
+     * @brief getSaveGame
+     * @return
+     */
+    bool getSaveGame() const;
+    /**
+     * @brief setSaveGame
+     * @param value
+     */
+    void setSaveGame(bool value);
 signals:
     void buttonAllCOsRandom();
     void sigShowSelectCO(qint32 player, quint8 co);
@@ -156,6 +166,7 @@ private:
 
     spNetworkInterface m_pNetworkInterface{nullptr};
 
+    bool saveGame{false};
     bool m_PlayerReady{false};
 };
 

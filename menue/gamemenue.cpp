@@ -20,6 +20,8 @@
 #include "objects/dialogvictoryconditions.h"
 #include "objects/dialogconnecting.h"
 
+#include "multiplayer/networkcommands.h"
+
 #include <QFile>
 
 GameMenue* GameMenue::m_pInstance = nullptr;
@@ -45,7 +47,7 @@ GameMenue::GameMenue(spNetworkInterface pNetworkInterface)
         {
             QByteArray sendData;
             QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-            sendStream << QString("CLIENTINITGAME");
+            sendStream << NetworkCommands::CLIENTINITGAME;
             m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
         }
         else
@@ -80,7 +82,7 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
         QDataStream stream(&data, QIODevice::ReadOnly);
         QString messageType;
         stream >> messageType;
-        if (messageType == "CLIENTINITGAME")
+        if (messageType == NetworkCommands::CLIENTINITGAME)
         {
             if (m_pNetworkInterface->getIsServer())
             {
@@ -100,14 +102,14 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                     gameStarted = true;
                     QByteArray sendData;
                     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
-                    sendStream << QString("STARTGAME");
+                    sendStream << NetworkCommands::STARTGAME;
                     emit m_pNetworkInterface->sig_sendData(0, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
                     emit sigGameStarted();
                     emit sigActionPerformed();
                 }
             }
         }
-        else if (messageType == "STARTGAME")
+        else if (messageType == NetworkCommands::STARTGAME)
         {
             if (!m_pNetworkInterface->getIsServer())
             {

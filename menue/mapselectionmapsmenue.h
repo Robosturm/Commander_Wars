@@ -54,6 +54,7 @@ public slots:
     // slots for changing the map
     void mapSelectionItemClicked(QString item);
     void mapSelectionItemChanged(QString item);
+    void loadMap(QFileInfo info);
 
     // slots for changing the rules
     void startWeatherChanged(qint32 value);

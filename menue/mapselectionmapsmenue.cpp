@@ -307,7 +307,6 @@ void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)
     QFileInfo info = m_pMapSelection->getCurrentFolder() + item;
     if (info.isFile())
     {
-        m_currentMapFile = info;
         emit buttonNext();
     }
     pApp->continueThread();
@@ -318,6 +317,12 @@ void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     QFileInfo info = m_pMapSelection->getCurrentFolder() + item;
+    loadMap(info);
+    pApp->continueThread();
+}
+
+void MapSelectionMapsMenue::loadMap(QFileInfo info)
+{
     if (info.isFile())
     {
         if (m_pCurrentMap != nullptr)
@@ -334,6 +339,7 @@ void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
         m_MapAuthor->setText(m_pCurrentMap->getMapAuthor().toStdString().c_str());
         m_MapDescription->setText(m_pCurrentMap->getMapDescription().toStdString().c_str());
         m_MapInfo->setContentHeigth(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 30);
+        m_currentMapFile = info;
 
         BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
         for (qint32 i = 0; i < pBuildingSpriteManager->getBuildingCount(); i++)
@@ -342,7 +348,6 @@ void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
             m_BuildingCountTexts[i]->setText(QString::number(count).toStdString().c_str());
         }
     }
-    pApp->continueThread();
 }
 
 void MapSelectionMapsMenue::startWeatherChanged(qint32 value)
