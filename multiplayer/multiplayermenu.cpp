@@ -21,6 +21,7 @@
 
 #include "objects/dialogconnecting.h"
 #include "objects/filedialog.h"
+#include "objects/dialogmessagebox.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
@@ -282,7 +283,12 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 else
                 {
                     // quit game with wrong version
-                    slotButtonBack();
+                    Mainapp* pApp = Mainapp::getInstance();
+                    pApp->suspendThread();
+                    spDialogMessageBox pDialogMessageBox = new DialogMessageBox(tr("Host has a different game version or other mods loaded leaving the game again."));
+                    connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
+                    addChild(pDialogMessageBox);
+                    pApp->continueThread();
                 }
             }
         }
@@ -411,7 +417,12 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                         }
                         else
                         {
-                            slotButtonBack();
+                            Mainapp* pApp = Mainapp::getInstance();
+                            pApp->suspendThread();
+                            spDialogMessageBox pDialogMessageBox = new DialogMessageBox(tr("Unable to download map or game script from host a different version of the map or game script with the same name exist! Leaving the game again."));
+                            connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
+                            addChild(pDialogMessageBox);
+                            pApp->continueThread();
                             return;
                         }
                     }
@@ -424,7 +435,12 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 }
                 else
                 {
-                    slotButtonBack();
+                    Mainapp* pApp = Mainapp::getInstance();
+                    pApp->suspendThread();
+                    spDialogMessageBox pDialogMessageBox = new DialogMessageBox(tr("Unable to download map or game script from host a different version of the map or game script with the same name exist! Leaving the game again."));
+                    connect(pDialogMessageBox.get(), &DialogMessageBox::sigOk, this, &Multiplayermenu::slotButtonBack, Qt::QueuedConnection);
+                    addChild(pDialogMessageBox);
+                    pApp->continueThread();
                     return;
                 }
             }
@@ -469,7 +485,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     pMap->updateSprites();
     // start game
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new GameMenue(m_NetworkInterface));
+    oxygine::getStage()->addChild(new GameMenue(m_NetworkInterface, saveGame));
     oxygine::Actor::detach();
     pApp->continueThread();
 }
@@ -722,7 +738,7 @@ void Multiplayermenu::countdown()
             pMap->updateSprites();
             // start game
             Console::print("Leaving Map Selection Menue", Console::eDEBUG);
-            oxygine::getStage()->addChild(new GameMenue(m_NetworkInterface));
+            oxygine::getStage()->addChild(new GameMenue(m_NetworkInterface, saveGame));
             emit m_NetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
             oxygine::Actor::detach();
             pApp->continueThread();

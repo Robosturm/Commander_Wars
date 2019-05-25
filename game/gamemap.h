@@ -532,9 +532,9 @@ private:
     static const QString m_GameAnimationFactory;
     float m_zoom{1.0f};
     bool loaded{false};
-    void loadMapData();
-
     qint32 m_UniqueIdCounter{0};
+
+    void loadMapData();
 };
 
 #endif // GAMEMAP_H

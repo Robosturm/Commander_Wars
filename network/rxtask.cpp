@@ -20,6 +20,8 @@ RxTask::~RxTask()
 
 void RxTask::recieveData()
 {
+    while (m_pSocket->bytesAvailable() > 0)
+    {
         QDataStream pStream(m_pSocket.get());
         pStream.setVersion(QDataStream::Qt_5_12);
 
@@ -79,4 +81,5 @@ void RxTask::recieveData()
             emit pIF->recieveData(m_SocketID, data, m_serive);
         }
         m_serive = NetworkInterface::NetworkSerives::None;
+    }
 }

@@ -501,6 +501,14 @@
     </message>
 </context>
 <context>
+    <name>DialogMessageBox</name>
+    <message>
+        <location filename="../objects/dialogmessagebox.cpp" line="40"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DialogModifyUnit</name>
     <message>
         <location filename="../objects/dialogmodifyunit.cpp" line="40"/>
@@ -803,17 +811,22 @@
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="58"/>
+        <location filename="../menue/gamemenue.cpp" line="60"/>
         <source>Waiting for Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="183"/>
+        <location filename="../menue/gamemenue.cpp" line="151"/>
+        <source>A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/gamemenue.cpp" line="197"/>
         <source>Save Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="191"/>
+        <location filename="../menue/gamemenue.cpp" line="205"/>
         <source>Exit Game</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1179,28 +1192,39 @@
 <context>
     <name>Multiplayermenu</name>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="58"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="641"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="59"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="657"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="64"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="65"/>
         <source>Connecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="80"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="81"/>
         <source>Host Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="39"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="40"/>
         <source>Load Savegame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="637"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="288"/>
+        <source>Host has a different game version or other mods loaded leaving the game again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="422"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="440"/>
+        <source>Unable to download map or game script from host a different version of the map or game script with the same name exist! Leaving the game again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="653"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

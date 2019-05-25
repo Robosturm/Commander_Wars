@@ -17,8 +17,8 @@ class GameMenue : public InGameMenue
 {
     Q_OBJECT
 public:
-    explicit GameMenue(spNetworkInterface pNetworkInterface = nullptr);
-    explicit GameMenue(QString map);
+    explicit GameMenue(spNetworkInterface pNetworkInterface = nullptr, bool saveGame = false);
+    explicit GameMenue(QString map, bool saveGame);
     virtual ~GameMenue();
 
     static GameMenue* getInstance()
@@ -128,6 +128,7 @@ private:
     bool gameStarted{false};
     QVector<quint64> m_PlayerSockets;
     QVector<quint64> m_ReadySockets;
+    bool m_SaveGame{false};
 };
 
 #endif // GAMEMENUE_H

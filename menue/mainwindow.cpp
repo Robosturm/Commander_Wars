@@ -248,16 +248,12 @@ void Mainwindow::loadGame(QString filename)
         QFile file(filename);
         if (file.exists())
         {
-            oxygine::getStage()->addChild(new GameMenue(filename));
+            oxygine::getStage()->addChild(new GameMenue(filename, true));
 
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioThread()->clearPlayList();
             GameMap* pMap = GameMap::getInstance();
-            pMap->getCurrentPlayer()->loadCOMusic();
-            pMap->updateUnitIcons();
-            pMap->getGameRules()->createFogVision();
-            pApp->getAudioThread()->playRandom();
-            GameMenue::getInstance()->updatePlayerinfo();
+            pMap->startGame();
             leaveMenue();
         }
     }

@@ -19,6 +19,7 @@
 
 #include "objects/dialogvictoryconditions.h"
 #include "objects/dialogconnecting.h"
+#include "objects/dialogmessagebox.h"
 
 #include "multiplayer/networkcommands.h"
 
@@ -26,8 +27,9 @@
 
 GameMenue* GameMenue::m_pInstance = nullptr;
 
-GameMenue::GameMenue(spNetworkInterface pNetworkInterface)
-    : InGameMenue()
+GameMenue::GameMenue(spNetworkInterface pNetworkInterface, bool saveGame)
+    : InGameMenue(),
+      m_SaveGame(saveGame)
 {
     m_pNetworkInterface = pNetworkInterface;
     if (m_pNetworkInterface.get() != nullptr)
@@ -69,8 +71,9 @@ GameMenue::GameMenue(spNetworkInterface pNetworkInterface)
     startGame();
 }
 
-GameMenue::GameMenue(QString map)
-    : InGameMenue(-1, -1, map)
+GameMenue::GameMenue(QString map, bool saveGame)
+    : InGameMenue(-1, -1, map),
+      m_SaveGame(saveGame)
 {    
     loadGameMenue();
 }
@@ -133,11 +136,22 @@ void GameMenue::playerJoined(quint64 socketID)
     }
 }
 
-void GameMenue::disconnected(quint64 socketID)
+void GameMenue::disconnected(quint64)
 {
-
-    // for the moment disconnections are handled with an immediate leaving of the game :(
-    exitGame();
+    if (m_pNetworkInterface.get() != nullptr)
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
+        if (m_pNetworkInterface.get() != nullptr)
+        {
+            emit m_pNetworkInterface->sig_close();
+            m_pNetworkInterface = nullptr;
+        }
+        gameStarted = false;
+        spDialogMessageBox pDialogMessageBox = new DialogMessageBox(tr("A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map."));
+        addChild(pDialogMessageBox);
+        pApp->continueThread();
+    }
 }
 
 bool GameMenue::isNetworkGame()
@@ -367,8 +381,6 @@ void GameMenue::victory(qint32 team)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
-
-    // todo move to correct position
     if (m_pNetworkInterface.get() != nullptr)
     {
         emit m_pNetworkInterface->sig_close();
@@ -530,12 +542,22 @@ void GameMenue::startGame()
     pApp->suspendThread();
     GameAnimationFactory::clearAllAnimations();
     GameMap* pMap = GameMap::getInstance();
-    pMap->startGame();
-    pMap->setCurrentPlayer(GameMap::getInstance()->getPlayerCount() - 1);
-    GameRules* pRules = pMap->getGameRules();
-    pRules->changeWeather(pRules->getWeather(pRules->getStartWeather())->getWeatherId(), pMap->getPlayerCount() + 1);
-    pMap->nextTurn();
-    updatePlayerinfo();
+    if (!m_SaveGame)
+    {
+        pMap->startGame();
+        pMap->setCurrentPlayer(GameMap::getInstance()->getPlayerCount() - 1);
+        GameRules* pRules = pMap->getGameRules();
+        pRules->changeWeather(pRules->getWeather(pRules->getStartWeather())->getWeatherId(), pMap->getPlayerCount() + 1);
+        pMap->nextTurn();
+        updatePlayerinfo();
+    }
+    else
+    {
+        pMap->getCurrentPlayer()->loadCOMusic();
+        pMap->updateUnitIcons();
+        pMap->getGameRules()->createFogVision();
+        pApp->getAudioThread()->playRandom();
+    }
     pApp->continueThread();
 }
 
@@ -556,37 +578,33 @@ void GameMenue::keyInput(SDL_Event event)
         }
         else if (cur == Settings::getKey_quickload1())
         {
-            Mainapp* pApp = Mainapp::getInstance();
-            pApp->suspendThread();
-            Console::print("Leaving Game Menue", Console::eDEBUG);
-            oxygine::Actor::detach();
-
-            oxygine::getStage()->addChild(new GameMenue("savegames/quicksave1.sav"));
-            pApp->getAudioThread()->clearPlayList();
-            GameMap* pMap = GameMap::getInstance();
-            pMap->getCurrentPlayer()->loadCOMusic();
-            pMap->updateUnitIcons();
-            pMap->getGameRules()->createFogVision();
-            pApp->getAudioThread()->playRandom();
-            GameMenue::getInstance()->updatePlayerinfo();
-            pApp->continueThread();
+            if (QFile::exists("savegames/quicksave1.sav"))
+            {
+                Mainapp* pApp = Mainapp::getInstance();
+                pApp->suspendThread();
+                Console::print("Leaving Game Menue", Console::eDEBUG);
+                oxygine::Actor::detach();
+                oxygine::getStage()->addChild(new GameMenue("savegames/quicksave1.sav", true));
+                pApp->getAudioThread()->clearPlayList();
+                GameMap* pMap = GameMap::getInstance();
+                pMap->startGame();
+                pApp->continueThread();
+            }
         }
         else if (cur == Settings::getKey_quickload2())
         {
-
-            Mainapp* pApp = Mainapp::getInstance();
-            pApp->suspendThread();
-            Console::print("Leaving Game Menue", Console::eDEBUG);
-            oxygine::Actor::detach();
-            oxygine::getStage()->addChild(new GameMenue("savegames/quicksave2.sav"));
-            pApp->getAudioThread()->clearPlayList();
-            GameMap* pMap = GameMap::getInstance();
-            pMap->getCurrentPlayer()->loadCOMusic();
-            pMap->updateUnitIcons();
-            pMap->getGameRules()->createFogVision();
-            pApp->getAudioThread()->playRandom();
-            GameMenue::getInstance()->updatePlayerinfo();
-            pApp->continueThread();
+            if (QFile::exists("savegames/quicksave2.sav"))
+            {
+                Mainapp* pApp = Mainapp::getInstance();
+                pApp->suspendThread();
+                Console::print("Leaving Game Menue", Console::eDEBUG);
+                oxygine::Actor::detach();
+                oxygine::getStage()->addChild(new GameMenue("savegames/quicksave2.sav", true));
+                pApp->getAudioThread()->clearPlayList();
+                GameMap* pMap = GameMap::getInstance();
+                pMap->startGame();
+                pApp->continueThread();
+            }
         }
     }
     else if (m_Focused)
