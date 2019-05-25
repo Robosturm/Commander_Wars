@@ -368,6 +368,11 @@ void Unit::setMaxRange(const qint32 &value)
     maxRange = value;
 }
 
+qint32 Unit::getBaseMaxRange()
+{
+    return maxRange;
+}
+
 qint32 Unit::getMinRange() const
 {
     return minRange;

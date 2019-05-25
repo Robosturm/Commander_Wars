@@ -36,7 +36,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (unit.getMaxRange() > 1)
+            if (unit.getBaseMaxRange() > 1)
             {
                 var variables = unit.getVariables();
                 var variable = variables.createVariable("SMITAN_ATTACK_COUNT");
@@ -81,7 +81,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (unit.getMaxRange() > 1)
+            if (unit.getBaseMaxRange() > 1)
             {
                 var variables = unit.getVariables();
                 var variable = variables.createVariable("SMITAN_ATTACK_COUNT");
@@ -121,7 +121,7 @@ var Constructor = function()
             {
                 case GameEnums.PowerMode_Superpower:
                 case GameEnums.PowerMode_Power:
-                    if (attacker.getMaxRange() > 1)
+                    if (attacker.getBaseMaxRange() > 1)
                     {
                         var variables = attacker.getVariables();
                         var variable = variables.createVariable("SMITAN_ATTACK_COUNT");
@@ -144,7 +144,7 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
-                if (unit.getMaxRange() > 1)
+                if (unit.getBaseMaxRange() > 1)
                 {
                     var variables = unit.getVariables();
                     var variable = variables.createVariable("SMITAN_ATTACK_COUNT");
@@ -170,7 +170,7 @@ var Constructor = function()
                                  defender, defPosX, defPosY, isDefender)
     {
         var inRangeCount = 0;
-        if (attacker.getMaxRange() === 1)
+        if (attacker.getBaseMaxRange() === 1)
         {
             var units = co.getOwner().getUnits();
             for (var i = 0; i < units.size(); i++)
@@ -179,7 +179,7 @@ var Constructor = function()
                 var x = unit.getX();
                 var y = unit.getY();
                 var distance = Math.abs(x - defPosX) + Math.abs(y - defPosY);
-                if (attacker.getMaxRange() > 1)
+                if (attacker.getBaseMaxRange() > 1)
                 {
                     if (unit.getMinRange() <= distance && distance <= unit.getMaxRange())
                     {
@@ -192,7 +192,7 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                if (attacker.getMaxRange() === 1)
+                if (attacker.getBaseMaxRange() === 1)
                 {
                     return inRangeCount * 20;
                 }
@@ -201,7 +201,7 @@ var Constructor = function()
                     return 0;
                 }
             case GameEnums.PowerMode_Power:
-                if (attacker.getMaxRange() === 1)
+                if (attacker.getBaseMaxRange() === 1)
                 {
                     return inRangeCount * 10;
                 }
@@ -210,7 +210,7 @@ var Constructor = function()
                     return 0;
                 }
             default:
-                if (attacker.getMaxRange() === 1)
+                if (attacker.getBaseMaxRange() === 1)
                 {
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
@@ -227,13 +227,13 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                if (unit.getMaxRange() > 1)
+                if (unit.getBaseMaxRange() > 1)
                 {
                     return 2;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (unit.getMaxRange() > 1)
+                if (unit.getBaseMaxRange() > 1)
                 {
                     return 1;
                 }

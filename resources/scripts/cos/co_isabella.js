@@ -153,13 +153,13 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                if (unit.getMaxRange() > 1)
+                if (unit.getBaseMaxRange() > 1)
                 {
                     return 2;
                 }
                 return 0;
             case GameEnums.PowerMode_Power:
-                if (unit.getMaxRange() > 1)
+                if (unit.getBaseMaxRange() > 1)
                 {
                     return 1;
                 }

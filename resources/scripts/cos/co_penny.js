@@ -102,7 +102,7 @@ var Constructor = function()
     this.getFirerangeModifier = function(co, unit, posX, posY)
     {
         if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM" &&
-            unit.getMaxRange() > 1)
+            unit.getBaseMaxRange() > 1)
         {
             if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
             {

@@ -141,7 +141,7 @@ var Constructor = function()
             return 0;
         }
         var bonus = 0;
-        if (defender.getMaxRange() === 1)
+        if (defender.getBaseMaxRange() === 1)
         {
 
             switch (co.getPowerMode())

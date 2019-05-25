@@ -36,7 +36,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (unit.getMaxRange() === 1)
+            if (unit.getBaseMaxRange() === 1)
             {
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
                 if (animations.length < 5)
@@ -78,7 +78,7 @@ var Constructor = function()
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (unit.getMaxRange() === 1)
+            if (unit.getBaseMaxRange() === 1)
             {
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
                 if (animations.length < 5)
@@ -117,19 +117,19 @@ var Constructor = function()
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:
-                if (attacker.getMaxRange() === 1)
+                if (attacker.getBaseMaxRange() === 1)
                 {
                     return 70;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (attacker.getMaxRange() === 1)
+                if (attacker.getBaseMaxRange() === 1)
                 {
                     return 45;
                 }
                 break;
             default:
-                if (attacker.getMaxRange() === 1)
+                if (attacker.getBaseMaxRange() === 1)
                 {
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
@@ -139,7 +139,7 @@ var Constructor = function()
                 }
                 break;
         }
-        if (attacker.getMaxRange() > 1)
+        if (attacker.getBaseMaxRange() > 1)
         {
             return -10;
         }
@@ -147,7 +147,7 @@ var Constructor = function()
     };
     this.getFirerangeModifier = function(co, unit, posX, posY)
     {
-        if (unit.getMaxRange() > 1)
+        if (unit.getBaseMaxRange() > 1)
         {
             return -1;
         }
@@ -160,14 +160,14 @@ var Constructor = function()
     {
         if (co.getPowerMode() === GameEnums.PowerMode_Power)
         {
-            if (unit.getMaxRange() === 1)
+            if (unit.getBaseMaxRange() === 1)
             {
                 return 1;
             }
         }
         else if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
         {
-            if (unit.getMaxRange() === 1)
+            if (unit.getBaseMaxRange() === 1)
             {
                 return 2;
             }

@@ -119,7 +119,7 @@ bool VeryEasyAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
         {
             repairUnits++;
         }
-        if (pUnit->getMaxRange() > 1)
+        if (pUnit->getBaseMaxRange() > 1)
         {
             indirectUnits++;
         }
@@ -386,7 +386,7 @@ bool VeryEasyAI::fireWithIndirectUnits(QmlVectorUnit* pUnits)
     {
         Unit* pUnit = pUnits->at(i);
         // can we use the unit?
-        if (!pUnit->getHasMoved() && pUnit->getMaxRange() > 1 &&
+        if (!pUnit->getHasMoved() && pUnit->getBaseMaxRange() > 1 &&
             (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0))
         {
             if (attack(pUnit))
@@ -761,7 +761,7 @@ bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits
         {
             infantryUnits++;
         }
-        if (pUnit->getMaxRange() > 1)
+        if (pUnit->getBaseMaxRange() > 1)
         {
             indirectUnits++;
         }

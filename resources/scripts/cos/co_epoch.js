@@ -172,7 +172,7 @@ var Constructor = function()
     };
     this.getFirerangeModifier = function(co, unit, posX, posY)
     {
-        if (unit.getMaxRange() > 1)
+        if (unit.getBaseMaxRange() > 1)
         {
             switch (co.getPowerMode())
             {
@@ -188,7 +188,7 @@ var Constructor = function()
     };
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
-        if (unit.getMaxRange() === 1)
+        if (unit.getBaseMaxRange() === 1)
         {
             if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
             {

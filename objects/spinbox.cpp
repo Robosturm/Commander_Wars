@@ -281,7 +281,7 @@ void SpinBox::setValue(qreal value)
             case Mode::Float:
             case Mode::Real:
             {
-                m_Text = QString::number(value, 'f');
+                m_Text = QString::number(value, 'f', 2);
                 break;
             }
         }

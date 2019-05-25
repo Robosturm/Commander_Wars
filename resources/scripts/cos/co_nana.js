@@ -126,7 +126,7 @@ var Constructor = function()
                 case GameEnums.PowerMode_Power:
                     friendlyFire = false;
                     damage = 1;
-                    if (attacker.getMaxRange() === 1 && damage > 0)
+                    if (attacker.getBaseMaxRange() === 1 && damage > 0)
                     {
                         damage = 2;
                         var width = map.getMapWidth();
@@ -182,7 +182,7 @@ var Constructor = function()
             }
 
             // deal indirect unit splash damage
-            if (attacker.getMaxRange() > 1 && damage > 0)
+            if (attacker.getBaseMaxRange() > 1 && damage > 0)
             {
                 var circle = globals.getCircle(1, explosionRange);
                 for (i = 0; i < circle.size(); i++)
