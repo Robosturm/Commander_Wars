@@ -114,7 +114,7 @@ var Constructor = function()
     };
     this.getMovementcostModifier = function(co, unit, posX, posY)
     {
-        if (unit.getOwner === co.getOwner())
+        if (unit.getOwner() === co.getOwner())
         {
             if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
             {

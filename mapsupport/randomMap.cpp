@@ -22,7 +22,8 @@
 
 qint32 GameMap::randomMap(qint32 width,qint32 heigth, qint32 playerCount,
                           bool roadSupport, qint32 seed,
-                          float forestchance, float mountainChance, float seachance, float buildingchance)
+                          float forestchance, float mountainChance, float seachance, float buildingchance,
+                          float factoryChance, float airPortChance, float harbourChance)
 {
     clearMap();
 
@@ -90,7 +91,12 @@ qint32 GameMap::randomMap(qint32 width,qint32 heigth, qint32 playerCount,
         fieldChance = minBuildings;
     }
     // place buildings
-    createBuildings(fieldChance, roadSupport, randInt, true);
+    QVector<QPoint> basePoints = createBuildings(fieldChance, randInt, factoryChance, airPortChance, harbourChance);
+
+    if (roadSupport)
+    {
+        createRoad(randInt, basePoints);
+    }
 
     updateSprites();
     centerMap(width / 2, heigth / 2);
@@ -220,14 +226,73 @@ void GameMap::placeBeach(QRandomGenerator& randInt)
     }
     for (qint32 i = 0; i < beachOptions.size(); i++)
     {
-        if (randInt.bounded(0, 40) < 25)
+        if (randInt.bounded(0, 40) < 15)
         {
             replaceTerrain("BEACH", beachOptions[i].x(), beachOptions[i].y());
         }
     }
 }
 
-void GameMap::createBuildings(qint32 buildings, bool roadSupport, QRandomGenerator& randInt, bool noHarbour)
+void GameMap::createRoad(QRandomGenerator& randInt, QVector<QPoint>& playerPositions)
+{
+    for (qint32 i = 0; i < players.size(); i++)
+    {
+        QPoint currentPoint = playerPositions[i];
+        QPoint endPoint;
+        if (i == players.size() - 1)
+        {
+            endPoint = playerPositions[0];
+        }
+        else
+        {
+            endPoint = playerPositions[i + 1];
+        }
+        while (currentPoint != endPoint)
+        {
+            qint32 xDistance = endPoint.x() - currentPoint.x();
+            qint32 yDistance = endPoint.y() - currentPoint.y();
+            qint32 erg = -1;
+            if (xDistance != 0 && yDistance != 0)
+            {
+                erg = randInt.bounded(0, qAbs(xDistance) + qAbs(yDistance));
+            }
+            if ((xDistance != 0 && yDistance == 0) || (erg >= 0 && erg < qAbs(xDistance)))
+            {
+                if (xDistance > 0)
+                {
+                    currentPoint.setX(currentPoint.x() + 1);
+                }
+                else
+                {
+                    currentPoint.setX(currentPoint.x() - 1);
+                }
+            }
+            else
+            {
+                if (yDistance > 0)
+                {
+                    currentPoint.setY(currentPoint.y() + 1);
+                }
+                else
+                {
+                    currentPoint.setY(currentPoint.y() - 1);
+                }
+            }
+            Terrain* pTerrain = getTerrain(currentPoint.x(), currentPoint.y());
+            if (pTerrain->getBaseTerrainID() == "PLAINS" && pTerrain->getBuilding() == nullptr)
+            {
+                replaceTerrain("STREET", currentPoint.x(), currentPoint.y());
+            }
+            else if (pTerrain->getBaseTerrainID() == "SEA" && pTerrain->getBuilding() == nullptr)
+            {
+                replaceTerrain("SEA", currentPoint.x(), currentPoint.y());
+                replaceTerrain("BRIDGE", currentPoint.x(), currentPoint.y(), true);
+            }
+        }
+    }
+}
+
+QVector<QPoint> GameMap::createBuildings(qint32 buildings, QRandomGenerator& randInt, float factoryChance, float airPortChance, float harbourChance)
 {
     qint32 maximumBuildingTry = 1000;
     qint32 maxTries = maximumBuildingTry;
@@ -297,10 +362,9 @@ void GameMap::createBuildings(qint32 buildings, bool roadSupport, QRandomGenerat
     buildings -= playerPositions.size();
 
     // number of factorys at start
-    qint32 factoryCount = static_cast<qint32>(static_cast<float>(buildings) * 0.2f);
-
-    qint32 playerBuldings = static_cast<qint32>(factoryCount * 0.75f / players.size());
-
+    qint32 factoryCount = static_cast<qint32>(Mainapp::roundUp(static_cast<float>(buildings) * factoryChance / static_cast<float>(players.size())) * players.size());
+    qint32 factoryBase = players.size() * 2;
+    qint32 playerBuldings = static_cast<qint32>(Mainapp::roundUp(factoryCount * 0.6f / static_cast<float>(players.size())) * players.size());
     for (qint32 i = 0; i < factoryCount; i++)
     {
         qint32 x = -1;
@@ -310,11 +374,20 @@ void GameMap::createBuildings(qint32 buildings, bool roadSupport, QRandomGenerat
         {
             x = randInt.bounded(0, mapWidth);
             y = randInt.bounded(0, mapHeigth);
-            if (i2 < playerBuldings)
+
+            if (i < playerBuldings)
             {
                 qint32 player = i % players.size();
-                x = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(player).x();
-                y = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(player).y();
+                if (factoryBase > 0)
+                {
+                    x = randInt.bounded(-2, 3) + playerPositions.at(player).x();
+                    y = randInt.bounded(-2, 3) + playerPositions.at(player).y();
+                }
+                else
+                {
+                    x = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(player).x();
+                    y = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(player).y();
+                }
             }
 
             if (isBuildingPlace(x, y))
@@ -332,11 +405,16 @@ void GameMap::createBuildings(qint32 buildings, bool roadSupport, QRandomGenerat
             replaceTerrain("PLAINS", x, y);
             Building* pBuilding = new Building("FACTORY");
             getTerrain(x, y)->setBuilding(pBuilding);
+            if (factoryBase > 0)
+            {
+                factoryBase--;
+            }
         }
     }
 
-    qint32 airportCount = static_cast<qint32>(static_cast<float>(buildings) * 0.1f);
-    playerBuldings = static_cast<qint32>(airportCount * 0.75f / players.size());
+    qint32 airportCount = static_cast<qint32>(Mainapp::roundUp(static_cast<float>(buildings) * airPortChance / static_cast<float>(players.size())) * players.size());
+    qint32 airportBase = players.size() * 2;
+    playerBuldings = static_cast<qint32>(Mainapp::roundUp(airportCount * 0.6f / static_cast<float>(players.size())) * players.size());
     for (qint32 i = 0; i < airportCount; i++)
     {
         qint32 x = -1;
@@ -346,11 +424,19 @@ void GameMap::createBuildings(qint32 buildings, bool roadSupport, QRandomGenerat
         {
             x = randInt.bounded(0, mapWidth);
             y = randInt.bounded(0, mapHeigth);
-            if (i2 < playerBuldings)
+            if (i < playerBuldings)
             {
                 qint32 player = i % players.size();
-                x = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(player).x();
-                y = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(player).y();
+                if (airportBase > 0)
+                {
+                    x = randInt.bounded(-3, 4) + playerPositions.at(player).x();
+                    y = randInt.bounded(-3, 4) + playerPositions.at(player).y();
+                }
+                else
+                {
+                    x = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(player).x();
+                    y = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(player).y();
+                }
             }
             if (isBuildingPlace(x, y))
             {
@@ -367,11 +453,86 @@ void GameMap::createBuildings(qint32 buildings, bool roadSupport, QRandomGenerat
             replaceTerrain("PLAINS", x, y);
             Building* pBuilding = new Building("AIRPORT");
             getTerrain(x, y)->setBuilding(pBuilding);
+            if (airportBase > 0)
+            {
+                airportBase--;
+            }
         }
     }
 
-    qint32 townCount = static_cast<qint32>(static_cast<float>(buildings) * 0.6f);
-    playerBuldings = static_cast<qint32>(townCount * 0.75f / players.size());
+    qint32 harbourCount = static_cast<qint32>(Mainapp::roundUp(static_cast<float>(buildings) * harbourChance / static_cast<float>(players.size())) * players.size());
+    playerBuldings = static_cast<qint32>(Mainapp::roundUp(harbourCount * 0.6f / static_cast<float>(players.size())) * players.size());
+    QVector<QPoint> harbourPoints;
+    qint32 heigth = getMapHeight();
+    qint32 width = getMapWidth();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            QmlVectorPoint* points = Mainapp::getCircle(1, 1);
+            for (qint32 i = 0; i < points->size(); i++)
+            {
+                qint32 posX = x + points->at(i).x();
+                qint32 posY = y + points->at(i).y();
+                if (onMap(posX, posY))
+                {
+                    if (getTerrain(posX, posY)->getTerrainID() == "SEA")
+                    {
+                        harbourPoints.append(QPoint(x, y));
+                    }
+                }
+            }
+            delete points;
+        }
+    }
+    for (qint32 i = 0; i < harbourCount; i++)
+    {
+        qint32 index = -1;
+        maxTries = maximumBuildingTry;
+        for (qint32 i2 = 0; i2 < maxTries; i2++)
+        {
+            if (harbourPoints.size() > 0)
+            {
+                index = randInt.bounded(0, harbourPoints.size());
+                if (i < playerBuldings)
+                {
+                    qint32 player = i % players.size();
+                    qint32 distance = qAbs(playerPositions.at(player).x() - harbourPoints[index].x()) + qAbs(playerPositions.at(player).y() - harbourPoints[index].y());
+                    if (distance > minimalDistance / 2)
+                    {
+                        index = -1;
+                    }
+                }
+                if (index >= 0)
+                {
+                    if (isBuildingPlace(harbourPoints[index].x(), harbourPoints[index].y()))
+                    {
+                        break;
+                    }
+                }
+                if (i2 == maxTries - 1)
+                {
+                    index = -1;
+                }
+            }
+        }
+        if (index >= 0)
+        {
+            qint32 x = harbourPoints[index].x();
+            qint32 y = harbourPoints[index].y();
+            if ((x >= 0) && (y >= 0))
+            {
+                replaceTerrain("PLAINS", x, y);
+                Building* pBuilding = new Building("HARBOUR");
+                getTerrain(x, y)->setBuilding(pBuilding);
+            }
+        }
+    }
+
+
+    qint32 townCount = static_cast<qint32>(Mainapp::roundUp(static_cast<float>(buildings) * (1.0f - factoryChance - airPortChance - harbourChance)  / static_cast<float>(players.size())) * players.size());
+    qint32 townBase = players.size() * 3;
+    playerBuldings = static_cast<qint32>(Mainapp::roundUp(townCount * 0.6f / static_cast<float>(players.size())) * players.size());
     for (qint32 i = 0; i < townCount; i++)
     {
         qint32 x = -1;
@@ -381,11 +542,19 @@ void GameMap::createBuildings(qint32 buildings, bool roadSupport, QRandomGenerat
         {
             x = randInt.bounded(0, mapWidth);
             y = randInt.bounded(0, mapHeigth);
-            if (i2 < playerBuldings)
+            if (i < playerBuldings)
             {
                 qint32 player = i % players.size();
-                x = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(player).x();
-                y = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(player).y();
+                if (townBase > 0)
+                {
+                    x = randInt.bounded(-3, 4) + playerPositions.at(player).x();
+                    y = randInt.bounded(-3, 4) + playerPositions.at(player).y();
+                }
+                else
+                {
+                    x = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(player).x();
+                    y = randInt.bounded(-minimalDistance / 4, minimalDistance / 4 + 1) + playerPositions.at(player).y();
+                }
             }
             if (isBuildingPlace(x, y))
             {
@@ -402,8 +571,14 @@ void GameMap::createBuildings(qint32 buildings, bool roadSupport, QRandomGenerat
             replaceTerrain("PLAINS", x, y);
             Building* pBuilding = new Building("TOWN");
             getTerrain(x, y)->setBuilding(pBuilding);
+            if (townBase > 0)
+            {
+                townBase--;
+            }
+
         }
     }
+    return playerPositions;
 }
 
 bool GameMap::isBuildingPlace(qint32 x, qint32 y)

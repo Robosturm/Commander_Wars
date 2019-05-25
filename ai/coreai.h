@@ -41,6 +41,7 @@ public:
     static const QString ACTION_ACTIVATE_SUPERPOWER_CO_1;
     static const QString ACTION_CO_UNIT_0;
     static const QString ACTION_CO_UNIT_1;
+    static const QString ACTION_EXPLODE;
 
     explicit CoreAI(BaseGameInputIF::AiTypes aiType);
     virtual ~CoreAI();
@@ -72,6 +73,13 @@ public slots:
      * @param pEnemyUnits
      */
     bool moveOoziums(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits);
+    /**
+     * @brief moveBlackBombs
+     * @param pUnits
+     * @param pEnemyUnits
+     * @return
+     */
+    bool moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits);
     /**
      * @brief getEnableBuildingAttack
      * @return

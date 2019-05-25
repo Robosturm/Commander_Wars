@@ -752,83 +752,11 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue,
     qint32 highestDamage = -1;
     QVector<QPoint> targets;
 
-    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    qint32 averageCosts = 0;
-    for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
-    {
-        QString unitId = pUnitSpriteManager->getUnitID(i);
-        Mainapp* pApp = Mainapp::getInstance();
-        QString function1 = "getBaseCost";
-        QJSValue erg = pApp->getInterpreter()->doFunction(unitId, function1);
-        if (erg.isNumber())
-        {
-             averageCosts += erg.toInt();
-        }
-    }
-    averageCosts = averageCosts / pUnitSpriteManager->getUnitCount();
-
     for (qint32 x = 0; x < pMap->getMapWidth(); x++)
     {
         for (qint32 y = 0; y < pMap->getMapHeight(); y++)
         {
-            qint32 damageDone = 0;
-            for (qint32 i = 0; i < pPoints->size(); i++)
-            {
-                qint32 x2 = x + pPoints->at(i).x();
-                qint32 y2 = y + pPoints->at(i).y();
-                // is there a unit?
-                if ((pMap->onMap(x2, y2)) &&
-                    (pMap->getTerrain(x2, y2)->getUnit() != nullptr))
-                {
-                    Unit* pUnit = pMap->getTerrain(x2, y2)->getUnit();
-                    float modifier = 1.0f;
-                    if (!isEnemyUnit(pUnit))
-                    {
-                        modifier = -ownUnitValue;
-                    }
-                    float damagePoints = damage;
-                    qint32 hpRounded = pUnit->getHpRounded();
-                    if (hpRounded < damage)
-                    {
-                        damagePoints = hpRounded;
-                    }
-                    switch (targetType)
-                    {
-                        case GameEnums::RocketTarget_Money:
-                        {
-                            // calc fonds damage
-                            damageDone += damagePoints / 10.0f * modifier * pUnit->getCosts();
-                            break;
-                        }
-                        case GameEnums::RocketTarget_HpHighMoney:
-                        {
-                            // calc fonds damage
-                            if (pUnit->getCosts() >= averageCosts / 2)
-                            {
-                                damageDone += damagePoints * modifier * 4;
-                            }
-                            else
-                            {
-                                damageDone += damagePoints * modifier;
-                            }
-                            break;
-                        }
-                        case GameEnums::RocketTarget_HpLowMoney:
-                        {
-                            // calc fonds damage
-                            if (pUnit->getCosts() <= averageCosts / 2)
-                            {
-                                damageDone += damagePoints * modifier * 4;
-                            }
-                            else
-                            {
-                                damageDone += damagePoints * modifier;
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
+            qint32 damageDone = getRocketTargetDamage(x, y, pPoints, damage, ownUnitValue, targetType);
             if (damageDone > highestDamage)
             {
                 highestDamage = damageDone;
@@ -851,6 +779,85 @@ QPoint Player::getRockettarget(qint32 radius, qint32 damage, float ownUnitValue,
     {
         return QPoint(-1, -1);
     }
+}
+
+qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType)
+{
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    qint32 averageCosts = 0;
+    for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+    {
+        QString unitId = pUnitSpriteManager->getUnitID(i);
+        Mainapp* pApp = Mainapp::getInstance();
+        QString function1 = "getBaseCost";
+        QJSValue erg = pApp->getInterpreter()->doFunction(unitId, function1);
+        if (erg.isNumber())
+        {
+             averageCosts += erg.toInt();
+        }
+    }
+    averageCosts = averageCosts / pUnitSpriteManager->getUnitCount();
+
+    GameMap* pMap = GameMap::getInstance();
+    qint32 damageDone = 0;
+    for (qint32 i = 0; i < pPoints->size(); i++)
+    {
+        qint32 x2 = x + pPoints->at(i).x();
+        qint32 y2 = y + pPoints->at(i).y();
+        // is there a unit?
+        if ((pMap->onMap(x2, y2)) &&
+            (pMap->getTerrain(x2, y2)->getUnit() != nullptr))
+        {
+            Unit* pUnit = pMap->getTerrain(x2, y2)->getUnit();
+            float modifier = 1.0f;
+            if (!isEnemyUnit(pUnit))
+            {
+                modifier = -ownUnitValue;
+            }
+            float damagePoints = damage;
+            qint32 hpRounded = pUnit->getHpRounded();
+            if (hpRounded < damage)
+            {
+                damagePoints = hpRounded;
+            }
+            switch (targetType)
+            {
+                case GameEnums::RocketTarget_Money:
+                {
+                    // calc fonds damage
+                    damageDone += damagePoints / 10.0f * modifier * pUnit->getCosts();
+                    break;
+                }
+                case GameEnums::RocketTarget_HpHighMoney:
+                {
+                    // calc fonds damage
+                    if (pUnit->getCosts() >= averageCosts / 2)
+                    {
+                        damageDone += damagePoints * modifier * 4;
+                    }
+                    else
+                    {
+                        damageDone += damagePoints * modifier;
+                    }
+                    break;
+                }
+                case GameEnums::RocketTarget_HpLowMoney:
+                {
+                    // calc fonds damage
+                    if (pUnit->getCosts() <= averageCosts / 2)
+                    {
+                        damageDone += damagePoints * modifier * 4;
+                    }
+                    else
+                    {
+                        damageDone += damagePoints * modifier;
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    return damageDone;
 }
 
 void Player::defineArmy()

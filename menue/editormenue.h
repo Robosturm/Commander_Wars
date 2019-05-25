@@ -159,7 +159,8 @@ public slots:
     void createRandomMap(QString mapName, QString author, QString description,
                          qint32 width,qint32 heigth, qint32 playerCount,
                          bool roadSupport, qint32 seed,
-                         float forestchance, float mountainChance, float seachance, float buildingchance);
+                         float forestchance, float mountainChance, float seachance, float buildingchance,
+                         float factoryChance, float airPortChance, float harbourChance);
 private:
     spEditorSelection m_EditorSelection{nullptr};
     EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};

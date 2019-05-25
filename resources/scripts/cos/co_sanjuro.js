@@ -262,7 +262,7 @@ var Constructor = function()
 
     this.getMovementcostModifier = function(co, unit, posX, posY)
     {
-        if (unit.getOwner === co.getOwner())
+        if (unit.getOwner() === co.getOwner())
         {
             var variables = co.getVariables();
             var buildedVar = variables.createVariable("SANJURO_BUILDED_" + unit.getUnitID());

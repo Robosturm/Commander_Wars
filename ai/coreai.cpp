@@ -1,4 +1,4 @@
-#include "ai/coreai.h"
+ #include "ai/coreai.h"
 
 #include "ai/targetedunitpathfindingsystem.h"
 
@@ -46,6 +46,7 @@ const QString CoreAI::ACTION_ACTIVATE_SUPERPOWER_CO_0 = "ACTION_ACTIVATE_SUPERPO
 const QString CoreAI::ACTION_ACTIVATE_SUPERPOWER_CO_1 = "ACTION_ACTIVATE_SUPERPOWER_CO_1";
 const QString CoreAI::ACTION_CO_UNIT_0 = "ACTION_CO_UNIT_0";
 const QString CoreAI::ACTION_CO_UNIT_1 = "ACTION_CO_UNIT_1";
+const QString CoreAI::ACTION_EXPLODE = "ACTION_EXPLODE";
 
 CoreAI::CoreAI(BaseGameInputIF::AiTypes aiType)
     : BaseGameInputIF(aiType)
@@ -68,7 +69,10 @@ void CoreAI::init()
 void CoreAI::nextAction()
 {
     // check if it's our turn
-    if (m_pPlayer == GameMap::getInstance()->getCurrentPlayer() && GameMenue::getInstance()->getGameStarted())
+    GameMenue* pMenue = GameMenue::getInstance();
+    if (pMenue != nullptr &&
+        m_pPlayer == GameMap::getInstance()->getCurrentPlayer() &&
+        pMenue->getGameStarted())
     {
         if (!processPredefinedAi())
         {
@@ -86,43 +90,6 @@ bool CoreAI::contains(QVector<QVector3D>& points, QPoint point)
             static_cast<qint32>(points[i].y()) == point.y())
         {
             return true;
-        }
-    }
-    return false;
-}
-
-bool CoreAI::moveOoziums(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
-{
-    //
-    QVector<QVector3D> targets;
-    for (qint32 i = 0; i < pEnemyUnits->size(); i++)
-    {
-        Unit* pUnit = pEnemyUnits->at(i);
-        targets.append(QVector3D(pUnit->getX(), pUnit->getY(), 1));
-    }
-
-    for (qint32 i = 0; i < pUnits->size(); i++)
-    {
-        Unit* pUnit = pUnits->at(i);
-        if (!pUnit->getHasMoved())
-        {
-            if (pUnit->getActionList().contains(ACTION_HOELLIUM_WAIT))
-            {
-                TargetedUnitPathFindingSystem pfs(pUnit, targets);
-                pfs.explore();
-                qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY()));
-                QPoint targetFields = pfs.getReachableTargetField(movepoints);
-                if (targetFields.x() >= 0)
-                {
-                    UnitPathFindingSystem turnPfs(pUnit);
-                    turnPfs.explore();
-                    GameAction* pAction = new GameAction(ACTION_HOELLIUM_WAIT);
-                    pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
-                    pAction->setMovepath(turnPfs.getClosestReachableMovePath(targetFields));
-                    emit performAction(pAction);
-                    return true;
-                }
-            }
         }
     }
     return false;

@@ -74,6 +74,7 @@ void VeryEasyAI::process()
     else if (buildCOUnit(pUnits)){}
     else if (captureBuildings(pUnits)){}
     else if (CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
+    else if (CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
     else if (fireWithIndirectUnits(pUnits)){}
     else if (fireWithDirectUnits(pUnits)){}
     else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings)){}

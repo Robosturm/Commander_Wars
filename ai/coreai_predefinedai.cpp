@@ -12,6 +12,126 @@
 
 #include "game/gameaction.h"
 
+#include "game/gamemap.h"
+
+
+bool CoreAI::moveOoziums(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
+{
+    //
+    QVector<QVector3D> targets;
+    for (qint32 i = 0; i < pEnemyUnits->size(); i++)
+    {
+        Unit* pUnit = pEnemyUnits->at(i);
+        targets.append(QVector3D(pUnit->getX(), pUnit->getY(), 1));
+    }
+
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pUnit = pUnits->at(i);
+        if (!pUnit->getHasMoved())
+        {
+            if (pUnit->getActionList().contains(ACTION_HOELLIUM_WAIT))
+            {
+                TargetedUnitPathFindingSystem pfs(pUnit, targets);
+                pfs.explore();
+                qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY()));
+                QPoint targetFields = pfs.getReachableTargetField(movepoints);
+                if (targetFields.x() >= 0)
+                {
+                    UnitPathFindingSystem turnPfs(pUnit);
+                    turnPfs.explore();
+                    GameAction* pAction = new GameAction(ACTION_HOELLIUM_WAIT);
+                    pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+                    pAction->setMovepath(turnPfs.getClosestReachableMovePath(targetFields));
+                    emit performAction(pAction);
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
+{
+    GameMap* pMap = GameMap::getInstance();
+    QVector<QVector3D> enemyTargets;
+    QmlVectorPoint* enemyFields = Mainapp::getCircle(1, 1);
+    for (qint32 i = 0; i < pEnemyUnits->size(); i++)
+    {
+        Unit* pUnit = pEnemyUnits->at(i);
+        for (qint32 i2 = 0; i2 < enemyFields->size(); i2++)
+        {
+            if (pMap->onMap(pUnit->getX() + enemyFields->at(i2).x(), pUnit->getY() + enemyFields->at(i2).y()))
+            {
+                QVector3D point = QVector3D(pUnit->getX() + enemyFields->at(i2).x(), pUnit->getY() + enemyFields->at(i2).y(), 1);
+                if (!enemyTargets.contains(point))
+                {
+                    enemyTargets.append(point);
+                }
+            }
+        }
+    }
+    delete enemyFields;
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pUnit = pUnits->at(i);
+        if (!pUnit->getHasMoved())
+        {
+            if (pUnit->getActionList().contains(ACTION_EXPLODE))
+            {
+                UnitPathFindingSystem turnPfs(pUnit);
+                turnPfs.explore();
+                QmlVectorPoint* pPoints = Mainapp::getCircle(1, 3);
+                QVector<QPoint> targets = turnPfs.getAllNodePoints();
+                qint32 maxDamage = 0;
+                QVector<QPoint> bestTargets;
+                GameAction* pAction = new GameAction(ACTION_EXPLODE);
+                pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+                for (qint32 i2 = 0; i2 < targets.size(); i2++)
+                {
+                    qint32 damageDone = m_pPlayer->getRocketTargetDamage(targets[i2].x(), targets[i2].y(), pPoints, 5, 1.2f, GameEnums::RocketTarget_Money);
+                    if (damageDone > maxDamage)
+                    {
+                        bestTargets.clear();
+                        bestTargets.append(targets[i2]);
+                        maxDamage = damageDone;
+                    }
+                    else if (damageDone == maxDamage)
+                    {
+                        bestTargets.append(targets[i2]);
+                        maxDamage = damageDone;
+                    }
+                }
+                delete pPoints;
+                if (bestTargets.size() > 0 && maxDamage > 0)
+                {
+                    QPoint target = bestTargets[Mainapp::randInt(0, bestTargets.size() - 1)];
+                    pAction->setMovepath(turnPfs.getPath(target.x(), target.y()));
+                    addSelectedFieldData(pAction, target);
+                    emit performAction(pAction);
+                    return true;
+                }
+                else
+                {
+                    TargetedUnitPathFindingSystem pfs(pUnit, enemyTargets);
+                    pfs.explore();
+                    qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY()));
+                    QPoint targetFields = pfs.getReachableTargetField(movepoints);
+                    if (targetFields.x() >= 0)
+                    {
+                        pAction->setActionID(ACTION_WAIT);
+                        pAction->setMovepath(turnPfs.getClosestReachableMovePath(targetFields));
+                        emit performAction(pAction);
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
 bool CoreAI::processPredefinedAi()
 {
     QmlVectorUnit* pUnits = m_pPlayer->getUnits();

@@ -227,6 +227,17 @@ public slots:
      */
     QPoint getRockettarget(qint32 radius, qint32 damage, float ownUnitValue = 1.2f, GameEnums::RocketTarget targetType = GameEnums::RocketTarget_Money);
     /**
+     * @brief getRocketTargetDamage
+     * @param x
+     * @param y
+     * @param pPoints
+     * @param damage
+     * @param ownUnitValue
+     * @param targetType
+     * @return
+     */
+    qint32 getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints, qint32 damage, float ownUnitValue, GameEnums::RocketTarget targetType);
+    /**
      * @brief defineArmy defines our army sprites based on the current co at position 0
      */
     void defineArmy();

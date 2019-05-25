@@ -533,7 +533,15 @@ void GameMenue::saveMap(QString filename)
 
 void GameMenue::exitGame()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    gameStarted = false;
+    while (GameAnimationFactory::getAnimationCount() > 0)
+    {
+        GameAnimationFactory::finishAllAnimations();
+    }
     victory(-1);
+    pApp->continueThread();
 }
 
 void GameMenue::startGame()
@@ -557,6 +565,7 @@ void GameMenue::startGame()
         pMap->updateUnitIcons();
         pMap->getGameRules()->createFogVision();
         pApp->getAudioThread()->playRandom();
+        emit sigActionPerformed();
     }
     pApp->continueThread();
 }

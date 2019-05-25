@@ -117,15 +117,41 @@ DialogRandomMap::DialogRandomMap()
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
     m_CreateRoad = new Checkbox();
+    m_CreateRoad->setChecked(true);
     m_CreateRoad->setPosition(text->getX() + width, text->getY());
     pSpriteBox->addChild(m_CreateRoad);
 
+    // Label
+    y += 40;
+    text = new oxygine::TextField();
+    text->setStyle(style);
+    text->setText(tr("Terrain Distribution").toStdString().c_str());
+    text->setPosition(30, 5 + y + text->getHeight());
+    pSpriteBox->addChild(text);
+
     y += 40;
     QVector<QString> terrainStrings = {tr("Plains"), tr("Forest"), tr("Mountain"), tr("Sea"), tr("Town")};
-    QVector<qint32> terrainChances = {65, 12, 8, 5, 10};
+    QVector<qint32> terrainChances = {50, 17, 16, 0, 17};
     m_TerrainChances = new Multislider(terrainStrings, pApp->getSettings()->getWidth() - 80, terrainChances);
     m_TerrainChances->setPosition(30, y);
     pSpriteBox->addChild(m_TerrainChances);
+
+    // Label
+    y += 40 * terrainStrings.size();
+    text = new oxygine::TextField();
+    text->setStyle(style);
+    text->setText(tr("Building Distribution").toStdString().c_str());
+    text->setPosition(30, 5 + y + text->getHeight());
+    pSpriteBox->addChild(text);
+
+    y += 40;
+    QVector<QString> buildingStrings = {tr("Factory"), tr("Airport"), tr("Harbour"), tr("Town")};
+    QVector<qint32> buildingChances = {20, 10, 10, 60};
+    m_BuildingChances = new Multislider(buildingStrings, pApp->getSettings()->getWidth() - 80, buildingChances);
+    m_BuildingChances->setPosition(30, y);
+    pSpriteBox->addChild(m_BuildingChances);
+
+
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
@@ -139,7 +165,9 @@ DialogRandomMap::DialogRandomMap()
                          static_cast<qint32>(m_MapPlayerCount->getCurrentValue()),
                          m_CreateRoad->getChecked(), static_cast<qint32>(m_Seed->getCurrentValue()),
                          m_TerrainChances->getSliderValue(1), m_TerrainChances->getSliderValue(2),
-                         m_TerrainChances->getSliderValue(3), m_TerrainChances->getSliderValue(4)
+                         m_TerrainChances->getSliderValue(3), m_TerrainChances->getSliderValue(4),
+                         m_BuildingChances->getSliderValue(0), m_BuildingChances->getSliderValue(1),
+                         m_BuildingChances->getSliderValue(2)
                          );
         this->getParent()->removeChild(this);
     });

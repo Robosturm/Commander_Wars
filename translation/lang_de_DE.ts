@@ -670,37 +670,63 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="124"/>
+        <location filename="../objects/dialograndommap.cpp" line="128"/>
+        <source>Terrain Distribution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialograndommap.cpp" line="133"/>
         <source>Plains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="124"/>
+        <location filename="../objects/dialograndommap.cpp" line="133"/>
         <source>Forest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="124"/>
+        <location filename="../objects/dialograndommap.cpp" line="133"/>
         <source>Mountain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="124"/>
+        <location filename="../objects/dialograndommap.cpp" line="133"/>
         <source>Sea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="124"/>
+        <location filename="../objects/dialograndommap.cpp" line="133"/>
+        <location filename="../objects/dialograndommap.cpp" line="148"/>
         <source>Town</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="131"/>
-        <source>Ok</source>
+        <location filename="../objects/dialograndommap.cpp" line="143"/>
+        <source>Building Distribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/dialograndommap.cpp" line="148"/>
+        <source>Factory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialograndommap.cpp" line="148"/>
+        <source>Airport</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialograndommap.cpp" line="148"/>
+        <source>Harbour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialograndommap.cpp" line="157"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialograndommap.cpp" line="176"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>

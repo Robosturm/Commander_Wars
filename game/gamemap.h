@@ -108,8 +108,9 @@ public:
      * @return seed used to create the map
      */
     qint32 randomMap(qint32 width,qint32 heigth, qint32 playerCount,
-                              bool roadSupport = true, qint32 seed = -1,
-                              float forestchance = 0.0286f, float mountainChance= 0.0125f, float seachance = 0.007024f, float buildingchance = 0.1f);
+                     bool roadSupport, qint32 seed,
+                     float forestchance, float mountainChance, float seachance, float buildingchance,
+                     float factoryChance, float airPortChance, float harbourChance);
     /**
      * @brief placeGroup
      * @param startX
@@ -146,7 +147,11 @@ public:
      * @param randInt
      * @param noHarbour
      */
-    void createBuildings(qint32 buildings, bool roadSupport, QRandomGenerator& randInt, bool noHarbour = false);
+    QVector<QPoint> createBuildings(qint32 buildings, QRandomGenerator& randInt, float factoryChance, float airPortChance, float harbourChance);
+    /**
+     * @brief createRoad
+     */
+    void createRoad(QRandomGenerator& randInt, QVector<QPoint>& playerPositions);
     /**
      * @brief isBuildingPlace
      * @param x
