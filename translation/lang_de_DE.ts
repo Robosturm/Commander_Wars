@@ -1296,6 +1296,11 @@
 <context>
     <name>Multiplayermenu</name>
     <message>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="40"/>
+        <source>Load Savegame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="59"/>
         <location filename="../multiplayer/multiplayermenu.cpp" line="657"/>
         <source>Ready</source>
@@ -1309,11 +1314,6 @@
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="81"/>
         <source>Host Adress: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="40"/>
-        <source>Load Savegame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1955,6 +1955,11 @@
 <context>
     <name>TCPServer</name>
     <message>
+        <location filename="../network/tcpserver.cpp" line="28"/>
+        <source>Server is running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../network/tcpserver.cpp" line="35"/>
         <source>Server is closed</source>
         <translation type="unfinished"></translation>
@@ -1969,11 +1974,6 @@
     <message>
         <location filename="../network/tcpserver.cpp" line="147"/>
         <source>New Client connection.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../network/tcpserver.cpp" line="28"/>
-        <source>Server is running</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2350,13 +2350,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="219"/>
-        <source>Gust Storm</source>
+        <location filename="../resources/scripts/cos/co_aira.js" line="215"/>
+        <source>Enemies expend 6 times more fuel for the next day.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_aira.js" line="215"/>
-        <source>Enemies expend 6 times more fuel for the next day.</source>
+        <location filename="../resources/scripts/cos/co_aira.js" line="219"/>
+        <source>Gust Storm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6774,7 +6774,17 @@
     <message>
         <location filename="../resources/scripts/cos/co_random.js" line="48"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_random.js" line="52"/>
+        <source></source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_random.js" line="56"/>
+        <source></source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_random.js" line="60"/>

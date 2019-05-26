@@ -155,7 +155,7 @@ VictoryMenue::VictoryMenue()
     }
 
     m_ProgressTimer.setSingleShot(false);
-    m_ProgressTimer.start(100);
+    m_ProgressTimer.start(50);
     connect(&m_ProgressTimer, &QTimer::timeout, this, &VictoryMenue::updateGraph, Qt::QueuedConnection);
 
     spPanel panel = new Panel(true, QSize(pApp->getSettings()->getWidth() - pButtonExit->getWidth() - 30, 105), QSize(pApp->getSettings()->getWidth() - pButtonExit->getX() - 20, 40));

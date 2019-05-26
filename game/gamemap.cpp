@@ -850,28 +850,28 @@ void GameMap::enableUnits(Player* pPlayer)
 bool GameMap::nextPlayer()
 {
     bool nextDay = false;
-    for (qint32 i = 0; i < players.size(); i++)
+    bool found = false;
+    qint32 start = m_CurrentPlayer->getPlayerID();
+    for (qint32 i = start + 1; i < players.size(); i++)
     {
-        if (players.at(i).get() == m_CurrentPlayer.get())
+        m_CurrentPlayer = players[i];
+        if (!m_CurrentPlayer->getIsDefeated())
         {
-            for (qint32 i2 = 0; i2 < players.size(); i2++)
-            {
-                if (i + i2 >= players.size() - 1)
-                {
-                    m_CurrentPlayer = players[i + i2 - (players.size() - 1)];
-                    currentDay++;
-                    nextDay = true;
-                }
-                else
-                {
-                    m_CurrentPlayer = players[i + i2 + 1];
-                }
-                if (!m_CurrentPlayer->getIsDefeated())
-                {
-                    break;
-                }
-            }
+            found = true;
             break;
+        }
+    }
+    if (!found)
+    {
+        nextDay = true;
+        currentDay++;
+        for (qint32 i = 0; i < players.size(); i++)
+        {
+            m_CurrentPlayer = players[i];
+            if (!m_CurrentPlayer->getIsDefeated())
+            {
+                break;
+            }
         }
     }
     return nextDay;
