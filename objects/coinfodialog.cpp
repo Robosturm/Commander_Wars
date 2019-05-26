@@ -77,7 +77,7 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
 
     // no the fun begins create checkboxes and stuff and a panel down here
     m_pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110),
-                                     QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110));
+                         QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110));
     m_pPanel->setPosition(30, 30);
     pSpriteBox->addChild(m_pPanel);
 
@@ -211,7 +211,7 @@ void COInfoDialog::showCO()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    oxygine::ResAnim* pAnim = nullptr;    
+    oxygine::ResAnim* pAnim = nullptr;
     QString coid = "";
     if (m_CurrentCO.get() != nullptr)
     {
@@ -232,59 +232,85 @@ void COInfoDialog::showCO()
     QString coPowerDesc = "";
     QString coSuperpower = "";
     QString coSuperpowerDesc = "";
-    qint32 corange = m_CurrentCO->getCORange();
+    qint32 corange = 0;
+    if (m_CurrentCO.get() != nullptr)
+    {
+        corange = m_CurrentCO->getCORange();
+    }
 
     Interpreter* pInterpreter = pApp->getInterpreter();
-    QJSValue value = pInterpreter->doFunction(coid, "getName");
-    if (value.isString())
+    QJSValue value;
+    if (m_CurrentCO.get() != nullptr)
     {
-        coName = value.toString();
+        QJSValue value = pInterpreter->doFunction(coid, "getName");
+        if (value.isString())
+        {
+            coName = value.toString();
+        }
     }
     m_COName->setText(coName.toStdString().c_str());
     m_COName->setPosition((pApp->getSettings()->getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_COName->getTextRect().getWidth(), 60);
-    value = pInterpreter->doFunction(coid, "getBio");
-    if (value.isString())
+    if (m_CurrentCO.get() != nullptr)
     {
-        coBio = value.toString();
+        value = pInterpreter->doFunction(coid, "getBio");
+        if (value.isString())
+        {
+            coBio = value.toString();
+        }
     }
     m_COBio->setText(coBio.toStdString().c_str());
 
-    value = pInterpreter->doFunction(coid, "getHits");
-    if (value.isString())
+    if (m_CurrentCO.get() != nullptr)
     {
-        coHits = value.toString();
+        value = pInterpreter->doFunction(coid, "getHits");
+        if (value.isString())
+        {
+            coHits = value.toString();
+        }
     }
     m_HitSprite->setY(m_COBio->getY() + m_COBio->getTextRect().getHeight() + 10);
     m_HitText->setText(coHits.toStdString().c_str());
     m_HitText->setY(m_HitSprite->getY());
 
-    value = pInterpreter->doFunction(coid, "getMiss");
-    if (value.isString())
+    if (m_CurrentCO.get() != nullptr)
     {
-        coMiss = value.toString();
+        value = pInterpreter->doFunction(coid, "getMiss");
+        if (value.isString())
+        {
+            coMiss = value.toString();
+        }
     }
     m_MissSprite->setY(m_HitSprite->getY() + 50);
     m_MissText->setText(coMiss.toStdString().c_str());
     m_MissText->setY(m_MissSprite->getY());
 
-    value = pInterpreter->doFunction(coid, "getCODescription");
-    if (value.isString())
+    if (m_CurrentCO.get() != nullptr)
     {
-        coDesc = value.toString();
+        value = pInterpreter->doFunction(coid, "getCODescription");
+        if (value.isString())
+        {
+            coDesc = value.toString();
+        }
     }
     m_InfoSprite->setY(m_MissSprite->getY() + 50);
     m_InfoText->setText((coDesc + "\n\n" + tr("CO-Zone-Range: ") + QString::number(corange)).toStdString().c_str());
     m_InfoText->setY(m_InfoSprite->getY() + 50);
 
-    value = pInterpreter->doFunction(coid, "getPowerDescription");
-    if (value.isString())
+    if (m_CurrentCO.get() != nullptr)
     {
-        coPowerDesc = value.toString();
+        value = pInterpreter->doFunction(coid, "getPowerDescription");
+        if (value.isString())
+        {
+            coPowerDesc = value.toString();
+        }
     }
-    value = pInterpreter->doFunction(coid, "getPowerName");
-    if (value.isString())
+    if (m_CurrentCO.get() != nullptr)
     {
-        coPower = value.toString();
+        value = pInterpreter->doFunction(coid, "getPowerName");
+        if (value.isString())
+        {
+            coPower = value.toString();
+        }
     }
     m_PowerSprite->setY(m_InfoText->getY() + m_InfoText->getTextRect().getHeight() + 20);
     m_Powername->setY(m_PowerSprite->getY());
@@ -292,16 +318,21 @@ void COInfoDialog::showCO()
     m_Powername->setText(coPower.toStdString().c_str());
     m_PowerDesc->setText(coPowerDesc.toStdString().c_str());
 
-
-    value = pInterpreter->doFunction(coid, "getSuperPowerDescription");
-    if (value.isString())
+    if (m_CurrentCO.get() != nullptr)
     {
-        coSuperpowerDesc = value.toString();
+        value = pInterpreter->doFunction(coid, "getSuperPowerDescription");
+        if (value.isString())
+        {
+            coSuperpowerDesc = value.toString();
+        }
     }
-    value = pInterpreter->doFunction(coid, "getSuperPowerName");
-    if (value.isString())
+    if (m_CurrentCO.get() != nullptr)
     {
-        coSuperpower = value.toString();
+        value = pInterpreter->doFunction(coid, "getSuperPowerName");
+        if (value.isString())
+        {
+            coSuperpower = value.toString();
+        }
     }
     m_SuperPowerSprite->setY(m_PowerDesc->getY() + m_PowerDesc->getTextRect().getHeight() + 20);
     m_SuperPowername->setY(m_SuperPowerSprite->getY());
@@ -336,14 +367,15 @@ void COInfoDialog::showCO()
         qint32 firerangeBonus = 0;
         qint32 movementBonus = 0;
         // not sure which one is better for ingame data
-//        if (m_Ingame)
-//        {
-//            offBonus = pUnit->getBonusOffensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false);
-//            defBonus = pUnit->getBonusDefensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false);
-//            firerangeBonus = pUnit->getBonusMaxRange(QPoint(-1, -1));
-//            movementBonus = pUnit->getBonusMovementpoints(QPoint(-1, -1));
-//        }
-//        else
+        //        if (m_Ingame)
+        //        {
+        //            offBonus = pUnit->getBonusOffensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false);
+        //            defBonus = pUnit->getBonusDefensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false);
+        //            firerangeBonus = pUnit->getBonusMaxRange(QPoint(-1, -1));
+        //            movementBonus = pUnit->getBonusMovementpoints(QPoint(-1, -1));
+        //        }
+        //        else
+        if (m_CurrentCO.get() != nullptr)
         {
             offBonus = m_CurrentCO->getOffensiveBonus(pUnit.get(), QPoint(-1, -1), nullptr, QPoint(-1, -1), false);
             defBonus = m_CurrentCO->getDeffensiveBonus(nullptr, QPoint(-1, -1), pUnit.get(), QPoint(-1, -1), false);

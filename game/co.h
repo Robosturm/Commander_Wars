@@ -406,6 +406,11 @@ public slots:
      * @return
      */
     GameAnimationPower* createPowerScreen(GameEnums::PowerMode powerMode);
+    /**
+     * @brief getIsCO0
+     * @return
+     */
+    bool getIsCO0();
 private:
     Player* m_Owner;
     QString coID;

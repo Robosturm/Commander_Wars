@@ -73,11 +73,12 @@ bool GameRuleManager::loadVictoryRule(const QString& victoryID)
     Mainapp* pMainapp = Mainapp::getInstance();
 
     QStringList searchPaths;
+    searchPaths.append("resources/scripts/gamerules/victory");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
         searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/gamerules/victory");
-    }
-    searchPaths.append("resources/scripts/gamerules/victory");
+    }    
+    bool bRet = false;
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
         QString file = searchPaths[i] + "/" + victoryID + ".js";
@@ -85,11 +86,14 @@ bool GameRuleManager::loadVictoryRule(const QString& victoryID)
         if (checkFile.exists() && checkFile.isFile())
         {
             pMainapp->getInterpreter()->openScript(file);
-            m_loadedVictoryRules.append(victoryID);
-            return true;
+            if (!bRet)
+            {
+                m_loadedVictoryRules.append(victoryID);
+            }
+            bRet = true;
         }
     }
-    return false;
+    return bRet;
 }
 
 bool GameRuleManager::loadWeather(const QString& weatherID)
@@ -97,11 +101,12 @@ bool GameRuleManager::loadWeather(const QString& weatherID)
     Mainapp* pMainapp = Mainapp::getInstance();
 
     QStringList searchPaths;
+    searchPaths.append("resources/scripts/gamerules/weather");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
         searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/gamerules/weather");
-    }
-    searchPaths.append("resources/scripts/gamerules/weather");
+    }    
+    bool bRet = false;
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
         QString file = searchPaths[i] + "/" + weatherID + ".js";
@@ -109,11 +114,14 @@ bool GameRuleManager::loadWeather(const QString& weatherID)
         if (checkFile.exists() && checkFile.isFile())
         {
             pMainapp->getInterpreter()->openScript(file);
-            m_loadedWeather.append(weatherID);
-            return true;
+            if (!bRet)
+            {
+                m_loadedWeather.append(weatherID);
+            }
+            bRet = true;
         }
     }
-    return false;
+    return bRet;
 }
 
 GameRuleManager* GameRuleManager::getInstance()

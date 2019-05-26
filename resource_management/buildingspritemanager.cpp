@@ -78,11 +78,12 @@ bool BuildingSpriteManager::loadBuilding(const QString& buildingID)
     Mainapp* pMainapp = Mainapp::getInstance();
 
     QStringList searchPaths;
+    searchPaths.append("resources/scripts/building");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
         searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/building");
-    }
-    searchPaths.append("resources/scripts/building");
+    }    
+    bool bRet = false;
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
         QString file = searchPaths[i] + "/" + buildingID + ".js";
@@ -90,11 +91,14 @@ bool BuildingSpriteManager::loadBuilding(const QString& buildingID)
         if (checkFile.exists() && checkFile.isFile())
         {
             pMainapp->getInterpreter()->openScript(file);
-            m_loadedBuildings.append(buildingID);
-            return true;
+            if (!bRet)
+            {
+                m_loadedBuildings.append(buildingID);
+            }
+            bRet = true;
         }
     }
-    return false;
+    return bRet;
 }
 
 void BuildingSpriteManager::reset()

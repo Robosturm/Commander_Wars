@@ -106,6 +106,9 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 audio.addMusic("resources/music/cos/bh_superpower.mp3");
                 break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/bh_tagpower.mp3");
+                break;
             default:
                 audio.addMusic("resources/music/cos/julia.mp3")
                 break;

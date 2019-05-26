@@ -127,6 +127,9 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 audio.addMusic("resources/music/cos/superpower.mp3");
                 break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/tagpower.mp3");
+                break;
             default:
                 audio.addMusic("resources/music/cos/drake.mp3")
                 break;
@@ -152,8 +155,8 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var airUnits = CO_EAGLE.getAirUnitIDS();
-        var seaUnits = CO_EAGLE.getSeaUnitIDS();
+        var airUnits = CO_DRAKE.getAirUnitIDS();
+        var seaUnits = CO_DRAKE.getSeaUnitIDS();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:

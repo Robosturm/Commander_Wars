@@ -62,6 +62,9 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 audio.addMusic("resources/music/cos/bh_superpower.mp3");
                 break;
+            case GameEnums.PowerMode_Tagpower:
+                audio.addMusic("resources/music/cos/bh_tagpower.mp3");
+                break;
             default:
                 audio.addMusic("resources/music/cos/penny.mp3")
                 break;
@@ -147,6 +150,7 @@ var Constructor = function()
             }
             return 1;
         }
+        return 0;
     };
 
     this.getPerfectVision = function(co)
@@ -159,7 +163,7 @@ var Constructor = function()
             }
         }
         return false;
-    }
+    };
 
     // CO - Intel
     this.getBio = function()

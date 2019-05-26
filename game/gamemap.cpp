@@ -1036,7 +1036,7 @@ void GameMap::checkFuel(Player* pPlayer)
     }
 }
 
-Unit* GameMap::getUnit(quint32 uniqueID)
+Unit* GameMap::getUnit(qint32 uniqueID)
 {
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
@@ -1065,7 +1065,7 @@ Unit* GameMap::getUnit(quint32 uniqueID)
     return nullptr;
 }
 
-Unit* GameMap::getUnit(Unit* pUnit, quint32 uniqueID)
+Unit* GameMap::getUnit(Unit* pUnit, qint32 uniqueID)
 {
     for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
     {

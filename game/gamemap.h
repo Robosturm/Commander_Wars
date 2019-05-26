@@ -240,14 +240,14 @@ public slots:
      * @param uniqueID
      * @return
      */
-    Unit* getUnit(quint32 uniqueID);
+    Unit* getUnit(qint32 uniqueID);
     /**
      * @brief getUnit
      * @param pUnit the transporting unit
      * @param uniqueID the unit it should transport
      * @return the found unit
      */
-    Unit* getUnit(Unit* pUnit, quint32 uniqueID);
+    Unit* getUnit(Unit* pUnit, qint32 uniqueID);
     /**
      * @brief getGameScript
      * @return

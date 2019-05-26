@@ -99,11 +99,12 @@ bool WeaponManager::loadWeapon(const QString& weaponID)
     Mainapp* pMainapp = Mainapp::getInstance();
 
     QStringList searchPaths;
+    searchPaths.append("resources/scripts/weapons");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
         searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/weapons");
     }
-    searchPaths.append("resources/scripts/weapons");
+    bool bRet = false;
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
         QString file = searchPaths[i] + "/" + weaponID + ".js";
@@ -111,9 +112,12 @@ bool WeaponManager::loadWeapon(const QString& weaponID)
         if (checkFile.exists() && checkFile.isFile())
         {
             pMainapp->getInterpreter()->openScript(file);
-            m_loadedWeapons.append(weaponID);
-            return true;
+            if (!bRet)
+            {
+                m_loadedWeapons.append(weaponID);
+            }
+            bRet = true;
         }
     }
-    return false;
+    return bRet;
 }

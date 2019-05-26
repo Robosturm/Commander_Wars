@@ -960,11 +960,20 @@ QString CO::getVictorySentence()
     return sentence;
 }
 
- GameAnimationPower* CO::createPowerScreen(GameEnums::PowerMode powerMode)
- {
-     GameAnimationPower* pGameAnimationPower = GameAnimationFactory::createAnimationPower(m_Owner->getColor(), powerMode, coID);
-     return pGameAnimationPower;
- }
+GameAnimationPower* CO::createPowerScreen(GameEnums::PowerMode powerMode)
+{
+    GameAnimationPower* pGameAnimationPower = GameAnimationFactory::createAnimationPower(m_Owner->getColor(), powerMode, coID);
+    return pGameAnimationPower;
+}
+
+bool CO::getIsCO0()
+{
+    if (this == m_Owner->getCO(0) || GameMenue::getInstance() == nullptr)
+    {
+        return true;
+    }
+    return false;
+}
 
 void CO::postBattleActions(Unit* pAttacker, float atkDamage, Unit* pDefender, bool gotAttacked)
 {

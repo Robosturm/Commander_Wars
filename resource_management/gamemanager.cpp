@@ -51,13 +51,39 @@ void GameManager::loadAll()
         while (dirIter->hasNext())
         {
             dirIter->next();
-            QString file = dirIter->fileInfo().absoluteFilePath();
-            QString actionID = dirIter->fileInfo().fileName().split(".").at(0).toUpper();
-            if (!m_loadedActions.contains(actionID))
+            QString file = dirIter->fileInfo().fileName().split(".").at(0);
+            if (!m_loadedActions.contains(file.toUpper()))
             {
-                m_loadedActions.append(actionID);
-                pMainapp->getInterpreter()->openScript(file);
+                loadAction(file.toUpper());
             }
         }
     }
+}
+
+bool GameManager::loadAction(const QString& actionID)
+{
+    Mainapp* pMainapp = Mainapp::getInstance();
+
+    QStringList searchPaths;
+    searchPaths.append("resources/scripts/actions");
+    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    {
+        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/actions");
+    }
+    bool bRet = false;
+    for (qint32 i = 0; i < searchPaths.size(); i++)
+    {
+        QString file = searchPaths[i] + "/" + actionID + ".js";
+        QFileInfo checkFile(file);
+        if (checkFile.exists() && checkFile.isFile())
+        {
+            pMainapp->getInterpreter()->openScript(file);
+            if (!bRet)
+            {
+                m_loadedActions.append(actionID);
+            }
+            bRet = true;
+        }
+    }
+    return bRet;
 }

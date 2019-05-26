@@ -71,11 +71,12 @@ bool MovementTableManager::loadTable(const QString& movementtableID)
     Mainapp* pMainapp = Mainapp::getInstance();
 
     QStringList searchPaths;
+    searchPaths.append("resources/scripts/movementtables");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
         searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/movementtables");
     }
-    searchPaths.append("resources/scripts/movementtables");
+    bool bRet = false;
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
         QString file = searchPaths[i] + "/" + movementtableID + ".js";
@@ -83,11 +84,14 @@ bool MovementTableManager::loadTable(const QString& movementtableID)
         if (checkFile.exists() && checkFile.isFile())
         {
             pMainapp->getInterpreter()->openScript(file);
-            m_loadedTables.append(movementtableID);
-            return true;
+            if (!bRet)
+            {
+                m_loadedTables.append(movementtableID);
+            }
+            bRet = true;
         }
     }
-    return false;
+    return bRet;
 }
 
 void MovementTableManager::reset()

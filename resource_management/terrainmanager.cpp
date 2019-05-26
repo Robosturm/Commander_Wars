@@ -66,11 +66,12 @@ bool TerrainManager::loadTerrain(const QString& TerrainID)
     Mainapp* pMainapp = Mainapp::getInstance();
 
     QStringList searchPaths;
+    searchPaths.append("resources/scripts/terrain");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
         searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/terrain");
     }
-    searchPaths.append("resources/scripts/terrain");
+    bool bRet = false;
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
         QString file = searchPaths[i] + "/" + TerrainID + ".js";
@@ -78,11 +79,14 @@ bool TerrainManager::loadTerrain(const QString& TerrainID)
         if (checkFile.exists() && checkFile.isFile())
         {
             pMainapp->getInterpreter()->openScript(file);
-            m_loadedTerrains.append(TerrainID);
-            return true;
+            if (!bRet)
+            {
+                m_loadedTerrains.append(TerrainID);
+            }
+            bRet = true;
         }
     }
-    return false;
+    return bRet;
 }
 
 TerrainManager* TerrainManager::getInstance()

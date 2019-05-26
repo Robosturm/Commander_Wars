@@ -14,6 +14,12 @@ public:
      * @brief loadAll loads all movement table data
      */
     void loadAll();
+    /**
+     * @brief loadAction
+     * @param actionID
+     * @return
+     */
+    bool loadAction(const QString& actionID);
 
     bool getLoaded()
     {

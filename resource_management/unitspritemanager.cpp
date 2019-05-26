@@ -63,11 +63,12 @@ bool UnitSpriteManager::loadUnit(const QString& unitID)
     Mainapp* pMainapp = Mainapp::getInstance();
 
     QStringList searchPaths;
+    searchPaths.append("resources/scripts/units");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
         searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/units");
     }
-    searchPaths.append("resources/scripts/units");
+    bool bRet = false;
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
         QString file = searchPaths[i] + "/" + unitID + ".js";
@@ -75,11 +76,14 @@ bool UnitSpriteManager::loadUnit(const QString& unitID)
         if (checkFile.exists() && checkFile.isFile())
         {
             pMainapp->getInterpreter()->openScript(file);
-            m_loadedUnits.append(unitID);
-            return true;
+            if (!bRet)
+            {
+                m_loadedUnits.append(unitID);
+            }
+            bRet = true;
         }
     }
-    return false;
+    return bRet;
 }
 
 qint32 UnitSpriteManager::getUnitIndex(QString id)

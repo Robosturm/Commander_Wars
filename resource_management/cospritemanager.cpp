@@ -74,11 +74,12 @@ bool COSpriteManager::loadCO(const QString& coID)
     Mainapp* pMainapp = Mainapp::getInstance();
 
     QStringList searchPaths;
+    searchPaths.append("resources/scripts/cos");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
         searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/cos");
     }
-    searchPaths.append("resources/scripts/cos");
+    bool bRet = false;
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
         QString file = searchPaths[i] + "/" + coID + ".js";
@@ -86,11 +87,14 @@ bool COSpriteManager::loadCO(const QString& coID)
         if (checkFile.exists() && checkFile.isFile())
         {
             pMainapp->getInterpreter()->openScript(file);
-            m_loadedCOs.append(coID);
-            return true;
+            if (!bRet)
+            {
+                m_loadedCOs.append(coID);
+            }
+            bRet = true;
         }
     }
-    return false;
+    return bRet;
 }
 
 void COSpriteManager::reset()
