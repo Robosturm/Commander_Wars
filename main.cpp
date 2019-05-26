@@ -1,14 +1,14 @@
 #include <QObject>
-
 #include <QProcess>
 
-#include "coreengine/audiothread.h"
-
-#include "coreengine/mainapp.h"
-#include "network/tcpserver.h"
-
+#ifdef GAMEDEBUG
 #include <QQmlApplicationEngine>
 #include <QJSEngine>
+#endif
+
+#include "coreengine/audiothread.h"
+#include "coreengine/mainapp.h"
+#include "network/tcpserver.h"
 
 #include "coreengine/console.h"
 
@@ -94,11 +94,6 @@ int main(int argc, char* argv[])
 
     oxygine::Point size = oxygine::core::getDisplaySize();
     oxygine::getStage()->setSize(size);
-
-#ifdef GAMEDEBUG
-    // DebugActor is a helper actor node. It shows FPS, memory usage and other useful stuff
-    //oxygine::DebugActor::show();
-#endif
 
     app.setup();
 

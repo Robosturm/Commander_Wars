@@ -6774,17 +6774,7 @@
     <message>
         <location filename="../resources/scripts/cos/co_random.js" line="48"/>
         <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_random.js" line="52"/>
-        <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_random.js" line="56"/>
-        <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_random.js" line="60"/>

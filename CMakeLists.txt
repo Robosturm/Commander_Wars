@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8.11)
+cmake_minimum_required (VERSION 3.1.0)
 project (Commander_Wars)
 
 # add oxygen as our engine
@@ -24,28 +24,31 @@ find_package(Qt5LinguistTools REQUIRED)
 find_package(Qt5QML REQUIRED)
 find_package(Qt5Multimedia REQUIRED)
 find_package(Qt5Network REQUIRED)
+find_package(Qt5Gui REQUIRED)
+find_package(Qt5Widgets REQUIRED)
 
+# build dependend defines
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
     add_definitions(
         -DQT_DECLARATIVE_DEBUG
         -DQT_QML_DEBUG
         -DGAMEDEBUG
-        -DUSE_MEMORY_POOL
     )
 else("Release")
     add_definitions(
         -DGAMERELEASE
-        -DUSE_MEMORY_POOL
     )
 endif()
 
+# general defines
 add_definitions(
+    -DUSE_MEMORY_POOL
     -DMAJOR=0
     -DMINOR=3
     -DREVISION=0
 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OXYGINE_CXX_FLAGS} -DCMAKE_C_FLAGS=\"-mwindows\"")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OXYGINE_CXX_FLAGS}")
 
 # source list we start slow here with the main cpp
 set(${PROJECT_NAME}_SRCS
@@ -171,7 +174,7 @@ set(${PROJECT_NAME}_SRCS
         gameinput/markedfielddata.cpp
         gameinput/cursordata.cpp
 
-        # map importing\exporting support
+        # map importing/exporting support
         # and resizing etc.
         mapsupport/importcowtxt.cpp
         mapsupport/refactorMap.cpp
@@ -230,7 +233,7 @@ add_custom_target(${PROJECT_NAME}_translations DEPENDS ${QM_FILES})
 
 # create executable
 add_executable(
-	${PROJECT_NAME}
+        ${PROJECT_NAME}
         ${${PROJECT_NAME}_SRCS}
         ICON.rc
 )
@@ -248,8 +251,9 @@ target_link_libraries(
         Qt5::Qml
         Qt5::Multimedia
         Qt5::Network
+        Qt5::Gui
+        Qt5::Widgets
 )
-
 
 
 # install section
@@ -259,11 +263,8 @@ set(CMAKE_INSTALL_PREFIX "../install/${CMAKE_BUILD_TYPE}")
 set(${PROJECT_NAME}_INSTALL_LIBS
     Libs/libcurl.dll
     Libs/libeay32.dll
-    Libs/libgcc_s_dw2-1.dll
     Libs/libpng16.dll
     Libs/libssh2.dll
-    Libs/libstdc++-6.dll
-    Libs/libwinpthread-1.dll
     Libs/libzlib.dll
     Libs/pthreadVCE2.dll
     Libs/SDL2.dll
@@ -277,6 +278,8 @@ get_filename_component(QT_BIN_DIR "${_qmake_executable}" DIRECTORY)
 
 #find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
 
+message(${QT_BIN_DIR})
+
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
     set(${PROJECT_NAME}_INSTALL_QT_LIBS
          ${QT_BIN_DIR}/Qt5Qmld.dll
@@ -285,6 +288,9 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
          ${QT_BIN_DIR}/Qt5Multimediad.dll
          ${QT_BIN_DIR}/Qt5Guid.dll
          ${QT_BIN_DIR}/Qt5Widgetsd.dll
+         ${QT_BIN_DIR}/libgcc_s_dw2-1.dll
+         ${QT_BIN_DIR}/libstdc++-6.dll
+         ${QT_BIN_DIR}/libwinpthread-1.dll
     )
 
     set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
@@ -299,6 +305,9 @@ else("Release")
         ${QT_BIN_DIR}/Qt5Multimedia.dll
         ${QT_BIN_DIR}/Qt5Gui.dll
         ${QT_BIN_DIR}/Qt5Widgets.dll
+        ${QT_BIN_DIR}/libgcc_s_dw2-1.dll
+        ${QT_BIN_DIR}/libstdc++-6.dll
+        ${QT_BIN_DIR}/libwinpthread-1.dll
     )
 
     set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
@@ -317,7 +326,9 @@ install(FILES ${${PROJECT_NAME}_INSTALL_LIBS} DESTINATION ".")
 # install exe
 install(TARGETS ${PROJECT_NAME} DESTINATION ".")
 install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION ".")
-install(FILES ${${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS} DESTINATION "mediaservice_dis")
+install(FILES ${${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS} DESTINATION "mediaservice")
 # install translations
 install(FILES ${QM_FILES} DESTINATION "resources/translation/")
 
+# execute_process (
+#    COMMAND ${QT_BIN_DIR}/windeployqt.exe "D:/Programmierung/Commander_Wars/builds/install/Release/Commander_Wars.exe")
