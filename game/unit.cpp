@@ -679,6 +679,8 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
         }
     }
 
+    pCO0 = m_pOwner->getCO(0);
+    pCO1 = m_pOwner->getCO(1);
     if (pCO0 != nullptr && pCO1 != nullptr &&
         pCO0->getPowerMode() == GameEnums::PowerMode_Tagpower)
     {

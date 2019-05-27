@@ -4,7 +4,7 @@ CO_ANDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     if (co.getIsCO0() === true)
     {
         if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             return 20;
         }
@@ -16,7 +16,7 @@ CO_ANDY.getMovementpointModifier = function(co, unit, posX, posY)
     if (co.getIsCO0() === true)
     {
         if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
-                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
+            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             return 1;
         }

@@ -47,7 +47,7 @@ void WorkerThread::start()
     // make sure to overwrite existing js stuff
     for (qint32 i = 0; i < pApp->getSettings()->getMods().size(); i++)
     {
-        searchPaths.append(pApp->getSettings()->getMods().at(i) + "/scripts/general");
+        searchPaths.append("/" + pApp->getSettings()->getMods().at(i) + "/scripts/general");
     }
     for (qint32 i = 0; i < searchPaths.size(); i++)
     {
