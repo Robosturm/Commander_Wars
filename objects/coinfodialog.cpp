@@ -10,6 +10,8 @@
 
 #include "resource_management/unitspritemanager.h"
 
+#include "resource_management/gamemanager.h"
+
 #include "objects/panel.h"
 
 #include "game/gamemap.h"
@@ -189,7 +191,11 @@ COInfoDialog::COInfoDialog(spCO pCO, spPlayer pPlayer,
     m_SuperPowerDesc->setWidth(m_pCurrentCO->getX() - 50);
     m_SuperPowerDesc->setX(10);
     m_pPanel->addItem(m_SuperPowerDesc);
-
+    m_SynergyText = new oxygine::TextField();
+    m_SynergyText->setStyle(style);
+    m_SynergyText->setText(tr("Synergy").toStdString().c_str());
+    m_SynergyText->setX(10);
+    m_pPanel->addItem(m_SynergyText);
 
     showCO();
 }
@@ -340,20 +346,86 @@ void COInfoDialog::showCO()
     m_SuperPowername->setText(coSuperpower.toStdString().c_str());
     m_SuperPowerDesc->setText(coSuperpowerDesc.toStdString().c_str());
 
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+
+    qint32 y = m_SuperPowerDesc->getY() + m_SuperPowerDesc->getTextRect().getHeight() + 20;
+    if (m_CurrentCO.get() != nullptr)
+    {
+        m_SynergyText->setY(y);
+        y += 40;
+
+        // show co synergys
+        for (qint32 i = 0; i < m_SynergyCONames.size(); i++)
+        {
+            m_SynergyCONames[i]->detach();
+            m_SynergyStarActors[i]->detach();
+        }
+        m_SynergyCONames.clear();
+        m_SynergyStarActors.clear();
+        GameManager* pGameManager = GameManager::getInstance();
+        pAnim = pGameManager->getResAnim("tagaffinitystar");
+        for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
+        {
+            QString coid = pCOSpriteManager->getCOID(i);
+            spCO testCO = new CO(coid, nullptr);
+
+            QJSValueList args;
+            QJSValue obj1 = pApp->getInterpreter()->newQObject(m_CurrentCO.get());
+            QJSValue obj2 = pApp->getInterpreter()->newQObject(testCO.get());
+            args << obj1;
+            args << obj2;
+            value = pInterpreter->doFunction("TAGPOWER", "getTagstars", args);
+            if (value.isNumber())
+            {
+                qint32 synergy = value.toInt();
+                if (synergy > 0)
+                {
+                    QString coSynergyName = "";
+                    value = pInterpreter->doFunction(coid, "getName");
+                    if (value.isString())
+                    {
+                        coSynergyName = value.toString();
+                    }
+                    oxygine::spTextField pText = new oxygine::TextField();
+                    pText->setStyle(style);
+                    pText->setText(coSynergyName.toStdString().c_str());
+                    pText->setX(10);
+                    pText->setY(y);
+                    m_pPanel->addItem(pText);
+                    m_SynergyCONames.append(pText);
+                    oxygine::spActor pActor = new oxygine::Actor();
+                    pActor->setX(120);
+                    pActor->setY(y);
+                    for (qint32 i2 = 0; i2 < synergy; i2++)
+                    {
+                        oxygine::spSprite pSprite = new oxygine::Sprite();
+                        pSprite->setResAnim(pAnim);
+                        pSprite->setScale(1.5f);
+                        pSprite->setX(i2 * pSprite->getScaledWidth() + 3);
+                        pActor->addChild(pSprite);
+                    }
+                    m_pPanel->addItem(pActor);
+                    m_SynergyStarActors.append(pActor);
+                    y += 40;
+                }
+            }
+        }
+    }
+
+
     for (qint32 i = 0; i < m_UnitDataActors.size(); i++)
     {
         m_UnitDataActors[i]->detach();
     }
     m_UnitDataActors.clear();
 
-    qint32 y = m_SuperPowerDesc->getY() + m_SuperPowerDesc->getTextRect().getHeight() + 20;
+
     qint32 x = 10;
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    style.multiline = false;
     for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
     {
         QString unitID = pUnitSpriteManager->getUnitID(i);
@@ -496,3 +568,4 @@ void COInfoDialog::createStrengthBar(oxygine::spActor pActor, qint32 bonus, qint
     pEndBox->setPosition(5 +  GameMap::Imagesize + pStartBox->getWidth(), y);
     pActor->addChild(pEndBox);
 }
+

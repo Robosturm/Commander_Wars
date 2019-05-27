@@ -18,7 +18,7 @@ CO_PETER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             case GameEnums.PowerMode_Power:
                 return 60;
             default:
-                bonus = 30;
+                bonus = 20;
                 break;
             }
         }

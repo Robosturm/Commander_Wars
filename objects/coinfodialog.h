@@ -65,6 +65,10 @@ private:
     oxygine::spTextField m_SuperPowername;
     oxygine::spTextField m_SuperPowerDesc;
 
+    oxygine::spTextField m_SynergyText;
+    QVector<oxygine::spTextField> m_SynergyCONames;
+    QVector<oxygine::spActor> m_SynergyStarActors;
+
     QVector<oxygine::spActor> m_UnitDataActors;
 
     spCO m_CurrentCO;

@@ -375,42 +375,47 @@
 <context>
     <name>COInfoDialog</name>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="42"/>
+        <location filename="../objects/coinfodialog.cpp" line="44"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="51"/>
+        <location filename="../objects/coinfodialog.cpp" line="53"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="61"/>
+        <location filename="../objects/coinfodialog.cpp" line="63"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="86"/>
+        <location filename="../objects/coinfodialog.cpp" line="88"/>
         <source>CO Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="117"/>
+        <location filename="../objects/coinfodialog.cpp" line="119"/>
         <source>Hit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="135"/>
+        <location filename="../objects/coinfodialog.cpp" line="137"/>
         <source>Miss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="153"/>
+        <location filename="../objects/coinfodialog.cpp" line="155"/>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="296"/>
+        <location filename="../objects/coinfodialog.cpp" line="196"/>
+        <source>Synergy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/coinfodialog.cpp" line="302"/>
         <source>CO-Zone-Range: </source>
         <translation type="unfinished"></translation>
     </message>
