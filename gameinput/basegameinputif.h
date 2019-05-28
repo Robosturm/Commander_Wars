@@ -21,6 +21,7 @@ public:
         ProxyAi = -1,
         Human = 0,
         VeryEasy,
+        Normal,
         Max,
         Open = 200
     };

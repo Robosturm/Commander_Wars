@@ -35,6 +35,8 @@ public:
     static const QString ACTION_UNLOAD;
     static const QString ACTION_LOAD;
     static const QString ACTION_NEXT_PLAYER;
+    static const QString ACTION_SWAP_COS;
+    static const QString ACTION_TAGPOWER;
     static const QString ACTION_ACTIVATE_POWER_CO_0;
     static const QString ACTION_ACTIVATE_POWER_CO_1;
     static const QString ACTION_ACTIVATE_SUPERPOWER_CO_0;
@@ -50,10 +52,6 @@ public:
      */
     virtual void init() override;
     /**
-     * @brief process
-     */
-    virtual void process() = 0;
-    /**
      * @brief contains
      * @param points
      * @param point
@@ -67,6 +65,16 @@ signals:
      */
     void performAction(GameAction* pAction);
 public slots:
+    /**
+     * @brief process
+     */
+    virtual void process() = 0;
+    /**
+     * @brief useBuilding
+     * @param pBuildings
+     * @return
+     */
+    bool useBuilding(QmlVectorBuilding* pBuildings);
     /**
      * @brief moveOoziums moves all those sweet nice ooziums :)
      * @param pUnits
@@ -140,6 +148,7 @@ protected:
     void processPredefinedAiHold(Unit* pUnit);
     void processPredefinedAiDefensive(Unit* pUnit);
     void processPredefinedAiOffensive(Unit* pUnit, QmlVectorUnit* pEnemyUnits);
+    virtual void finishTurn();
 private:
     bool finish{false};
     bool enableBuildingAttack{true};

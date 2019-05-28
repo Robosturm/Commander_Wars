@@ -57,12 +57,6 @@ protected:
      */
     bool useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits);
     /**
-     * @brief useBuilding
-     * @param pBuildings
-     * @return
-     */
-    bool useBuilding(QmlVectorBuilding* pBuildings);
-    /**
      * @brief buildCOUnit
      * @param pUnits
      * @return
@@ -137,7 +131,7 @@ protected:
     /**
      * @brief finishTurn
      */
-    void finishTurn();
+    virtual void finishTurn() override;
 protected:
     // helper functions to get targets for unit actions
     void appendCaptureTargets(QStringList actions, Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);

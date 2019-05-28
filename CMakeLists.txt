@@ -44,7 +44,7 @@ endif()
 add_definitions(
     -DUSE_MEMORY_POOL
     -DMAJOR=0
-    -DMINOR=3
+    -DMINOR=4
     -DREVISION=0
 )
 
@@ -194,6 +194,7 @@ set(${PROJECT_NAME}_SRCS
         ai/islandmap.cpp
         ai/coreai_predefinedai.cpp
         ai/proxyai.cpp
+        ai/normalai.cpp
 
         # multiplayer
         multiplayer/lobbymenu.cpp

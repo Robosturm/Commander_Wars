@@ -265,12 +265,12 @@ void PlayerSelection::showPlayerSelection()
         teamList.append(tr("Team") + " " + QString::number(i + 1));
     }
 
-    QVector<QString> aiList = {tr("Human"), tr("Very Easy")};
+    QVector<QString> aiList = {tr("Human"), tr("Very Easy"), tr("Normal")};
     if (m_pNetworkInterface.get() != nullptr)
     {
         if (m_pNetworkInterface->getIsServer())
         {
-            aiList = {tr("Human"), tr("Very Easy"), tr("Open")};
+            aiList.append(tr("Open"));
         }
         else
         {

@@ -13,6 +13,7 @@ CO_JUGGER.getBonusLuck = function(co, unit, posX, posY)
             return 30;
         }
     }
+    return 0;
 };
 
 CO_JUGGER.getBonusMisfortune = function(co, unit, posX, posY)
@@ -30,4 +31,5 @@ CO_JUGGER.getBonusMisfortune = function(co, unit, posX, posY)
             return 15;
         }
     }
+    return 0;
 };

@@ -40,6 +40,8 @@ const QString CoreAI::ACTION_FIRE = "ACTION_FIRE";
 const QString CoreAI::ACTION_UNLOAD = "ACTION_UNLOAD";
 const QString CoreAI::ACTION_LOAD = "ACTION_LOAD";
 const QString CoreAI::ACTION_NEXT_PLAYER = "ACTION_NEXT_PLAYER";
+const QString CoreAI::ACTION_SWAP_COS = "ACTION_SWAP_COS";
+const QString CoreAI::ACTION_TAGPOWER = "ACTION_TAGPOWER";
 const QString CoreAI::ACTION_ACTIVATE_POWER_CO_0 = "ACTION_ACTIVATE_POWER_CO_0";
 const QString CoreAI::ACTION_ACTIVATE_POWER_CO_1 = "ACTION_ACTIVATE_POWER_CO_1";
 const QString CoreAI::ACTION_ACTIVATE_SUPERPOWER_CO_0 = "ACTION_ACTIVATE_SUPERPOWER_CO_0";
@@ -419,4 +421,100 @@ void CoreAI::addSelectedFieldData(GameAction* pGameAction, QPoint point)
     pGameAction->writeDataInt32(point.x());
     pGameAction->writeDataInt32(point.y());
     pGameAction->setInputStep(pGameAction->getInputStep() + 1);
+}
+
+void CoreAI::finishTurn()
+{
+    GameAction* pAction = new GameAction(ACTION_NEXT_PLAYER);
+    CO* pCO0 = m_pPlayer->getCO(0);
+    CO* pCO1 = m_pPlayer->getCO(1);
+    if (pCO0 != nullptr &&
+        pCO0->getPowerMode() == GameEnums::PowerMode_Off)
+    {
+        pAction->setActionID(ACTION_SWAP_COS);
+        if (pAction->canBePerformed())
+        {
+           float remainingC0 = pCO0->getPowerStars() + pCO0->getSuperpowerStars() - pCO0->getPowerFilled();
+           float remainingC1 = pCO1->getPowerStars() + pCO1->getSuperpowerStars() - pCO1->getPowerFilled();
+           if (remainingC1 - 0.1f > remainingC0)
+           {
+               pAction->setActionID(ACTION_SWAP_COS);
+           }
+        }
+        else
+        {
+            pAction->setActionID(ACTION_NEXT_PLAYER);
+        }
+    }
+    else if (pCO1 != nullptr && pCO0 != nullptr &&
+             pCO0->getPowerMode() == GameEnums::PowerMode_Tagpower &&
+             pCO1->getPowerMode() == GameEnums::PowerMode_Off)
+    {
+        pAction->setActionID(ACTION_SWAP_COS);
+    }
+    else
+    {
+        pAction->setActionID(ACTION_NEXT_PLAYER);
+    }
+    emit performAction(pAction);
+}
+
+bool CoreAI::useBuilding(QmlVectorBuilding* pBuildings)
+{
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < pBuildings->size(); i++)
+    {
+        Building* pBuilding = pBuildings->at(i);
+        QStringList actions = pBuilding->getActionList();
+        if (actions.size() == 1 &&
+            actions[0] != ACTION_BUILD_UNITS &&
+            !actions[0].isEmpty())
+        {
+            GameAction* pAction = new GameAction(actions[0]);
+            pAction->setTarget(QPoint(pBuilding->getX(), pBuilding->getY()));
+            if (pAction->canBePerformed())
+            {
+                if (pAction->isFinalStep())
+                {
+
+                    emit performAction(pAction);
+                    return true;
+                }
+                else
+                {
+                    if (pAction->getStepInputType() == "FIELD")
+                    {
+                        MarkedFieldData* pData = pAction->getMarkedFieldStepData();
+                        QVector<QPoint>* points = pData->getPoints();
+                        qint32 index = -1;
+                        QPoint target;
+                        qint32 maxValue = std::numeric_limits<qint32>::min();
+                        for (qint32 i2 = 0; i2 < points->size(); i2++)
+                        {
+                            Unit* pUnit = pMap->getTerrain(points->at(i2).x(), points->at(i2).y())->getUnit();
+                            if (pUnit != nullptr && pUnit->getUnitValue() > maxValue)
+                            {
+                                maxValue = pUnit->getUnitValue();
+                                index = i2;
+                            }
+                        }
+                        if (index < 0)
+                        {
+                            target = points->at(Mainapp::randInt(0, points->size() -1));
+                        }
+                        delete pData;
+
+                        addSelectedFieldData(pAction, target);
+                        if (pAction->isFinalStep())
+                        {
+                            emit performAction(pAction);
+                            return true;
+                        }
+                    }
+                }
+            }
+            delete pAction;
+        }
+    }
+    return false;
 }

@@ -89,7 +89,7 @@
 <context>
     <name>ACTION_CAPTURE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="47"/>
+        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="48"/>
         <source>Capture</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1710,15 +1710,18 @@
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="268"/>
-        <location filename="../objects/playerselection.cpp" line="273"/>
         <location filename="../objects/playerselection.cpp" line="277"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="268"/>
-        <location filename="../objects/playerselection.cpp" line="273"/>
         <source>Very Easy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/playerselection.cpp" line="268"/>
+        <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

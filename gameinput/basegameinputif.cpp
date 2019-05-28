@@ -5,6 +5,7 @@
 #include "humanplayerinput.h"
 #include "ai/veryeasyai.h"
 #include "ai/proxyai.h"
+#include "ai/normalai.h"
 
 #include "coreengine/mainapp.h"
 
@@ -65,7 +66,11 @@ BaseGameInputIF* BaseGameInputIF::createAi(BaseGameInputIF::AiTypes type)
             ret = new VeryEasyAI();
             break;
         }
-
+        case AiTypes::Normal:
+        {
+            ret = new NormalAi();
+            break;
+        }
         case AiTypes::ProxyAi:
         {
             ret = new ProxyAi();

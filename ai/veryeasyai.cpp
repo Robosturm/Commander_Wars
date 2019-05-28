@@ -5,9 +5,8 @@
 #include "game/player.h"
 
 #include "game/co.h"
-
+#include "game/building.h"
 #include "game/unit.h"
-
 #include "game/gamemap.h"
 
 #include "game/unitpathfindingsystem.h"
@@ -69,7 +68,10 @@ void VeryEasyAI::process()
     }
 
     // make the ai do stuff
-    if (useCOPower(pUnits, pEnemyUnits)){}
+    if (useCOPower(pUnits, pEnemyUnits))
+    {
+        turnMode = TurnTime::onGoingTurn;
+    }
     else if (useBuilding(pBuildings)){}
     else if (buildCOUnit(pUnits)){}
     else if (captureBuildings(pUnits)){}
@@ -166,6 +168,16 @@ bool VeryEasyAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
             GameAction* pAction = new GameAction(ACTION_ACTIVATE_SUPERPOWER_CO_0);
             if (pAction->canBePerformed())
             {
+                pAction->setActionID(ACTION_TAGPOWER);
+                if (pAction->canBePerformed())
+                {
+                    emit performAction(pAction);
+                    return true;
+                }
+                else
+                {
+                    pAction->setActionID(ACTION_ACTIVATE_SUPERPOWER_CO_0);
+                }
                 emit performAction(pAction);
                 return true;
             }
@@ -215,54 +227,10 @@ void VeryEasyAI::finishTurn()
 {
     turnMode = TurnTime::startOfTurn;
     rebuildIslandMaps = true;
-    GameAction* pAction = new GameAction(ACTION_NEXT_PLAYER);
-    emit performAction(pAction);
+    CoreAI::finishTurn();
 }
 
-bool VeryEasyAI::useBuilding(QmlVectorBuilding* pBuildings)
-{
-    turnMode = TurnTime::onGoingTurn;
-    for (qint32 i = 0; i < pBuildings->size(); i++)
-    {
-        Building* pBuilding = pBuildings->at(i);
-        QStringList actions = pBuilding->getActionList();
-        if (actions.size() == 1 &&
-            actions[0] != ACTION_BUILD_UNITS &&
-            !actions[0].isEmpty())
-        {
-            GameAction* pAction = new GameAction(actions[0]);
-            pAction->setTarget(QPoint(pBuilding->getX(), pBuilding->getY()));
-            if (pAction->canBePerformed())
-            {
-                if (pAction->isFinalStep())
-                {
 
-                    emit performAction(pAction);
-                    return true;
-                }
-                else
-                {
-                    if (pAction->getStepInputType() == "FIELD")
-                    {
-                        MarkedFieldData* pData = pAction->getMarkedFieldStepData();
-                        QVector<QPoint>* points = pData->getPoints();
-                        QPoint target = points->at(Mainapp::randInt(0, points->size() -1));
-                        delete pData;
-                        addSelectedFieldData(pAction, target);
-                        if (pAction->isFinalStep())
-                        {
-                            emit performAction(pAction);
-                            return true;
-                        }
-                    }
-                }
-            }
-            delete pAction;
-        }
-    }
-    return false;
-
-}
 
 bool VeryEasyAI::buildCOUnit(QmlVectorUnit* pUnits)
 {

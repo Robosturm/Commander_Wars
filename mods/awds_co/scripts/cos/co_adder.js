@@ -24,5 +24,5 @@ CO_ADDER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 CO_ADDER.gainPowerstar = function(co, fondsDamage, x, y)
 {
     // adder gains more power than other co's
-    co.setPowerFilled(co.getPowerFilled() + (fondsDamage / 15000) * 1.2)
+    co.setPowerFilled(co.getPowerFilled() + (fondsDamage / 15000) * 4 * 1.2)
 };

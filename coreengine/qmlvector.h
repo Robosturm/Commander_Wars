@@ -73,6 +73,10 @@ public slots:
      * @brief sortExpensive most expensive units are sorted in first
      */
     void sortExpensive();
+    /**
+     * @brief sortShortestMovementRange
+     */
+    void sortShortestMovementRange();
 private:
     QVector<Unit*> m_Vector;
 };

@@ -222,47 +222,51 @@ QStringList Building::getActionList()
     {
         QStringList retList = ret.toString().split(",");
         QStringList actionModifierList;
-        CO* pCO = m_pOwner->getCO(0);
-        if (pCO != nullptr)
+        if (m_pOwner != nullptr)
         {
-            QString result = pCO->getAdditionalBuildingActions(this);
-            if (!result.isEmpty())
+            CO* pCO = m_pOwner->getCO(0);
+            if (pCO != nullptr)
             {
-                actionModifierList += result.split(",");
-            }
-        }
-        pCO = m_pOwner->getCO(1);
-        if (pCO != nullptr)
-        {
-            QString result = pCO->getAdditionalBuildingActions(this);
-            if (!result.isEmpty())
-            {
-                actionModifierList += result.split(",");
-            }
-        }
-
-        GameMap* pMap = GameMap::getInstance();
-        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
-        {
-            Player* pPlayer = pMap->getPlayer(i);
-            if (m_pOwner->isEnemy(pPlayer))
-            {
-                pCO = pPlayer->getCO(0);
-                if (pCO != nullptr)
+                QString result = pCO->getAdditionalBuildingActions(this);
+                if (!result.isEmpty())
                 {
-                    QString result = pCO->getAdditionalBuildingActions(this);
-                    if (!result.isEmpty())
-                    {
-                        actionModifierList += result.split(",");
-                    }
+                    actionModifierList += result.split(",");
                 }
-                pCO = pPlayer->getCO(1);
-                if (pCO != nullptr)
+            }
+            pCO = m_pOwner->getCO(1);
+            if (pCO != nullptr)
+            {
+                QString result = pCO->getAdditionalBuildingActions(this);
+                if (!result.isEmpty())
                 {
-                    QString result = pCO->getAdditionalBuildingActions(this);
-                    if (!result.isEmpty())
+                    actionModifierList += result.split(",");
+                }
+            }
+
+
+            GameMap* pMap = GameMap::getInstance();
+            for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+            {
+                Player* pPlayer = pMap->getPlayer(i);
+                if (m_pOwner->isEnemy(pPlayer))
+                {
+                    pCO = pPlayer->getCO(0);
+                    if (pCO != nullptr)
                     {
-                        actionModifierList += result.split(",");
+                        QString result = pCO->getAdditionalBuildingActions(this);
+                        if (!result.isEmpty())
+                        {
+                            actionModifierList += result.split(",");
+                        }
+                    }
+                    pCO = pPlayer->getCO(1);
+                    if (pCO != nullptr)
+                    {
+                        QString result = pCO->getAdditionalBuildingActions(this);
+                        if (!result.isEmpty())
+                        {
+                            actionModifierList += result.split(",");
+                        }
                     }
                 }
             }

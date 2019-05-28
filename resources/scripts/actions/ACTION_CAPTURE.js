@@ -17,7 +17,6 @@ var Constructor = function()
             var building = action.getMovementBuilding();
             if (building !== null)
             {
-
                 var alliance = unit.getOwner().checkAlliance(building.getOwner());
                 if ((alliance === GameEnums.Alliance_Enemy) &&
                     (capturableBuildings.indexOf(building.getBuildingID()) >= 0))
