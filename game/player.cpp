@@ -650,6 +650,29 @@ QmlVectorUnit* Player::getEnemyUnits()
     return ret;
 }
 
+QVector<spUnit> Player::getSpEnemyUnits()
+{
+    GameMap* pMap = GameMap::getInstance();
+    qint32 heigth = pMap->getMapHeight();
+    qint32 width = pMap->getMapWidth();
+    QVector<spUnit> ret;
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            spUnit pUnit = pMap->getTerrain(x, y)->getSpUnit();
+            if (pUnit.get() != nullptr)
+            {
+                if ((isEnemyUnit(pUnit.get())))
+                {
+                   ret.append(pUnit);
+                }
+            }
+        }
+    }
+    return ret;
+}
+
 QmlVectorBuilding* Player::getEnemyBuildings()
 {
     GameMap* pMap = GameMap::getInstance();

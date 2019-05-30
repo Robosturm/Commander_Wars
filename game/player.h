@@ -66,8 +66,11 @@ public:
      * @return pointer to the co
      */
     spCO getspCO(quint8 id);
-
-
+    /**
+     * @brief getSpEnemyUnits
+     * @return
+     */
+    QVector<spUnit> getSpEnemyUnits();
 signals:
 
 public slots:

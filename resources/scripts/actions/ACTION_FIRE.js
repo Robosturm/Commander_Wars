@@ -85,9 +85,9 @@ var Constructor = function()
         var damage = Global[attackerWeapon].calculateDamage(attackerHp, baseDamage, offensive, 100);
         return damage;
     };
-    this.calcAttackerDamage = function(attacker, attackerWeapon, attackerPosition, defender, luckMode)
+    this.calcAttackerDamage = function(attacker, attackerWeapon, takenDamage, attackerPosition, defender, luckMode)
     {
-        return ACTION_FIRE.calcDamage(attacker, attackerWeapon, attackerPosition, attacker.getHpRounded(),
+        return ACTION_FIRE.calcDamage(attacker, attackerWeapon, attackerPosition, attacker.getHp() - takenDamage / 10.0,
                           defender, defender.getPosition(), false,
                           luckMode)
     };
@@ -103,12 +103,9 @@ var Constructor = function()
             }
             health = globals.roundUp(health);
             var damage = -1;
-            if (health > 0)
-            {
                 damage = ACTION_FIRE.calcDamage(defender, defenderWeapon, defender.getPosition(), health,
                                                 attacker, attackerPosition, true,
                                                 luckMode);
-            }
         }
         return damage;
     };
@@ -116,6 +113,10 @@ var Constructor = function()
                                defender, defenderPosition, isDefender,
                                luckMode)
     {
+        if (attackerBaseHp <= 0)
+        {
+            return -1;
+        }
         var baseDamage = Global[attackerWeapon].getBaseDamage(defender);
         var damage = baseDamage;
         if (baseDamage > 0)
@@ -161,14 +162,24 @@ var Constructor = function()
 
     this.calcBattleDamage2 = function(attacker, atkPos, x, y, luckMode)
     {
+        return ACTION_FIRE.calcBattleDamage3(attacker, 0, atkPos.x, atkPos.y, null, x, y, 0, luckMode);
+    };
+
+    this.calcBattleDamage3 = function(attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckMode)
+    {
         var result = Qt.rect(-1, -1, -1, -1);
         if (map.onMap(x, y))
         {
             var unit = attacker;
-            var actionTargetField = atkPos;
+            var actionTargetField = Qt.point(atkPosX, atkPosY);
             var defTerrain = map.getTerrain(x, y);
             var defBuilding = defTerrain.getBuilding();
             var defUnit = defTerrain.getUnit();
+            if (defender !== null)
+            {
+                defUnit = defender;
+            }
+
             var dmg1 = -1;
             var dmg2 = -1;
             if (defUnit !== null)
@@ -177,11 +188,11 @@ var Constructor = function()
                 {
                     if (unit.hasAmmo1())
                     {
-                        dmg1 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon1ID(), actionTargetField ,defUnit, luckMode);
+                        dmg1 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon1ID(), attackerTakenDamage, actionTargetField ,defUnit, luckMode);
                     }
                     if (unit.hasAmmo2())
                     {
-                        dmg2 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon2ID(), actionTargetField ,defUnit, luckMode);
+                        dmg2 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon2ID(), attackerTakenDamage, actionTargetField ,defUnit, luckMode);
                     }
                     if ((dmg1 > 0) || (dmg2 > 0))
                     {
@@ -202,11 +213,11 @@ var Constructor = function()
                         var defWeapon = 0;
                         if (defUnit.hasAmmo1())
                         {
-                            defDamage = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon1ID(), result.x, luckMode);
+                            defDamage = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon1ID(), result.x + defenderTakenDamage, luckMode);
                         }
                         if (defUnit.hasAmmo2())
                         {
-                            var defDamage2 = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon2ID(), result.x, luckMode);
+                            var defDamage2 = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon2ID(), result.x + defenderTakenDamage, luckMode);
                             if (defDamage2 > defDamage)
                             {
                                 defDamage = defDamage2;

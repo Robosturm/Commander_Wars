@@ -2,7 +2,6 @@
 #define VERYEASYAI_H
 
 #include "qvector.h"
-#include "ai/islandmap.h"
 
 #include "ai/coreai.h"
 #include "ai/decisiontree.h"
@@ -132,65 +131,7 @@ protected:
      * @brief finishTurn
      */
     virtual void finishTurn() override;
-protected:
-    // helper functions to get targets for unit actions
-    void appendCaptureTargets(QStringList actions, Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
-    void appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets);
-    void appendRepairTargets(Unit* pUnit, QmlVectorBuilding* pBuildings, QVector<QVector3D>& targets);
-    void appendSupplyTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QVector3D>& targets);
-    void appendTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QVector3D>& targets);
-    void appendCaptureTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
-    void appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings, bool ignoreCaptureTargets, QVector<QVector3D>& targets);
-
-    void checkIslandForUnloading(Unit* pLoadedUnit, QVector<qint32>& checkedIslands,
-                                 qint32 unitIslandIdx, qint32 unitIsland,
-                                 qint32 loadedUnitIslandIdx, qint32 targetIsland,
-                                 QmlVectorPoint* pUnloadArea, QVector<QVector3D>& targets);
-    /**
-     * @brief appendNearestUnloadTargets searches for unload fields closest to our current position
-     * @param pUnit
-     * @param pEnemyUnits
-     * @param pEnemyBuildings
-     */
-    void appendNearestUnloadTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
-    /**
-     * @brief appendUnloadTargetsForCapturing searches unload fields near enemy buildings
-     * @param pUnit
-     * @param pEnemyBuildings
-     */
-    void appendUnloadTargetsForCapturing(Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
-    /**
-     * @brief onSameIsland checks if unit1 can reach unit 2. This may be vice versa but isn't checked here
-     * @param pUnit1
-     * @param pUnit2
-     * @return
-     */
-    bool onSameIsland(Unit* pUnit1, Unit* pUnit2);
-    /**
-     * @brief onSameIsland checks if unit1 can reach the building. This may be vice versa but isn't checked here
-     * @param pUnit1
-     * @param pBuilding
-     * @return
-     */
-    bool onSameIsland(Unit* pUnit1, Building* pBuilding);
-    /**
-     * @brief getIsland
-     * @param pUnit1
-     * @return
-     */
-    qint32 getIsland(Unit* pUnit);
-    /**
-     * @brief getIslandIndex
-     * @param pUnit1
-     * @return
-     */
-    qint32 getIslandIndex(Unit* pUnit);
-    /**
-     * @brief createIslandMap
-     * @param movementType
-     * @param unitID
-     */
-    void createIslandMap(QString movementType, QString unitID);
+protected:    
 private:
     DecisionTree m_COPowerTree;
     DecisionTree m_COUnitTree;
@@ -200,8 +141,6 @@ private:
 
     TurnTime turnMode{TurnTime::startOfTurn};
     bool rebuildIslandMaps{true};
-
-    QVector<spIslandMap> m_IslandMaps;
 };
 
 #endif // VERYEASYAI_H

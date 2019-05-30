@@ -3,11 +3,15 @@
 
 #include <qvector.h>
 #include <qvector3d.h>
+#include <qvector4d.h>
 #include <QRectF>
 
 #include "gameinput/basegameinputif.h"
 
 #include "ai/decisionquestion.h"
+
+#include "qvector.h"
+#include "ai/islandmap.h"
 
 class GameAction;
 class Unit;
@@ -100,14 +104,6 @@ public slots:
     void setEnableBuildingAttack(bool value);
     virtual void nextAction();
     /**
-     * @brief getBestTarget
-     * @param pUnit
-     * @param pAction
-     * @param pPfs
-     * @return target unit x, y and z = fonddamage
-     */
-    void getBestTarget(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields);
-    /**
      * @brief calcUnitDamage
      * @param pUnit
      * @param position
@@ -116,12 +112,57 @@ public slots:
      */
     QRectF calcUnitDamage(GameAction* pAction, QPoint target);
     /**
+     * @brief CoreAI::calcVirtuelUnitDamage
+     * @param pAttacker
+     * @param attackerTakenDamage
+     * @param atkPos
+     * @param defX
+     * @param defY
+     * @param defenderTakenDamage
+     * @return
+     */
+    QRectF calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage, QPoint atkPos,
+                                 Unit* pDefender, float defenderTakenDamage, QPoint defPos);
+    /**
+     * @brief getBestTarget
+     * @param pUnit
+     * @param pAction
+     * @param pPfs
+     * @return target unit x, y and z = fonddamage
+     */
+    void getBestTarget(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields);
+    /**
      * @brief getAttacksFromField
      * @param pUnit
      * @param pAction
      * @param ret
      */
-    void getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields);
+    void getBestAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields);
+    /**
+     * @brief getAttackTargets
+     * @param pUnit
+     * @param pAction
+     * @param pPfs
+     * @param ret
+     * @param moveTargetFields
+     */
+    void getAttackTargets(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem* pPfs, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields);
+    /**
+     * @brief getAttacksFromField
+     * @param pUnit
+     * @param pAction
+     * @param ret
+     * @param moveTargetFields
+     */
+    void getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields);
+    /**
+     * @brief CoreAI::calcFondsDamage
+     * @param damage
+     * @param pAtk
+     * @param pDef
+     * @return
+     */
+    QPointF calcFondsDamage(QRectF damage, Unit* pAtk, Unit* pDef);
     /**
      * @brief appendAttackTargets
      * @param pUnit
@@ -149,9 +190,78 @@ protected:
     void processPredefinedAiDefensive(Unit* pUnit);
     void processPredefinedAiOffensive(Unit* pUnit, QmlVectorUnit* pEnemyUnits);
     virtual void finishTurn();
+    // helper functions to get targets for unit actions
+    void appendCaptureTargets(QStringList actions, Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
+    void appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets);
+    void appendRepairTargets(Unit* pUnit, QmlVectorBuilding* pBuildings, QVector<QVector3D>& targets);
+    void appendSupplyTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QVector3D>& targets);
+    void appendTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QVector3D>& targets);
+    void appendCaptureTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
+    void appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings, bool ignoreCaptureTargets, QVector<QVector3D>& targets);
+    /**
+     * @brief appendNearestUnloadTargets searches for unload fields closest to our current position
+     * @param pUnit
+     * @param pEnemyUnits
+     * @param pEnemyBuildings
+     */
+    void appendNearestUnloadTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
+    /**
+     * @brief appendUnloadTargetsForCapturing searches unload fields near enemy buildings
+     * @param pUnit
+     * @param pEnemyBuildings
+     */
+    void appendUnloadTargetsForCapturing(Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
+
+    void checkIslandForUnloading(Unit* pLoadedUnit, QVector<qint32>& checkedIslands,
+                                 qint32 unitIslandIdx, qint32 unitIsland,
+                                 qint32 loadedUnitIslandIdx, qint32 targetIsland,
+                                 QmlVectorPoint* pUnloadArea, QVector<QVector3D>& targets);
+    /**
+     * @brief createIslandMap
+     * @param pUnits
+     */
+    void rebuildIsland(QmlVectorUnit* pUnits);
+    /**
+     * @brief onSameIsland checks if unit1 can reach unit 2. This may be vice versa but isn't checked here
+     * @param pUnit1
+     * @param pUnit2
+     * @return
+     */
+    bool onSameIsland(Unit* pUnit1, Unit* pUnit2);
+    /**
+     * @brief onSameIsland checks if unit1 can reach the building. This may be vice versa but isn't checked here
+     * @param pUnit1
+     * @param pBuilding
+     * @return
+     */
+    bool onSameIsland(Unit* pUnit1, Building* pBuilding);
+    /**
+     * @brief getIsland
+     * @param pUnit1
+     * @return
+     */
+    qint32 getIsland(Unit* pUnit);
+    /**
+     * @brief getIslandIndex
+     * @param pUnit1
+     * @return
+     */
+    qint32 getIslandIndex(Unit* pUnit);
+    /**
+     * @brief createIslandMap
+     * @param movementType
+     * @param unitID
+     */
+    void createIslandMap(QString movementType, QString unitID);
+protected:
+    QVector<spIslandMap> m_IslandMaps;
+    float buildingValue{1.0f};
+    float ownUnitValue{1.0f};
 private:
     bool finish{false};
     bool enableBuildingAttack{true};
+
+
 };
 
 #endif // COREAI_H

@@ -187,6 +187,11 @@ QmlVectorPoint* Mainapp::getShotFields(qint32 min, qint32 max, qint32 xDirection
     return ret;
 }
 
+qint32 Mainapp::getDistance(QPoint p1, QPoint p2)
+{
+    return qAbs(p1.x() - p2.x()) + qAbs(p1.y() - p2.y());
+}
+
 QmlVectorPoint* Mainapp::getEmptyPointArray()
 {
     return new QmlVectorPoint();

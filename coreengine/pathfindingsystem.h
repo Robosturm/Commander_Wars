@@ -6,7 +6,9 @@
 #include <QPoint>
 #include "coreengine/qmlvector.h"
 
-class PathFindingSystem : public QObject
+#include "oxygine-framework.h"
+
+class PathFindingSystem : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:

@@ -7,6 +7,10 @@
 
 #include "game/smartpointers.h"
 
+
+class UnitPathFindingSystem;
+typedef oxygine::intrusive_ptr<UnitPathFindingSystem> spUnitPathFindingSystem;
+
 class UnitPathFindingSystem : public PathFindingSystem
 {
     Q_OBJECT

@@ -464,6 +464,10 @@ qint32 Terrain::getDefense(Unit* pUnit)
     qint32 defense = getBaseDefense();
     if (pUnit != nullptr)
     {
+        if (!pUnit->useTerrainDefense())
+        {
+            return 0;
+        }
         defense += pUnit->getTerrainDefenseModifier(QPoint(x, y));
         GameMap* pMap = GameMap::getInstance();
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)

@@ -186,7 +186,7 @@ void CoreAI::processPredefinedAiHold(Unit* pUnit)
     QVector<QVector3D> ret;
     QVector<QVector3D> moveTargetFields;
     pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())));
-    getAttacksFromField(pUnit, pAction, ret, moveTargetFields);
+    getBestAttacksFromField(pUnit, pAction, ret, moveTargetFields);
     if (ret.size() > 0)
     {
         qint32 selection = Mainapp::randInt(0, ret.size() - 1);

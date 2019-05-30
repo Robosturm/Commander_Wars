@@ -132,6 +132,13 @@ public slots:
      */
     static QmlVectorPoint* getShotFields(qint32 min, qint32 max, qint32 xDirection = 0, qint32 yDirection = 0);
     /**
+     * @brief getDistance
+     * @param p1
+     * @param p2
+     * @return
+     */
+    static qint32 getDistance(QPoint p1, QPoint p2);
+    /**
      * @brief getEmptyPointArray
      * @return
      */

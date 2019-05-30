@@ -89,7 +89,7 @@
 <context>
     <name>ACTION_CAPTURE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="48"/>
+        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="46"/>
         <source>Capture</source>
         <translation type="unfinished"></translation>
     </message>
@@ -158,7 +158,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="265"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="276"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
