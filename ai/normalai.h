@@ -54,7 +54,8 @@ protected:
      * @return
      */
     bool moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
-                   QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
+                   QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+                   qint32 minfireRange, qint32 maxfireRange);
     /**
      * @brief moveUnit
      * @param pAction
@@ -66,6 +67,30 @@ protected:
      */
     bool moveUnit(GameAction* pAction, Unit* pUnit, QStringList& actions,
                   QVector<QVector3D>& targets, QVector<QVector3D>& transporterTargets);
+    /**
+     * @brief loadUnits
+     * @param pUnits
+     * @return
+     */
+    bool loadUnits(QmlVectorUnit* pUnits);
+    /**
+     * @brief NormalAi::moveTransporters
+     * @param pUnits
+     * @param pEnemyUnits
+     * @param pEnemyBuildings
+     * @return
+     */
+    bool moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
+    /**
+     * @brief moveToUnloadArea
+     * @param pAction
+     * @param pUnit
+     * @param actions
+     * @param targets
+     * @return
+     */
+    bool moveToUnloadArea(GameAction* pAction, Unit* pUnit, QStringList& actions,
+                          QVector<QVector3D>& targets);
     /**
      * @brief getMoveTargetField shortens the movepath so we take no damage
      * @param pUnit

@@ -51,7 +51,8 @@ const QString CoreAI::ACTION_CO_UNIT_1 = "ACTION_CO_UNIT_1";
 const QString CoreAI::ACTION_EXPLODE = "ACTION_EXPLODE";
 
 CoreAI::CoreAI(BaseGameInputIF::AiTypes aiType)
-    : BaseGameInputIF(aiType)
+    : BaseGameInputIF(aiType),
+      m_COPowerTree("resources/aidata/copower.tree", "resources/aidata/copower.txt")
 {
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
@@ -78,6 +79,7 @@ void CoreAI::nextAction()
     {
         if (!processPredefinedAi())
         {
+
             // if so execute next action
             process();
         }
@@ -96,6 +98,126 @@ bool CoreAI::contains(QVector<QVector3D>& points, QPoint point)
     }
     return false;
 }
+
+bool CoreAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
+{
+    QVector<float> data;
+    data.append(-1);
+    data.append(0);
+    data.append(-1);
+    data.append(pUnits->size());
+    qint32 repairUnits = 0;
+    qint32 indirectUnits = 0;
+    qint32 directUnits = 0;
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pUnit = pUnits->at(i);
+        if (pUnit->getHpRounded() < 10)
+        {
+            repairUnits++;
+        }
+        if (pUnit->getBaseMaxRange() > 1)
+        {
+            indirectUnits++;
+        }
+        else
+        {
+            directUnits++;
+        }
+    }
+    data.append(repairUnits);
+    data.append(indirectUnits);
+    data.append(directUnits);
+    data.append(pEnemyUnits->size());
+    data.append(m_pPlayer->getFonds());
+    data.append(static_cast<float>(turnMode));
+    CO* pCO = m_pPlayer->getCO(0);
+    if (pCO != nullptr)
+    {
+        data[0] = COSpriteManager::getInstance()->getCOIndex(pCO->getCoID());
+        if (pCO->canUseSuperpower())
+        {
+            data[1] = 2;
+        }
+        else if (pCO->canUsePower())
+        {
+            data[1] = 1;
+        }
+        else
+        {
+            data[1] = 0;
+        }
+        data[2] = pCO->getPowerFilled() - pCO->getPowerStars();
+        float result = m_COPowerTree.getDecision(data);
+        if (result == 1.0f)
+        {
+            GameAction* pAction = new GameAction(ACTION_ACTIVATE_POWER_CO_0);
+            if (pAction->canBePerformed())
+            {
+                emit performAction(pAction);
+                return true;
+            }
+        }
+        else if (result == 2.0f)
+        {
+            GameAction* pAction = new GameAction(ACTION_ACTIVATE_SUPERPOWER_CO_0);
+            if (pAction->canBePerformed())
+            {
+                pAction->setActionID(ACTION_TAGPOWER);
+                if (pAction->canBePerformed())
+                {
+                    emit performAction(pAction);
+                    return true;
+                }
+                else
+                {
+                    pAction->setActionID(ACTION_ACTIVATE_SUPERPOWER_CO_0);
+                }
+                emit performAction(pAction);
+                return true;
+            }
+        }
+    }
+    pCO = m_pPlayer->getCO(1);
+    if (pCO != nullptr)
+    {
+        data[0] = COSpriteManager::getInstance()->getCOIndex(pCO->getCoID());
+        if (pCO->canUseSuperpower())
+        {
+            data[1] = 2;
+        }
+        else if (pCO->canUsePower())
+        {
+            data[1] = 1;
+        }
+        else
+        {
+            data[1] = 0;
+        }
+        data[2] = pCO->getPowerFilled() - pCO->getPowerStars();
+        float result = m_COPowerTree.getDecision(data);
+        if (result == 1.0f)
+        {
+            GameAction* pAction = new GameAction(ACTION_ACTIVATE_POWER_CO_1);
+            if (pAction->canBePerformed())
+            {
+                emit performAction(pAction);
+                return true;
+            }
+        }
+        else if (result == 2.0f)
+        {
+            GameAction* pAction = new GameAction(ACTION_ACTIVATE_SUPERPOWER_CO_1);
+            if (pAction->canBePerformed())
+            {
+                emit performAction(pAction);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 
 void CoreAI::getBestTarget(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields)
 {
@@ -319,6 +441,54 @@ QRectF CoreAI::calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage,
     QJSValue erg = pApp->getInterpreter()->doFunction(ACTION_FIRE, function1, args1);
     return erg.toVariant().toRectF();
 }
+
+
+bool CoreAI::moveAwayFromProduction(QmlVectorUnit* pUnits)
+{
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pUnit = pUnits->at(i);
+        // can we use the unit and does it block a production center cause it has nothing to do this turn?
+        if (!pUnit->getHasMoved() &&
+            pUnit->getTerrain()->getBuilding() != nullptr &&
+            !m_pPlayer->isEnemy(pUnit->getTerrain()->getBuilding()->getOwner()) &&
+            pUnit->getTerrain()->getBuilding()->isProductionBuilding())
+        {
+            UnitPathFindingSystem turnPfs(pUnit);
+            turnPfs.explore();
+            QVector<QPoint> points = turnPfs.getAllNodePoints();
+            QPoint target(-1 , -1);
+            for (qint32 i = 0; i < points.size(); i++)
+            {
+                Terrain* pTerrain = pMap->getTerrain(points[i].x(), points[i].y());
+                if (pTerrain->getUnit() == nullptr)
+                {
+                    if (pTerrain->getBuilding() == nullptr)
+                    {
+                        target = points[i];
+                        break;
+                    }
+                    else if (!pTerrain->getBuilding()->isProductionBuilding())
+                    {
+                        target = points[i];
+                        break;
+                    }
+                }
+            }
+            if (target.x() >= 0 && target.y() >= 0)
+            {
+                GameAction* pAction = new GameAction(ACTION_WAIT);
+                pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+                pAction->setMovepath(turnPfs.getPath(target.x(), target.y()));
+                emit performAction(pAction);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 
 void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions)
 {

@@ -20,7 +20,6 @@
 
 VeryEasyAI::VeryEasyAI()
     : CoreAI(BaseGameInputIF::AiTypes::VeryEasy),
-      m_COPowerTree("resources/aidata/very_easy/copower.tree", "resources/aidata/very_easy/copower.txt"),
       m_COUnitTree("resources/aidata/very_easy/counit.tree", "resources/aidata/very_easy/counit.txt"),
       m_GeneralBuildingTree("resources/aidata/very_easy/generalbuilding.tree", "resources/aidata/very_easy/generalbuilding.txt"),
       m_AirportBuildingTree("resources/aidata/very_easy/airportbuilding.tree", "resources/aidata/very_easy/airportbuilding.txt"),
@@ -53,7 +52,7 @@ void VeryEasyAI::process()
         // delete island maps of the last turn
         m_IslandMaps.clear();
     }
-
+    rebuildIsland(pUnits);
 
     // make the ai do stuff
     if (useCOPower(pUnits, pEnemyUnits))
@@ -62,28 +61,37 @@ void VeryEasyAI::process()
     }
     else if (useBuilding(pBuildings)){}
     else if (buildCOUnit(pUnits)){}
-    else if (captureBuildings(pUnits)){}
-    else if (CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
-    else if (CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
-    else if (fireWithIndirectUnits(pUnits)){}
-    else if (fireWithDirectUnits(pUnits)){}
-    else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings)){}
-    else if (loadUnits(pUnits)){}
-    else if (moveTransporters(pUnits, pEnemyUnits, pEnemyBuildings)){}
-    else if (moveAwayFromProduction(pUnits)){}
-    else if (buildUnits(pBuildings, pUnits)){}
+    else if (!transporting && captureBuildings(pUnits)){}
+    else if (!transporting && CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
+    else if (!transporting && CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
+    else if (!transporting && fireWithIndirectUnits(pUnits)){}
+    else if (!transporting && fireWithDirectUnits(pUnits)){}
+    else if (!transporting && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings)){}
     else
     {
-        turnMode = TurnTime::endOfTurn;
-        if (useCOPower(pUnits, pEnemyUnits))
-        {
-            turnMode = TurnTime::onGoingTurn;
-        }
+        transporting = true;
+        if (loadUnits(pUnits)){}
+        else if (moveTransporters(pUnits, pEnemyUnits, pEnemyBuildings)){}
         else
         {
-            finishTurn();
-        }
+            transporting = false;
+            if (moveAwayFromProduction(pUnits)){}
+            else if (buildUnits(pBuildings, pUnits)){}
+            else
+            {
 
+                turnMode = TurnTime::endOfTurn;
+                if (useCOPower(pUnits, pEnemyUnits))
+                {
+                    turnMode = TurnTime::onGoingTurn;
+                }
+                else
+                {
+                    finishTurn();
+                }
+
+            }
+        }
     }
     delete pBuildings;
     delete pUnits;
@@ -92,124 +100,6 @@ void VeryEasyAI::process()
     delete pEnemyUnits;
 }
 
-bool VeryEasyAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
-{
-    QVector<float> data;
-    data.append(-1);
-    data.append(0);
-    data.append(-1);
-    data.append(pUnits->size());
-    qint32 repairUnits = 0;
-    qint32 indirectUnits = 0;
-    qint32 directUnits = 0;
-    for (qint32 i = 0; i < pUnits->size(); i++)
-    {
-        Unit* pUnit = pUnits->at(i);
-        if (pUnit->getHpRounded() < 10)
-        {
-            repairUnits++;
-        }
-        if (pUnit->getBaseMaxRange() > 1)
-        {
-            indirectUnits++;
-        }
-        else
-        {
-            directUnits++;
-        }
-    }
-    data.append(repairUnits);
-    data.append(indirectUnits);
-    data.append(directUnits);
-    data.append(pEnemyUnits->size());
-    data.append(m_pPlayer->getFonds());
-    data.append(static_cast<float>(turnMode));
-    CO* pCO = m_pPlayer->getCO(0);
-    if (pCO != nullptr)
-    {
-        data[0] = COSpriteManager::getInstance()->getCOIndex(pCO->getCoID());
-        if (pCO->canUseSuperpower())
-        {
-            data[1] = 2;
-        }
-        else if (pCO->canUsePower())
-        {
-            data[1] = 1;
-        }
-        else
-        {
-            data[1] = 0;
-        }
-        data[2] = pCO->getPowerFilled() - pCO->getPowerStars();
-        float result = m_COPowerTree.getDecision(data);
-        if (result == 1.0f)
-        {
-            GameAction* pAction = new GameAction(ACTION_ACTIVATE_POWER_CO_0);
-            if (pAction->canBePerformed())
-            {
-                emit performAction(pAction);
-                return true;
-            }
-        }
-        else if (result == 2.0f)
-        {
-            GameAction* pAction = new GameAction(ACTION_ACTIVATE_SUPERPOWER_CO_0);
-            if (pAction->canBePerformed())
-            {
-                pAction->setActionID(ACTION_TAGPOWER);
-                if (pAction->canBePerformed())
-                {
-                    emit performAction(pAction);
-                    return true;
-                }
-                else
-                {
-                    pAction->setActionID(ACTION_ACTIVATE_SUPERPOWER_CO_0);
-                }
-                emit performAction(pAction);
-                return true;
-            }
-        }
-    }
-    pCO = m_pPlayer->getCO(1);
-    if (pCO != nullptr)
-    {
-        data[0] = COSpriteManager::getInstance()->getCOIndex(pCO->getCoID());
-        if (pCO->canUseSuperpower())
-        {
-            data[1] = 2;
-        }
-        else if (pCO->canUsePower())
-        {
-            data[1] = 1;
-        }
-        else
-        {
-            data[1] = 0;
-        }
-        data[2] = pCO->getPowerFilled() - pCO->getPowerStars();
-        float result = m_COPowerTree.getDecision(data);
-        if (result == 1.0f)
-        {
-            GameAction* pAction = new GameAction(ACTION_ACTIVATE_POWER_CO_1);
-            if (pAction->canBePerformed())
-            {
-                emit performAction(pAction);
-                return true;
-            }
-        }
-        else if (result == 2.0f)
-        {
-            GameAction* pAction = new GameAction(ACTION_ACTIVATE_SUPERPOWER_CO_1);
-            if (pAction->canBePerformed())
-            {
-                emit performAction(pAction);
-                return true;
-            }
-        }
-    }
-    return false;
-}
 
 void VeryEasyAI::finishTurn()
 {
@@ -466,6 +356,7 @@ bool VeryEasyAI::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
     return false;
 }
 
+
 bool VeryEasyAI::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)
 {
     for (qint32 i = 0; i < pUnits->size(); i++)
@@ -526,52 +417,6 @@ bool VeryEasyAI::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUn
     return false;
 }
 
-bool VeryEasyAI::moveAwayFromProduction(QmlVectorUnit* pUnits)
-{
-    GameMap* pMap = GameMap::getInstance();
-    for (qint32 i = 0; i < pUnits->size(); i++)
-    {
-        Unit* pUnit = pUnits->at(i);
-        // can we use the unit and does it block a production center cause it has nothing to do this turn?
-        if (!pUnit->getHasMoved() &&
-            pUnit->getTerrain()->getBuilding() != nullptr &&
-            !m_pPlayer->isEnemy(pUnit->getTerrain()->getBuilding()->getOwner()) &&
-            pUnit->getTerrain()->getBuilding()->isProductionBuilding())
-        {
-            UnitPathFindingSystem turnPfs(pUnit);
-            turnPfs.explore();
-            QVector<QPoint> points = turnPfs.getAllNodePoints();
-            QPoint target(-1 , -1);
-            for (qint32 i = 0; i < points.size(); i++)
-            {
-                Terrain* pTerrain = pMap->getTerrain(points[i].x(), points[i].y());
-                if (pTerrain->getUnit() == nullptr)
-                {
-                    if (pTerrain->getBuilding() == nullptr)
-                    {
-                        target = points[i];
-                        break;
-                    }
-                    else if (!pTerrain->getBuilding()->isProductionBuilding())
-                    {
-                        target = points[i];
-                        break;
-                    }
-                }
-            }
-            if (target.x() >= 0 && target.y() >= 0)
-            {
-                GameAction* pAction = new GameAction(ACTION_LOAD);
-                pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
-                pAction->setMovepath(turnPfs.getPath(target.x(), target.y()));
-                pAction->setActionID(ACTION_WAIT);
-                emit performAction(pAction);
-                return true;
-            }
-        }
-    }
-    return false;
-}
 
 bool VeryEasyAI::loadUnits(QmlVectorUnit* pUnits)
 {

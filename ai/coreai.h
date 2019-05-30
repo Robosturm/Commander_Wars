@@ -13,6 +13,8 @@
 #include "qvector.h"
 #include "ai/islandmap.h"
 
+#include "ai/decisiontree.h"
+
 class GameAction;
 class Unit;
 class UnitPathFindingSystem;
@@ -25,6 +27,12 @@ class CoreAI : public BaseGameInputIF
 {
     Q_OBJECT
 public:
+    enum class TurnTime
+    {
+        startOfTurn,
+        onGoingTurn,
+        endOfTurn,
+    };
     // static string list of actions so we only define them once
     static const QString ACTION_WAIT;
     static const QString ACTION_HOELLIUM_WAIT;
@@ -73,6 +81,13 @@ public slots:
      * @brief process
      */
     virtual void process() = 0;
+    /**
+     * @brief useCOPower
+     * @param pUnits
+     * @param pEnemyUnits
+     * @return
+     */
+    bool useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits);
     /**
      * @brief useBuilding
      * @param pBuildings
@@ -155,6 +170,12 @@ public slots:
      * @param moveTargetFields
      */
     void getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields);
+    /**
+     * @brief moveAwayFromProduction
+     * @param pUnits
+     * @return
+     */
+    bool moveAwayFromProduction(QmlVectorUnit* pUnits);
     /**
      * @brief CoreAI::calcFondsDamage
      * @param damage
@@ -254,9 +275,11 @@ protected:
      */
     void createIslandMap(QString movementType, QString unitID);
 protected:
+    DecisionTree m_COPowerTree;
     QVector<spIslandMap> m_IslandMaps;
     float buildingValue{1.0f};
     float ownUnitValue{1.0f};
+    TurnTime turnMode{TurnTime::startOfTurn};
 private:
     bool finish{false};
     bool enableBuildingAttack{true};

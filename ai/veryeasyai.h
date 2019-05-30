@@ -15,12 +15,7 @@ class VeryEasyAI : public CoreAI
 {
     Q_OBJECT
 public:
-    enum class TurnTime
-    {
-        startOfTurn,
-        onGoingTurn,
-        endOfTurn,
-    };
+
     VeryEasyAI();
 
 
@@ -48,13 +43,7 @@ public slots:
      */
     virtual void process() override;
 protected:
-    /**
-     * @brief useCOPower
-     * @param pUnits
-     * @param pEnemyUnits
-     * @return
-     */
-    bool useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits);
+
     /**
      * @brief buildCOUnit
      * @param pUnits
@@ -97,12 +86,7 @@ protected:
                     QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
 
     bool moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
-    /**
-     * @brief moveAwayFromProduction
-     * @param pUnits
-     * @return
-     */
-    bool moveAwayFromProduction(QmlVectorUnit* pUnits);
+
     /**
      * @brief loadUnits
      * @param pUnits
@@ -133,13 +117,11 @@ protected:
     virtual void finishTurn() override;
 protected:    
 private:
-    DecisionTree m_COPowerTree;
     DecisionTree m_COUnitTree;
     DecisionTree m_GeneralBuildingTree;
     DecisionTree m_AirportBuildingTree;
     DecisionTree m_HarbourBuildingTree;
-
-    TurnTime turnMode{TurnTime::startOfTurn};
+    bool transporting{false};
     bool rebuildIslandMaps{true};
 };
 
