@@ -514,7 +514,7 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
         }
         else
         {
-            if (line.startsWith("type") && !questionsFound)
+            if (line.startsWith("type") && !questionsFound )
             {
                 questionsFound = true;
                 QStringList items = line.split(" ");

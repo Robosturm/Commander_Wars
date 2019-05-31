@@ -55,6 +55,7 @@
 #include "resource_management/terrainmanager.h"
 #include "resource_management/unitspritemanager.h"
 
+#include "ai/neuralnetwork.h"
 
 int main(int argc, char* argv[])
 {
@@ -66,6 +67,7 @@ int main(int argc, char* argv[])
     QNetworkSession networkSession(config);
     networkSession.open();
 
+    srand(static_cast<unsigned>(time(nullptr)));
 #ifdef GAMEDEBUG
     qQmlEnableDebuggingHelper.startTcpDebugServer(3768);
 #endif

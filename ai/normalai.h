@@ -8,6 +8,7 @@
 #include "game/smartUnit.h"
 
 #include "game/unitpathfindingsystem.h"
+#include "ai/neuralnetwork.h"
 
 class QmlVectorUnit;
 class QmlVectorBuilding;
@@ -92,6 +93,13 @@ protected:
     bool moveToUnloadArea(GameAction* pAction, Unit* pUnit, QStringList& actions,
                           QVector<QVector3D>& targets);
     /**
+     * @brief repairUnits
+     * @param pUnits
+     * @param pBuildings
+     * @return
+     */
+    bool repairUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings);
+    /**
      * @brief getMoveTargetField shortens the movepath so we take no damage
      * @param pUnit
      * @param movePath
@@ -117,6 +125,14 @@ protected:
      * @return
      */
     bool fireWithUnits(QmlVectorUnit* pUnits, qint32 minfireRange, qint32 maxfireRange);
+    /**
+     * @brief suicide
+     * @param pAction
+     * @param pUnit
+     * @param turnPfs
+     * @return
+     */
+    bool suicide(GameAction* pAction, Unit* pUnit, UnitPathFindingSystem& turnPfs);
     /**
      * @brief getIndirectTarget
      * @param pUnit
@@ -160,6 +176,13 @@ protected:
      * @brief clearEnemyData
      */
     void clearEnemyData();
+    /**
+     * @brief buildUnits
+     * @param pBuildings
+     * @param pUnits
+     * @return
+     */
+    bool buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits);
 private:
     /**
      * @brief m_EnemyUnits all enemy units that exists at the start of turn
@@ -177,6 +200,9 @@ private:
      * @brief m_VirtualEnemyData
      */
     QVector<QPointF> m_VirtualEnemyData;
+
+    NeuralNetwork m_BuildingNetwork;
+
 };
 
 #endif // NORMALAI_H

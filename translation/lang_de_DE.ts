@@ -1742,7 +1742,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="83"/>
+        <location filename="../main.cpp" line="82"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
