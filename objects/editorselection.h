@@ -96,6 +96,9 @@ private:
     EditorMode m_Mode{EditorMode::Terrain};
     PlacementSize m_SizeMode{PlacementSize::Small};
     qint32 m_StartIndex{0};
+
+    oxygine::spSlidingActor m_PlacementSelectionSlider;
+    oxygine::spActor m_PlacementActor;
     QVector<spTerrain> m_Terrains;
     QVector<spBuilding> m_Buildings;
     QVector<spUnit> m_Units;

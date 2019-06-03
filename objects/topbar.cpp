@@ -86,9 +86,18 @@ void Topbar::addGroup(QString text)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-
     ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spButton pButton = pObjectManager->createButton(text);
+
+    oxygine::spTextField textField = new oxygine::TextField();
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
+    style.multiline = true;
+    textField->setStyle(style);
+    textField->setText(text.toStdString().c_str());
+
+    oxygine::spButton pButton = pObjectManager->createButton(text, textField->getTextRect().getWidth() + 20);
     m_pSpriteBox->addChild(pButton);
     qint32 x = 22;
     for (qint32 i = 0; i < m_Buttons.size(); i++)

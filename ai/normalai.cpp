@@ -1247,37 +1247,37 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
     return false;
 }
 
-float calcExpectedFondsDamage(Unit& dummy, QmlVectorUnit* pEnemyUnits)
+float NormalAi::calcExpectedFondsDamage(Unit& dummy, QmlVectorUnit* pEnemyUnits)
 {
-    WeaponManager* pWeaponManager = WeaponManager::getInstance();
-    qint32 notAttackableCount = 0;
-    float damageCount = 0;
-    float attacksCount = 0;
-    for (qint32 i3 = 0; i3 < pEnemyUnits->size(); i3++)
-    {
-        Unit* pEnemyUnit = pEnemyUnits->at(i3);
-        float dmg1 = 0.0f;
-        if (!dummy.getWeapon1ID().isEmpty())
-        {
-            dmg1 = pWeaponManager->getBaseDamage(dummy.getWeapon1ID(), pEnemyUnit);
-        }
-        float dmg2 = 0.0f;
-        if (!dummy.getWeapon2ID().isEmpty())
-        {
-            dmg2 = pWeaponManager->getBaseDamage(dummy.getWeapon2ID(), pEnemyUnit);
-        }
+//    WeaponManager* pWeaponManager = WeaponManager::getInstance();
+//    qint32 notAttackableCount = 0;
+//    float damageCount = 0;
+//    float attacksCount = 0;
+//    for (qint32 i3 = 0; i3 < pEnemyUnits->size(); i3++)
+//    {
+//        Unit* pEnemyUnit = pEnemyUnits->at(i3);
+//        float dmg1 = 0.0f;
+//        if (!dummy.getWeapon1ID().isEmpty())
+//        {
+//            dmg1 = pWeaponManager->getBaseDamage(dummy.getWeapon1ID(), pEnemyUnit);
+//        }
+//        float dmg2 = 0.0f;
+//        if (!dummy.getWeapon2ID().isEmpty())
+//        {
+//            dmg2 = pWeaponManager->getBaseDamage(dummy.getWeapon2ID(), pEnemyUnit);
+//        }
 
 
-    }
-    data[7] = notAttackableCount;
-    if (attacksCount > 0)
-    {
-        data[8] = static_cast<float>(damageCount / attacksCount);
-    }
-    else
-    {
-        data[8] = 0;
-    }
+//    }
+//    data[7] = notAttackableCount;
+//    if (attacksCount > 0)
+//    {
+//        data[8] = static_cast<float>(damageCount / attacksCount);
+//    }
+//    else
+//    {
+//        data[8] = 0;
+//    }
 }
 
 float NormalAi::calcBuildScore(QVector<float>& data)

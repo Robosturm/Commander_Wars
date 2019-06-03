@@ -29,8 +29,17 @@ IngameInfoBar::IngameInfoBar()
     pMiniMapBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pMiniMapBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pMiniMapBox->setResAnim(pAnim);
-    pMiniMapBox->setPosition(pApp->getSettings()->getWidth() - width, 0);
+
     pMiniMapBox->setSize(width, pApp->getSettings()->getHeight() - cursorInfoHeigth - gameInfoHeigth);
+    pMiniMapBox->setPosition(0, 0);
+    if (pApp->getSettings()->getHeight() - cursorInfoHeigth - gameInfoHeigth < 100)
+    {
+        pMiniMapBox->setHeight(100);
+        setScale(pApp->getSettings()->getHeight() / static_cast<float>(100 + cursorInfoHeigth + gameInfoHeigth));
+    }
+    setSize(width, Settings::getHeight());
+
+
     pMiniMapBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
     m_pMinimap = new Minimap();
     m_pMinimap->setPosition(0, 0);
@@ -48,7 +57,7 @@ IngameInfoBar::IngameInfoBar()
     m_pGameInfoBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_pGameInfoBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_pGameInfoBox->setResAnim(pAnim);
-    m_pGameInfoBox->setPosition(pApp->getSettings()->getWidth() - width, pApp->getSettings()->getHeight() - cursorInfoHeigth - gameInfoHeigth);
+    m_pGameInfoBox->setPosition(0, pMiniMapBox->getHeight());
     m_pGameInfoBox->setSize(width, gameInfoHeigth);
     m_pGameInfoBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
     addChild(m_pGameInfoBox);
@@ -58,12 +67,12 @@ IngameInfoBar::IngameInfoBar()
     m_pCursorInfoBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_pCursorInfoBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     m_pCursorInfoBox->setResAnim(pAnim);
-    m_pCursorInfoBox->setPosition(pApp->getSettings()->getWidth() - width, pApp->getSettings()->getHeight() - cursorInfoHeigth);
+    m_pCursorInfoBox->setPosition(0, pMiniMapBox->getHeight() + gameInfoHeigth);
     m_pCursorInfoBox->setSize(width, cursorInfoHeigth);
     m_pCursorInfoBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
-    addChild(m_pCursorInfoBox);
 
-    setSize(width, Settings::getHeight());
+    setX(pApp->getSettings()->getWidth() - getScaledWidth());
+    addChild(m_pCursorInfoBox);
 }
 
 void IngameInfoBar::updatePlayerInfo()

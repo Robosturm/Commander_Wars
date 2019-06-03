@@ -409,10 +409,9 @@ void OptionMenue::showSettings()
         {
             QSize newSize(mode.w, mode.h);
             if (!supportedSizes.contains(newSize) &&
-                newSize.width() >= 1152 &&
-                newSize.height() >= 864)
+                newSize.width() >= 800 &&
+                newSize.height() >= 600)
             {
-
                 supportedSizes.append(newSize);
             }
         }

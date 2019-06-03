@@ -24,7 +24,14 @@ DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items, bool up)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     m_Textfield->setStyle(style);
-    m_Textfield->setText(items[0].toStdString().c_str());
+    if (items.size() > 0)
+    {
+        m_Textfield->setText(items[0].toStdString().c_str());
+    }
+    else
+    {
+        m_Textfield->setText("unknown");
+    }
     oxygine::spClipRectActor pClipActor = new oxygine::ClipRectActor();
     m_Textfield->attachTo(pClipActor);
     m_Textbox->addChild(pClipActor);

@@ -23,6 +23,11 @@ DialogRandomMap::DialogRandomMap()
     pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
 
+    spPanel pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110),
+                                     QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110));
+    pPanel->setPosition(30, 30);
+    pSpriteBox->addChild(pPanel);
+
     float y = 30;
     qint32 width = 250;
     // Label
@@ -31,11 +36,11 @@ DialogRandomMap::DialogRandomMap()
     text->setStyle(style);
     text->setText(tr("Map name:").toStdString().c_str());
     text->setPosition(30, y);
-    pSpriteBox->addChild(text);
-    m_MapName = new Textbox(pApp->getSettings()->getWidth() - 60 - width);
+    pPanel->addItem(text);
+    m_MapName = new Textbox(pApp->getSettings()->getWidth() - 150 - width);
     m_MapName->setPosition(text->getX() + width, text->getY());
     m_MapName->setCurrentText("");
-    pSpriteBox->addChild(m_MapName);
+    pPanel->addItem(m_MapName);
     y += 40;
 
     // Label
@@ -43,11 +48,11 @@ DialogRandomMap::DialogRandomMap()
     text->setStyle(style);
     text->setText(tr("Map Author:").toStdString().c_str());
     text->setPosition(30, y);
-    pSpriteBox->addChild(text);
-    m_MapAuthor = new Textbox(pApp->getSettings()->getWidth() - 60 - width);
+    pPanel->addItem(text);
+    m_MapAuthor = new Textbox(pApp->getSettings()->getWidth() - 150 - width);
     m_MapAuthor->setPosition(text->getX() + width, text->getY());
     m_MapAuthor->setCurrentText(Settings::getUsername());
-    pSpriteBox->addChild(m_MapAuthor);
+    pPanel->addItem(m_MapAuthor);
     y += 40;
 
     // Label
@@ -55,11 +60,11 @@ DialogRandomMap::DialogRandomMap()
     text->setStyle(style);
     text->setText(tr("Map Description:").toStdString().c_str());
     text->setPosition(30, y);
-    pSpriteBox->addChild(text);
-    m_MapDescription = new Textbox(pApp->getSettings()->getWidth() - 60 - width);
+    pPanel->addItem(text);
+    m_MapDescription = new Textbox(pApp->getSettings()->getWidth() - 150 - width);
     m_MapDescription->setPosition(text->getX() + width, text->getY());
     m_MapDescription->setCurrentText("");
-    pSpriteBox->addChild(m_MapDescription);
+    pPanel->addItem(m_MapDescription);
     y += 40;
 
     // Label
@@ -67,11 +72,11 @@ DialogRandomMap::DialogRandomMap()
     text->setStyle(style);
     text->setText(tr("Map width:").toStdString().c_str());
     text->setPosition(30, 5 + y );
-    pSpriteBox->addChild(text);
+    pPanel->addItem(text);
     m_MapWidth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
     m_MapWidth->setPosition(text->getX() + width, text->getY());
     m_MapWidth->setCurrentValue(20);
-    pSpriteBox->addChild(m_MapWidth);
+    pPanel->addItem(m_MapWidth);
 
     // Label
     y += 40;
@@ -79,11 +84,11 @@ DialogRandomMap::DialogRandomMap()
     text->setStyle(style);
     text->setText(tr("Map heigth:").toStdString().c_str());
     text->setPosition(30, 5 + y + text->getHeight());
-    pSpriteBox->addChild(text);
+    pPanel->addItem(text);
     m_MapHeigth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
     m_MapHeigth->setPosition(text->getX() + width, text->getY());
     m_MapHeigth->setCurrentValue(20);
-    pSpriteBox->addChild(m_MapHeigth);
+    pPanel->addItem(m_MapHeigth);
 
     // Label
     y += 40;
@@ -91,11 +96,11 @@ DialogRandomMap::DialogRandomMap()
     text->setStyle(style);
     text->setText(tr("Map Player:").toStdString().c_str());
     text->setPosition(30, 5 + y + text->getHeight());
-    pSpriteBox->addChild(text);
+    pPanel->addItem(text);
     m_MapPlayerCount = new SpinBox(300, 2, 40, SpinBox::Mode::Int);
     m_MapPlayerCount->setPosition(text->getX() + width, text->getY());
     m_MapPlayerCount->setCurrentValue(4);
-    pSpriteBox->addChild(m_MapPlayerCount);
+    pPanel->addItem(m_MapPlayerCount);
 
     // Label
     y += 40;
@@ -103,11 +108,11 @@ DialogRandomMap::DialogRandomMap()
     text->setStyle(style);
     text->setText(tr("Map Seed:").toStdString().c_str());
     text->setPosition(30, 5 + y + text->getHeight());
-    pSpriteBox->addChild(text);
+    pPanel->addItem(text);
     m_Seed = new SpinBox(300, 0, std::numeric_limits<qint32>::max() - 1, SpinBox::Mode::Int);
     m_Seed->setPosition(text->getX() + width, text->getY());
     m_Seed->setCurrentValue(Mainapp::randInt(0, std::numeric_limits<qint32>::max() - 1));
-    pSpriteBox->addChild(m_Seed);
+    pPanel->addItem(m_Seed);
 
     // Label
     y += 40;
@@ -115,11 +120,11 @@ DialogRandomMap::DialogRandomMap()
     text->setStyle(style);
     text->setText(tr("Create Road:").toStdString().c_str());
     text->setPosition(30, 5 + y + text->getHeight());
-    pSpriteBox->addChild(text);
+    pPanel->addItem(text);
     m_CreateRoad = new Checkbox();
     m_CreateRoad->setChecked(true);
     m_CreateRoad->setPosition(text->getX() + width, text->getY());
-    pSpriteBox->addChild(m_CreateRoad);
+    pPanel->addItem(m_CreateRoad);
 
     // Label
     y += 40;
@@ -127,14 +132,14 @@ DialogRandomMap::DialogRandomMap()
     text->setStyle(style);
     text->setText(tr("Terrain Distribution").toStdString().c_str());
     text->setPosition(30, 5 + y + text->getHeight());
-    pSpriteBox->addChild(text);
+    pPanel->addItem(text);
 
     y += 40;
     QVector<QString> terrainStrings = {tr("Plains"), tr("Forest"), tr("Mountain"), tr("Sea"), tr("Town")};
     QVector<qint32> terrainChances = {50, 17, 16, 0, 17};
-    m_TerrainChances = new Multislider(terrainStrings, pApp->getSettings()->getWidth() - 80, terrainChances);
+    m_TerrainChances = new Multislider(terrainStrings, pApp->getSettings()->getWidth() - 150, terrainChances);
     m_TerrainChances->setPosition(30, y);
-    pSpriteBox->addChild(m_TerrainChances);
+    pPanel->addItem(m_TerrainChances);
 
     // Label
     y += 40 * terrainStrings.size();
@@ -142,16 +147,17 @@ DialogRandomMap::DialogRandomMap()
     text->setStyle(style);
     text->setText(tr("Building Distribution").toStdString().c_str());
     text->setPosition(30, 5 + y + text->getHeight());
-    pSpriteBox->addChild(text);
+    pPanel->addItem(text);
 
     y += 40;
     QVector<QString> buildingStrings = {tr("Factory"), tr("Airport"), tr("Harbour"), tr("Town")};
     QVector<qint32> buildingChances = {20, 10, 10, 60};
-    m_BuildingChances = new Multislider(buildingStrings, pApp->getSettings()->getWidth() - 80, buildingChances);
+    m_BuildingChances = new Multislider(buildingStrings, pApp->getSettings()->getWidth() - 150, buildingChances);
     m_BuildingChances->setPosition(30, y);
-    pSpriteBox->addChild(m_BuildingChances);
+    pPanel->addItem(m_BuildingChances);
 
-
+    y += 40;
+    pPanel->setContentHeigth(y + 40 * (buildingChances.size() + 1));
 
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);

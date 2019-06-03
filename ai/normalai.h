@@ -191,6 +191,13 @@ protected:
      * @return
      */
     float calcBuildScore(QVector<float>& data);
+    /**
+     * @brief NormalAi::calcExpectedFondsDamage
+     * @param dummy
+     * @param pEnemyUnits
+     * @return
+     */
+    float calcExpectedFondsDamage(Unit& dummy, QmlVectorUnit* pEnemyUnits);
 private:
     /**
      * @brief m_EnemyUnits all enemy units that exists at the start of turn

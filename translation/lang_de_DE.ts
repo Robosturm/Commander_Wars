@@ -651,103 +651,103 @@
 <context>
     <name>DialogRandomMap</name>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="32"/>
+        <location filename="../objects/dialograndommap.cpp" line="37"/>
         <source>Map name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="44"/>
+        <location filename="../objects/dialograndommap.cpp" line="49"/>
         <source>Map Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="56"/>
+        <location filename="../objects/dialograndommap.cpp" line="61"/>
         <source>Map Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="68"/>
+        <location filename="../objects/dialograndommap.cpp" line="73"/>
         <source>Map width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="80"/>
+        <location filename="../objects/dialograndommap.cpp" line="85"/>
         <source>Map heigth:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="92"/>
+        <location filename="../objects/dialograndommap.cpp" line="97"/>
         <source>Map Player:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="104"/>
+        <location filename="../objects/dialograndommap.cpp" line="109"/>
         <source>Map Seed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="116"/>
+        <location filename="../objects/dialograndommap.cpp" line="121"/>
         <source>Create Road:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="128"/>
+        <location filename="../objects/dialograndommap.cpp" line="133"/>
         <source>Terrain Distribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="133"/>
+        <location filename="../objects/dialograndommap.cpp" line="138"/>
         <source>Plains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="133"/>
+        <location filename="../objects/dialograndommap.cpp" line="138"/>
         <source>Forest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="133"/>
+        <location filename="../objects/dialograndommap.cpp" line="138"/>
         <source>Mountain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="133"/>
+        <location filename="../objects/dialograndommap.cpp" line="138"/>
         <source>Sea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="133"/>
-        <location filename="../objects/dialograndommap.cpp" line="148"/>
+        <location filename="../objects/dialograndommap.cpp" line="138"/>
+        <location filename="../objects/dialograndommap.cpp" line="153"/>
         <source>Town</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="143"/>
+        <location filename="../objects/dialograndommap.cpp" line="148"/>
         <source>Building Distribution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="148"/>
+        <location filename="../objects/dialograndommap.cpp" line="153"/>
         <source>Factory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="148"/>
+        <location filename="../objects/dialograndommap.cpp" line="153"/>
         <source>Airport</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="148"/>
+        <location filename="../objects/dialograndommap.cpp" line="153"/>
         <source>Harbour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="157"/>
+        <location filename="../objects/dialograndommap.cpp" line="163"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="176"/>
+        <location filename="../objects/dialograndommap.cpp" line="182"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -967,116 +967,116 @@
 <context>
     <name>IngameInfoBar</name>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="124"/>
+        <location filename="../objects/ingameinfobar.cpp" line="133"/>
         <source>Buildings: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="131"/>
+        <location filename="../objects/ingameinfobar.cpp" line="140"/>
         <source>Units: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="138"/>
+        <location filename="../objects/ingameinfobar.cpp" line="147"/>
         <source>Fonds: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="145"/>
+        <location filename="../objects/ingameinfobar.cpp" line="154"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="152"/>
+        <location filename="../objects/ingameinfobar.cpp" line="161"/>
         <source>Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="221"/>
-        <location filename="../objects/ingameinfobar.cpp" line="264"/>
-        <location filename="../objects/ingameinfobar.cpp" line="268"/>
+        <location filename="../objects/ingameinfobar.cpp" line="230"/>
+        <location filename="../objects/ingameinfobar.cpp" line="273"/>
+        <location filename="../objects/ingameinfobar.cpp" line="277"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="308"/>
+        <location filename="../objects/ingameinfobar.cpp" line="317"/>
         <source>Ammo1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="324"/>
+        <location filename="../objects/ingameinfobar.cpp" line="333"/>
         <source>Ammo1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="340"/>
+        <location filename="../objects/ingameinfobar.cpp" line="349"/>
         <source>Ammo2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="356"/>
+        <location filename="../objects/ingameinfobar.cpp" line="365"/>
         <source>Ammo2: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="373"/>
+        <location filename="../objects/ingameinfobar.cpp" line="382"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="390"/>
+        <location filename="../objects/ingameinfobar.cpp" line="399"/>
         <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="511"/>
-        <location filename="../objects/ingameinfobar.cpp" line="563"/>
+        <location filename="../objects/ingameinfobar.cpp" line="520"/>
+        <location filename="../objects/ingameinfobar.cpp" line="572"/>
         <source>Owner: Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="521"/>
+        <location filename="../objects/ingameinfobar.cpp" line="530"/>
         <source>Owner: Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="531"/>
-        <location filename="../objects/ingameinfobar.cpp" line="542"/>
+        <location filename="../objects/ingameinfobar.cpp" line="540"/>
+        <location filename="../objects/ingameinfobar.cpp" line="551"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="573"/>
+        <location filename="../objects/ingameinfobar.cpp" line="582"/>
         <source>Weapon 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="585"/>
+        <location filename="../objects/ingameinfobar.cpp" line="594"/>
         <source>Weapon 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="595"/>
+        <location filename="../objects/ingameinfobar.cpp" line="604"/>
         <source>Move: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="604"/>
+        <location filename="../objects/ingameinfobar.cpp" line="613"/>
         <source>Movementpoints: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="613"/>
+        <location filename="../objects/ingameinfobar.cpp" line="622"/>
         <source>Vision: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="626"/>
+        <location filename="../objects/ingameinfobar.cpp" line="635"/>
         <source>Loaded Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="646"/>
+        <location filename="../objects/ingameinfobar.cpp" line="655"/>
         <source>Loaded Units: ?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1515,82 +1515,82 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="439"/>
+        <location filename="../menue/optionmenue.cpp" line="438"/>
         <source>Screen Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="447"/>
+        <location filename="../menue/optionmenue.cpp" line="446"/>
         <source>Screen Resolution: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="463"/>
+        <location filename="../menue/optionmenue.cpp" line="462"/>
         <source>Screen Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="466"/>
+        <location filename="../menue/optionmenue.cpp" line="465"/>
         <source>Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="466"/>
+        <location filename="../menue/optionmenue.cpp" line="465"/>
         <source>Bordered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="466"/>
+        <location filename="../menue/optionmenue.cpp" line="465"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="475"/>
+        <location filename="../menue/optionmenue.cpp" line="474"/>
         <source>Audio Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="481"/>
+        <location filename="../menue/optionmenue.cpp" line="480"/>
         <source>Global Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="497"/>
+        <location filename="../menue/optionmenue.cpp" line="496"/>
         <source>Music Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="513"/>
+        <location filename="../menue/optionmenue.cpp" line="512"/>
         <source>Sound Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="528"/>
+        <location filename="../menue/optionmenue.cpp" line="527"/>
         <source>Network Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="535"/>
+        <location filename="../menue/optionmenue.cpp" line="534"/>
         <source>Username: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="557"/>
+        <location filename="../menue/optionmenue.cpp" line="556"/>
         <source>Server Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="572"/>
+        <location filename="../menue/optionmenue.cpp" line="571"/>
         <source>Lobby port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="587"/>
+        <location filename="../menue/optionmenue.cpp" line="586"/>
         <source>Server: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="603"/>
+        <location filename="../menue/optionmenue.cpp" line="602"/>
         <source>Game port: </source>
         <translation type="unfinished"></translation>
     </message>

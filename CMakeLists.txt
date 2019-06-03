@@ -291,11 +291,34 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
          ${QT_BIN_DIR}/libgcc_s_dw2-1.dll
          ${QT_BIN_DIR}/libstdc++-6.dll
          ${QT_BIN_DIR}/libwinpthread-1.dll
+         ${QT_BIN_DIR}/d3dcompiler_47.dll
+         ${QT_BIN_DIR}/libEGLd.dll
+         ${QT_BIN_DIR}/libGLESv2d.dll
+         ${QT_BIN_DIR}/Qt5Svgd.dll
     )
 
     set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
          ${QT_BIN_DIR}/../plugins/mediaservice/dsengined.dll
          ${QT_BIN_DIR}/../plugins/mediaservice/qtmedia_audioengined.dll
+    )
+    set(${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS
+        ${QT_BIN_DIR}/../plugins/audio/qtaudio_windowsd.dll
+    )
+
+    set(${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS
+        ${QT_BIN_DIR}/../plugins/bearer/qgenericbearerd.dll
+    )
+
+    set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
+        ${QT_BIN_DIR}/../plugins/platforms/qwindowsd.dll
+    )
+
+    set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
+        ${QT_BIN_DIR}/../plugins/playlistformats/qtmultimedia_m3ud.dll
+    )
+
+    set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
+        ${QT_BIN_DIR}/../plugins/styles/qwindowsvistastyled.dll
     )
 else("Release")
     set(${PROJECT_NAME}_INSTALL_QT_LIBS
@@ -308,11 +331,35 @@ else("Release")
         ${QT_BIN_DIR}/libgcc_s_dw2-1.dll
         ${QT_BIN_DIR}/libstdc++-6.dll
         ${QT_BIN_DIR}/libwinpthread-1.dll
+        ${QT_BIN_DIR}/d3dcompiler_47.dll
+        ${QT_BIN_DIR}/libEGL.dll
+        ${QT_BIN_DIR}/libGLESv2.dll
+        ${QT_BIN_DIR}/Qt5Svg.dll
     )
 
     set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
          ${QT_BIN_DIR}/../plugins/mediaservice/dsengine.dll
          ${QT_BIN_DIR}/../plugins/mediaservice/qtmedia_audioengine.dll
+    )
+
+    set(${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS
+         ${QT_BIN_DIR}/../plugins/audio/qtaudio_windows.dll
+    )
+
+    set(${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS
+         ${QT_BIN_DIR}/../plugins/bearer/qgenericbearer.dll
+    )
+
+    set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
+         ${QT_BIN_DIR}/../plugins/platforms/qwindows.dll
+    )
+
+    set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
+         ${QT_BIN_DIR}/../plugins/playlistformats/qtmultimedia_m3u.dll
+    )
+
+    set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
+         ${QT_BIN_DIR}/../plugins/styles/qwindowsvistastyle.dll
     )
 endif()
 
@@ -327,6 +374,12 @@ install(FILES ${${PROJECT_NAME}_INSTALL_LIBS} DESTINATION ".")
 install(TARGETS ${PROJECT_NAME} DESTINATION ".")
 install(FILES ${${PROJECT_NAME}_INSTALL_QT_LIBS} DESTINATION ".")
 install(FILES ${${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS} DESTINATION "mediaservice")
+install(FILES ${${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS} DESTINATION "audio")
+install(FILES ${${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS} DESTINATION "bearer")
+install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS} DESTINATION "platforms")
+install(FILES ${${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS} DESTINATION "playlistformats")
+install(FILES ${${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS} DESTINATION "styles")
+
 # install translations
 install(FILES ${QM_FILES} DESTINATION "resources/translation/")
 
