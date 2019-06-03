@@ -55,8 +55,6 @@
 #include "resource_management/terrainmanager.h"
 #include "resource_management/unitspritemanager.h"
 
-#include "ai/neuralnetwork.h"
-
 int main(int argc, char* argv[])
 {
     /*************************************************************************************************/

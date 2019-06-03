@@ -8,7 +8,7 @@ var Constructor = function()
 
         unit.setAmmo2(0);
         unit.setMaxAmmo2(0);
-        unit.setWeapon2ID("APC");
+        unit.setWeapon2ID("");
 
         unit.setFuel(70);
         unit.setMaxFuel(70);

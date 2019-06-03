@@ -845,19 +845,14 @@ void CoreAI::appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, QmlVectorUnit* pEnem
 void CoreAI::appendRepairTargets(Unit* pUnit, QmlVectorBuilding* pBuildings, QVector<QVector3D>& targets)
 {
     GameMap* pMap = GameMap::getInstance();
-    if ((pUnit->getMaxAmmo1() > 0 && !pUnit->hasAmmo1()) ||
-        (pUnit->getMaxAmmo2() > 0 && !pUnit->hasAmmo2()) ||
-        (pUnit->getMaxFuel() > 0 && static_cast<float>(pUnit->getFuel()) / static_cast<float>(pUnit->getMaxFuel()) < 1.0f / 3.0f))
+    for (qint32 i2 = 0; i2 < pBuildings->size(); i2++)
     {
-        for (qint32 i2 = 0; i2 < pBuildings->size(); i2++)
+        Building* pBuilding = pBuildings->at(i2);
+        QPoint point(pBuilding->getX(), pBuilding->getY());
+        if (pMap->getTerrain(point.x(), point.y())->getUnit() == nullptr &&
+            pBuilding->canRepair(pUnit))
         {
-            Building* pBuilding = pBuildings->at(i2);
-            QPoint point(pBuilding->getX(), pBuilding->getY());
-            if (pMap->getTerrain(point.x(), point.y())->getUnit() == nullptr &&
-                pBuilding->canRepair(pUnit))
-            {
-                targets.append(QVector3D(pBuilding->getX(), pBuilding->getY(), 1));
-            }
+            targets.append(QVector3D(pBuilding->getX(), pBuilding->getY(), 1));
         }
     }
 }
@@ -1178,6 +1173,26 @@ bool CoreAI::onSameIsland(Unit* pUnit1, Building* pBuilding)
         {
             if (m_IslandMaps[i]->getIsland(pUnit1->getX(), pUnit1->getY()) ==
                 m_IslandMaps[i]->getIsland(pBuilding->getX(), pBuilding->getY()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+    return false;
+}
+
+bool CoreAI::onSameIsland(QString movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1)
+{
+    for (auto i = 0; i < m_IslandMaps.size(); i++)
+    {
+        if (m_IslandMaps[i]->getMovementType() == movemnetType)
+        {
+            if (m_IslandMaps[i]->getIsland(x, y) ==
+                m_IslandMaps[i]->getIsland(x1, y1))
             {
                 return true;
             }

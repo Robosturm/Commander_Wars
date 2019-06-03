@@ -121,7 +121,6 @@ private:
     DecisionTree m_GeneralBuildingTree;
     DecisionTree m_AirportBuildingTree;
     DecisionTree m_HarbourBuildingTree;
-    bool transporting{false};
     bool rebuildIslandMaps{true};
 };
 

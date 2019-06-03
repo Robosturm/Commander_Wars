@@ -8,7 +8,7 @@
 #include "game/smartUnit.h"
 
 #include "game/unitpathfindingsystem.h"
-#include "ai/neuralnetwork.h"
+#include "ai/decisiontree.h"
 
 class QmlVectorUnit;
 class QmlVectorBuilding;
@@ -66,8 +66,9 @@ protected:
      * @param transporterTargets
      * @return
      */
-    bool moveUnit(GameAction* pAction, Unit* pUnit, QStringList& actions,
-                  QVector<QVector3D>& targets, QVector<QVector3D>& transporterTargets);
+    bool moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits, QStringList& actions,
+                  QVector<QVector3D>& targets, QVector<QVector3D>& transporterTargets,
+                  bool shortenPathForTarget);
     /**
      * @brief loadUnits
      * @param pUnits
@@ -90,7 +91,7 @@ protected:
      * @param targets
      * @return
      */
-    bool moveToUnloadArea(GameAction* pAction, Unit* pUnit, QStringList& actions,
+    bool moveToUnloadArea(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits, QStringList& actions,
                           QVector<QVector3D>& targets);
     /**
      * @brief repairUnits
@@ -105,14 +106,14 @@ protected:
      * @param movePath
      * @return
      */
-    qint32 getMoveTargetField(Unit* pUnit, QVector<QPoint>& movePath);
+    qint32 getMoveTargetField(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QPoint>& movePath);
     /**
      * @brief moveToSafety
      * @param pUnit
      * @param turnPfs
      * @return
      */
-    std::tuple<QPoint, float, bool> moveToSafety(Unit* pUnit, UnitPathFindingSystem& turnPfs, QPoint target);
+    std::tuple<QPoint, float, bool> moveToSafety(Unit* pUnit, QmlVectorUnit* pUnits, UnitPathFindingSystem& turnPfs, QPoint target);
     /**
      * @brief captureBuildings
      * @param pUnits
@@ -148,7 +149,7 @@ protected:
      * @param moveTargetFields
      * @return
      */
-    qint32 getBestAttackTarget(Unit* pUnit, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields);
+    qint32 getBestAttackTarget(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields);
     /**
      * @brief updateEnemyData
      */
@@ -171,7 +172,7 @@ protected:
      * @param pEnemyUnit
      * @param enemyNewLife
      */
-    float calculateCounterDamage(Unit* pUnit, QPoint newPosition, Unit* pEnemyUnit, float enemyTakenDamage);
+    float calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoint newPosition, Unit* pEnemyUnit, float enemyTakenDamage);
     /**
      * @brief clearEnemyData
      */
@@ -182,7 +183,14 @@ protected:
      * @param pUnits
      * @return
      */
-    bool buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits);
+    bool buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
+                    QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
+    /**
+     * @brief calcBuildScore
+     * @param data
+     * @return
+     */
+    float calcBuildScore(QVector<float>& data);
 private:
     /**
      * @brief m_EnemyUnits all enemy units that exists at the start of turn
@@ -201,7 +209,6 @@ private:
      */
     QVector<QPointF> m_VirtualEnemyData;
 
-    NeuralNetwork m_BuildingNetwork;
 
 };
 

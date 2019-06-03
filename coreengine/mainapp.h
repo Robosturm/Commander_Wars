@@ -173,6 +173,8 @@ private:
     bool m_quit{false};
 
     QMutex m_Mutex{QMutex::RecursionMode::Recursive};
+
+    void createTrainingData();
 };
 
 #endif // MAINAPP_H

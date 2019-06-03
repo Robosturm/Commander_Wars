@@ -257,6 +257,16 @@ protected:
      */
     bool onSameIsland(Unit* pUnit1, Building* pBuilding);
     /**
+     * @brief onSameIsland
+     * @param movemnetType
+     * @param x
+     * @param y
+     * @param x1
+     * @param y1
+     * @return
+     */
+    bool onSameIsland(QString movemnetType, qint32 x, qint32 y, qint32 x1, qint32 y1);
+    /**
      * @brief getIsland
      * @param pUnit1
      * @return

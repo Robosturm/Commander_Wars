@@ -12,6 +12,8 @@
 #include "game/co.h"
 #include "network/tcpserver.h"
 
+#include "qfile.h"
+
 Mainapp* Mainapp::m_pMainapp;
 QRandomGenerator Mainapp::randGenerator;
 QThread Mainapp::m_Workerthread;
@@ -37,6 +39,8 @@ Mainapp::Mainapp(int argc, char* argv[])
     m_AudioWorker.start(QThread::Priority::LowPriority);
     m_Networkthread.start(QThread::Priority::NormalPriority);
     m_Workerthread.start(QThread::Priority::HighestPriority);
+
+    // createTrainingData();
 }
 
 Mainapp::~Mainapp()
@@ -334,4 +338,49 @@ bool Mainapp::getUseSeed()
 void Mainapp::setUseSeed(bool useSeed)
 {
     m_useSeed = useSeed;
+}
+
+void Mainapp::createTrainingData()
+{
+    QFile file("data.txt");
+    file.open(QIODevice::WriteOnly);
+    QTextStream stream(&file);
+    for (qint32 i = 0; i < 800; i++)
+    {
+        stream << QRandomGenerator::global()->bounded(4.0) << " ";
+        stream << QRandomGenerator::global()->bounded(0.4) << " ";
+        qint32 chance = QRandomGenerator::global()->bounded(0, 100);
+        if (chance < 40)
+        {
+            stream << 1 << " ";
+            stream << 0 << " ";
+            stream << 0 << " ";
+        }
+        else if (chance < 80)
+        {
+            stream << 0 << " ";
+            stream << 1 << " ";
+            stream << 0 << " ";
+        }
+        else
+        {
+            if (chance < 95)
+            {
+                stream << 0 << " ";
+                stream << 1 << " ";
+                stream << 1 << " ";
+            }
+            else
+            {
+                stream << 1 << " ";
+                stream << 0 << " ";
+                stream << 1 << " ";
+            }
+        }
+        stream << QRandomGenerator::global()->bounded(2.0) << " ";
+        stream << QRandomGenerator::global()->bounded(2.0) << " ";
+        stream << QRandomGenerator::global()->bounded(0, 2) << " ";
+        stream << QRandomGenerator::global()->bounded(20, 100) << " ";
+        stream << "\n";
+    }
 }

@@ -61,38 +61,29 @@ void VeryEasyAI::process()
     }
     else if (useBuilding(pBuildings)){}
     else if (buildCOUnit(pUnits)){}
-    else if (!transporting && captureBuildings(pUnits)){}
-    else if (!transporting && CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
-    else if (!transporting && CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
-    else if (!transporting && fireWithIndirectUnits(pUnits)){}
-    else if (!transporting && fireWithDirectUnits(pUnits)){}
-    else if (!transporting && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings)){}
+    else if (captureBuildings(pUnits)){}
+    else if (CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
+    else if (CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
+    else if (fireWithIndirectUnits(pUnits)){}
+    else if (fireWithDirectUnits(pUnits)){}
+    else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings)){}
+    else if (loadUnits(pUnits)){}
+    else if (moveTransporters(pUnits, pEnemyUnits, pEnemyBuildings)){}
+    else if (moveAwayFromProduction(pUnits)){}
+    else if (buildUnits(pBuildings, pUnits)){}
     else
     {
-        transporting = true;
-        if (loadUnits(pUnits)){}
-        else if (moveTransporters(pUnits, pEnemyUnits, pEnemyBuildings)){}
+        turnMode = TurnTime::endOfTurn;
+        if (useCOPower(pUnits, pEnemyUnits))
+        {
+            turnMode = TurnTime::onGoingTurn;
+        }
         else
         {
-            transporting = false;
-            if (moveAwayFromProduction(pUnits)){}
-            else if (buildUnits(pBuildings, pUnits)){}
-            else
-            {
-
-                turnMode = TurnTime::endOfTurn;
-                if (useCOPower(pUnits, pEnemyUnits))
-                {
-                    turnMode = TurnTime::onGoingTurn;
-                }
-                else
-                {
-                    finishTurn();
-                }
-
-            }
+            finishTurn();
         }
     }
+
     delete pBuildings;
     delete pUnits;
 
@@ -339,7 +330,12 @@ bool VeryEasyAI::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
             appendAttackTargetsIgnoreOwnUnits(pUnit, pEnemyUnits, targets);
             if (targets.size() == 0)
             {
-                appendRepairTargets(pUnit, pBuildings, targets);
+                if ((pUnit->getMaxAmmo1() > 0 && !pUnit->hasAmmo1()) ||
+                    (pUnit->getMaxAmmo2() > 0 && !pUnit->hasAmmo2()) ||
+                    (pUnit->getMaxFuel() > 0 && static_cast<float>(pUnit->getFuel()) / static_cast<float>(pUnit->getMaxFuel()) < 1.0f / 3.0f))
+                {
+                    appendRepairTargets(pUnit, pBuildings, targets);
+                }
             }
             // force resupply when low on fuel
             else if (static_cast<float>(pUnit->getFuel()) / static_cast<float>(pUnit->getMaxFuel()) < 1.0f / 3.0f)
@@ -541,12 +537,14 @@ bool VeryEasyAI::moveUnit(GameAction* pAction, Unit* pUnit, QStringList& actions
 
 bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits)
 {
+    GameMap* pMap = GameMap::getInstance();
     QVector<float> data;
     qint32 productionBuildings = 0;
     for (qint32 i = 0; i < pBuildings->size(); i++)
     {
         Building* pBuilding = pBuildings->at(i);
-        if (pBuilding->isProductionBuilding())
+        if (pBuilding->isProductionBuilding() &&
+            pMap->getTerrain(pBuilding->getX(), pBuilding->getY())->getUnit() == nullptr)
         {
             productionBuildings++;
         }

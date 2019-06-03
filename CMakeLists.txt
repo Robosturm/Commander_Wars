@@ -10,10 +10,6 @@ link_directories(${OXYGINE_LIBRARY_DIRS})
 add_subdirectory(3rd_party/oxygine-flow oxygine-flow)
 include_directories(${OXYGINE_FLOW_INCLUDE_DIRS})
 
-add_subdirectory(3rd_party/opennn opennn)
-include_directories(${CMAKE_SOURCE_DIR}/3rd_party/opennn)
-
-
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -199,7 +195,6 @@ set(${PROJECT_NAME}_SRCS
         ai/coreai_predefinedai.cpp
         ai/proxyai.cpp
         ai/normalai.cpp
-        ai/neuralnetwork.cpp
 
         # multiplayer
         multiplayer/lobbymenu.cpp
@@ -252,7 +247,6 @@ endif(WIN32)
 target_link_libraries(
         ${PROJECT_NAME}
         oxygine-flow
-        ${CMAKE_CURRENT_BINARY_DIR}/opennn/opennn/libopennn.a
 	${OXYGINE_CORE_LIBS}
         Qt5::Core
         Qt5::Qml
