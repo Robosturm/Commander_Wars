@@ -1294,7 +1294,7 @@ bool CoreAI::useBuilding(QmlVectorBuilding* pBuildings)
                         QVector<QPoint>* points = pData->getPoints();
                         qint32 index = -1;
                         QPoint target;
-                        qint32 maxValue = std::numeric_limits<qint32>::min();
+                        qint32 maxValue = std::numeric_limits<qint32>::lowest();
                         for (qint32 i2 = 0; i2 < points->size(); i2++)
                         {
                             Unit* pUnit = pMap->getTerrain(points->at(i2).x(), points->at(i2).y())->getUnit();

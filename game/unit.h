@@ -291,10 +291,13 @@ public slots:
      */
     qint32 getY() const;
     /**
-     * @brief getPosition
+     * @brief getPosition the unit position as qpoint
      * @return
      */
-    QPoint getPosition() const;
+    QPoint getPosition() const
+    {
+        return QPoint(getX(), getY());
+    }
     /**
      * @brief refill fills up all ammo and fuel to max
      */

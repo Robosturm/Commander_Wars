@@ -1395,11 +1395,6 @@ qint32 Unit::getY() const
     }
 }
 
-QPoint Unit::getPosition() const
-{
-    return QPoint(getX(), getY());
-}
-
 void Unit::refill()
 {
     setFuel(maxFuel);

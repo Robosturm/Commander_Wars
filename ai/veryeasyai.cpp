@@ -55,35 +55,35 @@ void VeryEasyAI::process()
     rebuildIsland(pUnits);
 
     // make the ai do stuff
-    if (useCOPower(pUnits, pEnemyUnits))
-    {
-        turnMode = TurnTime::onGoingTurn;
-    }
-    else if (useBuilding(pBuildings)){}
-    else if (buildCOUnit(pUnits)){}
-    else if (captureBuildings(pUnits)){}
-    else if (CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
-    else if (CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
-    else if (fireWithIndirectUnits(pUnits)){}
-    else if (fireWithDirectUnits(pUnits)){}
-    else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings)){}
-    else if (loadUnits(pUnits)){}
-    else if (moveTransporters(pUnits, pEnemyUnits, pEnemyBuildings)){}
-    else if (moveAwayFromProduction(pUnits)){}
-    else if (buildUnits(pBuildings, pUnits)){}
+    if (useCOPower(pUnits, pEnemyUnits)){}
     else
     {
-        turnMode = TurnTime::endOfTurn;
-        if (useCOPower(pUnits, pEnemyUnits))
-        {
-            turnMode = TurnTime::onGoingTurn;
-        }
+        turnMode = TurnTime::onGoingTurn;
+        if (useBuilding(pBuildings)){}
+        else if (buildCOUnit(pUnits)){}
+        else if (captureBuildings(pUnits)){}
+        else if (CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
+        else if (CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
+        else if (fireWithIndirectUnits(pUnits)){}
+        else if (fireWithDirectUnits(pUnits)){}
+        else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings)){}
+        else if (loadUnits(pUnits)){}
+        else if (moveTransporters(pUnits, pEnemyUnits, pEnemyBuildings)){}
+        else if (moveAwayFromProduction(pUnits)){}
+        else if (buildUnits(pBuildings, pUnits)){}
         else
         {
-            finishTurn();
+            turnMode = TurnTime::endOfTurn;
+            if (useCOPower(pUnits, pEnemyUnits))
+            {
+                turnMode = TurnTime::onGoingTurn;
+            }
+            else
+            {
+                finishTurn();
+            }
         }
     }
-
     delete pBuildings;
     delete pUnits;
 

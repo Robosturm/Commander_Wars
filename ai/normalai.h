@@ -197,7 +197,7 @@ protected:
      * @param pEnemyUnits
      * @return
      */
-    float calcExpectedFondsDamage(Unit& dummy, QmlVectorUnit* pEnemyUnits);
+    std::tuple<float, qint32> calcExpectedFondsDamage(qint32 posX, qint32 posY, Unit& dummy, QmlVectorUnit* pEnemyUnits, QVector<QVector4D> attackCount);
 private:
     /**
      * @brief m_EnemyUnits all enemy units that exists at the start of turn

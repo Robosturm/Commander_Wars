@@ -41,7 +41,7 @@ void QmlVectorUnit::sortExpensive()
     while (m_Vector.size() > 0)
     {
         qint32 item = 0;
-        qint32 value = std::numeric_limits<qint32>::min();
+        qint32 value = std::numeric_limits<qint32>::lowest();
         for (qint32 i = 0; i < m_Vector.size(); i++)
         {
             if (costs[i] > value)

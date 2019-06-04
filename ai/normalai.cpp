@@ -44,41 +44,44 @@ void NormalAi::process()
         updateEnemyData(pUnits);
         if (useCOPower(pUnits, pEnemyUnits))
         {
-            turnMode = TurnTime::onGoingTurn;
+            clearEnemyData();
         }
-        // todo build co unit
-        else if (CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
-        else if (CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
-        else if (captureBuildings(pUnits)){}
-        // indirect units
-        else if (fireWithUnits(pUnits, 2, std::numeric_limits<qint32>::max())){}
-        // direct units
-        else if (fireWithUnits(pUnits, 1, 1)){}
-        else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, 1)){}
-        else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 2, std::numeric_limits<qint32>::max())){}
-        else if (repairUnits(pUnits, pBuildings)){}
-        else if (loadUnits(pUnits)){}
-        else if (moveTransporters(pUnits, pEnemyUnits, pEnemyBuildings)){}
-        else if (moveAwayFromProduction(pUnits)){}
-        else if (buildUnits(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings)){}
         else
         {
-            clearEnemyData();
-            m_IslandMaps.clear();
-            turnMode = TurnTime::endOfTurn;
-            if (useCOPower(pUnits, pEnemyUnits))
-            {
-                turnMode = TurnTime::onGoingTurn;
-            }
+            turnMode = TurnTime::onGoingTurn;
+            // todo build co unit
+            if (CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
+            else if (CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
+            else if (captureBuildings(pUnits)){}
+            // indirect units
+            else if (fireWithUnits(pUnits, 2, std::numeric_limits<qint32>::max())){}
+            // direct units
+            else if (fireWithUnits(pUnits, 1, 1)){}
+            else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, 1)){}
+            else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 2, std::numeric_limits<qint32>::max())){}
+            else if (repairUnits(pUnits, pBuildings)){}
+            else if (loadUnits(pUnits)){}
+            else if (moveTransporters(pUnits, pEnemyUnits, pEnemyBuildings)){}
+            else if (moveAwayFromProduction(pUnits)){}
+            else if (buildUnits(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings)){}
             else
             {
-                turnMode = TurnTime::startOfTurn;
-                finishTurn();
+                clearEnemyData();
+                m_IslandMaps.clear();
+                turnMode = TurnTime::endOfTurn;
+                if (useCOPower(pUnits, pEnemyUnits))
+                {
+                    clearEnemyData();
+                    turnMode = TurnTime::onGoingTurn;
+                }
+                else
+                {
+                    turnMode = TurnTime::startOfTurn;
+                    finishTurn();
+                }
             }
         }
     }
-
-
 
     delete pBuildings;
     delete pUnits;
@@ -246,6 +249,8 @@ bool NormalAi::captureBuildings(QmlVectorUnit* pUnits)
                     GameAction* pAction = new GameAction(ACTION_CAPTURE);
                     pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
                     pAction->setMovepath(pfs.getPath(static_cast<qint32>(captures[targetIndex].x()), static_cast<qint32>(captures[targetIndex].y())));
+                    updatePoints.append(pUnit->getPosition());
+                    updatePoints.append(pAction->getActionTarget());
                     if (pAction->canBePerformed())
                     {
                         emit performAction(pAction);
@@ -296,6 +301,9 @@ bool NormalAi::fireWithUnits(QmlVectorUnit* pUnits, qint32 minfireRange, qint32 
                 }
                 if (pAction->isFinalStep())
                 {
+                    updatePoints.append(pUnit->getPosition());
+                    updatePoints.append(pAction->getActionTarget());
+                    updatePoints.append(QPoint(static_cast<qint32>(target.x()), static_cast<qint32>(target.y())));
                     emit performAction(pAction);
                     return true;
                 }
@@ -439,7 +447,7 @@ bool NormalAi::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnit
 }
 
 bool NormalAi::moveToUnloadArea(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits, QStringList& actions,
-                          QVector<QVector3D>& targets)
+                                QVector<QVector3D>& targets)
 {
     GameMap* pMap = GameMap::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
@@ -528,6 +536,8 @@ bool NormalAi::moveToUnloadArea(GameAction* pAction, Unit* pUnit, QmlVectorUnit*
             }
             while (unloaded);
             addMenuItemData(pAction, ACTION_WAIT, 0);
+            updatePoints.append(pUnit->getPosition());
+            updatePoints.append(pAction->getActionTarget());
             emit performAction(pAction);
             return true;
         }
@@ -591,6 +601,8 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
         {
             pAction->setMovepath(turnPfs.getPath(targetFields.x(), targetFields.y()));
             pAction->setActionID(ACTION_LOAD);
+            updatePoints.append(pUnit->getPosition());
+            updatePoints.append(pAction->getActionTarget());
             emit performAction(pAction);
             return true;
         }
@@ -599,19 +611,21 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
             QVector<QPoint> movePath = turnPfs.getClosestReachableMovePath(targetFields);
             pAction->setMovepath(movePath);
             pAction->setActionID(ACTION_WAIT);
+            updatePoints.append(pUnit->getPosition());
+            updatePoints.append(pAction->getActionTarget());
             emit performAction(pAction);
             return true;
         }
         else
         {
-           QVector<QPoint> movePath = turnPfs.getClosestReachableMovePath(targetFields);
-           if (movePath.size() == 0)
-           {
-               movePath.append(QPoint(pUnit->getX(), pUnit->getY()));
-           }
-           qint32 idx = getMoveTargetField(pUnit, pUnits, movePath);
-           if (idx < 0)
-           {
+            QVector<QPoint> movePath = turnPfs.getClosestReachableMovePath(targetFields);
+            if (movePath.size() == 0)
+            {
+                movePath.append(QPoint(pUnit->getX(), pUnit->getY()));
+            }
+            qint32 idx = getMoveTargetField(pUnit, pUnits, movePath);
+            if (idx < 0)
+            {
                 std::tuple<QPoint, float, bool> target = moveToSafety(pUnit, pUnits, turnPfs, movePath[0]);
                 QPoint ret = std::get<0>(target);
                 float minDamage = std::get<1>(target);
@@ -629,44 +643,46 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
                 {
                     pAction->setMovepath(turnPfs.getPath(ret.x(), ret.y()));
                 }
-           }
-           else
-           {
-               pAction->setMovepath(turnPfs.getPath(movePath[idx].x(), movePath[idx].y()));
-           }
-           if (pAction->getMovePath().size() > 0)
-           {
-               if (actions.contains(ACTION_RATION))
-               {
-                   pAction->setActionID(ACTION_RATION);
-                   if (pAction->canBePerformed())
-                   {
-                       emit performAction(pAction);
-                       return true;
-                   }
-               }
-               if (actions.contains(ACTION_STEALTH))
-               {
-                   pAction->setActionID(ACTION_STEALTH);
-                   if (pAction->canBePerformed())
-                   {
-                       emit performAction(pAction);
-                       return true;
-                   }
-               }
-               if (actions.contains(ACTION_UNSTEALTH))
-               {
-                   pAction->setActionID(ACTION_UNSTEALTH);
-                   if (pAction->canBePerformed())
-                   {
-                       emit performAction(pAction);
-                       return true;
-                   }
-               }
-               pAction->setActionID(ACTION_WAIT);
-               emit performAction(pAction);
-               return true;
-           }
+            }
+            else
+            {
+                pAction->setMovepath(turnPfs.getPath(movePath[idx].x(), movePath[idx].y()));
+            }
+            if (pAction->getMovePath().size() > 0)
+            {
+                updatePoints.append(pUnit->getPosition());
+                updatePoints.append(pAction->getActionTarget());
+                if (actions.contains(ACTION_RATION))
+                {
+                    pAction->setActionID(ACTION_RATION);
+                    if (pAction->canBePerformed())
+                    {
+                        emit performAction(pAction);
+                        return true;
+                    }
+                }
+                if (actions.contains(ACTION_STEALTH))
+                {
+                    pAction->setActionID(ACTION_STEALTH);
+                    if (pAction->canBePerformed())
+                    {
+                        emit performAction(pAction);
+                        return true;
+                    }
+                }
+                if (actions.contains(ACTION_UNSTEALTH))
+                {
+                    pAction->setActionID(ACTION_UNSTEALTH);
+                    if (pAction->canBePerformed())
+                    {
+                        emit performAction(pAction);
+                        return true;
+                    }
+                }
+                pAction->setActionID(ACTION_WAIT);
+                emit performAction(pAction);
+                return true;
+            }
         }
     }
     delete pAction;
@@ -690,6 +706,10 @@ bool NormalAi::suicide(GameAction* pAction, Unit* pUnit, UnitPathFindingSystem& 
                                                      static_cast<qint32>(target.y())));
         if (pAction->isFinalStep())
         {
+            updatePoints.append(pUnit->getPosition());
+            updatePoints.append(pAction->getActionTarget());
+            updatePoints.append(QPoint(static_cast<qint32>(target.x()),
+                                       static_cast<qint32>(target.y())));
             emit performAction(pAction);
             return true;
         }
@@ -759,50 +779,50 @@ qint32 NormalAi::getBestAttackTarget(Unit* pUnit, QmlVectorUnit* pUnits, QVector
     qint32 minfireRange = pUnit->getMinRange();
     for (qint32 i = 0; i < ret.size(); i++)
     {
-       Unit* pEnemy = pMap->getTerrain(static_cast<qint32>(ret[i].x()), static_cast<qint32>(ret[i].y()))->getUnit();
+        Unit* pEnemy = pMap->getTerrain(static_cast<qint32>(ret[i].x()), static_cast<qint32>(ret[i].y()))->getUnit();
 
-       qint32 fondsDamage = 0;
-       float newHp = 0.0f;
-       if (pEnemy != nullptr)
-       {
-           newHp = pEnemy->getHp() - static_cast<float>(ret[i].w());
-           fondsDamage = static_cast<qint32>(ret[i].z() * calculateCaptureBonus(pEnemy, newHp));
-           if (minfireRange > 1)
-           {
-               fondsDamage *= 2.0f;
-           }
-           if (newHp <= 0)
-           {
-               fondsDamage *= 2.0f;
-           }
-           if (pEnemy->getMinRange() > 1)
-           {
-               fondsDamage *= 3.0f;
-           }
+        qint32 fondsDamage = 0;
+        float newHp = 0.0f;
+        if (pEnemy != nullptr)
+        {
+            newHp = pEnemy->getHp() - static_cast<float>(ret[i].w());
+            fondsDamage = static_cast<qint32>(ret[i].z() * calculateCaptureBonus(pEnemy, newHp));
+            if (minfireRange > 1)
+            {
+                fondsDamage *= 2.0f;
+            }
+            if (newHp <= 0)
+            {
+                fondsDamage *= 2.0f;
+            }
+            if (pEnemy->getMinRange() > 1)
+            {
+                fondsDamage *= 3.0f;
+            }
 
-       }
-       else
-       {
-           fondsDamage = static_cast<qint32>(ret[i].z());
-       }
-       QPoint moveTarget(static_cast<qint32>(moveTargetFields[i].x()), static_cast<qint32>(moveTargetFields[i].y()));
-       fondsDamage -= calculateCounterDamage(pUnit, pUnits, moveTarget, pEnemy, ret[i].w());
-       qint32 targetDefense = pMap->getTerrain(static_cast<qint32>(ret[i].x()), static_cast<qint32>(ret[i].y()))->getDefense(pUnit);
-       if (fondsDamage >= 0)
-       {
-           if (fondsDamage > currentDamage)
-           {
-               currentDamage = fondsDamage;
-               target = i;
-               deffense = targetDefense;
-           }
-           else if (fondsDamage == currentDamage && targetDefense > deffense)
-           {
-               currentDamage = fondsDamage;
-               target = i;
-               deffense = targetDefense;
-           }
-       }
+        }
+        else
+        {
+            fondsDamage = static_cast<qint32>(ret[i].z());
+        }
+        QPoint moveTarget(static_cast<qint32>(moveTargetFields[i].x()), static_cast<qint32>(moveTargetFields[i].y()));
+        fondsDamage -= calculateCounterDamage(pUnit, pUnits, moveTarget, pEnemy, ret[i].w());
+        qint32 targetDefense = pMap->getTerrain(static_cast<qint32>(ret[i].x()), static_cast<qint32>(ret[i].y()))->getDefense(pUnit);
+        if (fondsDamage >= 0)
+        {
+            if (fondsDamage > currentDamage)
+            {
+                currentDamage = fondsDamage;
+                target = i;
+                deffense = targetDefense;
+            }
+            else if (fondsDamage == currentDamage && targetDefense > deffense)
+            {
+                currentDamage = fondsDamage;
+                target = i;
+                deffense = targetDefense;
+            }
+        }
     }
     return target;
 }
@@ -967,7 +987,7 @@ void NormalAi::updateEnemyData(QmlVectorUnit* pUnits)
                     qAbs(updatePoints[i].y() - m_EnemyUnits[i2]->getY()) <=
                     m_EnemyUnits[i2]->getMovementpoints(QPoint(m_EnemyUnits[i2]->getX(), m_EnemyUnits[i2]->getY())))
                 {
-                    m_EnemyPfs[i2] = new UnitPathFindingSystem(m_EnemyUnits[i].get());
+                    m_EnemyPfs[i2] = new UnitPathFindingSystem(m_EnemyUnits[i2].get());
                     m_EnemyPfs[i2]->explore();
                 }
             }
@@ -1086,7 +1106,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
             {
                 dmg2 = pWeaponManager->getBaseDamage(pUnit->getWeapon2ID(), pEnemyUnit);
             }
-            if ((dmg1 > 30.0f || dmg2 > 30.0f) &&
+            if ((dmg1 > 45.0f || dmg2 > 45.0f) &&
                 pEnemyUnit->getMovementpoints(QPoint(pEnemyUnit->getX(), pEnemyUnit->getY())) - pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY())) < 2)
             {
                 if (onSameIsland(pUnit, pEnemyUnits->at(i2)))
@@ -1095,11 +1115,11 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                 }
                 attackCount[i2].setX(attackCount[i2].x() + 1);
             }
-            if (dmg1 > 50.0f || dmg2 > 50.0f)
+            if (dmg1 > 55.0f || dmg2 > 55.0f)
             {
                 attackCount[i2].setZ(attackCount[i2].z() + 1);
             }
-            if (dmg1 > 70.0f || dmg2 > 70.0f)
+            if (dmg1 > 75.0f || dmg2 > 75.0f)
             {
                 attackCount[i2].setW(attackCount[i2].w() + 1);
             }
@@ -1128,11 +1148,15 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
     data[9] = infantryUnits;
 
     GameAction* pAction = new GameAction(ACTION_BUILD_UNITS);
-    float bestScore = std::numeric_limits<float>::min();
-    float variance = 5.0;
+    float bestScore = std::numeric_limits<float>::lowest();
     QVector<qint32> buildingIdx;
     QVector<qint32> unitIDx;
     QVector<float> scores;
+    float variance = pMap->getCurrentDay() - 1;
+    if (variance > 10)
+    {
+        variance = 10.0f;
+    }
     for (qint32 i = 0; i < pBuildings->size(); i++)
     {
         Building* pBuilding = pBuildings->at(i);
@@ -1150,75 +1174,94 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                     if (pData->getEnabledList()[i2])
                     {
                         Unit dummy(pData->getActionIDs()[i2], m_pPlayer, false);
-                        if (!dummy.getWeapon1ID().isEmpty() ||
-                            !dummy.getWeapon2ID().isEmpty())
+                        bool canMove = false;
+                        QmlVectorPoint* pFields = Mainapp::getCircle(1, 1);
+                        for (qint32 i3 = 0; i3 < pFields->size(); i3++)
                         {
-                            if (dummy.getBaseMaxRange() > 1)
+                            qint32 x = pBuilding->getX() + pFields->at(i3).x();
+                            qint32 y = pBuilding->getY() + pFields->at(i3).y();
+                            if (pMap->onMap(x, y) &&
+                                dummy.getBaseMovementCosts(x, y) > 0)
                             {
-                                data[2] = 1.0;
-                                data[3] = 0.0;
+                                canMove = true;
+                                break;
                             }
-                            else
+                        }
+                        delete pFields;
+                        if (canMove)
+                        {
+                            if (!dummy.getWeapon1ID().isEmpty() ||
+                                !dummy.getWeapon2ID().isEmpty())
                             {
-                                data[2] = 0.0;
-                                data[3] = 1.0;
-                            }
-                            if (dummy.getActionList().contains(ACTION_CAPTURE))
-                            {
-                                data[4] = 1.0;
-                            }
-                            else
-                            {
-                                data[4] = 0.0;
-                            }
-                            data[5] = dummy.getUnitCosts() / fondsPerFactory;
-                            if (pEnemyBuildings->size() > 0 && enemeyCount > 0)
-                            {
-                                data[6] = pBuildings->size() / (static_cast<float>(pEnemyBuildings->size()) / static_cast<float>(enemeyCount));
-                            }
-                            else
-                            {
-                                data[6] = 0.0;
-                            }
-
-                            if (dummy.getBonusOffensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0 ||
-                                dummy.getBonusDefensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0)
-                            {
-                                data[10] = 1;
-                            }
-                            else
-                            {
-                                data[10] = 0;
-                            }
-                            data[11] = dummy.getMovementpoints(QPoint(pBuilding->getX(), pBuilding->getY()));
-                            float score = calcBuildScore(data);
-
-                            if (score > bestScore)
-                            {
-                                bestScore = score;
-                                buildingIdx.append(i);
-                                unitIDx.append(i2);
-                                scores.append(score);
-                                qint32 index = 0;
-                                while (index < scores.size())
+                                if (dummy.getBaseMaxRange() > 1)
                                 {
-                                    if (scores[index] < bestScore - variance)
+                                    data[2] = 1.0;
+                                    data[3] = 0.0;
+                                }
+                                else
+                                {
+                                    data[2] = 0.0;
+                                    data[3] = 1.0;
+                                }
+                                if (dummy.getActionList().contains(ACTION_CAPTURE))
+                                {
+                                    data[4] = 1.0;
+                                }
+                                else
+                                {
+                                    data[4] = 0.0;
+                                }
+                                data[5] = dummy.getUnitCosts() / fondsPerFactory;
+                                if (pEnemyBuildings->size() > 0 && enemeyCount > 0)
+                                {
+                                    data[6] = pBuildings->size() / (static_cast<float>(pEnemyBuildings->size()) / static_cast<float>(enemeyCount));
+                                }
+                                else
+                                {
+                                    data[6] = 0.0;
+                                }
+                                auto damageData = calcExpectedFondsDamage(pBuilding->getX(), pBuilding->getY(), dummy, pEnemyUnits, attackCount);
+                                data[7] = std::get<1>(damageData);
+                                data[8] =  std::get<0>(damageData);
+
+                                if (dummy.getBonusOffensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0 ||
+                                    dummy.getBonusDefensive(QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0)
+                                {
+                                    data[10] = 1;
+                                }
+                                else
+                                {
+                                    data[10] = 0;
+                                }
+                                data[11] = dummy.getMovementpoints(QPoint(pBuilding->getX(), pBuilding->getY()));
+                                float score = calcBuildScore(data);
+                                if (score > bestScore)
+                                {
+                                    bestScore = score;
+                                    buildingIdx.append(i);
+                                    unitIDx.append(i2);
+                                    scores.append(score);
+                                    qint32 index = 0;
+                                    while (index < scores.size())
                                     {
-                                        buildingIdx.removeAt(index);
-                                        unitIDx.removeAt(index);
-                                        scores.removeAt(index);
-                                    }
-                                    else
-                                    {
-                                        index++;
+                                        if (scores[index] < bestScore - variance)
+                                        {
+                                            buildingIdx.removeAt(index);
+                                            unitIDx.removeAt(index);
+                                            scores.removeAt(index);
+                                        }
+                                        else
+                                        {
+                                            index++;
+                                        }
                                     }
                                 }
-                            }
-                            else if (score >= bestScore - variance)
-                            {
-                                buildingIdx.append(i);
-                                unitIDx.append(i2);
-                                scores.append(score);
+                                else if (score >= bestScore - variance)
+                                {
+                                    buildingIdx.append(i);
+                                    unitIDx.append(i2);
+                                    scores.append(score);
+                                }
                             }
                         }
                     }
@@ -1239,6 +1282,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
         // produce the unit
         if (pAction->isFinalStep())
         {
+            updatePoints.append(pAction->getActionTarget());
             emit performAction(pAction);
             return true;
         }
@@ -1247,55 +1291,115 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
     return false;
 }
 
-float NormalAi::calcExpectedFondsDamage(Unit& dummy, QmlVectorUnit* pEnemyUnits)
+std::tuple<float, qint32> NormalAi::calcExpectedFondsDamage(qint32 posX, qint32 posY, Unit& dummy, QmlVectorUnit* pEnemyUnits, QVector<QVector4D> attackCount)
 {
-//    WeaponManager* pWeaponManager = WeaponManager::getInstance();
-//    qint32 notAttackableCount = 0;
-//    float damageCount = 0;
-//    float attacksCount = 0;
-//    for (qint32 i3 = 0; i3 < pEnemyUnits->size(); i3++)
-//    {
-//        Unit* pEnemyUnit = pEnemyUnits->at(i3);
-//        float dmg1 = 0.0f;
-//        if (!dummy.getWeapon1ID().isEmpty())
-//        {
-//            dmg1 = pWeaponManager->getBaseDamage(dummy.getWeapon1ID(), pEnemyUnit);
-//        }
-//        float dmg2 = 0.0f;
-//        if (!dummy.getWeapon2ID().isEmpty())
-//        {
-//            dmg2 = pWeaponManager->getBaseDamage(dummy.getWeapon2ID(), pEnemyUnit);
-//        }
-
-
-//    }
-//    data[7] = notAttackableCount;
-//    if (attacksCount > 0)
-//    {
-//        data[8] = static_cast<float>(damageCount / attacksCount);
-//    }
-//    else
-//    {
-//        data[8] = 0;
-//    }
+    WeaponManager* pWeaponManager = WeaponManager::getInstance();
+    qint32 notAttackableCount = 0;
+    float damageCount = 0;
+    float attacksCount = 0;
+    for (qint32 i3 = 0; i3 < pEnemyUnits->size(); i3++)
+    {
+        Unit* pEnemyUnit = pEnemyUnits->at(i3);
+        float dmg = 0.0f;
+        if (!dummy.getWeapon1ID().isEmpty())
+        {
+            dmg = pWeaponManager->getBaseDamage(dummy.getWeapon1ID(), pEnemyUnit);
+        }
+        if (!dummy.getWeapon2ID().isEmpty())
+        {
+            float dmg2 = pWeaponManager->getBaseDamage(dummy.getWeapon2ID(), pEnemyUnit);
+            if (dmg2 > dmg)
+            {
+                dmg = dmg2;
+            }
+        }
+        if (dmg > 45.0f)
+        {
+            if (attackCount[i3].y() == 0.0f)
+            {
+                notAttackableCount++;
+            }
+        }
+        if (dmg > pEnemyUnit->getHp() * 10.0f)
+        {
+            dmg = pEnemyUnit->getHp() * 10.0f;
+        }
+        if (dmg > 0.0f)
+        {
+            float counterDmg = 0;
+            if (!pEnemyUnit->getWeapon1ID().isEmpty())
+            {
+                counterDmg = pWeaponManager->getBaseDamage(pEnemyUnit->getWeapon1ID(), &dummy);
+            }
+            if (!pEnemyUnit->getWeapon2ID().isEmpty())
+            {
+                float dmg2 = pWeaponManager->getBaseDamage(pEnemyUnit->getWeapon2ID(), &dummy);
+                if (dmg2 > counterDmg)
+                {
+                    counterDmg = dmg2;
+                }
+            }
+            if (counterDmg > 100.0f)
+            {
+                counterDmg = 100.0f;
+            }
+            float resDamage = 0;
+            float myMovepoints = dummy.getBaseMovementPoints();
+            float enemyMovepoints = pEnemyUnit->getBaseMovementPoints();
+            float myFirerange = dummy.getMaxRange();
+            float enemyFirerange = dummy.getMaxRange();
+            float smoothing = 3;
+            if (myMovepoints + myFirerange >= enemyMovepoints)
+            {
+                resDamage = dmg / (pEnemyUnit->getHp() * 10.0f) * pEnemyUnit->getUnitValue() * (myMovepoints + myFirerange + smoothing) / (enemyMovepoints + enemyFirerange + smoothing) -
+                            counterDmg / 100.0f * pEnemyUnit->getUnitValue();
+            }
+            else
+            {
+                resDamage = dmg / (pEnemyUnit->getHp() * 10.0f) * pEnemyUnit->getUnitValue() -
+                            counterDmg / 100.0f * pEnemyUnit->getUnitValue() * (enemyMovepoints + enemyFirerange + smoothing) / (myMovepoints + myFirerange + smoothing);
+            }
+            float factor = 1.0f;
+            createIslandMap(dummy.getMovementType(), dummy.getUnitID());
+            if (onSameIsland(dummy.getMovementType(), posX, posY, pEnemyUnit->getX(), pEnemyUnit->getY()))
+            {
+                factor = (2.0f - (Mainapp::getDistance(dummy.getPosition(), pEnemyUnit->getPosition()) / static_cast<float>(myMovepoints) * (2.0f / 5.0f)));
+            }
+            else
+            {
+                factor = (1.0f - (Mainapp::getDistance(dummy.getPosition(), pEnemyUnit->getPosition()) / static_cast<float>(myMovepoints) * (1.0f / 3.0f)));
+            }
+            if (factor < 0)
+            {
+                factor = 0;
+            }
+            damageCount += resDamage * factor;
+            attacksCount++;
+        }
+    }
+    if (attacksCount <= 0)
+    {
+        attacksCount = 1;
+    }
+    return std::tuple<float, qint32>(damageCount / attacksCount, notAttackableCount);
 }
 
 float NormalAi::calcBuildScore(QVector<float>& data)
 {
     static float min = std::numeric_limits<float>::max();
-    static float max = std::numeric_limits<float>::min();
+    static float max = std::numeric_limits<float>::lowest();
     float score = 0;
-    // used index 0, 1, 2, 3, 4, 5, 6, 7, 9, 10
+    // used index 0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11
     if (data[2] == 1.0f)
     {
         // indirect unit
-        if (data[0] > 4.0f)
+        if (data[0] > 1.5f)
         {
-            score += 3 * (data[0] - 4.0f) / 0.1f;
+            score += 3 * (data[0] - 1.5f) / 0.1f;
         }
-        else if (data[0] < 2.0f)
+        else if (data[0] < 1.5f)
         {
-            score -= 2 * (2.0f - data[0]) / 0.1f;
+            score -= 2 * (1.5f - data[0]) / 0.1f;
         }
     }
     else if (data[3] == 1.0f)
@@ -1305,19 +1409,19 @@ float NormalAi::calcBuildScore(QVector<float>& data)
         {
             score += 3 * (2.0f - data[0]) / 0.2f;
         }
-        else if (data[0] > 4.0f)
+        else if (data[0] > 2.0f)
         {
-            score -= 2 * (data[0] - 4.0f) / 0.1f;
+            score -= 2 * (data[0] - 2.0f) / 0.1f;
         }
     }
     // apply damage bonus
-    score += data[8] / 2.5f;
+    score += data[8] / 100.0f;
     // infantry bonus
     if (data[4] == 1.0f)
     {
         if (data[9] < 6 && data[6] < 1.25f)
         {
-          score += (5 - data[9]) * 4;
+            score += (5 - data[9]) * 4;
         }
         else if (data[1] < 0.4f)
         {
@@ -1330,7 +1434,7 @@ float NormalAi::calcBuildScore(QVector<float>& data)
     }
     if (data[5] > 3.0f)
     {
-       score -= (data[5] - 3.0f) * 2;
+        score -= (data[5] - 3.0f) * 2;
     }
     else if (data[5] < 0.8f)
     {
@@ -1341,7 +1445,7 @@ float NormalAi::calcBuildScore(QVector<float>& data)
         score += (3 - data[5]) / 0.2f;
     }
     // apply movement bonus
-    score += data[11] * 2;
+    score += data[11] * 0.5f;
     // apply not attackable unit bonus
     score += data[7] * 30.0f;
     // apply co buff bonus
