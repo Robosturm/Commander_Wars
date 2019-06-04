@@ -37,6 +37,10 @@ void CO::init()
 
 void CO::setCOUnit(Unit* pUnit)
 {
+    if (pUnit == nullptr && m_pCOUnit != nullptr)
+    {
+        setPowerFilled(powerFilled / 2.0f);
+    }
     m_pCOUnit = pUnit;
 }
 

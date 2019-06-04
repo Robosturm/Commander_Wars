@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include <QVector>
+#include <QTime>
 
 #include "oxygine-framework.h"
 
@@ -21,6 +22,7 @@ public:
     {
         return m_currentFolder;
     }
+    virtual void update(const oxygine::UpdateState& us) override;
 signals:
     void changeSelection(qint32 index);
     void itemClicked(QString item);
@@ -38,6 +40,8 @@ private:
     QStringList files;
     qint32 currentStartIndex{0};
     oxygine::spBox9Sprite m_SelectedItem;
+    qint32 spin = 0;
+    QTime timer;
 
 };
 

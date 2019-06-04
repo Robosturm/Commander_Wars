@@ -177,10 +177,6 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return 0;
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                {
-                    return 0;
-                }
                 break;
         }
         return -20;
@@ -204,7 +200,7 @@ var Constructor = function()
                 }
                 break;
         }
-        return 15;
+        return 10;
     };
 
     this.getCOArmy = function()
