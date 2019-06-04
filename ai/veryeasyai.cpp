@@ -125,19 +125,22 @@ bool VeryEasyAI::buildCOUnit(QmlVectorUnit* pUnits)
                     pAction->setActionID(ACTION_CO_UNIT_1);
                 }
                 CO* pCO = m_pPlayer->getCO(i2);
-                if (pCO != nullptr)
+
+                if (pCO != nullptr &&
+                    pCO->getCOUnit() == nullptr)
                 {
                     data[0] = pCOSpriteManager->getCOIndex(pCO->getCoID());
-                }
-                data[1] = pUnitSpriteManager->getUnitIndex(pUnit->getUnitID());
-                float ret = m_COUnitTree.getDecision(data);
-                if (ret == 1.0f)
-                {
-                    pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
-                    if (pAction->canBePerformed())
+
+                    data[1] = pUnitSpriteManager->getUnitIndex(pUnit->getUnitID());
+                    float ret = m_COUnitTree.getDecision(data);
+                    if (ret == 1.0f)
                     {
-                        emit performAction(pAction);
-                        return true;
+                        pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+                        if (pAction->canBePerformed())
+                        {
+                            emit performAction(pAction);
+                            return true;
+                        }
                     }
                 }
             }

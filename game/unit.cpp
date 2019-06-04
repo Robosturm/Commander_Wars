@@ -1788,6 +1788,15 @@ void Unit::updateIconTweens()
     }
 }
 
+bool Unit::hasWeapons()
+{
+    if (!weapon1ID.isEmpty() || !weapon2ID.isEmpty())
+    {
+        return true;
+    }
+    return false;
+}
+
 qint32 Unit::getUniqueID() const
 {
     return m_UniqueID;

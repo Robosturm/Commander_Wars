@@ -13,6 +13,9 @@
 #include "resource_management/weaponmanager.h"
 
 const float NormalAi::minMovementDamage = 0.3f;
+const float NormalAi::notAttackableDamage = 45.0f;
+const float NormalAi::midDamage = 55.0f;
+const float NormalAi::highDamage = 65.0f;
 
 NormalAi::NormalAi()
     : CoreAI (BaseGameInputIF::AiTypes::Normal)
@@ -49,8 +52,8 @@ void NormalAi::process()
         else
         {
             turnMode = TurnTime::onGoingTurn;
-            // todo build co unit
-            if (CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
+            if (buildCOUnit(pUnits)){}
+            else if (CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
             else if (CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
             else if (captureBuildings(pUnits)){}
             // indirect units
@@ -87,6 +90,66 @@ void NormalAi::process()
     delete pUnits;
     delete pEnemyBuildings;
     delete pEnemyUnits;
+}
+
+bool NormalAi::buildCOUnit(QmlVectorUnit* pUnits)
+{
+    GameAction* pAction = new GameAction();
+    for (quint8 i2 = 0; i2 < 2; i2++)
+    {
+        if (i2 == 0)
+        {
+            pAction->setActionID(ACTION_CO_UNIT_0);
+        }
+        else
+        {
+            pAction->setActionID(ACTION_CO_UNIT_1);
+        }
+        CO* pCO = m_pPlayer->getCO(i2);
+        qint32 bestScore = 0;
+        qint32 unitIdx = -1;
+        if (pCO != nullptr &&
+            pCO->getCOUnit() == nullptr)
+        {
+            for (qint32 i = 0; i < pUnits->size(); i++)
+            {
+                Unit* pUnit = pUnits->at(i);
+                pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+                if (pAction->canBePerformed())
+                {
+                    if (!pUnit->getHasMoved())
+                    {
+                        if (pUnit->hasWeapons())
+                        {
+                            qint32 score = 0;
+                            if (pCO->getOffensiveBonus(pUnit, QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0 ||
+                                pCO->getDeffensiveBonus(pUnit, QPoint(-1, -1), nullptr, QPoint(-1, -1), false) > 0 ||
+                                pCO->getFirerangeModifier(pUnit, QPoint(-1, -1)) > 0)
+                            {
+                                score += pUnit->getUnitValue() * 1.1;
+                            }
+                            score += pUnit->getUnitValue();
+                            score -= 1000 * pUnit->getUnitRank();
+                            if (score > bestScore)
+                            {
+                                bestScore = score;
+                                unitIdx = i;
+                            }
+                        }
+                    }
+                }
+            }
+            if (unitIdx > 0 && bestScore > 5000)
+            {
+                Unit* pUnit = pUnits->at(unitIdx);
+                pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+                emit performAction(pAction);
+                return true;
+            }
+        }
+    }
+    delete pAction;
+    return false;
 }
 
 bool NormalAi::isUsingUnit(Unit* pUnit)
@@ -1106,7 +1169,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
             {
                 dmg2 = pWeaponManager->getBaseDamage(pUnit->getWeapon2ID(), pEnemyUnit);
             }
-            if ((dmg1 > 45.0f || dmg2 > 45.0f) &&
+            if ((dmg1 > notAttackableDamage || dmg2 > notAttackableDamage) &&
                 pEnemyUnit->getMovementpoints(QPoint(pEnemyUnit->getX(), pEnemyUnit->getY())) - pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY())) < 2)
             {
                 if (onSameIsland(pUnit, pEnemyUnits->at(i2)))
@@ -1115,11 +1178,11 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                 }
                 attackCount[i2].setX(attackCount[i2].x() + 1);
             }
-            if (dmg1 > 55.0f || dmg2 > 55.0f)
+            if (dmg1 > midDamage || dmg2 > midDamage)
             {
                 attackCount[i2].setZ(attackCount[i2].z() + 1);
             }
-            if (dmg1 > 75.0f || dmg2 > 75.0f)
+            if (dmg1 > highDamage || dmg2 > highDamage)
             {
                 attackCount[i2].setW(attackCount[i2].w() + 1);
             }
@@ -1313,13 +1376,6 @@ std::tuple<float, qint32> NormalAi::calcExpectedFondsDamage(qint32 posX, qint32 
                 dmg = dmg2;
             }
         }
-        if (dmg > 45.0f)
-        {
-            if (attackCount[i3].y() == 0.0f)
-            {
-                notAttackableCount++;
-            }
-        }
         if (dmg > pEnemyUnit->getHp() * 10.0f)
         {
             dmg = pEnemyUnit->getHp() * 10.0f;
@@ -1360,14 +1416,64 @@ std::tuple<float, qint32> NormalAi::calcExpectedFondsDamage(qint32 posX, qint32 
                             counterDmg / 100.0f * pEnemyUnit->getUnitValue() * (enemyMovepoints + enemyFirerange + smoothing) / (myMovepoints + myFirerange + smoothing);
             }
             float factor = 1.0f;
+            if (dmg > highDamage)
+            {
+                factor += (attackCount[i3].w() + smoothing) / (attackCount[i3].x() + smoothing);
+            }
+            else if (dmg > midDamage)
+            {
+                factor += (attackCount[i3].z() + smoothing) / (attackCount[i3].z() + smoothing);
+            }
             createIslandMap(dummy.getMovementType(), dummy.getUnitID());
             if (onSameIsland(dummy.getMovementType(), posX, posY, pEnemyUnit->getX(), pEnemyUnit->getY()))
             {
-                factor = (2.0f - (Mainapp::getDistance(dummy.getPosition(), pEnemyUnit->getPosition()) / static_cast<float>(myMovepoints) * (2.0f / 5.0f)));
+                factor += (2.0f - (Mainapp::getDistance(dummy.getPosition(), pEnemyUnit->getPosition()) / static_cast<float>(myMovepoints) * (2.0f / 5.0f)));
+                float notAttackableValue = 0.0f;
+                if (dmg > highDamage)
+                {
+                    notAttackableValue = 2.0f;
+                }
+                else if (dmg > midDamage)
+                {
+                    notAttackableValue = 1.5f;
+                }
+                else if (dmg > notAttackableDamage)
+                {
+                    notAttackableValue = 1.0f;
+                }
+                if (attackCount[i3].y() == 0.0f)
+                {
+                    notAttackableCount += notAttackableValue;
+                }
+                else if (attackCount[i3].x() == 0.0f)
+                {
+                    notAttackableCount  += notAttackableValue / 2.0f;
+                }
             }
             else
             {
-                factor = (1.0f - (Mainapp::getDistance(dummy.getPosition(), pEnemyUnit->getPosition()) / static_cast<float>(myMovepoints) * (1.0f / 3.0f)));
+                factor += (1.0f - (Mainapp::getDistance(dummy.getPosition(), pEnemyUnit->getPosition()) / static_cast<float>(myMovepoints) * (1.0f / 3.0f)));
+                float notAttackableValue = 0.0f;
+                if (dmg > highDamage)
+                {
+                    notAttackableValue = 2.0f;
+                }
+                else if (dmg > midDamage)
+                {
+                    notAttackableValue = 1.5f;
+                }
+                else if (dmg > notAttackableDamage)
+                {
+                    notAttackableValue = 1.0f;
+                }
+                if (attackCount[i3].y() == 0.0f)
+                {
+                    notAttackableCount += notAttackableValue / 2.0f;
+                }
+                else if (attackCount[i3].x() == 0.0f)
+                {
+                    notAttackableCount  += notAttackableValue / 4.0f;
+                }
             }
             if (factor < 0)
             {

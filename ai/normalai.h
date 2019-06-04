@@ -45,6 +45,17 @@ signals:
 public slots:
     virtual void process() override;
 protected:
+    /**
+     * @brief buildCOUnit
+     * @param pUnits
+     * @return
+     */
+    bool buildCOUnit(QmlVectorUnit* pUnits);
+    /**
+     * @brief isUsingUnit
+     * @param pUnit
+     * @return
+     */
     bool isUsingUnit(Unit* pUnit);
     /**
      * @brief moveUnits
@@ -216,7 +227,9 @@ private:
      */
     QVector<QPointF> m_VirtualEnemyData;
 
-
+    static const float notAttackableDamage;
+    static const float midDamage;
+    static const float highDamage;
 };
 
 #endif // NORMALAI_H

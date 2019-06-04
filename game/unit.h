@@ -101,6 +101,7 @@ public:
 signals:
 
 public slots:
+    bool hasWeapons();
     /**
      * @brief getUniqueID
      * @return returns the map wide unique id of this unit.
