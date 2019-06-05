@@ -64,6 +64,8 @@ var Constructor = function()
                 return 85;
             case "ROCKETTHROWER":
                 return 85;
+            case "PIPERUNNER":
+                return 85;
 			
 			// ships
 			case "BATTLESHIP":

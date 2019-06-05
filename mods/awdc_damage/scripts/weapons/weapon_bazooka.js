@@ -53,6 +53,8 @@ var Constructor = function()
 			case "MISSILE":
                 return 85;
             case "ROCKETTHROWER":
+                return 85;                
+            case "PIPERUNNER":
                 return 85;
 			default:
 				return -1;

@@ -70,6 +70,8 @@ var Constructor = function()
                 return 60;
             case "ROCKETTHROWER":
                 return 60;
+            case "PIPERUNNER":
+                return 8;
 			default:
 				return -1;
         }

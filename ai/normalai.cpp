@@ -60,9 +60,9 @@ void NormalAi::process()
             else if (fireWithUnits(pUnits, 2, std::numeric_limits<qint32>::max())){}
             // direct units
             else if (fireWithUnits(pUnits, 1, 1)){}
-            else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, 1)){}
-            else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 2, std::numeric_limits<qint32>::max())){}
             else if (repairUnits(pUnits, pBuildings)){}
+            else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, 1)){}
+            else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 2, std::numeric_limits<qint32>::max())){}            
             else if (loadUnits(pUnits)){}
             else if (moveTransporters(pUnits, pEnemyUnits, pEnemyBuildings)){}
             else if (moveAwayFromProduction(pUnits)){}
@@ -741,6 +741,10 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
                         emit performAction(pAction);
                         return true;
                     }
+                }
+                if (pUnit->canMoveAndFire(pAction->getActionTarget()))
+                {
+                    // todo check for attacking
                 }
                 pAction->setActionID(ACTION_WAIT);
                 emit performAction(pAction);

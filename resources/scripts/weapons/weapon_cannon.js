@@ -61,6 +61,8 @@
                 return 80;
             case "ROCKETTHROWER":
                 return 80;
+            case "PIPERUNNER":
+                return 70;
 
             case "HOELLIUM":
                 return 5;

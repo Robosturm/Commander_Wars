@@ -1,55 +1,18 @@
-var Constructor = function()
+ANTITANKCANNON.init = function(unit)
 {
-    this.init = function(unit)
-    {
-        unit.setAmmo1(6);
-        unit.setMaxAmmo1(6);
-        unit.setWeapon1ID("WEAPON_A_TANK_CANNON");
+    unit.setAmmo1(6);
+    unit.setMaxAmmo1(6);
+    unit.setWeapon1ID("WEAPON_A_TANK_CANNON");
 
-        unit.setAmmo2(0);
-        unit.setMaxAmmo2(0);
-        unit.setWeapon2ID("");
+    unit.setAmmo2(0);
+    unit.setMaxAmmo2(0);
+    unit.setWeapon2ID("");
 
-        unit.setFuel(50);
-        unit.setMaxFuel(50);
-        unit.setBaseMovementPoints(4);
-        unit.setMinRange(1);
-        unit.setMaxRange(3);
-        unit.setVision(2);
+    unit.setFuel(50);
+    unit.setMaxFuel(50);
+    unit.setBaseMovementPoints(4);
+    unit.setMinRange(1);
+    unit.setMaxRange(3);
+    unit.setVision(2);
 
-    };
-    // called for loading the main sprite
-    this.loadSprites = function(unit)
-    {
-        // load sprites
-        unit.loadSprite("antitankcannon", false);
-        unit.loadSprite("antitankcannon+mask", true);
-    };
-    this.getMovementType = function()
-    {
-        return "MOVE_TIRE_B";
-    };
-    this.doWalkingAnimation = function(action)
-    {
-        var unit = action.getTargetUnit();
-        var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
-        var unitID = unit.getUnitID().toLowerCase();
-        animation.loadSprite(unitID + "+walk+mask", true, 1);
-        animation.loadSprite(unitID + "+walk", false, 1);
-        animation.setSound("moveheavytire.wav", -2);
-        return animation;
-    };
-
-    this.getBaseCost = function()
-    {
-        return 11000;
-    };
-
-    this.getName = function()
-    {
-        return qsTr("Anti Tank Cannon");
-    };
-}
-
-Constructor.prototype = UNIT;
-var ANTITANKCANNON = new Constructor();
+};
