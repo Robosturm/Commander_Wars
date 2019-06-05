@@ -30,6 +30,8 @@ var Constructor = function()
             case "SILO":
             case "SILO_ROCKET":
             case "LABOR":
+            case "TEMPORARY_AIRPORT":
+            case "TEMPORARY_HARBOUR":
                 return 1;
             case "MOUNTAIN":
             case "RIVER":

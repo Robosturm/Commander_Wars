@@ -9,6 +9,7 @@ var Constructor = function()
         switch (terrain.getID())
         {
             case "HARBOUR":
+            case "TEMPORARY_HARBOUR":
             case "SEA":
             case "FOG":
                 return 1;

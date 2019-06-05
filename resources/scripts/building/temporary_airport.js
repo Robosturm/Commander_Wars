@@ -49,7 +49,10 @@ var Constructor = function()
     {
         return "back_airport";
     };
-
+    this.getDefense = function()
+    {
+        return 1;
+    };
 }
 
 Constructor.prototype = BUILDING;

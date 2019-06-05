@@ -1155,11 +1155,19 @@ void Unit::setAmmo2(const qint32 &value)
     }
     if (maxAmmo2 > 0 && static_cast<float>(ammo2) / static_cast<float>(maxAmmo2) <= 1.0f / 3.0f)
     {
-        loadIcon("ammo1", GameMap::Imagesize / 2, 0);
+        if (weapon2ID.isEmpty())
+        {
+            loadIcon("material1", GameMap::Imagesize / 2, 0);
+        }
+        else
+        {
+            loadIcon("ammo1", GameMap::Imagesize / 2, 0);
+        }
     }
     else
     {
         unloadIcon("ammo1");
+        unloadIcon("material1");
     }
 }
 
@@ -1210,11 +1218,19 @@ void Unit::setAmmo1(const qint32 &value)
 
     if (maxAmmo1 > 0 && static_cast<float>(ammo1) / static_cast<float>(maxAmmo1) <= 1.0f / 3.0f)
     {
-        loadIcon("ammo", GameMap::Imagesize / 2, 0);
+        if (weapon1ID.isEmpty())
+        {
+            loadIcon("material", GameMap::Imagesize / 2, 0);
+        }
+        else
+        {
+            loadIcon("ammo", GameMap::Imagesize / 2, 0);
+        }
     }
     else
     {
         unloadIcon("ammo");
+        unloadIcon("material");
     }
 }
 

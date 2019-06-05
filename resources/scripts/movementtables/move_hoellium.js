@@ -30,6 +30,8 @@ var Constructor = function()
             case "LABOR":
             case "TOWER":
             case "TOWN":
+            case "TEMPORARY_AIRPORT":
+            case "TEMPORARY_HARBOUR":
             case "MOUNTAIN":
             case "RIVER":
                 return 1;

@@ -10,6 +10,7 @@ var Constructor = function()
         {
 			case "BEACH":
             case "HARBOUR":
+            case "TEMPORARY_HARBOUR":
             case "FOG":
             case "SEA":
                 return 1;

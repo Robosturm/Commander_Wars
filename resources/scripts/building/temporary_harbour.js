@@ -47,6 +47,10 @@ var Constructor = function()
     {
         return "back_harbour";
     };
+    this.getDefense = function()
+    {
+        return 1;
+    };
 }
 
 Constructor.prototype = BUILDING;

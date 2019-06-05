@@ -29,6 +29,8 @@
 		<image file="icons/hold.png" />
 		<image file="icons/normal.png" />
 		<image file="icons/offensive.png" />
+		<image file="icons/material.png" />		
+		<image file="icons/material1.png" />
 			
 		<!-- aircraftcarrier -->
 		<image file="aircraftcarrier.png" cols = "4" />

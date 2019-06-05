@@ -79,6 +79,22 @@
     </message>
 </context>
 <context>
+    <name>ACTION_BUILD_TEMP_AIRPORT</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="29"/>
+        <source>Build Airport</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_BUILD_TEMP_HARBOUR</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="29"/>
+        <source>Build Harbour</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_BUILD_UNITS</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BUILD_UNITS.js" line="22"/>
@@ -89,7 +105,7 @@
 <context>
     <name>ACTION_CAPTURE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="46"/>
+        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="47"/>
         <source>Capture</source>
         <translation type="unfinished"></translation>
     </message>

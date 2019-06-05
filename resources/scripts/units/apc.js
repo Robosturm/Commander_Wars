@@ -2,8 +2,8 @@ var Constructor = function()
 {
     this.init = function(unit)
     {
-        unit.setAmmo1(0);
-        unit.setMaxAmmo1(0);
+        unit.setAmmo1(1);
+        unit.setMaxAmmo1(1);
         unit.setWeapon1ID("");
 
         unit.setAmmo2(0);
@@ -31,7 +31,7 @@ var Constructor = function()
     this.getActions = function()
     {
         // returns a string id list of the actions this unit can perform
-        return "ACTION_LOAD,ACTION_UNLOAD,ACTION_JOIN,ACTION_RATION,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
+        return "ACTION_BUILD_TEMP_HARBOUR,ACTION_BUILD_TEMP_AIRPORT,ACTION_LOAD,ACTION_UNLOAD,ACTION_JOIN,ACTION_RATION,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
     };
     this.getBaseCost = function()
     {

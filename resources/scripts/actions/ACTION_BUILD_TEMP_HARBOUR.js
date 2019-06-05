@@ -11,50 +11,33 @@ var Constructor = function()
             return false;
         }
         var capturableBuildings = ACTION_CAPTURE.getCapturableBuildings();
-        if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
-            (action.getMovementTarget() === null))
+        if ((((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y)) ||
+            (action.getMovementTarget() === null)) &&
+             unit.hasAmmo1())
         {
-            var building = action.getMovementBuilding();
-            if (building !== null)
+            var terrain = map.getTerrain(actionTargetField.x, actionTargetField.y);
+            if (terrain.getID() === "BEACH")
             {
-                var alliance = unit.getOwner().checkAlliance(building.getOwner());
-                if ((alliance === GameEnums.Alliance_Enemy) &&
-                    (capturableBuildings.indexOf(building.getBuildingID()) >= 0))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return true;
             }
         }
-        else
-        {
-            return false;
-        }
-    };
-
-    this.getCapturableBuildings = function()
-    {
-        return ["AIRPORT", "FACTORY", "HARBOUR", "HQ", "LABOR", "MINE",
-                "PIPESTATION", "RADAR", "TOWER", "TOWN", "TEMPORARY_AIRPORT",
-                "TEMPORARY_HARBOUR"];
+        return false;
     };
 
     this.getActionText = function()
     {
-        return qsTr("Capture");
+        return qsTr("Build Harbour");
     };
     this.getIcon = function()
     {
-        return "capture";
+        return "build";
     };
     this.perform = function(action)
     {
         var maxCapturePoints = 20;
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
+        var actionTargetField = action.getActionTarget();
         var animation = Global[unit.getUnitID()].doWalkingAnimation(action);
         // move unit to target position
         unit.moveUnitAction(action);
@@ -87,16 +70,8 @@ var Constructor = function()
         {
             armyName = "os";
         }
-        var color;
-        if (building.getOwner() === null)
-        {
-            color = "#FFFFFF";
-        }
-        else
-        {
-            color = building.getOwner().getColor();
-        }
-        Global[building.getBuildingID()].addCaptureAnimationBuilding(captureAnimation, building, color, unit.getOwner().getColor());
+        var color = "#FFFFFF";
+        Global["TEMPORARY_HARBOUR"].addCaptureAnimationBuilding(captureAnimation, building, color, unit.getOwner().getColor());
         captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , unit.getOwner().getColor(), true);
         captureAnimation.addSoldierSprite("soldier+" + armyName , unit.getOwner().getColor(), false);
 
@@ -104,17 +79,10 @@ var Constructor = function()
 
         if (captured)
         {
-            if (building.getBuildingID() === "HQ")
-            {
-                map.getGameRecorder().addSpecialEvent(unit.getOwner().getPlayerID(),
-                                                      GameEnums.GameRecord_SpecialEvents_HQCaptured);
-                if (building.getOwner() !== null)
-                {
-                    map.getGameRecorder().addSpecialEvent(building.getOwner().getPlayerID(),
-                                                          GameEnums.GameRecord_SpecialEvents_HQLost);
-                }
-            }
-            building.setUnitOwner(unit);
+            var terrain = map.getTerrain(actionTargetField.x, actionTargetField.y);
+            terrain.loadBuilding("TEMPORARY_HARBOUR");
+            terrain.getBuilding().setUnitOwner(unit);
+            unit.reduceAmmo1(1);
         }
         // disable unit commandments for this turn
         unit.setHasMoved(true);
@@ -128,4 +96,4 @@ var Constructor = function()
 
 
 Constructor.prototype = ACTION;
-var ACTION_CAPTURE = new Constructor();
+var ACTION_BUILD_TEMP_HARBOUR = new Constructor();
