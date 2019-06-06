@@ -516,14 +516,14 @@ bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange)
             {
                 if (m_pOwner->isEnemyUnit(pDefender) == true)
                 {
-                    if (hasAmmo1())
+                    if (hasAmmo1() && !weapon1ID.isEmpty())
                     {
                         if (pWeaponManager->getBaseDamage(weapon1ID, pDefender) > 0)
                         {
                             return true;
                         }
                     }
-                    if (hasAmmo2())
+                    if (hasAmmo2() && !weapon2ID.isEmpty())
                     {
                         if (pWeaponManager->getBaseDamage(weapon2ID, pDefender) > 0)
                         {

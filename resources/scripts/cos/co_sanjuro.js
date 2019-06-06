@@ -265,16 +265,24 @@ var Constructor = function()
 
     this.getMovementcostModifier = function(co, unit, posX, posY)
     {
-        if (unit.getOwner() === co.getOwner())
+        switch (co.getPowerMode())
         {
-            var variables = co.getVariables();
-            var buildedVar = variables.createVariable("SANJURO_BUILDED_" + unit.getUnitID());
-            var builded = buildedVar.readDataBool();
-            if (builded === true)
+        case GameEnums.PowerMode_Superpower:
+            if (unit.getOwner() === co.getOwner())
             {
-                // movement boost for builded units
-                return -999;
+                var variables = co.getVariables();
+                var buildedVar = variables.createVariable("SANJURO_BUILDED_" + unit.getUnitID());
+                var builded = buildedVar.readDataBool();
+                if (builded === true)
+                {
+                    // movement boost for builded units
+                    return -999;
+                }
             }
+        case GameEnums.PowerMode_Power:
+            break;
+        default:
+            break;
         }
         return 0;
     };

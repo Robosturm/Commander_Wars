@@ -7237,102 +7237,102 @@
 <context>
     <name>co_sanjuro</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="309"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="317"/>
         <source>A respected mercenary from Golden Sun. Once he accepts a job, he sees it through to the end no matter how difficult or dangerous it becomes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="313"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="321"/>
         <source>Honest work</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="317"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="325"/>
         <source>Shady business</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="321"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="329"/>
         <source>A keen mind for his finances, he spends more for better equipment when there&apos;s a surplus and focuses on getting the best deal when he&apos;s pressed for money.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="325"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="333"/>
         <source>When his units take combat damage, he recieves a portion of the value of the damage in funds.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="329"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="337"/>
         <source>Heart of Gold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="333"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="341"/>
         <source>When a unit is built, units of the same type recieve a firepower and defense boost, unhindered by terrain, and production costs reduced by half.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="337"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="345"/>
         <source>Buying Power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="341"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="349"/>
         <source>My services are expensive, and worth every penny.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="342"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="350"/>
         <source>Consider this a free sample!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="343"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="351"/>
         <source>You&apos;re finished! Surrender now!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="344"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="352"/>
         <source>War is my livelihood. Can you handle my level of experience?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="345"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="353"/>
         <source>I was born for battle. I have no limits!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="346"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="354"/>
         <source>If you think this is strictly business, think again. The battlefield calls to me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="350"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="358"/>
         <source>I have a reputation to keep, you know.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="351"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="359"/>
         <source>Another job well done...where&apos;s the next fight?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="352"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="360"/>
         <source>Did you expect anything less from a hardened mercenary?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="356"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="364"/>
         <source>For this i get to less money</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="357"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="365"/>
         <source>Now, i know how the Romans felt like.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="361"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="369"/>
         <source>Sanjuro</source>
         <translation type="unfinished"></translation>
     </message>

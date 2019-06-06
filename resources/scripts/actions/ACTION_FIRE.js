@@ -93,8 +93,9 @@ var Constructor = function()
     };
     this.calcDefenderDamage = function(attacker, attackerPosition, defender, defenderWeapon, takenDamage, luckMode)
     {
+        var damage = -1;
         // only direct units can deal counter damage
-        if (defender.getMinRange() === 1)
+        if (defender.getMinRange() === 1 && defenderWeapon !== "")
         {
             var health = defender.getHp() - takenDamage / 10.0;
             if (defender.getFirstStrike(defender.getPosition()))
@@ -102,10 +103,9 @@ var Constructor = function()
                 health = defender.getHp();
             }
             health = globals.roundUp(health);
-            var damage = -1;
-                damage = ACTION_FIRE.calcDamage(defender, defenderWeapon, defender.getPosition(), health,
-                                                attacker, attackerPosition, true,
-                                                luckMode);
+            damage = ACTION_FIRE.calcDamage(defender, defenderWeapon, defender.getPosition(), health,
+                                            attacker, attackerPosition, true,
+                                            luckMode);
         }
         return damage;
     };

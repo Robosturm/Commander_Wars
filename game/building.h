@@ -117,6 +117,14 @@ public slots:
      * @return  y coordinates of this unit
      */
     qint32 getY() const;
+    /**
+     * @brief getPosition
+     * @return
+     */
+    QPoint getPosition() const
+    {
+        return QPoint(getX(), getY());
+    }
 
     qint32 getHp() const;
     void setHp(const qint32 &Hp);

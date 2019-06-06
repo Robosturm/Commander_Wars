@@ -209,6 +209,16 @@ protected:
      * @return
      */
     std::tuple<float, qint32> calcExpectedFondsDamage(qint32 posX, qint32 posY, Unit& dummy, QmlVectorUnit* pEnemyUnits, QVector<QVector4D> attackCount);
+    /**
+     * @brief getClosestTargetDistance
+     * @param posX
+     * @param posY
+     * @param dummy
+     * @param pEnemyUnits
+     * @param pEnemyBuildings
+     * @return
+     */
+    qint32 getClosestTargetDistance(qint32 posX, qint32 posY, Unit& dummy, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
 private:
     /**
      * @brief m_EnemyUnits all enemy units that exists at the start of turn
