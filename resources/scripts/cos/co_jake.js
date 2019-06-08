@@ -121,7 +121,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 2;
+        return 4;
     };
     this.getCOArmy = function()
     {
@@ -152,14 +152,10 @@ var Constructor = function()
                 {
                     if (terrainID === "PLAINS")
                     {
-                        return 20;
+                        return 30;
                     }
                 }
                 break;
-            }
-            if (terrainID === "PLAINS")
-            {
-                return 10;
             }
         }
         return 0;

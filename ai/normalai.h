@@ -203,6 +203,34 @@ protected:
      */
     float calcBuildScore(QVector<float>& data);
     /**
+     * @brief calcCostScore
+     * @param data
+     * @return
+     */
+    float calcCostScore(QVector<float>& data);
+    /**
+     * @brief calcTransporterScore
+     * @param posX
+     * @param posY
+     * @param dummy
+     * @param pUnits
+     * @param pEnemyUnits
+     * @return
+     */
+    float calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
+                               QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+                               QVector<std::tuple<Unit*, Unit*>>& transportTargets,
+                               QVector<float>& data);
+    /**
+     * @brief canTransportToEnemy
+     * @param pUnit
+     * @param pLoadedUnit
+     * @param pEnemyUnits
+     * @param pEnemyBuildings
+     * @return
+     */
+    bool canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
+    /**
      * @brief NormalAi::calcExpectedFondsDamage
      * @param dummy
      * @param pEnemyUnits

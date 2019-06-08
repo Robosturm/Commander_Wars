@@ -126,7 +126,7 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var baseDamage = 75;
+        var baseDamage = 70;
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Superpower:

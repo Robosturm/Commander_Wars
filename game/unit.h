@@ -98,6 +98,15 @@ public:
      * @brief applyMod
      */
     void applyMod();
+
+    void setVirtuellX(qint32 value)
+    {
+        virtuellX = value;
+    }
+    void setVirtuellY(qint32 value)
+    {
+        virtuellY = value;
+    }
 signals:
 
 public slots:
@@ -397,7 +406,7 @@ public slots:
      * @brief canTransportUnit
      * @return checks if we have space and if the unit can be transported by this unit.
      */
-    bool canTransportUnit(Unit* pUnit);
+    bool canTransportUnit(Unit* pUnit, bool ignoreLoadingPlace = false);
     /**
      * @brief getBonusOffensive
      * @param position
@@ -597,6 +606,9 @@ private:
     GameEnums::GameAi m_AiMode{GameEnums::GameAi::GameAi_Normal};
     ScriptVariables m_Variables;
     ModdingFlags m_ModdingFlags{ModdingFlags::None};
+
+    qint32 virtuellX{-1};
+    qint32 virtuellY{-1};
 };
 
 #endif // UNIT_H

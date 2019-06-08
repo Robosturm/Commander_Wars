@@ -108,7 +108,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 2;
+        return 3;
     };
     this.getCOArmy = function()
     {
@@ -128,10 +128,6 @@ var Constructor = function()
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     return towers * 5;
-                }
-                else
-                {
-                    return towers * 2.5;
                 }
         }
     };
@@ -164,11 +160,6 @@ var Constructor = function()
                     {
                         ret += 20;
                         ret += towers * 5;
-                    }
-                    else
-                    {
-                        ret += 10;
-                        ret += towers * 2.5;
                     }
                 }
                 break;

@@ -60,7 +60,7 @@ var Constructor = function()
     };
     this.getTransportUnits = function()
     {
-        return ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER"];
+        return ["INFANTRY", "MECH", "SNIPER"];
     };
     this.useTerrainDefense = function()
     {

@@ -631,14 +631,14 @@ QStringList  Unit::getTransportUnits()
     return erg.toVariant().toStringList();
 }
 
-bool Unit::canTransportUnit(Unit* pUnit)
+bool Unit::canTransportUnit(Unit* pUnit, bool ignoreLoadingPlace)
 {
     QStringList transportableUnits = getTransportUnits();
     // can we carry the unit
     if (transportableUnits.contains(pUnit->getUnitID()))
     {
         // do we have space left?
-        if (getLoadedUnitCount() < getLoadingPlace())
+        if (getLoadedUnitCount() < getLoadingPlace() || ignoreLoadingPlace)
         {
             return true;
         }
@@ -1395,7 +1395,7 @@ qint32 Unit::getX() const
     }
     else
     {
-        return -1;
+        return virtuellX;
     }
 }
 
@@ -1407,7 +1407,7 @@ qint32 Unit::getY() const
     }
     else
     {
-        return -1;
+        return virtuellY;
     }
 }
 

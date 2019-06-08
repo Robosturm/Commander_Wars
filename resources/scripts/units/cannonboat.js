@@ -64,6 +64,14 @@ var Constructor = function()
         animation.setSound("moveship.wav", -2);
         return animation;
     };
+    this.getLoadingPlace = function()
+    {
+        return 1;
+    };
+    this.getTransportUnits = function()
+    {
+        return ["INFANTRY", "MECH", "SNIPER"];
+    };
     this.canMoveAndFire = function()
     {
         return true;

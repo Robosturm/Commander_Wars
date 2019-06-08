@@ -383,7 +383,7 @@ bool VeryEasyAI::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUn
                     }
                 }
                 // if not find closest unloading field
-                if (targets.size() == 0)
+                if (targets.size() == 0 || pUnit->getLoadedUnitCount() > 1)
                 {
                     appendNearestUnloadTargets(pUnit, pEnemyUnits, pEnemyBuildings, targets);
                 }
@@ -401,10 +401,10 @@ bool VeryEasyAI::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUn
                 // we need to move to a loading place
                 QVector<QVector3D> targets;
                 QVector<QVector3D> transporterTargets;
-                appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, targets);
+                appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, false, targets);
                 if (targets.size() == 0)
                 {
-                    appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, true, targets);
+                    appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, true, false, targets);
                 }
                 if (moveUnit(pAction, pUnit, actions, targets, transporterTargets))
                 {

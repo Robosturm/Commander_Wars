@@ -672,20 +672,23 @@ void CoreAI::addSelectedFieldData(GameAction* pGameAction, QPoint point)
 }
 
 
-void CoreAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings, bool ignoreCaptureTargets, QVector<QVector3D>& targets)
+QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits,
+                                            QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+                                            bool ignoreCaptureTargets, bool virtualLoading, QVector<QVector3D>& targets)
 {
     qint32 unitIslandIdx = getIslandIndex(pUnit);
     qint32 unitIsland = getIsland(pUnit);
     GameMap* pMap = GameMap::getInstance();
     qint32 width = pMap->getMapWidth();
     qint32 heigth = pMap->getMapHeight();
+    QVector<Unit*> transportUnits;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pLoadingUnit = pUnits->at(i);
         if (pLoadingUnit != pUnit)
         {
             // can we transport it?
-            if (pUnit->canTransportUnit(pLoadingUnit))
+            if (pUnit->canTransportUnit(pLoadingUnit, virtualLoading))
             {
                 bool found = false;
                 bool canCapture = pLoadingUnit->getActionList().contains(ACTION_CAPTURE);
@@ -695,36 +698,7 @@ void CoreAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorU
                 }
                 else
                 {
-                    // check if we have anything to do here :)
-                    for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
-                    {
-                        Unit* pEnemy = pEnemyUnits->at(i2);
-                        if (onSameIsland(pLoadingUnit, pEnemy) &&
-                            pLoadingUnit->isAttackable(pEnemy, true))
-                        {
-                            // this unit can do stuff skip it
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (!found)
-                    {
-                        // check for capturing or missiles next
-                        if (canCapture)
-                        {
-                            for (qint32 i2 = 0; i2 < pEnemyBuildings->size(); i2++)
-                            {
-                                Building* pBuilding = pEnemyBuildings->at(i2);
-                                if (onSameIsland(pLoadingUnit, pBuilding) &&
-                                    pBuilding->isCaptureOrMissileBuilding())
-                                {
-                                    // this unit can do stuff skip it
-                                    found = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                    found = hasTargets(pLoadingUnit, canCapture, pEnemyUnits, pEnemyBuildings);
                 }
                 if (!found)
                 {
@@ -766,7 +740,7 @@ void CoreAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorU
                                 if ((m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland) &&
                                     (m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland) &&
                                     (pMap->getTerrain(x, y)->getUnit() == nullptr) &&
-                                    (!targets.contains(QVector3D(x, y, 1))))
+                                    (virtualLoading || !targets.contains(QVector3D(x, y, 1))))
                                 {
                                     // append it and and skip further searching
                                     found = true;
@@ -778,6 +752,7 @@ void CoreAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorU
                         // a loading field for this unit was
                         if (found)
                         {
+                            transportUnits.append(pLoadingUnit);
                             break;
                         }
                     }
@@ -785,6 +760,43 @@ void CoreAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorU
             }
         }
     }
+    return transportUnits;
+}
+
+bool CoreAI::hasTargets(Unit* pLoadingUnit, bool canCapture, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)
+{
+    bool found = false;
+    // check if we have anything to do here :)
+    for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
+    {
+        Unit* pEnemy = pEnemyUnits->at(i2);
+        if (onSameIsland(pLoadingUnit, pEnemy) &&
+            pLoadingUnit->isAttackable(pEnemy, true))
+        {
+            // this unit can do stuff skip it
+            found = true;
+            break;
+        }
+    }
+    if (!found)
+    {
+        // check for capturing or missiles next
+        if (canCapture)
+        {
+            for (qint32 i2 = 0; i2 < pEnemyBuildings->size(); i2++)
+            {
+                Building* pBuilding = pEnemyBuildings->at(i2);
+                if (onSameIsland(pLoadingUnit, pBuilding) &&
+                    pBuilding->isCaptureOrMissileBuilding())
+                {
+                    // this unit can do stuff skip it
+                    found = true;
+                    break;
+                }
+            }
+        }
+    }
+    return found;
 }
 
 void CoreAI::appendCaptureTargets(QStringList actions, Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets)

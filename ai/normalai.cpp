@@ -111,9 +111,14 @@ bool NormalAi::buildCOUnit(QmlVectorUnit* pUnits)
         if (pCO != nullptr &&
             pCO->getCOUnit() == nullptr)
         {
+            bool active = false;
             for (qint32 i = 0; i < pUnits->size(); i++)
             {
                 Unit* pUnit = pUnits->at(i);
+                if (pUnit->getUnitValue() > 6000 && pUnit->getUnitRank() < GameEnums::UnitRank_CO0)
+                {
+                    active = true;
+                }
                 pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
                 if (pAction->canBePerformed())
                 {
@@ -139,7 +144,7 @@ bool NormalAi::buildCOUnit(QmlVectorUnit* pUnits)
                     }
                 }
             }
-            if (unitIdx > 0 && bestScore > 5000)
+            if (unitIdx > 0 && bestScore > 5000 && active)
             {
                 Unit* pUnit = pUnits->at(unitIdx);
                 pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
@@ -169,7 +174,7 @@ bool NormalAi::isUsingUnit(Unit* pUnit)
     {
         return false;
     }
-    if (pUnit->getHpRounded() < 5)
+    if (pUnit->getHpRounded() < 3)
     {
         return false;
     }
@@ -387,7 +392,8 @@ bool NormalAi::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
         // can we use the unit?
         if (isUsingUnit(pUnit) &&
             pUnit->getBaseMaxRange() >= minfireRange &&
-            pUnit->getBaseMaxRange() <= maxfireRange)
+            pUnit->getBaseMaxRange() <= maxfireRange &&
+            pUnit->hasWeapons() && pUnit->getLoadedUnitCount() == 0)
         {
             QVector<QVector3D> targets;
             QVector<QVector3D> transporterTargets;
@@ -476,7 +482,7 @@ bool NormalAi::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnit
                     }
                 }
                 // if not find closest unloading field
-                if (targets.size() == 0)
+                if (targets.size() == 0 || pUnit->getLoadedUnitCount() > 1)
                 {
                     appendNearestUnloadTargets(pUnit, pEnemyUnits, pEnemyBuildings, targets);
                 }
@@ -494,10 +500,10 @@ bool NormalAi::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnit
                 // we need to move to a loading place
                 QVector<QVector3D> targets;
                 QVector<QVector3D> transporterTargets;
-                appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, targets);
+                appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, false, targets);
                 if (targets.size() == 0)
                 {
-                    appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, true, targets);
+                    appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, true, false, targets);
                 }
                 if (moveUnit(pAction, pUnit, pUnits, actions, targets, transporterTargets, true))
                 {
@@ -1165,6 +1171,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
     qint32 indirectUnits = 0;
     qint32 directUnits = 0;
     QVector<QVector4D> attackCount(pEnemyUnits->size(), QVector4D(0, 0, 0, 0));
+    QVector<std::tuple<Unit*, Unit*>> transportTargets;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -1179,6 +1186,15 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
         else
         {
             directUnits++;
+        }
+        if (pUnit->getLoadingPlace() > 0)
+        {
+            QVector<QVector3D> ret;
+            QVector<Unit*> transportUnits = appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, false, true, ret);
+            for (qint32 i2 = 0; i2 < transportUnits.size(); i2++)
+            {
+                transportTargets.append(std::tuple<Unit*, Unit*>(pUnit, transportUnits[i2]));
+            }
         }
     }
 
@@ -1272,6 +1288,8 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                     if (pData->getEnabledList()[i2])
                     {
                         Unit dummy(pData->getActionIDs()[i2], m_pPlayer, false);
+                        dummy.setVirtuellX(pBuilding->getX());
+                        dummy.setVirtuellY(pBuilding->getY());
                         createIslandMap(dummy.getMovementType(), dummy.getUnitID());
                         bool canMove = false;
                         QmlVectorPoint* pFields = Mainapp::getCircle(1, 1);
@@ -1289,6 +1307,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                         delete pFields;
                         if (canMove)
                         {
+                            float score = 0.0f;
                             if (!dummy.getWeapon1ID().isEmpty() ||
                                 !dummy.getWeapon2ID().isEmpty())
                             {
@@ -1334,34 +1353,38 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                                 }
                                 data[11] = dummy.getMovementpoints(QPoint(pBuilding->getX(), pBuilding->getY()));
                                 data[14] = getClosestTargetDistance(pBuilding->getX(), pBuilding->getY(), dummy, pEnemyUnits, pEnemyBuildings);
-                                float score = calcBuildScore(data);
-                                if (score > bestScore)
+                                score = calcBuildScore(data);
+                            }
+                            else
+                            {
+                                score = calcTransporterScore(dummy, pUnits, pEnemyUnits, pEnemyBuildings, transportTargets, data);
+                            }
+                            if (score > bestScore)
+                            {
+                                bestScore = score;
+                                buildingIdx.append(i);
+                                unitIDx.append(i2);
+                                scores.append(score);
+                                qint32 index = 0;
+                                while (index < scores.size())
                                 {
-                                    bestScore = score;
-                                    buildingIdx.append(i);
-                                    unitIDx.append(i2);
-                                    scores.append(score);
-                                    qint32 index = 0;
-                                    while (index < scores.size())
+                                    if (scores[index] < bestScore - variance)
                                     {
-                                        if (scores[index] < bestScore - variance)
-                                        {
-                                            buildingIdx.removeAt(index);
-                                            unitIDx.removeAt(index);
-                                            scores.removeAt(index);
-                                        }
-                                        else
-                                        {
-                                            index++;
-                                        }
+                                        buildingIdx.removeAt(index);
+                                        unitIDx.removeAt(index);
+                                        scores.removeAt(index);
+                                    }
+                                    else
+                                    {
+                                        index++;
                                     }
                                 }
-                                else if (score >= bestScore - variance)
-                                {
-                                    buildingIdx.append(i);
-                                    unitIDx.append(i2);
-                                    scores.append(score);
-                                }
+                            }
+                            else if (score >= bestScore - variance)
+                            {
+                                buildingIdx.append(i);
+                                unitIDx.append(i2);
+                                scores.append(score);
                             }
                         }
                     }
@@ -1529,6 +1552,10 @@ std::tuple<float, qint32> NormalAi::calcExpectedFondsDamage(qint32 posX, qint32 
                         notAttackableCount  += notAttackableValue / 2.0f;
                     }
                 }
+                else
+                {
+                    factor /= 8.0f;
+                }
             }
             else
             {
@@ -1557,6 +1584,10 @@ std::tuple<float, qint32> NormalAi::calcExpectedFondsDamage(qint32 posX, qint32 
                         notAttackableCount  += notAttackableValue / 4.0f;
                     }
                 }
+                else
+                {
+                    factor /= 8.0f;
+                }
             }
             if (factor < 0)
             {
@@ -1573,10 +1604,124 @@ std::tuple<float, qint32> NormalAi::calcExpectedFondsDamage(qint32 posX, qint32 
     return std::tuple<float, qint32>(damageCount / attacksCount, notAttackableCount);
 }
 
+float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
+                                     QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+                                     QVector<std::tuple<Unit*, Unit*>>& transportTargets,
+                                     QVector<float>& data)
+{
+    float score = 0.0f;
+    QVector<QVector3D> targets;
+    QVector<Unit*> loadingUnits = appendLoadingTargets(&dummy, pUnits, pEnemyUnits, pEnemyBuildings, false, true, targets);
+    QVector<Unit*> transporterUnits;
+    for (qint32 i2 = 0; i2 < transportTargets.size(); i2++)
+    {
+        if (!transporterUnits.contains(std::get<0>(transportTargets[i2])))
+        {
+            transporterUnits.append(std::get<0>(transportTargets[i2]));
+        }
+    }
+    qint32 i = 0;
+    while ( i < loadingUnits.size())
+    {
+        if (canTransportToEnemy(&dummy, loadingUnits[i], pEnemyUnits, pEnemyBuildings))
+        {
+            qint32 transporter = 0;
+            for (qint32 i2 = 0; i2 < transportTargets.size(); i2++)
+            {
+                if (std::get<1>(transportTargets[i2])->getPosition() == loadingUnits[i]->getPosition())
+                {
+                    transporter++;
+                }
+            }
+
+            if (transporter == 0)
+            {
+                score += 35.0f;
+            }
+            i++;
+        }
+        else
+        {
+            loadingUnits.removeAt(i);
+        }
+    }
+    if (transporterUnits.size() > 0 && loadingUnits.size() > 0)
+    {
+        score += (transportTargets.size() / static_cast<float>(transporterUnits.size() * 6.0f)) * 15;
+    }
+    if (score > 0)
+    {
+        score += dummy.getLoadingPlace() * 5;
+        score += calcCostScore(data);
+        score += loadingUnits.size() * 5;
+    }
+    return score;
+}
+
+bool NormalAi::canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)
+{
+    QmlVectorPoint* pUnloadArea = Mainapp::getCircle(1, 1);
+    // check for enemis
+    qint32 loadedUnitIslandIdx = getIslandIndex(pLoadedUnit);
+    qint32 unitIslandIdx = getIslandIndex(pUnit);
+    qint32 unitIsland = getIsland(pUnit);
+    QVector<qint32> checkedIslands;
+    QVector<QVector3D> targets;
+    for (qint32 i = 0; i < pEnemyUnits->size(); i++)
+    {
+        Unit* pEnemy = pEnemyUnits->at(i);
+        qint32 targetIsland = m_IslandMaps[loadedUnitIslandIdx]->getIsland(pEnemy->getX(), pEnemy->getY());
+        // check if we could reach the enemy if we would be on his island
+        // and we didn't checked this island yet -> improves the speed
+        if (targetIsland >= 0 )
+        {
+            // could we beat his ass? -> i mean can we attack him
+            // if so this is a great island
+            if (pLoadedUnit->isAttackable(pEnemy, true))
+            {
+                checkIslandForUnloading(pLoadedUnit, checkedIslands, unitIslandIdx, unitIsland,
+                                        loadedUnitIslandIdx, targetIsland, pUnloadArea, targets);
+                if (targets.size() > 0)
+                {
+                    break;
+                }
+            }
+        }
+    }
+    // check for capturable buildings
+    if (pLoadedUnit->getActionList().contains(ACTION_CAPTURE) && targets.size() == 0)
+    {
+        for (qint32 i = 0; i < pEnemyBuildings->size(); i++)
+        {
+            Building* pEnemyBuilding = pEnemyBuildings->at(i);
+
+            qint32 targetIsland = m_IslandMaps[loadedUnitIslandIdx]->getIsland(pEnemyBuilding->getX(), pEnemyBuilding->getY());
+            // check if we could reach the enemy if we would be on his island
+            // and we didn't checked this island yet -> improves the speed
+            if (targetIsland >= 0 )
+            {
+                if (pEnemyBuilding->isCaptureOrMissileBuilding())
+                {
+                    checkIslandForUnloading(pLoadedUnit, checkedIslands, unitIslandIdx, unitIsland,
+                                            loadedUnitIslandIdx, targetIsland, pUnloadArea, targets);
+                    if (targets.size() > 0)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    delete pUnloadArea;
+    if (targets.size() > 0)
+    {
+        return true;
+    }
+    return false;
+}
+
 float NormalAi::calcBuildScore(QVector<float>& data)
 {
-    static float min = std::numeric_limits<float>::max();
-    static float max = std::numeric_limits<float>::lowest();
     float score = 0;
     // used index 0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11
     if (data[2] == 1.0f)
@@ -1625,19 +1770,7 @@ float NormalAi::calcBuildScore(QVector<float>& data)
         }
 
     }
-    // fonds bonus;
-    if (data[5] > 2.5f + data[12])
-    {
-        score -= (data[5] - 2.5f + data[12]) * 2;
-    }
-    else if (data[5] < 0.8f)
-    {
-        score += (0.9f - data[5]) / 0.05f * 2;
-    }
-    else
-    {
-        score += (2.5f + data[12] - data[5]) / 0.125f;
-    }
+    score += calcCostScore(data);
     // apply movement bonus
     score += data[11] * 0.33f;
     if (data[13] > 3)
@@ -1652,14 +1785,24 @@ float NormalAi::calcBuildScore(QVector<float>& data)
     {
         score += 10.0f / Mainapp::roundUp(data[14] / data[11]);
     }
+    return score;
+}
 
-    if (score > max)
+float NormalAi::calcCostScore(QVector<float>& data)
+{
+    float score = 0;
+    // fonds bonus;
+    if (data[5] > 2.5f + data[12])
     {
-        max = score;
+        score -= (data[5] - 2.5f + data[12]) * 2;
     }
-    if (score < min)
+    else if (data[5] < 0.8f)
     {
-        min = score;
+        score += (0.9f - data[5]) / 0.05f * 2;
+    }
+    else
+    {
+        score += (2.5f + data[12] - data[5]) / 0.125f;
     }
     return score;
 }

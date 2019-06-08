@@ -130,7 +130,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 3;
+        return 2;
     };
     this.getCOArmy = function()
     {
@@ -148,11 +148,11 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 20;
+                    return 30;
                 }
                 break;
         }
-        return 10;
+        return 0;
     };
 
     // CO - Intel

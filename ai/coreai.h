@@ -217,8 +217,20 @@ protected:
     void appendRepairTargets(Unit* pUnit, QmlVectorBuilding* pBuildings, QVector<QVector3D>& targets);
     void appendSupplyTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QVector3D>& targets);
     void appendTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QVector3D>& targets);
-    void appendCaptureTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
-    void appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings, bool ignoreCaptureTargets, QVector<QVector3D>& targets);
+    void appendCaptureTransporterTargets(Unit* pUnit, QmlVectorUnit* pUnits,
+                                         QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
+    QVector<Unit*> appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits,
+                                        QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+                                        bool ignoreCaptureTargets, bool virtualLoading, QVector<QVector3D>& targets);
+    /**
+     * @brief hasTargets checks if a unit has anything to do on this island
+     * @param pLoadingUnit
+     * @param canCapture
+     * @param pEnemyUnits
+     * @param pEnemyBuildings
+     * @return
+     */
+    bool hasTargets(Unit* pLoadingUnit, bool canCapture, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
     /**
      * @brief appendNearestUnloadTargets searches for unload fields closest to our current position
      * @param pUnit
