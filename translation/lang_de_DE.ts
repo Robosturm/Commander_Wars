@@ -2574,6 +2574,109 @@
     </message>
 </context>
 <context>
+    <name>co_alexis</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="267"/>
+        <source>A crystal-obsessed person. Blindly follows orders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="271"/>
+        <source>Crystals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="275"/>
+        <source>Experiments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="279"/>
+        <source>Units adjacent to own properties restore one HP of health at the beginning of each turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="283"/>
+        <source>Units nearby an allied property receive offensive bonuses, and restore three HP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="287"/>
+        <source>Crystal Brace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="291"/>
+        <source>Units nearby an allied property receive firepower bonuses. Enemies nearby their own properties suffer three HP of damage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="295"/>
+        <source>Crystal Edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="299"/>
+        <source>You&apos;ll regret angering me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="300"/>
+        <source>It&apos;s time you learned the real power of the crystals!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="301"/>
+        <source>You were probably enjoying this battle, until now!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="302"/>
+        <source>Witness the power the Black Crystal gave to me!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="303"/>
+        <source>I hope you&apos;re ready for what&apos;s coming next!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="304"/>
+        <source>See, now my army really shines, like diamonds!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="308"/>
+        <source>I&apos;m unbreakable, just like a diamond!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="309"/>
+        <source>Haha, you were shattered!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="310"/>
+        <source>I&apos;ll leave you to clean this up, &apos;kay?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="314"/>
+        <source>My diamonds didn&apos;t help me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="315"/>
+        <source>My diamonds broke?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="319"/>
+        <source>Alexis</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>co_andy</name>
     <message>
         <location filename="../resources/scripts/cos/co_andy.js" line="157"/>
@@ -6819,6 +6922,109 @@
     <message>
         <location filename="../resources/scripts/cos/co_random.js" line="60"/>
         <source>Random</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_rattigan</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="230"/>
+        <source>A dutiful CO of the Yellow Comet army addled by a childhood phobia. Blames Sensei for Yellow Cometâ€™s lack of former glory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="234"/>
+        <source>Yellow Comet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="238"/>
+        <source>Infestations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="242"/>
+        <source>Rattigan&apos;s ground troops are trained to be extremely capable at dealing with large regiments of units at a time, but are taken off guard by lone units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="246"/>
+        <source>Receives a small offensive boost when attacking enemies in groups. Movement is increased by one space.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="250"/>
+        <source>Raid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="254"/>
+        <source>Receives a firepower and defense boost for engaging enemies in groups. Enemy units suffer one HP of damage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="258"/>
+        <source>The Sweep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="262"/>
+        <source>All those enemy men... heh, perfect!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="263"/>
+        <source>G-gah! Theyâ€™re everywhere!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="264"/>
+        <source>Hrumph! Thisâ€™ll learn yeh!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="265"/>
+        <source>Heh, could Sensei do THIS?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="266"/>
+        <source>Who the heck taught you to fight?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="267"/>
+        <source>Stay on your toes! Iâ€™m talking to you!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="271"/>
+        <source>With all of those troops, you&apos;d think they&apos;d last longer...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="272"/>
+        <source>A-aughk!! Uhmâ€¦ I meanâ€¦ congratulations, men.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="273"/>
+        <source>With Yellow Comet on the line, I can&apos;t lose.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="277"/>
+        <source>What you had enough troops...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="278"/>
+        <source>Sensei that&apos;s you&apos;re fault!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="282"/>
+        <source>Rattigan</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

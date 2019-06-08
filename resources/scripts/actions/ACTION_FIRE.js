@@ -186,11 +186,11 @@ var Constructor = function()
             {
                 if (unit.isAttackable(defUnit))
                 {
-                    if (unit.hasAmmo1())
+                    if (unit.hasAmmo1() && unit.getWeapon1ID() !== "")
                     {
                         dmg1 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon1ID(), attackerTakenDamage, actionTargetField ,defUnit, luckMode);
                     }
-                    if (unit.hasAmmo2())
+                    if (unit.hasAmmo2() && unit.getWeapon2ID() !== "")
                     {
                         dmg2 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon2ID(), attackerTakenDamage, actionTargetField ,defUnit, luckMode);
                     }
@@ -211,11 +211,11 @@ var Constructor = function()
                     {
                         var defDamage = -1;
                         var defWeapon = 0;
-                        if (defUnit.hasAmmo1())
+                        if (defUnit.hasAmmo1() && defUnit.getWeapon1ID() !== "")
                         {
                             defDamage = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon1ID(), result.x + defenderTakenDamage, luckMode);
                         }
-                        if (defUnit.hasAmmo2())
+                        if (defUnit.hasAmmo2() && defUnit.getWeapon2ID() !== "")
                         {
                             var defDamage2 = ACTION_FIRE.calcDefenderDamage(unit, actionTargetField, defUnit, defUnit.getWeapon2ID(), result.x + defenderTakenDamage, luckMode);
                             if (defDamage2 > defDamage)
@@ -238,11 +238,11 @@ var Constructor = function()
                      (defBuilding.getIsAttackable(x, y) && unit.getOwner().isEnemy(defBuilding.getOwner()))) ||
                      (defTerrain.getHp() > 0))
                 {
-                    if (unit.hasAmmo1())
+                    if (unit.hasAmmo1() && unit.getWeapon1ID() !== "")
                     {
                         dmg1 = ACTION_FIRE.calcEnviromentDamage(unit, unit.getWeapon1ID(), actionTargetField, Qt.point(x, y), defTerrain.getID());
                     }
-                    if (unit.hasAmmo2())
+                    if (unit.hasAmmo2() && unit.getWeapon2ID() !== "")
                     {
                         dmg2 = ACTION_FIRE.calcEnviromentDamage(unit, unit.getWeapon2ID(), actionTargetField, Qt.point(x, y), defTerrain.getID());
                     }

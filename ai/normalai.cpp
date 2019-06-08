@@ -1158,7 +1158,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
     qint32 enemeyCount = 0;
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
-        if (m_pPlayer->isEnemy(pMap->getPlayer(i)))
+        if (m_pPlayer->isEnemy(pMap->getPlayer(i)) && !pMap->getPlayer(i)->getIsDefeated())
         {
             enemeyCount++;
         }
@@ -1676,7 +1676,7 @@ float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
             loadingUnits.removeAt(i);
         }
     }
-    if (score == 0.0f && pUnits->size() > 5 && dummy.getLoadingPlace() == 1)
+    if (score == 0.0f && pUnits->size() / (smallTransporterCount + 1) > 5 && dummy.getLoadingPlace() == 1)
     {
         GameMap* pMap = GameMap::getInstance();
         if (smallTransporterCount > 0)

@@ -198,7 +198,10 @@
 		<image file="pf/co_mina+face.png" cols = "3" />
 		<image file="pf/co_nana+nrm.png" />
 		<image file="pf/co_nana+info.png" />
-		<image file="pf/co_nana+face.png" cols = "3" />
+		<image file="pf/co_nana+face.png" cols = "3" />		
+		<image file="pf/co_alexis+nrm.png" />
+		<image file="pf/co_alexis+info.png" />
+		<image file="pf/co_alexis+face.png" cols = "3" />
 		
 		<!-- ti -->
 		<image file="ti/co_conrad+nrm.png" />
@@ -232,7 +235,10 @@
 		<image file="yc/co_sensei+face.png" cols = "3" />
 		<image file="yc/co_sonja+nrm.png" />
 		<image file="yc/co_sonja+info.png" />
-		<image file="yc/co_sonja+face.png" cols = "3" />
+		<image file="yc/co_sonja+face.png" cols = "3" />		
+		<image file="yc/co_rattigan+nrm.png" />
+		<image file="yc/co_rattigan+info.png" />
+		<image file="yc/co_rattigan+face.png" cols = "3" />		
 		<image file="yc/co_officier_yc+face.png" cols = "3" />
 				
 		<!-- BH -->
