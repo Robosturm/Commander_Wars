@@ -116,6 +116,10 @@ var Constructor = function()
         var step = action.getInputStep();
         var unitIndexes = [];
         var blockedFields = [];
+        var fields = null;
+        var i3 = 0;
+        var i4 = 0;
+        var found = false;
         for (var i2 = 0; i2 < step; i2 += 2)
         {
             unitIndexes.push(parseInt(action.readDataString()));
@@ -133,11 +137,11 @@ var Constructor = function()
             {
                 if (unitIndexes.indexOf(i) < 0)
                 {
-                    var fields = ACTION_UNLOAD.getUnloadFields(action, i);
-                    for (var i3 = 0; i3 < fields.length; i3++)
+                    fields = ACTION_UNLOAD.getUnloadFields(action, i);
+                    for (i3 = 0; i3 < fields.length; i3++)
                     {
-                        var found = false;
-                        for (var i4 = 0; i4 < blockedFields.length; i4++)
+                        found = false;
+                        for (i4 = 0; i4 < blockedFields.length; i4++)
                         {
                             if (blockedFields[i4] === fields[i3])
                             {
@@ -159,11 +163,11 @@ var Constructor = function()
         else
         {
             // find out which unit we want to unload
-            var fields = ACTION_UNLOAD.getUnloadFields(action, unitIndexes[unitIndexes.length - 1]);
-            for (var i3 = 0; i3 < fields.length; i3++)
+            fields = ACTION_UNLOAD.getUnloadFields(action, unitIndexes[unitIndexes.length - 1]);
+            for (i3 = 0; i3 < fields.length; i3++)
             {
-                var found = false;
-                for (var i4 = 0; i4 < blockedFields.length; i4++)
+                found = false;
+                for (i4 = 0; i4 < blockedFields.length; i4++)
                 {
                     if (blockedFields[i4] === fields[i3])
                     {

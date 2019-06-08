@@ -440,7 +440,7 @@ void PlayerSelection::showPlayerSelection()
         {
             if (i > 0)
             {
-                playerAi->setCurrentItem(1);
+                playerAi->setCurrentItem(aiList.size() - 1);
 
             }
             else

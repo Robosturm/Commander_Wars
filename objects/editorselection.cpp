@@ -532,7 +532,7 @@ void EditorSelection::initSelection()
     for (qint32 i = 0; i < m_Buildings.size(); i++)
     {
         qint32 posX = frameSize + xCounter * GameMap::Imagesize * xFactor;
-        if (posX > m_BoxPlacementSelection->getWidth() - GameMap::Imagesize - frameSize)
+        if (xCounter >= m_selectedIndex.z())
         {
             posY += GameMap::Imagesize * yFactor;
             xCounter = 0;
@@ -556,7 +556,7 @@ void EditorSelection::initSelection()
     for (qint32 i = 0; i < m_Terrains.size(); i++)
     {
         qint32 posX = frameSize + xCounter * GameMap::Imagesize * xFactor;
-        if (posX > m_BoxPlacementSelection->getWidth() - GameMap::Imagesize - frameSize)
+        if (xCounter >= m_selectedIndex.z())
         {
             posY += GameMap::Imagesize * yFactor;
             xCounter = 0;
@@ -577,7 +577,7 @@ void EditorSelection::initSelection()
     for (qint32 i = 0; i < m_Units.size(); i++)
     {
         qint32 posX = frameSize + xCounter * GameMap::Imagesize * xFactor;
-        if (posX > m_BoxPlacementSelection->getWidth() - GameMap::Imagesize - frameSize)
+        if (xCounter >= m_selectedIndex.z())
         {
             posY += GameMap::Imagesize * yFactor;
             xCounter = 0;

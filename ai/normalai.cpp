@@ -115,7 +115,7 @@ bool NormalAi::buildCOUnit(QmlVectorUnit* pUnits)
             for (qint32 i = 0; i < pUnits->size(); i++)
             {
                 Unit* pUnit = pUnits->at(i);
-                if (pUnit->getUnitValue() > 6000 && pUnit->getUnitRank() < GameEnums::UnitRank_CO0)
+                if (pUnit->getUnitValue() >= 6000 && pUnit->getUnitRank() < GameEnums::UnitRank_CO0)
                 {
                     active = true;
                 }
@@ -174,7 +174,13 @@ bool NormalAi::isUsingUnit(Unit* pUnit)
     {
         return false;
     }
-    if (pUnit->getHpRounded() < 3)
+    Building* pBuilding = GameMap::getInstance()->getTerrain(pUnit->getX(), pUnit->getY())->getBuilding();
+    if (pBuilding == nullptr && pUnit->getHpRounded() < 3)
+    {
+        return false;
+    }
+    else if (pBuilding != nullptr && pBuilding->getOwner() == m_pPlayer &&
+             pUnit->getHpRounded() < 7)
     {
         return false;
     }
@@ -245,6 +251,7 @@ bool NormalAi::captureBuildings(QmlVectorUnit* pUnits)
                 }
                 bool perform = false;
                 qint32 targetIndex = 0;
+                bool productionBuilding = false;
                 if (captures.size() > 0)
                 {
                     if (captures.size() == 0)
@@ -267,11 +274,13 @@ bool NormalAi::captureBuildings(QmlVectorUnit* pUnits)
                                     captureCount++;
                                 }
                             }
-                            if (captureCount == 1)
+                            bool isProductionBuilding = pMap->getTerrain(static_cast<qint32>(captures[i2].x()), static_cast<qint32>(captures[i2].y()))->getBuilding()->getActionList().contains(ACTION_BUILD_UNITS);
+                            if ((captureCount == 1 && perform == false) ||
+                                (captureCount == 1 && productionBuilding == false && perform == true && isProductionBuilding))
                             {
+                                productionBuilding = isProductionBuilding;
                                 targetIndex = i2;
                                 perform = true;
-                                break;
                             }
                         }
                         // check if there unique captures open
@@ -570,22 +579,21 @@ bool NormalAi::moveToUnloadArea(GameAction* pAction, Unit* pUnit, QmlVectorUnit*
                             else if (unloadFields[i].size() > 0 &&
                                      pUnit->getLoadedUnit(i)->getActionList().contains(ACTION_CAPTURE))
                             {
-                                MarkedFieldData* pFields = pAction->getMarkedFieldStepData();
-                                for (qint32 i2 = 0; i2 < pFields->getPoints()->size(); i2++)
+                                for (qint32 i2 = 0; i2 < unloadFields.size(); i2++)
                                 {
-                                    Building* pBuilding = pMap->getTerrain(pFields->getPoints()->at(i2).x(),
-                                                                           pFields->getPoints()->at(i2).y())->getBuilding();
+                                    QPoint unloadField = unloadFields[i][i2].toPoint();
+                                    Building* pBuilding = pMap->getTerrain(unloadField.x(),
+                                                                           unloadField.y())->getBuilding();
                                     if (pBuilding != nullptr && m_pPlayer->isEnemy(pBuilding->getOwner()))
                                     {
                                         qint32 costs = pDataMenu->getCostList()[i];
                                         addMenuItemData(pAction, actions[i], costs);
-                                        addSelectedFieldData(pAction, pFields->getPoints()->at(i2));
+                                        addSelectedFieldData(pAction, unloadField);
                                         unloaded = true;
                                         unloadedUnits.append(i);
                                         break;
                                     }
                                 }
-                                delete pFields;
                                 break;
                             }
                         }
@@ -760,7 +768,7 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
                                                                 pAction->getActionTarget().y(), 1));
                     QVector<QVector3D> ret;
                     getBestAttacksFromField(pUnit, pAction, ret, moveTargets);
-                    if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue() / 2)
+                    if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue()  * 3.0f / 4.0f)
                     {
                         qint32 selection = Mainapp::randInt(0, ret.size() - 1);
                         QVector3D target = ret[selection];
@@ -794,7 +802,7 @@ bool NormalAi::suicide(GameAction* pAction, Unit* pUnit, UnitPathFindingSystem& 
     QVector<QVector3D> ret;
     QVector<QVector3D> moveTargetFields;
     CoreAI::getBestTarget(pUnit, pAction, &turnPfs, ret, moveTargetFields);
-    if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue() / 2)
+    if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue() * 3.0f / 4.0f)
     {
         qint32 selection = Mainapp::randInt(0, ret.size() - 1);
         QVector3D target = ret[selection];
@@ -1601,7 +1609,19 @@ std::tuple<float, qint32> NormalAi::calcExpectedFondsDamage(qint32 posX, qint32 
     {
         attacksCount = 1;
     }
-    return std::tuple<float, qint32>(damageCount / attacksCount, notAttackableCount);
+    float damage = damageCount / attacksCount;
+    if (damage > 0)
+    {
+        if (attacksCount > 5)
+        {
+            damage *= (attacksCount + 5) / (pEnemyUnits->size());
+        }
+        else
+        {
+            damage *= (attacksCount) / (pEnemyUnits->size());
+        }
+    }
+    return std::tuple<float, qint32>(damage, notAttackableCount);
 }
 
 float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
@@ -1618,6 +1638,17 @@ float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
         if (!transporterUnits.contains(std::get<0>(transportTargets[i2])))
         {
             transporterUnits.append(std::get<0>(transportTargets[i2]));
+        }
+    }
+    qint32 smallTransporterCount = 0;
+    if (dummy.getLoadingPlace() == 1)
+    {
+        for (qint32 i = 0; i < pUnits->size(); i++)
+        {
+            if (pUnits->at(i)->getLoadingPlace() == 1)
+            {
+                smallTransporterCount++;
+            }
         }
     }
     qint32 i = 0;
@@ -1645,15 +1676,37 @@ float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
             loadingUnits.removeAt(i);
         }
     }
+    if (score == 0.0f && pUnits->size() > 5 && dummy.getLoadingPlace() == 1)
+    {
+        GameMap* pMap = GameMap::getInstance();
+        if (smallTransporterCount > 0)
+        {
+            score += ((pMap->getMapWidth() * pMap->getMapHeight()) / 200.0f) / smallTransporterCount * 10;
+        }
+        else if (pMap->getMapWidth() * pMap->getMapHeight() >= 200.0f)
+        {
+            score += 30.0f;
+        }
+        // give a bonus to t-heli's or similar units cause they are mostlikly much faster
+        if (dummy.useTerrainDefense() == false && score > 15.0f)
+        {
+            score += 15.0f;
+        }
+    }
     if (transporterUnits.size() > 0 && loadingUnits.size() > 0)
     {
         score += (transportTargets.size() / static_cast<float>(transporterUnits.size() * 6.0f)) * 15;
     }
-    if (score > 0)
+    if (score >= 20)
     {
         score += dummy.getLoadingPlace() * 5;
         score += calcCostScore(data);
         score += loadingUnits.size() * 5;
+    }
+    // avoid building transporters if the score is low
+    if (score <= 10)
+    {
+        score = std::numeric_limits<float>::lowest();
     }
     return score;
 }
@@ -1758,11 +1811,15 @@ float NormalAi::calcBuildScore(QVector<float>& data)
     {
         if (data[9] < 6 && data[6] < 1.25f)
         {
-            score += (5 - data[9]) * 5 + (1 - data[6]) / 0.025f;
+            score += (5 - data[9]) * 5 + (1.25f - data[6]) / 0.02f;
         }
         else if (data[1] < 0.4f)
         {
-            score += (1.25f - data[6]) / 0.2f * 4;
+            score += (1.25f - data[6]) / 0.15f * 4;
+        }
+        else
+        {
+            score += (1.0f - data[6]) / 0.15f * 4;
         }
         if (data[9] >= 6)
         {
@@ -1794,7 +1851,7 @@ float NormalAi::calcCostScore(QVector<float>& data)
     // fonds bonus;
     if (data[5] > 2.5f + data[12])
     {
-        score -= (data[5] - 2.5f + data[12]) * 2;
+        score -= (data[5] - 2.5f + data[12]) * 5;
     }
     else if (data[5] < 0.8f)
     {
@@ -1802,7 +1859,7 @@ float NormalAi::calcCostScore(QVector<float>& data)
     }
     else
     {
-        score += (2.5f + data[12] - data[5]) / 0.125f;
+        score += (2.5f + data[12] - data[5]) / 0.10f;
     }
     return score;
 }
