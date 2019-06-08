@@ -146,7 +146,8 @@ var Constructor = function()
             return false;
         }
         if (terrain.getID() === "STREET" ||
-            terrain.getID() === "BRIDGE")
+            terrain.getID() === "BRIDGE" ||
+            terrain.getID() === "RUIN" )
         {
             return false;
         }
@@ -175,7 +176,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 2;
+        return 3;
     };
     this.getCOArmy = function()
     {
@@ -201,7 +202,7 @@ var Constructor = function()
                     }
                     break;
                 }
-                return 10;
+                return 5;
             }
         }
         return 0;

@@ -106,7 +106,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 2;
+        return 3;
     };
     this.getCOArmy = function()
     {
@@ -127,7 +127,7 @@ var Constructor = function()
                 }
                 break;
         }
-        return 15;
+        return 10;
     };
 	
     this.getBonusMisfortune = function(co, unit, posX, posY)

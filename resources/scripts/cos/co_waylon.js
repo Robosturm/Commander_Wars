@@ -194,7 +194,6 @@ var Constructor = function()
                     {
                         return 30;
                     }
-                    return 15;
                 }
                 break;
         }

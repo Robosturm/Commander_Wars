@@ -110,7 +110,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 2;
+        return 3;
     };
     this.getCOArmy = function()
     {
@@ -152,11 +152,6 @@ var Constructor = function()
                     return 0;
                 }
                 break;
-        }
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-        {
-            // apply snow buff :)
-            return 10;
         }
         return 0;
     };

@@ -137,7 +137,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 1;
+        return 3;
     };
     this.getCOArmy = function()
     {
@@ -190,7 +190,7 @@ var Constructor = function()
                         case GameEnums.UnitRank_CO1:
                             return 20;
                         default:
-                            return -2.5;
+                            return 0;
                     }
                 }
                 else
@@ -259,7 +259,7 @@ var Constructor = function()
                         case GameEnums.UnitRank_CO1:
                             return 20;
                         default:
-                            return -2.5;
+                            return 0;
                     }
                 }
                 else

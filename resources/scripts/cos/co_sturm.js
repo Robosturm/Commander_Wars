@@ -118,7 +118,7 @@ var Constructor = function()
                 }
                 break;
         }
-        return 15;
+        return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
@@ -136,7 +136,7 @@ var Constructor = function()
                 }
                 break;
         }
-        return 15;
+        return 0;
     };
     this.getMovementcostModifier = function(co, unit, posX, posY)
     {

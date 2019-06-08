@@ -200,7 +200,7 @@ var Constructor = function()
                 }
                 break;
         }
-        return 10;
+        return 0;
     };
 
     this.getCOArmy = function()

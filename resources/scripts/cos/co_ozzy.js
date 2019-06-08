@@ -153,11 +153,11 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    return 30;
+                    return 20;
                 }
                 break;
         }
-        return 10;
+        return 0;
     };
 
     // CO - Intel

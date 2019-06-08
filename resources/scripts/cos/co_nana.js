@@ -2,8 +2,8 @@ var Constructor = function()
 {
     this.init = function(co)
     {
-        co.setPowerStars(4);
-        co.setSuperpowerStars(5);
+        co.setPowerStars(5);
+        co.setSuperpowerStars(4);
     };
 
     this.activatePower = function(co)

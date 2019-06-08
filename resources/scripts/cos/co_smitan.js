@@ -167,7 +167,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 2;
+        return 3;
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
@@ -217,9 +217,8 @@ var Constructor = function()
                 {
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
-                        return inRangeCount * 10;
+                        return inRangeCount * 15;
                     }
-                    return inRangeCount * 5;
                 }
                 break;
         }        

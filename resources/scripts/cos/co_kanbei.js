@@ -137,7 +137,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 30;
+                    return 40;
                 }
                 break;
         }

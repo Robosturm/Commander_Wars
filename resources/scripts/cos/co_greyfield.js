@@ -188,7 +188,7 @@ var Constructor = function()
                     {
                         return 40;
                     }
-                    return 15;
+                    return 0;
                 }
                 break;
         }

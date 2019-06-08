@@ -181,7 +181,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
                 {
-                    return 30
+                    return 40
                 }
                 else
                 {
@@ -192,7 +192,7 @@ var Constructor = function()
                 {
                     if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
                     {
-                        return 30
+                        return 40
                     }
                     else
                     {
@@ -200,14 +200,6 @@ var Constructor = function()
                     }
                 }
                 break;
-        }
-        if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
-        {
-            return 20
-        }
-        else
-        {
-            return 10;
         }
     };
 

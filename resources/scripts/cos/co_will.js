@@ -152,10 +152,6 @@ var Constructor = function()
                     {
                         return 20;
                     }
-                    else
-                    {
-                        return 10;
-                    }
                 }
                 break;
         }

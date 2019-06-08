@@ -107,7 +107,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 3;
+        return 4;
     };
     this.getCOArmy = function()
     {
@@ -130,11 +130,7 @@ var Constructor = function()
                 default:
                     if (co.inCORange(Qt.point(attacker.getX(), attacker.getY()), attacker))
                     {
-                        healPercent = 0.2;
-                    }
-                    else
-                    {
-                        healPercent = 0.1;
+                        healPercent = 0.35;
                     }
                     break;
 

@@ -107,7 +107,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 2;
+        return 3;
     };
     this.getCOArmy = function()
     {
@@ -134,7 +134,6 @@ var Constructor = function()
                     }
                     break;
                 }
-                return terrainDefense * 5;
             }
         }
         return 0;

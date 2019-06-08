@@ -87,7 +87,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 1;
+        return 2;
     };
     this.getCOArmy = function()
     {

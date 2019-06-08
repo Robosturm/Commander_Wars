@@ -146,7 +146,6 @@ var Constructor = function()
                     {
                         return 20;
                     }
-                    return 5;
                 }
                 break;
         }

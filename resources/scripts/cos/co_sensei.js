@@ -141,7 +141,6 @@ var Constructor = function()
                     {
                         return 30;
                     }
-                    return 20;
                 }
                 else if (attacker.getUnitID() === "K_HELI")
                 {
@@ -149,7 +148,7 @@ var Constructor = function()
                     {
                         return 50;
                     }
-                    return 30;
+                    return 20;
                 }
                 break;
         }

@@ -127,7 +127,6 @@ var Constructor = function()
                 }
                 break;
         }
-        return 5;
     };
 
     // CO - Intel

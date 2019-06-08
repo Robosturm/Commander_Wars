@@ -133,10 +133,6 @@ var Constructor = function()
                 {
                     return damage * 0.2;
                 }
-                else
-                {
-                    return damage * 0.1;
-                }
             }
             break;
         }

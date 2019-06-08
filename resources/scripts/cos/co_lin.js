@@ -147,10 +147,6 @@ var Constructor = function()
                     {
                         return 30;
                     }
-                    else
-                    {
-                        return 10;
-                    }
                 }
                 break;
         }
