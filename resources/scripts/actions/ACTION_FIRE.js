@@ -98,7 +98,7 @@ var Constructor = function()
         if (defender.getMinRange() === 1 && defenderWeapon !== "")
         {
             var health = defender.getHp() - takenDamage / 10.0;
-            if (defender.getFirstStrike(defender.getPosition()))
+            if (defender.getFirstStrike(defender.getPosition(), attacker))
             {
                 health = defender.getHp();
             }

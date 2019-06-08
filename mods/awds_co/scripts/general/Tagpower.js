@@ -146,11 +146,19 @@ TAGPOWER.TAGPOWERDATA = [["CO_ANDY",    "CO_EAGLE",     qsTr("Airlift"),        
                          ["CO_ALEXIS",   "CO_OZZY",     qsTr("Whole Lotta Love"),  10,     0],
                          ["CO_ALEXIS",   "CO_MINA",     qsTr("Tagpower"),          5,      0],
                          ["CO_ALEXIS",   "CO_LASH",     qsTr("Tagpower"),          -10,    0],
-                         ["CO_RATTIGAN", "CO_GRIMM",    qsTr("Cleaning House"),    10,    1],
-                         ["CO_RATTIGAN", "CO_KANBEI",   qsTr("Former Glory"),      5,     1],
-                         ["CO_RATTIGAN", "CO_OLAF",     qsTr("Tagpower"),          5,     0],
-                         ["CO_RATTIGAN", "CO_SENSEI",   qsTr("Tagpower"),          -10,   0],
-                         ["CO_RATTIGAN", "CO_VON_BOLT", qsTr("Tagpower"),          -10,   0]];
+                         ["CO_RATTIGAN", "CO_GRIMM",    qsTr("Cleaning House"),    10,     1],
+                         ["CO_RATTIGAN", "CO_KANBEI",   qsTr("Former Glory"),      5,      1],
+                         ["CO_RATTIGAN", "CO_OLAF",     qsTr("Tagpower"),          5,      0],
+                         ["CO_RATTIGAN", "CO_SENSEI",   qsTr("Tagpower"),          -10,    0],
+                         ["CO_RATTIGAN", "CO_VON_BOLT", qsTr("Tagpower"),          -10,    0],
+                         ["CO_CASSIDY",  "CO_KINDLE",   qsTr("Firestarters"),      10,     1],
+                         ["CO_CASSIDY",  "CO_KOAL",     qsTr("Road Rage"),         10,     1],
+                         ["CO_CASSIDY",  "CO_FLAK",     qsTr("Tagpower"),          5,      0],
+                         ["CO_CASSIDY",  "CO_MINA",     qsTr("Tagpower"),          5,      0],
+                         ["CO_CASSIDY",  "CO_GRAVES",   qsTr("Tagpower"),          -20,    0],
+                         ["CO_JOEY",     "CO_SASHA",    qsTr("Confident Abilities"), 15,   2],
+                         ["CO_JOEY",     "CO_GRIMM",    qsTr("Daredevil Business"), 5,     1],
+                         ["CO_JOEY",     "CO_COLIN",    qsTr("Tagpower"),          -10,     0],];
 
 
 TAGPOWER.getTagname = function(co1, co2)

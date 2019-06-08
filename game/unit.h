@@ -169,7 +169,7 @@ public slots:
      * @param position
      * @return
      */
-    bool getFirstStrike(QPoint position);
+    bool getFirstStrike(QPoint position, Unit* pAttacker);
     /**
      * @brief getMovementpoints the movement points this unit can move
      * @param position

@@ -212,7 +212,10 @@
 		<image file="ti/co_joey+face.png" cols = "3" />
 		<image file="ti/co_walter+nrm.png" />
 		<image file="ti/co_walter+info.png" />
-		<image file="ti/co_walter+face.png" cols = "3" />		
+		<image file="ti/co_walter+face.png" cols = "3" />	
+		<image file="ti/co_cassidy+nrm.png" />
+		<image file="ti/co_cassidy+info.png" />
+		<image file="ti/co_cassidy+face.png" cols = "3" />			
 		<set scale_factor = "0.35" />	
 		<image file="ti/co_greyfield+nrm.png" />
 		<set scale_factor = "0.366" />	

@@ -148,7 +148,7 @@ qint32 CO::getTerrainDefenseModifier(Unit* pUnit, QPoint position)
     }
 }
 
-bool CO::getFirstStrike(Unit* pUnit, QPoint position)
+bool CO::getFirstStrike(Unit* pUnit, QPoint position, Unit* pAttacker)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getFirstStrike";
@@ -159,6 +159,8 @@ bool CO::getFirstStrike(Unit* pUnit, QPoint position)
     args1 << obj1;
     args1 << position.x();
     args1 << position.y();
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(pAttacker);
+    args1 << obj3;
     QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
     if (erg.isBool())
     {
