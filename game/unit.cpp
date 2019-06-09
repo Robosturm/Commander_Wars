@@ -963,15 +963,34 @@ void Unit::makeCOUnit(quint8 co)
 qint32 Unit::getBonusLuck(QPoint position)
 {
     qint32 bonus = 0;
-    CO* pCO = m_pOwner->getCO(0);
-    if (pCO != nullptr)
+    CO* pCO0 = m_pOwner->getCO(0);
+    if (pCO0 != nullptr)
     {
-        bonus += pCO->getBonusLuck(this, position);
+        bonus += pCO0->getBonusLuck(this, position);
     }
-    pCO = m_pOwner->getCO(1);
-    if (pCO != nullptr)
+    CO* pCO1 = m_pOwner->getCO(1);
+    if (pCO1 != nullptr)
     {
-        bonus += pCO->getBonusLuck(this, position);
+        bonus += pCO1->getBonusLuck(this, position);
+    }
+    // apply star bonus
+    pCO0 = m_pOwner->getCO(0);
+    pCO1 = m_pOwner->getCO(1);
+    if (pCO0 != nullptr && pCO1 != nullptr &&
+        pCO0->getPowerMode() == GameEnums::PowerMode_Tagpower)
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        QString function1 = "getTagstars";
+        QJSValueList args1;
+        QJSValue obj1 = pApp->getInterpreter()->newQObject(pCO0);
+        args1 << obj1;
+        QJSValue obj2 = pApp->getInterpreter()->newQObject(pCO1);
+        args1 << obj2;
+        QJSValue erg = pApp->getInterpreter()->doFunction("TAGPOWER", function1, args1);
+        if (erg.isNumber())
+        {
+            bonus += erg.toInt() * 5;
+        }
     }
     return bonus;
 }
@@ -1374,7 +1393,7 @@ qint32 Unit::getLoadingPlace()
     QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
     if (ret.isNumber())
     {
-        return ret.toNumber();
+        return ret.toInt();
     }
     else
     {

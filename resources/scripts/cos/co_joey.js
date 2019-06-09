@@ -220,6 +220,7 @@ var Constructor = function()
                 return false;
             }
         }
+        return false;
     };
 
     this.getCostModifier = function(co, id, baseCost)

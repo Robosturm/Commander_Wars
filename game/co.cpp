@@ -39,7 +39,12 @@ void CO::setCOUnit(Unit* pUnit)
 {
     if (pUnit == nullptr && m_pCOUnit != nullptr)
     {
-        setPowerFilled(powerFilled / 2.0f);
+        Mainapp* pApp = Mainapp::getInstance();
+        QString function1 = "onCOUnitLost";
+        QJSValueList args1;
+        QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+        args1 << obj1;
+        QJSValue erg = pApp->getInterpreter()->doFunction(this->coID, function1, args1);
     }
     m_pCOUnit = pUnit;
 }

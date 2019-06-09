@@ -1,27 +1,30 @@
 CO_CASSIDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                         defender, defPosX, defPosY, isDefender)
 {
-    if (defender !== null)
+    if (co.getIsCO0() === true)
     {
-        switch (co.getPowerMode())
+        if (defender !== null)
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (attacker.getHp() > defender.getHp())
+            switch (co.getPowerMode())
             {
-                return 80;
-            }
-            return 30;
-        case GameEnums.PowerMode_Power:
-            if (attacker.getHp() > defender.getHp())
-            {
-                return 60;
-            }
-            return 30;
-        default:
-            if (attacker.getHp() > defender.getHp())
-            {
-                return 20;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (attacker.getHp() > defender.getHp())
+                {
+                    return 80;
+                }
+                return 30;
+            case GameEnums.PowerMode_Power:
+                if (attacker.getHp() > defender.getHp())
+                {
+                    return 60;
+                }
+                return 30;
+            default:
+                if (attacker.getHp() > defender.getHp())
+                {
+                    return 20;
+                }
             }
         }
     }

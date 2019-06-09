@@ -6,6 +6,12 @@ var CO =
         co.setSuperpowerStars(3);
     },
 
+    onCOUnitLost : function(co)
+    {
+        // called when a co unit got destroyed
+        co.setPowerFilled(co.getPowerFilled() / 2.0);
+    },
+
     loadCOMusic : function(co)
     {
         // put the co music in here.

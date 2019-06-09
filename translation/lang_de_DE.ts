@@ -4853,107 +4853,107 @@
 <context>
     <name>co_joey</name>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="243"/>
         <source>Loves to live and fight on the edge. He prefers risks and gambles over safety.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="246"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="247"/>
         <source>Disadvantages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="251"/>
         <source>Cheaters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="255"/>
         <source>Joey likes to live on the edge. Units are stronger when engaging stronger units, but firepower is reduced when engaging a weaker unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="259"/>
         <source>Units receive a large firepower boost when engaging a stronger unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="263"/>
         <source>Eccentricity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="266"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="267"/>
         <source>Deployment costs drop and units get first strike when engaging a stronger unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="270"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="271"/>
         <source>Tempestous Technique</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="274"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="275"/>
         <source>I feel a bit dirty for doing this...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="276"/>
         <source>I gave you a chance, but you didn&apos;t want it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="277"/>
         <source>You gotta live life on the edge!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="277"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="278"/>
         <source>You were never too good.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="278"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="279"/>
         <source>You&apos;re going to be feeling edgy about this...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="279"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="280"/>
         <source>C&apos;mon, give the little guys a chance!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="281"/>
         <source>What&apos;s a little risk taking going to hurt?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="284"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="285"/>
         <source>Heh, good game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="285"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="286"/>
         <source>Power isn&apos;t everything y&apos;know...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="286"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="287"/>
         <source>Big risk, big reward!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="290"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="291"/>
         <source>This was to risky...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="291"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="292"/>
         <source>I thought my risk was calculated but man i&apos;m bad at math!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_joey.js" line="295"/>
+        <location filename="../resources/scripts/cos/co_joey.js" line="296"/>
         <source>Joey</source>
         <translation type="unfinished"></translation>
     </message>
