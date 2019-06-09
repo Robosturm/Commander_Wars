@@ -911,6 +911,11 @@
         <source>Import AWDC Aw4</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="72"/>
+        <source>Import AW by Web</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FIRE</name>

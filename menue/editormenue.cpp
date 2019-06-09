@@ -69,6 +69,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Import CoW Txt"), "IMPORTCOWTXT", 3);
     m_Topbar->addItem(tr("Import AWDS Aws"), "IMPORTAWDSAWS", 3);
     m_Topbar->addItem(tr("Import AWDC Aw4"), "IMPORTAWDCAW4", 3);
+    m_Topbar->addItem(tr("Import AW by Web"), "IMPORTAWDBYWEB", 3);
 
 
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
@@ -163,6 +164,17 @@ void EditorMenue::clickedTopbar(QString itemID)
         spFileDialog fileDialog = new FileDialog(path, wildcards);
         this->addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDCAw4Map, Qt::QueuedConnection);
+        connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+        setFocused(false);
+    }
+    else if (itemID == "IMPORTAWDBYWEB")
+    {
+        QVector<QString> wildcards;
+        wildcards.append("*.txt");
+        QString path = QCoreApplication::applicationDirPath() + "/maps";
+        spFileDialog fileDialog = new FileDialog(path, wildcards);
+        this->addChild(fileDialog);
+        connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWByWeb, Qt::QueuedConnection);
         connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
         setFocused(false);
     }
@@ -765,6 +777,24 @@ void EditorMenue::importAWDCAw4Map(QString filename)
         if (file.exists())
         {
             GameMap::getInstance()->importAWDCMap(filename);
+            m_EditorSelection->createPlayerSelection();
+        }
+    }
+    setFocused(true);
+    pApp->continueThread();
+}
+
+void EditorMenue::importAWByWeb(QString filename)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
+    if (filename.endsWith(".txt"))
+    {
+        QFile file(filename);
+        if (file.exists())
+        {
+            GameMap::getInstance()->importAWByWebMap(filename);
             m_EditorSelection->createPlayerSelection();
         }
     }

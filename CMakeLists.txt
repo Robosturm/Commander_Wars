@@ -181,6 +181,7 @@ set(${PROJECT_NAME}_SRCS
         mapsupport/randomMap.cpp
         mapsupport/importexport_awds.cpp
         mapsupport/importexport_awdc.cpp
+        mapsupport/importawbyweb_text.cpp
 
         # ai
         ai/leaf.cpp

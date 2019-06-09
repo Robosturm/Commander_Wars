@@ -122,6 +122,11 @@ public slots:
      */
     void importAWDCAw4Map(QString filename);
     /**
+     * @brief importAWByWeb
+     * @param filename
+     */
+    void importAWByWeb(QString filename);
+    /**
      * @brief newMap
      * @param mapName
      * @param mapWidth

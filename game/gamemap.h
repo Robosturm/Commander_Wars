@@ -501,6 +501,11 @@ public slots:
      */
     void importAWDCMap(QString file);
     /**
+     * @brief importAWByWebMap
+     * @param file
+     */
+    void importAWByWebMap(QString file);
+    /**
      * @brief exportAWDCMap
      * @param file
      */
