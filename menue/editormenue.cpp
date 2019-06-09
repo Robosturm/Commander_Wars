@@ -317,6 +317,13 @@ void EditorMenue::optimizePlayers()
             }
         }
     }
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        if (pMap->getPlayer(i)->getTeam() >= pMap->getPlayerCount())
+        {
+            pMap->getPlayer(i)->setTeam(i);
+        }
+    }
     m_EditorSelection->createPlayerSelection();
     pApp->continueThread();
 }

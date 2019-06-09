@@ -32,6 +32,7 @@ public slots:
         {
             return m_loadedTerrains.at(position);
         }
+        return "";
     }
     /**
      * @brief getTerrainCount

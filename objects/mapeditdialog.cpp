@@ -94,7 +94,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     text->setText(tr("Map width:").toStdString().c_str());
     text->setPosition(30, 5 + y );
     pSpriteBox->addChild(text);
-    m_MapWidth = new SpinBox(300, 1, 999, SpinBox::Mode::Float);
+    m_MapWidth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
     m_MapWidth->setPosition(text->getX() + width, text->getY());
     m_MapWidth->setCurrentValue(mapWidth);
     pSpriteBox->addChild(m_MapWidth);
@@ -106,7 +106,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     text->setText(tr("Map heigth:").toStdString().c_str());
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
-    m_MapHeigth = new SpinBox(300, 1, 999, SpinBox::Mode::Float);
+    m_MapHeigth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
     m_MapHeigth->setPosition(text->getX() + width, text->getY());
     m_MapHeigth->setCurrentValue(mapHeigth);
     pSpriteBox->addChild(m_MapHeigth);
@@ -118,7 +118,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     text->setText(tr("Map Player:").toStdString().c_str());
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
-    m_MapPlayerCount = new SpinBox(300, 2, 40, SpinBox::Mode::Float);
+    m_MapPlayerCount = new SpinBox(300, 2, 40, SpinBox::Mode::Int);
     m_MapPlayerCount->setPosition(text->getX() + width, text->getY());
     m_MapPlayerCount->setCurrentValue(playerCount);
     pSpriteBox->addChild(m_MapPlayerCount);

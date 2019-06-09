@@ -37,7 +37,7 @@ void CO::init()
 
 void CO::setCOUnit(Unit* pUnit)
 {
-    if (pUnit == nullptr && m_pCOUnit != nullptr)
+    if (pUnit == nullptr && m_pCOUnit != nullptr && GameMenue::getInstance() != nullptr)
     {
         Mainapp* pApp = Mainapp::getInstance();
         QString function1 = "onCOUnitLost";

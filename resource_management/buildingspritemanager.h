@@ -32,6 +32,7 @@ public slots:
         {
             return m_loadedBuildings.at(position);
         }
+        return "";
     }
     /**
      * @brief getBuildingIndex

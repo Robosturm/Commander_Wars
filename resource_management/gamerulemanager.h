@@ -35,6 +35,7 @@ public slots:
         {
             return m_loadedVictoryRules.at(position);
         }
+        return "";
     }
     /**
      * @brief getVictoryRuleCount
@@ -62,6 +63,7 @@ public slots:
         {
             return m_loadedWeather.at(position);
         }
+        return "";
     }
     /**
      * @brief getWeatherCount

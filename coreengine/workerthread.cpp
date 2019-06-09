@@ -18,6 +18,7 @@
 #include "resource_management/gamemanager.h"
 #include "resource_management/cospritemanager.h"
 #include "resource_management/gamerulemanager.h"
+#include "resource_management/battleanimationmanager.h"
 
 WorkerThread::WorkerThread()
 {
@@ -80,9 +81,11 @@ void WorkerThread::start()
     pUnitspritemanager->loadAll();
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
     pWeaponManager->loadAll();
+    BattleAnimationManager* pBattleAnimationManager = BattleAnimationManager::getInstance();
+    pBattleAnimationManager->loadAll();
 
-    pApp->continueThread();
     started = true;
+    pApp->continueThread();
 }
 
 bool WorkerThread::getStarted() const

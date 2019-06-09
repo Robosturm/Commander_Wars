@@ -34,6 +34,7 @@ public:
         {
             return m_loadedUnits.at(position);
         }
+        return "";
     }
     /**
      * @brief getUnitIndex

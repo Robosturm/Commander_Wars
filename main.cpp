@@ -54,6 +54,7 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/terrainmanager.h"
 #include "resource_management/unitspritemanager.h"
+#include "resource_management/battleanimationmanager.h"
 
 int main(int argc, char* argv[])
 {
@@ -152,6 +153,7 @@ int main(int argc, char* argv[])
     ObjectManager::getInstance();
     TerrainManager::getInstance();
     UnitSpriteManager::getInstance();
+    BattleAnimationManager::getInstance();
 
     /*************************************************************************************************/
     // This is the main game loop.

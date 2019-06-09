@@ -13,6 +13,7 @@
 #include "game/gamemap.h"
 #include "game/player.h"
 #include "game/co.h"
+#include "game/battleanimationsprite.h"
 
 IngameInfoBar::IngameInfoBar()
     : QObject()
@@ -451,6 +452,15 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
         pSprite->setResAnim(pAnimBack);
         pSprite->setPriority(2);
         m_pCursorInfoBox->addChild(pSprite);
+
+        if (pUnit != nullptr)
+        {
+            BattleAnimationSprite* pBattleAnimationSprite = new BattleAnimationSprite(pUnit, BattleAnimationSprite::standingAnimation);
+            pBattleAnimationSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 110);
+            pBattleAnimationSprite->setPriority(3);
+            m_pCursorInfoBox->addChild(pBattleAnimationSprite);
+        }
+
         qint32 TerrainDefense = 0;
         if (pUnit != nullptr)
         {
@@ -470,7 +480,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             pSprite->setPosition(defenseX, defenseY);
             pSprite->setResAnim(pAnim);
             pSprite->setScale(1.5f);
-            pSprite->setPriority(3);
+            pSprite->setPriority(4);
             m_pCursorInfoBox->addChild(pSprite);
             if (i % 4 == 0)
             {

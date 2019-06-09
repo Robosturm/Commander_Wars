@@ -43,6 +43,7 @@ public:
         {
             return m_loadedTables.at(position);
         }
+        return "";
     }
     /**
      * @brief getMovementTableCount

@@ -105,8 +105,10 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target
                 usedNodes.append(pCurrentNode);
                 Unit* pNodeUnit = pMap->getTerrain(pCurrentNode->x, pCurrentNode->y)->getUnit();
                 // empty field or unit ignores collision and can move on the field
+                // or we are on this field
                 if (pNodeUnit == nullptr ||
-                    (m_pUnit->getIgnoreUnitCollision() && pNodeUnit != nullptr && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit)))
+                    (m_pUnit->getIgnoreUnitCollision() && pNodeUnit != nullptr && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit)) ||
+                    (pNodeUnit == m_pUnit))
                 {
                     return getPath(pCurrentNode->x, pCurrentNode->y);
                 }

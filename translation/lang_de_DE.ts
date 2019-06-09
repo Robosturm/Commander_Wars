@@ -988,116 +988,116 @@
 <context>
     <name>IngameInfoBar</name>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="133"/>
+        <location filename="../objects/ingameinfobar.cpp" line="134"/>
         <source>Buildings: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="140"/>
+        <location filename="../objects/ingameinfobar.cpp" line="141"/>
         <source>Units: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="147"/>
+        <location filename="../objects/ingameinfobar.cpp" line="148"/>
         <source>Fonds: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="154"/>
+        <location filename="../objects/ingameinfobar.cpp" line="155"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="161"/>
+        <location filename="../objects/ingameinfobar.cpp" line="162"/>
         <source>Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="230"/>
-        <location filename="../objects/ingameinfobar.cpp" line="273"/>
-        <location filename="../objects/ingameinfobar.cpp" line="277"/>
+        <location filename="../objects/ingameinfobar.cpp" line="231"/>
+        <location filename="../objects/ingameinfobar.cpp" line="274"/>
+        <location filename="../objects/ingameinfobar.cpp" line="278"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="317"/>
+        <location filename="../objects/ingameinfobar.cpp" line="318"/>
         <source>Ammo1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="333"/>
+        <location filename="../objects/ingameinfobar.cpp" line="334"/>
         <source>Ammo1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="349"/>
+        <location filename="../objects/ingameinfobar.cpp" line="350"/>
         <source>Ammo2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="365"/>
+        <location filename="../objects/ingameinfobar.cpp" line="366"/>
         <source>Ammo2: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="382"/>
+        <location filename="../objects/ingameinfobar.cpp" line="383"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="399"/>
+        <location filename="../objects/ingameinfobar.cpp" line="400"/>
         <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="520"/>
-        <location filename="../objects/ingameinfobar.cpp" line="572"/>
+        <location filename="../objects/ingameinfobar.cpp" line="530"/>
+        <location filename="../objects/ingameinfobar.cpp" line="582"/>
         <source>Owner: Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="530"/>
+        <location filename="../objects/ingameinfobar.cpp" line="540"/>
         <source>Owner: Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="540"/>
-        <location filename="../objects/ingameinfobar.cpp" line="551"/>
+        <location filename="../objects/ingameinfobar.cpp" line="550"/>
+        <location filename="../objects/ingameinfobar.cpp" line="561"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="582"/>
+        <location filename="../objects/ingameinfobar.cpp" line="592"/>
         <source>Weapon 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="594"/>
+        <location filename="../objects/ingameinfobar.cpp" line="604"/>
         <source>Weapon 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="604"/>
+        <location filename="../objects/ingameinfobar.cpp" line="614"/>
         <source>Move: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="613"/>
+        <location filename="../objects/ingameinfobar.cpp" line="623"/>
         <source>Movementpoints: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="622"/>
+        <location filename="../objects/ingameinfobar.cpp" line="632"/>
         <source>Vision: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="635"/>
+        <location filename="../objects/ingameinfobar.cpp" line="645"/>
         <source>Loaded Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="655"/>
+        <location filename="../objects/ingameinfobar.cpp" line="665"/>
         <source>Loaded Units: ?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1763,7 +1763,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="80"/>
+        <location filename="../main.cpp" line="81"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>

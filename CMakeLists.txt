@@ -89,6 +89,7 @@ set(${PROJECT_NAME}_SRCS
         objects/dialogconnecting.cpp
         objects/dialogmessagebox.cpp
         objects/dialograndommap.cpp
+        game/battleanimationsprite.cpp
 
         #menues
         menue/mainwindow.cpp
@@ -113,6 +114,7 @@ set(${PROJECT_NAME}_SRCS
         resource_management/weaponmanager.cpp
         resource_management/cospritemanager.cpp
         resource_management/gamerulemanager.cpp
+        resource_management/battleanimationmanager.cpp
 
         # core engine
         coreengine/mainapp.cpp

@@ -35,6 +35,7 @@ public:
         {
             return m_loadedCOs.at(position);
         }
+        return "";
     }
     /**
      * @brief getCOIndex
