@@ -11,3 +11,4 @@ If you need help with modding or have a question concerning the game contact me!
 E-Mail-Contact: commanderwars@gmx.de ask for help here. :)
 
 Latest Release is Beta 3 which can be found here: [CoW Beta 3](https://github.com/Robosturm/Commander_Wars/releases/tag/Beta_3)
+Videos of the game can be found on [Youtube](https://www.youtube.com/user/Robosturm)
