@@ -7,7 +7,7 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit)
     {
-        var player = unit.getOwner();
+		var player = unit.getOwner();
         // get army name
         var armyName = player.getArmy().toLowerCase();
         if (armyName === "bg")
@@ -21,12 +21,12 @@ var Constructor = function()
         {
             armyName = "os";
         }
-        sprite.loadSprite("light_tank+" + armyName,  false,
-                          BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), Qt.point(-5, 5));
-        sprite.loadSprite("light_tank+" + armyName + "+mask",  true,
-                          BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), Qt.point(-5, 5));
+        sprite.loadSprite("fighter+" + armyName,  false,
+                          BATTLEANIMATION_FIGHTER.getMaxUnitCount(), Qt.point(-40, 20));
+        sprite.loadSprite("fighter+" + armyName + "+mask",  true,
+                          BATTLEANIMATION_FIGHTER.getMaxUnitCount(), Qt.point(-40, 20));
     };
 };
 
 Constructor.prototype = BATTLEANIMATION;
-var BATTLEANIMATION_LIGHT_TANK = new Constructor();
+var BATTLEANIMATION_FIGHTER = new Constructor();

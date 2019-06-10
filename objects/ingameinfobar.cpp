@@ -455,7 +455,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 
         if (pUnit != nullptr)
         {
-            BattleAnimationSprite* pBattleAnimationSprite = new BattleAnimationSprite(pUnit, BattleAnimationSprite::standingAnimation);
+            BattleAnimationSprite* pBattleAnimationSprite = new BattleAnimationSprite(pUnit, pUnit->getTerrain(), BattleAnimationSprite::standingAnimation);
             pBattleAnimationSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 110);
             pBattleAnimationSprite->setPriority(3);
             m_pCursorInfoBox->addChild(pBattleAnimationSprite);

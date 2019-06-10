@@ -14,19 +14,22 @@ var Constructor = function()
         {
             armyName = "bh"
         }
-        if ((armyName !== "yc") &&
+        if ((armyName !== "ac") &&
+			(armyName !== "yc") &&
             (armyName !== "ge") &&
             (armyName !== "bm") &&
+			(armyName !== "dm") &&
+			(armyName !== "ti") &&
             (armyName !== "bh"))
         {
             armyName = "os";
         }
-        sprite.loadSprite("light_tank+" + armyName,  false,
-                          BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), Qt.point(-5, 5));
-        sprite.loadSprite("light_tank+" + armyName + "+mask",  true,
-                          BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), Qt.point(-5, 5));
+        sprite.loadSprite("rocketthrower+" + armyName,  false,
+                          BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount(), Qt.point(-5, 5));
+        sprite.loadSprite("rocketthrower+" + armyName + "+mask",  true,
+                          BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount(), Qt.point(-5, 5));
     };
 };
 
 Constructor.prototype = BATTLEANIMATION;
-var BATTLEANIMATION_LIGHT_TANK = new Constructor();
+var BATTLEANIMATION_ROCKETTHROWER = new Constructor();

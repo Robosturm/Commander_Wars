@@ -2,7 +2,7 @@ var Constructor = function()
 {
     this.getMaxUnitCount = function()
     {
-        return 5;
+        return 1;
     };
 
     this.loadStandingAnimation = function(sprite, unit)
@@ -21,12 +21,12 @@ var Constructor = function()
         {
             armyName = "os";
         }
-        sprite.loadSprite("light_tank+" + armyName,  false,
-                          BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), Qt.point(-5, 5));
-        sprite.loadSprite("light_tank+" + armyName + "+mask",  true,
-                          BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), Qt.point(-5, 5));
+        sprite.loadSprite("bomber+" + armyName,  false,
+                          BATTLEANIMATION_BOMBER.getMaxUnitCount(), Qt.point(0, 40));
+        sprite.loadSprite("bomber+" + armyName + "+mask",  true,
+                          BATTLEANIMATION_BOMBER.getMaxUnitCount(), Qt.point(0, 40));
     };
 };
 
 Constructor.prototype = BATTLEANIMATION;
-var BATTLEANIMATION_LIGHT_TANK = new Constructor();
+var BATTLEANIMATION_BOMBER = new Constructor();

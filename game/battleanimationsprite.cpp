@@ -14,9 +14,10 @@
 
 const QString BattleAnimationSprite::standingAnimation = "loadStandingAnimation";
 
-BattleAnimationSprite::BattleAnimationSprite(Unit* pUnit, QString animationType)
+BattleAnimationSprite::BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QString animationType)
     : QObject(),
-      m_pUnit(pUnit)
+      m_pUnit(pUnit),
+      m_pTerrain(pTerrain)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -35,10 +36,26 @@ BattleAnimationSprite::BattleAnimationSprite(Unit* pUnit, QString animationType)
     QJSValue erg = pApp->getInterpreter()->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
 }
 
+QPoint BattleAnimationSprite::getUnitPositionOffset(qint32 unitIdx)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getPositionOffset";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(m_pUnit);
+    args1 << obj2;
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(m_pTerrain);
+    args1 << obj3;
+    args1 << unitIdx;
+    QJSValue erg = pApp->getInterpreter()->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1, args1);
+    return erg.toVariant().toPoint();
+}
+
 QPoint BattleAnimationSprite::getUnitPosition(qint32 unitCount, qint32 maxUnitCount)
 {
     qint32 x = (unitCount * 70) % 100;
-    qint32 y = 17 * (maxUnitCount - unitCount);
+    qint32 y = 20 * (maxUnitCount - unitCount);
     return QPoint(x, y);
 }
 
@@ -74,7 +91,8 @@ void BattleAnimationSprite::loadSprite(QString spriteID, bool addPlayerColor, qi
                 oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
                 pSprite->addTween(tween);
             }
-            pSprite->setPosition(position.x() + offset.x(), 192 - position.y() - offset.y() - pAnim->getHeight());
+            QPoint posOffset = getUnitPositionOffset(i);
+            pSprite->setPosition(position.x() + offset.x() + posOffset.x(), 192 - position.y() - offset.y() - pAnim->getHeight() - posOffset.y());
             pSprite->setPriority(i);
             m_Actor->addChild(pSprite);
         }

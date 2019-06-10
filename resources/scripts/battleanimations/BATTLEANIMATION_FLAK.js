@@ -21,12 +21,12 @@ var Constructor = function()
         {
             armyName = "os";
         }
-        sprite.loadSprite("light_tank+" + armyName,  false,
-                          BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), Qt.point(-5, 5));
-        sprite.loadSprite("light_tank+" + armyName + "+mask",  true,
-                          BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), Qt.point(-5, 5));
+        sprite.loadSprite("flak+" + armyName,  false,
+                          BATTLEANIMATION_FLAK.getMaxUnitCount(), Qt.point(-5, 5));
+        sprite.loadSprite("flak+" + armyName + "+mask",  true,
+                          BATTLEANIMATION_FLAK.getMaxUnitCount(), Qt.point(-5, 5));
     };
 };
 
 Constructor.prototype = BATTLEANIMATION;
-var BATTLEANIMATION_LIGHT_TANK = new Constructor();
+var BATTLEANIMATION_FLAK = new Constructor();

@@ -2,7 +2,7 @@ var Constructor = function()
 {
     this.getMaxUnitCount = function()
     {
-        return 5;
+        return 1;
     };
 
     this.loadStandingAnimation = function(sprite, unit)
@@ -16,17 +16,16 @@ var Constructor = function()
         }
         if ((armyName !== "yc") &&
             (armyName !== "ge") &&
-            (armyName !== "bm") &&
-            (armyName !== "bh"))
+            (armyName !== "bm"))
         {
             armyName = "os";
         }
-        sprite.loadSprite("light_tank+" + armyName,  false,
-                          BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), Qt.point(-5, 5));
-        sprite.loadSprite("light_tank+" + armyName + "+mask",  true,
-                          BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), Qt.point(-5, 5));
+        sprite.loadSprite("t_heli+" + armyName,  false,
+                          BATTLEANIMATION_T_HELI.getMaxUnitCount(), Qt.point(0, 40));
+        sprite.loadSprite("t_heli+" + armyName + "+mask",  true,
+                          BATTLEANIMATION_T_HELI.getMaxUnitCount(), Qt.point(0, 40));
     };
 };
 
 Constructor.prototype = BATTLEANIMATION;
-var BATTLEANIMATION_LIGHT_TANK = new Constructor();
+var BATTLEANIMATION_T_HELI = new Constructor();

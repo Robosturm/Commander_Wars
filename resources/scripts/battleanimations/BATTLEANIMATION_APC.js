@@ -10,7 +10,6 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = player.getArmy().toLowerCase();
-        var zoom = 1;
         if (armyName === "bg")
         {
             armyName = "bh"

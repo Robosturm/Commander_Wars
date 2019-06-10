@@ -8,9 +8,9 @@ var Constructor = function()
     this.loadStandingAnimation = function(sprite, unit)
     {
         sprite.loadSprite("aircraftcarrier",  false,
-                          BATTLEANIMATION_AIRCRAFTCARRIER.getMaxUnitCount(), Qt.point(0, 0));
+                          BATTLEANIMATION_AIRCRAFTCARRIER.getMaxUnitCount(), Qt.point(0, 20));
         sprite.loadSprite("aircraftcarrier+mask",  true,
-                          BATTLEANIMATION_AIRCRAFTCARRIER.getMaxUnitCount(), Qt.point(0, 0));
+                          BATTLEANIMATION_AIRCRAFTCARRIER.getMaxUnitCount(), Qt.point(0, 20));
     };
 };
 
