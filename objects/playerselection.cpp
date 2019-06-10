@@ -46,6 +46,11 @@ void PlayerSelection::attachNetworkInterface(spNetworkInterface pNetworkInterfac
     }
 }
 
+void PlayerSelection::attachCampaign(spCampaign campaign)
+{
+    m_pCampaign = campaign;
+}
+
 bool PlayerSelection::isOpenPlayer(qint32 player)
 {
     if (m_pNetworkInterface.get() != nullptr)
@@ -210,7 +215,8 @@ void PlayerSelection::showPlayerSelection()
         emit buttonAllCOsRandom();
     });
     connect(this, &PlayerSelection::buttonAllCOsRandom, this, &PlayerSelection::slotAllCOsRandom, Qt::QueuedConnection);
-    if (m_pNetworkInterface.get() != nullptr)
+    if (m_pNetworkInterface.get() != nullptr ||
+        m_pCampaign.get() != nullptr)
     {
         pButtonAllCOs->setVisible(false);
     }
@@ -221,9 +227,9 @@ void PlayerSelection::showPlayerSelection()
     allStartFondsSpinBox->setCurrentValue(0);
     m_pPlayerSelection->addItem(allStartFondsSpinBox);
     connect(allStartFondsSpinBox.get(), &SpinBox::sigValueChanged, this, &PlayerSelection::allPlayerStartFondsChanged, Qt::QueuedConnection);
-    if ((m_pNetworkInterface.get() != nullptr &&
-        !m_pNetworkInterface->getIsServer()) ||
-        saveGame)
+    if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
+        saveGame ||
+        m_pCampaign.get() != nullptr)
     {
         allStartFondsSpinBox->setEnabled(false);
     }
@@ -235,9 +241,9 @@ void PlayerSelection::showPlayerSelection()
     allIncomeSpinBox->setSpinSpeed(0.1f);
     m_pPlayerSelection->addItem(allIncomeSpinBox);
     connect(allIncomeSpinBox.get(), &SpinBox::sigValueChanged, this, &PlayerSelection::allPlayerIncomeChanged, Qt::QueuedConnection);
-    if ((m_pNetworkInterface.get() != nullptr &&
-        !m_pNetworkInterface->getIsServer()) ||
-        saveGame)
+    if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
+        saveGame ||
+        m_pCampaign.get() != nullptr)
     {
         allIncomeSpinBox->setEnabled(false);
     }
@@ -251,9 +257,9 @@ void PlayerSelection::showPlayerSelection()
         emit buttonShowAllBuildList();
     });
     connect(this, &PlayerSelection::buttonShowAllBuildList, this, &PlayerSelection::slotShowAllBuildList, Qt::QueuedConnection);
-    if ((m_pNetworkInterface.get() != nullptr &&
-        !m_pNetworkInterface->getIsServer()) ||
-        saveGame)
+    if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
+        saveGame ||
+        m_pCampaign.get() != nullptr)
     {
         pButtonAllBuildList->setEnabled(false);
     }
@@ -264,9 +270,17 @@ void PlayerSelection::showPlayerSelection()
     {
         teamList.append(tr("Team") + " " + QString::number(i + 1));
     }
-
-    QVector<QString> aiList = {tr("Human"), tr("Very Easy"), tr("Normal")};
-    if (m_pNetworkInterface.get() != nullptr)
+    QVector<QString> defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal")};
+    QVector<QString> aiList = defaultAiList;
+    if (m_pCampaign.get() != nullptr)
+    {
+        aiList = {tr("Human")};
+        if (m_pNetworkInterface.get() != nullptr)
+        {
+            aiList.append(tr("Open"));
+        }
+    }
+    else if (m_pNetworkInterface.get() != nullptr)
     {
         if (m_pNetworkInterface->getIsServer())
         {
@@ -295,25 +309,34 @@ void PlayerSelection::showPlayerSelection()
     }
     bool allPlayer1 = true;
     bool allHuman = true;
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    if (m_pCampaign.get() == nullptr)
     {
-        Player* pPlayer = pMap->getPlayer(i);
-        if (pPlayer->getTeam() != 0)
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
-            allPlayer1 = false;
-        }
-        if (pPlayer->getBaseGameInput() != nullptr)
-        {
-            if (pPlayer->getBaseGameInput()->getAiType() > BaseGameInputIF::AiTypes::Human)
+            Player* pPlayer = pMap->getPlayer(i);
+            if (pPlayer->getTeam() != 0)
             {
-                allHuman = false;
+                allPlayer1 = false;
+            }
+            if (pPlayer->getBaseGameInput() != nullptr)
+            {
+                if (pPlayer->getBaseGameInput()->getAiType() > BaseGameInputIF::AiTypes::Human)
+                {
+                    allHuman = false;
+                }
+            }
+            else
+            {
+                pPlayer->setBaseGameInput(new HumanPlayerInput());
             }
         }
-        else
-        {
-            pPlayer->setBaseGameInput(new HumanPlayerInput());
-        }
     }
+    else
+    {
+        allHuman = false;
+        allPlayer1 = false;
+    }
+
     // assume players had no real team assigned
     // reassign each a unique team
     if (allPlayer1)
@@ -340,8 +363,7 @@ void PlayerSelection::showPlayerSelection()
         {
             emit sigShowSelectCO(i, 0);
         });
-        if ((m_pNetworkInterface.get() != nullptr &&
-            !m_pNetworkInterface->getIsServer()) ||
+        if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
             saveGame)
         {
             spriteCO1->setEnabled(false);
@@ -407,9 +429,9 @@ void PlayerSelection::showPlayerSelection()
             playerColorChanged(value, i);
         }, Qt::QueuedConnection);
         m_playerColors.append(playerColor);
-        if ((m_pNetworkInterface.get() != nullptr &&
-             !m_pNetworkInterface->getIsServer()) ||
-            saveGame)
+        if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
+            saveGame ||
+            m_pCampaign.get() != nullptr)
         {
             playerColor->setEnabled(false);
         }
@@ -417,7 +439,24 @@ void PlayerSelection::showPlayerSelection()
         itemIndex++;
         spDropDownmenu playerAi = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, aiList, up);
         playerAi->setPosition(xPositions[itemIndex], y);
-        if (m_pNetworkInterface.get() != nullptr)
+        if (m_pCampaign.get() != nullptr)
+        {
+            qint32 ai = 0;
+            if (pMap->getPlayer(i)->getBaseGameInput() != nullptr)
+            {
+                ai = static_cast<qint32>(pMap->getPlayer(i)->getBaseGameInput()->getAiType());
+            }
+            if (ai == 0)
+            {
+                playerAi->setCurrentItem(0);
+            }
+            else
+            {
+                playerAi->setCurrentItemText(defaultAiList[ai]);
+                playerAi->setEnabled(false);
+            }
+        }
+        else if (m_pNetworkInterface.get() != nullptr)
         {
             if (m_pNetworkInterface->getIsServer())
             {
@@ -471,9 +510,9 @@ void PlayerSelection::showPlayerSelection()
         {
             playerStartFondsChanged(value, i);
         }, Qt::QueuedConnection);
-        if ((m_pNetworkInterface.get() != nullptr &&
-             !m_pNetworkInterface->getIsServer()) ||
-            saveGame)
+        if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
+            saveGame ||
+            m_pCampaign.get() != nullptr)
         {
             playerStartFondsSpinBox->setEnabled(false);
         }
@@ -489,9 +528,9 @@ void PlayerSelection::showPlayerSelection()
         {
             playerIncomeChanged(value, i);
         }, Qt::QueuedConnection);
-        if ((m_pNetworkInterface.get() != nullptr &&
-             !m_pNetworkInterface->getIsServer()) ||
-            saveGame)
+        if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
+            saveGame ||
+            m_pCampaign.get() != nullptr)
         {
             playerIncomeSpinBox->setEnabled(false);
         }
@@ -506,9 +545,9 @@ void PlayerSelection::showPlayerSelection()
             playerTeamChanged(value, i);
         }, Qt::QueuedConnection);
         m_playerTeams.append(playerTeam);
-        if ((m_pNetworkInterface.get() != nullptr &&
-             !m_pNetworkInterface->getIsServer()) ||
-            saveGame)
+        if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
+            saveGame ||
+            m_pCampaign.get() != nullptr)
         {
             playerTeam->setEnabled(false);
         }
@@ -522,9 +561,9 @@ void PlayerSelection::showPlayerSelection()
             emit buttonShowPlayerBuildList(i);
         });
         m_playerBuildlist.append(pButtonPlayerBuildList);
-        if ((m_pNetworkInterface.get() != nullptr &&
-             !m_pNetworkInterface->getIsServer()) ||
-            saveGame)
+        if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
+            saveGame ||
+            m_pCampaign.get() != nullptr)
         {
             pButtonPlayerBuildList->setEnabled(false);
         }
@@ -1254,7 +1293,7 @@ void PlayerSelection::updatePlayerData(qint32 player)
             }
         }
         else
-        {
+        {            
             if (m_pNetworkInterface->getIsServer() && !saveGame)
             {
                 m_playerAIs[player]->setEnabled(true);
@@ -1278,6 +1317,16 @@ void PlayerSelection::updatePlayerData(qint32 player)
                 m_playerCO1[player]->setEnabled(false);
                 m_playerCO2[player]->setEnabled(false);
             }
+        }
+        if (m_pCampaign.get() != nullptr)
+        {
+            if (pPlayer->getBaseGameInput()->getAiType() != BaseGameInputIF::AiTypes::Human)
+            {
+                m_playerAIs[player]->setEnabled(false);
+                m_playerCO1[player]->setEnabled(false);
+                m_playerCO2[player]->setEnabled(false);
+            }
+            m_playerColors[player]->setEnabled(false);
         }
     }
     pApp->continueThread();

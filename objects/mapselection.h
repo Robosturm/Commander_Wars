@@ -22,7 +22,17 @@ public:
     {
         return m_currentFolder;
     }
+    QString getCurrentFile()
+    {
+        return m_currentFolder + currentItem;
+    }
     virtual void update(const oxygine::UpdateState& us) override;
+    /**
+     * @brief setSelection
+     * @param folder
+     * @param files
+     */
+    void setSelection(QString folder, QStringList files);
 signals:
     void changeSelection(qint32 index);
     void itemClicked(QString item);
@@ -37,7 +47,7 @@ private:
     QVector<oxygine::spTextField> m_Items;
     qint32 itemCount{0};
     static const qint32 itemHeigth{35};
-    QStringList files;
+    QStringList m_Files;
     qint32 currentStartIndex{0};
     oxygine::spBox9Sprite m_SelectedItem;
     qint32 spin = 0;

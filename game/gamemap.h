@@ -28,6 +28,7 @@
 #include "game/gamerecording/gamerecorder.h"
 
 #include "game/gamescript.h"
+#include "game/campaign.h"
 
 class GameAction;
 
@@ -207,7 +208,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 7;
+        return 8;
     }
     /**
      * @brief clearMap
@@ -253,6 +254,11 @@ public slots:
      * @return
      */
     GameScript* getGameScript();
+    /**
+     * @brief getCampaign
+     * @return
+     */
+    Campaign* getCampaign();
     /**
      * @brief getMapAuthor
      * @return
@@ -543,6 +549,7 @@ private:
     spPlayer m_CurrentPlayer;
     qint32 currentDay{0};
     spGameRules m_Rules;
+    spCampaign m_Campaign;
     spGameRecorder m_Recorder{new GameRecorder()};
     spGameScript m_GameScript{new GameScript()};
     static const QString m_JavascriptName;

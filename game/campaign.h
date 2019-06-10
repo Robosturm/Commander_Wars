@@ -1,0 +1,56 @@
+#ifndef CAMPAIGN_H
+#define CAMPAIGN_H
+
+#include <QObject>
+#include <QVector>
+#include "coreengine/fileserializable.h"
+#include "coreengine/scriptvariables.h"
+
+#include "oxygine-framework.h"
+
+class Campaign;
+typedef oxygine::intrusive_ptr<Campaign> spCampaign;
+
+class Campaign : public QObject, public FileSerializable, public oxygine::ref_counter
+{
+    Q_OBJECT
+public:
+    static const QString scriptName;
+    explicit Campaign(QString file);
+    explicit Campaign();
+    virtual ~Campaign() override;
+    /**
+     * @brief serialize stores the object
+     * @param pStream
+     */
+    virtual void serializeObject(QDataStream& pStream) override;
+    /**
+     * @brief deserialize restores the object
+     * @param pStream
+     */
+    virtual void deserializeObject(QDataStream& pStream) override;
+    /**
+     * @brief getVersion stream version for serialization
+     * @return
+     */
+    inline virtual qint32 getVersion() override
+    {
+        return 1;
+    }
+    /**
+     * @brief init loads the script and stores the script in the script variable
+     */
+    void init();
+signals:
+
+public slots:
+
+private:
+    QString script;
+    QString scriptFile;
+    ScriptVariables m_Variables;
+    bool loaded{false};
+
+};
+
+#endif // CAMPAIGN_H

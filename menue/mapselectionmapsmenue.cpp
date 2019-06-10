@@ -13,17 +13,20 @@
 
 #include "game/gamemap.h"
 
+#include "game/campaign.h"
+
 #include "game/player.h"
 
 #include "game/co.h"
 
 #include "menue/mainwindow.h"
 #include "menue/gamemenue.h"
+#include "menue/campaignmenu.h"
 
 #include "objects/checkbox.h"
 #include "objects/spinbox.h"
 
-MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth)
+MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView pMapSelectionView)
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -49,135 +52,18 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth)
     pApp->getAudioThread()->loadFolder("resources/music/mapselection");
     pApp->getAudioThread()->playRandom();
 
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    style.multiline = false;
-
-    qint32 width = 0;
-    if (pApp->getSettings()->getWidth() / 2 > 400)
+    if (pMapSelectionView.get() == nullptr)
     {
-        width = 400;
-    }
-    else if (pApp->getSettings()->getWidth() / 2 < 300)
-    {
-        width = 300;
+        m_pMapSelectionView = new MapSelectionView();
     }
     else
     {
-        width = pApp->getSettings()->getWidth() / 2;
+        m_pMapSelectionView = pMapSelectionView;
     }
+    addChild(m_pMapSelectionView);
 
-    m_pMapSelection = new MapSelection(pApp->getSettings()->getHeight() - 70, width, "");
-    m_pMapSelection->setPosition(10, 10);
-    this->addChild(m_pMapSelection);
-    m_pMinimap = new Minimap();
-    m_pMinimap->setPosition(0, 0);
-    m_pMinimap->setScale(2.0f);
-
-    m_MinimapSlider = new oxygine::SlidingActor();
-
-    m_MinimapSlider->setPosition(10, 10);
-    m_MinimapSlider->setSize(pApp->getSettings()->getWidth() - width - 100 - 20,
-                             pApp->getSettings()->getHeight() / 2 - 235);
-    m_MinimapSlider->setContent(m_pMinimap);
-
-    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
-    m_pMiniMapBox = new oxygine::Box9Sprite();
-    m_pMiniMapBox->setResAnim(pAnim);
-    m_pMiniMapBox->setPosition(width + 50, 50);
-    m_pMiniMapBox->setSize(pApp->getSettings()->getWidth() - width - 100,
-                           pApp->getSettings()->getHeight() / 2 - 215);
-    m_pMiniMapBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_pMiniMapBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-
-
-    m_pMiniMapBox->addChild(m_MinimapSlider);
-    addChild(m_pMiniMapBox);
-
-    // map info text
-    m_MapInfo = new Panel(true, QSize(pApp->getSettings()->getWidth() - width - 100, pApp->getSettings()->getHeight() / 2 - 60),
-                          QSize(pApp->getSettings()->getWidth() - width - 100, pApp->getSettings()->getHeight() / 2 - 60));
-    m_MapInfo->setPosition(width + 50, pApp->getSettings()->getHeight() / 2 - 140);
-    this->addChild(m_MapInfo);
-    oxygine::spTextField pTextfield = new oxygine::TextField();
-    pTextfield->setStyle(style);
-    pTextfield->setPosition(10, 10);
-    pTextfield->setText(tr("Map Name: ").toStdString().c_str());
-    m_MapInfo->addItem(pTextfield);
-    m_MapName = new oxygine::TextField();
-    m_MapName->setStyle(style);
-    m_MapName->setPosition(150, 10);
-    m_MapInfo->addItem(m_MapName);
-
-    pTextfield = new oxygine::TextField();
-    pTextfield->setStyle(style);
-    pTextfield->setPosition(10, 50);
-    pTextfield->setText(tr("Map Author: ").toStdString().c_str());
-    m_MapInfo->addItem(pTextfield);
-    m_MapAuthor = new oxygine::TextField();
-    m_MapAuthor->setStyle(style);
-    m_MapAuthor->setPosition(150, 50);
-    m_MapInfo->addItem(m_MapAuthor);
-
-    pTextfield = new oxygine::TextField();
-    pTextfield->setStyle(style);
-    pTextfield->setPosition(10, 90);
-    pTextfield->setText(tr("Map Description ").toStdString().c_str());
-    m_MapInfo->addItem(pTextfield);
-
-    style.multiline = true;
-    m_MapDescription = new oxygine::TextField();
-    m_MapDescription->setStyle(style);
-    m_MapDescription->setWidth(m_MapInfo->getContentWidth() - 80);
-    m_MapDescription->setPosition(10, 130);
-    m_MapInfo->addItem(m_MapDescription);
-
-    // building count
-    pAnim = pObjectManager->getResAnim("mapSelectionBuildingInfo");
-    m_pBuildingBackground = new oxygine::Box9Sprite();
-    m_pBuildingBackground->setResAnim(pAnim);
-    m_pBuildingBackground->setSize(pApp->getSettings()->getWidth() - width - 100, 60);
-    m_pBuildingBackground->setPosition(m_MapInfo->getX(),
-                                     m_MapInfo->getY() + m_MapInfo->getHeight() + 20);
-    m_pBuildingBackground->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_pBuildingBackground->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-    oxygine::TextStyle styleTimes10 = FontManager::getTimesFont10();
-    styleTimes10.color = oxygine::Color(255, 255, 255, 255);
-    styleTimes10.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    styleTimes10.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    styleTimes10.multiline = false;
-
-    oxygine::spSlidingActor slider = new oxygine::SlidingActor();
-    slider->setSize(m_pBuildingBackground->getWidth() - 20, 100);
-    oxygine::spActor content = new oxygine::Actor();
-    content->setSize(pBuildingSpriteManager->getBuildingCount()* (GameMap::Imagesize + 12), 100);
-    for (qint32 i = 0; i < pBuildingSpriteManager->getBuildingCount(); i++)
-    {
-        spBuilding building = new Building(pBuildingSpriteManager->getBuildingID(i));
-        building->updateBuildingSprites();
-        qint32 width = building->getBuildingWidth();
-        qint32 heigth = building->getBuildingHeigth();
-        building->setScaleX(1.0f / static_cast<float>(width));
-        building->setScaleY(1.0f / static_cast<float>(heigth));
-        building->setPosition(i * (GameMap::Imagesize + 12) + GameMap::Imagesize * (width - 1) / (width),
-                              5 + GameMap::Imagesize / 2 + GameMap::Imagesize * (heigth - 1) / (heigth));
-        content->addChild(building);
-        oxygine::spTextField pText = new oxygine::TextField();
-        pText->setText("0");
-        pText->setPosition(2 + i * (GameMap::Imagesize + 12), 10 + GameMap::Imagesize * 1.2f);
-        pText->setStyle(styleTimes10);
-        content->addChild(pText);
-        m_BuildingCountTexts.push_back(pText);
-    }
-    slider->setX(10);
-    slider->setContent(content);
-    m_pBuildingBackground->addChild(slider);
-    addChild(m_pBuildingBackground);
-
-    connect(m_pMapSelection.get(), &MapSelection::itemChanged, this, &MapSelectionMapsMenue::mapSelectionItemChanged, Qt::QueuedConnection);
-    connect(m_pMapSelection.get(), &MapSelection::itemClicked, this, &MapSelectionMapsMenue::mapSelectionItemClicked, Qt::QueuedConnection);
+    connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &MapSelectionMapsMenue::mapSelectionItemChanged, Qt::QueuedConnection);
+    connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemClicked, this, &MapSelectionMapsMenue::mapSelectionItemClicked, Qt::QueuedConnection);
 
     m_pButtonBack = ObjectManager::createButton(tr("Back"));
     m_pButtonBack->setPosition(10, pApp->getSettings()->getHeight() - 10 - m_pButtonBack->getHeight());
@@ -221,9 +107,19 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth)
     m_pRuleSelection->setPosition(10, 20);
     addChild(m_pRuleSelection);
 
-
-    hidePlayerSelection();
-    hideRuleSelection();
+    if (m_pMapSelectionView->getCurrentCampaign().get() == nullptr)
+    {
+        hidePlayerSelection();
+        hideRuleSelection();
+    }
+    else
+    {
+        hideMapSelection();
+        hideRuleSelection();
+        m_pPlayerSelection->attachCampaign(m_pMapSelectionView->getCurrentCampaign());
+        showPlayerSelection();
+        m_MapSelectionStep = MapSelectionStep::selectMap;
+    }
 }
 
 MapSelectionMapsMenue::~MapSelectionMapsMenue()
@@ -253,9 +149,19 @@ void MapSelectionMapsMenue::slotButtonBack()
         }
         case MapSelectionStep::selectPlayer:
         {
-            showRuleSelection();
-            hidePlayerSelection();
-            m_MapSelectionStep = MapSelectionStep::selectRules;
+            if (m_pMapSelectionView->getCurrentCampaign().get() == nullptr)
+            {
+                showRuleSelection();
+                hidePlayerSelection();
+                m_MapSelectionStep = MapSelectionStep::selectRules;
+            }
+            else
+            {
+                m_pMapSelectionView->getMapSelection()->changeFolder("");
+                hideRuleSelection();
+                showMapSelection();
+                m_MapSelectionStep = MapSelectionStep::selectMap;
+            }
             break;
         }
     }
@@ -270,9 +176,11 @@ void MapSelectionMapsMenue::slotButtonNext()
     {
         case MapSelectionStep::selectMap:
         {
-            if (m_pCurrentMap != nullptr)
+            QString file = m_pMapSelectionView->getMapSelection()->getCurrentFile();
+            if (m_pMapSelectionView->getCurrentMap() != nullptr && file.endsWith(".map"))
             {
-                if (m_pCurrentMap->getGameScript()->immediateStart())
+                m_pMapSelectionView->setCurrentCampaign(nullptr);
+                if (m_pMapSelectionView->getCurrentMap()->getGameScript()->immediateStart())
                 {
                     startGame();
                 }
@@ -281,6 +189,15 @@ void MapSelectionMapsMenue::slotButtonNext()
                     hideMapSelection();
                     showRuleSelection();
                     m_MapSelectionStep = MapSelectionStep::selectRules;
+                }
+            }
+            else
+            {
+                if (file.endsWith(".cmp"))
+                {
+                    Console::print("Leaving Map Selection Menue", Console::eDEBUG);
+                    oxygine::getStage()->addChild(new CampaignMenu(m_pMapSelectionView->getCurrentCampaign(), false));
+                    oxygine::Actor::detach();
                 }
             }
             break;
@@ -304,7 +221,7 @@ void MapSelectionMapsMenue::mapSelectionItemClicked(QString item)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    QFileInfo info = m_pMapSelection->getCurrentFolder() + item;
+    QFileInfo info = m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item;
     if (info.isFile())
     {
         emit buttonNext();
@@ -316,45 +233,18 @@ void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    QFileInfo info = m_pMapSelection->getCurrentFolder() + item;
-    loadMap(info);
+    QFileInfo info = m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item;
+    m_pMapSelectionView->loadMap(info);
     pApp->continueThread();
 }
 
-void MapSelectionMapsMenue::loadMap(QFileInfo info)
-{
-    if (info.isFile())
-    {
-        if (m_pCurrentMap != nullptr)
-        {
-            m_pCurrentMap->deleteMap();
-            m_pCurrentMap = nullptr;
-        }
-        m_pCurrentMap = new GameMap(info.absoluteFilePath(), true);
-        m_pCurrentMap->getGameScript()->init();
-        m_pMinimap->updateMinimap(m_pCurrentMap);
-        m_MinimapSlider->setContent(m_pMinimap);
-        m_MinimapSlider->snap();
-        m_MapName->setText(m_pCurrentMap->getMapName().toStdString().c_str());
-        m_MapAuthor->setText(m_pCurrentMap->getMapAuthor().toStdString().c_str());
-        m_MapDescription->setText(m_pCurrentMap->getMapDescription().toStdString().c_str());
-        m_MapInfo->setContentHeigth(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 30);
-        m_currentMapFile = info;
 
-        BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
-        for (qint32 i = 0; i < pBuildingSpriteManager->getBuildingCount(); i++)
-        {
-            qint32 count = m_pCurrentMap->getBuildingCount(pBuildingSpriteManager->getBuildingID(i));
-            m_BuildingCountTexts[i]->setText(QString::number(count).toStdString().c_str());
-        }
-    }
-}
 
 void MapSelectionMapsMenue::startWeatherChanged(qint32 value)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    m_pCurrentMap->getGameRules()->setStartWeather(value);
+    m_pMapSelectionView->getCurrentMap()->getGameRules()->setStartWeather(value);
     pApp->continueThread();
 }
 
@@ -362,9 +252,9 @@ void MapSelectionMapsMenue::weatherChancesChanged()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    for (qint32 i = 0; i < m_pCurrentMap->getGameRules()->getWeatherCount(); i++)
+    for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getGameRules()->getWeatherCount(); i++)
     {
-        m_pCurrentMap->getGameRules()->changeWeatherChance(i, m_pWeatherSlider->getSliderValue(i));
+        m_pMapSelectionView->getCurrentMap()->getGameRules()->changeWeatherChance(i, m_pWeatherSlider->getSliderValue(i));
     }
     pApp->continueThread();
 }
@@ -373,10 +263,7 @@ void MapSelectionMapsMenue::hideMapSelection()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    m_pMapSelection->setVisible(false);
-    m_pMiniMapBox->setVisible(false);
-    m_MapInfo->setVisible(false);
-    m_pBuildingBackground->setVisible(false);
+    m_pMapSelectionView->setVisible(false);
     pApp->continueThread();
 }
 
@@ -384,10 +271,7 @@ void MapSelectionMapsMenue::showMapSelection()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    m_pMapSelection->setVisible(true);
-    m_pMiniMapBox->setVisible(true);
-    m_MapInfo->setVisible(true);
-    m_pBuildingBackground->setVisible(true);
+    m_pMapSelectionView->setVisible(true);
     pApp->continueThread();
 }
 
@@ -422,11 +306,11 @@ void MapSelectionMapsMenue::showRuleSelection()
 
     QVector<QString> weatherStrings;
     QVector<qint32> weatherChances;
-    for (qint32 i = 0; i < m_pCurrentMap->getGameRules()->getWeatherCount(); i++)
+    for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getGameRules()->getWeatherCount(); i++)
     {
-        Weather* pWeather = m_pCurrentMap->getGameRules()->getWeather(i);
+        Weather* pWeather = m_pMapSelectionView->getCurrentMap()->getGameRules()->getWeather(i);
         weatherStrings.append(pWeather->getWeatherName());
-        weatherChances.append(m_pCurrentMap->getGameRules()->getWeatherChance(pWeather->getWeatherId()));
+        weatherChances.append(m_pMapSelectionView->getCurrentMap()->getGameRules()->getWeatherChance(pWeather->getWeatherId()));
     }
     m_pWeatherSlider = new Multislider(weatherStrings, pApp->getSettings()->getWidth() - 80, weatherChances);
     m_pWeatherSlider->setPosition(30, y);
@@ -442,8 +326,8 @@ void MapSelectionMapsMenue::showRuleSelection()
     spCheckbox pCheckbox = new Checkbox();
     pCheckbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
     m_pRuleSelection->addItem(pCheckbox);
-    pCheckbox->setChecked(m_pCurrentMap->getGameRules()->getRandomWeather());
-    connect(pCheckbox.get(), &Checkbox::checkChanged, m_pCurrentMap->getGameRules(), &GameRules::setRandomWeather, Qt::QueuedConnection);
+    pCheckbox->setChecked(m_pMapSelectionView->getCurrentMap()->getGameRules()->getRandomWeather());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMapSelectionView->getCurrentMap()->getGameRules(), &GameRules::setRandomWeather, Qt::QueuedConnection);
 
     textField = new oxygine::TextField();
     textField->setStyle(style);
@@ -453,7 +337,7 @@ void MapSelectionMapsMenue::showRuleSelection()
 
     spDropDownmenu startWeather = new DropDownmenu(200, weatherStrings);
     startWeather->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
-    startWeather->setCurrentItem(m_pCurrentMap->getGameRules()->getCurrentWeatherId());
+    startWeather->setCurrentItem(m_pMapSelectionView->getCurrentMap()->getGameRules()->getCurrentWeatherId());
     connect(startWeather.get(), &DropDownmenu::sigItemChanged, this, &MapSelectionMapsMenue::startWeatherChanged, Qt::QueuedConnection);
     m_pRuleSelection->addItem(startWeather);
     startWeatherChanged(0);
@@ -474,8 +358,8 @@ void MapSelectionMapsMenue::showRuleSelection()
     pCheckbox = new Checkbox();
     pCheckbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
     m_pRuleSelection->addItem(pCheckbox);
-    pCheckbox->setChecked(m_pCurrentMap->getGameRules()->getRankingSystem());
-    connect(pCheckbox.get(), &Checkbox::checkChanged, m_pCurrentMap->getGameRules(), &GameRules::setRankingSystem, Qt::QueuedConnection);
+    pCheckbox->setChecked(m_pMapSelectionView->getCurrentMap()->getGameRules()->getRankingSystem());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMapSelectionView->getCurrentMap()->getGameRules(), &GameRules::setRankingSystem, Qt::QueuedConnection);
     y += 40;
     textField = new oxygine::TextField();
     textField->setStyle(style);
@@ -485,8 +369,8 @@ void MapSelectionMapsMenue::showRuleSelection()
     pCheckbox = new Checkbox();
     pCheckbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
     m_pRuleSelection->addItem(pCheckbox);
-    pCheckbox->setChecked(m_pCurrentMap->getGameRules()->getNoPower());
-    connect(pCheckbox.get(), &Checkbox::checkChanged, m_pCurrentMap->getGameRules(), &GameRules::setNoPower, Qt::QueuedConnection);
+    pCheckbox->setChecked(m_pMapSelectionView->getCurrentMap()->getGameRules()->getNoPower());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMapSelectionView->getCurrentMap()->getGameRules(), &GameRules::setNoPower, Qt::QueuedConnection);
     y += 40;
     textField = new oxygine::TextField();
     textField->setStyle(style);
@@ -496,10 +380,10 @@ void MapSelectionMapsMenue::showRuleSelection()
     QVector<QString> fogModes = {tr("Off"), tr("Fog of War")};
     spDropDownmenu fogOfWar = new DropDownmenu(200, fogModes);
     fogOfWar->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
-    fogOfWar->setCurrentItem(m_pCurrentMap->getGameRules()->getFogMode());
-    connect(fogOfWar.get(), &DropDownmenu::sigItemChanged, m_pCurrentMap->getGameRules(), [=](qint32 value)
+    fogOfWar->setCurrentItem(m_pMapSelectionView->getCurrentMap()->getGameRules()->getFogMode());
+    connect(fogOfWar.get(), &DropDownmenu::sigItemChanged, m_pMapSelectionView->getCurrentMap()->getGameRules(), [=](qint32 value)
     {
-        m_pCurrentMap->getGameRules()->setFogMode(static_cast<GameEnums::Fog>(value));
+        m_pMapSelectionView->getCurrentMap()->getGameRules()->setFogMode(static_cast<GameEnums::Fog>(value));
     });
     m_pRuleSelection->addItem(fogOfWar);
     y += 50;
@@ -512,8 +396,8 @@ void MapSelectionMapsMenue::showRuleSelection()
     pSpinbox->setInfinityValue(0.0f);
     pSpinbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
     m_pRuleSelection->addItem(pSpinbox);
-    pSpinbox->setCurrentValue(m_pCurrentMap->getGameRules()->getUnitLimit());
-    connect(pSpinbox.get(), &SpinBox::sigValueChanged, m_pCurrentMap->getGameRules(), &GameRules::setUnitLimit, Qt::QueuedConnection);
+    pSpinbox->setCurrentValue(m_pMapSelectionView->getCurrentMap()->getGameRules()->getUnitLimit());
+    connect(pSpinbox.get(), &SpinBox::sigValueChanged, m_pMapSelectionView->getCurrentMap()->getGameRules(), &GameRules::setUnitLimit, Qt::QueuedConnection);
 
     y += 50;
     textField = new oxygine::TextField();
@@ -532,7 +416,7 @@ void MapSelectionMapsMenue::showRuleSelection()
             bool defaultValue = pRule->getDefaultValue();
             if (defaultValue)
             {
-                m_pCurrentMap->getGameRules()->addVictoryRule(pRule);
+                m_pMapSelectionView->getCurrentMap()->getGameRules()->addVictoryRule(pRule);
             }
             // add a cool check box and a cool text
             QString labelName = pRule->getRuleName();
@@ -549,11 +433,11 @@ void MapSelectionMapsMenue::showRuleSelection()
             {
                 if (value)
                 {
-                    m_pCurrentMap->getGameRules()->addVictoryRule(ruleID);
+                    m_pMapSelectionView->getCurrentMap()->getGameRules()->addVictoryRule(ruleID);
                 }
                 else
                 {
-                    m_pCurrentMap->getGameRules()->removeVictoryRule(ruleID);
+                    m_pMapSelectionView->getCurrentMap()->getGameRules()->removeVictoryRule(ruleID);
                 }
             });
         }
@@ -563,7 +447,7 @@ void MapSelectionMapsMenue::showRuleSelection()
             qint32 startValue = pRule->getInfiniteValue();
             if (defaultValue != startValue)
             {
-                m_pCurrentMap->getGameRules()->addVictoryRule(pRule);
+                m_pMapSelectionView->getCurrentMap()->getGameRules()->addVictoryRule(pRule);
             }
             QString labelName = pRule->getRuleName();
             textField = new oxygine::TextField();
@@ -579,12 +463,12 @@ void MapSelectionMapsMenue::showRuleSelection()
             connect(pSpinbox.get(), &SpinBox::sigValueChanged, [=](float value)
             {
                 qint32 newValue = static_cast<qint32>(value);
-                m_pCurrentMap->getGameRules()->removeVictoryRule(ruleID);
+                m_pMapSelectionView->getCurrentMap()->getGameRules()->removeVictoryRule(ruleID);
                 if (newValue != startValue)
                 {
                     spVictoryRule pRule = new VictoryRule(ruleID);
                     pRule->setRuleValue(newValue);
-                    m_pCurrentMap->getGameRules()->addVictoryRule(pRule);
+                    m_pMapSelectionView->getCurrentMap()->getGameRules()->addVictoryRule(pRule);
                 }
             });
         }
@@ -611,7 +495,7 @@ void MapSelectionMapsMenue::hidePlayerSelection()
 void MapSelectionMapsMenue::initPlayers()
 {
     // fix some stuff for the players based on our current input
-    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+    for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
     {
         Player* pPlayer = GameMap::getInstance()->getPlayer(i);
         // resolve CO 1 beeing set and CO 0 not

@@ -89,7 +89,8 @@ set(${PROJECT_NAME}_SRCS
         objects/dialogconnecting.cpp
         objects/dialogmessagebox.cpp
         objects/dialograndommap.cpp
-        game/battleanimationsprite.cpp
+        objects/mapselectionview.cpp
+
 
         #menues
         menue/mainwindow.cpp
@@ -100,6 +101,7 @@ set(${PROJECT_NAME}_SRCS
         menue/mapselectionmapsmenue.cpp
         menue/creditsmenue.cpp
         menue/victorymenue.cpp
+        menue/campaignmenu.cpp
 
         # ressource management
         resource_management/unitspritemanager.cpp
@@ -167,6 +169,8 @@ set(${PROJECT_NAME}_SRCS
         game/gamerecording/gamerecorder.cpp
         # cool ingame script support
         game/gamescript.cpp
+        game/campaign.cpp
+        game/battleanimationsprite.cpp
 
         # game input
         gameinput/basegameinputif.cpp
@@ -216,6 +220,9 @@ add_custom_target(templatescripts SOURCES ${TemplateScripts})
 
 FILE(GLOB_RECURSE GameScripts "maps/*.js")
 add_custom_target(gamescripts SOURCES ${GameScripts})
+
+FILE(GLOB_RECURSE CampaignScripts "maps/*.cmp")
+add_custom_target(campaignscripts SOURCES ${CampaignScripts})
 
 # create translation here :)
 set(LUPDATE_OPTIONS "" CACHE STRING "specifies options passed to lupdate")

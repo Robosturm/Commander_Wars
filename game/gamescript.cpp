@@ -9,6 +9,9 @@ const QString GameScript::scriptName = "gameScript";
 GameScript::GameScript()
     : QObject()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
 }
 
 GameScript::~GameScript()

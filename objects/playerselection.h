@@ -17,6 +17,8 @@
 
 #include "gameinput/basegameinputif.h"
 
+#include "game/campaign.h"
+
 class PlayerSelection;
 typedef oxygine::intrusive_ptr<PlayerSelection> spPlayerSelection;
 
@@ -30,6 +32,7 @@ public:
     void showPlayerSelection();
     void resetPlayerSelection();
     void attachNetworkInterface(spNetworkInterface pNetworkInterface);
+    void attachCampaign(spCampaign campaign);
     bool isOpenPlayer(qint32 player);
     bool hasOpenPlayer();
     QString getPlayerAiName(qint32 player);
@@ -165,6 +168,7 @@ private:
     QVector<oxygine::spButton> m_playerBuildlist;
 
     spNetworkInterface m_pNetworkInterface{nullptr};
+    spCampaign m_pCampaign;
 
     bool saveGame{false};
     bool m_PlayerReady{false};

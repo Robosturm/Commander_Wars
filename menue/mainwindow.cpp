@@ -165,7 +165,7 @@ void Mainwindow::changeUsername(QString name)
 void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
 {
     static const qint32 buttonCount = 8;
-    float buttonHeigth = pButton->getHeight() + 30;
+    float buttonHeigth = pButton->getHeight() + 10;
     Mainapp* pApp = Mainapp::getInstance();
     pButton->setPosition(pApp->getSettings()->getWidth() / 2.0f - pButton->getWidth() / 2.0f, pApp->getSettings()->getHeight() / 2.0f - buttonCount  / 2.0f * buttonHeigth + buttonHeigth * btnI);
 }

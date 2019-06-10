@@ -7,7 +7,7 @@
 
 #include "oxygine-framework.h"
 
-#include "objects/mapselection.h"
+#include "objects/mapselectionview.h"
 
 #include "objects/minimap.h"
 
@@ -23,6 +23,8 @@
 
 #include "objects/playerselection.h"
 
+#include "game/campaign.h"
+
 class GameMap;
 
 class MapSelectionMapsMenue : public QObject, public oxygine::Actor
@@ -36,7 +38,7 @@ public:
         selectPlayer
     };
 
-    explicit MapSelectionMapsMenue(qint32 heigth = -1);
+    explicit MapSelectionMapsMenue(qint32 heigth = -1, spMapSelectionView pMapSelectionView = nullptr);
     virtual ~MapSelectionMapsMenue();
     // functions for swapping between the inputs
     virtual void hideMapSelection();
@@ -54,7 +56,6 @@ public slots:
     // slots for changing the map
     void mapSelectionItemClicked(QString item);
     void mapSelectionItemChanged(QString item);
-    void loadMap(QFileInfo info);
 
     // slots for changing the rules
     void startWeatherChanged(qint32 value);
@@ -73,23 +74,7 @@ protected:
     oxygine::spButton m_pButtonNext;
     oxygine::spButton m_pButtonStart;
     oxygine::spButton m_pButtonBack;
-    GameMap* m_pCurrentMap{nullptr};
-    // map selection
-    spMapSelection m_pMapSelection;
-    spPanel m_MapInfo;
-    oxygine::spTextField m_MapName;
-    oxygine::spTextField m_MapAuthor;
-    oxygine::spTextField m_MapDescription;
-    spMinimap m_pMinimap;
-    oxygine::spSlidingActor m_MinimapSlider;
-    oxygine::spBox9Sprite m_pMiniMapBox;
-    QVector<oxygine::spTextField> m_BuildingCountTexts;
-    oxygine::spBox9Sprite m_pBuildingBackground;
-    /**
-     * @brief m_currentMapFile stores the current map info
-     */
-    QFileInfo m_currentMapFile;
-
+    spMapSelectionView m_pMapSelectionView;
     // rule selection
     spPanel m_pRuleSelection;
     spMultislider m_pWeatherSlider;

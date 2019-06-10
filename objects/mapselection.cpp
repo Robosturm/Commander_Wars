@@ -101,7 +101,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
             if (m_Items[itemPos]->getText() != "")
             {
                 m_SelectedItem->setY(y);
-                currentItem = files[currentStartIndex + i];
+                currentItem = m_Files[currentStartIndex + i];
                 currentIdx = currentStartIndex + i;
                 emit itemChanged(currentItem);
             }
@@ -154,6 +154,19 @@ MapSelection::~MapSelection()
 
 }
 
+void MapSelection::setSelection(QString folder, QStringList files)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
+    m_currentFolder = folder;
+    m_Files = files;
+    updateSelection(0);
+    currentItem = m_Files[0];
+    emit itemChanged(currentItem);
+    pApp->continueThread();
+}
+
 void MapSelection::changeFolder(QString folder)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -173,15 +186,15 @@ void MapSelection::changeFolder(QString folder)
     {
         QFileInfo newFolderInfo(newFolder);
         newFolder = newFolderInfo.absoluteFilePath() + "/";
-        files.clear();
+        m_Files.clear();
         if ((newFolder != QCoreApplication::applicationDirPath() + "/maps//") &&
             (newFolder != QCoreApplication::applicationDirPath() + "/maps/"))
         {
-            files.append("..");
+            m_Files.append("..");
         }
         QFileInfoList infoList;
         QFileInfo upFolder(newFolder + "..");
-        QString list = "*.map";
+        QString list = "*.map;*.cmp";
         infoList.append(QDir(newFolder).entryInfoList(QDir::Dirs));
         infoList.append(QDir(newFolder).entryInfoList(list.split(";"), QDir::Files));
         for (qint32 i = 1; i < infoList.size(); i++)
@@ -196,18 +209,18 @@ void MapSelection::changeFolder(QString folder)
 
             if (infoList[i].isDir())
             {
-                files.append(infoList[i].absoluteFilePath().replace(folder, ""));
+                m_Files.append(infoList[i].absoluteFilePath().replace(folder, ""));
             }
             else if (infoList[i].isFile())
             {
-                files.append(infoList[i].fileName());
+                m_Files.append(infoList[i].fileName());
             }
         }
         m_currentFolder = newFolder;
         updateSelection(0);
-        if (currentIdx < files.size())
+        if (currentIdx < m_Files.size())
         {
-            currentItem = files[currentIdx];
+            currentItem = m_Files[currentIdx];
             emit itemChanged(currentItem);
         }
     }
@@ -234,9 +247,9 @@ void MapSelection::updateSelection(qint32 startIndex)
     {
         currentStartIndex = 0;
     }
-    else if (currentStartIndex >= files.size() - itemCount)
+    else if (currentStartIndex >= m_Files.size() - itemCount)
     {
-        currentStartIndex = files.size() - itemCount;
+        currentStartIndex = m_Files.size() - itemCount;
         if (currentStartIndex < 0)
         {
             currentStartIndex = 0;
@@ -244,20 +257,20 @@ void MapSelection::updateSelection(qint32 startIndex)
     }
     for (qint32 i = 0; i < itemCount; i++)
     {
-        if (currentStartIndex + i >= files.size())
+        if (currentStartIndex + i >= m_Files.size())
         {
             m_Items[i]->setText("");
         }
         else
         {
-            QDir dir(files[currentStartIndex + i]);
-            if (files[currentStartIndex + i] == "..")
+            QDir dir(m_Files[currentStartIndex + i]);
+            if (m_Files[currentStartIndex + i] == "..")
             {
-                m_Items[i]->setText(files[currentStartIndex + i].toStdString().c_str());
+                m_Items[i]->setText(m_Files[currentStartIndex + i].toStdString().c_str());
             }
             else if (dir.exists())
             {
-                QStringList data = files[currentStartIndex + i].split("/");
+                QStringList data = m_Files[currentStartIndex + i].split("/");
                 QStringList data2 = data[data.size() - 1].split(".");
                 QStringList data3 = data2[0].split("_");
                 QString item;
@@ -274,13 +287,13 @@ void MapSelection::updateSelection(qint32 startIndex)
             else
             {
                 // it's a map
-                QFile file(m_currentFolder + files[currentStartIndex + i]);
+                QFile file(m_currentFolder + m_Files[currentStartIndex + i]);
                 file.open(QIODevice::ReadOnly);
                 QDataStream pStream(&file);
                 QString name = GameMap::readMapName(pStream);
                 if (name.isEmpty())
                 {
-                    QStringList data = files[currentStartIndex + i].split("/");
+                    QStringList data = m_Files[currentStartIndex + i].split("/");
                     QStringList data2 = data[data.size() - 1].split(".");
                     QStringList data3 = data2[0].split("_");
                     QString item;

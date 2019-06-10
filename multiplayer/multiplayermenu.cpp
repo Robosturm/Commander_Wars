@@ -112,7 +112,7 @@ void Multiplayermenu::loadSaveGame(QString filename)
         QFileInfo info(filename);
         if (file.exists())
         {
-            loadMap(info);
+            m_pMapSelectionView->loadMap(info);
             hideMapSelection();
             saveGame = true;
             m_pPlayerSelection->setSaveGame(saveGame);
@@ -148,9 +148,9 @@ void Multiplayermenu::playerJoined(quint64 socketID)
         if (m_pPlayerSelection->hasOpenPlayer())
         {
             QCryptographicHash myHash(QCryptographicHash::Sha3_512);
-            QString file = m_currentMapFile.filePath();
-            QString fileName = m_currentMapFile.fileName();
-            QString scriptFile = m_pCurrentMap->getGameScript()->getScriptFile();
+            QString file = m_pMapSelectionView->getCurrentFile().filePath();
+            QString fileName = m_pMapSelectionView->getCurrentFile().fileName();
+            QString scriptFile = m_pMapSelectionView->getCurrentMap()->getGameScript()->getScriptFile();
             QFile mapFile(file);
             mapFile.open(QIODevice::ReadOnly);
             myHash.addData(&mapFile);
@@ -169,7 +169,7 @@ void Multiplayermenu::playerJoined(quint64 socketID)
             }
             if (saveGame)
             {
-                m_pCurrentMap->serializeObject(stream);
+                m_pMapSelectionView->getCurrentMap()->serializeObject(stream);
             }
             else
             {
@@ -244,7 +244,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                     stream >> saveGame;
                     if (saveGame)
                     {
-                        m_pCurrentMap = new GameMap(stream);
+                        m_pMapSelectionView->setCurrentMap(new GameMap(stream));
                         loadMultiplayerMap();
                         QByteArray sendData;
                         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
@@ -300,8 +300,8 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 QByteArray sendData;
                 QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                 sendStream << NetworkCommands::SENDINITUPDATE;
-                m_pCurrentMap->getGameRules()->serializeObject(sendStream);
-                for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+                m_pMapSelectionView->getCurrentMap()->getGameRules()->serializeObject(sendStream);
+                for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
                 {
                     BaseGameInputIF::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
                     if (aiType == BaseGameInputIF::AiTypes::Human)
@@ -321,7 +321,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                             sendStream << static_cast<qint32>(BaseGameInputIF::AiTypes::ProxyAi);
                         }
                     }
-                    m_pCurrentMap->getPlayer(i)->serializeObject(sendStream);
+                    m_pMapSelectionView->getCurrentMap()->getPlayer(i)->serializeObject(sendStream);
                 }
                 m_NetworkInterface->sig_sendData(socketID, sendData, NetworkInterface::NetworkSerives::Multiplayer, false);
             }
@@ -331,16 +331,16 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             // the client recieved the initial map data read it and make it visible
             if (!m_NetworkInterface->getIsServer())
             {
-                m_pCurrentMap->getGameRules()->deserializeObject(stream);
-                for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+                m_pMapSelectionView->getCurrentMap()->getGameRules()->deserializeObject(stream);
+                for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
                 {
                     QString name;
                     qint32 aiType;
                     stream >> name;
                     stream >> aiType;
                     m_pPlayerSelection->setPlayerAiName(i, name);
-                    m_pCurrentMap->getPlayer(i)->deserializeObject(stream);
-                    m_pCurrentMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(static_cast<BaseGameInputIF::AiTypes>(aiType)));
+                    m_pMapSelectionView->getCurrentMap()->getPlayer(i)->deserializeObject(stream);
+                    m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(static_cast<BaseGameInputIF::AiTypes>(aiType)));
                     m_pPlayerSelection->updatePlayerData(i);
                 }
                 m_pPlayerSelection->sendPlayerRequest(socketID, -1, BaseGameInputIF::AiTypes::Human);
@@ -352,13 +352,13 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             // someone requested the current map data from the server
             if (m_NetworkInterface->getIsServer())
             {
-                QString file = m_currentMapFile.filePath().replace(QCoreApplication::applicationDirPath() + "/", "");
-                QString scriptFile = m_pCurrentMap->getGameScript()->getScriptFile();
+                QString file = m_pMapSelectionView->getCurrentFile().filePath().replace(QCoreApplication::applicationDirPath() + "/", "");
+                QString scriptFile = m_pMapSelectionView->getCurrentMap()->getGameScript()->getScriptFile();
                 QByteArray sendData;
                 QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                 sendStream << NetworkCommands::MAPDATA;
                 sendStream << file;
-                QFile mapFile(m_currentMapFile.filePath());
+                QFile mapFile(m_pMapSelectionView->getCurrentFile().filePath());
                 mapFile.open(QIODevice::ReadOnly);
                 sendStream << mapFile.readAll();
                 mapFile.close();
@@ -426,7 +426,7 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                             return;
                         }
                     }
-                    m_pCurrentMap = new GameMap(mapFile, true);
+                    m_pMapSelectionView->setCurrentMap(new GameMap(mapFile, true));
                     loadMultiplayerMap();
                     QByteArray sendData;
                     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
@@ -458,10 +458,8 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
 
 void Multiplayermenu::loadMultiplayerMap()
 {    
-    m_pCurrentMap->getGameScript()->init();
-    m_MapName->setText(m_pCurrentMap->getMapName().toStdString().c_str());
-    m_MapAuthor->setText(m_pCurrentMap->getMapAuthor().toStdString().c_str());
-    m_MapDescription->setText(m_pCurrentMap->getMapDescription().toStdString().c_str());
+    m_pMapSelectionView->getCurrentMap()->getGameScript()->init();
+    m_pMapSelectionView->updateMapData();
     showPlayerSelection();
 }
 
@@ -471,11 +469,11 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     stream >> seed;
     Mainapp::seed(seed);
     Mainapp::setUseSeed(true);
-    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+    for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
     {
-        BaseGameInputIF::AiTypes aiType = m_pCurrentMap->getPlayer(i)->getBaseGameInput()->getAiType();
-        m_pCurrentMap->getPlayer(i)->deserializeObject(stream);
-        m_pCurrentMap->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(aiType));
+        BaseGameInputIF::AiTypes aiType = m_pMapSelectionView->getCurrentMap()->getPlayer(i)->getBaseGameInput()->getAiType();
+        m_pMapSelectionView->getCurrentMap()->getPlayer(i)->deserializeObject(stream);
+        m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(aiType));
     }
     initPlayers();
     Mainapp* pApp = Mainapp::getInstance();
@@ -513,7 +511,7 @@ bool Multiplayermenu::existsMap(QString& fileName, QByteArray& hash, QString& sc
         QByteArray myHashArray = myHash.result();
         if (hash == myHashArray)
         {
-            m_pCurrentMap = new GameMap(file, true);
+            m_pMapSelectionView->setCurrentMap(new GameMap(file, true));
             loadMultiplayerMap();
             found = true;
         }
@@ -623,7 +621,7 @@ void Multiplayermenu::disconnectNetwork()
 bool Multiplayermenu::getGameReady()
 {
     bool gameReady = true;
-    for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+    for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
     {
         BaseGameInputIF::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
         if (aiType == BaseGameInputIF::AiTypes::Open)
@@ -696,7 +694,7 @@ void Multiplayermenu::sendServerReady(bool value)
             emit dynamic_cast<TCPServer*>(m_NetworkInterface.get())->continueListening();
         }
         QVector<qint32> player;
-        for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+        for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
         {
             BaseGameInputIF::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
             if (aiType != BaseGameInputIF::AiTypes::Open &&
@@ -726,9 +724,9 @@ void Multiplayermenu::countdown()
             Mainapp::seed(seed);
             Mainapp::setUseSeed(true);
             stream << seed;
-            for (qint32 i = 0; i < m_pCurrentMap->getPlayerCount(); i++)
+            for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
             {
-                m_pCurrentMap->getPlayer(i)->serializeObject(stream);
+                m_pMapSelectionView->getCurrentMap()->getPlayer(i)->serializeObject(stream);
             }
 
             Mainapp* pApp = Mainapp::getInstance();

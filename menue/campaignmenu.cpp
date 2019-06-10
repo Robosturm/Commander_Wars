@@ -1,0 +1,119 @@
+#include "campaignmenu.h"
+#include "menue/mainwindow.h"
+
+#include "menue/mapselectionmapsmenue.h"
+#include "multiplayer/multiplayermenu.h"
+
+#include "coreengine/mainapp.h"
+#include "coreengine/console.h"
+#include "coreengine/settings.h"
+
+#include "resource_management/backgroundmanager.h"
+#include "resource_management/objectmanager.h"
+
+CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
+    : QObject(),
+      m_Multiplayer(multiplayer)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+    Console::print("Entering Campaign Menue", Console::eDEBUG);
+
+    BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
+    // load background
+    oxygine::spSprite sprite = new oxygine::Sprite();
+    addChild(sprite);
+    oxygine::ResAnim* pBackground = pBackgroundManager->getResAnim("Background+1");
+    sprite->setResAnim(pBackground);
+    sprite->setPosition(0, 0);
+    // background should be last to draw
+    sprite->setPriority(static_cast<short>(Mainapp::ZOrder::Background));
+    sprite->setScaleX(pApp->getSettings()->getWidth() / pBackground->getWidth());
+    sprite->setScaleY(pApp->getSettings()->getHeight() / pBackground->getHeight());
+
+    pApp->getAudioThread()->clearPlayList();
+    pApp->getAudioThread()->loadFolder("resources/music/mapselection");
+    pApp->getAudioThread()->playRandom();
+
+    oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
+    pButtonExit->attachTo(this);
+    pButtonExit->setPosition(pApp->getSettings()->getWidth()  / 2.0f - pButtonExit->getWidth() / 2.0f,
+                             pApp->getSettings()->getHeight() - pButtonExit->getHeight() - 10);
+    pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigExitMenue();
+    });
+    connect(this, &CampaignMenu::sigExitMenue, this, &CampaignMenu::exitMenue, Qt::QueuedConnection);
+
+    m_pButtonNext = ObjectManager::createButton(tr("Next"));
+    m_pButtonNext->setPosition(pApp->getSettings()->getWidth() - 10 - m_pButtonNext->getWidth(), pApp->getSettings()->getHeight() - 10 - m_pButtonNext->getHeight());
+    m_pButtonNext->attachTo(this);
+    m_pButtonNext->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit buttonNext();
+    });
+    connect(this, &CampaignMenu::buttonNext, this, &CampaignMenu::slotButtonNext, Qt::QueuedConnection);
+
+
+    m_pMapSelectionView = new MapSelectionView();
+    m_pMapSelectionView->setCurrentCampaign(campaign);
+    addChild(m_pMapSelectionView);
+    connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &CampaignMenu::mapSelectionItemChanged, Qt::QueuedConnection);
+    connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemClicked, this, &CampaignMenu::mapSelectionItemClicked, Qt::QueuedConnection);
+
+    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getCurrentCampaignMaps");
+    QStringList files = value.toVariant().toStringList();
+    QString folder = files[0];
+    files.removeAt(0);
+    m_pMapSelectionView->getMapSelection()->setSelection(folder, files);
+}
+
+void CampaignMenu::exitMenue()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    Console::print("Leaving Option Menue", Console::eDEBUG);
+    oxygine::getStage()->addChild(new Mainwindow());
+    oxygine::Actor::detach();
+    pApp->continueThread();
+}
+
+
+void CampaignMenu::mapSelectionItemClicked(QString item)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    QFileInfo info = m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item;
+    if (info.isFile())
+    {
+        emit buttonNext();
+    }
+    pApp->continueThread();
+}
+
+void CampaignMenu::mapSelectionItemChanged(QString item)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    QFileInfo info = m_pMapSelectionView->getMapSelection()->getCurrentFolder() + item;
+    m_pMapSelectionView->loadMap(info);
+    pApp->continueThread();
+}
+
+void CampaignMenu::slotButtonNext()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    if (m_Multiplayer)
+    {
+
+    }
+    else
+    {
+        Console::print("Leaving Campaign Menue", Console::eDEBUG);
+        oxygine::getStage()->addChild(new MapSelectionMapsMenue(-1, m_pMapSelectionView));
+        oxygine::Actor::detach();
+    }
+    pApp->continueThread();
+}
