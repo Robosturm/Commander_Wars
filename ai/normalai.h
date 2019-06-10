@@ -236,7 +236,7 @@ protected:
      * @param pEnemyUnits
      * @return
      */
-    std::tuple<float, qint32> calcExpectedFondsDamage(qint32 posX, qint32 posY, Unit& dummy, QmlVectorUnit* pEnemyUnits, QVector<QVector4D> attackCount);
+    std::tuple<float, qint32> calcExpectedFondsDamage(qint32 posX, qint32 posY, Unit& dummy, QmlVectorUnit* pEnemyUnits, QVector<QVector4D> attackCount, float bonusFactor);
     /**
      * @brief getClosestTargetDistance
      * @param posX
@@ -268,6 +268,7 @@ private:
     static const float notAttackableDamage;
     static const float midDamage;
     static const float highDamage;
+    static const float directIndirectRatio;
 };
 
 #endif // NORMALAI_H
