@@ -742,6 +742,7 @@ void PlayerSelection::playerCO1Changed(QString coid, qint32 playerIdx)
     GameMap* pMap = GameMap::getInstance();
     CO* pCO = pMap->getPlayer(playerIdx)->getCO(1);
     if (coid == "" ||
+        coid == "CO_RANDOM" ||
         pCO == nullptr ||
         pCO->getCoID() != coid)
     {
@@ -773,6 +774,7 @@ void PlayerSelection::playerCO2Changed(QString coid, qint32 playerIdx)
     GameMap* pMap = GameMap::getInstance();
     CO* pCO = pMap->getPlayer(playerIdx)->getCO(0);
     if (coid == "" ||
+        coid == "CO_RANDOM" ||
         pCO == nullptr ||
         pCO->getCoID() != coid)
     {
