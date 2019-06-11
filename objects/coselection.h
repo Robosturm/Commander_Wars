@@ -18,7 +18,7 @@ class COSelection : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit COSelection();
+    explicit COSelection(QStringList coids = {});
     virtual ~COSelection();
 
 signals:
@@ -50,6 +50,8 @@ private:
     oxygine::spSlidingActor m_CODescRect;
     oxygine::spTextField m_COPower;
     oxygine::spTextField m_COSuperpower;
+
+    QStringList m_Coids;
 };
 
 #endif // COSELECTION_H

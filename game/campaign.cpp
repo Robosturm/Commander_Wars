@@ -6,6 +6,8 @@
 
 #include "coreengine/mainapp.h"
 
+#include "game/gamemap.h"
+
 const QString Campaign::scriptName = "campaignScript";
 
 Campaign::Campaign(QString file)
@@ -57,6 +59,63 @@ void Campaign::init()
     }
 }
 
+std::tuple<QString, QStringList> Campaign::getCampaignMaps()
+{
+    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getCurrentCampaignMaps", args);
+    QStringList files = value.toVariant().toStringList();
+    QString folder = files[0];
+    files.removeAt(0);
+    return std::tuple<QString, QStringList>(folder, files);
+}
+
+QStringList Campaign::getSelectableCOs(GameMap* pMap, qint32 player, quint8 coIdx)
+{
+    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue obj1 = pInterpreter->newQObject(pMap);
+    args << obj1;
+    args << player;
+    args << coIdx;
+    QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getSelectableCOs", args);
+    return value.toVariant().toStringList();
+}
+
+QString Campaign::getAuthor()
+{
+    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getAuthor");
+    if (value.isString())
+    {
+        return value.toString();
+    }
+    return "";
+}
+QString Campaign::getName()
+{
+    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getCampaignName");
+    if (value.isString())
+    {
+        return value.toString();
+    }
+    return "";
+}
+QString Campaign::getDescription()
+{
+    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getDescription");
+    if (value.isString())
+    {
+        return value.toString();
+    }
+    return "";
+}
 void Campaign::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();

@@ -228,6 +228,11 @@ public:
      * @return a new unique id
      */
     qint32 getUniqueIdCounter();
+    /**
+     * @brief setCampaign
+     * @param Campaign
+     */
+    void setCampaign(spCampaign campaign);
 
 signals:
     void signalExitGame();

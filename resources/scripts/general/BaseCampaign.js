@@ -30,4 +30,15 @@ var BASECAMPAIGN =
         // should return true when the campaign is at it's end
         return false;
     },
+
+    getSelectableCOs : function(campaign, map, player, coIndex)
+    {
+        // return the co's for a certain map a player [player] and the first or second co [coIndex]
+        // make no co selectable
+        return [""];
+        // make all co's including random co selectable
+        // return [];
+        // example for making three co's selectable
+        // return ["CO_ANDY", "CO_MAX", "CO_SAMI"];
+    },
 };

@@ -61,12 +61,8 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
     connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemChanged, this, &CampaignMenu::mapSelectionItemChanged, Qt::QueuedConnection);
     connect(m_pMapSelectionView->getMapSelection(), &MapSelection::itemClicked, this, &CampaignMenu::mapSelectionItemClicked, Qt::QueuedConnection);
 
-    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
-    QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getCurrentCampaignMaps");
-    QStringList files = value.toVariant().toStringList();
-    QString folder = files[0];
-    files.removeAt(0);
-    m_pMapSelectionView->getMapSelection()->setSelection(folder, files);
+    std::tuple<QString, QStringList> data = campaign->getCampaignMaps();
+    m_pMapSelectionView->getMapSelection()->setSelection(std::get<0>(data), std::get<1>(data));
 }
 
 void CampaignMenu::exitMenue()

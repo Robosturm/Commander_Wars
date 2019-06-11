@@ -136,7 +136,12 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
     {
         coid = pMap->getPlayer(player)->getCO(co)->getCoID();
     }
-    spCOSelectionDialog dialog = new COSelectionDialog(coid, pMap->getPlayer(player)->getColor(), player);
+    QStringList cos;
+    if (m_pCampaign.get() != nullptr)
+    {
+        cos = m_pCampaign->getSelectableCOs(GameMap::getInstance(), player, co);
+    }
+    spCOSelectionDialog dialog = new COSelectionDialog(coid, pMap->getPlayer(player)->getColor(), player, cos);
     oxygine::getStage()->addChild(dialog);
     m_pPlayerSelection->setVisible(false);
     if (co == 0)
@@ -350,6 +355,12 @@ void PlayerSelection::showPlayerSelection()
     // add player selection information
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
+        qint32 ai = 0;
+        if (pMap->getPlayer(i)->getBaseGameInput() != nullptr)
+        {
+            ai = static_cast<qint32>(pMap->getPlayer(i)->getBaseGameInput()->getAiType());
+        }
+
         itemIndex = 0;
         oxygine::spSprite spriteCO1 = new oxygine::Sprite();
         spriteCO1->setPosition(xPositions[itemIndex], y);
@@ -364,7 +375,8 @@ void PlayerSelection::showPlayerSelection()
             emit sigShowSelectCO(i, 0);
         });
         if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
-            saveGame)
+            saveGame ||
+            ai > 0)
         {
             spriteCO1->setEnabled(false);
         }
@@ -393,9 +405,9 @@ void PlayerSelection::showPlayerSelection()
         {
             emit sigShowSelectCO(i, 1);
         });
-        if ((m_pNetworkInterface.get() != nullptr &&
-             !m_pNetworkInterface->getIsServer()) ||
-            saveGame)
+        if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
+            saveGame ||
+            ai > 0)
         {
             spriteCO2->setEnabled(false);
         }
@@ -441,11 +453,6 @@ void PlayerSelection::showPlayerSelection()
         playerAi->setPosition(xPositions[itemIndex], y);
         if (m_pCampaign.get() != nullptr)
         {
-            qint32 ai = 0;
-            if (pMap->getPlayer(i)->getBaseGameInput() != nullptr)
-            {
-                ai = static_cast<qint32>(pMap->getPlayer(i)->getBaseGameInput()->getAiType());
-            }
             if (ai == 0)
             {
                 playerAi->setCurrentItem(0);
@@ -733,10 +740,16 @@ void PlayerSelection::playerCO1Changed(QString coid, qint32 playerIdx)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
-    pMap->getPlayer(playerIdx)->setCO(coid, 0);
-    updateCO1Sprite(coid, playerIdx);
+    CO* pCO = pMap->getPlayer(playerIdx)->getCO(1);
+    if (coid == "" ||
+        pCO == nullptr ||
+        pCO->getCoID() != coid)
+    {
+        pMap->getPlayer(playerIdx)->setCO(coid, 0);
+        updateCO1Sprite(coid, playerIdx);
+        updateCOData(playerIdx);
+    }
     m_pPlayerSelection->setVisible(true);
-    updateCOData(playerIdx);
     pApp->continueThread();
 }
 void PlayerSelection::updateCO1Sprite(QString coid, qint32 playerIdx)
@@ -758,10 +771,16 @@ void PlayerSelection::playerCO2Changed(QString coid, qint32 playerIdx)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
-    pMap->getPlayer(playerIdx)->setCO(coid, 1);
-    updateCO2Sprite(coid, playerIdx);
+    CO* pCO = pMap->getPlayer(playerIdx)->getCO(0);
+    if (coid == "" ||
+        pCO == nullptr ||
+        pCO->getCoID() != coid)
+    {
+        pMap->getPlayer(playerIdx)->setCO(coid, 1);
+        updateCO2Sprite(coid, playerIdx);
+        updateCOData(playerIdx);
+    }
     m_pPlayerSelection->setVisible(true);
-    updateCOData(playerIdx);
     pApp->continueThread();
 }
 void PlayerSelection::updateCO2Sprite(QString coid, qint32 playerIdx)

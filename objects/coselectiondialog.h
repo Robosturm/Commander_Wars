@@ -23,7 +23,7 @@ class COSelectionDialog : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit COSelectionDialog(QString coid, QColor color, qint32 player);
+    explicit COSelectionDialog(QString coid, QColor color, qint32 player, QStringList coids = {});
     virtual ~COSelectionDialog() = default;
 signals:
     void editFinished(QString coid, qint32 player);

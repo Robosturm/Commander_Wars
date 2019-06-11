@@ -6,8 +6,9 @@
 #include "resource_management/cospritemanager.h"
 #include "resource_management/fontmanager.h"
 
-COSelection::COSelection()
-    : QObject()
+COSelection::COSelection(QStringList coids)
+    : QObject(),
+      m_Coids(coids)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -23,39 +24,41 @@ COSelection::COSelection()
     oxygine::spSprite pSprite;
     for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
     {
-
         QString coid = pCOSpriteManager->getCOID(i);
-        QString function1 = "getCOArmy";
-        QJSValue ret = pInterpreter->doFunction(coid, function1);
-        if (ret.isString())
+        if (m_Coids.isEmpty() || m_Coids.contains(coid))
         {
-            QString army = ret.toString();
-            if (!m_Armies.contains(army))
+            QString function1 = "getCOArmy";
+            QJSValue ret = pInterpreter->doFunction(coid, function1);
+            if (ret.isString())
             {
-                pAnim = pObjectManager->getResAnim(army.toStdString().c_str());
-                if (pAnim != nullptr)
+                QString army = ret.toString();
+                if (!m_Armies.contains(army))
                 {
-                    m_Armies.append(army);
-                    oxygine::spClipRectActor pRect = new oxygine::ClipRectActor();
-                    pRect->setPosition(bannerX, 0);
-                    pRect->setSize(pAnim->getWidth(), pAnim->getHeight());
-                    pSprite = new oxygine::Sprite();
-                    pSprite->setResAnim(pAnim);
-                    if (i != 0)
+                    pAnim = pObjectManager->getResAnim(army.toStdString().c_str());
+                    if (pAnim != nullptr)
                     {
-                        pSprite->setPosition(0, -12);
-                    }
-                    pRect->addChild(pSprite);
-                    m_ArmyBanners.append(pSprite);
+                        m_Armies.append(army);
+                        oxygine::spClipRectActor pRect = new oxygine::ClipRectActor();
+                        pRect->setPosition(bannerX, 0);
+                        pRect->setSize(pAnim->getWidth(), pAnim->getHeight());
+                        pSprite = new oxygine::Sprite();
+                        pSprite->setResAnim(pAnim);
+                        if (i != 0)
+                        {
+                            pSprite->setPosition(0, -12);
+                        }
+                        pRect->addChild(pSprite);
+                        m_ArmyBanners.append(pSprite);
 
-                    qint32 index = m_ArmyBanners.size() - 1;
-                    pSprite->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
-                    {
-                        armyBannerClicked(army, index);
-                    });
-                    addChild(pRect);
-                    bannerX += pAnim->getWidth();
-                    y = pAnim->getHeight() + 5;
+                        qint32 index = m_ArmyBanners.size() - 1;
+                        pSprite->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+                        {
+                            armyBannerClicked(army, index);
+                        });
+                        addChild(pRect);
+                        bannerX += pAnim->getWidth();
+                        y = pAnim->getHeight() + 5;
+                    }
                 }
             }
         }
@@ -84,7 +87,10 @@ COSelection::COSelection()
     addChild(m_Cursor);
 
     connect(this, &COSelection::armySelectedChange, this, &COSelection::armyChanged, Qt::QueuedConnection);
-    armyChanged(m_Armies[0]);
+    if (m_Armies.size() > 0)
+    {
+        armyChanged(m_Armies[0]);
+    }
 
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);
@@ -177,21 +183,24 @@ void COSelection::armyChanged(QString army)
             for (qint32 i = coStartIndex; i < pCOSpriteManager->getCOCount(); i++)
             {
                 coid = pCOSpriteManager->getCOID(i);
-                QString function1 = "getCOArmy";
-                QJSValue ret = pInterpreter->doFunction(coid, function1);
-                if (ret.isString())
+                if (m_Coids.isEmpty() || m_Coids.contains(coid))
                 {
-                    QString COArmy = ret.toString();
-                    if (COArmy == army)
+                    QString function1 = "getCOArmy";
+                    QJSValue ret = pInterpreter->doFunction(coid, function1);
+                    if (ret.isString())
                     {
-                        coStartIndex = i + 1;
-                        coFound = true;
-                        QString resAnim = coid.toLower() + "+face";
-                        pAnim = pCOSpriteManager->getResAnim(resAnim.toStdString().c_str());
-                        pSprite = new oxygine::Sprite();
-                        pSprite->setResAnim(pAnim);
-                        actor->addChild(pSprite);
-                        break;
+                        QString COArmy = ret.toString();
+                        if (COArmy == army)
+                        {
+                            coStartIndex = i + 1;
+                            coFound = true;
+                            QString resAnim = coid.toLower() + "+face";
+                            pAnim = pCOSpriteManager->getResAnim(resAnim.toStdString().c_str());
+                            pSprite = new oxygine::Sprite();
+                            pSprite->setResAnim(pAnim);
+                            actor->addChild(pSprite);
+                            break;
+                        }
                     }
                 }
             }

@@ -182,22 +182,9 @@ void MapSelectionView::loadMap(QFileInfo info)
         m_pMinimap->updateMinimap(nullptr);
         m_CurrentCampaign = nullptr;
         m_CurrentCampaign = new Campaign(info.absoluteFilePath());
-        Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
-        QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getDescription");
-        if (value.isString())
-        {
-            m_MapDescription->setText(value.toString().toStdString().c_str());
-        }
-        value = pInterpreter->doFunction(Campaign::scriptName, "getAuthor");
-        if (value.isString())
-        {
-            m_MapAuthor->setText(value.toString().toStdString().c_str());
-        }
-        value = pInterpreter->doFunction(Campaign::scriptName, "getCampaignName");
-        if (value.isString())
-        {
-            m_MapName->setText(value.toString().toStdString().c_str());
-        }
+        m_MapDescription->setText(m_CurrentCampaign->getDescription().toStdString().c_str());
+        m_MapAuthor->setText(m_CurrentCampaign->getAuthor().toStdString().c_str());
+        m_MapName->setText(m_CurrentCampaign->getName().toStdString().c_str());
     }
 }
 

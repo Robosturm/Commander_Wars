@@ -938,6 +938,11 @@ qint32 GameMap::getWinnerTeam()
     return winnerTeam;
 }
 
+void GameMap::setCampaign(spCampaign campaign)
+{
+    m_Campaign = campaign;
+}
+
 GameScript* GameMap::getGameScript()
 {
     return m_GameScript.get();

@@ -8,6 +8,8 @@
 
 #include "oxygine-framework.h"
 
+class GameMap;
+
 class Campaign;
 typedef oxygine::intrusive_ptr<Campaign> spCampaign;
 
@@ -41,10 +43,34 @@ public:
      * @brief init loads the script and stores the script in the script variable
      */
     void init();
+    /**
+     * @brief getCampaignMaps
+     * @return
+     */
+    std::tuple<QString, QStringList> getCampaignMaps();
+    /**
+     * @brief getSelectableCOs
+     * @return
+     */
+    QStringList getSelectableCOs(GameMap* pMap, qint32 player, quint8 coIdx);
 signals:
 
 public slots:
-
+    /**
+     * @brief getAuthor
+     * @return
+     */
+    QString getAuthor();
+    /**
+     * @brief getName
+     * @return
+     */
+    QString getName();
+    /**
+     * @brief getDescription
+     * @return
+     */
+    QString getDescription();
 private:
     QString script;
     QString scriptFile;

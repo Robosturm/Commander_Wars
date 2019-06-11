@@ -114,11 +114,18 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     }
     else
     {
-        hideMapSelection();
-        hideRuleSelection();
-        m_pPlayerSelection->attachCampaign(m_pMapSelectionView->getCurrentCampaign());
-        showPlayerSelection();
-        m_MapSelectionStep = MapSelectionStep::selectMap;
+        if (m_pMapSelectionView->getCurrentMap()->getGameScript()->immediateStart())
+        {
+            startGame();
+        }
+        else
+        {
+            hideMapSelection();
+            hideRuleSelection();
+            m_pPlayerSelection->attachCampaign(m_pMapSelectionView->getCurrentCampaign());
+            showPlayerSelection();
+            m_MapSelectionStep = MapSelectionStep::selectMap;
+        }
     }
 }
 
@@ -533,6 +540,7 @@ void MapSelectionMapsMenue::startGame()
     pApp->suspendThread();
     initPlayers();
     GameMap* pMap = GameMap::getInstance();
+    pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
     pMap->getGameScript()->gameStart();
     pMap->updateSprites();
     // start game

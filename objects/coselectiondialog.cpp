@@ -13,7 +13,7 @@
 #include "game/co.h"
 
 
-COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player)
+COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, QStringList coids)
     : QObject(),
       m_player(player)
 {
@@ -31,11 +31,15 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player)
     pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
 
-    m_COSelection = new COSelection();
+    m_COSelection = new COSelection(coids);
     m_COSelection->colorChanged(color);
     m_COSelection->setPosition(30, 30);
     m_COSelection->setScale((pSpriteBox->getSize().x - 70) / (m_COSelection->getWidth() + 208));
     pSpriteBox->addChild(m_COSelection);
+    if (m_COSelection->getScaledHeight() > pApp->getSettings()->getHeight() - 150)
+    {
+        m_COSelection->setScale((pApp->getSettings()->getHeight() - 150) / static_cast<float>(m_COSelection->getHeight()));
+    }
 
     m_pCurrentCO = new oxygine::Sprite();
     m_pCurrentCO->setPosition(40 + m_COSelection->getScaledWidth(), 30);
