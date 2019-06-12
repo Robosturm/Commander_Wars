@@ -148,6 +148,7 @@ var Constructor = function()
             var stunLevel = 0;
             switch (co.getPowerMode())
             {
+                case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                     stunLevel = 4;
                     break;

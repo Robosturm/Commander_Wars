@@ -37,7 +37,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     pButtonExit->attachTo(this);
-    pButtonExit->setPosition(pApp->getSettings()->getWidth()  / 2.0f - pButtonExit->getWidth() / 2.0f,
+    pButtonExit->setPosition(pApp->getSettings()->getWidth()  + 10,
                              pApp->getSettings()->getHeight() - pButtonExit->getHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {

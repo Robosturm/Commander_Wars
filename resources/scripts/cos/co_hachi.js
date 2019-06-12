@@ -70,6 +70,7 @@ var Constructor = function()
     {
 		switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
 				return -baseCost * 0.5;
@@ -83,6 +84,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (building.getBuildingID() === "TOWN" &&
                     building.getOwner() === co.getOwner())
@@ -103,6 +105,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return 10;
             case GameEnums.PowerMode_Power:

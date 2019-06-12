@@ -126,6 +126,7 @@ var Constructor = function()
 
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return visionCount * 2;
             case GameEnums.PowerMode_Power:
@@ -153,14 +154,15 @@ var Constructor = function()
         {
             switch (co.getPowerMode())
             {
-            case GameEnums.PowerMode_Superpower:
-                var variables = co.getVariables();
-                var dmgModVar = variables.createVariable("CONRAD_DMG_MOD");
-                var bonusDamage = dmgModVar.readDataFloat();
-                return bonusDamage;
-            case GameEnums.PowerMode_Power:
-            default:
-                break;
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    var variables = co.getVariables();
+                    var dmgModVar = variables.createVariable("CONRAD_DMG_MOD");
+                    var bonusDamage = dmgModVar.readDataFloat();
+                    return bonusDamage;
+                case GameEnums.PowerMode_Power:
+                default:
+                    break;
             }
         }
         // return average luck as true damage
@@ -173,24 +175,25 @@ var Constructor = function()
         {
             switch (co.getPowerMode())
             {
-            case GameEnums.PowerMode_Superpower:
-                var variables = co.getVariables();
-                var dmgModVar = variables.createVariable("CONRAD_DMG_MOD");
-                var defenderDamage = defender.getHp() * 10;
-                // overkill case
-                if (defenderDamage < 0)
-                {
-                    dmgModVar.writeDataFloat(-defenderDamage);
-                }
-                else
-                {
-                    dmgModVar.writeDataFloat(0);
-                }
-                break;
-            case GameEnums.PowerMode_Power:
-                break;
-            default:
-                break;
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    var variables = co.getVariables();
+                    var dmgModVar = variables.createVariable("CONRAD_DMG_MOD");
+                    var defenderDamage = defender.getHp() * 10;
+                    // overkill case
+                    if (defenderDamage < 0)
+                    {
+                        dmgModVar.writeDataFloat(-defenderDamage);
+                    }
+                    else
+                    {
+                        dmgModVar.writeDataFloat(0);
+                    }
+                    break;
+                case GameEnums.PowerMode_Power:
+                    break;
+                default:
+                    break;
             }
         }
     };
@@ -199,6 +202,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return 0;
             case GameEnums.PowerMode_Power:

@@ -127,6 +127,7 @@ var Constructor = function()
         var unitInfantryIDs = ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
                 {
@@ -154,7 +155,8 @@ var Constructor = function()
     };
     this.getCaptureBonus = function(co, unit, posX, posY)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+        if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             return 20;
         }
@@ -177,6 +179,7 @@ var Constructor = function()
         {
             switch (co.getPowerMode())
             {
+                case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                     return 2;
                 case GameEnums.PowerMode_Power:

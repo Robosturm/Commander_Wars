@@ -121,6 +121,7 @@ var Constructor = function()
             var hp = 0;
             switch (powerMode)
             {
+                case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                     damage = 2;
                     explosionRange = 2;

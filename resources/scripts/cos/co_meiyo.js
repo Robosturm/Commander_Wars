@@ -148,6 +148,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 switch (attacker.getUnitRank())
                 {
@@ -217,6 +218,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 switch (defender.getUnitRank())
                 {

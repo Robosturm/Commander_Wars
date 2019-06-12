@@ -133,6 +133,7 @@ var Constructor = function()
         var seaAirUnits = CO_WILL.getSeaAirUnitIDS();
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (attacker.getBaseMaxRange() === 1 && seaAirUnits.indexOf(attacker.getUnitID()) < 0)
                 {
@@ -163,6 +164,7 @@ var Constructor = function()
         var seaAirUnits = CO_WILL.getSeaAirUnitIDS();
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (seaAirUnits.indexOf(unit.getUnitID()) < 0)
                 {

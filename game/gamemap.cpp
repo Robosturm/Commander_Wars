@@ -943,6 +943,11 @@ void GameMap::setCampaign(spCampaign campaign)
     m_Campaign = campaign;
 }
 
+spCampaign GameMap::getSpCampaign()
+{
+    return m_Campaign;
+}
+
 GameScript* GameMap::getGameScript()
 {
     return m_GameScript.get();

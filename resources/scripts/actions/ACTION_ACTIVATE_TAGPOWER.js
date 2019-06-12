@@ -3,7 +3,14 @@ var Constructor = function()
     // called for loading the main sprite
     this.canBePerformed = function(action)
     {
-        // disabled for normal gameplay :)
+        var player = map.getCurrentPlayer();
+        var co0 = player.getCO(0);
+        var co1 = player.getCO(1);
+        if ((co0 !== null) && co0.canUseSuperpower() &&
+            (co1 !== null) && co1.canUseSuperpower())
+        {
+            return true;
+        }
         return false;
     };
     this.getActionText = function()
@@ -17,6 +24,7 @@ var Constructor = function()
     this.perform = function(action)
     {
         map.getCurrentPlayer().getCO(0).activateSuperpower(GameEnums.PowerMode_Tagpower);
+        map.getCurrentPlayer().getCO(1).activateSuperpower(GameEnums.PowerMode_Tagpower);
         map.getGameRecorder().addSpecialEvent(map.getCurrentPlayer().getPlayerID(),
                                               GameEnums.GameRecord_SpecialEvents_SuperPower);
     };

@@ -129,6 +129,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return 20;
             case GameEnums.PowerMode_Power:
@@ -144,7 +145,8 @@ var Constructor = function()
     };
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+        if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             return 1;
         }

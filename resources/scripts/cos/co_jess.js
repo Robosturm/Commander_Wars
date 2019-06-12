@@ -141,6 +141,7 @@ var Constructor = function()
 
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if ((airUnits.indexOf(attacker.getUnitID()) < 0) &&
                     (seaUnits.indexOf(attacker.getUnitID()) < 0) &&
@@ -192,7 +193,8 @@ var Constructor = function()
                 return 1;
             }
         }
-        else if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+        else if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                 co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             if ((airUnits.indexOf(unit.getUnitID()) < 0) &&
                 (seaUnits.indexOf(unit.getUnitID()) < 0) &&

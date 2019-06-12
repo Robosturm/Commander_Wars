@@ -120,6 +120,7 @@ var Constructor = function()
         var towers = co.getOwner().getBuildingCount("TOWER");
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return towers * 25;
             case GameEnums.PowerMode_Power:
@@ -139,6 +140,7 @@ var Constructor = function()
         var ret = 0;
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (rangedAttacked)
                 {

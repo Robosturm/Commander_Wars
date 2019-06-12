@@ -128,6 +128,7 @@ var Constructor = function()
     {
             switch (co.getPowerMode())
             {
+                case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                     return 50;
                 case GameEnums.PowerMode_Power:
@@ -149,6 +150,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return 50;
             case GameEnums.PowerMode_Power:
@@ -160,7 +162,7 @@ var Constructor = function()
                 }
                 else
                 {
-                    return -15;
+                    return -20;
                 }
         }
     };

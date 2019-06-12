@@ -124,19 +124,20 @@ var Constructor = function()
             var builded = buildedVar.readDataBool();
             switch (co.getPowerMode())
             {
-            case GameEnums.PowerMode_Superpower:
-                if (builded === true)
-                {
-                    return 30;
-                }
-                else
-                {
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    if (builded === true)
+                    {
+                        return 30;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                case GameEnums.PowerMode_Power:
                     return 0;
-                }
-            case GameEnums.PowerMode_Power:
-                return 0;
-            default:
-                break;
+                default:
+                    break;
             }
         }
         return 0;
@@ -156,33 +157,34 @@ var Constructor = function()
         var modifier = dmgModVar.readDataFloat();
         switch (co.getPowerMode())
         {
-        case GameEnums.PowerMode_Superpower:
-            if (builded === true)
-            {
-                return modifier + 50;
-            }
-            else
-            {
-                return modifier;
-            }
-        case GameEnums.PowerMode_Power:
-            return modifier;
-        default:
-            if (modifier > 0)
-            {
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (builded === true)
                 {
-                    return modifier;
+                    return modifier + 50;
                 }
                 else
                 {
-                    return modifier / 2;
+                    return modifier;
                 }
-            }
-            else
-            {
+            case GameEnums.PowerMode_Power:
                 return modifier;
-            }
+            default:
+                if (modifier > 0)
+                {
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    {
+                        return modifier;
+                    }
+                    else
+                    {
+                        return modifier / 2;
+                    }
+                }
+                else
+                {
+                    return modifier;
+                }
         }
     };
 
@@ -248,6 +250,7 @@ var Constructor = function()
         var builded = buildedVar.readDataBool();
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (builded === true)
                 {
@@ -267,22 +270,24 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
-        case GameEnums.PowerMode_Superpower:
-            if (unit.getOwner() === co.getOwner())
-            {
-                var variables = co.getVariables();
-                var buildedVar = variables.createVariable("SANJURO_BUILDED_" + unit.getUnitID());
-                var builded = buildedVar.readDataBool();
-                if (builded === true)
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (unit.getOwner() === co.getOwner())
                 {
-                    // movement boost for builded units
-                    return -999;
+                    var variables = co.getVariables();
+                    var buildedVar = variables.createVariable("SANJURO_BUILDED_" + unit.getUnitID());
+                    var builded = buildedVar.readDataBool();
+                    if (builded === true)
+                    {
+                        // movement boost for builded units
+                        return -999;
+                    }
                 }
-            }
-        case GameEnums.PowerMode_Power:
-            break;
-        default:
-            break;
+                break;
+            case GameEnums.PowerMode_Power:
+                break;
+            default:
+                break;
         }
         return 0;
     };
@@ -293,6 +298,7 @@ var Constructor = function()
         {
             switch (co.getPowerMode())
             {
+                case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
 
                     break;

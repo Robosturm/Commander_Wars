@@ -388,6 +388,7 @@ void GameMenue::victory(qint32 team)
     }
 
     bool exit = true;
+    bool humanWin = false;
     // create victory
     if (team >= 0)
     {
@@ -398,8 +399,13 @@ void GameMenue::victory(qint32 team)
             {
                 pPlayer->defeatPlayer(nullptr);
             }
+            if (pPlayer->getIsDefeated() == false && pPlayer->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
+            {
+                humanWin = true;
+            }
         }
         exit = pMap->getGameScript()->victory(team);
+
         if (GameAnimationFactory::getAnimationCount() == 0)
         {
             exit = true;
@@ -407,6 +413,10 @@ void GameMenue::victory(qint32 team)
     }
     if (exit)
     {
+        if (pMap->getCampaign() != nullptr)
+        {
+            pMap->getCampaign()->mapFinished(humanWin);
+        }
         Console::print("Leaving Game Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new VictoryMenue());
         oxygine::Actor::detach();

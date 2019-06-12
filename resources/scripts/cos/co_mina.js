@@ -135,6 +135,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return 10;
             case GameEnums.PowerMode_Power:
@@ -153,20 +154,21 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
-        case GameEnums.PowerMode_Superpower:
-            return 0;
-        case GameEnums.PowerMode_Power:
-            if (luckMode === GameEnums.LuckDamageMode_On)
-            {
-                return globals.randInt(0, 50);
-            }
-            else if (luckMode === GameEnums.LuckDamageMode_Average)
-            {
-                return 25;
-            }
-            return 0;
-        default:
-            break;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                return 0;
+            case GameEnums.PowerMode_Power:
+                if (luckMode === GameEnums.LuckDamageMode_On)
+                {
+                    return globals.randInt(0, 50);
+                }
+                else if (luckMode === GameEnums.LuckDamageMode_Average)
+                {
+                    return 25;
+                }
+                return 0;
+            default:
+                break;
         }
         return 0;
     };

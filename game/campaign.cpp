@@ -86,6 +86,35 @@ QStringList Campaign::getSelectableCOs(GameMap* pMap, qint32 player, quint8 coId
     return value.toVariant().toStringList();
 }
 
+bool Campaign::getCampaignFinished()
+{
+    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getCampaignFinished", args);
+    if (value.isBool())
+    {
+        return value.toBool();
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void Campaign::mapFinished(bool result)
+{
+    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue obj1 = pInterpreter->newQObject(GameMap::getInstance());
+    args << obj1;
+    args << result;
+    pInterpreter->doFunction(Campaign::scriptName, "mapFinished", args);
+}
+
 QString Campaign::getAuthor()
 {
     Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();

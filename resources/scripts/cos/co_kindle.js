@@ -184,29 +184,30 @@ var Constructor = function()
             var building = map.getTerrain(atkPosX, atkPosY).getBuilding();
             switch (co.getPowerMode())
             {
-            case GameEnums.PowerMode_Superpower:
-                var ret = 0;
-                if (building !== null)
-                {
-                    ret = 130;
-                }
-                ret += co.getOwner().getBuildingCount() * 3;
-                return ret;
-            case GameEnums.PowerMode_Power:
-                if (building !== null)
-                {
-                    return 80;
-                }
-                break;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                {
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    var ret = 0;
                     if (building !== null)
                     {
-                        return 50;
+                        ret = 130;
                     }
-                }
-                break;
+                    ret += co.getOwner().getBuildingCount() * 3;
+                    return ret;
+                case GameEnums.PowerMode_Power:
+                    if (building !== null)
+                    {
+                        return 80;
+                    }
+                    break;
+                default:
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    {
+                        if (building !== null)
+                        {
+                            return 50;
+                        }
+                    }
+                    break;
             }
         }
         return 0;

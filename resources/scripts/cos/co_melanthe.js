@@ -160,6 +160,7 @@ var Constructor = function()
         {
             switch (co.getPowerMode())
             {
+                case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                     return 2;
                 case GameEnums.PowerMode_Power:
@@ -191,16 +192,17 @@ var Constructor = function()
             {
                 switch (co.getPowerMode())
                 {
-                case GameEnums.PowerMode_Superpower:
-                    return 20;
-                case GameEnums.PowerMode_Power:
-                    return 20;
-                default:
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                    {
+                    case GameEnums.PowerMode_Tagpower:
+                    case GameEnums.PowerMode_Superpower:
                         return 20;
-                    }
-                    break;
+                    case GameEnums.PowerMode_Power:
+                        return 20;
+                    default:
+                        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                        {
+                            return 20;
+                        }
+                        break;
                 }
                 return 5;
             }

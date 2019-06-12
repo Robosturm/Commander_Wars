@@ -127,6 +127,7 @@ var Constructor = function()
         var seaUnits = CO_GAGE.getSeaUnitIDS();
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (attacker.getBaseMaxRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
                 {
@@ -157,6 +158,7 @@ var Constructor = function()
         var seaUnits = CO_GAGE.getSeaUnitIDS();
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (defender.getBaseMaxRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
                 {
@@ -186,6 +188,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (unit.getBaseMaxRange() > 1)
                 {

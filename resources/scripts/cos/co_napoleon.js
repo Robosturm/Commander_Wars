@@ -115,16 +115,17 @@ var Constructor = function()
             var terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
             switch (co.getPowerMode())
             {
-            case GameEnums.PowerMode_Superpower:
-                return terrainDefense * 10;
-            case GameEnums.PowerMode_Power:
-                return 0;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                {
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    return terrainDefense * 10;
+                case GameEnums.PowerMode_Power:
                     return 0;
-                }
-                break;
+                default:
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    {
+                        return 0;
+                    }
+                    break;
             }
         }
         return 0;
@@ -134,12 +135,13 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
-        case GameEnums.PowerMode_Superpower:
-            return 4;
-        case GameEnums.PowerMode_Power:
-            return 0;
-        default:
-            break;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                return 4;
+            case GameEnums.PowerMode_Power:
+                return 0;
+            default:
+                break;
         }
         return 0;
     };
@@ -149,17 +151,18 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
-        case GameEnums.PowerMode_Superpower:
-            return 0;
-        case GameEnums.PowerMode_Power:
-            var defHp = defender.getHp() * 10;
-            if (damage  > defHp / 2)
-            {
-                return damage - defHp / 2;
-            }
-            return 0;
-        default:
-            break;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                return 0;
+            case GameEnums.PowerMode_Power:
+                var defHp = defender.getHp() * 10;
+                if (damage  > defHp / 2)
+                {
+                    return damage - defHp / 2;
+                }
+                return 0;
+            default:
+                break;
         }
         return 0;
     };
@@ -169,6 +172,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
                 {

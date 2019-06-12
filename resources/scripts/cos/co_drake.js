@@ -159,6 +159,7 @@ var Constructor = function()
         var seaUnits = CO_DRAKE.getSeaUnitIDS();
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
                 {

@@ -119,6 +119,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (attacker.getBaseMaxRange() === 1)
                 {
@@ -168,7 +169,8 @@ var Constructor = function()
                 return 1;
             }
         }
-        else if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+        else if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                 co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             if (unit.getBaseMaxRange() === 1)
             {

@@ -3,6 +3,7 @@
 #include "victorymenue.h"
 
 #include "menue/mainwindow.h"
+#include "menue/campaignmenu.h"
 
 #include "game/gamemap.h"
 #include "game/gamerecording/gamerecorder.h"
@@ -509,10 +510,21 @@ void VictoryMenue::exitMenue()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    GameMap::deleteMap();
-    Console::print("Leaving Victory Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new Mainwindow());
-    oxygine::Actor::detach();
+    spCampaign campaign = GameMap::getInstance()->getSpCampaign();
+    if (campaign.get() != nullptr && campaign->getCampaignFinished() == false)
+    {
+        GameMap::deleteMap();
+        Console::print("Leaving Victory Menue", Console::eDEBUG);
+        oxygine::getStage()->addChild(new CampaignMenu(campaign, false));
+        oxygine::Actor::detach();
+    }
+    else
+    {
+        GameMap::deleteMap();
+        Console::print("Leaving Victory Menue", Console::eDEBUG);
+        oxygine::getStage()->addChild(new Mainwindow());
+        oxygine::Actor::detach();
+    }
     pApp->continueThread();
 }
 

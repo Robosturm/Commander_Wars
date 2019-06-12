@@ -102,6 +102,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 var bonus = attacker.getOwner().getFonds() / 1000 * 3.33 - 15;
                 return bonus;

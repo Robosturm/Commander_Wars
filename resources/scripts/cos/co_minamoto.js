@@ -134,6 +134,7 @@ var Constructor = function()
 
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (nearMountains === true)
                 {
@@ -167,7 +168,8 @@ var Constructor = function()
     };
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+        if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             return 2;
         }
@@ -181,6 +183,7 @@ var Constructor = function()
             var blowRange = 0;
             switch (co.getPowerMode())
             {
+                case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                     if (atkDamage >= 3.5)
                     {

@@ -162,6 +162,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return 10;
             case GameEnums.PowerMode_Power:
@@ -188,7 +189,8 @@ var Constructor = function()
 
     this.getMovementcostModifier = function(co, unit, posX, posY)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower &&
+        if ((co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+            co.getPowerMode() === GameEnums.PowerMode_Tagpower) &&
             co.getOwner().isEnemyUnit(unit) === true)
         {
             return 1;

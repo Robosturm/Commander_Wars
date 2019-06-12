@@ -127,6 +127,7 @@ var Constructor = function()
         var seaAirUnits = CO_LIN.getSeaAirUnitIDS();
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (seaAirUnits.indexOf(attacker.getUnitID()) < 0)
                 {
@@ -159,6 +160,7 @@ var Constructor = function()
         var seaAirUnits = CO_LIN.getSeaAirUnitIDS();
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (seaAirUnits.indexOf(defender.getUnitID()) < 0)
                 {
@@ -188,6 +190,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return 2;
             case GameEnums.PowerMode_Power:
@@ -202,6 +205,7 @@ var Constructor = function()
         // return true if forest and reafs etc are disabled in fog of war see sonja
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return true;
             case GameEnums.PowerMode_Power:

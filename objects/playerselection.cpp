@@ -455,6 +455,7 @@ void PlayerSelection::showPlayerSelection()
         {
             if (ai == 0)
             {
+                ai = 0;
                 playerAi->setCurrentItem(0);
             }
             else
@@ -469,16 +470,19 @@ void PlayerSelection::showPlayerSelection()
             {
                 if (i > 0)
                 {
-                    playerAi->setCurrentItem(aiList.size() - 1);
+                    ai = aiList.size() - 1;
+                    playerAi->setCurrentItem(ai);
                 }
                 else
                 {
+                    ai = 0;
                     playerAi->setCurrentItem(0);
                 }
             }
             else
             {
-                playerAi->setCurrentItem(aiList.size() - 1);
+                ai = aiList.size() - 1;
+                playerAi->setCurrentItem(ai);
                 playerAi->setEnabled(false);
             }
         }
@@ -486,17 +490,20 @@ void PlayerSelection::showPlayerSelection()
         {
             if (i > 0)
             {
-                playerAi->setCurrentItem(aiList.size() - 1);
+                ai = aiList.size() - 1;
+                playerAi->setCurrentItem(ai);
 
             }
             else
             {
+                ai = 0;
                 playerAi->setCurrentItem(0);
             }
         }
         else
         {
-            playerAi->setCurrentItem(static_cast<qint32>(pMap->getPlayer(i)->getBaseGameInput()->getAiType()));
+            ai = static_cast<qint32>(pMap->getPlayer(i)->getBaseGameInput()->getAiType());
+            playerAi->setCurrentItem(ai);
         }
         connect(playerAi.get(), &DropDownmenu::sigItemChanged, this, [=](qint32)
         {
@@ -504,7 +511,7 @@ void PlayerSelection::showPlayerSelection()
         });
         m_playerAIs.append(playerAi);
         m_pPlayerSelection->addItem(playerAi);
-        createAi(i, static_cast<BaseGameInputIF::AiTypes>(m_playerAIs[i]->getCurrentItem()));
+        createAi(i, static_cast<BaseGameInputIF::AiTypes>(ai));
         m_PlayerSockets.append(0);
 
         itemIndex++;

@@ -53,9 +53,19 @@ public:
      * @return
      */
     QStringList getSelectableCOs(GameMap* pMap, qint32 player, quint8 coIdx);
+
 signals:
 
 public slots:
+    /**
+     * @brief mapFiniished
+     */
+    void mapFinished(bool result);
+    /**
+     * @brief getCampaignFinished
+     * @return
+     */
+    bool getCampaignFinished();
     /**
      * @brief getAuthor
      * @return
@@ -71,6 +81,14 @@ public slots:
      * @return
      */
     QString getDescription();
+    /**
+     * @brief getVariables returns the enviroment variables of this game script
+     * @return
+     */
+    inline ScriptVariables* getVariables()
+    {
+        return &m_Variables;
+    }
 private:
     QString script;
     QString scriptFile;

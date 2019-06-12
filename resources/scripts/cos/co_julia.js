@@ -129,6 +129,7 @@ var Constructor = function()
         var baseDamage = 70;
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 baseDamage = 80;
                 break;

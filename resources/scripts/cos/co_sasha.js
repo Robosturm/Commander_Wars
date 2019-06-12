@@ -122,6 +122,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return 10;
             case GameEnums.PowerMode_Power:
@@ -137,6 +138,7 @@ var Constructor = function()
         {
             switch (co.getPowerMode())
             {
+                case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                     // damage can be negativ if we can't do a counter attack the damge is -1
                     // avoid loosing money cause of our super power

@@ -116,6 +116,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return true;
             case GameEnums.PowerMode_Power:
@@ -132,6 +133,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return 15;
             case GameEnums.PowerMode_Power:
@@ -150,6 +152,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return 30;
             case GameEnums.PowerMode_Power:
@@ -164,6 +167,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return 30;
             case GameEnums.PowerMode_Power:
@@ -179,12 +183,13 @@ var Constructor = function()
         {
             switch (co.getPowerMode())
             {
-            case GameEnums.PowerMode_Superpower:
-                return 1;
-            case GameEnums.PowerMode_Power:
-                break;
-            default:
-                break;
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    return 1;
+                case GameEnums.PowerMode_Power:
+                    break;
+                default:
+                    break;
             }
         }
         return 0;
@@ -193,7 +198,8 @@ var Constructor = function()
     {
         if (unit.getBaseMaxRange() === 1)
         {
-            if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+            if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
             {
                 return 1;
             }

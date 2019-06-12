@@ -77,7 +77,8 @@ var Constructor = function()
     this.getIncomeReduction = function(co, building, income)
     {
         // set income to 0 during scop
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+        if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             return income;
         }
@@ -117,6 +118,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return 10;
             case GameEnums.PowerMode_Power:

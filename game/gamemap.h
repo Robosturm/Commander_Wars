@@ -233,7 +233,11 @@ public:
      * @param Campaign
      */
     void setCampaign(spCampaign campaign);
-
+    /**
+     * @brief getSpCampaign
+     * @return
+     */
+    spCampaign getSpCampaign();
 signals:
     void signalExitGame();
     void signalSaveGame();

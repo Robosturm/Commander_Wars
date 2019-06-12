@@ -132,6 +132,7 @@ var Constructor = function()
 
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
                 {
@@ -166,6 +167,7 @@ var Constructor = function()
         var seaUnits = CO_GREYFIELD.getSeaUnitIDS();
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (seaUnits.indexOf(defender.getUnitID()) >= 0)
                 {
@@ -200,6 +202,7 @@ var Constructor = function()
         var seaUnits = CO_GREYFIELD.getSeaUnitIDS();
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (seaUnits.indexOf(unit.getUnitID()) >= 0)
                 {

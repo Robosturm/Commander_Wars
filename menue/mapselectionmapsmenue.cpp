@@ -34,7 +34,6 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
 
     Console::print("Entering Map Selection Menue", Console::eDEBUG);
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
-    ObjectManager* pObjectManager = ObjectManager::getInstance();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     pBuildingSpriteManager->loadAll();
     // load background
@@ -106,7 +105,6 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     m_pRuleSelection = new  Panel(true,  size, size);
     m_pRuleSelection->setPosition(10, 20);
     addChild(m_pRuleSelection);
-
     if (m_pMapSelectionView->getCurrentCampaign().get() == nullptr)
     {
         hidePlayerSelection();

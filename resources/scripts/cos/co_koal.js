@@ -122,34 +122,36 @@ var Constructor = function()
             var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
             switch (co.getPowerMode())
             {
-            case GameEnums.PowerMode_Superpower:
-                if (terrainID === "STREET")
-                {
-                    return 40;
-                }
-                break;
-            case GameEnums.PowerMode_Power:
-                if (terrainID === "STREET")
-                {
-                    return 30;
-                }
-                break;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                {
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
                     if (terrainID === "STREET")
                     {
-                        return 20;
+                        return 40;
                     }
-                }
-                break;
+                    break;
+                case GameEnums.PowerMode_Power:
+                    if (terrainID === "STREET")
+                    {
+                        return 30;
+                    }
+                    break;
+                default:
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    {
+                        if (terrainID === "STREET")
+                        {
+                            return 20;
+                        }
+                    }
+                    break;
             }
         }
         return 0;
     };
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+        if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             return 2;
         }

@@ -128,6 +128,7 @@ var Constructor = function()
         var tankUnits = CO_GRIT.getDirectUnitIDS();
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (attacker.getBaseMaxRange() > 1)
                 {
@@ -161,6 +162,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (unit.getBaseMaxRange() > 1)
                 {

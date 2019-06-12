@@ -135,27 +135,28 @@ var Constructor = function()
             var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
             switch (co.getPowerMode())
             {
-            case GameEnums.PowerMode_Superpower:
-                if (terrainID === "PLAINS")
-                {
-                    return 40;
-                }
-                break;
-            case GameEnums.PowerMode_Power:
-                if (terrainID === "PLAINS")
-                {
-                    return 20;
-                }
-                break;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                {
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
                     if (terrainID === "PLAINS")
                     {
-                        return 30;
+                        return 40;
                     }
-                }
-                break;
+                    break;
+                case GameEnums.PowerMode_Power:
+                    if (terrainID === "PLAINS")
+                    {
+                        return 20;
+                    }
+                    break;
+                default:
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    {
+                        if (terrainID === "PLAINS")
+                        {
+                            return 30;
+                        }
+                    }
+                    break;
             }
         }
         return 0;
@@ -165,6 +166,7 @@ var Constructor = function()
         var indirectUnits = CO_JAKE.getGroundIndirectUnitIDS();
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (indirectUnits.indexOf(unit.getUnitID()) >= 0)
                 {
@@ -185,7 +187,8 @@ var Constructor = function()
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
         var vehicleUnits = CO_JAKE.getVehicleUnitIDS();
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+        if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             if (vehicleUnits.indexOf(unit.getUnitID()) >= 0)
             {

@@ -76,6 +76,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             case GameEnums.PowerMode_Power:
                 return 2;
@@ -87,6 +88,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return -3;
             case GameEnums.PowerMode_Power:
@@ -101,6 +103,7 @@ var Constructor = function()
         // return true if forest and reafs etc are disabled in fog of war see sonja
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return true;
             case GameEnums.PowerMode_Power:
@@ -116,6 +119,7 @@ var Constructor = function()
         // meaning her troops attack before they loose their hp
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return true;
             case GameEnums.PowerMode_Power:

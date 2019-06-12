@@ -121,6 +121,7 @@ var Constructor = function()
             var healPercent = 0.0;
             switch (co.getPowerMode())
             {
+                case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                     healPercent = 1.0;
                     break;

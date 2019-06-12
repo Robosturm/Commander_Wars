@@ -114,6 +114,7 @@ var Constructor = function()
         var unitInfantryIDs = CO_SENSEI.getInfantryIDS();
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
                 {

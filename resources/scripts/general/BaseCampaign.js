@@ -31,6 +31,15 @@ var BASECAMPAIGN =
         return false;
     },
 
+    mapFinished : function(campaign, map, result)
+    {
+        // called when a map has been finished
+        // campaign = campaign object
+        // map = finished map object
+        // result = true -> won, false -> lost
+        // it's up to the campaign developer how to handle the map result
+    },
+
     getSelectableCOs : function(campaign, map, player, coIndex)
     {
         // return the co's for a certain map a player [player] and the first or second co [coIndex]

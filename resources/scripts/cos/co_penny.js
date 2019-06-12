@@ -84,6 +84,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                 {
@@ -130,7 +131,8 @@ var Constructor = function()
 
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+        if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
             {
@@ -144,7 +146,8 @@ var Constructor = function()
     {
         if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
         {
-            if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+            if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
             {
                 return 3;
             }
@@ -157,7 +160,8 @@ var Constructor = function()
     {
         if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
         {
-            if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+            if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                co.getPowerMode() === GameEnums.PowerMode_Tagpower)
             {
                 return true;
             }

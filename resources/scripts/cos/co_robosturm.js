@@ -172,6 +172,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return 0;
             case GameEnums.PowerMode_Power:
@@ -189,6 +190,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return 80;
             case GameEnums.PowerMode_Power:
@@ -196,7 +198,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    return 30;
+                    return 20;
                 }
                 break;
         }
@@ -213,7 +215,8 @@ var Constructor = function()
         {
             return 2;
         }
-        else if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+        else if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+                 co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             return 3;
         }

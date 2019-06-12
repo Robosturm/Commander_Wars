@@ -114,27 +114,28 @@ var Constructor = function()
         // reduce counter damage by a flat amount here
         switch (co.getPowerMode())
         {
-        case GameEnums.PowerMode_Superpower:
-            if (isDefender === true)
-            {
-                return damage * 0.2;
-            }
-            break;
-        case GameEnums.PowerMode_Power:
-            if (isDefender === true)
-            {
-                return damage;
-            }
-            break;
-        default:
-            if (isDefender === true)
-            {
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (isDefender === true)
                 {
                     return damage * 0.2;
                 }
-            }
-            break;
+                break;
+            case GameEnums.PowerMode_Power:
+                if (isDefender === true)
+                {
+                    return damage;
+                }
+                break;
+            default:
+                if (isDefender === true)
+                {
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    {
+                        return damage * 0.2;
+                    }
+                }
+                break;
         }
         return 0;
     };
@@ -158,6 +159,7 @@ var Constructor = function()
         {
             switch (co.getPowerMode())
             {
+                case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                     if (!gotAttacked && defender.getHp() > 0 && attacker.getHp() > 0)
                     {
@@ -188,6 +190,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (isDefender === false)
                 {

@@ -121,6 +121,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
                 {

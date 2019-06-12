@@ -172,6 +172,7 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Power:
                 return false;
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
             default:
                 var variables = co.getVariables();
@@ -192,12 +193,13 @@ var Constructor = function()
         // get cop and scop offensive bonus
         switch (co.getPowerMode())
         {
-        case GameEnums.PowerMode_Superpower:
-            return 30;
-        case GameEnums.PowerMode_Power:
-            return 20;
-        default:
-            return 0;
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                return 30;
+            case GameEnums.PowerMode_Power:
+                return 20;
+            default:
+                return 0;
         }
     };
 
@@ -205,7 +207,8 @@ var Constructor = function()
                                   defender, defPosX, defPosY, isDefender)
     {
         // reduce enemy defense
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+        if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+            co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             if (co.getOwner().isEnemyUnit(defender) &&
                     defender.useTerrainDefense())
@@ -220,6 +223,7 @@ var Constructor = function()
     {
         switch (co.getPowerMode())
         {
+            case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
                 return ""
             case GameEnums.PowerMode_Power:
@@ -258,7 +262,8 @@ var Constructor = function()
                 break;
             }
         }
-        if (co.getPowerMode() === GameEnums.PowerMode_Superpower &&
+        if ((co.getPowerMode() === GameEnums.PowerMode_Superpower ||
+             co.getPowerMode() === GameEnums.PowerMode_Tagpower) &&
             applyBonus === true)
         {
             return 15;
