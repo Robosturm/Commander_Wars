@@ -41,7 +41,7 @@ const QString CoreAI::ACTION_UNLOAD = "ACTION_UNLOAD";
 const QString CoreAI::ACTION_LOAD = "ACTION_LOAD";
 const QString CoreAI::ACTION_NEXT_PLAYER = "ACTION_NEXT_PLAYER";
 const QString CoreAI::ACTION_SWAP_COS = "ACTION_SWAP_COS";
-const QString CoreAI::ACTION_TAGPOWER = "ACTION_TAGPOWER";
+const QString CoreAI::ACTION_ACTIVATE_TAGPOWER = "ACTION_ACTIVATE_TAGPOWER";
 const QString CoreAI::ACTION_ACTIVATE_POWER_CO_0 = "ACTION_ACTIVATE_POWER_CO_0";
 const QString CoreAI::ACTION_ACTIVATE_POWER_CO_1 = "ACTION_ACTIVATE_POWER_CO_1";
 const QString CoreAI::ACTION_ACTIVATE_SUPERPOWER_CO_0 = "ACTION_ACTIVATE_SUPERPOWER_CO_0";
@@ -163,7 +163,7 @@ bool CoreAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
             GameAction* pAction = new GameAction(ACTION_ACTIVATE_SUPERPOWER_CO_0);
             if (pAction->canBePerformed())
             {
-                pAction->setActionID(ACTION_TAGPOWER);
+                pAction->setActionID(ACTION_ACTIVATE_TAGPOWER);
                 if (pAction->canBePerformed())
                 {
                     emit performAction(pAction);

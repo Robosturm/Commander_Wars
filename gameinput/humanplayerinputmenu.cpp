@@ -239,7 +239,7 @@ void HumanPlayerInputMenu::mouseMove(qint32 x, qint32 y)
         newY = (this->getY() + startY + itemHeigth / 2) * pMap->getZoom();
         currentAction = 0;
     }
-    if (y > (this->getY() + startY + itemHeigth * m_ActionIDs.size()) * pMap->getZoom())
+    else if (y > (this->getY() + startY + itemHeigth * m_ActionIDs.size()) * pMap->getZoom())
     {
         newY = (this->getY() + startY + itemHeigth * m_ActionIDs.size() - itemHeigth / 2) * pMap->getZoom();
         currentAction = m_ActionIDs.size() - 1;

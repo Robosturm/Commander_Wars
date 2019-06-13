@@ -48,7 +48,7 @@ public:
     static const QString ACTION_LOAD;
     static const QString ACTION_NEXT_PLAYER;
     static const QString ACTION_SWAP_COS;
-    static const QString ACTION_TAGPOWER;
+    static const QString ACTION_ACTIVATE_TAGPOWER;
     static const QString ACTION_ACTIVATE_POWER_CO_0;
     static const QString ACTION_ACTIVATE_POWER_CO_1;
     static const QString ACTION_ACTIVATE_SUPERPOWER_CO_0;

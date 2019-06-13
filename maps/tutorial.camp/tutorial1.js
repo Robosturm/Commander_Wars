@@ -9,7 +9,9 @@ var Constructor = function()
 
     this.victory = function()
     {
+        // we could check if a human player has won the map but i'm lazy here ;)
         // called when a player wins
+        // just an example dialog you can spam out after a player won or lost.
         var dialog1 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Tee hee! What?? Nooo not fun!! Epoch you won't enjoy the next tutorial. Heee...Heee"),
                     "co_lash", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
@@ -27,30 +29,34 @@ var Constructor = function()
     };
     this.actionDone = function()
     {
-        // check if we spawned the inital tanks after lash lost her infantry
+        // check if we spawned the inital tanks after lash lost her first infantry
         if (map.getPlayer(1).getUnitCount() === 1)
         {
+            // read the spawn variable or create it
             var variables = map.getGameScript().getVariables();
             var tanksSpawned = variables.createVariable("spawned");
+            // check if it's true or not
             if (tanksSpawned.readDataBool() === false)
             {
                 // call spawn tanks
                 gameScript.spawnTanks();
-                //
+                // set variable to true since we spawned the tanks
                 tanksSpawned.writeDataBool(true);
             }
         }
     };
     this.turnStart = function(turn, player)
     {
-        //
+        // called at the start of each players turn
         if (turn === 1 && player === 0)
         {
+            // play the inital dialog on day one and player 0
             gameScript.initDialog();
         }
     };
     this.initDialog = function()
     {
+        // a long long queued dialog...
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog1 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Tee hee! Epoch i have a new Beta-Release for you. This new Version will be so much fun to play with!!"),
@@ -133,11 +139,14 @@ var Constructor = function()
     };
     this.spawnLashTank = function()
     {
+        // spawn a light tank at map positon x = 7 and y = 0 for player 1 in a check range of two fields -> shouldn't be needed just making sure the unit is always spawned
         map.spawnUnit(7, 0, "LIGHT_TANK", map.getPlayer(1), 2);
     };
     this.spawnEpochTanks = function()
     {
+        // spawn a light tank at map positon x = 0 and y = 4 for player 0 in a check range of two fields -> shouldn't be needed just making sure the unit is always spawned
         map.spawnUnit(0, 4, "LIGHT_TANK", map.getPlayer(0), 2);
+        // spawn a light tank at map positon x = 0 and y = 3 for player 0 in a check range of two fields -> shouldn't be needed just making sure the unit is always spawned
         map.spawnUnit(0, 3, "LIGHT_TANK", map.getPlayer(0), 2);
     };
 }
