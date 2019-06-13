@@ -238,6 +238,10 @@ public:
      * @return
      */
     spCampaign getSpCampaign();
+    /**
+     * @brief initPlayers
+     */
+    void initPlayers();
 signals:
     void signalExitGame();
     void signalSaveGame();

@@ -22,7 +22,6 @@ var Constructor = function()
             case "FACTORY":
             case "HARBOUR":
             case "HQ":
-            case "MINE":
             case "PIPESTATION":
             case "RADAR":
             case "TOWER":
@@ -33,6 +32,7 @@ var Constructor = function()
             case "TEMPORARY_AIRPORT":
             case "TEMPORARY_HARBOUR":
                 return 1;
+            case "MINE":
             case "MOUNTAIN":
             case "RIVER":
                 return 2;

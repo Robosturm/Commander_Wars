@@ -172,7 +172,7 @@ void MapSelectionView::loadMap(QFileInfo info)
             m_BuildingCountTexts[i]->setText(QString::number(count).toStdString().c_str());
         }
     }
-    else if (info.isFile() && info.fileName().endsWith(".cmp"))
+    else if (info.isFile() && info.fileName().endsWith(".jsm"))
     {
         if (m_pCurrentMap != nullptr)
         {

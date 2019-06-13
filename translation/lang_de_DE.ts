@@ -457,12 +457,12 @@
 <context>
     <name>CampaignMenu</name>
     <message>
-        <location filename="../menue/campaignmenu.cpp" line="38"/>
+        <location filename="../menue/campaignmenu.cpp" line="42"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/campaignmenu.cpp" line="48"/>
+        <location filename="../menue/campaignmenu.cpp" line="52"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1278,57 +1278,57 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="307"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="300"/>
         <source>Enviroment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="328"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="321"/>
         <source>Random Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="339"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="332"/>
         <source>Start Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="354"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="347"/>
         <source>Gameplay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="360"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="353"/>
         <source>Unit Ranking System: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="371"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="364"/>
         <source>No CO Powers: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="382"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="375"/>
         <source>Fog Of War: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="385"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="378"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="385"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="378"/>
         <source>Fog of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="397"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="390"/>
         <source>Unit Limit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="410"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="403"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1781,7 +1781,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="81"/>
+        <location filename="../main.cpp" line="83"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>

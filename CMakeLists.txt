@@ -221,7 +221,7 @@ add_custom_target(templatescripts SOURCES ${TemplateScripts})
 FILE(GLOB_RECURSE GameScripts "maps/*.js")
 add_custom_target(gamescripts SOURCES ${GameScripts})
 
-FILE(GLOB_RECURSE CampaignScripts "maps/*.cmp")
+FILE(GLOB_RECURSE CampaignScripts "maps/*.jsm")
 add_custom_target(campaignscripts SOURCES ${CampaignScripts})
 
 # create translation here :)

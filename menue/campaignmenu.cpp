@@ -2,11 +2,15 @@
 #include "menue/mainwindow.h"
 
 #include "menue/mapselectionmapsmenue.h"
+#include "menue/gamemenue.h"
 #include "multiplayer/multiplayermenu.h"
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
 #include "coreengine/settings.h"
+
+#include "game/gamemap.h"
+#include "game/gamescript.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
@@ -37,7 +41,7 @@ CampaignMenu::CampaignMenu(spCampaign campaign, bool multiplayer)
 
     oxygine::spButton pButtonExit = ObjectManager::createButton(tr("Exit"));
     pButtonExit->attachTo(this);
-    pButtonExit->setPosition(pApp->getSettings()->getWidth()  + 10,
+    pButtonExit->setPosition(10,
                              pApp->getSettings()->getHeight() - pButtonExit->getHeight() - 10);
     pButtonExit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
@@ -101,7 +105,19 @@ void CampaignMenu::slotButtonNext()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    if (m_Multiplayer)
+    if (m_pMapSelectionView->getCurrentMap()->getGameScript()->immediateStart())
+    {
+        GameMap* pMap = GameMap::getInstance();
+        pMap->initPlayers();
+        pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
+        pMap->getGameScript()->gameStart();
+        pMap->updateSprites();
+        // start game
+        Console::print("Leaving Campaign Menue", Console::eDEBUG);
+        oxygine::getStage()->addChild(new GameMenue());
+        oxygine::Actor::detach();
+    }
+    else if (m_Multiplayer)
     {
 
     }

@@ -20,7 +20,6 @@ var Constructor = function()
             case "FACTORY":
             case "HARBOUR":
             case "HQ":
-            case "MINE":
             case "PIPESTATION":
             case "RADAR":
             case "TOWER":

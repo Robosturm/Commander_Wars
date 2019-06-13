@@ -112,18 +112,11 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
     }
     else
     {
-        if (m_pMapSelectionView->getCurrentMap()->getGameScript()->immediateStart())
-        {
-            startGame();
-        }
-        else
-        {
-            hideMapSelection();
-            hideRuleSelection();
-            m_pPlayerSelection->attachCampaign(m_pMapSelectionView->getCurrentCampaign());
-            showPlayerSelection();
-            m_MapSelectionStep = MapSelectionStep::selectMap;
-        }
+        hideMapSelection();
+        hideRuleSelection();
+        m_pPlayerSelection->attachCampaign(m_pMapSelectionView->getCurrentCampaign());
+        showPlayerSelection();
+        m_MapSelectionStep = MapSelectionStep::selectMap;
     }
 }
 
@@ -198,7 +191,7 @@ void MapSelectionMapsMenue::slotButtonNext()
             }
             else
             {
-                if (file.endsWith(".cmp"))
+                if (file.endsWith(".jsm"))
                 {
                     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
                     oxygine::getStage()->addChild(new CampaignMenu(m_pMapSelectionView->getCurrentCampaign(), false));
@@ -497,47 +490,12 @@ void MapSelectionMapsMenue::hidePlayerSelection()
     m_pPlayerSelection->setVisible(false);
 }
 
-void MapSelectionMapsMenue::initPlayers()
-{
-    // fix some stuff for the players based on our current input
-    for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
-    {
-        Player* pPlayer = GameMap::getInstance()->getPlayer(i);
-        // resolve CO 1 beeing set and CO 0 not
-        if ((pPlayer->getCO(0) == nullptr) &&
-            (pPlayer->getCO(1) != nullptr))
-        {
-            pPlayer->swapCOs();
-        }
-        // resolve random CO
-        if (pPlayer->getCO(0) != nullptr)
-        {
-            COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-            while (pPlayer->getCO(0)->getCoID() == "CO_RANDOM")
-            {
-                pPlayer->setCO(pCOSpriteManager->getCOID(Mainapp::randInt(0, pCOSpriteManager->getCOCount() - 1)), 0);
-            }
-        }
-        if (pPlayer->getCO(1) != nullptr)
-        {
-            COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-            while ((pPlayer->getCO(1)->getCoID() == "CO_RANDOM") ||
-                   (pPlayer->getCO(1)->getCoID() == pPlayer->getCO(0)->getCoID()))
-            {
-                pPlayer->setCO(pCOSpriteManager->getCOID(Mainapp::randInt(0, pCOSpriteManager->getCOCount() - 1)), 1);
-            }
-        }
-        // define army of this player
-        pPlayer->defineArmy();
-    }
-}
-
 void MapSelectionMapsMenue::startGame()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    initPlayers();
     GameMap* pMap = GameMap::getInstance();
+    pMap->initPlayers();
     pMap->setCampaign(m_pMapSelectionView->getCurrentCampaign());
     pMap->getGameScript()->gameStart();
     pMap->updateSprites();

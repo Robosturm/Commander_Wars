@@ -194,14 +194,15 @@ void MapSelection::changeFolder(QString folder)
         }
         QFileInfoList infoList;
         QFileInfo upFolder(newFolder + "..");
-        QString list = "*.map;*.cmp";
+        QString list = "*.map;*.jsm";
         infoList.append(QDir(newFolder).entryInfoList(QDir::Dirs));
         infoList.append(QDir(newFolder).entryInfoList(list.split(";"), QDir::Files));
         for (qint32 i = 1; i < infoList.size(); i++)
         {
             QString myPath = infoList[i].absoluteFilePath();
             if ((myPath == newFolder) ||
-                (upFolder == infoList[i]))
+                (upFolder == infoList[i] ||
+                 (infoList[i].isDir() && myPath.endsWith(".camp"))))
             {
                 // skip ourself
                 continue;

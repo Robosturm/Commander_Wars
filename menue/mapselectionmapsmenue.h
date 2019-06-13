@@ -47,7 +47,6 @@ public:
     void showRuleSelection();
     void hidePlayerSelection();
     void showPlayerSelection();
-    void initPlayers();
 signals:
     void buttonBack();
     void buttonNext();

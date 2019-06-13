@@ -38,6 +38,8 @@
 #include "game/gamerules.h"
 #include "game/weather.h"
 #include "game/terrainfindingsystem.h"
+#include "game/campaign.h"
+#include "game/gamescript.h"
 
 
 #include "gameinput/cursordata.h"
@@ -142,6 +144,8 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<Weather>("Weather");
     qmlRegisterInterface<TerrainFindingSystem>("TerrainFindingSystem");
     qmlRegisterInterface<GameRecorder>("GameRecorder");
+    qmlRegisterInterface<GameScript>("GameScript");
+    qmlRegisterInterface<Campaign>("Campaign");
     // load ressources
     BackgroundManager::getInstance();
     BuildingSpriteManager::getInstance();

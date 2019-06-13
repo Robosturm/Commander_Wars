@@ -1223,3 +1223,38 @@ Player* GameMap::getCurrentViewPlayer()
     }
     return nullptr;
 }
+
+void GameMap::initPlayers()
+{
+    // fix some stuff for the players based on our current input
+    for (qint32 i = 0; i < getPlayerCount(); i++)
+    {
+        Player* pPlayer = GameMap::getInstance()->getPlayer(i);
+        // resolve CO 1 beeing set and CO 0 not
+        if ((pPlayer->getCO(0) == nullptr) &&
+            (pPlayer->getCO(1) != nullptr))
+        {
+            pPlayer->swapCOs();
+        }
+        // resolve random CO
+        if (pPlayer->getCO(0) != nullptr)
+        {
+            COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+            while (pPlayer->getCO(0)->getCoID() == "CO_RANDOM")
+            {
+                pPlayer->setCO(pCOSpriteManager->getCOID(Mainapp::randInt(0, pCOSpriteManager->getCOCount() - 1)), 0);
+            }
+        }
+        if (pPlayer->getCO(1) != nullptr)
+        {
+            COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+            while ((pPlayer->getCO(1)->getCoID() == "CO_RANDOM") ||
+                   (pPlayer->getCO(1)->getCoID() == pPlayer->getCO(0)->getCoID()))
+            {
+                pPlayer->setCO(pCOSpriteManager->getCOID(Mainapp::randInt(0, pCOSpriteManager->getCOCount() - 1)), 1);
+            }
+        }
+        // define army of this player
+        pPlayer->defineArmy();
+    }
+}

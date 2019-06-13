@@ -475,10 +475,10 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
         m_pMapSelectionView->getCurrentMap()->getPlayer(i)->deserializeObject(stream);
         m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(aiType));
     }
-    initPlayers();
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
+    pMap->initPlayers();
     pMap->getGameScript()->gameStart();
     pMap->updateSprites();
     // start game
@@ -716,7 +716,10 @@ void Multiplayermenu::countdown()
         emit m_Chat->sigSendText((QString::number(counter) + "...").toStdString().c_str());
         if (counter == 0)
         {
-            initPlayers();
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->suspendThread();
+            GameMap* pMap = GameMap::getInstance();
+            pMap->initPlayers();
             QByteArray data;
             QDataStream stream(&data, QIODevice::WriteOnly);
             stream << NetworkCommands::INITGAME;
@@ -727,11 +730,7 @@ void Multiplayermenu::countdown()
             for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
             {
                 m_pMapSelectionView->getCurrentMap()->getPlayer(i)->serializeObject(stream);
-            }
-
-            Mainapp* pApp = Mainapp::getInstance();
-            pApp->suspendThread();
-            GameMap* pMap = GameMap::getInstance();
+            }            
             pMap->getGameScript()->gameStart();
             pMap->updateSprites();
             // start game
