@@ -58,14 +58,14 @@ void NormalAi::process()
             else if (CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
             else if (captureBuildings(pUnits)){}
             // indirect units
-            else if (fireWithUnits(pUnits, 2, std::numeric_limits<qint32>::max())){}
+            else if (fireWithUnits(pUnits, 2, std::numeric_limits<qint32>::max(), pBuildings, pEnemyBuildings)){}
             // direct units
-            else if (fireWithUnits(pUnits, 1, 1)){}
-            else if (repairUnits(pUnits, pBuildings)){}
+            else if (fireWithUnits(pUnits, 1, 1, pBuildings, pEnemyBuildings)){}
+            else if (repairUnits(pUnits, pBuildings, pEnemyBuildings)){}
             else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, 1)){}
             else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 2, std::numeric_limits<qint32>::max())){}            
-            else if (loadUnits(pUnits)){}
-            else if (moveTransporters(pUnits, pEnemyUnits, pEnemyBuildings)){}
+            else if (loadUnits(pUnits, pBuildings, pEnemyBuildings)){}
+            else if (moveTransporters(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
             else if (moveAwayFromProduction(pUnits)){}
             else if (buildUnits(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings)){}
             else
@@ -349,7 +349,8 @@ bool NormalAi::captureBuildings(QmlVectorUnit* pUnits)
     return false;
 }
 
-bool NormalAi::fireWithUnits(QmlVectorUnit* pUnits, qint32 minfireRange, qint32 maxfireRange)
+bool NormalAi::fireWithUnits(QmlVectorUnit* pUnits, qint32 minfireRange, qint32 maxfireRange,
+                             QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -366,7 +367,7 @@ bool NormalAi::fireWithUnits(QmlVectorUnit* pUnits, qint32 minfireRange, qint32 
             QVector<QVector4D> ret;
             QVector<QVector3D> moveTargetFields;
             CoreAI::getAttackTargets(pUnit, pAction, &pfs, ret, moveTargetFields);
-            qint32 targetIdx = getBestAttackTarget(pUnit, pUnits, ret, moveTargetFields);
+            qint32 targetIdx = getBestAttackTarget(pUnit, pUnits, ret, moveTargetFields, pBuildings, pEnemyBuildings);
             if (targetIdx >= 0)
             {
                 QVector4D target = ret[targetIdx];
@@ -425,7 +426,7 @@ bool NormalAi::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
             {
                 appendRepairTargets(pUnit, pBuildings, targets);
             }
-            if (moveUnit(pAction, pUnit, pUnits, actions, targets, transporterTargets, true))
+            if (moveUnit(pAction, pUnit, pUnits, actions, targets, transporterTargets, true, pBuildings, pEnemyBuildings))
             {
                 return true;
             }
@@ -434,7 +435,7 @@ bool NormalAi::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
     return false;
 }
 
-bool NormalAi::loadUnits(QmlVectorUnit* pUnits)
+bool NormalAi::loadUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -456,7 +457,7 @@ bool NormalAi::loadUnits(QmlVectorUnit* pUnits)
             targets.append(transporterTargets);
             // till now the selected targets are a little bit lame cause we only search for reachable transporters
             // but not for reachable loading places.
-            if (moveUnit(pAction, pUnit, pUnits, actions, targets, transporterTargets, true))
+            if (moveUnit(pAction, pUnit, pUnits, actions, targets, transporterTargets, true, pBuildings, pEnemyBuildings))
             {
                 return true;
             }
@@ -465,7 +466,7 @@ bool NormalAi::loadUnits(QmlVectorUnit* pUnits)
     return false;
 }
 
-bool NormalAi::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)
+bool NormalAi::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -496,7 +497,7 @@ bool NormalAi::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnit
                 {
                     appendNearestUnloadTargets(pUnit, pEnemyUnits, pEnemyBuildings, targets);
                 }
-                if (moveToUnloadArea(pAction, pUnit, pUnits, actions, targets))
+                if (moveToUnloadArea(pAction, pUnit, pUnits, actions, targets, pBuildings, pEnemyBuildings))
                 {
                     return true;
                 }
@@ -515,7 +516,7 @@ bool NormalAi::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnit
                 {
                     appendLoadingTargets(pUnit, pUnits, pEnemyUnits, pEnemyBuildings, true, false, targets);
                 }
-                if (moveUnit(pAction, pUnit, pUnits, actions, targets, transporterTargets, true))
+                if (moveUnit(pAction, pUnit, pUnits, actions, targets, transporterTargets, true, pBuildings, pEnemyBuildings))
                 {
                     return true;
                 }
@@ -526,7 +527,8 @@ bool NormalAi::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnit
 }
 
 bool NormalAi::moveToUnloadArea(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits, QStringList& actions,
-                                QVector<QVector3D>& targets)
+                                QVector<QVector3D>& targets,
+                                QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
     GameMap* pMap = GameMap::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
@@ -621,13 +623,13 @@ bool NormalAi::moveToUnloadArea(GameAction* pAction, Unit* pUnit, QmlVectorUnit*
         }
         else
         {
-            return moveUnit(pAction, pUnit, pUnits, actions, targets, targets, true);
+            return moveUnit(pAction, pUnit, pUnits, actions, targets, targets, true, pBuildings, pEnemyBuildings);
         }
     }
     return false;
 }
 
-bool NormalAi::repairUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings)
+bool NormalAi::repairUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
@@ -642,7 +644,7 @@ bool NormalAi::repairUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings)
             // find possible targets for this unit
             pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
             appendRepairTargets(pUnit, pBuildings, targets);
-            if (moveUnit(pAction, pUnit, pUnits, actions, targets, transporterTargets, false))
+            if (moveUnit(pAction, pUnit, pUnits, actions, targets, transporterTargets, false, pBuildings, pEnemyBuildings))
             {
                 return true;
             }
@@ -665,7 +667,8 @@ bool NormalAi::repairUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings)
 
 bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits, QStringList& actions,
                         QVector<QVector3D>& targets, QVector<QVector3D>& transporterTargets,
-                        bool shortenPathForTarget)
+                        bool shortenPathForTarget,
+                        QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
     TargetedUnitPathFindingSystem pfs(pUnit, targets);
     pfs.explore();
@@ -701,10 +704,10 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
             {
                 movePath.append(QPoint(pUnit->getX(), pUnit->getY()));
             }
-            qint32 idx = getMoveTargetField(pUnit, pUnits, movePath);
+            qint32 idx = getMoveTargetField(pUnit, pUnits, movePath, pBuildings, pEnemyBuildings);
             if (idx < 0)
             {
-                std::tuple<QPoint, float, bool> target = moveToSafety(pUnit, pUnits, turnPfs, movePath[0]);
+                std::tuple<QPoint, float, bool> target = moveToSafety(pUnit, pUnits, turnPfs, movePath[0], pBuildings, pEnemyBuildings);
                 QPoint ret = std::get<0>(target);
                 float minDamage = std::get<1>(target);
                 bool allEqual = std::get<2>(target);
@@ -825,7 +828,9 @@ bool NormalAi::suicide(GameAction* pAction, Unit* pUnit, UnitPathFindingSystem& 
     return false;
 }
 
-std::tuple<QPoint, float, bool> NormalAi::moveToSafety(Unit* pUnit, QmlVectorUnit* pUnits, UnitPathFindingSystem& turnPfs, QPoint target)
+std::tuple<QPoint, float, bool> NormalAi::moveToSafety(Unit* pUnit, QmlVectorUnit* pUnits,
+                                                       UnitPathFindingSystem& turnPfs, QPoint target,
+                                                       QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
     GameMap* pMap = GameMap::getInstance();
     QVector<QPoint> targets = turnPfs.getAllNodePoints();
@@ -837,7 +842,7 @@ std::tuple<QPoint, float, bool> NormalAi::moveToSafety(Unit* pUnit, QmlVectorUni
     {
         if (pMap->getTerrain(targets[i].x(), targets[i].y())->getUnit() == nullptr)
         {
-            float currentDamage = calculateCounterDamage(pUnit, pUnits, targets[i], nullptr, 0.0f);
+            float currentDamage = calculateCounterDamage(pUnit, pUnits, targets[i], nullptr, 0.0f, pBuildings, pEnemyBuildings);
             if (leastDamageField < std::numeric_limits<float>::max() &&
                 static_cast<qint32>(leastDamageField) != static_cast<qint32>(currentDamage))
             {
@@ -861,7 +866,8 @@ std::tuple<QPoint, float, bool> NormalAi::moveToSafety(Unit* pUnit, QmlVectorUni
     return std::tuple<QPoint, float, bool>(ret, leastDamageField, allFieldsEqual);
 }
 
-qint32 NormalAi::getMoveTargetField(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QPoint>& movePath)
+qint32 NormalAi::getMoveTargetField(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QPoint>& movePath,
+                                    QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < movePath.size(); i++)
@@ -870,7 +876,7 @@ qint32 NormalAi::getMoveTargetField(Unit* pUnit, QmlVectorUnit* pUnits, QVector<
         if (pMap->getTerrain(movePath[i].x(), movePath[i].y())->getUnit() == nullptr ||
             pMap->getTerrain(movePath[i].x(), movePath[i].y())->getUnit() == pUnit)
         {
-            float counterDamage = calculateCounterDamage(pUnit, pUnits, movePath[i], nullptr, 0.0f);
+            float counterDamage = calculateCounterDamage(pUnit, pUnits, movePath[i], nullptr, 0.0f, pBuildings, pEnemyBuildings);
             if (counterDamage < pUnit->getUnitValue() * minMovementDamage)
             {
                 return i;
@@ -880,7 +886,9 @@ qint32 NormalAi::getMoveTargetField(Unit* pUnit, QmlVectorUnit* pUnits, QVector<
     return -1;
 }
 
-qint32 NormalAi::getBestAttackTarget(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields)
+qint32 NormalAi::getBestAttackTarget(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QVector4D>& ret,
+                                     QVector<QVector3D>& moveTargetFields,
+                                     QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
     GameMap* pMap = GameMap::getInstance();
     qint32 target = -1;
@@ -916,7 +924,7 @@ qint32 NormalAi::getBestAttackTarget(Unit* pUnit, QmlVectorUnit* pUnits, QVector
             fondsDamage = static_cast<qint32>(ret[i].z());
         }
         QPoint moveTarget(static_cast<qint32>(moveTargetFields[i].x()), static_cast<qint32>(moveTargetFields[i].y()));
-        fondsDamage -= calculateCounterDamage(pUnit, pUnits, moveTarget, pEnemy, ret[i].w());
+        fondsDamage -= calculateCounterDamage(pUnit, pUnits, moveTarget, pEnemy, ret[i].w(), pBuildings, pEnemyBuildings);
         qint32 targetDefense = pMap->getTerrain(static_cast<qint32>(ret[i].x()), static_cast<qint32>(ret[i].y()))->getDefense(pUnit);
         if (fondsDamage >= 0)
         {
@@ -986,7 +994,9 @@ float NormalAi::calculateCaptureBonus(Unit* pUnit, float newLife)
     return ret;
 }
 
-float NormalAi::calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoint newPosition, Unit* pEnemyUnit, float enemyTakenDamage)
+float NormalAi::calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoint newPosition,
+                                       Unit* pEnemyUnit, float enemyTakenDamage,
+                                       QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
     GameMap* pMap = GameMap::getInstance();
     float counterDamage = 0;
@@ -1070,6 +1080,50 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoin
             }
         }
     }
+    counterDamage += calculateCounteBuildingDamage(pUnit, newPosition, pBuildings, pEnemyBuildings);
+    return counterDamage;
+}
+
+float NormalAi::calculateCounteBuildingDamage(Unit* pUnit, QPoint newPosition, QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
+{
+    float counterDamage = 0.0f;
+    for (qint32 i = 0; i < pBuildings->size(); i++)
+    {
+        Building* pBuilding = pBuildings->at(i);
+        counterDamage += calcBuildingDamage(pUnit, newPosition, pBuilding);
+    }
+    for (qint32 i = 0; i < pEnemyBuildings->size(); i++)
+    {
+        Building* pBuilding = pEnemyBuildings->at(i);
+        counterDamage += calcBuildingDamage(pUnit, newPosition, pBuilding);
+    }
+    return counterDamage;
+}
+
+float NormalAi::calcBuildingDamage(Unit* pUnit, QPoint newPosition, Building* pBuilding)
+{
+    float counterDamage = 0.0f;
+    GameEnums::BuildingTarget targets = pBuilding->getBuildingTargets();
+    if (targets == GameEnums::BuildingTarget_All ||
+       (targets == GameEnums::BuildingTarget_Enemy && m_pPlayer->isEnemy(pBuilding->getOwner())) ||
+       (targets == GameEnums::BuildingTarget_Own && m_pPlayer == pBuilding->getOwner()))
+    {
+        QPoint pos = newPosition - pBuilding->getActionTargetOffset() - pBuilding->getPosition();
+        QmlVectorPoint* pTargets = pBuilding->getActionTargetFields();
+        if (pTargets != nullptr)
+        {
+            if (pTargets->contains(pos))
+            {
+                float damage = pBuilding->getDamage(pUnit);
+                if (damage > pUnit->getHp())
+                {
+                    damage = pBuilding->getHp();
+                }
+                counterDamage = damage / 10 * pUnit->getUnitCosts();
+            }
+        }
+        delete pTargets;
+    }
     return counterDamage;
 }
 
@@ -1104,18 +1158,23 @@ void NormalAi::updateEnemyData(QmlVectorUnit* pUnits)
             }
         }
     }
+    QVector<qint32> updated;
     for (qint32 i = 0; i < updatePoints.size(); i++)
     {
         for (qint32 i2 = 0; i2 < m_EnemyUnits.size(); i2++)
         {
-            if (m_EnemyUnits[i2]->getHp() > 0)
+            if (!updated.contains(i2))
             {
-                if (qAbs(updatePoints[i].x() - m_EnemyUnits[i2]->getX()) +
-                    qAbs(updatePoints[i].y() - m_EnemyUnits[i2]->getY()) <=
-                    m_EnemyUnits[i2]->getMovementpoints(QPoint(m_EnemyUnits[i2]->getX(), m_EnemyUnits[i2]->getY())) + 2)
+                if (m_EnemyUnits[i2]->getHp() > 0)
                 {
-                    m_EnemyPfs[i2] = new UnitPathFindingSystem(m_EnemyUnits[i2].get());
-                    m_EnemyPfs[i2]->explore();
+                    if (qAbs(updatePoints[i].x() - m_EnemyUnits[i2]->getX()) +
+                        qAbs(updatePoints[i].y() - m_EnemyUnits[i2]->getY()) <=
+                        m_EnemyUnits[i2]->getMovementpoints(QPoint(m_EnemyUnits[i2]->getX(), m_EnemyUnits[i2]->getY())) + 2)
+                    {
+                        m_EnemyPfs[i2] = new UnitPathFindingSystem(m_EnemyUnits[i2].get());
+                        m_EnemyPfs[i2]->explore();
+                    }
+                    updated.push_back(i2);
                 }
             }
         }

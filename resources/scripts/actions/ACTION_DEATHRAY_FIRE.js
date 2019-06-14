@@ -52,16 +52,18 @@ var Constructor = function()
         var x = ACTION_DEATHRAY_FIRE.postAnimationX;
         var y = ACTION_DEATHRAY_FIRE.postAnimationY;
         var building = ACTION_DEATHRAY_FIRE.postAnimationBuilding;
+
         for (var i = 0; i < ACTION_DEATHRAY_FIRE.postAnimationFields.size(); i++)
         {
             var point = ACTION_DEATHRAY_FIRE.postAnimationFields.at(i);
             if (map.onMap(x + point.x, y + point.y))
             {
                 var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
+                var damage = Global[building.getBuildingID()].getDamage(building, unit);
                 if ((unit !== null) &&
                     (building.getOwner().isEnemyUnit(unit)))
                 {
-                    unit.setHp(unit.getHpRounded() - 8);
+                    unit.setHp(unit.getHpRounded() - damage);
                     if (unit.getHp() <= 0)
                     {
                         unit.killUnit();

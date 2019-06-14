@@ -24,7 +24,7 @@ var Constructor = function()
         // read all  map variables
         var tutorial1Won = variables.createVariable("Tutorial 1");
         var tutorial2Won = variables.createVariable("Tutorial 2");
-
+        var tutorial3Won = variables.createVariable("Tutorial 3");
         // check for each tutorial map if we have won it if not enable the map for play
         if (tutorial1Won.readDataBool() === false)
         {
@@ -33,6 +33,10 @@ var Constructor = function()
         if (tutorial2Won.readDataBool() === false)
         {
             ret.push("tutorial2.map");
+        }
+        if (tutorial3Won.readDataBool() === false)
+        {
+            ret.push("tutorial3.map");
         }
         return ret;
     };
@@ -54,8 +58,10 @@ var Constructor = function()
         // read all  map variables
         var tutorial1Won = variables.createVariable("Tutorial 1");
         var tutorial2Won = variables.createVariable("Tutorial 2");
+        var tutorial3Won = variables.createVariable("Tutorial 3");
         if (tutorial1Won.readDataBool() === true &&
-            tutorial2Won.readDataBool() === true)
+            tutorial2Won.readDataBool() === true &&
+            tutorial3Won.readDataBool() === true)
         {
             return true;
         }

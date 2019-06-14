@@ -77,5 +77,9 @@ void GameEnums::registerEnums()
     value.setProperty("AnimationMode_Ally", AnimationMode_Ally);
     value.setProperty("AnimationMode_Enemy", AnimationMode_Enemy);
 
+    value.setProperty("BuildingTarget_All", BuildingTarget_All);
+    value.setProperty("BuildingTarget_Own", BuildingTarget_Own);
+    value.setProperty("BuildingTarget_Enemy", BuildingTarget_Enemy);
+
     pInterpreter->setGlobal("GameEnums", value);
 }

@@ -296,6 +296,8 @@ protected:
      * @param unitID
      */
     void createIslandMap(QString movementType, QString unitID);
+
+
 protected:
     DecisionTree m_COPowerTree;
     QVector<spIslandMap> m_IslandMaps;

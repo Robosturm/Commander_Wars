@@ -6,6 +6,7 @@
 
 #include "oxygine-framework.h"
 #include "game/smartpointers.h"
+#include "game/GameEnums.h"
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
 
@@ -234,6 +235,17 @@ public slots:
      * @return
      */
     bool isProductionBuilding();
+    /**
+     * @brief getDamage
+     * @param pUnit
+     * @return
+     */
+    float getDamage(Unit* pUnit);
+    /**
+     * @brief getBuildingTargets
+     * @return
+     */
+    GameEnums::BuildingTarget getBuildingTargets();
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
     /**

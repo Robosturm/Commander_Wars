@@ -27,6 +27,14 @@ var Constructor = function()
     {
         return globals.getCircle(0, 5);
     };
+    this.getDamage = function(building, unit)
+    {
+        return 5;
+    };
+    this.getBuildingTargets = function()
+    {
+        return GameEnums.BuildingTarget_Enemy;
+    };
     this.getName = function()
     {
         return qsTr("Talon Gun");

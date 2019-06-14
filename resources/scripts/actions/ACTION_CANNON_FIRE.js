@@ -6,7 +6,7 @@ var Constructor = function()
         var building = action.getTargetBuilding();
         if (building.getFireCount() >= 1)
         {
-            if (ACTION_MINICANNON_FIRE.getTargets(building).length > 0)
+            if (ACTION_CANNON_FIRE.getTargets(building).length > 0)
             {
                 return true;
             }
@@ -74,11 +74,13 @@ var Constructor = function()
     this.getStepData = function(action, data)
     {
         var building = action.getTargetBuilding();
-        var targets = ACTION_MINICANNON_FIRE.getTargets(building);
+        var targets = ACTION_CANNON_FIRE.getTargets(building);
         for (var i = 0; i < targets.length; i++)
         {
+            var damage = Global[building.getBuildingID()].getDamage(building,
+                                                                    map.getTerrain(targets[i].x, targets[i].y).getUnit());
             data.addPoint(Qt.point(targets[i].x, targets[i].y));
-            data.addZInformation(30);
+            data.addZInformation(damage * 10);
         }
         data.setColor("#C8FF0000");
         data.setZLabelColor("#ff4500");
@@ -94,23 +96,29 @@ var Constructor = function()
         action.startReading();
         var targetX = action.readDataInt32();
         var targetY = action.readDataInt32();
-        ACTION_MINICANNON_FIRE.postAnimationUnit = map.getTerrain(targetX, targetY).getUnit();
+        ACTION_CANNON_FIRE.postAnimationBuilding = building;
+        ACTION_CANNON_FIRE.postAnimationUnit = map.getTerrain(targetX, targetY).getUnit();
         var animation = Global[building.getBuildingID()].getShotAnimation(building);
         var animation2 = GameAnimationFactory.createAnimation(targetX, targetY, 70);
         animation2.addSprite("blackhole_shot", -map.getImageSize() * 0.5, -map.getImageSize() * 0.5, 0, 1.5);
-        animation2.setEndOfAnimationCall("ACTION_MINICANNON_FIRE", "performPostAnimation");
+        animation2.setEndOfAnimationCall("ACTION_CANNON_FIRE", "performPostAnimation");
         animation.queueAnimation(animation2);
     };
     var postAnimationUnit = null;
+    var postAnimationBuilding = null;
     this.performPostAnimation = function()
     {
-        ACTION_MINICANNON_FIRE.postAnimationUnit.setHp(ACTION_MINICANNON_FIRE.postAnimationUnit.getHpRounded() - 3);
-        if (ACTION_MINICANNON_FIRE.postAnimationUnit.getHp() <= 0)
+        var damage = Global[ACTION_CANNON_FIRE.postAnimationBuilding.getBuildingID()].getDamage(ACTION_CANNON_FIRE.postAnimationBuilding,
+                                                                                                ACTION_CANNON_FIRE.postAnimationUnit);
+        ACTION_CANNON_FIRE.postAnimationUnit.setHp(ACTION_CANNON_FIRE.postAnimationUnit.getHpRounded() - damage);
+        if (ACTION_CANNON_FIRE.postAnimationUnit.getHp() <= 0)
         {
-            ACTION_MINICANNON_FIRE.postAnimationUnit.killUnit();
+            ACTION_CANNON_FIRE.postAnimationUnit.killUnit();
         }
+        postAnimationUnit = null;
+        postAnimationBuilding = null;
     }
 }
 
 Constructor.prototype = ACTION;
-var ACTION_MINICANNON_FIRE = new Constructor();
+var ACTION_CANNON_FIRE = new Constructor();

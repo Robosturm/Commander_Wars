@@ -174,6 +174,17 @@ var BUILDING =
         return "base_air";
     },
 
+    getDamage : function(building, unit)
+    {
+        return 0;
+    },
+
+    getBuildingTargets : function()
+    {
+        // hint for the ai
+        return GameEnums.BuildingTarget_Own;
+    },
+
     getTerrainAnimationForeground : function(unit, terrain)
     {
         if (globals.randInt(0, 1) === 0)

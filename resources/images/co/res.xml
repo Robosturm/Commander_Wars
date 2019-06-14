@@ -138,7 +138,7 @@
 		<image file="dm/co_varlot+nrm.png" />
 		<image file="dm/co_varlot+info.png" />
 		<image file="dm/co_varlot+face.png" cols = "3" />
-		<set scale_factor = "1.0" />	
+		<set scale_factor = "0.85" />	
 		<image file="dm/co_caulder+nrm.png" />
 		<set scale_factor = "0.67" />	
 		<image file="dm/co_penny+nrm.png" />
@@ -289,5 +289,8 @@
 		<image file="ma/co_epoch+nrm.png" />
 		<image file="ma/co_epoch+info.png" />
 		<image file="ma/co_epoch+face.png" cols = "3" />
+		<image file="ma/co_ik_486_b7+nrm.png" />
+		<image file="ma/co_ik_486_b7+info.png" />
+		<image file="ma/co_ik_486_b7+face.png" cols = "3" />
 	</atlas>
 </resources>

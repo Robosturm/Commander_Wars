@@ -36,6 +36,14 @@ var Constructor = function()
         // offset for large buildings since there reference point is bound to the lower right corner.
         return Qt.point(-1, -1);
     };
+    this.getDamage = function(building, unit)
+    {
+        return -2;
+    };
+    this.getBuildingTargets = function()
+    {
+        return GameEnums.BuildingTarget_Own;
+    };
     this.getBuildingWidth = function()
     {
         // one field width default for most buildings

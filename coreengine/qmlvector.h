@@ -35,6 +35,10 @@ public slots:
     {
         return m_Vector.size();
     }
+    bool contains(QPoint pos)
+    {
+        return m_Vector.contains(pos);
+    }
     void remove()
     {
         delete this;

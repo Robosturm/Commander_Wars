@@ -94,6 +94,8 @@ var Constructor = function()
     {
         var x = ACTION_LASER_FIRE.postAnimationActionX;
         var y = ACTION_LASER_FIRE.postAnimationActionY;
+        var building = map.getTerrain(x, y).getBuilding();
+        var damage = Global[building.getBuildingID()].getDamage();
         var size = ACTION_LASER_FIRE.postAnimationActionFields.size();
         for (var i = 0; i < size; i++)
         {
@@ -103,7 +105,7 @@ var Constructor = function()
                 var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
                 if ((unit !== null))
                 {
-                    unit.setHp(unit.getHpRounded() - 5);
+                    unit.setHp(unit.getHpRounded() - damage);
                     if (unit.getHp() <= 0)
                     {
                         unit.killUnit();

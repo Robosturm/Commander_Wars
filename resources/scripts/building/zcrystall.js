@@ -19,6 +19,14 @@ var Constructor = function()
         // returns a string id list of the actions this building can perform
         return "ACTION_CRYSTALL_HEAL";
     };
+    this.getDamage = function(building, unit)
+    {
+        return -2;
+    };
+    this.getBuildingTargets = function()
+    {
+        return GameEnums.BuildingTarget_Own;
+    };
     this.startOfTurn = function(building)
     {
         building.setFireCount(1);

@@ -19,6 +19,14 @@ var Constructor = function()
         // returns a string id list of the actions this building can perform
         return "ACTION_LASER_FIRE";
     };
+    this.getDamage = function(building, unit)
+    {
+        return 5;
+    };
+    this.getBuildingTargets = function()
+    {
+        return GameEnums.BuildingTarget_All;
+    };
     this.startOfTurn = function(building)
     {
         building.setFireCount(1);

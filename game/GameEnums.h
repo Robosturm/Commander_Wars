@@ -126,6 +126,15 @@ public:
         AnimationMode_Ally,
         AnimationMode_Enemy,
     };
+    Q_ENUM(AnimationMode)
+
+    enum BuildingTarget
+    {
+        BuildingTarget_All,
+        BuildingTarget_Own,
+        BuildingTarget_Enemy,
+    };
+    Q_ENUM(BuildingTarget)
 
     static void registerEnums();
 private:

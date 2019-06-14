@@ -23,6 +23,14 @@ var Constructor = function()
         // one field heigth default for most buildings
         return 4;
     };
+    this.getDamage = function(building, unit)
+    {
+        return 5;
+    };
+    this.getBuildingTargets = function()
+    {
+        return GameEnums.BuildingTarget_All;
+    };
     this.getName = function()
     {
         return qsTr("Volcan");

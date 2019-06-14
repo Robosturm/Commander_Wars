@@ -42,19 +42,6 @@
     </message>
 </context>
 <context>
-    <name>ACTION_BLACKHOLECANNON_FIRE</name>
-    <message>
-        <location filename="../resources/scripts/actions/ACTION_BLACKHOLECANNON_FIRE.js" line="18"/>
-        <source>Fire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/actions/ACTION_BLACKHOLECANNON_FIRE.js" line="86"/>
-        <source>Damage</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ACTION_BLACKHOLEFACTORY_DOOR1</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="23"/>
@@ -99,6 +86,19 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_BUILD_UNITS.js" line="22"/>
         <source>Build</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_CANNON_FIRE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CANNON_FIRE.js" line="18"/>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_CANNON_FIRE.js" line="87"/>
+        <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -216,19 +216,6 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="31"/>
         <source>Load</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ACTION_MINICANNON_FIRE</name>
-    <message>
-        <location filename="../resources/scripts/actions/ACTION_MINICANNON_FIRE.js" line="18"/>
-        <source>Fire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/actions/ACTION_MINICANNON_FIRE.js" line="85"/>
-        <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1268,72 +1255,72 @@
 <context>
     <name>MapSelectionMapsMenue</name>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="67"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="68"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="76"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="77"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="85"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="86"/>
         <source>Start Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="300"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="308"/>
         <source>Enviroment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="321"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="329"/>
         <source>Random Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="332"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="340"/>
         <source>Start Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="347"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="355"/>
         <source>Gameplay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="353"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="361"/>
         <source>Unit Ranking System: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="364"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="372"/>
         <source>No CO Powers: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="375"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="383"/>
         <source>Fog Of War: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="378"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="386"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="378"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="386"/>
         <source>Fog of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="390"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="398"/>
         <source>Unit Limit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="403"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="411"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1365,7 +1352,7 @@
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="59"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="655"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="671"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1385,13 +1372,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="422"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="440"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="438"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="456"/>
         <source>Unable to download map or game script from host a different version of the map or game script with the same name exist! Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="651"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="667"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2459,72 +2446,72 @@
 <context>
     <name>VictoryMenue</name>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="88"/>
+        <location filename="../menue/victorymenue.cpp" line="89"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="166"/>
-        <location filename="../menue/victorymenue.cpp" line="441"/>
+        <location filename="../menue/victorymenue.cpp" line="167"/>
+        <location filename="../menue/victorymenue.cpp" line="442"/>
         <source>Fonds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="175"/>
-        <location filename="../menue/victorymenue.cpp" line="446"/>
+        <location filename="../menue/victorymenue.cpp" line="176"/>
+        <location filename="../menue/victorymenue.cpp" line="447"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="184"/>
-        <location filename="../menue/victorymenue.cpp" line="451"/>
+        <location filename="../menue/victorymenue.cpp" line="185"/>
+        <location filename="../menue/victorymenue.cpp" line="452"/>
         <source>Buildings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="193"/>
-        <location filename="../menue/victorymenue.cpp" line="456"/>
+        <location filename="../menue/victorymenue.cpp" line="194"/>
+        <location filename="../menue/victorymenue.cpp" line="457"/>
         <source>Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="202"/>
-        <location filename="../menue/victorymenue.cpp" line="461"/>
+        <location filename="../menue/victorymenue.cpp" line="203"/>
+        <location filename="../menue/victorymenue.cpp" line="462"/>
         <source>Player Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="213"/>
+        <location filename="../menue/victorymenue.cpp" line="214"/>
         <source>Ranking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="246"/>
+        <location filename="../menue/victorymenue.cpp" line="247"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="275"/>
+        <location filename="../menue/victorymenue.cpp" line="276"/>
         <source>Speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="281"/>
+        <location filename="../menue/victorymenue.cpp" line="282"/>
         <source>Force</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="287"/>
+        <location filename="../menue/victorymenue.cpp" line="288"/>
         <source>Technique</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="293"/>
+        <location filename="../menue/victorymenue.cpp" line="294"/>
         <source>Total</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/victorymenue.cpp" line="501"/>
+        <location filename="../menue/victorymenue.cpp" line="502"/>
         <source>Victory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4873,6 +4860,109 @@
     <message>
         <location filename="../resources/scripts/cos/co_hawke.js" line="214"/>
         <source>Hawke</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_ik_486_b7</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="193"/>
+        <source>One of Lash latest invented robots. He likes to stay at the same place and defend it against anything that comes to him.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="197"/>
+        <source>Fortresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="201"/>
+        <source>Conquering</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="205"/>
+        <source>His direct units can do indirect attacks when they don&apos;t move. However they loose a fraction of firepower when doing so.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="209"/>
+        <source>The defense of his direct units raises and the firerange is increased by 1 when they don&apos;t move.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="213"/>
+        <source>Wall of Defense</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="217"/>
+        <source>The defense of his direct units raises extremly and the firerange is increased by 2 when they don&apos;t move.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="221"/>
+        <source>Great Counterstrike</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="225"/>
+        <source>Direct Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="226"/>
+        <source>Function Attacking not found use function defending instead!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="227"/>
+        <source>My fortress is unbeatable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="228"/>
+        <source>Make ready to defend yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="229"/>
+        <source>You are to near to my defence position.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="230"/>
+        <source>Go to the shortage other their.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="234"/>
+        <source>Fools don&apos;t attack my fortress.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="235"/>
+        <source>Robots rule the world.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="236"/>
+        <source>Do function &apos;Be Happy&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="240"/>
+        <source>You have destroyed my fortress?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="241"/>
+        <source>Tilt! Tilt! Selfdestruction...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="245"/>
+        <source>IK-486-B7</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10255,7 +10345,7 @@
 <context>
     <name>zcrystall</name>
     <message>
-        <location filename="../resources/scripts/building/zcrystall.js" line="28"/>
+        <location filename="../resources/scripts/building/zcrystall.js" line="36"/>
         <source>Crystall</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10263,7 +10353,7 @@
 <context>
     <name>zdeathray_E</name>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_E.js" line="28"/>
+        <location filename="../resources/scripts/building/zdeathray_E.js" line="36"/>
         <source>Death Ray</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10271,7 +10361,7 @@
 <context>
     <name>zdeathray_N</name>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_N.js" line="28"/>
+        <location filename="../resources/scripts/building/zdeathray_N.js" line="36"/>
         <source>Death Ray</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10279,7 +10369,7 @@
 <context>
     <name>zdeathray_S</name>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_S.js" line="28"/>
+        <location filename="../resources/scripts/building/zdeathray_S.js" line="36"/>
         <source>Death Ray</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10287,7 +10377,7 @@
 <context>
     <name>zdeathray_W</name>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_W.js" line="28"/>
+        <location filename="../resources/scripts/building/zdeathray_W.js" line="36"/>
         <source>Death Ray</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10303,7 +10393,7 @@
 <context>
     <name>zlaser</name>
     <message>
-        <location filename="../resources/scripts/building/zlaser.js" line="28"/>
+        <location filename="../resources/scripts/building/zlaser.js" line="36"/>
         <source>Laser</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10359,7 +10449,7 @@
 <context>
     <name>ztalon_gun</name>
     <message>
-        <location filename="../resources/scripts/building/ztalon_gun.js" line="32"/>
+        <location filename="../resources/scripts/building/ztalon_gun.js" line="40"/>
         <source>Talon Gun</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10375,7 +10465,7 @@
 <context>
     <name>zvolcan</name>
     <message>
-        <location filename="../resources/scripts/building/zvolcan.js" line="28"/>
+        <location filename="../resources/scripts/building/zvolcan.js" line="36"/>
         <source>Volcan</source>
         <translation type="unfinished"></translation>
     </message>

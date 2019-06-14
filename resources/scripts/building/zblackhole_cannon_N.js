@@ -17,7 +17,7 @@ var Constructor = function()
     this.getActions = function()
     {
         // returns a string id list of the actions this building can perform
-        return "ACTION_BLACKHOLECANNON_FIRE";
+        return "ACTION_CANNON_FIRE";
     };
     this.startOfTurn = function(building)
     {
@@ -53,6 +53,14 @@ var Constructor = function()
     this.getMiniMapIcon = function()
     {
         return "minimap_blackholebuilding";
+    };
+    this.getDamage = function(building, unit)
+    {
+        return 5;
+    };
+    this.getBuildingTargets = function()
+    {
+        return GameEnums.BuildingTarget_Enemy;
     };
     this.getIsAttackable = function(building, x, y)
     {

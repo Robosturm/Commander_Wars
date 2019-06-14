@@ -14,6 +14,14 @@ var Constructor = function()
     {
         return 0;
     };
+    this.getDamage = function(building, unit)
+    {
+        return 8;
+    };
+    this.getBuildingTargets = function()
+    {
+        return GameEnums.BuildingTarget_Enemy;
+    };
     this.getActions = function()
     {
         // returns a string id list of the actions this building can perform

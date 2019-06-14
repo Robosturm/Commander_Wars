@@ -17,7 +17,7 @@ var Constructor = function()
     this.getActions = function()
     {
         // returns a string id list of the actions this building can perform
-        return "ACTION_MINICANNON_FIRE";
+        return "ACTION_CANNON_FIRE";
     };
     this.startOfTurn = function(building)
     {
@@ -34,6 +34,14 @@ var Constructor = function()
     this.getName = function()
     {
         return qsTr("Mini Cannon");
+    };
+    this.getDamage = function(building, unit)
+    {
+        return 3;
+    };
+    this.getBuildingTargets = function()
+    {
+        return GameEnums.BuildingTarget_Enemy;
     };
     this.onDestroyed = function(building)
     {

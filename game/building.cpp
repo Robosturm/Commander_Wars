@@ -467,6 +467,38 @@ QPoint Building::getActionTargetOffset()
     return ret.toVariant().toPoint();
 }
 
+float Building::getDamage(Unit* pUnit)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getDamage";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(pUnit);
+    args1 << obj2;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
+    if (ret.isNumber())
+    {
+        return ret.toNumber();
+    }
+    return 0.0f;
+}
+
+GameEnums::BuildingTarget Building::getBuildingTargets()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getBuildingTargets";
+    QJSValueList args1;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj1;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
+    if (ret.isNumber())
+    {
+        return static_cast<GameEnums::BuildingTarget>(ret.toInt());
+    }
+    return GameEnums::BuildingTarget_All;
+}
+
 QString Building::getTerrainAnimationBase()
 {
     Mainapp* pApp = Mainapp::getInstance();
