@@ -26,7 +26,7 @@ public:
         VictoryRanking
     };
 
-    explicit VictoryMenue();
+    explicit VictoryMenue(bool multiplayer);
     virtual ~VictoryMenue() = default;
 
     /**
@@ -88,6 +88,8 @@ private:
     QVector<QVector<oxygine::spTextField>> m_VictoryTexts;
     spPanel m_VictoryPanel;
     qint32 progress = 0;
+
+    bool m_Multiplayer{false};
 
 };
 

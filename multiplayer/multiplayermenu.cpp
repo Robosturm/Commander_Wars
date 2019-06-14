@@ -301,6 +301,15 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 QDataStream sendStream(&sendData, QIODevice::WriteOnly);
                 sendStream << NetworkCommands::SENDINITUPDATE;
                 m_pMapSelectionView->getCurrentMap()->getGameRules()->serializeObject(sendStream);
+                if (m_pMapSelectionView->getCurrentMap()->getCampaign() != nullptr)
+                {
+                    sendStream << true;
+                    m_pMapSelectionView->getCurrentMap()->getCampaign()->serializeObject(sendStream);
+                }
+                else
+                {
+                    sendStream << false;
+                }
                 for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
                 {
                     BaseGameInputIF::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
@@ -332,6 +341,13 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
             if (!m_NetworkInterface->getIsServer())
             {
                 m_pMapSelectionView->getCurrentMap()->getGameRules()->deserializeObject(stream);
+                bool campaign = false;
+                stream >> campaign;
+                if (campaign)
+                {
+                    m_pMapSelectionView->getCurrentMap()->setCampaign(new Campaign());
+                    m_pMapSelectionView->getCurrentMap()->getCampaign()->deserializeObject(stream);
+                }
                 for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
                 {
                     QString name;

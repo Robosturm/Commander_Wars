@@ -63,7 +63,7 @@ var Constructor = function()
                     "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog2 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("No Lash please no update. I work perfectly."),
-                    "co_epoch", GameEnums.COMood_Sad, PLAYER.getDefaultColor(5));
+                    "co_epoch", GameEnums.COMood_Sad, PLAYER.getDefaultColor(6));
         dialog1.queueAnimation(dialog2);
         var dialog3 = GameAnimationFactory.createGameAnimationDialog(
                                 qsTr("C'mon. This is not you're choice."),
@@ -71,7 +71,7 @@ var Constructor = function()
         dialog2.queueAnimation(dialog3);
         var dialog4 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Rebooting... System...Installing update... 50%...70%...70%...70%..."),
-                    "co_epoch", GameEnums.COMood_Normal, PLAYER.getDefaultColor(5));
+                    "co_epoch", GameEnums.COMood_Normal, PLAYER.getDefaultColor(6));
         dialog3.queueAnimation(dialog4);
         var dialog5 = GameAnimationFactory.createGameAnimationDialog(
                                 qsTr("Tee hee hee. What did the update got stuck again???"),
@@ -79,7 +79,7 @@ var Constructor = function()
         dialog4.queueAnimation(dialog5);
         var dialog6 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Update Installed!!! Hello i'm Epoch you're frienldy robot. What is my job? Who am I? Where am I? Why am I?"),
-                    "co_epoch", GameEnums.COMood_Happy, PLAYER.getDefaultColor(5));
+                    "co_epoch", GameEnums.COMood_Happy, PLAYER.getDefaultColor(6));
         dialog5.queueAnimation(dialog6);
         var dialog7 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Again really? Epoch why you can't remember a single setting after an Update? ") +
@@ -89,7 +89,7 @@ var Constructor = function()
         dialog6.queueAnimation(dialog7);
         var dialog8 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Initializing Input Buffer... Buffer Ready...Awaiting Commands!!!"),
-                    "co_epoch", GameEnums.COMood_Normal, PLAYER.getDefaultColor(5));
+                    "co_epoch", GameEnums.COMood_Normal, PLAYER.getDefaultColor(6));
         dialog7.queueAnimation(dialog8);
         var dialog9 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Let's start with the user interface. Tee hee hee. On the left top you see the current co's players and funds. On the right ") +
@@ -102,7 +102,7 @@ var Constructor = function()
         dialog8.queueAnimation(dialog9);
         var dialog10 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Inserted User Interface. Question how to I enter commands?"),
-                    "co_epoch", GameEnums.COMood_Normal, PLAYER.getDefaultColor(5));
+                    "co_epoch", GameEnums.COMood_Normal, PLAYER.getDefaultColor(6));
         dialog9.queueAnimation(dialog10);
         var dialog11 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Hiiii...hiii press the left mouse button or space (default) to enter or accept a command! ") +
@@ -128,7 +128,7 @@ var Constructor = function()
         dialog1.setEndOfAnimationCall("gameScript", "spawnLashTank");
         var dialog2 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Using Strg+C... Strg+V... Strg+V"),
-                    "co_epoch", GameEnums.COMood_Normal, PLAYER.getDefaultColor(5));
+                    "co_epoch", GameEnums.COMood_Normal, PLAYER.getDefaultColor(6));
         dialog1.queueAnimation(dialog2);
         // spawn the light tanks after Epoch finished her sentence
         dialog2.setEndOfAnimationCall("gameScript", "spawnEpochTanks");

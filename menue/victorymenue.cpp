@@ -20,8 +20,9 @@
 #include "coreengine/console.h"
 #include "coreengine/settings.h"
 
-VictoryMenue::VictoryMenue()
-    : QObject()
+VictoryMenue::VictoryMenue(bool multiplayer)
+    : QObject(),
+      m_Multiplayer(multiplayer)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -515,7 +516,7 @@ void VictoryMenue::exitMenue()
     {
         GameMap::deleteMap();
         Console::print("Leaving Victory Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(new CampaignMenu(campaign, false));
+        oxygine::getStage()->addChild(new CampaignMenu(campaign, m_Multiplayer));
         oxygine::Actor::detach();
     }
     else

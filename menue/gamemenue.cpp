@@ -381,8 +381,10 @@ void GameMenue::victory(qint32 team)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
+    bool multiplayer = false;
     if (m_pNetworkInterface.get() != nullptr)
     {
+        multiplayer = true;
         emit m_pNetworkInterface->sig_close();
         m_pNetworkInterface = nullptr;
     }
@@ -418,7 +420,7 @@ void GameMenue::victory(qint32 team)
             pMap->getCampaign()->mapFinished(humanWin);
         }
         Console::print("Leaving Game Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(new VictoryMenue());
+        oxygine::getStage()->addChild(new VictoryMenue(multiplayer));
         oxygine::Actor::detach();
     }
     pApp->continueThread();

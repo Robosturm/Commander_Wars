@@ -22,6 +22,7 @@
 #include "menue/mainwindow.h"
 #include "menue/gamemenue.h"
 #include "menue/campaignmenu.h"
+#include "multiplayer/multiplayermenu.h"
 
 #include "objects/checkbox.h"
 #include "objects/spinbox.h"
@@ -194,7 +195,14 @@ void MapSelectionMapsMenue::slotButtonNext()
                 if (file.endsWith(".jsm"))
                 {
                     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
-                    oxygine::getStage()->addChild(new CampaignMenu(m_pMapSelectionView->getCurrentCampaign(), false));
+                    if (dynamic_cast<Multiplayermenu*>(this) == nullptr)
+                    {
+                        oxygine::getStage()->addChild(new CampaignMenu(m_pMapSelectionView->getCurrentCampaign(), true));
+                    }
+                    else
+                    {
+                        oxygine::getStage()->addChild(new CampaignMenu(m_pMapSelectionView->getCurrentCampaign(), false));
+                    }
                     oxygine::Actor::detach();
                 }
             }
