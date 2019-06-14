@@ -427,15 +427,15 @@ public slots:
     /**
      * @brief getTrueDamage
      * @param damage
-     * @param pAttacker
      * @param position
      * @param attackerBaseHp
+     * @param pDefender
      * @param defPosition
      * @param isDefender
      * @return
      */
-    float getTrueDamage(float damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
-                              QPoint defPosition, bool isDefender);
+    float getTrueDamage(float damage, QPoint position, qint32 attackerBaseHp,
+                        Unit* pDefender, QPoint defPosition, bool isDefender);
     /**
      * @brief getTerrainDefense
      * @return

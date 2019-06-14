@@ -7,7 +7,7 @@ var Constructor = function()
 
     this.getCOArmy = function()
     {
-        return "BH";
+        return "TI";
     };
 
     // CO - Intel

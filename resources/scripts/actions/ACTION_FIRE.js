@@ -37,14 +37,14 @@ var Constructor = function()
                          (defBuilding.getIsAttackable(x, y) && unit.getOwner().isEnemy(defBuilding.getOwner()))) ||
                          (defTerrain.getHp() > 0))
                     {
-                        if (unit.hasAmmo1())
+                        if (unit.hasAmmo1() && unit.getWeapon1ID() !== "")
                         {
                             if (Global[unit.getWeapon1ID()].getEnviromentDamage(defTerrain.getID()) > 0)
                             {
                                 return true;
                             }
                         }
-                        if (unit.hasAmmo2())
+                        if (unit.hasAmmo2() && unit.getWeapon2ID() !== "")
                         {
                             if (Global[unit.getWeapon2ID()].getEnviromentDamage(defTerrain.getID()) > 0)
                             {
@@ -141,8 +141,8 @@ var Constructor = function()
                     }
                 }
             }
-            damage += attacker.getTrueDamage(damage, attacker, attackerPosition, attackerBaseHp,
-                                             defenderPosition, isDefender);
+            damage += attacker.getTrueDamage(damage, attackerPosition, attackerBaseHp,
+                                             defender, defenderPosition, isDefender);
             damage -= defender.getDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,
                                                   defenderPosition, isDefender, luckMode);
             // avoid healing through negativ damage caused by misfortune or other stuff

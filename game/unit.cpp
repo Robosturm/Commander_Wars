@@ -772,21 +772,21 @@ float Unit::getDamageReduction(float damage, Unit* pAttacker, QPoint position, q
     return bonus;
 }
 
-float Unit::getTrueDamage(float damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
-                          QPoint defPosition, bool isDefender)
+float Unit::getTrueDamage(float damage, QPoint position, qint32 attackerBaseHp,
+                          Unit* pDefender, QPoint defPosition, bool isDefender)
 {
     float bonus = 0;
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
-        bonus += pCO->getTrueDamage(damage, pAttacker, position, attackerBaseHp,
-                                         this, defPosition, isDefender);
+        bonus += pCO->getTrueDamage(damage, this, position, attackerBaseHp,
+                                    pDefender, defPosition, isDefender);
     }
     pCO = m_pOwner->getCO(1);
     if (pCO != nullptr)
     {
-        bonus += pCO->getTrueDamage(damage, pAttacker, position, attackerBaseHp,
-                                         this, defPosition, isDefender);
+        bonus += pCO->getTrueDamage(damage, this, position, attackerBaseHp,
+                                    pDefender, defPosition, isDefender);
     }
     return bonus;
 }

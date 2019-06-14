@@ -123,8 +123,13 @@
 		<image file="bd/co_tasha+info.png" />
 		<image file="bd/co_tasha+face.png" cols = "3" />
 		<image file="bd/co_gage+info.png" />
-		<image file="bd/co_gage+face.png" cols = "3" />
-		
+		<image file="bd/co_gage+face.png" cols = "3" />		
+		<image file="bd/co_adam+nrm.png" />
+		<image file="bd/co_adam+info.png" />
+		<image file="bd/co_adam+face.png" cols = "3" />
+		<image file="bd/co_artemis+nrm.png" />
+		<image file="bd/co_artemis+info.png" />
+		<image file="bd/co_artemis+face.png" cols = "3" />
 		<!-- dm -->
 		<image file="dm/co_graves+nrm.png" />
 		<image file="dm/co_graves+info.png" />
@@ -138,6 +143,9 @@
 		<image file="dm/co_varlot+nrm.png" />
 		<image file="dm/co_varlot+info.png" />
 		<image file="dm/co_varlot+face.png" cols = "3" />
+		<image file="dm/co_yukio+nrm.png" />
+		<image file="dm/co_yukio+info.png" />
+		<image file="dm/co_yukio+face.png" cols = "3" />
 		<set scale_factor = "0.85" />	
 		<image file="dm/co_caulder+nrm.png" />
 		<set scale_factor = "0.67" />	
@@ -185,6 +193,9 @@
 		<image file="gs/co_sanjuro+nrm.png" />
 		<image file="gs/co_sanjuro+info.png" />
 		<image file="gs/co_sanjuro+face.png" cols = "3" />
+		<image file="gs/co_xavier+nrm.png" />
+		<image file="gs/co_xavier+info.png" />
+		<image file="gs/co_xavier+face.png" cols = "3" />
 		
 		<!-- pf -->
 		<image file="pf/co_aira+nrm.png" />
@@ -202,6 +213,9 @@
 		<image file="pf/co_alexis+nrm.png" />
 		<image file="pf/co_alexis+info.png" />
 		<image file="pf/co_alexis+face.png" cols = "3" />
+		<image file="pf/co_carmen+nrm.png" />
+		<image file="pf/co_carmen+info.png" />
+		<image file="pf/co_carmen+face.png" cols = "3" />
 		
 		<!-- ti -->
 		<image file="ti/co_conrad+nrm.png" />
@@ -224,7 +238,13 @@
 		<image file="ti/co_greyfield+info.png" />
 		<image file="ti/co_greyfield+face.png" cols = "3" />
 		<image file="ti/co_waylon+info.png" />
-		<image file="ti/co_waylon+face.png" cols = "3" />
+		<image file="ti/co_waylon+face.png" cols = "3" />		
+		<image file="ti/co_koshi+nrm.png" />
+		<image file="ti/co_koshi+info.png" />
+		<image file="ti/co_koshi+face.png" cols = "3" />
+		<image file="ti/co_carrie+nrm.png" />
+		<image file="ti/co_carrie+info.png" />
+		<image file="ti/co_carrie+face.png" cols = "3" />
 		
 		<!-- YC -->
 		<image file="yc/co_kanbei+nrm.png" />

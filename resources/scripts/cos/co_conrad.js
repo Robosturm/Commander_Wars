@@ -144,7 +144,7 @@ var Constructor = function()
     this.getBonusLuck = function(co, unit, posX, posY)
     {
         // reduce luck to zero
-        return -999;
+        return -unit.getHpRounded() / 2;
     };
 
     this.getTrueDamage = function(co, damage, attacker, atkPosX, atkPosY, attackerBaseHp,
@@ -227,7 +227,7 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Pre-battle damage estimations are completely accurate. Firepower increases as more units are within vision range. Weak counters.");
+        return qsTr("Unit's have no basic luck instead they deal a fix amount of damage. Firepower increases as more units are within vision range. Weak counters.");
     };
     this.getPowerDescription = function()
     {

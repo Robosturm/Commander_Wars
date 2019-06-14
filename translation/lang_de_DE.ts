@@ -2645,6 +2645,109 @@
     </message>
 </context>
 <context>
+    <name>co_adam</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="293"/>
+        <source>A researcher-turned-commander of Brown Desert, Adam Deckster is a reclusive geek who nevertheless is slowly finding a place among the other commanders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="297"/>
+        <source>Vectors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="301"/>
+        <source>Percent Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="305"/>
+        <source>Adam&apos;s units finish off units that are within basic luck range. Whenever he destroys an enemy unit, the attacking unit gains a defense boost. However, Adam&apos;s units lose firepower as they lose HP.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="309"/>
+        <source>All of Adam&apos;s units gains a firepower boost and movement range. Whenever Adam destroys a unit, the next unit gains bonus firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="313"/>
+        <source>Decimation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="317"/>
+        <source>Each time Adam destroys an enemy unit, the attacking unit loses firepower and can move again, while the next unit gets an powerup.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="321"/>
+        <source>Cartesian Cleanup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="325"/>
+        <source>Get a hobby? This is my hobby!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="326"/>
+        <source>Woo! Watch out for shrapnel!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="327"/>
+        <source>Precision pays off!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="328"/>
+        <source>As my troops approach their limit...you become insignificant!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="329"/>
+        <source>Prepare to have your strategy debunked!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="330"/>
+        <source>I&apos;ll blind you with science!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="334"/>
+        <source>Call it bad luck, if you must.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="335"/>
+        <source>Who said math had no applications in real life?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="336"/>
+        <source>Ha! The revenge of the nerds!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="340"/>
+        <source>Hssss! Today was... unlucky. A bad day. Nothing more.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="341"/>
+        <source>It&apos;s the blasted weather! That was the problem! Hssss!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_adam.js" line="345"/>
+        <source>Adam</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>co_adder</name>
     <message>
         <location filename="../resources/scripts/cos/co_adder.js" line="158"/>
@@ -3601,7 +3704,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_conrad.js" line="230"/>
-        <source>Pre-battle damage estimations are completely accurate. Firepower increases as more units are within vision range. Weak counters.</source>
+        <source>Unit&apos;s have no basic luck instead they deal a fix amount of damage. Firepower increases as more units are within vision range. Weak counters.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
