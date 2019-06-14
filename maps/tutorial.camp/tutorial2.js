@@ -27,7 +27,7 @@ var Constructor = function()
     {
         var variables = map.getGameScript().getVariables();
         // check if the buildings changed there owner to a certain player and call a dialog on it
-        var tower = map.getTerrain(2, 2).getBuilding();
+        var tower = map.getTerrain(1, 4).getBuilding();
         var mine = map.getTerrain(6, 4).getBuilding();
         var radar = map.getTerrain(4, 4).getBuilding();
         if (tower.getOwner() === map.getPlayer(0))

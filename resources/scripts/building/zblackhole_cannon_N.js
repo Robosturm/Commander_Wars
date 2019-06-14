@@ -75,6 +75,12 @@ var Constructor = function()
         audio.playSound("explosion+land.wav");
         map.getTerrain(x, y).loadBuilding("ZBLACK_BUILDING_DESTROYED");
     };
+    this.getShotAnimation = function(building)
+    {
+        var animation = GameAnimationFactory.createAnimation(building.getX(), building.getY(), 70);
+        animation.addSprite("blackhole_shot_north", -map.getImageSize() * 2.0, -map.getImageSize() * 3.0, 0, 1.5);
+        return animation;
+    };
 }
 
 Constructor.prototype = BUILDING;

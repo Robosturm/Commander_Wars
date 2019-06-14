@@ -60,11 +60,19 @@
 		<image file="volcan_eruption.png" cols = "9" />
 		<image file="volcan_hit.png" cols = "3" />
 		<image file="volcan_fireball.png" />		
-		<image file="blackhole_shot_down.png" cols = "4" />
+		<image file="blackhole_shot_east.png" cols = "5" />
+		<image file="blackhole_shot_south.png" cols = "5" />
+		<image file="blackhole_shot_west.png" cols = "5" />
+		<image file="blackhole_shot_north.png" cols = "5" />
+		<image file="minicanon_east.png" cols = "8" />
+		<image file="minicanon_north.png" cols = "8" />
+		<image file="minicanon_west.png" cols = "8" />
+		<image file="minicanon_south.png" cols = "8" />
 				
 		<!-- static -->
 		<image file="ration.png" />
 		<image file="trap.png" />
+		<image file="repair.png" />
 		<image file="meteor.png" />
 		<image file="white_pixel.png" />
 		

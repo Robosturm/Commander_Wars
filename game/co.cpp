@@ -73,6 +73,18 @@ void CO::setPowerFilled(const float &value)
 {
     if (!GameMap::getInstance()->getGameRules()->getNoPower())
     {
+        if (GameMenue::getInstance() != nullptr)
+        {
+            Mainapp* pApp = Mainapp::getInstance();
+            if (powerFilled < powerStars && value >= powerStars)
+            {
+                pApp->getAudioThread()->playSound("powerready.wav");
+            }
+            else if (powerFilled < powerStars + superpowerStars && value >= powerStars + superpowerStars)
+            {
+                pApp->getAudioThread()->playSound("superpowerready.wav");
+            }
+        }
         powerFilled = value;
         if (powerFilled > powerStars + superpowerStars)
         {

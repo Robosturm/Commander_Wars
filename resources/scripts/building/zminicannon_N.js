@@ -46,6 +46,12 @@ var Constructor = function()
         animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
         audio.playSound("explosion+land.wav");
     };
+    this.getShotAnimation = function(building)
+    {
+        var animation = GameAnimationFactory.createAnimation(building.getX(), building.getY(), 70);
+        animation.addSprite("minicanon_north", -map.getImageSize() * 0.5, -map.getImageSize() * 1.5, 0, 1.5);
+        return animation;
+    };
 }
 
 Constructor.prototype = BUILDING;

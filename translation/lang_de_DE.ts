@@ -271,6 +271,11 @@
         <source>Repair</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_REPAIR.js" line="108"/>
+        <source>REPAIR</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ACTION_SAVEGAME</name>
@@ -2640,7 +2645,7 @@
     <name>building</name>
     <message>
         <location filename="../resources/scripts/general/building.js" line="157"/>
-        <source>RATION</source>
+        <source>REPAIR</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -92,7 +92,7 @@ void GameAnimationDialog::rightClick()
 
 void GameAnimationDialog::keyInput(SDL_Event event)
 {
-    if (!m_stopped)
+    if (!m_stopped && writePosition > 0)
     {
         // for debugging
         SDL_Keycode cur = event.key.keysym.sym;
@@ -121,6 +121,11 @@ void GameAnimationDialog::update(const oxygine::UpdateState& us)
             {
                 emit sigStartFinishTimer();
             }
+        }
+        else
+        {
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->getAudioThread()->playSound("speaking.wav");
         }
         m_TextField->setText(m_Text.mid(0, writePosition).toStdString().c_str());
         float textHeight = m_TextField->getTextRect().getHeight();

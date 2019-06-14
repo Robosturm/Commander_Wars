@@ -28,6 +28,7 @@ var Constructor = function()
         var variable = weather.getVariables().createVariable("FOGMODE");
         variable.writeDataInt32(map.getGameRules().getFogMode());
         map.getGameRules().setFogMode(GameEnums.Fog_OfWar);
+        audio.playSound("rain.wav");
     };
 
     this.deactivate = function(weather)

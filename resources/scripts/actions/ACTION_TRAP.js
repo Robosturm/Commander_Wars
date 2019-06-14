@@ -27,7 +27,7 @@ var Constructor = function()
     {
         var animation = GameAnimationFactory.createAnimation(ACTION_TRAP.postAnimationTrapSignX, ACTION_TRAP.postAnimationTrapSignY);
         animation.addSprite("trap", map.getImageSize() / 2, map.getImageSize() / 3, 400);
-        animation.addText(qsTr("TRAP!"), map.getImageSize() / 2 + 5, map.getImageSize() / 3, 0.7);
+        animation.addText(qsTr("TRAP!"), map.getImageSize() / 2 + 15, map.getImageSize() / 3, 0.7);
         audio.playSound("trap.wav");
         ACTION_TRAP.postAnimationTrapSignX = -1;
         ACTION_TRAP.postAnimationTrapSignY = -1;

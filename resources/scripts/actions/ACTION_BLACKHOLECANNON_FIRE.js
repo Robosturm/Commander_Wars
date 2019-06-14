@@ -95,17 +95,22 @@ var Constructor = function()
         action.startReading();
         var targetX = action.readDataInt32();
         var targetY = action.readDataInt32();
-        var unit = map.getTerrain(targetX, targetY).getUnit();
-
-        var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY(), 70);
-        animation.addSprite("blackhole_shot", -map.getImageSize() * 0.5, -map.getImageSize() * 0.5, 0, 1.5);
-
-        unit.setHp(unit.getHpRounded() - 5);
-        if (unit.getHp() <= 0)
-        {
-            unit.killUnit();
-        }
+        ACTION_BLACKHOLECANNON_FIRE.postAnimationUnit = map.getTerrain(targetX, targetY).getUnit();
+        var animation = Global[building.getBuildingID()].getShotAnimation(building);
+        var animation2 = GameAnimationFactory.createAnimation(targetX, targetY, 70);
+        animation2.addSprite("blackhole_shot", -map.getImageSize() * 0.5, -map.getImageSize() * 0.5, 0, 1.5);
+        animation2.setEndOfAnimationCall("ACTION_BLACKHOLECANNON_FIRE", "performPostAnimation");
+        animation.queueAnimation(animation2);
     };
+    var postAnimationUnit = null;
+    this.performPostAnimation = function()
+    {
+        ACTION_BLACKHOLECANNON_FIRE.postAnimationUnit.setHp(ACTION_BLACKHOLECANNON_FIRE.postAnimationUnit.getHpRounded() - 5);
+        if (ACTION_BLACKHOLECANNON_FIRE.postAnimationUnit.getHp() <= 0)
+        {
+            ACTION_BLACKHOLECANNON_FIRE.postAnimationUnit.killUnit();
+        }
+    }
 }
 
 Constructor.prototype = ACTION;

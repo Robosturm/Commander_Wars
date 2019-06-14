@@ -421,31 +421,44 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
     pApp->suspendThread();
     // resolve click
     GameMap* pMap = GameMap::getInstance();
-    switch (m_EditorSelection->getCurrentMode())
+
+    switch (m_EditorMode)
     {
-        case EditorSelection::EditorMode::Terrain:
+        case EditorModes::EditUnits:
+        case EditorModes::RemoveUnits:
         {
-            QString terrainID = pMap->getTerrain(x, y)->getTerrainID();
-            m_EditorSelection->selectTerrain(terrainID);
+            m_EditorMode = EditorModes::PlaceEditorSelection;
             break;
         }
-        case EditorSelection::EditorMode::Building:
+        case EditorModes::PlaceEditorSelection:
         {
-            Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
-            if (pBuilding != nullptr)
+            switch (m_EditorSelection->getCurrentMode())
             {
-                m_EditorSelection->selectBuilding(pBuilding->getBuildingID());
+                case EditorSelection::EditorMode::Terrain:
+                {
+                    QString terrainID = pMap->getTerrain(x, y)->getTerrainID();
+                    m_EditorSelection->selectTerrain(terrainID);
+                    break;
+                }
+                case EditorSelection::EditorMode::Building:
+                {
+                    Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+                    if (pBuilding != nullptr)
+                    {
+                        m_EditorSelection->selectBuilding(pBuilding->getBuildingID());
+                    }
+                    break;
+                }
+                case EditorSelection::EditorMode::Unit:
+                {
+                    Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                    if (pUnit != nullptr)
+                    {
+                        m_EditorSelection->selectUnit(pUnit->getUnitID());
+                    }
+                    break;
+                }
             }
-            break;
-        }
-        case EditorSelection::EditorMode::Unit:
-        {
-            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
-            if (pUnit != nullptr)
-            {
-                m_EditorSelection->selectUnit(pUnit->getUnitID());
-            }
-            break;
         }
     }
     m_EditorMode = EditorModes::PlaceEditorSelection;
