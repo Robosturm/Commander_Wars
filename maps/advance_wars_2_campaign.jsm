@@ -140,9 +140,9 @@ var Constructor = function()
         if (LiberationWon.readDataBool() === true)
         {
             // blue moon
-
             var toyboxWon = variables.createVariable("Toy Box");
             var reclamationWon = variables.createVariable("Reclamation");
+            var tanksWon = variables.createVariable("Tanks!!!");
             var blueMoonCount = 0;
             if (toyboxWon.readDataBool() === false)
             {
@@ -160,11 +160,28 @@ var Constructor = function()
             {
                 blueMoonCount += 1;
             }
+            if (tanksWon.readDataBool() === false)
+            {
+                ret.push("Tanks!!!.map");
+            }
+            else
+            {
+                blueMoonCount += 1;
+            }
+            if (blueMoonCount >= 2)
+            {
+                // enable the last three missions
 
+            }
+            if (blueMoonCount >= 4)
+            {
+                // enable factory mission
+            }
 
             // yellow comet
 
         }
+        ret.push("Tanks!!!.map");
 
         return ret;
     };
