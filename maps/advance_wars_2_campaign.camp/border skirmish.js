@@ -7,36 +7,39 @@ var Constructor = function()
         return true;
     };
 
-    this.victory = function()
+    this.victory = function(team)
     {
-        // called when a player wins
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Grrrr! Not bad... for a girl!"),
-                    "co_flak", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("You're the Black Hole CO!? You're just a thug! Who do you think--"),
-                    "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Yap, yap, yap! Shut your trap! I'm leaving for now... Next time, I'll put you in your place."),
-                    "co_flak", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
-        var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Hey!"),
-                    "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog5 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("He escaped... And he was so rude, too!"),
-                    "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Oooh!! That makes me so angry! If I get the chance, I'm gonna run him down!"),
-                    "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog7 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("I'm glad we can depend on you, Sami. "),
-                    "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        dialog1.queueAnimation(dialog2);
-        dialog2.queueAnimation(dialog3);
-        dialog3.queueAnimation(dialog4);
-        dialog4.queueAnimation(dialog5);
-        dialog5.queueAnimation(dialog6);
-        dialog6.queueAnimation(dialog7);
+        if (team === 0)
+        {
+            // called when a player wins
+            var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Grrrr! Not bad... for a girl!"),
+                        "co_flak", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
+            var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("You're the Black Hole CO!? You're just a thug! Who do you think--"),
+                        "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Yap, yap, yap! Shut your trap! I'm leaving for now... Next time, I'll put you in your place."),
+                        "co_flak", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
+            var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Hey!"),
+                        "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("He escaped... And he was so rude, too!"),
+                        "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Oooh!! That makes me so angry! If I get the chance, I'm gonna run him down!"),
+                        "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("I'm glad we can depend on you, Sami. "),
+                        "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            dialog1.queueAnimation(dialog2);
+            dialog2.queueAnimation(dialog3);
+            dialog3.queueAnimation(dialog4);
+            dialog4.queueAnimation(dialog5);
+            dialog5.queueAnimation(dialog6);
+            dialog6.queueAnimation(dialog7);
+        }
     };
     this.gameStart = function()
     {

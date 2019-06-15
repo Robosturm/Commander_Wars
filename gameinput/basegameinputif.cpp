@@ -23,6 +23,16 @@ void BaseGameInputIF::setPlayer(Player* pPlayer)
 }
 
 
+bool BaseGameInputIF::getEnableNeutralTerrainAttack() const
+{
+    return enableNeutralTerrainAttack;
+}
+
+void BaseGameInputIF::setEnableNeutralTerrainAttack(bool value)
+{
+    enableNeutralTerrainAttack = value;
+}
+
 void BaseGameInputIF::serializeInterface(QDataStream& pStream, BaseGameInputIF* input)
 {
     if (input == nullptr)
@@ -36,17 +46,28 @@ void BaseGameInputIF::serializeInterface(QDataStream& pStream, BaseGameInputIF* 
     }
 }
 
-BaseGameInputIF* BaseGameInputIF::deserializeInterface(QDataStream& pStream)
+BaseGameInputIF* BaseGameInputIF::deserializeInterface(QDataStream& pStream, qint32 version)
 {
-
-    AiTypes type;
-    qint32 typeInt;
-    pStream >> typeInt;
-    type = static_cast<AiTypes>(typeInt);
-    BaseGameInputIF* ret = createAi(type);
-    if (ret != nullptr)
+    BaseGameInputIF* ret = nullptr;
+    if (version > 7)
     {
-        ret->deserializeObject(pStream);
+        AiTypes type;
+        qint32 typeInt;
+        pStream >> typeInt;
+        type = static_cast<AiTypes>(typeInt);
+        ret = createAi(type);
+        if (ret != nullptr)
+        {
+            ret->deserializeObject(pStream);
+        }
+    }
+    else
+    {
+        AiTypes type;
+        qint32 typeInt;
+        pStream >> typeInt;
+        type = static_cast<AiTypes>(typeInt);
+        BaseGameInputIF* ret = createAi(type);
     }
     return ret;
 }

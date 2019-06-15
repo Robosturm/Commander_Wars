@@ -7,24 +7,27 @@ var Constructor = function()
         return true;
     };
 
-    this.victory = function()
+    this.victory = function(team)
     {
-        // called when a player wins
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("The Orange Star Army is here! I order you to surrender! "),
-                    "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("You did it, Andy! This area has been liberated! "),
-                    "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Hmmm... But it was kinda too easy... "),
-                    "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Don't worry. I've a feeling that we're in for a whole slew of combat. Today, however, we celebrate your victory! Keep up the good work! "),
-                    "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        dialog1.queueAnimation(dialog2);
-        dialog2.queueAnimation(dialog3);
-        dialog3.queueAnimation(dialog4);
+        if (team === 0)
+        {
+            // called when a player wins
+            var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("The Orange Star Army is here! I order you to surrender! "),
+                        "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("You did it, Andy! This area has been liberated! "),
+                        "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Hmmm... But it was kinda too easy... "),
+                        "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Don't worry. I've a feeling that we're in for a whole slew of combat. Today, however, we celebrate your victory! Keep up the good work! "),
+                        "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            dialog1.queueAnimation(dialog2);
+            dialog2.queueAnimation(dialog3);
+            dialog3.queueAnimation(dialog4);
+        }
     };
     this.gameStart = function()
     {

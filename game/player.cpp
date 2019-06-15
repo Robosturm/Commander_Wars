@@ -1007,7 +1007,7 @@ void Player::deserializeObject(QDataStream& pStream)
         if (version > 4)
         {
             pStream >> isDefeated;
-            m_pBaseGameInput = BaseGameInputIF::deserializeInterface(pStream);
+            m_pBaseGameInput = BaseGameInputIF::deserializeInterface(pStream, version);
             if (m_pBaseGameInput.get() != nullptr)
             {
                 m_pBaseGameInput->setPlayer(this);

@@ -7,60 +7,63 @@ var Constructor = function()
         return true;
     };
 
-    this.victory = function()
+    this.victory = function(team)
     {
-        // called when a player wins
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("How's that, ape-man?!? Told you not to mess with me!"),
-                    "co_max", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("...Hah!"),
-                    "co_flak", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Hah? Don't hah me! You just got beaten!"),
-                    "co_max", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
-        var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("This was just a test. Next time is for real."),
-                    "co_flak", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog5 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Like I've never heard that before! I'm gonna make you regret ever showing your ugly mug around here!"),
-                    "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Max, or whatever you said your name was, you're mine! Before this is over, I'll crush you like a bug. So long."),
-                    "co_flak", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog7 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Wait! Wait, you dirtbag! Shoot! He got away!"),
-                    "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog8 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Black Hole... Deplorable characters. All of them."),
-                    "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog9 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("You said it!"),
-                    "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog10 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("By the way, there's something else I wanted to talk to you about. After the battle, you'll see some points and a rank displayed, right? The points you can use in Battle Maps to buy things from Hachi. I'll explain how to get high points."),
-                    "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog11 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("OK! I definitely want to win with the highest ranking possible."),
-                    "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog12 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr(" I thought as much! You know, battling for higher rankings is fun when you've got free time. First, let me tell you what the scores all mean... Speed is the length of time you take to complete the mission. Next, Power is the number of enemy units you destroy. Finally, Technique counts the number of units you lost. However, victory is your top priority. Doing silly things to earn more points is not acceptable!"),
-                    "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog13 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Points or no points, I'm always at full throttle! I won't stop! "),
-                    "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        dialog1.queueAnimation(dialog2);
-        dialog2.queueAnimation(dialog3);
-        dialog3.queueAnimation(dialog4);
-        dialog4.queueAnimation(dialog5);
-        dialog5.queueAnimation(dialog6);
-        dialog6.queueAnimation(dialog7);
-        dialog7.queueAnimation(dialog8);
-        dialog8.queueAnimation(dialog9);
-        dialog9.queueAnimation(dialog10);
-        dialog10.queueAnimation(dialog11);
-        dialog11.queueAnimation(dialog12);
-        dialog12.queueAnimation(dialog13);
+        if (team === 0)
+        {
+            // called when a player wins
+            var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("How's that, ape-man?!? Told you not to mess with me!"),
+                        "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("...Hah!"),
+                        "co_flak", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
+            var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Hah? Don't hah me! You just got beaten!"),
+                        "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("This was just a test. Next time is for real."),
+                        "co_flak", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
+            var dialog5 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Like I've never heard that before! I'm gonna make you regret ever showing your ugly mug around here!"),
+                        "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Max, or whatever you said your name was, you're mine! Before this is over, I'll crush you like a bug. So long."),
+                        "co_flak", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
+            var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Wait! Wait, you dirtbag! Shoot! He got away!"),
+                        "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog8 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Black Hole... Deplorable characters. All of them."),
+                        "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog9 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("You said it!"),
+                        "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog10 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("By the way, there's something else I wanted to talk to you about. After the battle, you'll see some points and a rank displayed, right? The points you can use in Battle Maps to buy things from Hachi. I'll explain how to get high points."),
+                        "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog11 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("OK! I definitely want to win with the highest ranking possible."),
+                        "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog12 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr(" I thought as much! You know, battling for higher rankings is fun when you've got free time. First, let me tell you what the scores all mean... Speed is the length of time you take to complete the mission. Next, Power is the number of enemy units you destroy. Finally, Technique counts the number of units you lost. However, victory is your top priority. Doing silly things to earn more points is not acceptable!"),
+                        "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog13 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Points or no points, I'm always at full throttle! I won't stop! "),
+                        "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            dialog1.queueAnimation(dialog2);
+            dialog2.queueAnimation(dialog3);
+            dialog3.queueAnimation(dialog4);
+            dialog4.queueAnimation(dialog5);
+            dialog5.queueAnimation(dialog6);
+            dialog6.queueAnimation(dialog7);
+            dialog7.queueAnimation(dialog8);
+            dialog8.queueAnimation(dialog9);
+            dialog9.queueAnimation(dialog10);
+            dialog10.queueAnimation(dialog11);
+            dialog11.queueAnimation(dialog12);
+            dialog12.queueAnimation(dialog13);
+        }
     };
     this.gameStart = function()
     {

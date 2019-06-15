@@ -72,6 +72,10 @@ Unit::~Unit()
                 pCO->setCOUnit(nullptr);
             }
         }
+        if (m_CORange.get() != nullptr)
+        {
+            m_CORange->removeChildren();
+        }
     }
 }
 

@@ -75,6 +75,7 @@ public slots:
     void checkVictory();
     void addVictoryRule(QString rule);
     void removeVictoryRule(QString rule);
+    VictoryRule* getVictoryRule(QString rule);
     /**
      * @brief addWeather
      * @param weatherId

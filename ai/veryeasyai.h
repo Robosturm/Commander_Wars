@@ -35,7 +35,7 @@ public:
      */
     virtual qint32 getVersion() override
     {
-        return 1;
+        return 2;
     }
 public slots:
     /**

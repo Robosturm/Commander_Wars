@@ -54,6 +54,19 @@ void GameRules::addVictoryRule(QString rule)
         m_VictoryRules.append(new VictoryRule(rule));
     }
 }
+
+VictoryRule* GameRules::getVictoryRule(QString rule)
+{
+    for (qint32 i = 0; i < m_VictoryRules.size(); i++)
+    {
+        if (m_VictoryRules[i]->getRuleID() == rule)
+        {
+            return m_VictoryRules[i].get();
+        }
+    }
+    return nullptr;
+}
+
 void GameRules::addVictoryRule(spVictoryRule rule)
 {
     bool found = false;

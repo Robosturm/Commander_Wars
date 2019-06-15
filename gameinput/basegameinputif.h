@@ -33,16 +33,27 @@ public:
     virtual void init() = 0;
 
     static void serializeInterface(QDataStream& pStream, BaseGameInputIF* input);
-    static BaseGameInputIF* deserializeInterface(QDataStream& pStream);
+
+    static BaseGameInputIF* deserializeInterface(QDataStream& pStream, qint32 version);
     AiTypes getAiType() const;
     static BaseGameInputIF* createAi(BaseGameInputIF::AiTypes type);
 signals:
 
 public slots:
-
+    /**
+     * @brief getEnableNeutralTerrainAttack
+     * @return
+     */
+    bool getEnableNeutralTerrainAttack() const;
+    /**
+     * @brief setEnableNeutralTerrainAttack
+     * @param value
+     */
+    void setEnableNeutralTerrainAttack(bool value);
 protected:
     Player* m_pPlayer{nullptr};
     AiTypes m_AiType{AiTypes::Human};
+    bool enableNeutralTerrainAttack{true};
 };
 
 #endif // BASEGAMEINPUTIF_H

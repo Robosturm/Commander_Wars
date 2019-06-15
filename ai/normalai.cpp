@@ -1973,9 +1973,17 @@ float NormalAi::calcCostScore(QVector<float>& data)
     return score;
 }
 
-void NormalAi::serializeObject(QDataStream&)
+void NormalAi::serializeObject(QDataStream& stream)
 {
+    stream << getVersion();
+    stream << enableNeutralTerrainAttack;
 }
-void NormalAi::deserializeObject(QDataStream&)
+void NormalAi::deserializeObject(QDataStream& stream)
 {
+    qint32 version;
+    stream >> version;
+    if (version > 1)
+    {
+        stream >> enableNeutralTerrainAttack;
+    }
 }

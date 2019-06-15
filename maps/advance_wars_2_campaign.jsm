@@ -15,6 +15,64 @@ var Constructor = function()
         return qsTr("Advance Wars 2 Normal Campaign");
     };
 
+    this.getBasicBuildList = function()
+    {
+        return ["APC", "ARTILLERY", "BATTLESHIP", "BOMBER", "CRUISER", "FIGHTER", "FLAK",
+                "HEAVY_TANK", "INFANTRY", "K_HELI", "LANDER", "LIGHT_TANK", "MECH",
+                "MISSILE", "RECON", "ROCKETTHROWER", "SUBMARINE", "T_HELI"]
+    }
+    this.getOSBuildList = function()
+    {
+        var ret = campaignScript.getBasicBuildList();
+         var campaignVariables = map.getCampaign().getVariables();
+        var osNeotanks = campaignVariables.createVariable("osNeotanks");
+        if (osNeotanks.readDataBool() === true)
+        {
+            ret.push("NEOTANK");
+        }
+        return ret;
+    }
+    this.getBMBuildList = function()
+    {
+        var ret = campaignScript.getBasicBuildList();
+        var campaignVariables = map.getCampaign().getVariables();
+        var bmNeotanks = campaignVariables.createVariable("bmNeotanks");
+        if (bmNeotanks.readDataBool() === true)
+        {
+            ret.push("NEOTANK");
+        }
+        return ret;
+    }
+    this.getYCBuildList = function()
+    {
+        var ret = campaignScript.getBasicBuildList();
+         var campaignVariables = map.getCampaign().getVariables();
+        var ycNeotanks = campaignVariables.createVariable("ycNeotanks");
+        if (ycNeotanks.readDataBool() === true)
+        {
+            ret.push("NEOTANK");
+        }
+        return ret;
+    }
+    this.getGEBuildList = function()
+    {
+        var ret = campaignScript.getBasicBuildList();
+         var campaignVariables = map.getCampaign().getVariables();
+        var geNeotanks = campaignVariables.createVariable("geNeotanks");
+        if (geNeotanks.readDataBool() === true)
+        {
+            ret.push("NEOTANK");
+        }
+        return ret;
+    }
+    this.getBHBuildList = function()
+    {
+        var ret = campaignScript.getBasicBuildList();
+        ret.push("NEOTANK");
+        return ret;
+    }
+
+
     this.getCurrentCampaignMaps = function(campaign)
     {
         // set campaign folder
@@ -48,37 +106,29 @@ var Constructor = function()
         {
             ret.push("Orange Dawn.map");
         }
-
         if (Orange_DawnWon.readDataBool() === true &&
             Flak_AttackWon.readDataBool() === false)
         {
-
+            ret.push("Flak Attack.map");
         }
-        ret.push("Flak Attack.map");
-
         if (Orange_DawnWon.readDataBool() === true &&
             Lash_OutWon.readDataBool() === false)
         {
-
+            ret.push("Lash Out.map");
         }
-        ret.push("Lash Out.map");
 
         if (Orange_DawnWon.readDataBool() === true &&
             Andy_s_TimeWon.readDataBool() === false)
         {
-
+            ret.push("Andy's Time.map");
         }
-        ret.push("Andy's Time.map");
-
         // check for os lab enable
         if (osLabFound.readDataBool() === true &&
             Test_of_TimeWon.readDataBool() === false &&
             LiberationWon.readDataBool() === false)
         {
-
+            ret.push("Test of Time.map");
         }
-        ret.push("Test of Time.map");
-
         // check for os factory map
         if (Flak_AttackWon.readDataBool() === true &&
             Lash_OutWon.readDataBool() === true &&
@@ -88,7 +138,6 @@ var Constructor = function()
 
         }
         ret.push("Liberation.map");
-
         return ret;
     };
 	

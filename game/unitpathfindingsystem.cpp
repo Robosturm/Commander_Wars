@@ -39,7 +39,7 @@ qint32 UnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint32 curren
     }
 }
 
-bool UnitPathFindingSystem::finished(qint32, qint32)
+bool UnitPathFindingSystem::finished(qint32, qint32, qint32)
 {
     return false;
 }

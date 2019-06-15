@@ -28,9 +28,10 @@ public:
      * @brief finished checks if this would be the target node to reach
      * @param x
      * @param y
+     * @param costs
      * @return
      */
-    virtual bool finished(qint32 x, qint32 y)  override;
+    virtual bool finished(qint32 x, qint32 y, qint32)  override;
     /**
      * @brief getCosts
      * @param x
@@ -56,7 +57,7 @@ public:
      */
     void setMovepoints(const qint32 &movepoints);
 
-private:
+protected:
     Unit* m_pUnit;
     qint32 m_Movepoints{-1};
 };

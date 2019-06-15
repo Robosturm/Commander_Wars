@@ -39,6 +39,8 @@ private:
     qint32 currentAction{0};
     QStringList m_ActionIDs;
     QVector<qint32> m_CostList;
+    qint32 createTopSprite(qint32 x, qint32 width);
+    qint32 createBottomSprite(qint32 x, qint32 y, qint32 width);
 };
 
 #endif // HUMANPLAYERINPUTMENU_H

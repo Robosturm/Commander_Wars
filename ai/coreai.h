@@ -70,6 +70,13 @@ public:
      * @return
      */
     static bool contains(QVector<QVector3D>& points, QPoint point);
+    /**
+     * @brief index
+     * @param points
+     * @param point
+     * @return
+     */
+    static qint32 index(QVector<QVector3D>& points, QPoint point);
 signals:
     /**
      * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
@@ -107,16 +114,7 @@ public slots:
      * @return
      */
     bool moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits);
-    /**
-     * @brief getEnableBuildingAttack
-     * @return
-     */
-    bool getEnableBuildingAttack() const;
-    /**
-     * @brief setEnableBuildingAttack
-     * @param value
-     */
-    void setEnableBuildingAttack(bool value);
+
     virtual void nextAction();
     /**
      * @brief calcUnitDamage
@@ -306,9 +304,6 @@ protected:
     TurnTime turnMode{TurnTime::startOfTurn};
 private:
     bool finish{false};
-    bool enableBuildingAttack{true};
-
-
 };
 
 #endif // COREAI_H

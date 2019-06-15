@@ -43,6 +43,7 @@
 
 
 #include "gameinput/cursordata.h"
+#include "gameinput/basegameinputif.h"
 
 #include "game/GameEnums.h"
 
@@ -147,6 +148,7 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<GameRecorder>("GameRecorder");
     qmlRegisterInterface<GameScript>("GameScript");
     qmlRegisterInterface<Campaign>("Campaign");
+    qmlRegisterInterface<BaseGameInputIF>("BaseGameInputIF");
     // load ressources
     BackgroundManager::getInstance();
     BuildingSpriteManager::getInstance();

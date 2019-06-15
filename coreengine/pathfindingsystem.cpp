@@ -31,6 +31,11 @@ void PathFindingSystem::setStartPoint(qint32 startX, qint32 startY)
     m_StartPoint = QPoint(startX, startY);
 }
 
+void PathFindingSystem::setFinishNode()
+{
+    m_FinishNode = m_ClosedList.size() - 1;
+}
+
 void PathFindingSystem::explore()
 {
     m_OpenList.append(new Node(m_StartPoint.x(), m_StartPoint.y(), 0, getRemainingCost(m_StartPoint.x(), m_StartPoint.y(), 0)));
@@ -41,9 +46,9 @@ void PathFindingSystem::explore()
         // move node to close list
         m_OpenList.removeLast();
         m_ClosedList.append(pCurrentNode);
-        if (finished(pCurrentNode->x, pCurrentNode->y))
+        if (finished(pCurrentNode->x, pCurrentNode->y, pCurrentNode->currentCost))
         {
-            m_FinishNode = m_ClosedList.size() - 1;
+            setFinishNode();
             break;
         }
         for (qint32 i = 0; i < 4; i++)
@@ -162,6 +167,10 @@ void PathFindingSystem::explore()
             }
         }
     }
+    if (m_FinishNode < 0)
+    {
+        setFinishNode();
+    }
 }
 
 QVector<QPoint> PathFindingSystem::getFields(qint32 startX, qint32 startY, qint32 min, qint32 max)
@@ -207,6 +216,18 @@ QVector<QPoint> PathFindingSystem::getTargetPath()
         return getPath(m_ClosedList[m_FinishNode]->x, m_ClosedList[m_FinishNode]->y);
     }
     return QVector<QPoint>();
+}
+
+qint32 PathFindingSystem::getNodeIndex(qint32 x, qint32 y)
+{
+    for (qint32 i = 0; i < m_ClosedList.size(); i++)
+    {
+        if ((m_ClosedList[i]->x == x) && (m_ClosedList[i]->y == y))
+        {
+            return i;
+        }
+    }
+    return -1;
 }
 
 QVector<QPoint> PathFindingSystem::getPath(qint32 x, qint32 y)

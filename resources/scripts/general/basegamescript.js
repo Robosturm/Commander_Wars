@@ -11,7 +11,7 @@ var BASEGAMESCRIPT =
         return qsTr("No additional Victory Conditions are active.");
     },
 
-    victory : function()
+    victory : function(team)
     {
         // called when a player wins
     },

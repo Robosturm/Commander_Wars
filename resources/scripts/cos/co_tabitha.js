@@ -155,7 +155,7 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Her co unit is very weak outside of that she gets no bonuses.");
+        return qsTr("Her co unit is strong weak outside of that she gets no bonuses.");
     };
     this.getPowerDescription = function()
     {

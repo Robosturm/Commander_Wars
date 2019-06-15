@@ -20,7 +20,11 @@ public:
      * @param y
      * @return
      */
-    virtual bool finished(qint32 x, qint32 y)  override;
+    virtual bool finished(qint32 x, qint32 y, qint32 costs)  override;
+    /**
+     * @brief setFinishNode
+     */
+    virtual void setFinishNode() override;
     /**
      * @brief getTargetPath gets the target path shortened by the movepoints of this unit
      * @param movepoints
@@ -29,6 +33,7 @@ public:
     QPoint getReachableTargetField(qint32 movepoints);
 private:
     QVector<QVector3D> m_Targets;
+    QVector<std::tuple<qint32, qint32, qint32, float>> m_FinishNodes;
 };
 
 #endif // TARGETEDUNITPATHFINDINGSYSTEM_H

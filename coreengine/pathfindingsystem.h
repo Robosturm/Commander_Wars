@@ -73,9 +73,10 @@ public:
      * @brief finished checks if this would be the target node to reach
      * @param x
      * @param y
+     * @param costs
      * @return
      */
-    virtual bool finished(qint32 x, qint32 y) = 0;
+    virtual bool finished(qint32 x, qint32 y, qint32 costs) = 0;
     /**
      * @brief getCosts
      * @param x
@@ -88,6 +89,17 @@ public:
      * This will also add the start point to the open list
      */
     void explore();
+    /**
+     * @brief setFinishNode
+     */
+    virtual void setFinishNode();
+    /**
+     * @brief getNodeIndex
+     * @param x
+     * @param y
+     * @return
+     */
+    qint32 getNodeIndex(qint32 x, qint32 y);
     /**
      * @brief get the Path to the given field as vector of qpoints. an empty vector means unreachable
      * @param x

@@ -20,7 +20,7 @@ qint32 TerrainFindingSystem::getRemainingCost(qint32, qint32, qint32)
     return 1;
 }
 
-bool TerrainFindingSystem::finished(qint32, qint32)
+bool TerrainFindingSystem::finished(qint32, qint32, qint32)
 {
     return false;
 }

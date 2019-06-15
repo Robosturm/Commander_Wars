@@ -22,7 +22,7 @@ public:
      * @param y
      * @return
      */
-    virtual bool finished(qint32 x, qint32 y);
+    virtual bool finished(qint32 x, qint32 y, qint32 costs);
     /**
      * @brief getCosts
      * @param x

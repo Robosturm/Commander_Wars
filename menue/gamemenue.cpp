@@ -351,9 +351,9 @@ void GameMenue::actionPerformed()
     m_IngameInfoBar->updateMinimap();
     m_IngameInfoBar->updatePlayerInfo();
     GameMap* pMap = GameMap::getInstance();
-    pMap->getGameRules()->checkVictory();
-    pMap->getGameRules()->createFogVision();
     pMap->getGameScript()->actionDone();
+    pMap->getGameRules()->checkVictory();
+    pMap->getGameRules()->createFogVision();    
     if (GameAnimationFactory::getAnimationCount() == 0)
     {
         Mainapp::setUseSeed(false);
@@ -411,6 +411,10 @@ void GameMenue::victory(qint32 team)
         if (GameAnimationFactory::getAnimationCount() == 0)
         {
             exit = true;
+        }
+        else
+        {
+            exit = false;
         }
     }
     if (exit)

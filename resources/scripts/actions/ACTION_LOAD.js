@@ -51,6 +51,7 @@ var Constructor = function()
     this.performPostAnimation = function(postAnimation)
     {
         ACTION_LOAD.postAnimationUnit.setHasMoved(true);
+        ACTION_LOAD.postAnimationUnit.setCapturePoints(0);
         ACTION_LOAD.postAnimationTargetUnit.loadUnit(ACTION_LOAD.postAnimationUnit);
         audio.playSound("load.wav");
         ACTION_LOAD.postAnimationUnit.removeUnit();

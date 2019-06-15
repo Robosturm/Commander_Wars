@@ -40,16 +40,10 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     width += GameMap::Imagesize + GameMap::Imagesize * 3 / 4 ;
 
     GameManager* pGameManager = GameManager::getInstance();
-    oxygine::spBox9Sprite pTopBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+top");
-    pTopBox->setResAnim(pAnim);
-    pTopBox->setSize(pAnim->getSize());
-    pTopBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    pTopBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-    pTopBox->setWidth(width);
-    this->addChild(pTopBox);
+    qint32 heigth = createTopSprite(0, width);
 
-    qint32 y = static_cast<qint32>(pAnim->getHeight());
+    qint32 y = heigth;
     startY = y;
     m_Cursor = new oxygine::Sprite();
     pAnim = pGameManager->getResAnim("cursor+menu");
@@ -64,8 +58,17 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     }
     m_Cursor->setPosition(width - m_Cursor->getScaledWidth() / 2, y + GameMap::Imagesize / 2 - m_Cursor->getScaledHeight() / 2);
     m_Cursor->setScale(GameMap::Imagesize / pAnim->getWidth());
+    qint32 x = 0;
+    qint32 itemCount = 10;
     for (qint32 i = 0; i < actionIDs.size(); i++)
     {
+        if (i > 0 && i % itemCount == 0)
+        {
+            createBottomSprite(x, y, width);
+            x += width;
+            y = startY;
+            createTopSprite(x, width);
+        }
         bool enabled = true;
         if (enabledList.size() > 0)
         {
@@ -86,7 +89,9 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
         pItemBox->addChild(icons[i]);
         icons[i]->setPosition(3, 0);
         pItemBox->setHeight(GameMap::Imagesize);
+
         pItemBox->setY(y);
+        pItemBox->setX(x);
         pItemBox->setWidth(width);
 
         // text for the item
@@ -113,6 +118,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
             Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
             pEvent->stopPropagation();
             m_Cursor->setY(y + GameMap::Imagesize / 2 - m_Cursor->getScaledHeight() / 2);
+            m_Cursor->setX(x + width);
             currentAction = i;
         });
         QString action = actionIDs[i];
@@ -133,8 +139,22 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
             });
         }
         y += pItemBox->getHeight();
-        itemHeigth = pItemBox->getHeight();
+        itemHeigth = static_cast<qint32>(pItemBox->getHeight());
     }
+    qint32 bottomHeigth = createBottomSprite(x, y, width);
+    this->addChild(m_Cursor);
+    this->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+    this->setHeight(y + bottomHeigth);
+    this->setWidth(width * (actionIDs.size() / itemCount + 1));
+    GameMenue* pGameMenue = GameMenue::getInstance();
+    connect(pGameMenue, &GameMenue::sigMouseMove, this, &HumanPlayerInputMenu::mouseMove, Qt::QueuedConnection);
+    mouseMove(0, 0);
+}
+
+qint32 HumanPlayerInputMenu::createBottomSprite(qint32 x, qint32 y, qint32 width)
+{
+    GameManager* pGameManager = GameManager::getInstance();
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+top");
     oxygine::spBox9Sprite pBottomBox = new oxygine::Box9Sprite();
     pAnim = pGameManager->getResAnim("menu+bottom");
     pBottomBox->setResAnim(pAnim);
@@ -143,14 +163,24 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     pBottomBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pBottomBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBottomBox->setY(y);
+    pBottomBox->setX(x);
     this->addChild(pBottomBox);
-    this->addChild(m_Cursor);
-    this->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
-    this->setHeight(y + pBottomBox->getHeight());
-    this->setWidth(width);
-    GameMenue* pGameMenue = GameMenue::getInstance();
-    connect(pGameMenue, &GameMenue::sigMouseMove, this, &HumanPlayerInputMenu::mouseMove, Qt::QueuedConnection);
-    mouseMove(0, 0);
+    return static_cast<qint32>(pBottomBox->getHeight());
+}
+
+qint32 HumanPlayerInputMenu::createTopSprite(qint32 x, qint32 width)
+{
+    GameManager* pGameManager = GameManager::getInstance();
+    oxygine::spBox9Sprite pTopBox = new oxygine::Box9Sprite();
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+top");
+    pTopBox->setResAnim(pAnim);
+    pTopBox->setSize(pAnim->getSize());
+    pTopBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    pTopBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    pTopBox->setWidth(width);
+    pTopBox->setX(x);
+    this->addChild(pTopBox);
+    return static_cast<qint32>(pTopBox->getHeight());
 }
 
 void HumanPlayerInputMenu::leftClick(qint32, qint32)
@@ -165,10 +195,18 @@ void HumanPlayerInputMenu::setMenuPosition(qint32 x, qint32 y)
     if (x + getWidth() + GameMap::Imagesize / 2 > pMap->getMapWidth() * GameMap::Imagesize)
     {
         x = pMap->getMapWidth() * GameMap::Imagesize - getWidth() - GameMap::Imagesize / 2;
+        if (x < 0)
+        {
+            x = 0;
+        }
     }
     if (y + getHeight() + GameMap::Imagesize / 2 > pMap->getMapHeight() * GameMap::Imagesize)
     {
         y = pMap->getMapHeight() * GameMap::Imagesize - getHeight() - GameMap::Imagesize / 2;
+        if (y < 0)
+        {
+            y = 0;
+        }
     }
     this->setPosition(x, y);
     mouseMove(0, 0);

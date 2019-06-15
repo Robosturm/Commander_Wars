@@ -25,12 +25,14 @@ void ProxyAi::connectInterface(NetworkInterface* pNetworkInterface)
     connect(pNetworkInterface, &NetworkInterface::recieveData, this, &ProxyAi::recieveData, Qt::QueuedConnection);
 }
 
-void ProxyAi::serializeObject(QDataStream& )
+void ProxyAi::serializeObject(QDataStream& stream)
 {
+    stream << getVersion();
 }
-
-void ProxyAi::deserializeObject(QDataStream&)
+void ProxyAi::deserializeObject(QDataStream& stream)
 {
+    qint32 version;
+    stream >> version;
 }
 
 void ProxyAi::recieveData(quint64, QByteArray data, NetworkInterface::NetworkSerives service)

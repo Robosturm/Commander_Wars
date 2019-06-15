@@ -99,6 +99,19 @@ bool CoreAI::contains(QVector<QVector3D>& points, QPoint point)
     return false;
 }
 
+qint32 CoreAI::index(QVector<QVector3D>& points, QPoint point)
+{
+    for (qint32 i = 0; i < points.size(); i++)
+    {
+        if (static_cast<qint32>(points[i].x()) == point.x() &&
+            static_cast<qint32>(points[i].y()) == point.y())
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
 bool CoreAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
 {
     QVector<float> data;
@@ -378,9 +391,14 @@ void CoreAI::getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVect
             }
             else
             {
-                ret.append(QVector4D(target.x(), target.y(), static_cast<float>(damage.x()) * buildingValue, damage.x()));
-                QPoint point = pAction->getActionTarget();
-                moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
+                if ((enableNeutralTerrainAttack && pTerrain->getHp() > 0) ||
+                    pTerrain->getBuilding()->getOwner() != nullptr ||
+                    (enableNeutralTerrainAttack && pTerrain->getBuilding()->getOwner() == nullptr))
+                {
+                    ret.append(QVector4D(target.x(), target.y(), static_cast<float>(damage.x()) * buildingValue, damage.x()));
+                    QPoint point = pAction->getActionTarget();
+                    moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
+                }
             }
         }
         delete pMarkedFieldData;
@@ -644,16 +662,6 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
             }
         }
     }
-}
-
-bool CoreAI::getEnableBuildingAttack() const
-{
-    return enableBuildingAttack;
-}
-
-void CoreAI::setEnableBuildingAttack(bool value)
-{
-    enableBuildingAttack = value;
 }
 
 void CoreAI::addMenuItemData(GameAction* pGameAction, QString itemID, qint32 cost)
@@ -1294,7 +1302,6 @@ bool CoreAI::useBuilding(QmlVectorBuilding* pBuildings)
             {
                 if (pAction->isFinalStep())
                 {
-
                     emit performAction(pAction);
                     return true;
                 }
@@ -1310,15 +1317,20 @@ bool CoreAI::useBuilding(QmlVectorBuilding* pBuildings)
                         for (qint32 i2 = 0; i2 < points->size(); i2++)
                         {
                             Unit* pUnit = pMap->getTerrain(points->at(i2).x(), points->at(i2).y())->getUnit();
-                            if (pUnit != nullptr && pUnit->getUnitValue() > maxValue)
+                            qint32 unitValue = pUnit->getUnitValue();
+                            if (pUnit != nullptr && unitValue > maxValue)
                             {
-                                maxValue = pUnit->getUnitValue();
+                                maxValue = unitValue;
                                 index = i2;
                             }
                         }
                         if (index < 0)
                         {
                             target = points->at(Mainapp::randInt(0, points->size() -1));
+                        }
+                        else
+                        {
+                            target = points->at(index);
                         }
                         delete pData;
 

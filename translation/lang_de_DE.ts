@@ -1773,7 +1773,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="83"/>
+        <location filename="../main.cpp" line="84"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2160,7 +2160,16 @@
         <location filename="../resources/scripts/general/Tagpower.js" line="158"/>
         <location filename="../resources/scripts/general/Tagpower.js" line="159"/>
         <location filename="../resources/scripts/general/Tagpower.js" line="162"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="165"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="172"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="176"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="177"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="178"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="179"/>
         <location filename="../resources/scripts/general/Tagpower.js" line="180"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="181"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="182"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="197"/>
         <source>Tagpower</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2441,8 +2450,52 @@
     </message>
     <message>
         <location filename="../resources/scripts/general/Tagpower.js" line="164"/>
-        <location filename="../resources/scripts/general/Tagpower.js" line="165"/>
         <source>Beta-Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="166"/>
+        <source>Science Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="167"/>
+        <source>Evil Sisters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="168"/>
+        <source>Free Sea and Air</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="169"/>
+        <source>Loyalty of Amber Corona</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="170"/>
+        <source>The helpers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="171"/>
+        <source>Friendship</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="173"/>
+        <source>Brother and Sister?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="174"/>
+        <source>New Leaders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="175"/>
+        <source>Noble Shot</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9013,7 +9066,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_tabitha.js" line="158"/>
-        <source>Her co unit is very weak outside of that she gets no bonuses.</source>
+        <source>Her co unit is strong weak outside of that she gets no bonuses.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

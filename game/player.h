@@ -45,15 +45,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 7;
-    }
-    /**
-     * @brief getBaseGameInput pointer to the ai or human player interface
-     * @return
-     */
-    inline BaseGameInputIF* getBaseGameInput()
-    {
-        return m_pBaseGameInput.get();
+        return 8;
     }
     /**
      * @brief setBaseGameInput sets the player input
@@ -74,6 +66,14 @@ public:
 signals:
 
 public slots:
+    /**
+     * @brief getBaseGameInput pointer to the ai or human player interface
+     * @return
+     */
+    inline BaseGameInputIF* getBaseGameInput()
+    {
+        return m_pBaseGameInput.get();
+    }
     /**
      * @brief getIsDefeated
      * @return

@@ -7,7 +7,7 @@ var Constructor = function()
         return true;
     };
 
-    this.victory = function()
+    this.victory = function(team)
     {
         // we could check if a human player has won the map but i'm lazy here ;)
         // called when a player wins

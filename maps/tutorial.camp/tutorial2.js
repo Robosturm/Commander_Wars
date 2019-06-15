@@ -7,7 +7,7 @@ var Constructor = function()
         return true;
     };
 
-    this.victory = function()
+    this.victory = function(team)
     {
         // called when a player wins
         var dialog1 = GameAnimationFactory.createGameAnimationDialog(

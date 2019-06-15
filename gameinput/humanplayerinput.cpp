@@ -184,7 +184,10 @@ void HumanPlayerInput::clearMenu()
     if (m_CurrentMenu.get() != nullptr)
     {
         GameMenue* pMenue = GameMenue::getInstance();
-        pMenue->setFocused(true);
+        if (pMenue != nullptr)
+        {
+            pMenue->setFocused(true);
+        }
         m_CurrentMenu->getParent()->removeChild(m_CurrentMenu);
         m_CurrentMenu = nullptr;
     }
@@ -1171,9 +1174,12 @@ void HumanPlayerInput::autoEndTurn()
     }
 }
 
-void HumanPlayerInput::serializeObject(QDataStream&)
+void HumanPlayerInput::serializeObject(QDataStream& stream)
 {
+    stream << getVersion();
 }
-void HumanPlayerInput::deserializeObject(QDataStream&)
+void HumanPlayerInput::deserializeObject(QDataStream& stream)
 {
+    qint32 version;
+    stream >> version;
 }

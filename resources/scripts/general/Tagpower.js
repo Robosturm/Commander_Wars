@@ -144,7 +144,7 @@ var TAGPOWER =
                          ["CO_MARY",     "CO_OZZY",     qsTr("Tagpower"),          5,      0],
                          ["CO_MARY",     "CO_NELL",     qsTr("Tagpower"),          -10,    0],
                          ["CO_MARY",     "CO_ANDY",     qsTr("Tagpower"),          -20,    0],
-                         ["CO_ALEXIS",   "CO_OZZY",     qsTr("Whole Lotta Love"),  10,     0],
+                         ["CO_ALEXIS",   "CO_OZZY",     qsTr("Whole Lotta Love"),  10,     1],
                          ["CO_ALEXIS",   "CO_MINA",     qsTr("Tagpower"),          5,      0],
                          ["CO_ALEXIS",   "CO_LASH",     qsTr("Tagpower"),          -10,    0],
                          ["CO_RATTIGAN", "CO_GRIMM",    qsTr("Cleaning House"),    10,     1],
