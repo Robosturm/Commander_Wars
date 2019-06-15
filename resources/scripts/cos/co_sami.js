@@ -151,7 +151,11 @@ var Constructor = function()
                 }
                 break;
         }
-        return -10;
+        if (attacker.getBaseMaxRange() === 1)
+        {
+            return -10;
+        }
+        return 0;
     };
     this.getCaptureBonus = function(co, unit, posX, posY)
     {

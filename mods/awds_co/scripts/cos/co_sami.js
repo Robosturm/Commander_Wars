@@ -26,7 +26,10 @@ CO_SAMI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             }
             break;
         }
-        return -10;
+        if (attacker.getBaseMaxRange() === 1)
+        {
+            return -10;
+        }
     }
     return 0;
 };

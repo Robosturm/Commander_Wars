@@ -2160,7 +2160,7 @@
         <location filename="../resources/scripts/general/Tagpower.js" line="158"/>
         <location filename="../resources/scripts/general/Tagpower.js" line="159"/>
         <location filename="../resources/scripts/general/Tagpower.js" line="162"/>
-        <location filename="../resources/scripts/general/Tagpower.js" line="177"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="180"/>
         <source>Tagpower</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2432,6 +2432,17 @@
     <message>
         <location filename="../resources/scripts/general/Tagpower.js" line="161"/>
         <source>Daredevil Business</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="163"/>
+        <source>Machine Invasion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="164"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="165"/>
+        <source>Beta-Version</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8167,102 +8178,102 @@
 <context>
     <name>co_sami</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="197"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="201"/>
         <source>A strong-willed Orange Star special forces captain who loves long hair. Despite having short hair. Whatever, IS.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="201"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="205"/>
         <source>Chocolate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="205"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="209"/>
         <source>Cowards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="209"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="213"/>
         <source>As an infantry specialist, her foot soldiers do more damage and capture faster. Non-infantry direct-combat units have weaker firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="213"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="217"/>
         <source>Infantry units receive a movement bonus of one space. Their attack also increases. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="217"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="221"/>
         <source>Double Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="225"/>
         <source>All foot soldiers&apos;s capturing rate is doubled. Their movement is increased by two spaces and their attack increases greatly. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="229"/>
         <source>Victory March</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="233"/>
         <source>You&apos;re not bad!  Now it&apos;s my turn!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="230"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="234"/>
         <source>All right!  Time to end this!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="231"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="235"/>
         <source>Infantry... Assault!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="236"/>
         <source>Ready or not, here I come!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="237"/>
         <source>All right, it&apos;s make-or-break time!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="238"/>
         <source>Move out, grunts!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="242"/>
         <source>Mission accomplished! Awaiting orders!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="239"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="243"/>
         <source>Commandos always complete their mission.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="244"/>
         <source>Score one for the grunts!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="248"/>
         <source>Things would be easier if we had more infantry units...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="249"/>
         <source>Next time&apos;s for real. I won&apos;t lose focus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="253"/>
         <source>Sami</source>
         <translation type="unfinished"></translation>
     </message>
