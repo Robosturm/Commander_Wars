@@ -265,7 +265,7 @@ var Constructor = function()
         dialog14.queueAnimation(dialog15);
         dialog15.queueAnimation(dialog16);        
         dialog16.queueAnimation(dialog17);
-    }
+    };
 
     this.initDialogBH = function()
     {
@@ -289,9 +289,8 @@ var Constructor = function()
         dialog2.queueAnimation(dialog3);
         dialog3.queueAnimation(dialog4);
         dialog4.queueAnimation(dialog5);
-    }
-
-}
+    };
+};
 
 Constructor.prototype = BASEGAMESCRIPT;
 var gameScript = new Constructor();

@@ -112,7 +112,7 @@ var Constructor = function()
         dialog2.queueAnimation(dialog3);
         dialog3.queueAnimation(dialog4);
         dialog4.queueAnimation(dialog5);
-    }
+    };
 
     this.captureDialog = function()
     {
@@ -143,7 +143,7 @@ var Constructor = function()
         dialog4.queueAnimation(dialog5);
         dialog5.queueAnimation(dialog6);
         dialog6.queueAnimation(dialog7);
-    }
+    };
 
     this.turnStart = function(turn, player)
     {
@@ -232,7 +232,7 @@ var Constructor = function()
         dialog13.queueAnimation(dialog14);
         dialog14.queueAnimation(dialog15);
         dialog15.queueAnimation(dialog16);
-    }
+    };
 
     this.turn2Dialog = function()
     {
@@ -264,8 +264,8 @@ var Constructor = function()
         dialog4.queueAnimation(dialog5);
         dialog5.queueAnimation(dialog6);
         dialog6.queueAnimation(dialog7);
-    }
-}
+    };
+};
 
 Constructor.prototype = BASEGAMESCRIPT;
 var gameScript = new Constructor();

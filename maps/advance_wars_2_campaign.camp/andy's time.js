@@ -299,7 +299,7 @@ var Constructor = function()
         dialog24.queueAnimation(dialog25);
         dialog25.queueAnimation(dialog26);
         dialog26.queueAnimation(dialog27);
-    }
+    };
 
     this.initBHDialog = function()
     {
@@ -319,7 +319,7 @@ var Constructor = function()
         dialog1.queueAnimation(dialog2);
         dialog2.queueAnimation(dialog3);
         dialog3.queueAnimation(dialog4);
-    }
+    };
 
     this.day2Dialog = function()
     {
@@ -331,7 +331,7 @@ var Constructor = function()
                     qsTr("Understood! "),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         dialog1.queueAnimation(dialog2);
-    }
+    };
 
     this.day3Dialog = function()
     {
@@ -351,9 +351,9 @@ var Constructor = function()
         dialog1.queueAnimation(dialog2);
         dialog2.queueAnimation(dialog3);
         dialog3.queueAnimation(dialog4);
-    }
+    };
 
-}
+};
 
 Constructor.prototype = BASEGAMESCRIPT;
 var gameScript = new Constructor();

@@ -195,7 +195,7 @@ void MapSelectionMapsMenue::slotButtonNext()
                 if (file.endsWith(".jsm"))
                 {
                     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
-                    if (dynamic_cast<Multiplayermenu*>(this) == nullptr)
+                    if (dynamic_cast<Multiplayermenu*>(this) != nullptr)
                     {
                         oxygine::getStage()->addChild(new CampaignMenu(m_pMapSelectionView->getCurrentCampaign(), true));
                     }

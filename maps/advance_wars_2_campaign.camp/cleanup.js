@@ -235,8 +235,8 @@ var Constructor = function()
         dialog21.queueAnimation(dialog22);
         dialog22.queueAnimation(dialog23);
         dialog23.queueAnimation(dialog24);
-    }
-}
+    };
+};
 
 Constructor.prototype = BASEGAMESCRIPT;
 var gameScript = new Constructor();

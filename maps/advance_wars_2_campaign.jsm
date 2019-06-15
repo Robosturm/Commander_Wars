@@ -135,9 +135,37 @@ var Constructor = function()
             Andy_s_TimeWon.readDataBool() === true &&
             LiberationWon.readDataBool() === false)
         {
+            ret.push("Liberation.map");
+        }
+        if (LiberationWon.readDataBool() === true)
+        {
+            // blue moon
+
+            var toyboxWon = variables.createVariable("Toy Box");
+            var reclamationWon = variables.createVariable("Reclamation");
+            var blueMoonCount = 0;
+            if (toyboxWon.readDataBool() === false)
+            {
+                ret.push("Toy Box.map");
+            }
+            else
+            {
+                blueMoonCount += 1;
+            }
+            if (reclamationWon.readDataBool() === false)
+            {
+                ret.push("Reclamation.map");
+            }
+            else
+            {
+                blueMoonCount += 1;
+            }
+
+
+            // yellow comet
 
         }
-        ret.push("Liberation.map");
+
         return ret;
     };
 	
@@ -156,6 +184,17 @@ var Constructor = function()
 
         // not all maps are won so you didn't won the campaign
         return false;
+    };
+
+    this.getSelectableCOs = function(campaign, map, player, coIndex)
+    {
+        if (map.getMapName() === "Liberation" && coIndex === 0)
+        {
+            return ["CO_ANDY", "CO_MAX", "CO_SAMI"];
+        }
+        // return the co's for a certain map a player [player] and the first or second co [coIndex]
+        // make no co selectable
+        return [""];
     };
 };
 

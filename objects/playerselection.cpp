@@ -141,19 +141,22 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
     {
         cos = m_pCampaign->getSelectableCOs(GameMap::getInstance(), player, co);
     }
-    spCOSelectionDialog dialog = new COSelectionDialog(coid, pMap->getPlayer(player)->getColor(), player, cos);
-    oxygine::getStage()->addChild(dialog);
-    m_pPlayerSelection->setVisible(false);
-    if (co == 0)
+    if (cos.size() == 0 ||
+        cos[0] != "")
     {
-        connect(dialog.get(), &COSelectionDialog::editFinished, this , &PlayerSelection::playerCO1Changed, Qt::QueuedConnection);
+        spCOSelectionDialog dialog = new COSelectionDialog(coid, pMap->getPlayer(player)->getColor(), player, cos);
+        oxygine::getStage()->addChild(dialog);
+        m_pPlayerSelection->setVisible(false);
+        if (co == 0)
+        {
+            connect(dialog.get(), &COSelectionDialog::editFinished, this , &PlayerSelection::playerCO1Changed, Qt::QueuedConnection);
+        }
+        else
+        {
+            connect(dialog.get(), &COSelectionDialog::editFinished, this , &PlayerSelection::playerCO2Changed, Qt::QueuedConnection);
+        }
+        connect(dialog.get(), &COSelectionDialog::canceled, this , &PlayerSelection::playerCOCanceled, Qt::QueuedConnection);
     }
-    else
-    {
-        connect(dialog.get(), &COSelectionDialog::editFinished, this , &PlayerSelection::playerCO2Changed, Qt::QueuedConnection);
-    }
-
-    connect(dialog.get(), &COSelectionDialog::canceled, this , &PlayerSelection::playerCOCanceled, Qt::QueuedConnection);
     pApp->continueThread();
 }
 

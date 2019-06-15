@@ -804,7 +804,7 @@ void CO::gainPowerstar(qint32 fondsDamage, QPoint position)
     if (!inCORange(position, nullptr))
     {
         // reduce power meter gain when not in co range
-        fondsDamage /= 4;
+        fondsDamage /= 2;
     }
     if (m_PowerMode == GameEnums::PowerMode_Off)
     {

@@ -221,7 +221,7 @@ var Constructor = function()
         dialog19.queueAnimation(dialog20);
         dialog20.queueAnimation(dialog21);
         dialog21.queueAnimation(dialog22);
-    }
+    };
 
     this.day2Dialog = function()
     {
@@ -245,7 +245,7 @@ var Constructor = function()
         dialog2.queueAnimation(dialog3);
         dialog3.queueAnimation(dialog4);
         dialog4.queueAnimation(dialog5);
-    }
+    };
 
     this.day3Dialog = function()
     {
@@ -257,9 +257,9 @@ var Constructor = function()
                     qsTr(" Understood! Couldn't do this without you, Sami! I'll try and hold up my end! "),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         dialog1.queueAnimation(dialog2);
-    }
+    };
 
-}
+};
 
 Constructor.prototype = BASEGAMESCRIPT;
 var gameScript = new Constructor();

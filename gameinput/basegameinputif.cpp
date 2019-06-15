@@ -67,7 +67,7 @@ BaseGameInputIF* BaseGameInputIF::deserializeInterface(QDataStream& pStream, qin
         qint32 typeInt;
         pStream >> typeInt;
         type = static_cast<AiTypes>(typeInt);
-        BaseGameInputIF* ret = createAi(type);
+        ret = createAi(type);
     }
     return ret;
 }

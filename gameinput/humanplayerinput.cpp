@@ -176,7 +176,10 @@ void HumanPlayerInput::cleanUpInput()
     clearMarkedFields();
     deleteArrow();
     GameMenue* pMenue = GameMenue::getInstance();
-    pMenue->getCursor()->changeCursor("cursor+default");
+    if (pMenue != nullptr)
+    {
+        pMenue->getCursor()->changeCursor("cursor+default");
+    }
 }
 
 void HumanPlayerInput::clearMenu()
