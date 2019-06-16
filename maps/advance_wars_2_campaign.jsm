@@ -292,7 +292,6 @@ var Constructor = function()
         }
 
         ret.push("Factory Blues.map");
-        ret.push("Sea of Hope.map");
         ret.push("The Hunt's End.map");
         // ge
         if (factoryBluesWon.readDataBool() === true &&
@@ -324,15 +323,64 @@ var Constructor = function()
 
     this.getSelectableCOs = function(campaign, map, player, coIndex)
     {
-        if (map.getMapName() === "Liberation" && coIndex === 0)
-        {
-            return ["CO_ANDY", "CO_MAX", "CO_SAMI"];
-        }
+        var variables = campaign.getVariables();
+        // bm labor
         if (map.getMapName() === "Neotanks?!" && coIndex === 0)
         {
             return ["CO_COLIN", "CO_OLAF", "CO_GRIT"];
         }
-        // return the co's for a certain map a player [player] and the first or second co [coIndex]
+        // yc labor
+        if (map.getMapName() === "Sea of Hope" && player === 0 && coIndex === 0)
+        {
+            return ["CO_KANBEI", "CO_SENSEI", "CO_SONJA"];
+        }
+
+        // os factory
+        if (map.getMapName() === "Liberation" && coIndex === 0)
+        {
+            return ["CO_ANDY", "CO_MAX", "CO_SAMI"];
+        }
+        // bm factory
+        if (map.getMapName() === "Factory Blues")
+        {
+            var theHuntsEndWon = variables.createVariable("The Hunt's End");
+            if (coIndex === 0 && player === 0)
+            {
+                return ["CO_COLIN", "CO_OLAF", "CO_GRIT"];
+            }
+            if ( coIndex === 0 && player === 1)
+            {
+                if (theHuntsEndWon.readDataBool() === true)
+                {
+                    return ["CO_ANDY", "CO_MAX", "CO_SAMI", "CO_KANBEI", "CO_SENSEI", "CO_SONJA"];
+                }
+                else
+                {
+                    return ["CO_ANDY", "CO_MAX", "CO_SAMI"];
+                }
+            }
+        }
+        // yc factory
+        if (map.getMapName() === "The Hunt's End")
+        {
+            var factoryBluesWon = variables.createVariable("Factory Blues");
+            if (coIndex === 0 && player === 0)
+            {
+                return ["CO_KANBEI", "CO_SENSEI", "CO_SONJA"];
+            }
+            if ( coIndex === 0 && player === 1)
+            {
+                if (factoryBluesWon.readDataBool() === true)
+                {
+                    return ["CO_ANDY", "CO_MAX", "CO_SAMI", "CO_COLIN", "CO_OLAF", "CO_GRIT"];
+                }
+                else
+                {
+                    return ["CO_ANDY", "CO_MAX", "CO_SAMI"];
+                }
+            }
+        }
+
         // make no co selectable
         return [""];
     };

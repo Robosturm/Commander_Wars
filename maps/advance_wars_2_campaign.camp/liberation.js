@@ -77,6 +77,7 @@ var Constructor = function()
         map.getGameRules().setNoPower(false); // no co power
         map.getGameRules().setRandomWeather(false); // no random weather
         map.getGameRules().setFogMode(GameEnums.Fog_Off); // no fog of war or GameEnums.Fog_OfWar -> for on
+        map.getGameRules().addVictoryRule("VICTORYRULE_NOHQ"); // win by capturing all hq's of a player
         var osList = campaignScript.getOSBuildList();
         map.getPlayer(0).setBuildList(osList);
         var bhList = campaignScript.getBHBuildList();

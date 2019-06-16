@@ -4,7 +4,12 @@ var Constructor = function()
     {
         // called to check if the game should start immediatly without changing rules or modifying co's
         // return true for an immediate start
-        return true;
+        return false;
+    };
+
+    this.getVictoryInfo = function()
+    {
+        return qsTr("Capture the enemy labor.");
     };
 
     this.victory = function(team)
@@ -13,28 +18,33 @@ var Constructor = function()
         {
             // called when a player wins
             var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("I-I don't believe it... They were... stronger than me? Must find a way... to escape... "),
-                        "co_flak", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
+                        qsTr("These are... the plans for the new weapon! With these, we should be able to produce that new tank design!"),
+                        "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
             var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("The enemy has been routed! "),
+                        qsTr("You risked a lot to come to our aid. You have our gratitude."),
                         "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
             var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("I'm sorry, Father. I almost destroyed us all. "),
-                        "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                        qsTr("No, thank YOU. You helped me out of a jam. It's time for me to return to Orange Star, but we'll meet again."),
+                        "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
             var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("What, your silos? Don't be ridiculous, Sonja. It is because of those silos that we won here today. "),
-                        "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                        qsTr("Left without offering a name... Is that what passes for manners these days?"),
+                        "co_sensei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
             var dialog5 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Father... "),
-                        "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-            var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("There's no rest for the weary! Battle awaits, and we must ride forth to meet it! "),
+                        qsTr("Don't worry, I'm sure we'll be meeting again."),
                         "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+            var dialog6 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("My thoughts exactly. We'll be meeting again."),
+                        "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
             dialog1.queueAnimation(dialog2);
             dialog2.queueAnimation(dialog3);
             dialog3.queueAnimation(dialog4);
             dialog4.queueAnimation(dialog5);
             dialog5.queueAnimation(dialog6);
+
+            // store neo tank data
+            var campaignVariables = map.getCampaign().getVariables();
+            var ycNeotanks = campaignVariables.createVariable("ycNeotanks");
+            ycNeotanks.writeDataBool(true);
         }
     };
     this.gameStart = function()
@@ -48,6 +58,9 @@ var Constructor = function()
         // here we decide how you can win the game
         map.getGameRules().addVictoryRule("VICTORYRULE_NOUNITS"); // win by destroying all units
         map.getGameRules().addVictoryRule("VICTORYRULE_NOHQ"); // win by capturing all hq's of a player
+        map.getGameRules().addVictoryRule("VICTORYRULE_TURNLIMIT");
+        var turnLimit = map.getGameRules().getVictoryRule("VICTORYRULE_TURNLIMIT"); // loose if the turn limit is gone
+        turnLimit.setRuleValue(18);
         var ycList = campaignScript.getYCBuildList();
         map.getPlayer(0).setBuildList(ycList);
         var bhList = campaignScript.getBHBuildList();
@@ -55,7 +68,11 @@ var Constructor = function()
     };
     this.actionDone = function()
     {
-
+        var labor = map.getTerrain(7, 2).getBuilding();
+        if (labor.getOwner().getPlayerID() === 0)
+        {
+            map.getPlayer(2).setIsDefeated(true);
+        }
     };
 
     this.turnStart = function(turn, player)
@@ -70,40 +87,29 @@ var Constructor = function()
     {
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("What are the conditions in this region, Sonja? Eh? What's that? Danger! Sound the alarm! "),
-                    "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Oh, Father, calm down! That's no danger to us. Those are the missile silos we installed for our protection. With those, our country's self-defense network is perfect! "),
+                    qsTr("If my intel is accurate, they're working on a new type of tank in there. Calculating from Adder's skill and the speed of our advance... I estimate we have 18 days to capture the lab or rout our foe. If we can do that, we might be able to get our hands on the weapon specs."),
                     "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+                    qsTr("I see... We've no time to tarry then. Hm? It looks like the battle's started without us."),
+                    "co_sensei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Mmmm... Attacking from afar is not my liking, but at times, it's unavoidable. While we await the enemy, instruct me in the use of these... silos. "),
+                    qsTr("What? Who in the world could it be?"),
                     "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Commander! We're under attack! "),
-                    "co_officier_yc", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    qsTr("It's Black Hole on one side, but who are they fighting?"),
+                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         var dialog5 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("What? The enemy is here?! "),
-                    "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    qsTr("My enemy's enemy is my ally... Or something like that."),
+                    "co_sensei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Impossible! It can't be! My intel reported no enemy troops in this region... The silos! They're unguarded! The enemy is trying to take them! "),
-                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    qsTr("Prepare to advance! We must not be late!"),
+                    "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         var dialog7 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Don't worry, Sonja. I will go. "),
-                    "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    qsTr("This is the location of Black Hole's secret lab. We have to get this information to Yellow Comet."),
+                    "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         var dialog8 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("But... But... What if the enemy reaches them first? You'll be..."),
-                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-
-
-        var dialog9 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("I am the leader of this country. I shall not fail in my duty. Move out! Kanbei's forces ride! "),
-                    "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog10 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Father! Listen! The missile silos can only be operated by infantry or mech units. If you reach them first, you'll be able to launch a single missile! "),
-                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog11 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("I understand. Do not fear, my loyal subjects. Kanbei rides with you! "),
-                    "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    qsTr("Those troops... They don't appear to be the enemy's. Combining our resources just may give us a chance."),
+                    "co_sensei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         dialog1.queueAnimation(dialog2);
         dialog2.queueAnimation(dialog3);
         dialog3.queueAnimation(dialog4);
@@ -111,9 +117,6 @@ var Constructor = function()
         dialog5.queueAnimation(dialog6);
         dialog6.queueAnimation(dialog7);
         dialog7.queueAnimation(dialog8);
-        dialog8.queueAnimation(dialog9);
-        dialog9.queueAnimation(dialog10);
-        dialog10.queueAnimation(dialog11);
     };
 };
 
