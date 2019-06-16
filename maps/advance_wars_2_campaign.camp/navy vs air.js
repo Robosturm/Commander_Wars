@@ -7,43 +7,47 @@ var Constructor = function()
         return true;
     };
 
-    this.getVictoryInfo = function()
-    {
-        return qsTr("You loose if a unit reaches your HQ.");
-    };
-
     this.victory = function(team)
     {
         if (team === 0)
         {
             // called when a player wins
             var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr(" I think that answers that question. "),
-                        "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                        qsTr("Naval units repelling a superior air force? Quite a feat. It seems I underestimated my opponent. This war's far from over, though. The only battle I have to win is the final one."),
+                        "co_hawke", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
             var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Aaaah... I lost. Oh well, I still have plenty of pieces to play with. "),
-                        "co_lash", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
+                        qsTr("The enemy is retreating on all fronts."),
+                        "co_officier_ge", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
             var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr(" P-Pieces?! I can't believe you said that! This isn't a game! You're not on some kind of playground! "),
-                        "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));            
+                        qsTr("It looks like we won. Somehow..."),
+                        "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
             var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Oh, but it IS a game. A wonderfully fun game between you and me! I know you feel the same way. Come on, you can tell me. "),
-                        "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
+                        qsTr("So I'm here for no reason, eh?"),
+                        "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
             var dialog5 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Don't... Don't be silly... I'm... nothing like you, Lash."),
-                        "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                        qsTr("Eagle! You came to lend a hand!"),
+                        "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
             var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("You're exactly like me. You and I. We're the same. You're always thinking about it, right? Which move will bring victory? You enjoy war like a good game of chess. "),
-                        "co_Lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
+                        qsTr("I heard the enemy was mainly air units. I left the front under the command of the subcommander, but it looks like I worried for nothing."),
+                        "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
             var dialog7 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("......"),
-                        "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                        qsTr("I got lucky."),
+                        "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
             var dialog8 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("We're not different at all, Sonja. You'll feel it someday, the joy that war brings. Wait... You feel it now, don't you? Oh, Sonja! Tee hee hee! Toodles! "),
-                        "co_Lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
+                        qsTr("It was more than luck."),
+                        "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
             var dialog9 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Wait! Hold it! Am I really... like you? I won't become you, Lash. I can't... "),
-                        "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                        qsTr("How so?"),
+                        "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
+            var dialog10 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Drake, you're a gifted tactician. You should give yourself more credit. You do realize you defeated an army comprising mainly air units, right?"),
+                        "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
+            var dialog11 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("It's nothing you or Jess couldn't have done. I'm not so..."),
+                        "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
+            var dialog12 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Perhaps it's your humility that people find so appealing..."),
+                        "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
             dialog1.queueAnimation(dialog2);
             dialog2.queueAnimation(dialog3);
             dialog3.queueAnimation(dialog4);
@@ -60,23 +64,18 @@ var Constructor = function()
         //we're going to set the game rules here.
         map.getGameRules().setNoPower(false); // co power on
         map.getGameRules().setRandomWeather(false); // no random weather
-        map.getGameRules().setFogMode(GameEnums.Fog_OfWar); // no fog of war or GameEnums.Fog_OfWar -> for on
+        map.getGameRules().setFogMode(GameEnums.Fog_Off); // no fog of war or GameEnums.Fog_OfWar -> for on
         // map.getGameRules().changeWeatherChance("WEATHER_1SUN", 90); // sets the weather chance of sun to 90. The actual chance is the the value divided through the sum of all chances
         // here we decide how you can win the game
         map.getGameRules().addVictoryRule("VICTORYRULE_NOUNITS"); // win by destroying all units
         map.getGameRules().addVictoryRule("VICTORYRULE_NOHQ"); // win by capturing all hq's of a player
-        var ycList = campaignScript.getYCBuildList();
-        map.getPlayer(0).setBuildList(ycList);
+        var geList = campaignScript.getGEBuildList();
+        map.getPlayer(0).setBuildList(geList);
         var bhList = campaignScript.getBHBuildList();
         map.getPlayer(1).setBuildList(bhList);
     };
     this.actionDone = function()
     {
-        var unit = map.getTerrain(12, 1).getUnit();
-        if (unit !== null && unit.getOwner().getPlayerID() === 1)
-        {
-            map.getPlayer(0).setIsDefeated(true);
-        }
     };
 
     this.turnStart = function(turn, player)
@@ -91,68 +90,56 @@ var Constructor = function()
     {
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Hm? Where is my foe? What is this? There is no enemy in sight. Sonja, what's the meaning of this? "),
-                    "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    qsTr("Lash, is the airport completed?"),
+                    "co_hawke", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("You're right, Father. There's no one here... This is an important piece of the puzzle, though. The enemy must be targeting this area. "),
-                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    qsTr("Yep! I built it to your specs, but... "),
+                    "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("If they're here, Sonja, show me where they're hiding. If there is no enemy, there can be no battle. We must move ahead to the next battlefield. "),
-                    "co_sensei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    qsTr("But what? "),
+                    "co_hawke", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("I suppose you're right, and yet, something seems strange... "),
-                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    qsTr("Are you sure you want a standard airport? Lemme add some options! "),
+                    "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog5 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr(" I've no time for your stubbornness! Come, Sonja! We must go! "),
-                    "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    qsTr("Options? What are you talking about? "),
+                    "co_hawke", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Hmmm... Yes, Father. I understand. "),
-                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    qsTr("You know, all kinds of stuff. Like a self-destruct system. "),
+                    "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog7 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Just as I thought. Not a soul in sight. Does no one in Yellow Comet have a brain? Oh well, I guess I'll just march right in and capture their HQ. "),
-                    "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
+                    qsTr("Not necessary. "),
+                    "co_hawke", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog8 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Took your time getting here, didn't you? "),
-                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    qsTr("Tsk! Boooooring! "),
+                    "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog9 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Who? Sonja!? You're not supposed to be here! I was told your army had moved on! "),
-                    "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
+                    qsTr("If it's ready, I'd like to use it now. The enemy is close at hand. "),
+                    "co_hawke", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog10 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Sorry to disappoint you. That intel came from me, actually. It was false. It took some doing to get my father and Sensei to agree to this plan, but... I was beginning to wonder if you would take the bait. "),
-                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    qsTr("Go ahead, be my guest. "),
+                    "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog11 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Wait a minute... Are you saying that YOU trapped ME? "),
-                    "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
+                    qsTr("The enemy's built an airport? "),
+                    "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog12 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Surrender. There are rockets on both sides of you, and artillery waits ahead. If you try to get to our HQ, you'll be wiped out. "),
-                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    qsTr("They'll finish it shortly, sir. "),
+                    "co_officier_ge", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog13 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("I wonder... "),
-                    "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
+                    qsTr("You didn't notice this earlier? "),
+                    "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog14 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Huh? "),
-                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    qsTr("They must have hidden it somehow. Plus, they built it in such a short amount of time. Amazing speed. "),
+                    "co_officier_ge", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog15 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("It's not like you're a combat specialist or anything, right? I really wonder if you can take me. "),
-                    "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
+                    qsTr("I see... Thanks for the intel. Good work. "),
+                    "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog16 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("......"),
-                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                    qsTr("Yes, sir. Thank you, sir. "),
+                    "co_officier_ge", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog17 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr(" I have a pretty big army here. If I keep marching, I think I'll take your HQ and win. Don't you agree? "),
-                    "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog18 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr(" Impossible. My calculations are not wrong. Your army will be destroyed before you even touch our HQ."),
-                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog19 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("I think I can make it. Care to bet on it? "),
-                    "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog20 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("If you really want to try, who's going to stop you? Oh, that's right. I am. How's this? If even one of your units gets to our HQ, you win. Let's determine which of us has the better grasp on reality. "),
-                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
-        var dialog21 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Yay! A game! A game! Tee hee hee! "),
-                    "co_lash", GameEnums.COMood_Happy, PLAYER.getDefaultColor(4));
+                    qsTr("They must've realized I'm the only one who can sail these waters. Planes vs. boats... Air units do have powerful advantages, but... I'm not sunk yet! This sea dog's got a few tricks up his sleeve! "),
+                    "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         dialog1.queueAnimation(dialog2);
         dialog2.queueAnimation(dialog3);
         dialog3.queueAnimation(dialog4);
@@ -169,10 +156,6 @@ var Constructor = function()
         dialog14.queueAnimation(dialog15);
         dialog15.queueAnimation(dialog16);
         dialog16.queueAnimation(dialog17);
-        dialog17.queueAnimation(dialog18);
-        dialog18.queueAnimation(dialog19);
-        dialog19.queueAnimation(dialog20);
-        dialog20.queueAnimation(dialog21);
     };
 };
 
