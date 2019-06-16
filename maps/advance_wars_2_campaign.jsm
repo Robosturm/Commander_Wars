@@ -137,6 +137,7 @@ var Constructor = function()
         {
             ret.push("Liberation.map");
         }
+        var factoryBluesWon = variables.createVariable("Factory Blues");
         if (LiberationWon.readDataBool() === true)
         {
             // blue moon
@@ -147,76 +148,81 @@ var Constructor = function()
             var twoWeekTestWon = variables.createVariable("Two Week Test");
             var tminus15Won = variables.createVariable("T Minus 15");
             var neotanksWon = variables.createVariable("Neotanks?!");
-
-            var bmLabFound = variables.createVariable("bmLabFound");
-            var blueMoonCount = 0;
-            if (toyboxWon.readDataBool() === false)
+            if (factoryBluesWon.readDataBool() === false)
             {
-                ret.push("Toy Box.map");
-            }
-            else
-            {
-                blueMoonCount += 1;
-            }
-            if (reclamationWon.readDataBool() === false)
-            {
-                ret.push("Reclamation.map");
-            }
-            else
-            {
-                blueMoonCount += 1;
-            }
-            if (tanksWon.readDataBool() === false)
-            {
-                ret.push("Tanks!!!.map");
-            }
-            else
-            {
-                blueMoonCount += 1;
-            }
-            if (blueMoonCount >= 2)
-            {
-                // enable the last three missions
-                if (natureWalkWon.readDataBool() === false)
+                var bmLabFound = variables.createVariable("bmLabFound");
+                var blueMoonCount = 0;
+                if (toyboxWon.readDataBool() === false)
                 {
-                    ret.push("Nature Walk.map");
+                    ret.push("Toy Box.map");
                 }
                 else
                 {
                     blueMoonCount += 1;
                 }
-                if (twoWeekTestWon.readDataBool() === false)
+                if (reclamationWon.readDataBool() === false)
                 {
-                    ret.push("Two Week Test.map");
+                    ret.push("Reclamation.map");
                 }
                 else
                 {
                     blueMoonCount += 1;
                 }
-                if (tminus15Won.readDataBool() === false)
+                if (tanksWon.readDataBool() === false)
                 {
-                    ret.push("T Minus 15.map");
+                    ret.push("Tanks!!!.map");
                 }
                 else
                 {
                     blueMoonCount += 1;
                 }
+                if (blueMoonCount >= 2)
+                {
+                    // enable the last three missions
+                    if (natureWalkWon.readDataBool() === false)
+                    {
+                        ret.push("Nature Walk.map");
+                    }
+                    else
+                    {
+                        blueMoonCount += 1;
+                    }
+                    if (twoWeekTestWon.readDataBool() === false)
+                    {
+                        ret.push("Two Week Test.map");
+                    }
+                    else
+                    {
+                        blueMoonCount += 1;
+                    }
+                    if (tminus15Won.readDataBool() === false)
+                    {
+                        ret.push("T Minus 15.map");
+                    }
+                    else
+                    {
+                        blueMoonCount += 1;
+                    }
+                }
+                if (bmLabFound.readDataBool() === true &&
+                        neotanksWon.readDataBool() === false)
+                {
+                    ret.push("Neotanks?!.map");
+                }
+                if (blueMoonCount >= 4)
+                {
+                    // enable factory mission
+                    ret.push("Factory Blues.map");
+                }
             }
-            if (bmLabFound.readDataBool() === true &&
-                neotanksWon.readDataBool() === false)
-            {
-                ret.push("Neotanks?!.map");
-            }
-
-            if (blueMoonCount >= 4)
-            {
-                // enable factory mission
-            }
-
             // yellow comet
 
         }
-        ret.push("Neotanks?!.map");
+        ret.push("Factory Blues.map");
+
+        // ge
+
+        // bh
 
         return ret;
     };
