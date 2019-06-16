@@ -143,6 +143,12 @@ var Constructor = function()
             var toyboxWon = variables.createVariable("Toy Box");
             var reclamationWon = variables.createVariable("Reclamation");
             var tanksWon = variables.createVariable("Tanks!!!");
+            var natureWalkWon = variables.createVariable("Nature Walk");
+            var twoWeekTestWon = variables.createVariable("Two Week Test");
+            var tminus15Won = variables.createVariable("T Minus 15");
+            var neotanksWon = variables.createVariable("Neotanks?!");
+
+            var bmLabFound = variables.createVariable("bmLabFound");
             var blueMoonCount = 0;
             if (toyboxWon.readDataBool() === false)
             {
@@ -171,8 +177,37 @@ var Constructor = function()
             if (blueMoonCount >= 2)
             {
                 // enable the last three missions
-
+                if (natureWalkWon.readDataBool() === false)
+                {
+                    ret.push("Nature Walk.map");
+                }
+                else
+                {
+                    blueMoonCount += 1;
+                }
+                if (twoWeekTestWon.readDataBool() === false)
+                {
+                    ret.push("Two Week Test.map");
+                }
+                else
+                {
+                    blueMoonCount += 1;
+                }
+                if (tminus15Won.readDataBool() === false)
+                {
+                    ret.push("T Minus 15.map");
+                }
+                else
+                {
+                    blueMoonCount += 1;
+                }
             }
+            if (bmLabFound.readDataBool() === true &&
+                neotanksWon.readDataBool() === false)
+            {
+                ret.push("Neotanks?!.map");
+            }
+
             if (blueMoonCount >= 4)
             {
                 // enable factory mission
@@ -181,6 +216,7 @@ var Constructor = function()
             // yellow comet
 
         }
+        ret.push("Neotanks?!.map");
 
         return ret;
     };
@@ -207,6 +243,10 @@ var Constructor = function()
         if (map.getMapName() === "Liberation" && coIndex === 0)
         {
             return ["CO_ANDY", "CO_MAX", "CO_SAMI"];
+        }
+        if (map.getMapName() === "Neotanks?!" && coIndex === 0)
+        {
+            return ["CO_COLIN", "CO_OLAF", "CO_GRIT"];
         }
         // return the co's for a certain map a player [player] and the first or second co [coIndex]
         // make no co selectable

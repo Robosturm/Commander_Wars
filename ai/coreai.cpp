@@ -291,25 +291,30 @@ void CoreAI::getBestAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<Q
             }
             else
             {
-                if (ret.size() == 0)
+                if ((enableNeutralTerrainAttack && pTerrain->getHp() > 0) ||
+                    (pTerrain->getBuilding() != nullptr && pTerrain->getBuilding()->getOwner() != nullptr) ||
+                    (enableNeutralTerrainAttack && pTerrain->getBuilding() != nullptr && pTerrain->getBuilding()->getOwner() == nullptr))
                 {
-                    ret.append(QVector3D(target.x(), target.y(), static_cast<float>(damage.x()) * buildingValue));
-                    QPoint point = pAction->getActionTarget();
-                    moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
-                }
-                else if (ret[0].z() == static_cast<float>(damage.x()) * buildingValue)
-                {
-                    ret.append(QVector3D(target.x(), target.y(), static_cast<float>(damage.x()) * buildingValue));
-                    QPoint point = pAction->getActionTarget();
-                    moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
-                }
-                else if (static_cast<float>(damage.x()) > ret[0].z())
-                {
-                    ret.clear();
-                    moveTargetFields.clear();
-                    ret.append(QVector3D(target.x(), target.y(), static_cast<float>(damage.x()) * buildingValue));
-                    QPoint point = pAction->getActionTarget();
-                    moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
+                    if (ret.size() == 0)
+                    {
+                        ret.append(QVector3D(target.x(), target.y(), static_cast<float>(damage.x()) * buildingValue));
+                        QPoint point = pAction->getActionTarget();
+                        moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
+                    }
+                    else if (ret[0].z() == static_cast<float>(damage.x()) * buildingValue)
+                    {
+                        ret.append(QVector3D(target.x(), target.y(), static_cast<float>(damage.x()) * buildingValue));
+                        QPoint point = pAction->getActionTarget();
+                        moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
+                    }
+                    else if (static_cast<float>(damage.x()) > ret[0].z())
+                    {
+                        ret.clear();
+                        moveTargetFields.clear();
+                        ret.append(QVector3D(target.x(), target.y(), static_cast<float>(damage.x()) * buildingValue));
+                        QPoint point = pAction->getActionTarget();
+                        moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
+                    }
                 }
             }
         }

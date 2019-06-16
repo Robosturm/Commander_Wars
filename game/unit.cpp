@@ -152,7 +152,7 @@ void Unit::loadSprite(QString spriteID, bool addPlayerColor)
         this->addChild(pSprite);
         m_pUnitSprites.append(pSprite);
 
-        oxygine::Sprite::TweenColor tweenColor(oxygine::Color(100, 100, 100, 100));
+        oxygine::Sprite::TweenColor tweenColor(oxygine::Color(100, 100, 100, 170));
         oxygine::spTween tweenWait = oxygine::createTween(tweenColor, 1);
         pWaitSprite->addTween(tweenWait);
         pWaitSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
