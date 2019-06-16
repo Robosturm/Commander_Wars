@@ -108,25 +108,26 @@ var Constructor = function()
         return 3;
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender)
     {
-        if (map.onMap(atkPosX, atkPosY))
+        switch (co.getPowerMode())
         {
-            var terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
-            switch (co.getPowerMode())
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            var terrainDefense = 0;
+            if (map.onMap(atkPosX, atkPosY))
             {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
-                    return terrainDefense * 10;
-                case GameEnums.PowerMode_Power:
-                    return 0;
-                default:
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                    {
-                        return 0;
-                    }
-                    break;
+                terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
             }
+            return terrainDefense * 10 + 10;
+        case GameEnums.PowerMode_Power:
+            return 10;
+        default:
+            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                return 10;
+            }
+            break;
         }
         return 0;
     };
@@ -176,31 +177,31 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
                 {
-                    return 60
+                    return 65;
                 }
                 else
                 {
-                    return 40;
+                    return 45;
                 }
             case GameEnums.PowerMode_Power:
                 if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
                 {
-                    return 40
+                    return 45;
                 }
                 else
                 {
-                    return 20;
+                    return 25;
                 }
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
                     if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
                     {
-                        return 40
+                        return 45;
                     }
                     else
                     {
-                        return 20;
+                        return 25;
                     }
                 }
                 break;

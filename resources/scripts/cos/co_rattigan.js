@@ -145,20 +145,23 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 if (count > 0)
                 {
-                    return 40 + count * 5;
+                    return 40 + count * 5 + 10;
                 }
-                return 0;
+                return 10;
             case GameEnums.PowerMode_Power:
                 if (count > 0)
                 {
-                    return 20 + count * 5;
+                    return 20 + count * 5 + 10;
                 }
-                return 0;
+                return 10;
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) &&
-                    count > 0)
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 25;
+                    if (count > 0)
+                    {
+                        return 30;
+                    }
+                    return 0;
                 }
                 break;
         }
@@ -182,12 +185,16 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 if (count > 0)
                 {
-                    return 20;
+                    return 30;
                 }
-                return 0;
+                return 10;
             case GameEnums.PowerMode_Power:
-                return 0;
+                return 10;
             default:
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                {
+                    return 10;
+                }
                 break;
         }
         return 0;

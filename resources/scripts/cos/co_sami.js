@@ -132,22 +132,39 @@ var Constructor = function()
                 if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
                 {
                     return 80;
+                }                
+                else if (attacker.getBaseMaxRange() === 1)
+                {
+                    return 0;
                 }
-                break;
+                return 10;
             case GameEnums.PowerMode_Power:
                 if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
                 {
                     return 50;
                 }
-                break;
-            default:
-                if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
+
+                else if (attacker.getBaseMaxRange() === 1)
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    return 0;
+                }
+                return 10;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
                     {
                         return 40;
                     }
-                    return 5;
+                    else if (attacker.getBaseMaxRange() === 1)
+                    {
+                        return 0;
+                    }
+                    return 10;
+                }
+                if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
+                {
+                    return 10;
                 }
                 break;
         }
@@ -157,6 +174,16 @@ var Constructor = function()
         }
         return 0;
     };
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                           defender, defPosX, defPosY, isDefender)
+        {
+            if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                    co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return 10;
+            }
+            return 0;
+        };
     this.getCaptureBonus = function(co, unit, posX, posY)
     {
         if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||

@@ -42,5 +42,25 @@ CO_HACHI.getAdditionalBuildingActions = function(co, building)
 CO_HACHI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                       defender, defPosX, defPosY, isDefender)
 {
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+    }
+    return 0;
+};
+
+CO_HACHI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+    }
     return 0;
 };

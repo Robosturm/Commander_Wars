@@ -17,7 +17,11 @@ CO_SENSEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 80;
             }
-            break;
+            else if (seaUnitIDs.indexOf(attacker.getUnitID()) >= 0)
+            {
+                return 0;
+            }
+            return 10;
         case GameEnums.PowerMode_Power:
             if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
             {
@@ -27,7 +31,11 @@ CO_SENSEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 80;
             }
-            break;
+            else if (seaUnitIDs.indexOf(attacker.getUnitID()) >= 0)
+            {
+                return 0;
+            }
+            return 10;
         default:
             if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
             {
@@ -46,7 +54,18 @@ CO_SENSEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
-
+CO_SENSEI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+    }
+    return 0;
+};
 CO_SENSEI.getMovementpointModifier = function(co, unit, posX, posY)
 {
     if (co.getIsCO0() === true)

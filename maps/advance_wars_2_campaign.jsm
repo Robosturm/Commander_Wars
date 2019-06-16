@@ -181,7 +181,6 @@ var Constructor = function()
             // yellow comet
 
         }
-        ret.push("Tanks!!!.map");
 
         return ret;
     };

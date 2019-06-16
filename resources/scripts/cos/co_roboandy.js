@@ -125,13 +125,22 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return co.getPowerFilled() * 4;
+                    return co.getPowerFilled() * 4 + 10;
                 }
                 break;
         }
-        return co.getPowerFilled() * 2;
+        return co.getPowerFilled();
     };
-
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+        return 0;
+    };
     this.getBonusMisfortune = function(co, unit, posX, posY)
     {
         switch (co.getPowerMode())

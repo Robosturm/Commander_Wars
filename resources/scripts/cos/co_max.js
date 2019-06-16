@@ -124,20 +124,29 @@ var Constructor = function()
                 if (attacker.getBaseMaxRange() === 1)
                 {
                     return 70;
+                }                
+                else if (attacker.getBaseMaxRange() > 1)
+                {
+                    return 0;
                 }
-                break;
+                return 10;
             case GameEnums.PowerMode_Power:
                 if (attacker.getBaseMaxRange() === 1)
                 {
                     return 45;
                 }
-                break;
+
+                else if (attacker.getBaseMaxRange() > 1)
+                {
+                    return 0;
+                }
+                return 10;
             default:
                 if (attacker.getBaseMaxRange() === 1)
                 {
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
-                        return 30;
+                        return 35;
                     }
                     return 15;
                 }
@@ -146,6 +155,16 @@ var Constructor = function()
         if (attacker.getBaseMaxRange() > 1)
         {
             return -10;
+        }
+        return 0;
+    };
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
         }
         return 0;
     };

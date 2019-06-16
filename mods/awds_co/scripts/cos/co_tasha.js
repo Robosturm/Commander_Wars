@@ -16,11 +16,11 @@ CO_TASHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Power:
             if (airUnits.indexOf(attacker.getUnitID()) >= 0)
             {
-                return 40;
+                return 50;
             }
             else
             {
-                return 0;
+                return 10;
             }
         default:
             if (airUnits.indexOf(attacker.getUnitID()) >= 0)
@@ -45,16 +45,13 @@ CO_TASHA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 30;
             }
-            break;
+            return 10;
         case GameEnums.PowerMode_Power:
             if (airUnits.indexOf(defender.getUnitID()) >= 0)
             {
-                return 20;
+                return 30;
             }
-            else
-            {
-                return 0;
-            }
+            return 10;
         default:
             break;
         }

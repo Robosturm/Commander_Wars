@@ -136,7 +136,7 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
                 {
-                    return 60;
+                    return 70;
                 }
                 break;
             case GameEnums.PowerMode_Power:
@@ -146,15 +146,16 @@ var Constructor = function()
                 }
                 else
                 {
-                    return 0;
+                    return 10;
                 }
             default:
-                if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
                     {
-                        return 10;
+                        return 20;
                     }
+                    return 10;
                 }
                 break;
         }
@@ -173,24 +174,21 @@ var Constructor = function()
                 {
                     return 70;
                 }
-                break;
+                return 10;
             case GameEnums.PowerMode_Power:
                 if (seaUnits.indexOf(defender.getUnitID()) >= 0)
                 {
-                    return 40;
+                    return 50;
                 }
-                else
-                {
-                    return 0;
-                }
+                return 10;
             default:
-                if (seaUnits.indexOf(defender.getUnitID()) >= 0)
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                    if (seaUnits.indexOf(defender.getUnitID()) >= 0)
                     {
-                        return 40;
+                        return 50;
                     }
-                    return 0;
+                    return 10;
                 }
                 break;
         }

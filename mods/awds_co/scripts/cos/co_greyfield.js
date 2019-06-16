@@ -10,22 +10,19 @@ CO_GREYFIELD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Superpower:
             if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
             {
-                return 60;
+                return 70;
             }
-            break;
+            return 10;
         case GameEnums.PowerMode_Power:
             if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
             {
-                return 20;
+                return 30;
             }
-            else
-            {
-                return 0;
-            }
+            return 10;
         default:
             if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
             {
-                return 5;
+                return 0;
             }
             break;
         }
@@ -47,20 +44,17 @@ CO_GREYFIELD.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 70;
             }
-            break;
+            return 10;
         case GameEnums.PowerMode_Power:
             if (seaUnits.indexOf(defender.getUnitID()) >= 0)
             {
                 return 40;
             }
-            else
-            {
-                return 0;
-            }
+            return 10;
         default:
             if (seaUnits.indexOf(defender.getUnitID()) >= 0)
             {
-                return 25;
+                return 20;
             }
             break;
         }

@@ -25,20 +25,20 @@ CO_MINAMOTO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Superpower:
             if (nearMountains === true)
             {
-                return 40;
+                return 50;
             }
             else
             {
-                return 0;
+                return 10;
             }
         case GameEnums.PowerMode_Power:
             if (nearMountains === true)
             {
-                return 40;
+                return 50;
             }
             else
             {
-                return 0;
+                return 10;
             }
         default:
             if (nearMountains === true)
@@ -58,6 +58,18 @@ CO_MINAMOTO.getMovementpointModifier = function(co, unit, posX, posY)
             co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
             return 2;
+        }
+    }
+    return 0;
+};
+CO_MINAMOTO.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
         }
     }
     return 0;

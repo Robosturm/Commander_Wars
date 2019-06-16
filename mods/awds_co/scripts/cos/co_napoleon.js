@@ -3,20 +3,21 @@ CO_NAPOLEON.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        if (map.onMap(atkPosX, atkPosY))
-        {
-            var terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
             switch (co.getPowerMode())
             {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return terrainDefense * 10;
+                var terrainDefense = 0;
+                if (map.onMap(atkPosX, atkPosY))
+                {
+                    terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
+                }
+                return terrainDefense * 10 + 10;
             case GameEnums.PowerMode_Power:
-                return 0;
+                return 10;
             default:
                 return 0;
             }
-        }
     }
     return 0;
 };

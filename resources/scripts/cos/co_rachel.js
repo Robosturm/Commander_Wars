@@ -118,7 +118,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 3;
+        return 2;
     };
     this.getCOArmy = function()
     {
@@ -137,12 +137,22 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 10;
+                    return 20;
                 }
                 break;
         }
         return 0;
     };
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                           defender, defPosX, defPosY, isDefender)
+        {
+            if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                    co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return 10;
+            }
+            return 0;
+        };
     this.getBonusLuck = function(co, unit, posX, posY)
     {
         switch (co.getPowerMode())

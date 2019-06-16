@@ -21,6 +21,10 @@ CO_GRIMM.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return -10;
+        }
         return -20;
     }
     return 0;

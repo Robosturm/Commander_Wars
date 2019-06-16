@@ -7,9 +7,9 @@ CO_ISABELLA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            return 20;
+            return 30;
         case GameEnums.PowerMode_Power:
-            return 10;
+            return 20;
         default:
             return 5;
         }
@@ -26,9 +26,9 @@ CO_ISABELLA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            return 20;
+            return 30;
         case GameEnums.PowerMode_Power:
-            return 10;
+            return 20;
         default:
             return 2.5;
         }

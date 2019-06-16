@@ -7,16 +7,27 @@ CO_ROBOANDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            return 0;
+            return 10;
         case GameEnums.PowerMode_Power:
-            return 0;
+            return 10;
         default:
             return co.getPowerFilled() * 4;
         }
     }
     return 0;
 };
-
+CO_ROBOANDY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                      defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+    }
+    return 0;
+};
 CO_ROBOANDY.getBonusMisfortune = function(co, unit, posX, posY)
 {
     if (co.getIsCO0() === true)

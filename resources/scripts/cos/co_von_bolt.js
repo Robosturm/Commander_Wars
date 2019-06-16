@@ -90,7 +90,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 2;
+        return 3;
     };
     this.getCOArmy = function()
     {
@@ -103,17 +103,17 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 20;
+                return 30;
             case GameEnums.PowerMode_Power:
-                return 20;
+                return 30;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 20;
+                    return 30;
                 }
                 break;
         }
-        return 5;
+        return 0;
     };
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
@@ -132,7 +132,7 @@ var Constructor = function()
                 }
                 break;
         }
-        return 5;
+        return 0;
     };
 
     // CO - Intel

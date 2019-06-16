@@ -10,13 +10,13 @@ CO_GAGE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Superpower:
             if (attacker.getBaseMaxRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
             {
-                return 40;
+                return 50;
             }
             break;
         case GameEnums.PowerMode_Power:
             if (attacker.getBaseMaxRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
             {
-                return 20;
+                return 30;
             }
             break;
         default:
@@ -41,13 +41,13 @@ CO_GAGE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Superpower:
             if (defender.getBaseMaxRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
             {
-                return 20;
+                return 30;
             }
             break;
         case GameEnums.PowerMode_Power:
             if (defender.getBaseMaxRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
             {
-                return 10;
+                return 20;
             }
             break;
         default:

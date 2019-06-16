@@ -8,22 +8,41 @@ CO_PETER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             return 0;
         }
         var bonus = 0;
-        if (defender.getBaseMaxRange() === 1)
+        switch (co.getPowerMode())
         {
-            switch (co.getPowerMode())
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            if (defender.getBaseMaxRange() === 1)
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                return 40;
-            case GameEnums.PowerMode_Power:
-                return 60;
-            default:
-                bonus = 20;
-                break;
+                bonus += 40;
             }
+            bonus += 10;
+            break;
+        case GameEnums.PowerMode_Power:
+            if (defender.getBaseMaxRange() === 1)
+            {
+                bonus += 60;
+            }
+            bonus += 10;
+            break;
+        default:
+            bonus = 20;
+            break;
         }
         bonus -= defender.getTerrainDefense() * 5;
         return bonus;
+    }
+    return 0;
+};
+CO_PETER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                      defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
     }
     return 0;
 };

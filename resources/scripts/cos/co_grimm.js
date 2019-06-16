@@ -130,7 +130,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 40;
+                    return 50;
                 }
                 break;
         }
@@ -139,6 +139,10 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
+        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+        {
+            return -10;
+        }
         return -20;
     };
 

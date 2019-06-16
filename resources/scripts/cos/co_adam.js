@@ -107,7 +107,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 4;
+        return 3;
     };
     this.getCOArmy = function()
     {
@@ -151,6 +151,10 @@ var Constructor = function()
                 }
                 break;
             default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    ret += 10;
+                }
                 break;
             }
         }
@@ -173,7 +177,12 @@ var Constructor = function()
         {
             ret += deffbonusArray[index];
         }
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) === false)
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+            co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            ret += 10;
+        }
+        else
         {
             ret /= 2;
         }

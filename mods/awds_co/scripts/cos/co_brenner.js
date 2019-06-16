@@ -9,8 +9,21 @@ CO_BRENNER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Superpower:
             return 50;
         case GameEnums.PowerMode_Power:
-            return 20;
+            return 30;
         default:
+            return 10;
+        }
+    }
+    return 0;
+};
+
+CO_BRENNER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                      defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
             return 10;
         }
     }

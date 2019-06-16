@@ -212,19 +212,30 @@ var Constructor = function()
                 {
                     return 50;
                 }
-                return 0;
+                return 10;
             case GameEnums.PowerMode_Power:
                 if (nearBuildings)
                 {
                     return 30;
                 }
-                return 0;
+                return 10;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
                     return 10;
                 }
         }
+    };
+
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                 defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+            co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+        return 0;
     };
 
     this.startOfTurn = function(co)

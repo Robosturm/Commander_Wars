@@ -107,7 +107,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 4;
+        return 3;
     };
     this.getCOArmy = function()
     {
@@ -138,31 +138,41 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 if (nearMountains === true)
                 {
-                    return 40;
+                    return 50;
                 }
                 else
                 {
-                    return 0;
+                    return 10;
                 }
             case GameEnums.PowerMode_Power:
                 if (nearMountains === true)
                 {
-                    return 40;
+                    return 50;
                 }
                 else
                 {
-                    return 0;
+                    return 10;
                 }
             default:
-                if (nearMountains === true)
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    if (nearMountains === true)
                     {
-
-                        return 35;
+                        return 40;
                     }
+                    return 10;
                 }
                 break;
+        }
+        return 0;
+    };
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
         }
         return 0;
     };

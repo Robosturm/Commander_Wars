@@ -8,11 +8,11 @@ CO_JAVIER.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            return towers * 25;
+            return towers * 25 + 10;
         case GameEnums.PowerMode_Power:
-            return towers * 15;
+            return towers * 15 + 10;
         default:
-            return towers * 5;
+            return towers * 5 + 10;
         }
     }
     return 0;
@@ -33,25 +33,21 @@ CO_JAVIER.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 ret += 60;
             }
-            ret += towers * 5;
+            ret += towers * 5 + 10;
             break;
         case GameEnums.PowerMode_Power:
             if (rangedAttacked)
             {
                 ret += 40;
             }
-            ret += towers * 5;
+            ret += towers * 5 + 10;
             break;
         default:
             if (rangedAttacked)
             {
                 ret += 20;
-                ret += towers * 5;
             }
-            else
-            {
-                ret += towers * 5;
-            }
+            ret += towers * 5;
             break;
         }
         return ret;

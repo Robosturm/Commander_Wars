@@ -30,3 +30,16 @@ CO_CASSIDY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
+
+CO_CASSIDY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+    }
+    return 0;
+};

@@ -177,8 +177,13 @@ var Constructor = function()
                 {
                     if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
                     {
-                        return 20;
+                        return 30;
                     }
+                    else if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+                    {
+                        return -5;
+                    }
+                    return 10;
                 }
                 break;
         }
@@ -199,6 +204,17 @@ var Constructor = function()
         {
             return 1;
         }
+    };
+
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+        return 0;
     };
 
     // CO - Intel

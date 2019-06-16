@@ -12,7 +12,7 @@ CO_FORSYTHE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Power:
             return 20;
         default:
-            return 5;
+            return 10;
         }
     }
     return 0;

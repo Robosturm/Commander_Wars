@@ -122,13 +122,13 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return towers * 25;
+                return towers * 25 + 10;
             case GameEnums.PowerMode_Power:
-                return towers * 15;
+                return towers * 15 + 10;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return towers * 5;
+                    return towers * 5 + 10;
                 }
         }
     };
@@ -146,22 +146,22 @@ var Constructor = function()
                 {
                     ret += 60;
                 }
-                ret += towers * 5;
+                ret += towers * 5  + 10;
                 break;
             case GameEnums.PowerMode_Power:
                 if (rangedAttacked)
                 {
                     ret += 40;
                 }
-                ret += towers * 5;
+                ret += towers * 5  + 10;
                 break;
             default:
-                if (rangedAttacked)
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                    ret += towers * 5 + 10;
+                    if (rangedAttacked)
                     {
                         ret += 20;
-                        ret += towers * 5;
                     }
                 }
                 break;

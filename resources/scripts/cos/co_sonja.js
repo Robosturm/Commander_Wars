@@ -60,7 +60,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 3;
+        return 2;
     };
     this.getCOArmy = function()
     {
@@ -71,7 +71,27 @@ var Constructor = function()
     {
         return 5;
     };
+    this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                      defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+        return 0;
+    };
 
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+        return 0;
+    };
     this.getVisionrangeModifier = function(co, unit, posX, posY)
     {
         switch (co.getPowerMode())

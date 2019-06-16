@@ -2,8 +2,8 @@ var Constructor = function()
 {
     this.init = function(co)
     {
-        co.setPowerStars(6);
-        co.setSuperpowerStars(4);
+        co.setPowerStars(7);
+        co.setSuperpowerStars(5);
     };
 
     this.activatePower = function(co)
@@ -130,13 +130,13 @@ var Constructor = function()
             {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
-                    return 50;
+                    return 60;
                 case GameEnums.PowerMode_Power:
-                    return 30;
+                    return 40;
                 default:
                     if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                     {
-                        return 50;
+                        return 60;
                     }
                     else
                     {
@@ -152,13 +152,13 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return 50;
+                return 60;
             case GameEnums.PowerMode_Power:
-                return 30;
+                return 40;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    return 50;
+                    return 60;
                 }
                 else
                 {

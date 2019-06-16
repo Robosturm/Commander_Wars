@@ -105,7 +105,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 3;
+        return 2;
     };
     this.getCOArmy = function()
     {
@@ -120,18 +120,23 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        switch (co.getPowerMode())
+        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                return 10;
-            case GameEnums.PowerMode_Power:
-                return 10;
-            default:
+            return 10;
         }
         return 0;
     };
-
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+        return 0;
+    };
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
     {
         if (gotAttacked === false)

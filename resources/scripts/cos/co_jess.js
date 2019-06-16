@@ -149,7 +149,12 @@ var Constructor = function()
                 {
                     return 70;
                 }
-                break;
+                else if ((airUnits.indexOf(attacker.getUnitID()) >= 0) ||
+                         (seaUnits.indexOf(attacker.getUnitID()) >= 0))
+                {
+                    return 0;
+                }
+                return 10;
             case GameEnums.PowerMode_Power:
                 if ((airUnits.indexOf(attacker.getUnitID()) < 0) &&
                     (seaUnits.indexOf(attacker.getUnitID()) < 0) &&
@@ -157,18 +162,30 @@ var Constructor = function()
                 {
                     return 50;
                 }
-                break;
-            default:
-                if ((airUnits.indexOf(attacker.getUnitID()) < 0) &&
-                    (seaUnits.indexOf(attacker.getUnitID()) < 0) &&
-                    (infantryUnits.indexOf(attacker.getUnitID()) < 0))
+                else if ((airUnits.indexOf(attacker.getUnitID()) >= 0) ||
+                         (seaUnits.indexOf(attacker.getUnitID()) >= 0))
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    return 0;
+                }
+                return 10;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    if ((airUnits.indexOf(attacker.getUnitID()) < 0) &&
+                            (seaUnits.indexOf(attacker.getUnitID()) < 0) &&
+                            (infantryUnits.indexOf(attacker.getUnitID()) < 0))
                     {
+
                         return 30;
+                    }
+                    else if ((airUnits.indexOf(attacker.getUnitID()) >= 0) ||
+                             (seaUnits.indexOf(attacker.getUnitID()) >= 0))
+                    {
+                        return 0;
                     }
                     return 10;
                 }
+
                 break;
         }
         if ((airUnits.indexOf(attacker.getUnitID()) >= 0) ||
@@ -178,7 +195,16 @@ var Constructor = function()
         }
         return 0;
     };
-
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+        return 0;
+    };
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
         var airUnits = CO_JESS.getAirUnitIDS();

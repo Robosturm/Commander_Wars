@@ -144,23 +144,21 @@ var Constructor = function()
                 {
                     return 60;
                 }
-                break;
+                return 10;
             case GameEnums.PowerMode_Power:
                 if (airUnits.indexOf(attacker.getUnitID()) >= 0)
                 {
-                    return 20;
+                    return 30;
                 }
-                else
-                {
-                    return 0;
-                }
+                return 10;
             default:
-                if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    if (airUnits.indexOf(attacker.getUnitID()) >= 0)
                     {
-                        return 20;
+                        return 30;
                     }
+                    return 10;
                 }
                 break;
         }
@@ -179,23 +177,21 @@ var Constructor = function()
                 {
                     return 270;
                 }
-                break;
+                return 10;
             case GameEnums.PowerMode_Power:
                 if (airUnits.indexOf(defender.getUnitID()) >= 0)
                 {
                     return 200;
                 }
-                else
-                {
-                    return 0;
-                }
+                return 10;
             default:
-                if (airUnits.indexOf(defender.getUnitID()) >= 0)
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                    if (airUnits.indexOf(defender.getUnitID()) >= 0)
                     {
-                        return 30;
+                        return 40;
                     }
+                    return 10;
                 }
                 break;
         }

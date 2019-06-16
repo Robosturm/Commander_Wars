@@ -153,29 +153,29 @@ var Constructor = function()
                 switch (attacker.getUnitRank())
                 {
                     case GameEnums.UnitRank_Lieutenant:
-                        return 10;
-                    case GameEnums.UnitRank_General:
                         return 20;
+                    case GameEnums.UnitRank_General:
+                        return 30;
                     case GameEnums.UnitRank_Veteran:
                     case GameEnums.UnitRank_CO0:
                     case GameEnums.UnitRank_CO1:
-                        return 40;
+                        return 50;
                     default:
-                        return 0;
+                        return 10;
                 }
             case GameEnums.PowerMode_Power:
                 switch (attacker.getUnitRank())
                 {
                     case GameEnums.UnitRank_Lieutenant:
-                        return 10;
-                    case GameEnums.UnitRank_General:
                         return 20;
+                    case GameEnums.UnitRank_General:
+                        return 30;
                     case GameEnums.UnitRank_Veteran:
                     case GameEnums.UnitRank_CO0:
                     case GameEnums.UnitRank_CO1:
-                        return 40;
+                        return 50;
                     default:
-                        return 0;
+                        return 10;
                 }
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
@@ -183,15 +183,15 @@ var Constructor = function()
                     switch (attacker.getUnitRank())
                     {
                         case GameEnums.UnitRank_Lieutenant:
-                            return 5;
+                            return 15;
                         case GameEnums.UnitRank_General:
-                            return 10;
+                            return 20;
                         case GameEnums.UnitRank_Veteran:
                         case GameEnums.UnitRank_CO0:
                         case GameEnums.UnitRank_CO1:
-                            return 20;
+                            return 30;
                         default:
-                            return 0;
+                            return 10;
                     }
                 }
                 else
@@ -223,29 +223,29 @@ var Constructor = function()
                 switch (defender.getUnitRank())
                 {
                     case GameEnums.UnitRank_Lieutenant:
-                        return 10;
-                    case GameEnums.UnitRank_General:
                         return 20;
+                    case GameEnums.UnitRank_General:
+                        return 30;
                     case GameEnums.UnitRank_Veteran:
                     case GameEnums.UnitRank_CO0:
                     case GameEnums.UnitRank_CO1:
-                        return 40;
+                        return 50;
                     default:
-                        return 0;
+                        return 10;
                 }
             case GameEnums.PowerMode_Power:
                 switch (defender.getUnitRank())
                 {
                     case GameEnums.UnitRank_Lieutenant:
-                        return 10;
-                    case GameEnums.UnitRank_General:
                         return 20;
+                    case GameEnums.UnitRank_General:
+                        return 30;
                     case GameEnums.UnitRank_Veteran:
                     case GameEnums.UnitRank_CO0:
                     case GameEnums.UnitRank_CO1:
-                        return 40;
+                        return 50;
                     default:
-                        return 0;
+                        return 10;
                 }
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
@@ -253,15 +253,15 @@ var Constructor = function()
                     switch (defender.getUnitRank())
                     {
                         case GameEnums.UnitRank_Lieutenant:
-                            return 5;
+                            return 15;
                         case GameEnums.UnitRank_General:
-                            return 10;
+                            return 20;
                         case GameEnums.UnitRank_Veteran:
                         case GameEnums.UnitRank_CO0:
                         case GameEnums.UnitRank_CO1:
-                            return 20;
+                            return 30;
                         default:
-                            return 0;
+                            return 10;
                     }
                 }
                 else

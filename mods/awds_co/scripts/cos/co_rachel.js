@@ -1,6 +1,25 @@
 CO_RACHEL.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                        defender, defPosX, defPosY, isDefender)
 {
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+    }
+    return 0;
+};
+CO_RACHEL.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                      defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+    }
     return 0;
 };
 CO_RACHEL.getBonusLuck = function(co, unit, posX, posY)

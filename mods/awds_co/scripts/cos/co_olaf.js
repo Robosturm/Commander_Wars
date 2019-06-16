@@ -10,21 +10,21 @@ CO_OLAF.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
             {
                 // apply snow buff :)
-                return 40;
+                return 50;
             }
             else
             {
-                return 0;
+                return 10;
             }
         case GameEnums.PowerMode_Power:
             if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
             {
                 // apply snow buff :)
-                return 40;
+                return 50;
             }
             else
             {
-                return 0;
+                return 10;
             }
         default:
             if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
@@ -48,6 +48,19 @@ CO_OLAF.getMovementcostModifier = function(co, unit, posX, posY)
                 // apply snow buff :)
                 return -1;
             }
+        }
+    }
+    return 0;
+};
+
+CO_OLAF.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
         }
     }
     return 0;

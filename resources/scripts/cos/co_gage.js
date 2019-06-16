@@ -70,7 +70,7 @@ var Constructor = function()
         units.remove();
 
         audio.clearPlayList();
-        CO_GRIT.loadCOMusic(co);
+        CO_GAGE.loadCOMusic(co);
         audio.playRandom();
     };
 
@@ -131,22 +131,23 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 if (attacker.getBaseMaxRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
                 {
-                    return 40;
+                    return 50;
                 }
-                break;
+                return 10;
             case GameEnums.PowerMode_Power:
                 if (attacker.getBaseMaxRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
                 {
-                    return 20;
+                    return 30;
                 }
-                break;
+                return 10;
             default:
-                if (attacker.getBaseMaxRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    if (attacker.getBaseMaxRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
                     {
-                        return 20;
+                        return 30;
                     }
+                    return 10;
                 }
                 break;
         }
@@ -162,22 +163,23 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 if (defender.getBaseMaxRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
                 {
-                    return 20;
+                    return 30;
                 }
-                break;
+                return 10;
             case GameEnums.PowerMode_Power:
                 if (defender.getBaseMaxRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
                 {
-                    return 10;
+                    return 20;
                 }
-                break;
+                return 10;
             default:
-                if (defender.getBaseMaxRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                    if (defender.getBaseMaxRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
                     {
-                        return 10;
+                        return 20;
                     }
+                    return 10;
                 }
                 break;
         }

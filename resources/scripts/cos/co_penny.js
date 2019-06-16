@@ -92,14 +92,39 @@ var Constructor = function()
                 }
                 return 30;
             case GameEnums.PowerMode_Power:
-                break;
-            default:                
+                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                {
+                    // apply sandstorm buff :)
+                    return 15;
+                }
+                return 10;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
+                                co.getPowerMode() > GameEnums.PowerMode_Off)
+                {
+                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                    {
+                        // apply sandstorm buff :)
+                        return 25;
+                    }
+                    return 10;
+                }
                 break;
         }
         if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
         {
             // apply sandstorm buff :)
             return 15;
+        }
+        return 0;
+    };
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
         }
         return 0;
     };

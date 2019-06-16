@@ -200,31 +200,42 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 if (attacker.getBaseMaxRange() === 1)
                 {
-                    return inRangeCount * 20;
+                    return inRangeCount * 20 + 10;
                 }
                 else
                 {
-                    return 0;
+                    return 10;
                 }
             case GameEnums.PowerMode_Power:
                 if (attacker.getBaseMaxRange() === 1)
                 {
-                    return inRangeCount * 10;
+                    return inRangeCount * 10 + 10;
                 }
                 else
                 {
-                    return 0;
+                    return 10;
                 }
             default:
-                if (attacker.getBaseMaxRange() === 1)
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    if (attacker.getBaseMaxRange() === 1)
                     {
-                        return inRangeCount * 15;
+                        return inRangeCount * 10 + 10;
                     }
+                    return 10;
                 }
                 break;
         }        
+        return 0;
+    };
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
         return 0;
     };
     this.getFirerangeModifier = function(co, unit, posX, posY)

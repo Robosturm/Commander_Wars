@@ -188,28 +188,42 @@ var Constructor = function()
     {
         if (map.onMap(atkPosX, atkPosY))
         {
-            if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
-            {
+
                 switch (co.getPowerMode())
                 {
                     case GameEnums.PowerMode_Tagpower:
-                    case GameEnums.PowerMode_Superpower:
-                        return 20;
+                    case GameEnums.PowerMode_Superpower:                        
                     case GameEnums.PowerMode_Power:
-                        return 20;
+                        if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
+                        {
+                            return 30;
+                        }
+                        return 10;
                     default:
                         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                         {
-                            return 20;
+                            if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
+                            {
+                                return 30;
+                            }
+                            return 10;
                         }
                         break;
                 }
-                return 5;
-            }
+                return 0;
         }
         return 0;
     };
-
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+        return 0;
+    };
     // CO - Intel
     this.getBio = function()
     {

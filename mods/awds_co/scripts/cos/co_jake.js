@@ -13,15 +13,15 @@ CO_JAKE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             case GameEnums.PowerMode_Superpower:
                 if (terrainID === "PLAINS")
                 {
-                    return 40;
+                    return 50;
                 }
-                break;
+                return 10;
             case GameEnums.PowerMode_Power:
                 if (terrainID === "PLAINS")
                 {
-                    return 20;
+                    return 30;
                 }
-                break;
+                return 10;
             default:
                 if (terrainID === "PLAINS")
                 {
@@ -33,6 +33,20 @@ CO_JAKE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     }
     return 0;
 };
+
+CO_JAKE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+    }
+    return 0;
+};
+
 CO_JAKE.getFirerangeModifier = function(co, unit, posX, posY)
 {
     if (co.getIsCO0() === true)

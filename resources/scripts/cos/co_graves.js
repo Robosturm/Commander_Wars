@@ -134,11 +134,33 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 4;
+        return 3;
     };
     this.getCOArmy = function()
     {
         return "DM";
+    };
+
+    this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                      defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+        return 0;
+    };
+
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+        return 0;
     };
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)

@@ -19,7 +19,27 @@ CO_AIRA.getMovementcostModifier = function(co, unit, posX, posY)
 };
 
 CO_AIRA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                     defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender)
 {
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+    }
+    return 0;
+};
+
+CO_AIRA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+    }
     return 0;
 };

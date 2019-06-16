@@ -118,24 +118,35 @@ var Constructor = function()
     {
         if (map.onMap(atkPosX, atkPosY))
         {
-            if (attacker.useTerrainDefense())
-            {
+
                 var terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
                 switch (co.getPowerMode())
                 {
                     case GameEnums.PowerMode_Tagpower:
-                    case GameEnums.PowerMode_Superpower:
-                        return terrainDefense * 10;
+                    case GameEnums.PowerMode_Superpower:                       
                     case GameEnums.PowerMode_Power:
-                        return terrainDefense * 10;
+                        if (attacker.useTerrainDefense())
+                        {
+                            return terrainDefense * 10 + 10;
+                        }
+                        return 10;
                     default:
                         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                         {
-                            return terrainDefense * 10;
+                            return terrainDefense * 10 + 10;
                         }
                         break;
                 }
-            }
+        }
+        return 0;
+    };
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
         }
         return 0;
     };

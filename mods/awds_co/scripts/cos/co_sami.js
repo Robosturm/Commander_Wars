@@ -12,13 +12,21 @@ CO_SAMI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 80;
             }
-            break;
+            else if (attacker.getBaseMaxRange() === 1)
+            {
+                return 0;
+            }
+            return 10;
         case GameEnums.PowerMode_Power:
             if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
             {
                 return 50;
             }
-            break;
+            else if (attacker.getBaseMaxRange() === 1)
+            {
+                return 0;
+            }
+            return 10;
         default:
             if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
             {
@@ -50,7 +58,18 @@ CO_SAMI.getCaptureBonus = function(co, unit, posX, posY)
     }
     return 0;
 };
-
+CO_SAMI.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+    }
+    return 0;
+};
 CO_SAMI.getMovementpointModifier = function(co, unit, posX, posY)
 {
     if (co.getIsCO0() === true)

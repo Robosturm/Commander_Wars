@@ -33,19 +33,40 @@ CO_MELANTHE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     {
         if (map.onMap(atkPosX, atkPosY))
         {
-            if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
+            switch (co.getPowerMode())
             {
-                switch (co.getPowerMode())
+            case GameEnums.PowerMode_Tagpower:
+            case GameEnums.PowerMode_Superpower:
+                if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
                 {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
-                    return 20;
-                case GameEnums.PowerMode_Power:
-                    return 20;
-                default:
+                    return 30;
+                }
+                return 10;
+            case GameEnums.PowerMode_Power:
+                if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
+                {
+                    return 30;
+                }
+                return 10;
+            default:
+                if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
+                {
                     return 15;
                 }
             }
+        }
+    }
+    return 0;
+};
+
+CO_MELANTHE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
         }
     }
     return 0;

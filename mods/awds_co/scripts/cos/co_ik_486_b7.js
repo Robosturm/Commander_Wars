@@ -11,12 +11,11 @@ CO_IK_486_B7.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                return -10;
+                return 0;
             case GameEnums.PowerMode_Power:
-                return -10;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) &&
-                        Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
+                return 0;
+            default:                
+                if (Math.abs(atkPosX - defPosX) + Math.abs(atkPosY - defPosY) > 1)
                 {
                     return -10;
                 }
@@ -43,10 +42,7 @@ CO_IK_486_B7.getFirerangeModifier = function(co, unit, posX, posY)
             case GameEnums.PowerMode_Power:
                 return 2;
             default:
-                if (co.inCORange(Qt.point(posX, posY), unit))
-                {
-                    return 1;
-                }
+                return 1;
             }
         }
     }

@@ -26,7 +26,11 @@ CO_EAGLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 30;
             }
-            break;
+            else if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
+            {
+                return 0;
+            }
+            return 10;
         case GameEnums.PowerMode_Power:
             if (airUnits.indexOf(attacker.getUnitID()) >= 0)
             {
@@ -50,6 +54,19 @@ CO_EAGLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
         {
             return -10;
+        }
+    }
+    return 0;
+};
+
+CO_EAGLE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
         }
     }
     return 0;

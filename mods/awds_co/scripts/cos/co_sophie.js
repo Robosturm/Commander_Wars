@@ -83,11 +83,24 @@ CO_SOPHIE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                     return -30;
                 }
             }
-            break;
+            return 10;
         case GameEnums.PowerMode_Power:
-            break;
+            return 10;
         default:
             break;
+        }
+    }
+    return 0;
+};
+
+CO_SOPHIE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
         }
     }
     return 0;

@@ -18,10 +18,10 @@ CO_SANJURO.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 }
                 else
                 {
-                    return 0;
+                    return 10;
                 }
             case GameEnums.PowerMode_Power:
-                return 0;
+                return 10;
             default:
                 break;
             }
@@ -54,10 +54,10 @@ CO_SANJURO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             }
             else
             {
-                return modifier;
+                return modifier + 10;
             }
         case GameEnums.PowerMode_Power:
-            return modifier;
+            return modifier + 10;
         default:
             return modifier;
         }

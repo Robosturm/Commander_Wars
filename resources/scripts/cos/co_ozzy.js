@@ -128,9 +128,14 @@ var Constructor = function()
                 {
                     return 100;
                 }
-                return 0;
+                return 10;
             case GameEnums.PowerMode_Power:
+                return 10;
             default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    return 10;
+                }
                 break;
         }
         return 0;
@@ -155,7 +160,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    return 20;
+                    return 40;
                 }
                 break;
         }

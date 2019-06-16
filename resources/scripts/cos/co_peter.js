@@ -144,32 +144,54 @@ var Constructor = function()
             return 0;
         }
         var bonus = 0;
-        if (defender.getBaseMaxRange() === 1)
+        switch (co.getPowerMode())
         {
-
-            switch (co.getPowerMode())
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            if (defender.getBaseMaxRange() === 1)
             {
-                case GameEnums.PowerMode_Tagpower:
-                case GameEnums.PowerMode_Superpower:
-                    return 40;
-                case GameEnums.PowerMode_Power:
-                    return 60;
-                default:
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                    {
-                        bonus = 25;
-                    }
-                    else
-                    {
-                        bonus = 7;
-                    }
-                    break;
+                bonus += 40;
             }
+            bonus += 10;
+            break;
+        case GameEnums.PowerMode_Power:
+            if (defender.getBaseMaxRange() === 1)
+            {
+                bonus += 50;
+            }
+            bonus += 10;
+            break;
+        default:
+            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                if (defender.getBaseMaxRange() === 1)
+                {
+                    bonus = 20;
+                }
+                bonus += 10;
+            }
+            else
+            {
+                if (defender.getBaseMaxRange() === 1)
+                {
+                    bonus = 7;
+                }
+            }
+            break;
         }
         bonus -= defender.getTerrainDefense() * 5;
         return bonus;
     };
-
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+        return 0;
+    };
     // CO - Intel
     this.getBio = function()
     {

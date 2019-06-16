@@ -8,13 +8,35 @@ CO_LASH.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             if (attacker.useTerrainDefense())
             {
                 var terrainDefense = map.getTerrain(atkPosX, atkPosY).getDefense(attacker);
+                if (co.getPowerMode() > GameEnums.PowerMode_Off)
+                {
+                   return terrainDefense * 10 + 10;
+                }
                 return terrainDefense * 10;
+            }
+            else if (co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return 10;
             }
         }
     }
     return 0;
 };
-this.getTerrainDefenseModifier = function(co, unit, posX, posY)
+
+CO_LASH.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+    }
+    return 0;
+};
+
+CO_LASH.getTerrainDefenseModifier = function(co, unit, posX, posY)
 {
     if (co.getIsCO0() === true)
     {

@@ -16,7 +16,12 @@ CO_JESS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 70;
             }
-            break;
+            else if ((airUnits.indexOf(attacker.getUnitID()) >= 0) ||
+                     (seaUnits.indexOf(attacker.getUnitID()) >= 0))
+            {
+                return 0;
+            }
+            return 10;
         case GameEnums.PowerMode_Power:
             if ((airUnits.indexOf(attacker.getUnitID()) < 0) &&
                     (seaUnits.indexOf(attacker.getUnitID()) < 0) &&
@@ -24,7 +29,12 @@ CO_JESS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 50;
             }
-            break;
+            else if ((airUnits.indexOf(attacker.getUnitID()) >= 0) ||
+                     (seaUnits.indexOf(attacker.getUnitID()) >= 0))
+            {
+                return 0;
+            }
+            return 10;
         default:
             if ((airUnits.indexOf(attacker.getUnitID()) < 0) &&
                     (seaUnits.indexOf(attacker.getUnitID()) < 0) &&
@@ -38,6 +48,19 @@ CO_JESS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 (seaUnits.indexOf(attacker.getUnitID()) >= 0))
         {
             return -10;
+        }
+    }
+    return 0;
+};
+
+CO_JESS.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
         }
     }
     return 0;

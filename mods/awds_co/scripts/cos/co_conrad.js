@@ -26,9 +26,9 @@ CO_CONRAD.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            return visionCount * 2;
+            return visionCount * 2 + 10;
         case GameEnums.PowerMode_Power:
-            return visionCount * 5;
+            return visionCount * 5 + 10;
         default:
             return visionCount * 2;
         }
@@ -42,6 +42,19 @@ CO_CONRAD.getBonusLuck = function(co, unit, posX, posY)
     {
         // reduce luck to zero
         return -999;
+    }
+    return 0;
+};
+
+CO_CONRAD.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
     }
     return 0;
 };

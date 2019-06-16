@@ -134,27 +134,49 @@ var Constructor = function()
                 {
                     return 70;
                 }
-                break;
+                else if (tankUnits.indexOf(attacker.getUnitID()) >= 0)
+                {
+                    return -10;
+                }
+                return 10;
             case GameEnums.PowerMode_Power:
                 if (attacker.getBaseMaxRange() > 1)
                 {
                     return 50;
                 }
-                break;
-            default:
-                if (attacker.getBaseMaxRange() > 1)
+                else if (tankUnits.indexOf(attacker.getUnitID()) >= 0)
                 {
-                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    return -10;
+                }
+                return 10;
+            default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    if (attacker.getBaseMaxRange() > 1)
                     {
-                        return 20;
+                        return 30;
                     }
-                    return 0;
+                    else if (tankUnits.indexOf(attacker.getUnitID()) >= 0)
+                    {
+                        return -10;
+                    }
+                    return 10;
                 }
                 break;
         }
         if (tankUnits.indexOf(attacker.getUnitID()) >= 0)
         {
             return -20;
+        }
+        return 0;
+    };
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
         }
         return 0;
     };

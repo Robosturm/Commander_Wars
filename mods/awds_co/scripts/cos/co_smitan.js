@@ -86,25 +86,25 @@ CO_SMITAN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Superpower:
             if (attacker.getBaseMaxRange() === 1)
             {
-                return inRangeCount * 20;
+                return inRangeCount * 20 + 10;
             }
             else
             {
-                return 0;
+                return 10;
             }
         case GameEnums.PowerMode_Power:
             if (attacker.getBaseMaxRange() === 1)
             {
-                return inRangeCount * 10;
+                return inRangeCount * 10 + 10;
             }
             else
             {
-                return 0;
+                return 10;
             }
         default:
             if (attacker.getBaseMaxRange() === 1)
             {
-                return inRangeCount * 7.5;
+                return inRangeCount * 5;
             }
             break;
         }

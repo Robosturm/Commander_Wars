@@ -15,14 +15,14 @@ CO_KINDLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 {
                     ret = 130;
                 }
-                ret += co.getOwner().getBuildingCount() * 3;
+                ret += co.getOwner().getBuildingCount() * 3 + 10;
                 return ret;
             case GameEnums.PowerMode_Power:
                 if (building !== null)
                 {
                     return 80;
                 }
-                break;
+                return 10;
             default:
                 if (building !== null)
                 {
@@ -30,6 +30,19 @@ CO_KINDLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 }
                 break;
             }
+        }
+    }
+    return 0;
+};
+
+CO_KINDLE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
         }
     }
     return 0;

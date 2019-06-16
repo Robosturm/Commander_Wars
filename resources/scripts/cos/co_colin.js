@@ -104,14 +104,29 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                var bonus = attacker.getOwner().getFonds() / 1000 * 3.33 - 15;
+                var bonus = attacker.getOwner().getFonds() / 1000 * 3.33 - 5;
                 return bonus;
             case GameEnums.PowerMode_Power:
-                break;
+                return -5;
             default:
                 break;
         }
+        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+        {
+            return -5;
+        }
         return -15;
+    };
+
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+        return 0;
     };
 
     // CO - Intel

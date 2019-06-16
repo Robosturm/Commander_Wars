@@ -126,21 +126,21 @@ var Constructor = function()
                 if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
                 {
                     // apply snow buff :)
-                    return 40;
+                    return 50;
                 }
                 else
                 {
-                    return 0;
+                    return 10;
                 }
             case GameEnums.PowerMode_Power:
                 if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
                 {
                     // apply snow buff :)
-                    return 40;
+                    return 50;
                 }
                 else
                 {
-                    return 0;
+                    return 10;
                 }
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
@@ -148,14 +148,24 @@ var Constructor = function()
                     if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
                     {
                         // apply snow buff :)
-                        return 20;
+                        return 30;
                     }
-                    return 0;
+                    return 10;
                 }
                 break;
         }
         return 0;
     };
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                           defender, defPosX, defPosY, isDefender)
+        {
+            if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                    co.getPowerMode() > GameEnums.PowerMode_Off)
+            {
+                return 10;
+            }
+            return 0;
+        };
     this.getMovementcostModifier = function(co, unit, posX, posY)
     {
         if (unit.getOwner() === co.getOwner())

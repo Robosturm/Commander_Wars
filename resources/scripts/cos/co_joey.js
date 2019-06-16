@@ -126,7 +126,7 @@ var Constructor = function()
                 case GameEnums.PowerMode_Superpower:
                     if (attackerValue > defenderValue)
                     {
-                        return -10;
+                        return 0;
                     }
                     else if (attackerValue < defenderValue)
                     {
@@ -134,12 +134,12 @@ var Constructor = function()
                     }
                     else
                     {
-                        return 0;
+                        return 10;
                     }
                 case GameEnums.PowerMode_Power:
                     if (attackerValue > defenderValue)
                     {
-                        return -10;
+                        return 0;
                     }
                     else if (attackerValue < defenderValue)
                     {
@@ -147,27 +147,31 @@ var Constructor = function()
                     }
                     else
                     {
-                        return 0;
+                        return 10;
                     }
                 default:
                     if (attackerValue > defenderValue)
                     {
+                        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                        {
+                            return 0;
+                        }
                         return -10;
                     }
                     else if (attackerValue < defenderValue)
                     {
                         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                         {
-
                             return 30;
                         }
-                        else
-                        {
-                            return 10;
-                        }
+                        return 10;
                     }
                     else
                     {
+                        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                        {
+                            return 10;
+                        }
                         return 0;
                     }
                 }
@@ -186,13 +190,13 @@ var Constructor = function()
             {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
-                    return 0;
+                    return 10;
                 case GameEnums.PowerMode_Power:
                     if (attackerValue < defenderValue)
                     {
-                        return 20;
+                        return 30;
                     }
-                    return 0;
+                    return 10;
                 default:
             }
         }

@@ -161,12 +161,23 @@ var Constructor = function()
                 {
                     if (attacker.getHp() > defender.getHp())
                     {
-                        return 20;
+                        return 30;
                     }
-                    return 0;
+                    return 10;
                 }
                 break;
             }
+        }
+        return 0;
+    };
+
+    this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
         }
         return 0;
     };

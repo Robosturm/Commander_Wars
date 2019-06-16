@@ -12,13 +12,13 @@ CO_LIN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 50;
             }
-            return 0;
+            return 10;
         case GameEnums.PowerMode_Power:
             if (seaAirUnits.indexOf(attacker.getUnitID()) < 0)
             {
                 return 30;
             }
-            return 0;
+            return 10;
         default:
             if (seaAirUnits.indexOf(attacker.getUnitID()) < 0)
             {
@@ -44,13 +44,13 @@ CO_LIN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 50;
             }
-            return 0;
+            return 10;
         case GameEnums.PowerMode_Power:
             if (seaAirUnits.indexOf(defender.getUnitID()) < 0)
             {
                 return 30;
             }
-            return 0;
+            return 10;
         default:
             return 5;
         }

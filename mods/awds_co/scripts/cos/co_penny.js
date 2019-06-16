@@ -13,7 +13,12 @@ CO_PENNY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             }
             return 30;
         case GameEnums.PowerMode_Power:
-            break;
+            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+            {
+                // apply sandstorm buff :)
+                return 25;
+            }
+            return 10;
         default:
             break;
         }
@@ -21,6 +26,18 @@ CO_PENNY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         {
             // apply sandstorm buff :)
             return 15;
+        }
+    }
+    return 0;
+};
+CO_PENNY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                      defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
         }
     }
     return 0;

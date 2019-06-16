@@ -132,13 +132,24 @@ var Constructor = function()
             case GameEnums.PowerMode_Superpower:
                 return 50;
             case GameEnums.PowerMode_Power:
-                return 20;
+                return 30;
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    return 20;
+                    return 30;
                 }
                 break;
+        }
+        return 0;
+    };
+
+    this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                      defender, defPosX, defPosY, isDefender)
+    {
+        if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
+                co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            ret += 10;
         }
         return 0;
     };

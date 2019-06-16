@@ -11,8 +11,9 @@ CO_OZZY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 100;
             }
-            return 0;
+            return 10;
         case GameEnums.PowerMode_Power:
+            return 10;
         default:
             break;
         }

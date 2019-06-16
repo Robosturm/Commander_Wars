@@ -63,6 +63,10 @@ CO_ADAM.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         {
             ret += deffbonusArray[index];
         }
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            ret +=  10;
+        }
     }
     return ret;
 };

@@ -106,7 +106,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 4;
+        return 3;
     };
     this.getCOArmy = function()
     {
@@ -158,6 +158,10 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return 20;
             default:
+                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                {
+                    return 10;
+                }
                 break;
         }
         return 0;
@@ -173,6 +177,10 @@ var Constructor = function()
             case GameEnums.PowerMode_Power:
                 return 20;
             default:
+                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                {
+                    return 10;
+                }
                 break;
         }
         return 0;

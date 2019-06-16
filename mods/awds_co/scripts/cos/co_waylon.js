@@ -12,21 +12,14 @@ CO_WAYLON.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 60;
             }
-            break;
+            return 10;
         case GameEnums.PowerMode_Power:
             if (airUnits.indexOf(attacker.getUnitID()) >= 0)
             {
                 return 20;
             }
-            else
-            {
-                return 0;
-            }
+                return 10;
         default:
-            if (airUnits.indexOf(attacker.getUnitID()) >= 0)
-            {
-                return 5;
-            }
             break;
         }
     }

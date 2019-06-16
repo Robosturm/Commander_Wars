@@ -116,6 +116,19 @@ CO_MARY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     return 0;
 };
 
+CO_MARY.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
+                                       defender, defPosX, defPosY, isDefender)
+{
+    if (co.getIsCO0() === true)
+    {
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
+        {
+            return 10;
+        }
+    }
+    return 0;
+};
+
 CO_MARY.getDeffensiveReduction = function(co, attacker, atkPosX, atkPosY,
                                           defender, defPosX, defPosY, isDefender)
 {
