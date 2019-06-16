@@ -149,7 +149,7 @@ var Constructor = function()
         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            ret += 10;
+            return 10;
         }
         return 0;
     };
