@@ -138,6 +138,7 @@ var Constructor = function()
             ret.push("Liberation.map");
         }
         var factoryBluesWon = variables.createVariable("Factory Blues");
+        var theHuntsEndWon = variables.createVariable("The Hunt's End");
         if (LiberationWon.readDataBool() === true)
         {
             // blue moon
@@ -220,49 +221,85 @@ var Constructor = function()
             var senseisReturnWon = variables.createVariable("Sensei's Return");
             var siloScrambleWon = variables.createVariable("Silo Scramble");
             var showStopperWon = variables.createVariable("Show Stopper");
+            var dutyAndHonorWon = variables.createVariable("Duty and Honor");
+            var foulPlayWon = variables.createVariable("Foul Play");
+            var aMirrorDarklyWon = variables.createVariable("A Mirror Darkly");
+            var seaofHopeWon = variables.createVariable("Sea of Hope");
             var yellowCometCount = 0;
-            if (senseisReturnWon.readDataBool() === false)
+            if (theHuntsEndWon.readDataBool() === false)
             {
-                ret.push("Sensei's Return.map");
-            }
-            else
-            {
-                yellowCometCount += 1;
-            }
-            if (siloScrambleWon.readDataBool() === false)
-            {
-                ret.push("Silo Scramble.map");
-            }
-            else
-            {
-                yellowCometCount += 1;
-            }
-            if (showStopperWon.readDataBool() === false)
-            {
-                ret.push("Show Stopper.map");
-            }
-            else
-            {
-                yellowCometCount += 1;
-            }
-            if (yellowCometCount >= 2)
-            {
-
-            }
-            if (ycLabFound.readDataBool() === true &&
-                neotanksWon.readDataBool() === false)
-            {
-
-            }
-            if (yellowCometCount >= 4)
-            {
-
+                if (senseisReturnWon.readDataBool() === false)
+                {
+                    ret.push("Sensei's Return.map");
+                }
+                else
+                {
+                    yellowCometCount += 1;
+                }
+                if (siloScrambleWon.readDataBool() === false)
+                {
+                    ret.push("Silo Scramble.map");
+                }
+                else
+                {
+                    yellowCometCount += 1;
+                }
+                if (showStopperWon.readDataBool() === false)
+                {
+                    ret.push("Show Stopper.map");
+                }
+                else
+                {
+                    yellowCometCount += 1;
+                }
+                if (yellowCometCount >= 2)
+                {
+                    if (dutyAndHonorWon.readDataBool() === false)
+                    {
+                        ret.push("Duty and Honor.map");
+                    }
+                    else
+                    {
+                        yellowCometCount += 1;
+                    }
+                    if (foulPlayWon.readDataBool() === false)
+                    {
+                        ret.push("Foul Play.map");
+                    }
+                    else
+                    {
+                        yellowCometCount += 1;
+                    }
+                    if (aMirrorDarklyWon.readDataBool() === false)
+                    {
+                        ret.push("A Mirror Darkly.map");
+                    }
+                    else
+                    {
+                        yellowCometCount += 1;
+                    }
+                }
+                if (ycLabFound.readDataBool() === true &&
+                    seaofHopeWon.readDataBool() === false)
+                {
+                    ret.push("Sea of Hope.map");
+                }
+                if (yellowCometCount >= 4)
+                {
+                    ret.push("The Hunt's End.map");
+                }
             }
         }
+
         ret.push("Factory Blues.map");
-
+        ret.push("Sea of Hope.map");
+        ret.push("The Hunt's End.map");
         // ge
+        if (factoryBluesWon.readDataBool() === true &&
+            theHuntsEndWon.readDataBool() === true)
+        {
 
+        }
         // bh
 
         return ret;
