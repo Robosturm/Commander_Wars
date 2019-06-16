@@ -7,43 +7,34 @@ var Constructor = function()
         return true;
     };
 
-    this.getVictoryInfo = function()
-    {
-        return qsTr("Survive for 14 days.");
-    };
-
     this.victory = function(team)
     {
         if (team === 0)
         {
             // called when a player wins
             var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Hey! You OK, son?"),
-                        "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                        qsTr("I-I don't believe it... They were... stronger than me? Must find a way... to escape... "),
+                        "co_flak", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
             var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Grit!"),
-                        "co_colin", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                        qsTr("The enemy has been routed! "),
+                        "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
             var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Tsk! Time's up. All I'll gain now are more casualties. Guess it's time to disappear! Toodles!"),
-                        "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
+                        qsTr("I'm sorry, Father. I almost destroyed us all. "),
+                        "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
             var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Nice work, son. Holding out against a superior force that, I mean."),
-                        "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));            
+                        qsTr("What, your silos? Don't be ridiculous, Sonja. It is because of those silos that we won here today. "),
+                        "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
             var dialog5 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Commander Grit? Does this mean I'm worthy of being a commanding officer now?"),
-                        "co_colin", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                        qsTr("Father... "),
+                        "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
             var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("What're you talkin' about? You are a grade-A certified top-of-the-line CO, son! And you can take that to the bank!"),
-                        "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-            var dialog7 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Yes, sir!"),
-                        "co_colin", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                        qsTr("There's no rest for the weary! Battle awaits, and we must ride forth to meet it! "),
+                        "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
             dialog1.queueAnimation(dialog2);
             dialog2.queueAnimation(dialog3);
             dialog3.queueAnimation(dialog4);
             dialog4.queueAnimation(dialog5);
             dialog5.queueAnimation(dialog6);
-            dialog6.queueAnimation(dialog7);
         }
     };
     this.gameStart = function()
@@ -57,8 +48,8 @@ var Constructor = function()
         // here we decide how you can win the game
         map.getGameRules().addVictoryRule("VICTORYRULE_NOUNITS"); // win by destroying all units
         map.getGameRules().addVictoryRule("VICTORYRULE_NOHQ"); // win by capturing all hq's of a player
-        var bmList = campaignScript.getBMBuildList();
-        map.getPlayer(0).setBuildList(bmList);
+        var ycList = campaignScript.getYCBuildList();
+        map.getPlayer(0).setBuildList(ycList);
         var bhList = campaignScript.getBHBuildList();
         map.getPlayer(1).setBuildList(bhList);
     };
@@ -73,61 +64,46 @@ var Constructor = function()
         {
             gameScript.initDialog();
         }
-        if (turn === 15 && player === 0)
-        {
-            map.getPlayer(1).setIsDefeated(true);
-        }
     };
 
     this.initDialog = function()
     {
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Colin! You're in command now. Grit and I are returning to HQ to plan our continued strategy."),
-                    "co_olaf", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                    qsTr("What are the conditions in this region, Sonja? Eh? What's that? Danger! Sound the alarm! "),
+                    "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Yes, sir! Understood, sir! I'll guard these properties for the next 14 days."),
-                    "co_colin", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                    qsTr("Oh, Father, calm down! That's no danger to us. Those are the missile silos we installed for our protection. With those, our country's self-defense network is perfect! "),
+                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Mmm. No need to worry. According to our intel division, there's no chance of the enemy striking here. You're one-hundred percent safe."),
-                    "co_olaf", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                    qsTr("Mmmm... Attacking from afar is not my liking, but at times, it's unavoidable. While we await the enemy, instruct me in the use of these... silos. "),
+                    "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("But our intel division ain't the most reliable bunch of fellas. Do your best, son. We'll be back to get ya in 14 days."),
-                    "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                    qsTr("Commander! We're under attack! "),
+                    "co_officier_yc", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         var dialog5 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("I won't let you down, sir! I'm a Blue Moon CO after all!"),
-                    "co_colin", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                    qsTr("What? The enemy is here?! "),
+                    "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Commander COlin!"),
-                    "co_officier_bm", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                    qsTr("Impossible! It can't be! My intel reported no enemy troops in this region... The silos! They're unguarded! The enemy is trying to take them! "),
+                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         var dialog7 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Yes?"),
-                    "co_colin", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                    qsTr("Don't worry, Sonja. I will go. "),
+                    "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         var dialog8 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("It's an attack! The Black Hole Army's here!"),
-                    "co_officier_bm", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-        var dialog9 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("What? Just like that? Stay calm. Stay calm. Must not panic. I... must... be... strong! OK! Tighten the defenses!"),
-                    "co_colin", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-        var dialog10 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Helloooooo! Is anybody home? Looks deserted! Guess I'll just capture everything."),
-                    "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog11 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Not so fast. These properties... are under... my protection."),
-                    "co_colin", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-        var dialog12 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Just you? Talk about easy."),
-                    "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog13 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Uh... Reinforcements are on their way!"),
-                    "co_colin", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-        var dialog14 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Yeah, like in 14 days, right? I'll capture everything by then. C'mon, troops! Fire at will! "),
-                    "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
-        var dialog15 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Keep strong, everyone! We just have to protect the HQ for 14 days!"),
-                    "co_colin", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                    qsTr("But... But... What if the enemy reaches them first? You'll be..."),
+                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
 
+
+        var dialog9 = GameAnimationFactory.createGameAnimationDialog(
+                    qsTr("I am the leader of this country. I shall not fail in my duty. Move out! Kanbei's forces ride! "),
+                    "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+        var dialog10 = GameAnimationFactory.createGameAnimationDialog(
+                    qsTr("Father! Listen! The missile silos can only be operated by infantry or mech units. If you reach them first, you'll be able to launch a single missile! "),
+                    "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+        var dialog11 = GameAnimationFactory.createGameAnimationDialog(
+                    qsTr("I understand. Do not fear, my loyal subjects. Kanbei rides with you! "),
+                    "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
         dialog1.queueAnimation(dialog2);
         dialog2.queueAnimation(dialog3);
         dialog3.queueAnimation(dialog4);
@@ -138,10 +114,6 @@ var Constructor = function()
         dialog8.queueAnimation(dialog9);
         dialog9.queueAnimation(dialog10);
         dialog10.queueAnimation(dialog11);
-        dialog11.queueAnimation(dialog12);
-        dialog12.queueAnimation(dialog13);
-        dialog13.queueAnimation(dialog14);
-        dialog14.queueAnimation(dialog15);
     };
 };
 

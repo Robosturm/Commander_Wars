@@ -101,7 +101,7 @@ var Constructor = function()
                     "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
         var dialog9 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Intruders detected. Defensive system Backlash initiated... Taking damage from intruders. Initiate document-destruct sequence. Research lab will self-destruct in 15 days."),
-                    "co_colin", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
+                    "co_colin", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
         dialog1.queueAnimation(dialog2);
         dialog2.queueAnimation(dialog3);
         dialog3.queueAnimation(dialog4);

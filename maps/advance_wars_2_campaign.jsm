@@ -207,7 +207,7 @@ var Constructor = function()
                 if (bmLabFound.readDataBool() === true &&
                         neotanksWon.readDataBool() === false)
                 {
-                    ret.push("Neotanks?!.map");
+                    ret.push("Neotanks.map");
                 }
                 if (blueMoonCount >= 4)
                 {
@@ -216,7 +216,48 @@ var Constructor = function()
                 }
             }
             // yellow comet
+            var ycLabFound = variables.createVariable("ycLabFound");
+            var senseisReturnWon = variables.createVariable("Sensei's Return");
+            var siloScrambleWon = variables.createVariable("Silo Scramble");
+            var showStopperWon = variables.createVariable("Show Stopper");
+            var yellowCometCount = 0;
+            if (senseisReturnWon.readDataBool() === false)
+            {
+                ret.push("Sensei's Return.map");
+            }
+            else
+            {
+                yellowCometCount += 1;
+            }
+            if (siloScrambleWon.readDataBool() === false)
+            {
+                ret.push("Silo Scramble.map");
+            }
+            else
+            {
+                yellowCometCount += 1;
+            }
+            if (showStopperWon.readDataBool() === false)
+            {
+                ret.push("Show Stopper.map");
+            }
+            else
+            {
+                yellowCometCount += 1;
+            }
+            if (yellowCometCount >= 2)
+            {
 
+            }
+            if (ycLabFound.readDataBool() === true &&
+                neotanksWon.readDataBool() === false)
+            {
+
+            }
+            if (yellowCometCount >= 4)
+            {
+
+            }
         }
         ret.push("Factory Blues.map");
 

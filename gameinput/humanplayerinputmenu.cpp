@@ -60,12 +60,14 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     m_Cursor->setScale(GameMap::Imagesize / pAnim->getWidth());
     qint32 x = 0;
     qint32 itemCount = 10;
+    qint32 maxY = 0;
     for (qint32 i = 0; i < actionIDs.size(); i++)
     {
         if (i > 0 && i % itemCount == 0)
         {
             createBottomSprite(x, y, width);
             x += width;
+            maxY = y;
             y = startY;
             createTopSprite(x, width);
         }
@@ -139,12 +141,16 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
             });
         }
         y += pItemBox->getHeight();
+        if (y > maxY)
+        {
+            maxY = y;
+        }
         itemHeigth = static_cast<qint32>(pItemBox->getHeight());
     }
     qint32 bottomHeigth = createBottomSprite(x, y, width);
     this->addChild(m_Cursor);
     this->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
-    this->setHeight(y + bottomHeigth);
+    this->setHeight(maxY + bottomHeigth);
     this->setWidth(width * (actionIDs.size() / itemCount + 1));
     GameMenue* pGameMenue = GameMenue::getInstance();
     connect(pGameMenue, &GameMenue::sigMouseMove, this, &HumanPlayerInputMenu::mouseMove, Qt::QueuedConnection);
