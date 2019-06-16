@@ -316,16 +316,16 @@ var Constructor = function()
 
     this.getCampaignFinished = function(campaign)
     {
-
-        // not all maps are won so you didn't won the campaign
-        return false;
+        var variables = campaign.getVariables();
+        var lastMissionWon = variables.createVariable("Last Mission");
+        return lastMissionWon.readDataBool();
     };
 
     this.getSelectableCOs = function(campaign, map, player, coIndex)
     {
         var variables = campaign.getVariables();
         // bm labor
-        if (map.getMapName() === "Neotanks?!" && coIndex === 0)
+        if (map.getMapName() === "Neotanks?!" && player === 0 && coIndex === 0)
         {
             return ["CO_COLIN", "CO_OLAF", "CO_GRIT"];
         }
@@ -333,6 +333,11 @@ var Constructor = function()
         if (map.getMapName() === "Sea of Hope" && player === 0 && coIndex === 0)
         {
             return ["CO_KANBEI", "CO_SENSEI", "CO_SONJA"];
+        }
+        // ge labor
+        if (map.getMapName() === "Danger X 9" && player === 0 && coIndex === 0)
+        {
+            return ["CO_EAGLE", "CO_DRAKE", "CO_JESS"];
         }
 
         // os factory
@@ -380,9 +385,95 @@ var Constructor = function()
                 }
             }
         }
-
+        // ge factory
+        if (map.getMapName() === "Great Sea Battle")
+        {
+            if (coIndex === 0 && player === 2)
+            {
+                return ["CO_KANBEI", "CO_SENSEI", "CO_SONJA"];
+            }
+            if ( coIndex === 0 && player === 1)
+            {
+                return ["CO_ANDY", "CO_MAX", "CO_SAMI"];
+            }
+            if ( coIndex === 0 && player === 0)
+            {
+                return ["CO_EAGLE", "CO_JESS", "CO_DRAKE"];
+            }
+        }
+        // bh missions
+        if ((map.getMapName() === "Hot Pursuit" || map.getMapName() === "Last Mission") &&
+            coIndex === 0 && player <= 2)
+        {
+            // make each army unique selectable
+            var ret = [];
+            var co0 = map.getPlayer(0).getCO(0);
+            var co1 = map.getPlayer(1).getCO(0);
+            var co2 = map.getPlayer(2).getCO(0);
+            var armies = [];
+            armies.push(campaignScript.getArmy(co0));
+            armies.push(campaignScript.getArmy(co1));
+            armies.push(campaignScript.getArmy(co2));
+            if (armies.indexOf("OS") < 0)
+            {
+                ret.push("CO_ANDY");
+                ret.push("CO_MAX");
+                ret.push("CO_SAMI");
+            }
+            if (armies.indexOf("BM") < 0)
+            {
+                ret.push("CO_OLAF");
+                ret.push("CO_COLIN");
+                ret.push("CO_GRIT");
+            }
+            if (armies.indexOf("GE") < 0)
+            {
+                ret.push("CO_EAGLE");
+                ret.push("CO_JESS");
+                ret.push("CO_DRAKE");
+            }
+            if (armies.indexOf("YC") < 0)
+            {
+                ret.push("CO_KANBEI");
+                ret.push("CO_SONJA");
+                ret.push("CO_SENSEI");
+            }
+            return ret;
+        }
         // make no co selectable
         return [""];
+    };
+    this.getArmy = function(co)
+    {
+        if (co !== null)
+        {
+            var coid = co.getCOID();
+            if (coid === "CO_ANDY" ||
+                coid === "CO_MAX" ||
+                coid === "CO_SAMI" )
+            {
+                return "OS";
+            }
+            if (coid === "CO_OLAF" ||
+                coid === "CO_GRIT" ||
+                coid === "CO_COLIN" )
+            {
+                return "BM";
+            }
+            if (coid === "CO_KANBEI" ||
+                coid === "CO_SONJA" ||
+                coid === "CO_SENSEI" )
+            {
+                return "YC";
+            }
+            if (coid === "CO_EAGLE" ||
+                coid === "CO_DRAKE" ||
+                coid === "CO_JESS" )
+            {
+                return "GE";
+            }
+        }
+        return "";
     };
 };
 
