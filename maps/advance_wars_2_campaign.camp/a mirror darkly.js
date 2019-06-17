@@ -49,9 +49,9 @@ var Constructor = function()
             dialog3.queueAnimation(dialog4);
             dialog4.queueAnimation(dialog5);
             dialog5.queueAnimation(dialog6);
-            dialog5.queueAnimation(dialog7);
-            dialog5.queueAnimation(dialog8);
-            dialog5.queueAnimation(dialog9);
+            dialog6.queueAnimation(dialog7);
+            dialog7.queueAnimation(dialog8);
+            dialog8.queueAnimation(dialog9);
         }
     };
     this.gameStart = function()

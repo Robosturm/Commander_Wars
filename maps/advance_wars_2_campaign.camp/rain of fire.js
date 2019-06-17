@@ -49,9 +49,9 @@ var Constructor = function()
             dialog3.queueAnimation(dialog4);
             dialog4.queueAnimation(dialog5);
             dialog5.queueAnimation(dialog6);
-            dialog5.queueAnimation(dialog7);
-            dialog5.queueAnimation(dialog8);
-            dialog5.queueAnimation(dialog9);
+            dialog6.queueAnimation(dialog7);
+            dialog7.queueAnimation(dialog8);
+            dialog8.queueAnimation(dialog9);
         }
     };
     this.gameStart = function()
@@ -60,7 +60,7 @@ var Constructor = function()
         //we're going to set the game rules here.
         map.getGameRules().setNoPower(false); // co power on
         map.getGameRules().setRandomWeather(false); // no random weather
-        map.getGameRules().setFogMode(GameEnums.Fog_OfWar); // no fog of war or GameEnums.Fog_OfWar -> for on
+        map.getGameRules().setFogMode(GameEnums.Fog_Off); // no fog of war or GameEnums.Fog_OfWar -> for on
         // map.getGameRules().changeWeatherChance("WEATHER_1SUN", 90); // sets the weather chance of sun to 90. The actual chance is the the value divided through the sum of all chances
         // here we decide how you can win the game
         map.getGameRules().addVictoryRule("VICTORYRULE_NOUNITS"); // win by destroying all units

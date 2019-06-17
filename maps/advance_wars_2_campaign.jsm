@@ -139,6 +139,7 @@ var Constructor = function()
         }
         var factoryBluesWon = variables.createVariable("Factory Blues");
         var theHuntsEndWon = variables.createVariable("The Hunt's End");
+        var greatSeaBattleWon = variables.createVariable("Great Sea Battle");
         if (LiberationWon.readDataBool() === true)
         {
             // blue moon
@@ -290,16 +291,63 @@ var Constructor = function()
                 }
             }
         }
-
-        ret.push("Factory Blues.map");
-        ret.push("The Hunt's End.map");
         // ge
         if (factoryBluesWon.readDataBool() === true &&
             theHuntsEndWon.readDataBool() === true)
         {
+            if (greatSeaBattleWon.readDataBool() === false)
+            {
+                var geLabFound = variables.createVariable("geLabFound");
+                var navyVSAirWon = variables.createVariable("Navy VS Air");
+                var seaFortressWon = variables.createVariable("Sea Fortress");
 
+                //            var showStopperWon = variables.createVariable("Show Stopper");
+                //            var dutyAndHonorWon = variables.createVariable("Duty and Honor");
+                //            var foulPlayWon = variables.createVariable("Foul Play");
+                //            var aMirrorDarklyWon = variables.createVariable("A Mirror Darkly");
+                //            var seaofHopeWon = variables.createVariable("Sea of Hope");
+                var greenEarthCount = 0;
+                if (seaFortressWon.readDataBool() === false)
+                {
+                    ret.push("Sea Fortress.map");
+                }
+                else
+                {
+                    greenEarthCount += 1;
+                }
+
+                if (greenEarthCount >= 2)
+                {
+                    if (navyVSAirWon.readDataBool() === false)
+                    {
+                        ret.push("Navy VS Air.map");
+                    }
+                    else
+                    {
+                        greenEarthCount += 1;
+                    }
+                }
+                if (greenEarthCount >= 4)
+                {
+                    ret.push("Great Sea Battle.map");
+                }
+            }
         }
+        ret.push("Great Sea Battle.map");
+        ret.push("Hot Pursuit.map");
+        ret.push("Last Mission.map");
+        ret.push("Factory Blues.map");
+        ret.push("The Hunt's End.map");
         // bh
+        if (greatSeaBattleWon.readDataBool() === true)
+        {
+            ret.push("Hot Pursuit.map");
+        }
+        var hotPursuitWon = variables.createVariable("Hot Pursuit");
+        if (hotPursuitWon.readDataBool() === true)
+        {
+            ret.push("Last Mission.map");
+        }
 
         return ret;
     };
@@ -407,9 +455,21 @@ var Constructor = function()
         {
             // make each army unique selectable
             var ret = [];
-            var co0 = map.getPlayer(0).getCO(0);
-            var co1 = map.getPlayer(1).getCO(0);
-            var co2 = map.getPlayer(2).getCO(0);
+            var co0 = null;
+            if (player !== 0)
+            {
+                co0 = map.getPlayer(0).getCO(0);
+            }
+            var co1 = null;
+            if (player !== 1)
+            {
+                co1 = map.getPlayer(1).getCO(0);
+            }
+            var co2 = null;
+            if (player !== 2)
+            {
+                co2 = map.getPlayer(2).getCO(0);
+            }
             var armies = [];
             armies.push(campaignScript.getArmy(co0));
             armies.push(campaignScript.getArmy(co1));
@@ -447,7 +507,7 @@ var Constructor = function()
     {
         if (co !== null)
         {
-            var coid = co.getCOID();
+            var coid = co.getCoID();
             if (coid === "CO_ANDY" ||
                 coid === "CO_MAX" ||
                 coid === "CO_SAMI" )

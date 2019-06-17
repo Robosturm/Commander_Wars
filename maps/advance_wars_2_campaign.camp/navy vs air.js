@@ -53,9 +53,9 @@ var Constructor = function()
             dialog3.queueAnimation(dialog4);
             dialog4.queueAnimation(dialog5);
             dialog5.queueAnimation(dialog6);
-            dialog5.queueAnimation(dialog7);
-            dialog5.queueAnimation(dialog8);
-            dialog5.queueAnimation(dialog9);
+            dialog6.queueAnimation(dialog7);
+            dialog7.queueAnimation(dialog8);
+            dialog8.queueAnimation(dialog9);
         }
     };
     this.gameStart = function()
@@ -139,7 +139,7 @@ var Constructor = function()
                     "co_officier_ge", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog17 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("They must've realized I'm the only one who can sail these waters. Planes vs. boats... Air units do have powerful advantages, but... I'm not sunk yet! This sea dog's got a few tricks up his sleeve! "),
-                    "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
+                    "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         dialog1.queueAnimation(dialog2);
         dialog2.queueAnimation(dialog3);
         dialog3.queueAnimation(dialog4);

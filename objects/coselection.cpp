@@ -87,11 +87,6 @@ COSelection::COSelection(QStringList coids)
     addChild(m_Cursor);
 
     connect(this, &COSelection::armySelectedChange, this, &COSelection::armyChanged, Qt::QueuedConnection);
-    if (m_Armies.size() > 0)
-    {
-        armyChanged(m_Armies[0]);
-    }
-
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
@@ -140,16 +135,21 @@ COSelection::COSelection(QStringList coids)
     m_CODescRect->setSize(179, 48);
     m_CODescRect->setContent(m_COBio);
     addChild(m_CODescRect);
+
+    armyBannerClicked(m_Armies[0], 0);
 }
 
 void COSelection::armyBannerClicked(QString army, qint32 index)
 {
-    for (qint32 i2 = 0; i2 < m_ArmyBanners.size(); i2++)
+    if (index >= 0 && index < m_ArmyBanners.size())
     {
-        m_ArmyBanners[i2]->setY(-12);
+        for (qint32 i2 = 0; i2 < m_ArmyBanners.size(); i2++)
+        {
+            m_ArmyBanners[i2]->setY(-12);
+        }
+        m_ArmyBanners[index]->setY(0);
+        emit armySelectedChange(army);
     }
-    m_ArmyBanners[index]->setY(0);
-    emit armySelectedChange(army);
 }
 
 COSelection::~COSelection()

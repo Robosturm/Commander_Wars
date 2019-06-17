@@ -36,7 +36,7 @@ var Constructor = function()
         }
         if (tutorial3Won.readDataBool() === false)
         {
-            ret.push("tutorial3.map");
+            // ret.push("tutorial3.map");
         }
         return ret;
     };

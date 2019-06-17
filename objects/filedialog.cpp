@@ -150,6 +150,8 @@ void FileDialog::showFolder(QString folder)
     {
         m_MainPanel->removeItem(m_Items[i]);
     }
+
+    folder = folder.replace("\\", "/");
     m_Items.clear();
     QDir dir(folder);
     if (!dir.exists())
@@ -190,7 +192,7 @@ void FileDialog::showFolder(QString folder)
         style.color = oxygine::Color(255, 255, 255, 255);
         style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-        style.multiline = true;
+        style.multiline = false;
         textField->setStyle(style);
 
         textField->attachTo(pBox);
