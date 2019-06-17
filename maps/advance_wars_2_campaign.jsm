@@ -300,16 +300,32 @@ var Constructor = function()
                 var geLabFound = variables.createVariable("geLabFound");
                 var navyVSAirWon = variables.createVariable("Navy VS Air");
                 var seaFortressWon = variables.createVariable("Sea Fortress");
+                var drakesDilemmaWon = variables.createVariable("Drake's Dilemma");
+                var sinkingFeelingWon = variables.createVariable("Sinking Feeling");
+                var totheRescueWon = variables.createVariable("To the Rescue");
 
-                //            var showStopperWon = variables.createVariable("Show Stopper");
-                //            var dutyAndHonorWon = variables.createVariable("Duty and Honor");
-                //            var foulPlayWon = variables.createVariable("Foul Play");
-                //            var aMirrorDarklyWon = variables.createVariable("A Mirror Darkly");
-                //            var seaofHopeWon = variables.createVariable("Sea of Hope");
+
+                var dangerX9Won = variables.createVariable("Danger X 9");
                 var greenEarthCount = 0;
                 if (seaFortressWon.readDataBool() === false)
                 {
                     ret.push("Sea Fortress.map");
+                }
+                else
+                {
+                    greenEarthCount += 1;
+                }
+                if (drakesDilemmaWon.readDataBool() === false)
+                {
+                    ret.push("Drake's Dilemma.map");
+                }
+                else
+                {
+                    greenEarthCount += 1;
+                }
+                if (sinkingFeelingWon.readDataBool() === false)
+                {
+                    ret.push("Sinking Feeling.map");
                 }
                 else
                 {
@@ -326,6 +342,20 @@ var Constructor = function()
                     {
                         greenEarthCount += 1;
                     }
+                    if (totheRescueWon.readDataBool() === false)
+                    {
+                        ret.push("To the Rescue.map");
+                    }
+                    else
+                    {
+                        greenEarthCount += 1;
+                    }
+
+                }
+                if (geLabFound.readDataBool() === true &&
+                    dangerX9Won.readDataBool() === false)
+                {
+                    ret.push("Danger X 9.map");
                 }
                 if (greenEarthCount >= 4)
                 {
@@ -333,6 +363,7 @@ var Constructor = function()
                 }
             }
         }
+
         ret.push("Great Sea Battle.map");
         ret.push("Hot Pursuit.map");
         ret.push("Last Mission.map");
