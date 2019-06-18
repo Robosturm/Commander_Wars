@@ -55,25 +55,45 @@ var Constructor = function()
     this.startOfTurn = function(building)
     {
         // do some fire action here
+        if (building.getFireCount() === 0)
+        {
+            var targetOffset = building.getActionTargetOffset();
+            var x = building.getX() + targetOffset.x;
+            var y = building.getY() + targetOffset.y;
+            // we get called at the start of a new day
+            // for now we fire at random :)
+            var shotCount = 10;
+
+            var targets = [];
+            var targetFields = building.getActionTargetFields();
+            for (var i = 0; i < shotCount; i++)
+            {
+                var targetPos = globals.randInt(0, targetFields.size() - 1);
+                var target = Qt.point(targetFields.at(targetPos).x + x, targetFields.at(targetPos).y + y);
+                if (map.onMap(target.x, target.y))
+                {
+                    targets.push(target);
+                }
+            }
+            targetFields.remove();
+            ZVOLCAN.volcanFire(building, targets, 1000);
+        }
+    };
+
+    this.volcanFire = function(building, targets, delay)
+    {
         var targetOffset = building.getActionTargetOffset();
         var x = building.getX() + targetOffset.x;
         var y = building.getY() + targetOffset.y;
         var animation = GameAnimationFactory.createAnimation(x, y - 4);
-        animation.addSprite("volcan_eruption", 0, 0, 0, 1.5);
-        // we get called at the start of a new day
-        // for now we fire at random :)
-        var shotCount = 10;
-        ZVOLCAN.targetFields = [];
+        animation.addSprite("volcan_eruption", 0, 0, 0, 1.5, delay);
         var animation2 = null;
         var animation3 = null;
-        var targetFields = building.getActionTargetFields();
-        for (var i = 0; i < shotCount; i++)
+        for (var i = 0; i < targets.length; i++)
         {
-            var targetPos = globals.randInt(0, targetFields.size() - 1);
-            var target = Qt.point(targetFields.at(targetPos).x + x, targetFields.at(targetPos).y + y);
+            var target = targets[i];
             if (map.onMap(target.x, target.y))
             {
-                ZVOLCAN.targetFields.push(target);
                 animation2 = GameAnimationFactory.createAnimation(target.x, target.y - 3);
                 animation2.addSprite("volcan_fireball", 0, -map.getImageSize() * 1, 400, 1.5);
                 animation2.addTweenPosition(Qt.point(target.x * map.getImageSize(), target.y * map.getImageSize()), 400);
@@ -81,30 +101,12 @@ var Constructor = function()
                 animation3 = GameAnimationFactory.createAnimation(target.x, target.y);
                 animation3.addSprite("volcan_hit", -map.getImageSize() / 2, -map.getImageSize() * 1.5, 0, 1.5);
                 animation2.queueAnimation(animation3);
+                animation3.writeDataInt32(target.x);
+                animation3.writeDataInt32(target.y);
+                animation3.writeDataInt32(5);
+                animation3.setEndOfAnimationCall("ANIMATION", "postAnimationDamageKill");
             }
         }
-        if (animation3 !== null)
-        {
-            animation3.setEndOfAnimationCall("ZVOLCAN", "postAnimationDamage");
-        }
-        targetFields.remove();
-    };
-    this.targetFields = [];
-    this.postAnimationDamage = function(postAnimation)
-    {
-        for (var i = 0; i < ZVOLCAN.targetFields.length; i++)
-        {
-            var unit = map.getTerrain(ZVOLCAN.targetFields[i].x, ZVOLCAN.targetFields[i].y).getUnit();
-            if (unit !== null)
-            {
-                unit.setHp(unit.getHpRounded() - 5);
-                if (unit.getHp() <= 0)
-                {
-                    unit.killUnit();
-                }
-            }
-        }
-        ZVOLCAN.targetFields = [];
     };
 }
 

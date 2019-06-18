@@ -303,8 +303,7 @@ var Constructor = function()
                 var drakesDilemmaWon = variables.createVariable("Drake's Dilemma");
                 var sinkingFeelingWon = variables.createVariable("Sinking Feeling");
                 var totheRescueWon = variables.createVariable("To the Rescue");
-
-
+                var rainofFireWon = variables.createVariable("Rain of Fire");
                 var dangerX9Won = variables.createVariable("Danger X 9");
                 var greenEarthCount = 0;
                 if (seaFortressWon.readDataBool() === false)
@@ -350,6 +349,14 @@ var Constructor = function()
                     {
                         greenEarthCount += 1;
                     }
+                    if (rainofFireWon.readDataBool() === false)
+                    {
+                        ret.push("Rain of Fire.map");
+                    }
+                    else
+                    {
+                        greenEarthCount += 1;
+                    }
 
                 }
                 if (geLabFound.readDataBool() === true &&
@@ -365,8 +372,6 @@ var Constructor = function()
         }
 
         ret.push("Great Sea Battle.map");
-        ret.push("Hot Pursuit.map");
-        ret.push("Last Mission.map");
         ret.push("Factory Blues.map");
         ret.push("The Hunt's End.map");
         // bh
@@ -565,6 +570,33 @@ var Constructor = function()
             }
         }
         return "";
+    };
+    this.setArmyData = function(player, army)
+    {
+        if (army === "OS")
+        {
+            var osList = campaignScript.getOSBuildList();
+            map.getPlayer(player).setBuildList(osList);
+            map.getPlayer(player).setColor(PLAYER.getDefaultColor(0));
+        }
+        else if (army === "BM")
+        {
+            var bmList = campaignScript.getBMBuildList();
+            map.getPlayer(player).setBuildList(bmList);
+            map.getPlayer(player).setColor(PLAYER.getDefaultColor(1));
+        }
+        else if (army === "GE")
+        {
+            var geList = campaignScript.getGEBuildList();
+            map.getPlayer(player).setBuildList(geList);
+            map.getPlayer(player).setColor(PLAYER.getDefaultColor(2));
+        }
+        else if (army === "YC")
+        {
+            var ycList = campaignScript.getYCBuildList();
+            map.getPlayer(player).setBuildList(ycList);
+            map.getPlayer(player).setColor(PLAYER.getDefaultColor(3));
+        }
     };
 };
 

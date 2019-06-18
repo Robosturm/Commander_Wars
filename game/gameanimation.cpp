@@ -81,7 +81,7 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
         oxygine::spSprite pSprite = new oxygine::Sprite();
 
         oxygine::spTweenQueue queuedAnim = new oxygine::TweenQueue();
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * m_frameTime, 1, false, delay);
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * m_frameTime, 1, false, delay / static_cast<qint32>(Settings::getAnimationSpeed()));
         queuedAnim->add(tween);
         if (sleepAfterFinish > 0)
         {
