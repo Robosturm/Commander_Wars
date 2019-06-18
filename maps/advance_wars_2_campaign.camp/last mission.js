@@ -501,7 +501,6 @@ var Constructor = function()
         var dialog24 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Ohmigosh! We've just received report of a giant laser blocking the platform!"),
                     "co_colin", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-
         var dialog25 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("That would explain why the old boy was so doggone sure of himself."),
                     "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
