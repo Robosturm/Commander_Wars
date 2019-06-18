@@ -120,6 +120,64 @@ var Constructor = function()
         {
             gameScript.initDialog();
         }
+
+        // factory spawning comes here
+        if (turn === 1 && player === 2)
+        {
+            map.spawnUnit(8, 6, "MECH", map.getPlayer(2), 0);
+        }
+        else if (turn === 2 && player === 2)
+        {
+            map.spawnUnit(7, 6, "RECON", map.getPlayer(2), 0);
+            map.spawnUnit(8, 6, "RECON", map.getPlayer(2), 0);
+            map.spawnUnit(9, 6, "RECON", map.getPlayer(2), 0);
+        }
+        else if (turn === 4 && player === 2)
+        {
+            map.spawnUnit(8, 6, "LIGHT_TANK", map.getPlayer(2), 0);
+            map.spawnUnit(9, 6, "ARTILLERY", map.getPlayer(2), 0);
+        }
+        else if (turn === 5 && player === 2)
+        {
+            map.spawnUnit(9, 6, "HEAVY_TANK", map.getPlayer(2), 0);
+        }
+        else if (turn === 7 && player === 2)
+        {
+            map.spawnUnit(9, 6, "INFANTRY", map.getPlayer(2), 0);
+        }
+        else if (turn === 8 && player === 2)
+        {
+            map.spawnUnit(8, 6, "NEOTANK", map.getPlayer(2), 0);
+        }
+        else if (turn === 11 && player === 2)
+        {
+            map.spawnUnit(8, 6, "FLAK", map.getPlayer(2), 0);
+        }
+        else if (turn > 11 && player === 2)
+        {
+            gameScript.spawnFactory();
+        }
+
+    };
+
+    this.spawnFactory = function()
+    {
+        var amount = globals.randInt(0, 5);
+        if (amount <= 4)
+        {
+            amount = 0;
+        }
+        else
+        {
+            amount = 1;
+        }
+        for (var i = 0; i <= amount; i++)
+        {
+            var units = ["LIGHT_TANK", "FLAK", "ARTILLERY", "MECH", "HEAVY_TANK", "INFANTRY"];
+            var index = globals.randInt(0, 5);
+            var pos = globals.randInt(0, 2);
+            map.spawnUnit(7 + pos, 6, units[index], map.getPlayer(2), 0);
+        }
     };
 
     this.initDialog = function()

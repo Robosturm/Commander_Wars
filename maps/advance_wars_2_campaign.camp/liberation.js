@@ -235,7 +235,8 @@ var Constructor = function()
     {
         var units = ["LIGHT_TANK", "FLAK", "ARTILLERY", "MECH"];
         var index = globals.randInt(0, 3);
-        map.spawnUnit(5, 6, units[index], map.getPlayer(1), 0);
+        var pos = globals.randInt(0, 2);
+        map.spawnUnit(4 + pos, 6, units[index], map.getPlayer(1), 0);
     };
 
     this.day2Dialog = function()
