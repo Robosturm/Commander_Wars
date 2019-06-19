@@ -370,10 +370,6 @@ var Constructor = function()
                 }
             }
         }
-
-        ret.push("Great Sea Battle.map");
-        ret.push("Factory Blues.map");
-        ret.push("The Hunt's End.map");
         // bh
         if (greatSeaBattleWon.readDataBool() === true)
         {

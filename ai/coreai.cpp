@@ -397,8 +397,8 @@ void CoreAI::getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVect
             else
             {
                 if ((enableNeutralTerrainAttack && pTerrain->getHp() > 0) ||
-                    pTerrain->getBuilding()->getOwner() != nullptr ||
-                    (enableNeutralTerrainAttack && pTerrain->getBuilding()->getOwner() == nullptr))
+                    (pTerrain->getBuilding() != nullptr && pTerrain->getBuilding()->getOwner() != nullptr) ||
+                    (enableNeutralTerrainAttack && pTerrain->getBuilding() != nullptr && pTerrain->getBuilding()->getOwner() == nullptr))
                 {
                     ret.append(QVector4D(target.x(), target.y(), static_cast<float>(damage.x()) * buildingValue, damage.x()));
                     QPoint point = pAction->getActionTarget();

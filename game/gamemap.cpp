@@ -17,6 +17,8 @@
 
 #include "game/unit.h"
 
+#include "gameinput/humanplayerinput.h"
+
 #include "game/building.h"
 
 #include "game/player.h"
@@ -1230,6 +1232,10 @@ void GameMap::initPlayers()
     for (qint32 i = 0; i < getPlayerCount(); i++)
     {
         Player* pPlayer = GameMap::getInstance()->getPlayer(i);
+        if (pPlayer->getBaseGameInput() == nullptr)
+        {
+            pPlayer->setBaseGameInput(new HumanPlayerInput());
+        }
         // resolve CO 1 beeing set and CO 0 not
         if ((pPlayer->getCO(0) == nullptr) &&
             (pPlayer->getCO(1) != nullptr))

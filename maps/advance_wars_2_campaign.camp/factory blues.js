@@ -162,15 +162,21 @@ var Constructor = function()
 
     this.spawnFactory = function()
     {
+        // first deal with the spawning count
         var amount = globals.randInt(0, 5);
-        if (amount <= 4)
+        if (amount <= 4 && amount >= 2)
         {
             amount = 0;
         }
-        else
+        else if (amount === 5)
         {
             amount = 1;
         }
+        else
+        {
+            amount = -1;
+        }
+        // than spawn some random units :)
         for (var i = 0; i <= amount; i++)
         {
             var units = ["LIGHT_TANK", "FLAK", "ARTILLERY", "MECH", "HEAVY_TANK", "INFANTRY"];

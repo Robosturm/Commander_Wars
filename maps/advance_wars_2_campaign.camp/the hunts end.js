@@ -103,6 +103,105 @@ var Constructor = function()
         {
             gameScript.initDialog();
         }
+        // factory spawning comes here
+        if (turn === 1 && player === 2)
+        {
+            map.spawnUnit(25, 6, "T_HELI", map.getPlayer(2), 0);
+        }
+        else if (turn === 2 && player === 2)
+        {
+             map.spawnUnit(24, 6, "BATTLESHIP", map.getPlayer(2), 0);
+        }
+        else if (turn === 3 && player === 2)
+        {
+            map.spawnUnit(24, 6, "K_HELI", map.getPlayer(2), 0);
+            map.spawnUnit(25, 6, "K_HELI", map.getPlayer(2), 0);
+            map.spawnUnit(26, 6, "T_HELI", map.getPlayer(2), 0);
+        }
+        else if (turn === 5 && player === 2)
+        {
+            map.spawnUnit(26, 6, "HEAVY_TANK", map.getPlayer(2), 0);
+        }
+        else if (turn === 8 && player === 2)
+        {
+            map.spawnUnit(24, 6, "K_HELI", map.getPlayer(2), 0);
+            map.spawnUnit(25, 6, "K_HELI", map.getPlayer(2), 0);
+            map.spawnUnit(26, 6, "T_HELI", map.getPlayer(2), 0);
+        }
+        else if (turn === 9 && player === 2)
+        {
+            map.spawnUnit(24, 6, "SUBMARINE", map.getPlayer(2), 0);
+        }
+        else if (turn === 10 && player === 2)
+        {
+            map.spawnUnit(8, 6, "NEOTANK", map.getPlayer(2), 0);
+        }
+        else if (turn === 11 && player === 2)
+        {
+            map.spawnUnit(25, 6, "BATTLESHIP", map.getPlayer(2), 0);
+            map.spawnUnit(26, 6, "MECH", map.getPlayer(2), 0);
+        }
+        else if (turn === 13 && player === 2)
+        {
+            map.spawnUnit(26, 6, "FLAK", map.getPlayer(2), 0);
+        }
+        else if (turn === 14 && player === 2)
+        {
+            map.spawnUnit(24, 6, "BATTLESHIP", map.getPlayer(2), 0);
+            map.spawnUnit(25, 6, "CRUISER", map.getPlayer(2), 0);
+            map.spawnUnit(26, 6, "HEAVY_TANK", map.getPlayer(2), 0);
+        }
+        else if (turn === 16 && player === 2)
+        {
+            map.spawnUnit(26, 6, "NEOTANK", map.getPlayer(2), 0);
+        }
+
+        else if (turn === 18 && player === 2)
+        {
+            var unit = map.spawnUnit(24, 6, "CRUISER", map.getPlayer(2), 0);
+            // make cruiser a hold position unit after spawn
+            if (unit !== null)
+            {
+                unit.setAiMode(GameEnums.GameAi_Defensive);
+            }
+            map.spawnUnit(26, 6, "LIGHT_TANK", map.getPlayer(2), 0);
+        }
+        else if (turn === 19 && player === 2)
+        {
+            map.spawnUnit(26, 6, "FLAK", map.getPlayer(2), 0);
+        }
+        else if (turn > 19 && player === 2)
+        {
+            // end of fixed scripted spawn random spawn happens now
+            gameScript.spawnFactory();
+        }
+
+    };
+
+    this.spawnFactory = function()
+    {
+        // first deal with the spawning count
+        var amount = globals.randInt(0, 5);
+        if (amount <= 4 && amount >= 2)
+        {
+            amount = 0;
+        }
+        else if (amount === 5)
+        {
+            amount = 1;
+        }
+        else
+        {
+            amount = -1;
+        }
+        // than spawn some random units :)
+        for (var i = 0; i <= amount; i++)
+        {
+            var units = ["LIGHT_TANK", "FLAK", "ARTILLERY", "MECH", "HEAVY_TANK", "INFANTRY", "K_HELI", "T_HELI"];
+            var index = globals.randInt(0, 7);
+            var pos = globals.randInt(0, 2);
+            map.spawnUnit(24 + pos, 6, units[index], map.getPlayer(2), 0);
+        }
     };
 
     this.initDialog = function()

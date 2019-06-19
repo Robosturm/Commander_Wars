@@ -16,42 +16,49 @@ var Constructor = function()
     {
         if (team === 0)
         {
-            // called when a player wins
             var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr(" I think that answers that question. "),
-                        "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                        qsTr("The Black Cannons were destroyed. Useless hunks of--"),
+                        "co_hawke", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
             var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Aaaah... I lost. Oh well, I still have plenty of pieces to play with. "),
-                        "co_lash", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
+                        qsTr("We'll withdraw for the moment. Adjust our preparations."),
+                        "co_hawke", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
             var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr(" P-Pieces?! I can't believe you said that! This isn't a game! You're not on some kind of playground! "),
-                        "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));            
+                        qsTr("Commander Kanbei!"),
+                        "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
             var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Oh, but it IS a game. A wonderfully fun game between you and me! I know you feel the same way. Come on, you can tell me. "),
-                        "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
+                        qsTr("Ah, Commander Drake. I am pleased to see you unharmed."),
+                        "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
             var dialog5 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Don't... Don't be silly... I'm... nothing like you, Lash."),
-                        "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                        qsTr("You have our gratitude for the reinforcements. I believe we might have gone down with our ships if you hadn't come."),
+                        "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
             var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("You're exactly like me. You and I. We're the same. You're always thinking about it, right? Which move will bring victory? You enjoy war like a good game of chess. "),
-                        "co_Lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
+                        qsTr("Nonsense. Even surrounded, I believe you would have turned the tables and emerged victorious. We simply sped the process up a bit."),
+                        "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
             var dialog7 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("......"),
-                        "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                        qsTr("Thanks for the vote of confidence."),
+                        "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
             var dialog8 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("We're not different at all, Sonja. You'll feel it someday, the joy that war brings. Wait... You feel it now, don't you? Oh, Sonja! Tee hee hee! Toodles! "),
-                        "co_Lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
+                        qsTr("I would like to battle at your side again someday."),
+                        "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
             var dialog9 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Wait! Hold it! Am I really... like you? I won't become you, Lash. I can't... "),
-                        "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+                        qsTr("The feeling's mutual. Maybe when we're storming Black Hole's fortress..."),
+                        "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
+            var dialog10 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("May that day come soon. Until then, good-bye."),
+                        "co_kanbei", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
+            var dialog11 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Good-bye!"),
+                        "co_drake", GameEnums.COMood_Happy, PLAYER.getDefaultColor(2));
             dialog1.queueAnimation(dialog2);
             dialog2.queueAnimation(dialog3);
             dialog3.queueAnimation(dialog4);
             dialog4.queueAnimation(dialog5);
             dialog5.queueAnimation(dialog6);
-            dialog5.queueAnimation(dialog7);
-            dialog5.queueAnimation(dialog8);
-            dialog5.queueAnimation(dialog9);
+            dialog6.queueAnimation(dialog7);
+            dialog7.queueAnimation(dialog8);
+            dialog8.queueAnimation(dialog9);
+            dialog9.queueAnimation(dialog10);
+            dialog10.queueAnimation(dialog11);
         }
     };
     this.gameStart = function()
@@ -74,8 +81,8 @@ var Constructor = function()
     };
     this.actionDone = function()
     {
-        var blackCannon1 = map.getTerrain(24, 1).getBuilding();
-        var blackCannon2 = map.getTerrain(24, 7).getBuilding();
+        var blackCannon1 = map.getTerrain(2, 23).getBuilding();
+        var blackCannon2 = map.getTerrain(6, 23).getBuilding();
         if ((blackCannon1 === null || blackCannon1.getBuildingID() === "ZBLACK_BUILDING_DESTROYED") &&
             (blackCannon2 === null || blackCannon2.getBuildingID() === "ZBLACK_BUILDING_DESTROYED"))
         {
