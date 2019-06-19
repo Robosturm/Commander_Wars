@@ -375,7 +375,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="80"/>
+        <location filename="../objects/buildlistdialog.cpp" line="67"/>
+        <source>Commander Wars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/buildlistdialog.cpp" line="68"/>
+        <source>Advance Wars DoR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/buildlistdialog.cpp" line="69"/>
+        <source>Advance Wars DS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/buildlistdialog.cpp" line="70"/>
+        <source>Advance Wars 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/buildlistdialog.cpp" line="71"/>
+        <source>Advance Wars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/buildlistdialog.cpp" line="90"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>

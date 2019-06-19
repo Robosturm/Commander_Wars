@@ -52,7 +52,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     });
 
     m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 150);
-    m_ToggleAll->setPosition(pApp->getSettings()->getWidth() / 2 - m_ToggleAll->getWidth() / 2 , pApp->getSettings()->getHeight() - 30 - m_ToggleAll->getHeight());
+    m_ToggleAll->setPosition(pApp->getSettings()->getWidth() / 2 + 60 , pApp->getSettings()->getHeight() - 30 - m_ToggleAll->getHeight());
     pSpriteBox->addChild(m_ToggleAll);
     m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -63,6 +63,16 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
             emit m_Checkboxes[i]->checkChanged(toggle);
         }
     });
+
+    m_PredefinedLists = new DropDownmenu(230, {tr("Commander Wars"),
+                                               tr("Advance Wars DoR"),
+                                               tr("Advance Wars DS"),
+                                               tr("Advance Wars 2"),
+                                               tr("Advance Wars")}, true);
+
+    m_PredefinedLists->setPosition(pApp->getSettings()->getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), pApp->getSettings()->getHeight() - 30 - m_ToggleAll->getHeight());
+    pSpriteBox->addChild(m_PredefinedLists);
+    connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &BuildListDialog::setBuildlist, Qt::QueuedConnection);
 
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);
@@ -138,4 +148,62 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
         x += 280;
     }
     pPanel->setContentHeigth(y);
+}
+
+void BuildListDialog::setBuildlist(qint32 item)
+{
+    QStringList data;
+    if (item == 0) // Commander Wars
+    {
+        data = QStringList({QString("APC"), QString("ARTILLERY"), QString("BATTLESHIP"), QString("BOMBER"), QString("CRUISER"), QString("FIGHTER"), QString("FLAK"),
+                QString("HEAVY_TANK"), QString("INFANTRY"), QString("K_HELI"), QString("LANDER"), QString("LIGHT_TANK"), QString("MECH"), QString("MISSILE"),
+                QString("RECON"), QString("ROCKETTHROWER"), QString("SUBMARINE"), QString("T_HELI"), QString("NEOTANK"), QString("MEGATANK"),
+                QString("AIRCRAFTCARRIER"), QString("ANTITANKCANNON"), QString("CANNONBOAT"), QString("DUSTER"), QString("FLARE"),
+                QString("MOTORBIKE"), QString("WATERPLANE"), QString("BLACK_BOAT"), QString("BLACK_BOMB"), QString("PIPERUNNER"),
+                QString("STEALTHBOMBER"), QString("DESTROYER"), QString("HEAVY_HOVERCRAFT"), QString("HOVERCRAFT"),
+                QString("HOVERFLAK"), QString("TRANSPORTPLANE"), QString("HOELLIUM")});
+    }
+    else if (item == 1) // advance wars dc
+    {
+        data = QStringList({QString("APC"), QString("ARTILLERY"), QString("BATTLESHIP"), QString("BOMBER"), QString("CRUISER"), QString("FIGHTER"), QString("FLAK"),
+                QString("HEAVY_TANK"), QString("INFANTRY"), QString("K_HELI"), QString("LANDER"), QString("LIGHT_TANK"), QString("MECH"), QString("MISSILE"),
+                QString("RECON"), QString("ROCKETTHROWER"), QString("SUBMARINE"), QString("T_HELI"), QString("NEOTANK"), QString("MEGATANK"),
+                QString("AIRCRAFTCARRIER"), QString("ANTITANKCANNON"), QString("CANNONBOAT"), QString("DUSTER"), QString("FLARE"),
+                QString("MOTORBIKE"), QString("WATERPLANE")});
+    }
+    else if (item == 2) // advance wars ds
+    {
+        data = QStringList({QString("APC"), QString("ARTILLERY"), QString("BATTLESHIP"), QString("BOMBER"), QString("CRUISER"), QString("FIGHTER"), QString("FLAK"),
+                QString("HEAVY_TANK"), QString("INFANTRY"), QString("K_HELI"), QString("LANDER"), QString("LIGHT_TANK"), QString("MECH"), QString("MISSILE"),
+                QString("RECON"), QString("ROCKETTHROWER"), QString("SUBMARINE"), QString("T_HELI"), QString("NEOTANK"), QString("MEGATANK"),
+                QString("AIRCRAFTCARRIER"), QString("BLACK_BOAT"), QString("BLACK_BOMB"), QString("PIPERUNNER"), QString("STEALTHBOMBER")});
+    }
+    else if (item == 3) // advance wars 2
+    {
+        data = QStringList({QString("APC"), QString("ARTILLERY"), QString("BATTLESHIP"), QString("BOMBER"), QString("CRUISER"), QString("FIGHTER"), QString("FLAK"),
+                QString("HEAVY_TANK"), QString("INFANTRY"), QString("K_HELI"), QString("LANDER"), QString("LIGHT_TANK"), QString("MECH"), QString("MISSILE"),
+                QString("RECON"), QString("ROCKETTHROWER"), QString("SUBMARINE"), QString("T_HELI"), QString("NEOTANK")});
+    }
+    else if (item == 4)  // advance wars
+    {
+        data = QStringList({QString("APC"), QString("ARTILLERY"), QString("BATTLESHIP"), QString("BOMBER"), QString("CRUISER"), QString("FIGHTER"), QString("FLAK"),
+                QString("HEAVY_TANK"), QString("INFANTRY"), QString("K_HELI"), QString("LANDER"), QString("LIGHT_TANK"), QString("MECH"), QString("MISSILE"),
+                QString("RECON"), QString("ROCKETTHROWER"), QString("SUBMARINE"), QString("T_HELI")});
+    }
+
+
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+    {
+        if (data.contains(pUnitSpriteManager->getUnitID(i)))
+        {
+            m_Checkboxes[i]->setChecked(true);
+            emit m_Checkboxes[i]->checkChanged(true);
+        }
+        else
+        {
+            m_Checkboxes[i]->setChecked(false);
+            emit m_Checkboxes[i]->checkChanged(false);
+        }
+    }
 }

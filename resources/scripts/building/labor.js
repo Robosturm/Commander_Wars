@@ -19,6 +19,16 @@ var Constructor = function()
     {
         return qsTr("Labor");
     };
+    this.getActions = function()
+    {
+        // returns a string id list of the actions this building can perform
+        return "ACTION_BUILD_UNITS";
+    };
+
+    this.getConstructionList = function(building)
+    {
+        return ["HOELLIUM"];
+    };
 }
 
 Constructor.prototype = BUILDING;
