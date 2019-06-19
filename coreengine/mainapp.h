@@ -59,12 +59,7 @@ public:
     inline AudioThread* getAudioThread()
     {
         return m_Audiothread;
-    }
-
-    inline Settings* getSettings()
-    {
-        return &m_Settings;
-    }
+    }    
 
     void setup();
     static bool getUseSeed();
@@ -104,6 +99,10 @@ signals:
     void sigConsoleKeyUp(SDL_Event event);
 
 public slots:
+    inline Settings* getSettings()
+    {
+        return &m_Settings;
+    }
     void update();
     static void seed(quint32 seed);
     static qint32 randInt(qint32 low, qint32 high);

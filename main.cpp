@@ -149,6 +149,8 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<GameScript>("GameScript");
     qmlRegisterInterface<Campaign>("Campaign");
     qmlRegisterInterface<BaseGameInputIF>("BaseGameInputIF");
+    qmlRegisterInterface<Settings>("Settings");
+
     // load ressources
     BackgroundManager::getInstance();
     BuildingSpriteManager::getInstance();

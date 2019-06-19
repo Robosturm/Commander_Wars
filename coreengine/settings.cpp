@@ -55,6 +55,7 @@ Settings* Settings::m_pInstance = nullptr;
 
 Settings::Settings()
 {
+    Interpreter::setCppOwnerShip(this);
     loadSettings();
 }
 

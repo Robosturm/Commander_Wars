@@ -35,7 +35,7 @@ var Constructor = function()
         var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
-        var unitInfantryIDs = ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
+        var unitInfantryIDs = CO_SAMI.getInfantryIDs();
         units.randomize();
         for (var i = 0; i < units.size(); i++)
         {
@@ -78,7 +78,7 @@ var Constructor = function()
         var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
-        var unitInfantryIDs = ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
+        var unitInfantryIDs = CO_SAMI.getInfantryIDs();
         units.randomize();
         for (var i = 0; i < units.size(); i++)
         {
@@ -121,10 +121,15 @@ var Constructor = function()
     {
         return "OS";
     };
+    this.getInfantryIDs = function()
+    {
+        return ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
+    };
+
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var unitInfantryIDs = ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
+        var unitInfantryIDs = CO_SAMI.getInfantryIDs();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
@@ -205,7 +210,7 @@ var Constructor = function()
         {
             return 1;
         }
-        var unitInfantryIDs = ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
+        var unitInfantryIDs = CO_SAMI.getInfantryIDs();
         if (unitInfantryIDs.indexOf(unit.getUnitID()) >= 0)
         {
             switch (co.getPowerMode())

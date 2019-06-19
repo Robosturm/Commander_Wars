@@ -32,7 +32,7 @@ public:
     static QString getLastSaveGame();
     static void setLastSaveGame(const QString &LastSaveGame);
 
-    static QString getUsername();
+
     static void setUsername(const QString &Username);
 
     static bool getShowCursor();
@@ -42,6 +42,7 @@ public:
     static void setAutoEndTurn(bool AutoEndTurn);
 
 public slots:
+    static QString getUsername();
     inline static qint32 getX()
     {
         return m_x;

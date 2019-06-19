@@ -3,7 +3,7 @@ CO_SAMI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        var unitInfantryIDs = ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
+        var unitInfantryIDs = CO_SAMI.getInfantryIDs();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
@@ -79,7 +79,7 @@ CO_SAMI.getMovementpointModifier = function(co, unit, posX, posY)
         {
             return 1;
         }
-        var unitInfantryIDs = ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
+        var unitInfantryIDs = CO_SAMI.getInfantryIDs();
         if (unitInfantryIDs.indexOf(unit.getUnitID()) >= 0)
         {
             switch (co.getPowerMode())

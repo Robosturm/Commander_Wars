@@ -3,11 +3,12 @@ CO_MAX.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
+        var unitInfantryIDs = CO_MAX.getInfantryIDs();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (attacker.getBaseMaxRange() === 1)
+            if (attacker.getBaseMaxRange() === 1 && unitInfantryIDs.indexOf(unit.getUnitID())  < 0)
             {
                 return 70;
             }
@@ -17,7 +18,7 @@ CO_MAX.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             }
             return 10;
         case GameEnums.PowerMode_Power:
-            if (attacker.getBaseMaxRange() === 1)
+            if (attacker.getBaseMaxRange() === 1 && unitInfantryIDs.indexOf(unit.getUnitID())  < 0)
             {
                 return 45;
             }
@@ -27,7 +28,7 @@ CO_MAX.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             }
             return 10;
         default:
-            if (attacker.getBaseMaxRange() === 1)
+            if (attacker.getBaseMaxRange() === 1 && unitInfantryIDs.indexOf(unit.getUnitID())  < 0)
             {
                 return 20;
             }
@@ -70,9 +71,10 @@ CO_MAX.getMovementpointModifier = function(co, unit, posX, posY)
 {
     if (co.getIsCO0() === true)
     {
+        var unitInfantryIDs = CO_MAX.getInfantryIDs();
         if (co.getPowerMode() === GameEnums.PowerMode_Power)
         {
-            if (unit.getBaseMaxRange() === 1)
+            if (unit.getBaseMaxRange() === 1 && unitInfantryIDs.indexOf(unit.getUnitID())  < 0)
             {
                 return 1;
             }
@@ -80,7 +82,7 @@ CO_MAX.getMovementpointModifier = function(co, unit, posX, posY)
         else if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
                  co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
-            if (unit.getBaseMaxRange() === 1)
+            if (unit.getBaseMaxRange() === 1 && unitInfantryIDs.indexOf(unit.getUnitID())  < 0)
             {
                 return 2;
             }

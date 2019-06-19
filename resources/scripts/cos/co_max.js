@@ -114,14 +114,19 @@ var Constructor = function()
     {
         return 3;
     };
+    this.getInfantryIDs = function()
+    {
+        return ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
+    };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
+        var unitInfantryIDs = CO_MAX.getInfantryIDs();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (attacker.getBaseMaxRange() === 1)
+                if (attacker.getBaseMaxRange() === 1 && unitInfantryIDs.indexOf(attacker.getUnitID())  < 0)
                 {
                     return 70;
                 }                
@@ -131,7 +136,7 @@ var Constructor = function()
                 }
                 return 10;
             case GameEnums.PowerMode_Power:
-                if (attacker.getBaseMaxRange() === 1)
+                if (attacker.getBaseMaxRange() === 1 && unitInfantryIDs.indexOf(attacker.getUnitID())  < 0)
                 {
                     return 45;
                 }
@@ -142,7 +147,7 @@ var Constructor = function()
                 }
                 return 10;
             default:
-                if (attacker.getBaseMaxRange() === 1)
+                if (attacker.getBaseMaxRange() === 1 && unitInfantryIDs.indexOf(attacker.getUnitID())  < 0)
                 {
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
@@ -181,9 +186,10 @@ var Constructor = function()
     };
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
+        var unitInfantryIDs = CO_MAX.getInfantryIDs();
         if (co.getPowerMode() === GameEnums.PowerMode_Power)
         {
-            if (unit.getBaseMaxRange() === 1)
+            if (unit.getBaseMaxRange() === 1 && unitInfantryIDs.indexOf(unit.getUnitID())  < 0)
             {
                 return 1;
             }
@@ -191,7 +197,7 @@ var Constructor = function()
         else if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
                  co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
-            if (unit.getBaseMaxRange() === 1)
+            if (unit.getBaseMaxRange() === 1 && unitInfantryIDs.indexOf(unit.getUnitID())  < 0)
             {
                 return 2;
             }

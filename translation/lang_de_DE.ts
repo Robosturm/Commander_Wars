@@ -1963,58 +1963,58 @@
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="69"/>
-        <location filename="../coreengine/settings.cpp" line="79"/>
-        <location filename="../coreengine/settings.cpp" line="85"/>
-        <location filename="../coreengine/settings.cpp" line="91"/>
-        <location filename="../coreengine/settings.cpp" line="97"/>
-        <location filename="../coreengine/settings.cpp" line="109"/>
-        <location filename="../coreengine/settings.cpp" line="115"/>
-        <location filename="../coreengine/settings.cpp" line="122"/>
-        <location filename="../coreengine/settings.cpp" line="129"/>
-        <location filename="../coreengine/settings.cpp" line="136"/>
-        <location filename="../coreengine/settings.cpp" line="143"/>
-        <location filename="../coreengine/settings.cpp" line="150"/>
-        <location filename="../coreengine/settings.cpp" line="157"/>
-        <location filename="../coreengine/settings.cpp" line="164"/>
-        <location filename="../coreengine/settings.cpp" line="171"/>
-        <location filename="../coreengine/settings.cpp" line="178"/>
-        <location filename="../coreengine/settings.cpp" line="185"/>
-        <location filename="../coreengine/settings.cpp" line="192"/>
-        <location filename="../coreengine/settings.cpp" line="199"/>
-        <location filename="../coreengine/settings.cpp" line="210"/>
-        <location filename="../coreengine/settings.cpp" line="217"/>
-        <location filename="../coreengine/settings.cpp" line="224"/>
-        <location filename="../coreengine/settings.cpp" line="235"/>
-        <location filename="../coreengine/settings.cpp" line="242"/>
+        <location filename="../coreengine/settings.cpp" line="70"/>
+        <location filename="../coreengine/settings.cpp" line="80"/>
+        <location filename="../coreengine/settings.cpp" line="86"/>
+        <location filename="../coreengine/settings.cpp" line="92"/>
+        <location filename="../coreengine/settings.cpp" line="98"/>
+        <location filename="../coreengine/settings.cpp" line="110"/>
+        <location filename="../coreengine/settings.cpp" line="116"/>
+        <location filename="../coreengine/settings.cpp" line="123"/>
+        <location filename="../coreengine/settings.cpp" line="130"/>
+        <location filename="../coreengine/settings.cpp" line="137"/>
+        <location filename="../coreengine/settings.cpp" line="144"/>
+        <location filename="../coreengine/settings.cpp" line="151"/>
+        <location filename="../coreengine/settings.cpp" line="158"/>
+        <location filename="../coreengine/settings.cpp" line="165"/>
+        <location filename="../coreengine/settings.cpp" line="172"/>
+        <location filename="../coreengine/settings.cpp" line="179"/>
+        <location filename="../coreengine/settings.cpp" line="186"/>
+        <location filename="../coreengine/settings.cpp" line="193"/>
+        <location filename="../coreengine/settings.cpp" line="200"/>
+        <location filename="../coreengine/settings.cpp" line="211"/>
+        <location filename="../coreengine/settings.cpp" line="218"/>
+        <location filename="../coreengine/settings.cpp" line="225"/>
+        <location filename="../coreengine/settings.cpp" line="236"/>
+        <location filename="../coreengine/settings.cpp" line="243"/>
         <source>Error in the Ini File: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/settings.cpp" line="69"/>
-        <location filename="../coreengine/settings.cpp" line="79"/>
-        <location filename="../coreengine/settings.cpp" line="85"/>
-        <location filename="../coreengine/settings.cpp" line="91"/>
-        <location filename="../coreengine/settings.cpp" line="97"/>
-        <location filename="../coreengine/settings.cpp" line="109"/>
-        <location filename="../coreengine/settings.cpp" line="115"/>
-        <location filename="../coreengine/settings.cpp" line="122"/>
-        <location filename="../coreengine/settings.cpp" line="129"/>
-        <location filename="../coreengine/settings.cpp" line="136"/>
-        <location filename="../coreengine/settings.cpp" line="143"/>
-        <location filename="../coreengine/settings.cpp" line="150"/>
-        <location filename="../coreengine/settings.cpp" line="157"/>
-        <location filename="../coreengine/settings.cpp" line="164"/>
-        <location filename="../coreengine/settings.cpp" line="171"/>
-        <location filename="../coreengine/settings.cpp" line="178"/>
-        <location filename="../coreengine/settings.cpp" line="185"/>
-        <location filename="../coreengine/settings.cpp" line="192"/>
-        <location filename="../coreengine/settings.cpp" line="199"/>
-        <location filename="../coreengine/settings.cpp" line="210"/>
-        <location filename="../coreengine/settings.cpp" line="217"/>
-        <location filename="../coreengine/settings.cpp" line="224"/>
-        <location filename="../coreengine/settings.cpp" line="235"/>
-        <location filename="../coreengine/settings.cpp" line="242"/>
+        <location filename="../coreengine/settings.cpp" line="70"/>
+        <location filename="../coreengine/settings.cpp" line="80"/>
+        <location filename="../coreengine/settings.cpp" line="86"/>
+        <location filename="../coreengine/settings.cpp" line="92"/>
+        <location filename="../coreengine/settings.cpp" line="98"/>
+        <location filename="../coreengine/settings.cpp" line="110"/>
+        <location filename="../coreengine/settings.cpp" line="116"/>
+        <location filename="../coreengine/settings.cpp" line="123"/>
+        <location filename="../coreengine/settings.cpp" line="130"/>
+        <location filename="../coreengine/settings.cpp" line="137"/>
+        <location filename="../coreengine/settings.cpp" line="144"/>
+        <location filename="../coreengine/settings.cpp" line="151"/>
+        <location filename="../coreengine/settings.cpp" line="158"/>
+        <location filename="../coreengine/settings.cpp" line="165"/>
+        <location filename="../coreengine/settings.cpp" line="172"/>
+        <location filename="../coreengine/settings.cpp" line="179"/>
+        <location filename="../coreengine/settings.cpp" line="186"/>
+        <location filename="../coreengine/settings.cpp" line="193"/>
+        <location filename="../coreengine/settings.cpp" line="200"/>
+        <location filename="../coreengine/settings.cpp" line="211"/>
+        <location filename="../coreengine/settings.cpp" line="218"/>
+        <location filename="../coreengine/settings.cpp" line="225"/>
+        <location filename="../coreengine/settings.cpp" line="236"/>
+        <location filename="../coreengine/settings.cpp" line="243"/>
         <source>Setting:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6475,102 +6475,102 @@
 <context>
     <name>co_max</name>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="205"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="211"/>
         <source>A brave and loyal friend, not to mention a strong fighter, Max hates any kind of treachery, preferring a good, old-fashioned brawl.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="209"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="215"/>
         <source>Weight Training</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="213"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="219"/>
         <source>Studying</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="217"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="223"/>
         <source>Non-infantry direct-combat units are tops.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="227"/>
         <source>Firepower and movement of all non-infantry direct-combat units rises.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="231"/>
         <source>Max Force</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="235"/>
         <source>Firepower and movement of all non-infantry direct-combat units rises greatly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="239"/>
         <source>Max Blast</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="243"/>
         <source>Roll, tanks, roll!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="244"/>
         <source>Now you&apos;re gonna get hurt!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="239"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="245"/>
         <source>Hey!  Give up while you still can!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="246"/>
         <source>Wanna test might?  I won&apos;t lose!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="247"/>
         <source>That&apos;s enough!  Get outta the road!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="248"/>
         <source>Alright, the gloves are comin&apos; off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="246"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="252"/>
         <source>That was a piece of cake!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="247"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="253"/>
         <source>Ha! It&apos;ll take more than that to beat me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="254"/>
         <source>I&apos;m on a roll!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="252"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="258"/>
         <source>Ouch... I let my guard down.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="253"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="259"/>
         <source>Oh, man! Not good! What are we supposed to do now!?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_max.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_max.js" line="263"/>
         <source>Max</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8256,102 +8256,102 @@
 <context>
     <name>co_sami</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="233"/>
         <source>A strong-willed Orange Star special forces captain who loves long hair. Despite having short hair. Whatever, IS.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="232"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="237"/>
         <source>Chocolate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="241"/>
         <source>Cowards</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="245"/>
         <source>As an infantry specialist, her foot soldiers do more damage and capture faster. Non-infantry direct-combat units have weaker firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="249"/>
         <source>Infantry units receive a movement bonus of one space. Their attack also increases. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="253"/>
         <source>Double Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="252"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="257"/>
         <source>All foot soldiers&apos;s capturing rate is doubled. Their movement is increased by two spaces and their attack increases greatly. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="261"/>
         <source>Victory March</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="260"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="265"/>
         <source>You&apos;re not bad!  Now it&apos;s my turn!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="261"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="266"/>
         <source>All right!  Time to end this!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="267"/>
         <source>Infantry... Assault!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="268"/>
         <source>Ready or not, here I come!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="269"/>
         <source>All right, it&apos;s make-or-break time!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="265"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="270"/>
         <source>Move out, grunts!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="274"/>
         <source>Mission accomplished! Awaiting orders!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="270"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="275"/>
         <source>Commandos always complete their mission.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="276"/>
         <source>Score one for the grunts!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="280"/>
         <source>Things would be easier if we had more infantry units...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="276"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="281"/>
         <source>Next time&apos;s for real. I won&apos;t lose focus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sami.js" line="280"/>
+        <location filename="../resources/scripts/cos/co_sami.js" line="285"/>
         <source>Sami</source>
         <translation type="unfinished"></translation>
     </message>
