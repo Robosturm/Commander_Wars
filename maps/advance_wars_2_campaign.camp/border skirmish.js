@@ -32,7 +32,7 @@ var Constructor = function()
                         "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
             var dialog7 = GameAnimationFactory.createGameAnimationDialog(
                         qsTr("I'm glad we can depend on you, Sami. "),
-                        "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+                        "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
             dialog1.queueAnimation(dialog2);
             dialog2.queueAnimation(dialog3);
             dialog3.queueAnimation(dialog4);
