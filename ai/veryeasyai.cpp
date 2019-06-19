@@ -68,6 +68,7 @@ void VeryEasyAI::process()
         else if (fireWithDirectUnits(pUnits)){}
         else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings)){}
         else if (loadUnits(pUnits)){}
+        else if (moveRepair(pUnits)){}
         else if (moveTransporters(pUnits, pEnemyUnits, pEnemyBuildings)){}
         else if (moveAwayFromProduction(pUnits)){}
         else if (buildUnits(pBuildings, pUnits)){}

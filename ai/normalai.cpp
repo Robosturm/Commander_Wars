@@ -65,6 +65,7 @@ void NormalAi::process()
             else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, 1)){}
             else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 2, std::numeric_limits<qint32>::max())){}            
             else if (loadUnits(pUnits, pBuildings, pEnemyBuildings)){}
+            else if (moveRepair(pUnits)){}
             else if (moveTransporters(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
             else if (moveAwayFromProduction(pUnits)){}
             else if (buildUnits(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings)){}

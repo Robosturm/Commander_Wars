@@ -132,6 +132,65 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
     return false;
 }
 
+bool CoreAI::moveRepair(QmlVectorUnit* pUnits)
+{
+    GameMap* pMap = GameMap::getInstance();
+    QVector<QVector3D> unitTargets;
+    QVector<QPoint> unitPos;
+    QmlVectorPoint* unitFields = Mainapp::getCircle(1, 1);
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pUnit = pUnits->at(i);
+        if (pUnit->getHpRounded() < 10 && pUnit->getUnitCosts() / 10 <= m_pPlayer->getFonds())
+        {
+            for (qint32 i2 = 0; i2 < unitFields->size(); i2++)
+            {
+                if (pMap->onMap(pUnit->getX() + unitFields->at(i2).x(), pUnit->getY() + unitFields->at(i2).y()))
+                {
+                    QVector3D point = QVector3D(pUnit->getX() + unitFields->at(i2).x(), pUnit->getY() + unitFields->at(i2).y(), 1);
+                    if (!unitTargets.contains(point))
+                    {
+                        unitTargets.append(point);
+                        unitPos.append(pUnit->getPosition());
+                    }
+                }
+            }
+        }
+    }
+    delete unitFields;
+
+
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pUnit = pUnits->at(i);
+        if (!pUnit->getHasMoved() && pUnit->getLoadedUnitCount() == 0)
+        {
+            if (pUnit->getActionList().contains(ACTION_REPAIR))
+            {
+                UnitPathFindingSystem turnPfs(pUnit);
+                turnPfs.explore();
+                QVector<QPoint> targets = turnPfs.getAllNodePoints();
+                GameAction* pAction = new GameAction(ACTION_REPAIR);
+                pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+
+                for (qint32 i2 = 0; i2 < targets.size(); i2++)
+                {
+                    qint32 index = CoreAI::index(unitTargets, targets[i2]);
+                    if (index >= 0)
+                    {
+                        addSelectedFieldData(pAction, unitPos[index]);
+                        pAction->setMovepath(turnPfs.getPath(targets[i2].x(), targets[i2].y()));
+                        performAction(pAction);
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+
 bool CoreAI::processPredefinedAi()
 {
     QmlVectorUnit* pUnits = m_pPlayer->getUnits();

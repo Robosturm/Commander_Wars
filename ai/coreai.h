@@ -114,6 +114,12 @@ public slots:
      * @return
      */
     bool moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits);
+    /**
+     * @brief moveRepair
+     * @param pUnits
+     * @return
+     */
+    bool moveRepair(QmlVectorUnit* pUnits);
 
     virtual void nextAction();
     /**

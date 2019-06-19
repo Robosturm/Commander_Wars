@@ -27,7 +27,7 @@ var Constructor = function()
     };
     this.getIcon = function()
     {
-        return "heal";
+        return "repair";
     };
     this.getStepInputType = function(action)
     {
