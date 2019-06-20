@@ -1295,57 +1295,57 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="308"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="314"/>
         <source>Enviroment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="329"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="335"/>
         <source>Random Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="340"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="346"/>
         <source>Start Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="355"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="361"/>
         <source>Gameplay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="361"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="367"/>
         <source>Unit Ranking System: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="372"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="378"/>
         <source>No CO Powers: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="383"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="389"/>
         <source>Fog Of War: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="386"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="392"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="386"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="392"/>
         <source>Fog of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="398"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="404"/>
         <source>Unit Limit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="411"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="417"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>

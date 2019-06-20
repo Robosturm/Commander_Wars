@@ -66,8 +66,6 @@ var Constructor = function()
         var turnLimit = map.getGameRules().getVictoryRule("VICTORYRULE_BUILDINGLIMIT");
         turnLimit.setRuleValue(12);
 
-
-
         var list = campaignScript.getBasicBuildList();
         map.getPlayer(0).setBuildList(list);
         map.getPlayer(1).setBuildList(list);

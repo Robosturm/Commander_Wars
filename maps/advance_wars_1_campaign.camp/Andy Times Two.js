@@ -175,7 +175,7 @@ var Constructor = function()
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog1 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Maelstrom come... All who oppose me..."),
-                    "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+                    "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
     };
 };
 

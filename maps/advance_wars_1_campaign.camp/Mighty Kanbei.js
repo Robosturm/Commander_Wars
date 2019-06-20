@@ -24,7 +24,6 @@ var Constructor = function()
 
             if (map.getCurrentDay() <= 10)
             {
-                // store neo tank data
                 var campaignVariables = map.getCampaign().getVariables();
                 var sonjaCounter = campaignVariables.createVariable("sonjaCounter");
                 sonjaCounter.writeDataInt32(sonjaCounter.readDataInt32() + 1);

@@ -23,7 +23,6 @@ var Constructor = function()
             dialog1.queueAnimation(dialog2);
             if (map.getCurrentDay() <= 12)
             {
-                // store neo tank data
                 var campaignVariables = map.getCampaign().getVariables();
                 var sonjaCounter = campaignVariables.createVariable("sonjaCounter");
                 sonjaCounter.writeDataInt32(sonjaCounter.readDataInt32() + 1);

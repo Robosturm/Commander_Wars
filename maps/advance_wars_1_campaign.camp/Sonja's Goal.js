@@ -92,11 +92,6 @@ var Constructor = function()
         map.getGameRules().addVictoryRule("VICTORYRULE_NOUNITS"); // win by destroying all units
         map.getGameRules().addVictoryRule("VICTORYRULE_NOHQ"); // win by capturing all hq's of a player
 
-        // set building limit to 16
-        map.getGameRules().addVictoryRule("VICTORYRULE_BUILDINGLIMIT");
-        var turnLimit = map.getGameRules().getVictoryRule("VICTORYRULE_BUILDINGLIMIT");
-        turnLimit.setRuleValue(16);
-
         var list = campaignScript.getBasicBuildList();
         map.getPlayer(0).setBuildList(list);
         map.getPlayer(1).setBuildList(list);

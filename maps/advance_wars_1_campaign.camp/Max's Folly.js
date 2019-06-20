@@ -4,7 +4,7 @@ var Constructor = function()
     {
         // called to check if the game should start immediatly without changing rules or modifying co's
         // return true for an immediate start
-        return false;
+        return true;
     };
 
     this.victory = function(team)
@@ -14,32 +14,44 @@ var Constructor = function()
             var playername = globals.getSettings().getUsername();
             // called when a player wins
             var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Grrrr... Not again!"),
-                        "co_olaf", GameEnums.COMood_Happy, PLAYER.getDefaultColor(1));
+                        qsTr("Ya...Yahoo!"),
+                        "co_max", GameEnums.COMood_Happy, PLAYER.getDefaultColor(0));
             var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("He will not be pleased with me if this losing streak continues."),
-                        "co_olaf", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-            var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Grit!"),
-                        "co_olaf", GameEnums.COMood_Happy, PLAYER.getDefaultColor(1));
-            var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Yep."),
+                        qsTr("You're awful beat up to be celebratin'."),
                         "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+            var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Well..."),
+                        "co_max", GameEnums.COMood_Happy, PLAYER.getDefaultColor(0));
+            var dialog4 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Yeah, exactly. You know, Maxie, you never were any good at indirect combat. Why, if you'd have just used those big boys a little more, you wouldn't have taken such a poundin'."),
+                        "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+
             var dialog5 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Get out there and stop that cursed Orange Star Army!"),
-                        "co_olaf", GameEnums.COMood_Sad, PLAYER.getDefaultColor(1));
+                        qsTr("Um..."),
+                        "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
             var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Easier said than done, Boss. You didn't leave me anything to work with."),
+                        qsTr("And long as I'm givin' you what-for, what's up with you and the kid? He ain't got your particular shortcomings, so give him a break! He's pretty darn good, and you know it. C'mon, Maxie, what do you say?"),
                         "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
             var dialog7 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Don't get saucy! Rally the troops and do something! I have to go and pay him my respects."),
-                        "co_olaf", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                        qsTr("Yeah... I guess you're right. Hey! Andy! Sorry for being such a jerk."),
+                        "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
             var dialog8 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Don't fail me, Grit!"),
-                        "co_olaf", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                        qsTr("Huh? As long as you're cool, I'm cool. Hey, Grit!"),
+                        "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
             var dialog9 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Well, I'll be a... Olaf just tucked his tail between his legs and ran away. Where does that leave me? Guess I'll mosey on down and clean up his mess."),
+                        qsTr("What's up, Junior?"),
                         "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+
+            var dialog10 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("How many times do I have to tell you to stop calling me Junior?"),
+                        "co_andy", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
+            var dialog11 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Whoa! I hear you, I hear you. My apologies. Well now, look at the time. Gotta go, boys! See y'all later! Take care, Junior."),
+                        "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+            var dialog12 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("...."),
+                        "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+
             dialog1.queueAnimation(dialog2);
             dialog2.queueAnimation(dialog3);
             dialog3.queueAnimation(dialog4);
@@ -48,6 +60,9 @@ var Constructor = function()
             dialog6.queueAnimation(dialog7);
             dialog7.queueAnimation(dialog8);
             dialog8.queueAnimation(dialog9);
+            dialog9.queueAnimation(dialog10);
+            dialog10.queueAnimation(dialog11);
+            dialog11.queueAnimation(dialog12);
         }
     };
     this.gameStart = function()
@@ -61,12 +76,6 @@ var Constructor = function()
         // here we decide how you can win the game
         map.getGameRules().addVictoryRule("VICTORYRULE_NOUNITS"); // win by destroying all units
         map.getGameRules().addVictoryRule("VICTORYRULE_NOHQ"); // win by capturing all hq's of a player
-        // set building limit to 12
-        map.getGameRules().addVictoryRule("VICTORYRULE_BUILDINGLIMIT");
-        var turnLimit = map.getGameRules().getVictoryRule("VICTORYRULE_BUILDINGLIMIT");
-        turnLimit.setRuleValue(12);
-
-
 
         var list = campaignScript.getBasicBuildList();
         map.getPlayer(0).setBuildList(list);
@@ -83,6 +92,10 @@ var Constructor = function()
         {
             gameScript.initDialog();
         }
+        else if (turn === 6 && player === 0)
+        {
+            map.getPlayer(1).setIsDefeated(true);
+        }
     };
 
     this.initDialog = function()
@@ -90,47 +103,36 @@ var Constructor = function()
         var playername = globals.getSettings().getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog0 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Blast! We're running out of opportunities."),
-                    "co_olaf", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("I don't see the need to get so worked up. It's not like this was Blue Moon property to begin with."),
-                    "co_grit", GameEnums.COMood_Sad, PLAYER.getDefaultColor(1));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("What did you say? After all my work and planning?"),
-                    "co_olaf", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("It's common theft, man! Nothing more, nothing less."),
+                    qsTr("Hey! Junior!"),
                     "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
+                    qsTr("Stop calling me Junior!"),
+                    "co_andy", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
+        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
+                    qsTr("You're just a regular fireball, ain't you? By the way, how are you and Big Maxie getting along?"),
+                    "co_grit", GameEnums.COMood_Happy, PLAYER.getDefaultColor(1));
+        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
+                    qsTr("Grit? In the Blue Moon Army?"),
+                    "co_max", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
         var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Why, you insolent little..."),
-                    "co_olaf", GameEnums.COMood_Happy, PLAYER.getDefaultColor(1));
+                    qsTr("Yep. Things happen, you know. Blue Moon helped me out of some trouble, and I always repay my debts."),
+                    "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
         var dialog5 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Whoa! Hold on chief! Don't you think it's time to move out? Like you said, the Orange Star troops are knocking on our door."),
+                    qsTr("But that's neither here nor there, big fella. You must be getting old if they've sent you out to test Junior here."),
                     "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
         var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Grit! You're pushing your luck! Don't go anywhere, you understand? I'll deal with you when I get back."),
-                    "co_olaf", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                    qsTr("What? Why you..."),
+                    "co_max", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
         var dialog7 = GameAnimationFactory.createGameAnimationDialog(
-                    playername + qsTr("! Andy! Max! Can you hear me?"),
-                    "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+                    qsTr("I tell you what, why don't I just lend you a hand testing him out? You boys survive the next five days and you'll know what he's made of. Think you can take me, old dog? Bring it on boys!"),
+                    "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
         var dialog8 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("What is it, Nell?"),
-                    "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+                    qsTr("Grit, you're one arrogant piece of work!"),
+                    "co_max", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
         var dialog9 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("I've learned that this is a vital deployment point for Olaf. If we can drive him from the region, we may just cripple his army!"),
-                    "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog10 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Really? This may be where we can end this conflict with Olaf!"),
-                    "co_max", GameEnums.COMood_Happy, PLAYER.getDefaultColor(0));
-        var dialog11 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("That's right! You just need to capture as much property as possible, and fast! The first army to secure twelve properties will win this battle! Stay alert and good luck!"),
-                    "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog12 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Let's see... Yep, we've got bases for deploying troops, and..."),
+                    qsTr("Blast! Grit's troops are all around me! If I stay put, I'll be blasted to smithereens. If I retreat, our HQ will be captured... How am I gonna get out of this?"),
                     "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog13 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("OK! Understood. Let's go!"),
-                    "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+
         dialog0.queueAnimation(dialog1);
         dialog1.queueAnimation(dialog2);
         dialog2.queueAnimation(dialog3);
@@ -140,10 +142,6 @@ var Constructor = function()
         dialog6.queueAnimation(dialog7);
         dialog7.queueAnimation(dialog8);
         dialog8.queueAnimation(dialog9);
-        dialog9.queueAnimation(dialog10);
-        dialog10.queueAnimation(dialog11);
-        dialog11.queueAnimation(dialog12);
-        dialog12.queueAnimation(dialog13);
     };
 
 };

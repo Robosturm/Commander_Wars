@@ -138,7 +138,7 @@ var Constructor = function()
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog1 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Hmm."),
-                    "co_sturm", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+                    "co_sturm", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
     };
 };
 

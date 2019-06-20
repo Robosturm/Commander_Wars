@@ -67,8 +67,12 @@ std::tuple<QString, QStringList> Campaign::getCampaignMaps()
     args << obj;
     QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getCurrentCampaignMaps", args);
     QStringList files = value.toVariant().toStringList();
-    QString folder = files[0];
-    files.removeAt(0);
+    QString folder = "";
+    if (files.size() > 0)
+    {
+        folder = files[0];
+        files.removeAt(0);
+    }
     return std::tuple<QString, QStringList>(folder, files);
 }
 

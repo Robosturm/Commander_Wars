@@ -162,8 +162,11 @@ void MapSelection::setSelection(QString folder, QStringList files)
     m_currentFolder = folder;
     m_Files = files;
     updateSelection(0);
-    currentItem = m_Files[0];
-    emit itemChanged(currentItem);
+    if (m_Files.size() > 0)
+    {
+        currentItem = m_Files[0];
+        emit itemChanged(currentItem);
+    }
     pApp->continueThread();
 }
 

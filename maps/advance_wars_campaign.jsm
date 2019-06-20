@@ -60,6 +60,9 @@ var Constructor = function()
         }
         // split paths between andy route and max route
         var historyLessonWon = variables.createVariable("History Lesson!");
+        var olafsSeaStrikeWon = variables.createVariable("Olaf's Sea Strike!");
+        var olafsSeaStrikeEnabled = variables.createVariable("olafsSeaStrikeEnabled");
+        var olafsNavyWon = variables.createVariable("Olaf's Navy!");
         if (maxStrikeMaxWon.readDataBool() === true)
         {
             // max route
@@ -83,11 +86,28 @@ var Constructor = function()
         else if (maxStrikeAndyWon.readDataBool() === true)
         {
             // andy route
+            var maxsFollyWon = variables.createVariable("Max's Folly?");
+            if (maxsFollyWon.readDataBool() === false)
+            {
+                ret.push("Max's Folly.map");
+            }
+            if (maxsFollyWon.readDataBool() === true &&
+                olafsNavyWon.readDataBool() === false)
+            {
+                ret.push("Olaf's Navy.map");
+            }
+            // select olaf's sea strike if enemy was routed
+            if (olafsSeaStrikeEnabled.readDataBool() === true &&
+                olafsSeaStrikeWon.readDataBool() === false)
+            {
+                ret.push("Olaf's Sea Strike.map");
+            }
         }
         // eagle sami mission
         var samisDebutWon = variables.createVariable("Sami's Debut!");
-        if (historyLessonWon.readDataBool() === true &&
-            samisDebutWon.readDataBool() === false)
+        if ((historyLessonWon.readDataBool() === true && samisDebutWon.readDataBool() === false) ||
+             olafsSeaStrikeWon.readDataBool()  === true ||
+            (olafsSeaStrikeEnabled.readDataBool() === false && olafsNavyWon.readDataBool() === true))
         {
             ret.push("Sami's Debut.map");
         }
@@ -148,7 +168,11 @@ var Constructor = function()
 
 
         var andyTimesTwoWon = variables.createVariable("Andy Times Two!");
-
+        if (andyTimesTwoWon.readDataBool() === true &&
+            andyTimesTwoWon.readDataBool() === false)
+        {
+            ret.push("Andy Times Two.map");
+        }
         var engimaWon = variables.createVariable("Enigma");
         if (andyTimesTwoWon.readDataBool() === true &&
             engimaWon.readDataBool() === false)
@@ -162,11 +186,7 @@ var Constructor = function()
             ret.push("The Final Battle.map");
         }
 
-        ret.push("Sonja's Goal.map");
-        ret.push("Andy Times Two.map");
-        ret.push("Enigma.map");
         ret.push("The Final Battle.map");
-
         return ret;
     };
 	
@@ -190,7 +210,9 @@ var Constructor = function()
     this.getSelectableCOs = function(campaign, map, player, coIndex)
     {
         if ((map.getMapName() === "Sniper!" ||
-             map.getMapName() === "Blizzard Battle!") &&
+             map.getMapName() === "Blizzard Battle!" ||
+             map.getMapName() === "Olaf's Navy!" ||
+             map.getMapName() === "Olaf's Sea Strike!") &&
                 coIndex === 0)
         {
             return ["CO_ANDY", "CO_MAX"];

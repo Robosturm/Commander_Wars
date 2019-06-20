@@ -117,7 +117,7 @@ MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView p
         hideRuleSelection();
         m_pPlayerSelection->attachCampaign(m_pMapSelectionView->getCurrentCampaign());
         showPlayerSelection();
-        m_MapSelectionStep = MapSelectionStep::selectMap;
+        m_MapSelectionStep = MapSelectionStep::selectPlayer;
     }
 }
 
@@ -156,10 +156,16 @@ void MapSelectionMapsMenue::slotButtonBack()
             }
             else
             {
-                m_pMapSelectionView->getMapSelection()->changeFolder("");
-                hideRuleSelection();
-                showMapSelection();
-                m_MapSelectionStep = MapSelectionStep::selectMap;
+                Console::print("Leaving Map Selection Menue", Console::eDEBUG);
+                if (dynamic_cast<Multiplayermenu*>(this) != nullptr)
+                {
+                    oxygine::getStage()->addChild(new CampaignMenu(m_pMapSelectionView->getCurrentCampaign(), true));
+                }
+                else
+                {
+                    oxygine::getStage()->addChild(new CampaignMenu(m_pMapSelectionView->getCurrentCampaign(), false));
+                }
+                oxygine::Actor::detach();
             }
             break;
         }
