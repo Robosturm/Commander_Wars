@@ -93,7 +93,7 @@ var Constructor = function()
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog3 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("How interesting. I think I'll entertain them for a while."),
-                    "co_eagle", GameEnums.COMood_Happy, PLAYER.getDefaultColor(2));
+                    "co_eagle", GameEnums.COMood_Hapy, PLAYER.getDefaultColor(2));
         var dialog4 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("What's that? Didn't Nell say this area was empty? As in no enemies?"),
                     "co_andy", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
@@ -116,7 +116,7 @@ var Constructor = function()
     };
 
 
-    this.day4Dialog = function()
+    this.day2Dialog = function()
     {
         var playername = globals.getSettings().getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad

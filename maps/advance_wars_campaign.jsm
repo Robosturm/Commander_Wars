@@ -137,12 +137,35 @@ var Constructor = function()
         if (sonjaCounter.readDataInt32() < 3 ||
             sonjasGoalWon.readDataBool() === true)
         {
+            // here we go with max route
 
+            // here we go with sami route
+
+            // here we go with andy route
         }
 
-        ret.push("Sami Marches On.map");
-        ret.push("Divide and Conquer.map");
+        // here we meet again
+
+
+        var andyTimesTwoWon = variables.createVariable("Andy Times Two!");
+
+        var engimaWon = variables.createVariable("Enigma");
+        if (andyTimesTwoWon.readDataBool() === true &&
+            engimaWon.readDataBool() === false)
+        {
+            ret.push("Enigma.map");
+        }
+        var theFinalBattleWon = variables.createVariable("The Final Battle");
+        if (engimaWon.readDataBool() === true &&
+            theFinalBattleWon.readDataBool() === false)
+        {
+            ret.push("The Final Battle.map");
+        }
+
         ret.push("Sonja's Goal.map");
+        ret.push("Andy Times Two.map");
+        ret.push("Enigma.map");
+        ret.push("The Final Battle.map");
 
         return ret;
     };
