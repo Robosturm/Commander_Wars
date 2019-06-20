@@ -1007,6 +1007,10 @@ void Unit::startOfTurn()
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
     args1 << obj1;
     pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    for (qint32 i = 0; i < m_TransportUnits.size(); i++)
+    {
+        m_TransportUnits[i]->startOfTurn();
+    }
 }
 
 qint32 Unit::getCapturePoints() const

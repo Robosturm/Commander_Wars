@@ -239,9 +239,25 @@ qint32 Player::getUnitCount(QString unitID)
                     {
                         ret++;
                     }
+                    ret += getUnitCount(pUnit.get(), unitID);
                 }
             }
         }
+    }
+    return ret;
+}
+
+qint32 Player::getUnitCount(Unit* pUnit, QString unitID)
+{
+    qint32 ret = 0;
+    for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
+    {
+        Unit* pLoadedUnit = pUnit->getLoadedUnit(i);
+        if (pLoadedUnit->getUnitID() == unitID)
+        {
+            ret++;
+        }
+        ret += getUnitCount(pLoadedUnit, unitID);
     }
     return ret;
 }

@@ -270,6 +270,13 @@ public slots:
      */
     qint32 getUnitCount(QString unitID = "");
     /**
+     * @brief getUnitCount
+     * @param pUnit
+     * @param unitID
+     * @return
+     */
+    qint32 getUnitCount(Unit* pUnit, QString unitID);
+    /**
      * @brief getTeam
      * @return
      */

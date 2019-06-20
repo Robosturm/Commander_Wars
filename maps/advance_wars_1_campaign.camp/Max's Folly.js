@@ -7,6 +7,11 @@ var Constructor = function()
         return true;
     };
 
+    this.getVictoryInfo = function()
+    {
+        return qsTr("Survive for 5 rounds.");
+    };
+
     this.victory = function(team)
     {
         if (team === 0)

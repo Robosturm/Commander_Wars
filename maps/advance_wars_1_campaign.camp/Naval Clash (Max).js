@@ -4,7 +4,7 @@ var Constructor = function()
     {
         // called to check if the game should start immediatly without changing rules or modifying co's
         // return true for an immediate start
-        return false;
+        return true;
     };
 
     this.victory = function(team)
@@ -14,40 +14,8 @@ var Constructor = function()
             var playername = globals.getSettings().getUsername();
             // called when a player wins
             var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Grrrr... Not again!"),
-                        "co_olaf", GameEnums.COMood_Happy, PLAYER.getDefaultColor(1));
-            var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("He will not be pleased with me if this losing streak continues."),
-                        "co_olaf", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-            var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Grit!"),
-                        "co_olaf", GameEnums.COMood_Happy, PLAYER.getDefaultColor(1));
-            var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Yep."),
-                        "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-            var dialog5 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Get out there and stop that cursed Orange Star Army!"),
-                        "co_olaf", GameEnums.COMood_Sad, PLAYER.getDefaultColor(1));
-            var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Easier said than done, Boss. You didn't leave me anything to work with."),
-                        "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-            var dialog7 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Don't get saucy! Rally the troops and do something! I have to go and pay him my respects."),
-                        "co_olaf", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-            var dialog8 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Don't fail me, Grit!"),
-                        "co_olaf", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-            var dialog9 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Well, I'll be a... Olaf just tucked his tail between his legs and ran away. Where does that leave me? Guess I'll mosey on down and clean up his mess."),
-                        "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
-            dialog1.queueAnimation(dialog2);
-            dialog2.queueAnimation(dialog3);
-            dialog3.queueAnimation(dialog4);
-            dialog4.queueAnimation(dialog5);
-            dialog5.queueAnimation(dialog6);
-            dialog6.queueAnimation(dialog7);
-            dialog7.queueAnimation(dialog8);
-            dialog8.queueAnimation(dialog9);
+                        qsTr("Curses! I've been defeated. Time to hoist sail and flee!"),
+                        "co_drake", GameEnums.COMood_Happy, PLAYER.getDefaultColor(2));
         }
     };
     this.gameStart = function()
@@ -56,17 +24,15 @@ var Constructor = function()
         //we're going to set the game rules here.
         map.getGameRules().setNoPower(false); // co power on
         map.getGameRules().setRandomWeather(false); // no random weather
-        map.getGameRules().setFogMode(GameEnums.Fog_Off); // no fog of war or GameEnums.Fog_OfWar -> for on
+        map.getGameRules().setFogMode(GameEnums.Fog_OfWar); // no fog of war or GameEnums.Fog_OfWar -> for on
         // map.getGameRules().changeWeatherChance("WEATHER_1SUN", 90); // sets the weather chance of sun to 90. The actual chance is the the value divided through the sum of all chances
         // here we decide how you can win the game
         map.getGameRules().addVictoryRule("VICTORYRULE_NOUNITS"); // win by destroying all units
         map.getGameRules().addVictoryRule("VICTORYRULE_NOHQ"); // win by capturing all hq's of a player
-        // set building limit to 12
-        map.getGameRules().addVictoryRule("VICTORYRULE_BUILDINGLIMIT");
-        var turnLimit = map.getGameRules().getVictoryRule("VICTORYRULE_BUILDINGLIMIT");
-        turnLimit.setRuleValue(12);
 
-
+        map.getGameRules().addVictoryRule("VICTORYRULE_TURNLIMIT");
+        var turnLimit = map.getGameRules().getVictoryRule("VICTORYRULE_TURNLIMIT"); // loose if the turn limit is gone
+        turnLimit.setRuleValue(15);
 
         var list = campaignScript.getBasicBuildList();
         map.getPlayer(0).setBuildList(list);
@@ -83,6 +49,10 @@ var Constructor = function()
         {
             gameScript.initDialog();
         }
+        else if (turn === 1 && player === 1)
+        {
+            gameScript.day1Dialog();
+        }
     };
 
     this.initDialog = function()
@@ -90,47 +60,57 @@ var Constructor = function()
         var playername = globals.getSettings().getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog0 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Blast! We're running out of opportunities."),
-                    "co_olaf", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                    qsTr("By Neptune's beard, that was a rough battle!"),
+                    "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("I don't see the need to get so worked up. It's not like this was Blue Moon property to begin with."),
-                    "co_grit", GameEnums.COMood_Sad, PLAYER.getDefaultColor(1));
+                    qsTr("Come on, Drake! We'll be beaten again if you don't get moving!"),
+                    "co_eagle", GameEnums.COMood_Sad, PLAYER.getDefaultColor(2));
         var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("What did you say? After all my work and planning?"),
-                    "co_olaf", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                    qsTr("Quit your jabbering and look around, Eagle. Only fools sail onto uncharted waters blindfolded."),
+                    "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("It's common theft, man! Nothing more, nothing less."),
-                    "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                    qsTr("What are you talking ab...?"),
+                    "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Why, you insolent little..."),
-                    "co_olaf", GameEnums.COMood_Happy, PLAYER.getDefaultColor(1));
+                    qsTr("Orange Star did not attack Green Earth."),
+                    "co_drake", GameEnums.COMood_Happy, PLAYER.getDefaultColor(2));
         var dialog5 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Whoa! Hold on chief! Don't you think it's time to move out? Like you said, the Orange Star troops are knocking on our door."),
-                    "co_grit", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                    qsTr("But, we saw..."),
+                    "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Grit! You're pushing your luck! Don't go anywhere, you understand? I'll deal with you when I get back."),
-                    "co_olaf", GameEnums.COMood_Normal, PLAYER.getDefaultColor(1));
+                    qsTr("We saw what we were meant to see! And this goes beyond the battles in Green Earth. This entire conflict has been orchestrated from the beginning."),
+                    "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog7 = GameAnimationFactory.createGameAnimationDialog(
-                    playername + qsTr("! Andy! Max! Can you hear me?"),
-                    "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+                    qsTr("But how..."),
+                    "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog8 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("What is it, Nell?"),
-                    "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+                    qsTr("Quiet! Now, if I'm right, we'll have to turn the tides on our mystery foe. The best way to test my theory is to battle Orange Star again."),
+                    "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog9 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("I've learned that this is a vital deployment point for Olaf. If we can drive him from the region, we may just cripple his army!"),
-                    "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+                    qsTr("You mean... that wasn't Andy?"),
+                    "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog10 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Really? This may be where we can end this conflict with Olaf!"),
-                    "co_max", GameEnums.COMood_Happy, PLAYER.getDefaultColor(0));
+                    qsTr("") + playername + qsTr("! I have a mission for you and Max!"),
+                    "co_nell", GameEnums.COMood_Happy, PLAYER.getDefaultColor(0));
         var dialog11 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("That's right! You just need to capture as much property as possible, and fast! The first army to secure twelve properties will win this battle! Stay alert and good luck!"),
-                    "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+                    qsTr("A mission for me? You must need some serious smashin' done. Well, if that's the case, you know I'm ready to go!"),
+                    "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         var dialog12 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Let's see... Yep, we've got bases for deploying troops, and..."),
-                    "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+                    qsTr("It's not that simple, Max. There's a catch. The main body of the Green Earth Army is closing in on this position."),
+                    "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         var dialog13 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("OK! Understood. Let's go!"),
+                    qsTr("What? The entire army...?"),
+                    "co_max", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
+        var dialog14 = GameAnimationFactory.createGameAnimationDialog(
+                    qsTr("That's right! So, we need to eliminate the troops here ASAP, or else! Let's see... How much time...? Fifteen days! That's all you've got."),
+                    "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+        var dialog15 = GameAnimationFactory.createGameAnimationDialog(
+                    qsTr("Fifteen? That's a tall order. Man, I hate time limites! "),
                     "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+        var dialog16 = GameAnimationFactory.createGameAnimationDialog(
+                    qsTr("All right, here we go! Hey, ") + playername + qsTr("! Who do we take down first?"),
+                    "co_max", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
+
         dialog0.queueAnimation(dialog1);
         dialog1.queueAnimation(dialog2);
         dialog2.queueAnimation(dialog3);
@@ -144,8 +124,18 @@ var Constructor = function()
         dialog10.queueAnimation(dialog11);
         dialog11.queueAnimation(dialog12);
         dialog12.queueAnimation(dialog13);
+        dialog13.queueAnimation(dialog14);
+        dialog14.queueAnimation(dialog15);
+        dialog15.queueAnimation(dialog16);
     };
 
+    this.day1Dialog = function()
+    {
+        // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
+        var dialog0 = GameAnimationFactory.createGameAnimationDialog(
+                    qsTr("Aarrgh! They're here already. A bit later and I could've greeted them with the whole Green Earth Army. But if I can keep 'em swimmin' in circles for a while, I'll still win. Prepare to be boarded, ye scurvy dogs!"),
+                    "co_drake", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
+    };
 };
 
 Constructor.prototype = BASEGAMESCRIPT;

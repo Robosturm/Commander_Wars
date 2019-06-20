@@ -1027,7 +1027,7 @@ void GameMap::startOfTurn(Player* pPlayer)
             {
                 if (pUnit->getOwner() == pPlayer)
                 {
-                    pUnit->startOfTurn();
+                    pUnit->startOfTurn();;
                 }
                 pUnit->updateIcons(getCurrentViewPlayer());
             }

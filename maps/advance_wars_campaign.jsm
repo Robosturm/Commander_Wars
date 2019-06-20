@@ -154,21 +154,67 @@ var Constructor = function()
             }
         }
         // next split up path ahead
-        if (sonjaCounter.readDataInt32() < 3 ||
-            sonjasGoalWon.readDataBool() === true)
+
+        var captainDrakeMaxWon = variables.createVariable("Captain Drake! (Max)");
+        var captainDrakeSamiWon = variables.createVariable("Captain Drake! (Sami)");
+        var captainDrakeAndyWon = variables.createVariable("Captain Drake! (Andy)");
+        if ((sonjaCounter.readDataInt32() < 3 && kanbeisErrorWon.readDataBool() === true)||
+            sonjasGoalWon.readDataBool() === true &&
+            captainDrakeMaxWon.readDataBool() === false &&
+            captainDrakeSamiWon.readDataBool() === false &&
+            captainDrakeAndyWon.readDataBool() === false)
         {
-            // here we go with max route
-
-            // here we go with sami route
-
-            // here we go with andy route
+            ret.push("Captain Drake (Max).map");
+            ret.push("Captain Drake (Sami).map");
+            ret.push("Captain Drake (Andy).map");
         }
-
+        var navalClashMaxWon = variables.createVariable("Naval Clash! (Max)");
+        var navalClashSamiWon = variables.createVariable("Naval Clash! (Sami)");
+        var navalClashAndyWon = variables.createVariable("Naval Clash! (Andy)");
+        if ((captainDrakeMaxWon.readDataBool() === true ||
+            captainDrakeSamiWon.readDataBool() === true ||
+            captainDrakeAndyWon.readDataBool() === true) &&
+            navalClashMaxWon.readDataBool() === false &&
+            navalClashSamiWon.readDataBool() === false &&
+            navalClashAndyWon.readDataBool() === false)
+        {
+            ret.push("Naval Clash (Max).map");
+            ret.push("Naval Clash (Sami).map");
+            ret.push("Naval Clash (Andy).map");
+        }
+        var wingsOfVictoryMaxWon = variables.createVariable("Wings of Victory! (Max)");
+        var wingsOfVictorySamiWon = variables.createVariable("Wings of Victory! (Sami)");
+        var wingsOfVictoryAndyWon = variables.createVariable("Wings of Victory! (Andy)");
+        if ((navalClashMaxWon.readDataBool() === true ||
+            navalClashSamiWon.readDataBool() === true ||
+            navalClashAndyWon.readDataBool() === true) &&
+            wingsOfVictoryMaxWon.readDataBool() === false &&
+            wingsOfVictorySamiWon.readDataBool() === false &&
+            wingsOfVictoryAndyWon.readDataBool() === false)
+        {
+            ret.push("Wings of Victory (Max).map");
+            ret.push("Wings of Victory (Sami).map");
+            ret.push("Wings of Victory (Andy).map");
+        }
+        var battleMysteryMaxWon = variables.createVariable("Battle Mystery! (Max)");
+        var battleMysterySamiWon = variables.createVariable("Battle Mystery! (Sami)");
+        var battleMysteryAndyWon = variables.createVariable("Battle Mystery! (Andy)");
+        if ((wingsOfVictoryMaxWon.readDataBool() === true ||
+            wingsOfVictorySamiWon.readDataBool() === true ||
+            wingsOfVictoryAndyWon.readDataBool() === true) &&
+            battleMysteryMaxWon.readDataBool() === false &&
+            battleMysterySamiWon.readDataBool() === false &&
+            battleMysteryAndyWon.readDataBool() === false)
+        {
+            ret.push("Battle Mystery (Max).map");
+            ret.push("Battle Mystery (Sami).map");
+            ret.push("Battle Mystery (Andy).map");
+        }
         // here we meet again
-
-
         var andyTimesTwoWon = variables.createVariable("Andy Times Two!");
-        if (andyTimesTwoWon.readDataBool() === true &&
+        if ((battleMysteryMaxWon.readDataBool() === true ||
+            battleMysterySamiWon.readDataBool() === true ||
+            battleMysteryAndyWon.readDataBool() === true) &&
             andyTimesTwoWon.readDataBool() === false)
         {
             ret.push("Andy Times Two.map");
@@ -185,6 +231,15 @@ var Constructor = function()
         {
             ret.push("The Final Battle.map");
         }
+
+        var samiCounter = variables.createVariable("samiCounter");
+
+        ret.push("Captain Drake (Max).map");
+        ret.push("Captain Drake (Sami).map");
+        ret.push("Captain Drake (Andy).map");
+        ret.push("Naval Clash (Max).map");
+        ret.push("Naval Clash (Sami).map");
+        ret.push("Naval Clash (Andy).map");
 
         ret.push("The Final Battle.map");
         return ret;
@@ -203,8 +258,17 @@ var Constructor = function()
     this.getCampaignFinished = function(campaign)
     {
         var variables = campaign.getVariables();
-        var lastMissionWon = variables.createVariable("Last Mission");
-        return lastMissionWon.readDataBool();
+        var samiCounter = variables.createVariable("samiCounter");
+        var theFinalBattleWon = variables.createVariable("The Final Battle");
+        var rivalsWon = variables.createVariable("Rivals!");
+        if (samiCounter.readDataInt32() < 4)
+        {
+            return theFinalBattleWon.readDataBool();
+        }
+        else
+        {
+            return rivalsWon.readDataBool();
+        }
     };
 
     this.getSelectableCOs = function(campaign, map, player, coIndex)
