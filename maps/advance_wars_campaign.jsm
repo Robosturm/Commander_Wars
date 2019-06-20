@@ -234,12 +234,11 @@ var Constructor = function()
 
         var samiCounter = variables.createVariable("samiCounter");
 
-        ret.push("Captain Drake (Max).map");
-        ret.push("Captain Drake (Sami).map");
-        ret.push("Captain Drake (Andy).map");
-        ret.push("Naval Clash (Max).map");
+
         ret.push("Naval Clash (Sami).map");
-        ret.push("Naval Clash (Andy).map");
+        ret.push("Wings of Victory (Max).map");
+        ret.push("Wings of Victory (Sami).map");
+        ret.push("Wings of Victory (Andy).map");
 
         ret.push("The Final Battle.map");
         return ret;

@@ -14,10 +14,10 @@ var Constructor = function()
             var playername = globals.getSettings().getUsername();
             // called when a player wins
             var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("C'mon tell me! Why have you been chasing me?"),
-                        "co_andy", GameEnums.COMood_Happy, PLAYER.getDefaultColor(0));
+                        qsTr("Start talking, Eagle. I'm listening."),
+                        "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
             var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Don't play the fool with me, whelp! Do you expect me to forget what you did to Green Earth?"),
+                        qsTr("Very well... I'll tell you everything. I'll tell you all about it. All about how Andy attacked my homeland, Green Earth!"),
                         "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
             var dialog3 = GameAnimationFactory.createGameAnimationDialog(
                         qsTr("Huh?"),
@@ -26,19 +26,37 @@ var Constructor = function()
                         qsTr("The look on his face during the assault... I'll never forget! Never!"),
                         "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
             var dialog5 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("No! You're wrong! It wasn't me!"),
-                        "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+                        qsTr("Eagle! Stop it!"),
+                        "co_sami", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
             var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("What do you take me for, boy? I saw your face!"),
+                        qsTr("Stop what, Sami?"),
                         "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
             var dialog7 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("I'm telling you, it wasn't me! Why would I be out attacking other countries? Why?"),
-                        "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+                        qsTr("Look who you're accusing! Andy couldn't pull off anything that complicated. You suspect this kid who has his hands full just getting dressed?"),
+                        "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
             var dialog8 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Hmm... Very well. I'll take you at your word... for the moment. There are Drake's thoughts to consider, as well."),
-                        "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
+                        qsTr("Um... Excuse me?"),
+                        "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
             var dialog9 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("But don't believe for a moment that I trust you. If I find out you're lying to me, you'll curse the day you were born!"),
+                        qsTr("Well, it's not really a face that shines with intelligence."),
+                        "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
+            var dialog10 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Hold on a..."),
+                        "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog11 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Exactly! Andy spends the entire day not thinking of things!"),
+                        "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog12 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("All right, that's..."),
+                        "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog13 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("If you put it that way, it's hard to imagine Andy pulling it off."),
+                        "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
+            var dialog14 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("You guys are mean!"),
+                        "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog15 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("But I'm not completely convinced. I still suspect you of something! If I find you're lying to me, Andy, you'll curse the day you were born!"),
                         "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
             dialog1.queueAnimation(dialog2);
             dialog2.queueAnimation(dialog3);
@@ -48,6 +66,12 @@ var Constructor = function()
             dialog6.queueAnimation(dialog7);
             dialog7.queueAnimation(dialog8);
             dialog8.queueAnimation(dialog9);
+            dialog9.queueAnimation(dialog10);
+            dialog10.queueAnimation(dialog11);
+            dialog11.queueAnimation(dialog12);
+            dialog12.queueAnimation(dialog13);
+            dialog13.queueAnimation(dialog14);
+            dialog14.queueAnimation(dialog15);
         }
     };
     this.gameStart = function()
@@ -56,7 +80,7 @@ var Constructor = function()
         //we're going to set the game rules here.
         map.getGameRules().setNoPower(false); // co power on
         map.getGameRules().setRandomWeather(false); // no random weather
-        map.getGameRules().setFogMode(GameEnums.Fog_Off); // no fog of war or GameEnums.Fog_OfWar -> for on
+        map.getGameRules().setFogMode(GameEnums.Fog_OfWar); // no fog of war or GameEnums.Fog_OfWar -> for on
         // map.getGameRules().changeWeatherChance("WEATHER_1SUN", 90); // sets the weather chance of sun to 90. The actual chance is the the value divided through the sum of all chances
         // here we decide how you can win the game
         map.getGameRules().addVictoryRule("VICTORYRULE_NOUNITS"); // win by destroying all units
@@ -76,6 +100,10 @@ var Constructor = function()
         if (turn === 1 && player === 0)
         {
             gameScript.initDialog();
+        }
+        else if (turn === 1 && player === 1)
+        {
+            gameScript.day1Dialog();
         }
     };
 
@@ -97,21 +125,26 @@ var Constructor = function()
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
 
         var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("This'll be the third time. I've faced Eagle. It's about time to wrap him up for good."),
-                    "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+                    qsTr("Eagle! Why do you keep harrying us?"),
+                    "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         var dialog5 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("I'm gonna get him and make him tell me why he's been chasing me!"),
-                    "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+                    qsTr("It's you again... Sami."),
+                    "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("I must be dreaming! Andy! Are you getting serious on us?"),
+                    qsTr("Well, excuse me for getting in your way! Listen, will you just explain to me why you won't leave us be?"),
                     "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         var dialog7 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Are you feeling OK, pal? You comin' down with something?"),
-                    "co_max", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+                    qsTr("It... It has nothing to do with you."),
+                    "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog8 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Gimme a break, guys! I don't think you understand what it means to be me."),
-                    "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-
+                    qsTr("Bring out Andy! I want to settle this now!"),
+                    "co_eagle", GameEnums.COMood_Sad, PLAYER.getDefaultColor(2));
+        var dialog9 = GameAnimationFactory.createGameAnimationDialog(
+                    qsTr("No! Absolutely not! I'm in command now. You can't ask for Andy unless you get by me first!"),
+                    "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+        var dialog10 = GameAnimationFactory.createGameAnimationDialog(
+                    qsTr("Don't do this, Sami... I won't hold anything back."),
+                    "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         dialog0.queueAnimation(dialog1);
         dialog1.queueAnimation(dialog2);
         dialog2.queueAnimation(dialog3);
@@ -120,8 +153,18 @@ var Constructor = function()
         dialog5.queueAnimation(dialog6);
         dialog6.queueAnimation(dialog7);
         dialog7.queueAnimation(dialog8);
+        dialog8.queueAnimation(dialog9);
+        dialog9.queueAnimation(dialog10);
     };
 
+    this.day1Dialog = function()
+    {
+        var playername = globals.getSettings().getUsername();
+        // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
+        var dialog0 = GameAnimationFactory.createGameAnimationDialog(
+                    qsTr("I don't want to fight Sami, but... it looks like I've got no choice. To the skies!"),
+                    "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
+    };
 };
 
 Constructor.prototype = BASEGAMESCRIPT;

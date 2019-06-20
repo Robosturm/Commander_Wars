@@ -4,7 +4,7 @@ var Constructor = function()
     {
         // called to check if the game should start immediatly without changing rules or modifying co's
         // return true for an immediate start
-        return false;
+        return true;
     };
 
     this.victory = function(team)

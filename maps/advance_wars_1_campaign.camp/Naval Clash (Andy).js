@@ -95,7 +95,7 @@ var Constructor = function()
                     qsTr("You mean... that wasn't Andy?"),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog10 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("") + playername + qsTr("! Andy! This is Nell! can you read me?"),
+                    qsTr("") + playername + qsTr("! Andy! This is Nell! Can you read me?"),
                     "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         var dialog11 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("What's wrong?"),
