@@ -57,7 +57,11 @@ var Constructor = function()
             var buildingCount = 0;
             for (var i = 0; i < players; i++)
             {
-                map.getPlayer(i).setIsDefeated(true);
+                var defeatPlayer = map.getPlayer(i);
+                if (player.getTeam() !== defeatPlayer.getTeam())
+                {
+                    defeatPlayer.setIsDefeated(true);
+                }
             }
 		}
 		// all players loose if the time limit is exceeded

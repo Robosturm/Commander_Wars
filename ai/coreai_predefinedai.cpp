@@ -145,10 +145,11 @@ bool CoreAI::moveRepair(QmlVectorUnit* pUnits)
         {
             for (qint32 i2 = 0; i2 < unitFields->size(); i2++)
             {
-                if (pMap->onMap(pUnit->getX() + unitFields->at(i2).x(), pUnit->getY() + unitFields->at(i2).y()))
+                if (pMap->onMap(pUnit->getX() + unitFields->at(i2).x(), pUnit->getY() + unitFields->at(i2).y()) &&
+                    pMap->getTerrain(pUnit->getX() + unitFields->at(i2).x(), pUnit->getY() + unitFields->at(i2).y())->getUnit() == nullptr)
                 {
                     QVector3D point = QVector3D(pUnit->getX() + unitFields->at(i2).x(), pUnit->getY() + unitFields->at(i2).y(), 1);
-                    if (!unitTargets.contains(point))
+                    if (!unitTargets.contains(point) )
                     {
                         unitTargets.append(point);
                         unitPos.append(pUnit->getPosition());
@@ -176,7 +177,7 @@ bool CoreAI::moveRepair(QmlVectorUnit* pUnits)
                 for (qint32 i2 = 0; i2 < targets.size(); i2++)
                 {
                     qint32 index = CoreAI::index(unitTargets, targets[i2]);
-                    if (index >= 0)
+                    if (index >= 0 && pUnit->getPosition() != unitPos[index])
                     {
                         addSelectedFieldData(pAction, unitPos[index]);
                         pAction->setMovepath(turnPfs.getPath(targets[i2].x(), targets[i2].y()));

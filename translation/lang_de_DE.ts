@@ -238,15 +238,15 @@
 <context>
     <name>ACTION_RATION</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="57"/>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="59"/>
         <source>Ration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="94"/>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="102"/>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="111"/>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="119"/>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="96"/>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="104"/>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="113"/>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="121"/>
         <source>RATION</source>
         <translation type="unfinished"></translation>
     </message>
@@ -259,7 +259,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_REPAIR.js" line="108"/>
+        <location filename="../resources/scripts/actions/ACTION_REPAIR.js" line="110"/>
         <source>REPAIR</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1692,17 +1692,17 @@
 <context>
     <name>PlayerInfo</name>
     <message>
-        <location filename="../game/playerinfo.cpp" line="207"/>
+        <location filename="../game/playerinfo.cpp" line="213"/>
         <source>Power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/playerinfo.cpp" line="231"/>
+        <location filename="../game/playerinfo.cpp" line="237"/>
         <source>Superpower</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/playerinfo.cpp" line="255"/>
+        <location filename="../game/playerinfo.cpp" line="261"/>
         <source>Tagpower</source>
         <translation type="unfinished"></translation>
     </message>

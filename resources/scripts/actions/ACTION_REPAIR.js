@@ -52,7 +52,7 @@ var Constructor = function()
                             Qt.point(targetField.x,     targetField.y - 1),
                             Qt.point(targetField.x,     targetField.y + 1)];
         // check all neighbour terrains
-         var unit = action.getTargetUnit();
+        var unit = action.getTargetUnit();
         var ret = [];
         for (var i = 0; i < targetFields.length; i++)
         {
@@ -60,8 +60,10 @@ var Constructor = function()
             {
                 var terrain = map.getTerrain(targetFields[i].x, targetFields[i].y);
                 var repairUnit = terrain.getUnit();
-                // can the transported unit move over the terrain?
-                if ((repairUnit !== null && repairUnit.getOwner() === unit.getOwner()))
+                // can we repair the unit?
+                if (repairUnit !== null &&
+                    repairUnit.getOwner() === unit.getOwner() &&
+                    repairUnit !== unit)
                 {
                     ret.push(targetFields[i]);
                 }

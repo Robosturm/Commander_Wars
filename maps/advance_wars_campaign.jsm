@@ -30,8 +30,7 @@ var Constructor = function()
         // get campaign variables
         var variables = campaign.getVariables();
         // read all  map variables
-
-        // orange star maps
+        // orange star start
         var itsWarWon = variables.createVariable("It's War!");
         if (itsWarWon.readDataBool() === false)
         {
@@ -63,6 +62,7 @@ var Constructor = function()
         var historyLessonWon = variables.createVariable("History Lesson!");
         if (maxStrikeMaxWon.readDataBool() === true)
         {
+            // max route
             var sniperWon = variables.createVariable("Sniper!");
             if (sniperWon.readDataBool() === false)
             {
@@ -82,26 +82,67 @@ var Constructor = function()
         }
         else if (maxStrikeAndyWon.readDataBool() === true)
         {
-
+            // andy route
         }
+        // eagle sami mission
         var samisDebutWon = variables.createVariable("Sami's Debut!");
         if (historyLessonWon.readDataBool() === true &&
             samisDebutWon.readDataBool() === false)
         {
             ret.push("Sami's Debut.map");
         }
+        // kanbei missions coming in
         var kanbeiArrivesWon = variables.createVariable("Kanbei Arrives!");
         if (samisDebutWon.readDataBool() === true &&
             kanbeiArrivesWon.readDataBool() === false)
         {
             ret.push("Kanbei Arrives.map");
         }
+        var mightyKanbeiWon = variables.createVariable("Mighty Kanbei!");
+        if (kanbeiArrivesWon.readDataBool() === true &&
+            mightyKanbeiWon.readDataBool() === false)
+        {
+            ret.push("Mighty Kanbei.map");
+        }
+        var kanbeisErrorWon = variables.createVariable("Kanbei's Error?");
+        if (mightyKanbeiWon.readDataBool() === true &&
+            kanbeisErrorWon.readDataBool() === false)
+        {
+            ret.push("Kanbei's Error.map");
+        }
+        // sonja maps are ahead
+        var sonjaCounter = variables.createVariable("sonjaCounter");
+        var sonjasGoalWon = variables.createVariable("Sonja's Goal!");
+        if (sonjaCounter.readDataInt32() >= 3)
+        {
+            var divideandConquerWon = variables.createVariable("Divide and Conquer!");
+            if (kanbeisErrorWon.readDataBool() === true &&
+                divideandConquerWon.readDataBool() === false)
+            {
+                ret.push("Divide and Conquer.map");
+            }
+            var samiMarchesOnWon = variables.createVariable("Sami Marches On!");
+            if (divideandConquerWon.readDataBool() === true &&
+                samiMarchesOnWon.readDataBool() === false)
+            {
+                ret.push("Sami Marches On.map");
+            }
+            if (samiMarchesOnWon.readDataBool() === true &&
+                sonjasGoalWon.readDataBool() === false)
+            {
+                ret.push("Sonja's Goal.map");
+            }
+        }
+        // next split up path ahead
+        if (sonjaCounter.readDataInt32() < 3 ||
+            sonjasGoalWon.readDataBool() === true)
+        {
 
+        }
 
-        // map list for testing
-        ret.push("It's War.map");
-        ret.push("Sami's Debut.map");
-        ret.push("Kanbei Arrives.map");
+        ret.push("Sami Marches On.map");
+        ret.push("Divide and Conquer.map");
+        ret.push("Sonja's Goal.map");
 
         return ret;
     };

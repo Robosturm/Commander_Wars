@@ -9,14 +9,19 @@
 #include "game/player.h"
 #include "game/co.h"
 
-UnitPathFindingSystem::UnitPathFindingSystem(Unit* pUnit)
+UnitPathFindingSystem::UnitPathFindingSystem(Unit* pUnit, Player* pPlayer)
     : PathFindingSystem(pUnit->getX(), pUnit->getY()),
       m_pUnit(pUnit),
+      m_pPlayer(pPlayer),
       m_Movepoints(m_pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY())))
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
+    if (m_pPlayer == nullptr)
+    {
+        m_pPlayer = m_pUnit->getOwner();
+    }
 }
 
 qint32 UnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint32 currentCost)
@@ -57,7 +62,7 @@ qint32 UnitPathFindingSystem::getCosts(qint32 x, qint32 y)
             {
                 // ignore unit if it's not an enemy unit or if it's stealthed
                 if (m_pUnit->getOwner()->isEnemyUnit(pUnit) &&
-                    (!pUnit->isStealthed(m_pUnit->getOwner())))
+                    (!pUnit->isStealthed(m_pPlayer)))
                 {
                     return -1;
                 }

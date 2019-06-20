@@ -15,7 +15,7 @@ class UnitPathFindingSystem : public PathFindingSystem
 {
     Q_OBJECT
 public:
-    explicit UnitPathFindingSystem(Unit* pUnit);
+    explicit UnitPathFindingSystem(Unit* pUnit, Player* pPlayer = nullptr);
 
     /**
      * @brief getRemainingCost
@@ -59,6 +59,7 @@ public:
 
 protected:
     Unit* m_pUnit;
+    Player* m_pPlayer{nullptr};
     qint32 m_Movepoints{-1};
 };
 

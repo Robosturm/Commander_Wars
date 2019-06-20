@@ -70,6 +70,8 @@ char id=119   x=352     y=32     width=16     height=32     xoffset=0     yoffse
 char id=120   x=368     y=32     width=16     height=32     xoffset=0     yoffset=0    xadvance=16     page=0  chnl=0 
 char id=121   x=384     y=32     width=16     height=32     xoffset=0     yoffset=0    xadvance=16     page=0  chnl=0 
 char id=122   x=400     y=32     width=16     height=32     xoffset=0     yoffset=0    xadvance=16     page=0  chnl=0 
+char id=33    x=416     y=32     width=16     height=32     xoffset=0     yoffset=0    xadvance=16     page=0  chnl=0 
+char id=63    x=432     y=32     width=16     height=32     xoffset=0     yoffset=0    xadvance=16     page=0  chnl=0 
 char id=228   x=576     y=32     width=16     height=32     xoffset=0     yoffset=0    xadvance=16     page=0  chnl=0 
 char id=246   x=592     y=32     width=16     height=32     xoffset=0     yoffset=0    xadvance=16     page=0  chnl=0 
 char id=252   x=608     y=32     width=16     height=32     xoffset=0     yoffset=0    xadvance=16     page=0  chnl=0 

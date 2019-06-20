@@ -280,7 +280,7 @@ var Constructor = function()
                     qsTr("Lord Flak, we don't have many soldiers trained to use them... "),
                     "co_officier_bh", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Trained? I'll train 'em myself! These bombers... They're indirect- combat units. They're good against ground units. They're even good on Md tanks. But they can't fire on other air units. They're bombers. They bomb. This here's a fighter. It can attack other air units. It's the best weapon to have when you're stompin' flying stuff. You have to watch fuel with air units. They burn 2 units of fuel per day. Ground units stop moving when they run out of fuel, but that's all. An air unit without fuel falls out of the sky and crashes. You got it? Then attack! The more you take out, the better. "),
+                    qsTr("Trained? I'll train 'em myself! These bombers... They're direct- combat units. They're good against ground units. They're even good on Md tanks. But they can't fire on other air units. They're bombers. They bomb. This here's a fighter. It can attack other air units. It's the best weapon to have when you're stompin' flying stuff. You have to watch fuel with air units. They burn 2 units of fuel per day. Ground units stop moving when they run out of fuel, but that's all. An air unit without fuel falls out of the sky and crashes. You got it? Then attack! The more you take out, the better. "),
                     "co_flak", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog5 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Yes, sir! Delta squad is away!"),

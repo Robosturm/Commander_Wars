@@ -42,9 +42,11 @@ var Constructor = function()
     {
         if (map.onMap(x, y))
         {
-            if (map.getTerrain(x, y).getUnit() !== null)
+            var target = map.getTerrain(x, y).getUnit();
+            if (target !== null)
             {
-                if (map.getTerrain(x, y).getUnit().getOwner() === unit.getOwner())
+                if (target.getOwner() === unit.getOwner() &&
+                    target !== unit)
                 {
                     return true;
                 }

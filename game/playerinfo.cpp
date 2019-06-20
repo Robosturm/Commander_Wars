@@ -40,6 +40,7 @@ void PlayerInfo::updateData()
     GameManager* pGameManager = GameManager::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
 
+    Player* pViewPlayer = pMap->getCurrentViewPlayer();
     qint32 yPos = 0;
     qint32 currentPlayer = playerIdx;
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
@@ -107,6 +108,11 @@ void PlayerInfo::updateData()
 
             Text->setStyle(style);
             QString number = QString::number(pPlayer->getFonds());
+            if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
+                pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
+            {
+                number = "?";
+            }
             Text->setText(number.toStdString().c_str());
             Text->setY(yPos + 20);
             Text->setX(0);
