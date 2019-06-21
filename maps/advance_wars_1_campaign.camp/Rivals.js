@@ -14,36 +14,32 @@ var Constructor = function()
             var playername = globals.getSettings().getUsername();
             // called when a player wins
             var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("I... I lost? Huh? It's you! Andy!"),
+                        qsTr("I lost again. You're a tough one."),
                         "co_eagle", GameEnums.COMood_Sad, PLAYER.getDefaultColor(2));
             var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Yeah, but... who are you?"),
+                        qsTr("That's 'cause it's not just me! ") + playername + qsTr("'s my strategic planner!"),
                         "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
             var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Don't play dumb with me, boy! I'll never forget what you've done!"),
+                        qsTr("Oh, that's right. Orange Star is using strategic advisors. That way, the commander can just concentrate on the combat itself. That's an impressive system. It's why I couldn't match you in battle."),
                         "co_eagle", GameEnums.COMood_Sad, PLAYER.getDefaultColor(2));
             var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Huh?"),
+                        qsTr("I don't know why, but when we work together, we're really strong!"),
                         "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
             var dialog5 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("So, continuing to feign ignorance, eh?"),
+                        qsTr("Yes, indeed. This was your day in the sun. But..."),
                         "co_eagle", GameEnums.COMood_Sad, PLAYER.getDefaultColor(2));
             var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Very well, but the next time we meet will be our last!"),
-                        "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
-            var dialog7 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Hey! Wait up! He's gone. What was that all about?"),
-                        "co_andy", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
-            var dialog8 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Who in the world is that?"),
+                        qsTr("Hey! Let's fight again some day."),
                         "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
+            var dialog7 = GameAnimationFactory.createGameAnimationDialog(
+                        qsTr("Yes, let's do that. Until we meet again, Andy. See you again, ") + playername + qsTr(". Next time, I won't lose!"),
+                        "co_eagle", GameEnums.COMood_Sad, PLAYER.getDefaultColor(2));
             dialog1.queueAnimation(dialog2);
             dialog2.queueAnimation(dialog3);
             dialog3.queueAnimation(dialog4);
             dialog4.queueAnimation(dialog5);
             dialog5.queueAnimation(dialog6);
             dialog6.queueAnimation(dialog7);
-            dialog7.queueAnimation(dialog8);
         }
     };
     this.gameStart = function()
@@ -72,10 +68,6 @@ var Constructor = function()
         {
             gameScript.initDialog();
         }
-        else if (turn === 4 && player === 0)
-        {
-            gameScript.day4Dialog();
-        }
     };
 
     this.initDialog = function()
@@ -83,58 +75,28 @@ var Constructor = function()
         var playername = globals.getSettings().getUsername();
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog0 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Hmmmm... What have we here?"),
+                    qsTr("Andy! I wanted to face youz one more time. Let's go!"),
                     "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
         var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Orange Star forces, if I'm not mistaken. And, of course, I never am."),
-                    "co_eagle", GameEnums.COMood_Sad, PLAYER.getDefaultColor(2));
+                    qsTr("I'm ready!"),
+                    "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("I had heard that the Blue Moon Army ruined them, but..."),
-                    "co_eagle", GameEnums.COMood_Normal, PLAYER.getDefaultColor(2));
+                    qsTr("There aren't many units here, are there?"),
+                    "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("How interesting. I think I'll entertain them for a while."),
-                    "co_eagle", GameEnums.COMood_Hapy, PLAYER.getDefaultColor(2));
+                    qsTr("That's right. Do you know what to do?"),
+                    "co_nell", GameEnums.COMood_Hapy, PLAYER.getDefaultColor(0));
         var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("What's that? Didn't Nell say this area was empty? As in no enemies?"),
+                    qsTr("Sure! I just use these bases to deploy whatever troops I want!"),
                     "co_andy", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
         var dialog5 = GameAnimationFactory.createGameAnimationDialog(
-                    playername + qsTr("! Andy! Come in! Do you copy?"),
+                    qsTr("I guess there's nothing left for me to teach you."),
                     "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Nell! There are hostile forces here!"),
-                    "co_andy", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
-        var dialog7 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("So it seems. But those... those aren't Blue Moon troops. I'll see what I can find out. Hold your positions! We have some bases you can use here as a last resort. ") + playername + qsTr("! Watch over Andy, OK?"),
-                    "co_nell", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
         dialog0.queueAnimation(dialog1);
         dialog1.queueAnimation(dialog2);
         dialog2.queueAnimation(dialog3);
         dialog3.queueAnimation(dialog4);
         dialog4.queueAnimation(dialog5);
-        dialog5.queueAnimation(dialog6);
-        dialog6.queueAnimation(dialog7);
-    };
-
-
-    this.day2Dialog = function()
-    {
-        var playername = globals.getSettings().getUsername();
-        // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
-        var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                    playername + qsTr("! I've got it! I know who you've encountered! Those are Green Earth troops! Rumor has it that there's an independent battalion roaming about. I believe you've found them. Watch out for their air units. They're supposed to be brutal!"),
-                    "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
-        var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("You're too late, Nell."),
-                    "co_andy", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
-        var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("What? Does that mean you're already under attack? Well... Um... Good luck!"),
-                    "co_nell", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
-        var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Nell left us! She ran away..."),
-                    "co_andy", GameEnums.COMood_Sad, PLAYER.getDefaultColor(0));
-        dialog1.queueAnimation(dialog2);
-        dialog2.queueAnimation(dialog3);
-        dialog3.queueAnimation(dialog4);
     };
 };
 

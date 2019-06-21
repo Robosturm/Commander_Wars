@@ -52,7 +52,7 @@ var Constructor = function()
                         qsTr("Yeah?"),
                         "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
             var dialog13 = GameAnimationFactory.createGameAnimationDialog(
-                        qsTr("Very soon you and your friends are going to face an unimaginable foe. Take care of Paul, and Andy, too."),
+                        qsTr("Very soon you and your friends are going to face an unimaginable foe. Take care of ") + playername + qsTr(", and Andy, too."),
                         "co_sonja", GameEnums.COMood_Normal, PLAYER.getDefaultColor(3));
             var dialog14 = GameAnimationFactory.createGameAnimationDialog(
                         qsTr("How do you...?"),

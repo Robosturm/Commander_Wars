@@ -21,6 +21,10 @@ var Constructor = function()
             var dialog1 = GameAnimationFactory.createGameAnimationDialog(
                         qsTr("Curses! I've been defeated. Time to hoist sail and flee!"),
                         "co_drake", GameEnums.COMood_Happy, PLAYER.getDefaultColor(2));
+
+            var campaignVariables = map.getCampaign().getVariables();
+            var samiCounter = campaignVariables.createVariable("samiCounter");
+            samiCounter.writeDataInt32(samiCounter.readDataInt32() + 1);
         }
     };
     this.gameStart = function()
@@ -114,10 +118,10 @@ var Constructor = function()
                     qsTr("Understood. We'll do our part. You can count on us!"),
                     "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         var dialog16 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("I knew I could. Thanks Paul, Sami."),
+                    qsTr("I knew I could. Thanks ") + playername + qsTr(", Sami."),
                     "co_nell", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         var dialog17 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Psst, Paul. What's up with Sami? Have you noticed she acts differently around Nell? Oh, OK. I guess it's just me."),
+                    qsTr("Psst, ") + playername + qsTr(". What's up with Sami? Have you noticed she acts differently around Nell? Oh, OK. I guess it's just me."),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         var dialog18 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Yo, Andy! Sami's givin' you the evil eye!"),
@@ -129,7 +133,7 @@ var Constructor = function()
                     qsTr("Hey, you! You're playing with fire, Andy!"),
                     "co_sami", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         var dialog21 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Let's lay low a bit. OK, Paul?"),
+                    qsTr("Let's lay low a bit. OK, ") + playername + qsTr("?"),
                     "co_andy", GameEnums.COMood_Normal, PLAYER.getDefaultColor(0));
         dialog0.queueAnimation(dialog1);
         dialog1.queueAnimation(dialog2);

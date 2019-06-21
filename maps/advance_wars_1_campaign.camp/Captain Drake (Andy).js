@@ -28,6 +28,10 @@ var Constructor = function()
             dialog1.queueAnimation(dialog2);
             dialog2.queueAnimation(dialog3);
             dialog3.queueAnimation(dialog4);
+
+            var campaignVariables = map.getCampaign().getVariables();
+            var drakeCounter = campaignVariables.createVariable("drakeCounter");
+            drakeCounter.writeDataInt32(drakeCounter.readDataInt32() + 1);
         }
     };
     this.gameStart = function()

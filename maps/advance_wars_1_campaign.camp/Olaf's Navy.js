@@ -21,7 +21,7 @@ var Constructor = function()
                         "co_olaf", GameEnums.COMood_Sad, PLAYER.getDefaultColor(1));
             dialog1.queueAnimation(dialog2);
             // routed?
-            if (map.getTerrain().getBuilding().getOwner() !== map.getPlayer(0))
+            if (map.getTerrain(16, 1).getBuilding().getOwner() !== map.getPlayer(0))
             {
                 var campaignVariables = map.getCampaign().getVariables();
                 var olafsSeaStrikeEnabled = campaignVariables.createVariable("olafsSeaStrikeEnabled");

@@ -59,7 +59,8 @@ var Constructor = function()
     };
     this.actionDone = function()
     {
-
+        // disable sturms cop, scop :)
+        map.getPlayer(1).getCO(0).setPowerFilled(0);
     };
 
     this.turnStart = function(turn, player)

@@ -105,9 +105,10 @@ var Constructor = function()
         }
         // eagle sami mission
         var samisDebutWon = variables.createVariable("Sami's Debut!");
-        if ((historyLessonWon.readDataBool() === true && samisDebutWon.readDataBool() === false) ||
+        if ((historyLessonWon.readDataBool() === true ||
              olafsSeaStrikeWon.readDataBool()  === true ||
-            (olafsSeaStrikeEnabled.readDataBool() === false && olafsNavyWon.readDataBool() === true))
+            (olafsSeaStrikeEnabled.readDataBool() === false && olafsNavyWon.readDataBool() === true)) &&
+             samisDebutWon.readDataBool() === false)
         {
             ret.push("Sami's Debut.map");
         }
@@ -158,8 +159,8 @@ var Constructor = function()
         var captainDrakeMaxWon = variables.createVariable("Captain Drake! (Max)");
         var captainDrakeSamiWon = variables.createVariable("Captain Drake! (Sami)");
         var captainDrakeAndyWon = variables.createVariable("Captain Drake! (Andy)");
-        if ((sonjaCounter.readDataInt32() < 3 && kanbeisErrorWon.readDataBool() === true)||
-            sonjasGoalWon.readDataBool() === true &&
+        if (((sonjaCounter.readDataInt32() < 3 && kanbeisErrorWon.readDataBool() === true) ||
+            sonjasGoalWon.readDataBool() === true) &&
             captainDrakeMaxWon.readDataBool() === false &&
             captainDrakeSamiWon.readDataBool() === false &&
             captainDrakeAndyWon.readDataBool() === false)
@@ -231,16 +232,14 @@ var Constructor = function()
         {
             ret.push("The Final Battle.map");
         }
-
         var samiCounter = variables.createVariable("samiCounter");
-
-
-        ret.push("Naval Clash (Sami).map");
-        ret.push("Wings of Victory (Max).map");
-        ret.push("Wings of Victory (Sami).map");
-        ret.push("Wings of Victory (Andy).map");
-
-        ret.push("The Final Battle.map");
+        var rivalsWon = variables.createVariable("Rivals!");
+        if (samiCounter.readDataInt32() >= 4 &&
+            theFinalBattleWon.readDataBool() === true &&
+            rivalsWon.readDataBool() === false)
+        {
+            ret.push("Rivals.map");
+        }
         return ret;
     };
 	
@@ -272,6 +271,45 @@ var Constructor = function()
 
     this.getSelectableCOs = function(campaign, map, player, coIndex)
     {
+        var variables = campaign.getVariables();
+        if (map.getMapName() === "The Final Battle")
+        {
+            var ret = [];
+            if (player === 1 && coIndex === 0)
+            {
+                var olafsSeaStrikeEnabled = variables.createVariable("olafsSeaStrikeEnabled");
+                if (olafsSeaStrikeEnabled.readDataBool() === true)
+                {
+                    ret.push("CO_OLAF");
+                }
+                // you always can switch between those two :)
+                ret.push("CO_MAX");
+                ret.push("CO_GRIT");
+                return ret;
+            }
+            else if (player === 2 && coIndex === 0)
+            {
+                var drakeCounter = variables.createVariable("drakeCounter");
+                if (drakeCounter.readDataInt32() >= 4)
+                {
+                    ret.push("CO_DRAKE");
+                }
+                var samiCounter = variables.createVariable("samiCounter");
+                if (samiCounter.readDataInt32() >= 4)
+                {
+                    ret.push("CO_EAGLE");
+                }
+                var sonjaCounter = variables.createVariable("sonjaCounter");
+                if (sonjaCounter.readDataInt32() >= 3)
+                {
+                    ret.push("CO_KANBEI");
+                }
+                ret.push("CO_SAMI");
+                return ret;
+            }
+            return [""];
+        }
+
         if ((map.getMapName() === "Sniper!" ||
              map.getMapName() === "Blizzard Battle!" ||
              map.getMapName() === "Olaf's Navy!" ||

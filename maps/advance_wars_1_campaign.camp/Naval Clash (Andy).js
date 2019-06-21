@@ -21,6 +21,10 @@ var Constructor = function()
             var dialog1 = GameAnimationFactory.createGameAnimationDialog(
                         qsTr("Curses! I've been defeated. Time to hoist sail and flee!"),
                         "co_drake", GameEnums.COMood_Happy, PLAYER.getDefaultColor(2));
+
+            var campaignVariables = map.getCampaign().getVariables();
+            var drakeCounter = campaignVariables.createVariable("drakeCounter");
+            drakeCounter.writeDataInt32(drakeCounter.readDataInt32() + 1);
         }
     };
     this.gameStart = function()
@@ -54,7 +58,7 @@ var Constructor = function()
         {
             gameScript.initDialog();
         }
-        else if (turn === 11 && player === 0)
+        else if (turn === 10 && player === 0)
         {
             map.getPlayer(1).setIsDefeated(true);
         }

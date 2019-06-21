@@ -72,6 +72,10 @@ var Constructor = function()
             dialog12.queueAnimation(dialog13);
             dialog13.queueAnimation(dialog14);
             dialog14.queueAnimation(dialog15);
+
+            var campaignVariables = map.getCampaign().getVariables();
+            var samiCounter = campaignVariables.createVariable("samiCounter");
+            samiCounter.writeDataInt32(samiCounter.readDataInt32() + 1);
         }
     };
     this.gameStart = function()
