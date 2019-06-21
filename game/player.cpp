@@ -506,7 +506,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                             bool visionHide = visionField->getVisionHide(this);
                             if ((!visionHide) ||
                                 ((pUnit != nullptr) && visionHide &&
-                                 !pUnit->useTerrainDefense() && !pUnit->isStealthed(this)))
+                                 !pUnit->useTerrainDefense() && !pUnit->getHidden()))
                             {
                                 m_FogVisionFields[point.x() + x][point.y() + y].setX(1);
                             }
@@ -538,7 +538,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                             bool visionHide = visionField->getVisionHide(this);
                             if ((!visionHide) ||
                                 ((pUnit != nullptr) && visionHide &&
-                                 !pUnit->useTerrainDefense() && !pUnit->isStealthed(this)))
+                                 !pUnit->useTerrainDefense() && !pUnit->getHidden()))
                             {
                                 m_FogVisionFields[point.x() + x][point.y() + y].setX(1);
                             }
