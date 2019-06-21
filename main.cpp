@@ -59,6 +59,11 @@
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/battleanimationmanager.h"
 
+#include "ingamescriptsupport/scriptdata.h"
+#include "ingamescriptsupport/scriptevent.h"
+#include "ingamescriptsupport/scripteventdialog.h"
+#include "qfile.h"
+
 int main(int argc, char* argv[])
 {
     /*************************************************************************************************/
@@ -68,6 +73,26 @@ int main(int argc, char* argv[])
     QNetworkConfiguration config = manager.defaultConfiguration();
     QNetworkSession networkSession(config);
     networkSession.open();
+
+    ScriptData data;
+    data.addVictoryCondition();
+    data.addDayCondition(ScriptCondition::ConditionType::eachDay);
+    data.addDayCondition(ScriptCondition::ConditionType::startOfTurn);
+
+    data.getDayCondition(0)->addEvent(ScriptEvent::createEvent(ScriptEvent::EventType::dialog));
+    ScriptEventDialog* pDialog = dynamic_cast<ScriptEventDialog*>(data.getDayCondition(0)->getEvent(0).get());
+    pDialog->addDialog("Test!", "CO_ANDY", GameEnums::COMood_Happy, Qt::red);
+    pDialog->addDialog("Test!", "CO_STURM", GameEnums::COMood_Normal, Qt::blue);
+
+    QFile file("script.js");
+    file.open(QIODevice::WriteOnly);
+    QTextStream stream(&file);
+    data.writeScript(stream);
+    file.close();
+
+    file.open(QIODevice::ReadOnly);
+    data.readScript(stream);
+    file.close();
 
     srand(static_cast<unsigned>(time(nullptr)));
 #ifdef GAMEDEBUG

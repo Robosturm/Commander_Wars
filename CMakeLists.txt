@@ -210,6 +210,17 @@ set(${PROJECT_NAME}_SRCS
         # multiplayer
         multiplayer/lobbymenu.cpp
         multiplayer/multiplayermenu.cpp
+
+        # script support
+        ingamescriptsupport/scriptdata.cpp
+        # condition stuff
+        ingamescriptsupport/scriptcondition.cpp
+        ingamescriptsupport/scriptconditionvictory.cpp
+        ingamescriptsupport/scriptconditionstartofturn.cpp
+        ingamescriptsupport/scriptconditioneachday.cpp
+        # event stuff
+        ingamescriptsupport/scriptevent.cpp
+        ingamescriptsupport/scripteventdialog.cpp
 )
 
 

@@ -1,0 +1,31 @@
+#ifndef SCRIPTCONDITIONVICTORY_H
+#define SCRIPTCONDITIONVICTORY_H
+
+#include "ingamescriptsupport/scriptcondition.h"
+
+class ScriptConditionVictory;
+typedef oxygine::intrusive_ptr<ScriptConditionVictory> spScriptConditionVictory;
+
+class ScriptConditionVictory : public ScriptCondition
+{
+    Q_OBJECT
+public:
+    ScriptConditionVictory();
+
+    qint32 getTeam() const;
+    void setTeam(const qint32 &value);
+    /**
+     * @brief readCondition
+     * @param rStream
+     */
+    virtual void readCondition(QTextStream& rStream) override;
+    /**
+     * @brief writeCondition
+     * @param rStream
+     */
+    virtual void writeCondition(QTextStream& rStream) override;
+private:
+    qint32 team{0};
+};
+
+#endif // SCRIPTCONDITIONVICTORY_H
