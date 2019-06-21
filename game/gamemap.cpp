@@ -1192,7 +1192,12 @@ void GameMap::nextTurn()
     startOfTurn(m_CurrentPlayer.get());
     checkFuel(m_CurrentPlayer.get());
     m_Recorder->updatePlayerData(m_CurrentPlayer->getPlayerID());
-    GameMenue::getInstance()->updatePlayerinfo();
+    m_Rules->initRoundTime();
+    GameMenue* pMenu = GameMenue::getInstance();
+    if (pMenu != nullptr)
+    {
+        pMenu->updatePlayerinfo();
+    }
 
     m_CurrentPlayer->loadCOMusic();
     pApp->getAudioThread()->playRandom();

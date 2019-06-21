@@ -54,7 +54,7 @@ QString CO::getCoID() const
     return coID;
 }
 
-float CO::getPowerFilled() const
+double CO::getPowerFilled() const
 {
     return powerFilled;
 }
@@ -69,7 +69,7 @@ void CO::startOfTurn()
     pApp->getInterpreter()->doFunction(coID, function1, args1);
 }
 
-void CO::setPowerFilled(const float &value)
+void CO::setPowerFilled(const double &value)
 {
     if (!GameMap::getInstance()->getGameRules()->getNoPower())
     {
@@ -801,10 +801,13 @@ void CO::setPowerMode(const GameEnums::PowerMode &PowerMode)
 
 void CO::gainPowerstar(qint32 fondsDamage, QPoint position)
 {
+    double powerGain = fondsDamage;
+    // reduce power meter filling based on power usages
+    powerGain *= 1 / (1.0 + powerUsed * 0.1);
     if (!inCORange(position, nullptr))
     {
         // reduce power meter gain when not in co range
-        fondsDamage /= 2;
+        powerGain /= 2.0;
     }
     if (m_PowerMode == GameEnums::PowerMode_Off)
     {
@@ -813,7 +816,7 @@ void CO::gainPowerstar(qint32 fondsDamage, QPoint position)
         QJSValueList args1;
         QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
         args1 << obj1;
-        args1 << fondsDamage;
+        args1 << powerGain;
         args1 << position.x();
         args1 << position.y();
         pApp->getInterpreter()->doFunction(coID, function1, args1);
@@ -1023,6 +1026,7 @@ void CO::serializeObject(QDataStream& pStream)
     pStream << powerFilled;
     pStream << static_cast<qint32>(m_PowerMode);
     m_Variables.serializeObject(pStream);
+    pStream << powerUsed;
 }
 
 void CO::deserializeObject(QDataStream& pStream)
@@ -1032,13 +1036,28 @@ void CO::deserializeObject(QDataStream& pStream)
     pStream >> coID;
     pStream >> powerStars;
     pStream >> superpowerStars;
-    pStream >> powerFilled;
+
+    if (version > 2)
+    {
+        pStream >> powerFilled;
+    }
+    else
+    {
+        float power = 0.0f;
+        pStream >> power;
+        powerFilled = static_cast<double>(power);
+    }
+
     qint32 value = 0;
     pStream >> value;
     m_PowerMode = static_cast<GameEnums::PowerMode>(value);
     if (version > 1)
     {
         m_Variables.deserializeObject(pStream);
+    }
+    if (version > 2)
+    {
+        pStream >> powerUsed;
     }
     init();
 }

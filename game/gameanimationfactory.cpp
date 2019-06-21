@@ -117,10 +117,14 @@ GameAnimationDialog* GameAnimationFactory::createGameAnimationDialog(QString tex
 
 GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(Player* pPlayer, quint32 frameTime)
 {
-    GameAnimationNextDay* pAnim = new GameAnimationNextDay(pPlayer, frameTime);
-    GameMenue::getInstance()->addChild(pAnim);
-    m_Animations.append(pAnim);
-    return pAnim;
+    if (GameMenue::getInstance() != nullptr)
+    {
+        GameAnimationNextDay* pAnim = new GameAnimationNextDay(pPlayer, frameTime);
+        GameMenue::getInstance()->addChild(pAnim);
+        m_Animations.append(pAnim);
+        return pAnim;
+    }
+    return nullptr;
 }
 
 GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(qint32 x, qint32 y, qint32 startPoints, qint32 endPoints, qint32 maxPoints)

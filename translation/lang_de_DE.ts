@@ -832,117 +832,122 @@
 <context>
     <name>EditorMenue</name>
     <message>
-        <location filename="../menue/editormenue.cpp" line="46"/>
+        <location filename="../menue/editormenue.cpp" line="48"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="47"/>
+        <location filename="../menue/editormenue.cpp" line="49"/>
         <source>Save Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="48"/>
+        <location filename="../menue/editormenue.cpp" line="50"/>
         <source>Load Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="49"/>
+        <location filename="../menue/editormenue.cpp" line="51"/>
         <source>Exit Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="51"/>
+        <location filename="../menue/editormenue.cpp" line="53"/>
         <source>Map Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="52"/>
+        <location filename="../menue/editormenue.cpp" line="54"/>
         <source>New Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="53"/>
+        <location filename="../menue/editormenue.cpp" line="55"/>
         <source>Edit Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="55"/>
+        <location filename="../menue/editormenue.cpp" line="57"/>
         <source>Flip Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="56"/>
+        <location filename="../menue/editormenue.cpp" line="58"/>
         <source>Flip Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="57"/>
+        <location filename="../menue/editormenue.cpp" line="59"/>
         <source>Rotate Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="58"/>
+        <location filename="../menue/editormenue.cpp" line="60"/>
         <source>Rotate Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="59"/>
+        <location filename="../menue/editormenue.cpp" line="61"/>
         <source>Random Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="61"/>
+        <location filename="../menue/editormenue.cpp" line="63"/>
         <source>Editor Commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="62"/>
+        <location filename="../menue/editormenue.cpp" line="64"/>
         <source>Place Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="63"/>
+        <location filename="../menue/editormenue.cpp" line="65"/>
         <source>Delete Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="64"/>
+        <location filename="../menue/editormenue.cpp" line="66"/>
         <source>Edit Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="65"/>
+        <location filename="../menue/editormenue.cpp" line="67"/>
         <source>Edit Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="66"/>
-        <source>Optimize Players</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/editormenue.cpp" line="68"/>
-        <source>Import/Export</source>
+        <source>Edit Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="69"/>
-        <source>Import CoW Txt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="70"/>
-        <source>Import AWDS Aws</source>
+        <source>Optimize Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="71"/>
-        <source>Import AWDC Aw4</source>
+        <source>Import/Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="72"/>
+        <source>Import CoW Txt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="73"/>
+        <source>Import AWDS Aws</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="74"/>
+        <source>Import AWDC Aw4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="75"/>
         <source>Import AW by Web</source>
         <translation type="unfinished"></translation>
     </message>
@@ -987,22 +992,22 @@
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="60"/>
+        <location filename="../menue/gamemenue.cpp" line="61"/>
         <source>Waiting for Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="151"/>
+        <location filename="../menue/gamemenue.cpp" line="152"/>
         <source>A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="197"/>
+        <location filename="../menue/gamemenue.cpp" line="216"/>
         <source>Save Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="205"/>
+        <location filename="../menue/gamemenue.cpp" line="224"/>
         <source>Exit Game</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1280,73 +1285,18 @@
 <context>
     <name>MapSelectionMapsMenue</name>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="68"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="66"/>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="77"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="75"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="86"/>
+        <location filename="../menue/mapselectionmapsmenue.cpp" line="84"/>
         <source>Start Game</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="314"/>
-        <source>Enviroment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="335"/>
-        <source>Random Weather: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="346"/>
-        <source>Start Weather: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="361"/>
-        <source>Gameplay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="367"/>
-        <source>Unit Ranking System: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="378"/>
-        <source>No CO Powers: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="389"/>
-        <source>Fog Of War: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="392"/>
-        <source>Off</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="392"/>
-        <source>Fog of War</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="404"/>
-        <source>Unit Limit: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/mapselectionmapsmenue.cpp" line="417"/>
-        <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1832,6 +1782,77 @@
     <message>
         <location filename="../resources/scripts/terrain/RUIN.js" line="6"/>
         <source>Ruin</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RuleSelection</name>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="38"/>
+        <source>Enviroment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="62"/>
+        <source>Random Weather: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="73"/>
+        <source>Start Weather: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="88"/>
+        <source>Gameplay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="94"/>
+        <source>Unit Ranking System: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="105"/>
+        <source>No CO Powers: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="116"/>
+        <source>Fog Of War: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="119"/>
+        <source>Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="119"/>
+        <source>Fog of War</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="131"/>
+        <source>Unit Limit: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="144"/>
+        <source>Round Time: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="157"/>
+        <source>Victory Rules</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RuleSelectionDialog</name>
+    <message>
+        <location filename="../objects/ruleselectiondialog.cpp" line="27"/>
+        <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

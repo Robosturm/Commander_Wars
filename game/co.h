@@ -40,9 +40,9 @@ public:
      * @brief getVersion
      * @return
      */
-    virtual qint32 getVersion()
+    virtual qint32 getVersion() override
     {
-        return 2;
+        return 3;
     }
     void init();
 signals:
@@ -235,12 +235,12 @@ public slots:
      * @brief getPowerFilled
      * @return
      */
-    float getPowerFilled() const;
+    double getPowerFilled() const;
     /**
      * @brief setPowerFilled
      * @param value
      */
-    void setPowerFilled(const float &value);
+    void setPowerFilled(const double &value);
     /**
      * @brief getCanMoveAndFire returns
      * @return
@@ -416,10 +416,11 @@ private:
     QString coID;
     qint32 powerStars{0};
     qint32 superpowerStars{0};
-    float powerFilled{0.0f};
+    double powerFilled{0.0};
     Unit* m_pCOUnit{nullptr};
     GameEnums::PowerMode m_PowerMode{GameEnums::PowerMode_Off};
     ScriptVariables m_Variables;
+    qint32 powerUsed{0};
 };
 
 #endif // KO_H

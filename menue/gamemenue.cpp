@@ -12,6 +12,7 @@
 #include "game/gameanimationfactory.h"
 
 #include "resource_management/objectmanager.h"
+#include "resource_management/fontmanager.h"
 
 #include "objects/filedialog.h"
 
@@ -190,7 +191,25 @@ void GameMenue::loadGameMenue()
     pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setResAnim(pAnim);
-    pButtonBox->setSize(286, 50);
+    qint32 roundTime = pMap->getGameRules()->getRoundTimeMs();
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_MIDDLE;
+    style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
+    style.multiline = false;
+    m_CurrentRoundTime = new oxygine::TextField();
+    m_CurrentRoundTime->setStyle(style);
+    if (roundTime > 0)
+    {
+        pButtonBox->setSize(286 + 70, 50);
+        m_CurrentRoundTime->setPosition(138 + 35, 20);
+        pButtonBox->addChild(m_CurrentRoundTime);
+        updateTimer();
+    }
+    else
+    {
+        pButtonBox->setSize(286, 50);
+    }
     pButtonBox->setPosition((pApp->getSettings()->getWidth() - m_IngameInfoBar->getWidth()) / 2 - pButtonBox->getWidth() / 2 + 50, -4);
     pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
@@ -203,15 +222,19 @@ void GameMenue::loadGameMenue()
     pButtonBox->addChild(saveGame);
 
     oxygine::spButton exitGame = pObjectManager->createButton(tr("Exit Game"), 130);
-    exitGame->setPosition(148, 4);
+    exitGame->setPosition(pButtonBox->getWidth() - 138, 4);
     exitGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigExitGame();
     });
     pButtonBox->addChild(exitGame);
 
-
+    m_UpdateTimer.setInterval(500);
+    m_UpdateTimer.setSingleShot(false);
+    m_UpdateTimer.start();
+    connect(&m_UpdateTimer, &QTimer::timeout, this, &GameMenue::updateTimer, Qt::QueuedConnection);
     connect(pMap->getGameRules(), &GameRules::signalVictory, this, &GameMenue::victory, Qt::QueuedConnection);
+    connect(pMap->getGameRules()->getRoundTimer(), &Timer::timeout, pMap, &GameMap::nextTurn, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
@@ -222,6 +245,24 @@ void GameMenue::loadGameMenue()
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap, &GameMap::centerMap, Qt::QueuedConnection);
     connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameMenue::actionPerformed, Qt::QueuedConnection);
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, m_IngameInfoBar.get(), &IngameInfoBar::updateCursorInfo, Qt::QueuedConnection);
+}
+
+void GameMenue::updateTimer()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    QTimer* pTimer = GameMap::getInstance()->getGameRules()->getRoundTimer();
+    qint32 roundTime = pTimer->remainingTime();
+    if (!pTimer->isActive())
+    {
+        roundTime = pTimer->interval();
+    }
+    if (roundTime < 0)
+    {
+        roundTime = 0;
+    }
+    m_CurrentRoundTime->setText(QTime::fromMSecsSinceStartOfDay(roundTime).toString("hh:mm:ss").toStdString().c_str());
+    pApp->continueThread();
 }
 
 bool GameMenue::getGameStarted() const
@@ -244,6 +285,7 @@ void GameMenue::performAction(GameAction* pGameAction)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
+    pMap->getGameRules()->pauseRoundTime();
     QVector<QPoint> path = pGameAction->getMovePath();
     if (path.size() > 0)
     {
@@ -357,6 +399,7 @@ void GameMenue::actionPerformed()
     if (GameAnimationFactory::getAnimationCount() == 0)
     {
         Mainapp::setUseSeed(false);
+        pMap->getGameRules()->resumeRoundTime();
         emit sigActionPerformed();
     }
     pApp->continueThread();

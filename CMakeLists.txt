@@ -90,6 +90,9 @@ set(${PROJECT_NAME}_SRCS
         objects/dialogmessagebox.cpp
         objects/dialograndommap.cpp
         objects/mapselectionview.cpp
+        objects/timespinbox.cpp
+        objects/ruleselection.cpp
+        objects/ruleselectiondialog.cpp
 
 
         #menues
@@ -132,6 +135,7 @@ set(${PROJECT_NAME}_SRCS
         coreengine/scriptvariable.cpp
         coreengine/workerthread.cpp
         coreengine/dijkstramap.cpp
+        coreengine/timer.cpp
 
         # network engine
         network/tcpclient.cpp

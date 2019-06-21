@@ -147,6 +147,10 @@ public slots:
      */
     void playersChanged();
     /**
+     * @brief rulesChanged
+     */
+    void rulesChanged();
+    /**
      * @brief createRandomMap
      * @param mapName
      * @param author

@@ -11,6 +11,8 @@
 
 #include "game/GameEnums.h"
 
+#include "coreengine/timer.h"
+
 #include "oxygine-framework.h"
 
 class Player;
@@ -47,7 +49,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 2;
+        return 3;
     }
     void addVictoryRule(spVictoryRule rule);
     /**
@@ -55,6 +57,10 @@ public:
      */
     void createWeatherSprites();
 
+    Timer* getRoundTimer()
+    {
+        return &m_RoundTimer;
+    }
 signals:
     void signalVictory(qint32 team);
 public slots:
@@ -182,6 +188,37 @@ public slots:
     {
         return m_VictoryRules[index].get();
     }
+    /**
+     * @brief setRoundTimeMs
+     * @param timeMs
+     */
+    void setRoundTimeMs(qint32 timeMs)
+    {
+        roundTime = timeMs;
+    }
+    /**
+     * @brief getRoundTimeMs
+     * @return
+     */
+    qint32 getRoundTimeMs()
+    {
+        return roundTime;
+    }
+    /**
+     * @brief pauseRoundTime
+     */
+    void pauseRoundTime()
+    {
+        m_RoundTimer.pause();
+    }
+    /**
+     * @brief resumeRoundTime
+     */
+    void resumeRoundTime();
+    /**
+     * @brief startRoundTime
+     */
+    void initRoundTime();
 private:
     // victory conditions
     QVector<spVictoryRule> m_VictoryRules;
@@ -200,6 +237,9 @@ private:
 
     QVector<QVector<oxygine::spSprite>> m_FogSprites;
     QVector<oxygine::spSprite> m_WeatherSprites;
+
+    qint32 roundTime{0};
+    Timer m_RoundTimer;
 };
 
 #endif // GAMERULES_H

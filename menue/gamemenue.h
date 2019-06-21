@@ -2,6 +2,7 @@
 #define GAMEMENUE_H
 
 #include <QObject>
+#include <QTimer>
 #include <menue/ingamemenue.h>
 #include "game/gameaction.h"
 #include "game/gamemap.h"
@@ -118,6 +119,8 @@ public slots:
      * @param socketID
      */
     void playerJoined(quint64 socketID);
+protected slots:
+    void updateTimer();
 protected:
     void loadGameMenue();
 private:
@@ -128,7 +131,10 @@ private:
     bool gameStarted{false};
     QVector<quint64> m_PlayerSockets;
     QVector<quint64> m_ReadySockets;
+    oxygine::spTextField m_CurrentRoundTime;
     bool m_SaveGame{false};
+
+    QTimer m_UpdateTimer;
 };
 
 #endif // GAMEMENUE_H

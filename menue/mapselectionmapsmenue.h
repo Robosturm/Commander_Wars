@@ -56,10 +56,6 @@ public slots:
     void mapSelectionItemClicked(QString item);
     void mapSelectionItemChanged(QString item);
 
-    // slots for changing the rules
-    void startWeatherChanged(qint32 value);
-    void weatherChancesChanged();
-
     // general slots
     virtual void slotButtonBack();
     virtual void slotButtonNext();
@@ -76,7 +72,6 @@ protected:
     spMapSelectionView m_pMapSelectionView;
     // rule selection
     spPanel m_pRuleSelection;
-    spMultislider m_pWeatherSlider;
 
     spPlayerSelection m_pPlayerSelection;
 

@@ -20,6 +20,8 @@
 
 #include "objects/playerselectiondialog.h"
 
+#include "objects/ruleselectiondialog.h"
+
 #include "objects/dialograndommap.h"
 
 #include "game/terrainfindingsystem.h"
@@ -63,6 +65,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Delete Units"), "DELETEUNITS", 2);
     m_Topbar->addItem(tr("Edit Units"), "EDITUNITS", 2);
     m_Topbar->addItem(tr("Edit Players"), "EDITPLAYERS", 2);
+    m_Topbar->addItem(tr("Edit Rules"), "EDITRULES", 2);
     m_Topbar->addItem(tr("Optimize Players"), "OPTIMIZEPLAYERS", 2);
 
     m_Topbar->addGroup(tr("Import/Export"));
@@ -247,6 +250,13 @@ void EditorMenue::clickedTopbar(QString itemID)
         connect(pDialog.get(), &PlayerSelectionDialog::sigPlayersChanged, this, &EditorMenue::playersChanged, Qt::QueuedConnection);
         setFocused(false);
     }
+    else if (itemID == "EDITRULES")
+    {
+        spRuleSelectionDialog pDialog = new RuleSelectionDialog();
+        addChild(pDialog);
+        connect(pDialog.get(), &RuleSelectionDialog::sigRulesChanged, this, &EditorMenue::rulesChanged, Qt::QueuedConnection);
+        setFocused(false);
+    }
     pApp->continueThread();
 }
 
@@ -279,6 +289,14 @@ void EditorMenue::playersChanged()
     m_EditorSelection->createPlayerSelection();
     GameMap* pMap = GameMap::getInstance();
     pMap->updateSprites();
+    setFocused(true);
+    pApp->continueThread();
+}
+
+void EditorMenue::rulesChanged()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     setFocused(true);
     pApp->continueThread();
 }

@@ -71,7 +71,11 @@ EditorSelection::EditorSelection()
     pButtonTop->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         m_PlacementActor->setY(m_PlacementActor->getY() - GameMap::Imagesize);
-        if (m_PlacementActor->getY() < -m_PlacementActor->getHeight() + m_PlacementSelectionSlider->getHeight())
+        if (m_PlacementActor->getHeight() < m_PlacementSelectionSlider->getHeight())
+        {
+            m_PlacementActor->setY(-GameMap::Imagesize);
+        }
+        else if (m_PlacementActor->getY() < -m_PlacementActor->getHeight() + m_PlacementSelectionSlider->getHeight())
         {
             m_PlacementActor->setY(-m_PlacementActor->getHeight() + m_PlacementSelectionSlider->getHeight());
         }

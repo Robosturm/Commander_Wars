@@ -36,6 +36,7 @@ GameRules::GameRules()
         }
     }
     m_StartWeather = 0;
+    m_RoundTimer.setSingleShot(true);
 }
 
 void GameRules::addVictoryRule(QString rule)
@@ -497,6 +498,22 @@ void GameRules::setRankingSystem(bool RankingSystem)
     m_RankingSystem = RankingSystem;
 }
 
+void GameRules::resumeRoundTime()
+{
+    if (roundTime > 0)
+    {
+        m_RoundTimer.resume();
+    }
+}
+
+void GameRules::initRoundTime()
+{
+    if (roundTime > 0)
+    {
+        m_RoundTimer.setInterval(roundTime);
+    }
+}
+
 void GameRules::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
@@ -520,6 +537,8 @@ void GameRules::serializeObject(QDataStream& pStream)
     pStream << m_NoPower;
     pStream << m_UnitLimit;
     pStream << static_cast<qint32>(m_FogMode);
+    pStream << roundTime;
+    pStream << m_RoundTimer.interval();
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -572,5 +591,12 @@ void GameRules::deserializeObject(QDataStream& pStream)
         qint32 value = 0;
         pStream >> value;
         m_FogMode = static_cast<GameEnums::Fog>(value);
+    }
+    if (version > 2)
+    {
+        pStream >> roundTime;
+        qint32 intervall;
+        pStream >> intervall;
+        m_RoundTimer.setInterval(intervall);
     }
 }

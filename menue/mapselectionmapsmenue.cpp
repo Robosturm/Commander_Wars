@@ -9,7 +9,6 @@
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/cospritemanager.h"
 
-#include "resource_management/gamerulemanager.h"
 
 #include "game/gamemap.h"
 
@@ -24,8 +23,7 @@
 #include "menue/campaignmenu.h"
 #include "multiplayer/multiplayermenu.h"
 
-#include "objects/checkbox.h"
-#include "objects/spinbox.h"
+#include "objects/ruleselection.h"
 
 MapSelectionMapsMenue::MapSelectionMapsMenue(qint32 heigth, spMapSelectionView pMapSelectionView)
     : QObject()
@@ -250,27 +248,6 @@ void MapSelectionMapsMenue::mapSelectionItemChanged(QString item)
     pApp->continueThread();
 }
 
-
-
-void MapSelectionMapsMenue::startWeatherChanged(qint32 value)
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    m_pMapSelectionView->getCurrentMap()->getGameRules()->setStartWeather(value);
-    pApp->continueThread();
-}
-
-void MapSelectionMapsMenue::weatherChancesChanged()
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getGameRules()->getWeatherCount(); i++)
-    {
-        m_pMapSelectionView->getCurrentMap()->getGameRules()->changeWeatherChance(i, m_pWeatherSlider->getSliderValue(i));
-    }
-    pApp->continueThread();
-}
-
 void MapSelectionMapsMenue::hideMapSelection()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -301,191 +278,7 @@ void MapSelectionMapsMenue::showRuleSelection()
     pApp->suspendThread();
     m_pRuleSelection->setVisible(true);
     m_pRuleSelection->clearContent();
-    GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
-    qint32 y = 20;
-    // font style
-    oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
-    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-
-    oxygine::spTextField textField = new oxygine::TextField();
-    textField->setStyle(style);
-    textField->setText(tr("Enviroment").toStdString().c_str());
-    textField->setPosition(30, y);
-    m_pRuleSelection->addItem(textField);
-    y += 40;
-
-    QVector<QString> weatherStrings;
-    QVector<qint32> weatherChances;
-    for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getGameRules()->getWeatherCount(); i++)
-    {
-        Weather* pWeather = m_pMapSelectionView->getCurrentMap()->getGameRules()->getWeather(i);
-        weatherStrings.append(pWeather->getWeatherName());
-        weatherChances.append(m_pMapSelectionView->getCurrentMap()->getGameRules()->getWeatherChance(pWeather->getWeatherId()));
-    }
-    m_pWeatherSlider = new Multislider(weatherStrings, pApp->getSettings()->getWidth() - 80, weatherChances);
-    m_pWeatherSlider->setPosition(30, y);
-    m_pRuleSelection->addItem(m_pWeatherSlider);
-    connect(m_pWeatherSlider.get(), &Multislider::signalSliderChanged, this, &MapSelectionMapsMenue::weatherChancesChanged, Qt::QueuedConnection);
-
-    y += m_pWeatherSlider->getHeight();
-    textField = new oxygine::TextField();
-    textField->setStyle(style);
-    textField->setText(tr("Random Weather: ").toStdString().c_str());
-    textField->setPosition(30, y);
-    m_pRuleSelection->addItem(textField);
-    spCheckbox pCheckbox = new Checkbox();
-    pCheckbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
-    m_pRuleSelection->addItem(pCheckbox);
-    pCheckbox->setChecked(m_pMapSelectionView->getCurrentMap()->getGameRules()->getRandomWeather());
-    connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMapSelectionView->getCurrentMap()->getGameRules(), &GameRules::setRandomWeather, Qt::QueuedConnection);
-
-    textField = new oxygine::TextField();
-    textField->setStyle(style);
-    textField->setText(tr("Start Weather: ").toStdString().c_str());
-    textField->setPosition(30, pCheckbox->getY() + 40);
-    m_pRuleSelection->addItem(textField);
-
-    spDropDownmenu startWeather = new DropDownmenu(200, weatherStrings);
-    startWeather->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
-    startWeather->setCurrentItem(m_pMapSelectionView->getCurrentMap()->getGameRules()->getCurrentWeatherId());
-    connect(startWeather.get(), &DropDownmenu::sigItemChanged, this, &MapSelectionMapsMenue::startWeatherChanged, Qt::QueuedConnection);
-    m_pRuleSelection->addItem(startWeather);
-    startWeatherChanged(0);
-
-    y = textField->getY() + 50;
-
-    textField = new oxygine::TextField();
-    textField->setStyle(style);
-    textField->setText(tr("Gameplay").toStdString().c_str());
-    textField->setPosition(30, y);
-    m_pRuleSelection->addItem(textField);
-    y += 40;
-    textField = new oxygine::TextField();
-    textField->setStyle(style);
-    textField->setText(tr("Unit Ranking System: ").toStdString().c_str());
-    textField->setPosition(30, y);
-    m_pRuleSelection->addItem(textField);
-    pCheckbox = new Checkbox();
-    pCheckbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
-    m_pRuleSelection->addItem(pCheckbox);
-    pCheckbox->setChecked(m_pMapSelectionView->getCurrentMap()->getGameRules()->getRankingSystem());
-    connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMapSelectionView->getCurrentMap()->getGameRules(), &GameRules::setRankingSystem, Qt::QueuedConnection);
-    y += 40;
-    textField = new oxygine::TextField();
-    textField->setStyle(style);
-    textField->setText(tr("No CO Powers: ").toStdString().c_str());
-    textField->setPosition(30, y);
-    m_pRuleSelection->addItem(textField);
-    pCheckbox = new Checkbox();
-    pCheckbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
-    m_pRuleSelection->addItem(pCheckbox);
-    pCheckbox->setChecked(m_pMapSelectionView->getCurrentMap()->getGameRules()->getNoPower());
-    connect(pCheckbox.get(), &Checkbox::checkChanged, m_pMapSelectionView->getCurrentMap()->getGameRules(), &GameRules::setNoPower, Qt::QueuedConnection);
-    y += 40;
-    textField = new oxygine::TextField();
-    textField->setStyle(style);
-    textField->setText(tr("Fog Of War: ").toStdString().c_str());
-    textField->setPosition(30, y);
-    m_pRuleSelection->addItem(textField);
-    QVector<QString> fogModes = {tr("Off"), tr("Fog of War")};
-    spDropDownmenu fogOfWar = new DropDownmenu(200, fogModes);
-    fogOfWar->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
-    fogOfWar->setCurrentItem(m_pMapSelectionView->getCurrentMap()->getGameRules()->getFogMode());
-    connect(fogOfWar.get(), &DropDownmenu::sigItemChanged, m_pMapSelectionView->getCurrentMap()->getGameRules(), [=](qint32 value)
-    {
-        m_pMapSelectionView->getCurrentMap()->getGameRules()->setFogMode(static_cast<GameEnums::Fog>(value));
-    });
-    m_pRuleSelection->addItem(fogOfWar);
-    y += 50;
-    textField = new oxygine::TextField();
-    textField->setStyle(style);
-    textField->setText(tr("Unit Limit: ").toStdString().c_str());
-    textField->setPosition(30, y);
-    m_pRuleSelection->addItem(textField);
-    spSpinBox pSpinbox = new SpinBox(150, 0, 9999);
-    pSpinbox->setInfinityValue(0.0f);
-    pSpinbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
-    m_pRuleSelection->addItem(pSpinbox);
-    pSpinbox->setCurrentValue(m_pMapSelectionView->getCurrentMap()->getGameRules()->getUnitLimit());
-    connect(pSpinbox.get(), &SpinBox::sigValueChanged, m_pMapSelectionView->getCurrentMap()->getGameRules(), &GameRules::setUnitLimit, Qt::QueuedConnection);
-
-    y += 50;
-    textField = new oxygine::TextField();
-    textField->setStyle(style);
-    textField->setText(tr("Victory Rules").toStdString().c_str());
-    textField->setPosition(30, y);
-    m_pRuleSelection->addItem(textField);
-    y += 40;
-    for (qint32 i = 0; i < pGameRuleManager->getVictoryRuleCount(); i++)
-    {
-        QString ruleID = pGameRuleManager->getVictoryRuleID(i);
-        spVictoryRule pRule = new VictoryRule(ruleID);
-        QString inputType = pRule->getRuleType().toLower();
-        if (inputType == "checkbox")
-        {
-            bool defaultValue = pRule->getDefaultValue();
-            if (defaultValue)
-            {
-                m_pMapSelectionView->getCurrentMap()->getGameRules()->addVictoryRule(pRule);
-            }
-            // add a cool check box and a cool text
-            QString labelName = pRule->getRuleName();
-            textField = new oxygine::TextField();
-            textField->setStyle(style);
-            textField->setText(labelName.toStdString().c_str());
-            textField->setPosition(30, i * 50 + y);
-            m_pRuleSelection->addItem(textField);
-            spCheckbox pCheckbox = new Checkbox();
-            pCheckbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
-            m_pRuleSelection->addItem(pCheckbox);
-            pCheckbox->setChecked(defaultValue);
-            connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
-            {
-                if (value)
-                {
-                    m_pMapSelectionView->getCurrentMap()->getGameRules()->addVictoryRule(ruleID);
-                }
-                else
-                {
-                    m_pMapSelectionView->getCurrentMap()->getGameRules()->removeVictoryRule(ruleID);
-                }
-            });
-        }
-        else if (inputType == "spinbox")
-        {
-            qint32 defaultValue = pRule->getDefaultValue();
-            qint32 startValue = pRule->getInfiniteValue();
-            if (defaultValue != startValue)
-            {
-                m_pMapSelectionView->getCurrentMap()->getGameRules()->addVictoryRule(pRule);
-            }
-            QString labelName = pRule->getRuleName();
-            textField = new oxygine::TextField();
-            textField->setStyle(style);
-            textField->setText(labelName.toStdString().c_str());
-            textField->setPosition(30, i * 50 + y);
-            m_pRuleSelection->addItem(textField);
-            spSpinBox pSpinbox = new SpinBox(200, startValue, 9999);
-            pSpinbox->setPosition(40 + textField->getTextRect().getWidth(), textField->getY());
-            pSpinbox->setInfinityValue(startValue);
-            m_pRuleSelection->addItem(pSpinbox);
-            pSpinbox->setCurrentValue(defaultValue);
-            connect(pSpinbox.get(), &SpinBox::sigValueChanged, [=](float value)
-            {
-                qint32 newValue = static_cast<qint32>(value);
-                m_pMapSelectionView->getCurrentMap()->getGameRules()->removeVictoryRule(ruleID);
-                if (newValue != startValue)
-                {
-                    spVictoryRule pRule = new VictoryRule(ruleID);
-                    pRule->setRuleValue(newValue);
-                    m_pMapSelectionView->getCurrentMap()->getGameRules()->addVictoryRule(pRule);
-                }
-            });
-        }
-    }
-    m_pRuleSelection->setContentHeigth(90 + startWeather->getY() + pGameRuleManager->getVictoryRuleCount() * 50);
+    m_pRuleSelection->addItem(new RuleSelection(pApp->getSettings()->getWidth() - 80));
     pApp->continueThread();
 }
 
