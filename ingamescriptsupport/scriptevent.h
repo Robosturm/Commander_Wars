@@ -15,10 +15,14 @@ class ScriptEvent : public QObject, public oxygine::ref_counter
     Q_OBJECT
 public:
     static const QString EventDialog;
+    static const QString EventSpawnUnit;
+    static const QString EventDefeatPlayer;
 
     enum class EventType
     {
         dialog,
+        spawnUnit,
+        defeatPlayer,
     };
 
     static spScriptEvent createEvent(EventType type);

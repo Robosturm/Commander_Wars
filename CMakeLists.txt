@@ -212,6 +212,7 @@ set(${PROJECT_NAME}_SRCS
         multiplayer/multiplayermenu.cpp
 
         # script support
+        ingamescriptsupport/scripteditor.cpp
         ingamescriptsupport/scriptdata.cpp
         # condition stuff
         ingamescriptsupport/scriptcondition.cpp
@@ -221,6 +222,8 @@ set(${PROJECT_NAME}_SRCS
         # event stuff
         ingamescriptsupport/scriptevent.cpp
         ingamescriptsupport/scripteventdialog.cpp
+        ingamescriptsupport/scripteventspawnunit.cpp
+        ingamescriptsupport/scripteventdefeatplayer.cpp
 )
 
 

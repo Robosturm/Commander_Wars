@@ -1,8 +1,12 @@
 #include "scriptevent.h"
 
 #include "scripteventdialog.h"
+#include "scripteventspawnunit.h"
+#include "scripteventdefeatplayer.h"
 
-const QString ScriptEvent::EventDialog  = "EventDialog";
+const QString ScriptEvent::EventDialog  = "Dialog";
+const QString ScriptEvent::EventSpawnUnit = "Spawn Unit";
+const QString ScriptEvent::EventDefeatPlayer = "Defeat Player";
 
 ScriptEvent::ScriptEvent(EventType type)
     : QObject(),
@@ -19,6 +23,14 @@ spScriptEvent ScriptEvent::createReadEvent(QTextStream& rStream)
     if (line.endsWith(EventDialog))
     {
          ret = new ScriptEventDialog();
+    }
+    else if (line.endsWith(EventSpawnUnit))
+    {
+         ret = new ScriptEventSpawnUnit();
+    }
+    if (line.endsWith(EventDefeatPlayer))
+    {
+         ret = new ScriptEventDefeatPlayer();
     }
     if (ret != nullptr)
     {
@@ -39,6 +51,14 @@ spScriptEvent ScriptEvent::createEvent(EventType type)
         case EventType::dialog:
         {
             return new ScriptEventDialog();
+        }
+        case EventType::spawnUnit:
+        {
+            return new ScriptEventSpawnUnit();
+        }
+        case EventType::defeatPlayer:
+        {
+            return new ScriptEventDefeatPlayer();
         }
     }
     return nullptr;

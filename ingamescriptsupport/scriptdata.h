@@ -82,6 +82,17 @@ public:
      * @brief clearData
      */
     void clearData();
+    /**
+     * @brief getStartMode
+     * @return
+     */
+    bool getStartMode() const;
+    /**
+     * @brief setStartMode
+     * @param value
+     */
+    void setStartMode(bool value);
+
 private:
     QVector<spScriptCondition> m_Victory;
     QString customVictoryCode;

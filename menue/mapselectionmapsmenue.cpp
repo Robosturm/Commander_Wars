@@ -278,7 +278,9 @@ void MapSelectionMapsMenue::showRuleSelection()
     pApp->suspendThread();
     m_pRuleSelection->setVisible(true);
     m_pRuleSelection->clearContent();
-    m_pRuleSelection->addItem(new RuleSelection(pApp->getSettings()->getWidth() - 80));
+    spRuleSelection pRuleSelection = new RuleSelection(pApp->getSettings()->getWidth() - 80);
+    m_pRuleSelection->addItem(pRuleSelection);
+    m_pRuleSelection->setContentHeigth(pRuleSelection->getHeight() + 40);
     pApp->continueThread();
 }
 

@@ -194,15 +194,15 @@ void GameMenue::loadGameMenue()
     qint32 roundTime = pMap->getGameRules()->getRoundTimeMs();
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);
-    style.vAlign = oxygine::TextStyle::VALIGN_MIDDLE;
-    style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
+    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     m_CurrentRoundTime = new oxygine::TextField();
     m_CurrentRoundTime->setStyle(style);
     if (roundTime > 0)
     {
         pButtonBox->setSize(286 + 70, 50);
-        m_CurrentRoundTime->setPosition(138 + 35, 20);
+        m_CurrentRoundTime->setPosition(138 + 4, 10);
         pButtonBox->addChild(m_CurrentRoundTime);
         updateTimer();
     }
@@ -210,7 +210,7 @@ void GameMenue::loadGameMenue()
     {
         pButtonBox->setSize(286, 50);
     }
-    pButtonBox->setPosition((pApp->getSettings()->getWidth() - m_IngameInfoBar->getWidth()) / 2 - pButtonBox->getWidth() / 2 + 50, -4);
+    pButtonBox->setPosition((pApp->getSettings()->getWidth() - m_IngameInfoBar->getWidth()) / 2 - pButtonBox->getWidth() / 2 + 50, pApp->getSettings()->getHeight() - pButtonBox->getHeight() + 6);
     pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
     oxygine::spButton saveGame = pObjectManager->createButton(tr("Save Game"), 130);

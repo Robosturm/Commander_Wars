@@ -29,6 +29,7 @@ Topbar::Topbar(qint32 x, qint32 width)
             }
         }
     });
+    setSize(width, 80);
 }
 
 void Topbar::addItem(QString text, QString itemID, qint32 group)

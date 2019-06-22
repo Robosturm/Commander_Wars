@@ -20,6 +20,16 @@ void ScriptData::clearData()
     customVictoryCode = "";
 }
 
+bool ScriptData::getStartMode() const
+{
+    return startMode;
+}
+
+void ScriptData::setStartMode(bool value)
+{
+    startMode = value;
+}
+
 void ScriptData::readScript(QTextStream& rStream)
 {
     clearData();

@@ -4,9 +4,9 @@
 #include "scriptconditioneachday.h"
 #include "scriptconditionstartofturn.h"
 
-const QString ScriptCondition::ConditionVictory = "ConditionVictory";
-const QString ScriptCondition::ConditionStartOfTurn = "ConditionStartOfTurn";
-const QString ScriptCondition::ConditionEachDay = "ConditionEachDay";
+const QString ScriptCondition::ConditionVictory = "Victory";
+const QString ScriptCondition::ConditionStartOfTurn = "Start Of Turn";
+const QString ScriptCondition::ConditionEachDay = "Each Day";
 
 ScriptCondition::ScriptCondition(ConditionType type)
     : QObject(),

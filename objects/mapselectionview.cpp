@@ -147,6 +147,8 @@ MapSelectionView::MapSelectionView()
 
 void MapSelectionView::loadMap(QFileInfo info)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     if (info.isFile() && info.fileName().endsWith(".map"))
     {
         if (m_pCurrentMap != nullptr)
@@ -162,7 +164,6 @@ void MapSelectionView::loadMap(QFileInfo info)
         m_MapName->setText(m_pCurrentMap->getMapName().toStdString().c_str());
         m_MapAuthor->setText(m_pCurrentMap->getMapAuthor().toStdString().c_str());
         m_MapDescription->setText(m_pCurrentMap->getMapDescription().toStdString().c_str());
-        m_MapInfo->setContentHeigth(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 30);
         m_currentMapFile = info;
 
         BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
@@ -186,6 +187,18 @@ void MapSelectionView::loadMap(QFileInfo info)
         m_MapAuthor->setText(m_CurrentCampaign->getAuthor().toStdString().c_str());
         m_MapName->setText(m_CurrentCampaign->getName().toStdString().c_str());
     }
+    qint32 maxWidth = m_MapDescription->getX() + m_MapDescription->getTextRect().getWidth();
+    if (maxWidth < m_MapAuthor->getX() + m_MapAuthor->getTextRect().getWidth())
+    {
+        maxWidth = m_MapAuthor->getX() + m_MapAuthor->getTextRect().getWidth();
+    }
+    if (maxWidth < m_MapName->getX() + m_MapName->getTextRect().getWidth())
+    {
+        maxWidth = m_MapName->getX() + m_MapName->getTextRect().getWidth();
+    }
+    m_MapInfo->setContentWidth(maxWidth + 30);
+    m_MapInfo->setContentHeigth(m_MapDescription->getY() + m_MapDescription->getTextRect().getHeight() + 30);
+    pApp->continueThread();
 }
 
 void MapSelectionView::updateMapData()

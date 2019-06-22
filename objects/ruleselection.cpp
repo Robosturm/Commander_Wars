@@ -225,7 +225,7 @@ void RuleSelection::showRuleSelection()
             });
         }
     }
-    setHeight(90 + startWeather->getY() + pGameRuleManager->getVictoryRuleCount() * 50);
+    setHeight(y + pGameRuleManager->getVictoryRuleCount() * 50 + 50);
     pApp->continueThread();
 }
 

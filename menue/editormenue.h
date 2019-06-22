@@ -34,6 +34,13 @@ signals:
     void sigOnMapClickedLeft();
     void sigOnMapClickedRight();
 public slots:
+    /**
+     * @brief scriptFinished
+     */
+    void scriptFinished();
+    /**
+     * @brief editFinishedCanceled
+     */
     void editFinishedCanceled();
     /**
      * @brief cursorMoved called when the cursor moved
@@ -174,6 +181,7 @@ private:
     spEditorSelection m_EditorSelection{nullptr};
     EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};
     spTopbar m_Topbar;
+    oxygine::spTextField xyTextInfo;
 
     static EditorMenue* m_pInstance;
 };

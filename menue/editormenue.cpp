@@ -9,6 +9,8 @@
 #include "menue/mainwindow.h"
 
 #include "resource_management/movementtablemanager.h"
+#include "resource_management/objectmanager.h"
+#include "resource_management/fontmanager.h"
 
 #include "coreengine/console.h"
 
@@ -23,6 +25,8 @@
 #include "objects/ruleselectiondialog.h"
 
 #include "objects/dialograndommap.h"
+
+#include "ingamescriptsupport/scripteditor.h"
 
 #include "game/terrainfindingsystem.h"
 #include "game/co.h"
@@ -48,6 +52,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addGroup(tr("Menu"));
     m_Topbar->addItem(tr("Save Map"), "SAVEMAP", 0);
     m_Topbar->addItem(tr("Load Map"), "LOADMAP", 0);
+    m_Topbar->addItem(tr("Edit Script"), "EDITSCRIPT", 0);
     m_Topbar->addItem(tr("Exit Editor"), "EXIT", 0);
 
     m_Topbar->addGroup(tr("Map Info"));
@@ -90,6 +95,27 @@ EditorMenue::EditorMenue()
             }
         }
     });
+
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
+    oxygine::spBox9Sprite pButtonBox = new oxygine::Box9Sprite();
+    pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    pButtonBox->setResAnim(pAnim);
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+    xyTextInfo = new oxygine::TextField();
+    xyTextInfo->setStyle(style);
+    xyTextInfo->setText("X: 0 Y: 0");
+    xyTextInfo->setPosition(8, 8);
+    pButtonBox->addChild(xyTextInfo);
+    pButtonBox->setSize(120, 50);
+    pButtonBox->setPosition((pApp->getSettings()->getWidth() - m_EditorSelection->getWidth())  - pButtonBox->getWidth(), -4 + m_Topbar->getHeight());
+    pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+    addChild(pButtonBox);
 
     // connecting stuff
     connect(this, &EditorMenue::sigLeftClick, this, &EditorMenue::onMapClickedLeft, Qt::QueuedConnection);
@@ -135,6 +161,13 @@ void EditorMenue::clickedTopbar(QString itemID)
         this->addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::loadMap, Qt::QueuedConnection);
         connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+        setFocused(false);
+    }
+    else if (itemID == "EDITSCRIPT")
+    {
+        spScriptEditor scriptEditor = new ScriptEditor();
+        this->addChild(scriptEditor);
+        connect(scriptEditor.get(),  &ScriptEditor::sigFinished, this, &EditorMenue::scriptFinished, Qt::QueuedConnection);
         setFocused(false);
     }
     else if (itemID == "IMPORTCOWTXT")
@@ -373,6 +406,7 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    xyTextInfo->setText(("X: " + QString::number(x) + " Y: " + QString::number(y)).toStdString().c_str());
     switch (m_EditorMode)
     {
         case EditorModes::RemoveUnits:
@@ -538,6 +572,11 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
 }
 
 void EditorMenue::editFinishedCanceled()
+{
+    setFocused(true);
+}
+
+void EditorMenue::scriptFinished()
 {
     setFocused(true);
 }
