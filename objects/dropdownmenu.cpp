@@ -125,6 +125,18 @@ void DropDownmenu::setCurrentItem(qint32 index)
     }
 }
 
+void DropDownmenu::setCurrentItem(QString item)
+{
+    for (qint32 i = 0; i < m_ItemTexts.size(); i++)
+    {
+        if (m_ItemTexts[i] == item)
+        {
+            setCurrentItem(i);
+            break;
+        }
+    }
+}
+
 QString DropDownmenu::getCurrentItemText()
 {
     return QString(m_Textfield->getText().c_str());

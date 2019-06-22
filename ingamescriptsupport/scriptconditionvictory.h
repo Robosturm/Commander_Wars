@@ -24,6 +24,18 @@ public:
      * @param rStream
      */
     virtual void writeCondition(QTextStream& rStream) override;
+    /**
+     * @brief getDescription
+     * @return
+     */
+    virtual QString getDescription() override
+    {
+        return tr("Victory Team: ") + QString::number(team + 1);
+    }
+    /**
+     * @brief showEditConditin
+     */
+    virtual void showEditCondition(spScriptEditor pScriptEditor) override;
 private:
     qint32 team{0};
 };

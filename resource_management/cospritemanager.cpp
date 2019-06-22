@@ -19,6 +19,24 @@ COSpriteManager::COSpriteManager()
     }
 }
 
+QVector<QString> COSpriteManager::getSpriteCOIDs()
+{
+    QVector<QString> ret;
+    for (auto iter = _resourcesMap.begin(); iter != _resourcesMap.cend(); ++iter)
+    {
+        QString id(iter->first.c_str());
+        if (id.endsWith("+face"))
+        {
+            QString name = id.toUpper().replace("+FACE", "");
+            if (!ret.contains(name))
+            {
+                ret.append(name);
+            }
+        }
+    }
+    return ret;
+}
+
 COSpriteManager* COSpriteManager::getInstance()
 {
     if (m_pInstance == nullptr)

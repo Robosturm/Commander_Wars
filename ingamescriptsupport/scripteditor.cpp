@@ -20,7 +20,7 @@ ScriptEditor::ScriptEditor()
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
-    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("semidialog");
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
@@ -126,6 +126,10 @@ ScriptEditor::ScriptEditor()
     });
     connect(this, &ScriptEditor::sigSaveScript, this, &ScriptEditor::showSaveScript, Qt::QueuedConnection);
     connect(this, &ScriptEditor::sigLoadScript, this, &ScriptEditor::showLoadScript, Qt::QueuedConnection);
+    connect(this, &ScriptEditor::sigUpdateConditions, this, &ScriptEditor::updateConditios, Qt::QueuedConnection);
+    connect(this, &ScriptEditor::sigUpdateEvents, this, &ScriptEditor::updateEvents, Qt::QueuedConnection);
+    connect(this, &ScriptEditor::sigShowEditCondition, this, &ScriptEditor::showEditCondition, Qt::QueuedConnection);
+    connect(this, &ScriptEditor::sigShowEditEvent, this, &ScriptEditor::showEditEvent, Qt::QueuedConnection);
 }
 
 void ScriptEditor::showSaveScript()
@@ -196,20 +200,174 @@ void ScriptEditor::updateConditios()
     pApp->suspendThread();
     m_ImmediateStart->setChecked(m_Data->getStartMode());
 
+    m_ConditionPanel->clearContent();
+    m_ConditionBoxes.clear();
+    qint32 y = 10;
+
+    for (qint32 i = 0; i < m_Data->getDayConditionSize(); i++)
+    {
+        spScriptCondition pCondition = m_Data->getDayCondition(i);
+        addConditionEntry(pCondition, y);
+    }
+    for (qint32 i = 0; i < m_Data->getVictoryConditionSize(); i++)
+    {
+        spScriptCondition pCondition = m_Data->getVictoryCondition(i);
+        addConditionEntry(pCondition, y);
+    }
+    m_CurrentCondition = nullptr;
+    updateEvents();
+    m_ConditionPanel->setContentHeigth(y + 40);
     pApp->continueThread();
 }
 
-void ScriptEditor::selectCondition(qint32 index)
+void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
 {
+    qint32 x = 250;
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
 
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("textbox");
+    oxygine::spBox9Sprite pSpritebox = new oxygine::Box9Sprite();
+    pSpritebox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    pSpritebox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    pSpritebox->setResAnim(pAnim);
+    pSpritebox->setSize(x + 100 * 3 + 10, 50);
+    pSpritebox->setPosition(5, y);
+    m_ConditionBoxes.append(pSpritebox);
+    m_ConditionPanel->addItem(pSpritebox);
+
+    oxygine::spTextField text = new oxygine::TextField();
+    text->setStyle(style);
+    text->setText(pCondition->getDescription().toStdString().c_str());
+    text->setPosition(10, 5);
+    pSpritebox->addChild(text);
+
+    oxygine::spButton pEditButton = pObjectManager->createButton(tr("Edit"), 90);
+    pEditButton->setPosition(x, 5);
+    pSpritebox->addChild(pEditButton);
+    pEditButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        emit sigShowEditCondition(pCondition);
+    });
+    oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove"), 90);
+    pRemoveButton->setPosition(x + 100, 5);
+    pSpritebox->addChild(pRemoveButton);
+    pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        m_Data->removeCondition(pCondition);
+        emit sigUpdateConditions();
+    });
+    oxygine::spButton pSelectButton = pObjectManager->createButton(tr("Select"), 90);
+    pSelectButton->setPosition(x + 100 * 2, 5);
+    pSpritebox->addChild(pSelectButton);
+    pSelectButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        for (qint32 i = 0; i < m_ConditionBoxes.size(); i++)
+        {
+            m_ConditionBoxes[i]->setAddColor(0, 0, 0);
+        }
+        pSpritebox->setAddColor(32, 200, 32);
+        m_CurrentCondition = pCondition;
+        emit sigUpdateEvents();
+    });
+    y += 54;
+    m_ConditionPanel->setContentWidth(x + 100 * 3 + 30);
+}
+
+void ScriptEditor::updateEvents()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    m_EventPanel->clearContent();
+    qint32 y = 10;
+    if (m_CurrentCondition.get() != nullptr)
+    {
+
+        for (qint32 i = 0; i < m_CurrentCondition->getEventSize(); i++)
+        {
+            spScriptEvent pEvent = m_CurrentCondition->getEvent(i);
+            addEventEntry(pEvent, y);
+        }
+
+    }
+    m_EventPanel->setContentHeigth(y + 40);
+    pApp->continueThread();
+}
+
+void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
+{
+    qint32 x = 250;
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+    oxygine::spTextField text = new oxygine::TextField();
+    text->setStyle(style);
+    text->setText(pEvent->getDescription().toStdString().c_str());
+    text->setPosition(10, y);
+    m_EventPanel->addItem(text);
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    oxygine::spButton pEditButton = pObjectManager->createButton(tr("Edit"), 90);
+    pEditButton->setPosition(x, y);
+    m_EventPanel->addItem(pEditButton);
+    pEditButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        emit sigShowEditEvent(pEvent);
+    });
+    oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove"), 90);
+    pRemoveButton->setPosition(x + 100, y);
+    m_EventPanel->addItem(pRemoveButton);
+    pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        m_CurrentCondition->removeEvent(pEvent);
+        emit sigUpdateEvents();
+    });
+    y += 40;
+    m_EventPanel->setContentWidth(x + 100 * 2 + 10);
 }
 
 void ScriptEditor::addCondition()
 {
-
+    ScriptCondition::ConditionType type = static_cast<ScriptCondition::ConditionType>(m_Conditions->getCurrentItem());
+    spScriptCondition pCondition;
+    if (type == ScriptCondition::ConditionType::victory)
+    {
+        pCondition = m_Data->addVictoryCondition();
+    }
+    else
+    {
+        pCondition = m_Data->addDayCondition(type);
+    }
+    updateConditios();
 }
 
 void ScriptEditor::addEvent()
 {
+    if (m_CurrentCondition.get() != nullptr)
+    {
+        ScriptEvent::EventType type = static_cast<ScriptEvent::EventType>(m_Events->getCurrentItem());
+        m_CurrentCondition->addEvent(ScriptEvent::createEvent(type));
+        updateEvents();
+    }
+}
 
+void ScriptEditor::showEditCondition(spScriptCondition pCondition)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    pCondition->showEditCondition(this);
+    pApp->continueThread();
+}
+
+void ScriptEditor::showEditEvent(spScriptEvent pEvent)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    pEvent->showEditEvent(this);
+    pApp->continueThread();
 }

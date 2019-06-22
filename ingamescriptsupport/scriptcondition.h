@@ -14,6 +14,9 @@
 class ScriptCondition;
 typedef oxygine::intrusive_ptr<ScriptCondition> spScriptCondition;
 
+class ScriptEditor;
+typedef oxygine::intrusive_ptr<ScriptEditor> spScriptEditor;
+
 class ScriptCondition : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
@@ -70,14 +73,23 @@ public:
     }
     /**
      * @brief removeEvent
-     * @param index
+     * @param pEvent
      */
-    void removeEvent(qint32 index);
+    void removeEvent(spScriptEvent pEvent);
     /**
      * @brief getType
      * @return
      */
     ConditionType getType() const;
+    /**
+     * @brief getDescription
+     * @return
+     */
+    virtual QString getDescription() = 0;
+    /**
+     * @brief showEditCondition
+     */
+    virtual void showEditCondition(spScriptEditor pScriptEditor) = 0;
 protected:
     explicit ScriptCondition(ConditionType type);
     QVector<spScriptEvent> events;

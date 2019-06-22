@@ -59,9 +59,8 @@
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/battleanimationmanager.h"
 
-#include "ingamescriptsupport/scriptdata.h"
 #include "ingamescriptsupport/scriptevent.h"
-#include "ingamescriptsupport/scripteventdialog.h"
+#include "ingamescriptsupport/scriptcondition.h"
 #include "qfile.h"
 
 int main(int argc, char* argv[])
@@ -125,6 +124,8 @@ int main(int argc, char* argv[])
     qRegisterMetaType<GameEnums::BuildingTarget>("GameEnums::BuildingTarget");
     qRegisterMetaType<SDL_Event>("SDL_Event");
     qRegisterMetaType<std::shared_ptr<QTcpSocket>>("std::shared_ptr<QTcpSocket>");
+    qRegisterMetaType<spScriptEvent>("spScriptEvent");
+    qRegisterMetaType<spScriptCondition>("spScriptCondition");
 
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
     qmlRegisterInterface<Terrain>("Terrain");
@@ -155,6 +156,7 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<Campaign>("Campaign");
     qmlRegisterInterface<BaseGameInputIF>("BaseGameInputIF");
     qmlRegisterInterface<Settings>("Settings");
+
 
     // load ressources
     BackgroundManager::getInstance();

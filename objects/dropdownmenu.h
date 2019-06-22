@@ -28,10 +28,25 @@ public:
      * @return
      */
     QString getCurrentItemText();
+    /**
+     * @brief setCurrentItemText
+     * @param value
+     */
     void setCurrentItemText(QString value);
-
+    /**
+     * @brief setCurrentItem
+     * @param item
+     */
+    void setCurrentItem(QString item);
+    /**
+     * @brief setCurrentItem
+     * @param index
+     */
     void setCurrentItem(qint32 index);
-
+    /**
+     * @brief getItemCount
+     * @return
+     */
     inline qint32 getItemCount()
     {
         return m_ItemTexts.size();

@@ -10,6 +10,9 @@
 class ScriptEvent;
 typedef oxygine::intrusive_ptr<ScriptEvent> spScriptEvent;
 
+class ScriptEditor;
+typedef oxygine::intrusive_ptr<ScriptEditor> spScriptEditor;
+
 class ScriptEvent : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
@@ -50,6 +53,15 @@ public:
     {
         return m_Type;
     }
+    /**
+     * @brief getDescription
+     * @return
+     */
+    virtual QString getDescription() = 0;
+    /**
+     * @brief showEditEvent
+     */
+    virtual void showEditEvent(spScriptEditor pScriptEditor) = 0;
 protected:
     explicit ScriptEvent(EventType type);
     EventType m_Type;

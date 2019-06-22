@@ -51,6 +51,11 @@ public:
      */
     spScriptCondition addDayCondition(ScriptCondition::ConditionType type);
     /**
+     * @brief removeCondition
+     * @param condition
+     */
+    void removeCondition(spScriptCondition condition);
+    /**
      * @brief getVictoryCondition
      * @param index
      * @return

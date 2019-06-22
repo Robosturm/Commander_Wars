@@ -1,5 +1,9 @@
 #include "scripteventdialog.h"
 
+#include "scriptdialogdialog.h"
+
+#include "scripteditor.h"
+
 const QString ScriptEventDialog::ScriptEventDialogItem = "ScriptEventDialogItem";
 
 ScriptEventDialog::ScriptEventDialog()
@@ -18,6 +22,20 @@ void ScriptEventDialog::addDialog(QString text, QString coid, GameEnums::COMood 
     m_Dialog.append(dialog);
 }
 
+void ScriptEventDialog::showEditEvent(spScriptEditor pScriptEditor)
+{
+    spScriptDialogDialog pScriptDialogDialog = new ScriptDialogDialog(this);
+    pScriptEditor->addChild(pScriptDialogDialog);
+    connect(pScriptDialogDialog.get(), &ScriptDialogDialog::sigFinished, pScriptEditor.get(), &ScriptEditor::updateEvents, Qt::QueuedConnection);
+}
+
+void ScriptEventDialog::removeDialog(qint32 index)
+{
+    if (index >= 0 && index < m_Dialog.size())
+    {
+        m_Dialog.removeAt(index);
+    }
+}
 
 ScriptEventDialog::Dialog* ScriptEventDialog::getDialog(qint32 index)
 {

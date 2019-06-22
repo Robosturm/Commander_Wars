@@ -136,6 +136,26 @@ void ScriptData::writeScript(QTextStream& rStream)
     rStream << "var gameScript = new Constructor();\n";
 }
 
+void ScriptData::removeCondition(spScriptCondition condition)
+{
+    for (qint32 i = 0; i < m_Victory.size(); i++)
+    {
+        if (m_Victory[i].get() == condition.get())
+        {
+            m_Victory.removeAt(i);
+            break;
+        }
+    }
+    for (qint32 i = 0; i < m_DayConditions.size(); i++)
+    {
+        if (m_DayConditions[i].get() == condition.get())
+        {
+            m_DayConditions.removeAt(i);
+            break;
+        }
+    }
+}
+
 spScriptCondition ScriptData::addVictoryCondition()
 {
     spScriptCondition condition = ScriptCondition::createCondition(ScriptCondition::ConditionType::victory);

@@ -29,11 +29,11 @@ ScriptCondition* ScriptCondition::createCondition(ConditionType type)
         }
         case ConditionType::startOfTurn:
         {
-            return new ScriptConditionEachDay();
+            return new ScriptConditionStartOfTurn();
         }
         case ConditionType::eachDay:
         {
-            return new ScriptConditionStartOfTurn();
+            return new ScriptConditionEachDay();
         }
     }
     return nullptr;
@@ -78,10 +78,14 @@ spScriptEvent ScriptCondition::getEvent(qint32 index)
     return nullptr;
 }
 
-void ScriptCondition::removeEvent(qint32 index)
+void ScriptCondition::removeEvent(spScriptEvent pEvent)
 {
-    if (index >= 0 && index < events.size())
+    for (qint32 i = 0; i < events.size(); i++)
     {
-        events.removeAt(index);
+        if (events[i].get() == pEvent.get())
+        {
+            events.removeAt(i);
+            break;
+        }
     }
 }

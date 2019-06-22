@@ -52,6 +52,18 @@ public:
      * @param rStream
      */
     virtual void writeCondition(QTextStream& rStream) override;
+    /**
+     * @brief getDescription
+     * @return
+     */
+    virtual QString getDescription() override
+    {
+        return tr("Each: ") + QString::number(intervall) + tr(" Start: ")  + QString::number(day) + tr(" Player: ") + QString::number(player + 1);
+    }
+    /**
+     * @brief showEditConditin
+     */
+    virtual void showEditCondition(spScriptEditor pScriptEditor) override;
 private:
     qint32 day{1};
     qint32 player{0};

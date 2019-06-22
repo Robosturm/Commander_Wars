@@ -38,6 +38,11 @@ public:
         return "";
     }
     /**
+     * @brief getCOIDs
+     * @return
+     */
+    QVector<QString> getSpriteCOIDs();
+    /**
      * @brief getCOIndex
      * @param id
      * @return

@@ -213,6 +213,8 @@ set(${PROJECT_NAME}_SRCS
 
         # script support
         ingamescriptsupport/scripteditor.cpp
+        ingamescriptsupport/genericbox.cpp
+        ingamescriptsupport/scriptdialogdialog.cpp
         ingamescriptsupport/scriptdata.cpp
         # condition stuff
         ingamescriptsupport/scriptcondition.cpp

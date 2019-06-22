@@ -68,11 +68,22 @@ public:
      * @param value
      */
     void setRadius(const qint32 &value);
-
+    /**
+     * @brief getDescription
+     * @return
+     */
+    virtual QString getDescription() override
+    {
+        return tr("Spawn: ") + unitID;
+    }
+    /**
+     * @brief showEditEvent
+     */
+    virtual void showEditEvent(spScriptEditor pScriptEditor) override;
 private:
     qint32 x{0};
     qint32 y{0};
-    QString unitID;
+    QString unitID{"INFANTRY"};
     qint32 player{0};
     qint32 radius{0};
 };

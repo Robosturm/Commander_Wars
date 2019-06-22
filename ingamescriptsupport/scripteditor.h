@@ -42,6 +42,24 @@ signals:
      * @brief sigAddEvent
      */
     void sigAddEvent();
+    /**
+     * @brief sigUpdateConditions
+     */
+    void sigUpdateConditions();
+    /**
+     * @brief sigUpdateEvents
+     */
+    void sigUpdateEvents();
+    /**
+     * @brief sigShowEditCondition
+     * @param pCondition
+     */
+    void sigShowEditCondition(spScriptCondition pCondition);
+    /**
+     * @brief sigShowEditEvent
+     * @param pEvent
+     */
+    void sigShowEditEvent(spScriptEvent pEvent);
 public slots:
     /**
      * @brief saveScript
@@ -68,10 +86,11 @@ public slots:
      */
     void updateConditios();
     /**
-     * @brief selectCondition
-     * @param index
+     * @brief addConditionEntry
+     * @param pCondition
+     * @param y
      */
-    void selectCondition(qint32 index);
+    void addConditionEntry(spScriptCondition pCondition, qint32& y);
     /**
      * @brief addCondition
      */
@@ -80,6 +99,26 @@ public slots:
      * @brief addEvent
      */
     void addEvent();
+    /**
+     * @brief updateEvents
+     */
+    void updateEvents();
+    /**
+     * @brief addEventEntry
+     * @param pEvent
+     * @param y
+     */
+    void addEventEntry(spScriptEvent pEvent, qint32& y);
+    /**
+     * @brief showEditCondition
+     * @param pCondition
+     */
+    void showEditCondition(spScriptCondition pCondition);
+    /**
+     * @brief showEditEvent
+     * @param pEvent
+     */
+    void showEditEvent(spScriptEvent pEvent);
 private:
     spPanel m_ConditionPanel;
     spPanel m_EventPanel;
@@ -87,6 +126,8 @@ private:
     spScriptData m_Data;
     spDropDownmenu m_Conditions;
     spDropDownmenu m_Events;
+    spScriptCondition m_CurrentCondition;
+    QVector<oxygine::spBox9Sprite> m_ConditionBoxes;
 };
 
 #endif // SCRIPTEDITOR_H

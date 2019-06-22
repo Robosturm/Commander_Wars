@@ -30,7 +30,18 @@ public:
      * @param value
      */
     void setPlayer(const qint32 &value);
-
+    /**
+     * @brief getDescription
+     * @return
+     */
+    virtual QString getDescription() override
+    {
+        return tr("Defeat: ") + QString::number(player + 1);
+    }
+    /**
+     * @brief showEditEvent
+     */
+    virtual void showEditEvent(spScriptEditor pScriptEditor) override;
 private:
     qint32 player{0};
 };

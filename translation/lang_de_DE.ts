@@ -1026,6 +1026,14 @@
     </message>
 </context>
 <context>
+    <name>GenericBox</name>
+    <message>
+        <location filename="../ingamescriptsupport/genericbox.cpp" line="27"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>IngameInfoBar</name>
     <message>
         <location filename="../objects/ingameinfobar.cpp" line="134"/>
@@ -1753,7 +1761,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="89"/>
+        <location filename="../main.cpp" line="88"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1878,6 +1886,78 @@
     </message>
 </context>
 <context>
+    <name>ScriptConditionEachDay</name>
+    <message>
+        <location filename="../ingamescriptsupport/scriptconditioneachday.cpp" line="104"/>
+        <source>Each Day: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scriptconditioneachday.cpp" line="115"/>
+        <source>Start Day: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scriptconditioneachday.cpp" line="126"/>
+        <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptConditionStartOfTurn</name>
+    <message>
+        <location filename="../ingamescriptsupport/scriptconditionstartofturn.cpp" line="89"/>
+        <source>At Day: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scriptconditionstartofturn.cpp" line="100"/>
+        <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptConditionVictory</name>
+    <message>
+        <location filename="../ingamescriptsupport/scriptconditionvictory.cpp" line="72"/>
+        <source>Team: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptDialogDialog</name>
+    <message>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="35"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="45"/>
+        <source>add Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="53"/>
+        <source>remove Last</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="95"/>
+        <source>Normal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="95"/>
+        <source>Happy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="95"/>
+        <source>Sad</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ScriptEditor</name>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="43"/>
@@ -1917,6 +1997,59 @@
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="120"/>
         <source>Load Script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="249"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="315"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="256"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="322"/>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="264"/>
+        <source>Select</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventDefeatPlayer</name>
+    <message>
+        <location filename="../ingamescriptsupport/scripteventdefeatplayer.cpp" line="56"/>
+        <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventSpawnUnit</name>
+    <message>
+        <location filename="../ingamescriptsupport/scripteventspawnunit.cpp" line="111"/>
+        <source>X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteventspawnunit.cpp" line="122"/>
+        <source>Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteventspawnunit.cpp" line="133"/>
+        <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteventspawnunit.cpp" line="148"/>
+        <source>Unit ID: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteventspawnunit.cpp" line="174"/>
+        <source>Spawn Radius: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

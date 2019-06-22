@@ -9,6 +9,9 @@
 
 #include "game/GameEnums.h"
 
+class ScriptEventDialog;
+typedef oxygine::intrusive_ptr<ScriptEventDialog> spScriptEventDialog;
+
 class ScriptEventDialog : public ScriptEvent
 {
     Q_OBJECT
@@ -54,6 +57,24 @@ public:
      * @return
      */
     Dialog* getDialog(qint32 index);
+    /**
+     * @brief getDialog
+     * @param index
+     * @return
+     */
+    void removeDialog(qint32 index);
+    /**
+     * @brief getDescription
+     * @return
+     */
+    virtual QString getDescription() override
+    {
+        return tr("Dialog: ") + QString::number(m_Dialog.size());
+    }
+    /**
+     * @brief showEditEvent
+     */
+    virtual void showEditEvent(spScriptEditor pScriptEditor) override;
 private:
     QVector<Dialog> m_Dialog;
 };
