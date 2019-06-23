@@ -87,10 +87,10 @@ void ScriptConditionStartOfTurn::showEditCondition(spScriptEditor pScriptEditor)
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
     pText->setText(tr("At Day: ").toStdString().c_str());
-    pText->setPosition(30, 70);
+    pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, 9999);
-    spinBox->setPosition(width, 70);
+    spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(day);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptConditionStartOfTurn::setDay, Qt::QueuedConnection);
     pBox->addItem(spinBox);
@@ -98,10 +98,10 @@ void ScriptConditionStartOfTurn::showEditCondition(spScriptEditor pScriptEditor)
     pText = new oxygine::TextField();
     pText->setStyle(style);
     pText->setText(tr("Player: ").toStdString().c_str());
-    pText->setPosition(30, 110);
+    pText->setPosition(30, 70);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 1, 9999);
-    spinBox->setPosition(width, 110);
+    spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(player + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
             [=](qreal value)

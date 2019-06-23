@@ -209,7 +209,7 @@ bool CoreAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
         }
         data[2] = pCO->getPowerFilled() - pCO->getPowerStars();
         float result = m_COPowerTree.getDecision(data);
-        if (result == 1.0f)
+        if (result == 1.0f && data[2] < 0.5f)
         {
             GameAction* pAction = new GameAction(ACTION_ACTIVATE_POWER_CO_1);
             if (pAction->canBePerformed())

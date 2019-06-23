@@ -70,10 +70,10 @@ void ScriptConditionVictory::showEditCondition(spScriptEditor pScriptEditor)
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
     pText->setText(tr("Team: ").toStdString().c_str());
-    pText->setPosition(30, 110);
+    pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, 9999);
-    spinBox->setPosition(width, 110);
+    spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(team + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
             [=](qreal value)

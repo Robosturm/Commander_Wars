@@ -102,7 +102,7 @@ void ScriptData::readData(QString id, QTextStream& rStream, QString& customCode,
         else
         {
             line = rStream.readLine();
-            customCode += line;
+            customCode += line + "\n";
         }
     }
 }
