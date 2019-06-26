@@ -93,6 +93,7 @@ set(${PROJECT_NAME}_SRCS
         objects/timespinbox.cpp
         objects/ruleselection.cpp
         objects/ruleselectiondialog.cpp
+        objects/folderdialog.cpp
 
 
         #menues
@@ -210,6 +211,9 @@ set(${PROJECT_NAME}_SRCS
         # multiplayer
         multiplayer/lobbymenu.cpp
         multiplayer/multiplayermenu.cpp
+
+        #campaign support
+        ingamescriptsupport/campaigneditor.cpp
 
         # script support
         ingamescriptsupport/scripteditor.cpp

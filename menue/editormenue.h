@@ -39,6 +39,10 @@ public slots:
      */
     void scriptFinished();
     /**
+     * @brief campaignFinished
+     */
+    void campaignFinished();
+    /**
      * @brief editFinishedCanceled
      */
     void editFinishedCanceled();

@@ -472,6 +472,49 @@
     </message>
 </context>
 <context>
+    <name>CampaignEditor</name>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="44"/>
+        <source>Campaign Folder:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="52"/>
+        <source>Select Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="66"/>
+        <source>add Campaign</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="75"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="165"/>
+        <source>Enable Maps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="172"/>
+        <source>Disable Maps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="179"/>
+        <source>Remove Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="190"/>
+        <source>Last Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CampaignMenu</name>
     <message>
         <location filename="../menue/campaignmenu.cpp" line="42"/>
@@ -832,127 +875,132 @@
 <context>
     <name>EditorMenue</name>
     <message>
-        <location filename="../menue/editormenue.cpp" line="52"/>
+        <location filename="../menue/editormenue.cpp" line="54"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="53"/>
+        <location filename="../menue/editormenue.cpp" line="55"/>
         <source>Save Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="54"/>
+        <location filename="../menue/editormenue.cpp" line="56"/>
         <source>Load Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="55"/>
+        <location filename="../menue/editormenue.cpp" line="57"/>
         <source>Edit Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="56"/>
-        <source>Exit Editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/editormenue.cpp" line="58"/>
-        <source>Map Info</source>
+        <source>Edit Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="59"/>
-        <source>New Map</source>
+        <source>Exit Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="60"/>
-        <source>Edit Map</source>
+        <location filename="../menue/editormenue.cpp" line="61"/>
+        <source>Map Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="62"/>
-        <source>Flip Map X</source>
+        <source>New Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="63"/>
-        <source>Flip Map Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="64"/>
-        <source>Rotate Map X</source>
+        <source>Edit Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="65"/>
-        <source>Rotate Map Y</source>
+        <source>Flip Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="66"/>
-        <source>Random Map</source>
+        <source>Flip Map Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="67"/>
+        <source>Rotate Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="68"/>
-        <source>Editor Commands</source>
+        <source>Rotate Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="69"/>
-        <source>Place Selection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="70"/>
-        <source>Delete Units</source>
+        <source>Random Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="71"/>
-        <source>Edit Units</source>
+        <source>Editor Commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="72"/>
-        <source>Edit Players</source>
+        <source>Place Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="73"/>
-        <source>Edit Rules</source>
+        <source>Delete Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="74"/>
-        <source>Optimize Players</source>
+        <source>Edit Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="75"/>
+        <source>Edit Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="76"/>
-        <source>Import/Export</source>
+        <source>Edit Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="77"/>
-        <source>Import CoW Txt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="78"/>
-        <source>Import AWDS Aws</source>
+        <source>Optimize Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="79"/>
-        <source>Import AWDC Aw4</source>
+        <source>Import/Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="80"/>
+        <source>Import CoW Txt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="81"/>
+        <source>Import AWDS Aws</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="82"/>
+        <source>Import AWDC Aw4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="83"/>
         <source>Import AW by Web</source>
         <translation type="unfinished"></translation>
     </message>
@@ -990,6 +1038,19 @@
     </message>
     <message>
         <location filename="../objects/filedialog.cpp" line="79"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FolderDialog</name>
+    <message>
+        <location filename="../objects/folderdialog.cpp" line="37"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/folderdialog.cpp" line="51"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1197,47 +1258,47 @@
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="53"/>
+        <location filename="../menue/mainwindow.cpp" line="54"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="65"/>
+        <location filename="../menue/mainwindow.cpp" line="66"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="76"/>
+        <location filename="../menue/mainwindow.cpp" line="77"/>
         <source>Multiplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="87"/>
+        <location filename="../menue/mainwindow.cpp" line="88"/>
         <source>Load Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="98"/>
+        <location filename="../menue/mainwindow.cpp" line="99"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="109"/>
+        <location filename="../menue/mainwindow.cpp" line="110"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="120"/>
+        <location filename="../menue/mainwindow.cpp" line="121"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="131"/>
+        <location filename="../menue/mainwindow.cpp" line="132"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="143"/>
+        <location filename="../menue/mainwindow.cpp" line="144"/>
         <source>Select Username</source>
         <translation type="unfinished"></translation>
     </message>

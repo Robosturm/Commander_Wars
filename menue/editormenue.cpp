@@ -28,6 +28,8 @@
 
 #include "ingamescriptsupport/scripteditor.h"
 
+#include "ingamescriptsupport/campaigneditor.h"
+
 #include "game/terrainfindingsystem.h"
 #include "game/co.h"
 
@@ -53,6 +55,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Save Map"), "SAVEMAP", 0);
     m_Topbar->addItem(tr("Load Map"), "LOADMAP", 0);
     m_Topbar->addItem(tr("Edit Script"), "EDITSCRIPT", 0);
+    m_Topbar->addItem(tr("Edit Campaign"), "EDITCAMPAIGN", 0);
     m_Topbar->addItem(tr("Exit Editor"), "EXIT", 0);
 
     m_Topbar->addGroup(tr("Map Info"));
@@ -168,6 +171,13 @@ void EditorMenue::clickedTopbar(QString itemID)
         spScriptEditor scriptEditor = new ScriptEditor();
         this->addChild(scriptEditor);
         connect(scriptEditor.get(),  &ScriptEditor::sigFinished, this, &EditorMenue::scriptFinished, Qt::QueuedConnection);
+        setFocused(false);
+    }
+    else if (itemID == "EDITCAMPAIGN")
+    {
+        spCampaignEditor campaignEditor = new CampaignEditor();
+        this->addChild(campaignEditor);
+        connect(campaignEditor.get(),  &CampaignEditor::sigFinished, this, &EditorMenue::campaignFinished, Qt::QueuedConnection);
         setFocused(false);
     }
     else if (itemID == "IMPORTCOWTXT")
@@ -577,6 +587,11 @@ void EditorMenue::editFinishedCanceled()
 }
 
 void EditorMenue::scriptFinished()
+{
+    setFocused(true);
+}
+
+void EditorMenue::campaignFinished()
 {
     setFocused(true);
 }

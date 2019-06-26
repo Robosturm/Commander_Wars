@@ -17,11 +17,12 @@
 #include "objects/filedialog.h"
 #include "objects/dialogtextinput.h"
 
-#include <QFile>
-
 #include "game/co.h"
 
+#include <QFile>
+
 #include "SDL.h"
+
 
 Mainwindow::Mainwindow()
 {
