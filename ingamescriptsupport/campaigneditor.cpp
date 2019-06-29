@@ -16,6 +16,19 @@
 
 #include "qdir.h"
 
+#include "qfile.h"
+
+#include "qtextstream.h"
+
+const QString CampaignEditor::campaign = "campaign";
+const QString CampaignEditor::campaignName = "campaignName";
+const QString CampaignEditor::campaignDescription = "campaignDescription";
+const QString CampaignEditor::campaignAuthor = "campaignAuthor";
+const QString CampaignEditor::campaignMaps = "campaignMaps";
+const QString CampaignEditor::campaignMapsFolder = "campaignMapsFolder";
+const QString CampaignEditor::campainMapFinished = "campainMapFinished";
+const QString CampaignEditor::campaignFinished = "campaignFinished";
+
 CampaignEditor::CampaignEditor()
     : QObject()
 {
@@ -33,7 +46,7 @@ CampaignEditor::CampaignEditor()
     pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
 
-
+    qint32 y = 30;
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
@@ -42,10 +55,10 @@ CampaignEditor::CampaignEditor()
     oxygine::spTextField pText = new  oxygine::TextField();
     pText->setStyle(style);
     pText->setText(tr("Campaign Folder:").toStdString().c_str());
-    pText->setPosition(30, 30);
+    pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
-    m_CampaignFolder = new Textbox(pApp->getSettings()->getWidth() - 400);
-    m_CampaignFolder->setPosition(200, 30);
+    m_CampaignFolder = new Textbox(pApp->getSettings()->getWidth() - 500);
+    m_CampaignFolder->setPosition(300, y);
     m_CampaignFolder->setCurrentText("maps/");
     pSpriteBox->addChild(m_CampaignFolder);
     // Campaign Button
@@ -57,9 +70,43 @@ CampaignEditor::CampaignEditor()
         emit sigShowSelectFolder();
     });
 
-    QSize size(pApp->getSettings()->getWidth() - 80, pApp->getSettings()->getHeight() - 160);
+    y += 40;
+    pText = new  oxygine::TextField();
+    pText->setStyle(style);
+    pText->setText(tr("Campaign Name:").toStdString().c_str());
+    pText->setPosition(30, y);
+    pSpriteBox->addChild(pText);
+    m_Name = new Textbox(pApp->getSettings()->getWidth() - 500);
+    m_Name->setPosition(300, y);
+    m_Name->setCurrentText("");
+    pSpriteBox->addChild(m_Name);
+
+    y += 40;
+    pText = new  oxygine::TextField();
+    pText->setStyle(style);
+    pText->setText(tr("Campaign Author:").toStdString().c_str());
+    pText->setPosition(30, y);
+    pSpriteBox->addChild(pText);
+    m_Author = new Textbox(pApp->getSettings()->getWidth() - 500);
+    m_Author->setPosition(300, y);
+    m_Author->setCurrentText(Settings::getUsername());
+    pSpriteBox->addChild(m_Author);
+
+    y += 40;
+    pText = new  oxygine::TextField();
+    pText->setStyle(style);
+    pText->setText(tr("Campaign Description:").toStdString().c_str());
+    pText->setPosition(30, y);
+    pSpriteBox->addChild(pText);
+    m_Description = new Textbox(pApp->getSettings()->getWidth() - 500);
+    m_Description->setPosition(300, y);
+    m_Description->setCurrentText("");
+    pSpriteBox->addChild(m_Description);
+
+    y += 40;
+    QSize size(pApp->getSettings()->getWidth() - 80, pApp->getSettings()->getHeight() - 280);
     m_Panel = new Panel(true, size, size);
-    m_Panel->setPosition(40, 80);
+    m_Panel->setPosition(40, y);
     pSpriteBox->addChild(m_Panel);
 
     // add campaign
@@ -69,6 +116,24 @@ CampaignEditor::CampaignEditor()
     pAddCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit sigShowAddCampaign();
+    });
+
+    // load campaign
+    oxygine::spButton pLoadCampaignButton = pObjectManager->createButton(tr("load Campaign"), 150);
+    pLoadCampaignButton->setPosition(pApp->getSettings()->getWidth() / 2 - 10 - pLoadCampaignButton->getWidth(), pApp->getSettings()->getHeight() - 30 - pLoadCampaignButton->getHeight());
+    pSpriteBox->addChild(pLoadCampaignButton);
+    pLoadCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        emit sigShowLoadCampaign();
+    });
+
+    // save campaign
+    oxygine::spButton pSaveCampaignButton = pObjectManager->createButton(tr("save Campaign"), 150);
+    pSaveCampaignButton->setPosition(pApp->getSettings()->getWidth() / 2 + 10, pApp->getSettings()->getHeight() - 30 - pSaveCampaignButton->getHeight());
+    pSpriteBox->addChild(pSaveCampaignButton);
+    pSaveCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        emit sigShowSaveCampaign();
     });
 
     // ok button
@@ -83,6 +148,8 @@ CampaignEditor::CampaignEditor()
 
     connect(this, &CampaignEditor::sigShowAddCampaign, this, &CampaignEditor::showAddCampaign, Qt::QueuedConnection);
     connect(this, &CampaignEditor::sigShowSelectFolder, this, &CampaignEditor::showSelectFolder, Qt::QueuedConnection);
+    connect(this, &CampaignEditor::sigShowSaveCampaign, this, &CampaignEditor::showSaveCampaign, Qt::QueuedConnection);
+    connect(this, &CampaignEditor::sigShowLoadCampaign, this, &CampaignEditor::showLoadCampaign, Qt::QueuedConnection);
     connect(this, &CampaignEditor::sigUpdateCampaignData, this, &CampaignEditor::updateCampaignData, Qt::QueuedConnection);
 }
 
@@ -94,6 +161,26 @@ void CampaignEditor::showAddCampaign()
     spFileDialog fileDialog = new FileDialog(path, wildcards, "");
     this->addChild(fileDialog);
     connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::addCampaign, Qt::QueuedConnection);
+}
+
+void CampaignEditor::showSaveCampaign()
+{
+    QVector<QString> wildcards;
+    wildcards.append("*.jsm");
+    QString path = "maps/";
+    spFileDialog fileDialog = new FileDialog(path, wildcards, m_Name->getCurrentText());
+    this->addChild(fileDialog);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::saveCampaign, Qt::QueuedConnection);
+}
+
+void CampaignEditor::showLoadCampaign()
+{
+    QVector<QString> wildcards;
+    wildcards.append("*.jsm");
+    QString path = "maps/";
+    spFileDialog fileDialog = new FileDialog(path, wildcards, "");
+    this->addChild(fileDialog);
+    connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &CampaignEditor::loadCampaign, Qt::QueuedConnection);
 }
 
 void CampaignEditor::addCampaign(QString filename)
@@ -199,9 +286,78 @@ void CampaignEditor::updateCampaignData()
         {
             mapDatas[i].lastMap = value;
         });
-
     }
     m_Panel->setContentHeigth(mapDatas.size() * 40 + 40);
     m_Panel->setContentWidth(850);
     pApp->continueThread();
+}
+
+void CampaignEditor::loadCampaign(QString filename)
+{
+    if (filename.endsWith(".jsm"))
+    {
+        QFile file(filename);
+        file.open(QIODevice::ReadOnly);
+        QTextStream stream(&file);
+        bool started = false;
+        while (!file.atEnd())
+        {
+            QString line = stream.readLine().simplified();
+            if (line.endsWith(campaign))
+            {
+                started = true;
+                if (started)
+                {
+                    started = false;
+                    break;
+                }
+            }
+            else if (started)
+            {
+                if (line.endsWith(campaignName))
+                {
+
+                }
+            }
+        }
+    }
+}
+
+void CampaignEditor::saveCampaign(QString filename)
+{
+    if (filename.endsWith(".jsm"))
+    {
+        QFile file(filename);
+        file.open(QIODevice::WriteOnly);
+        QTextStream stream(&file);
+        stream << "var Constructor = function() { // " << campaign << "\n";
+
+        stream << "    this.getCampaignName = function() { //" << campaignName << "\n";
+        stream << "        return qsTr(\"" << m_Name->getCurrentText() << "\")\n";
+        stream << "    }; //" << campaignName << "\n";
+
+        stream << "    this.getAuthor = function() { // " << campaignAuthor << "\n";
+        stream << "        return qsTr(\"" << m_Author->getCurrentText() << "\")\n";
+        stream << "    }; // " << campaignAuthor << "\n";
+
+        stream << "    this.getDescription = function() { // " << campaignDescription << "\n";
+        stream << "        return qsTr(\"" << m_Description->getCurrentText() << "\")\n";
+        stream << "    }; // " << campaignDescription << "\n";
+
+        stream << "    this.getCurrentCampaignMaps = function(campaign) { // " << campaignMaps << "\n";
+        stream << "         var ret = [\"" << m_CampaignFolder->getCurrentText() << "\"] // " << campaignMapsFolder << "\n";
+
+
+        stream << "    }; // " << campaignMaps << "\n";
+
+        stream << "    this.mapFinished = function(campaign, map, result) { // " << campainMapFinished << "\n";
+        stream << "        var variables = campaign.getVariables();\n";
+        stream << "        var mapVar = variables.createVariable(map.getMapName());\n";
+        stream << "        mapVar.writeDataBool(result);\n";
+        stream << "    }; // " << campainMapFinished << "\n";
+
+        stream << "// " << campaign << "\n"  << "};\n" <<
+                  "Constructor.prototype = BASECAMPAIGN;\n" <<
+                  "var campaignScript = new Constructor();";
+    }
 }

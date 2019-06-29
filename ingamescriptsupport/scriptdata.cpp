@@ -5,6 +5,7 @@ const QString ScriptData::victory = "victory";
 const QString ScriptData::turnStart = "turnStart";
 const QString ScriptData::scriptStart = "scriptStart";
 const QString ScriptData::scriptEnd = "scriptEnd";
+const QString ScriptData::actionConditions = "actionConditions";
 
 ScriptData::ScriptData()
     : QObject()
@@ -15,8 +16,10 @@ void ScriptData::clearData()
 {
     m_Victory.clear();
     m_DayConditions.clear();
+    m_ActionConditions.clear();
     customCode = "";
     customStartOfTurnCode = "";
+    customActionConditions = "";
     customVictoryCode = "";
 }
 
@@ -70,6 +73,10 @@ void ScriptData::readScript(QTextStream& rStream)
             {
                 readData(turnStart, rStream, customStartOfTurnCode, &m_DayConditions);
             }
+            else if (line.endsWith(turnStart))
+            {
+                readData(actionConditions, rStream, customActionConditions, &m_ActionConditions);
+            }
             else if (line.endsWith(scriptEnd))
             {
                 break;
@@ -122,6 +129,7 @@ void ScriptData::writeScript(QTextStream& rStream)
     rStream << customVictoryCode;
     rStream << "    }; // " + victory + "\n";
 
+    // turn start
     rStream << "    this.turnStart = function(turn, player) { // " + turnStart + "\n";
     for (qint32 i = 0; i < m_DayConditions.size(); i++)
     {
@@ -129,6 +137,15 @@ void ScriptData::writeScript(QTextStream& rStream)
     }
     rStream << customStartOfTurnCode;
     rStream << "    }; // " + turnStart + "\n";
+
+    // turn start
+    rStream << "    this.actionDone = function() { // " + actionConditions + "\n";
+    for (qint32 i = 0; i < m_ActionConditions.size(); i++)
+    {
+        m_ActionConditions[i]->writeCondition(rStream);
+    }
+    rStream << customActionConditions;
+    rStream << "    }; // " + actionConditions + "\n";
 
     rStream << customCode;
     rStream << "// " + scriptEnd + "\n};\n";
@@ -179,12 +196,20 @@ spScriptCondition ScriptData::getVictoryCondition(qint32 index)
     return nullptr;
 }
 
-
 spScriptCondition ScriptData::getDayCondition(qint32 index)
 {
     if (index >= 0 && index < m_DayConditions.size())
     {
         return m_DayConditions[index];
+    }
+    return nullptr;
+}
+
+spScriptCondition ScriptData::getActionCondition(qint32 index)
+{
+    if (index >= 0 && index < m_ActionConditions.size())
+    {
+        return m_ActionConditions[index];
     }
     return nullptr;
 }

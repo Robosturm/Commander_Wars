@@ -20,6 +20,7 @@ public:
     static const QString scriptEnd;
     static const QString immediateStart;
     static const QString victory;
+    static const QString actionConditions;
     static const QString turnStart;
 
     explicit ScriptData();
@@ -83,6 +84,22 @@ public:
     {
         return m_DayConditions.size();
     }
+
+    /**
+     * @brief getDayCondition
+     * @param index
+     * @return
+     */
+    spScriptCondition getActionCondition(qint32 index);
+    /**
+     * @brief getDayConditionSize
+     * @return
+     */
+    qint32 getActionConditionSize()
+    {
+        return m_ActionConditions.size();
+    }
+
     /**
      * @brief clearData
      */
@@ -103,6 +120,10 @@ private:
     QString customVictoryCode;
     QVector<spScriptCondition> m_DayConditions;
     QString customStartOfTurnCode;
+
+    QVector<spScriptCondition> m_ActionConditions;
+    QString customActionConditions;
+
     QString customCode;
     bool startMode{false};
 

@@ -474,42 +474,67 @@
 <context>
     <name>CampaignEditor</name>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="44"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="56"/>
         <source>Campaign Folder:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="52"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="64"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="66"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="75"/>
+        <source>Campaign Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="86"/>
+        <source>Campaign Author:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="97"/>
+        <source>Campaign Description:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="112"/>
         <source>add Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="75"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="121"/>
+        <source>load Campaign</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="130"/>
+        <source>save Campaign</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="139"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="165"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="251"/>
         <source>Enable Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="172"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="258"/>
         <source>Disable Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="179"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="265"/>
         <source>Remove Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="190"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="276"/>
         <source>Last Map</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2061,19 +2086,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="249"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="315"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="257"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="323"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="256"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="322"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="264"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="330"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="264"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="272"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>

@@ -209,11 +209,19 @@ void ScriptEditor::updateConditios()
         spScriptCondition pCondition = m_Data->getDayCondition(i);
         addConditionEntry(pCondition, y);
     }
+
     for (qint32 i = 0; i < m_Data->getVictoryConditionSize(); i++)
     {
         spScriptCondition pCondition = m_Data->getVictoryCondition(i);
         addConditionEntry(pCondition, y);
     }
+
+    for (qint32 i = 0; i < m_Data->getActionConditionSize(); i++)
+    {
+        spScriptCondition pCondition = m_Data->getActionCondition(i);
+        addConditionEntry(pCondition, y);
+    }
+
     m_CurrentCondition = nullptr;
     updateEvents();
     m_ConditionPanel->setContentHeigth(y + 40);

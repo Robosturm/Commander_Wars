@@ -18,6 +18,15 @@ class CampaignEditor : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
+    static const QString campaign;
+    static const QString campaignName;
+    static const QString campaignDescription;
+    static const QString campaignAuthor;
+    static const QString campaignMaps;
+    static const QString campaignMapsFolder;
+    static const QString campainMapFinished;
+    static const QString campaignFinished;
+
     struct MapData
     {
         QString map;
@@ -45,7 +54,32 @@ signals:
      * @brief sigupdateCampaignData
      */
     void sigUpdateCampaignData();
+    /**
+     * @brief sigShowLoadCampaign
+     */
+    void sigShowLoadCampaign();
+    /**
+     * @brief sigShowSaveCampaign
+     */
+    void sigShowSaveCampaign();
 public slots:
+    /**
+     * @brief showSaveCampaign
+     */
+    void showSaveCampaign();
+    /**
+     * @brief saveCampaign
+     */
+    void saveCampaign(QString filename);
+    /**
+     * @brief showLoadCampaign
+     */
+    void showLoadCampaign();
+    /**
+     * @brief loadCampaign
+     * @param filename
+     */
+    void loadCampaign(QString filename);
     /**
      * @brief showAddCampaign
      */
@@ -81,6 +115,10 @@ private:
      * @brief mapData
      */
     QVector<MapData> mapDatas;
+
+    spTextbox m_Description;
+    spTextbox m_Author;
+    spTextbox m_Name;
 };
 
 #endif // CAMPAIGNEDITOR_H
