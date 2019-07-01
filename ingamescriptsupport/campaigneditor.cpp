@@ -26,6 +26,10 @@ const QString CampaignEditor::campaignDescription = "campaignDescription";
 const QString CampaignEditor::campaignAuthor = "campaignAuthor";
 const QString CampaignEditor::campaignMaps = "campaignMaps";
 const QString CampaignEditor::campaignMapsFolder = "campaignMapsFolder";
+const QString CampaignEditor::campaignMapNames = "campaignMapNames";
+const QString CampaignEditor::campaignMapEnabled = "campaignMapEnabled";
+const QString CampaignEditor::campaignMapDisabled = "campaignMapDisabled";
+const QString CampaignEditor::campainMapAdd = "campainMapAdd";
 const QString CampaignEditor::campainMapFinished = "campainMapFinished";
 const QString CampaignEditor::campaignFinished = "campaignFinished";
 
@@ -346,8 +350,30 @@ void CampaignEditor::saveCampaign(QString filename)
 
         stream << "    this.getCurrentCampaignMaps = function(campaign) { // " << campaignMaps << "\n";
         stream << "         var ret = [\"" << m_CampaignFolder->getCurrentText() << "\"] // " << campaignMapsFolder << "\n";
+        for (qint32 i = 0; i < mapDatas.size(); i++)
+        {
+            stream << "        var map" << QString::number(i) << "Won = variables.createVariable(\"" << mapDatas[i].mapName << "\"); // " << campaignMapNames << "\n";
+        }
+        for (qint32 i = 0; i < mapDatas.size(); i++)
+        {
+            stream << "        var map" << QString::number(i) << "EnableCount = 0; // " << campaignMapEnabled << "\n";
+            for (qint32 i2 = 0; i2 < mapDatas[i].previousMaps.size(); i2++)
+            {
+                stream << "        if (map" << QString::number(i2) << "Won.readDataBool() === true) { map" << QString::number(i) << "EnableCount++;} /n";
+            }
+            stream << "// " << campaignMapEnabled << "\n";
 
+            stream << "        var map" << QString::number(i) << "DisableCount = 0; // " << campaignMapDisabled << "\n";
+            for (qint32 i2 = 0; i2 < mapDatas[i].disableMaps.size(); i2++)
+            {
+                stream << "        if (map" << QString::number(i2) << "Won.readDataBool() === true) { map" << QString::number(i) << "DisableCount++;} /n";
+            }
+            stream << "// " << campaignMapDisabled << "\n";
+            stream << "        if (map" << QString::number(i) << "DisableCount < " << mapDatas[i].disableCount <<
+                      " && map" << QString::number(i) << "EnableCount >= " << mapDatas[i].previousCount << ") {ret.push(\"" << mapDatas[i].map << "\");} // " << campainMapAdd << "\n";
+        }
 
+        stream << "        return ret;\n";
         stream << "    }; // " << campaignMaps << "\n";
 
         stream << "    this.mapFinished = function(campaign, map, result) { // " << campainMapFinished << "\n";

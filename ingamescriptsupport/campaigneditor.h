@@ -24,6 +24,10 @@ public:
     static const QString campaignAuthor;
     static const QString campaignMaps;
     static const QString campaignMapsFolder;
+    static const QString campaignMapNames;
+    static const QString campaignMapEnabled;
+    static const QString campaignMapDisabled;
+    static const QString campainMapAdd;
     static const QString campainMapFinished;
     static const QString campaignFinished;
 
@@ -32,7 +36,9 @@ public:
         QString map;
         QString mapName;
         QStringList previousMaps;
+        qint32 previousCount{1};
         QStringList disableMaps;
+        qint32 disableCount{0};
         bool lastMap{false};
     };
     explicit CampaignEditor();
