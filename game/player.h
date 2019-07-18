@@ -204,6 +204,11 @@ public slots:
      */
     QmlVectorBuilding* getEnemyBuildings();
     /**
+     * @brief getEnemyCount
+     * @return
+     */
+    qint32 getEnemyCount();
+    /**
      * @brief getBuildings
      * @return
      */

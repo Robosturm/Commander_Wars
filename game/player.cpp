@@ -179,6 +179,10 @@ bool Player::isEnemy(Player* pOwner)
 void Player::setFonds(const qint32 &value)
 {
     fonds = value;
+    if (fonds < 0)
+    {
+        fonds = 0;
+    }
     if (GameMenue::getInstance() != nullptr)
     {
         GameMenue::getInstance()->updatePlayerinfo();
@@ -641,6 +645,20 @@ void Player::startOfTurn()
 QmlVectorUnit* Player::getUnits()
 {
     return GameMap::getInstance()->getUnits(this);
+}
+
+qint32 Player::getEnemyCount()
+{
+    GameMap* pMap = GameMap::getInstance();
+    qint32 ret = 0;
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        if (isEnemy(pMap->getPlayer(i)))
+        {
+            ret++;
+        }
+    }
+    return ret;
 }
 
 QmlVectorUnit* Player::getEnemyUnits()
