@@ -474,67 +474,67 @@
 <context>
     <name>CampaignEditor</name>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="56"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="61"/>
         <source>Campaign Folder:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="64"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="69"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="75"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="80"/>
         <source>Campaign Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="86"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="91"/>
         <source>Campaign Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="97"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="102"/>
         <source>Campaign Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="112"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="117"/>
         <source>add Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="121"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="126"/>
         <source>load Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="130"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="135"/>
         <source>save Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="139"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="144"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="251"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="256"/>
         <source>Enable Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="258"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="263"/>
         <source>Disable Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="265"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="270"/>
         <source>Remove Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="276"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="281"/>
         <source>Last Map</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9539,6 +9539,109 @@
     <message>
         <location filename="../resources/scripts/cos/co_tasha.js" line="271"/>
         <source>Tasha</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_varlot</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="221"/>
+        <source>This CO joined the military and rose through the ranks. But not quickly enough, and is now a sub-commander.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="225"/>
+        <source>Caviar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="229"/>
+        <source>Ethics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="233"/>
+        <source>Varlot reduces the income from a property he captures by an amount proportional to its Capture Points.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="237"/>
+        <source>His troops get a capture bonus. Varlot also gains a fraction of the enemy income.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="241"/>
+        <source>Aquisition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="245"/>
+        <source>All units are healed for 4 HP, gaining firepower for each point over 10HP they&apos;d be healed. The enemy pays for these repairs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="249"/>
+        <source>Hostile Takeover</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="253"/>
+        <source>Move out!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="254"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="255"/>
+        <source>Forward march!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="256"/>
+        <source>Onward to victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="257"/>
+        <source>Never surrender!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="258"/>
+        <source>Push forward!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="262"/>
+        <source>Mission complete.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="263"/>
+        <source>Another day, another battle won.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="264"/>
+        <source>Maybe I&apos;ll be up for promotion soon...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="268"/>
+        <source>I won&apos;t get demoted for this lost!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="269"/>
+        <source>Retreat!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="273"/>
+        <source>Varlot</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -3,14 +3,29 @@ var Constructor = function()
     this.init = function(co)
     {
         co.setPowerStars(3);
-        co.setSuperpowerStars(7);
+        co.setSuperpowerStars(4);
     };
 
     this.activatePower = function(co)
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(GameEnums.PowerMode_Power);
+
         dialogAnimation.queueAnimation(powerNameAnimation);
+
+        var player = co.getOwner();
+        var income = 0;
+        var playerCounter = map.getPlayerCount();
+        for (var i2 = 0; i2 < playerCounter; i2++)
+        {
+            var enemyPlayer = map.getPlayer(i2);
+            if ((enemyPlayer !== player) &&
+                (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
+            {
+                income += enemyPlayer.calcIncome(1.0);
+            }
+        }
+        player.addFonds(income / 4);
 
         audio.clearPlayList();
         CO_VARLOT.loadCOMusic(co);
@@ -82,7 +97,8 @@ var Constructor = function()
         bonusOffVariable.writeDataListInt32(bonusOffs);
 
         // reduce enemy fonds
-        var enemyCount = co.getOwner().getEnemyCount()
+        var player = co.getOwner();
+        var enemyCount = player.getEnemyCount()
         var playerCounter = map.getPlayerCount();
         for (var i2 = 0; i2 < playerCounter; i2++)
         {
@@ -90,7 +106,7 @@ var Constructor = function()
             if ((enemyPlayer !== player) &&
                 (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
             {
-                player.addFonds(-costs / enemyCount);
+                enemyPlayer.addFonds(-costs / enemyCount);
             }
         }
 
@@ -179,11 +195,20 @@ var Constructor = function()
         bonusOffVariable.writeDataListInt32(empty);
     };
 
+    this.getCaptureBonus = function(co, unit, posX, posY)
+    {
+        if (co.getPowerMode() === GameEnums.PowerMode_Power)
+        {
+            return 5;
+        }
+        return 0;
+    };
+
     this.getIncomeReduction = function(co, building, income)
     {
         var unit = map.getTerrain(building.getX(), building.getY()).getUnit();
         // set income to 0 during scop
-        if (unit.getOwner() === co.getOwner())
+        if (unit !== null && unit.getOwner() === co.getOwner())
         {
             return income * unit.getCapturePoints() / 20;
         }
@@ -209,7 +234,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Enemy properties lose 5 capture points for all his Infantries. Varlot gains the money that would be lost this way.");
+        return qsTr("His troops get a capture bonus. Varlot also gains a fraction of the enemy income.");
     };
     this.getPowerName = function()
     {
