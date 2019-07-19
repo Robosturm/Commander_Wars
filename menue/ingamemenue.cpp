@@ -65,6 +65,7 @@ void InGameMenue::loadHandling()
         {
             if (m_Focused)
             {
+                pEvent->stopPropagation();
                 emit this->sigMouseWheel(static_cast<qint32>(pTouchEvent->wheelDirection.y));
             }
         }
@@ -79,6 +80,7 @@ void InGameMenue::loadHandling()
             {
                 if (m_Focused)
                 {
+                    pEvent->stopPropagation();
                     this->m_moveMap = true;
                     this->m_MoveMapMousePoint.setX(static_cast<qint32>(pTouchEvent->getPointer()->getPosition().x));
                     this->m_MoveMapMousePoint.setY(static_cast<qint32>(pTouchEvent->getPointer()->getPosition().y));
@@ -93,6 +95,7 @@ void InGameMenue::loadHandling()
         {
             if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Middle)
             {
+                pEvent->stopPropagation();
                 this->m_moveMap = false;
             }
         }
@@ -101,9 +104,10 @@ void InGameMenue::loadHandling()
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
-        {
+        {            
             if (m_Focused)
             {
+                pEvent->stopPropagation();
                 qint32 curX = static_cast<qint32>(pTouchEvent->getPointer()->getPosition().x);
                 qint32 curY = static_cast<qint32>(pTouchEvent->getPointer()->getPosition().y);
                 if (this->m_moveMap)
@@ -129,6 +133,7 @@ void InGameMenue::loadHandling()
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
+            pEvent->stopPropagation();
             if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
             {
                 emit sigRightClick(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());

@@ -151,7 +151,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     this->addChild(m_Cursor);
     this->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
     this->setHeight(maxY + bottomHeigth);
-    this->setWidth(width * (actionIDs.size() / itemCount + 1));
+    this->setWidth(width * (actionIDs.size() / itemCount));
     GameMenue* pGameMenue = GameMenue::getInstance();
     connect(pGameMenue, &GameMenue::sigMouseMove, this, &HumanPlayerInputMenu::mouseMove, Qt::QueuedConnection);
     mouseMove(0, 0);
@@ -274,18 +274,22 @@ void HumanPlayerInputMenu::mouseMove(qint32 x, qint32 y)
     qint32 newX = -1;
     qint32 newY = -1;
     GameMap* pMap = GameMap::getInstance();
-    if (x < this->getX() * pMap->getZoom() || x > (this->getX() + this->getWidth()) * pMap->getZoom())
+    if (x < this->getX() * pMap->getZoom())
     {
-        newX = (this->getX() + this->getWidth() / 2) * pMap->getZoom();
+        newX = (this->getX() + 20) * pMap->getZoom();
+    }
+    if (x > (this->getX() + this->getWidth()) * pMap->getZoom())
+    {
+        newX = (this->getX() + this->getWidth() - 20) * pMap->getZoom();
     }
     if (y < (this->getY() + startY) * pMap->getZoom())
     {
         newY = (this->getY() + startY + itemHeigth / 2) * pMap->getZoom();
         currentAction = 0;
     }
-    else if (y > (this->getY() + startY + itemHeigth * m_ActionIDs.size()) * pMap->getZoom())
+    else if (y > (this->getY() + getHeight() - startY) * pMap->getZoom())
     {
-        newY = (this->getY() + startY + itemHeigth * m_ActionIDs.size() - itemHeigth / 2) * pMap->getZoom();
+        newY = (this->getY() + getHeight() - itemHeigth / 2 - startY) * pMap->getZoom();
         currentAction = m_ActionIDs.size() - 1;
     }
     if (newX < 0 && newY >= 0)

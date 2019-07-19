@@ -38,7 +38,7 @@ Mainapp::Mainapp(int argc, char* argv[])
     m_Workerthread.setObjectName("WorkerThread");
     m_AudioWorker.start(QThread::Priority::LowPriority);
     m_Networkthread.start(QThread::Priority::NormalPriority);
-    m_Workerthread.start(QThread::Priority::HighestPriority);
+    m_Workerthread.start(QThread::Priority::TimeCriticalPriority);
 
     // createTrainingData();
 }

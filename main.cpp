@@ -65,6 +65,7 @@
 
 int main(int argc, char* argv[])
 {
+    QThread::currentThread()->setPriority(QThread::TimeCriticalPriority);
     /*************************************************************************************************/
     // setup network session support
     QNetworkConfigurationManager manager;
