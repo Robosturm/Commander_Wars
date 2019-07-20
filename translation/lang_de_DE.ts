@@ -620,6 +620,78 @@
     </message>
 </context>
 <context>
+    <name>DESERT</name>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT.js" line="6"/>
+        <source>Desert</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DESERT_DESTROYEDWELD</name>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT_DESTROYEDWELD.js" line="6"/>
+        <source>Desert Destroyed Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DESERT_FOREST</name>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT_FOREST.js" line="6"/>
+        <source>Desert Forest</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DESERT_PATH</name>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT_PATH.js" line="6"/>
+        <source>Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DESERT_PIPELINE</name>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT_PIPELINE.js" line="6"/>
+        <source>Desert Pipeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DESERT_ROCK</name>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="6"/>
+        <source>Rock</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DESERT_TRY_RIVER</name>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT_TRY_RIVER.js" line="6"/>
+        <source>Try River</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DESERT_WASTELAND</name>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT_WASTELAND.js" line="6"/>
+        <source>Desert Wasteland</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DESERT_WELD</name>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT_WELD.js" line="6"/>
+        <source>Desert Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DESTROYEDWELD</name>
     <message>
         <location filename="../resources/scripts/terrain/DESTROYEDWELD.js" line="6"/>
@@ -1960,6 +2032,62 @@
     <message>
         <location filename="../resources/scripts/terrain/SEA.js" line="6"/>
         <source>Sea</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SNOW</name>
+    <message>
+        <location filename="../resources/scripts/terrain/SNOW.js" line="6"/>
+        <source>Snow</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SNOW_DESTROYEDWELD</name>
+    <message>
+        <location filename="../resources/scripts/terrain/SNOW_DESTROYEDWELD.js" line="6"/>
+        <source>Snowy Destroyed Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SNOW_FOREST</name>
+    <message>
+        <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="6"/>
+        <source>Snowy Forest</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SNOW_MOUNTAIN</name>
+    <message>
+        <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="6"/>
+        <source>Snowy Mountain</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SNOW_PIPELINE</name>
+    <message>
+        <location filename="../resources/scripts/terrain/SNOW_PIPELINE.js" line="6"/>
+        <source>Snowy Pipeline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SNOW_WASTELAND</name>
+    <message>
+        <location filename="../resources/scripts/terrain/SNOW_WASTELAND.js" line="6"/>
+        <source>Snowy Wasteland</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SNOW_WELD</name>
+    <message>
+        <location filename="../resources/scripts/terrain/SNOW_WELD.js" line="6"/>
+        <source>Snowy Weld</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -41,6 +41,10 @@
 		<image file="plains+plasma+S.png" />
 		<image file="plains+plasma+S+W.png" />
 		<image file="plains+plasma+W.png" />
+		<image file="plains+W.png" />
+		<image file="plains+S.png" />
+		<image file="plains+E.png" />
+		<image file="plains+N.png" />
 		
 		<image file="sea.png" cols = "5" />
 		<image file="sea+NE.png" cols = "5" />
@@ -266,5 +270,99 @@
 		
 		<image file="destroyedweld+E+W.png" />
 		<image file="destroyedweld+N+S.png" />
+		
+		<!-- Snowy Stuff praise Olaf -->
+		<image file="snow.png" />
+		<image file="snow+W.png" />
+		<image file="snow+S.png" />
+		<image file="snow+E.png" />
+		<image file="snow+N.png" />
+		<image file="snow_forest.png" />
+		<image file="snow_wasteland.png" />
+		<image file="snow_mountain.png" />
+		
+		<image file="snow_destroyedweld+E+W.png" />
+		<image file="snow_destroyedweld+N+S.png" />
+		
+		<image file="snow_weld+E+W.png" />
+		<image file="snow_weld+N+S.png" />
+		
+		<image file="snow_Pipeline+E.png" />
+		<image file="snow_Pipeline+E+S.png" />
+		<image file="snow_Pipeline+E+S+W.png" />
+		<image file="snow_Pipeline+E+W.png" />
+		<image file="snow_Pipeline+N.png" />
+		<image file="snow_Pipeline+N+E.png" />
+		<image file="snow_Pipeline+N+E+S.png" />
+		<image file="snow_Pipeline+N+E+S+W.png" />
+		<image file="snow_Pipeline+N+E+W.png" />
+		<image file="snow_Pipeline+N+S.png" />
+		<image file="snow_Pipeline+N+S+W.png" />
+		<image file="snow_Pipeline+N+W.png" />
+		<image file="snow_Pipeline+S.png" />
+		<image file="snow_Pipeline+S+W.png" />
+		<image file="snow_Pipeline+W.png" />
+		
+		<!-- desert stuff here comes zandra -->
+		<image file="desert.png" />
+		<image file="desert_forest.png" />
+		<image file="desert_wasteland.png" />
+		<image file="desert_rock.png" />
+
+		<image file="desert_destroyedweld+E+W.png" />
+		<image file="desert_destroyedweld+N+S.png" />
+		
+		<image file="desert_weld+E+W.png" />
+		<image file="desert_weld+N+S.png" />
+
+		<image file="desert_pipeline+E.png" />
+		<image file="desert_pipeline+E+S.png" />
+		<image file="desert_pipeline+E+S+W.png" />
+		<image file="desert_pipeline+E+W.png" />
+		<image file="desert_pipeline+N.png" />
+		<image file="desert_pipeline+N+E.png" />
+		<image file="desert_pipeline+N+E+S.png" />
+		<image file="desert_pipeline+N+E+S+W.png" />
+		<image file="desert_pipeline+N+E+W.png" />
+		<image file="desert_pipeline+N+S.png" />
+		<image file="desert_pipeline+N+S+W.png" />
+		<image file="desert_pipeline+N+W.png" />
+		<image file="desert_pipeline+S.png" />
+		<image file="desert_pipeline+S+W.png" />
+		<image file="desert_pipeline+W.png" />
+		
+		<image file="desert_try_river.png" />
+		<image file="desert_try_river+E.png" />
+		<image file="desert_try_river+E+S.png" />
+		<image file="desert_try_river+E+S+W.png" />
+		<image file="desert_try_river+E+W.png" />
+		<image file="desert_try_river+N.png" />
+		<image file="desert_try_river+N+E.png" />
+		<image file="desert_try_river+N+E+S.png" />
+		<image file="desert_try_river+N+E+S+W.png" />
+		<image file="desert_try_river+N+E+W.png" />
+		<image file="desert_try_river+N+S.png" />
+		<image file="desert_try_river+N+S+W.png" />
+		<image file="desert_try_river+N+W.png" />
+		<image file="desert_try_river+S.png" />
+		<image file="desert_try_river+S+W.png" />
+		<image file="desert_try_river+W.png" />
+		
+		<image file="desert_path.png" />
+		<image file="desert_path+E.png" />
+		<image file="desert_path+E+S.png" />
+		<image file="desert_path+E+S+W.png" />
+		<image file="desert_path+E+W.png" />
+		<image file="desert_path+N.png" />
+		<image file="desert_path+N+E.png" />
+		<image file="desert_path+N+E+S.png" />
+		<image file="desert_path+N+E+S+W.png" />
+		<image file="desert_path+N+E+W.png" />
+		<image file="desert_path+N+S.png" />
+		<image file="desert_path+N+S+W.png" />
+		<image file="desert_path+N+W.png" />
+		<image file="desert_path+S.png" />
+		<image file="desert_path+S+W.png" />
+		<image file="desert_path+W.png" />
 	</atlas>
 </resources>

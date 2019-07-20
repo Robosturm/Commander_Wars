@@ -569,7 +569,7 @@ void GameMap::replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool 
         spTerrain pTerrainOld = fields.at(y)->at(x);
         pTerrainOld->removeBuilding();
 
-        spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y);
+        spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getBaseTerrainID());
         if (useTerrainAsBaseTerrain)
         {            
             this->removeChild(pTerrainOld);
@@ -735,7 +735,7 @@ void GameMap::deserializeObject(QDataStream& pStream)
         fields.append(new QVector<spTerrain>());
         for (qint32 x = 0; x < width; x++)
         {
-            spTerrain pTerrain = Terrain::createTerrain("", x, y);
+            spTerrain pTerrain = Terrain::createTerrain("", x, y, "");
             fields[y]->append(pTerrain);
             pTerrain->deserializeObject(pStream);
             this->addChild(pTerrain);

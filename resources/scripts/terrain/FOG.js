@@ -13,7 +13,7 @@ var Constructor = function()
     {
         return true;
     };
-	this.loadBaseTerrain = function(terrain)
+    this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
 		terrain.loadBaseTerrain("SEA");
     };

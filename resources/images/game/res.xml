@@ -137,7 +137,18 @@
 		<image file="minimap/minimap_unit.png" />
 		<image file="minimap/minimap_wasteland.png" />
 		<image file="minimap/minimap_weld.png" />
-		<image file="minimap/minimap_blackholebuilding.png" />
+		<image file="minimap/minimap_blackholebuilding.png" />		
+		<image file="minimap/minimap_desert.png" />
+		<image file="minimap/minimap_desert_forest.png" />
+		<image file="minimap/minimap_desert_path.png" />
+		<image file="minimap/minimap_desert_rock.png" />
+		<image file="minimap/minimap_desert_try_river.png" />
+		<image file="minimap/minimap_desert_wasteland.png" />
+		<image file="minimap/minimap_snow.png" />
+		<image file="minimap/minimap_snow_forest.png" />
+		<image file="minimap/minimap_snow_mountain.png" />
+		<image file="minimap/minimap_snow_wasteland.png" />
+		
 		
 		<!-- dialogue stuff -->
 		<image file="dialogfield.png" />	

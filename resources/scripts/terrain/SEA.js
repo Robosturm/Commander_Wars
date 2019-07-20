@@ -6,7 +6,7 @@ var Constructor = function()
         terrain.setTerrainName(qsTr("Sea"));
     };
 
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, currentTerrainID)
     {
         terrain.loadBaseSprite("sea");
     };

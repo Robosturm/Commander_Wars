@@ -6,9 +6,20 @@ var Constructor = function()
         terrain.setTerrainName(qsTr("Meteor"));
         terrain.setHp(100);
     };
-	this.loadBaseTerrain = function(terrain)
+    this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
-		terrain.loadBaseTerrain("PLAINS");
+        if (currentTerrainID === "SNOW")
+        {
+            terrain.loadBaseTerrain("SNOW");
+        }
+        else if (currentTerrainID === "DESERT")
+        {
+            terrain.loadBaseTerrain("DESERT");
+        }
+        else
+        {
+            terrain.loadBaseTerrain("PLAINS");
+        }
     };
     this.loadBaseSprite = function(terrain)
     {

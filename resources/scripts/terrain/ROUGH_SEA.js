@@ -5,7 +5,7 @@ var Constructor = function()
     {
         terrain.setTerrainName(qsTr("Rough Sea"));
     };
-	this.loadBaseTerrain = function(terrain)
+    this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
 		terrain.loadBaseTerrain("SEA");
     };

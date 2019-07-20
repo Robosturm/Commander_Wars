@@ -5,13 +5,24 @@ var Constructor = function()
     {
         terrain.setTerrainName(qsTr("Destroyed Weld"));
     };
-	this.loadBaseTerrain = function(terrain)
+    this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
-		terrain.loadBaseTerrain("PLAINS");
+        if (currentTerrainID === "SNOW")
+        {
+            terrain.loadBaseTerrain("SNOW");
+        }
+        else if (currentTerrainID === "DESERT")
+        {
+            terrain.loadBaseTerrain("DESERT");
+        }
+        else
+        {
+            terrain.loadBaseTerrain("PLAINS");
+        }
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("PIPELINE", false, false, GameEnums.Directions_Direct, false);
+        var surroundings = terrain.getSurroundings("PIPELINE,SNOW_PIPELINE,DESERT_PIPELINE", false, false, GameEnums.Directions_Direct, false);
         var x = terrain.getX();
         var y = terrain.getY();
         if (map.onMap(x, y + 1))
@@ -48,7 +59,7 @@ var Constructor = function()
     this.canBePlaced = function(x, y)
     {
         var terrain = map.getTerrain(x, y);
-        var surroundings = terrain.getSurroundings("PIPELINE", false, false, GameEnums.Directions_Direct, false);
+        var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE", false, false, GameEnums.Directions_Direct, false);
         if ((surroundings === "+E+W") || (surroundings === "+N+S"))
         {
             return true;

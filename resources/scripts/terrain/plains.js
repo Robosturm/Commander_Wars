@@ -9,7 +9,7 @@ var Constructor = function()
     {
         return 1;
     };
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, currentTerrainID)
     {
         var random = globals.randInt(0, 140);
         if (random >= 15)
@@ -25,6 +25,26 @@ var Constructor = function()
     this.getMiniMapIcon = function()
     {
         return "minimap_plains";
+    };
+    this.loadOverlaySprite = function(terrain)
+    {
+        var surroundingsDesert = terrain.getSurroundings("SNOW_WASTELAND", true, false, GameEnums.Directions_Direct, false);
+        if (surroundingsDesert.includes("+N"))
+        {
+            terrain.loadOverlaySprite("snow+N");
+        }
+        if (surroundingsDesert.includes("+E"))
+        {
+            terrain.loadOverlaySprite("snow+E");
+        }
+        if (surroundingsDesert.includes("+S"))
+        {
+            terrain.loadOverlaySprite("snow+S");
+        }
+        if (surroundingsDesert.includes("+W"))
+        {
+            terrain.loadOverlaySprite("snow+W");
+        }
     };
 };
 Constructor.prototype = TERRAIN;

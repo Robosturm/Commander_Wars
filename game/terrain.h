@@ -29,7 +29,7 @@ public:
         Fog,
         Arrow
     };
-    static spTerrain createTerrain(const QString& terrainID, qint32 x, qint32 y);
+    static spTerrain createTerrain(const QString& terrainID, qint32 x, qint32 y, const QString&  currentTerrainID);
 
     virtual ~Terrain();
 
@@ -131,7 +131,7 @@ public slots:
     /**
      * @brief createBaseTerrain creates the base terrain for this terrain if it's a nullptr
      */
-    void createBaseTerrain();
+    void createBaseTerrain(const QString&  currentTerrainID);
     /**
      * @brief loadBaseTerrain loads a base terrain with the given id
      * @param terrainID

@@ -9,7 +9,7 @@ var Constructor = function()
     {
         return 1;
     };
-    this.loadBaseSprite = function(terrain)
+    this.loadBaseSprite = function(terrain, currentTerrainID)
     {
         var surroundings = terrain.getSurroundings("PLAINS_PLASMA", false, false, GameEnums.Directions_Direct);
         terrain.loadBaseSprite("plains+plasma" + surroundings);

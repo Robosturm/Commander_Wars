@@ -117,7 +117,7 @@ EditorSelection::EditorSelection()
     m_Terrains.reserve(pTerrainManager->getTerrainCount());
     for (qint32 i = 0; i < pTerrainManager->getTerrainCount(); i++)
     {
-        m_Terrains.append(Terrain::createTerrain(pTerrainManager->getTerrainID(i), -10, -10));
+        m_Terrains.append(Terrain::createTerrain(pTerrainManager->getTerrainID(i), -10, -10, ""));
         m_Terrains[i]->loadSprites();
         m_PlacementActor->addChild(m_Terrains[i]);
     }
@@ -158,8 +158,8 @@ EditorSelection::EditorSelection()
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
 
-    spTerrain plains = Terrain::createTerrain("PLAINS", -1, -1);
-    spTerrain sea = Terrain::createTerrain("SEA", -1, -1);
+    spTerrain plains = Terrain::createTerrain("PLAINS", -1, -1, "");
+    spTerrain sea = Terrain::createTerrain("SEA", -1, -1, "");
     for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
     {
         spUnit unit = new Unit(pUnitSpriteManager->getUnitID(i), m_Players.at(1)->getOwner(), false);

@@ -19,12 +19,12 @@
 #include "game/player.h"
 #include "game/co.h"
 
-spTerrain Terrain::createTerrain(const QString& terrainID, qint32 x, qint32 y)
+spTerrain Terrain::createTerrain(const QString& terrainID, qint32 x, qint32 y, const QString&  currentTerrainID)
 {
     spTerrain pTerrain = new Terrain(terrainID, x, y);
     if (terrainID != "")
     {
-        pTerrain->createBaseTerrain();
+        pTerrain->createBaseTerrain(currentTerrainID);
     }
     return pTerrain;
 }
@@ -132,18 +132,19 @@ spBuilding Terrain::getSpBuilding()
     return m_Building;
 }
 
-void Terrain::createBaseTerrain()
+void Terrain::createBaseTerrain(const QString&  currentTerrainID)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QJSValueList args;
     QJSValue obj = pApp->getInterpreter()->newQObject(this);
     args << obj;
+    args << currentTerrainID;
     // load sprite of the base terrain
     QString function = "loadBaseTerrain";
     pApp->getInterpreter()->doFunction(terrainID, function, args);
     if (m_pBaseTerrain.get() != nullptr)
     {
-        m_pBaseTerrain->createBaseTerrain();
+        m_pBaseTerrain->createBaseTerrain(currentTerrainID);
     }
 }
 
@@ -837,7 +838,7 @@ void Terrain::deserializeObject(QDataStream& pStream)
     pStream >> hasBaseTerrain;
     if (hasBaseTerrain)
     {
-        m_pBaseTerrain = createTerrain("", x, y);
+        m_pBaseTerrain = createTerrain("", x, y, "");
         m_pBaseTerrain->deserializeObject(pStream);
         m_pBaseTerrain->setPriority(static_cast<qint16>(DrawPriority::Terrain));
         m_pBaseTerrain->setPosition(0, 0);

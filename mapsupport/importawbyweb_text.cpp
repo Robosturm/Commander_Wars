@@ -48,7 +48,7 @@ void GameMap::importAWByWebMap(QString file)
             fields.append(new QVector<spTerrain>());
             for (qint32 x = 0; x < mapIDs[y].size(); x++)
             {
-                spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y);
+                spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "");
                 this->addChild(pTerrain);
                 fields[y]->append(pTerrain);
                 pTerrain->setPosition(x * Imagesize, y * Imagesize);

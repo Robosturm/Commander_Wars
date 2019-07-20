@@ -152,7 +152,7 @@ void GameMap::importTxtMap(QString file)
                     fields.append(new QVector<spTerrain>());
                     for (qint32 x = 0; x < width; x++)
                     {
-                        spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y);
+                        spTerrain pTerrain = Terrain::createTerrain("PLAINS", x, y, "");
                         this->addChild(pTerrain);
                         fields[y]->append(pTerrain);
                         pTerrain->setPosition(x * Imagesize, y * Imagesize);

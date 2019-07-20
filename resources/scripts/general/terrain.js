@@ -15,7 +15,7 @@ var TERRAIN =
 
     // called for loading a sub image terrain
     // this has only a visual effect
-    loadBaseTerrain : function(terrain)
+    loadBaseTerrain : function(terrain, currentTerrainID)
     {
     },
     // called for loading the main sprite
