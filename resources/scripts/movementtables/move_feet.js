@@ -31,11 +31,25 @@ var Constructor = function()
             case "LABOR":
             case "TEMPORARY_AIRPORT":
             case "TEMPORARY_HARBOUR":
+
+            case "DESERT_WASTELAND":
+            case "DESERT_PATH":
+            case "DESERT":
+            case "DESERT_DESTROYEDWELD":
+            case "DESERT_FOREST":
                 return 1;
             case "MINE":
             case "MOUNTAIN":
+            case "DESERT_ROCK":
+            case "DESERT_TRY_RIVER":
             case "RIVER":
+            case "SNOW":
+            case "SNOW_DESTROYEDWELD":
+            case "SNOW_FOREST":
+            case "SNOW_WASTELAND":
                 return 2;
+            case "SNOW_MOUNTAIN":
+                return 3;
         }
         return -1;
     };

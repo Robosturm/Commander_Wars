@@ -8,7 +8,11 @@ var Constructor = function()
     {
         switch (terrain.getID())
         {
+            case "DESERT_FOREST":
+            case "DESERT_WASTELAND":
             case "BEACH":
+            case "SNOW":
+            case "SNOW_DESTROYEDWELD":
 				return 2;            
             case "RUIN":			
 			case "DESTROYEDWELD":
@@ -30,10 +34,17 @@ var Constructor = function()
             case "LABOR":
             case "TEMPORARY_AIRPORT":
             case "TEMPORARY_HARBOUR":
+            case "DESERT":
+            case "DESERT_DESTROYEDWELD":
+            case "DESERT_PATH":
                 return 1;
 			case "FOREST":
 			case "WASTELAND":
-				return 3;
+            case "DESERT_TRY_RIVER":
+                return 3;
+            case "SNOW_FOREST":
+            case "SNOW_WASTELAND":
+                return 4;
         }
         return -1;
     };

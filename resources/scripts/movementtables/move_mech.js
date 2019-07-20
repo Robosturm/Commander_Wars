@@ -33,7 +33,18 @@ var Constructor = function()
             case "TEMPORARY_AIRPORT":
             case "TEMPORARY_HARBOUR":
 			case "MOUNTAIN":
-            case "RIVER":
+            case "RIVER":                
+            case "DESERT":
+            case "DESERT_DESTROYEDWELD":
+            case "DESERT_PATH":
+            case "DESERT_TRY_RIVER":
+            case "SNOW":
+            case "SNOW_DESTROYEDWELD":
+            case "WASTELAND":
+            case "DESERT_FOREST":
+            case "DESERT_WASTELAND":
+            case "SNOW_FOREST":
+            case "SNOW_WASTELAND":
                 return 1;
         }
         return -1;

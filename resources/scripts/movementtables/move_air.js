@@ -37,6 +37,18 @@ var Constructor = function()
             case "REAF":
             case "MOUNTAIN":
             case "RIVER":
+            case "DESERT":
+            case "DESERT_DESTROYEDWELD":
+            case "DESERT_FOREST":
+            case "DESERT_PATH":
+            case "DESERT_ROCK":
+            case "DESERT_TRY_RIVER":
+            case "DESERT_WASTELAND":
+            case "SNOW":
+            case "SNOW_DESTROYEDWELD":
+            case "SNOW_FOREST":
+            case "SNOW_MOUNTAIN":
+            case "SNOW_WASTELAND":
 				return 1;
         }
         return -1;
