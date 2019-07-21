@@ -179,10 +179,6 @@ bool Player::isEnemy(Player* pOwner)
 void Player::setFonds(const qint32 &value)
 {
     fonds = value;
-    if (fonds < 0)
-    {
-        fonds = 0;
-    }
     if (GameMenue::getInstance() != nullptr)
     {
         GameMenue::getInstance()->updatePlayerinfo();

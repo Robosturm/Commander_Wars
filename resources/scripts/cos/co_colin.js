@@ -18,7 +18,11 @@ var Constructor = function()
         powerNameAnimation.queueAnimation(animation);
 
         var player = co.getOwner();
-        player.addFonds(player.getFonds() * 0.5);
+        var fonds = player.getFonds();
+        if (fonds > 0)
+        {
+            player.addFonds(player.getFonds() * 0.5);
+        }
         audio.clearPlayList();
         CO_COLIN.loadCOMusic(co);
         audio.playRandom();

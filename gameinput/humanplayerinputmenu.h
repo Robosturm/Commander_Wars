@@ -17,6 +17,7 @@ class HumanPlayerInputMenu : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
+    static const qint32 itemCount = 10;
     explicit HumanPlayerInputMenu(QStringList texts, QStringList actionIDs, QVector<oxygine::spActor> icons,
                                   QVector<qint32> costList = QVector<qint32>(), QVector<bool> enabledList = QVector<bool>());
     /**
@@ -36,9 +37,11 @@ private:
     oxygine::spSprite m_Cursor;
     qint32 startY{0};
     qint32 itemHeigth{0};
+    qint32 itemWidth{0};
     qint32 currentAction{0};
     QStringList m_ActionIDs;
     QVector<qint32> m_CostList;
+    QVector<bool> m_EnabledList;
     qint32 createTopSprite(qint32 x, qint32 width);
     qint32 createBottomSprite(qint32 x, qint32 y, qint32 width);
 };

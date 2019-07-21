@@ -14,7 +14,8 @@
 HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList actionIDs, QVector<oxygine::spActor> icons,
                                            QVector<qint32> costList, QVector<bool> enabledList)
     : m_ActionIDs(actionIDs),
-      m_CostList(costList)
+      m_CostList(costList),
+      m_EnabledList(enabledList)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -38,7 +39,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
         }
     }
     width += GameMap::Imagesize + GameMap::Imagesize * 3 / 4 ;
-
+    itemWidth = width;
     GameManager* pGameManager = GameManager::getInstance();
     oxygine::ResAnim* pAnim = pGameManager->getResAnim("menu+top");
     qint32 heigth = createTopSprite(0, width);
@@ -59,7 +60,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     m_Cursor->setPosition(width - m_Cursor->getScaledWidth() / 2, y + GameMap::Imagesize / 2 - m_Cursor->getScaledHeight() / 2);
     m_Cursor->setScale(GameMap::Imagesize / pAnim->getWidth());
     qint32 x = 0;
-    qint32 itemCount = 10;
+
     qint32 maxY = 0;
     for (qint32 i = 0; i < actionIDs.size(); i++)
     {
@@ -238,6 +239,23 @@ void HumanPlayerInputMenu::keyInput(SDL_Event event)
             currentAction++;
         }
     }
+    if (cur == Settings::getKey_left())
+    {
+        if (currentAction - itemCount >= 0)
+        {
+            Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+            currentAction -= itemCount;
+        }
+    }
+    else if (cur == Settings::getKey_right())
+    {
+        if (currentAction + itemCount < m_ActionIDs.size() - 1)
+        {
+            Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+            currentAction += itemCount;
+        }
+    }
+
     else if (cur == Settings::getKey_left())
     {
         Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
@@ -252,13 +270,16 @@ void HumanPlayerInputMenu::keyInput(SDL_Event event)
     {
         if (m_ActionIDs.size() > 0)
         {
-            if (m_CostList.size() == m_ActionIDs.size())
+            if (m_EnabledList[currentAction])
             {
-                emit sigItemSelected(m_ActionIDs[currentAction], m_CostList[currentAction]);
-            }
-            else
-            {
-                emit sigItemSelected(m_ActionIDs[currentAction], 0);
+                if (m_CostList.size() == m_ActionIDs.size())
+                {
+                    emit sigItemSelected(m_ActionIDs[currentAction], m_CostList[currentAction]);
+                }
+                else
+                {
+                    emit sigItemSelected(m_ActionIDs[currentAction], 0);
+                }
             }
         }
     }
@@ -266,7 +287,16 @@ void HumanPlayerInputMenu::keyInput(SDL_Event event)
     {
         emit sigCanceled(0, 0);
     }
-    m_Cursor->setY(startY + itemHeigth * currentAction + GameMap::Imagesize / 2 - m_Cursor->getScaledHeight() / 2);
+
+    qint32 x = 0;
+    qint32 y = currentAction;
+    while (y >= itemCount)
+    {
+        y -= itemCount;
+        x++;
+    }
+    m_Cursor->setY(startY + y * itemHeigth + GameMap::Imagesize / 2 - m_Cursor->getScaledHeight() / 2);
+    m_Cursor->setX(itemWidth * (x + 1));
 }
 
 void HumanPlayerInputMenu::mouseMove(qint32 x, qint32 y)
@@ -303,6 +333,6 @@ void HumanPlayerInputMenu::mouseMove(qint32 x, qint32 y)
     if (newX >= 0 && newY >= 0)
     {
         // warp cursor to sweet nice position
-        SDL_WarpMouseInWindow(oxygine::core::getWindow(), pMap->getX() + newX, pMap->getY() + newY);
+        // SDL_WarpMouseInWindow(oxygine::core::getWindow(), pMap->getX() + newX, pMap->getY() + newY);
     }
 }

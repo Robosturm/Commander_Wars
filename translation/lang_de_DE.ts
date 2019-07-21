@@ -4090,102 +4090,102 @@
 <context>
     <name>co_colin</name>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="135"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="139"/>
         <source>Blue Moon&apos;s rich boy CO and Sasha&apos;s little brother. A gifted CO with a sharp, if insecure, mind.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="139"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="143"/>
         <source>Olaf and Grit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="143"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="147"/>
         <source>Black Hole</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="147"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="151"/>
         <source>The heir to a vast fortune who can purchase units at bargain-basement prices. Troops&apos; low firepower stems from his lack of confidence.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="151"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="155"/>
         <source>Increases current funds by 50 percent.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="155"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="159"/>
         <source>Gold Rush</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="159"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="163"/>
         <source>Uses wealth to increase the strength of units. The more funds available, the more firepower his units receive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="163"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="167"/>
         <source>Power of Money</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="167"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="171"/>
         <source>Let me show you the power of money!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="168"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="172"/>
         <source>This is not a drill... I won&apos;t give up so easily!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="169"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="173"/>
         <source>People of Blue Moon!  I need your help!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="170"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="174"/>
         <source>I&apos;ll give it everything I&apos;ve got!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="171"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="175"/>
         <source>You&apos;re not getting away with this!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="172"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="176"/>
         <source>I&apos;ll show you what I can do!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="176"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="180"/>
         <source>I w-won! Whew!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="177"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="181"/>
         <source>I&apos;ll win if I try my best!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="178"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="182"/>
         <source>Whew... I won! I really won!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="182"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="186"/>
         <source>If only Commander Olaf were here...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="183"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="187"/>
         <source>Wait till I tell my sis! Then you&apos;ll be sorry!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_colin.js" line="187"/>
+        <location filename="../resources/scripts/cos/co_colin.js" line="191"/>
         <source>Colin</source>
         <translation type="unfinished"></translation>
     </message>
