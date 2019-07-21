@@ -25,7 +25,10 @@ var Constructor = function()
     {
         return true;
     };
-
+    this.getFirerangeModifier = function(terrain, unit)
+    {
+        return -1;
+    };
     this.getTerrainAnimationBase = function(unit, terrain)
     {
         return "base_forest";

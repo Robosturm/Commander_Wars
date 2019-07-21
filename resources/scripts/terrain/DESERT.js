@@ -13,6 +13,10 @@ var Constructor = function()
     {
 		terrain.loadBaseSprite("desert");
     };
+    this.getFirerangeModifier = function(terrain, unit)
+    {
+        return -1;
+    };
     this.getMiniMapIcon = function()
     {
         return "minimap_desert";

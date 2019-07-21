@@ -21,6 +21,10 @@ var Constructor = function()
             terrain.loadBaseTerrain("PLAINS");
         }
     };
+    this.getFirerangeModifier = function(terrain, unit)
+    {
+        return -1;
+    };
     this.loadBaseSprite = function(terrain)
     {
         var surroundings = terrain.getSurroundings("PIPELINE,DESERT_PIPELINE,SNOW_PIPELINE", false, false, GameEnums.Directions_Direct, false);

@@ -198,6 +198,12 @@ public slots:
      */
     void setBuilding(Building* pBuilding);
     /**
+     * @brief getFirerangeModifier
+     * @param pUnit
+     * @return
+     */
+    qint32 getFirerangeModifier(Unit* pUnit);
+    /**
      * @brief removeBuilding
      */
     void removeBuilding();

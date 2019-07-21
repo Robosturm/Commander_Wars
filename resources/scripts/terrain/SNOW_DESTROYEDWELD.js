@@ -7,9 +7,9 @@ var Constructor = function()
     };
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
-        if (currentTerrainID === "SNOW")
+        if (currentTerrainID === "PLAINS")
         {
-            terrain.loadBaseTerrain("SNOW");
+            terrain.loadBaseTerrain("PLAINS");
         }
         else if (currentTerrainID === "DESERT")
         {
@@ -17,7 +17,7 @@ var Constructor = function()
         }
         else
         {
-            terrain.loadBaseTerrain("PLAINS");
+            terrain.loadBaseTerrain("SNOW");
         }
     };
     this.loadBaseSprite = function(terrain)

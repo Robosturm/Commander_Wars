@@ -305,6 +305,10 @@
 		
 		<!-- desert stuff here comes zandra -->
 		<image file="desert.png" />
+		<image file="desert+W.png" />
+		<image file="desert+S.png" />
+		<image file="desert+E.png" />
+		<image file="desert+N.png" />
 		<image file="desert_forest.png" />
 		<image file="desert_wasteland.png" />
 		<image file="desert_rock.png" />

@@ -40,7 +40,7 @@ var BUILDING =
     // if the current terrain isn't in the list. it'll be replaced by the first :)
     getBaseTerrain : function(building)
     {
-        return "PLAINS,STREET"
+        return "PLAINS,STREET,SNOW,DESERT,DESERT_PATH"
     },
 
     addCaptureAnimationBuilding : function(animation, building, startColor, capturedColor)

@@ -11,14 +11,18 @@ var Constructor = function()
         {
             terrain.loadBaseTerrain("SNOW");
         }
-        else if (currentTerrainID === "DESERT")
-        {
-            terrain.loadBaseTerrain("DESERT");
-        }
-        else
+        else if (currentTerrainID === "PLAINS")
         {
             terrain.loadBaseTerrain("PLAINS");
         }
+        else
+        {
+            terrain.loadBaseTerrain("DESERT");
+        }
+    };
+    this.getFirerangeModifier = function(terrain, unit)
+    {
+        return -1;
     };
     this.loadBaseSprite = function(terrain)
     {

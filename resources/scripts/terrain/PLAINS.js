@@ -28,22 +28,39 @@ var Constructor = function()
     };
     this.loadOverlaySprite = function(terrain)
     {
-        var surroundingsDesert = terrain.getSurroundings("SNOW_WASTELAND", true, false, GameEnums.Directions_Direct, false);
-        if (surroundingsDesert.includes("+N"))
+        var surroundingsSnow = terrain.getSurroundings("SNOW_WASTELAND", true, false, GameEnums.Directions_Direct, false);
+        if (surroundingsSnow.includes("+N"))
         {
             terrain.loadOverlaySprite("snow+N");
         }
-        if (surroundingsDesert.includes("+E"))
+        if (surroundingsSnow.includes("+E"))
         {
             terrain.loadOverlaySprite("snow+E");
         }
-        if (surroundingsDesert.includes("+S"))
+        if (surroundingsSnow.includes("+S"))
         {
             terrain.loadOverlaySprite("snow+S");
         }
-        if (surroundingsDesert.includes("+W"))
+        if (surroundingsSnow.includes("+W"))
         {
             terrain.loadOverlaySprite("snow+W");
+        }
+        var surroundingsDesert = terrain.getSurroundings("DESERT_WASTELAND", true, false, GameEnums.Directions_Direct, false);
+        if (surroundingsDesert.includes("+N"))
+        {
+            terrain.loadOverlaySprite("desert+N");
+        }
+        if (surroundingsDesert.includes("+E"))
+        {
+            terrain.loadOverlaySprite("desert+E");
+        }
+        if (surroundingsDesert.includes("+S"))
+        {
+            terrain.loadOverlaySprite("desert+S");
+        }
+        if (surroundingsDesert.includes("+W"))
+        {
+            terrain.loadOverlaySprite("desert+W");
         }
     };
 };

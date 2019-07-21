@@ -20,6 +20,10 @@ var Constructor = function()
             terrain.loadBaseTerrain("PLAINS");
         }
     };
+    this.getFirerangeModifier = function(terrain, unit)
+    {
+        return -1;
+    };
     this.loadBaseSprite = function(terrain)
     {
         var surroundings = terrain.getSurroundings("PIPELINE,WELD,DESTROYEDWELD,PIPESTATION,SNOW_PIPELINE,SNOW_DESTROYEDWELD,SNOW_WELD,DESERT_PIPELINE,DESERT_DESTROYEDWELD,DESERT_WELD", false, false, GameEnums.Directions_Direct, true, true);

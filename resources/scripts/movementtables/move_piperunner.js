@@ -11,7 +11,12 @@ var Constructor = function()
 			case "WELD":
             case "FACTORY":
             case "PIPELINE":
+            case "DESERT_WELD":
+            case "DESERT_PIPELINE":
 				return 1;
+            case "SNOW_WELD":
+            case "SNOW_PIPELINE":
+                return 2;
         }
         return -1;
     };

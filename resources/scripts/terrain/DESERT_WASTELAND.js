@@ -9,6 +9,10 @@ var Constructor = function()
     {
         return 2;
     };
+    this.getFirerangeModifier = function(terrain, unit)
+    {
+        return -1;
+    };
     this.loadBaseSprite = function(terrain)
     {
         terrain.loadBaseSprite("desert_wasteland");

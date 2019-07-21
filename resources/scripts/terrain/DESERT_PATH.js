@@ -20,6 +20,10 @@ var Constructor = function()
             terrain.loadBaseTerrain("DESERT");
         }
     };
+    this.getFirerangeModifier = function(terrain, unit)
+    {
+        return -1;
+    };
     this.loadBaseSprite = function(terrain)
     {
         var surroundings = terrain.getSurroundings("STREET,BRIDGE,AIRPORT,FACTORY,HARBOUR,HQ,LABOR,MINE,SILO,SILO_ROCKET,TOWER,TOWN,RADAR,PIPESTATION,DESERT_PATH",
