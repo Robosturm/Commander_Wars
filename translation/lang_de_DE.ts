@@ -9673,102 +9673,102 @@
 <context>
     <name>co_varlot</name>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="231"/>
         <source>This CO joined the military and rose through the ranks. But not quickly enough, and is now a sub-commander.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="235"/>
         <source>Caviar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="239"/>
         <source>Ethics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="243"/>
         <source>Varlot reduces the income from a property he captures by an amount proportional to its Capture Points.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="247"/>
         <source>His troops get a capture bonus. Varlot also gains a fraction of the enemy income.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="251"/>
         <source>Aquisition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="255"/>
         <source>All units are healed for 4 HP, gaining firepower for each point over 10HP they&apos;d be healed. The enemy pays for these repairs.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="259"/>
         <source>Hostile Takeover</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="253"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="263"/>
         <source>Move out!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="264"/>
         <source>Attack!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="265"/>
         <source>Forward march!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="256"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="266"/>
         <source>Onward to victory!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="257"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="267"/>
         <source>Never surrender!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="258"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="268"/>
         <source>Push forward!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="262"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="272"/>
         <source>Mission complete.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="263"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="273"/>
         <source>Another day, another battle won.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="264"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="274"/>
         <source>Maybe I&apos;ll be up for promotion soon...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="268"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="278"/>
         <source>I won&apos;t get demoted for this lost!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="269"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="279"/>
         <source>Retreat!!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_varlot.js" line="273"/>
+        <location filename="../resources/scripts/cos/co_varlot.js" line="283"/>
         <source>Varlot</source>
         <translation type="unfinished"></translation>
     </message>

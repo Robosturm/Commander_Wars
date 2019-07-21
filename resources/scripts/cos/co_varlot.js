@@ -2,7 +2,7 @@ var Constructor = function()
 {
     this.init = function(co)
     {
-        co.setPowerStars(3);
+        co.setPowerStars(4);
         co.setSuperpowerStars(4);
     };
 
@@ -100,13 +100,23 @@ var Constructor = function()
         var player = co.getOwner();
         var enemyCount = player.getEnemyCount()
         var playerCounter = map.getPlayerCount();
+        var playerCosts = costs / enemyCount;
         for (var i2 = 0; i2 < playerCounter; i2++)
         {
             var enemyPlayer = map.getPlayer(i2);
             if ((enemyPlayer !== player) &&
                 (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
             {
-                enemyPlayer.addFonds(-costs / enemyCount);
+                var fonds = enemyPlayer.getFonds();
+                var income = enemyPlayer.calcIncome();
+                if (playerCosts > income + fonds)
+                {
+                    enemyPlayer.setFonds(-income);
+                }
+                else
+                {
+                    enemyPlayer.addFonds(-playerCosts);
+                }
             }
         }
 
