@@ -129,11 +129,11 @@ var PLAYER =
             case 8:
                 return "BD";
             case 9:
-                return "JS";
+                return "GS";
             case 10:
-                return "PC";
+                return "PF";
             case 11:
-                return "TG";
+                return "TI";
             case 12:
                 return "DM";
         }
