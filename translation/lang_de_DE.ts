@@ -2610,7 +2610,8 @@
         <location filename="../resources/scripts/general/Tagpower.js" line="180"/>
         <location filename="../resources/scripts/general/Tagpower.js" line="181"/>
         <location filename="../resources/scripts/general/Tagpower.js" line="182"/>
-        <location filename="../resources/scripts/general/Tagpower.js" line="197"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="184"/>
+        <location filename="../resources/scripts/general/Tagpower.js" line="199"/>
         <source>Tagpower</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2937,6 +2938,11 @@
     <message>
         <location filename="../resources/scripts/general/Tagpower.js" line="175"/>
         <source>Noble Shot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/Tagpower.js" line="183"/>
+        <source>Unwavering Debt</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3705,102 +3711,102 @@
 <context>
     <name>co_amy</name>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="202"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="207"/>
         <source>The Commander in Chief of Pink Frontier. A former physicist who was thrust into war emerging as a hardened naval commander.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="206"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="211"/>
         <source>Quantum Theory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="210"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="215"/>
         <source>Hawke</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="214"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="219"/>
         <source>Hovercraft units are strengthened, and they gain one extra movement and get cheaper.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="218"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="223"/>
         <source>Movement range for all units is increased by one space.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="222"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="227"/>
         <source>Fluid Dynamics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="226"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="231"/>
         <source>Her defence raises extremly. Her troops get nearly invincible when attacking.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="230"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="235"/>
         <source>Photon Discharge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="239"/>
         <source>EMP? Why, it stands for Electromagnetic Pulse. You&apos;ll soon understand.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="235"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="240"/>
         <source>Quantum... you probably donâ€™t even know what it means.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="241"/>
         <source>Do you know how much energy splitting of the atom produces? Let&apos;s see.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="242"/>
         <source>Allow me demonstrate how flimsy hovercrafts are not.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="243"/>
         <source>For your sake, I hope your machines are magnetically shielded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="239"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="244"/>
         <source>Without science we wouldnâ€™t be doing what we are now.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="248"/>
         <source>That one was for you Lara.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="249"/>
         <source>Theoretically speaking, it appears you lost.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="245"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="250"/>
         <source>For lack of a better word, I feel fully ionised!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="254"/>
         <source>My theory didn&apos;t work in practice!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="255"/>
         <source>Ok, Iâ€™ll need to put more efford to put my theory into practice.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_amy.js" line="259"/>
         <source>Amy</source>
         <translation type="unfinished"></translation>
     </message>

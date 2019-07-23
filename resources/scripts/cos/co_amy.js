@@ -216,11 +216,11 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Hovercraft units are strengthened, and they gain one extra movement and get cheaper.");
+        return qsTr("She can command hovercraft units at optimal level. Reefs pose no problem for Amy's units.");
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Movement range for all units is increased by one space.");
+        return qsTr("Hovercraft units are strengthened, and they gain one extra movement and get cheaper.");
     };
     this.getPowerName = function()
     {

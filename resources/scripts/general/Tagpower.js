@@ -179,7 +179,9 @@ var TAGPOWER =
                          ["CO_CAULDER",  "CO_LIN",     qsTr("Tagpower"),           -20,    0],
                          ["CO_CAULDER",  "CO_ISABELLA", qsTr("Tagpower"),          -20,    0],
                          ["CO_CAULDER",  "CO_TASHA",   qsTr("Tagpower"),           -20,    0],
-                         ["CO_CAULDER",  "CO_GAGE",    qsTr("Tagpower"),           -20,    0],
+                         ["CO_CAULDER",  "CO_GAGE",    qsTr("Tagpower"),           -20,    0],        
+                         ["CO_AMY",      "CO_DRAKE",   qsTr("Unwavering Debt"),    15,     2],
+                         ["CO_AMY",      "CO_HAWKE",   qsTr("Tagpower"),           -30,    0],
     ],
 
     getTagname : function(co1, co2)
