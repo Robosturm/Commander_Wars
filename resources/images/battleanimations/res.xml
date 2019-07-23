@@ -26,6 +26,10 @@
 		<image file="apc/apc+yc.png" />
 		<image file="apc/apc+yc+mask.png" />
 		
+		<!-- artillerycraft -->
+		<image file="artillerycraft/artillerycraft.png" />
+		<image file="artillerycraft/artillerycraft+mask.png" />		
+		
 		<!-- artillery -->
 		<image file="artillery/artillery+bh.png" />
 		<image file="artillery/artillery+bh+mask.png" />

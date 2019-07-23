@@ -44,7 +44,13 @@ var Constructor = function()
             case "DESERT_WASTELAND":
             case "SNOW_FOREST":
             case "SNOW_WASTELAND":
-				return 2;           
+                return 2;
+            case "SEA":
+            case "FOG":
+                return 2;
+            case "ROUGH_SEA":
+            case "REAF":
+                return 3;
         }
         return -1;
     };

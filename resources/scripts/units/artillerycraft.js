@@ -4,25 +4,26 @@ var Constructor = function()
     {
         unit.setAmmo1(6);
         unit.setMaxAmmo1(6);
-        unit.setWeapon1ID("WEAPON_HOVERVULCAN_CANNON");
+        unit.setWeapon1ID("WEAPON_CANNON");
 
         unit.setAmmo2(0);
         unit.setMaxAmmo2(0);
         unit.setWeapon2ID("");
 
-        unit.setFuel(60);
-        unit.setMaxFuel(60);
-        unit.setBaseMovementPoints(6);
-        unit.setMinRange(1);
-        unit.setMaxRange(1);
-        unit.setVision(2);
+        unit.setFuel(70);
+        unit.setMaxFuel(70);
+        unit.setBaseMovementPoints(5);
+        unit.setMinRange(2);
+        unit.setMaxRange(3);
+        unit.setVision(1);
+
     };
     // called for loading the main sprite
     this.loadSprites = function(unit)
     {
         // load sprites
-        unit.loadSprite("hoverflak", false);
-        unit.loadSprite("hoverflak+mask", true);
+        unit.loadSprite("artillerycraft", false);
+        unit.loadSprite("artillerycraft+mask", true);
     };
     this.getMovementType = function()
     {
@@ -33,24 +34,20 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
         var unitID = unit.getUnitID().toLowerCase();
-        animation.loadSprite(unitID + "+walk+mask", true, 1.5);
-        animation.loadSprite(unitID + "+walk", false, 1.5);
+        animation.loadSprite(unitID + "+walk+mask", true, 1);
+        animation.loadSprite(unitID + "+walk", false, 1);
         animation.setSound("movetank.wav", -2);
         return animation;
     };
     this.getBaseCost = function()
     {
-        return 9500;
+        return 8000;
     };
     this.getName = function()
     {
-        return qsTr("Hover Anti Air");
-    };
-    this.canMoveAndFire = function()
-    {
-        return true;
+        return qsTr("Artillerycraft");
     };
 }
 
 Constructor.prototype = UNIT;
-var HOVERFLAK = new Constructor();
+var ARTILLERYCRAFT = new Constructor();

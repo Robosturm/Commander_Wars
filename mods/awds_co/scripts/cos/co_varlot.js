@@ -22,10 +22,6 @@ CO_VARLOT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Power:
             return 10;
         default:
-            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-            {
-                return 20;
-            }
             break;
         }
     }
@@ -36,8 +32,7 @@ CO_VARLOT.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        if (co.inCORange(Qt.point(defPosX, defPosY), defender) ||
-                co.getPowerMode() > GameEnums.PowerMode_Off)
+        if (co.getPowerMode() > GameEnums.PowerMode_Off)
         {
             return 10;
         }

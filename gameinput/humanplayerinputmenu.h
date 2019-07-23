@@ -17,7 +17,7 @@ class HumanPlayerInputMenu : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    static const qint32 itemCount = 10;
+    static const qint32 itemCount = 11;
     explicit HumanPlayerInputMenu(QStringList texts, QStringList actionIDs, QVector<oxygine::spActor> icons,
                                   QVector<qint32> costList = QVector<qint32>(), QVector<bool> enabledList = QVector<bool>());
     /**

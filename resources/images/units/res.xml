@@ -38,6 +38,12 @@
 		<image file="aircraftcarrier+walk.png" cols = "3" rows = "4"  />
 		<image file="aircraftcarrier+walk+mask.png" cols = "3" rows = "4"  />
 		
+		<!-- artillerycraft -->
+		<image file="artillerycraft.png" cols = "4" />
+		<image file="artillerycraft+mask.png" cols = "4" />
+		<image file="artillerycraft+walk.png" cols = "4" rows = "4"  />
+		<image file="artillerycraft+walk+mask.png" cols = "4" rows = "4"  />
+		
 		<!-- duster -->
 		<image file="duster.png" cols = "4" />
 		<image file="duster+mask.png" cols = "4" />
