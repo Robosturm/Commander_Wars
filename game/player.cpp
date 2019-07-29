@@ -443,6 +443,20 @@ QStringList Player::getBuildList() const
     return m_BuildList;
 }
 
+QStringList Player::getCOUnits(Building* pBuilding)
+{
+    QStringList ret;
+    if (playerCOs[0].get() != nullptr)
+    {
+       ret.append(playerCOs[0]->getCOUnits(pBuilding));
+    }
+    if (playerCOs[1].get() != nullptr)
+    {
+       ret.append(playerCOs[1]->getCOUnits(pBuilding));
+    }
+    return ret;
+}
+
 void Player::setBuildList(const QStringList &BuildList)
 {
     m_BuildList = BuildList;

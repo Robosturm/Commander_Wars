@@ -132,7 +132,7 @@ void Building::updatePlayerColor(bool visible)
         }
         else
         {
-            m_pBuildingSprites[i]->setColor(oxygine::Color(150, 150, 150, 255));
+            m_pBuildingSprites[i]->setColor(oxygine::Color(255, 255, 255, 255));
         }
     }
 }

@@ -233,6 +233,19 @@ qint32 CO::getVisionrangeModifier(Unit* pUnit, QPoint position)
     }
 }
 
+QStringList CO::getCOUnits(Building* pBuilding)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getCOUnits";
+    QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(pBuilding);
+    args1 << obj1;
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    return erg.toVariant().toStringList();
+}
+
 qint32 CO::getMovementpointModifier(Unit* pUnit, QPoint position)
 {
     Mainapp* pApp = Mainapp::getInstance();

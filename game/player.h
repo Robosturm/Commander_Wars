@@ -340,6 +340,11 @@ public slots:
      */
     QStringList getBuildList() const;
     /**
+     * @brief getCOUnits
+     * @return
+     */
+    QStringList getCOUnits(Building* pBuilding);
+    /**
      * @brief setBuildList
      * @param BuildList
      */

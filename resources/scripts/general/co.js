@@ -195,6 +195,11 @@ var CO =
         return 0;
     },
 
+    getCOUnits : function(co, building)
+    {
+        return [];
+    },
+
     getAdditionalBuildingActions : function(co, building)
     {
         // called from all co's for a building -> so you can boni from own co and mali from enemy co's here

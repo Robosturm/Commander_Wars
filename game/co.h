@@ -49,6 +49,12 @@ signals:
 
 public slots:
     /**
+     * @brief getCOUnits
+     * @param pBuilding
+     * @return
+     */
+    QStringList getCOUnits(Building* pBuilding);
+    /**
      * @brief getMovementpointModifier the bonus movementpoints of this co
      * @param pUnit
      * @param position

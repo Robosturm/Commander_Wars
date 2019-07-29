@@ -3171,102 +3171,102 @@
 <context>
     <name>co_adam</name>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="302"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="307"/>
         <source>A researcher-turned-commander of Brown Desert, Adam Deckster is a reclusive geek who nevertheless is slowly finding a place among the other commanders.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="306"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="311"/>
         <source>Vectors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="310"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="315"/>
         <source>Percent Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="314"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="319"/>
         <source>Adam&apos;s units finish off units that are within basic luck range. Whenever he destroys an enemy unit, the attacking unit gains a defense boost. However, Adam&apos;s units lose firepower as they lose HP.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="318"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="323"/>
         <source>All of Adam&apos;s units gains a firepower boost and movement range. Whenever Adam destroys a unit, the next unit gains bonus firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="322"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="327"/>
         <source>Decimation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="326"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="331"/>
         <source>Each time Adam destroys an enemy unit, the attacking unit loses firepower and can move again, while the next unit gets an powerup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="330"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="335"/>
         <source>Cartesian Cleanup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="334"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="339"/>
         <source>Get a hobby? This is my hobby!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="335"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="340"/>
         <source>Woo! Watch out for shrapnel!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="336"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="341"/>
         <source>Precision pays off!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="337"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="342"/>
         <source>As my troops approach their limit...you become insignificant!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="338"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="343"/>
         <source>Prepare to have your strategy debunked!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="339"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="344"/>
         <source>I&apos;ll blind you with science!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="343"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="348"/>
         <source>Call it bad luck, if you must.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="344"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="349"/>
         <source>Who said math had no applications in real life?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="345"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="350"/>
         <source>Ha! The revenge of the nerds!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="349"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="354"/>
         <source>Hssss! Today was... unlucky. A bad day. Nothing more.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="350"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="355"/>
         <source>It&apos;s the blasted weather! That was the problem! Hssss!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_adam.js" line="354"/>
+        <location filename="../resources/scripts/cos/co_adam.js" line="359"/>
         <source>Adam</source>
         <translation type="unfinished"></translation>
     </message>
