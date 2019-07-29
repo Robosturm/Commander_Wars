@@ -94,6 +94,10 @@ var Constructor = function()
     {
         return "back_sea";
     };
+    this.getDescription = function()
+    {
+        return qsTr("Calm sea. Naval and air forces have good mobility.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var SEA = new Constructor();

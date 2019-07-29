@@ -98,7 +98,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
     textField->setStyle(style);
-    textField->setText("..");
+    textField->setHtmlText("..");
     textField->attachTo(pBox);
     pBox->setSize(m_MainPanel->getWidth() - 50, 40);
     textField->setHeight(40);
@@ -216,7 +216,7 @@ void FileDialog::showFolder(QString folder)
         // loop through all entries :)
         if (infoList[i].isDir())
         {
-            textField->setText(infoList[i].absoluteFilePath().replace(folder, "").toStdString().c_str());
+            textField->setHtmlText(infoList[i].absoluteFilePath().replace(folder, "").toStdString().c_str());
             pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
             {
                 emit sigShowFolder(myPath);
@@ -225,7 +225,7 @@ void FileDialog::showFolder(QString folder)
         else if (infoList[i].isFile())
         {
             QString file = infoList[i].fileName();
-            textField->setText(file.toStdString().c_str());
+            textField->setHtmlText(file.toStdString().c_str());
             pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
             {
                 m_CurrentFile->setCurrentText(file);

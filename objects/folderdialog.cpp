@@ -71,7 +71,7 @@ FolderDialog::FolderDialog(QString startFolder)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
     textField->setStyle(style);
-    textField->setText("..");
+    textField->setHtmlText("..");
     textField->attachTo(pBox);
     pBox->setSize(m_MainPanel->getWidth() - 50, 40);
     textField->setHeight(40);
@@ -183,7 +183,7 @@ void FolderDialog::showFolder(QString folder)
         // loop through all entries :)
         if (infoList[i].isDir())
         {
-            textField->setText(infoList[i].absoluteFilePath().replace(folder, "").toStdString().c_str());
+            textField->setHtmlText(infoList[i].absoluteFilePath().replace(folder, "").toStdString().c_str());
             pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
             {
                 emit sigShowFolder(myPath);

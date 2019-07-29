@@ -53,6 +53,11 @@ var Constructor = function()
     {
         return 1;
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Airport made by APC. <div c='00ff00'>Resupplying <div c='ffffff'>of <div c='00ff00'>air <div c='ffffff'>units is possible.");
+    };
 }
 
 Constructor.prototype = BUILDING;

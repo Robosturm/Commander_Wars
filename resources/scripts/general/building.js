@@ -201,4 +201,15 @@ var BUILDING =
     {
         return "back_town";
     },
+
+    getDescription : function()
+    {
+        return "";
+    },
+
+    // vision created by this field
+    getVision : function()
+    {
+        return 0;
+    },
 };

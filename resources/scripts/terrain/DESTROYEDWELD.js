@@ -77,6 +77,10 @@ var Constructor = function()
     {
         return "minimap_plains";
     };
+    this.getDescription = function()
+    {
+        return qsTr("Ground units move easily on this terrain.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESTROYEDWELD = new Constructor();

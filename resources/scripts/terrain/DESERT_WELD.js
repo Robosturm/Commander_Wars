@@ -93,6 +93,10 @@ var Constructor = function()
     {
         return "fore_pipeline";
     };
+    this.getDescription = function()
+    {
+        return qsTr("Black Hole Pipeline Weld can be destroyed to cross the pipeline. It reduces the firerange of indirect units by 1.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_WELD = new Constructor();

@@ -63,6 +63,10 @@ var Constructor = function()
             terrain.loadOverlaySprite("desert+W");
         }
     };
+    this.getDescription = function()
+    {
+        return qsTr("Ground units move easily on this terrain.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var PLAINS = new Constructor();

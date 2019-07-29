@@ -22,7 +22,7 @@ Slider::Slider(qint32 width, qint32 minValue, qint32 maxValue, QString unit)
     style.multiline = false;
     m_Textfield->setStyle(style);
     m_CurrentValue = minValue;
-    m_Textfield->setText((QString::number(minValue)  + " " + m_Unit).toStdString().c_str());
+    m_Textfield->setHtmlText((QString::number(minValue)  + " " + m_Unit).toStdString().c_str());
     addChild(m_Textfield);
     m_Textfield->setX(getWidth() + 10);
     connect(this, &Slider::V_Scrollbar::sigScrollValueChanged, this, &Slider::slotSliderValueChanged, Qt::QueuedConnection);
@@ -33,7 +33,7 @@ void Slider::slotSliderValueChanged(float value)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_CurrentValue = (m_maxValue - m_minValue) * value + m_minValue;
-    m_Textfield->setText((QString::number(m_CurrentValue) + " " + m_Unit).toStdString().c_str());
+    m_Textfield->setHtmlText((QString::number(m_CurrentValue) + " " + m_Unit).toStdString().c_str());
     emit sliderValueChanged(m_CurrentValue);
 
     pApp->continueThread();
@@ -62,7 +62,7 @@ void Slider::setCurrentValue(const qint32 &CurrentValue)
     {
         // all fine do nothing
     }
-    m_Textfield->setText((QString::number(m_CurrentValue) + " " + m_Unit).toStdString().c_str());
+    m_Textfield->setHtmlText((QString::number(m_CurrentValue) + " " + m_Unit).toStdString().c_str());
     float scrollValue = static_cast<float>(m_CurrentValue - m_minValue) / static_cast<float>(m_maxValue - m_minValue);
     V_Scrollbar::setScrollvalue(scrollValue);
 

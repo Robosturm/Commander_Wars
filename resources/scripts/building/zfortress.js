@@ -44,6 +44,10 @@ var Constructor = function()
     {
         return "minimap_blackholebuilding";
     };
+    this.getDescription = function()
+    {
+        return qsTr("Black Hole Fortress that defends a position has no other effects.");
+    };
 }
 
 Constructor.prototype = BUILDING;

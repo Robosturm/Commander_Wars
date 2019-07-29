@@ -89,6 +89,10 @@ var Constructor = function()
     {
         return "fore_pipeline";
     };
+    this.getDescription = function()
+    {
+        return qsTr("Black Hole Pipeline Weld can be destroyed to cross the pipeline.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var WELD = new Constructor();

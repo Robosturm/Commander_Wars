@@ -94,7 +94,7 @@ CreditsMenue::CreditsMenue()
     {
         pTextfield = new oxygine::TextField();
         pTextfield->setStyle(style);
-        pTextfield->setText(m_Headlines[i].toStdString().c_str());
+        pTextfield->setHtmlText(m_Headlines[i].toStdString().c_str());
         pTextfield->setScale(2.0f);
         pTextfield->setPosition(x - pTextfield->getTextRect().getWidth(), y);
         creditsActor->addChild(pTextfield);
@@ -103,7 +103,7 @@ CreditsMenue::CreditsMenue()
         {
             pTextfield = new oxygine::TextField();
             pTextfield->setStyle(style);
-            pTextfield->setText(m_Authors[i][i2].toStdString().c_str());
+            pTextfield->setHtmlText(m_Authors[i][i2].toStdString().c_str());
             pTextfield->setPosition(x - pTextfield->getTextRect().getWidth() / 2.0f, y);
             creditsActor->addChild(pTextfield);
             y += pTextfield->getTextRect().getHeight() + 5;

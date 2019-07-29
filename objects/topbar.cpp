@@ -50,7 +50,7 @@ void Topbar::addItem(QString text, QString itemID, qint32 group)
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = true;
     textField->setStyle(style);
-    textField->setText(text.toStdString().c_str());
+    textField->setHtmlText(text.toStdString().c_str());
     textField->attachTo(pBox);
     pBox->setSize(200, 40);
     textField->setSize(pBox->getSize());
@@ -96,7 +96,7 @@ void Topbar::addGroup(QString text)
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = true;
     textField->setStyle(style);
-    textField->setText(text.toStdString().c_str());
+    textField->setHtmlText(text.toStdString().c_str());
 
     oxygine::spButton pButton = pObjectManager->createButton(text, textField->getTextRect().getWidth() + 20);
     m_pSpriteBox->addChild(pButton);

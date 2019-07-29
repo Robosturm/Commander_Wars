@@ -19,6 +19,18 @@ var Constructor = function()
         {
             terrain.loadBaseTerrain("DESERT");
         }
+        else if (currentTerrainID === "WASTELAND")
+        {
+            terrain.loadBaseTerrain("WASTELAND");
+        }
+        else if (currentTerrainID === "DESERT_WASTELAND")
+        {
+            terrain.loadBaseTerrain("DESERT_WASTELAND");
+        }
+        else if (currentTerrainID === "SNOW_WASTELAND")
+        {
+            terrain.loadBaseTerrain("SNOW_WASTELAND");
+        }
         else
         {
             terrain.loadBaseTerrain("PLAINS");
@@ -34,7 +46,11 @@ var Constructor = function()
     };
     this.getVision = function()
     {
-        return 3;
+        return 5;
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Ground units move easily on this terrain.");
     };
 };
 Constructor.prototype = TERRAIN;

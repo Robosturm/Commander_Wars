@@ -194,7 +194,7 @@ void PlayerSelection::showPlayerSelection()
         xPositions.append(curPos);
         pLabel = new oxygine::TextField();
         pLabel->setStyle(style);
-        pLabel->setText(items[i].toStdString().c_str());
+        pLabel->setHtmlText(items[i].toStdString().c_str());
         qint32 width = pLabel->getTextRect().getWidth() + 10;
         pLabel->setPosition(curPos, 5);
         m_pPlayerSelection->addItem(pLabel);
@@ -210,7 +210,7 @@ void PlayerSelection::showPlayerSelection()
     // all player
     pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setText(tr("All").toStdString().c_str());
+    pLabel->setHtmlText(tr("All").toStdString().c_str());
     pLabel->setPosition(xPositions[0], y);
     m_pPlayerSelection->addItem(pLabel);
 

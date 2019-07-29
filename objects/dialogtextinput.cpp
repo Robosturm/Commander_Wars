@@ -29,7 +29,7 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     oxygine::spTextField pText = new oxygine::TextField();
-    pText->setText(text.toStdString().c_str());
+    pText->setHtmlText(text.toStdString().c_str());
     pText->setStyle(style);
     pText->setPosition(pApp->getSettings()->getWidth() / 2 - pText->getTextRect().getWidth() / 2, pApp->getSettings()->getHeight() / 2 - 40);
     pSpriteBox->addChild(pText);

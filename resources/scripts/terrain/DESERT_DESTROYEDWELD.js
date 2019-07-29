@@ -81,6 +81,11 @@ var Constructor = function()
     {
         return "minimap_plains";
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Ground units move easily on this terrain, but it reduces the firerange of indirect units by 1.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_DESTROYEDWELD = new Constructor();

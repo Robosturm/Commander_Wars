@@ -37,6 +37,10 @@ var Constructor = function()
             terrain.loadOverlaySprite("plains+W");
         }
     };
+    this.getDescription = function()
+    {
+        return qsTr("Snowy terrain reduces rough to cross.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var SNOW = new Constructor();

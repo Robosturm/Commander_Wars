@@ -31,7 +31,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     {
 
         testText->setStyle(style);
-        testText->setText(texts[i].toStdString().c_str());
+        testText->setHtmlText(texts[i].toStdString().c_str());
         qint32 newWidth = testText->getTextRect().getWidth();
         if (newWidth > width )
         {
@@ -110,7 +110,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
             style.color = oxygine::Color(255, 255, 255, 255);
         }
         textField->setStyle(style);
-        textField->setText(texts[i].toStdString().c_str());
+        textField->setHtmlText(texts[i].toStdString().c_str());
         textField->attachTo(pItemBox);
         textField->setPosition(3 + GameMap::Imagesize, 0);
         textField->setSize(width - textField->getX(), GameMap::Imagesize - 4);

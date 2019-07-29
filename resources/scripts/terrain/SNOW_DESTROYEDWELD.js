@@ -77,6 +77,10 @@ var Constructor = function()
     {
         return "minimap_plains";
     };
+    this.getDescription = function()
+    {
+        return qsTr("Snowy terrain reduces rough to cross.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var SNOW_DESTROYEDWELD = new Constructor();

@@ -84,6 +84,11 @@ var Constructor = function()
         audio.playSound("explosion+land.wav");
         map.getTerrain(x, y).loadBuilding("ZBLACK_BUILDING_DESTROYED");
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Black Hole Monolith that can heal all own units for 2 HP in a 3 square area.");
+    };
 }
 
 Constructor.prototype = BUILDING;

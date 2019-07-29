@@ -64,6 +64,10 @@ var Constructor = function()
     {
         return "fore_pipeline";
     };
+    this.getDescription = function()
+    {
+        return qsTr("Black Hole Pipeline which can't be crossed by most units. It reduces the firerange of indirect units by 1.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_PIPELINE = new Constructor();

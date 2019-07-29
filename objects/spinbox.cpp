@@ -25,7 +25,7 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     m_Textfield->setStyle(style);
-    m_Textfield->setText("");
+    m_Textfield->setHtmlText("");
 
 
     oxygine::spClipRectActor pClipActor = new oxygine::ClipRectActor();
@@ -172,7 +172,7 @@ void SpinBox::update(const oxygine::UpdateState& us)
         {
             toggle.start();
         }
-        m_Textfield->setText(drawText.toStdString().c_str());
+        m_Textfield->setHtmlText(drawText.toStdString().c_str());
 
         if (m_Text.size() > 0)
         {
@@ -214,7 +214,7 @@ void SpinBox::update(const oxygine::UpdateState& us)
             checkInput();
         }
         QString drawText = m_Text;
-        m_Textfield->setText(drawText.toStdString().c_str());
+        m_Textfield->setHtmlText(drawText.toStdString().c_str());
     }
     oxygine::Actor::update(us);
 }
@@ -286,7 +286,7 @@ void SpinBox::setValue(qreal value)
             }
         }
     }
-    m_Textfield->setText(m_Text.toStdString().c_str());
+    m_Textfield->setHtmlText(m_Text.toStdString().c_str());
 }
 
 qreal SpinBox::getInfinityValue() const

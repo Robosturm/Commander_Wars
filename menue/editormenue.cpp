@@ -111,7 +111,7 @@ EditorMenue::EditorMenue()
     style.multiline = false;
     xyTextInfo = new oxygine::TextField();
     xyTextInfo->setStyle(style);
-    xyTextInfo->setText("X: 0 Y: 0");
+    xyTextInfo->setHtmlText("X: 0 Y: 0");
     xyTextInfo->setPosition(8, 8);
     pButtonBox->addChild(xyTextInfo);
     pButtonBox->setSize(120, 50);
@@ -416,7 +416,7 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    xyTextInfo->setText(("X: " + QString::number(x) + " Y: " + QString::number(y)).toStdString().c_str());
+    xyTextInfo->setHtmlText(("X: " + QString::number(x) + " Y: " + QString::number(y)).toStdString().c_str());
     switch (m_EditorMode)
     {
         case EditorModes::RemoveUnits:

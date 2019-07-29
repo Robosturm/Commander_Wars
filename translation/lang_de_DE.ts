@@ -3079,6 +3079,11 @@
         <source>Airport</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/building/airport.js" line="51"/>
+        <source>Once captured can be used for &lt;div c=&apos;00ff00&apos;&gt;production and resupplying &lt;div c=&apos;ffffff&apos;&gt;of &lt;div c=&apos;00ff00&apos;&gt;air &lt;div c=&apos;ffffff&apos;&gt;units.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>antitankcannon</name>
@@ -10409,6 +10414,11 @@
         <source>Base</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/building/factory.js" line="53"/>
+        <source>Once captured can be used for &lt;div c=&apos;00ff00&apos;&gt;production and resupplying &lt;div c=&apos;ffffff&apos;&gt;of &lt;div c=&apos;00ff00&apos;&gt;ground &lt;div c=&apos;ffffff&apos;&gt;units.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>fighter</name>
@@ -10439,6 +10449,11 @@
     <message>
         <location filename="../resources/scripts/building/harbour.js" line="25"/>
         <source>Harbour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/harbour.js" line="50"/>
+        <source>Once captured can be used for &lt;div c=&apos;00ff00&apos;&gt;production and resupplying &lt;div c=&apos;ffffff&apos;&gt;of &lt;div c=&apos;00ff00&apos;&gt;naval &lt;div c=&apos;ffffff&apos;&gt;units.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10489,6 +10504,11 @@
         <source>HQ</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/building/hq.js" line="118"/>
+        <source>&lt;div c=&apos;00ff00&apos;&gt;Battle ends &lt;div c=&apos;ffffff&apos;&gt;when an army&apos;s last HQ is captured. &lt;div c=&apos;00ff00&apos;&gt;Ground &lt;div c=&apos;ffffff&apos;&gt;units can &lt;div c=&apos;00ff00&apos;&gt;resupply.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>infantry</name>
@@ -10511,6 +10531,11 @@
     <message>
         <location filename="../resources/scripts/building/labor.js" line="20"/>
         <source>Labor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/labor.js" line="35"/>
+        <source>Once captured can be used for &lt;div c=&apos;00ff00&apos;&gt;production&lt;div c=&apos;ffffff&apos;&gt;of &lt;div c=&apos;00ff00&apos;&gt;oozium &lt;div c=&apos;ffffff&apos;&gt;units.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10551,6 +10576,11 @@
     <message>
         <location filename="../resources/scripts/building/mine.js" line="24"/>
         <source>Mine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/mine.js" line="29"/>
+        <source>Ore mine. Once captured produces a lot of funds, but can&apos;t repair units.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10689,12 +10719,22 @@
         <source>Pipestation</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/building/pipestation.js" line="38"/>
+        <source>Once captured can be used for &lt;div c=&apos;00ff00&apos;&gt;production and resupplying &lt;div c=&apos;ffffff&apos;&gt;of &lt;div c=&apos;00ff00&apos;&gt;pipe &lt;div c=&apos;ffffff&apos;&gt;units. Produces also more funds.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>radar</name>
     <message>
         <location filename="../resources/scripts/building/radar.js" line="30"/>
         <source>Radar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/radar.js" line="35"/>
+        <source>Once captured can be used for &lt;div c=&apos;00ff00&apos;&gt;production and resupplying &lt;div c=&apos;ffffff&apos;&gt;of &lt;div c=&apos;00ff00&apos;&gt;pipe &lt;div c=&apos;ffffff&apos;&gt;units. Produces also more funds.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

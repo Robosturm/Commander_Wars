@@ -86,7 +86,7 @@ void ScriptConditionStartOfTurn::showEditCondition(spScriptEditor pScriptEditor)
 
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setText(tr("At Day: ").toStdString().c_str());
+    pText->setHtmlText(tr("At Day: ").toStdString().c_str());
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, 9999);
@@ -97,7 +97,7 @@ void ScriptConditionStartOfTurn::showEditCondition(spScriptEditor pScriptEditor)
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setText(tr("Player: ").toStdString().c_str());
+    pText->setHtmlText(tr("Player: ").toStdString().c_str());
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 1, 9999);

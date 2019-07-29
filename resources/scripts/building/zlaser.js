@@ -64,6 +64,11 @@ var Constructor = function()
         animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
         audio.playSound("explosion+land.wav");
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Black Hole Laser that can deal 5 HP of damage to all units in 4 rays from the laser.");
+    };
 }
 
 Constructor.prototype = BUILDING;

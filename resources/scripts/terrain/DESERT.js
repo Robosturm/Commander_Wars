@@ -58,6 +58,11 @@ var Constructor = function()
             terrain.loadOverlaySprite("snow+W");
         }
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Ground units move easily on this terrain, but it reduces the firerange of indirect units by 1.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT = new Constructor();

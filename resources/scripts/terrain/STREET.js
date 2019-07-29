@@ -34,6 +34,10 @@ var Constructor = function()
     {
         return "fore_street";
     };
+    this.getDescription = function()
+    {
+        return qsTr("Well-surfaced roads provides optimum mobility but little cover.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var STREET = new Constructor();

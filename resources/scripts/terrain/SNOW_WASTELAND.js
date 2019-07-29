@@ -17,6 +17,10 @@ var Constructor = function()
     {
         return "minimap_snow_wasteland";
     };
+    this.getDescription = function()
+    {
+        return qsTr("Mobility is impaired on this rough terrain.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var SNOW_WASTELAND = new Constructor();

@@ -139,4 +139,9 @@ var UNIT =
     {
         return Global[terrain.getID()].getTerrainAnimationBackground(unit, terrain);
     },
+
+    getDescription : function()
+    {
+        return "";
+    },
 };

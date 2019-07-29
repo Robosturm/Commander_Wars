@@ -23,6 +23,11 @@ var Constructor = function()
     {
         return qsTr("Mine");
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Ore mine. Once captured produces a lot of funds, but can't repair units.");
+    };
 }
 
 Constructor.prototype = BUILDING;

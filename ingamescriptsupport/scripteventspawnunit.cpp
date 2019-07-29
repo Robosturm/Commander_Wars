@@ -108,7 +108,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     qint32 width = 300;
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setText(tr("X: ").toStdString().c_str());
+    pText->setHtmlText(tr("X: ").toStdString().c_str());
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 0, 9999);
@@ -119,7 +119,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setText(tr("Y: ").toStdString().c_str());
+    pText->setHtmlText(tr("Y: ").toStdString().c_str());
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 0, 9999);
@@ -130,7 +130,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setText(tr("Player: ").toStdString().c_str());
+    pText->setHtmlText(tr("Player: ").toStdString().c_str());
     pText->setPosition(30, 110);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 1, 9999);
@@ -145,7 +145,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setText(tr("Unit ID: ").toStdString().c_str());
+    pText->setHtmlText(tr("Unit ID: ").toStdString().c_str());
     pText->setPosition(30, 150);
     pBox->addItem(pText);
     QVector<QString> items;
@@ -171,7 +171,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setText(tr("Spawn Radius: ").toStdString().c_str());
+    pText->setHtmlText(tr("Spawn Radius: ").toStdString().c_str());
     pText->setPosition(30, 190);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 0, 9999);

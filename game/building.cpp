@@ -154,6 +154,21 @@ void Building::updatePlayerColor(bool visible)
     }
 }
 
+qint32 Building::getVision()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getVision";
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 void Building::updateBuildingSprites(bool neutral)
 {
     Mainapp* pApp = Mainapp::getInstance();

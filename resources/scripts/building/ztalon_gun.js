@@ -84,6 +84,10 @@ var Constructor = function()
         audio.playSound("explosion+land.wav");
         map.getTerrain(x, y).loadBuilding("ZTALON_GUN_DESTROYED");
     };
+    this.getDescription = function()
+    {
+        return qsTr("Talon Gun of Dark Matter fires at all enemie units each turn dealing 5HP of damage in a 3 square area.");
+    };
 }
 
 Constructor.prototype = BUILDING;

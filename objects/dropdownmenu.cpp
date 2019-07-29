@@ -26,11 +26,11 @@ DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items, bool up)
     m_Textfield->setStyle(style);
     if (items.size() > 0)
     {
-        m_Textfield->setText(items[0].toStdString().c_str());
+        m_Textfield->setHtmlText(items[0].toStdString().c_str());
     }
     else
     {
-        m_Textfield->setText("unknown");
+        m_Textfield->setHtmlText("unknown");
     }
     oxygine::spClipRectActor pClipActor = new oxygine::ClipRectActor();
     m_Textfield->attachTo(pClipActor);
@@ -120,7 +120,7 @@ void DropDownmenu::setCurrentItem(qint32 index)
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
         m_currentItem = index;
-        m_Textfield->setText(m_ItemTexts[index].toStdString().c_str());
+        m_Textfield->setHtmlText(m_ItemTexts[index].toStdString().c_str());
         pApp->continueThread();
     }
 }
@@ -146,7 +146,7 @@ void DropDownmenu::setCurrentItemText(QString value)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    m_Textfield->setText(value.toStdString().c_str());
+    m_Textfield->setHtmlText(value.toStdString().c_str());
     m_currentItem = -1;
     pApp->continueThread();
 }
@@ -166,7 +166,7 @@ void DropDownmenu::addDropDownItem(QString text, qint32 id)
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = true;
     textField->setStyle(style);
-    textField->setText(text.toStdString().c_str());
+    textField->setHtmlText(text.toStdString().c_str());
     textField->attachTo(pBox);
     pBox->setSize(getWidth() - 33, 40);
     textField->setSize(pBox->getSize());
@@ -187,7 +187,7 @@ void DropDownmenu::addDropDownItem(QString text, qint32 id)
     {
         m_currentItem = id;
         this->m_Panel->setVisible(false);
-        m_Textfield->setText(text.toStdString().c_str());
+        m_Textfield->setHtmlText(text.toStdString().c_str());
         emit sigItemChanged(m_currentItem);
     });
 }

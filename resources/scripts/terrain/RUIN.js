@@ -34,6 +34,10 @@ var Constructor = function()
     {
         return "minimap_ruin";
     };
+    this.getDescription = function()
+    {
+        return qsTr("In Fog of War conditions, the ruins provide ground unit <div c='ffffff'>hiding places<div c='00ff00'>.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var RUIN = new Constructor();

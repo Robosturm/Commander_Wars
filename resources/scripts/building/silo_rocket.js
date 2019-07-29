@@ -23,6 +23,11 @@ var Constructor = function()
     {
         return qsTr("Silo");
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Missile can be launched once, by Infantry unit. Damage across <div c='00ff00'>13 square <div c='ffffff'>area.");
+    };
 }
 
 Constructor.prototype = BUILDING;

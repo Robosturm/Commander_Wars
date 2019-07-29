@@ -22,7 +22,7 @@ Textbox::Textbox(qint32 width)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     m_Textfield->setStyle(style);
-    m_Textfield->setText("");
+    m_Textfield->setHtmlText("");
 
 
     oxygine::spClipRectActor pClipActor = new oxygine::ClipRectActor();
@@ -91,7 +91,7 @@ void Textbox::update(const oxygine::UpdateState& us)
         {
             toggle.start();
         }
-        m_Textfield->setText(drawText.toStdString().c_str());
+        m_Textfield->setHtmlText(drawText.toStdString().c_str());
 
         if (m_Text.size() > 0)
         {
@@ -121,7 +121,7 @@ void Textbox::update(const oxygine::UpdateState& us)
     }
     else
     {
-        m_Textfield->setText(m_Text.toStdString().c_str());
+        m_Textfield->setHtmlText(m_Text.toStdString().c_str());
     }
     oxygine::Actor::update(us);
 }

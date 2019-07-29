@@ -27,6 +27,11 @@ var Constructor = function()
     {
         return qsTr("Town");
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Populated city. Once captured <div c='00ff00'>ground <div c='ffffff'>units can <div c='00ff00'>resupply<div c='ffffff'>.");
+    };
 }
 
 Constructor.prototype = BUILDING;

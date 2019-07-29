@@ -57,6 +57,11 @@ var Constructor = function()
     {
         return "back_sea";
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("This spiky reaf provides ideal <div c='ffffff'>hiding places<div c='00ff00'> for naval units in Fog of War.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var REAF = new Constructor();

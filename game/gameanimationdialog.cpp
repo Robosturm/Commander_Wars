@@ -127,7 +127,7 @@ void GameAnimationDialog::update(const oxygine::UpdateState& us)
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioThread()->playSound("speaking.wav");
         }
-        m_TextField->setText(m_Text.mid(0, writePosition).toStdString().c_str());
+        m_TextField->setHtmlText(m_Text.mid(0, writePosition).toStdString().c_str());
         float textHeight = m_TextField->getTextRect().getHeight();
         m_TextField->setHeight(textHeight);
         if (textHeight > 48)

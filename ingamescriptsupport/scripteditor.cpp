@@ -40,7 +40,7 @@ ScriptEditor::ScriptEditor()
 
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setText(tr("Conditions").toStdString().c_str());
+    pText->setHtmlText(tr("Conditions").toStdString().c_str());
     pText->setPosition(pApp->getSettings()->getWidth() / 4 - pText->getTextRect().getWidth() / 2, 90);
     pSpriteBox->addChild(pText);
     QSize size(pApp->getSettings()->getWidth() / 2 - 40, pApp->getSettings()->getHeight() - 250);
@@ -65,7 +65,7 @@ ScriptEditor::ScriptEditor()
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setText(tr("Events").toStdString().c_str());
+    pText->setHtmlText(tr("Events").toStdString().c_str());
     pText->setPosition(pApp->getSettings()->getWidth() * 3 / 4 - pText->getTextRect().getWidth() / 2, 90);
     pSpriteBox->addChild(pText);
     m_EventPanel = new Panel(true, size, size);
@@ -91,7 +91,7 @@ ScriptEditor::ScriptEditor()
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setText(tr("Immediate Start: ").toStdString().c_str());
+    pText->setHtmlText(tr("Immediate Start: ").toStdString().c_str());
     pText->setPosition(30, 30);
     pSpriteBox->addChild(pText);
     m_ImmediateStart = new Checkbox();
@@ -250,7 +250,7 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
 
     oxygine::spTextField text = new oxygine::TextField();
     text->setStyle(style);
-    text->setText(pCondition->getDescription().toStdString().c_str());
+    text->setHtmlText(pCondition->getDescription().toStdString().c_str());
     text->setPosition(10, 5);
     pSpritebox->addChild(text);
 
@@ -316,7 +316,7 @@ void ScriptEditor::addEventEntry(spScriptEvent pEvent, qint32& y)
     style.multiline = false;
     oxygine::spTextField text = new oxygine::TextField();
     text->setStyle(style);
-    text->setText(pEvent->getDescription().toStdString().c_str());
+    text->setHtmlText(pEvent->getDescription().toStdString().c_str());
     text->setPosition(10, y);
     m_EventPanel->addItem(text);
     ObjectManager* pObjectManager = ObjectManager::getInstance();

@@ -71,7 +71,7 @@ VictoryMenue::VictoryMenue(bool multiplayer)
         pDayText->setX(i * 100);
         pDayText->setStyle(style);
         qint32 day = static_cast<qint32>((i * pMap->getCurrentDay()) / graphDays) + 1;
-        pDayText->setText(QString::number(day).toStdString().c_str());
+        pDayText->setHtmlText(QString::number(day).toStdString().c_str());
         m_pGraphBackground->addChild(pDayText);
     }
     qint32 graphHeigth = m_pGraphBackground->getHeight() / 100;
@@ -244,7 +244,7 @@ VictoryMenue::VictoryMenue(bool multiplayer)
         pTextfield->setStyle(style);
         pTextfield->setX(5);
         pTextfield->setY(50 * i + 5);
-        pTextfield->setText((tr("Player: ") + QString::number(i + 1)).toStdString().c_str());
+        pTextfield->setHtmlText((tr("Player: ") + QString::number(i + 1)).toStdString().c_str());
         spCheckbox pCheckbox = new Checkbox();
         pCheckbox->setChecked(true);
         pCheckbox->setPosition(15 + pTextfield->getTextRect().getWidth(), pTextfield->getY());
@@ -273,25 +273,25 @@ VictoryMenue::VictoryMenue(bool multiplayer)
         }
         oxygine::spTextField pHeaders = new oxygine::TextField();
         pHeaders->setStyle(style);
-        pHeaders->setText(tr("Speed").toStdString().c_str());
+        pHeaders->setHtmlText(tr("Speed").toStdString().c_str());
         pHeaders->setScale(1.5f);
         pHeaders->setPosition(startX, 5);
         m_VictoryPanel->addItem(pHeaders);
         pHeaders = new oxygine::TextField();
         pHeaders->setStyle(style);
-        pHeaders->setText(tr("Force").toStdString().c_str());
+        pHeaders->setHtmlText(tr("Force").toStdString().c_str());
         pHeaders->setScale(1.5f);
         pHeaders->setPosition(startX + 160 * 1, 5);
         m_VictoryPanel->addItem(pHeaders);
         pHeaders = new oxygine::TextField();
         pHeaders->setStyle(style);
-        pHeaders->setText(tr("Technique").toStdString().c_str());
+        pHeaders->setHtmlText(tr("Technique").toStdString().c_str());
         pHeaders->setScale(1.5f);
         pHeaders->setPosition(startX + 160 * 2, 5);
         m_VictoryPanel->addItem(pHeaders);
         pHeaders = new oxygine::TextField();
         pHeaders->setStyle(style);
-        pHeaders->setText(tr("Total").toStdString().c_str());
+        pHeaders->setHtmlText(tr("Total").toStdString().c_str());
         pHeaders->setScale(1.5f);
         pHeaders->setPosition(startX + 160 * 3, 5);
         m_VictoryPanel->addItem(pHeaders);
@@ -370,7 +370,7 @@ VictoryMenue::VictoryMenue(bool multiplayer)
                     winLooseText->setSize((sentenceWidth - 10 - 48 * scale) / textScale - 2, pWinLooseSprite->getHeight());
                     winLooseText->setScale(textScale);
                     winLooseText->setPosition(48 * scale + 10, 4 * scale + y);
-                    winLooseText->setText(sentence.toStdString().c_str());
+                    winLooseText->setHtmlText(sentence.toStdString().c_str());
                     m_VictoryPanel->addItem(winLooseText);
                     y += 48 * scale + 10;
                 }
@@ -387,25 +387,25 @@ VictoryMenue::VictoryMenue(bool multiplayer)
                     m_VictoryTexts[i][0]->setPosition(startX, y - 48 * scale);
                     m_VictoryTexts[i][0]->setStyle(style);
                     m_VictoryTexts[i][0]->setScale(1.5f);
-                    m_VictoryTexts[i][0]->setText("0");
+                    m_VictoryTexts[i][0]->setHtmlText("0");
                     m_VictoryPanel->addItem(m_VictoryTexts[i][0]);
                     m_VictoryTexts[i].append(new oxygine::TextField);
                     m_VictoryTexts[i][1]->setPosition(startX + 160 * 1, y - 48 * scale);
                     m_VictoryTexts[i][1]->setStyle(style);
                     m_VictoryTexts[i][1]->setScale(1.5f);
-                    m_VictoryTexts[i][1]->setText("0");
+                    m_VictoryTexts[i][1]->setHtmlText("0");
                     m_VictoryPanel->addItem(m_VictoryTexts[i][1]);
                     m_VictoryTexts[i].append(new oxygine::TextField);
                     m_VictoryTexts[i][2]->setPosition(startX + 160 * 2, y - 48 * scale);
                     m_VictoryTexts[i][2]->setStyle(style);
                     m_VictoryTexts[i][2]->setScale(1.5f);
-                    m_VictoryTexts[i][2]->setText("0");
+                    m_VictoryTexts[i][2]->setHtmlText("0");
                     m_VictoryPanel->addItem(m_VictoryTexts[i][2]);
                     m_VictoryTexts[i].append(new oxygine::TextField);
                     m_VictoryTexts[i][3]->setPosition(startX + 160 * 3, y - 48 * scale);
                     m_VictoryTexts[i][3]->setStyle(style);
                     m_VictoryTexts[i][3]->setScale(1.5f);
-                    m_VictoryTexts[i][3]->setText("0");
+                    m_VictoryTexts[i][3]->setHtmlText("0");
                     m_VictoryPanel->addItem(m_VictoryTexts[i][3]);
                 }
             }            
@@ -431,7 +431,7 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
 
         for (qint32 i = 0; i < m_YGraphItems.size(); i++)
         {
-            m_YGraphItems[i]->setText(QString::number(static_cast<qint32>(m_GraphMaxValues[static_cast<qint32>(m_CurrentGraphMode)]
+            m_YGraphItems[i]->setHtmlText(QString::number(static_cast<qint32>(m_GraphMaxValues[static_cast<qint32>(m_CurrentGraphMode)]
                                                       * (1.0f - i / static_cast<float>(m_YGraphItems.size())))).toStdString().c_str());
         }
 
@@ -439,27 +439,27 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
         {
             case GraphModes::Fonds:
             {
-                m_Textfield->setText(tr("Fonds").toStdString().c_str());
+                m_Textfield->setHtmlText(tr("Fonds").toStdString().c_str());
                 break;
             }
             case GraphModes::Income:
             {
-                m_Textfield->setText(tr("Income").toStdString().c_str());
+                m_Textfield->setHtmlText(tr("Income").toStdString().c_str());
                 break;
             }
             case GraphModes::Buildings:
             {
-                m_Textfield->setText(tr("Buildings").toStdString().c_str());
+                m_Textfield->setHtmlText(tr("Buildings").toStdString().c_str());
                 break;
             }
             case GraphModes::Units:
             {
-                m_Textfield->setText(tr("Units").toStdString().c_str());
+                m_Textfield->setHtmlText(tr("Units").toStdString().c_str());
                 break;
             }
             case GraphModes::PlayerStrength:
             {
-                m_Textfield->setText(tr("Player Strength").toStdString().c_str());
+                m_Textfield->setHtmlText(tr("Player Strength").toStdString().c_str());
                 break;
             }
             case GraphModes::Max:
@@ -499,7 +499,7 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
             m_PlayerSelectPanel->setVisible(false);
             m_pGraphBackground->setVisible(false);
             m_VictoryPanel->setVisible(true);
-            m_Textfield->setText(tr("Victory").toStdString().c_str());
+            m_Textfield->setHtmlText(tr("Victory").toStdString().c_str());
         }
     }
     m_Textfield->setX(pApp->getSettings()->getWidth() / 2.0f - m_Textfield->getTextRect().getWidth() / 2.0f);
@@ -828,11 +828,11 @@ void VictoryMenue::updateGraph()
             // update values
             for (qint32 i = 0; i < m_VictoryTexts.size(); i++)
             {
-                m_VictoryTexts[i][0]->setText(QString::number(static_cast<qint32>(m_VictoryScores[i].x() * progress / 100)).toStdString().c_str());
-                m_VictoryTexts[i][1]->setText(QString::number(static_cast<qint32>(m_VictoryScores[i].y() * progress / 100)).toStdString().c_str());
-                m_VictoryTexts[i][2]->setText(QString::number(static_cast<qint32>(m_VictoryScores[i].z() * progress / 100)).toStdString().c_str());
+                m_VictoryTexts[i][0]->setHtmlText(QString::number(static_cast<qint32>(m_VictoryScores[i].x() * progress / 100)).toStdString().c_str());
+                m_VictoryTexts[i][1]->setHtmlText(QString::number(static_cast<qint32>(m_VictoryScores[i].y() * progress / 100)).toStdString().c_str());
+                m_VictoryTexts[i][2]->setHtmlText(QString::number(static_cast<qint32>(m_VictoryScores[i].z() * progress / 100)).toStdString().c_str());
                 float sum = m_VictoryScores[i].x() + m_VictoryScores[i].y() +m_VictoryScores[i].z();
-                m_VictoryTexts[i][3]->setText(QString::number(static_cast<qint32>(sum * progress / 100)).toStdString().c_str());
+                m_VictoryTexts[i][3]->setHtmlText(QString::number(static_cast<qint32>(sum * progress / 100)).toStdString().c_str());
             }
             if (progress >= 100)
             {

@@ -72,7 +72,7 @@ MapSelectionView::MapSelectionView()
     oxygine::spTextField pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
     pTextfield->setPosition(10, 10);
-    pTextfield->setText(tr("Map Name: ").toStdString().c_str());
+    pTextfield->setHtmlText(tr("Map Name: ").toStdString().c_str());
     m_MapInfo->addItem(pTextfield);
     m_MapName = new oxygine::TextField();
     m_MapName->setStyle(style);
@@ -82,7 +82,7 @@ MapSelectionView::MapSelectionView()
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
     pTextfield->setPosition(10, 50);
-    pTextfield->setText(tr("Map Author: ").toStdString().c_str());
+    pTextfield->setHtmlText(tr("Map Author: ").toStdString().c_str());
     m_MapInfo->addItem(pTextfield);
     m_MapAuthor = new oxygine::TextField();
     m_MapAuthor->setStyle(style);
@@ -92,7 +92,7 @@ MapSelectionView::MapSelectionView()
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
     pTextfield->setPosition(10, 90);
-    pTextfield->setText(tr("Map Description ").toStdString().c_str());
+    pTextfield->setHtmlText(tr("Map Description ").toStdString().c_str());
     m_MapInfo->addItem(pTextfield);
 
     style.multiline = true;
@@ -133,7 +133,7 @@ MapSelectionView::MapSelectionView()
                               5 + GameMap::Imagesize / 2 + GameMap::Imagesize * (heigth - 1) / (heigth));
         content->addChild(building);
         oxygine::spTextField pText = new oxygine::TextField();
-        pText->setText("0");
+        pText->setHtmlText("0");
         pText->setPosition(2 + i * (GameMap::Imagesize + 12), 10 + GameMap::Imagesize * 1.2f);
         pText->setStyle(styleTimes10);
         content->addChild(pText);
@@ -161,16 +161,16 @@ void MapSelectionView::loadMap(QFileInfo info)
         m_pMinimap->updateMinimap(m_pCurrentMap);
         m_MinimapSlider->setContent(m_pMinimap);
         m_MinimapSlider->snap();
-        m_MapName->setText(m_pCurrentMap->getMapName().toStdString().c_str());
-        m_MapAuthor->setText(m_pCurrentMap->getMapAuthor().toStdString().c_str());
-        m_MapDescription->setText(m_pCurrentMap->getMapDescription().toStdString().c_str());
+        m_MapName->setHtmlText(m_pCurrentMap->getMapName().toStdString().c_str());
+        m_MapAuthor->setHtmlText(m_pCurrentMap->getMapAuthor().toStdString().c_str());
+        m_MapDescription->setHtmlText(m_pCurrentMap->getMapDescription().toStdString().c_str());
         m_currentMapFile = info;
 
         BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
         for (qint32 i = 0; i < pBuildingSpriteManager->getBuildingCount(); i++)
         {
             qint32 count = m_pCurrentMap->getBuildingCount(pBuildingSpriteManager->getBuildingID(i));
-            m_BuildingCountTexts[i]->setText(QString::number(count).toStdString().c_str());
+            m_BuildingCountTexts[i]->setHtmlText(QString::number(count).toStdString().c_str());
         }
     }
     else if (info.isFile() && info.fileName().endsWith(".jsm"))
@@ -183,9 +183,9 @@ void MapSelectionView::loadMap(QFileInfo info)
         m_pMinimap->updateMinimap(nullptr);
         m_CurrentCampaign = nullptr;
         m_CurrentCampaign = new Campaign(info.absoluteFilePath());
-        m_MapDescription->setText(m_CurrentCampaign->getDescription().toStdString().c_str());
-        m_MapAuthor->setText(m_CurrentCampaign->getAuthor().toStdString().c_str());
-        m_MapName->setText(m_CurrentCampaign->getName().toStdString().c_str());
+        m_MapDescription->setHtmlText(m_CurrentCampaign->getDescription().toStdString().c_str());
+        m_MapAuthor->setHtmlText(m_CurrentCampaign->getAuthor().toStdString().c_str());
+        m_MapName->setHtmlText(m_CurrentCampaign->getName().toStdString().c_str());
     }
     qint32 maxWidth = m_MapDescription->getX() + m_MapDescription->getTextRect().getWidth();
     if (maxWidth < m_MapAuthor->getX() + m_MapAuthor->getTextRect().getWidth())
@@ -203,7 +203,7 @@ void MapSelectionView::loadMap(QFileInfo info)
 
 void MapSelectionView::updateMapData()
 {
-    m_MapName->setText(m_pCurrentMap->getMapName().toStdString().c_str());
-    m_MapAuthor->setText(m_pCurrentMap->getMapAuthor().toStdString().c_str());
-    m_MapDescription->setText(m_pCurrentMap->getMapDescription().toStdString().c_str());
+    m_MapName->setHtmlText(m_pCurrentMap->getMapName().toStdString().c_str());
+    m_MapAuthor->setHtmlText(m_pCurrentMap->getMapAuthor().toStdString().c_str());
+    m_MapDescription->setHtmlText(m_pCurrentMap->getMapDescription().toStdString().c_str());
 }

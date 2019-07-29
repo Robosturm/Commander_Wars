@@ -534,8 +534,30 @@ void Player::updatePlayerVision(bool reduceTimer)
                      (checkAlliance(pBuilding->getOwner()) == GameEnums::Alliance_Friend)))
                 {
                     m_FogVisionFields[x][y].setX(1);
-
+                    qint32 visionRange = pBuilding->getVision();
+                    if (visionRange >= 0)
+                    {
+                        QmlVectorPoint* pPoints = Mainapp::getCircle(0, visionRange);
+                        for (qint32 i = 0; i < pPoints->size(); i++)
+                        {
+                            QPoint point = pPoints->at(i);
+                            if (pMap->onMap(point.x() + x, point.y() + y))
+                            {
+                                Terrain* visionField = pMap->getTerrain(point.x() + x,point.y() + y);
+                                Unit* pUnit = visionField->getUnit();
+                                bool visionHide = visionField->getVisionHide(this);
+                                if ((!visionHide) ||
+                                    ((pUnit != nullptr) && visionHide &&
+                                     !pUnit->useTerrainDefense() && !pUnit->getHidden()))
+                                {
+                                    m_FogVisionFields[point.x() + x][point.y() + y].setX(1);
+                                }
+                            }
+                        }
+                        delete pPoints;
+                    }
                 }
+
                 Unit* pUnit = pTerrain->getUnit();
                 if ((pUnit != nullptr) &&
                     (pUnit->getOwner() == this))

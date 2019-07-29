@@ -55,6 +55,11 @@ var Constructor = function()
         animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
         audio.playSound("explosion+land.wav");
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Black Hole Crystal that can heal all own units for 2 HP in a 13 square area.");
+    };
 }
 
 Constructor.prototype = BUILDING;

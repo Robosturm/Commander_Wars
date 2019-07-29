@@ -33,7 +33,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     oxygine::spTextField text = new oxygine::TextField();
     oxygine::TextStyle style = FontManager::getMainFont();
     text->setStyle(style);
-    text->setText(tr("Map name:").toStdString().c_str());    
+    text->setHtmlText(tr("Map name:").toStdString().c_str());
     text->setPosition(30, y);
     pSpriteBox->addChild(text);
     m_MapName = new Textbox(pApp->getSettings()->getWidth() - 60 - width);
@@ -45,7 +45,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     // Label
     text = new oxygine::TextField();
     text->setStyle(style);
-    text->setText(tr("Map Author:").toStdString().c_str());
+    text->setHtmlText(tr("Map Author:").toStdString().c_str());
     text->setPosition(30, y);
     pSpriteBox->addChild(text);
     m_MapAuthor = new Textbox(pApp->getSettings()->getWidth() - 60 - width);
@@ -57,7 +57,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     // Label
     text = new oxygine::TextField();
     text->setStyle(style);
-    text->setText(tr("Map Description:").toStdString().c_str());
+    text->setHtmlText(tr("Map Description:").toStdString().c_str());
     text->setPosition(30, y);
     pSpriteBox->addChild(text);
     m_MapDescription = new Textbox(pApp->getSettings()->getWidth() - 60 - width);
@@ -69,7 +69,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     // Label
     text = new oxygine::TextField();
     text->setStyle(style);
-    text->setText(tr("Map Script:").toStdString().c_str());
+    text->setHtmlText(tr("Map Script:").toStdString().c_str());
     text->setPosition(30, y);
     pSpriteBox->addChild(text);
     m_ScriptButton = pObjectManager->createButton(tr("Select File"), 150);
@@ -93,7 +93,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     // Label
     text = new oxygine::TextField();
     text->setStyle(style);
-    text->setText(tr("Map width:").toStdString().c_str());
+    text->setHtmlText(tr("Map width:").toStdString().c_str());
     text->setPosition(30, 5 + y );
     pSpriteBox->addChild(text);
     m_MapWidth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
@@ -105,7 +105,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     y += 40;
     text = new oxygine::TextField();
     text->setStyle(style);
-    text->setText(tr("Map heigth:").toStdString().c_str());
+    text->setHtmlText(tr("Map heigth:").toStdString().c_str());
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
     m_MapHeigth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
@@ -117,7 +117,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     y += 40;
     text = new oxygine::TextField();
     text->setStyle(style);
-    text->setText(tr("Map Player:").toStdString().c_str());
+    text->setHtmlText(tr("Map Player:").toStdString().c_str());
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
     m_MapPlayerCount = new SpinBox(300, 2, 40, SpinBox::Mode::Int);
@@ -129,7 +129,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     y += 40;
     text = new oxygine::TextField();
     text->setStyle(style);
-    text->setText(tr("Map Turn Limit:").toStdString().c_str());
+    text->setHtmlText(tr("Map Turn Limit:").toStdString().c_str());
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
     m_MapTurnLimit = new SpinBox(300, 0, std::numeric_limits<qint32>::max(), SpinBox::Mode::Int);
@@ -141,7 +141,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     y += 40;
     text = new oxygine::TextField();
     text->setStyle(style);
-    text->setText(tr("Deploy Limit:").toStdString().c_str());
+    text->setHtmlText(tr("Deploy Limit:").toStdString().c_str());
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
     m_UnitBuildLimit = new SpinBox(300, 0, std::numeric_limits<qint32>::max(), SpinBox::Mode::Int);

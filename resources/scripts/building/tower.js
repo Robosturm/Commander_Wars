@@ -34,6 +34,11 @@ var Constructor = function()
     {
         return qsTr("Tower");
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Once captured the Tower boosts your <div c='00ff00'>attack and defence powers<div c='ffffff'>.");
+    };
 }
 
 Constructor.prototype = BUILDING;

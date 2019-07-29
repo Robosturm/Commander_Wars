@@ -90,6 +90,11 @@ var Constructor = function()
         animation.addSprite("blackhole_shot_south", -map.getImageSize() * 2.0, -map.getImageSize() * 2.0, 0, 1.5);
         return animation;
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Black Hole Cannon that can deal 5 damage to a single unit in a large range.");
+    };
 }
 
 Constructor.prototype = BUILDING;

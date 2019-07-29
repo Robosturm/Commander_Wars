@@ -61,6 +61,10 @@ var Constructor = function()
         animation.addSprite("minicanon_west", -map.getImageSize() * 1.5, -map.getImageSize() * 0.5, 0, 1.5);
         return animation;
     };
+    this.getDescription = function()
+    {
+        return qsTr("Black Hole Minicannon that can deal 3 HP of damage to a single unit in a small range.");
+    };
 }
 
 Constructor.prototype = BUILDING;

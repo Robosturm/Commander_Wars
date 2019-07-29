@@ -38,6 +38,10 @@ var Constructor = function()
     {
         return "fore_street";
     };
+    this.getDescription = function()
+    {
+        return qsTr("Kinda well-surfaced path through the desert provides optimum mobility but little cover. It reduces the firerange of indirect units by 1.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_PATH = new Constructor();

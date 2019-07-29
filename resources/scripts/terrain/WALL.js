@@ -52,6 +52,10 @@ var Constructor = function()
     {
         return "fore_pipeline";
     };
+    this.getDescription = function()
+    {
+        return qsTr("Dark Matter Walls can't be crossed by most units. They can be destroyed to create a path through them.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var WALL = new Constructor();

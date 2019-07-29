@@ -45,6 +45,11 @@ var Constructor = function()
     {
         return "back_mountain";
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Clear view. In Fog of War, Infantry unit's gain <div c='ffffff'>vision +3<div c='00ff00'>. It reduces the firerange of indirect units by 1.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_ROCK = new Constructor();

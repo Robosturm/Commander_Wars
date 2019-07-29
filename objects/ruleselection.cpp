@@ -35,7 +35,7 @@ void RuleSelection::showRuleSelection()
 
     oxygine::spTextField textField = new oxygine::TextField();
     textField->setStyle(style);
-    textField->setText(tr("Enviroment").toStdString().c_str());
+    textField->setHtmlText(tr("Enviroment").toStdString().c_str());
     textField->setPosition(30, y);
     addChild(textField);
     y += 40;
@@ -59,7 +59,7 @@ void RuleSelection::showRuleSelection()
     y += m_pWeatherSlider->getHeight();
     textField = new oxygine::TextField();
     textField->setStyle(style);
-    textField->setText(tr("Random Weather: ").toStdString().c_str());
+    textField->setHtmlText(tr("Random Weather: ").toStdString().c_str());
     textField->setPosition(30, y);
     addChild(textField);
     spCheckbox pCheckbox = new Checkbox();
@@ -70,7 +70,7 @@ void RuleSelection::showRuleSelection()
 
     textField = new oxygine::TextField();
     textField->setStyle(style);
-    textField->setText(tr("Start Weather: ").toStdString().c_str());
+    textField->setHtmlText(tr("Start Weather: ").toStdString().c_str());
     textField->setPosition(30, pCheckbox->getY() + 40);
     addChild(textField);
 
@@ -85,13 +85,13 @@ void RuleSelection::showRuleSelection()
 
     textField = new oxygine::TextField();
     textField->setStyle(style);
-    textField->setText(tr("Gameplay").toStdString().c_str());
+    textField->setHtmlText(tr("Gameplay").toStdString().c_str());
     textField->setPosition(30, y);
     addChild(textField);
     y += 40;
     textField = new oxygine::TextField();
     textField->setStyle(style);
-    textField->setText(tr("Unit Ranking System: ").toStdString().c_str());
+    textField->setHtmlText(tr("Unit Ranking System: ").toStdString().c_str());
     textField->setPosition(30, y);
     addChild(textField);
     pCheckbox = new Checkbox();
@@ -102,7 +102,7 @@ void RuleSelection::showRuleSelection()
     y += 40;
     textField = new oxygine::TextField();
     textField->setStyle(style);
-    textField->setText(tr("No CO Powers: ").toStdString().c_str());
+    textField->setHtmlText(tr("No CO Powers: ").toStdString().c_str());
     textField->setPosition(30, y);
     addChild(textField);
     pCheckbox = new Checkbox();
@@ -113,7 +113,7 @@ void RuleSelection::showRuleSelection()
     y += 40;
     textField = new oxygine::TextField();
     textField->setStyle(style);
-    textField->setText(tr("Fog Of War: ").toStdString().c_str());
+    textField->setHtmlText(tr("Fog Of War: ").toStdString().c_str());
     textField->setPosition(30, y);
     addChild(textField);
     QVector<QString> fogModes = {tr("Off"), tr("Fog of War")};
@@ -128,7 +128,7 @@ void RuleSelection::showRuleSelection()
     y += 50;
     textField = new oxygine::TextField();
     textField->setStyle(style);
-    textField->setText(tr("Unit Limit: ").toStdString().c_str());
+    textField->setHtmlText(tr("Unit Limit: ").toStdString().c_str());
     textField->setPosition(30, y);
     addChild(textField);
     spSpinBox pSpinbox = new SpinBox(150, 0, 9999);
@@ -141,7 +141,7 @@ void RuleSelection::showRuleSelection()
     y += 50;
     textField = new oxygine::TextField();
     textField->setStyle(style);
-    textField->setText(tr("Round Time: ").toStdString().c_str());
+    textField->setHtmlText(tr("Round Time: ").toStdString().c_str());
     textField->setPosition(30, y);
     addChild(textField);
     spTimeSpinBox pTimeSpinbox = new TimeSpinBox(150);
@@ -154,7 +154,7 @@ void RuleSelection::showRuleSelection()
     y += 50;
     textField = new oxygine::TextField();
     textField->setStyle(style);
-    textField->setText(tr("Victory Rules").toStdString().c_str());
+    textField->setHtmlText(tr("Victory Rules").toStdString().c_str());
     textField->setPosition(30, y);
     addChild(textField);
     y += 40;
@@ -174,7 +174,7 @@ void RuleSelection::showRuleSelection()
             QString labelName = pRule->getRuleName();
             textField = new oxygine::TextField();
             textField->setStyle(style);
-            textField->setText(labelName.toStdString().c_str());
+            textField->setHtmlText(labelName.toStdString().c_str());
             textField->setPosition(30, i * 50 + y);
             addChild(textField);
             spCheckbox pCheckbox = new Checkbox();
@@ -204,7 +204,7 @@ void RuleSelection::showRuleSelection()
             QString labelName = pRule->getRuleName();
             textField = new oxygine::TextField();
             textField->setStyle(style);
-            textField->setText(labelName.toStdString().c_str());
+            textField->setHtmlText(labelName.toStdString().c_str());
             textField->setPosition(30, i * 50 + y);
             addChild(textField);
             spSpinBox pSpinbox = new SpinBox(200, startValue, 9999);

@@ -89,7 +89,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
         pTextfield->setStyle(style);
-        pTextfield->setText("");
+        pTextfield->setHtmlText("");
         pClipActor->addChild(pTextfield);
         pClipActor->setX(10);
         pClipActor->setSize(width - 20, itemHeigth);
@@ -263,14 +263,14 @@ void MapSelection::updateSelection(qint32 startIndex)
     {
         if (currentStartIndex + i >= m_Files.size())
         {
-            m_Items[i]->setText("");
+            m_Items[i]->setHtmlText("");
         }
         else
         {
             QDir dir(m_Files[currentStartIndex + i]);
             if (m_Files[currentStartIndex + i] == "..")
             {
-                m_Items[i]->setText(m_Files[currentStartIndex + i].toStdString().c_str());
+                m_Items[i]->setHtmlText(m_Files[currentStartIndex + i].toStdString().c_str());
             }
             else if (dir.exists())
             {
@@ -286,7 +286,7 @@ void MapSelection::updateSelection(qint32 startIndex)
                     }
                     item += data3[i2].replace(0, 1, data3[i2][0].toUpper());
                 }
-                m_Items[i]->setText(item.toStdString().c_str());
+                m_Items[i]->setHtmlText(item.toStdString().c_str());
             }
             else
             {
@@ -309,11 +309,11 @@ void MapSelection::updateSelection(qint32 startIndex)
                         }
                         item += data3[i2].replace(0, 1, data3[i2][0].toUpper());
                     }
-                    m_Items[i]->setText(item.toStdString().c_str());
+                    m_Items[i]->setHtmlText(item.toStdString().c_str());
                 }
                 else
                 {
-                    m_Items[i]->setText(name.toStdString().c_str());
+                    m_Items[i]->setHtmlText(name.toStdString().c_str());
                 }
             }
         }

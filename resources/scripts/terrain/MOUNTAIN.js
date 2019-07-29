@@ -43,6 +43,10 @@ var Constructor = function()
     {
         return "back_mountain";
     };
+    this.getDescription = function()
+    {
+        return qsTr("Clear view. In Fog of War, Infantry unit's gain <div c='ffffff'>vision +3<div c='00ff00'>.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var MOUNTAIN = new Constructor();

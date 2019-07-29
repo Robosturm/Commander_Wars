@@ -119,7 +119,11 @@ var Constructor = function()
             }
         }
         return animation2;
-    }
+    };
+    this.getDescription = function()
+    {
+        return qsTr("Black Hole Deathray that deals 8 HP of damage to all enemie units in a large in front of it. It needs 7 days to reload after fire.");
+    };
 }
 
 Constructor.prototype = BUILDING;

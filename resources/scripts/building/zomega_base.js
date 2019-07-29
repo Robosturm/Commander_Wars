@@ -44,6 +44,10 @@ var Constructor = function()
     {
         return "minimap_blackholebuilding";
     };
+    this.getDescription = function()
+    {
+        return qsTr("Black Hole Omega Base meant to launch a giant Rocket on the Earth to destroy it.");
+    };
 }
 
 Constructor.prototype = BUILDING;

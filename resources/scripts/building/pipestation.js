@@ -33,6 +33,10 @@ var Constructor = function()
     {
         return qsTr("Pipestation");
     };
+    this.getDescription = function()
+    {
+        return qsTr("Once captured can be used for <div c='00ff00'>production and resupplying <div c='ffffff'>of <div c='00ff00'>pipe <div c='ffffff'>units. Produces also more funds.");
+    };
 }
 
 Constructor.prototype = BUILDING;

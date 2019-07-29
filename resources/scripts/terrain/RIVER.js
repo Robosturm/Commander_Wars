@@ -68,6 +68,10 @@ var Constructor = function()
     {
         return "back_river";
     };
+    this.getDescription = function()
+    {
+        return qsTr("Most infantry and Hovercraft units are the only ground unit that can cross rivers.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var RIVER = new Constructor();

@@ -78,6 +78,11 @@ var Constructor = function()
     {
         return "back_beach";
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Bridge over river and seas which allows ground units to cross. Bridges over sea also allows naval units to cross the field.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var BEACH = new Constructor();

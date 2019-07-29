@@ -59,7 +59,7 @@ DialogVictoryConditions::DialogVictoryConditions()
     qint32 y = 10;
     oxygine::spTextField pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
-    pTextfield->setText(tr("Victory Info").toStdString().c_str());
+    pTextfield->setHtmlText(tr("Victory Info").toStdString().c_str());
     pTextfield->setScale(2.0f);
     pTextfield->setPosition(pApp->getSettings()->getWidth() / 2 - pTextfield->getTextRect().getWidth(), y);
     pPanel->addItem(pTextfield);
@@ -68,7 +68,7 @@ DialogVictoryConditions::DialogVictoryConditions()
 
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
-    pTextfield->setText(info.toStdString().c_str());
+    pTextfield->setHtmlText(info.toStdString().c_str());
     pTextfield->setWidth(pApp->getSettings()->getWidth() - 60);
     pTextfield->setPosition(10, y);
     pPanel->addItem(pTextfield);
@@ -81,7 +81,7 @@ DialogVictoryConditions::DialogVictoryConditions()
         pTextfield = new oxygine::TextField();
         pTextfield->setStyle(style);
         pTextfield->setWidth(pApp->getSettings()->getWidth() - 60);
-        pTextfield->setText(info.toStdString().c_str());
+        pTextfield->setHtmlText(info.toStdString().c_str());
         pTextfield->setPosition(10, y);
         pPanel->addItem(pTextfield);
         y += 30 + pTextfield->getTextRect().getHeight();
@@ -105,7 +105,7 @@ DialogVictoryConditions::DialogVictoryConditions()
 
                 pTextfield = new oxygine::TextField();
                 pTextfield->setStyle(style);
-                pTextfield->setText(info.toStdString().c_str());
+                pTextfield->setHtmlText(info.toStdString().c_str());
                 pTextfield->setPosition(x + GameMap::getImageSize() + 5, y - 15);
                 pPanel->addItem(pTextfield);
                 x += stepWidth;

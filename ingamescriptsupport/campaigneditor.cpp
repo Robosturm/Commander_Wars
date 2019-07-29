@@ -58,7 +58,7 @@ CampaignEditor::CampaignEditor()
     style.multiline = false;
     oxygine::spTextField pText = new  oxygine::TextField();
     pText->setStyle(style);
-    pText->setText(tr("Campaign Folder:").toStdString().c_str());
+    pText->setHtmlText(tr("Campaign Folder:").toStdString().c_str());
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
     m_CampaignFolder = new Textbox(pApp->getSettings()->getWidth() - 500);
@@ -77,7 +77,7 @@ CampaignEditor::CampaignEditor()
     y += 40;
     pText = new  oxygine::TextField();
     pText->setStyle(style);
-    pText->setText(tr("Campaign Name:").toStdString().c_str());
+    pText->setHtmlText(tr("Campaign Name:").toStdString().c_str());
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
     m_Name = new Textbox(pApp->getSettings()->getWidth() - 500);
@@ -88,7 +88,7 @@ CampaignEditor::CampaignEditor()
     y += 40;
     pText = new  oxygine::TextField();
     pText->setStyle(style);
-    pText->setText(tr("Campaign Author:").toStdString().c_str());
+    pText->setHtmlText(tr("Campaign Author:").toStdString().c_str());
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
     m_Author = new Textbox(pApp->getSettings()->getWidth() - 500);
@@ -99,7 +99,7 @@ CampaignEditor::CampaignEditor()
     y += 40;
     pText = new  oxygine::TextField();
     pText->setStyle(style);
-    pText->setText(tr("Campaign Description:").toStdString().c_str());
+    pText->setHtmlText(tr("Campaign Description:").toStdString().c_str());
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
     m_Description = new Textbox(pApp->getSettings()->getWidth() - 500);
@@ -249,7 +249,7 @@ void CampaignEditor::updateCampaignData()
         style.multiline = false;
         oxygine::spTextField pText = new  oxygine::TextField();
         pText->setStyle(style);
-        pText->setText(mapDatas[i].mapName.toStdString().c_str());
+        pText->setHtmlText(mapDatas[i].mapName.toStdString().c_str());
         pText->setPosition(10, 10 + i * 40);
         m_Panel->addItem(pText);
 
@@ -278,7 +278,7 @@ void CampaignEditor::updateCampaignData()
 
         pText = new  oxygine::TextField();
         pText->setStyle(style);
-        pText->setText(tr("Last Map").toStdString().c_str());
+        pText->setHtmlText(tr("Last Map").toStdString().c_str());
         pText->setPosition(670, 10 + i * 40);
         m_Panel->addItem(pText);
 

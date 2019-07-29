@@ -55,6 +55,11 @@ var Constructor = function()
     {
         return "minimap_blackholebuilding";
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Black Hole Factory that can build 3 units each turn which can immediatly move.");
+    };
 }
 
 Constructor.prototype = BUILDING;

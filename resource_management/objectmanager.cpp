@@ -37,7 +37,7 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width)
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = false;
     textField->setStyle(style);
-    textField->setText(text.toStdString().c_str());
+    textField->setHtmlText(text.toStdString().c_str());
     textField->attachTo(pButton);
     if (width < 0)
     {

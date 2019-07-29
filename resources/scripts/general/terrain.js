@@ -131,4 +131,9 @@ var TERRAIN =
                 return "back_plains";
         }
     },
+
+    getDescription : function()
+    {
+        return "";
+    },
 };

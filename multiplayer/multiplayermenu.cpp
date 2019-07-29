@@ -56,7 +56,7 @@ Multiplayermenu::Multiplayermenu(QString adress, bool host)
         hideMapSelection();
         m_MapSelectionStep = MapSelectionStep::selectPlayer;
         // change the name of the start button
-        dynamic_cast<oxygine::TextField*>(m_pButtonStart->getFirstChild().get())->setText(tr("Ready").toStdString().c_str());
+        dynamic_cast<oxygine::TextField*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready").toStdString().c_str());
         // quit on host connection lost
         connect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
         connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
@@ -78,7 +78,7 @@ Multiplayermenu::Multiplayermenu(QString adress, bool host)
         m_pHostAdresse = new oxygine::TextField();
         addChild(m_pHostAdresse);
         m_pHostAdresse->setStyle(style);
-        m_pHostAdresse->setText((tr("Host Adress: ") + NetworkInterface::getIPAdresse()).toStdString().c_str());
+        m_pHostAdresse->setHtmlText((tr("Host Adress: ") + NetworkInterface::getIPAdresse()).toStdString().c_str());
         m_pHostAdresse->setPosition(pApp->getSettings()->getWidth() / 2 - m_pHostAdresse->getTextRect().getWidth() / 2,
                                  pApp->getSettings()->getHeight() - m_pHostAdresse->getTextRect().getHeight() - 10);
 
@@ -664,11 +664,11 @@ void Multiplayermenu::startGame()
         m_pPlayerSelection->setPlayerReady(!m_pPlayerSelection->getPlayerReady());
         if (m_pPlayerSelection->getPlayerReady())
         {
-            dynamic_cast<oxygine::TextField*>(m_pButtonStart->getFirstChild().get())->setText(tr("Not Ready").toStdString().c_str());
+            dynamic_cast<oxygine::TextField*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Not Ready").toStdString().c_str());
         }
         else
         {
-            dynamic_cast<oxygine::TextField*>(m_pButtonStart->getFirstChild().get())->setText(tr("Ready").toStdString().c_str());
+            dynamic_cast<oxygine::TextField*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready").toStdString().c_str());
         }
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);

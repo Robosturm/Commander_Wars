@@ -23,6 +23,11 @@ var Constructor = function()
     {
         return qsTr("Silo");
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Empty missile silo which provides some defence.");
+    };
 }
 
 Constructor.prototype = BUILDING;

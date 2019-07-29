@@ -69,7 +69,7 @@ void ScriptConditionVictory::showEditCondition(spScriptEditor pScriptEditor)
 
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setText(tr("Team: ").toStdString().c_str());
+    pText->setHtmlText(tr("Team: ").toStdString().c_str());
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, 9999);

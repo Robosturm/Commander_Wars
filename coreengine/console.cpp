@@ -219,7 +219,7 @@ void Console::update(const oxygine::UpdateState& us)
             toggle.start();
         }
         drawText += "> " + curprintmsg;
-        m_text->setText(drawText.toStdString().c_str());
+        m_text->setHtmlText(drawText.toStdString().c_str());
     }
     oxygine::Actor::update(us);
 }

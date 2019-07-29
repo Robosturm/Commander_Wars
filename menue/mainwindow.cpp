@@ -153,7 +153,7 @@ Mainwindow::Mainwindow()
     style.multiline = false;
     oxygine::spTextField pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
-    pTextfield->setText(Mainapp::getGameVersion().toStdString().c_str());
+    pTextfield->setHtmlText(Mainapp::getGameVersion().toStdString().c_str());
     pTextfield->setPosition(pApp->getSettings()->getWidth() - 10 - pTextfield->getTextRect().getWidth(), pApp->getSettings()->getHeight() - 10 - pTextfield->getTextRect().getHeight());
     addChild(pTextfield);
 }

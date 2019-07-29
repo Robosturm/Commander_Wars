@@ -29,6 +29,11 @@ var Constructor = function()
     {
         return ["HOELLIUM"];
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Once captured can be used for <div c='00ff00'>production<div c='ffffff'>of <div c='00ff00'>oozium <div c='ffffff'>units.");
+    };
 }
 
 Constructor.prototype = BUILDING;

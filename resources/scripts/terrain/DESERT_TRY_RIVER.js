@@ -41,6 +41,11 @@ var Constructor = function()
     {
         return "back_river";
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Once a river. Now an empty Riverbed that can be crossed by most units doesn't provide cover. It reduces the firerange of indirect units by 1.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_TRY_RIVER = new Constructor();

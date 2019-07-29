@@ -109,6 +109,11 @@ var Constructor = function()
             }
         }
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Volcan that fires fireballs each day dealing 5 HP of damage at all units they hit.");
+    };
 }
 
 Constructor.prototype = BUILDING;

@@ -51,6 +51,10 @@ var Constructor = function()
     {
         return 1;
     };
+    this.getDescription = function()
+    {
+        return qsTr("Harbour made by APC. <div c='00ff00'>Resupplying <div c='ffffff'>of <div c='00ff00'>naval <div c='ffffff'>units is possible.");
+    };
 }
 
 Constructor.prototype = BUILDING;

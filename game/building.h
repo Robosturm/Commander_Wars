@@ -63,6 +63,11 @@ signals:
 
 public slots:
     /**
+     * @brief getVision
+     * @return
+     */
+    qint32 getVision();
+    /**
      * @brief setAlwaysVisble if true the owner is always visible else the owner gets hidden during fog of war
      * @param value
      */

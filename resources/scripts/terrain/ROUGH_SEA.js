@@ -45,6 +45,10 @@ var Constructor = function()
     {
         return "back_sea";
     };
+    this.getDescription = function()
+    {
+        return qsTr("Movement of naval units is impeded but air units are not affected.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var ROUGH_SEA = new Constructor();

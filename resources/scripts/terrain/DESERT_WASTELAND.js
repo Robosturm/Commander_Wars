@@ -21,6 +21,10 @@ var Constructor = function()
     {
         return "minimap_desert_wasteland";
     };
+    this.getDescription = function()
+    {
+        return qsTr("Infantry and Mech units aside, mobility is impaired on rough terrain. It reduces the firerange of indirect units by 1.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_WASTELAND = new Constructor();

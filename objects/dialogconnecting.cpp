@@ -31,7 +31,7 @@ DialogConnecting::DialogConnecting(QString text)
     style.multiline = false;
 
     m_Text = new oxygine::TextField();
-    m_Text->setText((text + ".  ").toStdString().c_str() );
+    m_Text->setHtmlText((text + ".  ").toStdString().c_str() );
     m_Text->setStyle(style);
     m_Text->setPosition(pApp->getSettings()->getWidth() / 2 - m_Text->getTextRect().getWidth() / 2, pApp->getSettings()->getHeight() / 2 - 40);
     pSpriteBox->addChild(m_Text);
@@ -68,15 +68,15 @@ void DialogConnecting::timeout()
     counter++;
     if (counter % 3 == 0)
     {
-        m_Text->setText((m_Message + ".  ").toStdString().c_str() );
+        m_Text->setHtmlText((m_Message + ".  ").toStdString().c_str() );
     }
     else if (counter % 3 == 1)
     {
-        m_Text->setText((m_Message + " . ").toStdString().c_str() );
+        m_Text->setHtmlText((m_Message + " . ").toStdString().c_str() );
     }
     else if (counter % 3 == 2)
     {
-        m_Text->setText((m_Message + "  .").toStdString().c_str() );
+        m_Text->setHtmlText((m_Message + "  .").toStdString().c_str() );
     }
     pApp->continueThread();
 }

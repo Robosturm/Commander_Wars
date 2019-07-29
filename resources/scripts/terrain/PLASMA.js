@@ -29,6 +29,10 @@ var Constructor = function()
     {
         return "minimap_plasma";
     };
+    this.getDescription = function()
+    {
+        return qsTr("Eectric charge us impassable but disappears if <div c='ffffff'>meteor pieces <div c='00ff00'>are destroyed.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var PLASMA = new Constructor();

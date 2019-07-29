@@ -18,6 +18,10 @@ var Constructor = function()
     {
         return "minimap_wasteland";
     };
+    this.getDescription = function()
+    {
+        return qsTr("Infantry and Mech units aside, mobility is impaired on rough terrain.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var WASTELAND = new Constructor();

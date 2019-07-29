@@ -58,7 +58,7 @@ void Chat::update(const oxygine::UpdateState& us)
     {
         drawText += "> " + messages[i] + "\n";
     }
-    m_Chat->setText(drawText.toStdString().c_str());
+    m_Chat->setHtmlText(drawText.toStdString().c_str());
     oxygine::Actor::update(us);
 }
 

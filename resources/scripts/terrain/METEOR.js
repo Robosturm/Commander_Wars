@@ -104,6 +104,10 @@ var Constructor = function()
         }
         return plasmaFields;
     };
+    this.getDescription = function()
+    {
+        return qsTr("Meteor pieces which can be <div c='ffffff'>attacked and destroyed <div c='00ff00'>to eliminate plasma.");
+    };
 };
 Constructor.prototype = TERRAIN;
 var METEOR = new Constructor();

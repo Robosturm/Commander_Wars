@@ -22,12 +22,22 @@ var Constructor = function()
 
     this.getVisionBonus = function()
     {
-        return 1;
+        return 0;
     };
 
     this.getName = function()
     {
         return qsTr("Radar");
+    };
+
+    this.getDescription = function()
+    {
+        return qsTr("In Fog of War, Radars make a <div c='00ff00'>5 square <div c='ffffff'>area around them visible.");
+    };
+
+    this.getVision = function()
+    {
+        return 5;
     };
 }
 

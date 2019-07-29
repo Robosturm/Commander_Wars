@@ -69,7 +69,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime)
     style.multiline = false;
     float scale = 3;
     oxygine::spTextField textField = new oxygine::TextField();
-    textField->setText((QString("Day ") + QString::number(GameMap::getInstance()->getCurrentDay())).toStdString().c_str());
+    textField->setHtmlText((QString("Day ") + QString::number(GameMap::getInstance()->getCurrentDay())).toStdString().c_str());
     textField->setPosition(10, pApp->getSettings()->getHeight() / 2 - textField->getTextRect(scale).getHeight() / 2);
     if (pCO != nullptr)
     {

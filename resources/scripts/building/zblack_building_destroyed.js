@@ -37,6 +37,11 @@ var Constructor = function()
     {
         return qsTr("Ruins");
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Destroyed Black Hole Building.");
+    };
 }
 
 Constructor.prototype = BUILDING;

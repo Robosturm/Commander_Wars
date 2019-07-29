@@ -112,6 +112,11 @@ var Constructor = function()
         }
         return "back_hq+" + armyName;
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("<div c='00ff00'>Battle ends <div c='ffffff'>when an army's last HQ is captured. <div c='00ff00'>Ground <div c='ffffff'>units can <div c='00ff00'>resupply.");
+    };
 }
 
 Constructor.prototype = BUILDING;

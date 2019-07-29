@@ -608,7 +608,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                     textField->setStyle(style);
                     textField->setScale(0.6f);
                     textField->setY(-2);
-                    textField->setText(m_pMarkedFieldData->getZLabelText().toStdString().c_str());
+                    textField->setHtmlText(m_pMarkedFieldData->getZLabelText().toStdString().c_str());
                     textField->attachTo(m_ZInformationLabel);
 
                     oxygine::spTextField textField2 = new oxygine::TextField();
@@ -626,7 +626,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                             break;
                         }
                     }
-                    textField2->setText(labelText.toStdString().c_str());
+                    textField2->setHtmlText(labelText.toStdString().c_str());
                     textField2->attachTo(m_ZInformationLabel);
 
                     m_ZInformationLabel->setScale(1.5f);
