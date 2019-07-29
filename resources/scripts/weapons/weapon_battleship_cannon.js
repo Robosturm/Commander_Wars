@@ -14,7 +14,7 @@ var Constructor = function()
         {
 			// infantry
 			case "INFANTRY":
-				return 75;
+                return 125;
 			case "MECH":
 				return 75;
 			case "MOTORBIKE":

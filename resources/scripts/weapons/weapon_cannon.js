@@ -14,7 +14,7 @@
         {
 			// infantry
 			case "INFANTRY":
-                return 90;
+                return 130;
 			case "MECH":
                 return 85;
 			case "MOTORBIKE":

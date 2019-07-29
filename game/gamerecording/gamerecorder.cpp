@@ -32,6 +32,8 @@ void GameRecorder::serializeObject(QDataStream& pStream)
         pStream << attackNumbers[i];
         pStream << deployedUnits[i];
     }
+    pStream << m_mapTime;
+    pStream << m_deployLimit;
 }
 
 void GameRecorder::deserializeObject(QDataStream& pStream)
@@ -48,18 +50,37 @@ void GameRecorder::deserializeObject(QDataStream& pStream)
     pStream >> size;
     for (qint32 i = 0; i < size; i++)
     {
-        quint64 value = 0;
-        pStream >> value;
-        destroyedUnits.append(value);
-        pStream >> value;
-        lostUnits.append(value);
-        pStream >> value;
-        damageDealt.append(value);
-        pStream >> value;
-        attackNumbers.append(value);
-        pStream >> value;
-        deployedUnits.append(value);
+        if (version > 1)
+        {
+            quint32 value = 0;
+            pStream >> value;
+            destroyedUnits.append(value);
+            pStream >> value;
+            lostUnits.append(value);
+            pStream >> value;
+            damageDealt.append(value);
+            pStream >> value;
+            attackNumbers.append(value);
+            pStream >> value;
+            deployedUnits.append(value);
+        }
+        else
+        {
+            quint64 value = 0;
+            pStream >> value;
+            destroyedUnits.append(static_cast<quint32>(value));
+            pStream >> value;
+            lostUnits.append(static_cast<quint32>(value));
+            pStream >> value;
+            damageDealt.append(static_cast<quint32>(value));
+            pStream >> value;
+            attackNumbers.append(static_cast<quint32>(value));
+            pStream >> value;
+            deployedUnits.append(static_cast<quint32>(value));
+        }
     }
+    pStream >> m_mapTime;
+    pStream >> m_deployLimit;
 }
 
 void GameRecorder::newDay()
@@ -112,6 +133,26 @@ void GameRecorder::attacked(qint32 player, float damage)
     }
 }
 
+quint32 GameRecorder::getDeployLimit() const
+{
+    return m_deployLimit;
+}
+
+void GameRecorder::setDeployLimit(const quint32 &deployLimit)
+{
+    m_deployLimit = deployLimit;
+}
+
+qint32 GameRecorder::getMapTime() const
+{
+    return m_mapTime;
+}
+
+void GameRecorder::setMapTime(const qint32 &mapTime)
+{
+    m_mapTime = mapTime;
+}
+
 void GameRecorder::updatePlayerData(qint32 player)
 {
     m_Record[m_Record.size() - 1]->addPlayerRecord(player, GameMap::getInstance()->getCurrentDay());
@@ -130,6 +171,10 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
     qint32 mapSize = pMap->getMapWidth() * pMap->getMapHeight();
     // calc speed points
     qint32 mapTime = (pMap->getMapWidth() + pMap->getMapHeight());
+    if (m_mapTime > 0)
+    {
+        mapTime = m_mapTime;
+    }
     if (pMap->getCurrentDay() < mapTime)
     {
         scorePoints.setX(200 - (pMap->getCurrentDay() * 100 / mapTime));
@@ -188,7 +233,11 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
     }
 
     // technique
-    quint64 deployLimit = static_cast<quint64>(mapSize / 9);
+    quint32 deployLimit = static_cast<quint32>(mapSize / 9);
+    if (m_deployLimit > 0)
+    {
+        deployLimit = m_deployLimit;
+    }
     float techScore1 = 0;
     float techScore2 = 0;
     float techScore3 = 0;
@@ -204,8 +253,8 @@ GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePo
     {
         techScore1 = 2.0f;
     }
-    quint64 deployed = deployedUnits[player];
-    quint64 startUnits = static_cast<quint64>(m_Record[0]->getPlayerRecord(player)->getUnits());
+    quint32 deployed = deployedUnits[player];
+    quint32 startUnits = static_cast<quint32>(m_Record[0]->getPlayerRecord(player)->getUnits());
     if (m_Record.size() > 0 &&
         startUnits > 0)
     {

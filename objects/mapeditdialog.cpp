@@ -8,7 +8,9 @@
 
 #include "resource_management/fontmanager.h"
 
-MapEditDialog::MapEditDialog(QString mapName, QString author, QString description, QString scriptFile, qint32 mapWidth, qint32 mapHeigth, qint32 playerCount)
+MapEditDialog::MapEditDialog(QString mapName, QString author, QString description, QString scriptFile,
+                             qint32 mapWidth, qint32 mapHeigth, qint32 playerCount,
+                             qint32 turnLimit, quint32 buildLimit)
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -123,6 +125,30 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     m_MapPlayerCount->setCurrentValue(playerCount);
     pSpriteBox->addChild(m_MapPlayerCount);
 
+    // Label
+    y += 40;
+    text = new oxygine::TextField();
+    text->setStyle(style);
+    text->setText(tr("Map Turn Limit:").toStdString().c_str());
+    text->setPosition(30, 5 + y + text->getHeight());
+    pSpriteBox->addChild(text);
+    m_MapTurnLimit = new SpinBox(300, 0, std::numeric_limits<qint32>::max(), SpinBox::Mode::Int);
+    m_MapTurnLimit->setPosition(text->getX() + width, text->getY());
+    m_MapTurnLimit->setCurrentValue(turnLimit);
+    pSpriteBox->addChild(m_MapTurnLimit);
+
+    // Label
+    y += 40;
+    text = new oxygine::TextField();
+    text->setStyle(style);
+    text->setText(tr("Deploy Limit:").toStdString().c_str());
+    text->setPosition(30, 5 + y + text->getHeight());
+    pSpriteBox->addChild(text);
+    m_UnitBuildLimit = new SpinBox(300, 0, std::numeric_limits<qint32>::max(), SpinBox::Mode::Int);
+    m_UnitBuildLimit->setPosition(text->getX() + width, text->getY());
+    m_UnitBuildLimit->setCurrentValue(buildLimit);
+    pSpriteBox->addChild(m_UnitBuildLimit);
+
     // ok button
     m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
     m_OkButton->setPosition(pApp->getSettings()->getWidth() - m_OkButton->getWidth() - 30, pApp->getSettings()->getHeight() - 30 - m_OkButton->getHeight());
@@ -132,7 +158,8 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
         emit editFinished(m_MapName->getCurrentText(), m_MapAuthor->getCurrentText(),
                           m_MapDescription->getCurrentText(), m_MapScriptFile->getCurrentText(),
                           static_cast<qint32>(m_MapWidth->getCurrentValue()), static_cast<qint32>(m_MapHeigth->getCurrentValue()),
-                          static_cast<qint32>(m_MapPlayerCount->getCurrentValue()));
+                          static_cast<qint32>(m_MapPlayerCount->getCurrentValue()), static_cast<qint32>(m_MapTurnLimit->getCurrentValue()),
+                          static_cast<quint32>(m_UnitBuildLimit->getCurrentValue()));
         this->getParent()->removeChild(this);
     });
 

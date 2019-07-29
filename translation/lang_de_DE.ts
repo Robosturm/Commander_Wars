@@ -1403,52 +1403,62 @@
 <context>
     <name>MapEditDialog</name>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="34"/>
+        <location filename="../objects/mapeditdialog.cpp" line="36"/>
         <source>Map name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="46"/>
+        <location filename="../objects/mapeditdialog.cpp" line="48"/>
         <source>Map Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="58"/>
+        <location filename="../objects/mapeditdialog.cpp" line="60"/>
         <source>Map Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="70"/>
+        <location filename="../objects/mapeditdialog.cpp" line="72"/>
         <source>Map Script:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="73"/>
+        <location filename="../objects/mapeditdialog.cpp" line="75"/>
         <source>Select File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="94"/>
+        <location filename="../objects/mapeditdialog.cpp" line="96"/>
         <source>Map width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="106"/>
+        <location filename="../objects/mapeditdialog.cpp" line="108"/>
         <source>Map heigth:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="118"/>
+        <location filename="../objects/mapeditdialog.cpp" line="120"/>
         <source>Map Player:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="127"/>
+        <location filename="../objects/mapeditdialog.cpp" line="132"/>
+        <source>Map Turn Limit:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/mapeditdialog.cpp" line="144"/>
+        <source>Deploy Limit:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/mapeditdialog.cpp" line="153"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapeditdialog.cpp" line="140"/>
+        <location filename="../objects/mapeditdialog.cpp" line="167"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3727,12 +3737,12 @@
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_amy.js" line="219"/>
-        <source>Hovercraft units are strengthened, and they gain one extra movement and get cheaper.</source>
+        <source>She can command hovercraft units at optimal level. Reefs pose no problem for Amy&apos;s units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_amy.js" line="223"/>
-        <source>Movement range for all units is increased by one space.</source>
+        <source>Hovercraft units are strengthened, and they gain one extra movement and get cheaper.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10164,6 +10174,109 @@
     <message>
         <location filename="../resources/scripts/cos/co_will.js" line="250"/>
         <source>Will</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_xavier</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="234"/>
+        <source>Fulfills his duties without second thought or consideration of the after-effects of his actions. Wears a pair of fake claws.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="238"/>
+        <source>Uncertainty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="242"/>
+        <source>Definitives</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="246"/>
+        <source>When Xavier&apos;s units drop below 5 HP, they are able to strike for maximum luck damage.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="250"/>
+        <source>Attacks inflict more damage than expected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="254"/>
+        <source>Phasing Charge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="258"/>
+        <source>Units gain firepower for each own unit nearby the attacked unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="262"/>
+        <source>Reality Minus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="266"/>
+        <source>You know, the laws of physics are made to be broken. Observe.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="267"/>
+        <source>You might say I&apos;m a rather.. twisted individual.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="268"/>
+        <source>Reality is only trivial. Watch and learn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="269"/>
+        <source>Allow me to reprimand, for your atrocious command.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="270"/>
+        <source>I&apos;m sure you&apos;ll get quite a scare out of this!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="271"/>
+        <source>Are you sure of the truth in what you see?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="275"/>
+        <source>... I must return to my work now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="276"/>
+        <source>See, this is reality. You never stood a chance.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="277"/>
+        <source>You are intellectually inferior to me. Simple as that.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="281"/>
+        <source>That&apos;s not my realitiy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="282"/>
+        <source>You were supposed to be intellectually inferior to me.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_xavier.js" line="286"/>
+        <source>Xavier</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -13,7 +13,7 @@ var Constructor = function()
         switch(unit.getUnitID())
         {
         case "INFANTRY":
-            return 65;
+            return 85;
         case "MECH":
             return 55;
         case "MOTORBIKE":

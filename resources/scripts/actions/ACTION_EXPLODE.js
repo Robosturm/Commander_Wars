@@ -34,9 +34,9 @@ var Constructor = function()
     };
     this.getStepCursor = function(action, cursorData)
     {
-        cursorData.setCursor("cursor+radius_3");
-        cursorData.setXOffset(- map.getImageSize() * 3);
-        cursorData.setYOffset(- map.getImageSize() * 3);
+        cursorData.setCursor("cursor+missile");
+        cursorData.setXOffset(- map.getImageSize() * 2);
+        cursorData.setYOffset(- map.getImageSize() * 2);
         cursorData.setScale(1.5);
     };
     this.getStepData = function(action, data)
@@ -80,7 +80,7 @@ var Constructor = function()
         var owner = ACTION_EXPLODE.postAnimationUnit.getOwner();
         var x = ACTION_EXPLODE.postAnimationTargetX;
         var y = ACTION_EXPLODE.postAnimationTargetY;
-        var fields = globals.getCircle(1, 3);
+        var fields = globals.getCircle(1, 2);
         for (var i = 0; i < fields.size(); i++)
         {
             var point = fields.at(i);
@@ -89,7 +89,7 @@ var Constructor = function()
                 var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
                 if (unit !== null)
                 {
-                    unit.setHp(unit.getHpRounded() - 5);
+                    unit.setHp(unit.getHpRounded() - 4);
                     if (unit.getHp() <= 0)
                     {
                         // we destroyed a unit

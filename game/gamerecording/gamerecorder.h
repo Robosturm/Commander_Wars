@@ -41,7 +41,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 1;
+        return 2;
     }
     /**
      * @brief calculateRang
@@ -103,14 +103,37 @@ public slots:
      * @param damage
      */
     void attacked(qint32 player, float damage);
+    /**
+     * @brief getMapTime
+     * @return
+     */
+    qint32 getMapTime() const;
+    /**
+     * @brief setMapTime
+     * @param mapTime
+     */
+    void setMapTime(const qint32 &mapTime);
+    /**
+     * @brief getDeployLimit
+     * @return
+     */
+    quint32 getDeployLimit() const;
+    /**
+     * @brief setDeployLimit
+     * @param deployLimit
+     */
+    void setDeployLimit(const quint32 &deployLimit);
 private:
     QVector<spDayToDayRecord> m_Record;
 
-    QVector<quint64> destroyedUnits;
-    QVector<quint64> lostUnits;
-    QVector<quint64> damageDealt;
-    QVector<quint64> attackNumbers;
-    QVector<quint64> deployedUnits;
+    QVector<quint32> destroyedUnits;
+    QVector<quint32> lostUnits;
+    QVector<quint32> damageDealt;
+    QVector<quint32> attackNumbers;
+    QVector<quint32> deployedUnits;
+
+    qint32 m_mapTime{0};
+    quint32 m_deployLimit{0};
 };
 
 #endif // GAMERECORDER_H
