@@ -6,9 +6,9 @@ var Constructor = function()
         building.setAlwaysVisble(true);
     };
     // called for loading the main sprite
-    this.loadSprites = function(building)
+    this.loadSprites = function(building, neutral)
     {
-        if (building.getOwnerID() >= 0)
+        if (building.getOwnerID() >= 0 && !neutral)
         {
             building.loadSprite("blackhole+factory", false);
             building.loadSprite("blackhole+factory+mask", true);

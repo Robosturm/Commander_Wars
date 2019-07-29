@@ -134,7 +134,7 @@ EditorSelection::EditorSelection()
         building->setScaleX(1.0f / static_cast<float>(width));
         building->setScaleY(1.0f / static_cast<float>(heigth));
         m_Buildings.append(building);
-        m_Buildings[i]->updateBuildingSprites();
+        m_Buildings[i]->updateBuildingSprites(false);
         oxygine::spSprite pSprite = new oxygine::Sprite();
         pAnim = pTerrainManager->getResAnim("plains+0");
         pSprite->setResAnim(pAnim);

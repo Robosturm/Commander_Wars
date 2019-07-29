@@ -1,9 +1,9 @@
 var Constructor = function()
 {
     // called for loading the main sprite
-    this.loadSprites = function(building)
+    this.loadSprites = function(building, neutral)
     {
-        if (building.getOwnerID() >= 0)
+        if (building.getOwnerID() >= 0 && !neutral)
         {
             // none neutral player
             building.loadSprite("temporary_airport", false);

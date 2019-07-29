@@ -6,11 +6,6 @@ var Constructor = function()
         co.setSuperpowerStars(4);
     };
 
-    this.getCOUnits = function(co, building)
-    {
-        return ["INFANTRY"];
-    };
-
     this.activatePower = function(co)
     {
 

@@ -52,7 +52,7 @@ void Building::setOwner(Player* pOwner)
     // change ownership
     m_pOwner = pOwner;
     // update sprites :)
-    updateBuildingSprites();
+    updateBuildingSprites(false);
 }
 
 Player* Building::getOwner()
@@ -123,21 +123,38 @@ void Building::loadSprite(QString spriteID, bool addPlayerColor)
 
 void Building::updatePlayerColor(bool visible)
 {
-    for (qint32 i = 0; i < m_pBuildingSprites.size(); i++)
+    if (m_pOwner != nullptr)
     {
-        if (m_addPlayerColor[i] && m_pOwner != nullptr && (visible || alwaysVisble))
+        if (neutralLoaded && (visible || alwaysVisble))
         {
-            QColor color = m_pOwner->getColor();
-            m_pBuildingSprites[i]->setColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
+            updateBuildingSprites(false);
         }
         else
         {
-            m_pBuildingSprites[i]->setColor(oxygine::Color(255, 255, 255, 255));
+            if (visible || alwaysVisble)
+            {
+                for (qint32 i = 0; i < m_pBuildingSprites.size(); i++)
+                {
+                    if (m_addPlayerColor[i])
+                    {
+                        QColor color = m_pOwner->getColor();
+                        m_pBuildingSprites[i]->setColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
+                    }
+                }
+            }
+            else if (!neutralLoaded)
+            {
+                updateBuildingSprites(true);
+            }
         }
+    }
+    else if (!neutralLoaded)
+    {
+        updateBuildingSprites(true);
     }
 }
 
-void Building::updateBuildingSprites()
+void Building::updateBuildingSprites(bool neutral)
 {
     Mainapp* pApp = Mainapp::getInstance();
     for (qint32 i = 0; i < m_pBuildingSprites.size(); i++)
@@ -150,7 +167,9 @@ void Building::updateBuildingSprites()
     QJSValueList args1;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
     args1 << obj1;
+    args1 << neutral;
     pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
+    neutralLoaded = neutral;
 }
 
 bool Building::canBuildingBePlaced(Terrain* pTerrain)

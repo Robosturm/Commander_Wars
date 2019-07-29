@@ -595,7 +595,7 @@ void Terrain::loadBuilding(QString buildingID)
         removeBuilding();
     }
     m_Building = new Building(buildingID);
-    m_Building->updateBuildingSprites();
+    m_Building->updateBuildingSprites(false);
     m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
     m_Building->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
     this->addChild(m_Building);

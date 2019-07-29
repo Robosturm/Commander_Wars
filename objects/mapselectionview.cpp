@@ -124,7 +124,7 @@ MapSelectionView::MapSelectionView()
     for (qint32 i = 0; i < pBuildingSpriteManager->getBuildingCount(); i++)
     {
         spBuilding building = new Building(pBuildingSpriteManager->getBuildingID(i));
-        building->updateBuildingSprites();
+        building->updateBuildingSprites(false);
         qint32 width = building->getBuildingWidth();
         qint32 heigth = building->getBuildingHeigth();
         building->setScaleX(1.0f / static_cast<float>(width));

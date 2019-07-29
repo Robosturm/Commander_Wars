@@ -26,7 +26,7 @@ public:
     /**
      * @brief updateBuildingSprites updates all sprites of this building
      */
-    void updateBuildingSprites();
+    void updateBuildingSprites(bool neutral);
     /**
      * @brief setTerrain
      * @param pTerrain smart pointer to the terrain this building is placed on
@@ -284,7 +284,7 @@ private:
     qint32 fireCount{0};
 
     bool alwaysVisble{false};
-
+    bool neutralLoaded{false};
     ScriptVariables m_Variables;
 };
 

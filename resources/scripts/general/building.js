@@ -33,7 +33,7 @@ var BUILDING =
         return 1;
     },
     // called for loading the main sprites
-    loadSprites : function(building)
+    loadSprites : function(building, neutral)
     {
     },
     // the terrain on which a building can be placed

@@ -1,9 +1,9 @@
 var Constructor = function()
 {
     // called for loading the main sprite
-    this.loadSprites = function(building)
+    this.loadSprites = function(building, neutral)
     {
-        if (building.getOwnerID() >= 0)
+        if (building.getOwnerID() >= 0 && !neutral)
         {
             // get army name
             var armyName = building.getOwner().getArmy().toLowerCase();

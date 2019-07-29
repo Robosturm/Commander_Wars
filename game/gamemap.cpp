@@ -221,7 +221,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput)
                 }
                 if (fields.at(y)->at(x)->getBuilding() != nullptr)
                 {
-                    fields.at(y)->at(x)->getBuilding()->updateBuildingSprites();
+                    fields.at(y)->at(x)->getBuilding()->updateBuildingSprites(false);
                 }
             }
         }
@@ -242,7 +242,7 @@ void GameMap::updateSprites(qint32 xInput, qint32 yInput)
                     }
                     if (fields.at(y)->at(x)->getBuilding() != nullptr)
                     {
-                        fields.at(y)->at(x)->getBuilding()->updateBuildingSprites();
+                        fields.at(y)->at(x)->getBuilding()->updateBuildingSprites(false);
                     }
                 }
             }
