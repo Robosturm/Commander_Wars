@@ -3,6 +3,7 @@ var Constructor = function()
     this.init = function (building)
     {
         building.setHp(100);
+        building.setAlwaysVisble(true);
     };
     // called for loading the main sprite
     this.loadSprites = function(building)

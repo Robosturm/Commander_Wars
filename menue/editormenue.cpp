@@ -55,13 +55,12 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Save Map"), "SAVEMAP", 0);
     m_Topbar->addItem(tr("Load Map"), "LOADMAP", 0);
     m_Topbar->addItem(tr("Edit Script"), "EDITSCRIPT", 0);
-    m_Topbar->addItem(tr("Edit Campaign"), "EDITCAMPAIGN", 0);
+    // m_Topbar->addItem(tr("Edit Campaign"), "EDITCAMPAIGN", 0);
     m_Topbar->addItem(tr("Exit Editor"), "EXIT", 0);
 
     m_Topbar->addGroup(tr("Map Info"));
     m_Topbar->addItem(tr("New Map"), "NEWMAP", 1);
     m_Topbar->addItem(tr("Edit Map"), "EDITMAP", 1);
-    // m_Topbar->addItem(tr("Optimize Players"), "OPTIMIZEPLAYERS", 1);
     m_Topbar->addItem(tr("Flip Map X"), "FLIPX", 1);
     m_Topbar->addItem(tr("Flip Map Y"), "FLIPY", 1);
     m_Topbar->addItem(tr("Rotate Map X"), "ROTATEX", 1);

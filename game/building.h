@@ -59,11 +59,19 @@ public:
     {
         return 3;
     }
-
-
 signals:
 
 public slots:
+    /**
+     * @brief setAlwaysVisble if true the owner is always visible else the owner gets hidden during fog of war
+     * @param value
+     */
+    bool getAlwaysVisble() const;
+    /**
+     * @brief setAlwaysVisble if true the owner is always visible else the owner gets hidden during fog of war
+     * @param value
+     */
+    void setAlwaysVisble(bool value);
     /**
      * @brief getName
      * @return
@@ -90,6 +98,11 @@ public slots:
      * @param addPlayerColor true for adding player color to the sprite
      */
     void loadSprite(QString sprite, bool addPlayerColor);
+    /**
+     * @brief updatePlayerColor
+     * @param visible
+     */
+    void updatePlayerColor(bool visible);
     /**
      * @brief getOwnerID
      * @return the player owner index of this building
@@ -248,6 +261,7 @@ public slots:
     GameEnums::BuildingTarget getBuildingTargets();
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
+    QVector<bool> m_addPlayerColor;
     /**
      * @brief m_BuildingID the id of this building
      */
@@ -269,7 +283,7 @@ private:
       */
     qint32 fireCount{0};
 
-
+    bool alwaysVisble{false};
 
     ScriptVariables m_Variables;
 };

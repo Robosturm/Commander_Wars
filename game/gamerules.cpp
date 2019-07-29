@@ -390,6 +390,7 @@ void GameRules::createFogVision()
         {
             bool visible = pPlayer->getFieldVisible(x, y);
             Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+            Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
             switch (m_FogMode)
             {
                 case GameEnums::Fog_Off:
@@ -403,6 +404,10 @@ void GameRules::createFogVision()
                     {
                         showHideStealthUnit(pPlayer, pUnit);
                     }
+                    if (pBuilding != nullptr)
+                    {
+                        pBuilding->updatePlayerColor(true);
+                    }
                     break;
                 }
                 case GameEnums::Fog_OfWar:
@@ -414,6 +419,10 @@ void GameRules::createFogVision()
                         {
                             pUnit->setUnitVisible(false);
                         }
+                    }
+                    if (pBuilding != nullptr)
+                    {
+                        pBuilding->updatePlayerColor(visible);
                     }
                     if (!visible)
                     {

@@ -992,11 +992,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="58"/>
-        <source>Edit Campaign</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/editormenue.cpp" line="59"/>
         <source>Exit Editor</source>
         <translation type="unfinished"></translation>
@@ -1017,87 +1012,87 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="65"/>
+        <location filename="../menue/editormenue.cpp" line="64"/>
         <source>Flip Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="66"/>
+        <location filename="../menue/editormenue.cpp" line="65"/>
         <source>Flip Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="67"/>
+        <location filename="../menue/editormenue.cpp" line="66"/>
         <source>Rotate Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="68"/>
+        <location filename="../menue/editormenue.cpp" line="67"/>
         <source>Rotate Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="69"/>
+        <location filename="../menue/editormenue.cpp" line="68"/>
         <source>Random Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="71"/>
+        <location filename="../menue/editormenue.cpp" line="70"/>
         <source>Editor Commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="72"/>
+        <location filename="../menue/editormenue.cpp" line="71"/>
         <source>Place Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="73"/>
+        <location filename="../menue/editormenue.cpp" line="72"/>
         <source>Delete Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="74"/>
+        <location filename="../menue/editormenue.cpp" line="73"/>
         <source>Edit Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="75"/>
+        <location filename="../menue/editormenue.cpp" line="74"/>
         <source>Edit Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="76"/>
+        <location filename="../menue/editormenue.cpp" line="75"/>
         <source>Edit Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="77"/>
+        <location filename="../menue/editormenue.cpp" line="76"/>
         <source>Optimize Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="79"/>
+        <location filename="../menue/editormenue.cpp" line="78"/>
         <source>Import/Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="80"/>
+        <location filename="../menue/editormenue.cpp" line="79"/>
         <source>Import CoW Txt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="81"/>
+        <location filename="../menue/editormenue.cpp" line="80"/>
         <source>Import AWDS Aws</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="82"/>
+        <location filename="../menue/editormenue.cpp" line="81"/>
         <source>Import AWDC Aw4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="83"/>
+        <location filename="../menue/editormenue.cpp" line="82"/>
         <source>Import AW by Web</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11238,7 +11233,7 @@
 <context>
     <name>zblack_building_destroyed</name>
     <message>
-        <location filename="../resources/scripts/building/zblack_building_destroyed.js" line="37"/>
+        <location filename="../resources/scripts/building/zblack_building_destroyed.js" line="38"/>
         <source>Ruins</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11246,7 +11241,7 @@
 <context>
     <name>zblackhole_cannon_E</name>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_E.js" line="24"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_E.js" line="25"/>
         <source>Black Cannon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11254,7 +11249,7 @@
 <context>
     <name>zblackhole_cannon_N</name>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_N.js" line="28"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_N.js" line="30"/>
         <source>Black Cannon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11262,7 +11257,7 @@
 <context>
     <name>zblackhole_cannon_S</name>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_S.js" line="28"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_S.js" line="29"/>
         <source>Black Cannon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11270,7 +11265,7 @@
 <context>
     <name>zblackhole_cannon_W</name>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_cannon_W.js" line="28"/>
+        <location filename="../resources/scripts/building/zblackhole_cannon_W.js" line="29"/>
         <source>Black Cannon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11278,7 +11273,7 @@
 <context>
     <name>zblackhole_factory</name>
     <message>
-        <location filename="../resources/scripts/building/zblackhole_factory.js" line="30"/>
+        <location filename="../resources/scripts/building/zblackhole_factory.js" line="31"/>
         <source>Black Hole Factory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11286,7 +11281,7 @@
 <context>
     <name>zcrystall</name>
     <message>
-        <location filename="../resources/scripts/building/zcrystall.js" line="36"/>
+        <location filename="../resources/scripts/building/zcrystall.js" line="37"/>
         <source>Crystall</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11294,7 +11289,7 @@
 <context>
     <name>zdeathray_E</name>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_E.js" line="36"/>
+        <location filename="../resources/scripts/building/zdeathray_E.js" line="37"/>
         <source>Death Ray</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11302,7 +11297,7 @@
 <context>
     <name>zdeathray_N</name>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_N.js" line="36"/>
+        <location filename="../resources/scripts/building/zdeathray_N.js" line="37"/>
         <source>Death Ray</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11310,7 +11305,7 @@
 <context>
     <name>zdeathray_S</name>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_S.js" line="36"/>
+        <location filename="../resources/scripts/building/zdeathray_S.js" line="37"/>
         <source>Death Ray</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11318,7 +11313,7 @@
 <context>
     <name>zdeathray_W</name>
     <message>
-        <location filename="../resources/scripts/building/zdeathray_W.js" line="36"/>
+        <location filename="../resources/scripts/building/zdeathray_W.js" line="37"/>
         <source>Death Ray</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11326,7 +11321,7 @@
 <context>
     <name>zfortress</name>
     <message>
-        <location filename="../resources/scripts/building/zfortress.js" line="26"/>
+        <location filename="../resources/scripts/building/zfortress.js" line="27"/>
         <source>Fortress</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11334,7 +11329,7 @@
 <context>
     <name>zlaser</name>
     <message>
-        <location filename="../resources/scripts/building/zlaser.js" line="36"/>
+        <location filename="../resources/scripts/building/zlaser.js" line="37"/>
         <source>Laser</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11342,7 +11337,7 @@
 <context>
     <name>zminicannon_E</name>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_E.js" line="32"/>
+        <location filename="../resources/scripts/building/zminicannon_E.js" line="33"/>
         <source>Mini Cannon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11350,7 +11345,7 @@
 <context>
     <name>zminicannon_N</name>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_N.js" line="36"/>
+        <location filename="../resources/scripts/building/zminicannon_N.js" line="37"/>
         <source>Mini Cannon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11358,7 +11353,7 @@
 <context>
     <name>zminicannon_S</name>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_S.js" line="36"/>
+        <location filename="../resources/scripts/building/zminicannon_S.js" line="37"/>
         <source>Mini Cannon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11366,7 +11361,7 @@
 <context>
     <name>zminicannon_W</name>
     <message>
-        <location filename="../resources/scripts/building/zminicannon_W.js" line="36"/>
+        <location filename="../resources/scripts/building/zminicannon_W.js" line="37"/>
         <source>Mini Cannon</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11374,7 +11369,7 @@
 <context>
     <name>zmonolith</name>
     <message>
-        <location filename="../resources/scripts/building/zmonolith.js" line="32"/>
+        <location filename="../resources/scripts/building/zmonolith.js" line="33"/>
         <source>Black Obelisk</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11382,7 +11377,7 @@
 <context>
     <name>zomega_base</name>
     <message>
-        <location filename="../resources/scripts/building/zomega_base.js" line="26"/>
+        <location filename="../resources/scripts/building/zomega_base.js" line="27"/>
         <source>Omega Base</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11390,7 +11385,7 @@
 <context>
     <name>ztalon_gun</name>
     <message>
-        <location filename="../resources/scripts/building/ztalon_gun.js" line="40"/>
+        <location filename="../resources/scripts/building/ztalon_gun.js" line="41"/>
         <source>Talon Gun</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11398,7 +11393,7 @@
 <context>
     <name>ztalon_gun_destroyed</name>
     <message>
-        <location filename="../resources/scripts/building/ztalon_gun_destroyed.js" line="37"/>
+        <location filename="../resources/scripts/building/ztalon_gun_destroyed.js" line="38"/>
         <source>Ruins</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11406,7 +11401,7 @@
 <context>
     <name>zvolcan</name>
     <message>
-        <location filename="../resources/scripts/building/zvolcan.js" line="36"/>
+        <location filename="../resources/scripts/building/zvolcan.js" line="37"/>
         <source>Volcan</source>
         <translation type="unfinished"></translation>
     </message>

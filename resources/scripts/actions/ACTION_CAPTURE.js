@@ -69,38 +69,43 @@ var Constructor = function()
             captured = true;
             unit.setCapturePoints(0);
         }
-        var x = action.getActionTarget().x * map.getImageSize() - 10;
-        var y = action.getActionTarget().y * map.getImageSize() - 30;
-        var captureAnimation = GameAnimationFactory.createGameAnimationCapture(x , y, capturePoints, unit.getCapturePoints(), maxCapturePoints);
-        captureAnimation.addBackgroundSprite("capture_background");
-        var armyName = unit.getOwner().getArmy().toLowerCase();
-        // bh and bg have the same sprites
-        if (armyName === "bg")
+        var targetX = action.getActionTarget().x;
+        var targetY = action.getActionTarget().y;
+        var viewPlayer = map.getCurrentViewPlayer();
+        if (viewPlayer === unit.getOwner() || viewPlayer.getFieldVisible(targetX, targetY))
         {
-            armyName = "bh"
+            var x = targetX * map.getImageSize() - 10;
+            var y = targetY * map.getImageSize() - 30;
+            var captureAnimation = GameAnimationFactory.createGameAnimationCapture(x , y, capturePoints, unit.getCapturePoints(), maxCapturePoints);
+            captureAnimation.addBackgroundSprite("capture_background");
+            var armyName = unit.getOwner().getArmy().toLowerCase();
+            // bh and bg have the same sprites
+            if (armyName === "bg")
+            {
+                armyName = "bh"
+            }
+            if ((armyName !== "os") &&
+                    (armyName !== "yc") &&
+                    (armyName !== "ge") &&
+                    (armyName !== "bm") &&
+                    (armyName !== "bh"))
+            {
+                armyName = "os";
+            }
+            var color;
+            if (building.getOwner() === null)
+            {
+                color = "#FFFFFF";
+            }
+            else
+            {
+                color = building.getOwner().getColor();
+            }
+            Global[building.getBuildingID()].addCaptureAnimationBuilding(captureAnimation, building, color, unit.getOwner().getColor());
+            captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , unit.getOwner().getColor(), true);
+            captureAnimation.addSoldierSprite("soldier+" + armyName , unit.getOwner().getColor(), false);
+            animation.queueAnimation(captureAnimation);
         }
-        if ((armyName !== "os") &&
-            (armyName !== "yc") &&
-            (armyName !== "ge") &&
-            (armyName !== "bm") &&
-            (armyName !== "bh"))
-        {
-            armyName = "os";
-        }
-        var color;
-        if (building.getOwner() === null)
-        {
-            color = "#FFFFFF";
-        }
-        else
-        {
-            color = building.getOwner().getColor();
-        }
-        Global[building.getBuildingID()].addCaptureAnimationBuilding(captureAnimation, building, color, unit.getOwner().getColor());
-        captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , unit.getOwner().getColor(), true);
-        captureAnimation.addSoldierSprite("soldier+" + armyName , unit.getOwner().getColor(), false);
-
-        animation.queueAnimation(captureAnimation);
 
         if (captured)
         {

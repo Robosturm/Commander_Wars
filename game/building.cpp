@@ -113,11 +113,27 @@ void Building::loadSprite(QString spriteID, bool addPlayerColor)
         }
         this->addChild(pSprite);
         m_pBuildingSprites.append(pSprite);
-
+        m_addPlayerColor.append(addPlayerColor);
     }
     else
     {
         Console::print("Unable to load terrain sprite: " + spriteID, Console::eERROR);
+    }
+}
+
+void Building::updatePlayerColor(bool visible)
+{
+    for (qint32 i = 0; i < m_pBuildingSprites.size(); i++)
+    {
+        if (m_addPlayerColor[i] && m_pOwner != nullptr && (visible || alwaysVisble))
+        {
+            QColor color = m_pOwner->getColor();
+            m_pBuildingSprites[i]->setColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
+        }
+        else
+        {
+            m_pBuildingSprites[i]->setColor(oxygine::Color(150, 150, 150, 255));
+        }
     }
 }
 
@@ -497,6 +513,16 @@ GameEnums::BuildingTarget Building::getBuildingTargets()
         return static_cast<GameEnums::BuildingTarget>(ret.toInt());
     }
     return GameEnums::BuildingTarget_All;
+}
+
+bool Building::getAlwaysVisble() const
+{
+    return alwaysVisble;
+}
+
+void Building::setAlwaysVisble(bool value)
+{
+    alwaysVisble = value;
 }
 
 QString Building::getTerrainAnimationBase()

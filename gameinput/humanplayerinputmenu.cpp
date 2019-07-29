@@ -130,6 +130,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
             pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
             {
                 oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+                pTouchEvent->stopPropagation();
                 if (pTouchEvent != nullptr)
                 {
                     if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
@@ -139,6 +140,7 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
                         emit sigItemSelected(action, costs);
                     }
                 }
+
             });
         }
         y += pItemBox->getHeight();
