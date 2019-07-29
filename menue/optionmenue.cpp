@@ -144,6 +144,23 @@ void OptionMenue::changeScreenMode(qint32 mode)
     pApp->continueThread();
 }
 
+qint32 OptionMenue::getScreenMode()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    if (pApp->getSettings()->getFullscreen())
+    {
+        return 2;
+    }
+    else if (pApp->getSettings()->getBorderless())
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 void OptionMenue::changeScreenSize(qint32 width, qint32 heigth)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -465,6 +482,7 @@ void OptionMenue::showSettings()
     QVector<QString> items = {tr("Window"), tr("Bordered"), tr("Fullscreen")};
     spDropDownmenu pScreenModes = new DropDownmenu(400, items);
     pScreenModes->setPosition(sliderOffset - 130, y);
+    pScreenModes->setCurrentItem(getScreenMode());
     m_pOptions->addItem(pScreenModes);
     connect(pScreenModes.get(), &DropDownmenu::sigItemChanged, this, &OptionMenue::changeScreenMode, Qt::QueuedConnection);
     y += 40;

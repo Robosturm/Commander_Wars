@@ -249,12 +249,11 @@ void Mainwindow::loadGame(QString filename)
         QFile file(filename);
         if (file.exists())
         {
-            oxygine::getStage()->addChild(new GameMenue(filename, true));
-
+            GameMenue* pMenu = new GameMenue(filename, true);
+            oxygine::getStage()->addChild(pMenu);
             Mainapp* pApp = Mainapp::getInstance();
             pApp->getAudioThread()->clearPlayList();
-            GameMap* pMap = GameMap::getInstance();
-            pMap->startGame();
+            pMenu->startGame();
             leaveMenue();
         }
     }

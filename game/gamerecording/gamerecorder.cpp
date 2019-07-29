@@ -79,8 +79,11 @@ void GameRecorder::deserializeObject(QDataStream& pStream)
             deployedUnits.append(static_cast<quint32>(value));
         }
     }
-    pStream >> m_mapTime;
-    pStream >> m_deployLimit;
+    if (version > 2)
+    {
+        pStream >> m_mapTime;
+        pStream >> m_deployLimit;
+    }
 }
 
 void GameRecorder::newDay()
@@ -155,12 +158,18 @@ void GameRecorder::setMapTime(const qint32 &mapTime)
 
 void GameRecorder::updatePlayerData(qint32 player)
 {
-    m_Record[m_Record.size() - 1]->addPlayerRecord(player, GameMap::getInstance()->getCurrentDay());
+    if (m_Record.size() > 0)
+    {
+        m_Record[m_Record.size() - 1]->addPlayerRecord(player, GameMap::getInstance()->getCurrentDay());
+    }
 }
 
 void GameRecorder::addSpecialEvent(qint32 player, GameEnums::GameRecord_SpecialEvents event)
 {
-    m_Record[m_Record.size() - 1]->addSpecialEvent(player, GameMap::getInstance()->getCurrentDay(), event);
+    if (m_Record.size() > 0)
+    {
+        m_Record[m_Record.size() - 1]->addSpecialEvent(player, GameMap::getInstance()->getCurrentDay(), event);
+    }
 }
 
 GameRecorder::Rang GameRecorder::calculateRang(qint32 player, QVector3D& scorePoints)

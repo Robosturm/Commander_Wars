@@ -30,7 +30,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime)
     pSprite->setScaleX(pApp->getSettings()->getWidth() / pAnim->getWidth());
     pSprite->setScaleY(pApp->getSettings()->getHeight() / pAnim->getHeight());
     QColor color = pPlayer->getColor();
-    oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), color.alpha()));
+    oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), 150));
     oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
     pSprite->addTween(tween);
 

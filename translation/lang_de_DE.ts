@@ -348,6 +348,11 @@
         <source>Beach</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/BEACH.js" line="84"/>
+        <source>Bridge over river and seas which allows ground units to cross. Bridges over sea also allows naval units to cross the field.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BRIDGE</name>
@@ -626,12 +631,22 @@
         <source>Desert</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT.js" line="64"/>
+        <source>Ground units move easily on this terrain, but it reduces the firerange of indirect units by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DESERT_DESTROYEDWELD</name>
     <message>
         <location filename="../resources/scripts/terrain/DESERT_DESTROYEDWELD.js" line="6"/>
         <source>Desert Destroyed Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT_DESTROYEDWELD.js" line="87"/>
+        <source>Ground units move easily on this terrain, but it reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -642,12 +657,22 @@
         <source>Desert Forest</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT_FOREST.js" line="47"/>
+        <source>In Fog of War conditions, the woods provide ground unit &lt;div c=&apos;ffffff&apos;&gt;hiding places&lt;div c=&apos;00ff00&apos;&gt;. It reduces the firerange of indirect units by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DESERT_PATH</name>
     <message>
         <location filename="../resources/scripts/terrain/DESERT_PATH.js" line="6"/>
         <source>Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT_PATH.js" line="43"/>
+        <source>Kinda well-surfaced path through the desert provides optimum mobility but little cover. It reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -658,12 +683,22 @@
         <source>Desert Pipeline</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT_PIPELINE.js" line="69"/>
+        <source>Black Hole Pipeline which can&apos;t be crossed by most units. It reduces the firerange of indirect units by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DESERT_ROCK</name>
     <message>
         <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="6"/>
         <source>Rock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="51"/>
+        <source>Clear view. In Fog of War, Infantry unit&apos;s gain &lt;div c=&apos;ffffff&apos;&gt;vision +3&lt;div c=&apos;00ff00&apos;&gt;. It reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -674,12 +709,22 @@
         <source>Try River</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT_TRY_RIVER.js" line="47"/>
+        <source>Once a river. Now an empty Riverbed that can be crossed by most units doesn&apos;t provide cover. It reduces the firerange of indirect units by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DESERT_WASTELAND</name>
     <message>
         <location filename="../resources/scripts/terrain/DESERT_WASTELAND.js" line="6"/>
         <source>Desert Wasteland</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT_WASTELAND.js" line="26"/>
+        <source>Infantry and Mech units aside, mobility is impaired on rough terrain. It reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -690,12 +735,22 @@
         <source>Desert Weld</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/DESERT_WELD.js" line="98"/>
+        <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline. It reduces the firerange of indirect units by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DESTROYEDWELD</name>
     <message>
         <location filename="../resources/scripts/terrain/DESTROYEDWELD.js" line="6"/>
         <source>Destroyed Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/DESTROYEDWELD.js" line="82"/>
+        <source>Ground units move easily on this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1104,6 +1159,11 @@
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/FIRE.js" line="53"/>
+        <source>Ground units move easily on this terrain.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FOG</name>
@@ -1112,12 +1172,22 @@
         <source>Fog</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/FOG.js" line="49"/>
+        <source>This heavy fog provides ideal &lt;div c=&apos;ffffff&apos;&gt;hiding places&lt;div c=&apos;00ff00&apos;&gt; for naval units in Fog of War.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FOREST</name>
     <message>
         <location filename="../resources/scripts/terrain/FOREST.js" line="6"/>
         <source>Forest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/FOREST.js" line="45"/>
+        <source>In Fog of War conditions, the woods provide ground unit &lt;div c=&apos;ffffff&apos;&gt;hiding places&lt;div c=&apos;00ff00&apos;&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1155,17 +1225,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="152"/>
+        <location filename="../menue/gamemenue.cpp" line="155"/>
         <source>A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="216"/>
+        <location filename="../menue/gamemenue.cpp" line="219"/>
         <source>Save Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="224"/>
+        <location filename="../menue/gamemenue.cpp" line="227"/>
         <source>Exit Game</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1338,12 +1408,22 @@
         <source>Meteor</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/METEOR.js" line="109"/>
+        <source>Meteor pieces which can be &lt;div c=&apos;ffffff&apos;&gt;attacked and destroyed &lt;div c=&apos;00ff00&apos;&gt;to eliminate plasma.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MOUNTAIN</name>
     <message>
         <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="6"/>
         <source>Mountain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="48"/>
+        <source>Clear view. In Fog of War, Infantry unit&apos;s gain &lt;div c=&apos;ffffff&apos;&gt;vision +3&lt;div c=&apos;00ff00&apos;&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1580,197 +1660,197 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="178"/>
+        <location filename="../menue/optionmenue.cpp" line="195"/>
         <source>Gameplay Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="185"/>
+        <location filename="../menue/optionmenue.cpp" line="202"/>
         <source>Show Ingame Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="188"/>
+        <location filename="../menue/optionmenue.cpp" line="205"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="188"/>
+        <location filename="../menue/optionmenue.cpp" line="205"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="188"/>
+        <location filename="../menue/optionmenue.cpp" line="205"/>
         <source>Own</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="188"/>
+        <location filename="../menue/optionmenue.cpp" line="205"/>
         <source>Ally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="188"/>
+        <location filename="../menue/optionmenue.cpp" line="205"/>
         <source>Enemy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="201"/>
+        <location filename="../menue/optionmenue.cpp" line="218"/>
         <source>Animation Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="216"/>
+        <location filename="../menue/optionmenue.cpp" line="233"/>
         <source>Auto End Turn: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="231"/>
+        <location filename="../menue/optionmenue.cpp" line="248"/>
         <source>Show Windows Cursor: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="246"/>
+        <location filename="../menue/optionmenue.cpp" line="263"/>
         <source>Ingame Keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="253"/>
+        <location filename="../menue/optionmenue.cpp" line="270"/>
         <source>Key Up: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="264"/>
+        <location filename="../menue/optionmenue.cpp" line="281"/>
         <source>Key Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="275"/>
+        <location filename="../menue/optionmenue.cpp" line="292"/>
         <source>Key Down: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="286"/>
+        <location filename="../menue/optionmenue.cpp" line="303"/>
         <source>Key Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="297"/>
+        <location filename="../menue/optionmenue.cpp" line="314"/>
         <source>Key Confirm: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="308"/>
+        <location filename="../menue/optionmenue.cpp" line="325"/>
         <source>Key Cancel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="319"/>
+        <location filename="../menue/optionmenue.cpp" line="336"/>
         <source>Key Next: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="330"/>
+        <location filename="../menue/optionmenue.cpp" line="347"/>
         <source>Key Previous: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="341"/>
+        <location filename="../menue/optionmenue.cpp" line="358"/>
         <source>Key Quicksave 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="352"/>
+        <location filename="../menue/optionmenue.cpp" line="369"/>
         <source>Key Quickload 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="363"/>
+        <location filename="../menue/optionmenue.cpp" line="380"/>
         <source>Key Quicksave 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="374"/>
+        <location filename="../menue/optionmenue.cpp" line="391"/>
         <source>Key Quickload 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="438"/>
+        <location filename="../menue/optionmenue.cpp" line="455"/>
         <source>Screen Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="446"/>
+        <location filename="../menue/optionmenue.cpp" line="463"/>
         <source>Screen Resolution: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="462"/>
+        <location filename="../menue/optionmenue.cpp" line="479"/>
         <source>Screen Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="465"/>
+        <location filename="../menue/optionmenue.cpp" line="482"/>
         <source>Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="465"/>
+        <location filename="../menue/optionmenue.cpp" line="482"/>
         <source>Bordered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="465"/>
+        <location filename="../menue/optionmenue.cpp" line="482"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="474"/>
+        <location filename="../menue/optionmenue.cpp" line="492"/>
         <source>Audio Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="480"/>
+        <location filename="../menue/optionmenue.cpp" line="498"/>
         <source>Global Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="496"/>
+        <location filename="../menue/optionmenue.cpp" line="514"/>
         <source>Music Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="512"/>
+        <location filename="../menue/optionmenue.cpp" line="530"/>
         <source>Sound Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="527"/>
+        <location filename="../menue/optionmenue.cpp" line="545"/>
         <source>Network Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="534"/>
+        <location filename="../menue/optionmenue.cpp" line="552"/>
         <source>Username: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="556"/>
+        <location filename="../menue/optionmenue.cpp" line="574"/>
         <source>Server Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="571"/>
+        <location filename="../menue/optionmenue.cpp" line="589"/>
         <source>Lobby port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="586"/>
+        <location filename="../menue/optionmenue.cpp" line="604"/>
         <source>Server: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="602"/>
+        <location filename="../menue/optionmenue.cpp" line="620"/>
         <source>Game port: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1782,12 +1862,22 @@
         <source>Pipeline</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/PIPELINE.js" line="65"/>
+        <source>Black Hole Pipeline which can&apos;t be crossed by most units.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PLAINS</name>
     <message>
         <location filename="../resources/scripts/terrain/PLAINS.js" line="6"/>
         <source>Plains</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/PLAINS.js" line="68"/>
+        <source>Ground units move easily on this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1798,6 +1888,11 @@
         <source>Plains</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="37"/>
+        <source>Ground units move easily on this terrain.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PLAINS_PLASMA</name>
@@ -1806,12 +1901,22 @@
         <source>Plains</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="23"/>
+        <source>Ground units move easily on this terrain.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PLASMA</name>
     <message>
         <location filename="../resources/scripts/terrain/PLASMA.js" line="6"/>
         <source>Plasma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/PLASMA.js" line="34"/>
+        <source>Eectric charge us impassable but disappears if &lt;div c=&apos;ffffff&apos;&gt;meteor pieces &lt;div c=&apos;00ff00&apos;&gt;are destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1936,12 +2041,22 @@
         <source>Reaf</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/REAF.js" line="63"/>
+        <source>This spiky reaf provides ideal &lt;div c=&apos;ffffff&apos;&gt;hiding places&lt;div c=&apos;00ff00&apos;&gt; for naval units in Fog of War.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RIVER</name>
     <message>
         <location filename="../resources/scripts/terrain/RIVER.js" line="6"/>
         <source>River</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/RIVER.js" line="73"/>
+        <source>Most infantry and Hovercraft units are the only ground unit that can cross rivers.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1952,12 +2067,22 @@
         <source>Rough Sea</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="50"/>
+        <source>Movement of naval units is impeded but air units are not affected.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RUIN</name>
     <message>
         <location filename="../resources/scripts/terrain/RUIN.js" line="6"/>
         <source>Ruin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/RUIN.js" line="39"/>
+        <source>In Fog of War conditions, the ruins provide ground unit &lt;div c=&apos;ffffff&apos;&gt;hiding places&lt;div c=&apos;00ff00&apos;&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2039,12 +2164,22 @@
         <source>Sea</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/SEA.js" line="99"/>
+        <source>Calm sea. Naval and air forces have good mobility.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SNOW</name>
     <message>
         <location filename="../resources/scripts/terrain/SNOW.js" line="6"/>
         <source>Snow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/SNOW.js" line="42"/>
+        <source>Snowy terrain reduces rough to cross.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2055,12 +2190,22 @@
         <source>Snowy Destroyed Weld</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/SNOW_DESTROYEDWELD.js" line="82"/>
+        <source>Snowy terrain reduces rough to cross.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SNOW_FOREST</name>
     <message>
         <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="6"/>
         <source>Snowy Forest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="43"/>
+        <source>In Fog of War conditions, the snowy woods provide ground unit &lt;div c=&apos;ffffff&apos;&gt;hiding places&lt;div c=&apos;00ff00&apos;&gt;. It&apos;s hard for ground units to cross this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2079,12 +2224,22 @@
         <source>Snowy Pipeline</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/SNOW_PIPELINE.js" line="65"/>
+        <source>Black Hole Pipeline which can&apos;t be crossed by most units and is also hard to cross for those who can.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SNOW_WASTELAND</name>
     <message>
         <location filename="../resources/scripts/terrain/SNOW_WASTELAND.js" line="6"/>
         <source>Snowy Wasteland</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/SNOW_WASTELAND.js" line="22"/>
+        <source>Mobility is impaired on this rough terrain.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2095,12 +2250,22 @@
         <source>Snowy Weld</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/SNOW_WELD.js" line="94"/>
+        <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>STREET</name>
     <message>
         <location filename="../resources/scripts/terrain/STREET.js" line="6"/>
         <source>Street</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/STREET.js" line="39"/>
+        <source>Well-surfaced roads provides optimum mobility but little cover.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3039,6 +3204,11 @@
         <source>Wall</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/WALL.js" line="57"/>
+        <source>Dark Matter Walls can&apos;t be crossed by most units. They can be destroyed to create a path through them.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WASTELAND</name>
@@ -3047,12 +3217,22 @@
         <source>Wasteland</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/terrain/WASTELAND.js" line="23"/>
+        <source>Infantry and Mech units aside, mobility is impaired on rough terrain.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WELD</name>
     <message>
         <location filename="../resources/scripts/terrain/WELD.js" line="6"/>
         <source>Weld</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/WELD.js" line="94"/>
+        <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10734,7 +10914,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/building/radar.js" line="35"/>
-        <source>Once captured can be used for &lt;div c=&apos;00ff00&apos;&gt;production and resupplying &lt;div c=&apos;ffffff&apos;&gt;of &lt;div c=&apos;00ff00&apos;&gt;pipe &lt;div c=&apos;ffffff&apos;&gt;units. Produces also more funds.</source>
+        <source>In Fog of War, Radars make a &lt;div c=&apos;00ff00&apos;&gt;5 square &lt;div c=&apos;ffffff&apos;&gt;area around them visible.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10761,12 +10941,22 @@
         <source>Silo</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/building/silo.js" line="29"/>
+        <source>Empty missile silo which provides some defence.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>silo_rocket</name>
     <message>
         <location filename="../resources/scripts/building/silo_rocket.js" line="24"/>
         <source>Silo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/silo_rocket.js" line="29"/>
+        <source>Missile can be launched once, by Infantry unit. Damage across &lt;div c=&apos;00ff00&apos;&gt;13 square &lt;div c=&apos;ffffff&apos;&gt;area.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10809,12 +10999,22 @@
         <source>Temporary Airport</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/building/temporary_airport.js" line="59"/>
+        <source>Airport made by APC. &lt;div c=&apos;00ff00&apos;&gt;Resupplying &lt;div c=&apos;ffffff&apos;&gt;of &lt;div c=&apos;00ff00&apos;&gt;air &lt;div c=&apos;ffffff&apos;&gt;units is possible.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>temporary_harbour</name>
     <message>
         <location filename="../resources/scripts/building/temporary_harbour.js" line="25"/>
         <source>Temporary Harbour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/temporary_harbour.js" line="56"/>
+        <source>Harbour made by APC. &lt;div c=&apos;00ff00&apos;&gt;Resupplying &lt;div c=&apos;ffffff&apos;&gt;of &lt;div c=&apos;00ff00&apos;&gt;naval &lt;div c=&apos;ffffff&apos;&gt;units is possible.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10825,12 +11025,22 @@
         <source>Tower</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/building/tower.js" line="40"/>
+        <source>Once captured the Tower boosts your &lt;div c=&apos;00ff00&apos;&gt;attack and defence powers&lt;div c=&apos;ffffff&apos;&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>town</name>
     <message>
         <location filename="../resources/scripts/building/town.js" line="28"/>
         <source>Town</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/town.js" line="33"/>
+        <source>Populated city. Once captured &lt;div c=&apos;00ff00&apos;&gt;ground &lt;div c=&apos;ffffff&apos;&gt;units can &lt;div c=&apos;00ff00&apos;&gt;resupply&lt;div c=&apos;ffffff&apos;&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11277,12 +11487,22 @@
         <source>Ruins</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/building/zblack_building_destroyed.js" line="43"/>
+        <source>Destroyed Black Hole Building.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>zblackhole_cannon_E</name>
     <message>
         <location filename="../resources/scripts/building/zblackhole_cannon_E.js" line="25"/>
         <source>Black Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_cannon_E.js" line="96"/>
+        <source>Black Hole Cannon that can deal 5 damage to a single unit in a large range.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11293,12 +11513,22 @@
         <source>Black Cannon</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_cannon_N.js" line="97"/>
+        <source>Black Hole Cannon that can deal 5 damage to a single unit in a large range.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>zblackhole_cannon_S</name>
     <message>
         <location filename="../resources/scripts/building/zblackhole_cannon_S.js" line="29"/>
         <source>Black Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_cannon_S.js" line="96"/>
+        <source>Black Hole Cannon that can deal 5 damage to a single unit in a large range.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11309,12 +11539,22 @@
         <source>Black Cannon</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_cannon_W.js" line="96"/>
+        <source>Black Hole Cannon that can deal 5 damage to a single unit in a large range.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>zblackhole_factory</name>
     <message>
         <location filename="../resources/scripts/building/zblackhole_factory.js" line="31"/>
         <source>Black Hole Factory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zblackhole_factory.js" line="61"/>
+        <source>Black Hole Factory that can build 3 units each turn which can immediatly move.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11325,12 +11565,22 @@
         <source>Crystall</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/building/zcrystall.js" line="61"/>
+        <source>Black Hole Crystal that can heal all own units for 2 HP in a 13 square area.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>zdeathray_E</name>
     <message>
         <location filename="../resources/scripts/building/zdeathray_E.js" line="37"/>
         <source>Death Ray</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zdeathray_E.js" line="126"/>
+        <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large in front of it. It needs 7 days to reload after fire.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11341,12 +11591,22 @@
         <source>Death Ray</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/building/zdeathray_N.js" line="125"/>
+        <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large in front of it. It needs 7 days to reload after fire.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>zdeathray_S</name>
     <message>
         <location filename="../resources/scripts/building/zdeathray_S.js" line="37"/>
         <source>Death Ray</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zdeathray_S.js" line="121"/>
+        <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large in front of it. It needs 7 days to reload after fire.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11357,12 +11617,22 @@
         <source>Death Ray</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/building/zdeathray_W.js" line="124"/>
+        <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large in front of it. It needs 7 days to reload after fire.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>zfortress</name>
     <message>
         <location filename="../resources/scripts/building/zfortress.js" line="27"/>
         <source>Fortress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zfortress.js" line="49"/>
+        <source>Black Hole Fortress that defends a position has no other effects.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11373,12 +11643,22 @@
         <source>Laser</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/building/zlaser.js" line="70"/>
+        <source>Black Hole Laser that can deal 5 HP of damage to all units in 4 rays from the laser.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>zminicannon_E</name>
     <message>
         <location filename="../resources/scripts/building/zminicannon_E.js" line="33"/>
         <source>Mini Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zminicannon_E.js" line="67"/>
+        <source>Black Hole Minicannon that can deal 3 HP of damage to a single unit in a small range.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11389,12 +11669,22 @@
         <source>Mini Cannon</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/building/zminicannon_N.js" line="66"/>
+        <source>Black Hole Minicannon that can deal 3 HP of damage to a single unit in a small range.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>zminicannon_S</name>
     <message>
         <location filename="../resources/scripts/building/zminicannon_S.js" line="37"/>
         <source>Mini Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zminicannon_S.js" line="66"/>
+        <source>Black Hole Minicannon that can deal 3 HP of damage to a single unit in a small range.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11405,12 +11695,22 @@
         <source>Mini Cannon</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/building/zminicannon_W.js" line="66"/>
+        <source>Black Hole Minicannon that can deal 3 HP of damage to a single unit in a small range.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>zmonolith</name>
     <message>
         <location filename="../resources/scripts/building/zmonolith.js" line="33"/>
         <source>Black Obelisk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zmonolith.js" line="90"/>
+        <source>Black Hole Monolith that can heal all own units for 2 HP in a 3 square area.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11421,12 +11721,22 @@
         <source>Omega Base</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/building/zomega_base.js" line="49"/>
+        <source>Black Hole Omega Base meant to launch a giant Rocket on the Earth to destroy it.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ztalon_gun</name>
     <message>
         <location filename="../resources/scripts/building/ztalon_gun.js" line="41"/>
         <source>Talon Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/ztalon_gun.js" line="89"/>
+        <source>Talon Gun of Dark Matter fires at all enemie units each turn dealing 5HP of damage in a 3 square area.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11437,12 +11747,22 @@
         <source>Ruins</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/building/ztalon_gun_destroyed.js" line="42"/>
+        <source>Destroyed Talon Gun of Dark Matter.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>zvolcan</name>
     <message>
         <location filename="../resources/scripts/building/zvolcan.js" line="37"/>
         <source>Volcan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zvolcan.js" line="115"/>
+        <source>Volcan that fires fireballs each day dealing 5 HP of damage at all units they hit.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

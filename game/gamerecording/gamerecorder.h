@@ -41,7 +41,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 2;
+        return 3;
     }
     /**
      * @brief calculateRang

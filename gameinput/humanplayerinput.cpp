@@ -661,7 +661,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
 {
     QVector<QPoint> points = m_ArrowPoints;
     deleteArrow();
-    if (m_pGameAction->getTarget() != QPoint(x, y))
+    if (m_pGameAction->getTarget() != QPoint(x, y) && !m_pGameAction->getTargetUnit()->getHasMoved())
     {
         if (m_pUnitPathFindingSystem->getCosts(x, y) > 0)
         {

@@ -48,7 +48,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
 
     oxygine::spClipRectActor pRect = new oxygine::ClipRectActor();
     pRect->setPosition(48 * scale + 5, 4 * scale);
-    pRect->setSize(pSetting->getWidth() - pRect->getX(), 42 * scale);
+    pRect->setSize(pSetting->getWidth() - pRect->getX() - 5, 42 * scale);
 
     m_TextField = new oxygine::TextField();
     m_TextField->setPosition(0, -9);

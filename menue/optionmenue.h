@@ -13,6 +13,7 @@ class OptionMenue : public QObject, public oxygine::Actor
 public:
     explicit OptionMenue();
 
+    qint32 getScreenMode();
 signals:
     void sigExitMenue();
     void sigShowMods();

@@ -74,9 +74,12 @@ GameMenue::GameMenue(spNetworkInterface pNetworkInterface, bool saveGame)
 
 GameMenue::GameMenue(QString map, bool saveGame)
     : InGameMenue(-1, -1, map),
+      gameStarted(true),
       m_SaveGame(saveGame)
+
 {    
     loadGameMenue();
+
 }
 
 void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
@@ -620,10 +623,12 @@ void GameMenue::startGame()
     }
     else
     {
+        pApp->getAudioThread()->clearPlayList();
         pMap->getCurrentPlayer()->loadCOMusic();
         pMap->updateUnitIcons();
-        pMap->getGameRules()->createFogVision();
+        pMap->getGameRules()->createFogVision();        
         pApp->getAudioThread()->playRandom();
+        updatePlayerinfo();
         emit sigActionPerformed();
     }
     pApp->continueThread();
@@ -652,10 +657,10 @@ void GameMenue::keyInput(SDL_Event event)
                 pApp->suspendThread();
                 Console::print("Leaving Game Menue", Console::eDEBUG);
                 oxygine::Actor::detach();
-                oxygine::getStage()->addChild(new GameMenue("savegames/quicksave1.sav", true));
+                GameMenue* pMenue = new GameMenue("savegames/quicksave1.sav", true);
+                oxygine::getStage()->addChild(pMenue);
                 pApp->getAudioThread()->clearPlayList();
-                GameMap* pMap = GameMap::getInstance();
-                pMap->startGame();
+                pMenue->startGame();
                 pApp->continueThread();
             }
         }
@@ -667,10 +672,10 @@ void GameMenue::keyInput(SDL_Event event)
                 pApp->suspendThread();
                 Console::print("Leaving Game Menue", Console::eDEBUG);
                 oxygine::Actor::detach();
-                oxygine::getStage()->addChild(new GameMenue("savegames/quicksave2.sav", true));
+                GameMenue* pMenue = new GameMenue("savegames/quicksave1.sav", true);
+                oxygine::getStage()->addChild(pMenue);
                 pApp->getAudioThread()->clearPlayList();
-                GameMap* pMap = GameMap::getInstance();
-                pMap->startGame();
+                pMenue->startGame();
                 pApp->continueThread();
             }
         }
