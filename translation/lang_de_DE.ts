@@ -312,7 +312,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="224"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="233"/>
         <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>

@@ -94,6 +94,16 @@ var Constructor = function()
                 }
             }
         }
+        else
+        {
+            var unloadableUnits = ACTION_UNLOAD.getUnloadableUnits(action);
+            if (unloadableUnits.length === 0)
+            {
+                action.writeDataString("ACTION_WAIT");
+                action.setInputStep(action.getInputStep() + 1);
+                return true;
+            }
+        }
         return false;
     };
 
@@ -102,7 +112,22 @@ var Constructor = function()
         // supported types are MENU and FIELD
         if (globals.isEven(action.getInputStep()))
         {
-            return "MENU";
+            // only one unit can be unloaded?
+            var unitIndexes = [];
+            var blockedFields = [];
+            ACTION_UNLOAD.getUsedUnitsAndFields(action, unitIndexes, blockedFields);
+            var unloadableUnits = ACTION_UNLOAD.getUnloadableUnits(action);
+            if (unitIndexes.length === 0 && unloadableUnits.length === 1)
+            {
+                // skip selecting a unit when only one can be unloaded
+                action.writeDataString(unloadableUnits[0]);
+                action.setInputStep(action.getInputStep() + 1);
+                return "FIELD";
+            }
+            else
+            {
+                return "MENU";
+            }
         }
         else
         {
@@ -110,16 +135,10 @@ var Constructor = function()
         }
     };
 
-    this.getStepData = function(action, data)
+    this.getUsedUnitsAndFields = function(action, unitIndexes, blockedFields)
     {
         action.startReading();
         var step = action.getInputStep();
-        var unitIndexes = [];
-        var blockedFields = [];
-        var fields = null;
-        var i3 = 0;
-        var i4 = 0;
-        var found = false;
         for (var i2 = 0; i2 < step; i2 += 2)
         {
             unitIndexes.push(parseInt(action.readDataString()));
@@ -130,6 +149,59 @@ var Constructor = function()
                 blockedFields.push(Qt.point(x, y))
             }
         }
+    };
+
+    this.getUnloadableUnits = function(action)
+    {
+        var ret = [];
+        var unitIndexes = [];
+        var blockedFields = [];
+        ACTION_UNLOAD.getUsedUnitsAndFields(action, unitIndexes, blockedFields);
+        var unit = action.getTargetUnit();
+        var fields = null;
+        var i3 = 0;
+        var i4 = 0;
+        var found = false;
+        for (var i = 0; i < unit.getLoadedUnitCount(); i++)
+        {
+            if (unitIndexes.indexOf(i) < 0)
+            {
+                fields = ACTION_UNLOAD.getUnloadFields(action, i);
+                for (i3 = 0; i3 < fields.length; i3++)
+                {
+                    found = false;
+                    for (i4 = 0; i4 < blockedFields.length; i4++)
+                    {
+                        if (blockedFields[i4] === fields[i3])
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (found === false)
+                    {
+                        var transportUnit = unit.getLoadedUnit(i);
+                        ret.push(i.toString());
+                        break;
+                    }
+                }
+            }
+        }
+        return ret;
+    };
+
+    this.getStepData = function(action, data)
+    {
+        var step = action.getInputStep();
+
+        var unitIndexes = [];
+        var blockedFields = [];
+        ACTION_UNLOAD.getUsedUnitsAndFields(action, unitIndexes, blockedFields);
+
+        var fields = null;
+        var i3 = 0;
+        var i4 = 0;
+        var found = false;
         if (globals.isEven(action.getInputStep()))
         {
             var unit = action.getTargetUnit();
