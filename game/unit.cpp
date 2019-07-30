@@ -581,6 +581,7 @@ bool Unit::canMoveAndFire(QPoint position)
 void Unit::loadUnit(Unit* pUnit)
 {
     m_TransportUnits.append(pUnit->getTerrain()->getSpUnit());
+    pUnit->removeUnit();
     updateIcons(GameMap::getInstance()->getCurrentViewPlayer());
 }
 

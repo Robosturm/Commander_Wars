@@ -46,15 +46,10 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var animation = GameAnimationFactory.createWalkingAnimation(unit, action);
         var unitID = unit.getUnitID().toLowerCase();
-        animation.loadSprite(unitID + "+walk+mask", true, 1.25);
-        animation.loadSprite(unitID + "+walk", false, 1.25);
+        animation.loadSprite(unitID + "+walk+mask", true, 1.5);
+        animation.loadSprite(unitID + "+walk", false, 1.5);
         animation.setSound("movetank.wav", -2);
         return animation;
-    };
-    this.startOfTurn = function(unit)
-    {
-        // pay unit upkeep
-        ACTION_RATION.giveRation(unit);
     };
     this.getLoadingPlace = function()
     {
@@ -66,6 +61,11 @@ var Constructor = function()
     };
     this.startOfTurn = function(unit)
     {
+        // pay unit upkeep
+        if (unit.getTerrain() !== null)
+        {
+            ACTION_RATION.giveRation(unit);
+        }
         UNIT.transporterRefilling(unit);
     };
 }

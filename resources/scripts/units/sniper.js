@@ -29,9 +29,17 @@ var Constructor = function()
         {
             armyName = "bh"
         }
+        if ((armyName !== "yc") &&
+            (armyName !== "ge") &&
+            (armyName !== "bm") &&
+            (armyName !== "bh") &&
+            (armyName !== "ma"))
+        {
+            armyName = "os";
+        }
         // load sprites
-        unit.loadSprite("sniper+" + armyName, false);
-        unit.loadSprite("sniper+" + armyName +"+mask", true);
+        unit.loadSprite("sniper+" + armyName, false, 1.5);
+        unit.loadSprite("sniper+" + armyName +"+mask", true, 1.5);
     };
     this.getMovementType = function()
     {

@@ -312,7 +312,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="161"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="224"/>
         <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10693,7 +10693,7 @@
 <context>
     <name>infantry</name>
     <message>
-        <location filename="../resources/scripts/units/infantry.js" line="81"/>
+        <location filename="../resources/scripts/units/infantry.js" line="76"/>
         <source>Infantry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10738,7 +10738,7 @@
 <context>
     <name>mech</name>
     <message>
-        <location filename="../resources/scripts/units/mech.js" line="81"/>
+        <location filename="../resources/scripts/units/mech.js" line="89"/>
         <source>Mech</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10963,7 +10963,7 @@
 <context>
     <name>sniper</name>
     <message>
-        <location filename="../resources/scripts/units/sniper.js" line="81"/>
+        <location filename="../resources/scripts/units/sniper.js" line="89"/>
         <source>Sniper</source>
         <translation type="unfinished"></translation>
     </message>
