@@ -461,6 +461,10 @@ void HumanPlayerInput::getNextStepData()
         m_pMarkedFieldData = pData;
         CursorData* pCursordata = m_pGameAction->getStepCursor();
         pMenue->getCursor()->changeCursor(pCursordata->getCursor(), pCursordata->getXOffset(), pCursordata->getYOffset(), pCursordata->getScale());
+        if (!m_pMarkedFieldData->getAllFields())
+        {
+            nextMarkedField();
+        }
         delete pCursordata;
     }
 }
