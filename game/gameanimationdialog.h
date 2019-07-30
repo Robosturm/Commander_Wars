@@ -12,10 +12,13 @@ class GameAnimationDialog : public GameAnimation
 {
     Q_OBJECT
 public:
+    static const qint32 dialogHeigth = 48;
     GameAnimationDialog(quint32 frameTime);
 
     virtual void restart() override;
     void finishDialog();
+    void updateShownText();
+    void nextDialogStep();
 signals:
     void sigStartFinishTimer();
     void sigRightClick();
@@ -72,6 +75,8 @@ private:
     qint32 textSpeed;
 
     float textScale{1.7f};
+
+    bool paused{false};
 };
 
 #endif // GAMEANIMATIONDIALOG_H

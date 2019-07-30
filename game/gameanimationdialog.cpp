@@ -87,7 +87,7 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
 
 void GameAnimationDialog::rightClick()
 {
-    GameAnimationFactory::finishAllAnimations();
+    nextDialogStep();
 }
 
 void GameAnimationDialog::keyInput(SDL_Event event)
@@ -98,7 +98,49 @@ void GameAnimationDialog::keyInput(SDL_Event event)
         SDL_Keycode cur = event.key.keysym.sym;
         if (cur == Settings::getKey_confirm())
         {
+            nextDialogStep();
+        }
+    }
+}
+
+void GameAnimationDialog::nextDialogStep()
+{
+    if (paused)
+    {
+        paused = false;
+        writePosition += 1;
+        m_TextField->setHtmlText(m_Text.mid(0, writePosition).toStdString().c_str());
+    }
+    else
+    {
+        if (writePosition >= m_Text.size())
+        {
             onFinished();
+        }
+        else
+        {
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->suspendThread();
+            float textHeight = m_TextField->getTextRect().getHeight();
+            qint32 nextHeight = (static_cast<qint32>(textHeight) / dialogHeigth + 1) * dialogHeigth;
+            // loop till two lines of text will be shown
+            while (writePosition < m_Text.size())
+            {
+                writePosition += 1;
+                m_TextField->setHtmlText(m_Text.mid(0, writePosition).toStdString().c_str());
+                textHeight = m_TextField->getTextRect().getHeight();
+                if (textHeight > nextHeight)
+                {
+                    writePosition -= 1;
+                    break;
+                }
+            }
+            updateShownText();
+            if (writePosition < m_Text.size())
+            {
+                paused = true;
+            }
+            pApp->continueThread();
         }
     }
 }
@@ -111,33 +153,55 @@ void GameAnimationDialog::startFinishTimer()
 
 void GameAnimationDialog::update(const oxygine::UpdateState& us)
 {
-    if (textTimer.elapsed() > textSpeed)
+    if (textTimer.elapsed() > textSpeed && !paused)
     {
         writePosition += 1;
-        if (writePosition > m_Text.size())
+        // check for auto pause
+        float textHeight = m_TextField->getTextRect().getHeight();
+        qint32 nextHeight = (static_cast<qint32>(textHeight) / dialogHeigth) * dialogHeigth;
+        if (static_cast<qint32>(textHeight) % dialogHeigth != 0)
         {
-            writePosition = m_Text.size();
-            if (autoFinishMs >= 0 && !finishTimer.isActive())
-            {
-                emit sigStartFinishTimer();
-            }
+            nextHeight += dialogHeigth;
+        }
+        m_TextField->setHtmlText(m_Text.mid(0, writePosition).toStdString().c_str());
+        textHeight = m_TextField->getTextRect().getHeight();
+        if (textHeight > nextHeight)
+        {
+            writePosition -= 1;
+            updateShownText();
+            paused = true;
         }
         else
         {
-            Mainapp* pApp = Mainapp::getInstance();
-            pApp->getAudioThread()->playSound("speaking.wav");
-        }
-        m_TextField->setHtmlText(m_Text.mid(0, writePosition).toStdString().c_str());
-        float textHeight = m_TextField->getTextRect().getHeight();
-        m_TextField->setHeight(textHeight);
-        if (textHeight > 48)
-        {
-            m_TextField->setY((-textHeight + 48) * textScale - 9);
+            if (writePosition > m_Text.size())
+            {
+                writePosition = m_Text.size();
+                if (autoFinishMs >= 0 && !finishTimer.isActive())
+                {
+                    emit sigStartFinishTimer();
+                }
+            }
+            else
+            {
+                Mainapp* pApp = Mainapp::getInstance();
+                pApp->getAudioThread()->playSound("speaking.wav");
+            }
+            updateShownText();
         }
         textTimer.start();
-
     }
     GameAnimation::update(us);
+}
+
+void GameAnimationDialog::updateShownText()
+{
+    m_TextField->setHtmlText(m_Text.mid(0, writePosition).toStdString().c_str());
+    float textHeight = m_TextField->getTextRect().getHeight();
+    m_TextField->setHeight(textHeight);
+    if (textHeight > dialogHeigth)
+    {
+        m_TextField->setY((-textHeight + dialogHeigth) * textScale - 9);
+    }
 }
 
 
