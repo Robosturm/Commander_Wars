@@ -230,6 +230,11 @@ set(${PROJECT_NAME}_SRCS
         ingamescriptsupport/scripteventdialog.cpp
         ingamescriptsupport/scripteventspawnunit.cpp
         ingamescriptsupport/scripteventdefeatplayer.cpp
+
+        # wiki stuff
+        wiki/terraininfo.cpp
+        wiki/unitinfo.cpp
+        wiki/fieldinfo.cpp
 )
 
 

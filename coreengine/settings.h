@@ -184,6 +184,20 @@ public slots:
     static SDL_Keycode getKey_quickload2();
     static void setKey_quickload2(const SDL_Keycode &key_quickload2);
 
+    static SDL_Keycode getKey_moveMapUp();
+    static void setKey_moveMapUp(const SDL_Keycode &key_moveMapUp);
+
+    static SDL_Keycode getKey_moveMapDown();
+    static void setKey_moveMapDown(const SDL_Keycode &key_moveMapDown);
+
+    static SDL_Keycode getKey_moveMapRight();
+    static void setKey_moveMapRight(const SDL_Keycode &key_moveMapRight);
+
+    static SDL_Keycode getKey_moveMapLeft();
+    static void setKey_moveMapLeft(const SDL_Keycode &key_moveMapLeft);
+
+    static SDL_Keycode getKey_information();
+    static void setKey_information(const SDL_Keycode &key_information);
 private:
     // setting variables
     static qint32 m_x;
@@ -208,6 +222,11 @@ private:
     static SDL_Keycode m_key_quicksave2;
     static SDL_Keycode m_key_quickload1;
     static SDL_Keycode m_key_quickload2;
+    static SDL_Keycode m_key_information;
+    static SDL_Keycode m_key_moveMapUp;
+    static SDL_Keycode m_key_moveMapDown;
+    static SDL_Keycode m_key_moveMapRight;
+    static SDL_Keycode m_key_moveMapLeft;
 
     static QString m_language;
     // Sound

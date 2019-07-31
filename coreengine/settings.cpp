@@ -28,6 +28,11 @@ SDL_Keycode Settings::m_key_quicksave1  = SDLK_F9;
 SDL_Keycode Settings::m_key_quicksave2  = SDLK_F11;
 SDL_Keycode Settings::m_key_quickload1  = SDLK_F10;
 SDL_Keycode Settings::m_key_quickload2  = SDLK_F12;
+SDL_Keycode Settings::m_key_information = SDLK_i;
+SDL_Keycode Settings::m_key_moveMapUp   = SDLK_UP;
+SDL_Keycode Settings::m_key_moveMapDown = SDLK_DOWN;
+SDL_Keycode Settings::m_key_moveMapRight= SDLK_RIGHT;
+SDL_Keycode Settings::m_key_moveMapLeft = SDLK_LEFT;
 
 QString Settings::m_language      = "en";
 // Sound
@@ -201,6 +206,41 @@ void Settings::loadSettings(){
         Console::print(error, Console::eERROR);
         m_key_quickload2 = SDLK_F12;
     }
+    m_key_information = static_cast<SDL_Keycode>(settings.value("key_information", SDLK_i).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_information";
+        Console::print(error, Console::eERROR);
+        m_key_information = SDLK_i;
+    }
+    m_key_moveMapUp = static_cast<SDL_Keycode>(settings.value("key_moveMapUp", SDLK_UP).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_moveMapUp";
+        Console::print(error, Console::eERROR);
+        m_key_moveMapUp = SDLK_UP;
+    }
+    m_key_moveMapDown = static_cast<SDL_Keycode>(settings.value("key_moveMapDown", SDLK_DOWN).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_moveMapDown";
+        Console::print(error, Console::eERROR);
+        m_key_moveMapDown = SDLK_DOWN;
+    }
+    m_key_moveMapRight = static_cast<SDL_Keycode>(settings.value("key_moveMapRight", SDLK_RIGHT).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_moveMapRight";
+        Console::print(error, Console::eERROR);
+        m_key_moveMapRight = SDLK_RIGHT;
+    }
+    m_key_moveMapLeft = static_cast<SDL_Keycode>(settings.value("key_moveMapLeft", SDLK_LEFT).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_moveMapLeft";
+        Console::print(error, Console::eERROR);
+        m_key_moveMapLeft = SDLK_LEFT;
+    }
     settings.endGroup();
 
     // Sound
@@ -308,6 +348,12 @@ void Settings::saveSettings(){
     settings.setValue("key_quicksave2",             m_key_quicksave2);
     settings.setValue("key_quickload1",             m_key_quickload1);
     settings.setValue("key_quickload2",             m_key_quickload2);
+    settings.setValue("key_information",            m_key_information);
+    settings.setValue("key_moveMapUp",              m_key_moveMapUp);
+    settings.setValue("key_moveMapDown",            m_key_moveMapDown);
+    settings.setValue("key_moveMapRight",           m_key_moveMapRight);
+    settings.setValue("key_moveMapLeft",            m_key_moveMapLeft);
+
     settings.endGroup();
 
     // Sound
@@ -532,6 +578,56 @@ SDL_Keycode Settings::getKey_quickload2()
 void Settings::setKey_quickload2(const SDL_Keycode &key_quickload2)
 {
     m_key_quickload2 = key_quickload2;
+}
+
+SDL_Keycode Settings::getKey_information()
+{
+    return m_key_information;
+}
+
+void Settings::setKey_information(const SDL_Keycode &key_information)
+{
+    m_key_information = key_information;
+}
+
+SDL_Keycode Settings::getKey_moveMapLeft()
+{
+    return m_key_moveMapLeft;
+}
+
+void Settings::setKey_moveMapLeft(const SDL_Keycode &key_moveMapLeft)
+{
+    m_key_moveMapLeft = key_moveMapLeft;
+}
+
+SDL_Keycode Settings::getKey_moveMapRight()
+{
+    return m_key_moveMapRight;
+}
+
+void Settings::setKey_moveMapRight(const SDL_Keycode &key_moveMapRight)
+{
+    m_key_moveMapRight = key_moveMapRight;
+}
+
+SDL_Keycode Settings::getKey_moveMapDown()
+{
+    return m_key_moveMapDown;
+}
+
+void Settings::setKey_moveMapDown(const SDL_Keycode &key_moveMapDown)
+{
+    m_key_moveMapDown = key_moveMapDown;
+}
+
+SDL_Keycode Settings::getKey_moveMapUp()
+{
+    return m_key_moveMapUp;
+}
+
+void Settings::setKey_moveMapUp(const SDL_Keycode &key_moveMapUp)
+{
+    m_key_moveMapUp = key_moveMapUp;
 }
 
 bool Settings::getAutoEndTurn()

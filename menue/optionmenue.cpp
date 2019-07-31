@@ -397,6 +397,60 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Key Information: ").toStdString().c_str());
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_information());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_information, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Key Move Map Up: ").toStdString().c_str());
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_moveMapUp());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_moveMapUp, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Key Move Map Left: ").toStdString().c_str());
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_moveMapLeft());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_moveMapLeft, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Key Move Map Down: ").toStdString().c_str());
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_moveMapDown());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_moveMapDown, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Key Move Map Right: ").toStdString().c_str());
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_moveMapRight());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_moveMapRight, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
 
     m_pOptions->setContentHeigth(20 + y);
     pApp->continueThread();

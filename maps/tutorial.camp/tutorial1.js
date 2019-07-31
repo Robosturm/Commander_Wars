@@ -110,10 +110,21 @@ var Constructor = function()
                     qsTr("Cancelling a command or viewing the firerange of units and buildings can be done by pressing the right mouse button or b (default). ") +
                     qsTr("You can press e or q (default) to move the cursor to the next/previous unit or building. ") +
                     qsTr("You can move the map by pressing the middle mouse button and moving the mouse afterwards. ") +
-                    qsTr("If you want to change the zoom level use the mouse wheel. ") +
-                    qsTr("Now let's start moving your units and finishing your turn. Tee heee. Now I can have fun."),
+                    qsTr("If you want to change the zoom level use the mouse wheel. "),
                     "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         dialog10.queueAnimation(dialog11);
+        var dialog12 = GameAnimationFactory.createGameAnimationDialog(
+                    qsTr("Epoch analyzed the User Interface and realized the User Interface could hide the map.") +
+                    qsTr("Epoch analyzed the User Interface and realized the User Interface could hide the map.") +
+                    qsTr("Epoch analyzed..."),
+                    "co_epoch", GameEnums.COMood_Normal, PLAYER.getDefaultColor(6));
+        dialog11.queueAnimation(dialog12);
+        var dialog13 = GameAnimationFactory.createGameAnimationDialog(
+                    qsTr("Hiiii... hiii! Wait an endless loop? Really? Epoch press the middle mouse button and move the mouse or ") +
+                    qsTr("press the arrow keys up, down, right and left (default) to move the map.") +
+                    qsTr("Now let's start moving your units and finishing your turn. Tee heee. Now I can have fun."),
+                    "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(6));
+        dialog12.queueAnimation(dialog13);
     };
 
     this.spawnTanks = function()
