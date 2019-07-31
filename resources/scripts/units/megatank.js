@@ -50,6 +50,10 @@ var Constructor = function()
     {
         return true;
     };
+    this.getDescription = function()
+    {
+        return qsTr("Most powerful Tank. Boast superlative attack and defence capabilities.");
+    };
 }
 
 Constructor.prototype = UNIT;

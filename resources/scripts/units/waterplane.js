@@ -85,6 +85,11 @@ var Constructor = function()
     {
         return "";
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Air unit. Can attack any unit. Can only produced at sea by Carries.");
+    };
 }
 
 Constructor.prototype = UNIT;

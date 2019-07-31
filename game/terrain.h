@@ -82,6 +82,11 @@ public:
 
 public slots:
     /**
+     * @brief getDescription
+     * @return
+     */
+    QString getDescription();
+    /**
      * @brief loadSprites loads all sprites we won't to show. Updates all sprite data
      */
     void loadSprites();

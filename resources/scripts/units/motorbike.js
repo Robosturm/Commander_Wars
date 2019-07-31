@@ -56,6 +56,11 @@ var Constructor = function()
         animation.setSound("movetire.wav", -2);
         return animation;
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Infantry unit. High mobility. Able to <div c='00ff00'>capture <div c='ffffff'> bases.");
+    };
 }
 
 Constructor.prototype = UNIT;

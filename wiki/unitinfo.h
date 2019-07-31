@@ -3,15 +3,23 @@
 
 #include <QObject>
 
-class UnitInfo : public QObject
+#include "oxygine-framework.h"
+
+#include "game/unit.h"
+
+class UnitInfo;
+typedef oxygine::intrusive_ptr<UnitInfo> spUnitInfo;
+
+class UnitInfo : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit UnitInfo(QObject *parent = nullptr);
-
-signals:
-
-public slots:
+    explicit UnitInfo(Unit* pUnit, qint32 width);
+    /**
+     * @brief createWeaponTable
+     * @param weaponID
+     */
+    void createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint32 width);
 };
 
 #endif // UNITINFO_H

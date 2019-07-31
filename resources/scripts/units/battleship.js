@@ -81,6 +81,11 @@ var Constructor = function()
     {
         return "back_sea";
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Naval Unit. Has unique ability to <div c='00ff00'>launch indirect attacks after moving<div c='ffffff'>.");
+    };
 }
 
 Constructor.prototype = UNIT;

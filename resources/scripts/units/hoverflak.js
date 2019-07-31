@@ -50,6 +50,11 @@ var Constructor = function()
     {
         return true;
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Specialised anti-air and anti-infantry unit. Can also attack ground forces. Can move over most terrains.");
+    };
 }
 
 Constructor.prototype = UNIT;

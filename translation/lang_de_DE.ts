@@ -698,7 +698,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="51"/>
-        <source>Clear view. In Fog of War, Infantry unit&apos;s gain &lt;div c=&apos;ffffff&apos;&gt;vision +3&lt;div c=&apos;00ff00&apos;&gt;. It reduces the firerange of indirect units by 1.</source>
+        <source>Clear view. In Fog of War, Infantry unit&apos;s gain &lt;div c=&apos;00ff00&apos;&gt;vision +3&lt;div c=&apos;ffffff&apos;&gt;. It reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1192,6 +1192,14 @@
     </message>
 </context>
 <context>
+    <name>FieldInfo</name>
+    <message>
+        <location filename="../wiki/fieldinfo.cpp" line="31"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FileDialog</name>
     <message>
         <location filename="../objects/filedialog.cpp" line="41"/>
@@ -1220,22 +1228,22 @@
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="61"/>
+        <location filename="../menue/gamemenue.cpp" line="63"/>
         <source>Waiting for Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="155"/>
+        <location filename="../menue/gamemenue.cpp" line="157"/>
         <source>A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="219"/>
+        <location filename="../menue/gamemenue.cpp" line="221"/>
         <source>Save Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="227"/>
+        <location filename="../menue/gamemenue.cpp" line="229"/>
         <source>Exit Game</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1423,7 +1431,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="48"/>
-        <source>Clear view. In Fog of War, Infantry unit&apos;s gain &lt;div c=&apos;ffffff&apos;&gt;vision +3&lt;div c=&apos;00ff00&apos;&gt;.</source>
+        <source>Clear view. In Fog of War, Infantry unit&apos;s gain &lt;div c=&apos;00ff00&apos;&gt;vision +3&lt;div c=&apos;ffffff&apos;&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2239,6 +2247,11 @@
     <message>
         <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="6"/>
         <source>Snowy Mountain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="46"/>
+        <source>Clear view. In Fog of War, Infantry unit&apos;s gain &lt;div c=&apos;00ff00&apos;&gt;vision +3&lt;div c=&apos;ffffff&apos;&gt;. Extremly high movement costs for infantry units.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3160,6 +3173,42 @@
     </message>
 </context>
 <context>
+    <name>TerrainInfo</name>
+    <message>
+        <location filename="../wiki/terraininfo.cpp" line="29"/>
+        <source>Terrain Information </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/terraininfo.cpp" line="46"/>
+        <source>Movement Costs</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UnitInfo</name>
+    <message>
+        <location filename="../wiki/unitinfo.cpp" line="35"/>
+        <source>Unit Information </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/unitinfo.cpp" line="55"/>
+        <source>Movement </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/unitinfo.cpp" line="143"/>
+        <source>Weapon 1 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/unitinfo.cpp" line="155"/>
+        <source>Weapon 2 </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>VictoryMenue</name>
     <message>
         <location filename="../menue/victorymenue.cpp" line="89"/>
@@ -3286,6 +3335,11 @@
         <source>Aircraft Carrier</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/aircraftcarrier.js" line="99"/>
+        <source>Naval Unit. Can &lt;div c=&apos;00ff00&apos;&gt;carry X 2&lt;div c=&apos;ffffff&apos;&gt; air units and &lt;div c=&apos;00ff00&apos;&gt;produce &lt;div c=&apos;ffffff&apos;&gt;Waterplanes.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>airport</name>
@@ -3307,12 +3361,22 @@
         <source>Anti Tank Cannon</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/antitankcannon.js" line="55"/>
+        <source>Indirect attack unit. When under direct enemy attack it can &lt;div c=&apos;00ff00&apos;&gt;counter-attack&lt;div c=&apos;ffffff&apos;&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>apc</name>
     <message>
         <location filename="../resources/scripts/units/apc.js" line="42"/>
         <source>APC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/apc.js" line="74"/>
+        <source>&lt;div c=&apos;00ff00&apos;&gt;Carries X 1&lt;div c=&apos;ffffff&apos;&gt; infantry unit, &lt;div c=&apos;00ff00&apos;&gt;supplies &lt;div c=&apos;ffffff&apos;&gt; units and &lt;div c=&apos;00ff00&apos;&gt;builds &lt;div c=&apos;ffffff&apos;&gt; Airports and Ports.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3323,12 +3387,22 @@
         <source>Artillery</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/artillery.js" line="53"/>
+        <source>Indirect attack unit. Attack cannot be launched after unit has moved.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>artillerycraft</name>
     <message>
         <location filename="../resources/scripts/units/artillerycraft.js" line="48"/>
         <source>Artillerycraft</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/artillerycraft.js" line="53"/>
+        <source>Indirect attack unit. Attack cannot be launched after unit has moved. Can move over most terrains.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3347,12 +3421,22 @@
         <source>Battleship</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/battleship.js" line="87"/>
+        <source>Naval Unit. Has unique ability to &lt;div c=&apos;00ff00&apos;&gt;launch indirect attacks after moving&lt;div c=&apos;ffffff&apos;&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>black_boat</name>
     <message>
         <location filename="../resources/scripts/units/black_boat.js" line="35"/>
         <source>Black Boat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/black_boat.js" line="96"/>
+        <source>Naval Unit. Has unique ability to &lt;div c=&apos;00ff00&apos;&gt;repair other units.&lt;div c=&apos;ffffff&apos;&gt; Can &lt;div c=&apos;00ff00&apos;&gt;carry X 1&lt;div c=&apos;ffffff&apos;&gt; infantry units.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3363,12 +3447,22 @@
         <source>Black Bomb</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/black_bomb.js" line="98"/>
+        <source>Air Unit. Has unique ability to &lt;div c=&apos;00ff00&apos;&gt;explode&lt;div c=&apos;ffffff&apos;&gt; in a huge explosion damaging all units.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>bomber</name>
     <message>
         <location filename="../resources/scripts/units/bomber.js" line="37"/>
         <source>Bomber</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/bomber.js" line="92"/>
+        <source>Air Unit. Can attack ground and naval units. Exceptional power.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3385,6 +3479,11 @@
     <message>
         <location filename="../resources/scripts/units/cannonboat.js" line="37"/>
         <source>Cannonboat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/cannonboat.js" line="96"/>
+        <source>Naval Unit. Attacks naval units. &lt;div c=&apos;00ff00&apos;&gt;Carries X 1&lt;div c=&apos;ffffff&apos;&gt; infantry units.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10605,6 +10704,11 @@
         <source>Cruiser</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/cruiser.js" line="97"/>
+        <source>Naval Unit. Strong against air units and submarines. &lt;div c=&apos;00ff00&apos;&gt;Transports X 2&lt;div c=&apos;ffffff&apos;&gt; Helis.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>destroyer</name>
@@ -10613,12 +10717,22 @@
         <source>Destroyer</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/destroyer.js" line="90"/>
+        <source>Naval Unit. Strong against all sea units and has decent firepower against air units.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>duster</name>
     <message>
         <location filename="../resources/scripts/units/duster.js" line="33"/>
         <source>Duster</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/duster.js" line="92"/>
+        <source>Air Unit. Can attack ground and air units. Medium power.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10642,6 +10756,11 @@
         <source>Fighter</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/fighter.js" line="92"/>
+        <source>Air Unit. Can attack air units. Most mobile aircraft.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>flak</name>
@@ -10650,12 +10769,22 @@
         <source>Anti Air</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/flak.js" line="56"/>
+        <source>Specialised anti-air and anti-infantry unit. Can also attack ground forces.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>flare</name>
     <message>
         <location filename="../resources/scripts/units/flare.js" line="47"/>
         <source>Flare</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/flare.js" line="61"/>
+        <source>In Fog of War, can fire &lt;div c=&apos;00ff00&apos;&gt;flare rocket&lt;div c=&apos;ffffff&apos;&gt;. Illuminates &lt;div c=&apos;00ff00&apos;&gt;2 square area&lt;div c=&apos;ffffff&apos;&gt; where it lands.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10679,12 +10808,22 @@
         <source>Heavy Hovercraft</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/heavy_hovercraft.js" line="56"/>
+        <source>Reinforced Tank. Attack and defence capabilities superior to standard hovercraft. Can move over most terrains.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>heavy_tank</name>
     <message>
         <location filename="../resources/scripts/units/heavy_tank.js" line="47"/>
         <source>Heavy Tank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/heavy_tank.js" line="56"/>
+        <source>Reinforced Tank. Attack and defence capabilities superior to standard tank.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10695,6 +10834,11 @@
         <source>Oozium</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/hoellium.js" line="58"/>
+        <source>Can move over all ground terrains and enemy units. Immediatly destroys units it moves over.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>hovercraft</name>
@@ -10703,12 +10847,22 @@
         <source>Hovercraft</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/hovercraft.js" line="55"/>
+        <source>Hovercraft unit. Good mobility makes it useful on battlefield. Can move over most terrains.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>hoverflak</name>
     <message>
         <location filename="../resources/scripts/units/hoverflak.js" line="47"/>
         <source>Hover Anti Air</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/hoverflak.js" line="56"/>
+        <source>Specialised anti-air and anti-infantry unit. Can also attack ground forces. Can move over most terrains.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10732,12 +10886,22 @@
         <source>Infantry</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/infantry.js" line="85"/>
+        <source>Cheapest unit. Can &lt;div c=&apos;00ff00&apos;&gt;capture &lt;div c=&apos;ffffff&apos;&gt; bases. &lt;div c=&apos;00ff00&apos;&gt;Vision +3 &lt;div c=&apos;ffffff&apos;&gt; when on mountains.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>k_heli</name>
     <message>
         <location filename="../resources/scripts/units/k_heli.js" line="37"/>
         <source>Battle Copter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/k_heli.js" line="91"/>
+        <source>Air unit. Can attack ground and naval units, and other Helicopters.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10761,12 +10925,22 @@
         <source>Lander</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/lander.js" line="93"/>
+        <source>Naval unit. Can &lt;div c=&apos;00ff00&apos;&gt;transport X 2 &lt;div c=&apos;ffffff&apos;&gt; ground units. No attack capability.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>light_tank</name>
     <message>
         <location filename="../resources/scripts/units/light_tank.js" line="47"/>
         <source>Light Tank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/light_tank.js" line="55"/>
+        <source>Light Tank unit. Good mobility makes it useful on battlefield.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10777,12 +10951,22 @@
         <source>Mech</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/mech.js" line="98"/>
+        <source>Attack power high. Can &lt;div c=&apos;00ff00&apos;&gt;capture &lt;div c=&apos;ffffff&apos;&gt; bases. &lt;div c=&apos;00ff00&apos;&gt;Vision +3 &lt;div c=&apos;ffffff&apos;&gt; when on mountains.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>megatank</name>
     <message>
         <location filename="../resources/scripts/units/megatank.js" line="47"/>
         <source>Megatank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/megatank.js" line="55"/>
+        <source>Most powerful Tank. Boast superlative attack and defence capabilities.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10806,12 +10990,22 @@
         <source>Missile</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/missile.js" line="51"/>
+        <source>Indirect attack unit. Only capable of striking air targets.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>motorbike</name>
     <message>
         <location filename="../resources/scripts/units/motorbike.js" line="42"/>
         <source>Motorbike</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/motorbike.js" line="62"/>
+        <source>Infantry unit. High mobility. Able to &lt;div c=&apos;00ff00&apos;&gt;capture &lt;div c=&apos;ffffff&apos;&gt; bases.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10843,7 +11037,7 @@
     <name>move_hoellium</name>
     <message>
         <location filename="../resources/scripts/movementtables/move_hoellium.js" line="5"/>
-        <source>Hoellium</source>
+        <source>Oozium</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10891,7 +11085,7 @@
     <name>move_tire_a</name>
     <message>
         <location filename="../resources/scripts/movementtables/move_tire_a.js" line="5"/>
-        <source>Tire</source>
+        <source>Tire A</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10899,7 +11093,7 @@
     <name>move_tire_b</name>
     <message>
         <location filename="../resources/scripts/movementtables/move_tire_b.js" line="5"/>
-        <source>Tire</source>
+        <source>Tire B</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10918,12 +11112,22 @@
         <source>Neotank</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/neotank.js" line="56"/>
+        <source>Reinforced Tank. Attack and defence capabilities superior to standard tank. Good mobility makes it useful on battlefield.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>piperunner</name>
     <message>
         <location filename="../resources/scripts/units/piperunner.js" line="47"/>
         <source>Piperunner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/piperunner.js" line="56"/>
+        <source>Indirect attack unit. Can attack all units. Can only move over pipelines. </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10960,12 +11164,22 @@
         <source>Recon</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/recon.js" line="56"/>
+        <source>Reconnaissance unit. High mobility. Good range of vision.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>rocketthrower</name>
     <message>
         <location filename="../resources/scripts/units/rocketthrower.js" line="37"/>
         <source>Rocketthrower</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/rocketthrower.js" line="56"/>
+        <source>Indirect attack unit. Powerful with a wide attack range.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11002,12 +11216,22 @@
         <source>Sniper</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/sniper.js" line="94"/>
+        <source>Indirect infantry unit exceptionly strong against other infantry units. Can &lt;div c=&apos;00ff00&apos;&gt;capture &lt;div c=&apos;ffffff&apos;&gt; bases. &lt;div c=&apos;00ff00&apos;&gt;Vision +3 &lt;div c=&apos;ffffff&apos;&gt; when on mountains.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>stealthbomber</name>
     <message>
         <location filename="../resources/scripts/units/stealthbomber.js" line="37"/>
         <source>Stealthbomber</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/stealthbomber.js" line="101"/>
+        <source>Air unit. After &lt;div c=&apos;00ff00&apos;&gt;hiding &lt;div c=&apos;ffffff&apos;&gt;, it remains hidden unless enemy units adjacent. Can attack any unit.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11018,12 +11242,22 @@
         <source>Submarine</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/submarine.js" line="96"/>
+        <source>Naval unit. After &lt;div c=&apos;00ff00&apos;&gt;diving &lt;div c=&apos;ffffff&apos;&gt;, it remains hidden unless enemy units adjacent.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>t_heli</name>
     <message>
         <location filename="../resources/scripts/units/t_heli.js" line="37"/>
         <source>Transport Copter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/t_heli.js" line="96"/>
+        <source>Air unit. &lt;div c=&apos;00ff00&apos;&gt;Carries X 1 &lt;div c=&apos;ffffff&apos;&gt; Infantry units. No attack capability.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11086,6 +11320,11 @@
         <source>Transportplane</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../resources/scripts/units/transportplane.js" line="98"/>
+        <source>Air unit. &lt;div c=&apos;00ff00&apos;&gt;Carries X 2 &lt;div c=&apos;ffffff&apos;&gt; ground units. No attack capability.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>victoryrule_buildinglimit</name>
@@ -11144,6 +11383,11 @@
     <message>
         <location filename="../resources/scripts/units/waterplane.js" line="37"/>
         <source>Waterplane</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/waterplane.js" line="91"/>
+        <source>Air unit. Can attack any unit. Can only produced at sea by Carries.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11264,14 +11508,6 @@
     <message>
         <location filename="../resources/scripts/weapons/weapon_destroyer_a_air_gun.js" line="5"/>
         <source>Anti Air Gun</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>weapon_flare</name>
-    <message>
-        <location filename="../resources/scripts/weapons/weapon_flare.js" line="5"/>
-        <source>Flare</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

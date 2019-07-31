@@ -93,6 +93,11 @@ var Constructor = function()
         // returns a string id list of the actions this unit can perform
         return "ACTION_FIRE,ACTION_JOIN,ACTION_LOAD,ACTION_UNLOAD,ACTION_BUILD_WATERPLANE,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Naval Unit. Can <div c='00ff00'>carry X 2<div c='ffffff'> air units and <div c='00ff00'>produce <div c='ffffff'>Waterplanes.");
+    };
 }
 
 Constructor.prototype = UNIT;

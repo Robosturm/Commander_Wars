@@ -90,6 +90,11 @@ var Constructor = function()
     {
         return "";
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Air unit. <div c='00ff00'>Carries X 1 <div c='ffffff'> Infantry units. No attack capability.");
+    };
 }
 
 Constructor.prototype = UNIT;

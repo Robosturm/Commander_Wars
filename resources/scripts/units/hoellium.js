@@ -52,6 +52,11 @@ var Constructor = function()
         animation.setSound("moveheavytank.wav", -2);
         return animation;
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Can move over all ground terrains and enemy units. Immediatly destroys units it moves over.");
+    };
 }
 
 Constructor.prototype = UNIT;

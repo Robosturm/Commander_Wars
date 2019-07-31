@@ -90,6 +90,11 @@ var Constructor = function()
     {
         return "back_sea";
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Naval Unit. Attacks naval units. <div c='00ff00'>Carries X 1<div c='ffffff'> infantry units.");
+    };
 }
 
 Constructor.prototype = UNIT;

@@ -90,6 +90,12 @@ var Constructor = function()
     {
         return "back_sea";
     };
+
+
+    this.getDescription = function()
+    {
+        return qsTr("Naval Unit. Strong against air units and submarines. <div c='00ff00'>Transports X 2<div c='ffffff'> Helis.");
+    };
 }
 
 Constructor.prototype = UNIT;

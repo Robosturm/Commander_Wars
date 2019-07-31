@@ -48,6 +48,12 @@ public:
      * @return
      */
     QString getWeaponName(QString weaponID);
+    /**
+     * @brief existsWeapon
+     * @param weaponID
+     * @return
+     */
+    bool existsWeapon(QString weaponID);
 private:
     explicit WeaponManager();
     virtual ~WeaponManager() = default;

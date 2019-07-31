@@ -90,6 +90,11 @@ var Constructor = function()
         // returns a string id list of the actions this unit can perform
         return "ACTION_REPAIR,ACTION_JOIN,ACTION_LOAD,ACTION_UNLOAD,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Naval Unit. Has unique ability to <div c='00ff00'>repair other units.<div c='ffffff'> Can <div c='00ff00'>carry X 1<div c='ffffff'> infantry units.");
+    };
 }
 
 Constructor.prototype = UNIT;

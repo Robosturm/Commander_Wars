@@ -86,6 +86,11 @@ var Constructor = function()
     {
         return "";
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Air Unit. Can attack air units. Most mobile aircraft.");
+    };
 }
 
 Constructor.prototype = UNIT;

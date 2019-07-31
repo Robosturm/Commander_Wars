@@ -37,6 +37,18 @@ QString WeaponManager::getWeaponName(QString weaponID)
     }
 }
 
+bool WeaponManager::existsWeapon(QString weaponID)
+{
+    for (qint32 i = 0; i < m_loadedWeapons.size(); i++)
+    {
+        if (m_loadedWeapons[i] == weaponID)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void WeaponManager::reset()
 {
     Mainapp* pMainapp = Mainapp::getInstance();

@@ -83,6 +83,12 @@ var Constructor = function()
     {
         return "back_sea";
     };
+
+
+    this.getDescription = function()
+    {
+        return qsTr("Naval Unit. Strong against all sea units and has decent firepower against air units.");
+    };
 }
 
 Constructor.prototype = UNIT;

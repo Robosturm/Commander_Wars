@@ -50,6 +50,11 @@ var Constructor = function()
     {
         return true;
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Reinforced Tank. Attack and defence capabilities superior to standard tank. Good mobility makes it useful on battlefield.");
+    };
 }
 
 Constructor.prototype = UNIT;

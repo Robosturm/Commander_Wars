@@ -85,6 +85,11 @@ var Constructor = function()
     {
         return "";
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Air unit. Can attack ground and naval units, and other Helicopters.");
+    };
 }
 
 Constructor.prototype = UNIT;

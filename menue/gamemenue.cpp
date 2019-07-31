@@ -24,6 +24,8 @@
 
 #include "multiplayer/networkcommands.h"
 
+#include "wiki/fieldinfo.h"
+
 #include <QFile>
 
 GameMenue* GameMenue::m_pInstance = nullptr;
@@ -678,6 +680,23 @@ void GameMenue::keyInput(SDL_Event event)
                 pMenue->startGame();
                 pApp->continueThread();
             }
+        }
+        else if (cur == Settings::getKey_information())
+        {
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->suspendThread();
+            GameMap* pMap = GameMap::getInstance();
+            if (pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()))
+            {
+                spFieldInfo fieldinfo = new FieldInfo(pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()));
+                this->addChild(fieldinfo);
+                connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
+                {
+                    setFocused(true);
+                });
+                setFocused(false);
+            }
+            pApp->continueThread();
         }
     }
     else if (m_Focused)

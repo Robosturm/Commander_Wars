@@ -79,6 +79,23 @@ Unit::~Unit()
     }
 }
 
+QString Unit::getDescription()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QJSValueList args;
+    // load sprite of the base terrain
+    QString function = "getDescription";
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function, args);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
 void Unit::setModdingFlags(ModdingFlags value)
 {
     m_ModdingFlags = value;

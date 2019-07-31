@@ -50,6 +50,11 @@ var Constructor = function()
     {
         return false;
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Indirect attack unit. Can attack all units. Can only move over pipelines. ");
+    };
 }
 
 Constructor.prototype = UNIT;

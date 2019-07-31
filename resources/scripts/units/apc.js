@@ -68,6 +68,11 @@ var Constructor = function()
         }
         UNIT.transporterRefilling(unit);
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("<div c='00ff00'>Carries X 1<div c='ffffff'> infantry unit, <div c='00ff00'>supplies <div c='ffffff'> units and <div c='00ff00'>builds <div c='ffffff'> Airports and Ports.");
+    };
 }
 
 Constructor.prototype = UNIT;

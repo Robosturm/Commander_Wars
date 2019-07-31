@@ -47,6 +47,11 @@ var Constructor = function()
     {
         return qsTr("Artillery");
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Indirect attack unit. Attack cannot be launched after unit has moved.");
+    };
 }
 
 Constructor.prototype = UNIT;

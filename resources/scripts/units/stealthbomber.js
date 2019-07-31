@@ -95,6 +95,11 @@ var Constructor = function()
     {
         return "";
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Air unit. After <div c='00ff00'>hiding <div c='ffffff'>, it remains hidden unless enemy units adjacent. Can attack any unit.");
+    };
 }
 
 Constructor.prototype = UNIT;

@@ -86,6 +86,11 @@ var Constructor = function()
     {
         return "";
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Air Unit. Can attack ground and air units. Medium power.");
+    };
 }
 
 Constructor.prototype = UNIT;

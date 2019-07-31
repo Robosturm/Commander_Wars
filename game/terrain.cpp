@@ -148,6 +148,23 @@ void Terrain::createBaseTerrain(const QString&  currentTerrainID)
     }
 }
 
+QString Terrain::getDescription()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QJSValueList args;
+    // load sprite of the base terrain
+    QString function = "getDescription";
+    QJSValue ret = pApp->getInterpreter()->doFunction(terrainID, function, args);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
 void Terrain::setBaseTerrain(spTerrain terrain)
 {
     if (m_pBaseTerrain.get() != nullptr)
@@ -527,9 +544,15 @@ void Terrain::setBuilding(Building* pBuilding)
     {
         m_Building = pBuilding;
         pBuilding->setPriority(static_cast<qint16>(DrawPriority::Building));
-        pBuilding->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
+        if (x >= 0 && y >= 0)
+        {
+            pBuilding->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
+        }
         this->addChild(pBuilding);
-        createBuildingDownStream();
+        if (x >= 0 && y >= 0)
+        {
+            createBuildingDownStream();
+        }
     }
     // delete current unit to avoid strange impact :)
     setUnit(nullptr);

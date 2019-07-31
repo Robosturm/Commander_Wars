@@ -50,6 +50,10 @@ var Constructor = function()
     {
         return true;
     };
+    this.getDescription = function()
+    {
+        return qsTr("Light Tank unit. Good mobility makes it useful on battlefield.");
+    };
 }
 
 Constructor.prototype = UNIT;

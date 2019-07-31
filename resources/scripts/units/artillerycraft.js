@@ -47,6 +47,11 @@ var Constructor = function()
     {
         return qsTr("Artillerycraft");
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Indirect attack unit. Attack cannot be launched after unit has moved. Can move over most terrains.");
+    };
 }
 
 Constructor.prototype = UNIT;

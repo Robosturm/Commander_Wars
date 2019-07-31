@@ -49,6 +49,11 @@ var Constructor = function()
     {
         return qsTr("Anti Tank Cannon");
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Indirect attack unit. When under direct enemy attack it can <div c='00ff00'>counter-attack<div c='ffffff'>.");
+    };
 }
 
 Constructor.prototype = UNIT;

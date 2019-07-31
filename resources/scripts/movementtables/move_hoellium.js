@@ -2,7 +2,7 @@ var Constructor = function()
 {
     this.getName = function()
     {
-        return qsTr("Hoellium");
+        return qsTr("Oozium");
     };
     this.movementpointsTable = [["PLAINS", 1],
                                 ["PLAINS_DESTROYED", 1],

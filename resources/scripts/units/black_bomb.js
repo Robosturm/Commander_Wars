@@ -92,6 +92,11 @@ var Constructor = function()
         // returns a string id list of the actions this unit can perform
         return "ACTION_EXPLODE,ACTION_JOIN,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Air Unit. Has unique ability to <div c='00ff00'>explode<div c='ffffff'> in a huge explosion damaging all units.");
+    };
 }
 
 Constructor.prototype = UNIT;

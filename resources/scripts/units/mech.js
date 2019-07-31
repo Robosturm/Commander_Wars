@@ -92,6 +92,11 @@ var Constructor = function()
     {
         return true;
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Attack power high. Can <div c='00ff00'>capture <div c='ffffff'> bases. <div c='00ff00'>Vision +3 <div c='ffffff'> when on mountains.");
+    };
 }
 
 Constructor.prototype = UNIT;

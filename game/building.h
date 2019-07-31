@@ -63,6 +63,11 @@ signals:
 
 public slots:
     /**
+     * @brief getDescription
+     * @return
+     */
+    QString getDescription();
+    /**
      * @brief getVision
      * @return
      */

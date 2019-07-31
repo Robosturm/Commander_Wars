@@ -50,6 +50,10 @@ var Constructor = function()
     {
         return true;
     };
+    this.getDescription = function()
+    {
+        return qsTr("Hovercraft unit. Good mobility makes it useful on battlefield. Can move over most terrains.");
+    };
 }
 
 Constructor.prototype = UNIT;

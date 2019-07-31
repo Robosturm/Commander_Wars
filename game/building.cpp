@@ -42,6 +42,23 @@ void Building::init()
     pApp->getInterpreter()->doFunction(m_BuildingID, function, args);
 }
 
+QString Building::getDescription()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QJSValueList args;
+    // load sprite of the base terrain
+    QString function = "getDescription";
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function, args);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    else
+    {
+        return "";
+    }
+}
+
 void Building::setUnitOwner(Unit* pUnit)
 {
     setOwner(pUnit->getOwner());

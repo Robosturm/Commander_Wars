@@ -2,7 +2,7 @@ var Constructor = function()
 {
     this.getName = function()
     {
-        return qsTr("Tire");
+        return qsTr("Tire A");
     };
     this.movementpointsTable = [["RUIN", 2],
                                 ["PLAINS", 2],
@@ -12,7 +12,7 @@ var Constructor = function()
                                 ["DESTROYEDWELD", 2],
                                 ["DESERT", 2],
                                 ["DESERT_DESTROYEDWELD", 2],
-                                ["DESERT_PATH", 2],
+                                ["DESERT_PATH", 1],
                                 ["BRIDGE", 1],
                                 ["STREET", 1],
                                 ["AIRPORT", 1],

@@ -50,6 +50,11 @@ var Constructor = function()
     {
         return false;
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Indirect attack unit. Powerful with a wide attack range.");
+    };
 }
 
 Constructor.prototype = UNIT;

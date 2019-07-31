@@ -87,6 +87,11 @@ var Constructor = function()
     {
         return "back_sea";
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Naval unit. Can <div c='00ff00'>transport X 2 <div c='ffffff'> ground units. No attack capability.");
+    };
 }
 
 Constructor.prototype = UNIT;

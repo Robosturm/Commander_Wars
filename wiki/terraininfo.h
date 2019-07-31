@@ -9,6 +9,9 @@
 #include "game/unit.h"
 #include "game/terrain.h"
 
+class TerrainInfo;
+typedef oxygine::intrusive_ptr<TerrainInfo> spTerrainInfo;
+
 class TerrainInfo : public QObject, public oxygine::Actor
 {
     Q_OBJECT

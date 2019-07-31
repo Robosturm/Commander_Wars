@@ -50,6 +50,11 @@ var Constructor = function()
     {
         return true;
     };
+
+    this.getDescription = function()
+    {
+        return qsTr("Reconnaissance unit. High mobility. Good range of vision.");
+    };
 }
 
 Constructor.prototype = UNIT;

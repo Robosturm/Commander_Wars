@@ -3,15 +3,27 @@
 
 #include <QObject>
 
-class FieldInfo : public QObject
+#include "oxygine-framework.h"
+
+#include "game/building.h"
+#include "game/unit.h"
+#include "game/terrain.h"
+
+class FieldInfo;
+typedef oxygine::intrusive_ptr<FieldInfo> spFieldInfo;
+
+class FieldInfo : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit FieldInfo(QObject *parent = nullptr);
+    explicit FieldInfo(Terrain* pTerrain);
 
 signals:
-
+    void sigFinished();
 public slots:
+    void keyInput(SDL_Event event);
+private:
+    oxygine::spButton m_OkButton;
 };
 
 #endif // FIELDINFO_H

@@ -46,6 +46,10 @@ var Constructor = function()
     {
         return qsTr("Missile");
     };
+    this.getDescription = function()
+    {
+        return qsTr("Indirect attack unit. Only capable of striking air targets.");
+    };
 }
 
 Constructor.prototype = UNIT;

@@ -110,6 +110,15 @@ public:
 signals:
 
 public slots:
+    /**
+     * @brief getDescription
+     * @return
+     */
+    QString getDescription();
+    /**
+     * @brief hasWeapons
+     * @return
+     */
     bool hasWeapons();
     /**
      * @brief getUniqueID
