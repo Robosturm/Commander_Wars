@@ -8,70 +8,35 @@ var Constructor = function()
     {
         return 25;
     };
+    this.damageTable = [["APC", 75],
+                        ["FLARE", 75],
+                        ["RECON", 75],
+                        ["FLAK", 40],
+                        ["HOVERFLAK", 40],
+                        ["LIGHT_TANK", 70],
+                        ["HOVERCRAFT", 70],
+                        ["HEAVY_HOVERCRAFT", 45],
+                        ["HEAVY_TANK", 45],
+                        ["NEOTANK", 45],
+                        ["MEGATANK", 35],
+                        ["ARTILLERY", 65],
+                        ["ANTITANKCANNON", 35],
+                        ["MISSILE", 55],
+                        ["ROCKETTHROWER", 75],
+                        ["PIPERUNNER", 55],
+                        ["HOELLIUM", 25],
+                        ["BATTLESHIP", 25],
+                        ["CANNONBOAT", 85],
+                        ["CRUISER", 10],
+                        ["DESTROYER", 10],
+                        ["SUBMARINE", 25],
+                        ["LANDER", 25],
+                        ["BLACK_BOAT", 85],
+                        ["AIRCRAFTCARRIER", 25]];
+
     this.getBaseDamage = function(unit)
     {
-        switch(unit.getUnitID())
-        {
-			case "APC":
-				return 75;
-			case "FLARE":
-				return 75;
-			case "RECON":
-				return 75;
-
-			case "FLAK":
-                return 40;
-			case "HOVERFLAK":
-                return 40;
-			case "LIGHT_TANK":
-                return 70;
-            case "HOVERCRAFT":
-                return 70;
-
-            case "HEAVY_HOVERCRAFT":
-				return 45;
-			case "HEAVY_TANK":
-				return 45;
-			case "NEOTANK":
-				return 45;
-
-			case "MEGATANK":
-                return 35;
-
-			case "ARTILLERY":
-                return 65;
-            case "ANTITANKCANNON":
-                return 35;
-			case "MISSILE":
-                return 55;
-            case "ROCKETTHROWER":
-				return 75;
-            case "PIPERUNNER":
-                return 55;
-
-            case "HOELLIUM":
-                return 25;
-				
-			// ships
-			case "BATTLESHIP":
-				return 25;
-			case "CANNONBOAT":
-				return 85;
-			case "CRUISER":
-				return 10;
-			case "DESTROYER":
-				return 10;
-			case "SUBMARINE":
-				return 25;
-			case "LANDER":
-				return 25;
-            case "BLACK_BOAT":
-                return 85;
-			case "AIRCRAFTCARRIER":
-				return 25;
-			default:
-				return -1;
-        }
+        return WEAPON.getDamageFromTable(unit, WEAPON_AIR_TO_GROUND_MISSILE.damageTable);
     };
 };
 

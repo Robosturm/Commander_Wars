@@ -1,85 +1,57 @@
-var Constructor = function()
+WEAPON_A_TANK_CANNON.getEnviromentDamage = function(enviromentId)
 {
-    this.getName = function()
-    {
-        return qsTr("Anti Tank Cannon");
-    };
-
-    this.getEnviromentDamage = function(enviromentId)
-    {
-        return 55;
-    };
-
-    this.getBaseDamage = function(unit)
-    {
-        switch(unit.getUnitID())
-        {
-			// infantry
-            case "INFANTRY":
-                return 75;
-            case "MECH":
-                return 65;
-            case "MOTORBIKE":
-                return 65;
-            case "SNIPER":
-                return 65;
-
-            // supporter
-            case "APC":
-                return 65;
-            case "FLARE":
-                return 75;
-            case "RECON":
-                return 75;
-
-			// tanks
-            case "FLAK":
-                return 75;
-            case "HOVERFLAK":
-                return 75;
-            case "LIGHT_TANK":
-                return 75;
-            case "HOVERCRAFT":
-                return 75;
-				
-			// heavy tanks
-            case "HEAVY_HOVERCRAFT":
-                return 65;
-            case "HEAVY_TANK":
-                return 65;
-            case "NEOTANK":
-                return 65;
-				
-			// very heavy tanks
-			case "MEGATANK":
-                return 55;
-
-            case "HOELLIUM":
-                return 15;
-				
-			// heli copter
-			case "T_HELI":
-                return 55;
-			case "K_HELI":
-				return 45;
-				
-			// ranged land units
-            case "ARTILLERY":
-                return 65;
-            case "ANTITANKCANNON":
-                return 55;
-            case "MISSILE":
-                return 70;
-            case "ROCKETTHROWER":
-                return 70;
-            case "PIPERUNNER":
-                return 70;
-			
-			default:
-				return -1;
-        }
-    };
+    return 55;
 };
-
-Constructor.prototype = WEAPON;
-var WEAPON_A_TANK_CANNON = new Constructor();
+var idx = 0;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "INFANTRY");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 75;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "MECH");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 65;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "MOTORBIKE");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 65;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "SNIPER");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 65;
+// supporter
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "APC");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 65;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "FLARE");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 75;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "RECON");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 75;
+// tanks
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "FLAK");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 75;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "HOVERFLAK");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 75;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "LIGHT_TANK");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 75;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "HOVERCRAFT");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 75;
+// heavy tanks
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "HEAVY_HOVERCRAFT");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 65;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "HEAVY_TANK");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 65;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "NEOTANK");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 65;
+// very heavy tanks
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "MEGATANK");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "HOELLIUM");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 15;
+// heli copter
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "T_HELI");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "K_HELI");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 45;
+// ranged land units
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ARTILLERY");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 65;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ANTITANKCANNON");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "MISSILE");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 70;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ROCKETTHROWER");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 70;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "PIPERUNNER");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 70;

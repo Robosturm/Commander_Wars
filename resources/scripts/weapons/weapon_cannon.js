@@ -1,4 +1,4 @@
- Constructor = function()
+Constructor = function()
 {
     this.getName = function()
     {
@@ -8,87 +8,54 @@
     {
         return 45;
     };
+    this.damageTable = [["INFANTRY", 130],
+                        ["MECH", 85],
+                        ["MOTORBIKE", 85],
+                        ["SNIPER", 85],
+
+                        // supporter
+                        ["APC", 75],
+                        ["FLARE", 75],
+                        ["RECON", 75],
+
+                        // tanks
+                        ["FLAK", 65],
+                        ["HOVERFLAK", 65],
+                        ["LIGHT_TANK", 60],
+                        ["HOVERCRAFT", 60],
+
+                        // heavy tanks
+                        ["HEAVY_HOVERCRAFT", 45],
+                        ["HEAVY_TANK", 45],
+                        ["NEOTANK", 45],
+
+                        // very heavy tanks
+                        ["MEGATANK", 35],
+
+                        // ranged land units
+                        ["ARTILLERY", 75],
+                        ["ANTITANKCANNON", 55],
+                        ["MISSILE", 80],
+                        ["ROCKETTHROWER", 80],
+                        ["PIPERUNNER", 70],
+
+                        ["HOELLIUM", 5],
+
+                        // ships
+                        ["BATTLESHIP", 45],
+                        ["CANNONBOAT", 100],
+                        ["CRUISER", 35],
+                        ["DESTROYER", 35],
+                        ["SUBMARINE", 35],
+                        ["LANDER", 65],
+                        ["BLACK_BOAT", 100],
+                        ["AIRCRAFTCARRIER", 45]];
+
     this.getBaseDamage = function(unit)
     {
-        switch(unit.getUnitID())
-        {
-			// infantry
-			case "INFANTRY":
-                return 130;
-			case "MECH":
-                return 85;
-			case "MOTORBIKE":
-                return 85;
-			case "SNIPER":
-                return 85;
-
-			// supporter
-			case "APC":
-				return 75;
-			case "FLARE":
-				return 75;
-			case "RECON":
-				return 75;
-
-			// tanks
-			case "FLAK":
-                return 65;
-			case "HOVERFLAK":
-                return 65;
-			case "LIGHT_TANK":
-                return 60;
-            case "HOVERCRAFT":
-                return 60;
-				
-			// heavy tanks
-            case "HEAVY_HOVERCRAFT":
-                return 45;
-			case "HEAVY_TANK":
-                return 45;
-			case "NEOTANK":
-                return 45;
-				
-			// very heavy tanks
-			case "MEGATANK":
-                return 35;
-				
-			// ranged land units
-			case "ARTILLERY":
-                return 75;
-            case "ANTITANKCANNON":
-                return 55;
-			case "MISSILE":
-                return 80;
-            case "ROCKETTHROWER":
-                return 80;
-            case "PIPERUNNER":
-                return 70;
-
-            case "HOELLIUM":
-                return 5;
-			
-			// ships
-			case "BATTLESHIP":
-                return 45;
-			case "CANNONBOAT":
-				return 100;
-			case "CRUISER":
-                return 35;
-			case "DESTROYER":
-                return 35;
-			case "SUBMARINE":
-                return 35;
-			case "LANDER":
-                return 65;
-            case "BLACK_BOAT":
-                return 100;
-			case "AIRCRAFTCARRIER":
-                return 45;
-			default:
-				return -1;
-        }
+        return WEAPON.getDamageFromTable(unit, WEAPON_CANNON.damageTable);
     };
 };
 
 Constructor.prototype = WEAPON;
- WEAPON_CANNON = new Constructor();
+WEAPON_CANNON = new Constructor();

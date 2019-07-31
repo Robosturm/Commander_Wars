@@ -1,36 +1,19 @@
-var Constructor = function()
-{
-    this.getName = function()
-    {
-        return qsTr("Anti Air Missile");
-    };
-    this.getBaseDamage = function(unit)
-    {
-        switch(unit.getUnitID())
-        {
-			case "DUSTER":
-                return 100;
-			case "FIGHTER":
-                return 100;
-			case "BOMBER":
-                return 100;
-			case "STEALTHBOMBER":
-                return 100;
-            case "BLACK_BOMB":
-                return 120;
-			case "TRANSPORTPLANE":
-                return 120;
-			case "WATERPLANE":
-                return 100;
-			case "K_HELI":
-                return 115;
-			case "T_HELI":
-                return 115;
-			default:
-				return -1;
-        }
-    };
-};
-
-Constructor.prototype = WEAPON;
-var WEAPON_CARRIER_ANTI_AIR_MISSILE = new Constructor();
+var idx = 0;
+idx = getIndexOf1(WEAPON_CARRIER_ANTI_AIR_MISSILE.damageTable, "DUSTER");
+WEAPON_CARRIER_ANTI_AIR_MISSILE.damageTable[idx][1] = 100;
+idx = getIndexOf1(WEAPON_CARRIER_ANTI_AIR_MISSILE, "FIGHTER");
+WEAPON_CARRIER_ANTI_AIR_MISSILE.damageTable[idx][1] = 100;
+idx = getIndexOf1(WEAPON_CARRIER_ANTI_AIR_MISSILE, "BOMBER");
+WEAPON_CARRIER_ANTI_AIR_MISSILE.damageTable[idx][1] = 100;
+idx = getIndexOf1(WEAPON_CARRIER_ANTI_AIR_MISSILE, "STEALTHBOMBER");
+WEAPON_CARRIER_ANTI_AIR_MISSILE.damageTable[idx][1] = 100;
+idx = getIndexOf1(WEAPON_CARRIER_ANTI_AIR_MISSILE, "BLACK_BOMB");
+WEAPON_CARRIER_ANTI_AIR_MISSILE.damageTable[idx][1] = 120;
+idx = getIndexOf1(WEAPON_CARRIER_ANTI_AIR_MISSILE, "TRANSPORTPLANE");
+WEAPON_CARRIER_ANTI_AIR_MISSILE.damageTable[idx][1] = 120;
+idx = getIndexOf1(WEAPON_CARRIER_ANTI_AIR_MISSILE, "WATERPLANE");
+WEAPON_CARRIER_ANTI_AIR_MISSILE.damageTable[idx][1] = 100;
+idx = getIndexOf1(WEAPON_CARRIER_ANTI_AIR_MISSILE, "K_HELI");
+WEAPON_CARRIER_ANTI_AIR_MISSILE.damageTable[idx][1] = 115;
+idx = getIndexOf1(WEAPON_CARRIER_ANTI_AIR_MISSILE, "T_HELI");
+WEAPON_CARRIER_ANTI_AIR_MISSILE.damageTable[idx][1] = 115;

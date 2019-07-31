@@ -4,32 +4,19 @@ var Constructor = function()
     {
         return qsTr("Missile");
     };
+    this.damageTable = [["DUSTER", 80],
+                        ["FIGHTER", 55],
+                        ["BOMBER", 65],
+                        ["STEALTHBOMBER", 65],
+                        ["TRANSPORTPLANE", 120],
+                        ["BLACK_BOMB", 120],
+                        ["WATERPLANE", 65],
+                        ["K_HELI", 120],
+                        ["T_HELI", 120]];
+
     this.getBaseDamage = function(unit)
     {
-        switch(unit.getUnitID())
-        {
-			// air
-			case "DUSTER":
-                return 80;
-			case "FIGHTER":
-                return 55;
-			case "BOMBER":
-                return 65;
-			case "STEALTHBOMBER":
-                return 65;
-			case "TRANSPORTPLANE":
-				return 120;
-            case "BLACK_BOMB":
-                return 120;
-			case "WATERPLANE":
-                return 65;
-			case "K_HELI":
-				return 120;
-			case "T_HELI":
-				return 120;
-			default:
-				return -1;
-        }
+        return WEAPON.getDamageFromTable(unit, WEAPON_A_TANK_CANNON.damageTable);
     };
 };
 

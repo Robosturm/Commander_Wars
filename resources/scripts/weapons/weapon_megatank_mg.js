@@ -8,73 +8,46 @@ var Constructor = function()
     {
         return 1;
     };
+    this.damageTable = [["INFANTRY", 170],
+                        ["MECH", 130],
+                        ["MOTORBIKE", 130],
+                        ["SNIPER", 130],
+
+                        // supporter
+                        ["APC", 50],
+                        ["FLARE", 50],
+                        ["RECON", 50],
+
+                        // tanks
+                        ["FLAK", 10],
+                        ["HOVERFLAK", 10],
+                        ["LIGHT_TANK", 10],
+                        ["HOVERCRAFT", 10],
+
+                        // heavy tanks
+                        ["HEAVY_HOVERCRAFT", 10],
+                        ["HEAVY_TANK", 10],
+                        ["NEOTANK", 10],
+
+                        // very heavy tanks
+                        ["MEGATANK", 1],
+
+                        ["HOELLIUM", 20],
+
+                        // heli copter
+                        ["T_HELI", 45],
+                        ["K_HELI", 35],
+
+                        // ranged land units
+                        ["ARTILLERY", 45],
+                        ["ANTITANKCANNON", 1],
+                        ["MISSILE", 65],
+                        ["ROCKETTHROWER", 65],
+                        ["PIPERUNNER", 10]];
+
     this.getBaseDamage = function(unit)
     {
-        switch(unit.getUnitID())
-        {
-			// infantry
-			case "INFANTRY":
-                return 170;
-			case "MECH":
-				return 130;
-			case "MOTORBIKE":
-				return 130;
-			case "SNIPER":
-				return 130;
-
-			// supporter
-			case "APC":
-				return 50;
-			case "FLARE":
-				return 50;
-			case "RECON":
-				return 50;
-
-			// tanks
-			case "FLAK":
-				return 10;
-			case "HOVERFLAK":
-				return 10;
-			case "LIGHT_TANK":
-				return 10;
-            case "HOVERCRAFT":
-				return 10;
-				
-			// heavy tanks
-			case "HEAVY_HOVERCRAFT":
-				return 10;
-			case "HEAVY_TANK":
-				return 10;
-			case "NEOTANK":
-				return 10;
-				
-			// very heavy tanks
-			case "MEGATANK":
-				return 1;
-
-            case "HOELLIUM":
-                return 20;
-				
-			// heli copter
-			case "T_HELI":
-				return 45;
-			case "K_HELI":
-				return 35;
-				
-			// ranged land units
-			case "ARTILLERY":
-                return 45;
-			case "ANTITANKCANNON":
-                return 1;
-			case "MISSILE":
-                return 65;
-            case "ROCKETTHROWER":
-                return 65;
-            case "PIPERUNNER":
-                return 10;
-			default:
-				return -1;
-        }
+        return WEAPON.getDamageFromTable(unit, WEAPON_MEGATANK_MG.damageTable);
     };
 };
 

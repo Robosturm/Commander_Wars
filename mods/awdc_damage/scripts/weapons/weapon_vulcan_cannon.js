@@ -1,98 +1,80 @@
-var Constructor = function()
+WEAPON_VULCAN_CANNON.getEnviromentDamage = function(enviromentId)
 {
-    this.getName = function()
-    {
-        return qsTr("Vulcan Cannon");
-    };
-    this.getEnviromentDamage = function(enviromentId)
-    {
-        return 1;
-    };
-    this.getBaseDamage = function(unit)
-    {
-        switch(unit.getUnitID())
-        {
-            // infantry
-            case "INFANTRY":
-                return 105;
-            case "MECH":
-                return 105;
-            case "MOTORBIKE":
-                return 105;
-            case "SNIPER":
-                return 105;
-
-            // supporter
-            case "APC":
-                return 50;
-            case "FLARE":
-                return 45;
-            case "RECON":
-                return 60;
-
-            // tanks
-            case "FLAK":
-                return 45;
-            case "HOVERFLAK":
-                return 45;
-            case "LIGHT_TANK":
-                return 15;
-            case "HOVERCRAFT":
-                return 15;
-
-            // heavy tanks
-            case "HEAVY_HOVERCRAFT":
-                return 10;
-            case "HEAVY_TANK":
-                return 10;
-            case "NEOTANK":
-                return 10;
-
-            // very heavy tanks
-            case "MEGATANK":
-                return 5;
-
-            case "HOELLIUM":
-                return 30;
-
-            // heli copter
-            case "T_HELI":
-                return 120;
-            case "K_HELI":
-                return 105;
-
-            //air
-            case "DUSTER":
-                return 75;
-            case "FIGHTER":
-                return 70;
-            case "BOMBER":
-                return 70;
-            case "STEALTHBOMBER":
-                return 75;
-            case "TRANSPORTPLANE":
-                return 75;
-            case "BLACK_BOMB":
-                return 75;
-            case "WATERPLANE":
-                return 75;
-
-            // ranged land units
-            case "ARTILLERY":
-                return 50;
-            case "ANTITANKCANNON":
-                return 25;
-            case "MISSILE":
-                return 55;
-            case "ROCKETTHROWER":
-                return 55;
-            case "PIPERUNNER":
-                return 25;
-			default:
-				return -1;
-        }
-    };
+    return 1;
 };
+var idx = 0;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "INFANTRY");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 105;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "MECH");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 105;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "MOTORBIKE");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 105;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "SNIPER");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 105;
 
-Constructor.prototype = WEAPON;
-var WEAPON_VULCAN_CANNON = new Constructor();
+// supporter
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "APC");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 50;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "FLARE");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 45;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "RECON");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 60;
+
+// tanks
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "FLAK");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 45;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "HOVERFLAK");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 45;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "LIGHT_TANK");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 15;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "HOVERCRAFT");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 15;
+
+// heavy tanks
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "HEAVY_HOVERCRAFT");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 10;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "HEAVY_TANK");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 10;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "NEOTANK");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 10;
+
+// very heavy tanks
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "MEGATANK");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 5;
+
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "HOELLIUM");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 30;
+
+// heli copter
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "T_HELI");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 120;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "K_HELI");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 105;
+
+//air
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "DUSTER");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 75;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "FIGHTER");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 70;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "BOMBER");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 70;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "STEALTHBOMBER");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 75;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "TRANSPORTPLANE");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 75;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "BLACK_BOMB");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 75;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "WATERPLANE");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 75;
+
+// ranged land units
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "ARTILLERY");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 50;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "ANTITANKCANNON");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 25;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "MISSILE");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "ROCKETTHROWER");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "PIPERUNNER");
+WEAPON_VULCAN_CANNON.damageTable[idx][1] = 25;

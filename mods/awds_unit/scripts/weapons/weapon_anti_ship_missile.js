@@ -1,35 +1,17 @@
-var Constructor = function()
-{
-    this.getName = function()
-    {
-        return qsTr("Ship Missile");
-    };
-    this.getBaseDamage = function(unit)
-    {
-        switch(unit.getUnitID())
-        {
-            // ships
-            case "BATTLESHIP":
-                return 40;
-            case "CANNONBOAT":
-                return 75;
-            case "CRUISER":
-                return 40;
-            case "DESTROYER":
-                return 40;
-            case "SUBMARINE":
-                return 40;
-            case "LANDER":
-                return 55;
-            case "BLACK_BOAT":
-                return 75;
-            case "AIRCRAFTCARRIER":
-                return 40;
-			default:
-				return -1;
-        }
-    };
-};
-
-Constructor.prototype = WEAPON;
-var WEAPON_ANTI_SHIP_MISSILE = new Constructor();
+var idx = 0;
+idx = getIndexOf1(WEAPON_ANTI_SHIP_MISSILE.damageTable, "BATTLESHIP");
+WEAPON_ANTI_SHIP_MISSILE.damageTable[idx][1] = 40;
+idx = getIndexOf1(WEAPON_ANTI_SHIP_MISSILE, "CANNONBOAT");
+WEAPON_ANTI_SHIP_MISSILE.damageTable[idx][1] = 75;
+idx = getIndexOf1(WEAPON_ANTI_SHIP_MISSILE, "CRUISER");
+WEAPON_ANTI_SHIP_MISSILE.damageTable[idx][1] = 40;
+idx = getIndexOf1(WEAPON_ANTI_SHIP_MISSILE, "DESTROYER");
+WEAPON_ANTI_SHIP_MISSILE.damageTable[idx][1] = 40;
+idx = getIndexOf1(WEAPON_ANTI_SHIP_MISSILE, "SUBMARINE");
+WEAPON_ANTI_SHIP_MISSILE.damageTable[idx][1] = 40;
+idx = getIndexOf1(WEAPON_ANTI_SHIP_MISSILE, "LANDER");
+WEAPON_ANTI_SHIP_MISSILE.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_ANTI_SHIP_MISSILE, "BLACK_BOAT");
+WEAPON_ANTI_SHIP_MISSILE.damageTable[idx][1] = 75;
+idx = getIndexOf1(WEAPON_ANTI_SHIP_MISSILE, "AIRCRAFTCARRIER");
+WEAPON_ANTI_SHIP_MISSILE.damageTable[idx][1] = 40;

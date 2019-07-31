@@ -4,50 +4,47 @@ var Constructor = function()
     {
         return qsTr("Mech");
     };
+    this.movementpointsTable = [["PLAINS", 1],
+                                ["PLAINS_DESTROYED", 1],
+                                ["PLAINS_PLASMA", 1],
+                                ["BEACH", 1],
+                                ["BRIDGE", 1],
+                                ["DESTROYEDWELD", 1],
+                                ["FOREST", 1],
+                                ["RUIN", 1],
+                                ["STREET", 1],
+                                ["WASTELAND", 1],
+                                ["AIRPORT", 1],
+                                ["FACTORY", 1],
+                                ["HARBOUR", 1],
+                                ["HQ", 1],
+                                ["MINE", 1],
+                                ["PIPESTATION", 1],
+                                ["RADAR", 1],
+                                ["TOWER", 1],
+                                ["TOWN", 1],
+                                ["SILO", 1],
+                                ["SILO_ROCKET", 1],
+                                ["LABOR", 1],
+                                ["TEMPORARY_AIRPORT", 1],
+                                ["TEMPORARY_HARBOUR", 1],
+                                ["MOUNTAIN", 1],
+                                ["RIVER", 1],
+                                ["DESERT", 1],
+                                ["DESERT_DESTROYEDWELD", 1],
+                                ["DESERT_PATH", 1],
+                                ["DESERT_TRY_RIVER", 1],
+                                ["SNOW", 1],
+                                ["SNOW_DESTROYEDWELD", 1],
+                                ["WASTELAND", 1],
+                                ["DESERT_FOREST", 1],
+                                ["DESERT_WASTELAND", 1],
+                                ["SNOW_FOREST", 1],
+                                ["SNOW_WASTELAND", 1]];
+
     this.getMovementpoints = function(terrain)
     {
-        switch (terrain.getID())
-        {
-            case "PLAINS":
-            case "PLAINS_DESTROYED":
-            case "PLAINS_PLASMA":
-            case "BEACH":
-            case "BRIDGE":
-            case "DESTROYEDWELD":
-            case "FOREST":
-            case "RUIN":
-            case "STREET":
-            case "WASTELAND":
-            case "AIRPORT":
-            case "FACTORY":
-            case "HARBOUR":
-            case "HQ":
-            case "MINE":
-            case "PIPESTATION":
-            case "RADAR":
-            case "TOWER":
-            case "TOWN":
-            case "SILO":
-            case "SILO_ROCKET":
-            case "LABOR":
-            case "TEMPORARY_AIRPORT":
-            case "TEMPORARY_HARBOUR":
-			case "MOUNTAIN":
-            case "RIVER":                
-            case "DESERT":
-            case "DESERT_DESTROYEDWELD":
-            case "DESERT_PATH":
-            case "DESERT_TRY_RIVER":
-            case "SNOW":
-            case "SNOW_DESTROYEDWELD":
-            case "WASTELAND":
-            case "DESERT_FOREST":
-            case "DESERT_WASTELAND":
-            case "SNOW_FOREST":
-            case "SNOW_WASTELAND":
-                return 1;
-        }
-        return -1;
+        return MOVEMENTTABLE.getMovementpointsFromTable(terrain, MOVE_MECH.movementpointsTable);
     };
 };
 Constructor.prototype = MOVEMENTTABLE;

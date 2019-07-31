@@ -4,49 +4,43 @@ var Constructor = function()
     {
         return qsTr("Tire");
     };
+    this.movementpointsTable = [["DESERT_FOREST", 2],
+            ["DESERT_WASTELAND", 2],
+            ["BEACH", 2],
+            ["SNOW", 2],
+            ["SNOW_DESTROYEDWELD", 2],      
+            ["RUIN", 1],			
+			["DESTROYEDWELD", 1],
+			["PLAINS", 1],
+            ["PLAINS_DESTROYED", 1],
+            ["PLAINS_PLASMA", 1],
+			["BRIDGE", 1],
+            ["STREET", 1],
+            ["AIRPORT", 1],
+            ["FACTORY", 1],
+            ["HARBOUR", 1],
+            ["HQ", 1],
+            ["PIPESTATION", 1],
+            ["RADAR", 1],
+            ["TOWER", 1],
+            ["TOWN", 1],
+            ["SILO", 1],
+            ["SILO_ROCKET", 1],
+            ["LABOR", 1],
+            ["TEMPORARY_AIRPORT", 1],
+            ["TEMPORARY_HARBOUR", 1],
+            ["DESERT", 1],
+            ["DESERT_DESTROYEDWELD", 1],
+            ["DESERT_PATH", 1],
+			["FOREST", 3],
+			["WASTELAND", 3],
+            ["DESERT_TRY_RIVER", 3],
+            ["SNOW_FOREST", 4],
+            ["SNOW_WASTELAND", 4]];
+
     this.getMovementpoints = function(terrain)
     {
-        switch (terrain.getID())
-        {
-            case "DESERT_FOREST":
-            case "DESERT_WASTELAND":
-            case "BEACH":
-            case "SNOW":
-            case "SNOW_DESTROYEDWELD":
-				return 2;            
-            case "RUIN":			
-			case "DESTROYEDWELD":
-			case "PLAINS":
-            case "PLAINS_DESTROYED":
-            case "PLAINS_PLASMA":
-			case "BRIDGE":
-            case "STREET":
-            case "AIRPORT":
-            case "FACTORY":
-            case "HARBOUR":
-            case "HQ":
-            case "PIPESTATION":
-            case "RADAR":
-            case "TOWER":
-            case "TOWN":
-            case "SILO":
-            case "SILO_ROCKET":
-            case "LABOR":
-            case "TEMPORARY_AIRPORT":
-            case "TEMPORARY_HARBOUR":
-            case "DESERT":
-            case "DESERT_DESTROYEDWELD":
-            case "DESERT_PATH":
-                return 1;
-			case "FOREST":
-			case "WASTELAND":
-            case "DESERT_TRY_RIVER":
-                return 3;
-            case "SNOW_FOREST":
-            case "SNOW_WASTELAND":
-                return 4;
-        }
-        return -1;
+        return MOVEMENTTABLE.getMovementpointsFromTable(terrain, MOVE_TIRE_B.movementpointsTable);
     };
 };
 Constructor.prototype = MOVEMENTTABLE;

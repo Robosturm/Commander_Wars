@@ -4,31 +4,19 @@ var Constructor = function()
     {
         return qsTr("Anti Air Missile");
     };
+    this.damageTable = [["DUSTER", 150],
+                        ["FIGHTER", 150],
+                        ["BOMBER", 150],
+                        ["STEALTHBOMBER", 150],
+                        ["TRANSPORTPLANE", 150],
+                        ["WATERPLANE", 150],
+                        ["BLACK_BOMB", 150],
+                        ["K_HELI", 170],
+                        ["T_HELI", 170]];
+
     this.getBaseDamage = function(unit)
     {
-        switch(unit.getUnitID())
-        {
-			case "DUSTER":
-				return 150;
-			case "FIGHTER":
-				return 150;
-			case "BOMBER":
-				return 150;
-			case "STEALTHBOMBER":
-				return 150;
-			case "TRANSPORTPLANE":
-				return 150;
-			case "WATERPLANE":
-				return 150;
-            case "BLACK_BOMB":
-                return 150;
-			case "K_HELI":
-				return 170;
-			case "T_HELI":
-				return 170;
-			default:
-				return -1;
-        }
+        return WEAPON.getDamageFromTable(unit, WEAPON_ANTI_AIR_MISSILE.damageTable);
     };
 };
 

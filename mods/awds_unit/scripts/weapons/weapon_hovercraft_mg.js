@@ -1,82 +1,64 @@
-var Constructor = function()
+WEAPON_HOVERCRAFT_MG.getEnviromentDamage = function(enviromentId)
 {
-    this.getName = function()
-    {
-        return qsTr("MG");
-    };
-    this.getEnviromentDamage = function(enviromentId)
-    {
-        return 1;
-    };
-    this.getBaseDamage = function(unit)
-    {
-        switch(unit.getUnitID())
-        {
-            // infantry
-            case "INFANTRY":
-                return 75;
-            case "MECH":
-                return 70;
-            case "MOTORBIKE":
-                return 70;
-            case "SNIPER":
-                return 70;
-
-            // supporter
-            case "APC":
-                return 45;
-            case "FLARE":
-                return 35;
-            case "RECON":
-                return 35;
-
-            // tanks
-            case "FLAK":
-                return 6;
-            case "HOVERFLAK":
-                return 6;
-            case "LIGHT_TANK":
-                return 6;
-            case "HOVERCRAFT":
-                return 6;
-
-            // heavy tanks
-            case "HEAVY_HOVERCRAFT":
-                return 1;
-            case "HEAVY_TANK":
-                return 1;
-            case "NEOTANK":
-                return 1;
-
-            // very heavy tanks
-            case "MEGATANK":
-                return 1;
-
-            case "HOELLIUM":
-                return 20;
-
-            // heli copter
-            case "T_HELI":
-                return 40;
-            case "K_HELI":
-                return 10;
-
-            // ranged land units
-            case "ARTILLERY":
-                return 45;
-            case "ANTITANKCANNON":
-                return 1;
-            case "MISSILE":
-                return 55;
-            case "ROCKETTHROWER":
-                return 55;
-            case "PIPERUNNER":
-                return 6;
-            default:
-                return -1;
-        }
-    };
+    return 1;
 };
+var idx = 0;
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG.damageTable, "INFANTRY");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 75;
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "MECH");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 70;
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "MOTORBIKE");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 70;
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "SNIPER");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 70;
 
-Constructor.prototype = WEAPON;
-var WEAPON_HOVERCRAFT_MG = new Constructor();
+// supporter
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "APC");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 45;
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "FLARE");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 35;
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "RECON");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 35;
+
+// tanks
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "FLAK");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 6;
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "HOVERFLAK");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 6;
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "LIGHT_TANK");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 6;
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "HOVERCRAFT");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 6;
+
+// heavy tanks
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "HEAVY_HOVERCRAFT");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 1;
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "HEAVY_TANK");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 1;
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "NEOTANK");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 1;
+
+// very heavy tanks
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "MEGATANK");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 1;
+
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "HOELLIUM");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 20;
+
+// heli copter
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "T_HELI");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 40;
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "K_HELI");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 10;
+
+// ranged land units
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "ARTILLERY");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 45;
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "ANTITANKCANNON");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 1;
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "MISSILE");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "ROCKETTHROWER");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_HOVERCRAFT_MG, "PIPERUNNER");
+WEAPON_HOVERCRAFT_MG.damageTable[idx][1] = 6;

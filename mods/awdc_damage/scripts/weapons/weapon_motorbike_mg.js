@@ -1,75 +1,58 @@
-var Constructor = function()
+WEAPON_MOTORBIKE_MG.getEnviromentDamage = function(enviromentId)
 {
-    this.getName = function()
-    {
-        return qsTr("MG");
-    };
-    this.getEnviromentDamage = function(enviromentId)
-    {
-        return 1;
-    };
-    this.getBaseDamage = function(unit)
-    {
-        switch(unit.getUnitID())
-        {
-            case "INFANTRY":
-                return 65;
-            case "MECH":
-                return 55;
-            case "MOTORBIKE":
-                return 55;
-            case "SNIPER":
-                return 75;
-
-            case "APC":
-                return 20;
-            case "FLARE":
-                return 15;
-            case "RECON":
-                return 18;
-
-            case "FLAK":
-                return 5;
-            case "HOVERFLAK":
-                return 5;
-            case "LIGHT_TANK":
-                return 8;
-            case "HOVERCRAFT":
-                return 8;
-
-            case "HEAVY_HOVERCRAFT":
-                return 5;
-            case "HEAVY_TANK":
-                return 5;
-            case "NEOTANK":
-                return 5;
-
-            case "MEGATANK":
-                return 1;
-
-            case "HOELLIUM":
-                return 20;
-
-            case "T_HELI":
-                return 35;
-            case "K_HELI":
-                return 12;
-
-            case "ARTILLERY":
-                return 15;
-            case "ANTITANKCANNON":
-                return 35;
-            case "MISSILE":
-                return 35;
-            case "ROCKETTHROWER":
-                return 35;
-            case "PIPERUNNER":
-                return 6;
-            default:
-                return -1;
-        }
-    };
+    return 1;
 };
+var idx = 0;
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "INFANTRY");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 65;
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "MECH");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "MOTORBIKE");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "SNIPER");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 75;
 
-Constructor.prototype = WEAPON;
-var WEAPON_MOTORBIKE_MG = new Constructor();
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "APC");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 20;
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "FLARE");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 15;
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "RECON");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 18;
+
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "FLAK");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 5;
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "HOVERFLAK");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 5;
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "LIGHT_TANK");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 8;
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "HOVERCRAFT");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 8;
+
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "HEAVY_HOVERCRAFT");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 5;
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "HEAVY_TANK");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 5;
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "NEOTANK");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 5;
+
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "MEGATANK");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 1;
+
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "HOELLIUM");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 20;
+
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "T_HELI");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 35;
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "K_HELI");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 12;
+
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "ARTILLERY");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 15;
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "ANTITANKCANNON");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 35;
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "MISSILE");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 35;
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "ROCKETTHROWER");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 35;
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "PIPERUNNER");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 6;

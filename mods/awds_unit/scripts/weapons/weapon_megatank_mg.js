@@ -1,82 +1,64 @@
-var Constructor = function()
+WEAPON_MEGATANK_MG.getEnviromentDamage = function(enviromentId)
 {
-    this.getName = function()
-    {
-        return qsTr("MG");
-    };
-    this.getEnviromentDamage = function(enviromentId)
-    {
-        return 1;
-    };
-    this.getBaseDamage = function(unit)
-    {
-        switch(unit.getUnitID())
-        {
-			// infantry
-			case "INFANTRY":
-                return 135;
-			case "MECH":
-                return 125;
-			case "MOTORBIKE":
-                return 125;
-			case "SNIPER":
-                return 135;
-
-			// supporter
-			case "APC":
-                return 65;
-			case "FLARE":
-                return 65;
-			case "RECON":
-                return 65;
-
-			// tanks
-			case "FLAK":
-                return 17;
-			case "HOVERFLAK":
-                return 17;
-			case "LIGHT_TANK":
-				return 10;
-            case "HOVERCRAFT":
-				return 10;
-				
-			// heavy tanks
-			case "HEAVY_HOVERCRAFT":
-                return 1;
-			case "HEAVY_TANK":
-                return 1;
-			case "NEOTANK":
-                return 1;
-				
-			// very heavy tanks
-			case "MEGATANK":
-				return 1;
-
-            case "HOELLIUM":
-                return 20;
-				
-			// heli copter
-			case "T_HELI":
-                return 55;
-			case "K_HELI":
-                return 22;
-				
-			// ranged land units
-			case "ARTILLERY":
-                return 65;
-			case "ANTITANKCANNON":
-                return 1;
-			case "MISSILE":
-                return 55;
-            case "ROCKETTHROWER":
-                return 75;
-            case "PIPERUNNER":
-                return 10;
-			default:
-				return -1;
-        }
-    };
+    return 1;
 };
+var idx = 0;
+idx = getIndexOf1(WEAPON_MEGATANK_MG.damageTable, "INFANTRY");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 135;
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "MECH");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 125;
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "MOTORBIKE");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 125;
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "SNIPER");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 135;
 
-Constructor.prototype = WEAPON;
-var WEAPON_MEGATANK_MG = new Constructor();
+// supporter
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "APC");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 65;
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "FLARE");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 65;
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "RECON");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 65;
+
+// tanks
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "FLAK");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 17;
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "HOVERFLAK");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 17;
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "LIGHT_TANK");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 10;
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "HOVERCRAFT");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 10;
+
+// heavy tanks
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "HEAVY_HOVERCRAFT");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 1;
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "HEAVY_TANK");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 1;
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "NEOTANK");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 1;
+
+// very heavy tanks
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "MEGATANK");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 1;
+
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "HOELLIUM");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 20;
+
+// heli copter
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "T_HELI");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "K_HELI");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 22;
+
+// ranged land units
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "ARTILLERY");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 65;
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "ANTITANKCANNON");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 1;
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "MISSILE");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "ROCKETTHROWER");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 75;
+idx = getIndexOf1(WEAPON_MEGATANK_MG, "PIPERUNNER");
+WEAPON_MEGATANK_MG.damageTable[idx][1] = 10;

@@ -53,7 +53,9 @@ void Interpreter::openScript(const QString& script)
             QJSValue value = evaluate(contents, script);
             if (value.isError())
             {
-                QString error = value.toString() + " in File:" + script;
+                QString error = value.toString() + " in File:" + script + " in File: " +
+                                value.property("fileName").toString() + " at Line: " +
+                                value.property("lineNumber").toString();
                 Console::print(error, Console::eERROR);
             }
         }

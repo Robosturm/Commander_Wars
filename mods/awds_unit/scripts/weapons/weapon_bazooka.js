@@ -1,66 +1,48 @@
-var Constructor = function()
+WEAPON_BAZOOKA.getEnviromentDamage = function(enviromentId)
 {
-    this.getName = function()
-    {
-        return qsTr("Bazooka");
-    };
-    this.getEnviromentDamage = function(enviromentId)
-    {
-        return 15;
-    };
-    this.getBaseDamage = function(unit)
-    {
-        switch(unit.getUnitID())
-        {
-			// supporter
-			case "APC":
-                return 75;
-			case "FLARE":
-				return 85;
-			case "RECON":
-                return 85;
-
-			// tanks
-			case "FLAK":
-                return 65;
-			case "HOVERFLAK":
-                return 65;
-			case "LIGHT_TANK":
-                return 55;
-            case "HOVERCRAFT":
-                return 55;
-				
-			// heavy tanks
-            case "HEAVY_HOVERCRAFT":
-                return 15;
-			case "HEAVY_TANK":
-                return 15;
-			case "NEOTANK":
-                return 15;
-				
-			// very heavy tanks
-			case "MEGATANK":
-                return 5;
-
-            case "HOELLIUM":
-                return 30;
-				
-			// ranged land units
-			case "ARTILLERY":
-                return 70;
-            case "ANTITANKCANNON":
-                return 55;
-			case "MISSILE":
-                return 85;
-            case "ROCKETTHROWER":
-                return 85;
-            case "PIPERUNNER":
-                return 55;
-			default:
-				return -1;
-        }
-    };
+    return 15;
 };
+var idx = 0;
+idx = getIndexOf1(WEAPON_BAZOOKA.damageTable, "APC");
+WEAPON_BAZOOKA.damageTable[idx][1] = 75;
+idx = getIndexOf1(WEAPON_BAZOOKA.damageTable, "FLARE");
+WEAPON_BAZOOKA.damageTable[idx][1] = 85;
+idx = getIndexOf1(WEAPON_BAZOOKA.damageTable, "RECON");
+WEAPON_BAZOOKA.damageTable[idx][1] = 85;
 
-Constructor.prototype = WEAPON;
-var WEAPON_BAZOOKA = new Constructor();
+// tanks
+idx = getIndexOf1(WEAPON_BAZOOKA.damageTable, "FLAK");
+WEAPON_BAZOOKA.damageTable[idx][1] = 65;
+idx = getIndexOf1(WEAPON_BAZOOKA.damageTable, "HOVERFLAK");
+WEAPON_BAZOOKA.damageTable[idx][1] = 65;
+idx = getIndexOf1(WEAPON_BAZOOKA.damageTable, "LIGHT_TANK");
+WEAPON_BAZOOKA.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_BAZOOKA.damageTable, "HOVERCRAFT");
+WEAPON_BAZOOKA.damageTable[idx][1] = 55;
+
+// heavy tanks
+idx = getIndexOf1(WEAPON_BAZOOKA.damageTable, "HEAVY_HOVERCRAFT");
+WEAPON_BAZOOKA.damageTable[idx][1] = 15;
+idx = getIndexOf1(WEAPON_BAZOOKA.damageTable, "HEAVY_TANK");
+WEAPON_BAZOOKA.damageTable[idx][1] = 15;
+idx = getIndexOf1(WEAPON_BAZOOKA.damageTable, "NEOTANK");
+WEAPON_BAZOOKA.damageTable[idx][1] = 15;
+
+// very heavy tanks
+idx = getIndexOf1(WEAPON_BAZOOKA.damageTable, "MEGATANK");
+WEAPON_BAZOOKA.damageTable[idx][1] = 5;
+
+idx = getIndexOf1(WEAPON_BAZOOKA.damageTable, "HOELLIUM");
+WEAPON_BAZOOKA.damageTable[idx][1] = 30;
+
+// ranged land units
+idx = getIndexOf1(WEAPON_BAZOOKA.damageTable, "ARTILLERY");
+WEAPON_BAZOOKA.damageTable[idx][1] = 70;
+idx = getIndexOf1(WEAPON_BAZOOKA.damageTable, "ANTITANKCANNON");
+WEAPON_BAZOOKA.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_BAZOOKA.damageTable, "MISSILE");
+WEAPON_BAZOOKA.damageTable[idx][1] = 85;
+idx = getIndexOf1(WEAPON_BAZOOKA.damageTable, "ROCKETTHROWER");
+WEAPON_BAZOOKA.damageTable[idx][1] = 85;
+idx = getIndexOf1(WEAPON_BAZOOKA.damageTable, "PIPERUNNER");
+WEAPON_BAZOOKA.damageTable[idx][1] = 55;

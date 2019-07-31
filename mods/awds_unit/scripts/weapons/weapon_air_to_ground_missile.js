@@ -1,79 +1,62 @@
-var Constructor = function()
+WEAPON_AIR_TO_GROUND_MISSILE.getEnviromentDamage = function(enviromentId)
 {
-    this.getName = function()
-    {
-        return qsTr("Missile");
-    };
-    this.getEnviromentDamage = function(enviromentId)
-    {
-        return 25;
-    };
-    this.getBaseDamage = function(unit)
-    {
-        switch(unit.getUnitID())
-        {
-			case "APC":
-                return 60;
-			case "FLARE":
-                return 55;
-			case "RECON":
-                return 55;
-
-			case "FLAK":
-                return 25;
-			case "HOVERFLAK":
-                return 25;
-			case "LIGHT_TANK":
-                return 55;
-            case "HOVERCRAFT":
-                return 55;
-
-            case "HEAVY_HOVERCRAFT":
-                return 25;
-			case "HEAVY_TANK":
-                return 25;
-			case "NEOTANK":
-                return 20;
-
-			case "MEGATANK":
-                return 10;
-
-			case "ARTILLERY":
-                return 65;
-            case "ANTITANKCANNON":
-                return 35;
-			case "MISSILE":
-                return 65;
-            case "ROCKETTHROWER":
-                return 65;
-            case "PIPERUNNER":
-                return 55;
-
-            case "HOELLIUM":
-                return 25;
-				
-			// ships
-			case "BATTLESHIP":
-				return 25;
-			case "CANNONBOAT":
-                return 25;
-			case "CRUISER":
-                return 25;
-			case "DESTROYER":
-                return 25;
-			case "SUBMARINE":
-				return 25;
-			case "LANDER":
-				return 25;
-            case "BLACK_BOAT":
-                return 25;
-			case "AIRCRAFTCARRIER":
-				return 25;
-			default:
-				return -1;
-        }
-    };
+    return 25;
 };
+var idx = 0;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "APC");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 60;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "FLARE");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "RECON");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 55;
 
-Constructor.prototype = WEAPON;
-var WEAPON_AIR_TO_GROUND_MISSILE = new Constructor();
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "FLAK");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 25;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "HOVERFLAK");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 25;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "LIGHT_TANK");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "HOVERCRAFT");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 55;
+
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "HEAVY_HOVERCRAFT");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 25;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "HEAVY_TANK");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 25;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "NEOTANK");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 20;
+
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "MEGATANK");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 10;
+
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "ARTILLERY");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 65;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "ANTITANKCANNON");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 35;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "MISSILE");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 65;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "ROCKETTHROWER");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 65;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "PIPERUNNER");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 55;
+
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "HOELLIUM");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 25;
+
+// ships
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "BATTLESHIP");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 25;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "CANNONBOAT");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 25;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "CRUISER");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 25;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "DESTROYER");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 25;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "SUBMARINE");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 25;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "LANDER");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 25;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "BLACK_BOAT");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 25;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "AIRCRAFTCARRIER");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 25;

@@ -5,6 +5,5 @@ UNIT.transporterRefilling = function (unit)
     {
         var transportUnit = unit.getLoadedUnit(i);
         transportUnit.refill();
-        transportUnit.setHasMoved(false);
     }
 };

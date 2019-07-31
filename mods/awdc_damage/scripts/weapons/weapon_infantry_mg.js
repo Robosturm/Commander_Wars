@@ -1,82 +1,64 @@
-var Constructor = function()
+WEAPON_INFANTRY_MG.getEnviromentDamage = function(enviromentId)
 {
-    this.getName = function()
-    {
-        return qsTr("MG");
-    };
-    this.getEnviromentDamage = function(enviromentId)
-    {
-        return 1;
-    };
-    this.getBaseDamage = function(unit)
-    {
-        switch(unit.getUnitID())
-        {
-			// infantry
-			case "INFANTRY":
-                return 55;
-			case "MECH":
-                return 45;
-			case "MOTORBIKE":
-                return 45;
-			case "SNIPER":
-                return 55;
-
-			// supporter
-			case "APC":
-                return 14;
-			case "FLARE":
-				return 10;
-			case "RECON":
-                return 12;
-
-			// tanks
-			case "FLAK":
-                return 3;
-			case "HOVERFLAK":
-                return 3;
-			case "LIGHT_TANK":
-				return 5;
-            case "HOVERCRAFT":
-				return 5;
-				
-			// heavy tanks
-			case "HEAVY_HOVERCRAFT":
-                return 5;
-			case "HEAVY_TANK":
-                return 5;
-			case "NEOTANK":
-                return 5;
-				
-			// very heavy tanks
-			case "MEGATANK":
-				return 1;
-
-            case "HOELLIUM":
-                return 20;
-				
-			// heli copter
-			case "T_HELI":
-				return 30;
-			case "K_HELI":
-                return 8;
-				
-			// ranged land units
-			case "ARTILLERY":
-				return 10;
-			case "ANTITANKCANNON":
-                return 30;
-			case "MISSILE":
-                return 20;
-            case "ROCKETTHROWER":
-				return 20;
-            case "PIPERUNNER":
-                return 5;
-			default:
-				return -1;
-        }
-    };
+    return 1;
 };
+var idx = 0;
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "INFANTRY");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "MECH");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 45;
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "MOTORBIKE");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 45;
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "SNIPER");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 55;
 
-Constructor.prototype = WEAPON;
-var WEAPON_INFANTRY_MG = new Constructor();
+// supporter
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "APC");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 14;
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "FLARE");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 10;
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "RECON");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 12;
+
+// tanks
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "FLAK");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 3;
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "HOVERFLAK");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 3;
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "LIGHT_TANK");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 5;
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "HOVERCRAFT");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 5;
+
+// heavy tanks
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "HEAVY_HOVERCRAFT");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 5;
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "HEAVY_TANK");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 5;
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "NEOTANK");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 5;
+
+// very heavy tanks
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "MEGATANK");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 1;
+
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "HOELLIUM");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 20;
+
+// heli copter
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "T_HELI");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 30;
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "K_HELI");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 8;
+
+// ranged land units
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "ARTILLERY");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 10;
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "ANTITANKCANNON");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 30;
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "MISSILE");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 20;
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "ROCKETTHROWER");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 20;
+idx = getIndexOf1(WEAPON_INFANTRY_MG.damageTable, "PIPERUNNER");
+WEAPON_INFANTRY_MG.damageTable[idx][1] = 5;

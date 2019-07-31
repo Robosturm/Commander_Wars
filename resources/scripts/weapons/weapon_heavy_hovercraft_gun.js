@@ -8,75 +8,46 @@ var Constructor = function()
     {
         return 55;
     };
+    this.damageTable = [["APC", 90],
+                        ["FLARE", 90],
+                        ["RECON", 95],
+
+                        // tanks
+                        ["FLAK", 90],
+                        ["HOVERFLAK", 90],
+                        ["LIGHT_TANK", 70],
+                        ["HOVERCRAFT", 70],
+
+                        // heavy tanks
+                        ["HEAVY_HOVERCRAFT", 55],
+                        ["HEAVY_TANK", 55],
+                        ["NEOTANK", 55],
+
+                        // very heavy tanks
+                        ["MEGATANK", 35],
+
+                        ["HOELLIUM", 30],
+
+                        // ranged land units
+                        ["ARTILLERY", 85],
+                        ["ANTITANKCANNON", 35],
+                        ["MISSILE", 90],
+                        ["ROCKETTHROWER", 90],
+                        ["PIPERUNNER", 90],
+
+                        // ships
+                        ["BATTLESHIP", 10],
+                        ["CANNONBOAT", 55],
+                        ["CRUISER", 12],
+                        ["DESTROYER", 12],
+                        ["SUBMARINE", 12],
+                        ["LANDER", 22],
+                        ["BLACK_BOAT", 55],
+                        ["AIRCRAFTCARRIER", 10]];
+
     this.getBaseDamage = function(unit)
     {
-        switch(unit.getUnitID())
-        {
-			// supporter
-			case "APC":
-				return 90;
-			case "FLARE":
-				return 90;
-			case "RECON":
-				return 95;
-
-			// tanks
-			case "FLAK":
-                return 90;
-			case "HOVERFLAK":
-                return 90;
-			case "LIGHT_TANK":
-                return 70;
-            case "HOVERCRAFT":
-                return 70;
-				
-			// heavy tanks
-            case "HEAVY_HOVERCRAFT":
-                return 55;
-			case "HEAVY_TANK":
-                return 55;
-			case "NEOTANK":
-                return 55;
-				
-			// very heavy tanks
-			case "MEGATANK":
-                return 35;
-
-            case "HOELLIUM":
-                return 30;
-				
-			// ranged land units
-			case "ARTILLERY":
-                return 85;
-			case "ANTITANKCANNON":
-                return 35;
-			case "MISSILE":
-                return 90;
-            case "ROCKETTHROWER":
-                return 90;
-            case "PIPERUNNER":
-                return 90;
-			
-			// ships
-			case "BATTLESHIP":
-                return 10;
-			case "CANNONBOAT":
-                return 55;
-			case "CRUISER":
-                return 12;
-			case "DESTROYER":
-                return 12;
-			case "SUBMARINE":
-                return 12;
-			case "LANDER":
-                return 22;
-            case "BLACK_BOAT":
-                return 55;
-			case "AIRCRAFTCARRIER":
-                return 10;
-			default:
-				return -1;
-        }
+        return WEAPON.getDamageFromTable(unit, WEAPON_HEAVY_HOVERCRAFT_GUN.damageTable);
     };
 };
 

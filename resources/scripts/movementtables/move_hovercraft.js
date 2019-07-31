@@ -4,55 +4,49 @@ var Constructor = function()
     {
         return qsTr("Hovercraft");
     };
+    this.movementpointsTable = [["PLAINS", 1],
+                                ["PLAINS_DESTROYED", 1],
+                                ["PLAINS_PLASMA", 1],
+                                ["BEACH", 1],
+                                ["BRIDGE", 1],
+                                ["DESTROYEDWELD", 1],
+                                ["RUIN", 1],
+                                ["STREET", 1],
+                                ["AIRPORT", 1],
+                                ["FACTORY", 1],
+                                ["HARBOUR", 1],
+                                ["HQ", 1],
+                                ["MINE", 1],
+                                ["PIPESTATION", 1],
+                                ["RADAR", 1],
+                                ["TOWER", 1],
+                                ["TOWN", 1],
+                                ["SILO", 1],
+                                ["SILO_ROCKET", 1],
+                                ["LABOR", 1],
+                                ["TEMPORARY_AIRPORT", 1],
+                                ["TEMPORARY_HARBOUR", 1],
+                                ["RIVER", 1],
+                                ["DESERT", 1],
+                                ["DESERT_DESTROYEDWELD", 1],
+                                ["DESERT_PATH", 1],
+                                ["DESERT_TRY_RIVER", 1],
+                                ["SNOW", 1],
+                                ["SNOW_DESTROYEDWELD", 1],
+                                ["FOREST", 2],
+                                ["WASTELAND", 2],
+                                ["DESERT_FOREST", 2],
+                                ["DESERT_WASTELAND", 2],
+                                ["SNOW_FOREST", 2],
+                                ["SNOW_WASTELAND", 2],
+                                ["SEA", 2],
+                                ["FOG", 2],
+                                ["ROUGH_SEA", 3],
+                                ["REAF", 3]];
+
     this.getMovementpoints = function(terrain)
     {
-        switch (terrain.getID())
-        {
-            case "PLAINS":
-            case "PLAINS_DESTROYED":
-            case "PLAINS_PLASMA":
-            case "BEACH":
-            case "BRIDGE":
-            case "DESTROYEDWELD":            
-            case "RUIN":
-            case "STREET":
-            case "AIRPORT":
-            case "FACTORY":
-            case "HARBOUR":
-            case "HQ":
-            case "MINE":
-            case "PIPESTATION":
-            case "RADAR":
-            case "TOWER":
-            case "TOWN":
-            case "SILO":
-            case "SILO_ROCKET":
-            case "LABOR":
-            case "TEMPORARY_AIRPORT":
-            case "TEMPORARY_HARBOUR":
-			case "RIVER":
-            case "DESERT":
-            case "DESERT_DESTROYEDWELD":
-            case "DESERT_PATH":
-            case "DESERT_TRY_RIVER":
-            case "SNOW":
-            case "SNOW_DESTROYEDWELD":
-                return 1;
-			case "FOREST":
-			case "WASTELAND":
-            case "DESERT_FOREST":
-            case "DESERT_WASTELAND":
-            case "SNOW_FOREST":
-            case "SNOW_WASTELAND":
-                return 2;
-            case "SEA":
-            case "FOG":
-                return 2;
-            case "ROUGH_SEA":
-            case "REAF":
-                return 3;
-        }
-        return -1;
+        return MOVEMENTTABLE.getMovementpointsFromTable(terrain, MOVE_HOVERCRAFT.movementpointsTable);
     };
 };
 Constructor.prototype = MOVEMENTTABLE;

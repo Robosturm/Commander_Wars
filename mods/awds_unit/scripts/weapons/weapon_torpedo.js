@@ -1,37 +1,19 @@
-var Constructor = function()
-{
-    this.getName = function()
-    {
-        return qsTr("Torpedo");
-    };
-    this.getBaseDamage = function(unit)
-    {
-        switch(unit.getUnitID())
-        {
-            // ships
-            case "BATTLESHIP":
-                return 65;
-            case "CANNONBOAT":
-                return 95;
-				
-            case "CRUISER":
-                return 25;
-            case "DESTROYER":
-                return 55;
-            case "SUBMARINE":
-                return 55;
-				
-            case "LANDER":
-                return 95;
-            case "BLACK_BOAT":
-                return 95;
-            case "AIRCRAFTCARRIER":
-                return 75;
-			default:
-				return -1;
-        }
-    };
-};
+var idx = 0;
+idx = getIndexOf1(WEAPON_TORPEDO.damageTable, "BATTLESHIP");
+WEAPON_TORPEDO.damageTable[idx][1] = 65;
+idx = getIndexOf1(WEAPON_TORPEDO, "CANNONBOAT");
+WEAPON_TORPEDO.damageTable[idx][1] = 95;
 
-Constructor.prototype = WEAPON;
-var WEAPON_TORPEDO = new Constructor();
+idx = getIndexOf1(WEAPON_TORPEDO, "CRUISER");
+WEAPON_TORPEDO.damageTable[idx][1] = 25;
+idx = getIndexOf1(WEAPON_TORPEDO, "DESTROYER");
+WEAPON_TORPEDO.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_TORPEDO, "SUBMARINE");
+WEAPON_TORPEDO.damageTable[idx][1] = 55;
+
+idx = getIndexOf1(WEAPON_TORPEDO, "LANDER");
+WEAPON_TORPEDO.damageTable[idx][1] = 95;
+idx = getIndexOf1(WEAPON_TORPEDO, "BLACK_BOAT");
+WEAPON_TORPEDO.damageTable[idx][1] = 95;
+idx = getIndexOf1(WEAPON_TORPEDO, "AIRCRAFTCARRIER");
+WEAPON_TORPEDO.damageTable[idx][1] = 75;

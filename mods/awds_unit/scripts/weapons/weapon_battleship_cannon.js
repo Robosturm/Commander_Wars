@@ -1,94 +1,76 @@
-var Constructor = function()
+WEAPON_BATTLESHIP_CANNON.getEnviromentDamage = function(enviromentId)
 {
-    this.getName = function()
-    {
-        return qsTr("Cannon");
-    };
-    this.getEnviromentDamage = function(enviromentId)
-    {
-        return 55;
-    };
-    this.getBaseDamage = function(unit)
-    {
-        switch(unit.getUnitID())
-        {
-			// infantry
-			case "INFANTRY":
-                return 95;
-			case "MECH":
-                return 90;
-			case "MOTORBIKE":
-                return 90;
-			case "SNIPER":
-                return 90;
-
-			// supporter
-			case "APC":
-                return 60;
-			case "FLARE":
-                return 90;
-			case "RECON":
-                return 90;
-
-			// tanks
-			case "FLAK":
-                return 85;
-			case "HOVERFLAK":
-                return 85;
-			case "LIGHT_TANK":
-                return 80;
-            case "HOVERCRAFT":
-                return 80;
-				
-			// heavy tanks
-            case "HEAVY_HOVERCRAFT":
-                return 55;
-			case "HEAVY_TANK":
-                return 55;
-			case "NEOTANK":
-                return 50;
-				
-			// very heavy tanks
-			case "MEGATANK":
-                return 25;
-				
-			// ranged land units
-			case "ARTILLERY":
-                return 80;
-            case "ANTITANKCANNON":
-                return 55;
-			case "MISSILE":
-                return 85;
-            case "ROCKETTHROWER":
-                return 85;
-            case "PIPERUNNER":
-                return 80;
-
-            case "HOELLIUM":
-                return 20;
-
-            // ships
-            case "BATTLESHIP":
-                return 50;
-            case "CANNONBOAT":
-                return 95;
-            case "CRUISER":
-                return 95;
-            case "DESTROYER":
-                return 55;
-            case "SUBMARINE":
-                return 95;
-            case "LANDER":
-                return 95;
-            case "BLACK_BOAT":
-                return 95;
-            case "AIRCRAFTCARRIER":
-                return 60;
-			default:
-				return -1;
-        }
-    };
+    return 55;
 };
+var idx = 0;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON.damageTable, "INFANTRY");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 95;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "MECH");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 90;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "MOTORBIKE");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 90;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "SNIPER");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 90;
 
-Constructor.prototype = WEAPON;
-var WEAPON_BATTLESHIP_CANNON = new Constructor();
+// supporter
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "APC");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 60;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "FLARE");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 90;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "RECON");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 90;
+
+// tanks
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "FLAK");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 85;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "HOVERFLAK");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 85;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "LIGHT_TANK");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 80;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "HOVERCRAFT");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 80;
+
+// heavy tanks
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "HEAVY_HOVERCRAFT");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "HEAVY_TANK");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "NEOTANK");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 50;
+
+// very heavy tanks
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "MEGATANK");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 25;
+
+// ranged land units
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "ARTILLERY");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 80;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "ANTITANKCANNON");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "MISSILE");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 85;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "ROCKETTHROWER");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 85;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "PIPERUNNER");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 80;
+
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "HOELLIUM");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 20;
+
+// ships
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "BATTLESHIP");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 50;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "CANNONBOAT");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 95;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "CRUISER");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 95;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "DESTROYER");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 55;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "SUBMARINE");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 95;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "LANDER");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 95;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "BLACK_BOAT");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 95;
+idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "AIRCRAFTCARRIER");
+WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 60;

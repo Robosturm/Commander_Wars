@@ -4,26 +4,20 @@ var Constructor = function()
     {
         return qsTr("Ship");
     };
+    this.movementpointsTable = [["HARBOUR", 1],
+                                ["TEMPORARY_HARBOUR", 1],
+                                ["SEA", 1],
+                                ["FOG", 1],
+                                ["ROUGH_SEA", 2],
+                                ["REAF", 2]];
+
     this.getMovementpoints = function(terrain)
     {
-        switch (terrain.getID())
+        if (terrain.getID() === "BRIDGE" && terrain.getBaseTerrainID() === "SEA")
         {
-            case "HARBOUR":
-            case "TEMPORARY_HARBOUR":
-            case "SEA":
-            case "FOG":
-                return 1;
-			case "ROUGH_SEA":
-            case "REAF":
-				return 2;
-            case "BRIDGE":
-                if (terrain.getBaseTerrainID() === "SEA")
-                {
-                    return 1;
-                }
-                break;
+            return 1;
         }
-        return -1;
+        return MOVEMENTTABLE.getMovementpointsFromTable(terrain, MOVE_SHIP.movementpointsTable);
     };
 };
 Constructor.prototype = MOVEMENTTABLE;

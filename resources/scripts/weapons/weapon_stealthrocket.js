@@ -8,106 +8,64 @@ var Constructor = function()
     {
         return 70;
     };
+    this.damageTable = [["INFANTRY", 105],
+                        ["MECH", 85],
+                        ["MOTORBIKE", 85],
+                        ["SNIPER", 85],
+
+                        // supporter
+                        ["APC", 75],
+                        ["FLARE", 75],
+                        ["RECON", 75],
+
+                        // tanks
+                        ["FLAK", 35],
+                        ["HOVERFLAK", 35],
+                        ["LIGHT_TANK", 65],
+                        ["HOVERCRAFT", 65],
+
+                        // heavy tanks
+                        ["HEAVY_HOVERCRAFT", 55],
+                        ["HEAVY_TANK", 55],
+                        ["NEOTANK", 55],
+
+                        // very heavy tanks
+                        ["MEGATANK", 35],
+
+                        ["HOELLIUM", 30],
+
+                        // ranged land units
+                        ["ARTILLERY", 65],
+                        ["ANTITANKCANNON", 55],
+                        ["MISSILE", 55],
+                        ["ROCKETTHROWER", 75],
+                        ["PIPERUNNER", 75],
+
+                        // air units
+                        ["DUSTER", 65],
+                        ["FIGHTER", 45],
+                        ["BOMBER", 75],
+                        ["STEALTHBOMBER", 75],
+                        ["TRANSPORTPLANE", 120],
+                        ["BLACK_BOMB", 120],
+                        ["WATERPLANE", 55],
+                        ["K_HELI", 85],
+                        ["T_HELI", 95],
+
+
+                        // ships
+                        ["BATTLESHIP", 55],
+                        ["CANNONBOAT", 75],
+                        ["CRUISER", 35],
+                        ["DESTROYER", 35],
+                        ["SUBMARINE", 55],
+                        ["LANDER", 55],
+                        ["BLACK_BOAT", 75],
+                        ["AIRCRAFTCARRIER", 55]];
+
     this.getBaseDamage = function(unit)
     {
-        switch(unit.getUnitID())
-        {
-			// infantry
-			case "INFANTRY":
-                return 105;
-			case "MECH":
-                return 85;
-			case "MOTORBIKE":
-                return 85;
-			case "SNIPER":
-                return 85;
-
-			// supporter
-			case "APC":
-                return 75;
-			case "FLARE":
-                return 75;
-			case "RECON":
-                return 75;
-
-			// tanks
-			case "FLAK":
-                return 35;
-			case "HOVERFLAK":
-                return 35;
-			case "LIGHT_TANK":
-                return 65;
-			case "HOVERCRAFT":
-                return 65;
-				
-			// heavy tanks
-            case "HEAVY_HOVERCRAFT":
-                return 55;
-			case "HEAVY_TANK":
-                return 55;
-			case "NEOTANK":
-                return 55;
-				
-			// very heavy tanks
-			case "MEGATANK":
-                return 35;
-
-            case "HOELLIUM":
-                return 30;
-				
-			// ranged land units
-			case "ARTILLERY":
-                return 65;
-			case "ANTITANKCANNON":
-                return 55;
-			case "MISSILE":
-                return 55;
-            case "ROCKETTHROWER":
-                return 75;
-            case "PIPERUNNER":
-                return 75;
-
-            // air units
-            case "DUSTER":
-                return 65;
-            case "FIGHTER":
-                return 45;
-            case "BOMBER":
-                return 75;
-            case "STEALTHBOMBER":
-                return 75;
-            case "TRANSPORTPLANE":
-                return 120;
-            case "BLACK_BOMB":
-                return 120;
-            case "WATERPLANE":
-                return 55;
-            case "K_HELI":
-                return 85;
-            case "T_HELI":
-                return 95;
-
-
-			// ships
-			case "BATTLESHIP":
-                return 55;
-			case "CANNONBOAT":
-				return 75;				
-			case "CRUISER":
-                return 35;
-			case "DESTROYER":
-                return 35;
-			case "SUBMARINE":
-                return 55;
-			case "LANDER":
-                return 55;
-            case "BLACK_BOAT":
-                return 75;
-			case "AIRCRAFTCARRIER":
-                return 55;
-			default:
-				return -1;
-        }
+        return WEAPON.getDamageFromTable(unit, WEAPON_STEALTHROCKET.damageTable);
     };
 };
 

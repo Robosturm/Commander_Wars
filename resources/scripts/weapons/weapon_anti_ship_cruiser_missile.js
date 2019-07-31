@@ -4,32 +4,18 @@ var Constructor = function()
     {
         return qsTr("Ship Missile");
     };
+    this.damageTable = [["BATTLESHIP", 38],
+                        ["CANNONBOAT", 85],
+                        ["CRUISER", 28],
+                        ["DESTROYER", 28],
+                        ["SUBMARINE", 95],
+                        ["LANDER", 40],
+                        ["BLACK_BOAT", 85],
+                        ["AIRCRAFTCARRIER", 38]];
+
     this.getBaseDamage = function(unit)
     {
-        switch(unit.getUnitID())
-        {
-            // ships
-            case "BATTLESHIP":
-                return 38;
-            case "CANNONBOAT":
-                return 85;
-				
-            case "CRUISER":
-                return 28;
-            case "DESTROYER":
-                return 28;
-            case "SUBMARINE":
-                return 95;
-				
-            case "LANDER":
-                return 40;
-            case "BLACK_BOAT":
-                return 85;
-            case "AIRCRAFTCARRIER":
-                return 38;
-			default:
-				return -1;
-        }
+        return WEAPON.getDamageFromTable(unit, WEAPON_ANTI_SHIP_CRUISER_MISSILE.damageTable);
     };
 };
 

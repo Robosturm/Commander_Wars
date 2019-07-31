@@ -1,82 +1,64 @@
-var Constructor = function()
+WEAPON_NEOTANK_MG.getEnviromentDamage = function(enviromentId)
 {
-    this.getName = function()
-    {
-        return qsTr("MG");
-    };
-    this.getEnviromentDamage = function(enviromentId)
-    {
-        return 1;
-    };
-    this.getBaseDamage = function(unit)
-    {
-        switch(unit.getUnitID())
-        {
-            // infantry
-            case "INFANTRY":
-                return 90;
-            case "MECH":
-                return 80;
-            case "MOTORBIKE":
-                return 80;
-            case "SNIPER":
-                return 80;
-
-            // supporter
-            case "APC":
-                return 45;
-            case "FLARE":
-                return 35;
-            case "RECON":
-                return 40;
-
-            // tanks
-            case "FLAK":
-                return 8;
-            case "HOVERFLAK":
-                return 8;
-            case "LIGHT_TANK":
-                return 8;
-            case "HOVERCRAFT":
-                return 8;
-
-            // heavy tanks
-            case "HEAVY_HOVERCRAFT":
-                return 5;
-            case "HEAVY_TANK":
-                return 5;
-            case "NEOTANK":
-                return 5;
-
-            // very heavy tanks
-            case "MEGATANK":
-                return 1;
-
-            case "HOELLIUM":
-                return 20;
-
-            // heli copter
-            case "T_HELI":
-                return 40;
-            case "K_HELI":
-                return 24;
-
-            // ranged land units
-            case "ARTILLERY":
-                return 45;
-            case "ANTITANKCANNON":
-                return 1;
-            case "MISSILE":
-                return 60;
-            case "ROCKETTHROWER":
-                return 60;
-            case "PIPERUNNER":
-                return 6;
-			default:
-				return -1;
-        }
-    };
+    return 1;
 };
+var idx = 0;
+idx = getIndexOf1(WEAPON_NEOTANK_MG.damageTable, "INFANTRY");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 90;
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "MECH");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 80;
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "MOTORBIKE");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 80;
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "SNIPER");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 80;
 
-Constructor.prototype = WEAPON;
-var WEAPON_NEOTANK_MG = new Constructor();
+// supporter
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "APC");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 45;
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "FLARE");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 35;
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "RECON");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 40;
+
+// tanks
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "FLAK");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 8;
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "HOVERFLAK");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 8;
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "LIGHT_TANK");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 8;
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "HOVERCRAFT");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 8;
+
+// heavy tanks
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "HEAVY_HOVERCRAFT");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 5;
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "HEAVY_TANK");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 5;
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "NEOTANK");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 5;
+
+// very heavy tanks
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "MEGATANK");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 1;
+
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "HOELLIUM");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 20;
+
+// heli copter
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "T_HELI");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 40;
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "K_HELI");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 24;
+
+// ranged land units
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "ARTILLERY");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 45;
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "ANTITANKCANNON");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 1;
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "MISSILE");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 60;
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "ROCKETTHROWER");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 60;
+idx = getIndexOf1(WEAPON_NEOTANK_MG, "PIPERUNNER");
+WEAPON_NEOTANK_MG.damageTable[idx][1] = 6;

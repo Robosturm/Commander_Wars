@@ -1,34 +1,17 @@
-var Constructor = function()
-{
-    this.getName = function()
-    {
-        return qsTr("Anti Air Gun");
-    };
-    this.getBaseDamage = function(unit)
-    {
-        switch(unit.getUnitID())
-        {
-			case "DUSTER":
-                return 100;
-			case "FIGHTER":
-                return 85;
-			case "BOMBER":
-                return 100;
-			case "STEALTHBOMBER":
-				return 105;
-			case "TRANSPORTPLANE":
-                return 120;
-			case "WATERPLANE":
-                return 100;
-			case "K_HELI":
-                return 105;
-			case "T_HELI":
-                return 105;
-			default:
-				return -1;
-        }
-    };
-};
-
-Constructor.prototype = WEAPON;
-var WEAPON_A_AIR_GUN = new Constructor();
+var idx = 0;
+idx = getIndexOf1(WEAPON_A_AIR_GUN.damageTable, "DUSTER");
+WEAPON_A_AIR_GUN.damageTable[idx][1] = 100;
+idx = getIndexOf1(WEAPON_A_AIR_GUN.damageTable, "FIGHTER");
+WEAPON_A_AIR_GUN.damageTable[idx][1] = 85;
+idx = getIndexOf1(WEAPON_A_AIR_GUN.damageTable, "BOMBER");
+WEAPON_A_AIR_GUN.damageTable[idx][1] = 100;
+idx = getIndexOf1(WEAPON_A_AIR_GUN.damageTable, "STEALTHBOMBER");
+WEAPON_A_AIR_GUN.damageTable[idx][1] = 105;
+idx = getIndexOf1(WEAPON_A_AIR_GUN.damageTable, "TRANSPORTPLANE");
+WEAPON_A_AIR_GUN.damageTable[idx][1] = 120;
+idx = getIndexOf1(WEAPON_A_AIR_GUN.damageTable, "WATERPLANE");
+WEAPON_A_AIR_GUN.damageTable[idx][1] = 100;
+idx = getIndexOf1(WEAPON_A_AIR_GUN.damageTable, "K_HELI");
+WEAPON_A_AIR_GUN.damageTable[idx][1] = 105;
+idx = getIndexOf1(WEAPON_A_AIR_GUN.damageTable, "T_HELI");
+WEAPON_A_AIR_GUN.damageTable[idx][1] = 105;

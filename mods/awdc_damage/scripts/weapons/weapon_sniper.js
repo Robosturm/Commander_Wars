@@ -1,82 +1,64 @@
-var Constructor = function()
+WEAPON_SNIPER.getEnviromentDamage = function(enviromentId)
 {
-    this.getName = function()
-    {
-        return qsTr("Sniper Rifle");
-    };
-    this.getEnviromentDamage = function(enviromentId)
-    {
-        return 1;
-    };
-    this.getBaseDamage = function(unit)
-    {
-        switch(unit.getUnitID())
-        {
-			// infantry
-			case "INFANTRY":
-				return 150;
-			case "MECH":
-				return 150;
-			case "MOTORBIKE":
-				return 150;
-			case "SNIPER":
-				return 150;
-
-			// supporter
-			case "APC":
-                return 15;
-			case "FLARE":
-                return 15;
-			case "RECON":
-                return 15;
-
-			// tanks
-			case "FLAK":
-				return 8;
-			case "HOVERFLAK":
-				return 8;
-			case "LIGHT_TANK":
-				return 8;
-            case "HOVERCRAFT":
-				return 8;
-				
-			// heavy tanks
-			case "HEAVY_HOVERCRAFT":
-				return 5;
-			case "HEAVY_TANK":
-				return 5;
-			case "NEOTANK":
-				return 5;
-				
-			// very heavy tanks
-			case "MEGATANK":
-				return 1;
-
-            case "HOELLIUM":
-                return 20;
-				
-			// heli copter
-			case "T_HELI":
-                return 35;
-			case "K_HELI":
-                return 15;
-				
-			// ranged land units
-			case "ARTILLERY":
-				return 8;
-			case "ANTITANKCANNON":
-                return 8;
-			case "MISSILE":
-                return 12;
-            case "ROCKETTHROWER":
-				return 12;
-            case "PIPERUNNER":
-                return 6;
-			default:
-				return -1;
-        }
-    };
+    return 1;
 };
+var idx = 0;
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "INFANTRY");
+WEAPON_SNIPER.damageTable[idx][1] = 150;
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "MECH");
+WEAPON_SNIPER.damageTable[idx][1] = 150;
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "MOTORBIKE");
+WEAPON_SNIPER.damageTable[idx][1] = 150;
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "SNIPER");
+WEAPON_SNIPER.damageTable[idx][1] = 150;
 
-Constructor.prototype = WEAPON;
-var WEAPON_SNIPER = new Constructor();
+// supporter
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "APC");
+WEAPON_SNIPER.damageTable[idx][1] = 15;
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "FLARE");
+WEAPON_SNIPER.damageTable[idx][1] = 15;
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "RECON");
+WEAPON_SNIPER.damageTable[idx][1] = 15;
+
+// tanks
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "FLAK");
+WEAPON_SNIPER.damageTable[idx][1] = 8;
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "HOVERFLAK");
+WEAPON_SNIPER.damageTable[idx][1] = 8;
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "LIGHT_TANK");
+WEAPON_SNIPER.damageTable[idx][1] = 8;
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "HOVERCRAFT");
+WEAPON_SNIPER.damageTable[idx][1] = 8;
+
+// heavy tanks
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "HEAVY_HOVERCRAFT");
+WEAPON_SNIPER.damageTable[idx][1] = 5;
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "HEAVY_TANK");
+WEAPON_SNIPER.damageTable[idx][1] = 5;
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "NEOTANK");
+WEAPON_SNIPER.damageTable[idx][1] = 5;
+
+// very heavy tanks
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "MEGATANK");
+WEAPON_SNIPER.damageTable[idx][1] = 1;
+
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "HOELLIUM");
+WEAPON_SNIPER.damageTable[idx][1] = 20;
+
+// heli copter
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "T_HELI");
+WEAPON_SNIPER.damageTable[idx][1] = 35;
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "K_HELI");
+WEAPON_SNIPER.damageTable[idx][1] = 15;
+
+// ranged land units
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "ARTILLERY");
+WEAPON_SNIPER.damageTable[idx][1] = 8;
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "ANTITANKCANNON");
+WEAPON_SNIPER.damageTable[idx][1] = 8;
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "MISSILE");
+WEAPON_SNIPER.damageTable[idx][1] = 12;
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "ROCKETTHROWER");
+WEAPON_SNIPER.damageTable[idx][1] = 12;
+idx = getIndexOf1(WEAPON_SNIPER.damageTable, "PIPERUNNER");
+WEAPON_SNIPER.damageTable[idx][1] = 6;

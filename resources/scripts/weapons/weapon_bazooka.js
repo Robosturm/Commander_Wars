@@ -8,57 +8,31 @@ var Constructor = function()
     {
         return 15;
     };
+    this.damageTable = [["APC", 85],
+                        ["FLARE", 85],
+                        ["RECON", 75],
+                        // tanks
+                        ["FLAK", 55],
+                        ["HOVERFLAK", 55],
+                        ["LIGHT_TANK", 55],
+                        ["HOVERCRAFT", 55],
+                        // heavy tanks
+                        ["HEAVY_HOVERCRAFT", 25],
+                        ["HEAVY_TANK", 25],
+                        ["NEOTANK", 25],
+                        // very heavy tanks
+                        ["MEGATANK", 15],
+                        ["HOELLIUM", 30],
+                        // ranged land units
+                        ["ARTILLERY", 70],
+                        ["ANTITANKCANNON", 55],
+                        ["MISSILE", 85],
+                        ["ROCKETTHROWER", 85],
+                        ["PIPERUNNER", 55]];
+
     this.getBaseDamage = function(unit)
     {
-        switch(unit.getUnitID())
-        {
-			// supporter
-			case "APC":
-				return 85;
-			case "FLARE":
-				return 85;
-			case "RECON":
-				return 75;
-
-			// tanks
-			case "FLAK":
-                return 55;
-			case "HOVERFLAK":
-                return 55;
-			case "LIGHT_TANK":
-                return 55;
-            case "HOVERCRAFT":
-                return 55;
-				
-			// heavy tanks
-            case "HEAVY_HOVERCRAFT":
-                return 25;
-			case "HEAVY_TANK":
-                return 25;
-			case "NEOTANK":
-                return 25;
-				
-			// very heavy tanks
-			case "MEGATANK":
-                return 15;
-
-            case "HOELLIUM":
-                return 30;
-				
-			// ranged land units
-			case "ARTILLERY":
-                return 70;
-            case "ANTITANKCANNON":
-                return 55;
-			case "MISSILE":
-                return 85;
-            case "ROCKETTHROWER":
-                return 85;
-            case "PIPERUNNER":
-                return 55;
-			default:
-				return -1;
-        }
+        return WEAPON.getDamageFromTable(unit, WEAPON_BAZOOKA.damageTable);
     };
 };
 

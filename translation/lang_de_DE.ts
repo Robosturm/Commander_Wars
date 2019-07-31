@@ -2593,11 +2593,16 @@
         <location filename="../coreengine/settings.cpp" line="191"/>
         <location filename="../coreengine/settings.cpp" line="198"/>
         <location filename="../coreengine/settings.cpp" line="205"/>
-        <location filename="../coreengine/settings.cpp" line="216"/>
-        <location filename="../coreengine/settings.cpp" line="223"/>
-        <location filename="../coreengine/settings.cpp" line="230"/>
-        <location filename="../coreengine/settings.cpp" line="241"/>
-        <location filename="../coreengine/settings.cpp" line="248"/>
+        <location filename="../coreengine/settings.cpp" line="212"/>
+        <location filename="../coreengine/settings.cpp" line="219"/>
+        <location filename="../coreengine/settings.cpp" line="226"/>
+        <location filename="../coreengine/settings.cpp" line="233"/>
+        <location filename="../coreengine/settings.cpp" line="240"/>
+        <location filename="../coreengine/settings.cpp" line="251"/>
+        <location filename="../coreengine/settings.cpp" line="258"/>
+        <location filename="../coreengine/settings.cpp" line="265"/>
+        <location filename="../coreengine/settings.cpp" line="276"/>
+        <location filename="../coreengine/settings.cpp" line="283"/>
         <source>Error in the Ini File: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2621,11 +2626,16 @@
         <location filename="../coreengine/settings.cpp" line="191"/>
         <location filename="../coreengine/settings.cpp" line="198"/>
         <location filename="../coreengine/settings.cpp" line="205"/>
-        <location filename="../coreengine/settings.cpp" line="216"/>
-        <location filename="../coreengine/settings.cpp" line="223"/>
-        <location filename="../coreengine/settings.cpp" line="230"/>
-        <location filename="../coreengine/settings.cpp" line="241"/>
-        <location filename="../coreengine/settings.cpp" line="248"/>
+        <location filename="../coreengine/settings.cpp" line="212"/>
+        <location filename="../coreengine/settings.cpp" line="219"/>
+        <location filename="../coreengine/settings.cpp" line="226"/>
+        <location filename="../coreengine/settings.cpp" line="233"/>
+        <location filename="../coreengine/settings.cpp" line="240"/>
+        <location filename="../coreengine/settings.cpp" line="251"/>
+        <location filename="../coreengine/settings.cpp" line="258"/>
+        <location filename="../coreengine/settings.cpp" line="265"/>
+        <location filename="../coreengine/settings.cpp" line="276"/>
+        <location filename="../coreengine/settings.cpp" line="283"/>
         <source>Setting:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10896,7 +10906,7 @@
 <context>
     <name>movementtable</name>
     <message>
-        <location filename="../resources/scripts/general/movementtable.js" line="5"/>
+        <location filename="../resources/scripts/general/movementtable.js" line="6"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11140,7 +11150,7 @@
 <context>
     <name>weapon_a_air_gun</name>
     <message>
-        <location filename="../resources/scripts/weapons/weapon_a_air_gun.js" line="5"/>
+        <location filename="../resources/scripts/weapons/weapon_a_air_gun.js" line="14"/>
         <source>Anti Air Gun</source>
         <translation type="unfinished"></translation>
     </message>

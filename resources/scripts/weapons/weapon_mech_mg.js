@@ -8,66 +8,40 @@ var Constructor = function()
     {
         return 1;
     };
+    this.damageTable = [["INFANTRY", 85],
+                        ["MECH", 55],
+                        ["MOTORBIKE", 55],
+                        ["SNIPER", 75],
+
+                        ["APC", 20],
+                        ["FLARE", 20],
+                        ["RECON", 20],
+
+                        ["FLAK", 5],
+                        ["HOVERFLAK", 5],
+                        ["LIGHT_TANK", 5],
+                        ["HOVERCRAFT", 5],
+
+                        ["HEAVY_HOVERCRAFT", 3],
+                        ["HEAVY_TANK", 3],
+                        ["NEOTANK", 3],
+
+                        ["MEGATANK", 1],
+
+                        ["HOELLIUM", 20],
+
+                        ["T_HELI", 30],
+                        ["K_HELI", 10],
+
+                        ["ARTILLERY", 15],
+                        ["ANTITANKCANNON", 45],
+                        ["MISSILE", 35],
+                        ["ROCKETTHROWER", 35],
+                        ["PIPERUNNER", 6]];
+
     this.getBaseDamage = function(unit)
     {
-        switch(unit.getUnitID())
-        {
-        case "INFANTRY":
-            return 85;
-        case "MECH":
-            return 55;
-        case "MOTORBIKE":
-            return 55;
-        case "SNIPER":
-            return 75;
-
-        case "APC":
-            return 20;
-        case "FLARE":
-            return 20;
-        case "RECON":
-            return 20;
-
-        case "FLAK":
-            return 5;
-        case "HOVERFLAK":
-            return 5;
-        case "LIGHT_TANK":
-            return 5;
-        case "HOVERCRAFT":
-            return 5;
-
-        case "HEAVY_HOVERCRAFT":
-            return 3;
-        case "HEAVY_TANK":
-            return 3;
-        case "NEOTANK":
-            return 3;
-
-        case "MEGATANK":
-            return 1;
-
-        case "HOELLIUM":
-            return 20;
-
-        case "T_HELI":
-            return 30;
-        case "K_HELI":
-            return 10;
-
-        case "ARTILLERY":
-            return 15;
-        case "ANTITANKCANNON":
-            return 45;
-        case "MISSILE":
-            return 35;
-        case "ROCKETTHROWER":
-            return 35;
-        case "PIPERUNNER":
-            return 6;
-        default:
-            return -1;
-        }
+        return WEAPON.getDamageFromTable(unit, WEAPON_MECH_MG.damageTable);
     };
 };
 
