@@ -11,7 +11,7 @@ var Constructor = function()
     {
         // called when a player wins
         var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Epoch!!! Stop ruining my fun. I shut you down if you continue..."),
+                    qsTr("Epoch!!! Stop ruining my fun. I'll shut you down if you continue..."),
                     "co_lash", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
         var dialog2 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("Please noooo. I'll do what you want!"),
@@ -86,26 +86,26 @@ var Constructor = function()
     {
         // moods are GameEnums.COMood_Normal, GameEnums.COMood_Happy, GameEnums.COMood_Sad
         var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Tee hee! You dropped my superior army!!! So i can have a lot of fun with Epoch."),
+                    qsTr("Tee hee! You dropped my superior army!!! So I can have a lot of fun with Epoch."),
                     "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Yes Lash as you have ordered a superior army."),
+                    qsTr("Yes Lash, as you have ordered, a superior army."),
                     "co_officier_bh", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
         dialog1.queueAnimation(dialog2);
         var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Huh? Why has Epoch a Laser?"),
+                    qsTr("Huh? Why does Epoch have a Laser?"),
                     "co_lash", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
         dialog2.queueAnimation(dialog3);
         var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("You ordered to place a laser there."),
+                    qsTr("You ordered to place a Laser there."),
                     "co_officier_bh", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         dialog3.queueAnimation(dialog4);
         var dialog5 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("... For me not for him. Luckily he doesn't know he has to select the laser and press fire to use it. "),
+                    qsTr("... For me, not for him. Luckily he doesn't know he has to select the Laser and press fire to use it. "),
                     "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         dialog4.queueAnimation(dialog5);
         var dialog6 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Huuuhuuu Epoch listen on this tutorial you learn everything about co units and buildings."),
+                    qsTr("Huuuhuuu, Epoch, listen, in this tutorial you learn everything about CO units and buildings."),
                     "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         dialog5.queueAnimation(dialog6);
         var dialog7 = GameAnimationFactory.createGameAnimationDialog(
@@ -119,12 +119,12 @@ var Constructor = function()
                     "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         dialog7.queueAnimation(dialog8);
         var dialog9 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Some CO's like this sniper guy Grit ") +
-                    qsTr("have global effects for certain or all units. Tee heee luckily those effects have often a negative effect as well. "),
+                    qsTr("Some COs like this sniper guy, Grit, ") +
+                    qsTr("have global effects for certain or all units. Tee heee, luckily those effects often have a negative effect as well. "),
                     "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         dialog8.queueAnimation(dialog9);
         var dialog10 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Got it!!! CO's are always stronger inside the CO-Zone!!!"),
+                    qsTr("Got it!!! COs are always stronger inside the CO-Zone!!!"),
                     "co_epoch", GameEnums.COMood_Normal, PLAYER.getDefaultColor(6));
         dialog9.queueAnimation(dialog10);
         var dialog11 = GameAnimationFactory.createGameAnimationDialog(
@@ -133,17 +133,17 @@ var Constructor = function()
                     "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         dialog10.queueAnimation(dialog11);
         var dialog12 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Epoch never looses his CO-Unit!"),
+                    qsTr("Epoch never loses his CO-Unit!"),
                     "co_epoch", GameEnums.COMood_Normal, PLAYER.getDefaultColor(6));
         dialog11.queueAnimation(dialog12);
         var dialog13 = GameAnimationFactory.createGameAnimationDialog(
                     qsTr("The CO-Zone of a CO raises when you gathered enough to use your CO-Power by 1 space and by 2 spaces for the CO-Superpower. ") +
-                    qsTr("If you have two CO's and both can use the Superpower you can use the Tagpower instead. This will activate both superpowers ") +
+                    qsTr("If you have two COs and both can use the Superpower, you can use the Tagpower instead. This will activate both superpowers ") +
                     qsTr("at the same time and for certain CO-Combinations give you additional strength."),
                     "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         dialog12.queueAnimation(dialog13);
         var dialog14 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Understood all units stay inside the CO-Zone! Attack and use the Laser."),
+                    qsTr("Understood, all units stay inside the CO-Zone! Attack and use the Laser."),
                     "co_epoch", GameEnums.COMood_Normal, PLAYER.getDefaultColor(6));
         dialog13.queueAnimation(dialog14);
     };
@@ -151,18 +151,18 @@ var Constructor = function()
     {
         // give a small dialog again
         var dialog1 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Hee hee! I have a mine now. This gives me a lot of funds. Now i can build so many troops. Huh? Where's my factory?"),
+                    qsTr("Hee hee! I have a mine now. This gives me a lot of funds. Now I can build so many troops. Huh? Where's my factory?"),
                     "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("We build one factories near the HQ just as you ordered."),
+                    qsTr("We built a factory near the HQ just as you ordered."),
                     "co_officier_bh", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
         dialog1.queueAnimation(dialog2);
         var dialog3 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Again for Epoch. Do i have to write down everything in detail. Can't you fools think yourself?..."),
+                    qsTr("Again for Epoch. Do I have to write down everything in detail? Can't you fools think for yourself?..."),
                     "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         dialog2.queueAnimation(dialog3);
         var dialog4 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Well than give me CO-Power. Hihihi..."),
+                    qsTr("Well then, give me CO-Power. Hihihi..."),
                     "co_lash", GameEnums.COMood_Normal, PLAYER.getDefaultColor(4));
         dialog3.queueAnimation(dialog4);
         dialog4.setEndOfAnimationCall("gameScript", "getLashPower");
@@ -174,7 +174,7 @@ var Constructor = function()
                     qsTr("Captured tower. I don't get anything from it. Why are there towers?"),
                     "co_epoch", GameEnums.COMood_Normal, PLAYER.getDefaultColor(6));
         var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Towers give you a small amount of offensive and deffensive power for all units. You dumb robot."),
+                    qsTr("Towers give you a small amount of offensive and defensive power for all units. You dumb robot."),
                     "co_lash", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
         dialog1.queueAnimation(dialog2);
     };
@@ -185,7 +185,7 @@ var Constructor = function()
                     qsTr("RADAR OWNED BY EPOCH!!! EPOCH IS THE BEST..."),
                     "co_epoch", GameEnums.COMood_Normal, PLAYER.getDefaultColor(6));
         var dialog2 = GameAnimationFactory.createGameAnimationDialog(
-                    qsTr("Hee hee. We have no fog of war here. Epoch so the enhanced vision range does nothing. Hiii hii! You won't win this way."),
+                    qsTr("Hee hee. We have no fog of war here, Epoch, so the enhanced vision range does nothing. Hiii hii! You won't win this way."),
                     "co_lash", GameEnums.COMood_Sad, PLAYER.getDefaultColor(4));
         dialog1.queueAnimation(dialog2);
     };
