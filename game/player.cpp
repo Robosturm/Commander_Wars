@@ -356,36 +356,7 @@ qint32 Player::calcIncome(float modifier)
             {
                 if (pBuilding->getOwner() == this)
                 {
-                    qint32 income = static_cast<qint32>(pBuilding->getBaseIncome() * modifier * fondsModifier);
-                    qint32 modifier = 0;
-                    CO* pCO = getCO(0);
-                    if (pCO != nullptr)
-                    {
-                        modifier += pCO->getBonusIncome(pBuilding.get(), income);
-                    }
-                    pCO = getCO(1);
-                    if (pCO != nullptr)
-                    {
-                        modifier += pCO->getBonusIncome(pBuilding.get(), income);
-                    }
-                    income = static_cast<qint32>(income) + modifier;
-
-                    modifier = 0;
-                    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
-                    {
-                        Player* pPlayer = pMap->getPlayer(i);
-                        if (isEnemy(pPlayer))
-                        {
-                            modifier -= pPlayer->getIncomeReduction(pBuilding.get(), income);
-                        }
-                    }
-                    income += modifier;
-
-                    if (income < 0)
-                    {
-                        income = 0;
-                    }
-                    ret += income;
+                    ret += pBuilding->getIncome() * modifier;
                 }
             }
         }

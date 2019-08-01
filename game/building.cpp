@@ -253,6 +253,44 @@ quint32 Building::getBaseIncome() const
     }
 }
 
+qint32 Building::getIncome()
+{
+    qint32 income = static_cast<qint32>(getBaseIncome());
+    if (m_pOwner != nullptr)
+    {
+        income = income * m_pOwner->getFondsModifier();
+        qint32 modifier = 0;
+        CO* pCO = m_pOwner->getCO(0);
+        if (pCO != nullptr)
+        {
+            modifier += pCO->getBonusIncome(this, income);
+        }
+        pCO = m_pOwner->getCO(1);
+        if (pCO != nullptr)
+        {
+            modifier += pCO->getBonusIncome(this, income);
+        }
+        income = static_cast<qint32>(income) + modifier;
+
+        modifier = 0;
+        GameMap* pMap = GameMap::getInstance();
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+        {
+            Player* pPlayer = pMap->getPlayer(i);
+            if (m_pOwner->isEnemy(pPlayer))
+            {
+                modifier -= pPlayer->getIncomeReduction(this, income);
+            }
+        }
+        income += modifier;
+    }
+    if (income < 0)
+    {
+        income = 0;
+    }
+    return income;
+}
+
 QString Building::getMinimapIcon()
 {
     Mainapp* pApp = Mainapp::getInstance();

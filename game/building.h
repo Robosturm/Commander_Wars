@@ -161,6 +161,11 @@ public slots:
      */
     quint32 getBaseIncome() const;
     /**
+     * @brief Building::getIncome
+     * @return
+     */
+    qint32 getIncome();
+    /**
      * @brief getActionList
      * @return list of actions that can be performed by this building e.g building units.
      */

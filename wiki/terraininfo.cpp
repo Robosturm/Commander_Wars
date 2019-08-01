@@ -41,6 +41,44 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
     addChild(pLabel);
     y += 40;
 
+    qint32 xOffset = 200;
+    // Income
+    pLabel = new oxygine::TextField();
+    pLabel->setWidth(width - 10);
+    pLabel->setStyle(style);
+    pLabel->setHtmlText(tr("Defense:").toStdString().c_str());
+    pLabel->setScale(1.0f);
+    pLabel->setPosition(0, y);
+    addChild(pLabel);
+    pLabel = new oxygine::TextField();
+    pLabel->setWidth(width - 10);
+    pLabel->setStyle(style);
+    pLabel->setHtmlText((QString::number(pTerrain->getDefense(nullptr))).toStdString().c_str());
+    pLabel->setScale(1.0f);
+    pLabel->setPosition(xOffset, y);
+    addChild(pLabel);
+    y += 40;
+
+    if (pBuilding != nullptr)
+    {
+        // Income
+        pLabel = new oxygine::TextField();
+        pLabel->setWidth(width - 10);
+        pLabel->setStyle(style);
+        pLabel->setHtmlText(tr("Income:").toStdString().c_str());
+        pLabel->setScale(1.0f);
+        pLabel->setPosition(0, y);
+        addChild(pLabel);
+        pLabel = new oxygine::TextField();
+        pLabel->setWidth(width - 10);
+        pLabel->setStyle(style);
+        pLabel->setHtmlText((QString::number(pBuilding->getIncome())).toStdString().c_str());
+        pLabel->setScale(1.0f);
+        pLabel->setPosition(xOffset, y);
+        addChild(pLabel);
+        y += 40;
+    }
+
     pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Movement Costs").toStdString().c_str());

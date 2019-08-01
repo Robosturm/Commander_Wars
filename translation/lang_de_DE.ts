@@ -3180,7 +3180,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="46"/>
+        <location filename="../wiki/terraininfo.cpp" line="49"/>
+        <source>Defense:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/terraininfo.cpp" line="68"/>
+        <source>Income:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/terraininfo.cpp" line="84"/>
         <source>Movement Costs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11886,7 +11896,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/building/zdeathray_E.js" line="126"/>
-        <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large in front of it. It needs 7 days to reload after fire.</source>
+        <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11899,7 +11909,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/building/zdeathray_N.js" line="125"/>
-        <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large in front of it. It needs 7 days to reload after fire.</source>
+        <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11912,7 +11922,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/building/zdeathray_S.js" line="121"/>
-        <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large in front of it. It needs 7 days to reload after fire.</source>
+        <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11925,7 +11935,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/building/zdeathray_W.js" line="124"/>
-        <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large in front of it. It needs 7 days to reload after fire.</source>
+        <source>Black Hole Deathray that deals 8 HP of damage to all enemie units in a large ray in front of it. It needs 7 days to reload after fire.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
