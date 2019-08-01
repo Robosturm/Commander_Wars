@@ -688,7 +688,8 @@ void GameMenue::keyInput(SDL_Event event)
             GameMap* pMap = GameMap::getInstance();
             if (pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()))
             {
-                spFieldInfo fieldinfo = new FieldInfo(pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()));
+                Terrain* pTerrain = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                spFieldInfo fieldinfo = new FieldInfo(pTerrain, pTerrain->getUnit());
                 this->addChild(fieldinfo);
                 connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
                 {

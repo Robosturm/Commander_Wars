@@ -2,6 +2,9 @@
 
 #include "game/gamemap.h"
 
+#include "game/unit.h"
+#include "wiki/fieldinfo.h"
+
 #include "menue/gamemenue.h"
 #include "objects/cursor.h"
 
@@ -10,6 +13,8 @@
 #include "resource_management/gamemanager.h"
 
 #include "resource_management/fontmanager.h"
+
+#include "resource_management/unitspritemanager.h"
 
 HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList actionIDs, QVector<oxygine::spActor> icons,
                                            QVector<qint32> costList, QVector<bool> enabledList)
@@ -139,6 +144,11 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
                         Mainapp::getInstance()->getAudioThread()->playSound("okay.wav");
                         emit sigItemSelected(action, costs);
                     }
+                    else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
+                    {
+                        pEvent->stopPropagation();
+                        emit sigCanceled(0, 0);
+                    }
                 }
 
             });
@@ -223,82 +233,101 @@ void HumanPlayerInputMenu::setMenuPosition(qint32 x, qint32 y)
 
 void HumanPlayerInputMenu::keyInput(SDL_Event event)
 {
-    // for debugging
-    SDL_Keycode cur = event.key.keysym.sym;
-    if (cur == Settings::getKey_up())
+    if (m_Focused)
     {
-        if (currentAction > 0)
+        // for debugging
+        SDL_Keycode cur = event.key.keysym.sym;
+        if (cur == Settings::getKey_up())
         {
-            Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
-            currentAction--;
-        }
-    }
-    else if (cur == Settings::getKey_down())
-    {
-        if (currentAction < m_ActionIDs.size() - 1)
-        {
-            Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
-            currentAction++;
-        }
-    }
-    if (cur == Settings::getKey_left())
-    {
-        if (currentAction - itemCount >= 0)
-        {
-            Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
-            currentAction -= itemCount;
-        }
-    }
-    else if (cur == Settings::getKey_right())
-    {
-        if (currentAction + itemCount < m_ActionIDs.size() - 1)
-        {
-            Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
-            currentAction += itemCount;
-        }
-    }
-
-    else if (cur == Settings::getKey_left())
-    {
-        Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
-        currentAction = 0;
-    }
-    else if (cur == Settings::getKey_right())
-    {
-        Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
-        currentAction = m_ActionIDs.size() - 1;
-    }
-    else if (cur == Settings::getKey_confirm())
-    {
-        if (m_ActionIDs.size() > 0)
-        {
-            if (m_EnabledList[currentAction])
+            if (currentAction > 0)
             {
-                if (m_CostList.size() == m_ActionIDs.size())
+                Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+                currentAction--;
+            }
+        }
+        else if (cur == Settings::getKey_down())
+        {
+            if (currentAction < m_ActionIDs.size() - 1)
+            {
+                Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+                currentAction++;
+            }
+        }
+        if (cur == Settings::getKey_left())
+        {
+            if (currentAction - itemCount >= 0)
+            {
+                Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+                currentAction -= itemCount;
+            }
+        }
+        else if (cur == Settings::getKey_right())
+        {
+            if (currentAction + itemCount < m_ActionIDs.size() - 1)
+            {
+                Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+                currentAction += itemCount;
+            }
+        }
+
+        else if (cur == Settings::getKey_left())
+        {
+            Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+            currentAction = 0;
+        }
+        else if (cur == Settings::getKey_right())
+        {
+            Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+            currentAction = m_ActionIDs.size() - 1;
+        }
+        else if (cur == Settings::getKey_confirm())
+        {
+            if (m_ActionIDs.size() > 0)
+            {
+                if (m_EnabledList[currentAction])
                 {
-                    emit sigItemSelected(m_ActionIDs[currentAction], m_CostList[currentAction]);
-                }
-                else
-                {
-                    emit sigItemSelected(m_ActionIDs[currentAction], 0);
+                    if (m_CostList.size() == m_ActionIDs.size())
+                    {
+                        emit sigItemSelected(m_ActionIDs[currentAction], m_CostList[currentAction]);
+                    }
+                    else
+                    {
+                        emit sigItemSelected(m_ActionIDs[currentAction], 0);
+                    }
                 }
             }
         }
-    }
-    else if (cur == Settings::getKey_cancel())
-    {
-        emit sigCanceled(0, 0);
-    }
+        else if (cur == Settings::getKey_cancel())
+        {
+            emit sigCanceled(0, 0);
+        }
+        else if (cur == Settings::getKey_information())
+        {
+            QString id = m_ActionIDs[currentAction];
+            UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+            if (pUnitSpriteManager->existsUnit(id))
+            {
+                spUnit pDummy = new Unit(id, GameMap::getInstance()->getCurrentPlayer(), false);
+                spFieldInfo fieldinfo = new FieldInfo(nullptr, pDummy.get());
+                GameMenue::getInstance()->addChild(fieldinfo);
+                connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
+                {
+                    m_Focused = true;
+                });
+                m_Focused = false;
+            }
+        }
 
-    qint32 x = 0;
-    qint32 y = currentAction;
-    while (y >= itemCount)
-    {
-        y -= itemCount;
-        x++;
+        qint32 x = 0;
+        qint32 y = currentAction;
+        while (y >= itemCount)
+        {
+            y -= itemCount;
+            x++;
+        }
+        m_Cursor->setY(startY + y * itemHeigth + GameMap::Imagesize / 2 - m_Cursor->getScaledHeight() / 2);
+        m_Cursor->setX(itemWidth * (x + 1));
     }
-    m_Cursor->setY(startY + y * itemHeigth + GameMap::Imagesize / 2 - m_Cursor->getScaledHeight() / 2);
-    m_Cursor->setX(itemWidth * (x + 1));
 }
 
 void HumanPlayerInputMenu::mouseMove(qint32 x, qint32 y)

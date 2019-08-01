@@ -16,7 +16,7 @@ class FieldInfo : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit FieldInfo(Terrain* pTerrain);
+    explicit FieldInfo(Terrain* pTerrain, Unit* pUnit);
 
 signals:
     void sigFinished();

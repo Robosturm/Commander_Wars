@@ -44,6 +44,8 @@ private:
     QVector<bool> m_EnabledList;
     qint32 createTopSprite(qint32 x, qint32 width);
     qint32 createBottomSprite(qint32 x, qint32 y, qint32 width);
+
+    bool m_Focused{true};
 };
 
 #endif // HUMANPLAYERINPUTMENU_H

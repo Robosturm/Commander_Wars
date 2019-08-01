@@ -3193,17 +3193,52 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="55"/>
+        <location filename="../wiki/unitinfo.cpp" line="60"/>
+        <source>Firerange:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/unitinfo.cpp" line="78"/>
+        <source>Movementpoints:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/unitinfo.cpp" line="95"/>
+        <source>Vision:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/unitinfo.cpp" line="112"/>
+        <source>Fuel:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/unitinfo.cpp" line="138"/>
+        <source>Ammo 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/unitinfo.cpp" line="157"/>
+        <source>Ammo 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/unitinfo.cpp" line="177"/>
+        <source>Loading Place:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/unitinfo.cpp" line="196"/>
         <source>Movement </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="143"/>
+        <location filename="../wiki/unitinfo.cpp" line="283"/>
         <source>Weapon 1 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="155"/>
+        <location filename="../wiki/unitinfo.cpp" line="295"/>
         <source>Weapon 2 </source>
         <translation type="unfinished"></translation>
     </message>

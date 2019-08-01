@@ -274,6 +274,7 @@ public slots:
 
     qint32 getVision(QPoint position);
     void setVision(const qint32 &value);
+    qint32 getBaseVision();
     /**
      * @brief loadSprites loads the given sprite
      * @param spriteID

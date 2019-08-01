@@ -10,7 +10,7 @@
 
 #include "wiki/unitinfo.h"
 
-FieldInfo::FieldInfo(Terrain* pTerrain)
+FieldInfo::FieldInfo(Terrain* pTerrain, Unit* pUnit)
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -42,16 +42,19 @@ FieldInfo::FieldInfo(Terrain* pTerrain)
                                      QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110));
     pPanel->setPosition(30, 30);
     pSpriteBox->addChild(pPanel);
-    spTerrainInfo pTerrainInfo = new TerrainInfo(pTerrain, pPanel->getWidth() - 40);
-    pTerrainInfo->setPosition(20, 10);
-    pPanel->addItem(pTerrainInfo);
-    pPanel->setContentHeigth(pTerrainInfo->getY() + pTerrainInfo->getHeight());
-
-    Unit* pUnit = pTerrain->getUnit();
+    qint32 y = 10;
+    if (pTerrain != nullptr)
+    {
+        spTerrainInfo pTerrainInfo = new TerrainInfo(pTerrain, pPanel->getWidth() - 40);
+        pTerrainInfo->setPosition(20, y);
+        pPanel->addItem(pTerrainInfo);
+        pPanel->setContentHeigth(pTerrainInfo->getY() + pTerrainInfo->getHeight());
+        y = pTerrainInfo->getY() + pTerrainInfo->getHeight() + 10;
+    }
     if (pUnit != nullptr)
     {
         spUnitInfo pUnitInfo = new UnitInfo(pUnit, pPanel->getWidth() - 40);
-        pUnitInfo->setPosition(20, pTerrainInfo->getY() + pTerrainInfo->getHeight() + 10);
+        pUnitInfo->setPosition(20, y);
         pPanel->addItem(pUnitInfo);
         pPanel->setContentHeigth(pUnitInfo->getY() + pUnitInfo->getHeight());
     }

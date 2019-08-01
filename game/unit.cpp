@@ -348,6 +348,11 @@ void Unit::setVision(const qint32 &value)
     vision = value;
 }
 
+qint32 Unit::getBaseVision()
+{
+    return vision;
+}
+
 qint32 Unit::getMaxRange()
 {
     return getMaxRangeAtPosition(QPoint(getX(), getY()));
