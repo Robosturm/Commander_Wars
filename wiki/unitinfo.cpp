@@ -45,7 +45,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     pLabel->setScale(1.0f);
     pLabel->setPosition(0, y);
     addChild(pLabel);
-    y += 40;
+    y += 20 + pLabel->getTextRect().getHeight();
 
     qint32 xOffset = 200;
 

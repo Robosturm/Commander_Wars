@@ -162,9 +162,9 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     }
     qint32 bottomHeigth = createBottomSprite(x, y, width);
     this->addChild(m_Cursor);
-    this->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<qint16>(Mainapp::ZOrder::FocusedObjects));
     this->setHeight(maxY + bottomHeigth);
-    this->setWidth(width * (actionIDs.size() / itemCount));
+    this->setWidth(width * Mainapp::roundUp((actionIDs.size() / static_cast<float>(itemCount))));
     GameMenue* pGameMenue = GameMenue::getInstance();
     connect(pGameMenue, &GameMenue::sigMouseMove, this, &HumanPlayerInputMenu::mouseMove, Qt::QueuedConnection);
     mouseMove(0, 0);

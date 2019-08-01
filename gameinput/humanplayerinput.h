@@ -73,6 +73,12 @@ public:
      */
     void createActionMenu(QStringList actionIDs, qint32 x, qint32 y);
     /**
+     * @brief attachActionMenu
+     * @param x
+     * @param y
+     */
+    void attachActionMenu(qint32 x, qint32 y);
+    /**
      * @brief finishAction finishes input and performs the action
      */
     void finishAction();
