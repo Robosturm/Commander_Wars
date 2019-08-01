@@ -185,6 +185,7 @@ void InGameMenue::autoScroll()
             moveX = GameMap::Imagesize * pMap->getZoom();
         }
         if ((curX > Settings::getWidth() - autoScrollBorder.width()) &&
+            (curX < Settings::getWidth() - autoScrollBorder.width() + 100) &&
             (pMap->getX() + pMap->getMapWidth() * pMap->getZoom() * GameMap::Imagesize > Settings::getWidth() - autoScrollBorder.width()))
 
         {
