@@ -1,5 +1,6 @@
 build_task:
     freebsd_instance:
+        image: freebsd-12-0-release-amd64
         cpu: 2
         memory: 4G
     install_script:
