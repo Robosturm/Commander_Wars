@@ -1,8 +1,8 @@
 language: shell
 os: windows
-env:
-    - PLATFORM: x86
-    - QT5_BASE_DIR: C:/Qt/5.12.3/mingw73_32
+env: 
+- PLATFORM: x86 
+- QT5_BASE_DIR: C:/Qt/5.12.3/mingw73_32
 cache:
     directories:
         - travis-cache
@@ -15,4 +15,5 @@ before_install:
 before_script:
 script:
 before_cache:
+    - if [ "$TRAVIS_OS_NAME" == "windows" ]; then toolchain/travis-cache-windows.sh save; fi
 after_script:
