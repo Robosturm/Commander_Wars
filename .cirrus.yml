@@ -4,7 +4,8 @@ windows_container:
 
 task:
     compile_script:
-        apt-get update && sudo apt-get install -y cmake
-        
+        choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System'
+        choco install qtcreator
+		
     binaries_artifacts:
         path: ""
