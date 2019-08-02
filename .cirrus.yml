@@ -3,6 +3,7 @@ build_task:
         image: freebsd-12-0-release-amd64
         cpu: 2
         memory: 4G
+    timeout_in: 60m
     install_script:
         pkg update -f
         pkg install -y \
@@ -14,6 +15,5 @@ build_task:
                     qt5-quickcontrols \
                     qt5-quickcontrols2 \
                     qt5-svg \
-                    qt5-xml \
-                    cmake
+                    qt5-xml
     compile_script:
