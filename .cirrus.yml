@@ -5,6 +5,5 @@ windows_container:
 task:
     compile_script:
         choco install -y cmake --installargs 'ADD_CMAKE_TO_PATH=System'
-        choco install -y qtcreator	
     binaries_artifacts:
         path: ""
