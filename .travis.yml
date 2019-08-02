@@ -1,6 +1,8 @@
-- name: Windows (MingW x86)
 language: shell
 os: windows
+    env:
+        - PLATFORM: x86
+        - QT5_BASE_DIR: C:/Qt/5.12.3/mingw73_32
 allow_failures:
     - os: windows
 script:
