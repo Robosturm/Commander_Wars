@@ -1,9 +1,18 @@
-windows_container:
-    image: cirrusci/windowsservercore:2019
-    os_version: 2019
-
-task:
+build_task:
+    freebsd_instance:
+        cpu: 2
+        memory: 4G
+    install_script:
+        pkg update -f
+        pkg install -y \
+                    git \
+                    qt5-qmake \
+                    qt5-buildtools \
+                    qt5-concurrent \
+                    qt5-opengl \
+                    qt5-quickcontrols \
+                    qt5-quickcontrols2 \
+                    qt5-svg \
+                    qt5-xml \
+                    cmake
     compile_script:
-        choco install -y cmake --installargs 'ADD_CMAKE_TO_PATH=System'
-    binaries_artifacts:
-        path: ""
