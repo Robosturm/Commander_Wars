@@ -11,3 +11,7 @@ allow_failures:
     - os: windows
 before_install:
     - echo $TRAVIS_OS_NAME
+before_script:
+script:
+before_cache:
+after_script:
