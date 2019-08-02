@@ -1,0 +1,10 @@
+windows_container:
+  image: cirrusci/windowsservercore:2019
+  os_version: 2019
+
+task:
+	compile_script:
+		apt-get update && sudo apt-get install -y cmake
+		
+	binaries_artifacts:
+		path: ""

@@ -43,6 +43,32 @@ WikiDatabase::WikiDatabase()
     // load general wiki page
 }
 
+QVector<WikiDatabase::pageData> WikiDatabase::getEntries(QString searchTerm)
+{
+    QVector<pageData> ret;
+    for (qint32 i = 0; i < m_Entries.size(); i++)
+    {
+        if ((std::get<0>(m_Entries[i]).contains(searchTerm, Qt::CaseInsensitive)) ||
+            (tagMatches(std::get<2>(m_Entries[i]), searchTerm)))
+        {
+            ret.append(m_Entries[i]);
+        }
+    }
+    return ret;
+}
+
+bool WikiDatabase::tagMatches(QStringList tags, QString searchTerm)
+{
+    for (qint32 i = 0; i < tags.size(); i++)
+    {
+        if (tags[i].contains(searchTerm, Qt::CaseInsensitive))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 oxygine::spActor WikiDatabase::getPage(pageData& data)
 {
     oxygine::spActor ret;

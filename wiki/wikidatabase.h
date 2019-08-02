@@ -23,6 +23,13 @@ public:
     typedef std::tuple<QString, QString, QStringList> pageData;
     static WikiDatabase* getInstance();
     oxygine::spActor getPage(pageData& data);
+    /**
+     * @brief getEntries
+     * @param searchTerm
+     * @return
+     */
+    QVector<pageData> getEntries(QString searchTerm);
+    bool tagMatches(QStringList tags, QString searchTerm);
 signals:
 
 public slots:

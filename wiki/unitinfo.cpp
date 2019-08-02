@@ -59,7 +59,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     pSpriteBox->setResAnim(pAnim);
     pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
-    pSpriteBox->setPosition(350, y);
+    pSpriteBox->setPosition(width - 210, y);
     this->addChild(pSpriteBox);
 
     spBattleAnimationSprite pBattleAnimationSprite = new BattleAnimationSprite(pUnit, nullptr, BattleAnimationSprite::standingAnimation);
