@@ -170,7 +170,8 @@ void InGameMenue::loadHandling()
 
 void InGameMenue::autoScroll()
 {
-    if (SDL_GetWindowFlags(oxygine::core::getWindow()) & SDL_WINDOW_MOUSE_FOCUS)
+    if (SDL_GetWindowFlags(oxygine::core::getWindow()) & SDL_WINDOW_MOUSE_FOCUS &&
+        m_Focused)
     {
         qint32 curX = 0;
         qint32 curY = 0;

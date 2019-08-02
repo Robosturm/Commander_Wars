@@ -645,9 +645,10 @@ void Terrain::setUnit(spUnit pUnit)
             pTerrain->setUnit(nullptr);
         }
         // add Terrain to unit and unit to drawing actor
-        pUnit->setPriority(static_cast<qint16>(DrawPriority::Unit));
+        pUnit->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(Terrain::y) + 2);
         pUnit->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
-        this->addChild(pUnit);
+        pUnit->setPosition(Terrain::x * GameMap::Imagesize, Terrain::y * GameMap::Imagesize);
+        GameMap::getInstance()->addChild(pUnit);
     }
 }
 
