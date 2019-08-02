@@ -55,6 +55,10 @@ var Constructor = function()
     {
         return qsTr("Reconnaissance unit. High mobility. Good range of vision.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Ground;
+    };
 }
 
 Constructor.prototype = UNIT;

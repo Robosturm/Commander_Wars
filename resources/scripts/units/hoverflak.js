@@ -55,6 +55,10 @@ var Constructor = function()
     {
         return qsTr("Specialised anti-air and anti-infantry unit. Can also attack ground forces. Can move over most terrains.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Ground;
+    };
 }
 
 Constructor.prototype = UNIT;

@@ -54,6 +54,10 @@ var Constructor = function()
     {
         return qsTr("Most powerful Tank. Boast superlative attack and defence capabilities.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Ground;
+    };
 }
 
 Constructor.prototype = UNIT;

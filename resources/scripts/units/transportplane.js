@@ -97,6 +97,10 @@ var Constructor = function()
     {
         return qsTr("Air unit. <div c='00ff00'>Carries X 2 <div c='ffffff'> ground units. No attack capability.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Air;
+    };
 }
 
 Constructor.prototype = UNIT;

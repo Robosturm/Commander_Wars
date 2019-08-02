@@ -95,6 +95,10 @@ var Constructor = function()
     {
         return qsTr("Naval Unit. Has unique ability to <div c='00ff00'>repair other units.<div c='ffffff'> Can <div c='00ff00'>carry X 1<div c='ffffff'> infantry units.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Naval;
+    };
 }
 
 Constructor.prototype = UNIT;

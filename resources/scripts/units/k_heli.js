@@ -90,6 +90,10 @@ var Constructor = function()
     {
         return qsTr("Air unit. Can attack ground and naval units, and other Helicopters.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Air;
+    };
 }
 
 Constructor.prototype = UNIT;

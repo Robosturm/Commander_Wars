@@ -97,6 +97,10 @@ var Constructor = function()
     {
         return qsTr("Air Unit. Has unique ability to <div c='00ff00'>explode<div c='ffffff'> in a huge explosion damaging all units.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Air;
+    };
 }
 
 Constructor.prototype = UNIT;

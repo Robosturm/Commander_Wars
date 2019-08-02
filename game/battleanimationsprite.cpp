@@ -25,6 +25,7 @@ BattleAnimationSprite::BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QSt
 
     m_Actor = new oxygine::ClipRectActor();
     m_Actor->setSize(127, 192);
+    setSize(m_Actor->getWidth(), m_Actor->getHeight());
     addChild(m_Actor);
 
     QString function1 = animationType;

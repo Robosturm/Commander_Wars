@@ -60,6 +60,10 @@ var Constructor = function()
     {
         return qsTr("In Fog of War, can fire <div c='00ff00'>flare rocket<div c='ffffff'>. Illuminates <div c='00ff00'>2 square area<div c='ffffff'> where it lands.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Ground;
+    };
 }
 
 Constructor.prototype = UNIT;

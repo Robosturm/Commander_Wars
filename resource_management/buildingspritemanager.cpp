@@ -110,3 +110,18 @@ void BuildingSpriteManager::reset()
     }
     m_loadedBuildings.clear();
 }
+
+QString BuildingSpriteManager::getBuildingName(qint32 position)
+{
+    if ((position >= 0) && (position < m_loadedBuildings.size()))
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        Interpreter* pInterpreter = pApp->getInterpreter();
+        QJSValue value = pInterpreter->doFunction(m_loadedBuildings[position], "getName");
+        if (value.isString())
+        {
+            return value.toString();
+        }
+    }
+    return "";
+}

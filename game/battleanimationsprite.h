@@ -7,6 +7,9 @@
 
 #include "game/unit.h"
 
+class BattleAnimationSprite;
+typedef oxygine::intrusive_ptr<BattleAnimationSprite> spBattleAnimationSprite;
+
 class BattleAnimationSprite : public QObject, public oxygine::Actor
 {
     Q_OBJECT

@@ -55,6 +55,10 @@ var Constructor = function()
     {
         return qsTr("Indirect attack unit. Can attack all units. Can only move over pipelines. ");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Ground;
+    };
 }
 
 Constructor.prototype = UNIT;

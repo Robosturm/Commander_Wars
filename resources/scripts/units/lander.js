@@ -92,6 +92,11 @@ var Constructor = function()
     {
         return qsTr("Naval unit. Can <div c='00ff00'>transport X 2 <div c='ffffff'> ground units. No attack capability.");
     };
+
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Naval;
+    };
 }
 
 Constructor.prototype = UNIT;

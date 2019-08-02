@@ -63,6 +63,8 @@
 #include "ingamescriptsupport/scriptcondition.h"
 #include "qfile.h"
 
+#include "wiki/wikidatabase.h"
+
 int main(int argc, char* argv[])
 {
     QThread::currentThread()->setPriority(QThread::TimeCriticalPriority);
@@ -176,6 +178,9 @@ int main(int argc, char* argv[])
     // This is the main game loop.
     app.start();
     oxygine::Stage::instance->setVisible(true);
+
+    WikiDatabase::getInstance();
+
     qint32 returncode = app.exec();
     app.getWorkerthread()->exit(0);
     /*************************************************************************************************/

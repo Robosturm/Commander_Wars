@@ -97,6 +97,10 @@ var Constructor = function()
     {
         return qsTr("Attack power high. Can <div c='00ff00'>capture <div c='ffffff'> bases. <div c='00ff00'>Vision +3 <div c='ffffff'> when on mountains.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Ground;
+    };
 }
 
 Constructor.prototype = UNIT;

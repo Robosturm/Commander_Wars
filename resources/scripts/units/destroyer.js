@@ -89,6 +89,11 @@ var Constructor = function()
     {
         return qsTr("Naval Unit. Strong against all sea units and has decent firepower against air units.");
     };
+
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Naval;
+    };
 }
 
 Constructor.prototype = UNIT;

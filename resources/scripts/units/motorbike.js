@@ -61,6 +61,10 @@ var Constructor = function()
     {
         return qsTr("Infantry unit. High mobility. Able to <div c='00ff00'>capture <div c='ffffff'> bases.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Ground;
+    };
 }
 
 Constructor.prototype = UNIT;

@@ -49,6 +49,12 @@ public slots:
         return m_loadedBuildings.size();
     }
     void reset();
+    /**
+     * @brief getBuildingName
+     * @param position
+     * @return
+     */
+    QString getBuildingName(qint32 position);
 private:
     QStringList m_loadedBuildings;
     explicit BuildingSpriteManager();

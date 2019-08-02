@@ -50,6 +50,10 @@ var Constructor = function()
     {
         return qsTr("Indirect attack unit. Only capable of striking air targets.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Ground;
+    };
 }
 
 Constructor.prototype = UNIT;

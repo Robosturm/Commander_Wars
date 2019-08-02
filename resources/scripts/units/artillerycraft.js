@@ -52,6 +52,10 @@ var Constructor = function()
     {
         return qsTr("Indirect attack unit. Attack cannot be launched after unit has moved. Can move over most terrains.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Ground;
+    };
 }
 
 Constructor.prototype = UNIT;

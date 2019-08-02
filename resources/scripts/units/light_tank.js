@@ -54,6 +54,10 @@ var Constructor = function()
     {
         return qsTr("Light Tank unit. Good mobility makes it useful on battlefield.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Ground;
+    };
 }
 
 Constructor.prototype = UNIT;

@@ -57,6 +57,10 @@ var Constructor = function()
     {
         return qsTr("Can move over all ground terrains and enemy units. Immediatly destroys units it moves over.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Ground;
+    };
 }
 
 Constructor.prototype = UNIT;

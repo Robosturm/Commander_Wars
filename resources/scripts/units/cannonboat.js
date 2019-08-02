@@ -95,6 +95,10 @@ var Constructor = function()
     {
         return qsTr("Naval Unit. Attacks naval units. <div c='00ff00'>Carries X 1<div c='ffffff'> infantry units.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Naval;
+    };
 }
 
 Constructor.prototype = UNIT;

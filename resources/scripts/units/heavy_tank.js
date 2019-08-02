@@ -55,6 +55,10 @@ var Constructor = function()
     {
         return qsTr("Reinforced Tank. Attack and defence capabilities superior to standard tank.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Ground;
+    };
 }
 
 Constructor.prototype = UNIT;

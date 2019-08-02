@@ -64,6 +64,8 @@ FieldInfo::FieldInfo(Terrain* pTerrain, Unit* pUnit)
 
 void FieldInfo::keyInput(SDL_Event event)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     // for debugging
     SDL_Keycode cur = event.key.keysym.sym;
     if (cur == Settings::getKey_information())
@@ -71,4 +73,5 @@ void FieldInfo::keyInput(SDL_Event event)
         emit sigFinished();
         this->getParent()->removeChild(this);
     }
+    pApp->continueThread();
 }

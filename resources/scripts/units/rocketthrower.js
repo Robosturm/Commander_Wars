@@ -55,6 +55,10 @@ var Constructor = function()
     {
         return qsTr("Indirect attack unit. Powerful with a wide attack range.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Ground;
+    };
 }
 
 Constructor.prototype = UNIT;

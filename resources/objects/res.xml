@@ -37,6 +37,7 @@
 		<image file="small_arrow+right.png" cols = "3" />
 		<!-- panel -->
 		<image file="panel.png" guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>
+		<image file="panel_transparent.png" guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>		
 		<!-- dropdownmenu -->
 		<image file="dropdownmenu.png" guideX1="9" guideX2="124" guideY1="5" guideY2="125"/>		
 		<image file="arrow+down.png" cols = "3" />

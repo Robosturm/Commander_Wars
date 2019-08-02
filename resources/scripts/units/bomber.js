@@ -91,6 +91,10 @@ var Constructor = function()
     {
         return qsTr("Air Unit. Can attack ground and naval units. Exceptional power.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Air;
+    };
 }
 
 Constructor.prototype = UNIT;

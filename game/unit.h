@@ -171,6 +171,11 @@ public slots:
      */
     QString getName();
     /**
+     * @brief Unit::getUnitType
+     * @return
+     */
+    GameEnums::UnitType getUnitType();
+    /**
      * @brief getTerrainDefenseModifier the bonus defense for this unit
      * @return
      */

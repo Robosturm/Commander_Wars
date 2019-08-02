@@ -98,6 +98,10 @@ var Constructor = function()
     {
         return qsTr("Naval Unit. Can <div c='00ff00'>carry X 2<div c='ffffff'> air units and <div c='00ff00'>produce <div c='ffffff'>Waterplanes.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Naval;
+    };
 }
 
 Constructor.prototype = UNIT;

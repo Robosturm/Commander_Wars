@@ -212,6 +212,22 @@ QString Unit::getName()
     }
 }
 
+GameEnums::UnitType Unit::getUnitType()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getUnitType";
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1);
+    if (ret.isNumber())
+    {
+        return static_cast<GameEnums::UnitType>(ret.toInt());
+    }
+    else
+    {
+        return GameEnums::UnitType_Ground;
+    }
+}
+
+
 qint32 Unit::getFuelCostModifier(QPoint position, qint32 costs)
 {
     qint32 modifier = 0;
@@ -543,7 +559,7 @@ bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange)
         if (!pDefender->isStealthed(m_pOwner, ignoreOutOfVisionRange))
         {
             if (!pDefender->getHidden() ||
-                (pDefender->getHidden() && pDefender->getMovementType() == getMovementType()))
+                (pDefender->getHidden() && pDefender->getUnitType() == getUnitType()))
             {
                 if (m_pOwner->isEnemyUnit(pDefender) == true)
                 {

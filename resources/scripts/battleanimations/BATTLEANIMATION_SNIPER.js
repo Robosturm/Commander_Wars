@@ -16,11 +16,14 @@ var Constructor = function()
 
     this.getPositionOffset = function(sprite, unit, terrain, unitIdx)
     {
-        if (terrain.getID() === "MOUNTAIN")
+        if (terrain !== null)
         {
-            if (unitIdx >= 4)
+            if (terrain.getID() === "MOUNTAIN")
             {
-                return Qt.point(-20 * (6 - unitIdx), 0);
+                if (unitIdx >= 4)
+                {
+                    return Qt.point(-20 * (6 - unitIdx), 0);
+                }
             }
         }
         return Qt.point(0, 0);

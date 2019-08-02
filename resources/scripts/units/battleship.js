@@ -86,6 +86,10 @@ var Constructor = function()
     {
         return qsTr("Naval Unit. Has unique ability to <div c='00ff00'>launch indirect attacks after moving<div c='ffffff'>.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Naval;
+    };
 }
 
 Constructor.prototype = UNIT;

@@ -1226,6 +1226,25 @@
     </message>
 </context>
 <context>
+    <name>GameEnums</name>
+    <message>
+        <location filename="../game/GameEnums.cpp" line="97"/>
+        <source>Air</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/GameEnums.cpp" line="101"/>
+        <source>Naval</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../game/GameEnums.cpp" line="105"/>
+        <location filename="../game/GameEnums.cpp" line="108"/>
+        <source>Ground</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GameMenue</name>
     <message>
         <location filename="../menue/gamemenue.cpp" line="63"/>
@@ -2062,7 +2081,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="89"/>
+        <location filename="../main.cpp" line="91"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3175,22 +3194,32 @@
 <context>
     <name>TerrainInfo</name>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="29"/>
+        <location filename="../wiki/terraininfo.cpp" line="35"/>
         <source>Terrain Information </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="49"/>
+        <location filename="../wiki/terraininfo.cpp" line="55"/>
         <source>Defense:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="68"/>
+        <location filename="../wiki/terraininfo.cpp" line="74"/>
         <source>Income:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="84"/>
+        <location filename="../wiki/terraininfo.cpp" line="94"/>
+        <source>Builds and Supplies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/terraininfo.cpp" line="98"/>
+        <source>Supplies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/terraininfo.cpp" line="123"/>
         <source>Movement Costs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3198,57 +3227,62 @@
 <context>
     <name>UnitInfo</name>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="35"/>
+        <location filename="../wiki/unitinfo.cpp" line="38"/>
         <source>Unit Information </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="60"/>
-        <source>Firerange:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../wiki/unitinfo.cpp" line="78"/>
-        <source>Movementpoints:</source>
+        <location filename="../wiki/unitinfo.cpp" line="74"/>
+        <source>Unit Type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../wiki/unitinfo.cpp" line="95"/>
+        <source>Firerange:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/unitinfo.cpp" line="113"/>
+        <source>Movementpoints:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/unitinfo.cpp" line="130"/>
         <source>Vision:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="112"/>
+        <location filename="../wiki/unitinfo.cpp" line="147"/>
         <source>Fuel:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="138"/>
+        <location filename="../wiki/unitinfo.cpp" line="173"/>
         <source>Ammo 1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="157"/>
+        <location filename="../wiki/unitinfo.cpp" line="192"/>
         <source>Ammo 2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="177"/>
+        <location filename="../wiki/unitinfo.cpp" line="212"/>
         <source>Loading Place:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="196"/>
+        <location filename="../wiki/unitinfo.cpp" line="236"/>
         <source>Movement </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="283"/>
+        <location filename="../wiki/unitinfo.cpp" line="323"/>
         <source>Weapon 1 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="295"/>
+        <location filename="../wiki/unitinfo.cpp" line="335"/>
         <source>Weapon 2 </source>
         <translation type="unfinished"></translation>
     </message>

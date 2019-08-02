@@ -12,9 +12,12 @@
 
 #include "resource_management/buildingspritemanager.h"
 
+#include "resource_management/objectmanager.h"
+
 #include "game/terrain.h"
 #include "game/building.h"
 #include "game/gamemap.h"
+#include "game/battleanimationsprite.h"
 
 UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     : QObject()
@@ -47,7 +50,39 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     addChild(pLabel);
     y += 20 + pLabel->getTextRect().getHeight();
 
+    qint32 yStart = y;
     qint32 xOffset = 200;
+
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel_transparent");
+    pSpriteBox->setResAnim(pAnim);
+    pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
+    pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
+    pSpriteBox->setPosition(350, y);
+    this->addChild(pSpriteBox);
+
+    spBattleAnimationSprite pBattleAnimationSprite = new BattleAnimationSprite(pUnit, nullptr, BattleAnimationSprite::standingAnimation);
+    pBattleAnimationSprite->setPosition(pSpriteBox->getX() + 7, pSpriteBox->getY() + 5);
+    pSpriteBox->setSize(pBattleAnimationSprite->getWidth() + 14, pBattleAnimationSprite->getHeight() + 12);
+    addChild(pBattleAnimationSprite);
+
+    // movement
+    pLabel = new oxygine::TextField();
+    pLabel->setWidth(width - 10);
+    pLabel->setStyle(style);
+    pLabel->setHtmlText(tr("Unit Type:").toStdString().c_str());
+    pLabel->setScale(1.0f);
+    pLabel->setPosition(0, y);
+    addChild(pLabel);
+    pLabel = new oxygine::TextField();
+    pLabel->setWidth(width - 10);
+    pLabel->setStyle(style);
+    pLabel->setHtmlText(GameEnums::getUnitTypeText(pUnit->getUnitType()).toStdString().c_str());
+    pLabel->setScale(1.0f);
+    pLabel->setPosition(xOffset, y);
+    addChild(pLabel);
+    y += 40;
 
     // fire range
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
@@ -188,6 +223,11 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         y += 40;
     }
 
+
+    if (y - yStart < 210)
+    {
+        y = yStart + 210;
+    }
     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
     QString id = pUnit->getMovementType();
     name = pMovementTableManager->getMovementName(id);

@@ -4,6 +4,12 @@
 
 #include "resource_management/movementtablemanager.h"
 
+#include "resource_management/unitspritemanager.h"
+
+#include "game/gamemap.h"
+
+#include "ai/coreai.h"
+
 TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
     : QObject()
 {
@@ -77,6 +83,39 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
         pLabel->setPosition(xOffset, y);
         addChild(pLabel);
         y += 40;
+
+        QStringList productionList = pBuilding->getConstructionList();
+        if (productionList.size() > 0)
+        {
+            pLabel = new oxygine::TextField();
+            pLabel->setStyle(style);
+            if (pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS))
+            {
+                pLabel->setHtmlText(tr("Builds and Supplies").toStdString().c_str());
+            }
+            else
+            {
+                pLabel->setHtmlText(tr("Supplies").toStdString().c_str());
+            }
+            pLabel->setScale(2.0f);
+            pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth(), y);
+            addChild(pLabel);
+            y += 80;
+            qint32 x = 0;
+            for (qint32 i = 0; i < productionList.size(); i++)
+            {
+                spUnit pDummy = new Unit(productionList[i], GameMap::getInstance()->getCurrentPlayer(), false);
+                pDummy->setPosition(x, y);
+                addChild(pDummy);
+                x += GameMap::Imagesize * 2;
+                if (x + GameMap::Imagesize * 2 > width && i < productionList.size() - 1)
+                {
+                    x = 0;
+                    y += 40;
+                }
+            }
+            y += 40;
+        }
     }
 
     pLabel = new oxygine::TextField();

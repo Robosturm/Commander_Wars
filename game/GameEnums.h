@@ -136,6 +136,15 @@ public:
     };
     Q_ENUM(BuildingTarget)
 
+    enum UnitType
+    {
+        UnitType_Ground,
+        UnitType_Air,
+        UnitType_Naval,
+    };
+    Q_ENUM(UnitType)
+    static QString getUnitTypeText(UnitType type);
+
     static void registerEnums();
 private:
     explicit GameEnums() = default;

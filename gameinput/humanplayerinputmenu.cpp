@@ -303,6 +303,8 @@ void HumanPlayerInputMenu::keyInput(SDL_Event event)
         }
         else if (cur == Settings::getKey_information())
         {
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->suspendThread();
             QString id = m_ActionIDs[currentAction];
             UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
             if (pUnitSpriteManager->existsUnit(id))
@@ -316,6 +318,7 @@ void HumanPlayerInputMenu::keyInput(SDL_Event event)
                 });
                 m_Focused = false;
             }
+            pApp->continueThread();
         }
 
         qint32 x = 0;

@@ -90,6 +90,10 @@ var Constructor = function()
     {
         return qsTr("Air unit. Can attack any unit. Can only produced at sea by Carries.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Air;
+    };
 }
 
 Constructor.prototype = UNIT;

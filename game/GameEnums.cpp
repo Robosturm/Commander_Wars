@@ -81,5 +81,29 @@ void GameEnums::registerEnums()
     value.setProperty("BuildingTarget_Own", BuildingTarget_Own);
     value.setProperty("BuildingTarget_Enemy", BuildingTarget_Enemy);
 
+    value.setProperty("UnitType_Ground", UnitType_Ground);
+    value.setProperty("UnitType_Air", UnitType_Air);
+    value.setProperty("UnitType_Naval", UnitType_Naval);
+
     pInterpreter->setGlobal("GameEnums", value);
+}
+
+QString GameEnums::getUnitTypeText(UnitType type)
+{
+    switch (type)
+    {
+        case UnitType_Air:
+        {
+            return tr("Air");
+        }
+        case UnitType_Naval:
+        {
+            return tr("Naval");
+        }
+        case UnitType_Ground:
+        {
+            return tr("Ground");
+        }
+    }
+    return tr("Ground");
 }

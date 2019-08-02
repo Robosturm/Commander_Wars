@@ -54,6 +54,10 @@ var Constructor = function()
     {
         return qsTr("Indirect attack unit. When under direct enemy attack it can <div c='00ff00'>counter-attack<div c='ffffff'>.");
     };
+    this.getUnitType = function()
+    {
+        return GameEnums.UnitType_Ground;
+    };
 }
 
 Constructor.prototype = UNIT;

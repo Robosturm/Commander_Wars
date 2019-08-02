@@ -144,4 +144,8 @@ var UNIT =
     {
         return "";
     },
+    getUnitType : function()
+    {
+        return GameEnums.UnitType_Ground;
+    },
 };
