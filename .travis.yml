@@ -1,17 +1,6 @@
-- name: Windows (MingW x86)
 language: shell
 os: windows
-    env:
-        - PLATFORM: x86
-        - QT5_BASE_DIR: C:/Qt/5.12.3/mingw73_32
-    cache:
-        directories:
-            - travis-cache
 allow_failures:
     - os: windows
-before_install:
-    - echo $TRAVIS_OS_NAME
-before_script:
 script:
-before_cache:
-after_script:
+    - echo $TRAVIS_OS_NAME
