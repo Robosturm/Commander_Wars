@@ -46,7 +46,7 @@
 		<image file="plains+E.png" />
 		<image file="plains+N.png" />
 		
-		<image file="sea.png" cols = "5" />
+		<image file="sea.png" cols = "8" />
 		<image file="sea+NE.png" cols = "5" />
 		<image file="sea+NW.png" cols = "5" />
 		<image file="sea+SE.png" cols = "5" />

@@ -14,7 +14,6 @@ class InGameMenue : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    static const QRect autoScrollBorder;
     explicit InGameMenue();
     explicit InGameMenue(qint32 width, qint32 heigth, QString map = "");
     virtual ~InGameMenue();
@@ -44,6 +43,7 @@ protected:
     QTimer scrollTimer;
 
     spCursor m_Cursor{new Cursor()};
+    QRect autoScrollBorder{300, 100, 400, 100};
 };
 
 #endif // INGAMEMENUE_H

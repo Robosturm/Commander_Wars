@@ -18,6 +18,8 @@
 
 #include "ai/coreai.h"
 
+const float Building::animationSpeed = 4.0f;
+
 Building::Building(const QString& BuildingID)
     : m_BuildingID(BuildingID),
       m_pOwner(nullptr),
@@ -95,7 +97,7 @@ void Building::loadSprite(QString spriteID, bool addPlayerColor)
         oxygine::spSprite pSprite = new oxygine::Sprite();
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime * 2, -1);
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), static_cast<qint32>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed), -1);
             pSprite->addTween(tween);
         }
         else

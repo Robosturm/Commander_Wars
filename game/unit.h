@@ -17,6 +17,8 @@ class Unit : public QObject, public oxygine::Actor, public FileSerializable
 {
     Q_OBJECT
 public:
+    static const float animationSpeed;
+
     enum class Priorities
     {
         Waiting = 10,

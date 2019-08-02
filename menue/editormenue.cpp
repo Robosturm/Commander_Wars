@@ -42,6 +42,8 @@ EditorMenue::EditorMenue()
     this->moveToThread(pApp->getWorkerthread());
     m_pInstance = this;
 
+    autoScrollBorder = QRect(100, 100, 400, 100);
+
     m_EditorSelection = new EditorSelection();
     this->addChild(m_EditorSelection);
     m_Topbar = new Topbar(0, pApp->getSettings()->getWidth() -  m_EditorSelection->getWidth());

@@ -9,7 +9,7 @@
 
 #include "qcursor.h"
 
-const QRect InGameMenue::autoScrollBorder = QRect(300, 100, 400, 100);
+
 
 InGameMenue::InGameMenue()
 {

@@ -26,6 +26,8 @@
 
 #include "coreengine/tweentogglevisibility.h"
 
+const float Unit::animationSpeed = 1.5f;
+
 Unit::Unit()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -145,10 +147,10 @@ void Unit::loadSprite(QString spriteID, bool addPlayerColor)
         oxygine::spSprite pWaitSprite = new oxygine::Sprite();
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), static_cast<qint32>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed), -1);
             pSprite->addTween(tween);
 
-            oxygine::spTween tweenWait = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+            oxygine::spTween tweenWait = oxygine::createTween(oxygine::TweenAnim(pAnim), static_cast<qint32>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed), -1);
             pWaitSprite->addTween(tweenWait);
         }
         else
