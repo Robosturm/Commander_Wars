@@ -579,8 +579,8 @@ bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits
             transporterUnits++;
         }
     }
-    data.append(m_pPlayer->getFonds());
-    data.append(m_pPlayer->getFonds() / static_cast<float>(productionBuildings));
+    data.append(m_pPlayer->getFunds());
+    data.append(m_pPlayer->getFunds() / static_cast<float>(productionBuildings));
     data.append(pUnits->size());
     if (indirectUnits > 0)
     {
@@ -596,7 +596,7 @@ bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     for (qint32 i2 = 0; i2 < 10; i2++)
     {
-        if (i2 == 0 || m_pPlayer->getFonds() >= 8000)
+        if (i2 == 0 || m_pPlayer->getFunds() >= 8000)
         {
             for (qint32 i = 0; i < pBuildings->size(); i++)
             {

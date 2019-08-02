@@ -104,11 +104,11 @@ var UNIT =
             // we could heal more than we need
             healingDone = 10 - hp;
         }
-        var fonds = unit.getOwner().getFonds();
+        var funds = unit.getOwner().getFunds();
         // check if we can pay for all healing
         for (var i = healingDone; i >= 0; i--)
         {
-            if (i * costs / 10  <= fonds)
+            if (i * costs / 10  <= funds)
             {
                 healingDone = i;
                 break;
@@ -122,7 +122,7 @@ var UNIT =
         // heal unit
         unit.setHp(hp + healingDone);
         // pay for healing
-        unit.getOwner().addFonds(-healingDone / 10 * costs);
+        unit.getOwner().addFunds(-healingDone / 10 * costs);
     },
 
     getTerrainAnimationBase : function(unit, terrain)

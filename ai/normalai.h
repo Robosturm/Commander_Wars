@@ -256,12 +256,12 @@ protected:
      */
     bool canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
     /**
-     * @brief NormalAi::calcExpectedFondsDamage
+     * @brief NormalAi::calcExpectedFundsDamage
      * @param dummy
      * @param pEnemyUnits
      * @return
      */
-    std::tuple<float, qint32> calcExpectedFondsDamage(qint32 posX, qint32 posY, Unit& dummy, QmlVectorUnit* pEnemyUnits, QVector<QVector4D> attackCount, float bonusFactor);
+    std::tuple<float, qint32> calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, QmlVectorUnit* pEnemyUnits, QVector<QVector4D> attackCount, float bonusFactor);
     /**
      * @brief getClosestTargetDistance
      * @param posX

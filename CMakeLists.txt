@@ -235,6 +235,7 @@ set(${PROJECT_NAME}_SRCS
         wiki/terraininfo.cpp
         wiki/unitinfo.cpp
         wiki/fieldinfo.cpp
+        wiki/wikidatabase.cpp
 )
 
 

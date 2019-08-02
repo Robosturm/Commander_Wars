@@ -142,7 +142,7 @@ bool CoreAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
     data.append(indirectUnits);
     data.append(directUnits);
     data.append(pEnemyUnits->size());
-    data.append(m_pPlayer->getFonds());
+    data.append(m_pPlayer->getFunds());
     data.append(static_cast<float>(turnMode));
     CO* pCO = m_pPlayer->getCO(0);
     if (pCO != nullptr)
@@ -267,7 +267,7 @@ void CoreAI::getBestAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<Q
             Unit* pDef = pTerrain->getUnit();
             if (pDef != nullptr)
             {
-                QPointF dmg = calcFondsDamage(damage, pUnit, pDef);
+                QPointF dmg = calcFundsDamage(damage, pUnit, pDef);
                 if (ret.size() == 0)
                 {
                     ret.append(QVector3D(target.x(), target.y(), dmg.y()));
@@ -389,7 +389,7 @@ void CoreAI::getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVect
             Unit* pDef = pTerrain->getUnit();
             if (pDef != nullptr)
             {
-                QPointF dmg = calcFondsDamage(damage, pUnit, pDef);
+                QPointF dmg = calcFundsDamage(damage, pUnit, pDef);
                 ret.append(QVector4D(target.x(), target.y(), dmg.y(), dmg.x()));
                 QPoint point = pAction->getActionTarget();
                 moveTargetFields.append(QVector3D(point.x(), point.y(), 1));
@@ -410,14 +410,14 @@ void CoreAI::getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVect
     }
 }
 
-QPointF CoreAI::calcFondsDamage(QRectF damage, Unit* pAtk, Unit* pDef)
+QPointF CoreAI::calcFundsDamage(QRectF damage, Unit* pAtk, Unit* pDef)
 {
     float atkDamage = static_cast<float>(damage.x()) / 10.0f;
     if (atkDamage > pDef->getHp())
     {
         atkDamage = pDef->getHp();
     }
-    float fondsDamage = pDef->getUnitCosts() * atkDamage / 10.0f;
+    float fundsDamage = pDef->getUnitCosts() * atkDamage / 10.0f;
     if (damage.width() >= 0.0)
     {
         atkDamage = static_cast<float>(damage.width()) / 10.0f;
@@ -425,9 +425,9 @@ QPointF CoreAI::calcFondsDamage(QRectF damage, Unit* pAtk, Unit* pDef)
         {
             atkDamage = pAtk->getHp();
         }
-        fondsDamage -= pAtk->getUnitCosts() * atkDamage / 10.0f * ownUnitValue;
+        fundsDamage -= pAtk->getUnitCosts() * atkDamage / 10.0f * ownUnitValue;
     }
-    return QPointF(atkDamage, fondsDamage);
+    return QPointF(atkDamage, fundsDamage);
 }
 
 QRectF CoreAI::calcUnitDamage(GameAction* pAction, QPoint target)

@@ -129,7 +129,7 @@ CO_SANJURO.postBattleActions = function(co, attacker, atkDamage, defender, gotAt
                 // avoid loosing money cause of our passive or power
                 if (atkDamage > 0)
                 {
-                    co.getOwner().addFonds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
+                    co.getOwner().addFunds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
                 }
                 break;
             default:

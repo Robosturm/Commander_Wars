@@ -43,6 +43,12 @@ public slots:
         return m_loadedTerrains.size();
     }
     void reset();
+    /**
+     * @brief getTerrainName
+     * @param position
+     * @return
+     */
+    QString getTerrainName(qint32 position);
 private:
     QStringList m_loadedTerrains;
     explicit TerrainManager();

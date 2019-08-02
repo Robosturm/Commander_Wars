@@ -176,23 +176,23 @@ bool Player::isEnemy(Player* pOwner)
 }
 
 
-void Player::setFonds(const qint32 &value)
+void Player::setFunds(const qint32 &value)
 {
-    fonds = value;
+    funds = value;
     if (GameMenue::getInstance() != nullptr)
     {
         GameMenue::getInstance()->updatePlayerinfo();
     }
 }
 
-void Player::addFonds(const qint32 &value)
+void Player::addFunds(const qint32 &value)
 {
-    setFonds(fonds + value);
+    setFunds(funds + value);
 }
 
-qint32 Player::getFonds() const
+qint32 Player::getFunds() const
 {
-    return fonds;
+    return funds;
 }
 
 qint32 Player::getBuildingCount(QString buildingID)
@@ -368,7 +368,7 @@ void Player::earnMoney(float modifier)
 {
 
 
-    setFonds(fonds + calcIncome(modifier));
+    setFunds(funds + calcIncome(modifier));
 }
 
 qint32 Player::getCostModifier(QString id, qint32 baseCost)
@@ -596,15 +596,15 @@ qint32 Player::getCosts(QString id)
     return costs;
 }
 
-void Player::gainPowerstar(qint32 fondsDamage, QPoint position)
+void Player::gainPowerstar(qint32 fundsDamage, QPoint position)
 {
     if (playerCOs[0].get() != nullptr)
     {
-       playerCOs[0]->gainPowerstar(fondsDamage, position);
+       playerCOs[0]->gainPowerstar(fundsDamage, position);
     }
     if (playerCOs[1].get() != nullptr)
     {
-       playerCOs[1]->gainPowerstar(fondsDamage, position);
+       playerCOs[1]->gainPowerstar(fundsDamage, position);
     }
     if (GameMenue::getInstance() != nullptr)
     {
@@ -884,13 +884,13 @@ qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints
             {
                 case GameEnums::RocketTarget_Money:
                 {
-                    // calc fonds damage
+                    // calc funds damage
                     damageDone += damagePoints / 10.0f * modifier * pUnit->getCosts();
                     break;
                 }
                 case GameEnums::RocketTarget_HpHighMoney:
                 {
-                    // calc fonds damage
+                    // calc funds damage
                     if (pUnit->getCosts() >= averageCosts / 2)
                     {
                         damageDone += damagePoints * modifier * 4;
@@ -903,7 +903,7 @@ qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints
                 }
                 case GameEnums::RocketTarget_HpLowMoney:
                 {
-                    // calc fonds damage
+                    // calc funds damage
                     if (pUnit->getCosts() <= averageCosts / 2)
                     {
                         damageDone += damagePoints * modifier * 4;
@@ -928,14 +928,14 @@ void Player::defineArmy()
     }
 }
 
-float Player::getFondsModifier() const
+float Player::getFundsModifier() const
 {
-    return fondsModifier;
+    return fundsModifier;
 }
 
-void Player::setFondsModifier(float value)
+void Player::setFundsModifier(float value)
 {
-    fondsModifier = value;
+    fundsModifier = value;
 }
 
 qint32 Player::calculatePlayerStrength()
@@ -964,8 +964,8 @@ void Player::serializeObject(QDataStream& pStream)
     quint32 color = m_Color.rgb();
     pStream << color;
 
-    pStream << fonds;
-    pStream << fondsModifier;
+    pStream << funds;
+    pStream << fundsModifier;
     pStream << playerArmy;
     if (playerCOs[0].get() == nullptr)
     {
@@ -1020,8 +1020,8 @@ void Player::deserializeObject(QDataStream& pStream)
             qint32 dummy = 0;
             pStream >> dummy;
         }
-        pStream >> fonds;
-        pStream >> fondsModifier;
+        pStream >> funds;
+        pStream >> fundsModifier;
         pStream >> playerArmy;
         bool hasC0 = false;
         pStream >> hasC0;

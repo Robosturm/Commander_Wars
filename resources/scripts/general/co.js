@@ -185,9 +185,9 @@ var CO =
         return "OS";
     },
 
-    gainPowerstar : function(co, fondsDamage, x, y)
+    gainPowerstar : function(co, fundsDamage, x, y)
     {
-        co.setPowerFilled(co.getPowerFilled() + fondsDamage / 11000)
+        co.setPowerFilled(co.getPowerFilled() + fundsDamage / 11000)
     },
 
     getCOUnitRange : function(co)

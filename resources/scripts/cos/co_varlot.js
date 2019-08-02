@@ -25,7 +25,7 @@ var Constructor = function()
                 income += enemyPlayer.calcIncome(1.0);
             }
         }
-        player.addFonds(income / 4);
+        player.addFunds(income / 4);
 
         audio.clearPlayList();
         CO_VARLOT.loadCOMusic(co);
@@ -96,7 +96,7 @@ var Constructor = function()
         bonusUnitVariable.writeDataListInt32(bonusUnits);
         bonusOffVariable.writeDataListInt32(bonusOffs);
 
-        // reduce enemy fonds
+        // reduce enemy funds
         var player = co.getOwner();
         var enemyCount = player.getEnemyCount()
         var playerCounter = map.getPlayerCount();
@@ -107,15 +107,15 @@ var Constructor = function()
             if ((enemyPlayer !== player) &&
                 (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
             {
-                var fonds = enemyPlayer.getFonds();
+                var funds = enemyPlayer.getFunds();
                 var income = enemyPlayer.calcIncome();
-                if (playerCosts > income + fonds)
+                if (playerCosts > income + funds)
                 {
-                    enemyPlayer.setFonds(-income);
+                    enemyPlayer.setFunds(-income);
                 }
                 else
                 {
-                    enemyPlayer.addFonds(-playerCosts);
+                    enemyPlayer.addFunds(-playerCosts);
                 }
             }
         }

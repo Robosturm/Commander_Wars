@@ -47,7 +47,7 @@ CO_SASHA.postBattleActions = function(co, attacker, atkDamage, defender, gotAtta
                 // avoid loosing money cause of our super power
                 if (atkDamage > 0)
                 {
-                    co.getOwner().addFonds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
+                    co.getOwner().addFunds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
                 }
                 break;
             case GameEnums.PowerMode_Power:

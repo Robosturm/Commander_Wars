@@ -9,11 +9,11 @@ PlayerRecord::PlayerRecord()
     Interpreter::setCppOwnerShip(this);
 }
 
-PlayerRecord::PlayerRecord(qint32 day, qint32 player, qint32 fonds, qint32 income,
+PlayerRecord::PlayerRecord(qint32 day, qint32 player, qint32 funds, qint32 income,
                           qint32 buildings, qint32 units, qint32 playerStrength)
     : m_Day(day),
       m_Player(player),
-      m_Fonds(fonds),
+      m_Funds(funds),
       m_Income(income),
       m_Buildings(buildings),
       m_Units(units),
@@ -28,7 +28,7 @@ void PlayerRecord::serializeObject(QDataStream& pStream)
     pStream << getVersion();
     pStream << m_Day;
     pStream << m_Player;
-    pStream << m_Fonds;
+    pStream << m_Funds;
     pStream << m_Income;
     pStream << m_Buildings;
     pStream << m_Units;
@@ -41,7 +41,7 @@ void PlayerRecord::deserializeObject(QDataStream& pStream)
     pStream >> version;
     pStream >> m_Day;
     pStream >> m_Player;
-    pStream >> m_Fonds;
+    pStream >> m_Funds;
     pStream >> m_Income;
     pStream >> m_Buildings;
     pStream >> m_Units;
@@ -58,9 +58,9 @@ qint32 PlayerRecord::getOwner() const
     return m_Player;
 }
 
-qint32 PlayerRecord::getFonds() const
+qint32 PlayerRecord::getFunds() const
 {
-    return m_Fonds;
+    return m_Funds;
 }
 
 qint32 PlayerRecord::getIncome() const

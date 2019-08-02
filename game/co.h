@@ -295,10 +295,10 @@ public slots:
     void setPowerMode(const GameEnums::PowerMode &PowerMode);
     /**
      * @brief gainPower
-     * @param fondsDamage
+     * @param fundsDamage
      * @param position
      */
-    void gainPowerstar(qint32 fondsDamage, QPoint position);
+    void gainPowerstar(qint32 fundsDamage, QPoint position);
     /**
      * @brief startOfTurn called at the start of our turn
      */

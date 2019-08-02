@@ -75,7 +75,7 @@ var Constructor = function()
             var overHeal = hp - 10;
             // todo earn money :)
             var income = ACTION_JOIN.postAnimationTargetUnit.getCosts() * (overHeal / 10);
-            ACTION_JOIN.postAnimationTargetUnit.getOwner().addFonds(income);
+            ACTION_JOIN.postAnimationTargetUnit.getOwner().addFunds(income);
             hp = 10;
         }
 

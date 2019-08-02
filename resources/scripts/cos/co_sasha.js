@@ -38,8 +38,8 @@ var Constructor = function()
         powerNameAnimation.queueAnimation(animation2);
 
         var player = co.getOwner();
-        // i prefer this version you could change it to 10% per fonds easily
-        var reduction = co.getOwner().getFonds() / 5000.0;
+        // i prefer this version you could change it to 10% per funds easily
+        var reduction = co.getOwner().getFunds() / 5000.0;
         var playerCounter = map.getPlayerCount();
         for (var i2 = 0; i2 < playerCounter; i2++)
         {
@@ -149,7 +149,7 @@ var Constructor = function()
                     // avoid loosing money cause of our super power
                     if (atkDamage > 0)
                     {
-                        co.getOwner().addFonds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
+                        co.getOwner().addFunds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
                     }
                     break;
                 case GameEnums.PowerMode_Power:

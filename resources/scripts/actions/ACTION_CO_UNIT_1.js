@@ -17,7 +17,7 @@ var Constructor = function()
             var constructionList = building.getConstructionList();
             var co = unit.getOwner().getCO(1);
             if (((constructionList.indexOf(unit.getUnitID()) >= 0) || (building.getBuildingID() === "HQ")) &&
-                (unit.getUnitCosts() / 2 <= unit.getOwner().getFonds()) &&
+                (unit.getUnitCosts() / 2 <= unit.getOwner().getFunds()) &&
                 (co !== null) && (co.getCOUnit() === null) &&
                 (unit.getUnitRank() <= GameEnums.UnitRank_Veteran) &&
                 (unit.getOwner() === building.getOwner()))
@@ -43,7 +43,7 @@ var Constructor = function()
     {
         var unit = action.getTargetUnit();
         unit.makeCOUnit(1);
-        unit.getOwner().addFonds(-unit.getUnitCosts() / 2);
+        unit.getOwner().addFunds(-unit.getUnitCosts() / 2);
     };
 }
 

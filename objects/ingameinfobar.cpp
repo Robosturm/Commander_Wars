@@ -142,10 +142,10 @@ void IngameInfoBar::updatePlayerInfo()
     pTextfield->setPosition(10, 135);
     m_pGameInfoBox->addChild(pTextfield);
 
-    count = pPlayer->getFonds();
+    count = pPlayer->getFunds();
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText((tr("Fonds: ") + QString::number(count)).toStdString().c_str());
+    pTextfield->setHtmlText((tr("Funds: ") + QString::number(count)).toStdString().c_str());
     pTextfield->setPosition(10, 170);
     m_pGameInfoBox->addChild(pTextfield);
 

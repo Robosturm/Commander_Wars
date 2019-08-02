@@ -80,8 +80,8 @@ public slots:
     // slots for changing player data
     void allPlayerIncomeChanged(float value);
     void playerIncomeChanged(float value, qint32 playerIdx);
-    void allPlayerStartFondsChanged(float value);
-    void playerStartFondsChanged(float value, qint32 playerIdx);
+    void allPlayerStartFundsChanged(float value);
+    void playerStartFundsChanged(float value, qint32 playerIdx);
     void playerTeamChanged(qint32 value, qint32 playerIdx);
     void playerColorChanged(QColor value, qint32 playerIdx);
     void showSelectCO(qint32 player, quint8 co);
@@ -155,7 +155,7 @@ private:
     QVector<oxygine::spSprite> m_playerCO2;
     QVector<spDropDownmenuColor> m_playerColors;
     QVector<spSpinBox> m_playerIncomes;
-    QVector<spSpinBox> m_playerStartFonds;
+    QVector<spSpinBox> m_playerStartFunds;
     QVector<spDropDownmenu> m_playerAIs;
     QVector<spCheckbox> m_pReadyBoxes;
     /**

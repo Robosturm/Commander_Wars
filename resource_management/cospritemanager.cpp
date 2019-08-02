@@ -46,6 +46,21 @@ COSpriteManager* COSpriteManager::getInstance()
     return m_pInstance;
 }
 
+QString COSpriteManager::getCOName(qint32 position)
+{
+    if ((position >= 0) && (position < m_loadedCOs.size()))
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        Interpreter* pInterpreter = pApp->getInterpreter();
+        QJSValue value = pInterpreter->doFunction(m_loadedCOs[position], "getName");
+        if (value.isString())
+        {
+            return value.toString();
+        }
+    }
+    return "";
+}
+
 void COSpriteManager::loadAll()
 {
     reset();

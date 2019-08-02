@@ -97,3 +97,18 @@ TerrainManager* TerrainManager::getInstance()
     }
     return m_pInstance;
 }
+
+QString TerrainManager::getTerrainName(qint32 position)
+{
+    if ((position >= 0) && (position < m_loadedTerrains.size()))
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        Interpreter* pInterpreter = pApp->getInterpreter();
+        QJSValue value = pInterpreter->doFunction(m_loadedTerrains[position], "getName");
+        if (value.isString())
+        {
+            return value.toString();
+        }
+    }
+    return "";
+}

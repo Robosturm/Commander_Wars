@@ -118,14 +118,14 @@ VictoryMenue::VictoryMenue(bool multiplayer)
         {
             for (qint32 i2 = 0; i2 < pMap->getPlayerCount(); i2++)
             {
-                qint32 fonds = pDayRecord->getPlayerRecord(i2)->getFonds();
+                qint32 funds = pDayRecord->getPlayerRecord(i2)->getFunds();
                 qint32 income = pDayRecord->getPlayerRecord(i2)->getIncome();
                 qint32 buildings = pDayRecord->getPlayerRecord(i2)->getBuildings();
                 qint32 units = pDayRecord->getPlayerRecord(i2)->getUnits();
                 qint32 playerStrength = pDayRecord->getPlayerRecord(i2)->getPlayerStrength();
-                if (fonds > m_GraphMaxValues[static_cast<qint32>(GraphModes::Fonds)])
+                if (funds > m_GraphMaxValues[static_cast<qint32>(GraphModes::Funds)])
                 {
-                    m_GraphMaxValues[static_cast<qint32>(GraphModes::Fonds)] = fonds;
+                    m_GraphMaxValues[static_cast<qint32>(GraphModes::Funds)] = funds;
                 }
                 if (income > m_GraphMaxValues[static_cast<qint32>(GraphModes::Income)])
                 {
@@ -164,18 +164,18 @@ VictoryMenue::VictoryMenue(bool multiplayer)
     panel->setPosition(10, pApp->getSettings()->getHeight() - 105);
     addChild(panel);
 
-    oxygine::spButton pButtonFonds = ObjectManager::createButton(tr("Fonds"));
-    pButtonFonds->attachTo(this);
-    pButtonFonds->setPosition(5, 5);
-    pButtonFonds->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    oxygine::spButton pButtonFunds = ObjectManager::createButton(tr("Funds"));
+    pButtonFunds->attachTo(this);
+    pButtonFunds->setPosition(5, 5);
+    pButtonFunds->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        emit sigShowGraph(GraphModes::Fonds);
+        emit sigShowGraph(GraphModes::Funds);
     });
-    panel->addItem(pButtonFonds);
+    panel->addItem(pButtonFunds);
 
     oxygine::spButton pButtonIncome = ObjectManager::createButton(tr("Income"));
     pButtonIncome->attachTo(this);
-    pButtonIncome->setPosition(10 + pButtonFonds->getWidth() + pButtonFonds->getX(), 5);
+    pButtonIncome->setPosition(10 + pButtonFunds->getWidth() + pButtonFunds->getX(), 5);
     pButtonIncome->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigShowGraph(GraphModes::Income);
@@ -412,7 +412,7 @@ VictoryMenue::VictoryMenue(bool multiplayer)
         }
         m_VictoryPanel->setContentHeigth(y + 48 * scale + 10);
     }
-    showGraph(GraphModes::Fonds);
+    showGraph(GraphModes::Funds);
 }
 
 void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
@@ -437,9 +437,9 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
 
         switch (m_CurrentGraphMode)
         {
-            case GraphModes::Fonds:
+            case GraphModes::Funds:
             {
-                m_Textfield->setHtmlText(tr("Fonds").toStdString().c_str());
+                m_Textfield->setHtmlText(tr("Funds").toStdString().c_str());
                 break;
             }
             case GraphModes::Income:
@@ -693,10 +693,10 @@ void VictoryMenue::updateGraph()
 
                     switch (m_CurrentGraphMode)
                     {
-                        case GraphModes::Fonds:
+                        case GraphModes::Funds:
                         {
-                            startPoint.setY(pStartRecord->getPlayerRecord(i)->getFonds());
-                            endPoint.setY(pEndRecord->getPlayerRecord(i)->getFonds());
+                            startPoint.setY(pStartRecord->getPlayerRecord(i)->getFunds());
+                            endPoint.setY(pEndRecord->getPlayerRecord(i)->getFunds());
                             break;
                         }
                         case GraphModes::Income:

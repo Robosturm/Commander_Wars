@@ -7,7 +7,7 @@ CO_COLIN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            var bonus = attacker.getOwner().getFonds() / 1000 * 3.33;
+            var bonus = attacker.getOwner().getFunds() / 1000 * 3.33;
             return bonus;
         case GameEnums.PowerMode_Power:
             return 0;

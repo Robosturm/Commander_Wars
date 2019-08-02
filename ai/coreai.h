@@ -181,13 +181,13 @@ public slots:
      */
     bool moveAwayFromProduction(QmlVectorUnit* pUnits);
     /**
-     * @brief CoreAI::calcFondsDamage
+     * @brief CoreAI::calcFundsDamage
      * @param damage
      * @param pAtk
      * @param pDef
      * @return
      */
-    QPointF calcFondsDamage(QRectF damage, Unit* pAtk, Unit* pDef);
+    QPointF calcFundsDamage(QRectF damage, Unit* pAtk, Unit* pDef);
     /**
      * @brief appendAttackTargets
      * @param pUnit

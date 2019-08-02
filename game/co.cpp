@@ -812,9 +812,9 @@ void CO::setPowerMode(const GameEnums::PowerMode &PowerMode)
     m_PowerMode = PowerMode;
 }
 
-void CO::gainPowerstar(qint32 fondsDamage, QPoint position)
+void CO::gainPowerstar(qint32 fundsDamage, QPoint position)
 {
-    double powerGain = fondsDamage;
+    double powerGain = fundsDamage;
     // reduce power meter filling based on power usages
     powerGain *= 1 / (1.0 + powerUsed * 0.1);
     if (!inCORange(position, nullptr))

@@ -26,8 +26,8 @@ public:
     enum RocketTarget
     {
         RocketTarget_Money, /**< targets the most money damage witht the rocket */
-        RocketTarget_HpLowMoney, /**< targets most hp damage where units which costs less than half of the average fonds count four time */
-        RocketTarget_HpHighMoney /**< targets most hp damage where units which costs more than half of the average fonds count four time */
+        RocketTarget_HpLowMoney, /**< targets most hp damage where units which costs less than half of the average funds count four time */
+        RocketTarget_HpHighMoney /**< targets most hp damage where units which costs more than half of the average funds count four time */
     };
     Q_ENUM(RocketTarget)
 

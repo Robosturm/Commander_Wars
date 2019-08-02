@@ -87,7 +87,7 @@ void DayToDayRecord::addPlayerRecord(qint32 player, qint32 day)
     Player* pPlayer = pMap->getPlayer(player);
     if (!pPlayer->getIsDefeated())
     {
-        m_PlayerRecords[player] = new PlayerRecord(day, player, pPlayer->getFonds(), pPlayer->calcIncome(),
+        m_PlayerRecords[player] = new PlayerRecord(day, player, pPlayer->getFunds(), pPlayer->calcIncome(),
                                                    pPlayer->getBuildingCount(), pPlayer->getUnitCount(), pPlayer->calculatePlayerStrength());
     }
 }

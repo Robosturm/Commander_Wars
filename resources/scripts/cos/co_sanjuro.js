@@ -210,17 +210,17 @@ var Constructor = function()
     this.startOfTurn = function(co)
     {
         var player = co.getOwner();
-        var fonds = player.getFonds();
+        var funds = player.getFunds();
         var income = player.calcIncome();
         var costModifier = 0.0;
         var damageModifier = 0.0;
         var exceed = 0;
         var maxCounter = 20;
         var counter = 0;
-        if (income < fonds)
+        if (income < funds)
         {
-            // we have more fonds than income
-            exceed = fonds - income;
+            // we have more funds than income
+            exceed = funds - income;
             // this means our troops get stronger and more expensive
             while (exceed >= 0 && counter < maxCounter)
             {
@@ -232,8 +232,8 @@ var Constructor = function()
         }
         else
         {
-            // we have less fonds than income
-            exceed = income - fonds;
+            // we have less funds than income
+            exceed = income - funds;
             // this means our troops get weaker and less expensive
             while (exceed >= 0 && counter < maxCounter)
             {
@@ -319,7 +319,7 @@ var Constructor = function()
                     // avoid loosing money cause of our passive or power
                     if (atkDamage > 0)
                     {
-                        co.getOwner().addFonds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
+                        co.getOwner().addFunds(atkDamage / 10.0 * defender.getUnitCosts() * 0.5);
                     }
                     break;
                 default:

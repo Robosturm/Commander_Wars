@@ -258,7 +258,7 @@ qint32 Building::getIncome()
     qint32 income = static_cast<qint32>(getBaseIncome());
     if (m_pOwner != nullptr)
     {
-        income = income * m_pOwner->getFondsModifier();
+        income = income * m_pOwner->getFundsModifier();
         qint32 modifier = 0;
         CO* pCO = m_pOwner->getCO(0);
         if (pCO != nullptr)

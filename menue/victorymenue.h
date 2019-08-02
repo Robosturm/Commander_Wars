@@ -17,7 +17,7 @@ class VictoryMenue : public QObject, public oxygine::Actor
 public:
     enum class GraphModes
     {
-        Fonds,
+        Funds,
         Income,
         Buildings,
         Units,
@@ -52,7 +52,7 @@ public slots:
      */
     void updateGraph();
 private:
-    GraphModes m_CurrentGraphMode{GraphModes::Fonds};
+    GraphModes m_CurrentGraphMode{GraphModes::Funds};
     /**
      * @brief m_PlayerGraphs first dimensions holds the graph modes, second dimension the graphs for each player
      */

@@ -107,7 +107,7 @@ void PlayerInfo::updateData()
             oxygine::spTextField Text = new oxygine::TextField();
 
             Text->setStyle(style);
-            QString number = QString::number(pPlayer->getFonds());
+            QString number = QString::number(pPlayer->getFunds());
             if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
                 pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
             {

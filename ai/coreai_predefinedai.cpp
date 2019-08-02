@@ -141,7 +141,7 @@ bool CoreAI::moveRepair(QmlVectorUnit* pUnits)
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
-        if (pUnit->getHpRounded() < 10 && pUnit->getUnitCosts() / 10 <= m_pPlayer->getFonds())
+        if (pUnit->getHpRounded() < 10 && pUnit->getUnitCosts() / 10 <= m_pPlayer->getFunds())
         {
             for (qint32 i2 = 0; i2 < unitFields->size(); i2++)
             {

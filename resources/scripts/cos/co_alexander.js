@@ -42,9 +42,9 @@ var Constructor = function()
             if ((enemyPlayer !== player) &&
                 (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
             {
-                var fonds = enemyPlayer.getFonds();
-                enemyPlayer.setFonds(fonds / 2);
-                player.addFonds(fonds / 2);
+                var funds = enemyPlayer.getFunds();
+                enemyPlayer.setFunds(funds / 2);
+                player.addFunds(funds / 2);
             }
         }
 

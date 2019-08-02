@@ -900,44 +900,44 @@ qint32 NormalAi::getBestAttackTarget(Unit* pUnit, QmlVectorUnit* pUnits, QVector
     {
         Unit* pEnemy = pMap->getTerrain(static_cast<qint32>(ret[i].x()), static_cast<qint32>(ret[i].y()))->getUnit();
 
-        qint32 fondsDamage = 0;
+        qint32 fundsDamage = 0;
         float newHp = 0.0f;
         if (pEnemy != nullptr)
         {
             newHp = pEnemy->getHp() - static_cast<float>(ret[i].w());
-            fondsDamage = static_cast<qint32>(ret[i].z() * calculateCaptureBonus(pEnemy, newHp));
+            fundsDamage = static_cast<qint32>(ret[i].z() * calculateCaptureBonus(pEnemy, newHp));
             if (minfireRange > 1)
             {
-                fondsDamage *= 2.0f;
+                fundsDamage *= 2.0f;
             }
             if (newHp <= 0)
             {
-                fondsDamage *= 2.0f;
+                fundsDamage *= 2.0f;
             }
             if (pEnemy->getMinRange() > 1)
             {
-                fondsDamage *= 3.0f;
+                fundsDamage *= 3.0f;
             }
 
         }
         else
         {
-            fondsDamage = static_cast<qint32>(ret[i].z());
+            fundsDamage = static_cast<qint32>(ret[i].z());
         }
         QPoint moveTarget(static_cast<qint32>(moveTargetFields[i].x()), static_cast<qint32>(moveTargetFields[i].y()));
-        fondsDamage -= calculateCounterDamage(pUnit, pUnits, moveTarget, pEnemy, ret[i].w(), pBuildings, pEnemyBuildings);
+        fundsDamage -= calculateCounterDamage(pUnit, pUnits, moveTarget, pEnemy, ret[i].w(), pBuildings, pEnemyBuildings);
         qint32 targetDefense = pMap->getTerrain(static_cast<qint32>(ret[i].x()), static_cast<qint32>(ret[i].y()))->getDefense(pUnit);
-        if (fondsDamage >= 0)
+        if (fundsDamage >= 0)
         {
-            if (fondsDamage > currentDamage)
+            if (fundsDamage > currentDamage)
             {
-                currentDamage = fondsDamage;
+                currentDamage = fundsDamage;
                 target = i;
                 deffense = targetDefense;
             }
-            else if (fondsDamage == currentDamage && targetDefense > deffense)
+            else if (fundsDamage == currentDamage && targetDefense > deffense)
             {
-                currentDamage = fondsDamage;
+                currentDamage = fundsDamage;
                 target = i;
                 deffense = targetDefense;
             }
@@ -1076,7 +1076,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoin
                 }
                 if (damageData.x() > 0)
                 {
-                    counterDamage += static_cast<qint32>(calcFondsDamage(damageData, pNextEnemy.get(), pUnit).y());
+                    counterDamage += static_cast<qint32>(calcFundsDamage(damageData, pNextEnemy.get(), pUnit).y());
                 }
             }
         }
@@ -1324,7 +1324,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
         }
     }
 
-    float fondsPerFactory = m_pPlayer->getFonds() / static_cast<float>(productionBuildings);
+    float fundsPerFactory = m_pPlayer->getFunds() / static_cast<float>(productionBuildings);
     // position 0 direct to indirect ratio
     if (indirectUnits > 0)
     {
@@ -1419,7 +1419,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                                 {
                                     data[4] = 0.0;
                                 }
-                                data[5] = dummy.getUnitCosts() / fondsPerFactory;
+                                data[5] = dummy.getUnitCosts() / fundsPerFactory;
                                 if (pEnemyBuildings->size() > 0 && enemeyCount > 0)
                                 {
                                     data[6] = pBuildings->size() / (static_cast<float>(pEnemyBuildings->size()) / static_cast<float>(enemeyCount));
@@ -1434,7 +1434,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                                 {
                                     bonusFactor = 1.2f;
                                 }
-                                auto damageData = calcExpectedFondsDamage(pBuilding->getX(), pBuilding->getY(), dummy, pEnemyUnits, attackCount, bonusFactor);
+                                auto damageData = calcExpectedFundsDamage(pBuilding->getX(), pBuilding->getY(), dummy, pEnemyUnits, attackCount, bonusFactor);
                                 data[7] = std::get<1>(damageData);
                                 data[8] =  std::get<0>(damageData);
 
@@ -1551,7 +1551,7 @@ qint32 NormalAi::getClosestTargetDistance(qint32 posX, qint32 posY, Unit& dummy,
     return minDistance;
 }
 
-std::tuple<float, qint32> NormalAi::calcExpectedFondsDamage(qint32 posX, qint32 posY, Unit& dummy, QmlVectorUnit* pEnemyUnits, QVector<QVector4D> attackCount, float bonusFactor)
+std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 posY, Unit& dummy, QmlVectorUnit* pEnemyUnits, QVector<QVector4D> attackCount, float bonusFactor)
 {
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
     qint32 notAttackableCount = 0;
@@ -1958,7 +1958,7 @@ float NormalAi::calcBuildScore(QVector<float>& data)
 float NormalAi::calcCostScore(QVector<float>& data)
 {
     float score = 0;
-    // fonds bonus;
+    // funds bonus;
     if (data[5] > 2.5f + data[12])
     {
         score -= (data[5] - 2.5f + data[12]) * 5;

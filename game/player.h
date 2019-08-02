@@ -126,17 +126,17 @@ public slots:
      * @return
      */
     bool isEnemy(Player* pOwner);
-    qint32 getFonds() const;
+    qint32 getFunds() const;
     /**
-     * @brief addFonds increases the money of this player by the given value
+     * @brief addFunds increases the money of this player by the given value
      * @param value
      */
-    void addFonds(const qint32 &value);
+    void addFunds(const qint32 &value);
     /**
-     * @brief setFonds
+     * @brief setFunds
      * @param value
      */
-    void setFonds(const qint32 &value);
+    void setFunds(const qint32 &value);
     /**
      * @brief earnMoney earns money based on the buildings the player has
      * @param modifier multiplier additionaly modifying the income
@@ -181,9 +181,9 @@ public slots:
     qint32 getCosts(QString id);
     /**
      * @brief gainPowerstar
-     * @param fondsDamage
+     * @param fundsDamage
      */
-    void gainPowerstar(qint32 fondsDamage, QPoint position);
+    void gainPowerstar(qint32 fundsDamage, QPoint position);
     /**
      * @brief startOfTurn
      */
@@ -250,15 +250,15 @@ public slots:
      */
     void defineArmy();
     /**
-     * @brief getFondsModifier
+     * @brief getFundsModifier
      * @return
      */
-    float getFondsModifier() const;
+    float getFundsModifier() const;
     /**
-     * @brief setFondsModifier
+     * @brief setFundsModifier
      * @param value
      */
-    void setFondsModifier(float value);
+    void setFundsModifier(float value);
     /**
      * @brief calculatePlayerStrength
      * @return
@@ -350,8 +350,8 @@ public slots:
      */
     void setBuildList(const QStringList &BuildList);
 private:
-    qint32 fonds{0};
-    float fondsModifier{1.0f};
+    qint32 funds{0};
+    float fundsModifier{1.0f};
 
     QColor m_Color;
     QString playerArmy{""};

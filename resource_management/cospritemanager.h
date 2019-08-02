@@ -38,6 +38,12 @@ public:
         return "";
     }
     /**
+     * @brief getCOName
+     * @param position the position in the loaded co list
+     * @return the id of the co at the given index
+     */
+    QString getCOName(qint32 position);
+    /**
      * @brief getCOIDs
      * @return
      */

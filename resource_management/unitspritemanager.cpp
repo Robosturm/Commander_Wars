@@ -119,3 +119,18 @@ bool UnitSpriteManager::existsUnit(QString unitID)
     }
     return false;
 }
+
+QString UnitSpriteManager::getUnitName(qint32 position)
+{
+    if ((position >= 0) && (position < m_loadedUnits.size()))
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        Interpreter* pInterpreter = pApp->getInterpreter();
+        QJSValue value = pInterpreter->doFunction(m_loadedUnits[position], "getName");
+        if (value.isString())
+        {
+            return value.toString();
+        }
+    }
+    return "";
+}

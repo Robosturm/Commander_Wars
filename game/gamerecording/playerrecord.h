@@ -17,7 +17,7 @@ class PlayerRecord : public QObject, public FileSerializable, public oxygine::re
     Q_OBJECT
 public:
     explicit PlayerRecord();
-    explicit PlayerRecord(qint32 day, qint32 player, qint32 fonds, qint32 income,
+    explicit PlayerRecord(qint32 day, qint32 player, qint32 funds, qint32 income,
                           qint32 buildings, qint32 units, qint32 playerStrength);
 
     /**
@@ -42,7 +42,7 @@ public:
 
     qint32 getDay() const;
     qint32 getOwner() const;
-    qint32 getFonds() const;
+    qint32 getFunds() const;
     qint32 getIncome() const;
     qint32 getBuildings() const;
     qint32 getUnits() const;
@@ -50,7 +50,7 @@ public:
 private:
     qint32 m_Day{-1};
     qint32 m_Player{-1};
-    qint32 m_Fonds{-1};
+    qint32 m_Funds{-1};
     qint32 m_Income{-1};
     qint32 m_Buildings{-1};
     qint32 m_Units{-1};

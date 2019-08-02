@@ -67,6 +67,12 @@ public:
     {
         return m_loadedUnits;
     }
+    /**
+     * @brief getUnitName
+     * @param position
+     * @return
+     */
+    QString getUnitName(qint32 position);
 private:
     explicit UnitSpriteManager();
     virtual ~UnitSpriteManager() = default;

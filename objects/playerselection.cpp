@@ -119,7 +119,7 @@ void PlayerSelection::resetPlayerSelection()
     m_playerCO2.clear();
     m_playerColors.clear();
     m_playerIncomes.clear();
-    m_playerStartFonds.clear();
+    m_playerStartFunds.clear();
     m_playerAIs.clear();
     m_playerTeams.clear();
     m_playerBuildlist.clear();
@@ -175,7 +175,7 @@ void PlayerSelection::showPlayerSelection()
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
     // add player labels at top
-    QStringList items = {tr("CO's"), tr("Color"), tr("AI Strength"), tr("Startfonds"), tr("Income Modifier"), tr("Team"), tr("Build List")};
+    QStringList items = {tr("CO's"), tr("Color"), tr("AI Strength"), tr("Startfunds"), tr("Income Modifier"), tr("Team"), tr("Build List")};
     if (m_pNetworkInterface.get() != nullptr)
     {
         items.append(tr("Connected"));
@@ -230,16 +230,16 @@ void PlayerSelection::showPlayerSelection()
     }
 
     itemIndex = 3;
-    spSpinBox allStartFondsSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
-    allStartFondsSpinBox->setPosition(xPositions[itemIndex], y);
-    allStartFondsSpinBox->setCurrentValue(0);
-    m_pPlayerSelection->addItem(allStartFondsSpinBox);
-    connect(allStartFondsSpinBox.get(), &SpinBox::sigValueChanged, this, &PlayerSelection::allPlayerStartFondsChanged, Qt::QueuedConnection);
+    spSpinBox allStartFundsSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
+    allStartFundsSpinBox->setPosition(xPositions[itemIndex], y);
+    allStartFundsSpinBox->setCurrentValue(0);
+    m_pPlayerSelection->addItem(allStartFundsSpinBox);
+    connect(allStartFundsSpinBox.get(), &SpinBox::sigValueChanged, this, &PlayerSelection::allPlayerStartFundsChanged, Qt::QueuedConnection);
     if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
         saveGame ||
         m_pCampaign.get() != nullptr)
     {
-        allStartFondsSpinBox->setEnabled(false);
+        allStartFundsSpinBox->setEnabled(false);
     }
 
     itemIndex = 4;
@@ -518,26 +518,26 @@ void PlayerSelection::showPlayerSelection()
         m_PlayerSockets.append(0);
 
         itemIndex++;
-        spSpinBox playerStartFondsSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
-        playerStartFondsSpinBox->setPosition(xPositions[itemIndex], y);
-        playerStartFondsSpinBox->setCurrentValue(pMap->getPlayer(i)->getFonds());
-        m_pPlayerSelection->addItem(playerStartFondsSpinBox);
-        m_playerStartFonds.append(playerStartFondsSpinBox);
-        connect(playerStartFondsSpinBox.get(), &SpinBox::sigValueChanged, this, [=](float value)
+        spSpinBox playerStartFundsSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
+        playerStartFundsSpinBox->setPosition(xPositions[itemIndex], y);
+        playerStartFundsSpinBox->setCurrentValue(pMap->getPlayer(i)->getFunds());
+        m_pPlayerSelection->addItem(playerStartFundsSpinBox);
+        m_playerStartFunds.append(playerStartFundsSpinBox);
+        connect(playerStartFundsSpinBox.get(), &SpinBox::sigValueChanged, this, [=](float value)
         {
-            playerStartFondsChanged(value, i);
+            playerStartFundsChanged(value, i);
         }, Qt::QueuedConnection);
         if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
             saveGame ||
             m_pCampaign.get() != nullptr)
         {
-            playerStartFondsSpinBox->setEnabled(false);
+            playerStartFundsSpinBox->setEnabled(false);
         }
 
         itemIndex++;
         spSpinBox playerIncomeSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 10, SpinBox::Mode::Float);
         playerIncomeSpinBox->setPosition(xPositions[itemIndex], y);
-        playerIncomeSpinBox->setCurrentValue(pMap->getPlayer(i)->getFondsModifier());
+        playerIncomeSpinBox->setCurrentValue(pMap->getPlayer(i)->getFundsModifier());
         playerIncomeSpinBox->setSpinSpeed(0.1f);
         m_pPlayerSelection->addItem(playerIncomeSpinBox);
         m_playerIncomes.append(playerIncomeSpinBox);
@@ -608,21 +608,21 @@ void PlayerSelection::allPlayerIncomeChanged(float value)
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
-        pMap->getPlayer(i)->setFondsModifier(value);
+        pMap->getPlayer(i)->setFundsModifier(value);
         m_playerIncomes[i]->setCurrentValue(value);
     }
     playerDataChanged();
     pApp->continueThread();
 }
-void PlayerSelection::allPlayerStartFondsChanged(float value)
+void PlayerSelection::allPlayerStartFundsChanged(float value)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
-        pMap->getPlayer(i)->setFonds(static_cast<qint32>(value));
-        m_playerStartFonds[i]->setCurrentValue(value);
+        pMap->getPlayer(i)->setFunds(static_cast<qint32>(value));
+        m_playerStartFunds[i]->setCurrentValue(value);
     }
     playerDataChanged();
     pApp->continueThread();
@@ -632,7 +632,7 @@ void PlayerSelection::playerIncomeChanged(float value, qint32 playerIdx)
     GameMap* pMap = GameMap::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    pMap->getPlayer(playerIdx)->setFondsModifier(value);
+    pMap->getPlayer(playerIdx)->setFundsModifier(value);
     playerDataChanged();
     pApp->continueThread();
 }
@@ -680,12 +680,12 @@ void PlayerSelection::slotChangePlayerBuildList(qint32 player, QStringList build
     playerDataChanged();
 }
 
-void PlayerSelection::playerStartFondsChanged(float value, qint32 playerIdx)
+void PlayerSelection::playerStartFundsChanged(float value, qint32 playerIdx)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
-    pMap->getPlayer(playerIdx)->setFonds(static_cast<qint32>(value));
+    pMap->getPlayer(playerIdx)->setFunds(static_cast<qint32>(value));
     playerDataChanged();
     pApp->continueThread();
 }
@@ -711,8 +711,8 @@ void PlayerSelection::playerDataChanged()
             for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
             {
                 Player* pPlayer = pMap->getPlayer(i);
-                sendStream << pPlayer->getFonds();
-                sendStream << pPlayer->getFondsModifier();
+                sendStream << pPlayer->getFunds();
+                sendStream << pPlayer->getFundsModifier();
                 sendStream << pPlayer->getTeam();
                 QStringList buildList = pPlayer->getBuildList();
                 sendStream << static_cast<qint32>(buildList.size());
@@ -1184,14 +1184,14 @@ void PlayerSelection::recievedPlayerData(quint64, QDataStream& stream)
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
             Player* pPlayer = pMap->getPlayer(i);
-            qint32 fonds = 0;
-            float fondsModifier = 0.0f;
+            qint32 funds = 0;
+            float fundsModifier = 0.0f;
             qint32 team = 0;
-            stream >> fonds;
-            stream >> fondsModifier;
+            stream >> funds;
+            stream >> fundsModifier;
             stream >> team;
-            pPlayer->setFonds(fonds);
-            pPlayer->setFondsModifier(fondsModifier);
+            pPlayer->setFunds(funds);
+            pPlayer->setFundsModifier(fundsModifier);
             pPlayer->setTeam(team);
             QStringList buildList;
             qint32 size = 0;
@@ -1288,8 +1288,8 @@ void PlayerSelection::updatePlayerData(qint32 player)
         }
         updateCO2Sprite(coid, player);
         m_playerColors[player]->setCurrentItem(pPlayer->getColor());
-        m_playerStartFonds[player]->setCurrentValue(pPlayer->getFonds());
-        m_playerIncomes[player]->setCurrentValue(pPlayer->getFondsModifier());
+        m_playerStartFunds[player]->setCurrentValue(pPlayer->getFunds());
+        m_playerIncomes[player]->setCurrentValue(pPlayer->getFundsModifier());
         m_playerTeams[player]->setCurrentItem(pPlayer->getTeam());
         // check for open player
         if (pPlayer->getBaseGameInput() == nullptr ||

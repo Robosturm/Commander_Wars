@@ -32,6 +32,10 @@ var TERRAIN =
     {
     },
 
+    getName : function()
+    {
+        return "";
+    },
     /***********************************************************************************/
     // this section deals with map editor hints
     // these functions have no influence in the game.

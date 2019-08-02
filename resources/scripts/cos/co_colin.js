@@ -18,10 +18,10 @@ var Constructor = function()
         powerNameAnimation.queueAnimation(animation);
 
         var player = co.getOwner();
-        var fonds = player.getFonds();
-        if (fonds > 0)
+        var funds = player.getFunds();
+        if (funds > 0)
         {
-            player.addFonds(player.getFonds() * 0.5);
+            player.addFunds(player.getFunds() * 0.5);
         }
         audio.clearPlayList();
         CO_COLIN.loadCOMusic(co);
@@ -108,7 +108,7 @@ var Constructor = function()
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                var bonus = attacker.getOwner().getFonds() / 1000 * 3.33 - 5;
+                var bonus = attacker.getOwner().getFunds() / 1000 * 3.33 - 5;
                 return bonus;
             case GameEnums.PowerMode_Power:
                 return -5;

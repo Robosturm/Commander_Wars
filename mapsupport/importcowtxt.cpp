@@ -138,8 +138,8 @@ void GameMap::importTxtMap(QString file)
                 QStringList data = line.split("|");
                 players.append(new Player());
                 qint32 idx = players.size() - 1;
-                players[idx]->setFondsModifier(static_cast<float>(data[1].toInt()) / 1000.0f);
-                players[idx]->setFonds(data[2].toInt());
+                players[idx]->setFundsModifier(static_cast<float>(data[1].toInt()) / 1000.0f);
+                players[idx]->setFunds(data[2].toInt());
                 players[idx]->init();
             }
             else if (line.startsWith(("GROESSE")))

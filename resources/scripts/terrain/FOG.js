@@ -3,7 +3,11 @@ var Constructor = function()
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
-        terrain.setTerrainName(qsTr("Fog"));
+        terrain.setTerrainName(FOG.getName());
+    };
+    this.getName = function()
+    {
+        return qsTr("Fog");
     };
     this.getDefense = function()
     {

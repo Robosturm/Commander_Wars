@@ -8,14 +8,14 @@ var Constructor = function()
         var targetField = action.getTarget();
         var unitID = "WATERPLANE";
         var costs = map.getCurrentPlayer().getCosts(unitID);
-        var fonds = map.getCurrentPlayer().getFonds();
+        var funds = map.getCurrentPlayer().getFunds();
 
         var unitLimit = map.getGameRules().getUnitLimit();
         var unitCount = unit.getOwner().getUnitCount();
 
 
         if ((unit.getHasMoved() === true) ||
-            (costs > fonds))
+            (costs > funds))
         {
             return false;
         }
@@ -59,7 +59,7 @@ var Constructor = function()
         var costs = player.getCosts(unitID);
         var unit = action.getTargetUnit();
         // pay for the unit
-        player.addFonds(-costs);
+        player.addFunds(-costs);
         map.getGameRecorder().buildUnit(player.getPlayerID());
         var spawnUnit = unit.spawnUnit(unitID);
         unit.setHasMoved(true);

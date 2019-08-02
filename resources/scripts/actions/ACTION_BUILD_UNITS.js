@@ -45,7 +45,7 @@ var Constructor = function()
         var player = map.getCurrentPlayer();
         var unit = map.spawnUnit(action.getTarget().x, action.getTarget().y, unitID, player);
         // pay for the unit
-        map.getCurrentPlayer().addFonds(-action.getCosts());
+        map.getCurrentPlayer().addFunds(-action.getCosts());
         map.getGameRecorder().buildUnit(player.getPlayerID());
         unit.setHasMoved(true);
         player.buildedUnit(unit);
@@ -75,8 +75,8 @@ var Constructor = function()
             var name = Global[units[i]].getName();
             var costs = map.getCurrentPlayer().getCosts(units[i]);
             var enabled = false;
-            var fonds = map.getCurrentPlayer().getFonds();
-            if (costs <= fonds)
+            var funds = map.getCurrentPlayer().getFunds();
+            if (costs <= funds)
             {
                 enabled = true;
             }
