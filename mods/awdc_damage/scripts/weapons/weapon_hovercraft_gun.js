@@ -38,6 +38,8 @@ WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 20;
 // ranged land units
 idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "ARTILLERY");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 70;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ARTILLERYCRAFT");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 70;
 idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "ANTITANKCANNON");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 30;
 idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "MISSILE");

@@ -45,6 +45,8 @@ WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 25;
 // ranged land units
 idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "ARTILLERY");
 WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 80;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ARTILLERYCRAFT");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 80;
 idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "ANTITANKCANNON");
 WEAPON_BATTLESHIP_CANNON.damageTable[idx][1] = 55;
 idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON, "MISSILE");

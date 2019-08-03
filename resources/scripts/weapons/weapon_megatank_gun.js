@@ -28,6 +28,7 @@ var Constructor = function()
 
                         // ranged land units
                         ["ARTILLERY", 105],
+                        ["ARTILLERYCRAFT", 105],
                         ["ANTITANKCANNON", 40],
                         ["MISSILE", 105],
                         ["ROCKETTHROWER", 105],

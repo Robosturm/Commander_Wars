@@ -29,6 +29,7 @@ var Constructor = function()
                         ["MEGATANK", 40],
                         // ranged land units
                         ["ARTILLERY", 70],
+                        ["ARTILLERYCRAFT", 70],
                         ["ANTITANKCANNON", 55],
                         ["MISSILE", 75],
                         ["ROCKETTHROWER", 75],

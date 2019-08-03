@@ -48,6 +48,8 @@ WEAPON_MECH_MG.damageTable[idx][1] = 12;
 
 idx = getIndexOf1(WEAPON_MECH_MG.damageTable, "ARTILLERY");
 WEAPON_MECH_MG.damageTable[idx][1] = 15;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ARTILLERYCRAFT");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 15;
 idx = getIndexOf1(WEAPON_MECH_MG.damageTable, "ANTITANKCANNON");
 WEAPON_MECH_MG.damageTable[idx][1] = 35;
 idx = getIndexOf1(WEAPON_MECH_MG.damageTable, "MISSILE");

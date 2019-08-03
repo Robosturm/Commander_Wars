@@ -54,6 +54,8 @@ WEAPON_INFANTRY_MG.damageTable[idx][1] = 7;
 // ranged land units
 idx = getIndexOf1(WEAPON_INFANTRY_MG, "ARTILLERY");
 WEAPON_INFANTRY_MG.damageTable[idx][1] = 15;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ARTILLERYCRAFT");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 15;
 idx = getIndexOf1(WEAPON_INFANTRY_MG, "ANTITANKCANNON");
 WEAPON_INFANTRY_MG.damageTable[idx][1] = 45;
 idx = getIndexOf1(WEAPON_INFANTRY_MG, "MISSILE");

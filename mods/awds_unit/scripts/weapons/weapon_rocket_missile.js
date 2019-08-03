@@ -48,6 +48,8 @@ WEAPON_ROCKET_MISSILE.damageTable[idx][1] = 15;
 // ranged land units
 idx = getIndexOf1(WEAPON_ROCKET_MISSILE, "ARTILLERY");
 WEAPON_ROCKET_MISSILE.damageTable[idx][1] = 80;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ARTILLERYCRAFT");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 80;
 idx = getIndexOf1(WEAPON_ROCKET_MISSILE, "ANTITANKCANNON");
 WEAPON_ROCKET_MISSILE.damageTable[idx][1] = 65;
 idx = getIndexOf1(WEAPON_ROCKET_MISSILE, "MISSILE");

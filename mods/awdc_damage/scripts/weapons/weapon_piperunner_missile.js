@@ -70,6 +70,8 @@ WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 75;
 // ranged land units
 idx = getIndexOf1(WEAPON_NEOTANK_MG, "ARTILLERY");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 85;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ARTILLERYCRAFT");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 85;
 idx = getIndexOf1(WEAPON_NEOTANK_MG, "ANTITANKCANNON");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 55;
 idx = getIndexOf1(WEAPON_NEOTANK_MG, "MISSILE");

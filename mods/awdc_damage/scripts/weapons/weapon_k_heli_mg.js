@@ -54,6 +54,8 @@ WEAPON_K_HELI_MG.damageTable[idx][1] = 65;
 // ranged land units
 idx = getIndexOf1(WEAPON_K_HELI_MG.damageTable, "ARTILLERY");
 WEAPON_K_HELI_MG.damageTable[idx][1] = 25;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ARTILLERYCRAFT");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 25;
 idx = getIndexOf1(WEAPON_K_HELI_MG.damageTable, "ANTITANKCANNON");
 WEAPON_K_HELI_MG.damageTable[idx][1] = 1;
 idx = getIndexOf1(WEAPON_K_HELI_MG.damageTable, "MISSILE");

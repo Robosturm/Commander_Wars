@@ -70,6 +70,8 @@ WEAPON_VULCAN_CANNON.damageTable[idx][1] = 75;
 // ranged land units
 idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "ARTILLERY");
 WEAPON_VULCAN_CANNON.damageTable[idx][1] = 50;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ARTILLERYCRAFT");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 50;
 idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "ANTITANKCANNON");
 WEAPON_VULCAN_CANNON.damageTable[idx][1] = 25;
 idx = getIndexOf1(WEAPON_VULCAN_CANNON.damageTable, "MISSILE");

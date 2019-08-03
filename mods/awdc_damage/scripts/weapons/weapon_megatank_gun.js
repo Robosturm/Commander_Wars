@@ -38,6 +38,8 @@ WEAPON_MEGATANK_GUN.damageTable[idx][1] = 35;
 // ranged land units
 idx = getIndexOf1(WEAPON_MEGATANK_GUN.damageTable, "ARTILLERY");
 WEAPON_MEGATANK_GUN.damageTable[idx][1] = 105;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ARTILLERYCRAFT");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 105;
 idx = getIndexOf1(WEAPON_MEGATANK_GUN.damageTable, "ANTITANKCANNON");
 WEAPON_MEGATANK_GUN.damageTable[idx][1] = 45;
 idx = getIndexOf1(WEAPON_MEGATANK_GUN.damageTable, "MISSILE");

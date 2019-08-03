@@ -34,6 +34,7 @@ var Constructor = function()
                         ["K_HELI", 10],
 
                         ["ARTILLERY", 15],
+                        ["ARTILLERYCRAFT", 15],
                         ["ANTITANKCANNON", 45],
                         ["MISSILE", 35],
                         ["ROCKETTHROWER", 35],

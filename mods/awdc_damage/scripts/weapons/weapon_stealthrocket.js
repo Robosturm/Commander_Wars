@@ -48,6 +48,8 @@ WEAPON_STEALTHROCKET.damageTable[idx][1] = 30;
 // ranged land units
 idx = getIndexOf1(WEAPON_STEALTHROCKET.damageTable, "ARTILLERY");
 WEAPON_STEALTHROCKET.damageTable[idx][1] = 65;
+idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ARTILLERYCRAFT");
+WEAPON_A_TANK_CANNON.damageTable[idx][1] = 65;
 idx = getIndexOf1(WEAPON_STEALTHROCKET.damageTable, "ANTITANKCANNON");
 WEAPON_STEALTHROCKET.damageTable[idx][1] = 55;
 idx = getIndexOf1(WEAPON_STEALTHROCKET.damageTable, "MISSILE");
