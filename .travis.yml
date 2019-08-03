@@ -11,7 +11,12 @@ before_install:
     - if [ "$TRAVIS_OS_NAME" == "windows" ]; then toolchain/travis-cache-windows.sh restore; fi
     - if [ "$TRAVIS_OS_NAME" == "windows" ]; then toolchain/travis-install-qt-windows.sh; fi
 before_script:
+    - mkdir build
+    - cd build
+    - if [ "$TRAVIS_OS_NAME" == "windows" ]; then cmake -A $PLATFORM ..; fi
 script:
+    - cmake.exe --build . --target Commander_Wars_translations -- -j8
+    - cmake.exe --build . --target install -- -j8 --config RELEASE
 before_cache:
     - if [ "$TRAVIS_OS_NAME" == "windows" ]; then toolchain/travis-cache-windows.sh save; fi
 after_script:
