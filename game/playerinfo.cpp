@@ -122,6 +122,8 @@ void PlayerInfo::updateData()
             yPos += itemHeigth;
         }
     }
+
+    setHeight(yPos);
     pApp->continueThread();
 }
 

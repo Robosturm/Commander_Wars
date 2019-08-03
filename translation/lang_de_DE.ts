@@ -1975,17 +1975,17 @@
 <context>
     <name>PlayerInfo</name>
     <message>
-        <location filename="../game/playerinfo.cpp" line="213"/>
+        <location filename="../game/playerinfo.cpp" line="215"/>
         <source>Power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/playerinfo.cpp" line="237"/>
+        <location filename="../game/playerinfo.cpp" line="239"/>
         <source>Superpower</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/playerinfo.cpp" line="261"/>
+        <location filename="../game/playerinfo.cpp" line="263"/>
         <source>Tagpower</source>
         <translation type="unfinished"></translation>
     </message>

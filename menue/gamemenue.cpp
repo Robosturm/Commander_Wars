@@ -708,3 +708,20 @@ void GameMenue::keyInput(SDL_Event event)
         }
     }
 }
+
+void GameMenue::autoScroll()
+{
+    if (SDL_GetWindowFlags(oxygine::core::getWindow()) & SDL_WINDOW_MOUSE_FOCUS &&
+        m_Focused)
+    {
+        qint32 curX = 0;
+        qint32 curY = 0;
+        SDL_GetMouseState(&curX, &curY);
+        if ((curY > m_pPlayerinfo->getScaledHeight() && curX < autoScrollBorder.y()) || // mouse is below the co info part
+            (curY < m_pPlayerinfo->getScaledHeight() && curX > autoScrollBorder.x() - autoScrollBorder.y() && curX < autoScrollBorder.x()) || // mouse is in the co info part
+            (curX > autoScrollBorder.x())) // default case
+        {
+            InGameMenue::autoScroll();
+        }
+    }
+}

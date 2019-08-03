@@ -119,6 +119,10 @@ public slots:
      * @param socketID
      */
     void playerJoined(quint64 socketID);
+    /**
+     * @brief autoScroll
+     */
+    virtual void autoScroll() override;
 protected slots:
     void updateTimer();
 protected:

@@ -32,7 +32,7 @@ public slots:
     void mouseWheel(qint32 direction);
     void MoveMap(qint32 x, qint32 y);
     virtual void keyInput(SDL_Event event);
-    void autoScroll();
+    virtual void autoScroll();
 protected:
     void loadBackground();
     void loadHandling();
@@ -43,7 +43,7 @@ protected:
     QTimer scrollTimer;
 
     spCursor m_Cursor{new Cursor()};
-    QRect autoScrollBorder{300, 100, 400, 100};
+    QRect autoScrollBorder{300, 50, 350, 50};
 };
 
 #endif // INGAMEMENUE_H
