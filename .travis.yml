@@ -15,7 +15,9 @@ before_install:
 before_script:
     - mkdir build
     - cd build
-    - set PATH=$($env:QT_DIR)/Tools/mingw730_32/bin;%PATH%
+    - echo $Env:QT_DIR
+    - $Env:Path = "$($env:QT_DIR)/Tools/mingw730_32/bin;$Env:Path"
+    - echo $Env:Path
     - cmake -G "MinGW Makefiles" .. "-DCMAKE_BUILD_TYPE:STRING=Debug" "-DCMAKE_CXX_COMPILER:STRING=$($env:QT_DIR)/Tools/mingw730_32/bin/g++.exe" "-DCMAKE_C_COMPILER:STRING=$($env:QT_DIR)/Tools/mingw730_32/bin/gcc.exe" "-DCMAKE_INSTALL_PREFIX:PATH=C:/install" "-DCMAKE_PREFIX_PATH:STRING=$($env:QT_DIR)/mingw73_32" "-DQT_QMAKE_EXECUTABLE:STRING=$($env:QT_DIR)/mingw73_32/bin/qmake.exe" "-DCMAKE_MAKE_PROGRAM:FILEPATH=$($env:QT_DIR)/Tools/mingw730_32/bin/mingw32-make.exe" "-DCMAKE_RC_COMPILER:FILEPATH=$($env:QT_DIR)/Tools/mingw730_32/bin/windres.exe"  "-DCMAKE_CXX_COMPILER_AR:FILEPATH=$($env:QT_DIR)/Tools/mingw730_32/bin/gcc-ar.exe" "-DCMAKE_CXX_COMPILER_RANLIB:FILEPATH=$($env:QT_DIR)/Tools/mingw730_32/bin/gcc-ranlib.exe"  "-DCMAKE_CXX_STANDARD_LIBRARIES:STRING=-lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32" "-DCMAKE_C_COMPILER_WORKS:BOOL=YES" "-DCMAKE_CXX_COMPILER_WORKS:BOOL=YES"
 script:	
     - cmake.exe --build . --target Commander_Wars_translations
