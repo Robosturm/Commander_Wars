@@ -13,7 +13,6 @@ before_install:
 before_script:
     - mkdir build
     - cd build
-    - if [ "$TRAVIS_OS_NAME" == "windows" ]; then cmake -A $PLATFORM ..; fi
 script:
     - cmake.exe --build . --target Commander_Wars_translations -- -j8
     - cmake.exe --build . --target install -- -j8 --config RELEASE
