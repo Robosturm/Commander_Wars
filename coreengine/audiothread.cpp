@@ -41,7 +41,8 @@ void AudioThread::initAudio()
     m_playList->moveToThread(Mainapp::getInstance()->getAudioWorker());
     m_Player->setPlaylist(m_playList);
     SlotSetVolume(static_cast<qint32>(static_cast<float>(Mainapp::getInstance()->getSettings()->getMusicVolume())));
-    connect(m_Player, SIGNAL(mediaStatusChanged(QMediaPlayer::MediaStatus)), this, SLOT(SlotMediaStatusChanged(QMediaPlayer::MediaStatus)));
+    connect(m_Player, &QMediaPlayer::mediaStatusChanged, this, &AudioThread::SlotMediaStatusChanged);
+    connect(m_Player, &QMediaPlayer::positionChanged, this, &AudioThread::SlotCheckMusicEnded);
 }
 
 void AudioThread::playMusic(qint32 File)
@@ -54,13 +55,74 @@ void AudioThread::setVolume(qint32 value)
     emit SignalSetVolume(value);
 }
 
+qint32 AudioThread::getVolume()
+{
+    return m_Player->volume();
+}
+
+void AudioThread::addMusic(const QString& File, qint64 startPointMs, qint64 endPointMs)
+{
+    emit SignalAddMusic(File, startPointMs, endPointMs);
+}
+
+void AudioThread::clearPlayList()
+{
+    emit SignalClearPlayList();
+}
+
+void AudioThread::playRandom()
+{
+    emit SignalPlayRandom();
+}
+
+void AudioThread::playSound(QString file, qint32 loops, QString folder)
+{
+    emit SignalPlaySound(file, loops, folder);
+}
+
+void AudioThread::stopSound(QString file, QString folder)
+{
+    emit SignalStopSound(file, folder);
+}
+
+void AudioThread::loadFolder(const QString& folder)
+{
+    emit SignalLoadFolder(folder);
+}
+
+void AudioThread::SlotPlayRandom()
+{
+    m_Player->stop();
+    qint32 size = m_playList->mediaCount();
+    qint32 newMedia = Mainapp::randInt(0, size - 1);
+    m_playList->setCurrentIndex(newMedia);
+    if (std::get<0>(m_PlayListdata[newMedia]) > 0)
+    {
+        m_Player->setPosition(std::get<0>(m_PlayListdata[newMedia]));
+    }
+    currentMedia = newMedia;
+    m_Player->play();
+}
+
+void AudioThread::SlotClearPlayList()
+{
+    m_Player->stop();
+    m_playList->clear();
+    m_PlayListdata.clear();
+}
+
 void AudioThread::SlotPlayMusic(qint32 File)
 {
     if (m_Player != nullptr)
     {
         m_Player->stop();
         m_playList->setCurrentIndex(File);
+        if (std::get<0>(m_PlayListdata[File]) > 0)
+        {
+            m_Player->setPosition(std::get<0>(m_PlayListdata[File]));
+        }
         m_Player->play();
+        currentMedia = File;
     }
 }
 
@@ -75,31 +137,11 @@ void AudioThread::SlotSetVolume(qint32 value)
     }
 }
 
-qint32 AudioThread::getVolume()
-{
-    return m_Player->volume();
-}
-
-void AudioThread::addMusic(const QString& File)
-{
-    emit SignalAddMusic(File);
-}
-
-void AudioThread::SlotAddMusic(QString File)
+void AudioThread::SlotAddMusic(QString File, qint64 startPointMs, qint64 endPointMs)
 {
     m_Player->stop();
     m_playList->addMedia(QUrl::fromLocalFile(File));
-}
-
-void AudioThread::clearPlayList()
-{
-    emit SignalClearPlayList();
-}
-
-void AudioThread::SlotClearPlayList()
-{
-    m_Player->stop();
-    m_playList->clear();
+    m_PlayListdata.append(std::tuple<qint64, qint64>(startPointMs, endPointMs));
 }
 
 void AudioThread::SlotMediaStatusChanged(QMediaPlayer::MediaStatus status)
@@ -118,35 +160,6 @@ void AudioThread::SlotMediaStatusChanged(QMediaPlayer::MediaStatus status)
     }
 }
 
-void AudioThread::playRandom()
-{
-    emit SignalPlayRandom();
-}
-
-void AudioThread::playSound(QString file, qint32 loops, QString folder)
-{
-    emit SignalPlaySound(file, loops, folder);
-}
-
-void AudioThread::stopSound(QString file, QString folder)
-{
-    emit SignalStopSound(file, folder);
-}
-
-void AudioThread::SlotPlayRandom()
-{
-    m_Player->stop();
-    qint32 size = m_playList->mediaCount();
-    qint32 newMedia = Mainapp::randInt(0, size - 1);
-    m_playList->setCurrentIndex(newMedia);
-    m_Player->play();
-}
-
-void AudioThread::loadFolder(const QString& folder)
-{
-    emit SignalLoadFolder(folder);
-}
-
 void AudioThread::SlotLoadFolder(QString folder)
 {
     QDir directory(folder);
@@ -155,6 +168,20 @@ void AudioThread::SlotLoadFolder(QString folder)
     for (QStringList::const_iterator it = files.begin(); it != files.end(); it++)
     {
         m_playList->addMedia(QUrl::fromLocalFile(folder + QString("/") + *it));
+        m_PlayListdata.append(std::tuple<qint64, qint64>(-1, -1));
+    }
+}
+
+void AudioThread::SlotCheckMusicEnded(qint64 duration)
+{
+    if (currentMedia >= 0 && currentMedia < m_PlayListdata.size())
+    {
+        if ((std::get<1>(m_PlayListdata[currentMedia]) <= duration) &&
+            (std::get<1>(m_PlayListdata[currentMedia]) > 0))
+        {
+            // shuffle load new media
+            SlotPlayRandom();
+        }
     }
 }
 

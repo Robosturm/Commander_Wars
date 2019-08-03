@@ -21,7 +21,7 @@ signals:
     void sigInitAudio();
     void SignalPlayMusic(qint32 File);
     void SignalSetVolume(qint32 value);
-    void SignalAddMusic(QString File);
+    void SignalAddMusic(QString File, qint64 startPointMs = -1, qint64 endPointMs = -1);
     void SignalClearPlayList();
     void SignalPlayRandom();
     void SignalLoadFolder(QString folder);
@@ -36,8 +36,10 @@ public slots:
     /**
      * @brief addMusic
      * @param File adds a file to the playlist
+     * @param startPointMs when this file is played the music will start at this position in ms. Values smaller 0 mean start at 0ms
+     * @param endPointMs when this file is played the music will end at this position in ms and the next file will be played. Values smaller 0 mean play till end.
      */
-    void addMusic(const QString& File);
+    void addMusic(const QString& File, qint64 startPointMs = -1, qint64 endPointMs = -1);
     /**
      * @brief loadFolder loads all mp3 to the playlist
      * @param folder  the folder to be loaded
@@ -79,18 +81,22 @@ protected slots:
     // stops current Music and launches new one.
     void SlotPlayMusic(qint32 File);
     void SlotSetVolume(qint32 value);
-    void SlotAddMusic(QString File);
+    void SlotAddMusic(QString File, qint64 startPointMs = -1, qint64 endPointMs = -1);
     void SlotClearPlayList();
     void SlotMediaStatusChanged(QMediaPlayer::MediaStatus status);
     void SlotPlayRandom();
     void SlotLoadFolder(QString folder);
+    void SlotCheckMusicEnded(qint64 duration);
+    // audio stuff
     void SlotPlaySound(QString file, qint32 loops, QString folder);
     void SlotStopSound(QString file, QString folder);
     void SlotSoundEnded();
-     void initAudio();
+    void initAudio();
 private:
     QMediaPlayer* m_Player{nullptr};
     QMediaPlaylist* m_playList{nullptr};
+    QVector<std::tuple<qint64, qint64>> m_PlayListdata;
+    qint32 currentMedia{-1};
     QVector<QSoundEffect*> m_Sounds;
 };
 
