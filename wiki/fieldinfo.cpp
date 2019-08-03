@@ -68,7 +68,8 @@ void FieldInfo::keyInput(SDL_Event event)
     pApp->suspendThread();
     // for debugging
     SDL_Keycode cur = event.key.keysym.sym;
-    if (cur == Settings::getKey_information())
+    if ((cur == Settings::getKey_information()) ||
+        cur == Settings::getKey_cancel())
     {
         emit sigFinished();
         this->getParent()->removeChild(this);
