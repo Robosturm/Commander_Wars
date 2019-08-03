@@ -2009,6 +2009,11 @@
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="178"/>
+        <source>Startfunds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/playerselection.cpp" line="178"/>
         <source>Income Modifier</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2023,11 +2028,6 @@
         <location filename="../objects/playerselection.cpp" line="260"/>
         <location filename="../objects/playerselection.cpp" line="573"/>
         <source>Build List</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/playerselection.cpp" line="178"/>
-        <source>Startfunds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4468,11 +4468,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_cassidy.js" line="224"/>
-        <source>Burn everything! I don&apos;t want to see anything left untouched!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_cassidy.js" line="222"/>
         <source>You won&apos;t like me when I am angry!</source>
         <translation type="unfinished"></translation>
@@ -4480,6 +4475,11 @@
     <message>
         <location filename="../resources/scripts/cos/co_cassidy.js" line="223"/>
         <source>I swear to make you rue this day!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="224"/>
+        <source>Burn everything! I don&apos;t want to see anything left untouched!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8769,7 +8769,17 @@
     <message>
         <location filename="../resources/scripts/cos/co_random.js" line="48"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_random.js" line="52"/>
+        <source></source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_random.js" line="56"/>
+        <source></source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_random.js" line="60"/>
@@ -8835,11 +8845,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rattigan.js" line="276"/>
-        <source>Stay on your toes! I&apos;m talking to you!!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_rattigan.js" line="274"/>
         <source>Heh, could Sensei do THIS?</source>
         <translation type="unfinished"></translation>
@@ -8847,6 +8852,11 @@
     <message>
         <location filename="../resources/scripts/cos/co_rattigan.js" line="275"/>
         <source>Who the heck taught you to fight?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_rattigan.js" line="276"/>
+        <source>Stay on your toes! I&apos;m talking to you!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
