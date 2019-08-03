@@ -1,6 +1,8 @@
 language: shell
 os: windows
-env: PLATFORM=x86 QT5_BASE_DIR=C:/Qt/5.12.3/mingw73_32
+env: PLATFORM=x86 QT5_BASE_DIR=C:/Qt/5.12.3/mingw73_32 CC=gcc-7 CXX=g++-7
+compiler:
+
 cache:
     directories:
         - travis-cache
@@ -14,8 +16,8 @@ before_script:
     - mkdir build
     - cd build
 script:
-    - cmake.exe --build . --target Commander_Wars_translations -- -j8
-    - cmake.exe --build . --target install -- -j8 --config RELEASE
+    - cmake.exe --build . --target Commander_Wars_translations
+    - cmake.exe --build . --target install --config RELEASE
 before_cache:
     - if [ "$TRAVIS_OS_NAME" == "windows" ]; then toolchain/travis-cache-windows.sh save; fi
 after_script:
