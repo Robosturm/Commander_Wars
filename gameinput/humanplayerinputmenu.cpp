@@ -284,7 +284,8 @@ void HumanPlayerInputMenu::keyInput(SDL_Event event)
         {
             if (m_ActionIDs.size() > 0)
             {
-                if (m_EnabledList[currentAction])
+                if ((m_EnabledList.size() > 0 && m_EnabledList[currentAction]) ||
+                    (m_EnabledList.size() == 0))
                 {
                     if (m_CostList.size() == m_ActionIDs.size())
                     {
