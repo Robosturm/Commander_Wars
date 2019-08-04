@@ -45,6 +45,17 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize)
     m_ContentRect = new oxygine::Actor();
     m_ContentRect->setSize(contentSize.width(), contentSize.height());
     m_ClipRect->addChild(m_ContentRect);
+
+    addEventListener(oxygine::TouchEvent::WHEEL_DIR, [ = ](oxygine::Event* pEvent)
+    {
+        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        if (pTouchEvent != nullptr)
+        {
+           emit m_HScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y * 100.0f / getContentHeigth());
+           emit m_VScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.x * 100.0f / getContentWidth());
+           pTouchEvent->stopPropagation();
+        }
+    });
 }
 
 void Panel::scrolledY(float value)

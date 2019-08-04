@@ -147,6 +147,15 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
     changeFolder(folder);
     connect(this, &MapSelection::changeSelection, this, &MapSelection::updateSelection, Qt::QueuedConnection);
     connect(this, &MapSelection::itemClicked, this, &MapSelection::changeFolder, Qt::QueuedConnection);
+    addEventListener(oxygine::TouchEvent::WHEEL_DIR, [ = ](oxygine::Event* pEvent)
+    {
+        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        if (pTouchEvent != nullptr)
+        {
+           emit changeSelection(static_cast<qint32>(-pTouchEvent->wheelDirection.y) + currentStartIndex);
+           pTouchEvent->stopPropagation();
+        }
+    });
 }
 
 MapSelection::~MapSelection()
@@ -317,6 +326,11 @@ void MapSelection::updateSelection(qint32 startIndex)
                 }
             }
         }
+    }
+    if (currentIdx + currentStartIndex< m_Files.size())
+    {
+        currentItem = m_Files[currentIdx + currentStartIndex];
+        emit itemChanged(currentItem);
     }
     pApp->continueThread();
 }
