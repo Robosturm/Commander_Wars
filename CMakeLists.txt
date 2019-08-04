@@ -17,7 +17,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
-# add qt to our project
+# add qt to our project and provide qt path to package path on travis
+set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};$ENV{QT5_BASE_DIR}")
 find_package(Qt5Core REQUIRED)
 # Qt5LinguistTools
 find_package(Qt5LinguistTools REQUIRED)
