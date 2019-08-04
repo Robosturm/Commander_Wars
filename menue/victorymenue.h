@@ -40,6 +40,7 @@ public:
 signals:
     void sigExitMenue();
     void sigShowGraph(VictoryMenue::GraphModes mode);
+    void sigFinishCurrentGraph();
 public slots:
     void exitMenue();
     /**
@@ -51,6 +52,15 @@ public slots:
      * @brief updateGraph
      */
     void updateGraph();
+    /**
+     * @brief finishGraph
+     */
+    void finishGraph();
+protected:
+    /**
+     * @brief drawGraphStep
+     */
+    void drawGraphStep(qint32 progress);
 private:
     GraphModes m_CurrentGraphMode{GraphModes::Funds};
     /**
