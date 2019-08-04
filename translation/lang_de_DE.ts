@@ -11026,12 +11026,12 @@
 <context>
     <name>mech</name>
     <message>
-        <location filename="../resources/scripts/units/mech.js" line="89"/>
+        <location filename="../resources/scripts/units/mech.js" line="81"/>
         <source>Mech</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/mech.js" line="98"/>
+        <location filename="../resources/scripts/units/mech.js" line="90"/>
         <source>Attack power high. Can &lt;div c=&apos;00ff00&apos;&gt;capture &lt;div c=&apos;ffffff&apos;&gt; bases. &lt;div c=&apos;00ff00&apos;&gt;Vision +3 &lt;div c=&apos;ffffff&apos;&gt; when on mountains.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11291,12 +11291,12 @@
 <context>
     <name>sniper</name>
     <message>
-        <location filename="../resources/scripts/units/sniper.js" line="89"/>
+        <location filename="../resources/scripts/units/sniper.js" line="81"/>
         <source>Sniper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/sniper.js" line="94"/>
+        <location filename="../resources/scripts/units/sniper.js" line="86"/>
         <source>Indirect infantry unit exceptionly strong against other infantry units. Can &lt;div c=&apos;00ff00&apos;&gt;capture &lt;div c=&apos;ffffff&apos;&gt; bases. &lt;div c=&apos;00ff00&apos;&gt;Vision +3 &lt;div c=&apos;ffffff&apos;&gt; when on mountains.</source>
         <translation type="unfinished"></translation>
     </message>

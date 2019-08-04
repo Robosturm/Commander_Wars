@@ -33,14 +33,6 @@ var Constructor = function()
         {
             armyName = "bh"
         }
-        if ((armyName !== "yc") &&
-            (armyName !== "ge") &&
-            (armyName !== "bm") &&
-            (armyName !== "bh") &&
-            (armyName !== "ma"))
-        {
-            armyName = "os";
-        }
         // load sprites
         unit.loadSprite("mech+" + armyName, false, 1.5);
         unit.loadSprite("mech+" + armyName +"+mask", true, 1.5);

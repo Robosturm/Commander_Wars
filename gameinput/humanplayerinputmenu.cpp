@@ -276,7 +276,7 @@ void HumanPlayerInputMenu::keyInput(SDL_Event event)
         else if (cur == Settings::getKey_right())
         {
             Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
-            if (currentAction + itemCount < m_ActionIDs.size() - 1)
+            if (currentAction + itemCount < m_ActionIDs.size())
             {
 
                 currentAction += itemCount;
