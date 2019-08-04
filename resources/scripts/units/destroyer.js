@@ -31,7 +31,7 @@ var Constructor = function()
 
     this.getBaseCost = function()
     {
-        return 20000;
+        return 22000;
     };
 
     this.getName = function()
@@ -87,7 +87,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Naval Unit. Strong against all sea units and has decent firepower against air units.");
+        return qsTr("Naval Unit. Strong against all sea units and has decent firepower against air units. Can also attack ground units.");
     };
 
     this.getUnitType = function()

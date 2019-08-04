@@ -5,13 +5,41 @@ var Constructor = function()
         return qsTr("Cannon");
     };
     this.damageTable = [["BATTLESHIP", 95],
-            ["CANNONBOAT", 120],				
-            ["CRUISER", 75],
-            ["DESTROYER", 55],
-            ["SUBMARINE", 65],				
-            ["LANDER", 120],
-            ["BLACK_BOAT", 120],
-            ["AIRCRAFTCARRIER", 120]];
+                        ["CANNONBOAT", 120],
+                        ["CRUISER", 75],
+                        ["DESTROYER", 55],
+                        ["SUBMARINE", 65],
+                        ["LANDER", 120],
+                        ["BLACK_BOAT", 120],
+                        ["AIRCRAFTCARRIER", 120],
+                        // destroyer can attack ground units
+                        ["INFANTRY", 125],
+                        ["MECH", 75],
+                        ["MOTORBIKE", 75],
+                        ["SNIPER", 75],
+                        // supporter
+                        ["APC", 75],
+                        ["FLARE", 75],
+                        ["RECON", 75],
+                        // tanks
+                        ["FLAK", 65],
+                        ["HOVERFLAK", 65],
+                        ["LIGHT_TANK", 65],
+                        ["HOVERCRAFT", 65],
+                        // heavy tanks
+                        ["HEAVY_HOVERCRAFT", 50],
+                        ["HEAVY_TANK", 50],
+                        ["NEOTANK", 50],
+                        // very heavy tanks
+                        ["MEGATANK", 40],
+                        // ranged land units
+                        ["ARTILLERY", 70],
+                        ["ARTILLERYCRAFT", 70],
+                        ["ANTITANKCANNON", 55],
+                        ["MISSILE", 75],
+                        ["ROCKETTHROWER", 75],
+                        ["PIPERUNNER", 80],
+                        ["HOELLIUM", 20]];
 
     this.getBaseDamage = function(unit)
     {
