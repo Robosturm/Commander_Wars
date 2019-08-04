@@ -15,10 +15,10 @@ before_install:
 before_script:
     - mkdir build
     - cd build
-    - echo $QT_DIR
-    - export PATH=$QT_DIR/Tools/mingw730_32/bin:$PATH
+    - echo ${QT_DIR}
+    - export PATH=${QT_DIR}/Tools/mingw730_32/bin:$PATH
     - echo $PATH
-    - cmake -G "MinGW Makefiles" .. "-DCMAKE_BUILD_TYPE:STRING=Debug" "-DCMAKE_CXX_COMPILER:STRING=$QT_DIR/Tools/mingw730_32/bin/g++.exe" "-DCMAKE_C_COMPILER:STRING=$QT_DIR/Tools/mingw730_32/bin/gcc.exe" "-DCMAKE_INSTALL_PREFIX:PATH=C:/install" "-DCMAKE_PREFIX_PATH:STRING=$QT_DIR/mingw73_32" "-DQT_QMAKE_EXECUTABLE:STRING=$QT_DIR/mingw73_32/bin/qmake.exe" "-DCMAKE_MAKE_PROGRAM:FILEPATH=$QT_DIR/Tools/mingw730_32/bin/mingw32-make.exe" "-DCMAKE_RC_COMPILER:FILEPATH=$QT_DIR/Tools/mingw730_32/bin/windres.exe"  "-DCMAKE_CXX_COMPILER_AR:FILEPATH=$QT_DIR/Tools/mingw730_32/bin/gcc-ar.exe" "-DCMAKE_CXX_COMPILER_RANLIB:FILEPATH=$QT_DIR/Tools/mingw730_32/bin/gcc-ranlib.exe"  "-DCMAKE_CXX_STANDARD_LIBRARIES:STRING=-lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32" "-DCMAKE_C_COMPILER_WORKS:BOOL=YES" "-DCMAKE_CXX_COMPILER_WORKS:BOOL=YES"
+    - cmake -G "MinGW Makefiles" .. "-DCMAKE_BUILD_TYPE:STRING=Debug" "-DCMAKE_CXX_COMPILER:STRING=${QT_DIR}/Tools/mingw730_32/bin/g++.exe" "-DCMAKE_C_COMPILER:STRING=${QT_DIR}/Tools/mingw730_32/bin/gcc.exe" "-DCMAKE_INSTALL_PREFIX:PATH=C:/install" "-DCMAKE_PREFIX_PATH:STRING=${QT_DIR}/mingw73_32" "-DQT_QMAKE_EXECUTABLE:STRING=${QT_DIR}/mingw73_32/bin/qmake.exe" "-DCMAKE_MAKE_PROGRAM:FILEPATH=${QT_DIR}/Tools/mingw730_32/bin/mingw32-make.exe" "-DCMAKE_RC_COMPILER:FILEPATH=${QT_DIR}/Tools/mingw730_32/bin/windres.exe"  "-DCMAKE_CXX_COMPILER_AR:FILEPATH=${QT_DIR}/Tools/mingw730_32/bin/gcc-ar.exe" "-DCMAKE_CXX_COMPILER_RANLIB:FILEPATH=${QT_DIR}/Tools/mingw730_32/bin/gcc-ranlib.exe"  "-DCMAKE_CXX_STANDARD_LIBRARIES:STRING=-lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32" "-DCMAKE_C_COMPILER_WORKS:BOOL=YES" "-DCMAKE_CXX_COMPILER_WORKS:BOOL=YES"
 script:	
     - cmake.exe --build . --target Commander_Wars_translations
     - cmake.exe --build . --target install --config RELEASE
