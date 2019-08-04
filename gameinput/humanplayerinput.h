@@ -133,10 +133,12 @@ signals:
      */
     void performAction(GameAction* pAction);
 public slots:
-    void rightClick(qint32 x, qint32 y);
+    void rightClickDown(qint32 x, qint32 y);
+    void rightClickUp(qint32 x, qint32 y);
     void leftClick(qint32 x, qint32 y);
     void cursorMoved(qint32 x, qint32 y);
-    void keyInput(SDL_Event event);
+    void keyDown(SDL_Event event);
+    void keyUp(SDL_Event event);
     void menuItemSelected(QString itemID, qint32 cost);
     void markedFieldSelected(QPoint point);
     QStringList getEmptyActionList();

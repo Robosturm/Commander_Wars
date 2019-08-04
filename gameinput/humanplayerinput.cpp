@@ -37,10 +37,11 @@ void HumanPlayerInput::init()
 {
     Mainapp* pApp = Mainapp::getInstance();
     GameMenue* pMenue = GameMenue::getInstance();
-    connect(pMenue, &GameMenue::sigRightClick, this, &HumanPlayerInput::rightClick, Qt::QueuedConnection);
+    connect(pMenue, &GameMenue::sigRightClickDown, this, &HumanPlayerInput::rightClickDown, Qt::QueuedConnection);
+    connect(pMenue, &GameMenue::sigRightClickUp, this, &HumanPlayerInput::rightClickUp, Qt::QueuedConnection);
     connect(pMenue, &GameMenue::sigLeftClick, this, &HumanPlayerInput::leftClick, Qt::QueuedConnection);
     connect(pMenue, &GameMenue::sigActionPerformed, this, &HumanPlayerInput::autoEndTurn, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInput::keyInput, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigKeyDown, this, &HumanPlayerInput::keyDown, Qt::QueuedConnection);
     connect(pMenue->getCursor(), &Cursor::sigCursorMoved, this, &HumanPlayerInput::cursorMoved, Qt::QueuedConnection);
     connect(this, &HumanPlayerInput::performAction, pMenue, &GameMenue::performAction, Qt::QueuedConnection);
 }
@@ -53,8 +54,21 @@ HumanPlayerInput::~HumanPlayerInput()
     m_pUnitPathFindingSystem = nullptr;
 }
 
+void HumanPlayerInput::rightClickUp(qint32 x, qint32 y)
+{
+    if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer)
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
+        if (m_FieldPoints.size() > 0 && m_pGameAction == nullptr)
+        {
+            cleanUpInput();
+        }
+        pApp->continueThread();
+    }
+}
 
-void HumanPlayerInput::rightClick(qint32 x, qint32 y)
+void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
 {
     if (!GameMap::getInstance()->onMap(x, y))
     {
@@ -87,8 +101,11 @@ void HumanPlayerInput::rightClick(qint32 x, qint32 y)
         }
         else
         {
-            Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
-            showAttackableFields(x, y);
+            if (m_FieldPoints.size() == 0 && m_pGameAction == nullptr)
+            {
+                Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
+                showAttackableFields(x, y);
+            }
         }
         pApp->continueThread();
     }
@@ -515,7 +532,9 @@ void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
     pMenue->addChild(m_CurrentMenu);
     pMenue->setFocused(false);
     connect(m_CurrentMenu.get(), &HumanPlayerInputMenu::sigItemSelected, this, &HumanPlayerInput::menuItemSelected, Qt::QueuedConnection);
-    connect(m_CurrentMenu.get(), &HumanPlayerInputMenu::sigCanceled, this, &HumanPlayerInput::rightClick, Qt::QueuedConnection);
+
+    // todo
+    connect(m_CurrentMenu.get(), &HumanPlayerInputMenu::sigCanceled, this, &HumanPlayerInput::rightClickDown, Qt::QueuedConnection);
 
 }
 
@@ -832,7 +851,7 @@ void HumanPlayerInput::deleteArrow()
     m_Arrows.clear();
 }
 
-void HumanPlayerInput::keyInput(SDL_Event event)
+void HumanPlayerInput::keyDown(SDL_Event event)
 {
     if (GameMenue::getInstance() != nullptr &&
         GameMap::getInstance()->getCurrentPlayer() == m_pPlayer &&
@@ -864,6 +883,19 @@ void HumanPlayerInput::keyInput(SDL_Event event)
                     previousSelectOption();
                 }
             }
+        }
+    }
+}
+
+void HumanPlayerInput::keyUp(SDL_Event event)
+{
+    if (GameMenue::getInstance() != nullptr &&
+        GameMap::getInstance()->getCurrentPlayer() == m_pPlayer &&
+        GameMenue::getInstance()->getFocused())
+    {
+        if (GameAnimationFactory::getAnimationCount() == 0)
+        {
+
         }
     }
 }

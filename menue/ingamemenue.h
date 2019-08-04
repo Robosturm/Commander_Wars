@@ -26,12 +26,15 @@ signals:
     void sigMouseWheel(qint32 direction);
     void sigMoveMap(qint32 x, qint32 y);
     void sigRightClick(qint32 x, qint32 y);
+    void sigRightClickDown(qint32 x, qint32 y);
+    void sigRightClickUp(qint32 x, qint32 y);
     void sigLeftClick(qint32 x, qint32 y);
     void sigMouseMove(qint32 x, qint32 y);
 public slots:
     void mouseWheel(qint32 direction);
     void MoveMap(qint32 x, qint32 y);
     virtual void keyInput(SDL_Event event);
+    virtual void keyUp(SDL_Event event);
     virtual void autoScroll();
 protected:
     void loadBackground();

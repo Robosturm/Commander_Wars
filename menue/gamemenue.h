@@ -45,7 +45,6 @@ public:
 signals:
     void sigActionPerformed();
     void sigGameStarted();
-
     void sigSaveGame();
     void sigExitGame();
 public slots:

@@ -148,6 +148,30 @@ void InGameMenue::loadHandling()
             }
         }
     });
+    GameMap::getInstance()->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event *pEvent )->void
+    {
+        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        if (pTouchEvent != nullptr)
+        {
+            pEvent->stopPropagation();
+            if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
+            {
+                emit sigRightClickDown(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+            }
+        }
+    });
+    GameMap::getInstance()->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event *pEvent )->void
+    {
+        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+        if (pTouchEvent != nullptr)
+        {
+            pEvent->stopPropagation();
+            if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
+            {
+                emit sigRightClickUp(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+            }
+        }
+    });
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event *)->void
     {
         SDL_ShowCursor(SDL_ENABLE);
@@ -161,6 +185,7 @@ void InGameMenue::loadHandling()
     });
 
     connect(pApp, &Mainapp::sigKeyDown, this, &InGameMenue::keyInput, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigKeyUp, this, &InGameMenue::keyUp, Qt::QueuedConnection);
     GameMap::getInstance()->addChild(m_Cursor);
 
     connect(&scrollTimer, &QTimer::timeout, this, &InGameMenue::autoScroll, Qt::QueuedConnection);
@@ -297,7 +322,20 @@ void InGameMenue::keyInput(SDL_Event event)
         }
         else if (cur == Settings::getKey_cancel())
         {
-            emit sigRightClick(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+            emit sigRightClickDown(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+        }
+    }
+}
+
+void InGameMenue::keyUp(SDL_Event event)
+{
+    if (m_Focused)
+    {
+        // for debugging
+        SDL_Keycode cur = event.key.keysym.sym;
+        if (cur == Settings::getKey_cancel())
+        {
+            emit sigRightClickUp(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
         }
     }
 }
