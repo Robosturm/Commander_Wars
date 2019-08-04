@@ -82,21 +82,7 @@ void HumanPlayerInput::rightClick(qint32 x, qint32 y)
             }
             else
             {
-                Unit* pUnit = m_pGameAction->getTargetUnit();
-                if ((pUnit != nullptr) &&
-                    (!pUnit->isStealthed(m_pPlayer)))
-                {
-                    if (m_pGameAction->getInputStep() == 0)
-                    {
-                        // go one step back :)
-                        clearMenu();
-                        createMarkedMoveFields();
-                    }
-                }
-                else
-                {
-                    cleanUpInput();
-                }
+                cancelActionInput();
             }
         }
         else
@@ -105,6 +91,25 @@ void HumanPlayerInput::rightClick(qint32 x, qint32 y)
             showAttackableFields(x, y);
         }
         pApp->continueThread();
+    }
+}
+
+void HumanPlayerInput::cancelActionInput()
+{
+    Unit* pUnit = m_pGameAction->getTargetUnit();
+    if ((pUnit != nullptr) &&
+        (!pUnit->isStealthed(m_pPlayer)))
+    {
+        if (m_pGameAction->getInputStep() == 0)
+        {
+            // go one step back :)
+            clearMenu();
+            createMarkedMoveFields();
+        }
+    }
+    else
+    {
+        cleanUpInput();
     }
 }
 
@@ -240,7 +245,8 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
         }
         else if (m_CurrentMenu.get() != nullptr)
         {
-            // do nothing
+            Mainapp::getInstance()->getAudioThread()->playSound("cancel.wav");
+            cancelActionInput();
         }
         else if (m_pMarkedFieldData != nullptr)
         {

@@ -105,6 +105,10 @@ public:
      */
     void clearMenu();
     /**
+     * @brief cancelActionInput
+     */
+    void cancelActionInput();
+    /**
      * @brief serialize stores the object
      * @param pStream
      */
