@@ -41,6 +41,7 @@ const QString Console::functions[] =
     QString("setLogLevel"),
     QString("connectToServer"),
     QString("getServerAdresse"),
+    QString("createSprites"),
     QString("help"),
     QString("")
 };

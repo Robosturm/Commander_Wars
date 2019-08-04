@@ -52,6 +52,13 @@ public slots:
     void setVolume(qint32 volume);
     void setLogLevel(eLogLevels newLogLevel);
     /**
+     * @brief createSprites
+     * @param input
+     * @param colorTable
+     * @param maskTable
+     */
+    void createSprites(QString input, QString colorTable, QString maskTable);
+    /**
      * @brief help shows the helps messages between given indexes or all as default
      * @param start
      * @param end
@@ -91,6 +98,8 @@ private:
 
     Console();
     virtual  ~Console() = default;
+
+    void createSprites(QString file, QImage& colorTable, QImage maskTable);
 };
 
 #endif // CONSOLE_H

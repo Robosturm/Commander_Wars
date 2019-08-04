@@ -103,7 +103,6 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
         {
             if (m_FieldPoints.size() == 0 && m_pGameAction == nullptr)
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
                 showAttackableFields(x, y);
             }
         }
@@ -141,7 +140,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
     {
         if (pUnit->hasAmmo1() || pUnit->hasAmmo2())
         {
-
+            Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
             qint32 minRange = pUnit->getMinRange();
             qint32 maxRange = pUnit->getMaxRange();
 
@@ -175,14 +174,15 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
             QmlVectorPoint* pPoints = pBuilding->getActionTargetFields();
             QPoint targetOffset = pBuilding->getActionTargetOffset();
             QPoint buildingPos(pBuilding->getX(), pBuilding->getY());
-            if (pPoints != nullptr)
+            if (pPoints != nullptr && pPoints->size() > 0)
             {
+                Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
                 for (qint32 i = 0; i < pPoints->size(); i++)
                 {
                     createMarkedField(buildingPos + targetOffset + pPoints->at(i), QColor(255, 0, 0), Terrain::DrawPriority::MarkedFieldMap);
                 }
-                delete pPoints;
             }
+            delete pPoints;
         }
     }
 }

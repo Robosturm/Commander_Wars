@@ -19,6 +19,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 # add qt to our project and provide qt path to package path on travis
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};$ENV{QT5_BASE_DIR}")
+message("Module Path: ${CMAKE_MODULE_PATH}")
 find_package(Qt5Core REQUIRED)
 # Qt5LinguistTools
 find_package(Qt5LinguistTools REQUIRED)
@@ -45,7 +46,7 @@ endif()
 add_definitions(
     -DUSE_MEMORY_POOL
     -DMAJOR=0
-    -DMINOR=5
+    -DMINOR=6
     -DREVISION=0
 )
 
@@ -237,6 +238,9 @@ set(${PROJECT_NAME}_SRCS
         wiki/unitinfo.cpp
         wiki/fieldinfo.cpp
         wiki/wikidatabase.cpp
+
+        # spriting support
+        spritingsupport/spritecreator.cpp
 )
 
 
