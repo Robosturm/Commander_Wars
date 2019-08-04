@@ -239,46 +239,52 @@ void HumanPlayerInputMenu::keyInput(SDL_Event event)
         SDL_Keycode cur = event.key.keysym.sym;
         if (cur == Settings::getKey_up())
         {
+            Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
             if (currentAction > 0)
-            {
-                Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+            {                
                 currentAction--;
+            }
+            else
+            {
+                currentAction = m_ActionIDs.size() - 1;
             }
         }
         else if (cur == Settings::getKey_down())
         {
+            Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
             if (currentAction < m_ActionIDs.size() - 1)
-            {
-                Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
+            {                
                 currentAction++;
+            }
+            else
+            {
+                currentAction = 0;
             }
         }
         if (cur == Settings::getKey_left())
         {
+            Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
             if (currentAction - itemCount >= 0)
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
                 currentAction -= itemCount;
             }
-        }
-        else if (cur == Settings::getKey_right())
-        {
-            if (currentAction + itemCount < m_ActionIDs.size() - 1)
+            else
             {
-                Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
-                currentAction += itemCount;
+                currentAction = m_ActionIDs.size() - 1;
             }
         }
-
-        else if (cur == Settings::getKey_left())
-        {
-            Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
-            currentAction = 0;
-        }
         else if (cur == Settings::getKey_right())
         {
             Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
-            currentAction = m_ActionIDs.size() - 1;
+            if (currentAction + itemCount < m_ActionIDs.size() - 1)
+            {
+
+                currentAction += itemCount;
+            }
+            else
+            {
+                currentAction = 0;
+            }
         }
         else if (cur == Settings::getKey_confirm())
         {
