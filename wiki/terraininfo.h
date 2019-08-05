@@ -23,6 +23,7 @@ signals:
 public slots:
 
 private:
+    spPlayer m_pPlayer;
 };
 
 #endif // TERRAININFO_H

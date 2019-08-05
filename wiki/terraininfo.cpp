@@ -107,19 +107,19 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
             y += 80;
             qint32 x = 0;
             GameMap* pMap = GameMap::getInstance();
-            spPlayer pPlayer;
+
             if (pMap != nullptr)
             {
-                pPlayer = pMap->getSpCurrentPlayer();
+                m_pPlayer = pMap->getSpCurrentPlayer();
             }
-            if (pPlayer.get() == nullptr)
+            if (m_pPlayer.get() == nullptr)
             {
-                pPlayer = new Player();
-                pPlayer->init();
+                m_pPlayer = new Player();
+                m_pPlayer->init();
             }
             for (qint32 i = 0; i < productionList.size(); i++)
             {
-                spUnit pDummy = new Unit(productionList[i], pPlayer.get(), false);
+                spUnit pDummy = new Unit(productionList[i], m_pPlayer.get(), false);
                 pDummy->setPosition(x, y);
                 addChild(pDummy);
                 x += GameMap::Imagesize * 2;

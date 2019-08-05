@@ -363,7 +363,7 @@ QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool black
         {
             // do nothing
         }
-        if (pGameMap->onMap(curX, curY))
+        if (pGameMap != nullptr && pGameMap->onMap(curX, curY))
         {
             QString neighbourID = "";
             if (useBuildingID)

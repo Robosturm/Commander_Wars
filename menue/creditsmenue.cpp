@@ -23,9 +23,9 @@ CreditsMenue::CreditsMenue()
     this->moveToThread(pApp->getWorkerthread());
     Console::print("Entering Credits Menue", Console::eDEBUG);
 
-//    WikiDatabase* pDatabase = WikiDatabase::getInstance();
-//    WikiDatabase::pageData data = pDatabase->getEntry(0);
-//    addChild(pDatabase->getPage(data));
+    WikiDatabase* pDatabase = WikiDatabase::getInstance();
+    WikiDatabase::pageData data("Plains", "FIGHTER", QStringList());
+    addChild(pDatabase->getPage(data));
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background

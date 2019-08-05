@@ -13,6 +13,8 @@
 
 #include "objects/coinfoactor.h"
 
+#include "wiki/fieldinfo.h"
+
 WikiDatabase* WikiDatabase::m_pInstance = nullptr;
 
 WikiDatabase* WikiDatabase::getInstance()
@@ -111,15 +113,21 @@ spWikipage WikiDatabase::getPage(pageData& data)
     }
     else if (pTerrainManager->existsTerrain(id))
     {
-
+        spTerrain pTerrain = Terrain::createTerrain(id, -1, -1, "");
+        ret = new FieldInfo(pTerrain.get(), nullptr);
     }
     else if (pBuildingSpriteManager->existsBuilding(id))
     {
-
+        spTerrain pTerrain = Terrain::createTerrain("PLAINS", -1, -1, "");
+        pTerrain->setBuilding(new Building(id));
+        ret = new FieldInfo(pTerrain.get(), nullptr);
     }
     else if (pUnitSpriteManager->existsUnit(id))
     {
-
+        spPlayer pPlayer = new Player();
+        pPlayer->init();
+        spUnit pUnit = new Unit(id, pPlayer.get(), false);
+        ret = new FieldInfo(nullptr, pUnit.get());
     }
     else
     {
