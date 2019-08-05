@@ -93,8 +93,12 @@ protected slots:
     void SlotSoundEnded();
     void initAudio();
 private:
+    // two players one is buffering the other one is actually playing
     QMediaPlayer* m_Player{nullptr};
     QMediaPlaylist* m_playList{nullptr};
+    QMediaPlayer* m_Player2{nullptr};
+    QMediaPlaylist* m_playList2{nullptr};
+    qint32 currentPlayer{-1};
     QVector<std::tuple<qint64, qint64>> m_PlayListdata;
     qint32 currentMedia{-1};
     QVector<QSoundEffect*> m_Sounds;
