@@ -141,7 +141,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/tagpower.mp3");
                 break;
             default:
-                audio.addMusic("resources/music/cos/aira.mp3")
+                audio.addMusic("resources/music/cos/aira.mp3", 75, 58517);
                 break;
         }
     };

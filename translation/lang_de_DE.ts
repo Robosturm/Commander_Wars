@@ -642,7 +642,7 @@
 <context>
     <name>CreditsMenue</name>
     <message>
-        <location filename="../menue/creditsmenue.cpp" line="46"/>
+        <location filename="../menue/creditsmenue.cpp" line="38"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>

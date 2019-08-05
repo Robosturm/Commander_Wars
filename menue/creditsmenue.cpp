@@ -12,20 +12,12 @@
 #include <qfile.h>
 #include <qtextstream.h>
 
-
-#include "wiki/wikidatabase.h"
-
-
 CreditsMenue::CreditsMenue()
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Console::print("Entering Credits Menue", Console::eDEBUG);
-
-    WikiDatabase* pDatabase = WikiDatabase::getInstance();
-    WikiDatabase::pageData data("Plains", "FIGHTER", QStringList());
-    addChild(pDatabase->getPage(data));
 
     BackgroundManager* pBackgroundManager = BackgroundManager::getInstance();
     // load background

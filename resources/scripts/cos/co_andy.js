@@ -111,7 +111,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/tagpower.mp3");
                 break;
             default:
-                audio.addMusic("resources/music/cos/andy.mp3")
+                audio.addMusic("resources/music/cos/andy.mp3",  4466, 74972);
                 break;
         }
     };

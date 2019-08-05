@@ -92,15 +92,14 @@ void AudioThread::loadFolder(const QString& folder)
 
 void AudioThread::SlotPlayRandom()
 {
-    m_Player->stop();
     qint32 size = m_playList->mediaCount();
     qint32 newMedia = Mainapp::randInt(0, size - 1);
     m_playList->setCurrentIndex(newMedia);
+    currentMedia = newMedia;
     if (std::get<0>(m_PlayListdata[newMedia]) > 0)
     {
         m_Player->setPosition(std::get<0>(m_PlayListdata[newMedia]));
     }
-    currentMedia = newMedia;
     m_Player->play();
 }
 
@@ -115,7 +114,6 @@ void AudioThread::SlotPlayMusic(qint32 File)
 {
     if (m_Player != nullptr)
     {
-        m_Player->stop();
         m_playList->setCurrentIndex(File);
         if (std::get<0>(m_PlayListdata[File]) > 0)
         {
