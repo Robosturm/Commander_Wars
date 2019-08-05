@@ -61,6 +61,18 @@ void TerrainManager::loadAll()
     }
 }
 
+bool TerrainManager::existsTerrain(const QString& TerrainID)
+{
+    for (qint32 i = 0; i < m_loadedTerrains.size(); i++)
+    {
+        if (m_loadedTerrains[i] == TerrainID)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 bool TerrainManager::loadTerrain(const QString& TerrainID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();

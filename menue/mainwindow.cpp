@@ -22,8 +22,6 @@
 #include <QFile>
 
 #include "SDL.h"
-
-
 Mainwindow::Mainwindow()
 {
     Mainapp* pApp = Mainapp::getInstance();

@@ -1,78 +1,28 @@
 #include "fieldinfo.h"
 
-#include "coreengine/mainapp.h"
-
-#include "resource_management/objectmanager.h"
-
-#include "objects/panel.h"
-
 #include "wiki/terraininfo.h"
 
 #include "wiki/unitinfo.h"
 
 FieldInfo::FieldInfo(Terrain* pTerrain, Unit* pUnit)
-    : QObject()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
-    ObjectManager* pObjectManager = ObjectManager::getInstance();
-    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
-    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
-    pSpriteBox->setResAnim(pAnim);
-    pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
-    pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
-    pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
-    this->addChild(pSpriteBox);
-    pSpriteBox->setPosition(0, 0);
-    pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
 
-    // ok button
-    m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
-    m_OkButton->setPosition(pApp->getSettings()->getWidth() / 2 - m_OkButton->getWidth() / 2, pApp->getSettings()->getHeight() - 30 - m_OkButton->getHeight());
-    pSpriteBox->addChild(m_OkButton);
-    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
-    {
-        emit sigFinished();
-        this->getParent()->removeChild(this);
-    });
-
-    // no the fun begins create checkboxes and stuff and a panel down here
-    spPanel pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110),
-                                     QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110));
-    pPanel->setPosition(30, 30);
-    pSpriteBox->addChild(pPanel);
     qint32 y = 10;
     if (pTerrain != nullptr)
     {
-        spTerrainInfo pTerrainInfo = new TerrainInfo(pTerrain, pPanel->getWidth() - 40);
+        spTerrainInfo pTerrainInfo = new TerrainInfo(pTerrain, m_pPanel->getWidth() - 40);
         pTerrainInfo->setPosition(20, y);
-        pPanel->addItem(pTerrainInfo);
-        pPanel->setContentHeigth(pTerrainInfo->getY() + pTerrainInfo->getHeight());
+        m_pPanel->addItem(pTerrainInfo);
+        m_pPanel->setContentHeigth(pTerrainInfo->getY() + pTerrainInfo->getHeight());
         y = pTerrainInfo->getY() + pTerrainInfo->getHeight() + 10;
     }
     if (pUnit != nullptr)
     {
-        spUnitInfo pUnitInfo = new UnitInfo(pUnit, pPanel->getWidth() - 40);
+        spUnitInfo pUnitInfo = new UnitInfo(pUnit, m_pPanel->getWidth() - 40);
         pUnitInfo->setPosition(20, y);
-        pPanel->addItem(pUnitInfo);
-        pPanel->setContentHeigth(pUnitInfo->getY() + pUnitInfo->getHeight());
+        m_pPanel->addItem(pUnitInfo);
+        m_pPanel->setContentHeigth(pUnitInfo->getY() + pUnitInfo->getHeight());
     }
 
-    connect(pApp, &Mainapp::sigKeyDown, this, &FieldInfo::keyInput, Qt::QueuedConnection);
 }
 
-void FieldInfo::keyInput(SDL_Event event)
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    // for debugging
-    SDL_Keycode cur = event.key.keysym.sym;
-    if ((cur == Settings::getKey_information()) ||
-        cur == Settings::getKey_cancel())
-    {
-        emit sigFinished();
-        this->getParent()->removeChild(this);
-    }
-    pApp->continueThread();
-}

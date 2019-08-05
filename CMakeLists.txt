@@ -98,7 +98,7 @@ set(${PROJECT_NAME}_SRCS
         objects/ruleselection.cpp
         objects/ruleselectiondialog.cpp
         objects/folderdialog.cpp
-
+        objects/coinfoactor.cpp
 
         #menues
         menue/mainwindow.cpp
@@ -240,6 +240,7 @@ set(${PROJECT_NAME}_SRCS
         wiki/unitinfo.cpp
         wiki/fieldinfo.cpp
         wiki/wikidatabase.cpp
+        wiki/wikipage.cpp
 
         # spriting support
         spritingsupport/spritecreator.cpp

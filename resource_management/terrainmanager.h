@@ -49,6 +49,12 @@ public slots:
      * @return
      */
     QString getTerrainName(qint32 position);
+    /**
+     * @brief existsTerrain
+     * @param TerrainID
+     * @return
+     */
+    bool existsTerrain(const QString& TerrainID);
 private:
     QStringList m_loadedTerrains;
     explicit TerrainManager();

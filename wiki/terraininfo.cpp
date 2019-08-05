@@ -8,6 +8,10 @@
 
 #include "game/gamemap.h"
 
+#include "game/player.h"
+
+#include "game/co.h"
+
 #include "ai/coreai.h"
 
 TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
@@ -102,9 +106,20 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
             addChild(pLabel);
             y += 80;
             qint32 x = 0;
+            GameMap* pMap = GameMap::getInstance();
+            spPlayer pPlayer;
+            if (pMap != nullptr)
+            {
+                pPlayer = pMap->getSpCurrentPlayer();
+            }
+            if (pPlayer.get() == nullptr)
+            {
+                pPlayer = new Player();
+                pPlayer->init();
+            }
             for (qint32 i = 0; i < productionList.size(); i++)
             {
-                spUnit pDummy = new Unit(productionList[i], GameMap::getInstance()->getCurrentPlayer(), false);
+                spUnit pDummy = new Unit(productionList[i], pPlayer.get(), false);
                 pDummy->setPosition(x, y);
                 addChild(pDummy);
                 x += GameMap::Imagesize * 2;

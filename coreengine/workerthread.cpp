@@ -19,6 +19,7 @@
 #include "resource_management/cospritemanager.h"
 #include "resource_management/gamerulemanager.h"
 #include "resource_management/battleanimationmanager.h"
+#include "wiki/wikidatabase.h"
 
 WorkerThread::WorkerThread()
 {
@@ -83,6 +84,7 @@ void WorkerThread::start()
     pWeaponManager->loadAll();
     BattleAnimationManager* pBattleAnimationManager = BattleAnimationManager::getInstance();
     pBattleAnimationManager->loadAll();
+    WikiDatabase::getInstance();
 
     started = true;
     pApp->continueThread();

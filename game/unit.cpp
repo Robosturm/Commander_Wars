@@ -628,16 +628,20 @@ void Unit::loadUnit(Unit* pUnit)
 Unit* Unit::spawnUnit(QString unitID)
 {
     GameMap* pMap = GameMap::getInstance();
-    qint32 unitLimit = pMap->getGameRules()->getUnitLimit();
-    qint32 unitCount = m_pOwner->getUnitCount();
-    if (unitLimit > 0 && unitCount >= unitLimit)
+    if (pMap != nullptr)
     {
-        return nullptr;
+        qint32 unitLimit = pMap->getGameRules()->getUnitLimit();
+        qint32 unitCount = m_pOwner->getUnitCount();
+        if (unitLimit > 0 && unitCount >= unitLimit)
+        {
+            return nullptr;
+        }
+        spUnit pUnit = new Unit(unitID, m_pOwner, true);
+        m_TransportUnits.append(pUnit);
+        updateIcons(pMap->getCurrentViewPlayer());
+        return pUnit.get();
     }
-    spUnit pUnit = new Unit(unitID, m_pOwner, true);
-    m_TransportUnits.append(pUnit);
-    updateIcons(GameMap::getInstance()->getCurrentViewPlayer());
-    return pUnit.get();
+    return nullptr;
 }
 
 Unit* Unit::getLoadedUnit(qint32 index)
@@ -651,16 +655,20 @@ Unit* Unit::getLoadedUnit(qint32 index)
 
 void Unit::unloadUnit(Unit* pUnit, QPoint position)
 {
-    for (qint32 i = 0; i < m_TransportUnits.size(); i++)
+    GameMap* pMap = GameMap::getInstance();
+    if (pMap != nullptr)
     {
-        if (m_TransportUnits[i] == pUnit)
+        for (qint32 i = 0; i < m_TransportUnits.size(); i++)
         {
-            GameMap::getInstance()->getTerrain(position.x(), position.y())->setUnit(m_TransportUnits[i]);
-            m_TransportUnits.removeAt(i);
-            break;
+            if (m_TransportUnits[i] == pUnit)
+            {
+                pMap->getTerrain(position.x(), position.y())->setUnit(m_TransportUnits[i]);
+                m_TransportUnits.removeAt(i);
+                break;
+            }
         }
+        updateIcons(pMap->getCurrentViewPlayer());
     }
-    updateIcons(GameMap::getInstance()->getCurrentViewPlayer());
 }
 
 qint32 Unit::getLoadedUnitCount()
@@ -1342,7 +1350,11 @@ void Unit::setHp(const float &value)
     {
         hp = 10.0f;
     }
-    updateIcons(GameMap::getInstance()->getCurrentViewPlayer());
+    GameMap* pMap = GameMap::getInstance();
+    if (pMap != nullptr)
+    {
+        updateIcons(pMap->getCurrentViewPlayer());
+    }
 }
 
 bool Unit::getHpHidden(Player* pPlayer)

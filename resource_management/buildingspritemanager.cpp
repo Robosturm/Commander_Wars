@@ -125,3 +125,15 @@ QString BuildingSpriteManager::getBuildingName(qint32 position)
     }
     return "";
 }
+
+bool BuildingSpriteManager::existsBuilding(const QString& buildingID)
+{
+    for (qint32 i = 0; i < m_loadedBuildings.size(); i++)
+    {
+        if (m_loadedBuildings[i] == buildingID)
+        {
+            return true;
+        }
+    }
+    return false;
+}

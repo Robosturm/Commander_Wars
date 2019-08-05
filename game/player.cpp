@@ -110,14 +110,18 @@ void Player::setColor(QColor color)
 qint32 Player::getPlayerID() const
 {
     GameMap* pMap = GameMap::getInstance();
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    if (pMap != nullptr)
     {
-        if (pMap->getPlayer(i) == this)
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
-            return i;
+            if (pMap->getPlayer(i) == this)
+            {
+                return i;
+            }
         }
+        return -1;
     }
-    return -1;
+    return 0;
 }
 
 QString Player::getArmy()

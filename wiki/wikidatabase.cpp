@@ -5,6 +5,14 @@
 #include "resource_management/terrainmanager.h"
 #include "resource_management/cospritemanager.h"
 
+#include "game/co.h"
+#include "game/player.h"
+#include "game/unit.h"
+#include "game/building.h"
+#include "game/terrain.h"
+
+#include "objects/coinfoactor.h"
+
 WikiDatabase* WikiDatabase::m_pInstance = nullptr;
 
 WikiDatabase* WikiDatabase::getInstance()
@@ -41,6 +49,7 @@ WikiDatabase::WikiDatabase()
         m_Entries.append(pageData(pUnitSpriteManager->getUnitName(i), pUnitSpriteManager->getUnitID(i), "UNIT"));
     }
     // load general wiki page
+
 }
 
 QVector<WikiDatabase::pageData> WikiDatabase::getEntries(QString searchTerm)
@@ -57,6 +66,15 @@ QVector<WikiDatabase::pageData> WikiDatabase::getEntries(QString searchTerm)
     return ret;
 }
 
+WikiDatabase::pageData WikiDatabase::getEntry(qint32 entry)
+{
+    if (entry >= 0 && entry < m_Entries.size())
+    {
+        return m_Entries[entry];
+    }
+    return pageData("", "", QStringList());
+}
+
 bool WikiDatabase::tagMatches(QStringList tags, QString searchTerm)
 {
     for (qint32 i = 0; i < tags.size(); i++)
@@ -69,9 +87,44 @@ bool WikiDatabase::tagMatches(QStringList tags, QString searchTerm)
     return false;
 }
 
-oxygine::spActor WikiDatabase::getPage(pageData& data)
+spWikipage WikiDatabase::getPage(pageData& data)
 {
-    oxygine::spActor ret;
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    spWikipage ret;
+    QString id = std::get<1>(data);
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+    TerrainManager* pTerrainManager = TerrainManager::getInstance();
+    BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    // select page loader and create wiki page
+    if (pCOSpriteManager->existsCO(id))
+    {
+        spPlayer pPlayer = new Player();
+        pPlayer->init();
+        spCO pCO = new CO(id, pPlayer.get());
+        ret = new Wikipage();
+        spCOInfoActor pInfo = new COInfoActor(ret->getPanel()->getWidth());
+        pInfo->showCO(pCO, pPlayer);
+        ret->getPanel()->addItem(pInfo);
+        ret->getPanel()->setContentHeigth(pInfo->getHeight());
+    }
+    else if (pTerrainManager->existsTerrain(id))
+    {
 
+    }
+    else if (pBuildingSpriteManager->existsBuilding(id))
+    {
+
+    }
+    else if (pUnitSpriteManager->existsUnit(id))
+    {
+
+    }
+    else
+    {
+        // default loader
+    }
+    pApp->continueThread();
     return ret;
 }

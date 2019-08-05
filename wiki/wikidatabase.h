@@ -7,6 +7,8 @@
 
 #include "oxygine-framework.h"
 
+#include "wiki/wikipage.h"
+
 /**
  * @brief The WikiDatabase class
  */
@@ -22,13 +24,25 @@ public:
      */
     typedef std::tuple<QString, QString, QStringList> pageData;
     static WikiDatabase* getInstance();
-    oxygine::spActor getPage(pageData& data);
+    spWikipage getPage(pageData& data);
     /**
      * @brief getEntries
      * @param searchTerm
      * @return
      */
     QVector<pageData> getEntries(QString searchTerm);
+    /**
+     * @brief getEntries
+     * @param entry
+     * @return
+     */
+    pageData getEntry(qint32 entry);
+    /**
+     * @brief tagMatches
+     * @param tags
+     * @param searchTerm
+     * @return
+     */
     bool tagMatches(QStringList tags, QString searchTerm);
 signals:
 

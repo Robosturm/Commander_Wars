@@ -15,6 +15,8 @@
 
 #include "panel.h"
 
+#include "objects/coinfoactor.h"
+
 class COInfoDialog;
 typedef oxygine::intrusive_ptr<COInfoDialog> spCOInfoDialog;
 
@@ -27,9 +29,10 @@ public:
                           bool ingame);
     virtual ~COInfoDialog() = default;
 
-
+    /**
+     * @brief showCO
+     */
     void showCO();
-    void createStrengthBar(oxygine::spActor pActor, qint32 bonus, qint32 y);
 signals:
     void next();
     void quit();
@@ -43,33 +46,7 @@ private:
     oxygine::spButton m_BackButton;
     spPanel m_pPanel;
 
-    oxygine::spSprite m_pCurrentCO;
-
-    oxygine::spTextField m_COName;
-    oxygine::spTextField m_COBio;
-
-    oxygine::spBox9Sprite m_HitSprite;
-    oxygine::spTextField m_HitText;
-
-    oxygine::spSprite m_MissSprite;
-    oxygine::spTextField m_MissText;
-
-    oxygine::spSprite m_InfoSprite;
-    oxygine::spTextField m_InfoText;
-
-    oxygine::spSprite m_PowerSprite;
-    oxygine::spTextField m_Powername;
-    oxygine::spTextField m_PowerDesc;
-
-    oxygine::spSprite m_SuperPowerSprite;
-    oxygine::spTextField m_SuperPowername;
-    oxygine::spTextField m_SuperPowerDesc;
-
-    oxygine::spTextField m_SynergyText;
-    QVector<oxygine::spTextField> m_SynergyCONames;
-    QVector<oxygine::spActor> m_SynergyStarActors;
-
-    QVector<oxygine::spActor> m_UnitDataActors;
+    spCOInfoActor m_COInfo;
 
     spCO m_CurrentCO;
     spPlayer m_pCurrentPlayer{nullptr};

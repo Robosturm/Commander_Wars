@@ -55,6 +55,12 @@ public slots:
      * @return
      */
     QString getBuildingName(qint32 position);
+    /**
+     * @brief existsBuilding
+     * @param buildingID
+     * @return
+     */
+    bool existsBuilding(const QString& buildingID);
 private:
     QStringList m_loadedBuildings;
     explicit BuildingSpriteManager();

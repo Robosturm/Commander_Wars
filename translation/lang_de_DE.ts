@@ -411,50 +411,53 @@
     </message>
 </context>
 <context>
-    <name>COInfoDialog</name>
+    <name>COInfoActor</name>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="44"/>
-        <source>Next</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/coinfodialog.cpp" line="53"/>
-        <source>Quit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/coinfodialog.cpp" line="63"/>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/coinfodialog.cpp" line="88"/>
+        <location filename="../objects/coinfoactor.cpp" line="31"/>
         <source>CO Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="119"/>
+        <location filename="../objects/coinfoactor.cpp" line="62"/>
         <source>Hit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="137"/>
+        <location filename="../objects/coinfoactor.cpp" line="80"/>
         <source>Miss</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="155"/>
+        <location filename="../objects/coinfoactor.cpp" line="98"/>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="196"/>
+        <location filename="../objects/coinfoactor.cpp" line="139"/>
         <source>Synergy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfodialog.cpp" line="302"/>
+        <location filename="../objects/coinfoactor.cpp" line="232"/>
         <source>CO-Zone-Range: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>COInfoDialog</name>
+    <message>
+        <location filename="../objects/coinfodialog.cpp" line="43"/>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/coinfodialog.cpp" line="52"/>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/coinfodialog.cpp" line="62"/>
+        <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -639,7 +642,7 @@
 <context>
     <name>CreditsMenue</name>
     <message>
-        <location filename="../menue/creditsmenue.cpp" line="38"/>
+        <location filename="../menue/creditsmenue.cpp" line="46"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1212,14 +1215,6 @@
     </message>
 </context>
 <context>
-    <name>FieldInfo</name>
-    <message>
-        <location filename="../wiki/fieldinfo.cpp" line="31"/>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>FileDialog</name>
     <message>
         <location filename="../objects/filedialog.cpp" line="41"/>
@@ -1477,47 +1472,47 @@
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="54"/>
+        <location filename="../menue/mainwindow.cpp" line="52"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="66"/>
+        <location filename="../menue/mainwindow.cpp" line="64"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="77"/>
+        <location filename="../menue/mainwindow.cpp" line="75"/>
         <source>Multiplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="88"/>
+        <location filename="../menue/mainwindow.cpp" line="86"/>
         <source>Load Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="99"/>
+        <location filename="../menue/mainwindow.cpp" line="97"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="110"/>
+        <location filename="../menue/mainwindow.cpp" line="108"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="121"/>
+        <location filename="../menue/mainwindow.cpp" line="119"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="132"/>
+        <location filename="../menue/mainwindow.cpp" line="130"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="144"/>
+        <location filename="../menue/mainwindow.cpp" line="142"/>
         <source>Select Username</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3214,32 +3209,32 @@
 <context>
     <name>TerrainInfo</name>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="35"/>
+        <location filename="../wiki/terraininfo.cpp" line="39"/>
         <source>Terrain Information </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="55"/>
+        <location filename="../wiki/terraininfo.cpp" line="59"/>
         <source>Defense:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="74"/>
+        <location filename="../wiki/terraininfo.cpp" line="78"/>
         <source>Income:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="94"/>
+        <location filename="../wiki/terraininfo.cpp" line="98"/>
         <source>Builds and Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="98"/>
+        <location filename="../wiki/terraininfo.cpp" line="102"/>
         <source>Supplies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/terraininfo.cpp" line="123"/>
+        <location filename="../wiki/terraininfo.cpp" line="138"/>
         <source>Movement Costs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3416,6 +3411,14 @@
     <message>
         <location filename="../resources/scripts/terrain/WELD.js" line="98"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Wikipage</name>
+    <message>
+        <location filename="../wiki/wikipage.cpp" line="25"/>
+        <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10818,7 +10821,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/units/destroyer.js" line="90"/>
-        <source>Naval Unit. Strong against all sea units and has decent firepower against air units.</source>
+        <source>Naval Unit. Strong against all sea units and has decent firepower against air units. Can also attack ground units.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
