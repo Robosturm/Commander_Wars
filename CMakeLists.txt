@@ -20,6 +20,8 @@ set(CMAKE_AUTORCC ON)
 # add qt to our project and provide qt path to package path on travis
 set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};$ENV{QT5_BASE_DIR};$ENV{QT5_BASE_DIR}/lib/cmake")
 message("Module Path: ${CMAKE_PREFIX_PATH}")
+message("C-Compiler Path: ${CMAKE_C_COMPILER}")
+message("C++-Compiler Path: ${CMAKE_CXX_COMPILER}")
 find_package(Qt5Core REQUIRED)
 # Qt5LinguistTools
 find_package(Qt5LinguistTools REQUIRED)
