@@ -1004,7 +1004,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoin
     for (qint32 i = 0; i < m_EnemyUnits.size(); i++)
     {
         spUnit pNextEnemy = m_EnemyUnits[i];
-        if (pNextEnemy->getHp() > 0)
+        if (pNextEnemy->getHp() > 0 && pNextEnemy->getTerrain() != nullptr)
         {
             qint32 maxFireRange = pNextEnemy->getMaxRange();
             qint32 minFireRange = pNextEnemy->getMinRange();

@@ -393,8 +393,10 @@ qint32 Unit::getBonusMaxRange(QPoint position)
     GameMap* pMap = GameMap::getInstance();
     rangeModifier += pMap->getGameRules()->getCurrentWeather()->getFirerangeModifier();
     // add terrain modifiers
-    rangeModifier += pMap->getTerrain(position.x(), position.y())->getFirerangeModifier(this);
-
+    if (pMap->onMap(position.x(), position.y()))
+    {
+        rangeModifier += pMap->getTerrain(position.x(), position.y())->getFirerangeModifier(this);
+    }
     return rangeModifier;
 }
 
