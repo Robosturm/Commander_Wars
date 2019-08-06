@@ -12,6 +12,7 @@
 #include "menue/optionmenue.h"
 #include "menue/mapselectionmapsmenue.h"
 #include "menue/creditsmenue.h"
+#include "menue/wikimenu.h"
 #include "multiplayer/lobbymenu.h"
 
 #include "objects/filedialog.h"
@@ -115,6 +116,17 @@ Mainwindow::Mainwindow()
     connect(this, &Mainwindow::sigEnterOptionmenue, this, &Mainwindow::enterOptionmenue, Qt::QueuedConnection);
     btnI++;
 
+    // wiki button
+    oxygine::spButton pButtonWiki = ObjectManager::createButton(tr("Wiki"));
+    pButtonWiki->attachTo(this);
+    setButtonPosition(pButtonWiki, btnI);
+    pButtonWiki->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigEnterWikimenue();
+    });
+    connect(this, &Mainwindow::sigEnterWikimenue, this, &Mainwindow::enterWikimenue, Qt::QueuedConnection);
+    btnI++;
+
     // credits button
     oxygine::spButton pButtonCredtis = ObjectManager::createButton(tr("Credits"));
     pButtonCredtis->attachTo(this);
@@ -163,8 +175,8 @@ void Mainwindow::changeUsername(QString name)
 
 void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
 {
-    static const qint32 buttonCount = 8;
-    float buttonHeigth = pButton->getHeight() + 10;
+    static const qint32 buttonCount = 9;
+    float buttonHeigth = pButton->getHeight() + 5;
     Mainapp* pApp = Mainapp::getInstance();
     pButton->setPosition(pApp->getSettings()->getWidth() / 2.0f - pButton->getWidth() / 2.0f, pApp->getSettings()->getHeight() / 2.0f - buttonCount  / 2.0f * buttonHeigth + buttonHeigth * btnI);
 }
@@ -206,6 +218,15 @@ void Mainwindow::enterOptionmenue()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     oxygine::getStage()->addChild(new OptionMenue());
+    leaveMenue();
+    pApp->continueThread();
+}
+
+void Mainwindow::enterWikimenue()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    oxygine::getStage()->addChild(new Wikimenu());
     leaveMenue();
     pApp->continueThread();
 }

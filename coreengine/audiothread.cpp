@@ -48,8 +48,11 @@ void AudioThread::initAudio()
     m_Player2->moveToThread(Mainapp::getInstance()->getAudioWorker());
     m_playList2->moveToThread(Mainapp::getInstance()->getAudioWorker());
     m_Player2->setPlaylist(m_playList2);
-    SlotSetVolume(static_cast<qint32>(static_cast<float>(Mainapp::getInstance()->getSettings()->getMusicVolume())));
 
+    m_Player->setNotifyInterval(200);
+    m_Player2->setNotifyInterval(200);
+
+    SlotSetVolume(static_cast<qint32>(static_cast<float>(Mainapp::getInstance()->getSettings()->getMusicVolume())));
     connect(m_Player, &QMediaPlayer::mediaStatusChanged, this, &AudioThread::SlotMediaStatusChanged);
     connect(m_Player, &QMediaPlayer::positionChanged, this, &AudioThread::SlotCheckMusicEnded);
     connect(m_Player2, &QMediaPlayer::mediaStatusChanged, this, &AudioThread::SlotMediaStatusChanged);
@@ -143,6 +146,11 @@ void AudioThread::SlotPlayRandom()
             m_Player2->setPosition(std::get<0>(m_PlayListdata[newMedia2]));
         }
         m_Player2->stop();
+        m_playList->setCurrentIndex(newMedia);
+        if (std::get<0>(m_PlayListdata[newMedia]) > 0)
+        {
+            m_Player->setPosition(std::get<0>(m_PlayListdata[newMedia]));
+        }
     }
     if (currentPlayer == 0)
     {
@@ -229,8 +237,9 @@ void AudioThread::SlotCheckMusicEnded(qint64 duration)
 {
     if (currentMedia >= 0 && currentMedia < m_PlayListdata.size())
     {
-        if ((std::get<1>(m_PlayListdata[currentMedia]) <= duration) &&
-            (std::get<1>(m_PlayListdata[currentMedia]) > 0))
+        qint64 loopPos = std::get<1>(m_PlayListdata[currentMedia]);
+        if ((loopPos <= duration) &&
+            (loopPos > 0))
         {
             // shuffle load new media
             SlotPlayRandom();

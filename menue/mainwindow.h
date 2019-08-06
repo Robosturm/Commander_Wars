@@ -19,10 +19,12 @@ signals:
     void sigQuit();
     void sigEnterLoadGame();
     void sigLastSaveGame();
+    void sigEnterWikimenue();
 public slots:
     void enterSingleplayer();
     void enterEditor();
     void enterOptionmenue();
+    void enterWikimenue();
     void enterLoadGame();
     void enterCreditsmenue();
     void loadGame(QString filename);

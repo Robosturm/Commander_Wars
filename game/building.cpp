@@ -197,6 +197,7 @@ void Building::updateBuildingSprites(bool neutral)
     }
     // call the js loader function to do the rest
     m_pBuildingSprites.clear();
+    m_addPlayerColor.clear();
     QString function1 = "loadSprites";
     QJSValueList args1;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);

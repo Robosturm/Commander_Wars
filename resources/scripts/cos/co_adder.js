@@ -100,7 +100,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
                 break;
             default:
-                audio.addMusic("resources/music/cos/adder.mp3", 2456, 84000);
+                audio.addMusic("resources/music/cos/adder.mp3", 2456, 80000);
                 break;
         }
     };

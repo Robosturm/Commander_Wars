@@ -110,6 +110,7 @@ set(${PROJECT_NAME}_SRCS
         menue/creditsmenue.cpp
         menue/victorymenue.cpp
         menue/campaignmenu.cpp
+        menue/wikimenu.cpp
 
         # ressource management
         resource_management/unitspritemanager.cpp
