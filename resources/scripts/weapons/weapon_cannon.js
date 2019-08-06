@@ -59,4 +59,4 @@ Constructor = function()
 };
 
 Constructor.prototype = WEAPON;
-WEAPON_CANNON = new Constructor();
+var WEAPON_CANNON = new Constructor();
