@@ -21,7 +21,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/tagpower.mp3");
                 break;
             default:
-                audio.addMusic("resources/music/cos/gage.mp3")
+                audio.addMusic("resources/music/cos/gage.mp3",9315 ,70409)
                 break;
         }
     };

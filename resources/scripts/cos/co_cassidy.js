@@ -123,7 +123,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
                 break;
             default:
-                audio.addMusic("resources/music/cos/cassidy.mp3")
+                audio.addMusic("resources/music/cos/cassidy.mp3", 76, 75279)
                 break;
         }
     };

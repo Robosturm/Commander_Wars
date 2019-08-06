@@ -607,6 +607,11 @@ GameEnums::BuildingTarget Building::getBuildingTargets()
     return GameEnums::BuildingTarget_All;
 }
 
+bool Building::getNeutralLoaded() const
+{
+    return neutralLoaded;
+}
+
 bool Building::getAlwaysVisble() const
 {
     return alwaysVisble;

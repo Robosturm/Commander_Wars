@@ -61,9 +61,15 @@ public:
     {
         return 3;
     }
+
 signals:
 
 public slots:
+    /**
+     * @brief getNeutralLoaded
+     * @return
+     */
+    bool getNeutralLoaded() const;
     /**
      * @brief getDescription
      * @return

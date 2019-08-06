@@ -72,7 +72,7 @@ void Minimap::updateMinimap(GameMap* pMap, bool useVision)
                         }
                         pSprite->setPosition(x * ImageSize, y * ImageSize);
                         Player* pPlayer = pBuilding->getOwner();
-                        if (pPlayer != nullptr)
+                        if (pPlayer != nullptr && !pBuilding->getNeutralLoaded())
                         {
                             QColor color = pPlayer->getColor();
                             pSprite->setColor(color.red(), color.green(), color.blue(), 255);
