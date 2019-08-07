@@ -827,6 +827,7 @@ void GameMap::clearMap()
     }
     fields.clear();
     players.clear();
+    removeChildren();
 }
 
 QString GameMap::readMapName(QDataStream& pStream)
