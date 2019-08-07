@@ -12,7 +12,7 @@
 /**
  * @brief The WikiDatabase class
  */
-class WikiDatabase : public QObject
+class WikiDatabase : public QObject, public oxygine::Resources
 {
     Q_OBJECT
 public:
@@ -24,6 +24,10 @@ public:
      */
     typedef std::tuple<QString, QString, QStringList> pageData;
     static WikiDatabase* getInstance();
+    /**
+     * @brief load
+     */
+    void load();
     /**
      * @brief getPage
      * @param data

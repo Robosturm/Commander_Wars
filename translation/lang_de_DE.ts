@@ -3442,7 +3442,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/wikimenu.cpp" line="72"/>
+        <location filename="../menue/wikimenu.cpp" line="73"/>
         <source>Search Tags: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3450,7 +3450,7 @@
 <context>
     <name>Wikipage</name>
     <message>
-        <location filename="../wiki/wikipage.cpp" line="25"/>
+        <location filename="../wiki/wikipage.cpp" line="31"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11010,7 +11010,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/building/hq.js" line="118"/>
-        <source>&lt;div c=&apos;00ff00&apos;&gt;Battle ends &lt;/div&gt;when an army&apos;s last HQ is captured. &lt;div c=&apos;00ff00&apos;&gt;Ground &lt;/div&gt;units can &lt;div c=&apos;00ff00&apos;&gt;resupply.</source>
+        <source>&lt;div c=&apos;00ff00&apos;&gt;Battle ends &lt;/div&gt;when an army&apos;s last HQ is captured. &lt;div c=&apos;00ff00&apos;&gt;Ground &lt;/div&gt;units can &lt;div c=&apos;00ff00&apos;&gt;resupply.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11102,6 +11102,34 @@
     <message>
         <location filename="../resources/scripts/units/megatank.js" line="55"/>
         <source>Most powerful Tank. Boast superlative attack and defence capabilities.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>metallarmy</name>
+    <message>
+        <location filename="../resources/scripts/wiki/metallarmy.js" line="8"/>
+        <source>The Metall Army is an army of robots. The robots were initially invented by Lash. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/metallarmy.js" line="9"/>
+        <source>The Robots AI developped its own behaviour instead of following Lash&apos;s or Dark Matters orders. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/metallarmy.js" line="10"/>
+        <source>The Metall Army defends it&apos;s own territory and all costs when it looses it&apos;s territory. The Army tries to reconquer it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/metallarmy.js" line="11"/>
+        <source>Besides this the Metall Army is very defensive orientated and doesn&apos;t attack anyone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/metallarmy.js" line="21"/>
+        <source>Metall Army</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

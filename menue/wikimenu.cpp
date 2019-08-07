@@ -68,6 +68,7 @@ Wikimenu::Wikimenu()
     connect(this, &Wikimenu::sigSearch, this, &Wikimenu::search, Qt::QueuedConnection);
     y += 50;
 
+    pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
     pTextfield->setText(tr("Search Tags: ").toStdString().c_str());
     pTextfield->setPosition(10, y);

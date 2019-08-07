@@ -4,6 +4,12 @@
 
 #include "resource_management/objectmanager.h"
 
+#include "resource_management/fontmanager.h"
+
+#include "resource_management/gamemanager.h"
+#include "resource_management/cospritemanager.h"
+#include "wiki/wikidatabase.h"
+
 Wikipage::Wikipage()
     : QObject()
 {
@@ -53,4 +59,59 @@ void Wikipage::keyInput(SDL_Event event)
         this->getParent()->removeChild(this);
     }
     pApp->continueThread();
+}
+
+void Wikipage::loadText(QString text)
+{
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = true;
+    oxygine::spTextField pLabel = new oxygine::TextField();
+    pLabel->setStyle(style);
+    pLabel->setHtmlText(text.toStdString().c_str());
+    pLabel->setScale(1.0f);
+    pLabel->setWidth(m_pPanel->getContentWidth() - 60);
+    pLabel->setPosition(10, y);
+    m_pPanel->addItem(pLabel);
+    y += pLabel->getTextRect().getHeight() + 10;
+}
+
+void Wikipage::loadImage(QString file, float scale)
+{
+    oxygine::ResAnim* pAnim = WikiDatabase::getInstance()->getResAnim(file.toStdString().c_str());
+    if (pAnim == nullptr)
+    {
+        pAnim = COSpriteManager::getInstance()->getResAnim(file.toStdString().c_str());
+    }
+    if (pAnim == nullptr)
+    {
+        pAnim = GameManager::getInstance()->getResAnim(file.toStdString().c_str());
+    }
+    if (pAnim != nullptr)
+    {
+        oxygine::spSprite pSprite = new oxygine::Sprite();
+        pSprite->setResAnim(pAnim);
+        pSprite->setScale(scale);
+        pSprite->setPosition(m_pPanel->getContentWidth() / 2 - pSprite->getScaledWidth() / 2.0f, y);
+        m_pPanel->addItem(pSprite);
+        y += pSprite->getScaledHeight() + 10;
+    }
+}
+
+void Wikipage::loadHeadline(QString text)
+{
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = true;
+    oxygine::spTextField pLabel = new oxygine::TextField();
+    pLabel->setStyle(style);
+    pLabel->setHtmlText(text.toStdString().c_str());
+    pLabel->setScale(2.0f);
+    pLabel->setPosition(m_pPanel->getContentWidth() / 2 - pLabel->getTextRect().getWidth(), y);
+    m_pPanel->addItem(pLabel);
+    y += 60;
 }

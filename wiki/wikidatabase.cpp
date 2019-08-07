@@ -15,6 +15,12 @@
 
 #include "wiki/fieldinfo.h"
 
+#include "qfile.h"
+
+#include "qdiriterator.h"
+
+#include "coreengine/interpreter.h"
+
 WikiDatabase* WikiDatabase::m_pInstance = nullptr;
 
 WikiDatabase* WikiDatabase::getInstance()
@@ -29,6 +35,20 @@ WikiDatabase* WikiDatabase::getInstance()
 WikiDatabase::WikiDatabase()
     : QObject()
 {
+    oxygine::Resources::loadXML("resources/images/wiki/res.xml");
+    Mainapp* pMainapp = Mainapp::getInstance();
+    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    {
+        if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/wiki/res.xml"))
+        {
+            oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/wiki/res.xml").toStdString());
+        }
+    }
+}
+
+void WikiDatabase::load()
+{
+    Mainapp* pMainapp = Mainapp::getInstance();
     // load database
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
@@ -50,8 +70,39 @@ WikiDatabase::WikiDatabase()
     {
         m_Entries.append(pageData(pUnitSpriteManager->getUnitName(i), pUnitSpriteManager->getUnitID(i), "Unit"));
     }
-    // load general wiki page
 
+    // load general wiki page
+    QStringList searchPaths;
+    searchPaths.append("resources/scripts/wiki");
+    // make sure to overwrite existing js stuff
+    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    {
+        searchPaths.append(pMainapp->getSettings()->getMods().at(i) + "/scripts/wiki");
+    }
+    for (qint32 i = 0; i < searchPaths.size(); i++)
+    {
+        QString path =  QCoreApplication::applicationDirPath() + "/" + searchPaths[i];
+        QStringList filter;
+        filter << "*.js";
+        QDirIterator* dirIter = new QDirIterator(path, filter, QDir::Files, QDirIterator::Subdirectories);
+        while (dirIter->hasNext())
+        {
+            dirIter->next();
+            QString file = dirIter->fileInfo().absoluteFilePath();
+            Interpreter* pInterpreter = pMainapp->getInterpreter();
+            pInterpreter->openScript(file);
+            QJSValue erg = pMainapp->getInterpreter()->doFunction("LOADEDWIKIPAGE", "getName");
+            QString name = "";
+            if (erg.isString())
+            {
+                name = erg.toString();
+            }
+            QStringList tags;
+            erg = pMainapp->getInterpreter()->doFunction("LOADEDWIKIPAGE", "getTags");
+            tags = erg.toVariant().toStringList();
+            m_Entries.append(pageData(name, file, tags));
+        }
+    }
 }
 
 QVector<WikiDatabase::pageData> WikiDatabase::getEntries(QString searchTerm)
@@ -149,6 +200,13 @@ spWikipage WikiDatabase::getPage(pageData data)
     else
     {
         // default loader
+        ret = new Wikipage();
+        Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+        pInterpreter->openScript(id);
+        QJSValueList args;
+        QJSValue obj1 = pApp->getInterpreter()->newQObject(ret.get());
+        args << obj1;
+        QJSValue erg = pApp->getInterpreter()->doFunction("LOADEDWIKIPAGE", "loadPage", args);
     }
     pApp->continueThread();
     return ret;

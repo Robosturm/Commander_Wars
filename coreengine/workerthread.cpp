@@ -84,7 +84,7 @@ void WorkerThread::start()
     pWeaponManager->loadAll();
     BattleAnimationManager* pBattleAnimationManager = BattleAnimationManager::getInstance();
     pBattleAnimationManager->loadAll();
-    WikiDatabase::getInstance();
+    WikiDatabase::getInstance()->load();
 
     started = true;
     pApp->continueThread();

@@ -160,6 +160,7 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<Campaign>("Campaign");
     qmlRegisterInterface<BaseGameInputIF>("BaseGameInputIF");
     qmlRegisterInterface<Settings>("Settings");
+    qmlRegisterInterface<Wikipage>("Wikipage");
 
 
     // load ressources
@@ -174,6 +175,7 @@ int main(int argc, char* argv[])
     TerrainManager::getInstance();
     UnitSpriteManager::getInstance();
     BattleAnimationManager::getInstance();
+    WikiDatabase::getInstance();
 
     /*************************************************************************************************/
     // This is the main game loop.
