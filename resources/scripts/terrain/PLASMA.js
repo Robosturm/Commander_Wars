@@ -35,7 +35,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Eectric charge us impassable but disappears if <div c='ffffff'>meteor pieces <div c='00ff00'>are destroyed.");
+        return qsTr("Eectric charge us impassable but disappears if <div c='00ff00'> meteor pieces</div> are destroyed.");
     };
 };
 Constructor.prototype = TERRAIN;

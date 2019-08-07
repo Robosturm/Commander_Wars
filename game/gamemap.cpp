@@ -821,13 +821,17 @@ void GameMap::clearMap()
     {
         for (qint32 x = 0; x < fields.at(y)->size(); x++)
         {
+            Unit* pUnit = fields.at(y)->at(x)->getUnit();
+            if (pUnit != nullptr)
+            {
+                pUnit->detach();
+            }
             this->removeChild(fields.at(y)->at(x));
         }
         fields.at(y)->clear();
     }
     fields.clear();
     players.clear();
-    removeChildren();
 }
 
 QString GameMap::readMapName(QDataStream& pStream)

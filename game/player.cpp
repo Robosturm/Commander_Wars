@@ -203,20 +203,23 @@ qint32 Player::getBuildingCount(QString buildingID)
 {
     qint32 ret = 0;
     GameMap* pMap = GameMap::getInstance();
-    for (qint32 y = 0; y < pMap->getMapHeight(); y++)
+    if (pMap != nullptr)
     {
-        for (qint32 x = 0; x < pMap->getMapWidth(); x++)
+        for (qint32 y = 0; y < pMap->getMapHeight(); y++)
         {
-            spBuilding pBuilding = pMap->getSpTerrain(x, y)->getSpBuilding();
-            if (pBuilding.get() != nullptr)
+            for (qint32 x = 0; x < pMap->getMapWidth(); x++)
             {
-                if (pBuilding->getOwner() == this)
+                spBuilding pBuilding = pMap->getSpTerrain(x, y)->getSpBuilding();
+                if (pBuilding.get() != nullptr)
                 {
-                    if (buildingID.isEmpty() || pBuilding->getBuildingID() == buildingID)
+                    if (pBuilding->getOwner() == this)
                     {
-                        if (pBuilding->getX() == x && pBuilding->getY() == y)
+                        if (buildingID.isEmpty() || pBuilding->getBuildingID() == buildingID)
                         {
-                            ret++;
+                            if (pBuilding->getX() == x && pBuilding->getY() == y)
+                            {
+                                ret++;
+                            }
                         }
                     }
                 }
@@ -651,7 +654,14 @@ void Player::startOfTurn()
 
 QmlVectorUnit* Player::getUnits()
 {
-    return GameMap::getInstance()->getUnits(this);
+    if (GameMap::getInstance() != nullptr)
+    {
+        return GameMap::getInstance()->getUnits(this);
+    }
+    else
+    {
+        return new QmlVectorUnit();
+    }
 }
 
 qint32 Player::getEnemyCount()

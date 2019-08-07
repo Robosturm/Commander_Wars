@@ -93,7 +93,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Naval unit. After <div c='00ff00'>diving <div c='ffffff'>, it remains hidden unless enemy units adjacent.");
+        return qsTr("Naval unit. After <div c='00ff00'>diving </div>, it remains hidden unless enemy units adjacent.");
     };
     this.getUnitType = function()
     {

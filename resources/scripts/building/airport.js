@@ -48,7 +48,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Once captured can be used for <div c='00ff00'>production and resupplying <div c='ffffff'>of <div c='00ff00'>air <div c='ffffff'>units.");
+        return qsTr("Once captured can be used for <div c='00ff00'>production and resupplying</div> of <div c='00ff00'>air</div> units.");
     };
 }
 

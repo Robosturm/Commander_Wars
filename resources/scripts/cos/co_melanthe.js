@@ -186,13 +186,14 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        if (map.onMap(atkPosX, atkPosY))
+        if (typeof map !== 'undefined')
         {
-
+            if (map.onMap(atkPosX, atkPosY))
+            {
                 switch (co.getPowerMode())
                 {
                     case GameEnums.PowerMode_Tagpower:
-                    case GameEnums.PowerMode_Superpower:                        
+                    case GameEnums.PowerMode_Superpower:
                     case GameEnums.PowerMode_Power:
                         if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
                         {
@@ -211,6 +212,7 @@ var Constructor = function()
                         break;
                 }
                 return 0;
+            }
         }
         return 0;
     };

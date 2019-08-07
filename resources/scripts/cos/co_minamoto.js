@@ -117,21 +117,23 @@ var Constructor = function()
                                  defender, defPosX, defPosY, isDefender)
     {
         var nearMountains = false;
-        var fields = globals.getCircle(0, 2);
-        for (var i = 0; i < fields.size(); i++)
+        if (typeof map !== 'undefined')
         {
-            var x = fields.at(i).x + atkPosX;
-            var y = fields.at(i).y + atkPosY;
-            if (map.onMap(x, y))
+            var fields = globals.getCircle(0, 2);
+            for (var i = 0; i < fields.size(); i++)
             {
-                if (map.getTerrain(x, y).getID() === "MOUNTAIN")
+                var x = fields.at(i).x + atkPosX;
+                var y = fields.at(i).y + atkPosY;
+                if (map.onMap(x, y))
                 {
-                    nearMountains = true;
-                    break;
+                    if (map.getTerrain(x, y).getID() === "MOUNTAIN")
+                    {
+                        nearMountains = true;
+                        break;
+                    }
                 }
             }
         }
-
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:

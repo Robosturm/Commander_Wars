@@ -71,7 +71,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<div c='00ff00'>Carries X 1<div c='ffffff'> infantry unit, <div c='00ff00'>supplies <div c='ffffff'> units and <div c='00ff00'>builds <div c='ffffff'> Airports and Ports.");
+        return qsTr("<div c='00ff00'>Carries X 1</div> infantry unit, <div c='00ff00'>supplies </div> units and <div c='00ff00'>builds </div> Airports and Ports.");
     };
     this.getUnitType = function()
     {

@@ -48,7 +48,46 @@ Wikimenu::Wikimenu()
     });
     connect(this, &Wikimenu::sigExitMenue, this, &Wikimenu::exitMenue, Qt::QueuedConnection);
 
+    qint32 y = 10;
+    oxygine::spTextField pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Search: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    addChild(pTextfield);
+    m_SearchString = new Textbox(Settings::getWidth() - 380);
+    m_SearchString->setPosition(150, y);
+    connect(m_SearchString.get(), &Textbox::sigTextChanged, this, &Wikimenu::searchChanged, Qt::QueuedConnection);
+    addChild(m_SearchString);
+    oxygine::spButton pButton = ObjectManager::createButton(tr("Search"));
+    addChild(pButton);
+    pButton->setPosition(m_SearchString->getWidth() + m_SearchString->getX() + 10, y);
+    pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigSearch();
+    });
+    connect(this, &Wikimenu::sigSearch, this, &Wikimenu::search, Qt::QueuedConnection);
+    y += 50;
+
+    pTextfield->setStyle(style);
+    pTextfield->setText(tr("Search Tags: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    addChild(pTextfield);
+    m_Tags = new DropDownmenu(300, WikiDatabase::getInstance()->getTags());
+    m_Tags->setPosition(150, y);
+    connect(m_Tags.get(), &DropDownmenu::sigItemChanged, this, &Wikimenu::tagChanged, Qt::QueuedConnection);
+    addChild(m_Tags);
+    connect(this, &Wikimenu::sigSearch, this, &Wikimenu::search, Qt::QueuedConnection);
+    y += 50;
+
+    QSize size(Settings::getWidth() - 20, Settings::getHeight() - y - 50);
+    m_MainPanel = new Panel(true, size, size);
+    m_MainPanel->setPosition(10, y);
+    addChild(m_MainPanel);
+    y += 50;
+
+    connect(this, &Wikimenu::sigShowWikipage, this, &Wikimenu::showWikipage, Qt::QueuedConnection);
 }
+
 
 void Wikimenu::exitMenue()
 {
@@ -59,4 +98,74 @@ void Wikimenu::exitMenue()
     oxygine::getStage()->addChild(new Mainwindow());
     oxygine::Actor::detach();
     pApp->continueThread();
+}
+
+void Wikimenu::searchChanged(QString)
+{
+    search();
+}
+
+void Wikimenu::search()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    m_MainPanel->clearContent();
+    QVector<WikiDatabase::pageData> items = WikiDatabase::getInstance()->getEntries(m_SearchString->getCurrentText());
+    qint32 itemCount = 0;
+    for (qint32 i = 0; i < items.size(); i++)
+    {
+        ObjectManager* pObjectManager = ObjectManager::getInstance();
+        oxygine::ResAnim* pAnim = pObjectManager->getResAnim("filedialogitems");
+        oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
+        pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+        pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+        pBox->setResAnim(pAnim);
+        oxygine::spTextField textField = new oxygine::TextField();
+        oxygine::TextStyle style = FontManager::getMainFont();
+        style.color = oxygine::Color(255, 255, 255, 255);
+        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+        style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+        style.multiline = false;
+        textField->setStyle(style);
+
+        textField->attachTo(pBox);
+        pBox->setSize(m_MainPanel->getWidth() - 70, 40);
+        textField->setHeight(40);
+        textField->setWidth(pBox->getWidth() - 18);
+        textField->setX(8);
+        pBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+        this->m_MainPanel->addItem(pBox);
+        // add some event handling :)
+        pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+        {
+            pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(32, 200, 32, 0)), 300);
+        });
+        pBox->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+        {
+            pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+        });
+        pBox->setPosition(0, itemCount * 40);
+
+        // loop through all entries :)
+        QString item = std::get<0>(items[i]);
+        textField->setHtmlText(item.toStdString().c_str());
+        pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        {
+            emit sigShowWikipage(items[i]);
+        });
+        itemCount++;
+    }
+    m_MainPanel->setContentHeigth(itemCount * 40 + 50);
+    pApp->continueThread();
+}
+
+void Wikimenu::showWikipage(WikiDatabase::pageData page)
+{
+    addChild(WikiDatabase::getInstance()->getPage(page));
+}
+
+void Wikimenu::tagChanged(qint32)
+{
+    m_SearchString->setCurrentText(m_Tags->getCurrentItemText());
+    emit sigSearch();
 }

@@ -5,21 +5,23 @@ CO_ALEXIS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
     {
         var nearBuildings = false;
         var fields = globals.getCircle(0, 2);
-        for (var i = 0; i < fields.size(); i++)
+        if (typeof map !== 'undefined')
         {
-            var x = fields.at(i).x + atkPosX;
-            var y = fields.at(i).y + atkPosY;
-            if (map.onMap(x, y))
+            for (var i = 0; i < fields.size(); i++)
             {
-                var building = map.getTerrain(x, y).getBuilding();
-                if (building !== null && building.getOwner() === co.getOwner())
+                var x = fields.at(i).x + atkPosX;
+                var y = fields.at(i).y + atkPosY;
+                if (map.onMap(x, y))
                 {
-                    nearBuildings = true;
-                    break;
+                    var building = map.getTerrain(x, y).getBuilding();
+                    if (building !== null && building.getOwner() === co.getOwner())
+                    {
+                        nearBuildings = true;
+                        break;
+                    }
                 }
             }
         }
-
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:

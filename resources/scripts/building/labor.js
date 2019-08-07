@@ -32,7 +32,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Once captured can be used for <div c='00ff00'>production<div c='ffffff'>of <div c='00ff00'>oozium <div c='ffffff'>units.");
+        return qsTr("Once captured can be used for <div c='00ff00'>production</div>of <div c='00ff00'>oozium </div>units.");
     };
 }
 

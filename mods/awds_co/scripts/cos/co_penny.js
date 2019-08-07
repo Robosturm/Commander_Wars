@@ -3,29 +3,32 @@ CO_PENNY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        switch (co.getPowerMode())
+        if (typeof map !== 'undefined')
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+            switch (co.getPowerMode())
             {
-                return 45
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                    {
+                        return 45
+                    }
+                    return 30;
+                case GameEnums.PowerMode_Power:
+                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                    {
+                        // apply sandstorm buff :)
+                        return 25;
+                    }
+                    return 10;
+                default:
+                    break;
             }
-            return 30;
-        case GameEnums.PowerMode_Power:
             if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
             {
                 // apply sandstorm buff :)
-                return 25;
+                return 15;
             }
-            return 10;
-        default:
-            break;
-        }
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-        {
-            // apply sandstorm buff :)
-            return 15;
         }
     }
     return 0;

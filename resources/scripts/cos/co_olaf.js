@@ -119,40 +119,43 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        switch (co.getPowerMode())
+        if (typeof map !== 'undefined')
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-                {
-                    // apply snow buff :)
-                    return 50;
-                }
-                else
-                {
-                    return 10;
-                }
-            case GameEnums.PowerMode_Power:
-                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-                {
-                    // apply snow buff :)
-                    return 50;
-                }
-                else
-                {
-                    return 10;
-                }
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
-                {
+            switch (co.getPowerMode())
+            {
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
                     if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
                     {
                         // apply snow buff :)
-                        return 30;
+                        return 50;
                     }
-                    return 10;
-                }
-                break;
+                    else
+                    {
+                        return 10;
+                    }
+                case GameEnums.PowerMode_Power:
+                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                    {
+                        // apply snow buff :)
+                        return 50;
+                    }
+                    else
+                    {
+                        return 10;
+                    }
+                default:
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                    {
+                        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                        {
+                            // apply snow buff :)
+                            return 30;
+                        }
+                        return 10;
+                    }
+                    break;
+            }
         }
         return 0;
     };

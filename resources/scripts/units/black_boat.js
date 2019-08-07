@@ -93,7 +93,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Naval Unit. Has unique ability to <div c='00ff00'>repair other units.<div c='ffffff'> Can <div c='00ff00'>carry X 1<div c='ffffff'> infantry units.");
+        return qsTr("Naval Unit. Has unique ability to <div c='00ff00'>repair other units.</div> Can <div c='00ff00'>carry X 1</div> infantry units.");
     };
     this.getUnitType = function()
     {

@@ -54,7 +54,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Ground units move easily on this terrain.");
+        return qsTr("In Fog of War, Radars make a <div c='00ff00'>5 square </div>area around them visible.");
     };
 };
 Constructor.prototype = TERRAIN;

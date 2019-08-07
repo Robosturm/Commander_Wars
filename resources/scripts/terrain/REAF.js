@@ -64,7 +64,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("This spiky reaf provides ideal <div c='ffffff'>hiding places<div c='00ff00'> for naval units in Fog of War.");
+        return qsTr("This spiky reaf provides ideal <div c='00ff00'>hiding places</div> for naval units in Fog of War.");
     };
 };
 Constructor.prototype = TERRAIN;

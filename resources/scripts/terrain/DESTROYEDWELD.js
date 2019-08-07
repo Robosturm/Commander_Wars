@@ -29,20 +29,23 @@ var Constructor = function()
         var surroundings = terrain.getSurroundings("PIPELINE,SNOW_PIPELINE,DESERT_PIPELINE", false, false, GameEnums.Directions_Direct, false);
         var x = terrain.getX();
         var y = terrain.getY();
-        if (map.onMap(x, y + 1))
+        if (typeof map !== 'undefined')
         {
-            var building = map.getTerrain(x, y + 1).getBuilding();
-            if (building !== null &&
-                building.getBuildingID() === "ZBLACKHOLE_FACTORY" &&
-                building.getX() - 1 === x && building.getY() - 4 === y)
+            if (map.onMap(x, y + 1))
             {
-                if (surroundings.indexOf("+W") >= 0)
+                var building = map.getTerrain(x, y + 1).getBuilding();
+                if (building !== null &&
+                        building.getBuildingID() === "ZBLACKHOLE_FACTORY" &&
+                        building.getX() - 1 === x && building.getY() - 4 === y)
                 {
-                    surroundings = surroundings.replace("+W", "+S+W");
-                }
-                else
-                {
-                    surroundings += "+S";
+                    if (surroundings.indexOf("+W") >= 0)
+                    {
+                        surroundings = surroundings.replace("+W", "+S+W");
+                    }
+                    else
+                    {
+                        surroundings += "+S";
+                    }
                 }
             }
         }

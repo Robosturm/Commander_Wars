@@ -87,7 +87,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Bridge over river and seas which allows ground units to cross. Bridges over sea also allows naval units to cross the field.");
+        return qsTr("Beachs over great landing places for landing ground troops.");
     };
 };
 Constructor.prototype = TERRAIN;

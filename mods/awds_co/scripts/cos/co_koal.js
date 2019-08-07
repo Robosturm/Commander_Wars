@@ -3,30 +3,33 @@ CO_KOAL.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        if (map.onMap(atkPosX, atkPosY))
+        if (typeof map !== 'undefined')
         {
-            var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
-            switch (co.getPowerMode())
+            if (map.onMap(atkPosX, atkPosY))
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                if (terrainID === "STREET")
+                var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
+                switch (co.getPowerMode())
                 {
-                    return 40;
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    if (terrainID === "STREET")
+                    {
+                        return 40;
+                    }
+                    break;
+                case GameEnums.PowerMode_Power:
+                    if (terrainID === "STREET")
+                    {
+                        return 30;
+                    }
+                    break;
+                default:
+                    if (terrainID === "STREET")
+                    {
+                        return 10;
+                    }
+                    break;
                 }
-                break;
-            case GameEnums.PowerMode_Power:
-                if (terrainID === "STREET")
-                {
-                    return 30;
-                }
-                break;
-            default:
-                if (terrainID === "STREET")
-                {
-                    return 10;
-                }
-                break;
             }
         }
     }

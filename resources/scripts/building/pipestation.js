@@ -35,7 +35,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Once captured can be used for <div c='00ff00'>production and resupplying <div c='ffffff'>of <div c='00ff00'>pipe <div c='ffffff'>units. Produces also more funds.");
+        return qsTr("Once captured can be used for <div c='00ff00'>production and resupplying </div>of <div c='00ff00'>pipe </div>units. Produces also more funds.");
     };
 }
 

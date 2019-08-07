@@ -56,7 +56,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Airport made by APC. <div c='00ff00'>Resupplying <div c='ffffff'>of <div c='00ff00'>air <div c='ffffff'>units is possible.");
+        return qsTr("Airport made by APC. <div c='00ff00'>Resupplying </div>of <div c='00ff00'>air </div>units is possible.");
     };
 }
 

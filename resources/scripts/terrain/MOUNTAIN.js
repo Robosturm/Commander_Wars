@@ -49,7 +49,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Clear view. In Fog of War, Infantry unit's gain <div c='00ff00'>vision +3<div c='ffffff'>.");
+        return qsTr("Clear view. In Fog of War, Infantry unit's gain <div c='00ff00'>vision +3.</div>");
     };
 };
 Constructor.prototype = TERRAIN;

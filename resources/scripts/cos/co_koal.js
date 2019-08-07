@@ -117,11 +117,13 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        if (map.onMap(atkPosX, atkPosY))
+        if (typeof map !== 'undefined')
         {
-            var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
-            switch (co.getPowerMode())
+            if (map.onMap(atkPosX, atkPosY))
             {
+                var terrainID = map.getTerrain(atkPosX, atkPosY).getID();
+                switch (co.getPowerMode())
+                {
                 case GameEnums.PowerMode_Tagpower:
                 case GameEnums.PowerMode_Superpower:
                     if (terrainID === "STREET")
@@ -134,7 +136,7 @@ var Constructor = function()
                     {
                         return 30;
                     }
-                   return 10;
+                    return 10;
                 default:
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
@@ -145,6 +147,7 @@ var Constructor = function()
                         return 10;
                     }
                     break;
+                }
             }
         }
         return 0;

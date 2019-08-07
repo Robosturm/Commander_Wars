@@ -30,7 +30,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Populated city. Once captured <div c='00ff00'>ground <div c='ffffff'>units can <div c='00ff00'>resupply<div c='ffffff'>.");
+        return qsTr("Populated city. Once captured <div c='00ff00'>ground </div>units can <div c='00ff00'>resupply</div>.");
     };
 }
 

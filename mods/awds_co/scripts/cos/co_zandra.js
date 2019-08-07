@@ -3,36 +3,39 @@ CO_ZANDRA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        switch (co.getPowerMode())
+        if (typeof map !== 'undefined')
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+            switch (co.getPowerMode())
             {
-                // apply sandstorm buff :)
-                return 55;
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                    {
+                        // apply sandstorm buff :)
+                        return 55;
+                    }
+                    else
+                    {
+                        return 10;
+                    }
+                case GameEnums.PowerMode_Power:
+                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                    {
+                        // apply sandstorm buff :)
+                        return 55;
+                    }
+                    else
+                    {
+                        return 10;
+                    }
+                default:
+                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                    {
+                        // apply sandstorm buff :)
+                        return 35;
+                    }
+                    return 0;
             }
-            else
-            {
-                return 10;
-            }
-        case GameEnums.PowerMode_Power:
-            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-            {
-                // apply sandstorm buff :)
-                return 55;
-            }
-            else
-            {
-                return 10;
-            }
-        default:
-            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-            {
-                // apply sandstorm buff :)
-                return 35;
-            }
-            return 0;
         }
     }
     return 0;

@@ -31,27 +31,30 @@ CO_MELANTHE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        if (map.onMap(atkPosX, atkPosY))
+        if (typeof map !== 'undefined')
         {
-            switch (co.getPowerMode())
+            if (map.onMap(atkPosX, atkPosY))
             {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
+                switch (co.getPowerMode())
                 {
-                    return 30;
-                }
-                return 10;
-            case GameEnums.PowerMode_Power:
-                if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
-                {
-                    return 30;
-                }
-                return 10;
-            default:
-                if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
-                {
-                    return 15;
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
+                    {
+                        return 30;
+                    }
+                    return 10;
+                case GameEnums.PowerMode_Power:
+                    if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
+                    {
+                        return 30;
+                    }
+                    return 10;
+                default:
+                    if (CO_MELANTHE.isNature(atkPosX, atkPosY) === true)
+                    {
+                        return 15;
+                    }
                 }
             }
         }

@@ -24,7 +24,12 @@ public:
      */
     typedef std::tuple<QString, QString, QStringList> pageData;
     static WikiDatabase* getInstance();
-    spWikipage getPage(pageData& data);
+    /**
+     * @brief getPage
+     * @param data
+     * @return
+     */
+    spWikipage getPage(pageData data);
     /**
      * @brief getEntries
      * @param searchTerm
@@ -44,6 +49,11 @@ public:
      * @return
      */
     bool tagMatches(QStringList tags, QString searchTerm);
+    /**
+     * @brief getTags
+     * @return
+     */
+    QVector<QString> getTags();
 signals:
 
 public slots:

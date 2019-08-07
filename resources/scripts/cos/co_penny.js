@@ -82,39 +82,42 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        switch (co.getPowerMode())
+        if (typeof map !== 'undefined')
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-                {
-                    return 45
-                }
-                return 30;
-            case GameEnums.PowerMode_Power:
-                if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-                {
-                    // apply sandstorm buff :)
-                    return 15;
-                }
-                return 10;
-            default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
-                                co.getPowerMode() > GameEnums.PowerMode_Off)
-                {
+            switch (co.getPowerMode())
+            {
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                    {
+                        return 45
+                    }
+                    return 30;
+                case GameEnums.PowerMode_Power:
                     if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                     {
                         // apply sandstorm buff :)
-                        return 25;
+                        return 15;
                     }
                     return 10;
-                }
-                break;
-        }
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
-        {
-            // apply sandstorm buff :)
-            return 15;
+                default:
+                    if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
+                            co.getPowerMode() > GameEnums.PowerMode_Off)
+                    {
+                        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                        {
+                            // apply sandstorm buff :)
+                            return 25;
+                        }
+                        return 10;
+                    }
+                    break;
+            }
+            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+            {
+                // apply sandstorm buff :)
+                return 15;
+            }
         }
         return 0;
     };
@@ -130,14 +133,17 @@ var Constructor = function()
     };
     this.getFirerangeModifier = function(co, unit, posX, posY)
     {
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM" &&
-            unit.getBaseMaxRange() > 1)
+        if (typeof map !== 'undefined')
         {
-            if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM" &&
+                    unit.getBaseMaxRange() > 1)
             {
-                return 3;
+                if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
+                {
+                    return 3;
+                }
+                return 1;
             }
-            return 1;
         }
         return 0;
     };

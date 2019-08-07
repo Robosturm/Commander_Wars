@@ -38,17 +38,17 @@ WikiDatabase::WikiDatabase()
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     for (qint32 i = 0; i < pTerrainManager->getTerrainCount(); i++)
     {
-        m_Entries.append(pageData(pTerrainManager->getTerrainName(i), pTerrainManager->getTerrainID(i), "TERRAIN"));
+        m_Entries.append(pageData(pTerrainManager->getTerrainName(i), pTerrainManager->getTerrainID(i), "Terrain"));
     }
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     for (qint32 i = 0; i < pBuildingSpriteManager->getBuildingCount(); i++)
     {
-        m_Entries.append(pageData(pBuildingSpriteManager->getBuildingName(i), pBuildingSpriteManager->getBuildingID(i), "BUILDING"));
+        m_Entries.append(pageData(pBuildingSpriteManager->getBuildingName(i), pBuildingSpriteManager->getBuildingID(i), "Building"));
     }
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
     {
-        m_Entries.append(pageData(pUnitSpriteManager->getUnitName(i), pUnitSpriteManager->getUnitID(i), "UNIT"));
+        m_Entries.append(pageData(pUnitSpriteManager->getUnitName(i), pUnitSpriteManager->getUnitID(i), "Unit"));
     }
     // load general wiki page
 
@@ -63,6 +63,23 @@ QVector<WikiDatabase::pageData> WikiDatabase::getEntries(QString searchTerm)
             (tagMatches(std::get<2>(m_Entries[i]), searchTerm)))
         {
             ret.append(m_Entries[i]);
+        }
+    }
+    return ret;
+}
+
+QVector<QString> WikiDatabase::getTags()
+{
+    QVector<QString> ret;
+    for (qint32 i = 0; i < m_Entries.size(); i++)
+    {
+        QStringList tags = std::get<2>(m_Entries[i]);
+        for (qint32 i2 = 0; i2 < tags.size(); i2++)
+        {
+            if (!ret.contains(tags[i2]))
+            {
+               ret.append(tags[i2]);
+            }
         }
     }
     return ret;
@@ -89,7 +106,7 @@ bool WikiDatabase::tagMatches(QStringList tags, QString searchTerm)
     return false;
 }
 
-spWikipage WikiDatabase::getPage(pageData& data)
+spWikipage WikiDatabase::getPage(pageData data)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();

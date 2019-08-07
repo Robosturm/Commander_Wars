@@ -50,7 +50,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("This heavy fog provides ideal <div c='ffffff'>hiding places<div c='00ff00'> for naval units in Fog of War.");
+        return qsTr("This heavy fog provides ideal hiding places<div c='00ff00'> for naval units in Fog of War.</div>");
     };
 };
 Constructor.prototype = TERRAIN;

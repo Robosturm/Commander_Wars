@@ -53,7 +53,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Harbour made by APC. <div c='00ff00'>Resupplying <div c='ffffff'>of <div c='00ff00'>naval <div c='ffffff'>units is possible.");
+        return qsTr("Harbour made by APC. <div c='00ff00'>Resupplying </div>of <div c='00ff00'>naval </div>units is possible.");
     };
 }
 

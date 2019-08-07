@@ -3,36 +3,39 @@ CO_OLAF.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        switch (co.getPowerMode())
+        if (typeof map !== 'undefined')
         {
-        case GameEnums.PowerMode_Tagpower:
-        case GameEnums.PowerMode_Superpower:
-            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+            switch (co.getPowerMode())
             {
-                // apply snow buff :)
-                return 50;
+                case GameEnums.PowerMode_Tagpower:
+                case GameEnums.PowerMode_Superpower:
+                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                    {
+                        // apply snow buff :)
+                        return 50;
+                    }
+                    else
+                    {
+                        return 10;
+                    }
+                case GameEnums.PowerMode_Power:
+                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                    {
+                        // apply snow buff :)
+                        return 50;
+                    }
+                    else
+                    {
+                        return 10;
+                    }
+                default:
+                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+                    {
+                        // apply snow buff :)
+                        return 20;
+                    }
+                    return 0;
             }
-            else
-            {
-                return 10;
-            }
-        case GameEnums.PowerMode_Power:
-            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-            {
-                // apply snow buff :)
-                return 50;
-            }
-            else
-            {
-                return 10;
-            }
-        default:
-            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
-            {
-                // apply snow buff :)
-                return 20;
-            }
-            return 0;
         }
     }
     return 0;

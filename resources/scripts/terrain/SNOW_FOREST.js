@@ -44,7 +44,7 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("In Fog of War conditions, the snowy woods provide ground unit <div c='ffffff'>hiding places<div c='00ff00'>. It's hard for ground units to cross this terrain.");
+        return qsTr("In Fog of War conditions, the snowy woods provide ground unit <div c='00ff00'>hiding places.</div> It's hard for ground units to cross this terrain.");
     };
 };
 Constructor.prototype = TERRAIN;

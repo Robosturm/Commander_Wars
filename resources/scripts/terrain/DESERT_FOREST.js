@@ -48,7 +48,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("In Fog of War conditions, the woods provide ground unit <div c='ffffff'>hiding places<div c='00ff00'>. It reduces the firerange of indirect units by 1.");
+        return qsTr("In Fog of War conditions, the woods provide ground unit hiding places.<div c='00ff00'> It reduces the firerange of indirect units by 1.</div>");
     };
 };
 Constructor.prototype = TERRAIN;
