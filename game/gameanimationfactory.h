@@ -53,6 +53,20 @@ public slots:
      */
     static GameAnimation* createAnimation(quint32 x, quint32 y, quint32 frameTime = GameMap::frameTime, bool mapPosition = true);
     /**
+     * @brief createBattleAnimation
+     * @param pAtkTerrain
+     * @param pAtkUnit
+     * @param atkStartHp
+     * @param atkEndHp
+     * @param pDefTerrain
+     * @param pDefUnit
+     * @param defStartHp
+     * @param defEndHp
+     * @return
+     */
+    static GameAnimation* createBattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp,
+                                                Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp);
+    /**
      * @brief createAnimationPower
      * @param color
      * @param superpower

@@ -365,6 +365,9 @@ var Constructor = function()
             var defOwner = defUnit.getOwner();
             var defUnitX = defUnit.getX();
             var defUnitY = defUnit.getY();
+            var defStartHp = defUnit.getHp();
+            var atkStartHp = attacker.getHp();
+
             var costs = defUnit.getCosts();
             var damage = attackerDamage / 10.0;
             var counterdamage = defenderDamage / 10.0;
@@ -438,39 +441,20 @@ var Constructor = function()
             // only kill units if we should else we stop here
             if (dontKillUnits  === false)
             {
-                // level up and defender destruction
-                if (attacker.getHp() <= 0)
-                {
-                    attacker.killUnit();
-                    // we destroyed a unit
-                    map.getGameRecorder().destroyedUnit(defOwner.getPlayerID());
-                    attacker = null;
-                    if (defUnit !== null)
-                    {
-                        if (defUnit.getUnitRank() < GameEnums.UnitRank_Veteran)
-                        {
-                            defUnit.setUnitRank(defUnit.getUnitRank() + 1);
-                        }
-                    }
-                }
-                // level up and attacker destruction
-                if (defUnit.getHp() <= 0)
-                {
-                    defUnit.killUnit();
-                    // we destroyed a unit nice
-                    map.getGameRecorder().destroyedUnit(attacker.getOwner().getPlayerID());
-                    defUnit = null;
-                    if (attacker.getUnitRank() < GameEnums.UnitRank_Veteran)
-                    {
-                        attacker.setUnitRank(attacker.getUnitRank() + 1);
-                    }
-                }
+                var unitBattleAnimation = GameAnimationFactory.createBattleAnimation(attacker.getTerrain(), attacker, atkStartHp, attacker.getHp(),
+                                                                                     defUnit.getTerrain(), defUnit, defStartHp, defUnit.getHp());
+                ACTION_FIRE.postUnitAnimationAttacker = attacker;
+                ACTION_FIRE.postUnitAnimationDefender = defUnit;
+                unitBattleAnimation.setEndOfAnimationCall("ACTION_FIRE", "performPostUnitAnimation");
             }
         }
         else
         {
             // we attacked a building or terrain ;)
-            // not implemented yet.
+            var buildBattleAnimation = GameAnimationFactory.createBattleAnimation(attacker.getTerrain(), attacker, -1, -1,
+                                                                                  defTerrain, null, -1, -1);
+            buildBattleAnimation.setEndOfAnimationCall("ACTION_FIRE", "performPostBuildingAnimation");
+            ACTION_FIRE.postBuildingAnimationTerrain = defTerrain;
             if ((defBuilding !== null) && (defBuilding.getHp() > 0))
             {
                 defBuilding.setHp(defBuilding.getHp() - attackerDamage);
@@ -481,10 +465,6 @@ var Constructor = function()
                 else
                 {
                     attacker.reduceAmmo2(1);
-                }
-                if (defBuilding.getHp() <= 0)
-                {
-                    Global[defBuilding.getBuildingID()].onDestroyed(defBuilding);
                 }
             }
             // check for damage against terrain
@@ -499,12 +479,62 @@ var Constructor = function()
                 {
                     attacker.reduceAmmo2(1);
                 }
-                if (defTerrain.getHp() <= 0)
+            }
+        }
+    };
+    this.postUnitAnimationAttacker = null;
+    this.postUnitAnimationDefender = null;
+    this.performPostUnitAnimation = function()
+    {
+        var attacker = ACTION_FIRE.postUnitAnimationAttacker;
+        var defUnit = ACTION_FIRE.postUnitAnimationDefender;
+        // level up and defender destruction
+        if (attacker.getHp() <= 0)
+        {
+            attacker.killUnit();
+            // we destroyed a unit
+            map.getGameRecorder().destroyedUnit(defOwner.getPlayerID());
+            attacker = null;
+            if (defUnit !== null)
+            {
+                if (defUnit.getUnitRank() < GameEnums.UnitRank_Veteran)
                 {
-                    Global[defTerrain.getID()].onDestroyed(defTerrain);
+                    defUnit.setUnitRank(defUnit.getUnitRank() + 1);
                 }
             }
         }
+        // level up and attacker destruction
+        if (defUnit.getHp() <= 0)
+        {
+            defUnit.killUnit();
+            // we destroyed a unit nice
+            map.getGameRecorder().destroyedUnit(attacker.getOwner().getPlayerID());
+            defUnit = null;
+            if (attacker.getUnitRank() < GameEnums.UnitRank_Veteran)
+            {
+                attacker.setUnitRank(attacker.getUnitRank() + 1);
+            }
+        }
+        ACTION_FIRE.postUnitAnimationAttacker = null;
+        ACTION_FIRE.postUnitAnimationDefender = null;
+    }
+
+    this.postBuildingAnimationTerrain = null;
+    this.performPostBuildingAnimation = function()
+    {
+        var defBuilding = ACTION_FIRE.postBuildingAnimationTerrain.getBuilding();
+        if (defBuilding !== null)
+        {
+            if ((defBuilding.getHp() <= 0))
+            {
+                Global[defBuilding.getBuildingID()].onDestroyed(defBuilding);
+            }
+        }
+        else if (ACTION_FIRE.postBuildingAnimationTerrain.getHp() <= 0)
+        {
+            Global[ACTION_FIRE.postBuildingAnimationTerrain.getID()].onDestroyed(ACTION_FIRE.postBuildingAnimationTerrain);
+        }
+        ACTION_FIRE.postBuildingAnimationTerrain = null;
     };
 }
 

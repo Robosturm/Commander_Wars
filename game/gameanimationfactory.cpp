@@ -137,6 +137,29 @@ GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(qint32 x,
     return pGameAnimationCapture;
 }
 
+GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp,
+                                                Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp)
+{
+    GameAnimation* pRet = nullptr;
+    if (pDefUnit != nullptr && atkStartHp != atkEndHp)
+    {
+        GameAnimation* pAtk = createAnimation(pDefTerrain->getX(), pDefTerrain->getY(), 70);
+        pAtk->addSprite("blackhole_shot", -GameMap::Imagesize * 0.5f, -GameMap::Imagesize * 0.5f, 0, 1.5f);
+        pAtk->setSound("talongunhit.wav", 1);
+        pRet = createAnimation(pAtkTerrain->getX(), pAtkTerrain->getY(), 70);
+        pRet->addSprite("blackhole_shot", -GameMap::Imagesize * 0.5f, -GameMap::Imagesize * 0.5f, 0, 1.5f);
+        pRet->setSound("talongunhit.wav", 1);
+        pAtk->queueAnimation(pRet);
+    }
+    else
+    {
+        pRet = createAnimation(pDefTerrain->getX(), pDefTerrain->getY(), 70);
+        pRet->addSprite("blackhole_shot", -GameMap::Imagesize * 0.5f, -GameMap::Imagesize * 0.5f, 0, 1.5f);
+        pRet->setSound("talongunhit.wav", 1);
+    }
+    return pRet;
+}
+
 qint32 GameAnimationFactory::getAnimationCount()
 {
     return m_Animations.size();
