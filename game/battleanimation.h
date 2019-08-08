@@ -9,10 +9,24 @@
 
 #include <QTimer>
 
+#include "game/battleanimationsprite.h"
+
 class BattleAnimation : public GameAnimation
 {
     Q_OBJECT
 public:
+    enum class AnimationProgress
+    {
+        MoveIn,
+        WaitAfterIn,
+        AttackerFire,
+        AttackerImpact,
+        DefenderFire,
+        DefenderImpact,
+        WaitAfterBattle,
+        Finished,
+    };
+
     BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp,
                     Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp);
 
@@ -27,7 +41,7 @@ private:
      * @param pUnit2
      * @return
      */
-    bool getIsRight(Unit* pUnit1, Unit* pUnit2);
+    bool getIsLeft(Unit* pUnit1, Unit* pUnit2);
     /**
      * @brief setSpritePosition
      * @param pSprite
@@ -52,9 +66,26 @@ private:
      * @param pColorBar
      * @param hp
      */
-    void setHealthBarColor(oxygine::spColorRectSprite pColorBar, float hp);
-    // dummy
-    QTimer endTimer;
+    oxygine::Color getHealthBarColor(float hp);
+    /**
+     * @brief loadImpactAnimation
+     * @param pAttacker
+     * @param pDefender
+     */
+    void loadImpactAnimation(Unit* pAttacker, Unit* pDefender);
+    /**
+     * @brief loadImpactAnimation
+     * @param pUnit
+     * @param pSprite
+     */
+    void loadImpactAnimation(Unit* pUnit, spBattleAnimationSprite pSprite, oxygine::spColorRectSprite pColorRect, float endHp,
+                             oxygine::spSprite pCO0, oxygine::spSprite pCO1, float enemyHp);
+    /**
+     * @brief nextAnimatinStep
+     */
+    void nextAnimatinStep();
+
+    QTimer battleTimer;
 
     oxygine::spSprite m_AtkCO0;
     oxygine::spSprite m_AtkCO1;
@@ -63,6 +94,20 @@ private:
 
     oxygine::spColorRectSprite m_HealthBar0;
     oxygine::spColorRectSprite m_HealthBar1;
+
+    spBattleAnimationSprite m_pAttackerAnimation;
+    spBattleAnimationSprite m_pDefenderAnimation;
+
+    Terrain* m_pAtkTerrain;
+    Unit* m_pAtkUnit;
+    float m_atkStartHp;
+    float m_atkEndHp;
+    Terrain* m_pDefTerrain;
+    Unit* m_pDefUnit;
+    float m_defStartHp;
+    float m_defEndHp;
+
+    AnimationProgress currentState{AnimationProgress::AttackerImpact};
 
     static const short priorityBack = -1;
     static const short priorityFront = 1;

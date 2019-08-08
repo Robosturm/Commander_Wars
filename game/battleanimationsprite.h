@@ -15,8 +15,27 @@ class BattleAnimationSprite : public QObject, public oxygine::Sprite
     Q_OBJECT
 public:
     static const QString standingAnimation;
+    static const QString impactAnimation;
     explicit BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QString animationType, qint32 hp = -1);
-
+    /**
+     * @brief loadAnimation
+     * @param animationType
+     */
+    void loadAnimation(QString animationType);
+    /**
+     * @brief loadAnimation
+     * @param animationType
+     * @param pUnit
+     */
+    void loadAnimation(QString animationType, Unit* pUnit);
+    /**
+     * @brief getClipActor
+     * @return
+     */
+    oxygine::spClipRectActor getClipActor()
+    {
+        return m_Actor;
+    }
 signals:
 
 public slots:

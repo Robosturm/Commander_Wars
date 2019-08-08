@@ -13,6 +13,7 @@
 #include "qcolor.h"
 
 const QString BattleAnimationSprite::standingAnimation = "loadStandingAnimation";
+const QString BattleAnimationSprite::impactAnimation = "loadImpactAnimation";
 
 BattleAnimationSprite::BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QString animationType, qint32 hp)
     : QObject(),
@@ -32,7 +33,18 @@ BattleAnimationSprite::BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QSt
     m_Actor->setSize(127, 192);
     setSize(m_Actor->getWidth(), m_Actor->getHeight());
     addChild(m_Actor);
+    loadAnimation(animationType);
+}
 
+void BattleAnimationSprite::loadAnimation(QString animationType)
+{
+    loadAnimation(animationType, m_pUnit);
+}
+
+void BattleAnimationSprite::loadAnimation(QString animationType, Unit* pUnit)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    m_Actor->removeChildren();
     QString function1 = animationType;
     QJSValueList args1;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);

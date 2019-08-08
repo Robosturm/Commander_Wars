@@ -13,5 +13,10 @@ var BATTLEANIMATION =
     getPositionOffset : function(sprite, unit, terrain, unitIdx)
     {
         return Qt.point(0, 0);
-    }
+    },
+
+    loadImpactAnimation : function(sprite, unit)
+    {
+
+    },
 };

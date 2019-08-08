@@ -10,15 +10,21 @@
 
 #include "resource_management/cospritemanager.h"
 
-#include "game/battleanimationsprite.h"
-
 #include "game/player.h"
 
 #include "game/co.h"
 
 BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp,
                                  Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp)
-    : GameAnimation(static_cast<quint32>(GameMap::frameTime))
+    : GameAnimation(static_cast<quint32>(GameMap::frameTime)),
+      m_pAtkTerrain(pAtkTerrain),
+      m_pAtkUnit(pAtkUnit),
+      m_atkStartHp(atkStartHp),
+      m_atkEndHp(atkEndHp),
+      m_pDefTerrain(pDefTerrain),
+      m_pDefUnit(pDefUnit),
+      m_defStartHp(defStartHp),
+      m_defEndHp(defEndHp)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -37,16 +43,6 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     oxygine::spSprite pDefTerrainSprite = loadTerrainSprite(pDefUnit);
     setSpritePosition(pDefTerrainSprite, pDefUnit, pAtkUnit);
     addChild(pDefTerrainSprite);
-
-    // dummy impl for standing units
-    spBattleAnimationSprite pDummyAnimationSprite1 = new BattleAnimationSprite(pAtkUnit, pAtkTerrain, BattleAnimationSprite::standingAnimation,
-                                                                               Mainapp::roundUp(atkStartHp));
-    setSpritePosition(pDummyAnimationSprite1, pAtkUnit, pDefUnit);
-    addChild(pDummyAnimationSprite1);
-    spBattleAnimationSprite pDummyAnimationSprite2 = new BattleAnimationSprite(pDefUnit, pDefTerrain, BattleAnimationSprite::standingAnimation,
-                                                                               Mainapp::roundUp(defStartHp));
-    setSpritePosition(pDummyAnimationSprite2, pDefUnit, pAtkUnit);
-    addChild(pDummyAnimationSprite2);
 
     pAnim = pGameManager->getResAnim("battle_front");
     pSprite = new oxygine::Sprite();
@@ -73,7 +69,14 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
         oxygine::ResAnim* pAnimCO = pCOSpriteManager->getResAnim(resAnim.toStdString().c_str());
         m_AtkCO0->setResAnim(pAnimCO);
         setCOMood(m_AtkCO0, atkStartHp, defStartHp);
-        m_AtkCO0->setPosition(pSprite->getX() + 17, pSprite->getY() + 17);
+        if (getIsLeft(pAtkUnit, pDefUnit))
+        {
+            m_AtkCO0->setPosition(-18, -13);
+        }
+        else
+        {
+            m_AtkCO0->setPosition(getWidth() - 28, -13);
+        }
         m_AtkCO0->setPriority(priorityCO);
         m_AtkCO0->setScale(coScale);
         addChild(m_AtkCO0);
@@ -91,7 +94,14 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
         oxygine::ResAnim* pAnimCO = pCOSpriteManager->getResAnim(resAnim.toStdString().c_str());
         m_AtkCO1->setResAnim(pAnimCO);
         setCOMood(m_AtkCO1, atkStartHp, defStartHp);
-        m_AtkCO1->setPosition(pSprite->getX() + 17, pSprite->getY() + 17);
+        if (getIsLeft(pAtkUnit, pDefUnit))
+        {
+            m_AtkCO1->setPosition(-18, getHeight() - 28);
+        }
+        else
+        {
+            m_AtkCO1->setPosition(getWidth() - 28, getHeight() - 28);
+        }
         m_AtkCO1->setPriority(priorityCO);
         m_AtkCO1->setScale(coScale);
         addChild(m_AtkCO1);
@@ -110,7 +120,14 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
         oxygine::ResAnim* pAnimCO = pCOSpriteManager->getResAnim(resAnim.toStdString().c_str());
         m_DefCO0->setResAnim(pAnimCO);
         setCOMood(m_DefCO0, atkStartHp, defStartHp);
-        m_DefCO0->setPosition(pSprite->getX() + 17, pSprite->getY() + 17);
+        if (getIsLeft(pDefUnit, pAtkUnit))
+        {
+            m_DefCO0->setPosition(-18, -13);
+        }
+        else
+        {
+            m_DefCO0->setPosition(getWidth() - 28, -13);
+        }
         m_DefCO0->setPriority(priorityCO);
         m_DefCO0->setScale(coScale);
         addChild(m_DefCO0);
@@ -128,7 +145,14 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
         oxygine::ResAnim* pAnimCO = pCOSpriteManager->getResAnim(resAnim.toStdString().c_str());
         m_DefCO1->setResAnim(pAnimCO);
         setCOMood(m_DefCO1, atkStartHp, defStartHp);
-        m_DefCO1->setPosition(pSprite->getX() + 17, pSprite->getY() + 17);
+        if (getIsLeft(pDefUnit, pAtkUnit))
+        {
+            m_DefCO1->setPosition(-18, getHeight() - 28);
+        }
+        else
+        {
+            m_DefCO1->setPosition(getWidth() - 28, getHeight() - 28);
+        }
         m_DefCO1->setPriority(priorityCO);
         m_DefCO1->setScale(coScale);
         addChild(m_DefCO1);
@@ -159,7 +183,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     // create health bar
     m_HealthBar0 = new oxygine::ColorRectSprite();
     m_HealthBar0->setSize(127 * atkStartHp / 10.0f, 9);
-    if (getIsRight(pAtkUnit, pDefUnit))
+    if (getIsLeft(pAtkUnit, pDefUnit))
     {
         m_HealthBar0->setPosition(31, 25);
     }
@@ -167,11 +191,11 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     {
         m_HealthBar0->setPosition(162, 25);
     }
-    setHealthBarColor(m_HealthBar0, atkStartHp);
+    m_HealthBar0->setColor(getHealthBarColor(atkStartHp));
     addChild(m_HealthBar0);
     m_HealthBar1 = new oxygine::ColorRectSprite();
     m_HealthBar1->setSize(127 * defStartHp / 10.0f, 9);
-    if (getIsRight(pDefUnit, pAtkUnit))
+    if (getIsLeft(pDefUnit, pAtkUnit))
     {
         m_HealthBar1->setPosition(31, 25);
     }
@@ -179,17 +203,26 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     {
         m_HealthBar1->setPosition(162, 25);
     }
-    setHealthBarColor(m_HealthBar1, defStartHp);
+    m_HealthBar1->setColor(getHealthBarColor(defStartHp));
     addChild(m_HealthBar1);
 
-    // dummy
-    endTimer.setSingleShot(true);
-    endTimer.setInterval(1000 / static_cast<qint32>(Settings::getAnimationSpeed()));
-    connect(&endTimer, &QTimer::timeout, this, &BattleAnimation::onFinished, Qt::QueuedConnection);
-    endTimer.start();
+    // dummy impl for standing units
+    m_pAttackerAnimation = new BattleAnimationSprite(pAtkUnit, pAtkTerrain, BattleAnimationSprite::standingAnimation,
+                                                                               Mainapp::roundUp(atkStartHp));
+    setSpritePosition(m_pAttackerAnimation, pAtkUnit, pDefUnit);
+    addChild(m_pAttackerAnimation);
+    m_pDefenderAnimation = new BattleAnimationSprite(pDefUnit, pDefTerrain, BattleAnimationSprite::standingAnimation,
+                                                                               Mainapp::roundUp(defStartHp));
+    setSpritePosition(m_pDefenderAnimation, pDefUnit, pAtkUnit);
+    addChild(m_pDefenderAnimation);
+
+    // battleTimer
+    battleTimer.setSingleShot(false);
+    connect(&battleTimer, &QTimer::timeout, this, &BattleAnimation::nextAnimatinStep, Qt::QueuedConnection);
+    nextAnimatinStep();
 }
 
-bool BattleAnimation::getIsRight(Unit* pUnit1, Unit* pUnit2)
+bool BattleAnimation::getIsLeft(Unit* pUnit1, Unit* pUnit2)
 {
     if ((pUnit1->getX() < pUnit2->getX()) ||
         (pUnit1->getY() < pUnit2->getY()))
@@ -204,7 +237,7 @@ bool BattleAnimation::getIsRight(Unit* pUnit1, Unit* pUnit2)
 
 void BattleAnimation::setSpritePosition(oxygine::spSprite pSprite, Unit* pUnit1, Unit* pUnit2)
 {
-    if (getIsRight(pUnit1, pUnit2))
+    if (getIsLeft(pUnit1, pUnit2))
     {
         pSprite->setPosition(31, 34);
     }
@@ -258,31 +291,124 @@ void BattleAnimation::setCOMood(oxygine::spSprite pSprite, float hp1, float hp2)
     pSprite->setColumn(static_cast<qint32>(mood));
 }
 
-void BattleAnimation::setHealthBarColor(oxygine::spColorRectSprite pColorBar, float hp)
+oxygine::Color BattleAnimation::getHealthBarColor(float hp)
 {
     float divider = hp / 10.0f;
     if (divider > 2.0f / 3.0f)
     {
-        pColorBar->setColor(0, 255, 0, 255);
+        return oxygine::Color(0, 255, 0, 255);
     }
     else if (divider > 1.0f / 3.0f)
     {
-        pColorBar->setColor(255, 128, 0, 255);
+        return oxygine::Color(255, 128, 0, 255);
     }
     else
     {
-        pColorBar->setColor(255, 0, 0, 255);
+        return oxygine::Color(255, 0, 0, 255);
     }
 }
 
 void BattleAnimation::restart()
 {
     GameMenue::getInstance()->addChild(this);
-    endTimer.start();
+    battleTimer.start();
 }
-
 
 void BattleAnimation::stop()
 {
-    endTimer.stop();
+    battleTimer.stop();
+}
+
+void BattleAnimation::nextAnimatinStep()
+{
+    switch (currentState)
+    {
+        case AnimationProgress::MoveIn:
+        {
+            break;
+        }
+        case AnimationProgress::WaitAfterIn:
+        {
+            break;
+        }
+        case AnimationProgress::AttackerFire:
+        {
+
+            break;
+        }
+        case AnimationProgress::AttackerImpact:
+        {
+            loadImpactAnimation(m_pDefUnit, m_pDefenderAnimation, m_HealthBar1, m_defEndHp,
+                                m_DefCO0, m_DefCO1, m_atkStartHp);
+            break;
+        }
+        case AnimationProgress::DefenderFire:
+        {
+            m_pDefenderAnimation->setHpRounded(Mainapp::roundUp(m_defEndHp));
+            m_pDefenderAnimation->loadAnimation(BattleAnimationSprite::standingAnimation);
+            setSpritePosition(m_pDefenderAnimation, m_pDefUnit, m_pAtkUnit);
+
+
+            if (m_atkEndHp != m_atkStartHp)
+            {
+                loadImpactAnimation(m_pAtkUnit, m_pAttackerAnimation, m_HealthBar0, m_atkEndHp,
+                                    m_AtkCO0, m_AtkCO1, m_defEndHp);
+            }
+            else
+            {
+                currentState = AnimationProgress::WaitAfterBattle;
+                battleTimer.start(500);
+            }
+            break;
+        }
+        case AnimationProgress::DefenderImpact:
+        {
+            m_pAttackerAnimation->setHpRounded(Mainapp::roundUp(m_atkEndHp));
+            m_pAttackerAnimation->loadAnimation(BattleAnimationSprite::standingAnimation);
+            setSpritePosition(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit);
+            // dummy
+            battleTimer.start(100);
+            break;
+        }
+        case AnimationProgress::WaitAfterBattle:
+        {
+            battleTimer.start(500 / Settings::getAnimationSpeed());
+            break;
+        }
+        case AnimationProgress::Finished:
+        {
+            onFinished();
+            break;
+        }
+    }
+    currentState = static_cast<AnimationProgress>(static_cast<qint32>(currentState) + 1);
+}
+
+void BattleAnimation::loadImpactAnimation(Unit* pUnit, spBattleAnimationSprite pSprite, oxygine::spColorRectSprite pColorRect, float endHp,
+                                          oxygine::spSprite pCO0, oxygine::spSprite pCO1, float enemyHp)
+{
+    if (endHp < 0.0f)
+    {
+        endHp = 0.0f;
+    }
+    oxygine::ColorRectSprite::TweenColor tweenColor(getHealthBarColor(endHp));
+    oxygine::spTween colorTween = oxygine::createTween(tweenColor, 800 / Settings::getAnimationSpeed());
+    pColorRect->addTween(colorTween);
+    oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth(127.0f * endHp / 10.0f), 800 / Settings::getAnimationSpeed());
+    pColorRect->addTween(posTween);
+    // add impact image
+    oxygine::ColorRectSprite::TweenColor tweenColor2(oxygine::Color(255, 0, 0));
+    oxygine::spActor child = pSprite->getClipActor()->getFirstChild();
+    while (child)
+    {
+        oxygine::spTween colorTween2 = oxygine::createTween(tweenColor2, 500 / Settings::getAnimationSpeed(), 1, true, 100);
+        child->addTween(colorTween2);
+        child = child->getNextSibling();
+    }
+    setCOMood(pCO0, endHp, enemyHp);
+    setCOMood(pCO1, endHp, enemyHp);
+
+
+    // dummy
+    battleTimer.start(1000);
 }
