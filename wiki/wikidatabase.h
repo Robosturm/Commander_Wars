@@ -47,6 +47,12 @@ public:
      */
     pageData getEntry(qint32 entry);
     /**
+     * @brief getEntry
+     * @param id
+     * @return
+     */
+    WikiDatabase::pageData getEntry(QString id);
+    /**
      * @brief tagMatches
      * @param tags
      * @param searchTerm

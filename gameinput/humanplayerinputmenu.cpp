@@ -16,6 +16,8 @@
 
 #include "resource_management/unitspritemanager.h"
 
+#include "wiki/wikidatabase.h"
+
 HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList actionIDs, QVector<oxygine::spActor> icons,
                                            QVector<qint32> costList, QVector<bool> enabledList)
     : m_ActionIDs(actionIDs),
@@ -324,6 +326,21 @@ void HumanPlayerInputMenu::keyInput(SDL_Event event)
                     m_Focused = true;
                 });
                 m_Focused = false;
+            }
+            else
+            {
+                WikiDatabase* pDatabase = WikiDatabase::getInstance();
+                WikiDatabase::pageData data = pDatabase->getEntry(id);
+                if (std::get<1>(data) != "")
+                {
+                    spWikipage page = pDatabase->getPage(data);
+                    GameMenue::getInstance()->addChild(page);
+                    connect(page.get(), &FieldInfo::sigFinished, [=]
+                    {
+                        m_Focused = true;
+                    });
+                    m_Focused = false;
+                }
             }
             pApp->continueThread();
         }

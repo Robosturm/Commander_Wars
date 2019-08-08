@@ -184,7 +184,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
 
     // dummy
     endTimer.setSingleShot(true);
-    endTimer.setInterval(10000 / static_cast<qint32>(Settings::getAnimationSpeed()));
+    endTimer.setInterval(1000 / static_cast<qint32>(Settings::getAnimationSpeed()));
     connect(&endTimer, &QTimer::timeout, this, &BattleAnimation::onFinished, Qt::QueuedConnection);
     endTimer.start();
 }

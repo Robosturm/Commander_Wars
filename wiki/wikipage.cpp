@@ -72,7 +72,7 @@ void Wikipage::loadText(QString text)
     pLabel->setStyle(style);
     pLabel->setHtmlText(text.toStdString().c_str());
     pLabel->setScale(1.0f);
-    pLabel->setWidth(m_pPanel->getContentWidth() - 60);
+    pLabel->setWidth(m_pPanel->getContentWidth() - 80);
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
     y += pLabel->getTextRect().getHeight() + 10;
@@ -80,14 +80,14 @@ void Wikipage::loadText(QString text)
 
 void Wikipage::loadImage(QString file, float scale)
 {
-    oxygine::ResAnim* pAnim = WikiDatabase::getInstance()->getResAnim(file.toStdString().c_str());
+    oxygine::ResAnim* pAnim = WikiDatabase::getInstance()->getResAnim(file.toStdString().c_str(), oxygine::error_policy::ep_ignore_error);
     if (pAnim == nullptr)
     {
-        pAnim = COSpriteManager::getInstance()->getResAnim(file.toStdString().c_str());
+        pAnim = COSpriteManager::getInstance()->getResAnim(file.toStdString().c_str(), oxygine::error_policy::ep_ignore_error);
     }
     if (pAnim == nullptr)
     {
-        pAnim = GameManager::getInstance()->getResAnim(file.toStdString().c_str());
+        pAnim = GameManager::getInstance()->getResAnim(file.toStdString().c_str(), oxygine::error_policy::ep_ignore_error);
     }
     if (pAnim != nullptr)
     {
@@ -113,5 +113,5 @@ void Wikipage::loadHeadline(QString text)
     pLabel->setScale(2.0f);
     pLabel->setPosition(m_pPanel->getContentWidth() / 2 - pLabel->getTextRect().getWidth(), y);
     m_pPanel->addItem(pLabel);
-    y += 60;
+    y += 80;
 }

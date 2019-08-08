@@ -145,6 +145,26 @@ WikiDatabase::pageData WikiDatabase::getEntry(qint32 entry)
     return pageData("", "", QStringList());
 }
 
+WikiDatabase::pageData WikiDatabase::getEntry(QString id)
+{
+    for (qint32 i = 0; i < m_Entries.size(); i++)
+    {
+        QString entry = std::get<1>(m_Entries[i]);
+        entry = entry.replace(".js", "");
+        entry = entry.remove(0, entry.lastIndexOf("/") + 1);
+        entry = entry.remove(0, entry.lastIndexOf("\\") + 1);
+        if (entry == id)
+        {
+            return m_Entries[i];
+        }
+        else if (entry.toUpper() == id.toUpper())
+        {
+            return m_Entries[i];
+        }
+    }
+    return pageData("", "", QStringList());
+}
+
 bool WikiDatabase::tagMatches(QStringList tags, QString searchTerm)
 {
     for (qint32 i = 0; i < tags.size(); i++)

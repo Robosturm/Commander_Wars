@@ -3481,6 +3481,294 @@
     </message>
 </context>
 <context>
+    <name>action_capture</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_capture.js" line="8"/>
+        <source>Orders a unit to capture a building. Once the resistant is reduced to 0 the building  will generate effects for your army based on the captured building.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_capture.js" line="18"/>
+        <source>Capture</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_co_unit_0</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_co_unit_0.js" line="8"/>
+        <source>Deploys your first co onto the given unit. All units inside the co range of this unit will get the buff of your first co.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_co_unit_0.js" line="18"/>
+        <source>CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_co_unit_1</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_co_unit_1.js" line="8"/>
+        <source>Deploys your second co onto the given unit. All units inside the co range of this unit will get the buff of your second co.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_co_unit_1.js" line="18"/>
+        <source>CO 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_crystall_heal</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_crystall_heal.js" line="8"/>
+        <source>Orders a crystall or monolith to heal all own units around it and also refills their ammo and fuel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_crystall_heal.js" line="18"/>
+        <source>Heal with Crystall</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_deathray_fire</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_deathray_fire.js" line="8"/>
+        <source>Orders a death ray to attack all enemy units in front of it, dealing devastating damage to them. This order has a cooldown of 7 days.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_deathray_fire.js" line="18"/>
+        <source>Fire with Death Ray</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_explode</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_explode.js" line="8"/>
+        <source>Destroys the current unit in a large explosion. The explosion will deal damage to all units around it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_explode.js" line="18"/>
+        <source>Explode</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_fire</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_fire.js" line="8"/>
+        <source>Orders a unit to attack another one. If the attack is a direct attack the enemy unit will counter with an attack of its own.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_fire.js" line="18"/>
+        <source>Fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_flare</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_flare.js" line="8"/>
+        <source>Fires a flare rocket at the given location. The flare rocket will reveal all terrains in an area around the target during fog of war.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_flare.js" line="18"/>
+        <source>Flare</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_hoellium_wait</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_hoellium_wait.js" line="8"/>
+        <source>Orders a oozium to wait at the current position and end all actions for this turn. Ooziums can wait on enemy units in doing so the enemy unit gets destroyed by the oozium.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_hoellium_wait.js" line="18"/>
+        <source>Oozium Wait</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_join</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_join.js" line="8"/>
+        <source>Combines a wounded unit of the same type with the current unit. This will lead to a unit with combined ammo, fuel and hp ad the highest rank of both units. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_join.js" line="9"/>
+        <source>Hp exceeding the maximum will be added in form of funds to your war funds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_join.js" line="19"/>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_laser_fire</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_laser_fire.js" line="8"/>
+        <source>Commands the laser to shot four laser rays. The laser rays deal damage to all units that get hit by one of the rays.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_laser_fire.js" line="18"/>
+        <source>Fire with Laser</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_load</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_load.js" line="8"/>
+        <source>Loads a unit to a transporters. This makes the unit untargetable for most effects. However the units gets lost when the transporter gets destroyed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_load.js" line="18"/>
+        <source>Load</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_missile</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_missile.js" line="8"/>
+        <source>Launches a missile from a silo at the target area. The missile deals massive damage to all units in the area of effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_missile.js" line="18"/>
+        <source>Missile</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_next_player</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_next_player.js" line="8"/>
+        <source>Ends your turn and gives control to the next player.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_next_player.js" line="18"/>
+        <source>Next Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_ration</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_ration.js" line="8"/>
+        <source>Refills fuel and ammo to all units surrounding this unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_ration.js" line="18"/>
+        <source>Ration</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_repair</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_repair.js" line="8"/>
+        <source>Repairs and refills the target unit. The player has to pay for the repair.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_repair.js" line="18"/>
+        <source>Repair</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_stealth</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_stealth.js" line="8"/>
+        <source>Stealths a unit and makes it invisible to all enemies. A stealthed unit is only visible when a unit is nearby it. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_stealth.js" line="9"/>
+        <source>In addition only units of the same Unit Type &lt;div c=&apos;00ff00&apos;&gt; Ground, Naval or Air&lt;/div&gt; can attack it. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_stealth.js" line="10"/>
+        <source>In most cases stealthed units have a higher fuel consumption per turn, while beeing stealthed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_stealth.js" line="20"/>
+        <source>Unstealth</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_talon_gun</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_talon_gun.js" line="8"/>
+        <source>Commands the talon gun to attack all enemy units around the talon gun dealing 5 Hp of damage to them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_talon_gun.js" line="18"/>
+        <source>Fire with Talon Gun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_unload</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_unload.js" line="8"/>
+        <source>Unloads loaded units. Units that have been loaded this turn can&apos;t move. Units that were loaded in previous turns can immediatly move after beeing unloaded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_unload.js" line="18"/>
+        <source>Unload</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_unstealth</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_unstealth.js" line="8"/>
+        <source>Unstealths a unit and makes it visible to all enemies.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_unstealth.js" line="18"/>
+        <source>Unstealth</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_wait</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_wait.js" line="8"/>
+        <source>Orders a unit to wait at the current position and end all actions for this turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_wait.js" line="18"/>
+        <source>Wait</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>aircraftcarrier</name>
     <message>
         <location filename="../resources/scripts/units/aircraftcarrier.js" line="39"/>
@@ -3602,6 +3890,65 @@
     <message>
         <location filename="../resources/scripts/units/black_bomb.js" line="98"/>
         <source>Air Unit. Has unique ability to &lt;div c=&apos;00ff00&apos;&gt;explode&lt;/div&gt; in a huge explosion damaging all units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>blackhole</name>
+    <message>
+        <location filename="../resources/scripts/wiki/blackhole.js" line="8"/>
+        <source>Black Hole is an aggressive force that seeks to dominate Wars World. Its COs have evil intents and are highly destructive, </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/blackhole.js" line="9"/>
+        <source>not caring about how many units they lose, as long as they can achieve their goal. In the first two games, Black Hole occupies </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/blackhole.js" line="10"/>
+        <source> some small islands in Cosmo Land and Macro Land respectively as their base of operation, before being driven out by the Allied Nations. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/blackhole.js" line="20"/>
+        <source>Black Hole</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>bluemoon</name>
+    <message>
+        <location filename="../resources/scripts/wiki/bluemoon.js" line="8"/>
+        <source>Due to Clone Andy leading an invasion on their land, Blue Moon was at war with Orange Star at the beginning of the original Advance Wars, though </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/bluemoon.js" line="9"/>
+        <source>later allied with them, co-finding the Allied Nations along with Green Earth and Yellow Comet to defend against the Black Hole invasion. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/bluemoon.js" line="19"/>
+        <source>Blue Moon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>boltguard</name>
+    <message>
+        <location filename="../resources/scripts/wiki/boltguard.js" line="8"/>
+        <source>Bolt Guard is a sub section of the Black Hole Army lead by Von Bolt.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/boltguard.js" line="9"/>
+        <source>The CO&apos;s of Bolt Guard only wishes to destroy the land to achieve their own goals.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/boltguard.js" line="19"/>
+        <source>Bolt Guard</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10941,6 +11288,24 @@
     </message>
 </context>
 <context>
+    <name>greenearth</name>
+    <message>
+        <location filename="../resources/scripts/wiki/greenearth.js" line="8"/>
+        <source>Green Earth&apos;s forces are extremely organized. Eagle, the leader of Green Earth, specializes in aerial combat, with Jess dominating the ground, and </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/greenearth.js" line="9"/>
+        <source>Drake the seas. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/greenearth.js" line="19"/>
+        <source>Green Earth</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>harbour</name>
     <message>
         <location filename="../resources/scripts/building/harbour.js" line="25"/>
@@ -11295,6 +11660,24 @@
     <message>
         <location filename="../resources/scripts/units/neotank.js" line="56"/>
         <source>Reinforced Tank. Attack and defence capabilities superior to standard tank. Good mobility makes it useful on battlefield.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>orangestar</name>
+    <message>
+        <location filename="../resources/scripts/wiki/orangestar.js" line="8"/>
+        <source>The Orange Star army is lead by Nell and her Sister Rachel also  de-facto leads the Allied Nations. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/orangestar.js" line="9"/>
+        <source>With the exception of Jake, the forces of Orange Star concentrates in direct warfare, excelling in frontal assaults. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/orangestar.js" line="19"/>
+        <source>Orange Star</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11928,6 +12311,24 @@
     <message>
         <location filename="../resources/scripts/gamerules/weather/weather_snow.js" line="6"/>
         <source>Snow</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>yellowcomet</name>
+    <message>
+        <location filename="../resources/scripts/wiki/yellowcomet.js" line="8"/>
+        <source>Yellow Comet is on a group of islands on the far east. They&apos;re also the smallest nation of the Allied Nations, but their strong army deters any </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/yellowcomet.js" line="9"/>
+        <source>outside forces from invading them. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/yellowcomet.js" line="19"/>
+        <source>Yellow Comet</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
