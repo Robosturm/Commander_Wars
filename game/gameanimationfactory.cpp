@@ -14,6 +14,8 @@
 
 #include "game/gameanimationnextday.h"
 
+#include "game/battleanimation.h"
+
 #include "game/unit.h"
 
 #include "game/gameaction.h"
@@ -138,24 +140,49 @@ GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(qint32 x,
 }
 
 GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp,
-                                                Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp)
+                                                           Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp)
 {
     GameAnimation* pRet = nullptr;
-    if (pDefUnit != nullptr && atkStartHp != atkEndHp)
+    if (pDefUnit != nullptr)
     {
-        GameAnimation* pAtk = createAnimation(pDefTerrain->getX(), pDefTerrain->getY(), 70);
-        pAtk->addSprite("blackhole_shot", -GameMap::Imagesize * 0.5f, -GameMap::Imagesize * 0.5f, 0, 1.5f);
-        pAtk->setSound("talongunhit.wav", 1);
-        pRet = createAnimation(pAtkTerrain->getX(), pAtkTerrain->getY(), 70);
-        pRet->addSprite("blackhole_shot", -GameMap::Imagesize * 0.5f, -GameMap::Imagesize * 0.5f, 0, 1.5f);
-        pRet->setSound("talongunhit.wav", 1);
-        pAtk->queueAnimation(pRet);
+        if (Settings::getBattleAnimations() == GameEnums::BattleAnimationMode_Detail)
+        {
+            pRet = new BattleAnimation(pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp,
+                                       pDefTerrain, pDefUnit, defStartHp, defEndHp);
+            pRet->setScale(1.5f);
+            pRet->setPosition(Settings::getWidth() / 2 - pRet->getScaledWidth() / 2,
+                              Settings::getHeight() / 2 - pRet->getScaledHeight() / 2);
+            GameMenue::getInstance()->addChild(pRet);
+            m_Animations.append(pRet);
+        }
+        else
+        {
+            // attacking unit
+            GameAnimation* pAtk = createAnimation(pDefTerrain->getX(), pDefTerrain->getY(), 70);
+            pAtk->addSprite("blackhole_shot", -GameMap::Imagesize * 0.5f, -GameMap::Imagesize * 0.5f, 0, 1.5f);
+            pAtk->setSound("talongunhit.wav", 1);
+            GameMap::getInstance()->addChild(pAtk);
+            m_Animations.append(pAtk);
+            if (atkStartHp > atkEndHp)
+            {
+                // counter damage
+                pRet = createAnimation(pAtkTerrain->getX(), pAtkTerrain->getY(), 70);
+                pRet->addSprite("blackhole_shot", -GameMap::Imagesize * 0.5f, -GameMap::Imagesize * 0.5f, 0, 1.5f);
+                pRet->setSound("talongunhit.wav", 1);
+                GameMap::getInstance()->addChild(pRet);
+                m_Animations.append(pRet);
+                pAtk->queueAnimation(pRet);
+            }
+        }
     }
     else
     {
+        // attacking building or terrain
         pRet = createAnimation(pDefTerrain->getX(), pDefTerrain->getY(), 70);
         pRet->addSprite("blackhole_shot", -GameMap::Imagesize * 0.5f, -GameMap::Imagesize * 0.5f, 0, 1.5f);
         pRet->setSound("talongunhit.wav", 1);
+        GameMap::getInstance()->addChild(pRet);
+        m_Animations.append(pRet);
     }
     return pRet;
 }

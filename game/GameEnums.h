@@ -128,6 +128,13 @@ public:
     };
     Q_ENUM(AnimationMode)
 
+    enum BattleAnimationMode
+    {
+        BattleAnimationMode_Detail,
+        BattleAnimationMode_Overworld,
+    };
+    Q_ENUM(BattleAnimationMode)
+
     enum BuildingTarget
     {
         BuildingTarget_All,

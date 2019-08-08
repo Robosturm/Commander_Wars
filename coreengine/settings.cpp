@@ -47,6 +47,7 @@ bool Settings::m_Server               = false;
 
 // ingame options
 GameEnums::AnimationMode Settings::showAnimations = GameEnums::AnimationMode_All;
+GameEnums::BattleAnimationMode Settings::battleAnimations = GameEnums::BattleAnimationMode_Detail;
 quint32 Settings::animationSpeed = 1;
 QString Settings::m_LastSaveGame = "";
 QString Settings::m_Username = "";
@@ -277,6 +278,13 @@ void Settings::loadSettings(){
         Console::print(error, Console::eERROR);
         animationSpeed = GameEnums::AnimationMode_All;
     }
+    battleAnimations  = static_cast<GameEnums::BattleAnimationMode>(settings.value("BattleAnimations", 0).toInt(&ok));
+    if (!ok || battleAnimations < GameEnums::BattleAnimationMode_Detail || battleAnimations > GameEnums::BattleAnimationMode_Overworld)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " BattleAnimations";
+        Console::print(error, Console::eERROR);
+        battleAnimations = GameEnums::BattleAnimationMode_Detail;
+    }
     animationSpeed = settings.value("AnimationSpeed", 1u).toUInt(&ok);
     if(!ok || animationSpeed <= 0 ||  animationSpeed > 100u)
     {
@@ -365,6 +373,7 @@ void Settings::saveSettings(){
 
     settings.beginGroup("Game");
     settings.setValue("ShowAnimations",                 static_cast<qint32>(showAnimations));
+    settings.setValue("BattleAnimations",                 static_cast<qint32>(battleAnimations));
     settings.setValue("AnimationSpeed",                 animationSpeed);
     settings.setValue("LastSaveGame",                   m_LastSaveGame);
     settings.setValue("Username",                       m_Username);
@@ -588,6 +597,16 @@ SDL_Keycode Settings::getKey_information()
 void Settings::setKey_information(const SDL_Keycode &key_information)
 {
     m_key_information = key_information;
+}
+
+GameEnums::BattleAnimationMode Settings::getBattleAnimations()
+{
+    return battleAnimations;
+}
+
+void Settings::setBattleAnimations(const GameEnums::BattleAnimationMode &value)
+{
+    battleAnimations = value;
 }
 
 SDL_Keycode Settings::getKey_moveMapLeft()

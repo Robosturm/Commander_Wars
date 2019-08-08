@@ -35,13 +35,20 @@ public:
 
     static void setUsername(const QString &Username);
 
+
+
+
+public slots:
+
     static bool getShowCursor();
     static void setShowCursor(bool ShowCursor);
 
     static bool getAutoEndTurn();
     static void setAutoEndTurn(bool AutoEndTurn);
 
-public slots:
+    static GameEnums::BattleAnimationMode getBattleAnimations();
+    static void setBattleAnimations(const GameEnums::BattleAnimationMode &value);
+
     static QString getUsername();
     inline static qint32 getX()
     {
@@ -242,6 +249,7 @@ private:
 
     // ingame options
     static GameEnums::AnimationMode showAnimations;
+    static GameEnums::BattleAnimationMode battleAnimations;
     static quint32 animationSpeed;
     static QString m_LastSaveGame;
     static bool m_ShowCursor;

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "resources/images/wiki/" />
+	<atlas>
+		<!-- army symbols -->
+		<image file="os.png"/>
+		<image file="bm.png"/>
+		<image file="ge.png"/>
+		<image file="yc.png"/>
+		<image file="bh.png"/>
+		<image file="bg.png"/>
+		<image file="ma.png"/>
+		<image file="ac.png"/>
+		<image file="bd.png"/>
+		<image file="gs.png"/>
+		<image file="pf.png"/>
+		<image file="ti.png"/>
+		<image file="dm.png"/>
+	</atlas>
+</resources>

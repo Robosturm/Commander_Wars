@@ -160,13 +160,6 @@ set(${PROJECT_NAME}_SRCS
         game/terrainfindingsystem.cpp
         game/gameaction.cpp
         game/unitpathfindingsystem.cpp
-        game/gameanimation.cpp
-        game/gameanimationfactory.cpp
-        game/gameanimationwalk.cpp
-        game/gameanimationcapture.cpp
-        game/gameanimationdialog.cpp
-        game/gameanimationpower.cpp
-        game/gameanimationnextday.cpp
         game/playerinfo.cpp
         game/GameEnums.cpp
         game/gamerules.cpp
@@ -181,6 +174,15 @@ set(${PROJECT_NAME}_SRCS
         game/gamescript.cpp
         game/campaign.cpp
         game/battleanimationsprite.cpp
+        # animation stuff
+        game/gameanimation.cpp
+        game/gameanimationfactory.cpp
+        game/gameanimationwalk.cpp
+        game/gameanimationcapture.cpp
+        game/gameanimationdialog.cpp
+        game/gameanimationpower.cpp
+        game/gameanimationnextday.cpp
+        game/battleanimation.cpp
 
         # game input
         gameinput/basegameinputif.cpp

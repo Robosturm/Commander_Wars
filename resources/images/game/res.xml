@@ -51,6 +51,12 @@
 		<image file="battlesprites/background/back_town.png" />
 		<image file="battlesprites/background/back_town+0.png" />
 		
+		<!-- battle animation -->
+		<image file="battlesprites/battle_back.png" />
+		<image file="battlesprites/battle_front.png" />
+		<image file="battlesprites/co_back.png" />
+		<image file="battlesprites/co_front.png" />
+		
 		<!-- weather stuff -->
 		<image file="weather/weather_sandstorm.png" cols = "16" />
 		<image file="weather/weather_rain.png" cols = "16" />

@@ -125,6 +125,7 @@ int main(int argc, char* argv[])
     qRegisterMetaType<GameEnums::GameAi>("GameEnums::GameAi");
     qRegisterMetaType<GameEnums::AnimationMode>("GameEnums::AnimationMode");
     qRegisterMetaType<GameEnums::BuildingTarget>("GameEnums::BuildingTarget");
+    qRegisterMetaType<GameEnums::BattleAnimationMode>("GameEnums::BattleAnimationMode");
     qRegisterMetaType<SDL_Event>("SDL_Event");
     qRegisterMetaType<std::shared_ptr<QTcpSocket>>("std::shared_ptr<QTcpSocket>");
     qRegisterMetaType<spScriptEvent>("spScriptEvent");

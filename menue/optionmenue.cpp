@@ -215,6 +215,22 @@ void OptionMenue::showGameplayAndKeys()
 
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Battle Animations: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    items = {tr("Detailed"), tr("Overworld")};
+    spDropDownmenu pBattleAnimationMode = new DropDownmenu(300, items);
+    pBattleAnimationMode->setCurrentItem(static_cast<qint32>(pSettings->getBattleAnimations()));
+    pBattleAnimationMode->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pBattleAnimationMode);
+    connect(pBattleAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
+    {
+        pSettings->setBattleAnimations(static_cast<GameEnums::BattleAnimationMode>(value));
+    });
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Animation Speed: ").toStdString().c_str());
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);

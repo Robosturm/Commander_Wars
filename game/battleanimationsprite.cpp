@@ -14,11 +14,16 @@
 
 const QString BattleAnimationSprite::standingAnimation = "loadStandingAnimation";
 
-BattleAnimationSprite::BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QString animationType)
+BattleAnimationSprite::BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QString animationType, qint32 hp)
     : QObject(),
       m_pUnit(pUnit),
-      m_pTerrain(pTerrain)
+      m_pTerrain(pTerrain),
+      hpRounded(hp)
 {
+    if (hpRounded < 0.0f)
+    {
+        hpRounded = pUnit->getHpRounded();
+    }
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -66,7 +71,7 @@ void BattleAnimationSprite::loadSprite(QString spriteID, bool addPlayerColor, qi
     oxygine::ResAnim* pAnim = pBattleAnimationManager->getResAnim(spriteID.toStdString());
     if (pAnim != nullptr)
     {
-        qint32 value = Mainapp::roundUp(m_pUnit->getHpRounded() / 10.0f * maxUnitCount);
+        qint32 value = Mainapp::roundUp(hpRounded / 10.0f * maxUnitCount);
         for (qint32 i = maxUnitCount; i >= maxUnitCount - value + 1; i--)
         {
             QPoint position(0, 0);
@@ -98,4 +103,14 @@ void BattleAnimationSprite::loadSprite(QString spriteID, bool addPlayerColor, qi
             m_Actor->addChild(pSprite);
         }
     }
+}
+
+qint32 BattleAnimationSprite::getHpRounded() const
+{
+    return hpRounded;
+}
+
+void BattleAnimationSprite::setHpRounded(const qint32 &value)
+{
+    hpRounded = value;
 }

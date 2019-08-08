@@ -118,6 +118,21 @@ namespace oxygine
             _frame.flipX();
             _flags ^= flag_flipX;
             animFrameChanged(_frame);
+        }        
+    }
+
+    void Sprite::flipActorsX(oxygine::spActor pActor, bool flippedX)
+    {
+        oxygine::spActor child = pActor->getFirstChild();
+        while (child)
+        {
+            oxygine::Sprite* pSprite1 = dynamic_cast<oxygine::Sprite*>(child.get());
+            if (pSprite1 != nullptr)
+            {
+                pSprite1->setFlippedX(flippedX);
+            }
+            flipActorsX(child, flippedX);
+            child = child->getNextSibling();
         }
     }
 

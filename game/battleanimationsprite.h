@@ -10,17 +10,26 @@
 class BattleAnimationSprite;
 typedef oxygine::intrusive_ptr<BattleAnimationSprite> spBattleAnimationSprite;
 
-class BattleAnimationSprite : public QObject, public oxygine::Actor
+class BattleAnimationSprite : public QObject, public oxygine::Sprite
 {
     Q_OBJECT
 public:
     static const QString standingAnimation;
-    explicit BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QString animationType);
-
+    explicit BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QString animationType, qint32 hp = -1);
 
 signals:
 
 public slots:
+    /**
+     * @brief getHpRounded
+     * @return
+     */
+    qint32 getHpRounded() const;
+    /**
+     * @brief setHpRounded
+     * @param value
+     */
+    void setHpRounded(const qint32 &value);
     /**
      * @brief getUnitPositionOffset
      * @param unitIdx
@@ -43,6 +52,7 @@ private:
     Unit* m_pUnit;
     Terrain* m_pTerrain;
     oxygine::spClipRectActor m_Actor;
+    qint32 hpRounded{0};
 };
 
 #endif // BATTLEANIMATIONSPRITE_H
