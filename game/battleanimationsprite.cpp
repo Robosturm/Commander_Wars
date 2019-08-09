@@ -2,6 +2,8 @@
 
 #include "coreengine/mainapp.h"
 
+#include "coreengine/tweentogglevisibility.h"
+
 #include "resource_management/battleanimationmanager.h"
 
 #include "game/gamemap.h"
@@ -14,6 +16,8 @@
 
 const QString BattleAnimationSprite::standingAnimation = "loadStandingAnimation";
 const QString BattleAnimationSprite::impactAnimation = "loadImpactAnimation";
+const QString BattleAnimationSprite::fireAnimation = "loadFireAnimation";
+const QString BattleAnimationSprite::moveInAnimation = "loadMoveInAnimation";
 
 BattleAnimationSprite::BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QString animationType, qint32 hp)
     : QObject(),
@@ -41,10 +45,13 @@ void BattleAnimationSprite::loadAnimation(QString animationType)
     loadAnimation(animationType, m_pUnit);
 }
 
-void BattleAnimationSprite::loadAnimation(QString animationType, Unit* pUnit)
+void BattleAnimationSprite::loadAnimation(QString animationType, Unit* pUnit, bool clearSprite)
 {
     Mainapp* pApp = Mainapp::getInstance();
-    m_Actor->removeChildren();
+    if (clearSprite)
+    {
+        m_Actor->removeChildren();
+    }
     QString function1 = animationType;
     QJSValueList args1;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
@@ -70,6 +77,86 @@ QPoint BattleAnimationSprite::getUnitPositionOffset(qint32 unitIdx)
     return erg.toVariant().toPoint();
 }
 
+qint32 BattleAnimationSprite::getMaxUnitCount()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getMaxUnitCount";
+    QJSValue erg = pApp->getInterpreter()->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 1;
+    }
+}
+
+qint32 BattleAnimationSprite::getImpactDurationMS()
+{
+    return getImpactDurationMS(m_pUnit);
+}
+
+qint32 BattleAnimationSprite::getImpactDurationMS(Unit* pUnit)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getImpactDurationMS";
+    QJSValue erg = pApp->getInterpreter()->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 1000;
+    }
+}
+
+bool BattleAnimationSprite::hasMoveInAnimation()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "hasMoveInAnimation";
+    QJSValue erg = pApp->getInterpreter()->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1);
+    if (erg.isBool())
+    {
+        return erg.toBool();
+    }
+    else
+    {
+        return false;
+    }
+}
+
+qint32 BattleAnimationSprite::getFireDurationMS()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getFireDurationMS";
+    QJSValue erg = pApp->getInterpreter()->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 500;
+    }
+}
+
+qint32 BattleAnimationSprite::getMoveInDurationMS()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getMoveInDurationMS";
+    QJSValue erg = pApp->getInterpreter()->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 500;
+    }
+}
+
 QPoint BattleAnimationSprite::getUnitPosition(qint32 unitCount, qint32 maxUnitCount)
 {
     qint32 x = (unitCount * 70) % 100;
@@ -77,7 +164,17 @@ QPoint BattleAnimationSprite::getUnitPosition(qint32 unitCount, qint32 maxUnitCo
     return QPoint(x, y);
 }
 
-void BattleAnimationSprite::loadSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset)
+void BattleAnimationSprite::loadSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,
+                                       qint32 loops, float scale, short priority, qint32 showDelay)
+{
+    loadMovingSprite(spriteID, addPlayerColor, maxUnitCount, offset,
+                     QPoint(0, 0), QPoint(0,0), 0,
+                     loops, scale, priority, showDelay);
+}
+
+void BattleAnimationSprite::loadMovingSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,
+                QPoint startPoint, QPoint endPoint, qint32 moveTime,
+                qint32 loops, float scale, short priority, qint32 showDelay)
 {
     BattleAnimationManager* pBattleAnimationManager = BattleAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pBattleAnimationManager->getResAnim(spriteID.toStdString());
@@ -94,7 +191,7 @@ void BattleAnimationSprite::loadSprite(QString spriteID, bool addPlayerColor, qi
             oxygine::spSprite pSprite = new oxygine::Sprite();
             if (pAnim->getTotalFrames() > 1)
             {
-                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, loops);
                 pSprite->addTween(tween);
             }
             else
@@ -110,8 +207,21 @@ void BattleAnimationSprite::loadSprite(QString spriteID, bool addPlayerColor, qi
                 pSprite->addTween(tween);
             }
             QPoint posOffset = getUnitPositionOffset(i);
-            pSprite->setPosition(position.x() + offset.x() + posOffset.x(), 192 - position.y() - offset.y() - pAnim->getHeight() - posOffset.y());
-            pSprite->setPriority(i);
+            qint32 xPos = position.x() + offset.x() + posOffset.x();
+            qint32 yPos = 192 - position.y() - offset.y() - pAnim->getHeight() - posOffset.y();
+            pSprite->setPosition(xPos + startPoint.x(), yPos + startPoint.y());
+            if (moveTime > 0)
+            {
+                oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(xPos + endPoint.x(), yPos + endPoint.y())), moveTime / Settings::getAnimationSpeed(), loops, false, showDelay);
+                pSprite->addTween(moveTween);
+            }
+            if (showDelay > 0)
+            {
+                oxygine::spTween visibileTween = oxygine::createTween(TweenToggleVisibility(0.9f, 1.0f), showDelay, loops);
+                pSprite->addTween(visibileTween);
+            }
+            pSprite->setPriority(i + priority);
+            pSprite->setScale(scale);
             m_Actor->addChild(pSprite);
         }
     }

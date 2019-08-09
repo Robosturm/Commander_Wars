@@ -16,18 +16,15 @@ class BattleAnimationSprite : public QObject, public oxygine::Sprite
 public:
     static const QString standingAnimation;
     static const QString impactAnimation;
+    static const QString fireAnimation;
+    static const QString moveInAnimation;
     explicit BattleAnimationSprite(Unit* pUnit, Terrain* pTerrain, QString animationType, qint32 hp = -1);
     /**
      * @brief loadAnimation
      * @param animationType
      */
     void loadAnimation(QString animationType);
-    /**
-     * @brief loadAnimation
-     * @param animationType
-     * @param pUnit
-     */
-    void loadAnimation(QString animationType, Unit* pUnit);
+
     /**
      * @brief getClipActor
      * @return
@@ -39,6 +36,18 @@ public:
 signals:
 
 public slots:
+    /**
+     * @brief loadAnimation
+     * @param animationType
+     * @param pUnit
+     * @param clearSprite if true clears the battle animation sprite buffer so you can add stuff from scratch default
+     */
+    void loadAnimation(QString animationType, Unit* pUnit, bool clearSprite = true);
+    /**
+     * @brief getMaxUnitCount
+     * @return
+     */
+    qint32 getMaxUnitCount();
     /**
      * @brief getHpRounded
      * @return
@@ -66,7 +75,38 @@ public slots:
      * @param spriteID
      * @param addPlayerColor
      */
-    void loadSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset);
+    void loadSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,
+                    qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0);
+
+    void loadMovingSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,
+                    QPoint startPoint, QPoint endPoint, qint32 moveTime,
+                    qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0);
+    /**
+     * @brief getImpactDurationMS
+     * @return
+     */
+    qint32 getImpactDurationMS();
+    /**
+     * @brief getImpactDurationMS
+     * @param pUnit
+     * @return
+     */
+    qint32 getImpactDurationMS(Unit* pUnit);
+    /**
+     * @brief getFireDurationMS
+     * @return
+     */
+    qint32 getFireDurationMS();
+    /**
+     * @brief getMoveInDurationMS
+     * @return
+     */
+    qint32 getMoveInDurationMS();
+    /**
+     * @brief hasMoveInAnimation
+     * @return
+     */
+    bool hasMoveInAnimation();
 private:
     Unit* m_pUnit;
     Terrain* m_pTerrain;

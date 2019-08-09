@@ -68,17 +68,27 @@ private:
      */
     oxygine::Color getHealthBarColor(float hp);
     /**
-     * @brief loadImpactAnimation
-     * @param pAttacker
-     * @param pDefender
-     */
-    void loadImpactAnimation(Unit* pAttacker, Unit* pDefender);
-    /**
-     * @brief loadImpactAnimation
-     * @param pUnit
+     * @brief loadMoveInAnimation
      * @param pSprite
      */
-    void loadImpactAnimation(Unit* pUnit, spBattleAnimationSprite pSprite, oxygine::spColorRectSprite pColorRect, float endHp,
+    void loadMoveInAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2);
+    /**
+     * @brief loadFireAnimation
+     * @param pSprite
+     */
+    void loadFireAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2);
+    /**
+     * @brief loadImpactAnimation
+     * @param pUnit1
+     * @param pUnit2
+     * @param pSprite
+     * @param pColorRect
+     * @param endHp
+     * @param pCO0
+     * @param pCO1
+     * @param enemyHp
+     */
+    void loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, oxygine::spColorRectSprite pColorRect, float endHp,
                              oxygine::spSprite pCO0, oxygine::spSprite pCO1, float enemyHp);
     /**
      * @brief nextAnimatinStep

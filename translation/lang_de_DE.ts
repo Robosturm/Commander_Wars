@@ -3481,6 +3481,182 @@
     </message>
 </context>
 <context>
+    <name>action_activate_power_co_0</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_power_co_0.js" line="8"/>
+        <source>Activates the Power of your first CO. Read the CO&apos;s power for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_power_co_0.js" line="18"/>
+        <source>Power of CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_activate_power_co_1</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_power_co_1.js" line="8"/>
+        <source>Activates the Power of your second CO. Read the CO&apos;s power for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_power_co_1.js" line="18"/>
+        <source>Power of CO 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_activate_superpower_co_0</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_superpower_co_0.js" line="8"/>
+        <source>Activates the superpower of your first CO. Read the CO&apos;s superpower for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_superpower_co_0.js" line="18"/>
+        <source>Superpower of CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_activate_superpower_co_1</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_superpower_co_1.js" line="8"/>
+        <source>Activates the superpower of your second CO. Read the CO&apos;s superpower for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_superpower_co_1.js" line="18"/>
+        <source>Superpower of CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_activate_tagpower</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_tagpower.js" line="8"/>
+        <source>Activates the superpower of both CO&apos;s. Read the CO&apos;s superpower for more information. This will also apply the Tagpower-Synergy. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_tagpower.js" line="9"/>
+        <source>The synergy gives a hidden firepower boost and a luck boost based on the affinity of the co&apos;s.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_activate_tagpower.js" line="19"/>
+        <source>Tagpower</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_blackholefactory_door1</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door1.js" line="8"/>
+        <source>Orders a Black Hole Factory to produce a unit at the first door. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door1.js" line="9"/>
+        <source>The unit is able to move immediatly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door1.js" line="19"/>
+        <source>Black Hole Factory Door 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_blackholefactory_door2</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door2.js" line="8"/>
+        <source>Orders a Black Hole Factory to produce a unit at the second door. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door2.js" line="9"/>
+        <source>The unit is able to move immediatly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door2.js" line="19"/>
+        <source>Black Hole Factory Door 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_blackholefactory_door3</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door3.js" line="8"/>
+        <source>Orders a Black Hole Factory to produce a unit at the third door. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door3.js" line="9"/>
+        <source>The unit is able to move immediatly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_blackholefactory_door3.js" line="19"/>
+        <source>Black Hole Factory Door 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_build_temp_airport</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_build_temp_airport.js" line="8"/>
+        <source>Orders an apc to build an airport on a plain which can be used to resupply air units. The airport will reduce the material of the apc by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_build_temp_airport.js" line="18"/>
+        <source>Build Airport</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_build_temp_harbour</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_build_temp_harbour.js" line="8"/>
+        <source>Orders an apc to build a harbour on a beach which can be used to resupply sea units. The harbour will reduce the material of the apc by 1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_build_temp_harbour.js" line="18"/>
+        <source>Build Harbour</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_build_waterplane</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_build_waterplane.js" line="8"/>
+        <source>Orders an aircraft carrier to produce a waterplane which can be launched next turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_build_waterplane.js" line="18"/>
+        <source>Build Waterplane</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>action_cannon_fire</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_cannon_fire.js" line="8"/>
+        <source>Orders a minicannon or black cannon to attack a single unit to deal some damage to it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_cannon_fire.js" line="18"/>
+        <source>Fire with Cannon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>action_capture</name>
     <message>
         <location filename="../resources/scripts/wiki/action_capture.js" line="8"/>
@@ -11206,6 +11382,34 @@
     <message>
         <location filename="../resources/scripts/units/cruiser.js" line="97"/>
         <source>Naval Unit. Strong against air units and submarines. &lt;div c=&apos;00ff00&apos;&gt;Transports X 2&lt;/div&gt; Helis.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>darkmatter</name>
+    <message>
+        <location filename="../resources/scripts/wiki/darkmatter.js" line="8"/>
+        <source>A military production company. Dark Matter originally supplied Black Hole with weapons in order to create a war to raise the income of the company. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/darkmatter.js" line="9"/>
+        <source>After three wars against the allied nations. The allied nations got some intel about the original creators of the war.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/darkmatter.js" line="10"/>
+        <source>The Intelligent Defense System section (IDS) is the research section of Dark Matter lead by Dr. Caulder. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/darkmatter.js" line="11"/>
+        <source>Dark Matter is lead by Yukio who lives to make money.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/darkmatter.js" line="21"/>
+        <source>Dark Matter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
