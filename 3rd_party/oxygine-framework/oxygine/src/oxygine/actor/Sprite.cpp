@@ -123,13 +123,25 @@ namespace oxygine
 
     void Sprite::flipActorsX(oxygine::spActor pActor, bool flippedX)
     {
+        oxygine::Sprite* pActorSprite = dynamic_cast<oxygine::Sprite*>(pActor.get());
+        if (pActorSprite != nullptr)
+        {
+            pActorSprite->setFlippedX(flippedX);
+        }
         oxygine::spActor child = pActor->getFirstChild();
         while (child)
         {
             oxygine::Sprite* pSprite1 = dynamic_cast<oxygine::Sprite*>(child.get());
             if (pSprite1 != nullptr)
             {
-                pSprite1->setFlippedX(flippedX);
+                if (pSprite1->getInvertFlipX())
+                {
+                    pSprite1->setFlippedX(!flippedX);
+                }
+                else
+                {
+                    pSprite1->setFlippedX(flippedX);
+                }
             }
             flipActorsX(child, flippedX);
             child = child->getNextSibling();
@@ -291,6 +303,16 @@ namespace oxygine
             _localScale.y = size.y / sz.y;
         else
             _localScale.y = 1.0f;
+    }
+
+    bool Sprite::getInvertFlipX() const
+    {
+        return invertFlipX;
+    }
+
+    void Sprite::setInvertFlipX(bool value)
+    {
+        invertFlipX = value;
     }
 
     RectF Sprite::getDestRect() const

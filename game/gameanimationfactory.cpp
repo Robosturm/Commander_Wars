@@ -139,17 +139,17 @@ GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(qint32 x,
     return pGameAnimationCapture;
 }
 
-GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp,
-                                                           Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp)
+GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
+                                                           Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon)
 {
     GameAnimation* pRet = nullptr;
     if (pDefUnit != nullptr)
     {
         if (Settings::getBattleAnimations() == GameEnums::BattleAnimationMode_Detail)
         {
-            pRet = new BattleAnimation(pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp,
-                                       pDefTerrain, pDefUnit, defStartHp, defEndHp);
-            pRet->setScale(1.5f);
+            pRet = new BattleAnimation(pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
+                                       pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon);
+            pRet->setScale(2.0f);
             pRet->setPosition(Settings::getWidth() / 2 - pRet->getScaledWidth() / 2,
                               Settings::getHeight() / 2 - pRet->getScaledHeight() / 2);
             GameMenue::getInstance()->addChild(pRet);

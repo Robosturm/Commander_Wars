@@ -5,7 +5,7 @@ var Constructor = function()
         return 5;
     };
 
-    this.loadStandingAnimation = function(sprite, unit)
+    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("duster",  false,
                           BATTLEANIMATION_DUSTER.getMaxUnitCount(), Qt.point(-40, 20));

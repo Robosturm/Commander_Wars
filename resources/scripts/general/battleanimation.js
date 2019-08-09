@@ -5,25 +5,25 @@ var BATTLEANIMATION =
         return 5;
     },
 
-    loadStandingAnimation : function(sprite, unit)
+    loadStandingAnimation : function(sprite, unit, defender, weapon)
     {
 
     },
 
-    hasMoveInAnimation : function(sprite, unit)
+    hasMoveInAnimation : function()
     {
         // return true if the unit has an implementation for loadMoveInAnimation
         return false;
     },
 
-    loadMoveInAnimation : function(sprite, unit)
+    loadMoveInAnimation : function(sprite, unit, defender, weapon)
     {
-        sprite.loadAnimation("loadStandingAnimation", unit);
+        sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);
     },
 
-    loadFireAnimation : function(sprite, unit)
+    loadFireAnimation : function(sprite, unit, defender, weapon)
     {
-        sprite.loadAnimation("loadStandingAnimation", unit);
+        sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);
     },
 
     getPositionOffset : function(sprite, unit, terrain, unitIdx)
@@ -31,10 +31,18 @@ var BATTLEANIMATION =
         return Qt.point(0, 0);
     },
 
-    loadImpactAnimation : function(sprite, unit)
+    loadImpactAnimation : function(sprite, unit, defender, weapon)
     {
-        sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
-                          1, 1.0, 0, 0);
+        if (weapon === 0)
+        {
+            sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
+                              1, 1.0, 0, 0);
+        }
+        else
+        {
+            sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
+                              1, 1.0, 0, 0);
+        }
     },
 
     getImpactDurationMS : function()

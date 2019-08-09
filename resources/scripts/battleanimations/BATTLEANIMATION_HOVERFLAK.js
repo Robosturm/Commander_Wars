@@ -5,7 +5,7 @@ var Constructor = function()
         return 5;
     };
 
-    this.loadStandingAnimation = function(sprite, unit)
+    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("hoverflak",  false,
                           BATTLEANIMATION_HOVERFLAK.getMaxUnitCount(), Qt.point(-45, 5));

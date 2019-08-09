@@ -5,7 +5,7 @@ var Constructor = function()
         return 5;
     };
 
-    this.loadStandingAnimation = function(sprite, unit)
+    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         var player = unit.getOwner();
         // get army name
@@ -25,9 +25,9 @@ var Constructor = function()
             armyName = "os";
         }
         sprite.loadSprite("rocketthrower+" + armyName,  false,
-                          BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount(), Qt.point(-5, 5));
+                          BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount(), Qt.point(-10, 5));
         sprite.loadSprite("rocketthrower+" + armyName + "+mask",  true,
-                          BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount(), Qt.point(-5, 5));
+                          BATTLEANIMATION_ROCKETTHROWER.getMaxUnitCount(), Qt.point(-10, 5));
     };
 };
 

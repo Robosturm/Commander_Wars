@@ -441,8 +441,8 @@ var Constructor = function()
             // only kill units if we should else we stop here
             if (dontKillUnits  === false)
             {
-                var unitBattleAnimation = GameAnimationFactory.createBattleAnimation(attacker.getTerrain(), attacker, atkStartHp, attacker.getHp(),
-                                                                                     defUnit.getTerrain(), defUnit, defStartHp, defUnit.getHp());
+                var unitBattleAnimation = GameAnimationFactory.createBattleAnimation(attacker.getTerrain(), attacker, atkStartHp, attacker.getHp(), attackerWeapon,
+                                                                                     defUnit.getTerrain(), defUnit, defStartHp, defUnit.getHp(), defenderWeapon);
                 ACTION_FIRE.postUnitAnimationAttacker = attacker;
                 ACTION_FIRE.postUnitAnimationDefender = defUnit;
                 unitBattleAnimation.setEndOfAnimationCall("ACTION_FIRE", "performPostUnitAnimation");
@@ -451,8 +451,8 @@ var Constructor = function()
         else
         {
             // we attacked a building or terrain ;)
-            var buildBattleAnimation = GameAnimationFactory.createBattleAnimation(attacker.getTerrain(), attacker, -1, -1,
-                                                                                  defTerrain, null, -1, -1);
+            var buildBattleAnimation = GameAnimationFactory.createBattleAnimation(attacker.getTerrain(), attacker, -1, -1, attackerWeapon,
+                                                                                  defTerrain, null, -1, -1, defenderWeapon);
             buildBattleAnimation.setEndOfAnimationCall("ACTION_FIRE", "performPostBuildingAnimation");
             ACTION_FIRE.postBuildingAnimationTerrain = defTerrain;
             if ((defBuilding !== null) && (defBuilding.getHp() > 0))

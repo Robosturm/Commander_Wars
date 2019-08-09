@@ -33,16 +33,22 @@ public:
     {
         return m_Actor;
     }
-signals:
 
+signals:
+    void sigDetachChild(oxygine::spActor pActor);
 public slots:
+    /**
+     * @brief setMaxUnitCount
+     * @param value
+     */
+    void setMaxUnitCount(const qint32 &value);
     /**
      * @brief loadAnimation
      * @param animationType
      * @param pUnit
      * @param clearSprite if true clears the battle animation sprite buffer so you can add stuff from scratch default
      */
-    void loadAnimation(QString animationType, Unit* pUnit, bool clearSprite = true);
+    void loadAnimation(QString animationType, Unit* pUnit, Unit* pDefender = nullptr, qint32 attackerWeapon = 0, bool clearSprite = true);
     /**
      * @brief getMaxUnitCount
      * @return
@@ -74,13 +80,36 @@ public slots:
      * @brief loadSprite
      * @param spriteID
      * @param addPlayerColor
+     * @param maxUnitCount
+     * @param offset
+     * @param loop
+     * @param scale
+     * @param priority
+     * @param showDelay
+     * @param invertFlipX if true the flipping of the sprite is inverted
      */
     void loadSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,
-                    qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0);
-
+                    qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
+                    bool invertFlipX = false);
+    /**
+     * @brief loadMovingSprite
+     * @param spriteID
+     * @param addPlayerColor
+     * @param maxUnitCount
+     * @param offset
+     * @param movement
+     * @param moveTime
+     * @param deleteAfter
+     * @param loop
+     * @param scale
+     * @param priority
+     * @param showDelay
+     * @param invertFlipX if true the flipping of the sprite is inverted
+     */
     void loadMovingSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,
-                    QPoint startPoint, QPoint endPoint, qint32 moveTime,
-                    qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0);
+                    QPoint movement, qint32 moveTime, bool deleteAfter = false,
+                    qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
+                    bool invertFlipX = false);
     /**
      * @brief getImpactDurationMS
      * @return
@@ -107,11 +136,17 @@ public slots:
      * @return
      */
     bool hasMoveInAnimation();
+    /**
+     * @brief detachChild
+     * @param pActor
+     */
+    void detachChild(oxygine::spActor pActor);
 private:
     Unit* m_pUnit;
     Terrain* m_pTerrain;
     oxygine::spClipRectActor m_Actor;
     qint32 hpRounded{0};
+    qint32 maxUnitCount{-1};
 };
 
 #endif // BATTLEANIMATIONSPRITE_H

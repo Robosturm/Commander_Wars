@@ -5,7 +5,7 @@ var Constructor = function()
         return 5;
     };
 
-    this.loadStandingAnimation = function(sprite, unit)
+    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("heavy_hovercraft",  false,
                           BATTLEANIMATION_HEAVY_HOVERCRAFT.getMaxUnitCount(), Qt.point(-45, 5));

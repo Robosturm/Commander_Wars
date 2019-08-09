@@ -5,7 +5,7 @@ var Constructor = function()
         return 1;
     };
 
-    this.loadStandingAnimation = function(sprite, unit)
+    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("aircraftcarrier",  false,
                           BATTLEANIMATION_AIRCRAFTCARRIER.getMaxUnitCount(), Qt.point(0, 20));

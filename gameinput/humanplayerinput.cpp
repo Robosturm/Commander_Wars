@@ -761,10 +761,10 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
                 oxygine::spSprite pSprite = new oxygine::Sprite();
                 oxygine::ResAnim* pAnim = pGameManager->getResAnim("arrow+unit");
                 pSprite->setResAnim(pAnim);
-                pSprite->setPriority(static_cast<qint16>(Terrain::DrawPriority::Arrow));
+                pSprite->setPriority(static_cast<qint16>(points[i].y() + 3));
                 pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
-                pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
-                pMap->getSpTerrain(points[i].x(), points[i].y())->addChild(pSprite);
+                pSprite->setPosition(points[i].x() * GameMap::Imagesize -(pSprite->getScaledWidth() - GameMap::Imagesize) / 2,  points[i].y() * GameMap::Imagesize -(pSprite->getScaledHeight() - GameMap::Imagesize));
+                pMap->addChild(pSprite);
                 m_Arrows.append(pSprite);
 
                 if (i > 0)
@@ -845,7 +845,7 @@ void HumanPlayerInput::deleteArrow()
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < m_Arrows.size(); i++)
     {
-        pMap->getTerrain(m_ArrowPoints[i].x(), m_ArrowPoints[i].y())->removeChild(m_Arrows[i]);
+        m_Arrows[i]->detach();
     }
     m_ArrowPoints.clear();
     m_Arrows.clear();

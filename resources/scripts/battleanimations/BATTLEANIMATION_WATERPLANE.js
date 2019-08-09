@@ -5,7 +5,7 @@ var Constructor = function()
         return 5;
     };
 
-    this.loadStandingAnimation = function(sprite, unit)
+    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("waterplane",  false,
                           BATTLEANIMATION_WATERPLANE.getMaxUnitCount(), Qt.point(-50, 20));

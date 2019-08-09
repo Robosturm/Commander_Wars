@@ -131,6 +131,7 @@ int main(int argc, char* argv[])
     qRegisterMetaType<spScriptEvent>("spScriptEvent");
     qRegisterMetaType<spScriptCondition>("spScriptCondition");
     qRegisterMetaType<WikiDatabase::pageData>("WikiDatabase::pageData");
+    qRegisterMetaType<oxygine::spActor>("oxygine::spActor");
 
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
     qmlRegisterInterface<Terrain>("Terrain");
@@ -162,7 +163,7 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<BaseGameInputIF>("BaseGameInputIF");
     qmlRegisterInterface<Settings>("Settings");
     qmlRegisterInterface<Wikipage>("Wikipage");
-
+    qmlRegisterInterface<oxygine::spActor>("oxygine::spActor");
 
     // load ressources
     BackgroundManager::getInstance();

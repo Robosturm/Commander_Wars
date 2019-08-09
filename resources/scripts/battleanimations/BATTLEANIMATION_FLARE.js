@@ -5,7 +5,7 @@ var Constructor = function()
         return 5;
     };
 
-    this.loadStandingAnimation = function(sprite, unit)
+    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("flare",  false,
                           BATTLEANIMATION_FLARE.getMaxUnitCount(), Qt.point(-45, 5));

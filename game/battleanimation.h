@@ -27,8 +27,8 @@ public:
         Finished,
     };
 
-    BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp,
-                    Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp);
+    BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
+                    Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon);
 
     virtual void restart() override;
     virtual void stop() override;
@@ -71,12 +71,12 @@ private:
      * @brief loadMoveInAnimation
      * @param pSprite
      */
-    void loadMoveInAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2);
+    void loadMoveInAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon);
     /**
      * @brief loadFireAnimation
      * @param pSprite
      */
-    void loadFireAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2);
+    void loadFireAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon);
     /**
      * @brief loadImpactAnimation
      * @param pUnit1
@@ -88,8 +88,8 @@ private:
      * @param pCO1
      * @param enemyHp
      */
-    void loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, oxygine::spColorRectSprite pColorRect, float endHp,
-                             oxygine::spSprite pCO0, oxygine::spSprite pCO1, float enemyHp);
+    void loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, spBattleAnimationSprite pAttackerSprite,
+                             oxygine::spColorRectSprite pColorRect, float endHp, qint32 weapon, float enemyHp);
     /**
      * @brief nextAnimatinStep
      */
@@ -112,10 +112,12 @@ private:
     Unit* m_pAtkUnit;
     float m_atkStartHp;
     float m_atkEndHp;
+    qint32 m_AtkWeapon{0};
     Terrain* m_pDefTerrain;
     Unit* m_pDefUnit;
     float m_defStartHp;
     float m_defEndHp;
+    qint32 m_DefWeapon{0};
 
     AnimationProgress currentState{AnimationProgress::AttackerImpact};
 

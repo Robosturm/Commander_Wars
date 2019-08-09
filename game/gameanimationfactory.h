@@ -64,8 +64,8 @@ public slots:
      * @param defEndHp
      * @return
      */
-    static GameAnimation* createBattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp,
-                                                Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp);
+    static GameAnimation* createBattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
+                                                Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon);
     /**
      * @brief createAnimationPower
      * @param color

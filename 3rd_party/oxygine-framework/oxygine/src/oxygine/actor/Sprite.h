@@ -51,6 +51,8 @@ namespace oxygine
         static void             flipActorsX(oxygine::spActor pActor, bool flippedX);
         void                    setFlippedY(bool flippedY);
         void                    setFlipped(bool flippedX, bool flippedY);
+        bool getInvertFlipX() const;
+        void setInvertFlipX(bool value);
 
         void serialize(serializedata* data) override;
         void deserialize(const deserializedata* data) override;
@@ -59,6 +61,8 @@ namespace oxygine
         std::string dump(const dumpOptions&) const override;
 
         void doRender(const RenderState&) override;
+
+
     protected:
         enum
         {
@@ -72,6 +76,8 @@ namespace oxygine
 
         Vector2 _localScale;
         AnimationFrame _frame;
+
+        bool invertFlipX{false};
     };
 }
 

@@ -5,7 +5,7 @@ var Constructor = function()
         return 1;
     };
 
-    this.loadStandingAnimation = function(sprite, unit)
+    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("hoellium",  false,
                           BATTLEANIMATION_HOELLIUM.getMaxUnitCount(), Qt.point(10, 10));

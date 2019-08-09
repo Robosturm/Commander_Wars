@@ -5,7 +5,7 @@ var Constructor = function()
         return 1;
     };
 
-    this.loadStandingAnimation = function(sprite, unit)
+    this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("piperunner",  false,
                           BATTLEANIMATION_PIPERUNNER.getMaxUnitCount(), Qt.point(30, 30));
