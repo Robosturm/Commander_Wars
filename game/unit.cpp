@@ -1171,10 +1171,6 @@ void Unit::setFuel(const qint32 &value)
     {
         fuel = value;
     }
-    if (fuel < 0 && maxFuel > 0)
-    {
-        fuel = maxFuel;
-    }
     if (maxFuel > 0 && static_cast<float>(fuel) / static_cast<float>(maxFuel) <= 1.0f / 3.0f)
     {
         loadIcon("fuel", GameMap::Imagesize / 2, 0);
@@ -1232,7 +1228,7 @@ void Unit::setAmmo2(const qint32 &value)
     }
     else  if (maxAmmo2 > 0 && ammo2 < 0)
     {
-        ammo2 = maxAmmo2;
+        ammo2 = 0;
     }
     if (maxAmmo2 > 0 && static_cast<float>(ammo2) / static_cast<float>(maxAmmo2) <= 1.0f / 3.0f)
     {
@@ -1294,7 +1290,7 @@ void Unit::setAmmo1(const qint32 &value)
     }
     else if (maxAmmo1 > 0 && ammo1 < 0)
     {
-        ammo1 = maxAmmo1;
+        ammo1 = 0;
     }
 
     if (maxAmmo1 > 0 && static_cast<float>(ammo1) / static_cast<float>(maxAmmo1) <= 1.0f / 3.0f)
