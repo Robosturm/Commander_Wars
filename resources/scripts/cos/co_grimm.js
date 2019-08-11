@@ -104,7 +104,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/tagpower.mp3");
                 break;
             default:
-                audio.addMusic("resources/music/cos/grimm.mp3")
+                audio.addMusic("resources/music/cos/grimm.mp3", 12479, 76493);
                 break;
         }
     };

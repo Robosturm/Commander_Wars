@@ -29,7 +29,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/tagpower.mp3");
                 break;
             default:
-                audio.addMusic("resources/music/cos/grit.mp3")
+                audio.addMusic("resources/music/cos/grit.mp3", 13156, 66022)
                 break;
         }
     };

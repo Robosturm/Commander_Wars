@@ -130,7 +130,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/tagpower.mp3");
                 break;
             default:
-                audio.addMusic("resources/music/cos/meiyo.mp3")
+                audio.addMusic("resources/music/cos/meiyo.mp3", 76678, 146244);
                 break;
         }
     };
