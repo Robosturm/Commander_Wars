@@ -46,6 +46,9 @@ Unit::Unit(QString unitID, Player* pOwner, bool aquireId)
     if (!m_UnitID.isEmpty())
     {
         initUnit();
+        setFuel(maxFuel);
+        setAmmo1(maxAmmo1);
+        setAmmo2(maxAmmo2);
         updateSprites();
         if (aquireId)
         {
@@ -1672,10 +1675,48 @@ void Unit::moveUnitAction(GameAction* pAction)
 
 void Unit::moveUnit(QVector<QPoint> movePath)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    if (movePath.size() < 1)
+    {
+        movePath.append(QPoint(getX(), getY()));
+    }
+    // update vision based on the movepath of the unit
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < movePath.size(); i++)
+    {
+        QmlVectorPoint* pCircle = Mainapp::getCircle(0, getVision(movePath[i]));
+        for (qint32 i2 = 0; i2 < pCircle->size(); i2++)
+        {
+            QPoint circleField = pCircle->at(i2);
+            QPoint field = circleField + QPoint(movePath[i].x(), movePath[i].y());
+            if (pMap->onMap(field.x(), field.y()))
+            {
+                if (qAbs(circleField.x()) + qAbs(circleField.y()) <= 1)
+                {
+                    m_pOwner->addVisionField(field.x(), field.y(), 1, true);
+                }
+                else
+                {
+                    Terrain* pTerrain = pMap->getTerrain(field.x(), field.y());
+                    Unit* pUnit = pTerrain->getUnit();
+                    bool visionHide = pTerrain->getVisionHide(m_pOwner);
+                    if ((!visionHide) ||
+                        ((pUnit != nullptr) && visionHide &&
+                         !pUnit->useTerrainDefense() && !pUnit->getHidden()))
+                    {
+                        m_pOwner->addVisionField(field.x(), field.y(), 1, false);
+                    }
+                }
+            }
+        }
+        delete pCircle;
+    }
     if (movePath.size() > 1)
     {
         moveUnitToField(movePath[0].x(), movePath[0].y());
     }
+    pApp->continueThread();
 }
 
 void Unit::moveUnitToField(qint32 x, qint32 y)
@@ -1981,6 +2022,11 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
         }
         // can we see the unit?
         bool visibleField = pPlayer->getFieldVisible(x, y);
+        bool directView = pPlayer->getFieldDirectVisible(x, y);
+        if (directView)
+        {
+            return false;
+        }
         if (!visibleField && !ignoreOutOfVisionRange)
         {
             return true;

@@ -92,13 +92,20 @@ var Constructor = function()
             var y = fields.at(i).y + ACTION_FLARE.postAnimationTargetY;
             if (map.onMap(x, y))
             {
-               ACTION_FLARE.postAnimationPlayer.addVisionField(x, y, 1);
+               ACTION_FLARE.postAnimationPlayer.addVisionField(x, y, 1, true);
             }
         }
         ACTION_FLARE.postAnimationTargetX = -1;
         ACTION_FLARE.postAnimationTargetY = -1;
         ACTION_FLARE.postAnimationPlayer = null;
-    }
+    };
+    this.getStepCursor = function(action, cursorData)
+    {
+        cursorData.setCursor("cursor+missile");
+        cursorData.setXOffset(- map.getImageSize() * 2);
+        cursorData.setYOffset(- map.getImageSize() * 2);
+        cursorData.setScale(1.5);
+    };
 }
 
 Constructor.prototype = ACTION;

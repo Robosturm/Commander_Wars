@@ -45,7 +45,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 8;
+        return 9;
     }
     /**
      * @brief setBaseGameInput sets the player input
@@ -314,13 +314,20 @@ public slots:
      * @param y
      * @param duration
      */
-    void addVisionField(qint32 x, qint32 y, qint32 duration = 1);
+    void addVisionField(qint32 x, qint32 y, qint32 duration = 1, bool directView = false);
     /**
      * @brief getFieldVisible
      * @param x
      * @param y
      */
     bool getFieldVisible(qint32 x, qint32 y);
+    /**
+     * @brief getFieldDirectVisible
+     * @param x
+     * @param y
+     * @return if true a stealthed unit will be made visible by this players view
+     */
+    bool getFieldDirectVisible(qint32 x, qint32 y);
     /**
      * @brief loadVisionFields
      */
@@ -362,7 +369,7 @@ private:
      */
     spBaseGameInputIF m_pBaseGameInput{nullptr};
     bool isDefeated{false};
-    QVector<QVector<QPoint>> m_FogVisionFields;
+    QVector<QVector<std::tuple<bool, qint32, bool>>> m_FogVisionFields;
     /**
      * @brief m_BuildList contains all units we're allowed to build
      */

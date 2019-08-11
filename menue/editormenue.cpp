@@ -693,6 +693,8 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
         {
             QString terrainID = m_EditorSelection->getCurrentTerrainID();
 
+            pMap->getTerrain(points.at(i).x(), points.at(i).y())->setUnit(nullptr);
+
             Mainapp* pApp = Mainapp::getInstance();
             QString function1 = "useTerrainAsBaseTerrain";
             QJSValueList args1;

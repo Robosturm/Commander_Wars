@@ -53,10 +53,10 @@ void Player::loadVisionFields()
     m_FogVisionFields.clear();
     for (qint32 x = 0; x < width; x++)
     {
-        m_FogVisionFields.append(QVector<QPoint>());
+        m_FogVisionFields.append(QVector<std::tuple<bool, qint32, bool>>());
         for (qint32 y = 0; y < heigth; y++)
         {
-            m_FogVisionFields[x].append(QPoint());
+            m_FogVisionFields[x].append(std::tuple<bool, qint32, bool>(false, 0, false));
         }
     }
 }
@@ -445,12 +445,16 @@ void Player::setIsDefeated(bool value)
     isDefeated = value;
 }
 
-void Player::addVisionField(qint32 x, qint32 y, qint32 duration)
+void Player::addVisionField(qint32 x, qint32 y, qint32 duration, bool directView)
 {
-    m_FogVisionFields[x][y].setX(1);
-    if (duration > m_FogVisionFields[x][y].y())
+    std::get<0>(m_FogVisionFields[x][y]) = true;
+    if (duration > std::get<1>(m_FogVisionFields[x][y]))
     {
-        m_FogVisionFields[x][y].setY(duration);
+        std::get<1>(m_FogVisionFields[x][y]) = duration;
+    }
+    if (std::get<2>(m_FogVisionFields[x][y]) == false)
+    {
+        std::get<2>(m_FogVisionFields[x][y]) = directView;
     }
 }
 
@@ -470,15 +474,18 @@ void Player::updatePlayerVision(bool reduceTimer)
             {
                 if (reduceTimer)
                 {
-                    m_FogVisionFields[x][y].setY(m_FogVisionFields[x][y].y() - 1);
+                    std::get<1>(m_FogVisionFields[x][y]) -= 1;
                 }
-                if (m_FogVisionFields[x][y].y() <= 0)
+                qint32 duration = std::get<1>(m_FogVisionFields[x][y]);
+                if (duration <= 0)
                 {
-                    m_FogVisionFields[x][y].setX(0);
-                    m_FogVisionFields[x][y].setY(0);
+                    std::get<0>(m_FogVisionFields[x][y]) = false;
+                    std::get<1>(m_FogVisionFields[x][y]) = 0;
+                    std::get<2>(m_FogVisionFields[x][y]) = false;
                 }
             }
         }
+
         for (qint32 x = 0; x < width; x++)
         {
             for (qint32 y = 0; y < heigth; y++)
@@ -500,7 +507,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                                 ((pUnit != nullptr) && visionHide &&
                                  !pUnit->useTerrainDefense() && !pUnit->getHidden()))
                             {
-                                m_FogVisionFields[point.x() + x][point.y() + y].setX(1);
+                                std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = true;
                             }
                         }
                     }
@@ -511,7 +518,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                     ((pBuilding->getOwner() == this) ||
                      (checkAlliance(pBuilding->getOwner()) == GameEnums::Alliance_Friend)))
                 {
-                    m_FogVisionFields[x][y].setX(1);
+                    std::get<0>(m_FogVisionFields[x][y]) = true;
                     qint32 visionRange = pBuilding->getVision();
                     if (visionRange >= 0)
                     {
@@ -528,7 +535,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                                     ((pUnit != nullptr) && visionHide &&
                                      !pUnit->useTerrainDefense() && !pUnit->getHidden()))
                                 {
-                                    m_FogVisionFields[point.x() + x][point.y() + y].setX(1);
+                                    std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = true;
                                 }
                             }
                         }
@@ -554,12 +561,12 @@ void Player::updatePlayerVision(bool reduceTimer)
                                 ((pUnit != nullptr) && visionHide &&
                                  !pUnit->useTerrainDefense() && !pUnit->getHidden()))
                             {
-                                m_FogVisionFields[point.x() + x][point.y() + y].setX(1);
+                                std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = true;
                             }
                             // terrain hides are visible if we're near it.
                             else if (((qAbs(point.x()) + qAbs(point.y())) <= 1))
                             {
-                                m_FogVisionFields[point.x() + x][point.y() + y].setX(1);
+                                std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = true;
                             }
                             else
                             {
@@ -585,9 +592,14 @@ bool Player::getFieldVisible(qint32 x, qint32 y)
         }
         case GameEnums::Fog_OfWar:
         {
-            return static_cast<bool>(m_FogVisionFields[x][y].x());
+            return std::get<0>(m_FogVisionFields[x][y]);
         }
     }
+}
+
+bool Player::getFieldDirectVisible(qint32 x, qint32 y)
+{
+    return std::get<2>(m_FogVisionFields[x][y]);
 }
 
 qint32 Player::getCosts(QString id)
@@ -1014,8 +1026,9 @@ void Player::serializeObject(QDataStream& pStream)
      {
          for (qint32 y = 0; y < heigth; y++)
          {
-             pStream << m_FogVisionFields[x][y].x();
-             pStream << m_FogVisionFields[x][y].y();
+             pStream << std::get<0>(m_FogVisionFields[x][y]);
+             pStream << std::get<1>(m_FogVisionFields[x][y]);
+             pStream << std::get<2>(m_FogVisionFields[x][y]);
          }
      }
      pStream << m_BuildList;
@@ -1077,15 +1090,28 @@ void Player::deserializeObject(QDataStream& pStream)
             pStream >> heigth;
             for (qint32 x = 0; x < width; x++)
             {
-                m_FogVisionFields.append(QVector<QPoint>());
+                m_FogVisionFields.append(QVector<std::tuple<bool, qint32, bool>>());
                 for (qint32 y = 0; y < heigth; y++)
-                {
-                    m_FogVisionFields[x].append(QPoint());
-                    qint32 value = 0;
-                    pStream >> value;
-                    m_FogVisionFields[x][y].setX(value);
-                    pStream >> value;
-                    m_FogVisionFields[x][y].setY(value);
+                {                    
+                    bool value = 0;
+                    qint32 duration = 0;
+                    bool directView = false;
+                    if (version > 8)
+                    {
+                        pStream >> value;
+                    }
+                    else
+                    {
+                        qint32 buf = 0;
+                        pStream >> buf;
+                        value = buf;
+                    }
+                    pStream >> duration;
+                    if (version > 8)
+                    {
+                        pStream >> directView;
+                    }
+                    m_FogVisionFields[x].append(std::tuple<bool, qint32, bool>(value, duration, directView));
                 }
             }
         }
