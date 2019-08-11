@@ -41,22 +41,22 @@ var Constructor = function()
         if (weapon === 0)
         {
             // gun
-            offset = Qt.point(21, 5);
+            offset = Qt.point(21, 21);
             if (armyName === "yc")
             {
-                offset = Qt.point(29, 0);
+                offset = Qt.point(29, 16);
             }
             else if (armyName === "ge")
             {
-                offset = Qt.point(32, 5);
+                offset = Qt.point(32, 21);
             }
             else if (armyName === "bm")
             {
-                offset = Qt.point(32, 0);
+                offset = Qt.point(32, 16);
             }
             else if (armyName === "bh")
             {
-                offset = Qt.point(31, 5);
+                offset = Qt.point(31, 21);
             }
             sprite.loadSprite("medium_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 0.5, 0, 0);

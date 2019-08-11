@@ -58,7 +58,7 @@ var Constructor = function()
             {
                 offset = Qt.point(28, 20);
             }
-            sprite.loadSprite("medium_shot",  false, sprite.getMaxUnitCount(), Qt.point(27, 23),
+            sprite.loadSprite("medium_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1.0, 0, 0);
         }
         else

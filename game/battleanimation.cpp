@@ -256,6 +256,8 @@ void BattleAnimation::setSpritePosition(oxygine::spSprite pSprite, Unit* pUnit1,
     if (getIsLeft(pUnit1, pUnit2))
     {
         pSprite->setPosition(31, 34);
+        // flip all childdren
+        pSprite->flipActorsX(pSprite, false);
     }
     else
     {

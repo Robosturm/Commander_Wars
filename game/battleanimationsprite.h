@@ -55,6 +55,12 @@ public slots:
      */
     qint32 getMaxUnitCount();
     /**
+     * @brief getUnitCount
+     * @param maxUnitCount
+     * @return
+     */
+    qint32 getUnitCount(qint32 maxUnitCount);
+    /**
      * @brief getHpRounded
      * @return
      */
@@ -90,7 +96,7 @@ public slots:
      */
     void loadSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,
                     qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
-                    bool invertFlipX = false);
+                    bool invertFlipX = false, bool deleteAfter = false);
     /**
      * @brief loadMovingSprite
      * @param spriteID
@@ -107,6 +113,24 @@ public slots:
      * @param invertFlipX if true the flipping of the sprite is inverted
      */
     void loadMovingSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,
+                    QPoint movement, qint32 moveTime, bool deleteAfter = false,
+                    qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
+                    bool invertFlipX = false);
+    /**
+     * @brief loadSingleMovingSprite
+     * @param spriteID
+     * @param addPlayerColor
+     * @param offset
+     * @param movement
+     * @param moveTime
+     * @param deleteAfter
+     * @param loop
+     * @param scale
+     * @param priority
+     * @param showDelay
+     * @param invertFlipX
+     */
+    void loadSingleMovingSprite(QString spriteID, bool addPlayerColor, QPoint offset,
                     QPoint movement, qint32 moveTime, bool deleteAfter = false,
                     qint32 loop = 1, float scale = 1.0f, short priority = 0, qint32 showDelay = 0,
                     bool invertFlipX = false);

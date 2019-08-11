@@ -11668,12 +11668,12 @@
 <context>
     <name>mech</name>
     <message>
-        <location filename="../resources/scripts/units/mech.js" line="81"/>
+        <location filename="../resources/scripts/units/mech.js" line="77"/>
         <source>Mech</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/mech.js" line="90"/>
+        <location filename="../resources/scripts/units/mech.js" line="86"/>
         <source>Attack power high. Can &lt;div c=&apos;00ff00&apos;&gt;capture &lt;/div&gt; bases. &lt;div c=&apos;00ff00&apos;&gt;Vision +3 &lt;/div&gt; when on mountains.</source>
         <translation type="unfinished"></translation>
     </message>

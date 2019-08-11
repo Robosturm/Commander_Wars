@@ -12,6 +12,27 @@ var Constructor = function()
         sprite.loadSprite("flare+mask",  true,
                           BATTLEANIMATION_FLARE.getMaxUnitCount(), Qt.point(-45, 5));
     };
+
+    this.loadFireAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_FLARE.loadStandingAnimation(sprite, unit, defender, weapon);
+        // mg
+        var offset = Qt.point(10, 27);
+        sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
+                          1, 1, 0, 0);
+    };
+
+    this.getFireDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 500;
+    };
+
+    this.loadImpactAnimation = function(sprite, unit, defender, weapon)
+    {
+        sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
+                          1, 1.0, 0, 0);
+    };
 };
 
 Constructor.prototype = BATTLEANIMATION;

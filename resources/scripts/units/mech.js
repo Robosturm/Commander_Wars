@@ -54,7 +54,7 @@ var Constructor = function()
         var player = unit.getOwner();
         // get army name
         var armyName = player.getArmy().toLowerCase();
-        var zoom = 1;
+        var zoom = 1.5;
         if (armyName === "bg")
         {
             armyName = "bh"
@@ -67,10 +67,6 @@ var Constructor = function()
         {
             armyName = "os";
         }
-		else
-		{
-			zoom = 1.5;
-		}
         animation.loadSprite("mech+" + armyName + "+walk+mask", true, zoom);
         animation.loadSprite("mech+" + armyName + "+walk", false, zoom);
         animation.setSound("movefeet.wav", -2);

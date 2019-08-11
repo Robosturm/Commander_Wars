@@ -38,9 +38,37 @@ var Constructor = function()
     {
         if (weapon === 1)
         {
+            var weaponRes = "bazooka_os";
+            var offset = Qt.point(27, 23);
+            var player = unit.getOwner();
+            // get army name
+            var armyName = player.getArmy().toLowerCase();
+            if (armyName === "bg")
+            {
+                armyName = "bh"
+            }
+            if (armyName === "yc")
+            {
+                offset = Qt.point(26, 17);
+            }
+            else if (armyName === "ge")
+            {
+                weaponRes = "bazooka_ge";
+                offset = Qt.point(28, 15);
+            }
+            else if (armyName === "bm")
+            {
+                offset = Qt.point(27, 17);
+            }
+            else if (armyName === "bh")
+            {
+                weaponRes = "bazooka_bh"
+                offset = Qt.point(25, 14);
+            }
             BATTLEANIMATION_MECH.loadStandingAnimation(sprite, unit, defender, weapon);
-            sprite.loadMovingSprite("bazooka_os", false, sprite.getMaxUnitCount(), Qt.point(20, 24),
-                                    Qt.point(127, 0), 400, false);
+            sprite.loadMovingSprite(weaponRes, false, sprite.getMaxUnitCount(), offset,
+                                    Qt.point(127, 0), 400, false,
+                                    1, 1, -1);
         }
         else
         {

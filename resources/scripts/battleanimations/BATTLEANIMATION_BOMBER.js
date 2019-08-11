@@ -26,6 +26,40 @@ var Constructor = function()
         sprite.loadSprite("bomber+" + armyName + "+mask",  true,
                           BATTLEANIMATION_BOMBER.getMaxUnitCount(), Qt.point(0, 40));
     };
+
+    this.loadFireAnimation = function(sprite, unit, defender, weapon)
+    {
+        BATTLEANIMATION_BOMBER.loadStandingAnimation(sprite, unit, defender, weapon);
+        var count = sprite.getUnitCount(5);
+        for (var i = 0; i < count; i++)
+        {
+            sprite.loadSingleMovingSprite("bombs_projectile", false, Qt.point(70, 50),
+                                    Qt.point(0, -70), 400, false,
+                                    1, 1, -1, i * 150);
+        }
+    };
+
+    this.getFireDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 1250;
+    };
+
+    this.loadImpactAnimation = function(sprite, unit, defender, weapon)
+    {
+        sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 60),
+                          1, 1.0, 0, 300);
+        sprite.loadMovingSprite("bomb_falling", false, 5, Qt.point(0, 150),
+                                Qt.point(0, -130), 400, true,
+                                1, 1, 0, 0, true);
+    };
+
+    this.getImpactDurationMS = function()
+    {
+        // should be a second or longer.
+        // the time will be scaled with animation speed inside the engine
+        return 1500;
+    };
 };
 
 Constructor.prototype = BATTLEANIMATION;

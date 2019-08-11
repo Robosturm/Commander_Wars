@@ -8,11 +8,14 @@
 		<image file="GeneralSprites/bazooka_os.png" />
 		<image file="GeneralSprites/bazooka_bh.png" />
 		<image file="GeneralSprites/bombs_projectile.png" cols = "4" />
+		<image file="GeneralSprites/bomb_falling.png" />		
 		<image file="GeneralSprites/medium_shot.png" cols = "5" />
 		<image file="GeneralSprites/mg_shot.png" cols = "5" />
 		<image file="GeneralSprites/mg_shot_air.png" cols = "5" />
 		<image file="GeneralSprites/rocket_launch.png" cols = "4" />
-		<image file="GeneralSprites/rocket_projectile.png" cols = "4" />
+		<image file="GeneralSprites/rocket.png" />
+		<image file="GeneralSprites/rocket_up.png" />
+		<image file="GeneralSprites/rocket_down.png" />
 		<image file="GeneralSprites/unit_explosion.png" cols = "10" />
 		<image file="GeneralSprites/mg_hit.png" cols = "10" />
 		<image file="GeneralSprites/vehicle_dust.png" cols = "7" />

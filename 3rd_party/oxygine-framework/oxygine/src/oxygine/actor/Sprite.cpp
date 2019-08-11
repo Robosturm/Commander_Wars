@@ -126,7 +126,14 @@ namespace oxygine
         oxygine::Sprite* pActorSprite = dynamic_cast<oxygine::Sprite*>(pActor.get());
         if (pActorSprite != nullptr)
         {
-            pActorSprite->setFlippedX(flippedX);
+            if (pActorSprite->getInvertFlipX())
+            {
+                pActorSprite->setFlippedX(!flippedX);
+            }
+            else
+            {
+                pActorSprite->setFlippedX(flippedX);
+            }
         }
         oxygine::spActor child = pActor->getFirstChild();
         while (child)

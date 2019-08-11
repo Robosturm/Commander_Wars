@@ -8,9 +8,24 @@ var Constructor = function()
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
         sprite.loadSprite("antitankcannon",  false,
-                          BATTLEANIMATION_ANTITANKCANNON.getMaxUnitCount(), Qt.point(-5, 5));
+                          BATTLEANIMATION_ANTITANKCANNON.getMaxUnitCount(), Qt.point(-15, 5));
         sprite.loadSprite("antitankcannon+mask",  true,
-                          BATTLEANIMATION_ANTITANKCANNON.getMaxUnitCount(), Qt.point(-5, 5));
+                          BATTLEANIMATION_ANTITANKCANNON.getMaxUnitCount(), Qt.point(-15, 5));
+    };
+
+    this.loadFireAnimation = function(sprite, unit, defender, weapon)
+    {
+        // gun
+        BATTLEANIMATION_ANTITANKCANNON.loadStandingAnimation(sprite, unit, defender, weapon);
+        var offset = Qt.point(30, 12);
+        sprite.loadSprite("medium_shot",  false, sprite.getMaxUnitCount(), offset,
+                          1, 0.5, 0, 0);
+    };
+
+    this.getFireDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 500;
     };
 };
 

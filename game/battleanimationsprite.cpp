@@ -180,88 +180,115 @@ QPoint BattleAnimationSprite::getUnitPosition(qint32 unitCount, qint32 maxUnitCo
 
 void BattleAnimationSprite::loadSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,
                                        qint32 loops, float scale, short priority, qint32 showDelay,
-                                       bool invertFlipX)
+                                       bool invertFlipX, bool deleteAfter)
 {
     loadMovingSprite(spriteID, addPlayerColor, maxUnitCount, offset,
-                     QPoint(0, 0), 0, false,
+                     QPoint(0, 0), 0, deleteAfter,
                      loops, scale, priority, showDelay,
                      invertFlipX);
+}
+
+qint32 BattleAnimationSprite::getUnitCount(qint32 maxUnitCount)
+{
+    return Mainapp::roundUp(hpRounded / 10.0f * maxUnitCount);
 }
 
 void BattleAnimationSprite::loadMovingSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,
                                              QPoint movement, qint32 moveTime, bool deleteAfter,
                                              qint32 loops, float scale, short priority, qint32 showDelay,
                                              bool invertFlipX)
+{    
+    qint32 value = getUnitCount(maxUnitCount);
+    for (qint32 i = maxUnitCount; i >= maxUnitCount - value + 1; i--)
+    {
+        QPoint position(0, 0);
+        if (maxUnitCount > 1)
+        {
+            position = getUnitPosition(i, maxUnitCount);
+        }
+        QPoint posOffset = getUnitPositionOffset(i);
+        loadSingleMovingSprite(spriteID, addPlayerColor, offset + position + posOffset, movement, moveTime, deleteAfter,
+                               loops, scale, i + priority, showDelay, invertFlipX);
+    }
+}
+
+void BattleAnimationSprite::loadSingleMovingSprite(QString spriteID, bool addPlayerColor, QPoint offset,
+                QPoint movement, qint32 moveTime, bool deleteAfter,
+                qint32 loops, float scale, short priority, qint32 showDelay,
+                bool invertFlipX)
 {
     BattleAnimationManager* pBattleAnimationManager = BattleAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pBattleAnimationManager->getResAnim(spriteID.toStdString());
     if (pAnim != nullptr)
     {
-        qint32 value = Mainapp::roundUp(hpRounded / 10.0f * maxUnitCount);
-        for (qint32 i = maxUnitCount; i >= maxUnitCount - value + 1; i--)
+        oxygine::spSprite pSprite = new oxygine::Sprite();
+        if (pAnim->getTotalFrames() > 1)
         {
-            QPoint position(0, 0);
-            if (maxUnitCount > 1)
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, loops, false, showDelay / Settings::getAnimationSpeed());
+            pSprite->addTween(tween);
+            if (deleteAfter && moveTime <= 0)
             {
-                position = getUnitPosition(i, maxUnitCount);
+                tween->addDoneCallback([=](oxygine::Event * pEvent)
+                {
+                    oxygine::spActor pTarget = dynamic_cast<oxygine::Actor*>(pEvent->target.get());
+                    if (pTarget.get() != nullptr)
+                    {
+                        emit sigDetachChild(pTarget);
+                    }
+                });
             }
-            oxygine::spSprite pSprite = new oxygine::Sprite();
-            if (pAnim->getTotalFrames() > 1)
-            {
-                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, loops);
-                pSprite->addTween(tween);
-            }
-            else
-            {
-                pSprite->setResAnim(pAnim);
-            }
-            // repaint the unit?
-            if (addPlayerColor)
-            {
-                QColor color = m_pUnit->getOwner()->getColor();
-                oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
-                oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
-                pSprite->addTween(tween);
-            }
-            pSprite->setPriority(i + priority);
-            pSprite->setScale(scale);
-            pSprite->setInvertFlipX(invertFlipX);
-            QPoint posOffset = getUnitPositionOffset(i);
-            qint32 xPos = position.x() + offset.x() + posOffset.x();
+        }
+        else
+        {
+            pSprite->setResAnim(pAnim);
+        }
+        // repaint the unit?
+        if (addPlayerColor)
+        {
+            QColor color = m_pUnit->getOwner()->getColor();
+            oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
+            oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
+            pSprite->addTween(tween);
+        }
+        pSprite->setPriority(priority);
+        pSprite->setScale(scale);
+        pSprite->setInvertFlipX(invertFlipX);
+
+        qint32 xPos = offset.x();
+        if (isFlippedX())
+        {
+            qint32 width = pAnim->getWidth() * scale;
+            xPos = 127 - xPos - width;
+        }
+        qint32 yPos = 192 - offset.y() - pAnim->getHeight() * scale;
+        pSprite->setPosition(xPos , yPos);
+        if (moveTime > 0)
+        {
+            qint32 endX = xPos + movement.x();
             if (isFlippedX())
             {
-                xPos = 127 - xPos - pSprite->getScaledWidth();
+                endX = xPos - movement.x();
             }
-            qint32 yPos = 192 - position.y() - offset.y() - pAnim->getHeight() - posOffset.y();
-            pSprite->setPosition(xPos , yPos);
-            if (moveTime > 0)
+            oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endX, yPos - movement.y())), moveTime / Settings::getAnimationSpeed(), loops, false, showDelay / Settings::getAnimationSpeed());
+            if (deleteAfter)
             {
-                qint32 endX = xPos + movement.x();
-                if (isFlippedX())
+                moveTween->addDoneCallback([=](oxygine::Event * pEvent)
                 {
-                    endX = xPos - movement.x();
-                }
-                oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endX, yPos - movement.y())), moveTime / Settings::getAnimationSpeed(), loops, false, showDelay);
-                if (deleteAfter)
-                {
-                    moveTween->addDoneCallback([=](oxygine::Event * pEvent)
+                    oxygine::spActor pTarget = dynamic_cast<oxygine::Actor*>(pEvent->target.get());
+                    if (pTarget.get() != nullptr)
                     {
-                        oxygine::spActor pTarget = dynamic_cast<oxygine::Actor*>(pEvent->target.get());
-                        if (pTarget.get() != nullptr)
-                        {
-                            emit sigDetachChild(pTarget);
-                        }
-                    });
-                }
-                pSprite->addTween(moveTween);
+                        emit sigDetachChild(pTarget);
+                    }
+                });
             }
-            if (showDelay > 0)
-            {
-                oxygine::spTween visibileTween = oxygine::createTween(TweenToggleVisibility(0.9f, 1.0f), showDelay, loops);
-                pSprite->addTween(visibileTween);
-            }
-            m_Actor->addChild(pSprite);
+            pSprite->addTween(moveTween);
         }
+        if (showDelay > 0)
+        {
+            oxygine::spTween visibileTween = oxygine::createTween(TweenToggleVisibility(0.9f, 1.0f), showDelay / Settings::getAnimationSpeed(), loops);
+            pSprite->addTween(visibileTween);
+        }
+        m_Actor->addChild(pSprite);
     }
 }
 
