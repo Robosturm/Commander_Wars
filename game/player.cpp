@@ -75,7 +75,7 @@ void Player::loadCOMusic()
         playerCOs[0].get() == nullptr)
     {
         Mainapp* pApp = Mainapp::getInstance();
-        pApp->getAudioThread()->addMusic("resources/music/cos/no_co.mp3");
+        pApp->getAudioThread()->addMusic("resources/music/cos/no_co.mp3", 4726, 58364);
     }
 }
 

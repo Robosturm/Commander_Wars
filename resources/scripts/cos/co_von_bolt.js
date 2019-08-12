@@ -21,7 +21,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
                 break;
             default:
-                audio.addMusic("resources/music/cos/von_bolt.mp3")
+                audio.addMusic("resources/music/cos/von_bolt.mp3", 47693, 113984);
                 break;
         }
     };

@@ -165,19 +165,22 @@ void AudioThread::bufferAudio()
     if (currentPlayer < 0)
     {
         qint32 size = m_playList->mediaCount();
-        qint32 newMedia = Mainapp::randInt(0, size - 1);
-        // load buffer on second player
-        qint32 newMedia2 = Mainapp::randInt(0, size - 1);
-        m_playList2->setCurrentIndex(newMedia2);
-        if (std::get<0>(m_PlayListdata[newMedia2]) > 0)
+        if (size > 0)
         {
-            m_Player2->setPosition(std::get<0>(m_PlayListdata[newMedia2]));
-        }
-        m_Player2->stop();
-        m_playList->setCurrentIndex(newMedia);
-        if (std::get<0>(m_PlayListdata[newMedia]) > 0)
-        {
-            m_Player->setPosition(std::get<0>(m_PlayListdata[newMedia]));
+            qint32 newMedia = Mainapp::randInt(0, size - 1);
+            // load buffer on second player
+            qint32 newMedia2 = Mainapp::randInt(0, size - 1);
+            m_playList2->setCurrentIndex(newMedia2);
+            if (std::get<0>(m_PlayListdata[newMedia2]) > 0)
+            {
+                m_Player2->setPosition(std::get<0>(m_PlayListdata[newMedia2]));
+            }
+            m_Player2->stop();
+            m_playList->setCurrentIndex(newMedia);
+            if (std::get<0>(m_PlayListdata[newMedia]) > 0)
+            {
+                m_Player->setPosition(std::get<0>(m_PlayListdata[newMedia]));
+            }
         }
     }
 }
@@ -185,25 +188,28 @@ void AudioThread::bufferAudio()
 void AudioThread::stopSecondPlayer()
 {
     qint32 size = m_playList->mediaCount();
-    qint32 newMedia = Mainapp::randInt(0, size - 1);
-    if (currentPlayer == 0)
+    if (size > 0)
     {
-        // load buffe on current player
-        m_Player2->stop();
-        m_playList2->setCurrentIndex(newMedia);
-        if (std::get<0>(m_PlayListdata[newMedia]) > 0)
+        qint32 newMedia = Mainapp::randInt(0, size - 1);
+        if (currentPlayer == 0)
         {
-            m_Player2->setPosition(std::get<0>(m_PlayListdata[newMedia]));
+            // load buffe on current player
+            m_Player2->stop();
+            m_playList2->setCurrentIndex(newMedia);
+            if (std::get<0>(m_PlayListdata[newMedia]) > 0)
+            {
+                m_Player2->setPosition(std::get<0>(m_PlayListdata[newMedia]));
+            }
         }
-    }
-    else
-    {
-        // load buffer on current player
-        m_Player->stop();
-        m_playList->setCurrentIndex(newMedia);
-        if (std::get<0>(m_PlayListdata[newMedia]) > 0)
+        else
         {
-            m_Player->setPosition(std::get<0>(m_PlayListdata[newMedia]));
+            // load buffer on current player
+            m_Player->stop();
+            m_playList->setCurrentIndex(newMedia);
+            if (std::get<0>(m_PlayListdata[newMedia]) > 0)
+            {
+                m_Player->setPosition(std::get<0>(m_PlayListdata[newMedia]));
+            }
         }
     }
 }

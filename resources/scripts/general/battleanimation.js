@@ -21,6 +21,11 @@ var BATTLEANIMATION =
         sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);
     },
 
+    loadStandingFiredAnimation : function(sprite, unit, defender, weapon)
+    {
+        sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);
+    },
+
     loadFireAnimation : function(sprite, unit, defender, weapon)
     {
         sprite.loadAnimation("loadStandingAnimation", unit, defender, weapon);

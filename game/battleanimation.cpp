@@ -281,14 +281,13 @@ oxygine::spSprite BattleAnimation::loadTerrainSprite(Unit* pUnit)
     pSprite->setResAnim(pAnimBase);
     ret->addChild(pSprite);
     pSprite = new oxygine::Sprite();
-    pSprite->setResAnim(pAnimFore);
-    pSprite->setPriority(1);
-    ret->addChild(pSprite);
-    pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimBack);
     pSprite->setScaleY(1.01f);
-    pSprite->setPriority(2);
     ret->addChild(pSprite);
+    pSprite = new oxygine::Sprite();
+    pSprite->setResAnim(pAnimFore);
+    ret->addChild(pSprite);
+
     return ret;
 }
 
@@ -362,7 +361,7 @@ void BattleAnimation::nextAnimatinStep()
         case AnimationProgress::AttackerImpact:
         {
             // replace firing frames
-            m_pAttackerAnimation->loadAnimation(BattleAnimationSprite::standingAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
+            m_pAttackerAnimation->loadAnimation(BattleAnimationSprite::standingFiredAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
             setSpritePosition(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit);
             // load impact
             loadImpactAnimation(m_pDefUnit, m_pAtkUnit, m_pDefenderAnimation, m_pAttackerAnimation,
@@ -388,7 +387,7 @@ void BattleAnimation::nextAnimatinStep()
         case AnimationProgress::DefenderImpact:
         {
             // remove firing frames
-            m_pDefenderAnimation->loadAnimation(BattleAnimationSprite::standingAnimation, m_pDefUnit, m_pAtkUnit, m_DefWeapon);
+            m_pDefenderAnimation->loadAnimation(BattleAnimationSprite::standingFiredAnimation, m_pDefUnit, m_pAtkUnit, m_DefWeapon);
             setSpritePosition(m_pDefenderAnimation, m_pDefUnit, m_pAtkUnit);
             loadImpactAnimation(m_pAtkUnit, m_pDefUnit, m_pAttackerAnimation, m_pDefenderAnimation,
                                 m_HealthBar0, m_atkEndHp, m_DefWeapon, m_defEndHp);
@@ -397,7 +396,7 @@ void BattleAnimation::nextAnimatinStep()
         case AnimationProgress::WaitAfterBattle:
         {
             m_pAttackerAnimation->setHpRounded(Mainapp::roundUp(m_atkEndHp));
-            m_pAttackerAnimation->loadAnimation(BattleAnimationSprite::standingAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
+            m_pAttackerAnimation->loadAnimation(BattleAnimationSprite::standingFiredAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
             setSpritePosition(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit);
             battleTimer.start(500 / Settings::getAnimationSpeed());
             break;

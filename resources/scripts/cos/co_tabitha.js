@@ -21,7 +21,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
                 break;
             default:
-                audio.addMusic("resources/music/cos/tabitha.mp3")
+                audio.addMusic("resources/music/cos/tabitha.mp3", 56155, 127410);
                 break;
         }
     };

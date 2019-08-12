@@ -444,14 +444,13 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
         m_pCursorInfoBox->addChild(pSprite);
         pSprite = new oxygine::Sprite();
         pSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 110);
-        pSprite->setResAnim(pAnimFore);
-        pSprite->setPriority(1);
+        pSprite->setResAnim(pAnimBack);
         m_pCursorInfoBox->addChild(pSprite);
         pSprite = new oxygine::Sprite();
         pSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 110);
-        pSprite->setResAnim(pAnimBack);
-        pSprite->setPriority(2);
+        pSprite->setResAnim(pAnimFore);
         m_pCursorInfoBox->addChild(pSprite);
+
 
         if (pUnit != nullptr)
         {

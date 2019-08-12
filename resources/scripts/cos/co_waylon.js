@@ -117,7 +117,7 @@ var Constructor = function()
                 audio.addMusic("resources/music/cos/bh_tagpower.mp3", 779 , 51141);
                 break;
             default:
-                audio.addMusic("resources/music/cos/waylon.mp3")
+                audio.addMusic("resources/music/cos/waylon.mp3", 58182, 112806);
                 break;
         }
     };
