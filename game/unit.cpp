@@ -270,6 +270,10 @@ void Unit::updateSprites()
         makeCOUnit(1);
     }
     setHasMoved(m_Moved);
+    for (qint32 i = 0; i < m_TransportUnits.size(); i++)
+    {
+        m_TransportUnits[i]->updateSprites();
+    }
 }
 
 GameEnums::UnitRanks Unit::getUnitRank() const
