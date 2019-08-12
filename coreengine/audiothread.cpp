@@ -29,10 +29,12 @@ AudioThread::~AudioThread()
 {
     m_Player->stop();
     m_Player2->stop();
+    doubleBufferTimer->stop();
     delete m_Player;
     delete m_playList;
     delete m_Player2;
     delete m_playList2;
+    delete doubleBufferTimer;
 }
 
 void AudioThread::initAudio()
@@ -49,6 +51,9 @@ void AudioThread::initAudio()
     m_playList2->moveToThread(Mainapp::getInstance()->getAudioWorker());
     m_Player2->setPlaylist(m_playList2);
 
+    doubleBufferTimer = new QTimer();
+    doubleBufferTimer->moveToThread(Mainapp::getInstance()->getAudioWorker());
+
     m_Player->setNotifyInterval(200);
     m_Player2->setNotifyInterval(200);
 
@@ -57,6 +62,10 @@ void AudioThread::initAudio()
     connect(m_Player, &QMediaPlayer::positionChanged, this, &AudioThread::SlotCheckMusicEnded);
     connect(m_Player2, &QMediaPlayer::mediaStatusChanged, this, &AudioThread::SlotMediaStatusChanged);
     connect(m_Player2, &QMediaPlayer::positionChanged, this, &AudioThread::SlotCheckMusicEnded);
+
+    doubleBufferTimer->setSingleShot(false);
+    doubleBufferTimer->setInterval(50);
+    connect(doubleBufferTimer, &QTimer::timeout, this, &AudioThread::stopSecondPlayer, Qt::QueuedConnection);
 }
 
 void AudioThread::playMusic(qint32 File)
@@ -133,11 +142,30 @@ void AudioThread::SlotPlayMusic(qint32 File)
 
 void AudioThread::SlotPlayRandom()
 {
-    qint32 size = m_playList->mediaCount();
-    qint32 newMedia = Mainapp::randInt(0, size - 1);
+    bufferAudio();
+    if (currentPlayer == 0)
+    {
+        // start buffered player
+        currentMedia = m_playList2->currentIndex();
+        m_Player2->play();
+        currentPlayer = 1;
+    }
+    else
+    {
+        // start buffered player
+        currentMedia = m_playList->currentIndex();
+        m_Player->play();
+        currentPlayer = 0;
+    }
+    doubleBufferTimer->start();
+}
 
+void AudioThread::bufferAudio()
+{
     if (currentPlayer < 0)
     {
+        qint32 size = m_playList->mediaCount();
+        qint32 newMedia = Mainapp::randInt(0, size - 1);
         // load buffer on second player
         qint32 newMedia2 = Mainapp::randInt(0, size - 1);
         m_playList2->setCurrentIndex(newMedia2);
@@ -152,21 +180,13 @@ void AudioThread::SlotPlayRandom()
             m_Player->setPosition(std::get<0>(m_PlayListdata[newMedia]));
         }
     }
+}
+
+void AudioThread::stopSecondPlayer()
+{
+    qint32 size = m_playList->mediaCount();
+    qint32 newMedia = Mainapp::randInt(0, size - 1);
     if (currentPlayer == 0)
-    {
-        // load buffe on current player
-        m_Player->stop();
-        m_playList->setCurrentIndex(newMedia);
-        if (std::get<0>(m_PlayListdata[newMedia]) > 0)
-        {
-            m_Player->setPosition(std::get<0>(m_PlayListdata[newMedia]));
-        }
-        // start buffered player
-        currentMedia = m_playList2->currentIndex();
-        m_Player2->play();
-        currentPlayer = 1;
-    }
-    else
     {
         // load buffe on current player
         m_Player2->stop();
@@ -175,11 +195,16 @@ void AudioThread::SlotPlayRandom()
         {
             m_Player2->setPosition(std::get<0>(m_PlayListdata[newMedia]));
         }
-
-        // start buffered player
-        currentMedia = m_playList->currentIndex();
-        m_Player->play();
-        currentPlayer = 0;
+    }
+    else
+    {
+        // load buffer on current player
+        m_Player->stop();
+        m_playList->setCurrentIndex(newMedia);
+        if (std::get<0>(m_PlayListdata[newMedia]) > 0)
+        {
+            m_Player->setPosition(std::get<0>(m_PlayListdata[newMedia]));
+        }
     }
 }
 

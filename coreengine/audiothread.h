@@ -6,6 +6,7 @@
 
 #include <QVector>
 #include <QSoundEffect>
+#include "qtimer.h"
 
 class QMediaPlaylist;
 
@@ -92,6 +93,11 @@ protected slots:
     void SlotStopSound(QString file, QString folder);
     void SlotSoundEnded();
     void initAudio();
+    /**
+     * @brief stopSecondPlayer
+     */
+    void stopSecondPlayer();
+    void bufferAudio();
 private:
     // two players one is buffering the other one is actually playing
     QMediaPlayer* m_Player{nullptr};
@@ -102,6 +108,8 @@ private:
     QVector<std::tuple<qint64, qint64>> m_PlayListdata;
     qint32 currentMedia{-1};
     QVector<QSoundEffect*> m_Sounds;
+
+    QTimer* doubleBufferTimer;
 };
 
 #endif // AUDIOTHREAD_H
