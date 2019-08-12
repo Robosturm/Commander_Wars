@@ -243,7 +243,6 @@ void GameRules::startOfTurn()
             changeWeather(m_Weathers[getStartWeather()]->getWeatherId() , playerCount);
         }
     }
-    pMap->getCurrentPlayer()->updatePlayerVision(true);
     createFogVision();
     pApp->continueThread();
 }

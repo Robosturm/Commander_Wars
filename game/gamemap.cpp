@@ -877,6 +877,7 @@ bool GameMap::nextPlayer()
     bool nextDay = false;
     bool found = false;
     qint32 start = m_CurrentPlayer->getPlayerID();
+    m_CurrentPlayer->updatePlayerVision(true);
     for (qint32 i = start + 1; i < players.size(); i++)
     {
         m_CurrentPlayer = players[i];
