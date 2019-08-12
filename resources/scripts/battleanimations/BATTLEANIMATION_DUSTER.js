@@ -24,7 +24,7 @@ var Constructor = function()
         {
             armyName = "bh"
         }
-        var offset = Qt.point(45, 53);
+        var offset = Qt.point(45, 50);
         sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                           1, 1, 0, 0);
     };

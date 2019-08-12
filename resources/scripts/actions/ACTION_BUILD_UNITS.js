@@ -65,11 +65,6 @@ var Constructor = function()
     {
         var building = action.getTargetBuilding();
         var units = building.getConstructionList();
-        var coUnits = building.getOwner().getCOUnits(building);
-        if (coUnits.length > 0)
-        {
-            units.push(coUnits);
-        }
         for (i = 0; i < units.length; i++)
         {
             var name = Global[units[i]].getName();
