@@ -43,6 +43,7 @@ var Constructor = function()
         var offset = Qt.point(31, 31);
         sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                           1, 1, 0, 0);
+        sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
     };
 
     this.getFireDurationMS = function()

@@ -78,6 +78,7 @@ var Constructor = function()
                                               Qt.point(0, 0), 0, false,
                                               1, 0.5, -1, 300 + i * 150, true);
             }
+            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", i * 100);
         }
     };
 

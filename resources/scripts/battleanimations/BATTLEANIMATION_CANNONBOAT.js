@@ -42,6 +42,7 @@ var Constructor = function()
                                                    offset.y + offset2.y),
                                           Qt.point(0, 0), 0, true,
                                           1, 0.5, 5, 200 * i, false);
+            sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", i * 200);
         }
     };
 
@@ -55,6 +56,7 @@ var Constructor = function()
     {
         sprite.loadSprite("unit_explosion",  false, 5, Qt.point(0, 20),
                           1, 1.0, 0, 0);
+        sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 0);
     };
 };
 

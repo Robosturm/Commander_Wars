@@ -23,6 +23,7 @@ var Constructor = function()
                                     Qt.point(128, 64), 400, false,
                                     1, 1, -1, i * 150);
         }
+        sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", 0);
     };
 
     this.getFireDurationMS = function()
@@ -38,6 +39,8 @@ var Constructor = function()
         sprite.loadMovingSprite("rocket_up", false, 5, Qt.point(127, 0),
                                 Qt.point(-128, 64), 400, true,
                                 1, 1, 0, 0, true);
+        sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
+        sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200);
     };
 
     this.getImpactDurationMS = function()

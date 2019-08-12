@@ -21,6 +21,7 @@ var Constructor = function()
             // gun
             sprite.loadSprite("medium_shot",  false, sprite.getMaxUnitCount(), Qt.point(27, 23),
                               1, 1.0, 0, 0);
+            sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", 0);
         }
         else
         {

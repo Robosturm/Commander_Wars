@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include "qtimer.h"
+
 #include "oxygine-framework.h"
 
 #include "game/unit.h"
@@ -166,12 +168,23 @@ public slots:
      * @param pActor
      */
     void detachChild(oxygine::spActor pActor);
+    /**
+     * @brief loadSound
+     */
+    void loadSound(QString file, qint32 loops, QString folder = "resources/sounds/", qint32 delay = 0);
+    /**
+     * @brief stopSound
+     */
+    void stopSound();
 private:
     Unit* m_pUnit;
     Terrain* m_pTerrain;
     oxygine::spClipRectActor m_Actor;
     qint32 hpRounded{0};
     qint32 maxUnitCount{-1};
+
+    QVector<std::tuple<QString, QString>> m_Sounds;
+    QVector<QTimer*> m_Timers;
 };
 
 #endif // BATTLEANIMATIONSPRITE_H

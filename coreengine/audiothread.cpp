@@ -98,9 +98,9 @@ void AudioThread::playRandom()
     emit SignalPlayRandom();
 }
 
-void AudioThread::playSound(QString file, qint32 loops, QString folder)
+void AudioThread::playSound(QString file, qint32 loops, QString folder, qint32 delay)
 {
-    emit SignalPlaySound(file, loops, folder);
+    emit SignalPlaySound(file, loops, folder, delay);
 }
 
 void AudioThread::stopSound(QString file, QString folder)
@@ -278,7 +278,7 @@ void AudioThread::SlotCheckMusicEnded(qint64 duration)
     }
 }
 
-void AudioThread::SlotPlaySound(QString file, qint32 loops, QString folder)
+void AudioThread::SlotPlaySound(QString file, qint32 loops, QString folder, qint32 delay)
 {
     qreal sound = (static_cast<qreal>(Mainapp::getInstance()->getSettings()->getSoundVolume()) / 100.0 *
                    static_cast<qreal>(Mainapp::getInstance()->getSettings()->getTotalVolume()) / 100.0);
@@ -289,25 +289,53 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, QString folder)
         qreal value = QAudio::convertVolume(sound,
                                             QAudio::LogarithmicVolumeScale,
                                             QAudio::LinearVolumeScale);
+        QTimer* pTimer = new QTimer();
+        pTimer->moveToThread(Mainapp::getInstance()->getAudioWorker());
         pSoundEffect->setVolume(value);
         pSoundEffect->setSource(url);
         pSoundEffect->setLoopCount(loops);
+        connect(pSoundEffect, &QSoundEffect::playingChanged, this, &AudioThread::SlotSoundEnded, Qt::QueuedConnection);
+        if (delay > 0)
+        {
+            connect(pTimer, &QTimer::timeout, this, &AudioThread::SlotSoundStart, Qt::QueuedConnection);
+            pTimer->setSingleShot(true);
+            pTimer->start(delay);
+        }
+        else
+        {
+            pSoundEffect->play();
+        }
         m_Sounds.push_back(pSoundEffect);
-        connect(pSoundEffect, SIGNAL(playingChanged()), this, SLOT(SlotSoundEnded()), Qt::QueuedConnection);
-        pSoundEffect->play();
+        m_SoundTimers.push_back(pTimer);
+    }
+}
+
+void AudioThread::SlotSoundStart()
+{
+    QTimer* pSender = dynamic_cast<QTimer*>(sender());
+    for (qint32 i = 0; i < m_SoundTimers.size(); i++)
+    {
+        if (pSender == m_SoundTimers[i])
+        {
+            m_Sounds[i]->play();
+        }
     }
 }
 
 void AudioThread::SlotSoundEnded()
 {
+    QSoundEffect* pSender = dynamic_cast<QSoundEffect*>(sender());
     qint32 i = 0;
     while (i < m_Sounds.size())
     {
         if ((m_Sounds[i]->isPlaying() == false) &&
-            (m_Sounds[i]->loopsRemaining() == 0))
+            (m_Sounds[i]->loopsRemaining() == 0) &&
+            (m_Sounds[i] == pSender))
         {
+            delete m_SoundTimers[i];
             delete m_Sounds[i];
             m_Sounds.removeAt(i);
+            m_SoundTimers.removeAt(i);
         }
         else
         {
@@ -323,9 +351,12 @@ void AudioThread::SlotStopSound(QString file, QString folder)
     {
         if (m_Sounds[i]->source() == url)
         {
+            m_SoundTimers[i]->stop();
             m_Sounds[i]->stop();
             delete m_Sounds[i];
+            delete m_SoundTimers[i];
             m_Sounds.removeAt(i);
+            m_SoundTimers.removeAt(i);
             break;
         }
     }

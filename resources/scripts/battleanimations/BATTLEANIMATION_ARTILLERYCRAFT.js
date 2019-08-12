@@ -20,7 +20,7 @@ var Constructor = function()
         // gun
         sprite.loadSprite("artillery_shot",  false, sprite.getMaxUnitCount(), offset,
                           1, 1.0, 0, 0);
-
+        sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", 0);
     };
 
     this.getFireDurationMS = function()

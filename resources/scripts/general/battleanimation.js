@@ -42,11 +42,13 @@ var BATTLEANIMATION =
         {
             sprite.loadSprite("unit_explosion",  false, sprite.getMaxUnitCount(), Qt.point(0, 20),
                               1, 1.0, 0, 0);
+            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 0);
         }
         else
         {
             sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
                               1, 1.0, 0, 0);
+            sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
         }
     },
 

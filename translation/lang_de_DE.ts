@@ -604,26 +604,6 @@
 <context>
     <name>Console</name>
     <message>
-        <location filename="../coreengine/console.cpp" line="93"/>
-        <source>Enter &quot;help()&quot; for console info.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../coreengine/console.cpp" line="94"/>
-        <source>Starting Game...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../coreengine/console.cpp" line="95"/>
-        <source>Prepare to Fight...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../coreengine/console.cpp" line="96"/>
-        <source>Read this message while waiting...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../spritingsupport/spritecreator.cpp" line="13"/>
         <source>The color table is not an existing file. </source>
         <translation type="unfinished"></translation>
@@ -641,6 +621,26 @@
     <message>
         <location filename="../spritingsupport/spritecreator.cpp" line="46"/>
         <source>Input directory or file doesn&apos;t exists. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/console.cpp" line="93"/>
+        <source>Enter &quot;help()&quot; for console info.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/console.cpp" line="94"/>
+        <source>Starting Game...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/console.cpp" line="95"/>
+        <source>Prepare to Fight...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/console.cpp" line="96"/>
+        <source>Read this message while waiting...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

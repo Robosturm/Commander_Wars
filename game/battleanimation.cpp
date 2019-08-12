@@ -337,6 +337,13 @@ void BattleAnimation::stop()
     battleTimer.stop();
 }
 
+bool BattleAnimation::onFinished()
+{
+    m_pAttackerAnimation->stopSound();
+    m_pDefenderAnimation->stopSound();
+    return GameAnimation::onFinished();
+}
+
 void BattleAnimation::nextAnimatinStep()
 {
     Mainapp* pApp = Mainapp::getInstance();

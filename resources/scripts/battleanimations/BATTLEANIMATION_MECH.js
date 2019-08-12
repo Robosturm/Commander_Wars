@@ -69,6 +69,7 @@ var Constructor = function()
             sprite.loadMovingSprite(weaponRes, false, sprite.getMaxUnitCount(), offset,
                                     Qt.point(127, 0), 400, false,
                                     1, 1, -1);
+            sprite.loadSound("rocket_launch.wav", 1, "resources/sounds/", 0);
         }
         else
         {
@@ -85,11 +86,14 @@ var Constructor = function()
             sprite.loadMovingSprite("bazooka_os", false, sprite.getMaxUnitCount(), Qt.point(127, 24),
                                     Qt.point(-127, 0), 400, true,
                                     1, 1, 0, 0, true);
+            sprite.loadSound("rocket_flying.wav", 1, "resources/sounds/", 0);
+            sprite.loadSound("impact_explosion.wav", 1, "resources/sounds/", 200);
         }
         else
         {
             sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
                               1, 1.0, 0, 0);
+            sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
         }
     };
 

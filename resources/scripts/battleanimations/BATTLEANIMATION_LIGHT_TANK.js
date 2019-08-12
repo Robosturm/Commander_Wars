@@ -29,7 +29,7 @@ var Constructor = function()
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
     {
-        sprite.loadAnimation("loadStandingAnimation", unit);
+        BATTLEANIMATION_LIGHT_TANK.loadStandingAnimation(sprite, unit, defender, weapon);
         var player = unit.getOwner();
         // get army name
         var armyName = player.getArmy().toLowerCase();
@@ -60,6 +60,7 @@ var Constructor = function()
             }
             sprite.loadSprite("medium_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 0.5, 0, 0);
+            sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", 0);
         }
         else
         {

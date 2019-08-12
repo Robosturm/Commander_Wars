@@ -55,7 +55,7 @@ void GameAnimation::update(const oxygine::UpdateState& us)
     {
         if (!m_soundFile.isEmpty())
         {
-            Mainapp::getInstance()->getAudioThread()->playSound(m_soundFile, m_loops);
+            Mainapp::getInstance()->getAudioThread()->playSound(m_soundFile, m_loops, m_soundFolder);
         }
         m_SoundStarted = true;
     }
@@ -130,10 +130,7 @@ bool GameAnimation::onFinished()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    if (m_loops < 0)
-    {
-       Mainapp::getInstance()->getAudioThread()->stopSound(m_soundFile);
-    }
+    pApp->getAudioThread()->stopSound(m_soundFile, m_soundFolder);
     for (qint32 i = 0; i < m_QueuedAnimations.size(); i++)
     {
         GameAnimationFactory::getInstance()->startQueuedAnimation(m_QueuedAnimations[i]);
@@ -150,10 +147,11 @@ bool GameAnimation::onFinished()
     return true;
 }
 
-void GameAnimation::setSound(QString soundFile, qint32 loops)
+void GameAnimation::setSound(QString soundFile, qint32 loops, QString folder)
 {
     m_soundFile = soundFile;
     m_loops = loops;
+    m_soundFolder = folder;
 }
 
 void GameAnimation::addTweenScale(float endScale, qint32 duration)

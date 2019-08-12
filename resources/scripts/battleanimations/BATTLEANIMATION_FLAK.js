@@ -26,6 +26,14 @@ var Constructor = function()
         sprite.loadSprite("flak+" + armyName + "+mask",  true,
                           BATTLEANIMATION_FLAK.getMaxUnitCount(), Qt.point(-5, 5));
     };
+
+
+    this.loadImpactAnimation = function(sprite, unit, defender, weapon)
+    {
+        sprite.loadSprite("mg_hit",  false, sprite.getMaxUnitCount(), Qt.point(0, 22),
+                          1, 1.0, 0, 0);
+        sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);
+    };
 };
 
 Constructor.prototype = BATTLEANIMATION;

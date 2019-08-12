@@ -32,6 +32,10 @@ public:
 
     virtual void restart() override;
     virtual void stop() override;
+    /**
+     * @brief onFinished called when the animation is finished
+     */
+    virtual bool onFinished() override;
 public slots:
 
 private:
