@@ -30,6 +30,23 @@ public:
      * @brief optimizePlayers
      */
     void optimizePlayers();
+    /**
+     * @brief cleanTemp clean ups undo and redo steps
+     * @param step
+     */
+    void cleanTemp(qint32 step);
+    /**
+     * @brief createTempFile
+     */
+    void createTempFile(bool cleanUp = true);
+    /**
+     * @brief undo
+     */
+    void editorUndo();
+    /**
+     * @brief redo
+     */
+    void editorRedo();
 signals:
     void sigOnMapClickedLeft();
     void sigOnMapClickedRight();
@@ -192,6 +209,8 @@ private:
     oxygine::spTextField xyTextInfo;
 
     static EditorMenue* m_pInstance;
+
+    qint32 tempCounter{0};
 };
 
 #endif // EDITORMENUE_H

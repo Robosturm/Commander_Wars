@@ -1,4 +1,5 @@
 #include <QFile>
+#include <qdir.h>
 
 #include "menue/editormenue.h"
 
@@ -33,6 +34,10 @@
 #include "game/terrainfindingsystem.h"
 #include "game/co.h"
 
+#include "wiki/fieldinfo.h"
+
+#include "objects/selectkey.h"
+
 EditorMenue* EditorMenue::m_pInstance = nullptr;
 
 EditorMenue::EditorMenue()
@@ -57,7 +62,8 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Save Map"), "SAVEMAP", 0);
     m_Topbar->addItem(tr("Load Map"), "LOADMAP", 0);
     m_Topbar->addItem(tr("Edit Script"), "EDITSCRIPT", 0);
-    // m_Topbar->addItem(tr("Edit Campaign"), "EDITCAMPAIGN", 0);
+    m_Topbar->addItem(tr("Undo Strg+Z"), "UNDO", 0);
+    m_Topbar->addItem(tr("Redo Strg+Y"), "REDO", 0);
     m_Topbar->addItem(tr("Exit Editor"), "EXIT", 0);
 
     m_Topbar->addGroup(tr("Map Info"));
@@ -71,7 +77,7 @@ EditorMenue::EditorMenue()
 
     m_Topbar->addGroup(tr("Editor Commands"));
     m_Topbar->addItem(tr("Place Selection"), "PLACESELECTION", 2);
-    m_Topbar->addItem(tr("Delete Units"), "DELETEUNITS", 2);
+    m_Topbar->addItem(tr("Delete Units") + " - " + SelectKey::getKeycodeText(Settings::getKey_cancel()), "DELETEUNITS", 2);
     m_Topbar->addItem(tr("Edit Units"), "EDITUNITS", 2);
     m_Topbar->addItem(tr("Edit Players"), "EDITPLAYERS", 2);
     m_Topbar->addItem(tr("Edit Rules"), "EDITRULES", 2);
@@ -127,11 +133,101 @@ EditorMenue::EditorMenue()
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, this, &EditorMenue::cursorMoved, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigKeyDown, this, &EditorMenue::KeyInput, Qt::QueuedConnection);
     connect(m_Topbar.get(), &Topbar::sigItemClicked, this, &EditorMenue::clickedTopbar, Qt::QueuedConnection);
+
+    // clean up temp folder
+    QDir dir("temp/");
+    dir.removeRecursively();
+    dir.mkpath(".");
 }
 
 EditorMenue::~EditorMenue()
 {
-    m_pInstance = nullptr;
+    cleanTemp(-1);
+    m_pInstance = nullptr;    
+}
+
+void EditorMenue::cleanTemp(qint32 step)
+{
+    QDir dir("temp/");
+    if (step < 0)
+    {
+        tempCounter = 0;
+        dir.removeRecursively();
+        dir.mkpath(".");
+    }
+    else
+    {
+        for (qint32 i = step; i < std::numeric_limits<qint32>::max(); i++)
+        {
+            QFile file("temp/temp" + QString::number(i) + ".tmp");
+            if (file.exists())
+            {
+                file.remove();
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+}
+
+void EditorMenue::createTempFile(bool cleanUp)
+{
+    if (cleanUp)
+    {
+        cleanTemp(tempCounter);
+    }
+    QFile file("temp/temp" + QString::number(tempCounter) + ".tmp");
+    file.open(QIODevice::WriteOnly | QIODevice::Truncate);
+    QDataStream stream(&file);
+    GameMap* pMap = GameMap::getInstance();
+    pMap->serializeObject(stream);
+    file.close();
+    tempCounter++;
+
+}
+
+void EditorMenue::editorUndo()
+{
+    tempCounter--;
+    if (tempCounter >= 0)
+    {
+        QFile file("temp/temp" + QString::number(tempCounter) + ".tmp");
+        if (file.exists())
+        {
+            tempCounter++;
+            createTempFile(false);
+            tempCounter -= 2;
+            file.open(QIODevice::ReadOnly);
+            QDataStream stream(&file);
+            GameMap::getInstance()->deserializeObject(stream);
+            file.close();
+            GameMap* pMap = GameMap::getInstance();
+            pMap->updateSprites();
+            m_EditorSelection->createPlayerSelection();
+        }
+    }
+    else
+    {
+        tempCounter = 0;
+    }
+}
+
+void EditorMenue::editorRedo()
+{
+    tempCounter++;
+    QFile file("temp/temp" + QString::number(tempCounter) + ".tmp");
+    if (file.exists())
+    {
+        file.open(QIODevice::ReadOnly);
+        QDataStream stream(&file);
+        GameMap::getInstance()->deserializeObject(stream);
+        file.close();
+        GameMap* pMap = GameMap::getInstance();
+        pMap->updateSprites();
+        m_EditorSelection->createPlayerSelection();
+    }
 }
 
 void EditorMenue::clickedTopbar(QString itemID)
@@ -166,6 +262,14 @@ void EditorMenue::clickedTopbar(QString itemID)
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::loadMap, Qt::QueuedConnection);
         connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
         setFocused(false);
+    }
+    else if (itemID == "UNDO")
+    {
+        editorUndo();
+    }
+    else if (itemID == "REDO")
+    {
+        editorRedo();
     }
     else if (itemID == "EDITSCRIPT")
     {
@@ -313,6 +417,7 @@ void EditorMenue::createRandomMap(QString mapName, QString author, QString descr
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    cleanTemp(-1);
     GameMap* pGameMap = GameMap::getInstance();
     pGameMap->randomMap(width, heigth, playerCount, roadSupport, seed,
                         forestchance / 100.0f, mountainChance / 100.0f,
@@ -350,6 +455,7 @@ void EditorMenue::optimizePlayers()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    createTempFile();
     GameMap* pMap = GameMap::getInstance();
     QVector<bool> foundPlayers(pMap->getPlayerCount(), false);
     qint32 mapWidth = pMap->getMapWidth();
@@ -395,20 +501,70 @@ void EditorMenue::KeyInput(SDL_Event event)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    InGameMenue::keyInput(event);
+    // for debugging
     SDL_Keycode cur = event.key.keysym.sym;
-    switch (cur)
+    if (m_Focused)
     {
-        case SDLK_ESCAPE:
+        switch (cur)
         {
-            Console::print("Leaving Editor Menue", Console::eDEBUG);
-            oxygine::getStage()->addChild(new Mainwindow());
-            oxygine::Actor::detach();
-            break;
+            case SDLK_ESCAPE:
+            {
+                Console::print("Leaving Editor Menue", Console::eDEBUG);
+                oxygine::getStage()->addChild(new Mainwindow());
+                oxygine::Actor::detach();
+                break;
+            }
+            case SDLK_y:
+            {
+                if ((event.key.keysym.mod & KMOD_CTRL) > 0)
+                {
+                    editorRedo();
+                }
+                break;
+            }
+            case SDLK_z:
+            {
+                if ((event.key.keysym.mod & KMOD_CTRL) > 0)
+                {
+                    editorUndo();
+                }
+                break;
+            }
+            default:
+            {
+                // do nothing
+                break;
+            }
         }
-        default:
+        if (cur == Settings::getKey_information())
         {
-            // do nothing
-            break;
+            Mainapp* pApp = Mainapp::getInstance();
+            pApp->suspendThread();
+            GameMap* pMap = GameMap::getInstance();
+            if (pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()))
+            {
+                Terrain* pTerrain = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                spFieldInfo fieldinfo = new FieldInfo(pTerrain, pTerrain->getUnit());
+                this->addChild(fieldinfo);
+                connect(fieldinfo.get(), &FieldInfo::sigFinished, [=]
+                {
+                    setFocused(true);
+                });
+                setFocused(false);
+            }
+            pApp->continueThread();
+        }
+        else if (cur == Settings::getKey_cancel())
+        {
+            if (m_EditorMode == EditorModes::RemoveUnits)
+            {
+                m_EditorMode = EditorModes::PlaceEditorSelection;
+            }
+            else
+            {
+                m_EditorMode = EditorModes::RemoveUnits;
+            }
         }
     }
     pApp->continueThread();
@@ -450,7 +606,10 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
                 }
                 case EditorSelection::EditorMode::Building:
                 {
-                    if (canBuildingBePlaced(x, y))
+                    spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
+                    if (canBuildingBePlaced(x, y) ||
+                        (pCurrentBuilding->getBuildingWidth() == 1 &&
+                         pCurrentBuilding->getBuildingHeigth() == 1))
                     {
                         m_Cursor->changeCursor("cursor+default");
                     }
@@ -541,6 +700,7 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
             Unit* pUnit = GameMap::getInstance()->getTerrain(x, y)->getUnit();
             if (pUnit != nullptr)
             {
+                createTempFile();
                 pUnit->killUnit();
             }
             break;
@@ -550,6 +710,7 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
             Unit* pUnit = GameMap::getInstance()->getTerrain(x, y)->getUnit();
             if (pUnit != nullptr)
             {
+                createTempFile();
                 spDialogModifyUnit pDialog = new DialogModifyUnit(pUnit);
                 addChild(pDialog);
                 connect(pDialog.get(), &DialogModifyUnit::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
@@ -563,16 +724,19 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
             {
                 case EditorSelection::EditorMode::Terrain:
                 {
+                    createTempFile();
                     placeTerrain(x, y);
                     break;
                 }
                 case EditorSelection::EditorMode::Building:
                 {
+                    createTempFile();
                     placeBuilding(x, y);
                     break;
                 }
                 case EditorSelection::EditorMode::Unit:
                 {
+                    createTempFile();
                     placeUnit(x, y);
                     break;
                 }
@@ -753,9 +917,16 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
         // point still on the map great :)
         qint32 curX = points.at(i).x();
         qint32 curY = points.at(i).y();
+        spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
+        if (!canBuildingBePlaced(curX, curY) &&
+            pCurrentBuilding->getBuildingWidth() == 1 &&
+            pCurrentBuilding->getBuildingHeigth() == 1)
+        {
+            QString baseTerrain = pCurrentBuilding->getBaseTerrain()[0];
+            pMap->replaceTerrain(baseTerrain, curX, curY, false, false);
+        }
         if (canBuildingBePlaced(curX, curY))
         {
-            spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
             Building* pBuilding = new Building(pCurrentBuilding->getBuildingID());
             pBuilding->setOwner(pCurrentBuilding->getOwner());
             pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
@@ -847,6 +1018,7 @@ void EditorMenue::loadMap(QString filename)
         QFile file(filename);
         if (file.exists())
         {
+            cleanTemp(-1);
             QFile file(filename);
             file.open(QIODevice::ReadOnly);
             QDataStream stream(&file);
@@ -872,6 +1044,7 @@ void EditorMenue::importAWDCAw4Map(QString filename)
         QFile file(filename);
         if (file.exists())
         {
+            cleanTemp(-1);
             GameMap::getInstance()->importAWDCMap(filename);
             m_EditorSelection->createPlayerSelection();
         }
@@ -890,6 +1063,7 @@ void EditorMenue::importAWByWeb(QString filename)
         QFile file(filename);
         if (file.exists())
         {
+            cleanTemp(-1);
             GameMap::getInstance()->importAWByWebMap(filename);
             m_EditorSelection->createPlayerSelection();
         }
@@ -908,6 +1082,7 @@ void EditorMenue::importAWDSAwsMap(QString filename)
         QFile file(filename);
         if (file.exists())
         {
+            cleanTemp(-1);
             GameMap::getInstance()->importAWDSMap(filename);
             m_EditorSelection->createPlayerSelection();
         }
@@ -926,6 +1101,7 @@ void EditorMenue::importCoWTxTMap(QString filename)
         QFile file(filename);
         if (file.exists())
         {
+            cleanTemp(-1);
             GameMap::getInstance()->importTxtMap(filename);
             m_EditorSelection->createPlayerSelection();
         }
@@ -940,7 +1116,7 @@ void EditorMenue::newMap(QString mapName, QString author, QString description, Q
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-
+    cleanTemp(-1);
     GameMap* pMap = GameMap::getInstance();
     pMap->setMapName(mapName);
     pMap->setMapAuthor(author);
@@ -961,7 +1137,7 @@ void EditorMenue::changeMap(QString mapName, QString author, QString description
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-
+    createTempFile();
     GameMap* pMap = GameMap::getInstance();
     pMap->setMapName(mapName);
     pMap->setMapAuthor(author);

@@ -36,9 +36,9 @@ var Constructor = function()
     {
         return qsTr("Volcan");
     };
-    this.canBuildingBePlaced = function(terrain)
+    this.canBuildingBePlaced = function(terrain, building)
     {
-        return BUILDING.canLargeBuildingPlaced(terrain, ZVOLCAN.getBuildingWidth(), ZVOLCAN.getBuildingHeigth());
+        return BUILDING.canLargeBuildingPlaced(terrain, building, ZVOLCAN.getBuildingWidth(), ZVOLCAN.getBuildingHeigth());
     };
     this.getMiniMapIcon = function()
     {

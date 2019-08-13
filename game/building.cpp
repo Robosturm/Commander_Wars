@@ -44,6 +44,17 @@ void Building::init()
     pApp->getInterpreter()->doFunction(m_BuildingID, function, args);
 }
 
+QStringList Building::getBaseTerrain()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QJSValueList args;
+    QString function = "getBaseTerrain";
+    QJSValue objArg = pApp->getInterpreter()->newQObject(this);
+    args << objArg;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function, args);
+    return ret.toVariant().toStringList();
+}
+
 QString Building::getDescription()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -214,6 +225,8 @@ bool Building::canBuildingBePlaced(Terrain* pTerrain)
     QJSValueList args1;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(pTerrain);
     args1 << obj1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
     QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
     if (ret.isBool())
     {

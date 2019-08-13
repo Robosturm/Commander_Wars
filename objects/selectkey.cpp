@@ -36,7 +36,7 @@ void SelectKey::keyInput(SDL_Event event)
     }
 }
 
-void SelectKey::setKeycode(SDL_Keycode code)
+QString SelectKey::getKeycodeText(SDL_Keycode code)
 {
     QString codeText = tr("Unknown");
     const oxygine::Font* pFont = FontManager::getMainFont()->getFont();
@@ -120,6 +120,12 @@ void SelectKey::setKeycode(SDL_Keycode code)
             codeText = static_cast<char>(code);
         }
     }
+    return codeText;
+}
+
+void SelectKey::setKeycode(SDL_Keycode code)
+{
+    QString codeText = getKeycodeText(code);
     if (codeText != tr("Unknown"))
     {
         currentCode = code;

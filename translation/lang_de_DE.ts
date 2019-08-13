@@ -1055,127 +1055,137 @@
 <context>
     <name>EditorMenue</name>
     <message>
-        <location filename="../menue/editormenue.cpp" line="56"/>
+        <location filename="../menue/editormenue.cpp" line="61"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="57"/>
+        <location filename="../menue/editormenue.cpp" line="62"/>
         <source>Save Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="58"/>
+        <location filename="../menue/editormenue.cpp" line="63"/>
         <source>Load Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="59"/>
+        <location filename="../menue/editormenue.cpp" line="64"/>
         <source>Edit Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="61"/>
-        <source>Exit Editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="63"/>
-        <source>Map Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="64"/>
-        <source>New Map</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/editormenue.cpp" line="65"/>
-        <source>Edit Map</source>
+        <source>Undo Strg+Z</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="66"/>
-        <source>Flip Map X</source>
+        <source>Redo Strg+Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="67"/>
-        <source>Flip Map Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="68"/>
-        <source>Rotate Map X</source>
+        <source>Exit Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="69"/>
-        <source>Rotate Map Y</source>
+        <source>Map Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="70"/>
-        <source>Random Map</source>
+        <source>New Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="71"/>
+        <source>Edit Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="72"/>
-        <source>Editor Commands</source>
+        <source>Flip Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="73"/>
-        <source>Place Selection</source>
+        <source>Flip Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="74"/>
-        <source>Delete Units</source>
+        <source>Rotate Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="75"/>
-        <source>Edit Units</source>
+        <source>Rotate Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="76"/>
-        <source>Edit Players</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="77"/>
-        <source>Edit Rules</source>
+        <source>Random Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="78"/>
-        <source>Optimize Players</source>
+        <source>Editor Commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="79"/>
+        <source>Place Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="80"/>
-        <source>Import/Export</source>
+        <source>Delete Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="81"/>
-        <source>Import CoW Txt</source>
+        <source>Edit Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="82"/>
-        <source>Import AWDS Aws</source>
+        <source>Edit Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="83"/>
-        <source>Import AWDC Aw4</source>
+        <source>Edit Rules</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="84"/>
+        <source>Optimize Players</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="86"/>
+        <source>Import/Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="87"/>
+        <source>Import CoW Txt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="88"/>
+        <source>Import AWDS Aws</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="89"/>
+        <source>Import AWDC Aw4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="90"/>
         <source>Import AW by Web</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2121,7 +2131,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="91"/>
+        <location filename="../main.cpp" line="92"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2543,7 +2553,7 @@
     </message>
     <message>
         <location filename="../objects/selectkey.cpp" line="41"/>
-        <location filename="../objects/selectkey.cpp" line="123"/>
+        <location filename="../objects/selectkey.cpp" line="129"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2638,7 +2648,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/selectkey.cpp" line="127"/>
+        <location filename="../objects/selectkey.cpp" line="133"/>
         <source>Key </source>
         <translation type="unfinished"></translation>
     </message>
@@ -4144,7 +4154,7 @@
 <context>
     <name>building</name>
     <message>
-        <location filename="../resources/scripts/general/building.js" line="157"/>
+        <location filename="../resources/scripts/general/building.js" line="159"/>
         <source>REPAIR</source>
         <translation type="unfinished"></translation>
     </message>

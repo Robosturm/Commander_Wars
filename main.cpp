@@ -1,5 +1,6 @@
 #include <QObject>
 #include <QProcess>
+#include <qdir.h>
 
 #ifdef GAMEDEBUG
 #include <QQmlApplicationEngine>
@@ -186,6 +187,8 @@ int main(int argc, char* argv[])
     oxygine::Stage::instance->setVisible(true);
     qint32 returncode = app.exec();
     app.getWorkerthread()->exit(0);
+    QDir dir("temp/");
+    dir.removeRecursively();
     /*************************************************************************************************/
     // clean up section ahead
     // store current settings when closing

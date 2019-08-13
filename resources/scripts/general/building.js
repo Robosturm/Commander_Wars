@@ -40,7 +40,7 @@ var BUILDING =
     // if the current terrain isn't in the list. it'll be replaced by the first :)
     getBaseTerrain : function(building)
     {
-        return "PLAINS,STREET,SNOW,DESERT,DESERT_PATH"
+        return ["PLAINS", "STREET", "SNOW", "DESERT", "DESERT_PATH"];
     },
 
     addCaptureAnimationBuilding : function(animation, building, startColor, capturedColor)
@@ -49,17 +49,18 @@ var BUILDING =
         animation.addBuildingSprite("town", startColor , capturedColor, false);
     },
 
-    canLargeBuildingPlaced : function(terrain, width, heigth)
+    canLargeBuildingPlaced : function(terrain, building, width, heigth)
     {
         var placeX = terrain.getX();
         var placeY = terrain.getY();
+        var baseTerrains = building.getBaseTerrain();
         for (var x = 0; x < width; x++)
         {
             for (var y = 0; y < heigth; y++)
             {
                 if (map.onMap(placeX - x, placeY - y))
                 {
-                    if (map.getTerrain(placeX - x, placeY - y).getTerrainID() !== "PLAINS")
+                    if (baseTerrains.indexOf(map.getTerrain(placeX - x, placeY - y).getTerrainID()) < 0)
                     {
                         return false;
                     }
@@ -73,9 +74,10 @@ var BUILDING =
         return true;
     },
 
-    canBuildingBePlaced : function(terrain)
+    canBuildingBePlaced : function(terrain, building)
     {
-        if ((terrain.getTerrainID() === "PLAINS") || (terrain.getTerrainID() === "STREET"))
+        var baseTerrains = building.getBaseTerrain();
+        if (baseTerrains.indexOf(terrain.getTerrainID()) >= 0)
         {
             return true;
         }

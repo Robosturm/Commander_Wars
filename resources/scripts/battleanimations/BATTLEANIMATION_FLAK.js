@@ -27,6 +27,64 @@ var Constructor = function()
                           BATTLEANIMATION_FLAK.getMaxUnitCount(), Qt.point(-5, 5));
     };
 
+    this.loadFireAnimation = function(sprite, unit, defender, weapon)
+    {
+        // mg
+        var player = unit.getOwner();
+        // get army name
+        var armyName = player.getArmy().toLowerCase();
+        if (armyName === "bg")
+        {
+            armyName = "bh"
+        }
+        var offset = Qt.point(-5, 5);
+        if (armyName === "yc")
+        {
+            offset = Qt.point(27, 22);
+        }
+        else if (armyName === "ge")
+        {
+            offset = Qt.point(20, 15);
+        }
+        else if (armyName === "bm")
+        {
+            offset = Qt.point(20, 19);
+        }
+        else if (armyName === "bh")
+        {
+            offset = Qt.point(-38, 5);
+        }
+        if (armyName === "bh" ||
+            armyName === "os")
+        {
+            if (defender.getUnitType() === GameEnums.UnitType_Air)
+            {
+                sprite.loadSprite("flak+" + armyName + "+fire+air",  false,
+                                  BATTLEANIMATION_FLAK.getMaxUnitCount(), offset);
+                sprite.loadSprite("flak+" + armyName + "+fire+air+mask",  true,
+                                  BATTLEANIMATION_FLAK.getMaxUnitCount(), offset);
+            }
+            else
+            {
+                sprite.loadSprite("flak+" + armyName + "+fire+ground",  false,
+                                  BATTLEANIMATION_FLAK.getMaxUnitCount(), offset);
+                sprite.loadSprite("flak+" + armyName + "+fire+ground+mask",  true,
+                                  BATTLEANIMATION_FLAK.getMaxUnitCount(), offset);
+            }
+        }
+        else
+        {
+            BATTLEANIMATION_FLAK.loadStandingAnimation(sprite, unit, defender, weapon);
+            sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
+                              1, 1, 0, 0);
+        }
+    };
+
+    this.getFireDurationMS = function()
+    {
+        // the time will be scaled with animation speed inside the engine
+        return 900;
+    };
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)
     {

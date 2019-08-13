@@ -65,6 +65,7 @@ public:
 signals:
 
 public slots:
+    QStringList getBaseTerrain();
     /**
      * @brief getNeutralLoaded
      * @return

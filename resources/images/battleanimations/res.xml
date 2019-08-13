@@ -140,6 +140,17 @@
 		<image file="flak/flak+os+mask.png" />
 		<image file="flak/flak+yc.png" />
 		<image file="flak/flak+yc+mask.png" />
+
+		<image file="flak/flak+bh+fire+ground+mask.png" cols = "9" />
+		<image file="flak/flak+bh+fire+ground.png" cols = "9" />
+		<image file="flak/flak+bh+fire+air+mask.png" cols = "9" />
+		<image file="flak/flak+bh+fire+air.png" cols = "9" />
+		
+		<image file="flak/flak+os+fire+ground+mask.png" cols = "4" />
+		<image file="flak/flak+os+fire+ground.png" cols = "4" />
+		<image file="flak/flak+os+fire+air+mask.png" cols = "6" />
+		<image file="flak/flak+os+fire+air.png" cols = "6" />
+
 		
 		<!-- flare -->
 		<image file="flare/flare.png" />

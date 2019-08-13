@@ -14,6 +14,7 @@ public:
     explicit SelectKey(SDL_Keycode code);
     virtual ~SelectKey() = default;
 
+    static QString getKeycodeText(SDL_Keycode code);
 signals:
     void sigKeyChanged(SDL_Keycode key);
 
