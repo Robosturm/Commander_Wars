@@ -32,6 +32,17 @@ Topbar::Topbar(qint32 x, qint32 width)
     setSize(width, 80);
 }
 
+void Topbar::hide()
+{
+    for (qint32 i = 0; i < m_Items.size(); i++)
+    {
+        for (qint32 i2 = 0; i2 < m_Items.at(i)->size(); i2++)
+        {
+            m_Items.at(i)->at(i2)->setVisible(false);
+        }
+    }
+}
+
 void Topbar::addItem(QString text, QString itemID, qint32 group)
 {
     Mainapp* pApp = Mainapp::getInstance();

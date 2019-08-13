@@ -562,7 +562,7 @@ void EditorMenue::KeyInput(SDL_Event event)
                     if (copyRect.x() >= 0 && copyRect.y() >= 0 &&
                         copyRect.width() != 0 && copyRect.height() != 0)
                     {
-                        pasteSelection(-1, -1);
+                        pasteSelection(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
                     }
                 }
                 break;
@@ -610,6 +610,7 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    m_Topbar->hide();
     xyTextInfo->setHtmlText(("X: " + QString::number(x) + " Y: " + QString::number(y)).toStdString().c_str());
 
     GameMap* pMap = GameMap::getInstance();

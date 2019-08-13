@@ -26,6 +26,10 @@ public:
      * @param text
      */
     void addGroup(QString text);
+    /**
+     * @brief hide
+     */
+    void hide();
 signals:
     /**
      * @brief sigItemClicked connect to this signal in order to recieve when an item was clicked so you can handle it
