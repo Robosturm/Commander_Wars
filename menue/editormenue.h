@@ -18,7 +18,15 @@ public:
         PlaceEditorSelection,
         RemoveUnits,
         EditUnits,
+        CopySelection,
     };
+
+    enum class CursorModes
+    {
+        Rect,
+        Circle,
+    };
+
     explicit EditorMenue();
     virtual ~EditorMenue();
 
@@ -202,6 +210,22 @@ public slots:
                          bool roadSupport, qint32 seed,
                          float forestchance, float mountainChance, float seachance, float buildingchance,
                          float factoryChance, float airPortChance, float harbourChance);
+    /**
+     * @brief createMarkedArea
+     * @param pActor
+     * @param p1
+     * @param p2
+     * @param mode
+     */
+    void createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2, CursorModes mode, QColor color = Qt::white);
+    /**
+     * @brief selectionChanged
+     */
+    void selectionChanged();
+    /**
+     * @brief pasteSelection
+     */
+    void pasteSelection(qint32 x, qint32 y);
 private:
     spEditorSelection m_EditorSelection{nullptr};
     EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};
@@ -211,6 +235,10 @@ private:
     static EditorMenue* m_pInstance;
 
     qint32 tempCounter{0};
+
+    QRect copyRect{-1, -1, 0, 0};
+    oxygine::spActor copyRectActor{new oxygine::Actor()};
+    oxygine::spActor cursorActor{new oxygine::Actor()};
 };
 
 #endif // EDITORMENUE_H

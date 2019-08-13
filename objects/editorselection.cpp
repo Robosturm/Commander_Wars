@@ -225,6 +225,7 @@ void EditorSelection::createBoxPlacementSize()
     {
         m_SizeMode = PlacementSize::Small;
         m_CurrentSelectorSize->setPosition(frameSize, yStartPos);
+        emit sigSelectionChanged();
     });
     // scale marker to correct size if needed
     m_CurrentSelectorSize->setScale(pAnim->getWidth() / pAnimMarker->getWidth());
@@ -238,6 +239,7 @@ void EditorSelection::createBoxPlacementSize()
     {
         m_SizeMode = PlacementSize::Medium;
         m_CurrentSelectorSize->setPosition(frameSize + xChange, yStartPos);
+        emit sigSelectionChanged();
     });
 
     oxygine::spSprite pSpriteBig = new oxygine::Sprite();
@@ -249,6 +251,7 @@ void EditorSelection::createBoxPlacementSize()
     {
         m_SizeMode = PlacementSize::Big;
         m_CurrentSelectorSize->setPosition(frameSize + xChange * 2, yStartPos);
+        emit sigSelectionChanged();
     });
 
     oxygine::spSprite pSpriteFill = new oxygine::Sprite();
@@ -260,6 +263,7 @@ void EditorSelection::createBoxPlacementSize()
     {
         m_SizeMode = PlacementSize::Fill;
         m_CurrentSelectorSize->setPosition(frameSize + xChange * 3, yStartPos);
+        emit sigSelectionChanged();
     });
 }
 
@@ -605,6 +609,7 @@ void EditorSelection::ClickedPlacementSelection(qint32 x, qint32 y)
     m_selectedIndex.setX(x);
     m_selectedIndex.setY(y);
     m_CurrentSelector->setPosition(frameSize + x * GameMap::Imagesize * xFactor, startH + GameMap::Imagesize * yFactor * y);
+    emit sigSelectionChanged();
     pApp->continueThread();
 }
 
@@ -642,6 +647,7 @@ void EditorSelection::selectBuilding(const QString& buildingID)
                 m_selectedIndex.setX(i % static_cast<qint32>(m_selectedIndex.z()));
                 m_selectedIndex.setY(i / static_cast<qint32>(m_selectedIndex.z()));
                 m_CurrentSelector->setPosition(frameSize + m_selectedIndex.x() * GameMap::Imagesize * xFactor, startH + GameMap::Imagesize * yFactor * m_selectedIndex.y());
+                emit sigSelectionChanged();
             }
         }
     }

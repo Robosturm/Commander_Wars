@@ -1165,27 +1165,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="86"/>
-        <source>Import/Export</source>
+        <location filename="../menue/editormenue.cpp" line="85"/>
+        <source>Copy Strg+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="87"/>
-        <source>Import CoW Txt</source>
+        <location filename="../menue/editormenue.cpp" line="86"/>
+        <source>Paste Strg+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="88"/>
-        <source>Import AWDS Aws</source>
+        <source>Import/Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="89"/>
-        <source>Import AWDC Aw4</source>
+        <source>Import CoW Txt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="90"/>
+        <source>Import AWDS Aws</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="91"/>
+        <source>Import AWDC Aw4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="92"/>
         <source>Import AW by Web</source>
         <translation type="unfinished"></translation>
     </message>

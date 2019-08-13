@@ -76,6 +76,7 @@ public:
 signals:
    void sigClickedPlacementSelection(qint32 x, qint32 y);
    void sigUpdateSelectedPlayer();
+   void sigSelectionChanged();
 public slots:
     void ClickedPlacementSelection(qint32 x, qint32 y);
     void selectTerrain(const QString& terrainID);

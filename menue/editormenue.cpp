@@ -82,6 +82,8 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Edit Players"), "EDITPLAYERS", 2);
     m_Topbar->addItem(tr("Edit Rules"), "EDITRULES", 2);
     m_Topbar->addItem(tr("Optimize Players"), "OPTIMIZEPLAYERS", 2);
+    m_Topbar->addItem(tr("Copy Strg+C"), "COPY", 2);
+    m_Topbar->addItem(tr("Paste Strg+V"), "PASTE", 2);
 
     m_Topbar->addGroup(tr("Import/Export"));
     m_Topbar->addItem(tr("Import CoW Txt"), "IMPORTCOWTXT", 3);
@@ -133,6 +135,8 @@ EditorMenue::EditorMenue()
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, this, &EditorMenue::cursorMoved, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigKeyDown, this, &EditorMenue::KeyInput, Qt::QueuedConnection);
     connect(m_Topbar.get(), &Topbar::sigItemClicked, this, &EditorMenue::clickedTopbar, Qt::QueuedConnection);
+    connect(m_EditorSelection.get(), &EditorSelection::sigSelectionChanged, this, &EditorMenue::selectionChanged, Qt::QueuedConnection);
+
 
     // clean up temp folder
     QDir dir("temp/");
@@ -406,6 +410,15 @@ void EditorMenue::clickedTopbar(QString itemID)
         connect(pDialog.get(), &RuleSelectionDialog::sigRulesChanged, this, &EditorMenue::rulesChanged, Qt::QueuedConnection);
         setFocused(false);
     }
+    else if (itemID == "COPY")
+    {
+        m_EditorMode = EditorModes::CopySelection;
+        copyRect = QRect(-1, -1, 0, 0);
+    }
+    else if (itemID == "PASTE")
+    {
+        // do nothing
+    }
     pApp->continueThread();
 }
 
@@ -531,6 +544,29 @@ void EditorMenue::KeyInput(SDL_Event event)
                 }
                 break;
             }
+            case SDLK_c:
+            {
+                if ((event.key.keysym.mod & KMOD_CTRL) > 0)
+                {
+                    m_EditorMode = EditorModes::CopySelection;
+                    copyRect = QRect(-1, -1, 0, 0);
+                    createMarkedArea(cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
+                    createMarkedArea(copyRectActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle, Qt::white);
+                }
+                break;
+            }
+            case SDLK_v:
+            {
+                if ((event.key.keysym.mod & KMOD_CTRL) > 0)
+                {
+                    if (copyRect.x() >= 0 && copyRect.y() >= 0 &&
+                        copyRect.width() != 0 && copyRect.height() != 0)
+                    {
+                        pasteSelection(-1, -1);
+                    }
+                }
+                break;
+            }
             default:
             {
                 // do nothing
@@ -575,6 +611,15 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     xyTextInfo->setHtmlText(("X: " + QString::number(x) + " Y: " + QString::number(y)).toStdString().c_str());
+
+    GameMap* pMap = GameMap::getInstance();
+    copyRectActor->detach();
+    if (pMap->onMap(x, y))
+    {
+        pMap->addChild(cursorActor);
+        cursorActor->setPosition(x * GameMap::Imagesize, y * GameMap::Imagesize);
+    }
+
     switch (m_EditorMode)
     {
         case EditorModes::RemoveUnits:
@@ -634,6 +679,21 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
             }
             break;
         }
+        case EditorModes::CopySelection:
+        {
+            m_Cursor->changeCursor("cursor+default");
+            pMap->addChild(copyRectActor);
+            if (copyRect.x() >= 0 && copyRect.y() >= 0 &&
+                copyRect.width() == 0 && copyRect.height() == 0)
+            {
+                createMarkedArea(copyRectActor, copyRect.topLeft(), QPoint(x, y), CursorModes::Rect, QColor(255, 0, 0));
+            }
+            else if (copyRect.x() < 0 || copyRect.y() < 0)
+            {
+                copyRectActor->removeChildren();
+            }
+            break;
+        }
     }
     pApp->continueThread();
 }
@@ -647,10 +707,13 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
 
     switch (m_EditorMode)
     {
+        case EditorModes::CopySelection:
         case EditorModes::EditUnits:
         case EditorModes::RemoveUnits:
         {
+            copyRectActor->detach();
             m_EditorMode = EditorModes::PlaceEditorSelection;
+            selectionChanged();
             break;
         }
         case EditorModes::PlaceEditorSelection:
@@ -740,6 +803,20 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
                     placeUnit(x, y);
                     break;
                 }
+            }
+            break;
+        }
+        case EditorModes::CopySelection:
+        {
+            pasteSelection(x, y);
+            GameMap::getInstance()->addChild(copyRectActor);
+            if (copyRect.width() == 0)
+            {
+                createMarkedArea(copyRectActor, copyRect.topLeft(), QPoint(x, y), CursorModes::Rect, QColor(255, 0, 0));
+            }
+            else
+            {
+                createMarkedArea(copyRectActor, copyRect.topLeft(), copyRect.bottomRight(), CursorModes::Rect, QColor(255, 0, 0));
             }
             break;
         }
@@ -1149,4 +1226,314 @@ void EditorMenue::changeMap(QString mapName, QString author, QString description
     m_EditorSelection->createPlayerSelection();
     setFocused(true);
     pApp->continueThread();
+}
+
+void EditorMenue::selectionChanged()
+{
+    if (m_EditorMode == EditorModes::PlaceEditorSelection)
+    {
+        if (m_EditorSelection->getCurrentMode() == EditorSelection::EditorMode::Building)
+        {
+            spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
+            if (pCurrentBuilding->getBuildingWidth() > 1 ||
+                pCurrentBuilding->getBuildingHeigth() > 1)
+            {
+                createMarkedArea(cursorActor, QPoint(0, 0), QPoint(-pCurrentBuilding->getBuildingWidth() + 1, -pCurrentBuilding->getBuildingHeigth() + 1), CursorModes::Rect);
+                return;
+            }
+        }
+        switch (m_EditorSelection->getSizeMode())
+        {
+            case EditorSelection::PlacementSize::Medium:
+            {
+                createMarkedArea(cursorActor, QPoint(0, 0), QPoint(1, -1), CursorModes::Circle);
+                break;
+            }
+            case EditorSelection::PlacementSize::Big:
+            {
+                createMarkedArea(cursorActor, QPoint(0, 0), QPoint(2, -1), CursorModes::Circle);
+                break;
+            }
+            case EditorSelection::PlacementSize::Small:
+            case EditorSelection::PlacementSize::Fill:
+            {
+                createMarkedArea(cursorActor, QPoint(0, 0), QPoint(-1, -1), CursorModes::Circle);
+                break;
+            }
+        }
+    }
+    else if (m_EditorMode == EditorModes::CopySelection)
+    {
+        createMarkedArea(cursorActor, QPoint(0, 0), QPoint(copyRect.width() - 1, copyRect.height() - 1), CursorModes::Rect);
+    }
+}
+
+void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2, CursorModes mode, QColor color)
+{
+    pActor->removeChildren();
+    switch (mode)
+    {
+        case CursorModes::Rect:
+        {
+            ObjectManager* pObjectManager = ObjectManager::getInstance();
+            qint32 xDir = 1;
+            if (p1.x() != p2.x())
+            {
+                xDir = (p2.x() - p1.x()) / qAbs(p1.x() - p2.x());
+            }
+            qint32 yDir = 1;
+            if (p1.y() != p2.y())
+            {
+                yDir = (p2.y() - p1.y()) / qAbs(p1.y() - p2.y());
+            }
+            for (qint32 i = p1.x(); i != p2.x() + xDir; i += xDir)
+            {
+                oxygine::spSprite pSprite = new oxygine::Sprite();
+                qint32 y = p1.y();
+                if (p2.y() < p1.y())
+                {
+                    y = p2.y();
+                }
+                oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+top");
+                pSprite->setResAnim(pAnim);
+                pSprite->setColor(oxygine::Color(static_cast<quint8>(color.red()),
+                                                 static_cast<quint8>(color.green()),
+                                                 static_cast<quint8>(color.blue())));
+                pSprite->setPosition(GameMap::Imagesize * i,
+                                     GameMap::Imagesize * y);
+                pActor->addChild(pSprite);
+                y = p2.y();
+                if (p2.y() < p1.y())
+                {
+                    y = p1.y();
+                }
+                pSprite = new oxygine::Sprite();
+                pAnim = pObjectManager->getResAnim("cursor+border+bottom");
+                pSprite->setResAnim(pAnim);
+                pSprite->setColor(oxygine::Color(static_cast<quint8>(color.red()),
+                                                 static_cast<quint8>(color.green()),
+                                                 static_cast<quint8>(color.blue())));
+                pSprite->setPosition(GameMap::Imagesize * i,
+                                     GameMap::Imagesize * y);
+                pActor->addChild(pSprite);
+            }
+            for (qint32 i = p1.y(); i != p2.y() + yDir; i += yDir)
+            {
+                oxygine::spSprite pSprite = new oxygine::Sprite();
+                qint32 x = p1.x();
+                if (p2.x() < p1.x())
+                {
+                    x = p2.x();
+                }
+                oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+left");
+                pSprite->setResAnim(pAnim);
+                pSprite->setColor(oxygine::Color(static_cast<quint8>(color.red()),
+                                                 static_cast<quint8>(color.green()),
+                                                 static_cast<quint8>(color.blue())));
+                pSprite->setPosition(GameMap::Imagesize * x,
+                                     GameMap::Imagesize * i);
+                pActor->addChild(pSprite);
+                x = p2.x();
+                if (p2.x() < p1.x())
+                {
+                    x = p1.x();
+                }
+                pSprite = new oxygine::Sprite();
+                pAnim = pObjectManager->getResAnim("cursor+border+right");
+                pSprite->setResAnim(pAnim);
+                pSprite->setColor(oxygine::Color(static_cast<quint8>(color.red()),
+                                                 static_cast<quint8>(color.green()),
+                                                 static_cast<quint8>(color.blue())));
+                pSprite->setPosition(GameMap::Imagesize * x,
+                                     GameMap::Imagesize * i);
+                pActor->addChild(pSprite);
+            }
+            break;
+        }
+        case CursorModes::Circle:
+        {
+            if (p2.x() > 0)
+            {
+                QmlVectorPoint* pPoints = Mainapp::getCircle(p2.x(), p2.x());
+                ObjectManager* pObjectManager = ObjectManager::getInstance();
+                for (qint32 i = 0; i < pPoints->size(); i++)
+                {
+                    QPoint point = pPoints->at(i);
+                    if (point.x() >= 0)
+                    {
+                        oxygine::spSprite pSprite = new oxygine::Sprite();
+                        oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+right");
+                        pSprite->setResAnim(pAnim);
+                        pSprite->setColor(oxygine::Color(static_cast<quint8>(color.red()),
+                                                         static_cast<quint8>(color.green()),
+                                                         static_cast<quint8>(color.blue())));
+                        pSprite->setPosition(GameMap::Imagesize * (p1.x() + point.x()),
+                                             GameMap::Imagesize * (p1.y() + point.y()));
+                        pActor->addChild(pSprite);
+                    }
+                    if (point.x() <= 0)
+                    {
+                        oxygine::spSprite pSprite = new oxygine::Sprite();
+                        oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+left");
+                        pSprite->setResAnim(pAnim);
+                        pSprite->setColor(oxygine::Color(static_cast<quint8>(color.red()),
+                                                         static_cast<quint8>(color.green()),
+                                                         static_cast<quint8>(color.blue())));
+                        pSprite->setPosition(GameMap::Imagesize * (p1.x() + point.x()),
+                                             GameMap::Imagesize * (p1.y() + point.y()));
+                        pActor->addChild(pSprite);
+                    }
+                    if (point.y() >= 0)
+                    {
+                        oxygine::spSprite pSprite = new oxygine::Sprite();
+                        oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+bottom");
+                        pSprite->setResAnim(pAnim);
+                        pSprite->setColor(oxygine::Color(static_cast<quint8>(color.red()),
+                                                         static_cast<quint8>(color.green()),
+                                                         static_cast<quint8>(color.blue())));
+                        pSprite->setPosition(GameMap::Imagesize * (p1.x() + point.x()),
+                                             GameMap::Imagesize * (p1.y() + point.y()));
+                        pActor->addChild(pSprite);
+                    }
+                    if (point.y() <= 0)
+                    {
+                        oxygine::spSprite pSprite = new oxygine::Sprite();
+                        oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+top");
+                        pSprite->setResAnim(pAnim);
+                        pSprite->setColor(oxygine::Color(static_cast<quint8>(color.red()),
+                                                         static_cast<quint8>(color.green()),
+                                                         static_cast<quint8>(color.blue())));
+                        pSprite->setPosition(GameMap::Imagesize * (p1.x() + point.x()),
+                                             GameMap::Imagesize * (p1.y() + point.y()));
+                        pActor->addChild(pSprite);
+                    }
+                }
+                delete pPoints;
+            }
+            break;
+        }
+    }
+}
+
+void EditorMenue::pasteSelection(qint32 x, qint32 y)
+{
+    GameMap* pMap = GameMap::getInstance();
+    if (pMap->onMap(x, y))
+    {
+        if (copyRect.x() < 0)
+        {
+            copyRect.setX(x);
+            copyRect.setY(y);
+            copyRect.setWidth(0);
+            copyRect.setHeight(0);
+        }
+        else if (copyRect.width() == 0)
+        {
+            if (copyRect.x() < x)
+            {
+                copyRect.setRight(x);
+            }
+            else
+            {
+                qint32 copy = copyRect.x();
+                copyRect.setX(x);
+                copyRect.setRight(copy);
+            }
+            if (copyRect.y() < y)
+            {
+                copyRect.setBottom(y);
+            }
+            else
+            {
+                qint32 copy = copyRect.y();
+                copyRect.setY(y);
+                copyRect.setBottom(copy);
+            }
+            createMarkedArea(cursorActor, QPoint(0, 0), QPoint(copyRect.width() - 1, copyRect.height() - 1), CursorModes::Rect);
+        }
+        else
+        {
+            QRect rect(x, y, copyRect.width(), copyRect.height());
+            if (pMap->onMap(rect.x(), rect.y()) &&
+                pMap->onMap(rect.right(), rect.bottom()) &&
+                !copyRect.intersects(QRect(x, y, copyRect.width(), copyRect.height())))
+            {
+                createTempFile();
+                qint32 xDir = copyRect.width() / qAbs(copyRect.width());
+                qint32 yDir = copyRect.height() / qAbs(copyRect.height());
+
+                switch (m_EditorSelection->getCurrentMode())
+                {
+                    case EditorSelection::EditorMode::Terrain:
+                    {
+                        for (qint32 xPos = 0; xPos != copyRect.width(); xPos += xDir)
+                        {
+                            for (qint32 yPos = 0; yPos != copyRect.height(); yPos += yDir)
+                            {
+                                Terrain* pCopyTerrain = pMap->getTerrain(copyRect.x() + xPos, copyRect.y() + yPos);
+                                pMap->replaceTerrain(pCopyTerrain->getBaseTerrainID(1), x + xPos, y + yPos, false, false);
+                                pMap->replaceTerrain(pCopyTerrain->getBaseTerrainID(0), x + xPos, y + yPos, true, false);
+                            }
+                        }
+                        pMap->updateSprites();
+                        break;
+                    }
+                    case EditorSelection::EditorMode::Building:
+                    {
+                        for (qint32 xPos = 0; xPos != copyRect.width(); xPos += xDir)
+                        {
+                            for (qint32 yPos = 0; yPos != copyRect.height(); yPos += yDir)
+                            {
+                                Building* pBuilding = pMap->getTerrain(copyRect.x() + xPos, copyRect.y() + yPos)->getBuilding();
+                                if (pBuilding != nullptr &&
+                                    pBuilding->getBuildingWidth() == 1 &&
+                                    pBuilding->getBuildingHeigth() == 1)
+                                {
+                                    if (pBuilding->canBuildingBePlaced(pMap->getTerrain(x + xPos, y + yPos)))
+                                    {
+                                        QString baseTerrain = pBuilding->getBaseTerrain()[0];
+                                        pMap->replaceTerrain(baseTerrain, x + xPos, y + yPos, false, false);
+                                    }
+                                    Building* pCopyBuilding = new Building(pBuilding->getBuildingID());
+                                    pCopyBuilding->setOwner(pBuilding->getOwner());
+                                    pMap->getTerrain(x + xPos, y + yPos)->setBuilding(pCopyBuilding);
+                                }
+                            }
+                        }
+                        pMap->updateSprites();
+                        break;
+                    }
+                    case EditorSelection::EditorMode::Unit:
+                    {
+                        for (qint32 xPos = 0; xPos != copyRect.width(); xPos += xDir)
+                        {
+                            for (qint32 yPos = 0; yPos != copyRect.height(); yPos += yDir)
+                            {
+                                Unit* pUnit = pMap->getTerrain(copyRect.x() + xPos, copyRect.y() + yPos)->getUnit();
+                                if (pUnit != nullptr)
+                                {
+                                    MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
+                                    QString movementType = pUnit->getMovementType();
+                                    if (pMovementTableManager->getBaseMovementPoints(movementType, pMap->getTerrain(x + xPos, y + yPos)) > 0)
+                                    {
+                                        Unit* pCopyUnit = new Unit(pUnit->getUnitID(), pUnit->getOwner(), false);
+                                        pMap->getTerrain(x + xPos, y + yPos)->setUnit(nullptr);
+                                        pMap->getTerrain(x + xPos, y + yPos)->setUnit(pCopyUnit);
+                                        pCopyUnit->setHp(pUnit->getHp());
+                                        pCopyUnit->setAmmo1(pUnit->getAmmo1());
+                                        pCopyUnit->setAmmo2(pUnit->getAmmo2());
+                                        pCopyUnit->setFuel(pUnit->getFuel());
+                                        pCopyUnit->setAiMode(pUnit->getAiMode());
+                                        pCopyUnit->setUnitRank(pUnit->getUnitRank());
+                                    }
+                                }
+                            }
+                        }
+                        pMap->updateSprites();
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }

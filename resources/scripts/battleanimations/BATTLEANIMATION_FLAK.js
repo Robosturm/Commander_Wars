@@ -37,6 +37,14 @@ var Constructor = function()
         {
             armyName = "bh"
         }
+        if ((armyName !== "yc") &&
+            (armyName !== "ge") &&
+            (armyName !== "bm") &&
+            (armyName !== "bh"))
+        {
+            armyName = "os";
+        }
+
         var offset = Qt.point(-5, 5);
         if (armyName === "yc")
         {
@@ -60,16 +68,16 @@ var Constructor = function()
             if (defender.getUnitType() === GameEnums.UnitType_Air)
             {
                 sprite.loadSprite("flak+" + armyName + "+fire+air",  false,
-                                  BATTLEANIMATION_FLAK.getMaxUnitCount(), offset);
+                                  BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
                 sprite.loadSprite("flak+" + armyName + "+fire+air+mask",  true,
-                                  BATTLEANIMATION_FLAK.getMaxUnitCount(), offset);
+                                  BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
             }
             else
             {
                 sprite.loadSprite("flak+" + armyName + "+fire+ground",  false,
-                                  BATTLEANIMATION_FLAK.getMaxUnitCount(), offset);
+                                  BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
                 sprite.loadSprite("flak+" + armyName + "+fire+ground+mask",  true,
-                                  BATTLEANIMATION_FLAK.getMaxUnitCount(), offset);
+                                  BATTLEANIMATION_FLAK.getMaxUnitCount(), offset, 2);
             }
         }
         else
@@ -83,7 +91,7 @@ var Constructor = function()
     this.getFireDurationMS = function()
     {
         // the time will be scaled with animation speed inside the engine
-        return 900;
+        return 850;
     };
 
     this.loadImpactAnimation = function(sprite, unit, defender, weapon)

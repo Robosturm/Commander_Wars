@@ -2,6 +2,10 @@
 <resources>
 	<set path = "resources/cursor/" />
 	<atlas>
+		<image file="cursor+border+bottom.png" />
+		<image file="cursor+border+left.png" />
+		<image file="cursor+border+right.png" />
+		<image file="cursor+border+top.png" />
 		<image file="cursor+attack.png" cols = "4" />
 		<image file="cursor+default.png" cols = "4" />
 		<image file="cursor+unable.png" cols = "4" />

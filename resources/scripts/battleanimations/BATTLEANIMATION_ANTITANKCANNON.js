@@ -17,7 +17,7 @@ var Constructor = function()
     {
         // gun
         BATTLEANIMATION_ANTITANKCANNON.loadStandingAnimation(sprite, unit, defender, weapon);
-        var offset = Qt.point(30, 12);
+        var offset = Qt.point(30, 28);
         sprite.loadSprite("medium_shot",  false, sprite.getMaxUnitCount(), offset,
                           1, 0.5, 0, 0);
         sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", 0);
