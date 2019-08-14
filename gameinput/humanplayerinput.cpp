@@ -366,7 +366,7 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                 (m_CurrentMenu.get() == nullptr))
             {
                 Unit* pUnit = m_pGameAction->getTargetUnit();
-                m_pGameAction->setMovepath(m_ArrowPoints);
+                m_pGameAction->setMovepath(m_ArrowPoints, m_pGameAction->getCosts());
                 if (pUnit != nullptr)
                 {
                     // we want to do something with this unit :)
@@ -709,12 +709,13 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
 {
     QVector<QPoint> points = m_ArrowPoints;
     deleteArrow();
-    if (m_pGameAction->getTarget() != QPoint(x, y) && !m_pGameAction->getTargetUnit()->getHasMoved())
+    if (m_pGameAction->getTarget() != QPoint(x, y) &&
+        !m_pGameAction->getTargetUnit()->getHasMoved() &&
+        m_FieldPoints.contains(QVector3D(x, y, 0)))
     {
         if (m_pUnitPathFindingSystem->getCosts(x, y) > 0)
         {
             // is it a neighbour field to the last target?
-            qint32 fieldCosts = m_pUnitPathFindingSystem->getCosts(m_pGameAction->getTarget().x(), m_pGameAction->getTarget().y());
             if (((points.size() > 0) && ((points[0].x() - x + points[0].y() - y) != 0)))
             {
                 if ((points.size() > 0) && ((qAbs(points[0].x() - x) + qAbs(points[0].y() - y)) == 1))
@@ -726,7 +727,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
                     else
                     {
                         points.push_front(QPoint(x, y));
-                        if (m_pUnitPathFindingSystem->getCosts(points) - fieldCosts > m_pGameAction->getTargetUnit()->getMovementpoints(QPoint(x, y)))
+                        if (m_pUnitPathFindingSystem->getCosts(points)  > m_pGameAction->getTargetUnit()->getMovementpoints(QPoint(x, y)))
                         {
                             // not reachable this way get the ideal path
                             points = m_pUnitPathFindingSystem->getPath(x, y);
@@ -752,7 +753,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
             {
                 points = m_pUnitPathFindingSystem->getPath(x, y);
             }
-            m_pGameAction->setCosts(m_pUnitPathFindingSystem->getCosts(points) - fieldCosts);
+            m_pGameAction->setCosts(m_pUnitPathFindingSystem->getCosts(points));
             m_ArrowPoints = points;
             GameMap* pMap = GameMap::getInstance();
             GameManager* pGameManager = GameManager::getInstance();

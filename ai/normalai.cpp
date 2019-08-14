@@ -218,7 +218,7 @@ bool NormalAi::captureBuildings(QmlVectorUnit* pUnits)
                 for (qint32 i2 = 0; i2 < targets.size(); i2++)
                 {
                     action.setActionID(ACTION_CAPTURE);
-                    action.setMovepath(QVector<QPoint>(1, targets[i2]));
+                    action.setMovepath(QVector<QPoint>(1, targets[i2]), 0);
                     if (action.canBePerformed())
                     {
                         captureBuildings.append(QVector3D(targets[i2].x(), targets[i2].y(), i));
@@ -327,7 +327,8 @@ bool NormalAi::captureBuildings(QmlVectorUnit* pUnits)
                     pfs.explore();
                     GameAction* pAction = new GameAction(ACTION_CAPTURE);
                     pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
-                    pAction->setMovepath(pfs.getPath(static_cast<qint32>(captures[targetIndex].x()), static_cast<qint32>(captures[targetIndex].y())));
+                    QVector<QPoint> path = pfs.getPath(static_cast<qint32>(captures[targetIndex].x()), static_cast<qint32>(captures[targetIndex].y()));
+                    pAction->setMovepath(path, pfs.getCosts(path));
                     updatePoints.append(pUnit->getPosition());
                     updatePoints.append(pAction->getActionTarget());
                     if (pAction->canBePerformed())
@@ -372,8 +373,9 @@ bool NormalAi::fireWithUnits(QmlVectorUnit* pUnits, qint32 minfireRange, qint32 
             if (targetIdx >= 0)
             {
                 QVector4D target = ret[targetIdx];
-                pAction->setMovepath(pfs.getPath(static_cast<qint32>(moveTargetFields[targetIdx].x()),
-                                                 static_cast<qint32>(moveTargetFields[targetIdx].y())));
+                QVector<QPoint> path = pfs.getPath(static_cast<qint32>(moveTargetFields[targetIdx].x()),
+                                                   static_cast<qint32>(moveTargetFields[targetIdx].y()));
+                pAction->setMovepath(path, pfs.getCosts(path));
                 CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()), static_cast<qint32>(target.y())));
                 if (GameMap::getInstance()->getTerrain(static_cast<qint32>(target.x()), static_cast<qint32>(target.y()))->getUnit() == nullptr)
                 {
@@ -543,7 +545,8 @@ bool NormalAi::moveToUnloadArea(GameAction* pAction, Unit* pUnit, QmlVectorUnit*
         {
             UnitPathFindingSystem turnPfs(pUnit);
             turnPfs.explore();
-            pAction->setMovepath(turnPfs.getPath(targetFields.x(), targetFields.y()));
+            QVector<QPoint> path = turnPfs.getPath(targetFields.x(), targetFields.y());
+            pAction->setMovepath(path, turnPfs.getCosts(path));
             pAction->setActionID(ACTION_UNLOAD);
             bool unloaded = false;
             QVector<qint32> unloadedUnits;
@@ -681,7 +684,8 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
         turnPfs.explore();
         if (CoreAI::contains(transporterTargets, targetFields))
         {
-            pAction->setMovepath(turnPfs.getPath(targetFields.x(), targetFields.y()));
+            QVector<QPoint> path = turnPfs.getPath(targetFields.x(), targetFields.y());
+            pAction->setMovepath(path, turnPfs.getCosts(path));
             pAction->setActionID(ACTION_LOAD);
             updatePoints.append(pUnit->getPosition());
             updatePoints.append(pAction->getActionTarget());
@@ -691,7 +695,7 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
         else if (!shortenPathForTarget && CoreAI::contains(targets, targetFields))
         {
             QVector<QPoint> movePath = turnPfs.getClosestReachableMovePath(targetFields);
-            pAction->setMovepath(movePath);
+            pAction->setMovepath(movePath, turnPfs.getCosts(movePath));
             pAction->setActionID(ACTION_WAIT);
             updatePoints.append(pUnit->getPosition());
             updatePoints.append(pAction->getActionTarget());
@@ -722,17 +726,20 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
                     }
                     else
                     {
-                        pAction->setMovepath(turnPfs.getPath(ret.x(), ret.y()));
+                        QVector<QPoint> movePath = turnPfs.getPath(ret.x(), ret.y());
+                        pAction->setMovepath(movePath, turnPfs.getCosts(movePath));
                     }
                 }
                 else
                 {
-                    pAction->setMovepath(turnPfs.getPath(ret.x(), ret.y()));
+                    QVector<QPoint> movePath = turnPfs.getPath(ret.x(), ret.y());
+                    pAction->setMovepath(movePath, turnPfs.getCosts(movePath));
                 }
             }
             else
             {
-                pAction->setMovepath(turnPfs.getPath(movePath[idx].x(), movePath[idx].y()));
+                QVector<QPoint> path = turnPfs.getPath(movePath[idx].x(), movePath[idx].y());
+                pAction->setMovepath(path, turnPfs.getCosts(path));
             }
             if (pAction->getMovePath().size() > 0)
             {
@@ -812,8 +819,9 @@ bool NormalAi::suicide(GameAction* pAction, Unit* pUnit, UnitPathFindingSystem& 
     {
         qint32 selection = Mainapp::randInt(0, ret.size() - 1);
         QVector3D target = ret[selection];
-        pAction->setMovepath(turnPfs.getPath(static_cast<qint32>(moveTargetFields[selection].x()),
-                                             static_cast<qint32>(moveTargetFields[selection].y())));
+        QVector<QPoint> path = turnPfs.getPath(static_cast<qint32>(moveTargetFields[selection].x()),
+                                               static_cast<qint32>(moveTargetFields[selection].y()));
+        pAction->setMovepath(path, turnPfs.getCosts(path));
         CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()),
                                                      static_cast<qint32>(target.y())));
         if (pAction->isFinalStep())

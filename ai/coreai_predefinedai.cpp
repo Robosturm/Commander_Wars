@@ -42,7 +42,8 @@ bool CoreAI::moveOoziums(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
                     turnPfs.explore();
                     GameAction* pAction = new GameAction(ACTION_HOELLIUM_WAIT);
                     pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
-                    pAction->setMovepath(turnPfs.getClosestReachableMovePath(targetFields));
+                    QVector<QPoint> path = turnPfs.getClosestReachableMovePath(targetFields);
+                    pAction->setMovepath(path, turnPfs.getCosts(path));
                     emit performAction(pAction);
                     return true;
                 }
@@ -107,7 +108,8 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
                 if (bestTargets.size() > 0 && maxDamage > 0)
                 {
                     QPoint target = bestTargets[Mainapp::randInt(0, bestTargets.size() - 1)];
-                    pAction->setMovepath(turnPfs.getPath(target.x(), target.y()));
+                    QVector<QPoint> path = turnPfs.getPath(target.x(), target.y());
+                    pAction->setMovepath(path, turnPfs.getCosts(path));
                     addSelectedFieldData(pAction, target);
                     emit performAction(pAction);
                     return true;
@@ -121,7 +123,8 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
                     if (targetFields.x() >= 0)
                     {
                         pAction->setActionID(ACTION_WAIT);
-                        pAction->setMovepath(turnPfs.getClosestReachableMovePath(targetFields));
+                        QVector<QPoint> path = turnPfs.getClosestReachableMovePath(targetFields);
+                        pAction->setMovepath(path, turnPfs.getCosts(path));
                         emit performAction(pAction);
                         return true;
                     }
@@ -180,7 +183,8 @@ bool CoreAI::moveRepair(QmlVectorUnit* pUnits)
                     if (index >= 0 && pUnit->getPosition() != unitPos[index])
                     {
                         addSelectedFieldData(pAction, unitPos[index]);
-                        pAction->setMovepath(turnPfs.getPath(targets[i2].x(), targets[i2].y()));
+                        QVector<QPoint> path = turnPfs.getPath(targets[i2].x(), targets[i2].y());
+                        pAction->setMovepath(path, turnPfs.getCosts(path));
                         performAction(pAction);
                         return true;
                     }
@@ -245,7 +249,7 @@ void CoreAI::processPredefinedAiHold(Unit* pUnit)
     pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
     QVector<QVector3D> ret;
     QVector<QVector3D> moveTargetFields;
-    pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())));
+    pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())), 0);
     getBestAttacksFromField(pUnit, pAction, ret, moveTargetFields);
     if (ret.size() > 0)
     {
@@ -292,8 +296,9 @@ void CoreAI::processPredefinedAiDefensive(Unit* pUnit)
         if (static_cast<qint32>(moveTargetFields[selection].x()) != point.x() ||
             static_cast<qint32>(moveTargetFields[selection].y()) != point.y())
         {
-            pAction->setMovepath(pfs.getPath(static_cast<qint32>(moveTargetFields[selection].x()),
-                                             static_cast<qint32>(moveTargetFields[selection].y())));
+            QVector<QPoint> path = pfs.getPath(static_cast<qint32>(moveTargetFields[selection].x()),
+                                               static_cast<qint32>(moveTargetFields[selection].y()));
+            pAction->setMovepath(path, pfs.getCosts(path));
         }
         CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()),
                                                      static_cast<qint32>(target.y())));
@@ -319,7 +324,7 @@ void CoreAI::processPredefinedAiOffensive(Unit* pUnit, QmlVectorUnit* pEnemyUnit
 {
     GameAction* pAction = new GameAction(ACTION_FIRE);
     pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
-    pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())));
+    pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())), 0);
     UnitPathFindingSystem pfs(pUnit);
     pfs.explore();
     QVector<QVector3D> ret;
@@ -334,12 +339,13 @@ void CoreAI::processPredefinedAiOffensive(Unit* pUnit, QmlVectorUnit* pEnemyUnit
         if (static_cast<qint32>(moveTargetFields[selection].x()) != point.x() ||
             static_cast<qint32>(moveTargetFields[selection].y()) != point.y())
         {
-            pAction->setMovepath(pfs.getPath(static_cast<qint32>(moveTargetFields[selection].x()),
-                                             static_cast<qint32>(moveTargetFields[selection].y())));
+            QVector<QPoint> path = pfs.getPath(static_cast<qint32>(moveTargetFields[selection].x()),
+                                               static_cast<qint32>(moveTargetFields[selection].y()));
+            pAction->setMovepath(path, pfs.getCosts(path));
         }
         else
         {
-            pAction->setMovepath(QVector<QPoint>());
+            pAction->setMovepath(QVector<QPoint>(), 0);
         }
         CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()),
                                                      static_cast<qint32>(target.y())));
@@ -361,11 +367,12 @@ void CoreAI::processPredefinedAiOffensive(Unit* pUnit, QmlVectorUnit* pEnemyUnit
         QPoint targetFields = targetPfs.getReachableTargetField(movepoints);
         if (targetFields.x() >= 0)
         {
-            pAction->setMovepath(pfs.getClosestReachableMovePath(targetFields));
+            QVector<QPoint> path = pfs.getClosestReachableMovePath(targetFields);
+            pAction->setMovepath(path, pfs.getCosts(path));
         }
         else
         {
-            pAction->setMovepath(QVector<QPoint>());
+            pAction->setMovepath(QVector<QPoint>(), 0);
         }
         emit performAction(pAction);
     }

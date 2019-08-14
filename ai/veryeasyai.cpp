@@ -179,11 +179,12 @@ bool VeryEasyAI::captureBuildings(QmlVectorUnit* pUnits)
                         if (pUnit->getX() == targets[i2].x() &&
                             pUnit->getY() == targets[i2].y())
                         {
-                            pAction->setMovepath(QVector<QPoint>());
+                            pAction->setMovepath(QVector<QPoint>(), 0);
                         }
                         else
                         {
-                            pAction->setMovepath(pfs.getPath(targets[i2].x(), targets[i2].y()));
+                            QVector<QPoint> path = pfs.getPath(targets[i2].x(), targets[i2].y());
+                            pAction->setMovepath(path, pfs.getCosts(path));
                         }
                         if (pAction->canBePerformed())
                         {
@@ -198,11 +199,12 @@ bool VeryEasyAI::captureBuildings(QmlVectorUnit* pUnits)
                         if (pUnit->getX() == targets[i2].x() &&
                             pUnit->getY() == targets[i2].y())
                         {
-                            pAction->setMovepath(QVector<QPoint>());
+                            pAction->setMovepath(QVector<QPoint>(), 0);
                         }
                         else
                         {
-                            pAction->setMovepath(pfs.getPath(targets[i2].x(), targets[i2].y()));
+                            QVector<QPoint> path = pfs.getPath(targets[i2].x(), targets[i2].y());
+                            pAction->setMovepath(path, pfs.getCosts(path));
                         }
                         if (pAction->canBePerformed())
                         {
@@ -282,12 +284,13 @@ bool VeryEasyAI::attack(Unit* pUnit)
             if (static_cast<qint32>(moveTargetFields[selection].x()) != point.x() ||
                 static_cast<qint32>(moveTargetFields[selection].y()) != point.y())
             {
-                pAction->setMovepath(pfs.getPath(static_cast<qint32>(moveTargetFields[selection].x()),
-                                                 static_cast<qint32>(moveTargetFields[selection].y())));
+                QVector<QPoint> path = pfs.getPath(static_cast<qint32>(moveTargetFields[selection].x()),
+                                                   static_cast<qint32>(moveTargetFields[selection].y()));
+                pAction->setMovepath(path, pfs.getCosts(path));
             }
             else
             {
-                pAction->setMovepath(QVector<QPoint>());
+                pAction->setMovepath(QVector<QPoint>(), 0);
             }
             CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()), static_cast<qint32>(target.y())));
             // attacing none unit targets may modify the islands for a unit -> rebuild all for the love of god
@@ -465,7 +468,8 @@ bool VeryEasyAI::moveUnit(GameAction* pAction, Unit* pUnit, QStringList& actions
         {
             if (unload)
             {
-                pAction->setMovepath(turnPfs.getPath(targetFields.x(), targetFields.y()));
+                QVector<QPoint> path = turnPfs.getPath(targetFields.x(), targetFields.y());
+                pAction->setMovepath(path, turnPfs.getCosts(path));
                 pAction->setActionID(ACTION_UNLOAD);
                 // this isn't ideal since we unload the units in a random order and not the best fitting order
                 // but we're lazy here for the very easy ai
@@ -494,7 +498,8 @@ bool VeryEasyAI::moveUnit(GameAction* pAction, Unit* pUnit, QStringList& actions
             }
             else
             {
-                pAction->setMovepath(turnPfs.getPath(targetFields.x(), targetFields.y()));
+                QVector<QPoint> path = turnPfs.getPath(targetFields.x(), targetFields.y());
+                pAction->setMovepath(path, turnPfs.getCosts(path));
                 pAction->setActionID(ACTION_LOAD);
                 emit performAction(pAction);
                 return true;
@@ -502,7 +507,8 @@ bool VeryEasyAI::moveUnit(GameAction* pAction, Unit* pUnit, QStringList& actions
         }
         else
         {
-            pAction->setMovepath(turnPfs.getClosestReachableMovePath(targetFields));
+            QVector<QPoint> path = turnPfs.getClosestReachableMovePath(targetFields);
+            pAction->setMovepath(path, turnPfs.getCosts(path));
             if (actions.contains(ACTION_RATION))
             {
                 pAction->setActionID(ACTION_RATION);

@@ -234,7 +234,7 @@ bool CoreAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
 
 void CoreAI::getBestTarget(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields)
 {
-    pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())));
+    pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())), 0);
     getBestAttacksFromField(pUnit, pAction, ret, moveTargetFields);
     if (pUnit->canMoveAndFire(QPoint(pUnit->getX(), pUnit->getY())))
     {
@@ -244,7 +244,7 @@ void CoreAI::getBestTarget(Unit* pUnit, GameAction* pAction, UnitPathFindingSyst
         {
             if (pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr)
             {
-                pAction->setMovepath(QVector<QPoint>(1, targets[i2]));
+                pAction->setMovepath(QVector<QPoint>(1, targets[i2]), 0);
                 getBestAttacksFromField(pUnit, pAction, ret, moveTargetFields);
             }
         }
@@ -356,7 +356,7 @@ void CoreAI::appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVecto
 
 void CoreAI::getAttackTargets(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem* pPfs, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields)
 {
-    pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())));
+    pAction->setMovepath(QVector<QPoint>(1, QPoint(pUnit->getX(), pUnit->getY())), 0);
     getAttacksFromField(pUnit, pAction, ret, moveTargetFields);
     if (pUnit->canMoveAndFire(QPoint(pUnit->getX(), pUnit->getY())))
     {
@@ -366,7 +366,7 @@ void CoreAI::getAttackTargets(Unit* pUnit, GameAction* pAction, UnitPathFindingS
         {
             if (pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr)
             {
-                pAction->setMovepath(QVector<QPoint>(1, targets[i2]));
+                pAction->setMovepath(QVector<QPoint>(1, targets[i2]), 0);
                 getAttacksFromField(pUnit, pAction, ret, moveTargetFields);
             }
         }
@@ -503,7 +503,8 @@ bool CoreAI::moveAwayFromProduction(QmlVectorUnit* pUnits)
             {
                 GameAction* pAction = new GameAction(ACTION_WAIT);
                 pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
-                pAction->setMovepath(turnPfs.getPath(target.x(), target.y()));
+                QVector<QPoint> path = turnPfs.getPath(target.x(), target.y());
+                pAction->setMovepath(path, turnPfs.getCosts(path));
                 emit performAction(pAction);
                 return true;
             }

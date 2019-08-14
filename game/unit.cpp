@@ -1010,25 +1010,23 @@ void Unit::setUnitVisible(bool value)
 void Unit::makeCOUnit(quint8 co)
 {
     CO* pCO = m_pOwner->getCO(co);
-    if (pCO != nullptr)
+    if (pCO != nullptr &&
+        pCO->getCOUnit() == nullptr)
     {
-        if (pCO->getCOUnit() == nullptr)
+        pCO->setCOUnit(this);
+        if (co == 0)
         {
-            setUnitRank(GameEnums::UnitRank_Veteran);
+            setUnitRank(GameEnums::UnitRank_CO0);
         }
         else
         {
-            pCO->setCOUnit(this);
-            if (co == 0)
-            {
-                setUnitRank(GameEnums::UnitRank_CO0);
-            }
-            else
-            {
-                setUnitRank(GameEnums::UnitRank_CO1);
-            }
-            createCORange(pCO->getCORange());
+            setUnitRank(GameEnums::UnitRank_CO1);
         }
+        createCORange(pCO->getCORange());
+    }
+    else
+    {
+        setUnitRank(GameEnums::UnitRank_Veteran);
     }
 }
 

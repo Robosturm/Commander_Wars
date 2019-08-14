@@ -292,19 +292,22 @@ void GameMenue::performAction(GameAction* pGameAction)
     GameMap* pMap = GameMap::getInstance();
     pMap->getGameRules()->pauseRoundTime();
     QVector<QPoint> path = pGameAction->getMovePath();
-    if (path.size() > 0)
+    Unit * pMoveUnit = pGameAction->getTargetUnit();
+    if (path.size() > 0 && pMoveUnit != nullptr)
     {
         QVector<QPoint> trapPath;
+        qint32 trapPathCost = 0;
         for (qint32 i = path.size() - 1; i >= 0; i--)
         {
             // check the movepath for a trap
             QPoint point = path[i];
+
             Unit* pUnit = pMap->getTerrain(point.x(), point.y())->getUnit();
             if ((pUnit != nullptr) &&
                 (pUnit->isStealthed(pMap->getCurrentPlayer())))
             {
                 GameAction* pTrapAction = new GameAction("ACTION_TRAP");
-                pTrapAction->setMovepath(trapPath);
+                pTrapAction->setMovepath(trapPath, trapPathCost);
                 pTrapAction->writeDataInt32(point.x());
                 pTrapAction->writeDataInt32(point.y());
                 pTrapAction->setTarget(pGameAction->getTarget());
@@ -315,6 +318,11 @@ void GameMenue::performAction(GameAction* pGameAction)
             else
             {
                 trapPath.push_front(point);
+                if (point.x() != pMoveUnit->getX() ||
+                    point.y() != pMoveUnit->getY())
+                {
+                    trapPathCost += pMoveUnit->getMovementCosts(point.x(), point.y());
+                }
             }
         }
     }

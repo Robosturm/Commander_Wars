@@ -79,7 +79,7 @@ qint32 UnitPathFindingSystem::getCosts(qint32 x, qint32 y)
 qint32 UnitPathFindingSystem::getCosts(QVector<QPoint> path)
 {
     qint32 totalCosts = 0;
-    for (qint32 i = 0; i < path.size(); i++)
+    for (qint32 i = 0; i < path.size() - 1; i++)
     {
         totalCosts += getCosts(path[i].x(), path[i].y());
     }
