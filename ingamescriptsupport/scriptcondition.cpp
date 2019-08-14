@@ -14,6 +14,16 @@ ScriptCondition::ScriptCondition(ConditionType type)
 {
 }
 
+spScriptCondition ScriptCondition::getSubCondition() const
+{
+    return subCondition;
+}
+
+void ScriptCondition::setSubCondition(const spScriptCondition &value)
+{
+    subCondition = value;
+}
+
 ScriptCondition::ConditionType ScriptCondition::getType() const
 {
     return m_Type;
@@ -88,4 +98,36 @@ void ScriptCondition::removeEvent(spScriptEvent pEvent)
             break;
         }
     }
+}
+
+bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type2)
+{
+    switch (type1)
+    {
+        case ScriptCondition::ConditionType::victory:
+        {
+            return (type2 == type1);
+        }
+        case ScriptCondition::ConditionType::startOfTurn:
+        case ScriptCondition::ConditionType::eachDay:
+        {
+            switch (type2)
+            {
+                case ScriptCondition::ConditionType::startOfTurn:
+                case ScriptCondition::ConditionType::eachDay:
+                {
+                    return true;
+                }
+                default:
+                {
+                    return false;
+                }
+            }
+        }
+        default:
+        {
+            return false;
+        }
+    }
+    return false;
 }

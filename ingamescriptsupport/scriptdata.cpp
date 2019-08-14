@@ -155,20 +155,37 @@ void ScriptData::writeScript(QTextStream& rStream)
 
 void ScriptData::removeCondition(spScriptCondition condition)
 {
-    for (qint32 i = 0; i < m_Victory.size(); i++)
+    removeCondition(m_Victory, condition);
+    removeCondition(m_DayConditions, condition);
+    removeCondition(m_ActionConditions, condition);
+}
+
+void ScriptData::removeCondition(QVector<spScriptCondition>& data, spScriptCondition condition)
+{
+    for (qint32 i = 0; i < data.size(); i++)
     {
-        if (m_Victory[i].get() == condition.get())
+        if (data[i].get() == condition.get())
         {
-            m_Victory.removeAt(i);
+            data.removeAt(i);
             break;
         }
-    }
-    for (qint32 i = 0; i < m_DayConditions.size(); i++)
-    {
-        if (m_DayConditions[i].get() == condition.get())
+        else
         {
-            m_DayConditions.removeAt(i);
-            break;
+            spScriptCondition parent = data[i];
+            spScriptCondition cond = data[i]->getSubCondition();
+            while (cond.get() != nullptr)
+            {
+                if (cond == condition)
+                {
+                    parent->setSubCondition(nullptr);
+                    break;
+                }
+                else
+                {
+                    parent = cond;
+                    cond = parent->getSubCondition();
+                }
+            }
         }
     }
 }
@@ -184,6 +201,13 @@ spScriptCondition ScriptData::addDayCondition(ScriptCondition::ConditionType typ
 {
     spScriptCondition condition = ScriptCondition::createCondition(type);
     m_DayConditions.append(condition);
+    return condition;
+}
+
+spScriptCondition ScriptData::addActionCondition(ScriptCondition::ConditionType type)
+{
+    spScriptCondition condition = ScriptCondition::createCondition(type);
+    m_ActionConditions.append(condition);
     return condition;
 }
 

@@ -69,6 +69,10 @@ void ScriptConditionEachDay::readCondition(QTextStream& rStream)
             {
                 rStream.seek(pos);
             }
+            if (subCondition.get() == nullptr)
+            {
+                subCondition = createReadCondition(rStream);
+            }
             spScriptEvent event = ScriptEvent::createReadEvent(rStream);
             if (event.get() != nullptr)
             {
@@ -84,6 +88,10 @@ void ScriptConditionEachDay::writeCondition(QTextStream& rStream)
     for (qint32 i = 0; i < events.size(); i++)
     {
         events[i]->writeEvent(rStream);
+    }
+    if (subCondition.get() != nullptr)
+    {
+        subCondition->writeCondition(rStream);
     }
     rStream << "        } // " + ConditionEachDay + "\n";
 }

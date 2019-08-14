@@ -57,7 +57,15 @@ void ScriptConditionStartOfTurn::readCondition(QTextStream& rStream)
             {
                 rStream.seek(pos);
             }
-            events.append(ScriptEvent::createReadEvent(rStream));
+            if (subCondition.get() == nullptr)
+            {
+                subCondition = createReadCondition(rStream);
+            }
+            spScriptEvent event = ScriptEvent::createReadEvent(rStream);
+            if (event.get() != nullptr)
+            {
+                events.append(event);
+            }
         }
     }
 }
@@ -68,6 +76,10 @@ void ScriptConditionStartOfTurn::writeCondition(QTextStream& rStream)
     for (qint32 i = 0; i < events.size(); i++)
     {
         events[i]->writeEvent(rStream);
+    }
+    if (subCondition.get() != nullptr)
+    {
+        subCondition->writeCondition(rStream);
     }
     rStream << "        } // " + ConditionStartOfTurn + "\n";
 }

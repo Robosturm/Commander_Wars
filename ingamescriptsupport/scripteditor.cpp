@@ -248,41 +248,53 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
     m_ConditionBoxes.append(pSpritebox);
     m_ConditionPanel->addItem(pSpritebox);
 
-    oxygine::spTextField text = new oxygine::TextField();
-    text->setStyle(style);
-    text->setHtmlText(pCondition->getDescription().toStdString().c_str());
-    text->setPosition(10, 5);
-    pSpritebox->addChild(text);
+    qint32 boxY = 5;
+    spScriptCondition condition = pCondition;
+    while (condition.get() != nullptr)
+    {
+        oxygine::spTextField text = new oxygine::TextField();
+        text->setStyle(style);
+        text->setHtmlText(condition->getDescription().toStdString().c_str());
+        text->setPosition(10, boxY);
+        pSpritebox->addChild(text);
 
-    oxygine::spButton pEditButton = pObjectManager->createButton(tr("Edit"), 90);
-    pEditButton->setPosition(x, 5);
-    pSpritebox->addChild(pEditButton);
-    pEditButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
-    {
-        emit sigShowEditCondition(pCondition);
-    });
-    oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove"), 90);
-    pRemoveButton->setPosition(x + 100, 5);
-    pSpritebox->addChild(pRemoveButton);
-    pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
-    {
-        m_Data->removeCondition(pCondition);
-        emit sigUpdateConditions();
-    });
-    oxygine::spButton pSelectButton = pObjectManager->createButton(tr("Select"), 90);
-    pSelectButton->setPosition(x + 100 * 2, 5);
-    pSpritebox->addChild(pSelectButton);
-    pSelectButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
-    {
-        for (qint32 i = 0; i < m_ConditionBoxes.size(); i++)
+        oxygine::spButton pEditButton = pObjectManager->createButton(tr("Edit"), 90);
+        pEditButton->setPosition(x, boxY);
+        pSpritebox->addChild(pEditButton);
+        pEditButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
-            m_ConditionBoxes[i]->setAddColor(0, 0, 0);
+            emit sigShowEditCondition(condition);
+        });
+        oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove"), 90);
+        pRemoveButton->setPosition(x + 100, boxY);
+        pSpritebox->addChild(pRemoveButton);
+        pRemoveButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        {
+            m_Data->removeCondition(condition);
+            emit sigUpdateConditions();
+        });
+        oxygine::spButton pSelectButton = pObjectManager->createButton(tr("Select"), 90);
+        pSelectButton->setPosition(x + 100 * 2, boxY);
+        pSpritebox->addChild(pSelectButton);
+        pSelectButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        {
+            for (qint32 i = 0; i < m_ConditionBoxes.size(); i++)
+            {
+                m_ConditionBoxes[i]->setAddColor(0, 0, 0);
+            }
+            pSpritebox->setAddColor(32, 200, 32);
+            m_CurrentCondition = condition;
+            emit sigUpdateEvents();
+        });
+        condition = condition->getSubCondition();
+        if (condition.get() != nullptr)
+        {
+            boxY += 40;
+            pSpritebox->setHeight(pSpritebox->getHeight() + 40);
         }
-        pSpritebox->setAddColor(32, 200, 32);
-        m_CurrentCondition = pCondition;
-        emit sigUpdateEvents();
-    });
-    y += 54;
+    }
+
+    y += 54 + boxY;
     m_ConditionPanel->setContentWidth(x + 100 * 3 + 30);
 }
 
@@ -343,13 +355,34 @@ void ScriptEditor::addCondition()
 {
     ScriptCondition::ConditionType type = static_cast<ScriptCondition::ConditionType>(m_Conditions->getCurrentItem());
     spScriptCondition pCondition;
-    if (type == ScriptCondition::ConditionType::victory)
+    if (m_CurrentCondition.get() != nullptr &&
+        ScriptCondition::sameConditionGroup(m_CurrentCondition->getType(), type))
     {
-        pCondition = m_Data->addVictoryCondition();
+        spScriptCondition parent = m_CurrentCondition;
+        spScriptCondition subCondition = m_CurrentCondition->getSubCondition();
+        while (subCondition.get() != nullptr)
+        {
+            parent = subCondition;
+            subCondition = parent->getSubCondition();
+        }
+        parent->setSubCondition(ScriptCondition::createCondition(type));
     }
     else
     {
-        pCondition = m_Data->addDayCondition(type);
+        switch (type)
+        {
+            case ScriptCondition::ConditionType::victory:
+            {
+                pCondition = m_Data->addVictoryCondition();
+                break;
+            }
+            case ScriptCondition::ConditionType::startOfTurn:
+            case ScriptCondition::ConditionType::eachDay:
+            {
+                pCondition = m_Data->addDayCondition(type);
+                break;
+            }
+        }
     }
     updateConditios();
 }

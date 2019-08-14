@@ -90,9 +90,27 @@ public:
      * @brief showEditCondition
      */
     virtual void showEditCondition(spScriptEditor pScriptEditor) = 0;
+    /**
+     * @brief getSubCondition
+     * @return
+     */
+    spScriptCondition getSubCondition() const;
+    /**
+     * @brief setSubCondition
+     * @param value
+     */
+    void setSubCondition(const spScriptCondition &value);
+    /**
+     * @brief sameConditionGroup
+     * @param type1
+     * @param type2
+     * @return
+     */
+    static bool sameConditionGroup(ConditionType type1, ConditionType type2);
 protected:
     explicit ScriptCondition(ConditionType type);
     QVector<spScriptEvent> events;
+    spScriptCondition subCondition;
 
     ConditionType m_Type;
 };

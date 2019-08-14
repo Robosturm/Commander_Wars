@@ -2389,17 +2389,17 @@
 <context>
     <name>ScriptConditionEachDay</name>
     <message>
-        <location filename="../ingamescriptsupport/scriptconditioneachday.cpp" line="104"/>
+        <location filename="../ingamescriptsupport/scriptconditioneachday.cpp" line="112"/>
         <source>Each Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptconditioneachday.cpp" line="115"/>
+        <location filename="../ingamescriptsupport/scriptconditioneachday.cpp" line="123"/>
         <source>Start Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptconditioneachday.cpp" line="126"/>
+        <location filename="../ingamescriptsupport/scriptconditioneachday.cpp" line="134"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2407,12 +2407,12 @@
 <context>
     <name>ScriptConditionStartOfTurn</name>
     <message>
-        <location filename="../ingamescriptsupport/scriptconditionstartofturn.cpp" line="89"/>
+        <location filename="../ingamescriptsupport/scriptconditionstartofturn.cpp" line="101"/>
         <source>At Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptconditionstartofturn.cpp" line="100"/>
+        <location filename="../ingamescriptsupport/scriptconditionstartofturn.cpp" line="112"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2420,7 +2420,7 @@
 <context>
     <name>ScriptConditionVictory</name>
     <message>
-        <location filename="../ingamescriptsupport/scriptconditionvictory.cpp" line="72"/>
+        <location filename="../ingamescriptsupport/scriptconditionvictory.cpp" line="84"/>
         <source>Team: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2501,19 +2501,19 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="257"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="323"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="261"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="335"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="264"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="330"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="268"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="342"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="272"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="276"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>

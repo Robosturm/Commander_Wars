@@ -52,10 +52,22 @@ public:
      */
     spScriptCondition addDayCondition(ScriptCondition::ConditionType type);
     /**
+     * @brief addActionCondition
+     * @param type
+     * @return
+     */
+    spScriptCondition addActionCondition(ScriptCondition::ConditionType type);
+    /**
      * @brief removeCondition
      * @param condition
      */
     void removeCondition(spScriptCondition condition);
+    /**
+     * @brief removeCondition
+     * @param data
+     * @param condition
+     */
+    void removeCondition(QVector<spScriptCondition>& data, spScriptCondition condition);
     /**
      * @brief getVictoryCondition
      * @param index
@@ -120,7 +132,6 @@ private:
     QString customVictoryCode;
     QVector<spScriptCondition> m_DayConditions;
     QString customStartOfTurnCode;
-
     QVector<spScriptCondition> m_ActionConditions;
     QString customActionConditions;
 
