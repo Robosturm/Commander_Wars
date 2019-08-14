@@ -97,7 +97,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CANNON_FIRE.js" line="87"/>
+        <location filename="../resources/scripts/actions/ACTION_CANNON_FIRE.js" line="88"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>

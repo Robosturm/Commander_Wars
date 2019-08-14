@@ -130,7 +130,7 @@ public slots:
      * @brief setMovepath sets the movepath for this unit
      * @param points
      */
-    void setMovepath(QVector<QPoint> points);
+    void setMovepath(QVector<QPoint> points, qint32 fuelCost);
     /**
      * @brief getActionTarget the target action
      * @return

@@ -161,17 +161,17 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
             GameAnimation* pAtk = createAnimation(pDefTerrain->getX(), pDefTerrain->getY(), 70);
             pAtk->addSprite("blackhole_shot", -GameMap::Imagesize * 0.5f, -GameMap::Imagesize * 0.5f, 0, 1.5f);
             pAtk->setSound("talongunhit.wav", 1);
-            GameMap::getInstance()->addChild(pAtk);
-            m_Animations.append(pAtk);
             if (atkStartHp > atkEndHp)
             {
                 // counter damage
                 pRet = createAnimation(pAtkTerrain->getX(), pAtkTerrain->getY(), 70);
                 pRet->addSprite("blackhole_shot", -GameMap::Imagesize * 0.5f, -GameMap::Imagesize * 0.5f, 0, 1.5f);
                 pRet->setSound("talongunhit.wav", 1);
-                GameMap::getInstance()->addChild(pRet);
-                m_Animations.append(pRet);
                 pAtk->queueAnimation(pRet);
+            }
+            else
+            {
+                pRet = pAtk;
             }
         }
     }
@@ -181,8 +181,6 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
         pRet = createAnimation(pDefTerrain->getX(), pDefTerrain->getY(), 70);
         pRet->addSprite("blackhole_shot", -GameMap::Imagesize * 0.5f, -GameMap::Imagesize * 0.5f, 0, 1.5f);
         pRet->setSound("talongunhit.wav", 1);
-        GameMap::getInstance()->addChild(pRet);
-        m_Animations.append(pRet);
     }
     return pRet;
 }

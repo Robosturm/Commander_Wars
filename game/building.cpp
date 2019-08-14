@@ -432,7 +432,11 @@ QStringList  Building::getConstructionList()
     args1 << obj1;
     QJSValue ret = pApp->getInterpreter()->doFunction(m_BuildingID, function1, args1);
     QStringList buildList = ret.toVariant().toStringList();
-    QStringList coUnits = m_pOwner->getCOUnits(this);
+    QStringList coUnits;
+    if (m_pOwner != nullptr)
+    {
+        coUnits = m_pOwner->getCOUnits(this);
+    }
     if (coUnits.size() > 0)
     {
         buildList.append(coUnits);

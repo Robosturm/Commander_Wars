@@ -45,8 +45,9 @@ var Constructor = function()
     };
     this.getTargets = function(building)
     {
-        var x = building.getX();
-        var y = building.getY();
+        var offset = Global[building.getBuildingID()].getActionTargetOffset(building);
+        var x = building.getX() + offset.x;
+        var y = building.getY() + offset.y;
         var fields = Global[building.getBuildingID()].getActionTargetFields(building);
         var ret = [];
         for (var i = 0; i < fields.size(); i++)
@@ -56,7 +57,7 @@ var Constructor = function()
             {
                 var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
                 if ((unit !== null) &&
-                        (building.getOwner().isEnemyUnit(unit)))
+                    (building.getOwner().isEnemyUnit(unit)))
                 {
                     if (building.getOwner().getFieldVisible(unit.getX(), unit.getY()))
                     {

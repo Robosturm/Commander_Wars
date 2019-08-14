@@ -49,7 +49,7 @@ var Constructor = function()
     };
     this.canBuildingBePlaced = function(terrain, building)
     {
-        return BUILDING.canLargeBuildingPlaced(terrain, ZBLACKHOLE_CANNON_E.getBuildingWidth(), ZBLACKHOLE_CANNON_E.getBuildingHeigth());
+        return BUILDING.canLargeBuildingPlaced(terrain, building, ZBLACKHOLE_CANNON_E.getBuildingWidth(), ZBLACKHOLE_CANNON_E.getBuildingHeigth());
     };
     this.getMiniMapIcon = function()
     {

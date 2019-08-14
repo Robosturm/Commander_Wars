@@ -88,9 +88,10 @@ Building* GameAction::getTargetBuilding()
 
 }
 
-void GameAction::setMovepath(QVector<QPoint> points)
+void GameAction::setMovepath(QVector<QPoint> points, qint32 fuelCost)
 {
     m_Movepath = points;
+    costs = fuelCost;
 }
 
 bool GameAction::canBePerformed()
