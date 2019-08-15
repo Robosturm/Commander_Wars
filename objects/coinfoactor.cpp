@@ -193,6 +193,11 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         {
             coBio = value.toString();
         }
+        value = pInterpreter->doFunction(coid, "getLongBio");
+        if (value.isString())
+        {
+            coBio += " " + value.toString();
+        }
     }
     m_COBio->setHtmlText(coBio.toStdString().c_str());
 
@@ -226,6 +231,11 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         if (value.isString())
         {
             coDesc = value.toString();
+        }
+        value = pInterpreter->doFunction(coid, "getLongCODescription");
+        if (value.isString())
+        {
+            coDesc += " " + value.toString();
         }
     }
     m_InfoSprite->setY(m_MissSprite->getY() + 50);

@@ -234,6 +234,10 @@ var CO =
     {
         return "";
     },
+    getLongBio : function()
+    {
+        return "";
+    },
     getHits : function()
     {
         return "";
@@ -243,6 +247,10 @@ var CO =
         return "";
     },
     getCODescription : function()
+    {
+        return "";
+    },
+    getLongCODescription : function()
     {
         return "";
     },

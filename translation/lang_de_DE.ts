@@ -443,7 +443,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/coinfoactor.cpp" line="232"/>
+        <location filename="../objects/coinfoactor.cpp" line="242"/>
         <source>CO-Zone-Range: </source>
         <translation type="unfinished"></translation>
     </message>
