@@ -379,7 +379,7 @@ void PlayerSelection::showPlayerSelection()
         });
         if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
             saveGame ||
-            ai > 0)
+            (ai > 0 && m_pCampaign.get() != nullptr))
         {
             spriteCO1->setEnabled(false);
         }
@@ -410,7 +410,7 @@ void PlayerSelection::showPlayerSelection()
         });
         if ((m_pNetworkInterface.get() != nullptr && !m_pNetworkInterface->getIsServer()) ||
             saveGame ||
-            ai > 0)
+            (ai > 0 && m_pCampaign.get() != nullptr))
         {
             spriteCO2->setEnabled(false);
         }
