@@ -246,7 +246,7 @@ void Terrain::loadBaseSprite(QString spriteID)
         {
             pSprite->setResAnim(pAnim);
         }
-        pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
+        pSprite->setScale((GameMap::Imagesize + 1) / pAnim->getWidth() );
 
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
         this->addChild(pSprite);
@@ -430,7 +430,7 @@ void Terrain::loadOverlaySprite(QString spriteID)
     {
         pSprite->setResAnim(pAnim);
     }
-    pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
+    pSprite->setScale((GameMap::Imagesize + 1) / pAnim->getWidth());
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
     this->addChild(pSprite);
     m_pOverlaySprites.append(pSprite);
