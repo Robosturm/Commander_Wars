@@ -86,6 +86,21 @@ bool UnitSpriteManager::loadUnit(const QString& unitID)
     return bRet;
 }
 
+GameEnums::UnitType UnitSpriteManager::getUnitType(qint32 i)
+{
+    if ((i >= 0) && (i < m_loadedUnits.size()))
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        QString function1 = "getUnitType";
+        QJSValue ret = pApp->getInterpreter()->doFunction(m_loadedUnits[i], function1);
+        if (ret.isNumber())
+        {
+            return static_cast<GameEnums::UnitType>(ret.toInt());
+        }
+    }
+    return GameEnums::UnitType_Ground;
+}
+
 qint32 UnitSpriteManager::getUnitIndex(QString id)
 {
     for (qint32 i = 0; i < m_loadedUnits.size(); i++)

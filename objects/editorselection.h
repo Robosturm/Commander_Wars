@@ -112,6 +112,11 @@ private:
     oxygine::spSprite m_CurrentSelector;
     oxygine::spSprite m_CurrentSelectorSize;
     oxygine::spSprite m_CurrentSelectorMode;
+
+    oxygine::spSprite m_pSpriteTerrainMode;
+    oxygine::spSprite m_pSpriteBuildingMode;
+    oxygine::spSprite m_pSpriteUnitMode;
+
     QVector3D m_selectedIndex{0, 0, 0};
     /**
      * @brief current selected player

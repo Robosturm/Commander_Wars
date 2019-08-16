@@ -2,6 +2,16 @@
 var TERRAIN =
 {
     // search type filter for overlay
+    getTerrainGroup : function()
+    {
+        // terrain groups for editor selection ordering
+        // 0 = sea tiles
+        // 1 = normal ground tiles
+        // 2 = desert tiles
+        // 3 = snow tiles
+        // everthing else is open to use
+        return 0;
+    },
 
     // loader for stuff which needs C++ Support
     init : function (terrain)

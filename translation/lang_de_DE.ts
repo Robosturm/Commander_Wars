@@ -344,12 +344,12 @@
 <context>
     <name>BEACH</name>
     <message>
-        <location filename="../resources/scripts/terrain/BEACH.js" line="11"/>
+        <location filename="../resources/scripts/terrain/BEACH.js" line="16"/>
         <source>Beach</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/BEACH.js" line="90"/>
+        <location filename="../resources/scripts/terrain/BEACH.js" line="95"/>
         <source>Beachs over great landing places for landing ground troops.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -357,12 +357,12 @@
 <context>
     <name>BRIDGE</name>
     <message>
-        <location filename="../resources/scripts/terrain/BRIDGE.js" line="11"/>
+        <location filename="../resources/scripts/terrain/BRIDGE.js" line="15"/>
         <source>Bridge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/BRIDGE.js" line="55"/>
+        <location filename="../resources/scripts/terrain/BRIDGE.js" line="59"/>
         <source>Bridge over river and seas which allows ground units to cross. Bridges over sea also allows naval units to cross the field.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -655,12 +655,12 @@
 <context>
     <name>DESERT</name>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT.js" line="11"/>
+        <location filename="../resources/scripts/terrain/DESERT.js" line="15"/>
         <source>Desert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT.js" line="69"/>
+        <location filename="../resources/scripts/terrain/DESERT.js" line="73"/>
         <source>Ground units move easily on this terrain, but it reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -668,12 +668,12 @@
 <context>
     <name>DESERT_DESTROYEDWELD</name>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_DESTROYEDWELD.js" line="10"/>
+        <location filename="../resources/scripts/terrain/DESERT_DESTROYEDWELD.js" line="14"/>
         <source>Desert Destroyed Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_DESTROYEDWELD.js" line="94"/>
+        <location filename="../resources/scripts/terrain/DESERT_DESTROYEDWELD.js" line="98"/>
         <source>Ground units move easily on this terrain, but it reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -681,12 +681,12 @@
 <context>
     <name>DESERT_FOREST</name>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_FOREST.js" line="10"/>
+        <location filename="../resources/scripts/terrain/DESERT_FOREST.js" line="14"/>
         <source>Desert Forest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_FOREST.js" line="51"/>
+        <location filename="../resources/scripts/terrain/DESERT_FOREST.js" line="55"/>
         <source>In Fog of War conditions, the woods provide ground unit hiding places.&lt;div c=&apos;00ff00&apos;&gt; It reduces the firerange of indirect units by 1.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -694,12 +694,12 @@
 <context>
     <name>DESERT_PATH</name>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_PATH.js" line="10"/>
+        <location filename="../resources/scripts/terrain/DESERT_PATH.js" line="14"/>
         <source>Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_PATH.js" line="47"/>
+        <location filename="../resources/scripts/terrain/DESERT_PATH.js" line="51"/>
         <source>Kinda well-surfaced path through the desert provides optimum mobility but little cover. It reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -707,12 +707,12 @@
 <context>
     <name>DESERT_PIPELINE</name>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_PIPELINE.js" line="10"/>
+        <location filename="../resources/scripts/terrain/DESERT_PIPELINE.js" line="14"/>
         <source>Desert Pipeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_PIPELINE.js" line="76"/>
+        <location filename="../resources/scripts/terrain/DESERT_PIPELINE.js" line="80"/>
         <source>Black Hole Pipeline which can&apos;t be crossed by most units. It reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -720,12 +720,12 @@
 <context>
     <name>DESERT_ROCK</name>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="10"/>
+        <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="14"/>
         <source>Rock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="55"/>
+        <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="59"/>
         <source>Clear view. In Fog of War, Infantry unit&apos;s gain &lt;div c=&apos;00ff00&apos;&gt;vision +3.&lt;/div&gt; It reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -733,12 +733,12 @@
 <context>
     <name>DESERT_TRY_RIVER</name>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_TRY_RIVER.js" line="10"/>
+        <location filename="../resources/scripts/terrain/DESERT_TRY_RIVER.js" line="14"/>
         <source>Try River</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_TRY_RIVER.js" line="51"/>
+        <location filename="../resources/scripts/terrain/DESERT_TRY_RIVER.js" line="55"/>
         <source>Once a river. Now an empty Riverbed that can be crossed by most units doesn&apos;t provide cover. It reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -746,12 +746,12 @@
 <context>
     <name>DESERT_WASTELAND</name>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_WASTELAND.js" line="10"/>
+        <location filename="../resources/scripts/terrain/DESERT_WASTELAND.js" line="14"/>
         <source>Desert Wasteland</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_WASTELAND.js" line="30"/>
+        <location filename="../resources/scripts/terrain/DESERT_WASTELAND.js" line="34"/>
         <source>Infantry and Mech units aside, mobility is impaired on rough terrain. It reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -759,12 +759,12 @@
 <context>
     <name>DESERT_WELD</name>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_WELD.js" line="11"/>
+        <location filename="../resources/scripts/terrain/DESERT_WELD.js" line="15"/>
         <source>Desert Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_WELD.js" line="105"/>
+        <location filename="../resources/scripts/terrain/DESERT_WELD.js" line="109"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline. It reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -772,12 +772,12 @@
 <context>
     <name>DESTROYEDWELD</name>
     <message>
-        <location filename="../resources/scripts/terrain/DESTROYEDWELD.js" line="10"/>
+        <location filename="../resources/scripts/terrain/DESTROYEDWELD.js" line="14"/>
         <source>Destroyed Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESTROYEDWELD.js" line="89"/>
+        <location filename="../resources/scripts/terrain/DESTROYEDWELD.js" line="93"/>
         <source>Ground units move easily on this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1203,12 +1203,12 @@
 <context>
     <name>FIRE</name>
     <message>
-        <location filename="../resources/scripts/terrain/FIRE.js" line="10"/>
+        <location filename="../resources/scripts/terrain/FIRE.js" line="14"/>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/FIRE.js" line="57"/>
+        <location filename="../resources/scripts/terrain/FIRE.js" line="61"/>
         <source>In Fog of War, Radars make a &lt;div c=&apos;00ff00&apos;&gt;5 square &lt;/div&gt;area around them visible.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1216,12 +1216,12 @@
 <context>
     <name>FOG</name>
     <message>
-        <location filename="../resources/scripts/terrain/FOG.js" line="10"/>
+        <location filename="../resources/scripts/terrain/FOG.js" line="14"/>
         <source>Fog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/FOG.js" line="53"/>
+        <location filename="../resources/scripts/terrain/FOG.js" line="57"/>
         <source>This heavy fog provides ideal hiding places&lt;div c=&apos;00ff00&apos;&gt; for naval units in Fog of War.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1229,12 +1229,12 @@
 <context>
     <name>FOREST</name>
     <message>
-        <location filename="../resources/scripts/terrain/FOREST.js" line="10"/>
+        <location filename="../resources/scripts/terrain/FOREST.js" line="14"/>
         <source>Forest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/FOREST.js" line="49"/>
+        <location filename="../resources/scripts/terrain/FOREST.js" line="53"/>
         <source>In Fog of War conditions, the woods provide ground unit &lt;div c=&apos;00ff00&apos;&gt;hiding places.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1471,12 +1471,12 @@
 <context>
     <name>METEOR</name>
     <message>
-        <location filename="../resources/scripts/terrain/METEOR.js" line="11"/>
+        <location filename="../resources/scripts/terrain/METEOR.js" line="15"/>
         <source>Meteor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/METEOR.js" line="113"/>
+        <location filename="../resources/scripts/terrain/METEOR.js" line="117"/>
         <source>Meteor pieces which can be attacked and destroyed &lt;div c=&apos;00ff00&apos;&gt;to eliminate plasma.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1484,12 +1484,12 @@
 <context>
     <name>MOUNTAIN</name>
     <message>
-        <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="10"/>
+        <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="14"/>
         <source>Mountain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="52"/>
+        <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="56"/>
         <source>Clear view. In Fog of War, Infantry unit&apos;s gain &lt;div c=&apos;00ff00&apos;&gt;vision +3.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1970,12 +1970,12 @@
 <context>
     <name>PIPELINE</name>
     <message>
-        <location filename="../resources/scripts/terrain/PIPELINE.js" line="10"/>
+        <location filename="../resources/scripts/terrain/PIPELINE.js" line="14"/>
         <source>Pipeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PIPELINE.js" line="72"/>
+        <location filename="../resources/scripts/terrain/PIPELINE.js" line="76"/>
         <source>Black Hole Pipeline which can&apos;t be crossed by most units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1983,12 +1983,12 @@
 <context>
     <name>PLAINS</name>
     <message>
-        <location filename="../resources/scripts/terrain/PLAINS.js" line="10"/>
+        <location filename="../resources/scripts/terrain/PLAINS.js" line="14"/>
         <source>Plains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PLAINS.js" line="72"/>
+        <location filename="../resources/scripts/terrain/PLAINS.js" line="76"/>
         <source>Ground units move easily on this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1996,12 +1996,12 @@
 <context>
     <name>PLAINS_DESTROYED</name>
     <message>
-        <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="10"/>
+        <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="14"/>
         <source>Plains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="41"/>
+        <location filename="../resources/scripts/terrain/PLAINS_DESTROYED.js" line="45"/>
         <source>Ground units move easily on this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2009,12 +2009,12 @@
 <context>
     <name>PLAINS_PLASMA</name>
     <message>
-        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="10"/>
+        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="14"/>
         <source>Plains</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="27"/>
+        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="31"/>
         <source>Ground units move easily on this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2022,12 +2022,12 @@
 <context>
     <name>PLASMA</name>
     <message>
-        <location filename="../resources/scripts/terrain/PLASMA.js" line="10"/>
+        <location filename="../resources/scripts/terrain/PLASMA.js" line="14"/>
         <source>Plasma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PLASMA.js" line="38"/>
+        <location filename="../resources/scripts/terrain/PLASMA.js" line="42"/>
         <source>Eectric charge us impassable but disappears if &lt;div c=&apos;00ff00&apos;&gt; meteor pieces&lt;/div&gt; are destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2149,12 +2149,12 @@
 <context>
     <name>REAF</name>
     <message>
-        <location filename="../resources/scripts/terrain/REAF.js" line="10"/>
+        <location filename="../resources/scripts/terrain/REAF.js" line="14"/>
         <source>Reaf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/REAF.js" line="67"/>
+        <location filename="../resources/scripts/terrain/REAF.js" line="71"/>
         <source>This spiky reaf provides ideal &lt;div c=&apos;00ff00&apos;&gt;hiding places&lt;/div&gt; for naval units in Fog of War.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2162,12 +2162,12 @@
 <context>
     <name>RIVER</name>
     <message>
-        <location filename="../resources/scripts/terrain/RIVER.js" line="10"/>
+        <location filename="../resources/scripts/terrain/RIVER.js" line="14"/>
         <source>River</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/RIVER.js" line="77"/>
+        <location filename="../resources/scripts/terrain/RIVER.js" line="81"/>
         <source>Most infantry and Hovercraft units are the only ground unit that can cross rivers.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2175,12 +2175,12 @@
 <context>
     <name>ROUGH_SEA</name>
     <message>
-        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="10"/>
+        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="14"/>
         <source>Rough Sea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="54"/>
+        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="58"/>
         <source>Movement of naval units is impeded but air units are not affected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2188,12 +2188,12 @@
 <context>
     <name>RUIN</name>
     <message>
-        <location filename="../resources/scripts/terrain/RUIN.js" line="10"/>
+        <location filename="../resources/scripts/terrain/RUIN.js" line="14"/>
         <source>Ruin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/RUIN.js" line="42"/>
+        <location filename="../resources/scripts/terrain/RUIN.js" line="46"/>
         <source>In Fog of War conditions, the ruins provide ground unit &lt;div c=&apos;00ff00&apos;&gt;hiding places.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2272,12 +2272,12 @@
 <context>
     <name>SEA</name>
     <message>
-        <location filename="../resources/scripts/terrain/SEA.js" line="11"/>
+        <location filename="../resources/scripts/terrain/SEA.js" line="15"/>
         <source>Sea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SEA.js" line="103"/>
+        <location filename="../resources/scripts/terrain/SEA.js" line="107"/>
         <source>Calm sea. Naval and air forces have good mobility.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2285,12 +2285,12 @@
 <context>
     <name>SNOW</name>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW.js" line="10"/>
+        <location filename="../resources/scripts/terrain/SNOW.js" line="14"/>
         <source>Snow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW.js" line="46"/>
+        <location filename="../resources/scripts/terrain/SNOW.js" line="50"/>
         <source>Snowy terrain reduces rough to cross.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2298,12 +2298,12 @@
 <context>
     <name>SNOW_DESTROYEDWELD</name>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_DESTROYEDWELD.js" line="10"/>
+        <location filename="../resources/scripts/terrain/SNOW_DESTROYEDWELD.js" line="14"/>
         <source>Snowy Destroyed Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_DESTROYEDWELD.js" line="89"/>
+        <location filename="../resources/scripts/terrain/SNOW_DESTROYEDWELD.js" line="93"/>
         <source>Snowy terrain reduces rough to cross.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2311,12 +2311,12 @@
 <context>
     <name>SNOW_FOREST</name>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="10"/>
+        <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="14"/>
         <source>Snowy Forest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="47"/>
+        <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="51"/>
         <source>In Fog of War conditions, the snowy woods provide ground unit &lt;div c=&apos;00ff00&apos;&gt;hiding places.&lt;/div&gt; It&apos;s hard for ground units to cross this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2324,12 +2324,12 @@
 <context>
     <name>SNOW_MOUNTAIN</name>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="10"/>
+        <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="14"/>
         <source>Snowy Mountain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="50"/>
+        <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="54"/>
         <source>Clear view. In Fog of War, Infantry unit&apos;s gain &lt;div c=&apos;00ff00&apos;&gt;vision +3.&lt;/div&gt; Extremly high movement costs for infantry units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2337,12 +2337,12 @@
 <context>
     <name>SNOW_PIPELINE</name>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_PIPELINE.js" line="10"/>
+        <location filename="../resources/scripts/terrain/SNOW_PIPELINE.js" line="14"/>
         <source>Snowy Pipeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_PIPELINE.js" line="72"/>
+        <location filename="../resources/scripts/terrain/SNOW_PIPELINE.js" line="76"/>
         <source>Black Hole Pipeline which can&apos;t be crossed by most units and is also hard to cross for those who can.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2350,12 +2350,12 @@
 <context>
     <name>SNOW_WASTELAND</name>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_WASTELAND.js" line="10"/>
+        <location filename="../resources/scripts/terrain/SNOW_WASTELAND.js" line="14"/>
         <source>Snowy Wasteland</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_WASTELAND.js" line="26"/>
+        <location filename="../resources/scripts/terrain/SNOW_WASTELAND.js" line="30"/>
         <source>Mobility is impaired on this rough terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2363,12 +2363,12 @@
 <context>
     <name>SNOW_WELD</name>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_WELD.js" line="11"/>
+        <location filename="../resources/scripts/terrain/SNOW_WELD.js" line="15"/>
         <source>Snowy Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_WELD.js" line="101"/>
+        <location filename="../resources/scripts/terrain/SNOW_WELD.js" line="105"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2376,12 +2376,12 @@
 <context>
     <name>STREET</name>
     <message>
-        <location filename="../resources/scripts/terrain/STREET.js" line="10"/>
+        <location filename="../resources/scripts/terrain/STREET.js" line="14"/>
         <source>Street</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/STREET.js" line="43"/>
+        <location filename="../resources/scripts/terrain/STREET.js" line="47"/>
         <source>Well-surfaced roads provides optimum mobility but little cover.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3425,12 +3425,12 @@
 <context>
     <name>WALL</name>
     <message>
-        <location filename="../resources/scripts/terrain/WALL.js" line="11"/>
+        <location filename="../resources/scripts/terrain/WALL.js" line="15"/>
         <source>Wall</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/WALL.js" line="61"/>
+        <location filename="../resources/scripts/terrain/WALL.js" line="65"/>
         <source>Dark Matter Walls can&apos;t be crossed by most units. They can be destroyed to create a path through them.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3438,12 +3438,12 @@
 <context>
     <name>WASTELAND</name>
     <message>
-        <location filename="../resources/scripts/terrain/WASTELAND.js" line="10"/>
+        <location filename="../resources/scripts/terrain/WASTELAND.js" line="14"/>
         <source>Wasteland</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/WASTELAND.js" line="27"/>
+        <location filename="../resources/scripts/terrain/WASTELAND.js" line="31"/>
         <source>Infantry and Mech units aside, mobility is impaired on rough terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3451,12 +3451,12 @@
 <context>
     <name>WELD</name>
     <message>
-        <location filename="../resources/scripts/terrain/WELD.js" line="11"/>
+        <location filename="../resources/scripts/terrain/WELD.js" line="15"/>
         <source>Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/WELD.js" line="101"/>
+        <location filename="../resources/scripts/terrain/WELD.js" line="105"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
         <translation type="unfinished"></translation>
     </message>

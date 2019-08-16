@@ -721,27 +721,24 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
         {
             switch (m_EditorSelection->getCurrentMode())
             {
+                case EditorSelection::EditorMode::Unit:
                 case EditorSelection::EditorMode::Terrain:
-                {
-                    QString terrainID = pMap->getTerrain(x, y)->getTerrainID();
-                    m_EditorSelection->selectTerrain(terrainID);
-                    break;
-                }
                 case EditorSelection::EditorMode::Building:
                 {
                     Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
-                    if (pBuilding != nullptr)
-                    {
-                        m_EditorSelection->selectBuilding(pBuilding->getBuildingID());
-                    }
-                    break;
-                }
-                case EditorSelection::EditorMode::Unit:
-                {
                     Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
                     if (pUnit != nullptr)
                     {
                         m_EditorSelection->selectUnit(pUnit->getUnitID());
+                    }
+                    else if (pBuilding != nullptr)
+                    {
+                        m_EditorSelection->selectBuilding(pBuilding->getBuildingID());
+                    }
+                    else
+                    {
+                        QString terrainID = pMap->getTerrain(x, y)->getTerrainID();
+                        m_EditorSelection->selectTerrain(terrainID);
                     }
                     break;
                 }

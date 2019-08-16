@@ -1,5 +1,9 @@
 var Constructor = function()
 {
+    this.getTerrainGroup = function()
+    {
+        return 2;
+    };
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {

@@ -61,6 +61,21 @@ void TerrainManager::loadAll()
     }
 }
 
+qint32 TerrainManager::getTerrainGroup(qint32 i)
+{
+    if ((i >= 0) && (i < m_loadedTerrains.size()))
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        QString function1 = "getTerrainGroup";
+        QJSValue ret = pApp->getInterpreter()->doFunction(m_loadedTerrains[i], function1);
+        if (ret.isNumber())
+        {
+            return ret.toInt();
+        }
+    }
+    return 0;
+}
+
 bool TerrainManager::existsTerrain(const QString& TerrainID)
 {
     for (qint32 i = 0; i < m_loadedTerrains.size(); i++)

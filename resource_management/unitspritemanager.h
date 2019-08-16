@@ -4,6 +4,7 @@
 #include "QString"
 #include "QStringList"
 #include "oxygine-framework.h"
+#include "game/GameEnums.h"
 
 class UnitSpriteManager : public oxygine::Resources
 {
@@ -50,6 +51,12 @@ public:
     {
         return m_loadedUnits.size();
     }
+    /**
+     * @brief getUnitType
+     * @param i
+     * @return
+     */
+    GameEnums::UnitType getUnitType(qint32 i);
     /**
      * @brief reset deletes all data
      */

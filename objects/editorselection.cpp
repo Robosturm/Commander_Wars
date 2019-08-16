@@ -115,12 +115,28 @@ EditorSelection::EditorSelection()
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     // reserve vector size for fun and speed :D
     m_Terrains.reserve(pTerrainManager->getTerrainCount());
+    QVector<qint32> terrainGroups;
     for (qint32 i = 0; i < pTerrainManager->getTerrainCount(); i++)
     {
-        m_Terrains.append(Terrain::createTerrain(pTerrainManager->getTerrainID(i), -10, -10, ""));
-        m_Terrains[i]->loadSprites();
-        m_PlacementActor->addChild(m_Terrains[i]);
+        qint32 terrainGroup = pTerrainManager->getTerrainGroup(i);
+        if (!terrainGroups.contains(terrainGroup))
+        {
+            terrainGroups.append(terrainGroup);
+        }
     }
+    for (qint32 i2 = 0; i2 < terrainGroups.size(); i2++)
+    {
+        for (qint32 i = 0; i < pTerrainManager->getTerrainCount(); i++)
+        {
+            if (pTerrainManager->getTerrainGroup(i) == terrainGroups[i2])
+            {
+                m_Terrains.append(Terrain::createTerrain(pTerrainManager->getTerrainID(i), -10, -10, ""));
+                m_Terrains[m_Terrains.size() - 1]->loadSprites();
+                m_PlacementActor->addChild(m_Terrains[m_Terrains.size() - 1]);
+            }
+        }
+    }
+
     connect(this, &EditorSelection::sigClickedPlacementSelection, this, &EditorSelection::ClickedPlacementSelection, Qt::QueuedConnection);
     connect(this, &EditorSelection::sigUpdateSelectedPlayer, this, &EditorSelection::updateSelectedPlayer);
 
@@ -160,33 +176,49 @@ EditorSelection::EditorSelection()
 
     spTerrain plains = Terrain::createTerrain("PLAINS", -1, -1, "");
     spTerrain sea = Terrain::createTerrain("SEA", -1, -1, "");
+
+    QVector<GameEnums::UnitType> unitTypes;
     for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
     {
-        spUnit unit = new Unit(pUnitSpriteManager->getUnitID(i), m_Players.at(1)->getOwner(), false);
-        m_Units.append(unit);
-        oxygine::spSprite pSprite = new oxygine::Sprite();
-        QString movementType = m_Units.at(i)->getMovementType();
-        if (pMovementTableManager->getBaseMovementPoints(movementType, plains.get()) > 0)
+        GameEnums::UnitType unitType = pUnitSpriteManager->getUnitType(i);
+        if (!unitTypes.contains(unitType))
         {
-            pAnim = pTerrainManager->getResAnim("plains+0");
-            pSprite->setResAnim(pAnim);
+            unitTypes.append(unitType);
         }
-        else if (pMovementTableManager->getBaseMovementPoints(movementType, sea.get()) > 0)
+    }
+    for (qint32 i2 = 0; i2 < unitTypes.size(); i2++)
+    {
+        for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
         {
-            pAnim = pTerrainManager->getResAnim("SEA");
-            pSprite->setResAnim(pAnim);
+            if (pUnitSpriteManager->getUnitType(i) == unitTypes[i2])
+            {
+                spUnit unit = new Unit(pUnitSpriteManager->getUnitID(i), m_Players.at(1)->getOwner(), false);
+                m_Units.append(unit);
+                oxygine::spSprite pSprite = new oxygine::Sprite();
+                QString movementType = unit->getMovementType();
+                if (pMovementTableManager->getBaseMovementPoints(movementType, plains.get()) > 0)
+                {
+                    pAnim = pTerrainManager->getResAnim("plains+0");
+                    pSprite->setResAnim(pAnim);
+                }
+                else if (pMovementTableManager->getBaseMovementPoints(movementType, sea.get()) > 0)
+                {
+                    pAnim = pTerrainManager->getResAnim("SEA");
+                    pSprite->setResAnim(pAnim);
+                }
+                else
+                {
+                    // todo maybe to something about this here
+                    pAnim = pTerrainManager->getResAnim("plains+0");
+                    pSprite->setResAnim(pAnim);
+                }
+                pSprite->setPriority(-100);
+                pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
+                unit->addChild(pSprite);
+                unit->setVisible(false);
+                m_PlacementActor->addChild(unit);
+            }
         }
-        else
-        {
-            // todo maybe to something about this here
-            pAnim = pTerrainManager->getResAnim("plains+0");
-            pSprite->setResAnim(pAnim);
-        }
-        pSprite->setPriority(-100);
-        pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
-        m_Units[i]->addChild(pSprite);
-        m_Units[i]->setVisible(false);
-        m_PlacementActor->addChild(m_Units[i]);
     }
 
 
@@ -433,14 +465,14 @@ void EditorSelection::createBoxSelectionMode()
     }
     m_BoxSelectionType->addChild(m_CurrentSelectorMode);
 
-    oxygine::spSprite pSpriteTerrainMode = new oxygine::Sprite();
+    m_pSpriteTerrainMode = new oxygine::Sprite();
 
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("editor+terrain");
-    pSpriteTerrainMode->setResAnim(pAnim);
-    pSpriteTerrainMode->setPosition(frameSize, yStartPos);
+    m_pSpriteTerrainMode->setResAnim(pAnim);
+    m_pSpriteTerrainMode->setPosition(frameSize, yStartPos);
     m_CurrentSelectorMode->setPosition(frameSize, yStartPos);
-    m_BoxSelectionType->addChild(pSpriteTerrainMode);
-    pSpriteTerrainMode->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)->void
+    m_BoxSelectionType->addChild(m_pSpriteTerrainMode);
+    m_pSpriteTerrainMode->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)->void
     {
         m_Mode = EditorMode::Terrain;
         m_CurrentSelectorMode->setPosition(frameSize, yStartPos);
@@ -450,13 +482,13 @@ void EditorSelection::createBoxSelectionMode()
     // scale marker to correct size if needed
     m_CurrentSelectorMode->setScale(pAnim->getWidth() / pAnimMarker->getWidth());
 
-    oxygine::spSprite pSpriteBuildingMode = new oxygine::Sprite();
+    m_pSpriteBuildingMode = new oxygine::Sprite();
 
     pAnim = pObjectManager->getResAnim("editor+building");
-    pSpriteBuildingMode->setResAnim(pAnim);
-    pSpriteBuildingMode->setPosition(frameSize + xChange, yStartPos);
-    m_BoxSelectionType->addChild(pSpriteBuildingMode);
-    pSpriteBuildingMode->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)->void
+    m_pSpriteBuildingMode->setResAnim(pAnim);
+    m_pSpriteBuildingMode->setPosition(frameSize + xChange, yStartPos);
+    m_BoxSelectionType->addChild(m_pSpriteBuildingMode);
+    m_pSpriteBuildingMode->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)->void
     {
         m_Mode = EditorMode::Building;
         m_CurrentSelectorMode->setPosition(frameSize + xChange, yStartPos);
@@ -464,13 +496,13 @@ void EditorSelection::createBoxSelectionMode()
         emit sigClickedPlacementSelection(0, 0);
     });
 
-    oxygine::spSprite pSpriteUnitMode = new oxygine::Sprite();
+    m_pSpriteUnitMode = new oxygine::Sprite();
 
     pAnim = pObjectManager->getResAnim("editor+unit");
-    pSpriteUnitMode->setResAnim(pAnim);
-    pSpriteUnitMode->setPosition(frameSize + xChange * 2, yStartPos);
-    m_BoxSelectionType->addChild(pSpriteUnitMode);
-    pSpriteUnitMode->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)->void
+    m_pSpriteUnitMode->setResAnim(pAnim);
+    m_pSpriteUnitMode->setPosition(frameSize + xChange * 2, yStartPos);
+    m_BoxSelectionType->addChild(m_pSpriteUnitMode);
+    m_pSpriteUnitMode->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *)->void
     {
         m_Mode = EditorMode::Unit;
         m_CurrentSelectorMode->setPosition(frameSize + xChange * 2, yStartPos);
@@ -617,6 +649,9 @@ void EditorSelection::selectTerrain(const QString& terrainID)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    m_Mode = EditorMode::Terrain;
+    m_CurrentSelectorMode->setPosition(m_pSpriteTerrainMode->getPosition());
+    updateTerrainView();
     for (qint32 i = 0; i < m_Terrains.size(); i++)
     {
         if (m_Terrains[i]->getTerrainID() == terrainID)
@@ -637,6 +672,9 @@ void EditorSelection::selectBuilding(const QString& buildingID)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    m_Mode = EditorMode::Building;
+    m_CurrentSelectorMode->setPosition(m_pSpriteBuildingMode->getPosition());
+    updateBuildingView();
     for (qint32 i = 0; i < m_Buildings.size(); i++)
     {
         if (m_Buildings[i]->getBuildingID() == buildingID)
@@ -658,6 +696,9 @@ void EditorSelection::selectUnit(const QString& unitID)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    m_Mode = EditorMode::Unit;
+    m_CurrentSelectorMode->setPosition(m_pSpriteUnitMode->getPosition());
+    updateUnitView();
     for (qint32 i = 0; i < m_Units.size(); i++)
     {
         if (m_Units[i]->getUnitID() == unitID)

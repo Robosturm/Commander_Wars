@@ -35,6 +35,12 @@ public slots:
         return "";
     }
     /**
+     * @brief getTerrainGroup
+     * @param i
+     * @return
+     */
+    qint32 getTerrainGroup(qint32 i);
+    /**
      * @brief getTerrainCount
      * @return the amount of terrains loaded at the current time
      */
