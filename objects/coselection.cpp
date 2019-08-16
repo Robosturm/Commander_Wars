@@ -116,7 +116,7 @@ COSelection::COSelection(QStringList coids)
 
     m_COBio = new oxygine::TextField();
     m_COBio->setStyle(style);
-    m_COBio->setScale(0.5f);
+    m_COBio->setScale(0.47f);
     m_COBio->setSize(175 / m_COBio->getScaleY(), 20);
 
     m_COBioRect = new oxygine::SlidingActor();
@@ -127,7 +127,7 @@ COSelection::COSelection(QStringList coids)
 
     m_CODesc = new oxygine::TextField();
     m_CODesc->setStyle(style);
-    m_CODesc->setScale(0.5f);
+    m_CODesc->setScale(0.47f);
     m_CODesc->setSize(175 / m_CODesc->getScaleY(), 48);
 
     m_CODescRect = new oxygine::SlidingActor();
