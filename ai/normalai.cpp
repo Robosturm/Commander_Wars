@@ -429,6 +429,7 @@ bool NormalAi::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
             {
                 appendRepairTargets(pUnit, pBuildings, targets);
             }
+
             if (moveUnit(pAction, pUnit, pUnits, actions, targets, transporterTargets, true, pBuildings, pEnemyBuildings))
             {
                 return true;

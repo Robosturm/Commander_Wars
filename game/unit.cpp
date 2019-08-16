@@ -2032,11 +2032,11 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
         // can we see the unit?
         bool visibleField = pPlayer->getFieldVisible(x, y);
         bool directView = pPlayer->getFieldDirectVisible(x, y);
-        if (directView)
+        if (directView || ignoreOutOfVisionRange)
         {
             return false;
         }
-        if (!visibleField && !ignoreOutOfVisionRange)
+        if (!visibleField)
         {
             return true;
         }
