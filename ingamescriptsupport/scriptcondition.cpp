@@ -3,15 +3,27 @@
 #include "scriptconditionvictory.h"
 #include "scriptconditioneachday.h"
 #include "scriptconditionstartofturn.h"
+#include "scriptconditionunitdestroyed.h"
 
 const QString ScriptCondition::ConditionVictory = "Victory";
 const QString ScriptCondition::ConditionStartOfTurn = "Start Of Turn";
 const QString ScriptCondition::ConditionEachDay = "Each Day";
+const QString ScriptCondition::ConditionUnitDestroyed = "Unit Destroyed";
 
 ScriptCondition::ScriptCondition(ConditionType type)
     : QObject(),
       m_Type(type)
 {
+}
+
+ScriptCondition *ScriptCondition::getParent() const
+{
+    return pParent;
+}
+
+void ScriptCondition::setParent(ScriptCondition *value)
+{
+    pParent = value;
 }
 
 spScriptCondition ScriptCondition::getSubCondition() const
@@ -22,6 +34,10 @@ spScriptCondition ScriptCondition::getSubCondition() const
 void ScriptCondition::setSubCondition(const spScriptCondition &value)
 {
     subCondition = value;
+    if (subCondition.get() != nullptr)
+    {
+        subCondition->setParent(this);
+    }
 }
 
 ScriptCondition::ConditionType ScriptCondition::getType() const
@@ -45,6 +61,10 @@ ScriptCondition* ScriptCondition::createCondition(ConditionType type)
         {
             return new ScriptConditionEachDay();
         }
+        case ConditionType::unitDestroyed:
+        {
+            return new ScriptConditionUnitDestroyed();
+        }
     }
     return nullptr;
 }
@@ -67,6 +87,10 @@ ScriptCondition* ScriptCondition::createReadCondition(QTextStream& rStream)
     else if (line.endsWith(ConditionVictory))
     {
         ret = new ScriptConditionVictory();
+    }
+    else if (line.endsWith(ConditionUnitDestroyed))
+    {
+        ret = new ScriptConditionUnitDestroyed();
     }
     if (ret != nullptr)
     {
@@ -124,10 +148,35 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
                 }
             }
         }
-        default:
+        case ScriptCondition::ConditionType::unitDestroyed:
         {
-            return false;
+            switch (type2)
+            {
+                case ScriptCondition::ConditionType::unitDestroyed:
+                {
+                    return true;
+                }
+                default:
+                {
+                    return false;
+                }
+            }
         }
     }
-    return false;
+}
+
+void ScriptCondition::writePreCondition(QTextStream& rStream)
+{
+    if (subCondition.get() != nullptr)
+    {
+        subCondition->writePreCondition(rStream);
+    }
+}
+
+void ScriptCondition::writePostCondition(QTextStream& rStream)
+{
+    if (pParent != nullptr)
+    {
+        pParent->writePostCondition(rStream);
+    }
 }

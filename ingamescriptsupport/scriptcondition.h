@@ -25,11 +25,13 @@ public:
     {
         startOfTurn,
         victory,
-        eachDay
+        eachDay,
+        unitDestroyed
     };
     static const QString ConditionVictory;
     static const QString ConditionStartOfTurn;
     static const QString ConditionEachDay;
+    static const QString ConditionUnitDestroyed;
     /**
      * @brief createCondition
      * @param type
@@ -52,6 +54,16 @@ public:
      * @param rStream
      */
     virtual void writeCondition(QTextStream& rStream) = 0;
+    /**
+     * @brief writePreCondition
+     * @param rStream
+     */
+    virtual void writePreCondition(QTextStream& rStream);
+    /**
+     * @brief writePostCondition
+     * @param rStream
+     */
+    virtual void writePostCondition(QTextStream& rStream);
     /**
      * @brief addEvent
      * @param event
@@ -107,10 +119,22 @@ public:
      * @return
      */
     static bool sameConditionGroup(ConditionType type1, ConditionType type2);
+    /**
+     * @brief getParent
+     * @return
+     */
+    ScriptCondition *getParent() const;
+    /**
+     * @brief setParent
+     * @param value
+     */
+    void setParent(ScriptCondition *value);
+
 protected:
     explicit ScriptCondition(ConditionType type);
     QVector<spScriptEvent> events;
     spScriptCondition subCondition;
+    ScriptCondition* pParent{nullptr};
 
     ConditionType m_Type;
 };

@@ -61,7 +61,7 @@ void ScriptConditionEachDay::readCondition(QTextStream& rStream)
         {
             qint64 pos = rStream.pos();
             line = rStream.readLine().simplified();
-            if (line.endsWith(ConditionEachDay))
+            if (line.endsWith(ConditionEachDay + " End"))
             {
                 break;
             }
@@ -71,7 +71,7 @@ void ScriptConditionEachDay::readCondition(QTextStream& rStream)
             }
             if (subCondition.get() == nullptr)
             {
-                subCondition = createReadCondition(rStream);
+                setSubCondition(createReadCondition(rStream));
             }
             spScriptEvent event = ScriptEvent::createReadEvent(rStream);
             if (event.get() != nullptr)
@@ -93,7 +93,7 @@ void ScriptConditionEachDay::writeCondition(QTextStream& rStream)
     {
         subCondition->writeCondition(rStream);
     }
-    rStream << "        } // " + ConditionEachDay + "\n";
+    rStream << "        } // " + ConditionEachDay + " End\n";
 }
 
 void ScriptConditionEachDay::showEditCondition(spScriptEditor pScriptEditor)

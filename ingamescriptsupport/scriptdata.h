@@ -126,7 +126,11 @@ public:
      * @param value
      */
     void setStartMode(bool value);
-
+    /**
+     * @brief getVariableName
+     * @return
+     */
+    static QString getVariableName();
 private:
     QVector<spScriptCondition> m_Victory;
     QString customVictoryCode;
@@ -138,6 +142,7 @@ private:
     QString customCode;
     bool startMode{false};
 
+    static quint32 m_variableCounter;
 };
 
 #endif // SCRIPTDATA_H

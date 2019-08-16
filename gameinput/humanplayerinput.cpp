@@ -568,10 +568,11 @@ void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::Dr
         oxygine::spTween tween2 = oxygine::createTween(tweenColor, 1);
         pSprite->addTween(tween2);
 
-        pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
+
 
         if (drawPriority == Terrain::DrawPriority::MarkedFieldMap)
         {
+            pSprite->setScale((GameMap::Imagesize) / pAnim->getWidth());
             pSprite->setPosition(point.x() * GameMap::Imagesize, point.y() * GameMap::Imagesize);
             pSprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::MarkedFields));
             pMap->addChild(pSprite);
@@ -579,6 +580,7 @@ void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::Dr
         }
         else
         {
+            pSprite->setScale((GameMap::Imagesize + 1) / pAnim->getWidth());
             pSprite->setPriority(static_cast<qint16>(drawPriority));
             pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
             pMap->getSpTerrain(point.x(), point.y())->addChild(pSprite);
@@ -763,7 +765,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
                 oxygine::ResAnim* pAnim = pGameManager->getResAnim("arrow+unit");
                 pSprite->setResAnim(pAnim);
                 pSprite->setPriority(static_cast<qint16>(points[i].y() + 3));
-                pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
+                pSprite->setScale((GameMap::Imagesize + 1) / pAnim->getWidth());
                 pSprite->setPosition(points[i].x() * GameMap::Imagesize -(pSprite->getScaledWidth() - GameMap::Imagesize) / 2,  points[i].y() * GameMap::Imagesize -(pSprite->getScaledHeight() - GameMap::Imagesize));
                 pMap->addChild(pSprite);
                 m_Arrows.append(pSprite);

@@ -7,6 +7,8 @@ const QString ScriptData::scriptStart = "scriptStart";
 const QString ScriptData::scriptEnd = "scriptEnd";
 const QString ScriptData::actionConditions = "actionConditions";
 
+quint32 ScriptData::m_variableCounter = 0;
+
 ScriptData::ScriptData()
     : QObject()
 {
@@ -31,6 +33,12 @@ bool ScriptData::getStartMode() const
 void ScriptData::setStartMode(bool value)
 {
     startMode = value;
+}
+
+QString ScriptData::getVariableName()
+{
+    m_variableCounter++;
+    return "variable" + QString::number(m_variableCounter);
 }
 
 void ScriptData::readScript(QTextStream& rStream)
@@ -73,7 +81,7 @@ void ScriptData::readScript(QTextStream& rStream)
             {
                 readData(turnStart, rStream, customStartOfTurnCode, &m_DayConditions);
             }
-            else if (line.endsWith(turnStart))
+            else if (line.endsWith(actionConditions))
             {
                 readData(actionConditions, rStream, customActionConditions, &m_ActionConditions);
             }
@@ -101,6 +109,19 @@ void ScriptData::readData(QString id, QTextStream& rStream, QString& customCode,
             break;
         }
         rStream.seek(pos);
+
+        if (line.endsWith("precondition"))
+        {
+            while (!rStream.atEnd())
+            {
+                QString line = rStream.readLine().simplified();
+                if (line.endsWith("preconditionend"))
+                {
+                    break;
+                }
+            }
+        }
+
         ScriptCondition* pCondition = ScriptCondition::createReadCondition(rStream);
         if (pCondition != nullptr)
         {
@@ -116,6 +137,7 @@ void ScriptData::readData(QString id, QTextStream& rStream, QString& customCode,
 
 void ScriptData::writeScript(QTextStream& rStream)
 {
+    m_variableCounter = 0;
     rStream << "var Constructor = function() { // " + scriptStart + "\n";
     rStream << "    this.immediateStart = function() { // " + immediateStart + "\n";
     rStream << "        return " + QVariant(startMode).toString() +  ";\n";
@@ -124,13 +146,22 @@ void ScriptData::writeScript(QTextStream& rStream)
     rStream << "    this.victory = function(team) { // " + victory + "\n";
     for (qint32 i = 0; i < m_Victory.size(); i++)
     {
+        m_Victory[i]->writePreCondition(rStream);
+    }
+    for (qint32 i = 0; i < m_Victory.size(); i++)
+    {
         m_Victory[i]->writeCondition(rStream);
     }
     rStream << customVictoryCode;
     rStream << "    }; // " + victory + "\n";
 
+
     // turn start
     rStream << "    this.turnStart = function(turn, player) { // " + turnStart + "\n";
+    for (qint32 i = 0; i < m_DayConditions.size(); i++)
+    {
+        m_DayConditions[i]->writePreCondition(rStream);
+    }
     for (qint32 i = 0; i < m_DayConditions.size(); i++)
     {
         m_DayConditions[i]->writeCondition(rStream);
@@ -138,8 +169,15 @@ void ScriptData::writeScript(QTextStream& rStream)
     rStream << customStartOfTurnCode;
     rStream << "    }; // " + turnStart + "\n";
 
-    // turn start
+    // action conditions
     rStream << "    this.actionDone = function() { // " + actionConditions + "\n";
+    rStream << "    // precondition\n";
+    rStream << "        var variables = map.getGameScript().getVariables();\n";
+    for (qint32 i = 0; i < m_ActionConditions.size(); i++)
+    {
+        m_ActionConditions[i]->writePreCondition(rStream);
+    }
+    rStream << "    // preconditionend\n";
     for (qint32 i = 0; i < m_ActionConditions.size(); i++)
     {
         m_ActionConditions[i]->writeCondition(rStream);

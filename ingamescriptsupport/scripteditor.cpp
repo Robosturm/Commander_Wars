@@ -49,7 +49,8 @@ ScriptEditor::ScriptEditor()
     pSpriteBox->addChild(m_ConditionPanel);
     QVector<QString> items = {tr(ScriptCondition::ConditionStartOfTurn.toStdString().c_str()),
                               tr(ScriptCondition::ConditionVictory.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionEachDay.toStdString().c_str())};
+                              tr(ScriptCondition::ConditionEachDay.toStdString().c_str()),
+                             tr(ScriptCondition::ConditionUnitDestroyed.toStdString().c_str())};
     m_Conditions = new DropDownmenu(200, items, true);
     m_Conditions->setPosition(30, pApp->getSettings()->getHeight() - 115);
     pSpriteBox->addChild(m_Conditions);
@@ -380,6 +381,11 @@ void ScriptEditor::addCondition()
             case ScriptCondition::ConditionType::eachDay:
             {
                 pCondition = m_Data->addDayCondition(type);
+                break;
+            }
+            case ScriptCondition::ConditionType::unitDestroyed:
+            {
+                pCondition = m_Data->addActionCondition(type);
                 break;
             }
         }

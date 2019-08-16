@@ -2418,6 +2418,15 @@
     </message>
 </context>
 <context>
+    <name>ScriptConditionUnitDestroyed</name>
+    <message>
+        <location filename="../ingamescriptsupport/scriptconditionunitdestroyed.cpp" line="128"/>
+        <location filename="../ingamescriptsupport/scriptconditionunitdestroyed.cpp" line="143"/>
+        <source>X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ScriptConditionVictory</name>
     <message>
         <location filename="../ingamescriptsupport/scriptconditionvictory.cpp" line="84"/>
@@ -2466,54 +2475,54 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="57"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="58"/>
         <source>Add Condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="68"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="69"/>
         <source>Events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="81"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="82"/>
         <source>Add Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="94"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="95"/>
         <source>Immediate Start: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="104"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="105"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="113"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="114"/>
         <source>Save Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="120"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="121"/>
         <source>Load Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="261"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="335"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="262"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="336"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="268"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="342"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="269"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="343"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="276"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="277"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>

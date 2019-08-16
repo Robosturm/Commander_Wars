@@ -49,7 +49,7 @@ void ScriptConditionStartOfTurn::readCondition(QTextStream& rStream)
         {
             qint64 pos = rStream.pos();
             line = rStream.readLine().simplified();
-            if (line.endsWith(ConditionStartOfTurn))
+            if (line.endsWith(ConditionStartOfTurn + " End"))
             {
                 break;
             }
@@ -59,7 +59,7 @@ void ScriptConditionStartOfTurn::readCondition(QTextStream& rStream)
             }
             if (subCondition.get() == nullptr)
             {
-                subCondition = createReadCondition(rStream);
+                setSubCondition(createReadCondition(rStream));
             }
             spScriptEvent event = ScriptEvent::createReadEvent(rStream);
             if (event.get() != nullptr)
@@ -81,7 +81,7 @@ void ScriptConditionStartOfTurn::writeCondition(QTextStream& rStream)
     {
         subCondition->writeCondition(rStream);
     }
-    rStream << "        } // " + ConditionStartOfTurn + "\n";
+    rStream << "        } // " + ConditionStartOfTurn + " End\n";
 }
 
 void ScriptConditionStartOfTurn::showEditCondition(spScriptEditor pScriptEditor)

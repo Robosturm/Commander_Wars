@@ -232,6 +232,7 @@ set(${PROJECT_NAME}_SRCS
         ingamescriptsupport/scriptconditionvictory.cpp
         ingamescriptsupport/scriptconditionstartofturn.cpp
         ingamescriptsupport/scriptconditioneachday.cpp
+        ingamescriptsupport/scriptconditionunitdestroyed.cpp
         # event stuff
         ingamescriptsupport/scriptevent.cpp
         ingamescriptsupport/scripteventdialog.cpp
