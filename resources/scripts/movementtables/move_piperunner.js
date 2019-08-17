@@ -7,6 +7,7 @@ var Constructor = function()
     this.movementpointsTable = [["WELD", 1],
                                 ["FACTORY", 1],
                                 ["PIPELINE", 1],
+                                ["PIPESTATION", 1],
                                 ["DESERT_WELD", 1],
                                 ["DESERT_PIPELINE", 1],
                                 ["SNOW_WELD", 2],
