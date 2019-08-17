@@ -9,7 +9,7 @@
 
 #include "oxygine-framework.h"
 
-#include "ingamescriptsupport/scriptevent.h"
+#include "ingamescriptsupport/events/scriptevent.h"
 
 class ScriptCondition;
 typedef oxygine::intrusive_ptr<ScriptCondition> spScriptCondition;

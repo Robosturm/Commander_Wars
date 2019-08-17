@@ -142,6 +142,11 @@ public slots:
         return m_Weathers.size();
     }
     /**
+     * @brief reduceWeatherDuration
+     * @param duration
+     */
+    void reduceWeatherDuration(qint32 duration = 1);
+    /**
      * @brief startOfTurn
      */
     void startOfTurn();
@@ -151,6 +156,12 @@ public slots:
      * @param duration
      */
     void changeWeather(QString weatherId, qint32 duration);
+    /**
+     * @brief changeWeather
+     * @param weatherId
+     * @param duration
+     */
+    void changeWeather(qint32 weatherId, qint32 duration);
 
     bool getRankingSystem() const;
     void setRankingSystem(bool RankingSystem);

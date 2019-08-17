@@ -5,7 +5,7 @@
 
 #include "QColor"
 
-#include "ingamescriptsupport/scriptevent.h"
+#include "ingamescriptsupport/events/scriptevent.h"
 
 #include "game/GameEnums.h"
 

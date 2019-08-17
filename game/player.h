@@ -356,6 +356,12 @@ public slots:
      * @param BuildList
      */
     void setBuildList(const QStringList &BuildList);
+    /**
+     * @brief changeBuildlist
+     * @param unitID
+     * @param remove
+     */
+    void changeBuildlist(const QString& unitID, bool remove = false);
 private:
     qint32 funds{0};
     float fundsModifier{1.0f};

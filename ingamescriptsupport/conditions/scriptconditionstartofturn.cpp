@@ -1,7 +1,7 @@
-#include "scriptconditioneachday.h"
+#include "scriptconditionstartofturn.h"
 
-#include "scripteditor.h"
-#include "genericbox.h"
+#include "ingamescriptsupport/scripteditor.h"
+#include "ingamescriptsupport/genericbox.h"
 
 #include "resource_management/fontmanager.h"
 
@@ -9,59 +9,47 @@
 
 #include "objects/spinbox.h"
 
-ScriptConditionEachDay::ScriptConditionEachDay()
-    : ScriptCondition (ConditionType::eachDay)
+ScriptConditionStartOfTurn::ScriptConditionStartOfTurn()
+    : ScriptCondition (ConditionType::startOfTurn)
 {
 
 }
 
-qint32 ScriptConditionEachDay::getIntervall() const
-{
-    return intervall;
-}
-
-void ScriptConditionEachDay::setIntervall(const qint32 &value)
-{
-    intervall = value;
-}
-
-qint32 ScriptConditionEachDay::getDay() const
+qint32 ScriptConditionStartOfTurn::getDay() const
 {
     return day;
 }
 
-void ScriptConditionEachDay::setDay(const qint32 &value)
+void ScriptConditionStartOfTurn::setDay(const qint32 &value)
 {
     day = value;
 }
 
-qint32 ScriptConditionEachDay::getPlayer() const
+qint32 ScriptConditionStartOfTurn::getPlayer() const
 {
     return player;
 }
 
-void ScriptConditionEachDay::setPlayer(const qint32 &value)
+void ScriptConditionStartOfTurn::setPlayer(const qint32 &value)
 {
     player = value;
 }
 
-void ScriptConditionEachDay::readCondition(QTextStream& rStream)
+void ScriptConditionStartOfTurn::readCondition(QTextStream& rStream)
 {
     QString line = rStream.readLine().simplified();
-    QStringList items = line.replace("if ((turn - ", "")
-                            .replace(") % ", ",")
-                            .replace(" === 0 && player === ", ",")
-                            .replace(") { // " + ConditionEachDay, "").split(",");
-    if (items.size() == 3)
+    QStringList items = line.replace("if (turn === ", "")
+                            .replace(" && player === ", ",")
+                            .replace(") { // " + ConditionStartOfTurn, "").split(",");
+    if (items.size() == 2)
     {
         day = items[0].toInt();
-        intervall = items[1].toInt();
-        player = items[2].toInt();
+        player = items[1].toInt();
         while (!rStream.atEnd())
         {
             qint64 pos = rStream.pos();
             line = rStream.readLine().simplified();
-            if (line.endsWith(ConditionEachDay + " End"))
+            if (line.endsWith(ConditionStartOfTurn + " End"))
             {
                 break;
             }
@@ -82,9 +70,9 @@ void ScriptConditionEachDay::readCondition(QTextStream& rStream)
     }
 }
 
-void ScriptConditionEachDay::writeCondition(QTextStream& rStream)
+void ScriptConditionStartOfTurn::writeCondition(QTextStream& rStream)
 {
-    rStream << "        if ((turn - " + QString::number(day)  +  ") % " + QString::number(intervall) +  " === 0 && player === " + QString::number(player) + ") { // " + ConditionEachDay +"\n";
+    rStream << "        if (turn === " + QString::number(day) + " && player === " + QString::number(player) + ") { // " + ConditionStartOfTurn +"\n";
     for (qint32 i = 0; i < events.size(); i++)
     {
         events[i]->writeEvent(rStream);
@@ -93,10 +81,10 @@ void ScriptConditionEachDay::writeCondition(QTextStream& rStream)
     {
         subCondition->writeCondition(rStream);
     }
-    rStream << "        } // " + ConditionEachDay + " End\n";
+    rStream << "        } // " + ConditionStartOfTurn + " End\n";
 }
 
-void ScriptConditionEachDay::showEditCondition(spScriptEditor pScriptEditor)
+void ScriptConditionStartOfTurn::showEditCondition(spScriptEditor pScriptEditor)
 {
     spGenericBox pBox = new GenericBox();
 
@@ -107,35 +95,25 @@ void ScriptConditionEachDay::showEditCondition(spScriptEditor pScriptEditor)
     style.multiline = false;
 
     qint32 width = 300;
+
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Each Day: ").toStdString().c_str());
+    pText->setHtmlText(tr("At Day: ").toStdString().c_str());
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, 9999);
     spinBox->setPosition(width, 30);
-    spinBox->setCurrentValue(intervall);
-    connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptConditionEachDay::setIntervall, Qt::QueuedConnection);
-    pBox->addItem(spinBox);
-
-    pText = new oxygine::TextField();
-    pText->setStyle(style);
-    pText->setHtmlText(tr("Start Day: ").toStdString().c_str());
-    pText->setPosition(30, 70);
-    pBox->addItem(pText);
-    spinBox = new SpinBox(150, 1, 9999);
-    spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(day);
-    connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptConditionEachDay::setDay, Qt::QueuedConnection);
+    connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptConditionStartOfTurn::setDay, Qt::QueuedConnection);
     pBox->addItem(spinBox);
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: ").toStdString().c_str());
-    pText->setPosition(30, 110);
+    pText->setPosition(30, 70);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 1, 9999);
-    spinBox->setPosition(width, 110);
+    spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(player + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
             [=](qreal value)

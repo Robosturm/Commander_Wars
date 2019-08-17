@@ -8,8 +8,8 @@
 
 #include "objects/filedialog.h"
 
-#include "ingamescriptsupport/scriptcondition.h"
-#include "ingamescriptsupport/scriptevent.h"
+#include "ingamescriptsupport/conditions/scriptcondition.h"
+#include "ingamescriptsupport/events/scriptevent.h"
 
 #include "qfile.h"
 
@@ -74,7 +74,11 @@ ScriptEditor::ScriptEditor()
     pSpriteBox->addChild(m_EventPanel);
     items = {tr(ScriptEvent::EventDialog.toStdString().c_str()),
              tr(ScriptEvent::EventSpawnUnit.toStdString().c_str()),
-             tr(ScriptEvent::EventDefeatPlayer.toStdString().c_str())};
+             tr(ScriptEvent::EventDefeatPlayer.toStdString().c_str()),
+             tr(ScriptEvent::EventChangeBuildlist.toStdString().c_str()),
+             tr(ScriptEvent::EventAddFunds.toStdString().c_str()),
+             tr(ScriptEvent::EventChangeWeather.toStdString().c_str()),
+             tr(ScriptEvent::EventChangeCOBar.toStdString().c_str())};
     m_Events = new DropDownmenu(200, items, true);
     m_Events->setPosition(pApp->getSettings()->getWidth() / 2 + 10, pApp->getSettings()->getHeight() - 115);
     pSpriteBox->addChild(m_Events);

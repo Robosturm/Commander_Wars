@@ -1,7 +1,7 @@
 #include "scripteventspawnunit.h"
 
-#include "scripteditor.h"
-#include "genericbox.h"
+#include "ingamescriptsupport/scripteditor.h"
+#include "ingamescriptsupport/genericbox.h"
 
 #include "resource_management/fontmanager.h"
 #include "resource_management/unitspritemanager.h"

@@ -7,7 +7,7 @@
 
 #include "oxygine-framework.h"
 
-#include "ingamescriptsupport/scripteventdialog.h"
+#include "ingamescriptsupport/events/scripteventdialog.h"
 
 #include "objects/panel.h"
 

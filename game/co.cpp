@@ -101,6 +101,11 @@ void CO::setPowerFilled(const double &value)
     }
 }
 
+void CO::addPowerFilled(const double &value)
+{
+    setPowerFilled(value + powerFilled);
+}
+
 qint32 CO::getSuperpowerStars() const
 {
     return superpowerStars;

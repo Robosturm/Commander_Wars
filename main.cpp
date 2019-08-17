@@ -60,8 +60,8 @@
 #include "resource_management/unitspritemanager.h"
 #include "resource_management/battleanimationmanager.h"
 
-#include "ingamescriptsupport/scriptevent.h"
-#include "ingamescriptsupport/scriptcondition.h"
+#include "ingamescriptsupport/events/scriptevent.h"
+#include "ingamescriptsupport/conditions/scriptcondition.h"
 #include "qfile.h"
 
 #include "wiki/wikidatabase.h"

@@ -1,8 +1,8 @@
 #include "scripteventdialog.h"
 
-#include "scriptdialogdialog.h"
+#include "ingamescriptsupport/scriptdialogdialog.h"
 
-#include "scripteditor.h"
+#include "ingamescriptsupport/scripteditor.h"
 
 const QString ScriptEventDialog::ScriptEventDialogItem = "ScriptEventDialogItem";
 

@@ -1,7 +1,7 @@
 #ifndef SCRIPTCONDITIONVICTORY_H
 #define SCRIPTCONDITIONVICTORY_H
 
-#include "ingamescriptsupport/scriptcondition.h"
+#include "ingamescriptsupport/conditions/scriptcondition.h"
 
 class ScriptConditionVictory;
 typedef oxygine::intrusive_ptr<ScriptConditionVictory> spScriptConditionVictory;

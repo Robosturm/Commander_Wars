@@ -1,0 +1,135 @@
+#include "scripteventchangecobar.h"
+
+#include "ingamescriptsupport/scripteditor.h"
+#include "ingamescriptsupport/genericbox.h"
+
+#include "resource_management/fontmanager.h"
+
+#include "coreengine/mainapp.h"
+
+#include "objects/spinbox.h"
+
+ScriptEventChangeCOBar::ScriptEventChangeCOBar()
+    : ScriptEvent (EventType::changeCOBar)
+{
+
+}
+
+qint32 ScriptEventChangeCOBar::getCo() const
+{
+    return co;
+}
+
+void ScriptEventChangeCOBar::setCo(const qint32 &value)
+{
+    co = value;
+}
+
+float ScriptEventChangeCOBar::getStars() const
+{
+    return stars;
+}
+
+void ScriptEventChangeCOBar::setStars(float value)
+{
+    stars = value;
+}
+
+
+void ScriptEventChangeCOBar::readEvent(QTextStream& rStream)
+{
+    QString line = rStream.readLine().simplified();
+    line = rStream.readLine().simplified();
+    QStringList items = line.replace("map.getPlayer(", "")
+                            .replace(").getCO(", ",")
+                            .replace(").addPowerFilled(", ",")
+                            .replace(");", "").split(",");
+    if (items.size() == 3)
+    {
+        player = items[0].toInt();
+        co = items[1].toInt();
+        stars = items[2].toFloat();
+    }
+    line = rStream.readLine().simplified();
+}
+
+void ScriptEventChangeCOBar::writeEvent(QTextStream& rStream)
+{
+    rStream <<  "            if (map.getPlayer(" << QString::number(player) << ").getCO(" << QString::number(co) << ") !== null){ // "
+            << EventChangeCOBar << "\n";
+    rStream <<  "            map.getPlayer(" << QString::number(player) << ").getCO("  << QString::number(co) << ").addPowerFilled("
+            << QString::number(stars) << ");\n";
+    rStream <<  "            }\n";
+}
+
+qint32 ScriptEventChangeCOBar::getPlayer() const
+{
+    return player;
+}
+
+void ScriptEventChangeCOBar::setPlayer(const qint32 &value)
+{
+    player = value;
+}
+
+void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
+{
+    spGenericBox pBox = new GenericBox();
+
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+
+    qint32 width = 300;
+
+    oxygine::spTextField pText = new oxygine::TextField();
+    pText->setStyle(style);
+    pText->setHtmlText(tr("Player: ").toStdString().c_str());
+    pText->setPosition(30, 30);
+    pBox->addItem(pText);
+    spSpinBox spinBox = new SpinBox(150, 1, 9999);
+    spinBox->setPosition(width, 30);
+    spinBox->setCurrentValue(player + 1);
+    connect(spinBox.get(), &SpinBox::sigValueChanged,
+            [=](qreal value)
+    {
+        setPlayer(static_cast<qint32>(value) - 1);
+    });
+    pBox->addItem(spinBox);
+
+    pText = new oxygine::TextField();
+    pText->setStyle(style);
+    pText->setHtmlText(tr("CO: ").toStdString().c_str());
+    pText->setPosition(30, 70);
+    pBox->addItem(pText);
+    spinBox = new SpinBox(150, 1, 2);
+    spinBox->setPosition(width, 70);
+    spinBox->setCurrentValue(co + 1);
+    connect(spinBox.get(), &SpinBox::sigValueChanged,
+            [=](qreal value)
+    {
+        setCo(static_cast<qint32>(value) - 1);
+    });
+    pBox->addItem(spinBox);
+
+
+    pText = new oxygine::TextField();
+    pText->setStyle(style);
+    pText->setHtmlText(tr("Stars: ").toStdString().c_str());
+    pText->setPosition(30, 110);
+    pBox->addItem(pText);
+    spinBox = new SpinBox(150, -100, 100, SpinBox::Mode::Float);
+    spinBox->setPosition(width, 110);
+    spinBox->setCurrentValue(stars);
+    connect(spinBox.get(), &SpinBox::sigValueChanged,
+            [=](qreal value)
+    {
+        setStars(static_cast<qint32>(value));
+    });
+    pBox->addItem(spinBox);
+
+    pScriptEditor->addChild(pBox);
+    connect(pBox.get(), &GenericBox::sigFinished, pScriptEditor.get(), &ScriptEditor::updateEvents, Qt::QueuedConnection);
+}

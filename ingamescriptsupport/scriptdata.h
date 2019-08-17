@@ -7,7 +7,7 @@
 
 #include "oxygine-framework.h"
 
-#include "scriptconditionvictory.h"
+#include "conditions/scriptcondition.h"
 
 class ScriptData;
 typedef oxygine::intrusive_ptr<ScriptData> spScriptData;

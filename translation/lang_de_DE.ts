@@ -2389,17 +2389,17 @@
 <context>
     <name>ScriptConditionEachDay</name>
     <message>
-        <location filename="../ingamescriptsupport/scriptconditioneachday.cpp" line="112"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="112"/>
         <source>Each Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptconditioneachday.cpp" line="123"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="123"/>
         <source>Start Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptconditioneachday.cpp" line="134"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="134"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2407,12 +2407,12 @@
 <context>
     <name>ScriptConditionStartOfTurn</name>
     <message>
-        <location filename="../ingamescriptsupport/scriptconditionstartofturn.cpp" line="101"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="101"/>
         <source>At Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptconditionstartofturn.cpp" line="112"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="112"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2420,8 +2420,8 @@
 <context>
     <name>ScriptConditionUnitDestroyed</name>
     <message>
-        <location filename="../ingamescriptsupport/scriptconditionunitdestroyed.cpp" line="128"/>
-        <location filename="../ingamescriptsupport/scriptconditionunitdestroyed.cpp" line="143"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="128"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="143"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2429,7 +2429,7 @@
 <context>
     <name>ScriptConditionVictory</name>
     <message>
-        <location filename="../ingamescriptsupport/scriptconditionvictory.cpp" line="84"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.cpp" line="84"/>
         <source>Team: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2485,52 +2485,114 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="82"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="86"/>
         <source>Add Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="95"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="99"/>
         <source>Immediate Start: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="105"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="109"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="114"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="118"/>
         <source>Save Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="121"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="125"/>
         <source>Load Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="262"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="336"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="266"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="340"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="269"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="343"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="273"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="347"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="277"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="281"/>
         <source>Select</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventAddFunds</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="72"/>
+        <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="87"/>
+        <source>Funds: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventChangeBuildlist</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="90"/>
+        <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="105"/>
+        <source>Unit ID: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="131"/>
+        <source>Remove: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventChangeCOBar</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="89"/>
+        <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="104"/>
+        <source>CO: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="120"/>
+        <source>Stars: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventChangeWeather</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeweather.cpp" line="75"/>
+        <source>Days: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeweather.cpp" line="90"/>
+        <source>Weather: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ScriptEventDefeatPlayer</name>
     <message>
-        <location filename="../ingamescriptsupport/scripteventdefeatplayer.cpp" line="56"/>
+        <location filename="../ingamescriptsupport/events/scripteventdefeatplayer.cpp" line="56"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2538,27 +2600,27 @@
 <context>
     <name>ScriptEventSpawnUnit</name>
     <message>
-        <location filename="../ingamescriptsupport/scripteventspawnunit.cpp" line="111"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="111"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteventspawnunit.cpp" line="122"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="122"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteventspawnunit.cpp" line="133"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="133"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteventspawnunit.cpp" line="148"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="148"/>
         <source>Unit ID: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteventspawnunit.cpp" line="174"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="174"/>
         <source>Spawn Radius: </source>
         <translation type="unfinished"></translation>
     </message>

@@ -440,6 +440,21 @@ void Player::setBuildList(const QStringList &BuildList)
     m_BuildList = BuildList;
 }
 
+void Player::changeBuildlist(const QString& unitID, bool remove)
+{
+    if (remove)
+    {
+        m_BuildList.removeAll(unitID);
+    }
+    else
+    {
+        if (!m_BuildList.contains(unitID))
+        {
+            m_BuildList.append(unitID);
+        }
+    }
+}
+
 void Player::setIsDefeated(bool value)
 {
     isDefeated = value;

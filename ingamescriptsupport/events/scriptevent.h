@@ -20,12 +20,20 @@ public:
     static const QString EventDialog;
     static const QString EventSpawnUnit;
     static const QString EventDefeatPlayer;
+    static const QString EventChangeBuildlist;
+    static const QString EventAddFunds;
+    static const QString EventChangeWeather;
+    static const QString EventChangeCOBar;
 
     enum class EventType
     {
         dialog,
         spawnUnit,
         defeatPlayer,
+        changeBuildlist,
+        addFunds,
+        changeWeather,
+        changeCOBar
     };
 
     static spScriptEvent createEvent(EventType type);

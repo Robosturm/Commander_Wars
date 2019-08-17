@@ -886,6 +886,10 @@ bool GameMap::nextPlayer()
             found = true;
             break;
         }
+        else
+        {
+            m_Rules->reduceWeatherDuration();
+        }
     }
     if (!found)
     {
@@ -897,6 +901,10 @@ bool GameMap::nextPlayer()
             if (!m_CurrentPlayer->getIsDefeated())
             {
                 break;
+            }
+            else
+            {
+                m_Rules->reduceWeatherDuration();
             }
         }
     }

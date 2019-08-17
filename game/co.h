@@ -248,6 +248,11 @@ public slots:
      */
     void setPowerFilled(const double &value);
     /**
+     * @brief addPowerFilled
+     * @param value
+     */
+    void addPowerFilled(const double &value);
+    /**
      * @brief getCanMoveAndFire returns
      * @return
      */

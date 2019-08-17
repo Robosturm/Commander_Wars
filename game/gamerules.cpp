@@ -209,6 +209,11 @@ qint32 GameRules::getWeatherChance(QString weatherId)
     return 0;
 }
 
+void GameRules::reduceWeatherDuration(qint32 duration)
+{
+    m_weatherDuration -= duration;
+}
+
 void GameRules::startOfTurn()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -254,22 +259,30 @@ void GameRules::setStartWeather(qint32 index)
 
 void GameRules::changeWeather(QString weatherId, qint32 duration)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     for (qint32 i = 0; i < m_Weathers.size(); i++)
     {
         if (m_Weathers[i]->getWeatherId() == weatherId)
         {
-            if (m_CurrentWeather >= 0)
-            {
-                m_Weathers[m_CurrentWeather]->deactivate();
-            }
-            m_CurrentWeather = i;
-            m_Weathers[m_CurrentWeather]->activate();
+            changeWeather(i, duration);
             break;
         }
     }
-    m_weatherDuration = duration;
+}
+
+void GameRules::changeWeather(qint32 weatherId, qint32 duration)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    if (weatherId >= 0 && weatherId < m_Weathers.size())
+    {
+        if (m_CurrentWeather >= 0)
+        {
+            m_Weathers[m_CurrentWeather]->deactivate();
+        }
+        m_CurrentWeather = weatherId;
+        m_Weathers[m_CurrentWeather]->activate();
+        m_weatherDuration = duration;
+    }
     // create weather sprites :)
     createWeatherSprites();
     pApp->continueThread();

@@ -228,16 +228,20 @@ set(${PROJECT_NAME}_SRCS
         ingamescriptsupport/scriptdialogdialog.cpp
         ingamescriptsupport/scriptdata.cpp
         # condition stuff
-        ingamescriptsupport/scriptcondition.cpp
-        ingamescriptsupport/scriptconditionvictory.cpp
-        ingamescriptsupport/scriptconditionstartofturn.cpp
-        ingamescriptsupport/scriptconditioneachday.cpp
-        ingamescriptsupport/scriptconditionunitdestroyed.cpp
+        ingamescriptsupport/conditions/scriptcondition.cpp
+        ingamescriptsupport/conditions/scriptconditionvictory.cpp
+        ingamescriptsupport/conditions/scriptconditionstartofturn.cpp
+        ingamescriptsupport/conditions/scriptconditioneachday.cpp
+        ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp
         # event stuff
-        ingamescriptsupport/scriptevent.cpp
-        ingamescriptsupport/scripteventdialog.cpp
-        ingamescriptsupport/scripteventspawnunit.cpp
-        ingamescriptsupport/scripteventdefeatplayer.cpp
+        ingamescriptsupport/events/scriptevent.cpp
+        ingamescriptsupport/events/scripteventdialog.cpp
+        ingamescriptsupport/events/scripteventspawnunit.cpp
+        ingamescriptsupport/events/scripteventdefeatplayer.cpp
+        ingamescriptsupport/events/scripteventchangebuildlist.cpp
+        ingamescriptsupport/events/scripteventaddfunds.cpp
+        ingamescriptsupport/events/scripteventchangeweather.cpp
+        ingamescriptsupport/events/scripteventchangecobar.cpp
 
         # wiki stuff
         wiki/terraininfo.cpp
