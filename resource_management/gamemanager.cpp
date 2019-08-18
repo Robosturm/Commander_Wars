@@ -58,6 +58,7 @@ void GameManager::loadAll()
             }
         }
     }
+    m_loadedActions.sort();
 }
 
 bool GameManager::loadAction(const QString& actionID)

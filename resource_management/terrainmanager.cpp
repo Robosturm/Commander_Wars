@@ -59,6 +59,7 @@ void TerrainManager::loadAll()
             }
         }
     }
+    m_loadedTerrains.sort();
 }
 
 qint32 TerrainManager::getTerrainGroup(qint32 i)

@@ -70,6 +70,7 @@ void BuildingSpriteManager::loadAll()
             }
         }
     }
+    m_loadedBuildings.sort();
 }
 
 

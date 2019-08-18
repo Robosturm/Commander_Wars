@@ -55,6 +55,7 @@ void UnitSpriteManager::loadAll()
             }
         }
     }
+    m_loadedUnits.sort();
 }
 
 

@@ -321,6 +321,7 @@ void Settings::loadSettings(){
     {
         m_activeMods = modList.split(",");
     }
+    m_activeMods.sort();
     settings.endGroup();
 }
 

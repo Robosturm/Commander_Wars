@@ -63,6 +63,7 @@ void MovementTableManager::loadAll()
             }
         }
     }
+    m_loadedTables.sort();
 }
 
 

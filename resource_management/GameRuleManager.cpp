@@ -66,6 +66,8 @@ void GameRuleManager::loadAll()
 
         }
     }
+    m_loadedVictoryRules.sort();
+    m_loadedWeather.sort();
 }
 
 bool GameRuleManager::loadVictoryRule(const QString& victoryID)

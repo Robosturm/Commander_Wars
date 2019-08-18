@@ -88,6 +88,7 @@ void COSpriteManager::loadAll()
             }
         }
     }
+    m_loadedCOs.sort();
 }
 
 qint32 COSpriteManager::getCOIndex(QString id)
