@@ -2580,13 +2580,13 @@
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="271"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="345"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="352"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/scripteditor.cpp" line="278"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="352"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="359"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>

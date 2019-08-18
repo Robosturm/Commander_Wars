@@ -47,7 +47,7 @@ EditorMenue::EditorMenue()
     this->moveToThread(pApp->getWorkerthread());
     m_pInstance = this;
 
-    autoScrollBorder = QRect(50, 50, 350, 50);
+    autoScrollBorder = QRect(50, 50, pApp->getSettings()->getWidth() / 4, 50);
 
     m_EditorSelection = new EditorSelection();
     this->addChild(m_EditorSelection);

@@ -292,8 +292,15 @@ void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
             {
                 m_ConditionBoxes[i]->setAddColor(0, 0, 0);
             }
-            pSpritebox->setAddColor(32, 200, 32);
-            m_CurrentCondition = condition;
+            if (m_CurrentCondition.get() == condition.get())
+            {
+                m_CurrentCondition = nullptr;
+            }
+            else
+            {
+                pSpritebox->setAddColor(32, 200, 32);
+                m_CurrentCondition = condition;
+            }
             emit sigUpdateEvents();
         });
         condition = condition->getSubCondition();

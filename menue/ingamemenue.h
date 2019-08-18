@@ -46,7 +46,7 @@ protected:
     QTimer scrollTimer;
 
     spCursor m_Cursor{new Cursor()};
-    QRect autoScrollBorder{300, 50, 350, 50};
+    QRect autoScrollBorder{300, 50, 300, 50};
 };
 
 #endif // INGAMEMENUE_H

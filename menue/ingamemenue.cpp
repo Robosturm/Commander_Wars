@@ -210,23 +210,24 @@ void InGameMenue::autoScroll()
         {
             moveX = GameMap::Imagesize * pMap->getZoom();
         }
-        if ((curX > Settings::getWidth() - autoScrollBorder.width()) &&
-            (curX < Settings::getWidth() - autoScrollBorder.width() + 100) &&
-            (pMap->getX() + pMap->getMapWidth() * pMap->getZoom() * GameMap::Imagesize > Settings::getWidth() - autoScrollBorder.width()))
-
+        else if ((curX < Settings::getWidth() - autoScrollBorder.width()) &&
+            (curX > Settings::getWidth() - autoScrollBorder.width() - 50) &&
+            (pMap->getX() + pMap->getMapWidth() * pMap->getZoom() * GameMap::Imagesize > Settings::getWidth() - autoScrollBorder.width() - 50))
         {
             moveX = -GameMap::Imagesize * pMap->getZoom();
         }
+
         if ((curY < autoScrollBorder.y()) &&
             (pMap->getY() < autoScrollBorder.y()))
         {
             moveY = GameMap::Imagesize * pMap->getZoom();
         }
-        if ((curY > Settings::getHeight() - autoScrollBorder.height()) &&
+        else if ((curY > Settings::getHeight() - autoScrollBorder.height()) &&
             (pMap->getY() + pMap->getMapHeight() * pMap->getZoom() * GameMap::Imagesize > Settings::getHeight() - autoScrollBorder.height()))
         {
             moveY = -GameMap::Imagesize * pMap->getZoom();
         }
+
         if (moveX != 0 || moveY != 0)
         {
             MoveMap(moveX , moveY);
