@@ -2387,6 +2387,50 @@
     </message>
 </context>
 <context>
+    <name>ScriptConditionBuildingCaptured</name>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="150"/>
+        <source>X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="165"/>
+        <source>Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="180"/>
+        <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptConditionBuildingDestroyed</name>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="119"/>
+        <source>X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="134"/>
+        <source>Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptConditionBuildingsOwned</name>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="138"/>
+        <source>Count: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="153"/>
+        <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ScriptConditionEachDay</name>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="112"/>
@@ -2400,6 +2444,14 @@
     </message>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="134"/>
+        <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptConditionPlayerDefeated</name>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp" line="126"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2420,9 +2472,26 @@
 <context>
     <name>ScriptConditionUnitDestroyed</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="128"/>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="143"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="136"/>
         <source>X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="151"/>
+        <source>Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptConditionUnitsDestroyed</name>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="138"/>
+        <source>Count: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="153"/>
+        <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2475,54 +2544,54 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="58"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="63"/>
         <source>Add Condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="69"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="74"/>
         <source>Events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="86"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="91"/>
         <source>Add Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="99"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="104"/>
         <source>Immediate Start: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="109"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="114"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="118"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="123"/>
         <source>Save Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="125"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="130"/>
         <source>Load Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="266"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="340"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="271"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="345"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="273"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="347"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="278"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="352"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="281"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="286"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>

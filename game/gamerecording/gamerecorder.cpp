@@ -119,6 +119,15 @@ void GameRecorder::destroyedUnit(qint32 player)
     }
 }
 
+quint32 GameRecorder::getDestroyedUnits(qint32 player)
+{
+    if (player >= 0 && player < destroyedUnits.size())
+    {
+        return destroyedUnits[player];
+    }
+    return 0;
+}
+
 void GameRecorder::buildUnit(qint32 player)
 {
     if (player >= 0 && player < deployedUnits.size())

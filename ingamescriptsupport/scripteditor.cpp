@@ -50,7 +50,12 @@ ScriptEditor::ScriptEditor()
     QVector<QString> items = {tr(ScriptCondition::ConditionStartOfTurn.toStdString().c_str()),
                               tr(ScriptCondition::ConditionVictory.toStdString().c_str()),
                               tr(ScriptCondition::ConditionEachDay.toStdString().c_str()),
-                             tr(ScriptCondition::ConditionUnitDestroyed.toStdString().c_str())};
+                              tr(ScriptCondition::ConditionUnitDestroyed.toStdString().c_str()),
+                              tr(ScriptCondition::ConditionBuildingDestroyed.toStdString().c_str()),
+                              tr(ScriptCondition::ConditionBuildingCaptured.toStdString().c_str()),
+                              tr(ScriptCondition::ConditionPlayerDefeated.toStdString().c_str()),
+                              tr(ScriptCondition::ConditionUnitsDestroyed.toStdString().c_str()),
+                              tr(ScriptCondition::ConditionBuildingsOwned.toStdString().c_str())};
     m_Conditions = new DropDownmenu(200, items, true);
     m_Conditions->setPosition(30, pApp->getSettings()->getHeight() - 115);
     pSpriteBox->addChild(m_Conditions);
@@ -387,6 +392,11 @@ void ScriptEditor::addCondition()
                 pCondition = m_Data->addDayCondition(type);
                 break;
             }
+            case ScriptCondition::ConditionType::buildingDestroyed:
+            case ScriptCondition::ConditionType::buildingCaptured:
+            case ScriptCondition::ConditionType::playerDefeated:
+            case ScriptCondition::ConditionType::unitsDestroyed:
+            case ScriptCondition::ConditionType::buildingsOwned:
             case ScriptCondition::ConditionType::unitDestroyed:
             {
                 pCondition = m_Data->addActionCondition(type);

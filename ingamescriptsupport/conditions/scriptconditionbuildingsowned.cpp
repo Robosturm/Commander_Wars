@@ -1,6 +1,8 @@
-#include "scriptconditionunitdestroyed.h"
+#include "scriptconditionbuildingsowned.h"
 
+#include "ingamescriptsupport/scriptdata.h"
 #include "ingamescriptsupport/scripteditor.h"
+
 #include "ingamescriptsupport/genericbox.h"
 
 #include "resource_management/fontmanager.h"
@@ -9,24 +11,48 @@
 
 #include "objects/spinbox.h"
 
-ScriptConditionUnitDestroyed::ScriptConditionUnitDestroyed()
-    : ScriptCondition (ScriptCondition::ConditionType::unitDestroyed)
+ScriptConditionBuildingsOwned::ScriptConditionBuildingsOwned()
+    : ScriptCondition(ConditionType::buildingsOwned)
 {
 
 }
 
+qint32 ScriptConditionBuildingsOwned::getCount() const
+{
+    return m_count;
+}
 
-void ScriptConditionUnitDestroyed::readCondition(QTextStream& rStream)
+void ScriptConditionBuildingsOwned::setCount(const qint32 &count)
+{
+    m_count = count;
+}
+
+qint32 ScriptConditionBuildingsOwned::getPlayer() const
+{
+    return m_player;
+}
+
+void ScriptConditionBuildingsOwned::setPlayer(const qint32 &player)
+{
+    m_player = player;
+}
+
+void ScriptConditionBuildingsOwned::readCondition(QTextStream& rStream)
 {
     QString line = rStream.readLine().simplified();
-    QStringList list = line.split("//")[1].split(" ");
-    m_x = list[1].toInt();
-    m_y = list[2].toInt();
+    QStringList items = line.replace("if (map.getPlayer(", "")
+                            .replace(").getBuildingCount() >= ", ",")
+                            .replace(" && ", ",").split(",");
+    if (items.size() >= 2)
+    {
+        m_player = items[0].toInt();
+        m_count = items[1].toInt();
+    }
     while (!rStream.atEnd())
     {
         qint64 pos = rStream.pos();
         line = rStream.readLine().simplified();
-        if (line.endsWith(ConditionUnitDestroyed + " End"))
+        if (line.endsWith(ConditionBuildingsOwned + " End"))
         {
             break;
         }
@@ -46,25 +72,21 @@ void ScriptConditionUnitDestroyed::readCondition(QTextStream& rStream)
     }
 }
 
-void ScriptConditionUnitDestroyed::writePreCondition(QTextStream& rStream)
+void ScriptConditionBuildingsOwned::writePreCondition(QTextStream& rStream)
 {
     m_executed = ScriptData::getVariableName();
-    m_unitID = ScriptData::getVariableName();
     rStream << "        var " << m_executed << " = variables.createVariable(\"" << m_executed << "\");\n";
-    rStream << "        var " << m_unitID << " = variables.createVariable(\"" << m_unitID << "\");\n";
-    rStream << "        var " << m_unitID << "Value = " << m_unitID << ".readDataInt32();\n";
-    rStream << "        if (" << m_unitID << "Value === 0){" << m_unitID << ".writeDataInt32(map.getTerrain(" << m_x << ", " << m_y << ").getUnit().getUniqueID());}\n";
-    rStream << "        " << m_unitID << "Value = " << m_unitID << ".readDataInt32();\n";
     if (subCondition.get() != nullptr)
     {
         subCondition->writePreCondition(rStream);
     }
 }
 
-void ScriptConditionUnitDestroyed::writeCondition(QTextStream& rStream)
+void ScriptConditionBuildingsOwned::writeCondition(QTextStream& rStream)
 {
-    rStream << "        if (map.getUnit(" << m_unitID << "Value) === null && " << m_executed << ".readDataBool() === false) {"
-            << "// " << m_x << " " << m_y << " " << ConditionUnitDestroyed << "\n";
+    rStream << "        if (map.getPlayer(" << QString::number(m_player) << ").getBuildingCount() >= " << QString::number(m_count)
+            << " && " << m_executed << ".readDataBool() === false) {"
+            << "// " << ConditionBuildingsOwned << "\n";
     if (subCondition.get() != nullptr)
     {
         subCondition->writeCondition(rStream);
@@ -86,10 +108,10 @@ void ScriptConditionUnitDestroyed::writeCondition(QTextStream& rStream)
         }
         rStream << "            " << m_executed << ".writeDataBool(true);\n";
     }
-    rStream << "        } // " + ConditionUnitDestroyed + " End\n";
+    rStream << "        } // " + ConditionBuildingsOwned + " End\n";
 }
 
-void ScriptConditionUnitDestroyed::writePostCondition(QTextStream& rStream)
+void ScriptConditionBuildingsOwned::writePostCondition(QTextStream& rStream)
 {
     ScriptCondition::writePostCondition(rStream);
     for (qint32 i = 0; i < events.size(); i++)
@@ -99,27 +121,7 @@ void ScriptConditionUnitDestroyed::writePostCondition(QTextStream& rStream)
     rStream << "            " << m_executed << ".writeDataBool(true);\n";
 }
 
-qint32 ScriptConditionUnitDestroyed::getX() const
-{
-    return m_x;
-}
-
-void ScriptConditionUnitDestroyed::setX(const qint32 &x)
-{
-    m_x = x;
-}
-
-qint32 ScriptConditionUnitDestroyed::getY() const
-{
-    return m_y;
-}
-
-void ScriptConditionUnitDestroyed::setY(const qint32 &y)
-{
-    m_y = y;
-}
-
-void ScriptConditionUnitDestroyed::showEditCondition(spScriptEditor pScriptEditor)
+void ScriptConditionBuildingsOwned::showEditCondition(spScriptEditor pScriptEditor)
 {
     spGenericBox pBox = new GenericBox();
 
@@ -133,31 +135,31 @@ void ScriptConditionUnitDestroyed::showEditCondition(spScriptEditor pScriptEdito
 
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("X: ").toStdString().c_str());
+    pText->setHtmlText(tr("Count: ").toStdString().c_str());
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 0, 99999);
     spinBox->setPosition(width, 30);
-    spinBox->setCurrentValue(m_x);
+    spinBox->setCurrentValue(m_count);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
             [=](qreal value)
     {
-        setX(static_cast<qint32>(value));
+        setCount(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Y: ").toStdString().c_str());
+    pText->setHtmlText(tr("Player: ").toStdString().c_str());
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 99999);
+    spinBox = new SpinBox(150, 1, 99999);
     spinBox->setPosition(width, 70);
-    spinBox->setCurrentValue(m_y);
+    spinBox->setCurrentValue(m_player + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
             [=](qreal value)
     {
-        setY(static_cast<qint32>(value));
+        setPlayer(static_cast<qint32>(value) - 1);
     });
     pBox->addItem(spinBox);
 

@@ -46,8 +46,8 @@ void ScriptEventChangeBuildlist::readEvent(QTextStream& rStream)
 {
     QString line = rStream.readLine().simplified();
     QStringList items = line.replace("map.getPlayer(", "")
-                            .replace(").changeBuildlist(", ",")
-                        .replace(", ", ",")
+                            .replace(").changeBuildlist(\"", ",")
+                        .replace("\", ", ",")
                             .replace("); // " + EventChangeBuildlist, "").split(",");
     if (items.size() == 3)
     {
@@ -59,7 +59,7 @@ void ScriptEventChangeBuildlist::readEvent(QTextStream& rStream)
 
 void ScriptEventChangeBuildlist::writeEvent(QTextStream& rStream)
 {
-    rStream <<  "            map.getPlayer(" << QString::number(player) << ").changeBuildlist(" + unitID + ", " + QVariant(remove).toString() + "); // "
+    rStream <<  "            map.getPlayer(" << QString::number(player) << ").changeBuildlist(\"" + unitID + "\", " + QVariant(remove).toString() + "); // "
             << EventChangeBuildlist << "\n";
 }
 

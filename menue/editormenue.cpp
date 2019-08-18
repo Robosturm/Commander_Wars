@@ -740,6 +740,7 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
                         QString terrainID = pMap->getTerrain(x, y)->getTerrainID();
                         m_EditorSelection->selectTerrain(terrainID);
                     }
+                    selectionChanged();
                     break;
                 }
             }

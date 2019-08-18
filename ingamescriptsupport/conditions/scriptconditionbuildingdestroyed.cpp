@@ -1,6 +1,8 @@
-#include "scriptconditionunitdestroyed.h"
+#include "scriptconditionbuildingdestroyed.h"
 
+#include "ingamescriptsupport/scriptdata.h"
 #include "ingamescriptsupport/scripteditor.h"
+
 #include "ingamescriptsupport/genericbox.h"
 
 #include "resource_management/fontmanager.h"
@@ -9,24 +11,29 @@
 
 #include "objects/spinbox.h"
 
-ScriptConditionUnitDestroyed::ScriptConditionUnitDestroyed()
-    : ScriptCondition (ScriptCondition::ConditionType::unitDestroyed)
+ScriptConditionBuildingDestroyed::ScriptConditionBuildingDestroyed()
+    : ScriptCondition(ConditionType::buildingDestroyed)
 {
 
 }
 
-
-void ScriptConditionUnitDestroyed::readCondition(QTextStream& rStream)
+void ScriptConditionBuildingDestroyed::readCondition(QTextStream& rStream)
 {
     QString line = rStream.readLine().simplified();
-    QStringList list = line.split("//")[1].split(" ");
-    m_x = list[1].toInt();
-    m_y = list[2].toInt();
+    QStringList items = line.replace("if ((map.getTerrain(", "")
+                            .replace(", ", ",")
+                            .replace(").getBuilding() === ", ",")
+                            .replace(" && ", "").split(",");
+    if (items.size() >= 2)
+    {
+        m_x = items[0].toInt();
+        m_y = items[1].toInt();
+    }
     while (!rStream.atEnd())
     {
         qint64 pos = rStream.pos();
         line = rStream.readLine().simplified();
-        if (line.endsWith(ConditionUnitDestroyed + " End"))
+        if (line.endsWith(ConditionBuildingDestroyed + " End"))
         {
             break;
         }
@@ -46,25 +53,21 @@ void ScriptConditionUnitDestroyed::readCondition(QTextStream& rStream)
     }
 }
 
-void ScriptConditionUnitDestroyed::writePreCondition(QTextStream& rStream)
+void ScriptConditionBuildingDestroyed::writePreCondition(QTextStream& rStream)
 {
     m_executed = ScriptData::getVariableName();
-    m_unitID = ScriptData::getVariableName();
     rStream << "        var " << m_executed << " = variables.createVariable(\"" << m_executed << "\");\n";
-    rStream << "        var " << m_unitID << " = variables.createVariable(\"" << m_unitID << "\");\n";
-    rStream << "        var " << m_unitID << "Value = " << m_unitID << ".readDataInt32();\n";
-    rStream << "        if (" << m_unitID << "Value === 0){" << m_unitID << ".writeDataInt32(map.getTerrain(" << m_x << ", " << m_y << ").getUnit().getUniqueID());}\n";
-    rStream << "        " << m_unitID << "Value = " << m_unitID << ".readDataInt32();\n";
     if (subCondition.get() != nullptr)
     {
         subCondition->writePreCondition(rStream);
     }
 }
 
-void ScriptConditionUnitDestroyed::writeCondition(QTextStream& rStream)
+void ScriptConditionBuildingDestroyed::writeCondition(QTextStream& rStream)
 {
-    rStream << "        if (map.getUnit(" << m_unitID << "Value) === null && " << m_executed << ".readDataBool() === false) {"
-            << "// " << m_x << " " << m_y << " " << ConditionUnitDestroyed << "\n";
+    rStream << "        if ((map.getTerrain(" << QString::number(m_x) << ", " << QString::number(m_y) << ").getBuilding() === null || "
+            << "map.getTerrain(" << QString::number(m_x) << ", " << QString::number(m_y) << ").getBuilding().getHp() <= 0) && " << m_executed << ".readDataBool() === false) {"
+            << "// " << ConditionBuildingDestroyed << "\n";
     if (subCondition.get() != nullptr)
     {
         subCondition->writeCondition(rStream);
@@ -86,10 +89,10 @@ void ScriptConditionUnitDestroyed::writeCondition(QTextStream& rStream)
         }
         rStream << "            " << m_executed << ".writeDataBool(true);\n";
     }
-    rStream << "        } // " + ConditionUnitDestroyed + " End\n";
+    rStream << "        } // " + ConditionBuildingDestroyed + " End\n";
 }
 
-void ScriptConditionUnitDestroyed::writePostCondition(QTextStream& rStream)
+void ScriptConditionBuildingDestroyed::writePostCondition(QTextStream& rStream)
 {
     ScriptCondition::writePostCondition(rStream);
     for (qint32 i = 0; i < events.size(); i++)
@@ -99,27 +102,7 @@ void ScriptConditionUnitDestroyed::writePostCondition(QTextStream& rStream)
     rStream << "            " << m_executed << ".writeDataBool(true);\n";
 }
 
-qint32 ScriptConditionUnitDestroyed::getX() const
-{
-    return m_x;
-}
-
-void ScriptConditionUnitDestroyed::setX(const qint32 &x)
-{
-    m_x = x;
-}
-
-qint32 ScriptConditionUnitDestroyed::getY() const
-{
-    return m_y;
-}
-
-void ScriptConditionUnitDestroyed::setY(const qint32 &y)
-{
-    m_y = y;
-}
-
-void ScriptConditionUnitDestroyed::showEditCondition(spScriptEditor pScriptEditor)
+void ScriptConditionBuildingDestroyed::showEditCondition(spScriptEditor pScriptEditor)
 {
     spGenericBox pBox = new GenericBox();
 
@@ -163,4 +146,24 @@ void ScriptConditionUnitDestroyed::showEditCondition(spScriptEditor pScriptEdito
 
     pScriptEditor->addChild(pBox);
     connect(pBox.get(), &GenericBox::sigFinished, pScriptEditor.get(), &ScriptEditor::updateConditios, Qt::QueuedConnection);
+}
+
+qint32 ScriptConditionBuildingDestroyed::getX() const
+{
+    return m_x;
+}
+
+void ScriptConditionBuildingDestroyed::setX(const qint32 &x)
+{
+    m_x = x;
+}
+
+qint32 ScriptConditionBuildingDestroyed::getY() const
+{
+    return m_y;
+}
+
+void ScriptConditionBuildingDestroyed::setY(const qint32 &y)
+{
+    m_y = y;
 }

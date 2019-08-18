@@ -94,6 +94,12 @@ public slots:
      */
     void destroyedUnit(qint32 player);
     /**
+     * @brief getDestroyedUnits
+     * @param player
+     * @return
+     */
+    quint32 getDestroyedUnits(qint32 player);
+    /**
      * @brief buildUnit
      * @param player
      */

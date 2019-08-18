@@ -26,12 +26,23 @@ public:
         startOfTurn,
         victory,
         eachDay,
-        unitDestroyed
+        unitDestroyed,
+        buildingDestroyed,
+        buildingCaptured,
+        playerDefeated,
+        unitsDestroyed,
+        buildingsOwned
     };
     static const QString ConditionVictory;
     static const QString ConditionStartOfTurn;
     static const QString ConditionEachDay;
     static const QString ConditionUnitDestroyed;
+    static const QString ConditionBuildingDestroyed;
+    static const QString ConditionBuildingCaptured;
+    static const QString ConditionPlayerDefeated;
+    static const QString ConditionUnitsDestroyed;
+    static const QString ConditionBuildingsOwned;
+
     /**
      * @brief createCondition
      * @param type

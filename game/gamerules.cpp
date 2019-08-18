@@ -29,7 +29,7 @@ GameRules::GameRules()
     GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
     if (getWeatherCount() != pGameRuleManager->getWeatherCount())
     {
-        qint32 weatherChance = 30 / pGameRuleManager->getWeatherCount();
+        qint32 weatherChance = 30 / (pGameRuleManager->getWeatherCount() - 1);
         for (qint32 i = 0; i < pGameRuleManager->getWeatherCount(); i++)
         {
             if (i == 0)

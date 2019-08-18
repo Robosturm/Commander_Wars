@@ -4,11 +4,21 @@
 #include "scriptconditioneachday.h"
 #include "scriptconditionstartofturn.h"
 #include "scriptconditionunitdestroyed.h"
+#include "scriptconditionbuildingdestroyed.h"
+#include "scriptconditionbuildingcaptured.h"
+#include "scriptconditionplayerdefeated.h"
+#include "scriptconditionunitsdestroyed.h"
+#include "scriptconditionbuildingsowned.h"
 
 const QString ScriptCondition::ConditionVictory = "Victory";
 const QString ScriptCondition::ConditionStartOfTurn = "Start Of Turn";
 const QString ScriptCondition::ConditionEachDay = "Each Day";
 const QString ScriptCondition::ConditionUnitDestroyed = "Unit Destroyed";
+const QString ScriptCondition::ConditionBuildingDestroyed = "Building Destroyed";
+const QString ScriptCondition::ConditionBuildingCaptured = "Building Captured";
+const QString ScriptCondition::ConditionPlayerDefeated = "Player Defeated";
+const QString ScriptCondition::ConditionUnitsDestroyed = "Units Destroyed";
+const QString ScriptCondition::ConditionBuildingsOwned = "Buildings Owned";
 
 ScriptCondition::ScriptCondition(ConditionType type)
     : QObject(),
@@ -65,6 +75,26 @@ ScriptCondition* ScriptCondition::createCondition(ConditionType type)
         {
             return new ScriptConditionUnitDestroyed();
         }
+        case ConditionType::buildingDestroyed:
+        {
+            return new ScriptConditionBuildingDestroyed();
+        }
+        case ConditionType::buildingCaptured:
+        {
+            return new ScriptConditionBuildingCaptured();
+        }
+        case ConditionType::playerDefeated:
+        {
+            return new ScriptConditionPlayerDefeated();
+        }
+        case ConditionType::unitsDestroyed:
+        {
+            return new ScriptConditionUnitsDestroyed();
+        }
+        case ConditionType::buildingsOwned:
+        {
+            return new ScriptConditionBuildingsOwned();
+        }
     }
     return nullptr;
 }
@@ -91,6 +121,26 @@ ScriptCondition* ScriptCondition::createReadCondition(QTextStream& rStream)
     else if (line.endsWith(ConditionUnitDestroyed))
     {
         ret = new ScriptConditionUnitDestroyed();
+    }
+    else if (line.endsWith(ConditionBuildingDestroyed))
+    {
+        ret = new ScriptConditionBuildingDestroyed();
+    }
+    else if (line.endsWith(ConditionBuildingCaptured))
+    {
+        ret = new ScriptConditionBuildingCaptured();
+    }
+    else if (line.endsWith(ConditionPlayerDefeated))
+    {
+        ret = new ScriptConditionPlayerDefeated();
+    }
+    else if (line.endsWith(ConditionUnitsDestroyed))
+    {
+        ret = new ScriptConditionUnitsDestroyed();
+    }
+    else if (line.endsWith(ConditionBuildingsOwned))
+    {
+        ret = new ScriptConditionBuildingsOwned();
     }
     if (ret != nullptr)
     {
@@ -148,10 +198,20 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
                 }
             }
         }
+        case ScriptCondition::ConditionType::buildingDestroyed:
+        case ScriptCondition::ConditionType::buildingCaptured:
+        case ScriptCondition::ConditionType::playerDefeated:
+        case ScriptCondition::ConditionType::unitsDestroyed:
+        case ScriptCondition::ConditionType::buildingsOwned:
         case ScriptCondition::ConditionType::unitDestroyed:
         {
             switch (type2)
             {
+                case ScriptCondition::ConditionType::buildingDestroyed:
+                case ScriptCondition::ConditionType::buildingCaptured:
+                case ScriptCondition::ConditionType::playerDefeated:
+                case ScriptCondition::ConditionType::unitsDestroyed:
+                case ScriptCondition::ConditionType::buildingsOwned:
                 case ScriptCondition::ConditionType::unitDestroyed:
                 {
                     return true;
