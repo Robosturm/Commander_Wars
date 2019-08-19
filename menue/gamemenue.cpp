@@ -398,6 +398,13 @@ void GameMenue::performAction(GameAction* pGameAction)
             }
         }
     }
+
+    if (pMap->getCurrentPlayer()->getIsDefeated())
+    {
+        GameAction* pAction = new GameAction();
+        pAction->setActionID(CoreAI::ACTION_NEXT_PLAYER);
+        performAction(pAction);
+    }
     pApp->continueThread();
 }
 
@@ -773,6 +780,9 @@ void GameMenue::surrenderGame()
     pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
     pMap->getCurrentPlayer()->defeatPlayer(nullptr);
-    pMap->nextPlayer();
+    GameAction* pAction = new GameAction();
+    pAction->setActionID(CoreAI::ACTION_NEXT_PLAYER);
+    performAction(pAction);
+    m_Focused = true;
     pApp->continueThread();
 }

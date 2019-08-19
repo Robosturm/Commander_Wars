@@ -15,12 +15,10 @@ var Constructor = function()
     };
     this.perform = function(action)
     {
-        action.setIsLocal(true);
         map.surrenderGame();
     };
     this.isFinalStep = function(action)
     {
-        action.setIsLocal(true);
         return true;
     };
 }

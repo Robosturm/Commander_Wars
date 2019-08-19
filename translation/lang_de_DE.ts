@@ -281,6 +281,14 @@
     </message>
 </context>
 <context>
+    <name>ACTION_SURRENDER</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SURRENDER.js" line="10"/>
+        <source>Surrender Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_SWAP_COS</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SWAP_COS.js" line="11"/>
@@ -1312,12 +1320,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="745"/>
+        <location filename="../menue/gamemenue.cpp" line="752"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="760"/>
+        <location filename="../menue/gamemenue.cpp" line="767"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
