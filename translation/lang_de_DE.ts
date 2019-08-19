@@ -151,6 +151,14 @@
     </message>
 </context>
 <context>
+    <name>ACTION_DELETE_UNIT</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_DELETE_UNIT.js" line="11"/>
+        <source>Delete Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_EXITGAME</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_EXITGAME.js" line="10"/>
