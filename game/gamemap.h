@@ -248,6 +248,7 @@ signals:
     void signalVictoryInfo();
     void signalShowCOInfo();
     void sigQueueAction(GameAction* pAction);
+    void sigSurrenderGame();
 public slots:
     /**
      * @brief getUnit
@@ -552,6 +553,10 @@ public slots:
      * @return -1 for no winner
      */
     qint32 getWinnerTeam();
+    /**
+     * @brief surrenderGame the current player surrenders the game
+     */
+    void surrenderGame();
 private:
     static spGameMap m_pInstance;
     QString mapName;

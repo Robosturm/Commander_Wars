@@ -797,6 +797,11 @@
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../objects/dialogmessagebox.cpp" line="51"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DialogModifyUnit</name>
@@ -1304,6 +1309,16 @@
     <message>
         <location filename="../menue/gamemenue.cpp" line="229"/>
         <source>Exit Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/gamemenue.cpp" line="745"/>
+        <source>Do you want to exit the current game?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/gamemenue.cpp" line="760"/>
+        <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

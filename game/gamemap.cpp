@@ -783,6 +783,11 @@ void GameMap::exitGame()
     emit signalExitGame();
 }
 
+void GameMap::surrenderGame()
+{
+    emit sigSurrenderGame();
+}
+
 void GameMap::saveGame()
 {
     emit signalSaveGame();

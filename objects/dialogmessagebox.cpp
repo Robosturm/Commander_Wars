@@ -6,7 +6,7 @@
 
 #include "resource_management/fontmanager.h"
 
-DialogMessageBox::DialogMessageBox(QString text)
+DialogMessageBox::DialogMessageBox(QString text, bool withCancel)
     : QObject(),
       m_Message(text)
 {
@@ -45,10 +45,26 @@ DialogMessageBox::DialogMessageBox(QString text)
     {
         emit sigOk();
     });
-    connect(this, &DialogMessageBox::sigOk, this, &DialogMessageBox::ok, Qt::QueuedConnection);
+
+    if (withCancel)
+    {
+        m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
+        m_CancelButton->setPosition(pApp->getSettings()->getWidth() / 2 + 10,
+                                m_Text->getY() + m_Text->getTextRect().getHeight() + 20);
+        pSpriteBox->addChild(m_CancelButton);
+        m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        {
+            emit sigCancel();
+        });
+        m_OkButton->setPosition(pApp->getSettings()->getWidth() / 2 - m_OkButton->getWidth() - 10,
+                                m_Text->getY() + m_Text->getTextRect().getHeight() + 20);
+    }
+
+    connect(this, &DialogMessageBox::sigOk, this, &DialogMessageBox::remove, Qt::QueuedConnection);
+    connect(this, &DialogMessageBox::sigCancel, this, &DialogMessageBox::remove, Qt::QueuedConnection);
 }
 
-void DialogMessageBox::ok()
+void DialogMessageBox::remove()
 {
     this->getParent()->removeChild(this);
 }

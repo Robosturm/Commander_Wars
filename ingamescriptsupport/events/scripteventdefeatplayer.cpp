@@ -19,13 +19,13 @@ void ScriptEventDefeatPlayer::readEvent(QTextStream& rStream)
 {
     QString line = rStream.readLine().simplified();
     QString item = line.replace("map.getPlayer(", "")
-                    .replace(").setIsDefeated(true); // " + EventDefeatPlayer, "");
+                    .replace(").defeatPlayer(null); // " + EventDefeatPlayer, "");
     player = item.toInt();
 }
 
 void ScriptEventDefeatPlayer::writeEvent(QTextStream& rStream)
 {
-    rStream <<  "            map.getPlayer(" << QString::number(player) << ").setIsDefeated(true); // "
+    rStream <<  "            map.getPlayer(" << QString::number(player) << ").defeatPlayer(null); // "
             << EventDefeatPlayer << "\n";
 }
 

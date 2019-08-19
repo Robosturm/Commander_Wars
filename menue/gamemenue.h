@@ -47,6 +47,8 @@ signals:
     void sigGameStarted();
     void sigSaveGame();
     void sigExitGame();
+    void sigShowExitGame();
+    void sigShowSurrenderGame();
 public slots:
     /**
      * @brief actionPerformed
@@ -88,6 +90,10 @@ public slots:
      */
     void exitGame();
     /**
+     * @brief surrenderGame
+     */
+    void surrenderGame();
+    /**
      * @brief keyInput
      * @param event
      */
@@ -122,6 +128,14 @@ public slots:
      * @brief autoScroll
      */
     virtual void autoScroll() override;
+    /**
+     * @brief showExitGame
+     */
+    void showExitGame();
+    /**
+     * @brief showSurrenderGame
+     */
+    void showSurrenderGame();
 protected slots:
     void updateTimer();
 protected:

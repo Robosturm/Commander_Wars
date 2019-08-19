@@ -230,7 +230,7 @@ void GameMenue::loadGameMenue()
     exitGame->setPosition(pButtonBox->getWidth() - 138, 4);
     exitGame->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        emit sigExitGame();
+        emit sigShowExitGame();
     });
     pButtonBox->addChild(exitGame);
 
@@ -240,9 +240,12 @@ void GameMenue::loadGameMenue()
     connect(&m_UpdateTimer, &QTimer::timeout, this, &GameMenue::updateTimer, Qt::QueuedConnection);
     connect(pMap->getGameRules(), &GameRules::signalVictory, this, &GameMenue::victory, Qt::QueuedConnection);
     connect(pMap->getGameRules()->getRoundTimer(), &Timer::timeout, pMap, &GameMap::nextTurn, Qt::QueuedConnection);
-    connect(pMap, &GameMap::signalExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
+    connect(pMap, &GameMap::signalExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
+    connect(pMap, &GameMap::sigSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
+    connect(this, &GameMenue::sigShowExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
+    connect(this, &GameMenue::sigShowSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalVictoryInfo, this, &GameMenue::victoryInfo, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalShowCOInfo, this, &GameMenue::showCOInfo, Qt::QueuedConnection);
@@ -712,7 +715,7 @@ void GameMenue::keyInput(SDL_Event event)
     {
         if (cur == SDLK_ESCAPE)
         {
-            exitGame();
+            emit sigShowExitGame();
         }
     }
 }
@@ -732,4 +735,44 @@ void GameMenue::autoScroll()
             InGameMenue::autoScroll();
         }
     }
+}
+
+void GameMenue::showExitGame()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    m_Focused = false;
+    spDialogMessageBox pExit = new DialogMessageBox(tr("Do you want to exit the current game?"), true);
+    connect(pExit.get(), &DialogMessageBox::sigOk, this, &GameMenue::exitGame, Qt::QueuedConnection);
+    connect(pExit.get(), &DialogMessageBox::sigCancel, [=]()
+    {
+        m_Focused = true;
+    });
+    addChild(pExit);
+    pApp->continueThread();
+}
+
+void GameMenue::showSurrenderGame()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    m_Focused = false;
+    spDialogMessageBox pSurrender = new DialogMessageBox(tr("Do you want to surrender the current game?"), true);
+    connect(pSurrender.get(), &DialogMessageBox::sigOk, this, &GameMenue::surrenderGame, Qt::QueuedConnection);
+    connect(pSurrender.get(), &DialogMessageBox::sigCancel, [=]()
+    {
+        m_Focused = true;
+    });
+    addChild(pSurrender);
+    pApp->continueThread();
+}
+
+void GameMenue::surrenderGame()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    GameMap* pMap = GameMap::getInstance();
+    pMap->getCurrentPlayer()->defeatPlayer(nullptr);
+    pMap->nextPlayer();
+    pApp->continueThread();
 }
