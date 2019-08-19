@@ -105,6 +105,12 @@ public slots:
      */
     void buildUnit(qint32 player);
     /**
+     * @brief getBuildedUnits
+     * @param player
+     * @return
+     */
+    quint32 getBuildedUnits(qint32 player);
+    /**
      * @brief attacked
      * @param damage
      */

@@ -99,6 +99,7 @@ set(${PROJECT_NAME}_SRCS
         objects/ruleselectiondialog.cpp
         objects/folderdialog.cpp
         objects/coinfoactor.cpp
+        objects/tableview.cpp
 
         #menues
         menue/mainwindow.cpp

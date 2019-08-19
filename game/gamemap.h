@@ -247,6 +247,7 @@ signals:
     void signalSaveGame();
     void signalVictoryInfo();
     void signalShowCOInfo();
+    void sigShowGameInfo();
     void sigQueueAction(GameAction* pAction);
     void sigSurrenderGame();
 public slots:
@@ -337,6 +338,10 @@ public slots:
      * @brief showCOInfo
      */
     void showCOInfo();
+    /**
+     * @brief showGameInfo
+     */
+    void showGameInfo();
     /**
      * @brief getBuildingCount
      * @param buildingID

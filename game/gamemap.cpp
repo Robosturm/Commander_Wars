@@ -803,6 +803,12 @@ void GameMap::showCOInfo()
     emit signalShowCOInfo();
 }
 
+
+void GameMap::showGameInfo()
+{
+    emit sigShowGameInfo();
+}
+
 void GameMap::startGame()
 {
     m_Recorder = new GameRecorder();

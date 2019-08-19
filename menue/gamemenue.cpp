@@ -26,6 +26,10 @@
 
 #include "wiki/fieldinfo.h"
 
+#include "ingamescriptsupport/genericbox.h"
+
+#include "objects/tableview.h"
+
 #include <QFile>
 
 GameMenue* GameMenue::m_pInstance = nullptr;
@@ -243,6 +247,7 @@ void GameMenue::loadGameMenue()
     connect(pMap, &GameMap::signalExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
     connect(pMap, &GameMap::sigSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
+    connect(pMap, &GameMap::sigShowGameInfo, this, &GameMenue::showGameInfo, Qt::QueuedConnection);
     connect(this, &GameMenue::sigExitGame, this, &GameMenue::exitGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigShowExitGame, this, &GameMenue::showExitGame, Qt::QueuedConnection);
     connect(this, &GameMenue::sigShowSurrenderGame, this, &GameMenue::showSurrenderGame, Qt::QueuedConnection);
@@ -493,6 +498,46 @@ void GameMenue::victory(qint32 team)
         oxygine::getStage()->addChild(new VictoryMenue(multiplayer));
         oxygine::Actor::detach();
     }
+    pApp->continueThread();
+}
+
+void GameMenue::showGameInfo()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    m_Focused = false;
+    QStringList header = {tr("Player"), tr("Produced"), tr("Lost"), tr("Income"), tr("Funds"), tr("Bases")};
+    QVector<QStringList> data;
+    GameMap* pMap = GameMap::getInstance();
+    qint32 totalBuildings = pMap->getBuildingCount("");
+    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    {
+        qint32 buildingCount = pMap->getPlayer(i)->getBuildingCount();
+        data.append({tr("Player ") + QString::number(i + 1),
+                     QString::number(pMap->getGameRecorder()->getBuildedUnits(i)),
+                     QString::number(pMap->getGameRecorder()->getDestroyedUnits(i)),
+                     QString::number(pMap->getPlayer(i)->calcIncome()),
+                     QString::number(pMap->getPlayer(i)->getFunds()),
+                     QString::number(buildingCount)});
+        totalBuildings -= buildingCount;
+    }
+    data.append({tr("Neutral"), "", "", "", "", QString::number(totalBuildings)});
+
+    spGenericBox pGenericBox = new GenericBox();
+    QSize size(Settings::getWidth() - 40, Settings::getHeight() - 80);
+    spPanel pPanel = new Panel(true, size, size);
+    pPanel->setPosition(20, 20);
+    qint32 width = (Settings::getWidth() - 120 - 5 * (header.size() + 1)) / header.size();
+    spTableView pTableView = new TableView(width * header.size() + 5 * (header.size() + 1), data, header, false);
+    pTableView->setPosition(20, 20);
+    pPanel->addItem(pTableView);
+    pPanel->setContentHeigth(pTableView->getHeight() + 40);
+    pGenericBox->addItem(pPanel);
+    addChild(pGenericBox);
+    connect(pGenericBox.get(), &GenericBox::sigFinished, [=]()
+    {
+        m_Focused = true;
+    });
     pApp->continueThread();
 }
 
