@@ -14,11 +14,14 @@
 
 #include "objects/checkbox.h"
 
+#include "objects/spinbox.h"
+
+#include "ingamescriptsupport/genericbox.h"
+
 #include "qdir.h"
 
 #include "qfile.h"
 
-#include "qtextstream.h"
 
 const QString CampaignEditor::campaign = "campaign";
 const QString CampaignEditor::campaignName = "campaignName";
@@ -29,8 +32,8 @@ const QString CampaignEditor::campaignMapsFolder = "campaignMapsFolder";
 const QString CampaignEditor::campaignMapNames = "campaignMapNames";
 const QString CampaignEditor::campaignMapEnabled = "campaignMapEnabled";
 const QString CampaignEditor::campaignMapDisabled = "campaignMapDisabled";
-const QString CampaignEditor::campainMapAdd = "campainMapAdd";
-const QString CampaignEditor::campainMapFinished = "campainMapFinished";
+const QString CampaignEditor::campaignMapAdd = "campaignMapAdd";
+const QString CampaignEditor::campaignMapFinished = "campaignMapFinished";
 const QString CampaignEditor::campaignFinished = "campaignFinished";
 
 CampaignEditor::CampaignEditor()
@@ -258,6 +261,7 @@ void CampaignEditor::updateCampaignData()
         m_Panel->addItem(pEnableButton);
         pEnableButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
+            showEditEnableMaps(i);
         });
 
         oxygine::spButton pDisableButton = pObjectManager->createButton(tr("Disable Maps"), 150);
@@ -265,6 +269,7 @@ void CampaignEditor::updateCampaignData()
         m_Panel->addItem(pDisableButton);
         pDisableButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
+            showEditDisableMaps(i);
         });
 
         oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove Map"), 150);
@@ -304,24 +309,130 @@ void CampaignEditor::loadCampaign(QString filename)
         file.open(QIODevice::ReadOnly);
         QTextStream stream(&file);
         bool started = false;
-        while (!file.atEnd())
+        while (!stream.atEnd())
         {
             QString line = stream.readLine().simplified();
             if (line.endsWith(campaign))
             {
-                started = true;
                 if (started)
                 {
                     started = false;
                     break;
+                }
+                else
+                {
+                    started = true;
                 }
             }
             else if (started)
             {
                 if (line.endsWith(campaignName))
                 {
-
+                    line = stream.readLine().simplified();
+                    m_Name->setCurrentText(line.replace("return qsTr(\"", "").replace("\");", ""));
+                    line = stream.readLine();
                 }
+                if (line.endsWith(campaignAuthor))
+                {
+                    line = stream.readLine().simplified();
+                    m_Author->setCurrentText(line.replace("return qsTr(\"", "").replace("\");", ""));
+                    line = stream.readLine();
+                }
+                if (line.endsWith(campaignDescription))
+                {
+                    line = stream.readLine().simplified();
+                    m_Description->setCurrentText(line.replace("return qsTr(\"", "").replace("\");", ""));
+                    line = stream.readLine();
+                }
+                if (line.endsWith(campaignMaps))
+                {
+                    loadCampaignMaps(stream);
+                }
+            }
+        }
+    }
+    updateCampaignData();
+}
+
+void CampaignEditor::loadCampaignMaps(QTextStream& stream)
+{
+    mapDatas.clear();
+    while (!stream.atEnd())
+    {
+        QString line = stream.readLine().simplified();
+        if (line.endsWith(campaignMaps))
+        {
+            break;
+        }
+        if (line.endsWith(campaignMapsFolder))
+        {
+            m_CampaignFolder->setCurrentText(line.replace("var ret = [\"", "").replace("\"]; // " + campaignMapsFolder, ""));
+        }
+        if (line.endsWith(campaignMapNames))
+        {
+            mapDatas.append(MapData());
+            QStringList items = line.replace("var map", "")
+                                    .replace("Won = variables.createVariable(\"", ",")
+                                    .replace("\"); // " + campaignMapNames, "")
+                                    .split(",");
+            if (items.size() >= 2)
+            {
+                mapDatas[items[0].toInt()].mapName = items[1];
+            }
+        }
+        if (line.endsWith(campaignMapEnabled))
+        {
+            qint32 mapDataIndex = line.replace("var map", "").replace("EnableCount = 0; // " + campaignMapEnabled, "").toInt();
+            while (!stream.atEnd())
+            {
+                line = stream.readLine().simplified();
+                if (line.endsWith(campaignMapEnabled))
+                {
+                    break;
+                }
+                else
+                {
+                    QString index = line.replace("if (map", "");
+                    qint32 pos = index.indexOf("Won");
+                    index = index.remove(pos, index.size());
+                    mapDatas[mapDataIndex].previousMaps.append(mapDatas[index.toInt()].mapName);
+                }
+            }
+        }
+        if (line.endsWith(campaignMapDisabled))
+        {
+            qint32 mapDataIndex = line.replace("var map", "").replace("DisableCount = 0; // " + campaignMapDisabled, "").toInt();
+            while (!stream.atEnd())
+            {
+                line = stream.readLine().simplified();
+                if (line.endsWith(campaignMapDisabled))
+                {
+                    break;
+                }
+                else
+                {
+                    QString index = line.replace("if (map", "");
+                    qint32 pos = index.indexOf("Won");
+                    index = index.remove(pos, index.size());
+                    mapDatas[mapDataIndex].disableMaps.append(mapDatas[index.toInt()].mapName);
+                }
+            }
+        }
+        if (line.endsWith(campaignMapAdd))
+        {
+            QStringList items = line.replace("if (map", "")
+                                    .replace("DisableCount < ", ",")
+                                    .replace(" && map", ",")
+                                    .replace("EnableCount >= ", ",")
+                                    .replace(") {ret.push(\"", ",")
+                                    .replace("\");} // " + campaignMapAdd, "")
+                                    .split(",");
+            if (items.size() >= 5)
+            {
+                qint32 index = items[0].toInt();
+                mapDatas[index].disableCount = items[1].toInt();
+                mapDatas[index].previousCount = items[3].toInt();
+                mapDatas[index].map = items[4];
             }
         }
     }
@@ -337,19 +448,25 @@ void CampaignEditor::saveCampaign(QString filename)
         stream << "var Constructor = function() { // " << campaign << "\n";
 
         stream << "    this.getCampaignName = function() { //" << campaignName << "\n";
-        stream << "        return qsTr(\"" << m_Name->getCurrentText() << "\")\n";
+        stream << "        return qsTr(\"" << m_Name->getCurrentText() << "\");\n";
         stream << "    }; //" << campaignName << "\n";
 
         stream << "    this.getAuthor = function() { // " << campaignAuthor << "\n";
-        stream << "        return qsTr(\"" << m_Author->getCurrentText() << "\")\n";
+        stream << "        return qsTr(\"" << m_Author->getCurrentText() << "\");\n";
         stream << "    }; // " << campaignAuthor << "\n";
 
         stream << "    this.getDescription = function() { // " << campaignDescription << "\n";
-        stream << "        return qsTr(\"" << m_Description->getCurrentText() << "\")\n";
+        stream << "        return qsTr(\"" << m_Description->getCurrentText() << "\");\n";
         stream << "    }; // " << campaignDescription << "\n";
 
         stream << "    this.getCurrentCampaignMaps = function(campaign) { // " << campaignMaps << "\n";
-        stream << "         var ret = [\"" << m_CampaignFolder->getCurrentText() << "\"] // " << campaignMapsFolder << "\n";
+        stream << "        var variables = campaign.getVariables();" << "\n";
+        QString folder = m_CampaignFolder->getCurrentText();
+        if (!folder.endsWith("/"))
+        {
+            folder += "/";
+        }
+        stream << "        var ret = [\"" << folder << "\"]; // " << campaignMapsFolder << "\n";
         for (qint32 i = 0; i < mapDatas.size(); i++)
         {
             stream << "        var map" << QString::number(i) << "Won = variables.createVariable(\"" << mapDatas[i].mapName << "\"); // " << campaignMapNames << "\n";
@@ -359,31 +476,184 @@ void CampaignEditor::saveCampaign(QString filename)
             stream << "        var map" << QString::number(i) << "EnableCount = 0; // " << campaignMapEnabled << "\n";
             for (qint32 i2 = 0; i2 < mapDatas[i].previousMaps.size(); i2++)
             {
-                stream << "        if (map" << QString::number(i2) << "Won.readDataBool() === true) { map" << QString::number(i) << "EnableCount++;} /n";
+                for (qint32 i3 = 0; i3 < mapDatas.size(); i3++)
+                {
+                    if (mapDatas[i3].mapName == mapDatas[i].previousMaps[i2])
+                    {
+                        stream << "        if (map" << QString::number(i3) << "Won.readDataBool() === true) { map" << QString::number(i) << "EnableCount++;} \n";
+                        break;
+                    }
+                }
             }
-            stream << "// " << campaignMapEnabled << "\n";
+            stream << "        // " << campaignMapEnabled << "\n";
 
             stream << "        var map" << QString::number(i) << "DisableCount = 0; // " << campaignMapDisabled << "\n";
             for (qint32 i2 = 0; i2 < mapDatas[i].disableMaps.size(); i2++)
             {
-                stream << "        if (map" << QString::number(i2) << "Won.readDataBool() === true) { map" << QString::number(i) << "DisableCount++;} /n";
+                for (qint32 i3 = 0; i3 < mapDatas.size(); i3++)
+                {
+                    if (mapDatas[i3].mapName == mapDatas[i].disableMaps[i2])
+                    {
+                        stream << "        if (map" << QString::number(i3) << "Won.readDataBool() === true) { map" << QString::number(i) << "DisableCount++;} \n";
+                    }
+                }
             }
-            stream << "// " << campaignMapDisabled << "\n";
+            stream << "        // " << campaignMapDisabled << "\n";
             stream << "        if (map" << QString::number(i) << "DisableCount < " << mapDatas[i].disableCount <<
-                      " && map" << QString::number(i) << "EnableCount >= " << mapDatas[i].previousCount << ") {ret.push(\"" << mapDatas[i].map << "\");} // " << campainMapAdd << "\n";
+                      " && map" << QString::number(i) << "EnableCount >= " << mapDatas[i].previousCount << ") {ret.push(\"" << mapDatas[i].map << "\");} // " << campaignMapAdd << "\n";
         }
 
         stream << "        return ret;\n";
         stream << "    }; // " << campaignMaps << "\n";
 
-        stream << "    this.mapFinished = function(campaign, map, result) { // " << campainMapFinished << "\n";
+        stream << "    this.mapFinished = function(campaign, map, result) { // " << campaignMapFinished << "\n";
         stream << "        var variables = campaign.getVariables();\n";
         stream << "        var mapVar = variables.createVariable(map.getMapName());\n";
         stream << "        mapVar.writeDataBool(result);\n";
-        stream << "    }; // " << campainMapFinished << "\n";
+        stream << "    }; // " << campaignMapFinished << "\n";
+
+
+
 
         stream << "// " << campaign << "\n"  << "};\n" <<
                   "Constructor.prototype = BASECAMPAIGN;\n" <<
                   "var campaignScript = new Constructor();";
     }
+}
+
+void CampaignEditor::showEditEnableMaps(qint32 index)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    spGenericBox pBox = new GenericBox();
+    QSize size(Settings::getWidth() - 40, Settings::getHeight() - 80);
+    spPanel pPanel = new Panel(true, size, size);
+    pPanel->setPosition(20, 20);
+    pBox->addChild(pPanel);
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+
+    oxygine::spTextField pText = new  oxygine::TextField();
+    pText->setStyle(style);
+    pText->setHtmlText(tr("Enable Map Count:").toStdString().c_str());
+    pText->setPosition(10, 10);
+    pPanel->addItem(pText);
+    spSpinBox spinBox = new SpinBox(150, 0, mapDatas.size() - 1);
+    spinBox->setPosition(300, 10);
+    spinBox->setCurrentValue(mapDatas[index].previousCount);
+    connect(spinBox.get(), &SpinBox::sigValueChanged,
+            [=](qreal value)
+    {
+        mapDatas[index].previousCount = static_cast<qint32>(value);
+    });
+    pPanel->addItem(spinBox);
+
+    qint32 counter = 0;
+    for (qint32 i = 0; i < mapDatas.size(); i++)
+    {
+        if (i != index)
+        {
+            pText = new  oxygine::TextField();
+            pText->setStyle(style);
+            pText->setHtmlText(mapDatas[i].mapName.toStdString().c_str());
+            pText->setPosition(10, 50 + counter * 40);
+            pPanel->addItem(pText);
+
+            spCheckbox pCheckbox = new Checkbox();
+            pCheckbox->setPosition(300, 50 + counter * 40);
+            if (mapDatas[index].previousMaps.contains(mapDatas[i].mapName))
+            {
+                pCheckbox->setChecked(true);
+            }
+            else
+            {
+                pCheckbox->setChecked(false);
+            }
+            connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+            {
+                if (value)
+                {
+                    mapDatas[index].previousMaps.append(mapDatas[i].mapName);
+                }
+                else
+                {
+                    mapDatas[index].previousMaps.removeAll(mapDatas[i].mapName);
+                }
+            });
+            pPanel->addItem(pCheckbox);
+            counter++;
+        }
+    }
+    addChild(pBox);
+    pApp->continueThread();
+}
+
+void CampaignEditor::showEditDisableMaps(qint32 index)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    spGenericBox pBox = new GenericBox();
+    QSize size(Settings::getWidth() - 40, Settings::getHeight() - 80);
+    spPanel pPanel = new Panel(true, size, size);
+    pPanel->setPosition(20, 20);
+    pBox->addChild(pPanel);
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+
+    oxygine::spTextField pText = new  oxygine::TextField();
+    pText->setStyle(style);
+    pText->setHtmlText(tr("Disable Map Count:").toStdString().c_str());
+    pText->setPosition(10, 10);
+    pPanel->addItem(pText);
+    spSpinBox spinBox = new SpinBox(150, 1, mapDatas.size() - 1);
+    spinBox->setPosition(300, 10);
+    spinBox->setCurrentValue(mapDatas[index].disableCount);
+    connect(spinBox.get(), &SpinBox::sigValueChanged,
+            [=](qreal value)
+    {
+        mapDatas[index].disableCount = static_cast<qint32>(value);
+    });
+    pPanel->addItem(spinBox);
+
+    qint32 counter = 0;
+    for (qint32 i = 0; i < mapDatas.size(); i++)
+    {
+        pText = new  oxygine::TextField();
+        pText->setStyle(style);
+        pText->setHtmlText(mapDatas[i].mapName.toStdString().c_str());
+        pText->setPosition(10, 50 + counter * 40);
+        pPanel->addItem(pText);
+
+        spCheckbox pCheckbox = new Checkbox();
+        pCheckbox->setPosition(300, 50 + counter * 40);
+        if (mapDatas[index].disableMaps.contains(mapDatas[i].mapName))
+        {
+            pCheckbox->setChecked(true);
+        }
+        else
+        {
+            pCheckbox->setChecked(false);
+        }
+        connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+        {
+            if (value)
+            {
+                mapDatas[index].disableMaps.append(mapDatas[i].mapName);
+            }
+            else
+            {
+                mapDatas[index].disableMaps.removeAll(mapDatas[i].mapName);
+            }
+        });
+        pPanel->addItem(pCheckbox);
+        counter++;
+    }
+    addChild(pBox);
+    pApp->continueThread();
 }

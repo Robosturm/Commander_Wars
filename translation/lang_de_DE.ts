@@ -511,68 +511,78 @@
 <context>
     <name>CampaignEditor</name>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="61"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="64"/>
         <source>Campaign Folder:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="69"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="72"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="80"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="83"/>
         <source>Campaign Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="91"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="94"/>
         <source>Campaign Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="102"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="105"/>
         <source>Campaign Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="117"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="120"/>
         <source>add Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="126"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="129"/>
         <source>load Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="135"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="138"/>
         <source>save Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="144"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="147"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="256"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="259"/>
         <source>Enable Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="263"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="267"/>
         <source>Disable Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="270"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="275"/>
         <source>Remove Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="281"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="286"/>
         <source>Last Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="541"/>
+        <source>Enable Map Count:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="611"/>
+        <source>Disable Map Count:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

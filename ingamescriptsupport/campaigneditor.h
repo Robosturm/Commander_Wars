@@ -11,6 +11,8 @@
 
 #include "objects/textbox.h"
 
+#include "qtextstream.h"
+
 class CampaignEditor;
 typedef oxygine::intrusive_ptr<CampaignEditor> spCampaignEditor;
 
@@ -27,8 +29,8 @@ public:
     static const QString campaignMapNames;
     static const QString campaignMapEnabled;
     static const QString campaignMapDisabled;
-    static const QString campainMapAdd;
-    static const QString campainMapFinished;
+    static const QString campaignMapAdd;
+    static const QString campaignMapFinished;
     static const QString campaignFinished;
 
     struct MapData
@@ -36,9 +38,9 @@ public:
         QString map;
         QString mapName;
         QStringList previousMaps;
-        qint32 previousCount{1};
+        qint32 previousCount{0};
         QStringList disableMaps;
-        qint32 disableCount{0};
+        qint32 disableCount{1};
         bool lastMap{false};
     };
     explicit CampaignEditor();
@@ -82,6 +84,11 @@ public slots:
      */
     void showLoadCampaign();
     /**
+     * @brief loadCampaignMaps
+     * @param stream
+     */
+    void loadCampaignMaps(QTextStream& stream);
+    /**
      * @brief loadCampaign
      * @param filename
      */
@@ -111,6 +118,16 @@ public slots:
      * @brief updateCampaignData
      */
     void updateCampaignData();
+    /**
+     * @brief showEditEnableMaps
+     * @param index
+     */
+    void showEditEnableMaps(qint32 index);
+    /**
+     * @brief showEditDisableMaps
+     * @param index
+     */
+    void showEditDisableMaps(qint32 index);
 private:
     spPanel m_Panel;
     /**
