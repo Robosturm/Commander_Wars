@@ -29,6 +29,8 @@ signals:
     void sigRightClickDown(qint32 x, qint32 y);
     void sigRightClickUp(qint32 x, qint32 y);
     void sigLeftClick(qint32 x, qint32 y);
+    void sigLeftClickDown(qint32 x, qint32 y);
+    void sigLeftClickUp(qint32 x, qint32 y);
     void sigMouseMove(qint32 x, qint32 y);
 public slots:
     void mouseWheel(qint32 direction);

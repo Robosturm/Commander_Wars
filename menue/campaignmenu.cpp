@@ -74,7 +74,7 @@ void CampaignMenu::exitMenue()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     Console::print("Leaving Option Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new Mainwindow());
+    oxygine::getStage()->addChild(new MapSelectionMapsMenue());
     oxygine::Actor::detach();
     pApp->continueThread();
 }
@@ -119,7 +119,7 @@ void CampaignMenu::slotButtonNext()
     }
     else if (m_Multiplayer)
     {
-
+        // todo
     }
     else
     {

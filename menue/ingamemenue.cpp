@@ -158,6 +158,10 @@ void InGameMenue::loadHandling()
             {
                 emit sigRightClickDown(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
             }
+            else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
+            {
+                emit sigLeftClickDown(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+            }
         }
     });
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::TOUCH_UP, [=](oxygine::Event *pEvent )->void
@@ -169,6 +173,10 @@ void InGameMenue::loadHandling()
             if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
             {
                 emit sigRightClickUp(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+            }
+            else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
+            {
+                emit sigLeftClickUp(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
             }
         }
     });

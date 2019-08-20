@@ -80,6 +80,18 @@ public slots:
      */
     void onMapClickedLeft(qint32 x, qint32 y);
     /**
+     * @brief onMapClickedLeftUp
+     * @param x
+     * @param y
+     */
+    void onMapClickedLeftUp(qint32 x, qint32 y);
+    /**
+     * @brief onMapClickedLeftDown
+     * @param x
+     * @param y
+     */
+    void onMapClickedLeftDown(qint32 x, qint32 y);
+    /**
      * @brief onMapClickedRight right click on the map
      */
     void onMapClickedRight(qint32 x, qint32 y);

@@ -62,6 +62,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Save Map"), "SAVEMAP", 0);
     m_Topbar->addItem(tr("Load Map"), "LOADMAP", 0);
     m_Topbar->addItem(tr("Edit Script"), "EDITSCRIPT", 0);
+    m_Topbar->addItem(tr("Edit Campaign"), "EDITCAMPAIGN", 0);
     m_Topbar->addItem(tr("Undo Strg+Z"), "UNDO", 0);
     m_Topbar->addItem(tr("Redo Strg+Y"), "REDO", 0);
     m_Topbar->addItem(tr("Exit Editor"), "EXIT", 0);
@@ -131,6 +132,8 @@ EditorMenue::EditorMenue()
 
     // connecting stuff
     connect(this, &EditorMenue::sigLeftClick, this, &EditorMenue::onMapClickedLeft, Qt::QueuedConnection);
+    connect(this, &EditorMenue::sigLeftClickDown, this, &EditorMenue::onMapClickedLeftDown, Qt::QueuedConnection);
+    connect(this, &EditorMenue::sigLeftClickUp, this, &EditorMenue::onMapClickedLeftUp, Qt::QueuedConnection);
     connect(this, &EditorMenue::sigRightClick, this, &EditorMenue::onMapClickedRight, Qt::QueuedConnection);
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, this, &EditorMenue::cursorMoved, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigKeyDown, this, &EditorMenue::KeyInput, Qt::QueuedConnection);
@@ -383,6 +386,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     else if (itemID == "PLACESELECTION")
     {
         m_EditorMode = EditorModes::PlaceEditorSelection;
+        selectionChanged();
     }
     else if (itemID == "DELETEUNITS")
     {
@@ -699,6 +703,8 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
     pApp->continueThread();
 }
 
+
+
 void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -747,6 +753,71 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
         }
     }
     m_EditorMode = EditorModes::PlaceEditorSelection;
+    pApp->continueThread();
+}
+
+void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    // resolve click
+    switch (m_EditorMode)
+    {
+        case EditorModes::CopySelection:
+        {
+            if (copyRect.x() < 0)
+            {
+                pasteSelection(x, y);
+                GameMap::getInstance()->addChild(copyRectActor);
+                if (copyRect.width() == 0)
+                {
+                    createMarkedArea(copyRectActor, copyRect.topLeft(), QPoint(x, y), CursorModes::Rect, QColor(255, 0, 0));
+                }
+                else
+                {
+                    createMarkedArea(copyRectActor, copyRect.topLeft(), copyRect.bottomRight(), CursorModes::Rect, QColor(255, 0, 0));
+                }
+            }
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+    pApp->continueThread();
+}
+
+
+void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    // resolve click
+    switch (m_EditorMode)
+    {
+        case EditorModes::CopySelection:
+        {
+            if (copyRect.x() >= 0)
+            {
+                pasteSelection(x, y);
+                GameMap::getInstance()->addChild(copyRectActor);
+                if (copyRect.width() == 0)
+                {
+                    createMarkedArea(copyRectActor, copyRect.topLeft(), QPoint(x, y), CursorModes::Rect, QColor(255, 0, 0));
+                }
+                else
+                {
+                    createMarkedArea(copyRectActor, copyRect.topLeft(), copyRect.bottomRight(), CursorModes::Rect, QColor(255, 0, 0));
+                }
+            }
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
     pApp->continueThread();
 }
 
@@ -802,20 +873,6 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
                     placeUnit(x, y);
                     break;
                 }
-            }
-            break;
-        }
-        case EditorModes::CopySelection:
-        {
-            pasteSelection(x, y);
-            GameMap::getInstance()->addChild(copyRectActor);
-            if (copyRect.width() == 0)
-            {
-                createMarkedArea(copyRectActor, copyRect.topLeft(), QPoint(x, y), CursorModes::Rect, QColor(255, 0, 0));
-            }
-            else
-            {
-                createMarkedArea(copyRectActor, copyRect.topLeft(), copyRect.bottomRight(), CursorModes::Rect, QColor(255, 0, 0));
             }
             break;
         }
