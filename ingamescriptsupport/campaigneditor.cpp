@@ -199,14 +199,20 @@ void CampaignEditor::addCampaign(QString filename)
         QString map = fileData.replace(m_CampaignFolder->getCurrentText() + "/", "");
         MapData data;
         data.map = map;
-        QFile file(filename);
-        file.open(QIODevice::ReadOnly);
-        QDataStream stream(&file);
-        data.mapName = GameMap::readMapName(stream);
-        file.close();
+        data.mapName = getMapName(filename);
         mapDatas.append(data);
         updateCampaignData();
     }
+}
+
+QString CampaignEditor::getMapName(QString filename)
+{
+    QFile file(filename);
+    file.open(QIODevice::ReadOnly);
+    QDataStream stream(&file);
+    QString ret = GameMap::readMapName(stream);
+    file.close();
+    return ret;
 }
 
 void CampaignEditor::showSelectFolder()
@@ -332,25 +338,51 @@ void CampaignEditor::loadCampaign(QString filename)
                     m_Name->setCurrentText(line.replace("return qsTr(\"", "").replace("\");", ""));
                     line = stream.readLine();
                 }
-                if (line.endsWith(campaignAuthor))
+                else if (line.endsWith(campaignAuthor))
                 {
                     line = stream.readLine().simplified();
                     m_Author->setCurrentText(line.replace("return qsTr(\"", "").replace("\");", ""));
                     line = stream.readLine();
                 }
-                if (line.endsWith(campaignDescription))
+                else if (line.endsWith(campaignDescription))
                 {
                     line = stream.readLine().simplified();
                     m_Description->setCurrentText(line.replace("return qsTr(\"", "").replace("\");", ""));
                     line = stream.readLine();
                 }
-                if (line.endsWith(campaignMaps))
+                else if (line.endsWith(campaignMaps))
                 {
                     loadCampaignMaps(stream);
+                }
+                else if (line.endsWith(campaignFinished))
+                {
+                    while (!stream.atEnd())
+                    {
+                        line = stream.readLine().simplified();
+                        if (line.endsWith(campaignFinished))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            if (line.endsWith(campaignMapNames))
+                            {
+                                QStringList items = line.replace("var map", "")
+                                                        .replace("Won = variables.createVariable(\"", ",")
+                                                        .replace("\"); // " + campaignMapNames, "")
+                                                        .split(",");
+                                if (items.size() >= 2)
+                                {
+                                    mapDatas[items[0].toInt()].lastMap = true;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
     }
+    updateMapNames();
     updateCampaignData();
 }
 
@@ -435,6 +467,38 @@ void CampaignEditor::loadCampaignMaps(QTextStream& stream)
                 mapDatas[index].map = items[4];
             }
         }
+    }   
+}
+
+void CampaignEditor::updateMapNames()
+{
+    QStringList orgName;
+    QStringList newName;
+    for (qint32 i = 0; i < mapDatas.size(); i++)
+    {
+        QString name = getMapName(m_CampaignFolder->getCurrentText() + mapDatas[i].map);
+        if (name != mapDatas[i].mapName)
+        {
+            orgName.append(mapDatas[i].mapName);
+            newName.append(name);
+            mapDatas[i].mapName = name;
+        }
+    }
+    for (qint32 i = 0; i < mapDatas.size(); i++)
+    {
+        for (qint32 i2 = 0; i2 < orgName.size(); i2++)
+        {
+            if (mapDatas[i].previousMaps.contains(orgName[i2]))
+            {
+                mapDatas[i].previousMaps.removeAll(orgName[i2]);
+                mapDatas[i].previousMaps.append(newName[i2]);
+            }
+            if (mapDatas[i].disableMaps.contains(orgName[i2]))
+            {
+                mapDatas[i].disableMaps.removeAll(orgName[i2]);
+                mapDatas[i].disableMaps.append(newName[i2]);
+            }
+        }
     }
 }
 
@@ -512,9 +576,25 @@ void CampaignEditor::saveCampaign(QString filename)
         stream << "        mapVar.writeDataBool(result);\n";
         stream << "    }; // " << campaignMapFinished << "\n";
 
-
-
-
+        stream << "    this.getCampaignFinished = function(campaign){ // " << campaignFinished << "\n";
+        stream << "        var variables = campaign.getVariables();\n";
+        stream << "        var wonCounter = 0;\n";
+        qint32 count = 0;
+        for (qint32 i = 0; i < mapDatas.size(); i++)
+        {
+            if (mapDatas[i].lastMap)
+            {
+                count++;
+                stream << "        var map" << QString::number(i) << "Won = variables.createVariable(\"" << mapDatas[i].mapName << "\"); // " << campaignMapNames << "\n";
+                stream << "        if (map" << QString::number(i) << "Won.readDataBool() === true) { wonCounter++;} \n";
+            }
+        }
+        if (count > 0)
+        {
+            stream << "        if (wonCounter >= " << QString::number(count) << "){return true;} \n";
+        }
+        stream << "        return false;\n";
+        stream << "    } // " << campaignFinished << "\n";
         stream << "// " << campaign << "\n"  << "};\n" <<
                   "Constructor.prototype = BASECAMPAIGN;\n" <<
                   "var campaignScript = new Constructor();";

@@ -556,32 +556,32 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="259"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="265"/>
         <source>Enable Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="267"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="273"/>
         <source>Disable Maps</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="275"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="281"/>
         <source>Remove Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="286"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="292"/>
         <source>Last Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="541"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="621"/>
         <source>Enable Map Count:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="611"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="691"/>
         <source>Disable Map Count:</source>
         <translation type="unfinished"></translation>
     </message>

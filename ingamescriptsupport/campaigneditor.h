@@ -89,6 +89,10 @@ public slots:
      */
     void loadCampaignMaps(QTextStream& stream);
     /**
+     * @brief updateMapNames
+     */
+    void updateMapNames();
+    /**
      * @brief loadCampaign
      * @param filename
      */
@@ -101,6 +105,12 @@ public slots:
      * @brief addCampaign
      */
     void addCampaign(QString filename);
+    /**
+     * @brief getMapName
+     * @param filename
+     * @return
+     */
+    QString getMapName(QString filename);
     /**
      * @brief showSelectFolder
      */
