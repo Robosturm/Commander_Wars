@@ -126,6 +126,16 @@ public slots:
      * @return
      */
     bool isEnemy(Player* pOwner);
+    /**
+     * @brief isAlly
+     * @param pOwner
+     * @return
+     */
+    bool isAlly(Player* pOwner);
+    /**
+     * @brief getFunds
+     * @return
+     */
     qint32 getFunds() const;
     /**
      * @brief addFunds increases the money of this player by the given value

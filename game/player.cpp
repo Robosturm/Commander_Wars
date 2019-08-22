@@ -179,6 +179,11 @@ bool Player::isEnemy(Player* pOwner)
     return (checkAlliance(pOwner) == GameEnums::Alliance_Enemy);
 }
 
+bool Player::isAlly(Player* pOwner)
+{
+    return (checkAlliance(pOwner) == GameEnums::Alliance_Friend);
+}
+
 
 void Player::setFunds(const qint32 &value)
 {
@@ -530,7 +535,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                 }
                 Building* pBuilding = pTerrain->getBuilding();
                 if ((pBuilding != nullptr) &&
-                    ((pBuilding->getOwner() == this) ||
+                    ((isAlly( pBuilding->getOwner())) ||
                      (checkAlliance(pBuilding->getOwner()) == GameEnums::Alliance_Friend)))
                 {
                     std::get<0>(m_FogVisionFields[x][y]) = true;
@@ -560,7 +565,7 @@ void Player::updatePlayerVision(bool reduceTimer)
 
                 Unit* pUnit = pTerrain->getUnit();
                 if ((pUnit != nullptr) &&
-                    (pUnit->getOwner() == this))
+                    (isAlly(pUnit->getOwner())))
                 {
                     qint32 visionRange = pUnit->getVision(QPoint(x, y));
                     QmlVectorPoint* pPoints = Mainapp::getCircle(0, visionRange);
