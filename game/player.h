@@ -7,8 +7,6 @@
 #include <QVector>
 #include <QVector3D>
 #include "oxygine-flow.h"
-#include "game/smartpointers.h"
-#include "game/smartCO.h"
 
 #include "coreengine/mainapp.h"
 
@@ -18,7 +16,10 @@
 
 #include "gameinput/basegameinputif.h"
 
-class CO;
+#include "co.h"
+
+class Player;
+typedef oxygine::intrusive_ptr<Player> spPlayer;
 
 class Player : public QObject, public oxygine::Actor, public FileSerializable
 {

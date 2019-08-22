@@ -9,13 +9,13 @@
 
 #include "oxygine-framework.h"
 
-#include "game/smartpointers.h"
-
 #include "game/gameanimation.h"
 
 #include "game/gamemap.h"
 
 #include "game/GameEnums.h"
+
+class Unit;
 
 class GameAnimationWalk : public GameAnimation
 {

@@ -3482,7 +3482,7 @@
 <context>
     <name>Terrain</name>
     <message>
-        <location filename="../game/terrain.cpp" line="58"/>
+        <location filename="../game/terrain.cpp" line="55"/>
         <source>Unable to load Terrain </source>
         <translation type="unfinished"></translation>
     </message>

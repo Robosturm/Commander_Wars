@@ -12,11 +12,8 @@
 
 #include <QFileInfo>
 
-#include "game/building.h"
-
-#include "game/unit.h"
-
 #include "game/player.h"
+
 #include "game/co.h"
 
 spTerrain Terrain::createTerrain(const QString& terrainID, qint32 x, qint32 y, const QString&  currentTerrainID)

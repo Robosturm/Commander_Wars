@@ -5,8 +5,6 @@
 
 #include <QVector>
 
-#include "game/smartCO.h"
-
 #include "game/player.h"
 
 #include "game/co.h"

@@ -9,7 +9,8 @@
 
 #include "oxygine-framework.h"
 
-#include "game/smartpointers.h"
+class GameAnimation;
+typedef oxygine::intrusive_ptr<GameAnimation> spGameAnimation;
 
 class GameAnimation : public QObject, public oxygine::Sprite
 {

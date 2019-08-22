@@ -6,11 +6,17 @@
 
 #include "oxygine-framework.h"
 
-#include "smartpointers.h"
-
 #include "coreengine/fileserializable.h"
 
+#include "game/unit.h"
+
+#include "game/building.h"
+
+class Player;
 class TerrainFindingSystem;
+
+class Terrain;
+typedef oxygine::intrusive_ptr<Terrain> spTerrain;
 
 class Terrain : public QObject, public oxygine::Actor, public FileSerializable
 {

@@ -1,7 +1,5 @@
 #include "game/gameanimationfactory.h"
 
-#include "game/gameanimation.h"
-
 #include "game/gamemap.h"
 
 #include "game/gameanimationwalk.h"

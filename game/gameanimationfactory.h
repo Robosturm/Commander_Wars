@@ -5,11 +5,10 @@
 
 #include <QVector>
 
-#include "game/smartpointers.h"
-
 #include "game/gamemap.h"
 
-class GameAnimation;
+#include "game/gameanimation.h"
+
 class GameAnimationWalk;
 class GameAnimationCapture;
 class GameAnimationDialog;

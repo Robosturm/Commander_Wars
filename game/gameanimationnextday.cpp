@@ -8,8 +8,6 @@
 
 #include "coreengine/mainapp.h"
 
-#include "game/player.h"
-
 #include "game/co.h"
 
 #include "game/gamemap.h"

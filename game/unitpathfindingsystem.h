@@ -5,9 +5,6 @@
 
 #include "game/unit.h"
 
-#include "game/smartpointers.h"
-
-
 class UnitPathFindingSystem;
 typedef oxygine::intrusive_ptr<UnitPathFindingSystem> spUnitPathFindingSystem;
 

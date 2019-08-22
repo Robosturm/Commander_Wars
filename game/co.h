@@ -8,8 +8,6 @@
 
 #include "oxygine-framework.h"
 
-#include "game/smartUnit.h"
-
 #include "coreengine/fileserializable.h"
 
 #include "coreengine/scriptvariables.h"
@@ -20,6 +18,9 @@ class Player;
 class Building;
 class GameAnimationDialog;
 class GameAnimationPower;
+
+class CO;
+typedef oxygine::intrusive_ptr<CO> spCO;
 
 class CO : public QObject, public oxygine::Actor, public FileSerializable
 {

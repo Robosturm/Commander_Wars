@@ -9,7 +9,6 @@
 
 #include "oxygine/core/ref_counter.h"
 #include "oxygine-framework.h"
-#include "game/smartpointers.h"
 
 #include "memory"
 
@@ -29,6 +28,8 @@
 
 #include "game/gamescript.h"
 #include "game/campaign.h"
+
+#include "player.h"
 
 class GameAction;
 

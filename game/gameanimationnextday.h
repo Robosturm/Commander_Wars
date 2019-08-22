@@ -5,6 +5,8 @@
 
 #include <QTimer>
 
+#include "player.h"
+
 class GameAnimationNextDay : public GameAnimation
 {
     Q_OBJECT

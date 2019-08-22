@@ -6,11 +6,12 @@
 #include <QVector>
 #include <QBuffer>
 #include <QDataStream>
-#include "game/smartpointers.h"
 #include "gameinput/menudata.h"
 #include "gameinput/markedfielddata.h"
 #include "gameinput/cursordata.h"
 #include "coreengine/fileserializable.h"
+#include "unit.h"
+#include "building.h"
 
 class GameAction : public QObject, public FileSerializable
 {

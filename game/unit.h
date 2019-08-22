@@ -5,13 +5,17 @@
 #include <QVector>
 #include "oxygine-framework.h"
 
-#include "game/smartpointers.h"
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
 
 #include "game/GameEnums.h"
 
 class GameAction;
+
+class Player;
+class Terrain;
+class Unit;
+typedef oxygine::intrusive_ptr<Unit> spUnit;
 
 class Unit : public QObject, public oxygine::Actor, public FileSerializable
 {

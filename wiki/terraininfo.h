@@ -8,6 +8,7 @@
 #include "game/building.h"
 #include "game/unit.h"
 #include "game/terrain.h"
+#include "game/player.h"
 
 class TerrainInfo;
 typedef oxygine::intrusive_ptr<TerrainInfo> spTerrainInfo;

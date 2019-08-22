@@ -5,12 +5,18 @@
 #include <QVector>
 
 #include "oxygine-framework.h"
-#include "game/smartpointers.h"
 #include "game/GameEnums.h"
 #include "coreengine/fileserializable.h"
 #include "coreengine/scriptvariables.h"
 
 class QmlVectorPoint;
+
+class Player;
+class Unit;
+class Terrain;
+
+class Building;
+typedef oxygine::intrusive_ptr<Building> spBuilding;
 
 class Building : public QObject, public oxygine::Actor, public FileSerializable
 {
