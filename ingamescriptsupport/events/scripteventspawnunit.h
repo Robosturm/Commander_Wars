@@ -80,6 +80,14 @@ public:
      * @brief showEditEvent
      */
     virtual void showEditEvent(spScriptEditor pScriptEditor) override;
+    /**
+     * @brief getVersion
+     * @return
+     */
+    virtual qint32 getVersion() override
+    {
+        return 0;
+    }
 private:
     qint32 x{0};
     qint32 y{0};

@@ -61,6 +61,14 @@ public:
      * @param value
      */
     void setRemove(bool value);
+    /**
+     * @brief getVersion
+     * @return
+     */
+    virtual qint32 getVersion() override
+    {
+        return 0;
+    }
 private:
     qint32 player{0};
     QString unitID{"INFANTRY"};

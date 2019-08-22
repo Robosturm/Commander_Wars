@@ -140,7 +140,11 @@ public:
      * @param value
      */
     void setParent(ScriptCondition *value);
-
+    /**
+     * @brief getVersion
+     * @return
+     */
+    virtual qint32 getVersion() = 0;
 protected:
     explicit ScriptCondition(ConditionType type);
     QVector<spScriptEvent> events;

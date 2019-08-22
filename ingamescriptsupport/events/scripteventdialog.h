@@ -75,6 +75,14 @@ public:
      * @brief showEditEvent
      */
     virtual void showEditEvent(spScriptEditor pScriptEditor) override;
+    /**
+     * @brief getVersion
+     * @return
+     */
+    virtual qint32 getVersion() override
+    {
+        return 0;
+    }
 private:
     QVector<Dialog> m_Dialog;
 };

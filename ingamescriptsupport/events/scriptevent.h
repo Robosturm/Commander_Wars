@@ -70,6 +70,11 @@ public:
      * @brief showEditEvent
      */
     virtual void showEditEvent(spScriptEditor pScriptEditor) = 0;
+    /**
+     * @brief getVersion
+     * @return
+     */
+    virtual qint32 getVersion() = 0;
 protected:
     explicit ScriptEvent(EventType type);
     EventType m_Type;

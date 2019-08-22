@@ -36,6 +36,14 @@ public:
      * @brief showEditConditin
      */
     virtual void showEditCondition(spScriptEditor pScriptEditor) override;
+    /**
+     * @brief getVersion
+     * @return
+     */
+    virtual qint32 getVersion() override
+    {
+        return 0;
+    }
 private:
     qint32 team{0};
 };

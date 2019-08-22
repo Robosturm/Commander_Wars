@@ -52,7 +52,14 @@ public:
      * @param value
      */
     void setWeatherID(const qint32 &value);
-
+    /**
+     * @brief getVersion
+     * @return
+     */
+    virtual qint32 getVersion() override
+    {
+        return 0;
+    }
 private:
     qint32 weatherID{0};
     qint32 turns{1};

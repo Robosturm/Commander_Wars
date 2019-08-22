@@ -48,15 +48,15 @@ var Constructor = function()
         var offset = Qt.point(-5, 5);
         if (armyName === "yc")
         {
-            offset = Qt.point(27, 22);
+            offset = Qt.point(37, 30);
         }
         else if (armyName === "ge")
         {
-            offset = Qt.point(20, 15);
+            offset = Qt.point(38, 28);
         }
         else if (armyName === "bm")
         {
-            offset = Qt.point(20, 19);
+            offset = Qt.point(35, 24);
         }
         else if (armyName === "bh")
         {
@@ -84,7 +84,7 @@ var Constructor = function()
         {
             BATTLEANIMATION_FLAK.loadStandingAnimation(sprite, unit, defender, weapon);
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
-                              1, 1, 0, 0);
+                              2, 1, 0, 0);
         }
     };
 

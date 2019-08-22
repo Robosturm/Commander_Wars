@@ -26,8 +26,8 @@ void ScriptEventSpawnUnit::readEvent(QTextStream& rStream)
                             .replace(",\"", ",")
                             .replace("\",map.getPlayer(", ",")
                             .replace("),", ",")
-                            .replace("); // " + EventSpawnUnit, "").split(",");
-    if (items.size() == 5)
+                            .replace("); // " , ",").split(",");
+    if (items.size() >= 5)
     {
         x = items[0].toInt();
         y = items[1].toInt();
@@ -42,7 +42,7 @@ void ScriptEventSpawnUnit::writeEvent(QTextStream& rStream)
     rStream <<  "            map.spawnUnit(" << QString::number(x) << ", "
             << QString::number(y) << ", \"" << unitID << "\", map.getPlayer("
             << QString::number(player) << "), " << QString::number(radius) << "); // "
-            << EventSpawnUnit << "\n";
+            << QString::number(getVersion()) << " " << EventSpawnUnit << "\n";
 }
 
 qint32 ScriptEventSpawnUnit::getX() const

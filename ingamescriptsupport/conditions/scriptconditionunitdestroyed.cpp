@@ -64,7 +64,7 @@ void ScriptConditionUnitDestroyed::writePreCondition(QTextStream& rStream)
 void ScriptConditionUnitDestroyed::writeCondition(QTextStream& rStream)
 {
     rStream << "        if (map.getUnit(" << m_unitID << "Value) === null && " << m_executed << ".readDataBool() === false) {"
-            << "// " << m_x << " " << m_y << " " << ConditionUnitDestroyed << "\n";
+            << "// " << m_x << " " << m_y << " " << QString::number(getVersion()) << " " << ConditionUnitDestroyed << "\n";
     if (subCondition.get() != nullptr)
     {
         subCondition->writeCondition(rStream);

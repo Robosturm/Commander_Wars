@@ -86,7 +86,7 @@ void ScriptConditionBuildingsOwned::writeCondition(QTextStream& rStream)
 {
     rStream << "        if (map.getPlayer(" << QString::number(m_player) << ").getBuildingCount() >= " << QString::number(m_count)
             << " && " << m_executed << ".readDataBool() === false) {"
-            << "// " << ConditionBuildingsOwned << "\n";
+            << "// " << QString::number(getVersion()) << " " << ConditionBuildingsOwned << "\n";
     if (subCondition.get() != nullptr)
     {
         subCondition->writeCondition(rStream);

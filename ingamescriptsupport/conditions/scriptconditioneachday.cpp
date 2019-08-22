@@ -51,8 +51,8 @@ void ScriptConditionEachDay::readCondition(QTextStream& rStream)
     QStringList items = line.replace("if ((turn - ", "")
                             .replace(") % ", ",")
                             .replace(" === 0 && player === ", ",")
-                            .replace(") { // " + ConditionEachDay, "").split(",");
-    if (items.size() == 3)
+                            .replace(") { // ", ",").split(",");
+    if (items.size() >= 3)
     {
         day = items[0].toInt();
         intervall = items[1].toInt();
@@ -84,7 +84,8 @@ void ScriptConditionEachDay::readCondition(QTextStream& rStream)
 
 void ScriptConditionEachDay::writeCondition(QTextStream& rStream)
 {
-    rStream << "        if ((turn - " + QString::number(day)  +  ") % " + QString::number(intervall) +  " === 0 && player === " + QString::number(player) + ") { // " + ConditionEachDay +"\n";
+    rStream << "        if ((turn - " + QString::number(day)  +  ") % " + QString::number(intervall) +  " === 0 && player === " + QString::number(player) + ") { // "
+            << QString::number(getVersion()) << " " << ConditionEachDay +"\n";
     for (qint32 i = 0; i < events.size(); i++)
     {
         events[i]->writeEvent(rStream);

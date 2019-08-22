@@ -53,7 +53,14 @@ public:
      * @param player
      */
     void setPlayer(const qint32 &player);
-
+    /**
+     * @brief getVersion
+     * @return
+     */
+    virtual qint32 getVersion() override
+    {
+        return 0;
+    }
 private:
     qint32 m_player{0};
     QString m_executed;

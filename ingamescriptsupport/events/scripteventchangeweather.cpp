@@ -44,8 +44,8 @@ void ScriptEventChangeWeather::readEvent(QTextStream& rStream)
     QString line = rStream.readLine().simplified();
     QStringList items = line.replace("map.getGameRules().changeWeather(", "")
                             .replace(", map.getPlayerCount() * ", ",")
-                            .replace("); // " + EventChangeWeather, "").split(",");
-    if (items.size() == 2)
+                            .replace("); // ", ",").split(",");
+    if (items.size() >= 2)
     {
         weatherID = items[0].toInt();
         turns = items[1].toInt();
@@ -55,7 +55,7 @@ void ScriptEventChangeWeather::readEvent(QTextStream& rStream)
 void ScriptEventChangeWeather::writeEvent(QTextStream& rStream)
 {
     rStream <<  "            map.getGameRules().changeWeather(" << QString::number(weatherID) << ", map.getPlayerCount() * " + QString::number(turns) + "); // "
-            << EventChangeWeather << "\n";
+            << QString::number(getVersion()) << " " << EventChangeWeather << "\n";
 }
 
 void ScriptEventChangeWeather::showEditEvent(spScriptEditor pScriptEditor)

@@ -19,14 +19,14 @@ void ScriptEventDefeatPlayer::readEvent(QTextStream& rStream)
 {
     QString line = rStream.readLine().simplified();
     QString item = line.replace("map.getPlayer(", "")
-                    .replace(").defeatPlayer(null); // " + EventDefeatPlayer, "");
+                    .replace(").defeatPlayer(null); // ", ",");
     player = item.toInt();
 }
 
 void ScriptEventDefeatPlayer::writeEvent(QTextStream& rStream)
 {
     rStream <<  "            map.getPlayer(" << QString::number(player) << ").defeatPlayer(null); // "
-            << EventDefeatPlayer << "\n";
+            << QString::number(getVersion()) << " " << EventDefeatPlayer << "\n";
 }
 
 qint32 ScriptEventDefeatPlayer::getPlayer() const

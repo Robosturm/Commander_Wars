@@ -62,7 +62,14 @@ public:
      * @param count
      */
     void setCount(const qint32 &count);
-
+    /**
+     * @brief getVersion
+     * @return
+     */
+    virtual qint32 getVersion() override
+    {
+        return 0;
+    }
 private:
     qint32 m_player{0};
     qint32 m_count{1};

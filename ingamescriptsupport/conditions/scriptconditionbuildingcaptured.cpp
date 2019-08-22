@@ -54,7 +54,7 @@ void ScriptConditionBuildingCaptured::readCondition(QTextStream& rStream)
                             .replace(", ", ",")
                             .replace(").getBuilding().getOwner().getPlayerID() === ", ",")
                             .replace(" && ", ",").split(",");
-    if (items.size() == 4)
+    if (items.size() >= 4)
     {
         m_x = items[0].toInt();
         m_y = items[1].toInt();
@@ -98,7 +98,7 @@ void ScriptConditionBuildingCaptured::writeCondition(QTextStream& rStream)
 {
     rStream << "        if (map.getTerrain(" << QString::number(m_x) << ", " << QString::number(m_y) << ").getBuilding().getOwner().getPlayerID() === "
             << QString::number(m_player) << " && " << m_executed << ".readDataBool() === false) {"
-            << "// " << ConditionBuildingCaptured << "\n";
+            << "// " << QString::number(getVersion()) << " "  << ConditionBuildingCaptured << "\n";
     if (subCondition.get() != nullptr)
     {
         subCondition->writeCondition(rStream);

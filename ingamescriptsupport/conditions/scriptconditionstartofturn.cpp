@@ -40,8 +40,8 @@ void ScriptConditionStartOfTurn::readCondition(QTextStream& rStream)
     QString line = rStream.readLine().simplified();
     QStringList items = line.replace("if (turn === ", "")
                             .replace(" && player === ", ",")
-                            .replace(") { // " + ConditionStartOfTurn, "").split(",");
-    if (items.size() == 2)
+                            .replace(") { // ", ",").split(",");
+    if (items.size() >= 2)
     {
         day = items[0].toInt();
         player = items[1].toInt();
@@ -72,7 +72,8 @@ void ScriptConditionStartOfTurn::readCondition(QTextStream& rStream)
 
 void ScriptConditionStartOfTurn::writeCondition(QTextStream& rStream)
 {
-    rStream << "        if (turn === " + QString::number(day) + " && player === " + QString::number(player) + ") { // " + ConditionStartOfTurn +"\n";
+    rStream << "        if (turn === " + QString::number(day) + " && player === " + QString::number(player) + ") { // "
+            << QString::number(getVersion()) << " " << ConditionStartOfTurn +"\n";
     for (qint32 i = 0; i < events.size(); i++)
     {
         events[i]->writeEvent(rStream);

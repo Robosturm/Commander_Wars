@@ -2527,17 +2527,17 @@
 <context>
     <name>ScriptConditionEachDay</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="112"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="113"/>
         <source>Each Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="123"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="124"/>
         <source>Start Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="134"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="135"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2553,12 +2553,12 @@
 <context>
     <name>ScriptConditionStartOfTurn</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="101"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="102"/>
         <source>At Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="112"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="113"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2592,7 +2592,7 @@
 <context>
     <name>ScriptConditionVictory</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.cpp" line="84"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.cpp" line="89"/>
         <source>Team: </source>
         <translation type="unfinished"></translation>
     </message>

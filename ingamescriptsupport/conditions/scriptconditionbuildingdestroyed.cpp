@@ -67,7 +67,7 @@ void ScriptConditionBuildingDestroyed::writeCondition(QTextStream& rStream)
 {
     rStream << "        if ((map.getTerrain(" << QString::number(m_x) << ", " << QString::number(m_y) << ").getBuilding() === null || "
             << "map.getTerrain(" << QString::number(m_x) << ", " << QString::number(m_y) << ").getBuilding().getHp() <= 0) && " << m_executed << ".readDataBool() === false) {"
-            << "// " << ConditionBuildingDestroyed << "\n";
+            << "// " << QString::number(getVersion()) << " " << ConditionBuildingDestroyed << "\n";
     if (subCondition.get() != nullptr)
     {
         subCondition->writeCondition(rStream);

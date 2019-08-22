@@ -44,7 +44,7 @@ void ScriptEventChangeCOBar::readEvent(QTextStream& rStream)
                             .replace(").getCO(", ",")
                             .replace(").addPowerFilled(", ",")
                             .replace(");", "").split(",");
-    if (items.size() == 3)
+    if (items.size() >= 3)
     {
         player = items[0].toInt();
         co = items[1].toInt();
@@ -56,7 +56,7 @@ void ScriptEventChangeCOBar::readEvent(QTextStream& rStream)
 void ScriptEventChangeCOBar::writeEvent(QTextStream& rStream)
 {
     rStream <<  "            if (map.getPlayer(" << QString::number(player) << ").getCO(" << QString::number(co) << ") !== null){ // "
-            << EventChangeCOBar << "\n";
+            << QString::number(getVersion()) << " " << EventChangeCOBar << "\n";
     rStream <<  "            map.getPlayer(" << QString::number(player) << ").getCO("  << QString::number(co) << ").addPowerFilled("
             << QString::number(stars) << ");\n";
     rStream <<  "            }\n";

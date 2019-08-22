@@ -86,7 +86,7 @@ void ScriptConditionUnitsDestroyed::writeCondition(QTextStream& rStream)
 {
     rStream << "        if (map.getGameRecorder().getDestroyedUnits(" << QString::number(m_player) << ") >= " << QString::number(m_count)
             << " && " << m_executed << ".readDataBool() === false) {"
-            << "// " << ConditionUnitsDestroyed << "\n";
+            << "// " << QString::number(getVersion()) << " " << ConditionUnitsDestroyed << "\n";
     if (subCondition.get() != nullptr)
     {
         subCondition->writeCondition(rStream);

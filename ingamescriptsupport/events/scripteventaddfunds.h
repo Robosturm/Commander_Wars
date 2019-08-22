@@ -51,7 +51,14 @@ public:
      * @param value
      */
     void setFunds(const qint32 &value);
-
+    /**
+     * @brief getVersion
+     * @return
+     */
+    virtual qint32 getVersion() override
+    {
+        return 0;
+    }
 private:
     qint32 player{0};
     qint32 funds{0};

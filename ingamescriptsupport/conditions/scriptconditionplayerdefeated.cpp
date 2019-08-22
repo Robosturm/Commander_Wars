@@ -74,7 +74,7 @@ void ScriptConditionPlayerDefeated::writeCondition(QTextStream& rStream)
 {
     rStream << "        if (map.getPlayer(" << QString::number(m_player) << ").getIsDefeated() === true"
             << " && " << m_executed << ".readDataBool() === false) {"
-            << "// " << ConditionPlayerDefeated << "\n";
+            << "// " << QString::number(getVersion()) << " " << ConditionPlayerDefeated << "\n";
     if (subCondition.get() != nullptr)
     {
         subCondition->writeCondition(rStream);

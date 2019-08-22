@@ -61,7 +61,14 @@ public:
      * @param value
      */
     void setStars(float value);
-
+    /**
+     * @brief getVersion
+     * @return
+     */
+    virtual qint32 getVersion() override
+    {
+        return 0;
+    }
 private:
     qint32 player{0};
     qint32 co{0};

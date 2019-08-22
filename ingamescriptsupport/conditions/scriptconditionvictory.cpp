@@ -28,7 +28,11 @@ void ScriptConditionVictory::setTeam(const qint32 &value)
 void ScriptConditionVictory::readCondition(QTextStream& rStream)
 {
     QString line = rStream.readLine().simplified();
-    team = line.replace("if (team === ", "").replace(") { // " + ConditionVictory, "").toInt();
+    QStringList items = line.replace("if (team === ", "").replace(") { // ", ",").split(",");
+    if (items.size() > 0)
+    {
+        team = items[0].toInt();
+    }
     while (!rStream.atEnd())
     {
         qint64 pos = rStream.pos();
@@ -55,7 +59,8 @@ void ScriptConditionVictory::readCondition(QTextStream& rStream)
 
 void ScriptConditionVictory::writeCondition(QTextStream& rStream)
 {
-    rStream << "        if (team === " + QString::number(team) +") { // " + ConditionVictory +"\n";
+    rStream << "        if (team === " + QString::number(team) +") { // "
+            << QString::number(getVersion()) << " " << ConditionVictory + "\n";
     for (qint32 i = 0; i < events.size(); i++)
     {
         events[i]->writeEvent(rStream);

@@ -64,7 +64,14 @@ public:
      * @param y
      */
     void setY(const qint32 &y);
-
+    /**
+     * @brief getVersion
+     * @return
+     */
+    virtual qint32 getVersion() override
+    {
+        return 0;
+    }
 private:
     qint32 m_x{0};
     qint32 m_y{0};

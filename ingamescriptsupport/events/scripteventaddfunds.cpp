@@ -31,8 +31,8 @@ void ScriptEventAddFunds::readEvent(QTextStream& rStream)
     QString line = rStream.readLine().simplified();
     QStringList items = line.replace("map.getPlayer(", "")
                             .replace(").addFunds(", ",")
-                            .replace("); // " + EventAddFunds, "").split(",");
-    if (items.size() == 2)
+                            .replace("); // ", ",").split(",");
+    if (items.size() >= 2)
     {
         player = items[0].toInt();
         funds = items[1].toInt();
@@ -42,7 +42,7 @@ void ScriptEventAddFunds::readEvent(QTextStream& rStream)
 void ScriptEventAddFunds::writeEvent(QTextStream& rStream)
 {
     rStream <<  "            map.getPlayer(" << QString::number(player) << ").addFunds(" + QString::number(funds) + "); // "
-            << EventAddFunds << "\n";
+            << QString::number(getVersion()) << " " << EventAddFunds << "\n";
 }
 
 qint32 ScriptEventAddFunds::getPlayer() const

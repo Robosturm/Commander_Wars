@@ -64,8 +64,8 @@ void ScriptEventDialog::readEvent(QTextStream& rStream)
                                     .replace("\"), \"", ",")
                                     .replace("\", GameEnums.COMood_", ",")
                                     .replace(", \"", ",")
-                                    .replace("\"); // " + ScriptEventDialogItem, "").split(",");
-            if (items.size() == 4)
+                                    .replace("\"); // ", ",").split(",");
+            if (items.size() >= 4)
             {
                 Dialog dialog;
                 dialog.text = items[0];
@@ -115,7 +115,7 @@ void ScriptEventDialog::writeEvent(QTextStream& rStream)
                 break;
             }
         }
-        rStream << ", \"" << m_Dialog[i].color.name() << "\"); // " << ScriptEventDialogItem << "\n";
+        rStream << ", \"" << m_Dialog[i].color.name() << "\"); // " << QString::number(getVersion()) << " " << ScriptEventDialogItem << "\n";
     }
     for (qint32 i = 0; i < m_Dialog.size() - 1; i++)
     {
