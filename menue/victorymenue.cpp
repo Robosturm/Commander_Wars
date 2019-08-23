@@ -109,6 +109,13 @@ VictoryMenue::VictoryMenue(bool multiplayer)
             m_PlayerGraphs[i].append(new oxygine::Actor());
             m_pGraphBackground->addChild(m_PlayerGraphs[i][i2]);
         }
+
+        oxygine::spColorRectSprite pProgressLine = new oxygine::ColorRectSprite();
+        pProgressLine->setColor(255, 0, 0, 255);
+        pProgressLine->setSize(5, m_pGraphBackground->getHeight());
+        pProgressLine->setPriority(10);
+        m_GraphsProgessLine[i] = pProgressLine;
+        m_pGraphBackground->addChild(pProgressLine);
     }
     // find max values for each graph here
     for (qint32 i = 0; i < pMap->getCurrentDay(); i++)
@@ -492,6 +499,14 @@ void VictoryMenue::showGraph(VictoryMenue::GraphModes mode)
 
         for (qint32 i = 0; i < m_PlayerGraphs.size(); i++)
         {
+            if (i == static_cast<qint32>(mode))
+            {
+                m_GraphsProgessLine[i]->setVisible(true);
+            }
+            else
+            {
+                m_GraphsProgessLine[i]->setVisible(false);
+            }
             for (qint32 i2 = 0; i2 < m_PlayerGraphs[i].size(); i2++)
             {
                 if (i == static_cast<qint32>(mode))
@@ -802,6 +817,7 @@ void VictoryMenue::drawGraphStep(qint32 progress)
     if (pStartRecord != nullptr &&
         pEndRecord != nullptr)
     {
+        m_GraphsProgessLine[static_cast<qint32>(m_CurrentGraphMode)]->setX((progress + 1) * lineLength - m_GraphsProgessLine[static_cast<qint32>(m_CurrentGraphMode)]->getWidth() / 2);
         // add player lines
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
