@@ -105,13 +105,15 @@ void MovementTableManager::reset()
     m_loadedTables.clear();
 }
 
-qint32 MovementTableManager::getBaseMovementPoints(QString movementID, Terrain* pTerrain)
+qint32 MovementTableManager::getBaseMovementPoints(QString movementID, Terrain* pTerrain, Unit* pUnit)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getMovementpoints";
     QJSValueList args1;
     QJSValue obj3 = pApp->getInterpreter()->newQObject(pTerrain);
     args1 << obj3;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(pUnit);
+    args1 << obj2;
     QJSValue ret = pApp->getInterpreter()->doFunction(movementID, function1, args1);
     if (ret.isNumber())
     {

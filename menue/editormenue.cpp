@@ -876,6 +876,10 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
             }
             break;
         }
+        case EditorModes::CopySelection:
+        {
+            break;
+        }
     }
     pApp->continueThread();
 }
@@ -943,7 +947,7 @@ bool EditorMenue::canUnitBePlaced(qint32 x, qint32 y)
     {
         MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
         QString movementType = m_EditorSelection->getCurrentSpUnit()->getMovementType();
-        if (pMovementTableManager->getBaseMovementPoints(movementType, pMap->getTerrain(x, y)) > 0)
+        if (pMovementTableManager->getBaseMovementPoints(movementType, pMap->getTerrain(x, y), m_EditorSelection->getCurrentSpUnit().get()) > 0)
         {
             ret = true;
         }
@@ -1570,7 +1574,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y)
                                 {
                                     MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
                                     QString movementType = pUnit->getMovementType();
-                                    if (pMovementTableManager->getBaseMovementPoints(movementType, pMap->getTerrain(x + xPos, y + yPos)) > 0)
+                                    if (pMovementTableManager->getBaseMovementPoints(movementType, pMap->getTerrain(x + xPos, y + yPos), pUnit) > 0)
                                     {
                                         Unit* pCopyUnit = new Unit(pUnit->getUnitID(), pUnit->getOwner(), false);
                                         pMap->getTerrain(x + xPos, y + yPos)->setUnit(nullptr);

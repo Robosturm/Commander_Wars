@@ -245,7 +245,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     {
         spTerrain pTerrain = Terrain::createTerrain(pTerrainManager->getTerrainID(i), -1, -1, "");
         pTerrain->loadSprites();
-        qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get());
+        qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pUnit);
         pTerrain->setPosition(x, y);
         addChild(pTerrain);
 
@@ -290,7 +290,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
             pBuilding->setY(GameMap::Imagesize * (buildingHeigth - 1) / (buildingHeigth));
         }
         pTerrain->setBuilding(pBuilding);
-        qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get());
+        qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pUnit);
         pTerrain->setPosition(x, y);
         addChild(pTerrain);
         pLabel = new oxygine::TextField();

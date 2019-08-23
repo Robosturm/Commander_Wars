@@ -58,7 +58,7 @@ public:
      */
     void reset();
 public slots:
-    qint32 getBaseMovementPoints(QString movementID, Terrain* pTerrain);
+    qint32 getBaseMovementPoints(QString movementID, Terrain* pTerrain, Unit* pUnit);
 private:
     explicit MovementTableManager();
     virtual ~MovementTableManager() = default;

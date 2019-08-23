@@ -46,8 +46,15 @@ var Constructor = function()
                                 ["SNOW_MOUNTAIN", 1],
                                 ["SNOW_WASTELAND", 1]];
 
-    this.getMovementpoints = function(terrain)
+    this.getMovementpoints = function(terrain, unit)
     {
+        var id = terrain.getID();
+        if ((id === "ZGATE_E_W" || id === "ZGATE_N_S") &&
+            (unit !== null) &&
+            (unit.getOwner().isAlly(terrain.getBuilding().getOwner())))
+        {
+            return 1;
+        }
         return MOVEMENTTABLE.getMovementpointsFromTable(terrain, MOVE_AIR.movementpointsTable);
     };
 };

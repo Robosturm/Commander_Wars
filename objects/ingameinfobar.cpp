@@ -219,7 +219,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
         {
             hp = pTerrain->getHp();
         }
-        if (hp > 0)
+        if (hp > 0 && pUnit == nullptr)
         {
             pAnim = pObjectManager->getResAnim("barforeground");
             pTextfield->setStyle(style);

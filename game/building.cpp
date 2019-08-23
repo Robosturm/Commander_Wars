@@ -133,12 +133,12 @@ void Building::loadSprite(QString spriteID, bool addPlayerColor)
         qint32 heigth = getBuildingHeigth();
         if (width == 1 && heigth == 1)
         {
-            pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
+            pSprite->setScale((GameMap::Imagesize + 1) / pAnim->getWidth());
             pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
         }
         else
         {
-            pSprite->setScale((GameMap::Imagesize * width) / pAnim->getWidth());
+            pSprite->setScale(((GameMap::Imagesize + 1) * width) / pAnim->getWidth());
             pSprite->setPosition(-pSprite->getScaledWidth() + GameMap::Imagesize, -pSprite->getScaledHeight() + GameMap::Imagesize);
         }
         this->addChild(pSprite);

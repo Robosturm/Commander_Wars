@@ -518,7 +518,7 @@ QString Unit::getTerrainAnimationBackground()
 bool Unit::canMoveOver(qint32 x, qint32 y)
 {
     GameMap* pMap = GameMap::getInstance();
-    if (MovementTableManager::getInstance()->getBaseMovementPoints(getMovementType(), pMap->getTerrain(x, y)) > 0)
+    if (MovementTableManager::getInstance()->getBaseMovementPoints(getMovementType(), pMap->getTerrain(x, y), this) > 0)
     {
         return true;
     }
@@ -1114,7 +1114,7 @@ void Unit::setBaseMovementPoints(const qint32 &value)
 qint32 Unit::getBaseMovementCosts(qint32 x, qint32 y)
 {
     GameMap* pMap = GameMap::getInstance();
-    return MovementTableManager::getInstance()->getBaseMovementPoints(getMovementType(), pMap->getTerrain(x, y));
+    return MovementTableManager::getInstance()->getBaseMovementPoints(getMovementType(), pMap->getTerrain(x, y), this);
 }
 
 qint32 Unit::getMovementCosts(qint32 x, qint32 y)

@@ -12,7 +12,7 @@ var Constructor = function()
                                 ["ROUGH_SEA", 2],
                                 ["REAF", 2]];
 
-    this.getMovementpoints = function(terrain)
+    this.getMovementpoints = function(terrain, unit)
     {
         if (terrain.getID() === "BRIDGE" && terrain.getBaseTerrainID() === "SEA")
         {

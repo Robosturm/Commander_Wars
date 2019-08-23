@@ -40,8 +40,8 @@ var Constructor = function()
         var ret = [];
         // can both units move over the current terrain?
         var moveType = Global[transportUnit.getMovementType()];
-        if ((moveType.getMovementpoints(targetTerrain) > 0) &&
-            (Global[unit.getMovementType()].getMovementpoints(targetTerrain) > 0))
+        if ((moveType.getMovementpoints(targetTerrain, transportUnit) > 0) &&
+            (Global[unit.getMovementType()].getMovementpoints(targetTerrain, unit) > 0))
         {
             // check all neighbour terrains
             for (var i = 0; i < targetFields.length; i++)
@@ -51,7 +51,7 @@ var Constructor = function()
                     var terrain = map.getTerrain(targetFields[i].x, targetFields[i].y);
                     var defUnit = terrain.getUnit();
                     // can the transported unit move over the terrain?
-                    if ((Global[transportUnit.getMovementType()].getMovementpoints(terrain) > 0) &&
+                    if ((Global[transportUnit.getMovementType()].getMovementpoints(terrain, transportUnit) > 0) &&
                         (defUnit === null || defUnit.isStealthed(unit.getOwner())))
                     {
                         ret.push(targetFields[i]);

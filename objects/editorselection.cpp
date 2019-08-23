@@ -196,12 +196,12 @@ EditorSelection::EditorSelection()
                 m_Units.append(unit);
                 oxygine::spSprite pSprite = new oxygine::Sprite();
                 QString movementType = unit->getMovementType();
-                if (pMovementTableManager->getBaseMovementPoints(movementType, plains.get()) > 0)
+                if (pMovementTableManager->getBaseMovementPoints(movementType, plains.get(), unit.get()) > 0)
                 {
                     pAnim = pTerrainManager->getResAnim("plains+0");
                     pSprite->setResAnim(pAnim);
                 }
-                else if (pMovementTableManager->getBaseMovementPoints(movementType, sea.get()) > 0)
+                else if (pMovementTableManager->getBaseMovementPoints(movementType, sea.get(), unit.get()) > 0)
                 {
                     pAnim = pTerrainManager->getResAnim("SEA");
                     pSprite->setResAnim(pAnim);

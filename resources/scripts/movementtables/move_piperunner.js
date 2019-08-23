@@ -9,11 +9,13 @@ var Constructor = function()
                                 ["PIPELINE", 1],
                                 ["PIPESTATION", 1],
                                 ["DESERT_WELD", 1],
+                                ["ZGATE_E_W", 1],
+                                ["ZGATE_N_S", 1],
                                 ["DESERT_PIPELINE", 1],
                                 ["SNOW_WELD", 2],
                                 ["SNOW_PIPELINE", 2]];
 
-    this.getMovementpoints = function(terrain)
+    this.getMovementpoints = function(terrain, unit)
     {
         return MOVEMENTTABLE.getMovementpointsFromTable(terrain, MOVE_PIPERUNNER.movementpointsTable);
     };

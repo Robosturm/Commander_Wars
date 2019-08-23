@@ -12947,6 +12947,32 @@
     </message>
 </context>
 <context>
+    <name>zgate_e_w</name>
+    <message>
+        <location filename="../resources/scripts/building/zgate_e_w.js" line="20"/>
+        <source>Gate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zgate_e_w.js" line="40"/>
+        <source>A gate through a wall can be crossed by all allied players. Can be destroyed by other players</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>zgate_n_s</name>
+    <message>
+        <location filename="../resources/scripts/building/zgate_n_s.js" line="21"/>
+        <source>Gate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/zgate_n_s.js" line="41"/>
+        <source>A gate through a wall can be crossed by all allied players. Can be destroyed by other players</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>zlaser</name>
     <message>
         <location filename="../resources/scripts/building/zlaser.js" line="37"/>

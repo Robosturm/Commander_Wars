@@ -61,6 +61,12 @@
 		<image file="silo.png" />
 		<image file="silo+rocket.png" />
 		
+		<!-- gate -->
+		<image file="gate+e+w.png" />
+		<image file="gate+e+w+mask.png" />
+		<image file="gate+n+s.png" />
+		<image file="gate+n+s+mask.png" />
+		
 		<!-- hq -->
 		<image file="hq+ac.png" cols = "2" />
 		<image file="hq+ac+mask.png" cols = "2" />

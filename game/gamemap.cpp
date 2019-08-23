@@ -304,7 +304,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
     {
         spTerrain pTerrain = getTerrain(x, y);
         if ((pTerrain->getUnit() == nullptr) &&
-            (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get()) > 0))
+            (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pUnit.get()) > 0))
         {
             pTerrain->setUnit(pUnit);
             return pUnit.get();
@@ -328,7 +328,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
             {
                 spTerrain pTerrain = getTerrain(x + x2 - currentRadius, y + y2);
                 if ((pTerrain->getUnit() == nullptr) &&
-                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get()) > 0))
+                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pUnit.get()) > 0))
                 {
                     pTerrain->setUnit(pUnit);
                     return pUnit.get();
@@ -343,7 +343,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
             {
                 spTerrain pTerrain = getTerrain(x + x2, y + y2);
                 if ((pTerrain->getUnit() == nullptr) &&
-                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get()) > 0))
+                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pUnit.get()) > 0))
                 {
                     pTerrain->setUnit(pUnit);
                     return pUnit.get();
@@ -358,7 +358,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
             {
                 spTerrain pTerrain = getTerrain(x + x2, y + y2);
                 if ((pTerrain->getUnit() == nullptr) &&
-                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get()) > 0))
+                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pUnit.get()) > 0))
                 {
                     pTerrain->setUnit(pUnit);
                     return pUnit.get();
@@ -373,7 +373,7 @@ Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint
             {
                 spTerrain pTerrain = getTerrain(x + x2, y + y2);
                 if ((pTerrain->getUnit() == nullptr) &&
-                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get()) > 0))
+                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pUnit.get()) > 0))
                 {
                     pTerrain->setUnit(pUnit);
                     return pUnit.get();
