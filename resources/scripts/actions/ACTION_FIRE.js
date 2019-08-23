@@ -251,12 +251,12 @@ var Constructor = function()
                         if (dmg1 >= dmg2)
                         {
                             result.x = dmg1;
-                            result.y = 1;
+                            result.y = 0;
                         }
                         else
                         {
                             result.x = dmg2;
-                            result.y = 2;
+                            result.y = 1;
                         }
                     }
                 }

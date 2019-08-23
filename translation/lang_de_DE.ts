@@ -1570,7 +1570,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/METEOR.js" line="117"/>
+        <location filename="../resources/scripts/terrain/METEOR.js" line="126"/>
         <source>Meteor pieces which can be attacked and destroyed &lt;div c=&apos;00ff00&apos;&gt;to eliminate plasma.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2121,7 +2121,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PLASMA.js" line="42"/>
+        <location filename="../resources/scripts/terrain/PLASMA.js" line="46"/>
         <source>Eectric charge us impassable but disappears if &lt;div c=&apos;00ff00&apos;&gt; meteor pieces&lt;/div&gt; are destroyed.</source>
         <translation type="unfinished"></translation>
     </message>

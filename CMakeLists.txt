@@ -220,6 +220,7 @@ set(${PROJECT_NAME}_SRCS
         multiplayer/lobbymenu.cpp
         multiplayer/multiplayermenu.cpp
         multiplayer/gameserver.cpp
+        multiplayer/gamedata.cpp
 
         #campaign support
         ingamescriptsupport/campaigneditor.cpp

@@ -84,7 +84,16 @@ var Constructor = function()
         for (i = 0; i < plasmaFields.length; i++)
         {
             field = plasmaFields[i];
-            map.replaceTerrain("PLAINS_PLASMA", field.x, field.y);
+            var placeTerrain = map.getTerrain(field.x, field.y);
+            var baseID = placeTerrain.getBaseTerrainID();
+            if (baseID === "PLAINS")
+            {
+                map.replaceTerrain("PLAINS_PLASMA", field.x, field.y);
+            }
+            else
+            {
+                map.replaceTerrain(baseID, field.x, field.y);
+            }
         }
         for (i = 0; i < plasmaFields.length; i++)
         {
