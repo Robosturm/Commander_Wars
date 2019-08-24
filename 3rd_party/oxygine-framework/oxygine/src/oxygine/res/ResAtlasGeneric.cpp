@@ -342,7 +342,7 @@ namespace oxygine
                 frames.reserve(frames_count);
 
                 ResAnim* ra = new ResAnim(this);
-
+                ra->setResPath(walker.getPath("file"));
 
                 anims.push_back(ra);
 

@@ -121,8 +121,9 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color)
             pSprite->setPosition(red * pixelSize, green * pixelSize);
             pSprite->setSize(pixelSize, pixelSize);
             pSprite->setColor(red, green, m_CurrentColor.blue(), 255);
-            pSprite->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+            pSprite->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* pEvent)
             {
+                pEvent->stopPropagation();
                 emit sigSelecetedColorChanged(QColor(red, green, m_CurrentColor.blue()));
             });
             m_ColorDialog->addChild(pSprite);
@@ -146,8 +147,9 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color)
         pSprite->setPosition(x, blue * pixelSize);
         pSprite->setSize(barWidth, pixelSize);
         pSprite->setColor(m_CurrentColor.red(), m_CurrentColor.green(), blue, 255);
-        pSprite->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+        pSprite->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* pEvent)
         {
+            pEvent->stopPropagation();
             emit sigSelecetedColorChanged(QColor(m_CurrentColor.red(), m_CurrentColor.green(), blue));
         });
         m_ColorDialog->addChild(pSprite);

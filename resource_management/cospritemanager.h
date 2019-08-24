@@ -3,6 +3,8 @@
 
 #include "QString"
 #include <QStringList>
+#include <qvector.h>
+#include <qimage.h>
 
 #include "oxygine-framework.h"
 
@@ -71,10 +73,26 @@ public:
      * @param coID
      */
     bool existsCO(QString coID);
+    /**
+     * @brief getResAnim
+     * @param id
+     * @param ep
+     * @return
+     */
+    virtual oxygine::ResAnim* getResAnim(const std::string& id, oxygine::error_policy ep = oxygine::ep_show_error) const override;
+    /**
+     * @brief loadResAnim
+     * @param coid
+     * @param file
+     * @param colorTable
+     * @param maskTable
+     */
+    void loadResAnim(QString coid, QString file, QImage& colorTable, QImage& maskTable);
 private:
     explicit COSpriteManager();
     virtual ~COSpriteManager() = default;
     QStringList m_loadedCOs;
+    QVector<std::tuple<QString, oxygine::spResAnim>> m_Ressources;
     static COSpriteManager* m_pInstance;
 };
 

@@ -1,5 +1,7 @@
 #include "coreengine/console.h"
 
+#include "coreengine/mainapp.h"
+
 #include "qdir.h"
 #include "qfile.h"
 #include "qfileinfo.h"
@@ -83,4 +85,71 @@ void Console::createSprites(QString file, QImage& colorTable, QImage maskTable)
     QFile::remove(maskFile);
     mainImg.save(file);
     maskImg.save(maskFile);
+}
+
+oxygine::ResAnim* Mainapp::createAnim(QString input, QString colorTable, QString newTable,
+                                      qint32 columns, qint32  rows, float scaleFactor)
+{
+    if (!QFile::exists(colorTable) && colorTable.endsWith(".png"))
+    {
+        Console::print(tr("The color table is not an existing file. ") + colorTable, Console::eERROR);
+        return nullptr;
+    }
+    QImage colorTableImg(colorTable);
+    if (!QFile::exists(newTable) && newTable.endsWith(".png"))
+    {
+        Console::print(tr("The mask table is not an existing file. ") + newTable, Console::eERROR);
+        return nullptr;
+    }
+    QImage maskTableImg(newTable);
+    if (maskTableImg.width() < colorTableImg.width())
+    {
+        Console::print(tr("The mask table is to small. ") + newTable, Console::eERROR);
+        return nullptr;
+    }
+    return createAnim(input, colorTableImg, maskTableImg, columns, rows, scaleFactor);
+}
+
+oxygine::ResAnim* Mainapp::createAnim(QString input, QImage& colorTableImg, QImage& maskTableImg,
+                                      qint32 columns, qint32  rows, float scaleFactor)
+{
+    QFileInfo inputInfo(input);
+    if (inputInfo.isFile() && inputInfo.exists())
+    {
+        createSprite(input, colorTableImg, maskTableImg);
+        oxygine::SingleResAnim* pRet = new oxygine::SingleResAnim();
+        pRet->init("temp.png", columns, rows, scaleFactor);
+        QFile::remove("temp.png");
+        return pRet;
+    }
+    return nullptr;
+}
+
+void Mainapp::createSprite(QString input, QImage& colorTableImg, QImage maskTableImg)
+{
+    QImage orgImg(input);
+    QImage mainImg(orgImg.size(), QImage::Format_RGBA8888);
+    for (qint32 x = 0; x < orgImg.width(); x++)
+    {
+        for (qint32 y = 0; y < orgImg.height(); y++)
+        {
+            // color pixel or another one?
+            QColor org = orgImg.pixelColor(x, y);
+            for (qint32 i = 0; i < colorTableImg.width(); i++)
+            {
+                QColor mask = colorTableImg.pixelColor(i, 0);
+                if (mask.rgba() == org.rgba())
+                {
+                    mainImg.setPixelColor(x, y, maskTableImg.pixelColor(i, 0));
+                    break;
+                }
+                else if (i == colorTableImg.width() - 1)
+                {
+                    mainImg.setPixelColor(x, y, orgImg.pixelColor(x, y));
+                }
+            }
+        }
+    }
+    QFile::remove("temp.png");
+    mainImg.save("temp.png");
 }

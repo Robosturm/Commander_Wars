@@ -152,3 +152,64 @@ bool COSpriteManager::existsCO(QString coID)
     }
     return false;
 }
+
+void COSpriteManager::loadResAnim(QString coid, QString file, QImage& colorTable, QImage& maskTable)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString coidLower = coid.toLower();
+    bool nrmFound = false;
+    bool faceFound = false;
+    bool infoFound = false;
+    for (qint32 i = 0; i < m_Ressources.size(); i++)
+    {
+        if (coidLower+ "+nrm" == std::get<0>(m_Ressources[i]))
+        {
+            oxygine::ResAnim* pAnim = oxygine::Resources::getResAnim((coidLower + "+nrm").toStdString(), oxygine::error_policy::ep_ignore_error);
+            std::get<1>(m_Ressources[i]) = pApp->createAnim(file + "+nrm.png", colorTable, maskTable, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
+            nrmFound = true;
+        }
+        else if (coidLower + "+face" == std::get<0>(m_Ressources[i]))
+        {
+            oxygine::ResAnim* pAnim = oxygine::Resources::getResAnim((coidLower + "+face").toStdString(), oxygine::error_policy::ep_ignore_error);
+            std::get<1>(m_Ressources[i]) = pApp->createAnim(file + "+face.png", colorTable, maskTable, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
+            faceFound = true;
+        }
+        else if (coidLower + "+info" == std::get<0>(m_Ressources[i]))
+        {
+            oxygine::ResAnim* pAnim = oxygine::Resources::getResAnim((coidLower + "+info").toStdString(), oxygine::error_policy::ep_ignore_error);
+            std::get<1>(m_Ressources[i]) = pApp->createAnim(file + "+info.png", colorTable, maskTable, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
+            infoFound = true;
+        }
+    }
+
+    if (!faceFound)
+    {
+        oxygine::ResAnim* pAnim = oxygine::Resources::getResAnim((coidLower + "+face").toStdString(), oxygine::error_policy::ep_ignore_error);
+        m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+face",
+                            pApp->createAnim(file + "+face.png", colorTable, maskTable, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor())));
+    }
+    if (!infoFound)
+    {
+        oxygine::ResAnim* pAnim = oxygine::Resources::getResAnim((coidLower + "+info").toStdString(), oxygine::error_policy::ep_ignore_error);
+        m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+info",
+                            pApp->createAnim(file + "+info.png", colorTable, maskTable, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor())));
+    }
+    if (!nrmFound)
+    {
+        oxygine::ResAnim* pAnim = oxygine::Resources::getResAnim((coidLower + "+nrm").toStdString(), oxygine::error_policy::ep_ignore_error);
+        m_Ressources.append(std::tuple<QString, oxygine::spResAnim>(coidLower + "+nrm",
+                            pApp->createAnim(file + "+nrm.png", colorTable, maskTable, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor())));
+    }
+}
+
+oxygine::ResAnim* COSpriteManager::getResAnim(const std::string& id, oxygine::error_policy ep) const
+{
+    for (qint32 i = 0; i < m_Ressources.size(); i++)
+    {
+        if (QString(id.c_str()).toLower() == std::get<0>(m_Ressources[i]).toLower())
+        {
+            return std::get<1>(m_Ressources[i]).get();
+        }
+    }
+    return oxygine::Resources::getResAnim(id, ep);
+}

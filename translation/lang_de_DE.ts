@@ -638,22 +638,22 @@
 <context>
     <name>Console</name>
     <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="13"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="15"/>
         <source>The color table is not an existing file. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="19"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="21"/>
         <source>The mask table is not an existing file. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="25"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="27"/>
         <source>The mask table is to small. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="46"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="48"/>
         <source>Input directory or file doesn&apos;t exists. </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1585,6 +1585,24 @@
     <message>
         <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="56"/>
         <source>Clear view. In Fog of War, Infantry unit&apos;s gain &lt;div c=&apos;00ff00&apos;&gt;vision +3.&lt;/div&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Mainapp</name>
+    <message>
+        <location filename="../spritingsupport/spritecreator.cpp" line="95"/>
+        <source>The color table is not an existing file. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../spritingsupport/spritecreator.cpp" line="101"/>
+        <source>The mask table is not an existing file. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../spritingsupport/spritecreator.cpp" line="107"/>
+        <source>The mask table is to small. </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

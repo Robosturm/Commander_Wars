@@ -143,6 +143,7 @@ set(${PROJECT_NAME}_SRCS
         coreengine/workerthread.cpp
         coreengine/dijkstramap.cpp
         coreengine/timer.cpp
+        coreengine/userdata.cpp
 
         # network engine
         network/tcpclient.cpp

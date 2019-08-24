@@ -49,6 +49,9 @@ namespace oxygine
 
         operator const AnimationFrame& ();
 
+        std::string getResPath() const;
+        void setResPath(const std::string &value);
+
     protected:
 
         void _load(LoadResourcesContext* ctx = 0) override;
@@ -61,5 +64,7 @@ namespace oxygine
         int         _framerate;
 
         animationFrames _frames;
+
+        std::string resPath;
     };
 }

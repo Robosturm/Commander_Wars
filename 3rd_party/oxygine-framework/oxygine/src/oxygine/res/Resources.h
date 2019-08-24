@@ -85,7 +85,7 @@ namespace oxygine
         /** get resource by id
         @param resource id
         */
-        ResAnim* getResAnim(const std::string& id, error_policy ep = ep_show_error) const;
+        virtual ResAnim* getResAnim(const std::string& id, error_policy ep = ep_show_error) const;
 
         /** get animation resource by id
         @param resource id

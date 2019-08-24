@@ -96,6 +96,16 @@ namespace oxygine
         //OX_ASSERT(!"can't unload resanim");
     }
 
+    std::string ResAnim::getResPath() const
+    {
+        return resPath;
+    }
+
+    void ResAnim::setResPath(const std::string &value)
+    {
+        resPath = value;
+    }
+
     void ResAnim::removeFrames()
     {
         _frames.clear();
