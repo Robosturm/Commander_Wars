@@ -493,7 +493,7 @@ var Constructor = function()
         {
             attacker.killUnit();
             // we destroyed a unit
-            map.getGameRecorder().destroyedUnit(defOwner.getPlayerID());
+            map.getGameRecorder().destroyedUnit(defUnit.getOwner().getPlayerID());
             attacker = null;
             if (defUnit !== null)
             {

@@ -1,6 +1,8 @@
 #include <QFile>
 #include <qdir.h>
 
+#include <qcryptographichash.h>
+
 #include "menue/editormenue.h"
 
 #include "coreengine/mainapp.h"
@@ -191,8 +193,35 @@ void EditorMenue::createTempFile(bool cleanUp)
     GameMap* pMap = GameMap::getInstance();
     pMap->serializeObject(stream);
     file.close();
-    tempCounter++;
 
+    QFile previous("temp/temp" + QString::number(tempCounter - 1) + ".tmp");
+    if (previous.exists())
+    {
+        file.open(QIODevice::ReadOnly | QIODevice::Truncate);
+        QCryptographicHash myHash(QCryptographicHash::Sha3_512);
+        myHash.addData(&file);
+        QByteArray hash = myHash.result();
+        file.close();
+
+        previous.open(QIODevice::ReadOnly | QIODevice::Truncate);
+        QCryptographicHash myHash1(QCryptographicHash::Sha3_512);
+        myHash1.addData(&previous);
+        QByteArray hash1 = myHash1.result();
+        previous.close();
+        // no changes don't save map and don't increase counters
+        if (hash1 == hash)
+        {
+            file.remove();
+        }
+        else
+        {
+            tempCounter++;
+        }
+    }
+    else
+    {
+        tempCounter++;
+    }
 }
 
 void EditorMenue::editorUndo()

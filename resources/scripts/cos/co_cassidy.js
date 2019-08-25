@@ -52,7 +52,7 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        CO_CASSIDY.rattiganDamage(co, 1, dialogAnimation);
+        CO_CASSIDY.cassidyDamage(co, 1, dialogAnimation);
 
         audio.clearPlayList();
         CO_CASSIDY.loadCOMusic(co);
