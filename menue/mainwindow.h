@@ -20,6 +20,7 @@ signals:
     void sigEnterLoadGame();
     void sigLastSaveGame();
     void sigEnterWikimenue();
+    void sigEnterCOStyleMenu();
 public slots:
     void enterSingleplayer();
     void enterEditor();
@@ -33,6 +34,7 @@ public slots:
     void changeUsername(QString name);
     void leaveMenue();
     void quitGame();
+    void enterCOStyleMenu();
 protected:
     void setButtonPosition(oxygine::spButton pButton, qint32 btnI);
 };

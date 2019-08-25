@@ -13,6 +13,7 @@
 #include "menue/mapselectionmapsmenue.h"
 #include "menue/creditsmenue.h"
 #include "menue/wikimenu.h"
+#include "menue/costylemenu.h"
 #include "multiplayer/lobbymenu.h"
 
 #include "objects/filedialog.h"
@@ -117,6 +118,17 @@ Mainwindow::Mainwindow()
     connect(this, &Mainwindow::sigEnterOptionmenue, this, &Mainwindow::enterOptionmenue, Qt::QueuedConnection);
     btnI++;
 
+    // co style button
+    oxygine::spButton pButtonCOStyle = ObjectManager::createButton(tr("CO Style"));
+    pButtonCOStyle->attachTo(this);
+    setButtonPosition(pButtonCOStyle, btnI);
+    pButtonCOStyle->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigEnterCOStyleMenu();
+    });
+    connect(this, &Mainwindow::sigEnterCOStyleMenu, this, &Mainwindow::enterCOStyleMenu, Qt::QueuedConnection);
+    btnI++;
+
     // wiki button
     oxygine::spButton pButtonWiki = ObjectManager::createButton(tr("Wiki"));
     pButtonWiki->attachTo(this);
@@ -126,7 +138,7 @@ Mainwindow::Mainwindow()
         emit sigEnterWikimenue();
     });
     connect(this, &Mainwindow::sigEnterWikimenue, this, &Mainwindow::enterWikimenue, Qt::QueuedConnection);
-    btnI++;
+    btnI++;    
 
     // credits button
     oxygine::spButton pButtonCredtis = ObjectManager::createButton(tr("Credits"));
@@ -176,7 +188,7 @@ void Mainwindow::changeUsername(QString name)
 
 void Mainwindow::setButtonPosition(oxygine::spButton pButton, qint32 btnI)
 {
-    static const qint32 buttonCount = 9;
+    static const qint32 buttonCount = 10;
     float buttonHeigth = pButton->getHeight() + 5;
     Mainapp* pApp = Mainapp::getInstance();
     pButton->setPosition(pApp->getSettings()->getWidth() / 2.0f - pButton->getWidth() / 2.0f, pApp->getSettings()->getHeight() / 2.0f - buttonCount  / 2.0f * buttonHeigth + buttonHeigth * btnI);
@@ -286,6 +298,15 @@ void Mainwindow::leaveMenue()
     pApp->suspendThread();
     Console::print("Leaving Main Menue", Console::eDEBUG);
     oxygine::Actor::detach();
+    pApp->continueThread();
+}
+
+void Mainwindow::enterCOStyleMenu()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    oxygine::getStage()->addChild(new COStyleMenu());
+    leaveMenue();
     pApp->continueThread();
 }
 
