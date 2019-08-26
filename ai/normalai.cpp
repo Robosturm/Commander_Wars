@@ -742,6 +742,31 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
                 QVector<QPoint> path = turnPfs.getPath(movePath[idx].x(), movePath[idx].y());
                 pAction->setMovepath(path, turnPfs.getCosts(path));
             }
+            // when we don't move try to attack if possible
+            if (pAction->getMovePath()[0] == QPoint(pUnit->getX(), pUnit->getY()) &&
+                (pUnit->getHp() > 3.5f))
+            {
+                pAction->setActionID(ACTION_FIRE);
+                QVector<QVector3D> ret;
+                QVector<QVector3D> moveTargetFields;
+                getBestAttacksFromField(pUnit, pAction, ret, moveTargetFields);
+                if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue()  * 3.0f / 4.0f)
+                {
+                    qint32 selection = Mainapp::randInt(0, ret.size() - 1);
+                    QVector3D target = ret[selection];
+                    CoreAI::addSelectedFieldData(pAction, QPoint(static_cast<qint32>(target.x()),
+                                                                 static_cast<qint32>(target.y())));
+                    if (pAction->isFinalStep())
+                    {
+                        updatePoints.append(pUnit->getPosition());
+                        updatePoints.append(pAction->getActionTarget());
+                        updatePoints.append(QPoint(static_cast<qint32>(target.x()),
+                                                   static_cast<qint32>(target.y())));
+                        emit performAction(pAction);
+                        return true;
+                    }
+                }
+            }
             if (pAction->getMovePath().size() > 0)
             {
                 updatePoints.append(pUnit->getPosition());
