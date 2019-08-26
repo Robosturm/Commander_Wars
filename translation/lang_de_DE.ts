@@ -825,6 +825,19 @@
     </message>
 </context>
 <context>
+    <name>DialogCOStyle</name>
+    <message>
+        <location filename="../objects/dialogcostyle.cpp" line="34"/>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogcostyle.cpp" line="45"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DialogConnecting</name>
     <message>
         <location filename="../objects/dialogconnecting.cpp" line="39"/>

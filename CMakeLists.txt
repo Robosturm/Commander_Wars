@@ -100,6 +100,7 @@ set(${PROJECT_NAME}_SRCS
         objects/folderdialog.cpp
         objects/coinfoactor.cpp
         objects/tableview.cpp
+        objects/dialogcostyle.cpp
 
         #menues
         menue/mainwindow.cpp

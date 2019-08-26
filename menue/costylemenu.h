@@ -15,6 +15,7 @@ signals:
 public slots:
     void exitMenue();
     void selectedCOIDChanged(QString coid);
+    void editCOStyle();
 private:
     oxygine::spSprite m_pCurrentCO;
     QString m_currentCOID;

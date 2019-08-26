@@ -53,7 +53,8 @@ COStyleMenu::COStyleMenu()
     m_pCurrentCO->setPosition(40 + pCOSelection->getScaledWidth(), 30);
     m_pCurrentCO->setScale(pCOSelection->getScale());
     addChild(m_pCurrentCO);
-    connect(pCOSelection.get(), &COSelection::coSelected, this, &COStyleMenu::selectedCOIDChanged);
+    connect(pCOSelection.get(), &COSelection::coSelected, this, &COStyleMenu::selectedCOIDChanged, Qt::QueuedConnection);
+    connect(pCOSelection.get(), &COSelection::coSelected, this, &COStyleMenu::editCOStyle, Qt::QueuedConnection);
 }
 
 void COStyleMenu::exitMenue()
@@ -78,5 +79,13 @@ void COStyleMenu::selectedCOIDChanged(QString coid)
     }
     m_pCurrentCO->setResAnim(pAnim);
     m_currentCOID = coid;
+    pApp->continueThread();
+}
+
+void COStyleMenu::editCOStyle()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
     pApp->continueThread();
 }

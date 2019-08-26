@@ -64,46 +64,78 @@
 		<!-- OS -->
 		<image file="os/co_andy+nrm.png" />
 		<image file="os/co_andy+info.png" />
-		<image file="os/co_andy+face.png" cols = "3" />
+		<image file="os/co_andy+face.png" cols = "3" />		
+		<image file="os/co_andy+alt+nrm.png" />
+		<image file="os/co_andy+alt+info.png" />
+		<image file="os/co_andy+alt+face.png" cols = "3" />		
 		<image file="os/co_hachi+nrm.png" />
 		<image file="os/co_hachi+info.png" />
-		<image file="os/co_hachi+face.png" cols = "3" />
+		<image file="os/co_hachi+face.png" cols = "3" />		
+		<image file="os/co_hachi+alt+nrm.png" />
+		<image file="os/co_hachi+alt+info.png" />
+		<image file="os/co_hachi+alt+face.png" cols = "3" />		
 		<image file="os/co_max+nrm.png" />
 		<image file="os/co_max+info.png" />
-		<image file="os/co_max+face.png" cols = "3" />
+		<image file="os/co_max+face.png" cols = "3" />		
+		<image file="os/co_max+alt+nrm.png" />
+		<image file="os/co_max+alt+info.png" />
+		<image file="os/co_max+alt+face.png" cols = "3" />		
 		<image file="os/co_nell+nrm.png" />
 		<image file="os/co_nell+info.png" />
-		<image file="os/co_nell+face.png" cols = "3" />
+		<image file="os/co_nell+face.png" cols = "3" />		
+		<image file="os/co_nell+alt+nrm.png" />
+		<image file="os/co_nell+alt+info.png" />
+		<image file="os/co_nell+alt+face.png" cols = "3" />		
 		<image file="os/co_sami+nrm.png" />
 		<image file="os/co_sami+info.png" />
-		<image file="os/co_sami+face.png" cols = "3" />		
+		<image file="os/co_sami+face.png" cols = "3" />
+		<image file="os/co_sami+alt+nrm.png" />
+		<image file="os/co_sami+alt+info.png" />
+		<image file="os/co_sami+alt+face.png" cols = "3" />		
 		<image file="os/co_jake+nrm.png" />
 		<image file="os/co_jake+info.png" />
-		<image file="os/co_jake+face.png" cols = "3" />
+		<image file="os/co_jake+face.png" cols = "3" />		
+		<image file="os/co_jake+alt+nrm.png" />
+		<image file="os/co_jake+alt+info.png" />
+		<image file="os/co_jake+alt+face.png" cols = "3" />		
 		<image file="os/co_rachel+nrm.png" />
 		<image file="os/co_rachel+info.png" />
-		<image file="os/co_rachel+face.png" cols = "3" />
+		<image file="os/co_rachel+face.png" cols = "3" />		
+		<image file="os/co_rachel+alt+nrm.png" />
+		<image file="os/co_rachel+alt+info.png" />
+		<image file="os/co_rachel+alt+face.png" cols = "3" />		
 		<image file="os/co_officier_os+face.png" cols = "3" />		
 		
 		<!-- BM -->
 		<image file="bm/co_colin+nrm.png" />
 		<image file="bm/co_colin+info.png" />
-		<image file="bm/co_colin+face.png" cols = "3" />
+		<image file="bm/co_colin+face.png" cols = "3" />		
+		<image file="bm/co_colin+alt+nrm.png" />
+		<image file="bm/co_colin+alt+info.png" />
+		<image file="bm/co_colin+alt+face.png" cols = "3" />		
 		<image file="bm/co_grit+nrm.png" />
 		<image file="bm/co_grit+info.png" />
-		<image file="bm/co_grit+face.png" cols = "3" />
+		<image file="bm/co_grit+face.png" cols = "3" />		
+		<image file="bm/co_grit+alt+nrm.png" />
+		<image file="bm/co_grit+alt+info.png" />
+		<image file="bm/co_grit+alt+face.png" cols = "3" />		
 		<image file="bm/co_olaf+nrm.png" />
 		<image file="bm/co_olaf+info.png" />
-		<image file="bm/co_olaf+face.png" cols = "3" />
+		<image file="bm/co_olaf+face.png" cols = "3" />		
+		<image file="bm/co_olaf+alt+nrm.png" />
+		<image file="bm/co_olaf+alt+info.png" />
+		<image file="bm/co_olaf+alt+face.png" cols = "3" />		
 		<image file="bm/co_sasha+nrm.png" />
 		<image file="bm/co_sasha+info.png" />
-		<image file="bm/co_sasha+face.png" cols = "3" />
+		<image file="bm/co_sasha+face.png" cols = "3" />		
+		<image file="bm/co_sasha+alt+nrm.png" />
+		<image file="bm/co_sasha+alt+info.png" />
+		<image file="bm/co_sasha+alt+face.png" cols = "3" />		
 		<image file="bm/co_alexander+nrm.png" />
 		<image file="bm/co_alexander+info.png" />
 		<image file="bm/co_alexander+face.png" cols = "3" />
 		<image file="bm/co_officier_bm+face.png" cols = "3" />
-		
-		
+			
 		<!-- BD -->
 		<image file="bd/co_tempest+nrm.png" />
 		<image file="bd/co_tempest+info.png" />
@@ -165,13 +197,22 @@
 		<!-- GE -->
 		<image file="ge/co_eagle+nrm.png" />
 		<image file="ge/co_eagle+info.png" />
-		<image file="ge/co_eagle+face.png" cols = "3" />
+		<image file="ge/co_eagle+face.png" cols = "3" />		
+		<image file="ge/co_eagle+alt+nrm.png" />
+		<image file="ge/co_eagle+alt+info.png" />
+		<image file="ge/co_eagle+alt+face.png" cols = "3" />		
 		<image file="ge/co_jess+nrm.png" />
 		<image file="ge/co_jess+info.png" />
-		<image file="ge/co_jess+face.png" cols = "3" />
+		<image file="ge/co_jess+face.png" cols = "3" />		
+		<image file="ge/co_jess+alt+nrm.png" />
+		<image file="ge/co_jess+alt+info.png" />
+		<image file="ge/co_jess+alt+face.png" cols = "3" />		
 		<image file="ge/co_drake+nrm.png" />
 		<image file="ge/co_drake+info.png" />
-		<image file="ge/co_drake+face.png" cols = "3" />		
+		<image file="ge/co_drake+face.png" cols = "3" />
+		<image file="ge/co_drake+alt+nrm.png" />
+		<image file="ge/co_drake+alt+info.png" />
+		<image file="ge/co_drake+alt+face.png" cols = "3" />		
 		<image file="ge/co_peter+nrm.png" />
 		<image file="ge/co_peter+info.png" />
 		<image file="ge/co_peter+face.png" cols = "3" />
@@ -180,7 +221,10 @@
 		<image file="ge/co_smitan+face.png" cols = "3" />
 		<image file="ge/co_javier+nrm.png" />
 		<image file="ge/co_javier+info.png" />
-		<image file="ge/co_javier+face.png" cols = "3" />
+		<image file="ge/co_javier+face.png" cols = "3" />		
+		<image file="ge/co_javier+alt+nrm.png" />
+		<image file="ge/co_javier+alt+info.png" />
+		<image file="ge/co_javier+alt+face.png" cols = "3" />		
 		<image file="ge/co_officier_ge+face.png" cols = "3" />		
 		
 		<!-- gs -->
@@ -249,16 +293,28 @@
 		<!-- YC -->
 		<image file="yc/co_kanbei+nrm.png" />
 		<image file="yc/co_kanbei+info.png" />
-		<image file="yc/co_kanbei+face.png" cols = "3" />
+		<image file="yc/co_kanbei+face.png" cols = "3" />		
+		<image file="yc/co_kanbei+alt+nrm.png" />
+		<image file="yc/co_kanbei+alt+info.png" />
+		<image file="yc/co_kanbei+alt+face.png" cols = "3" />		
 		<image file="yc/co_grimm+nrm.png" />
 		<image file="yc/co_grimm+info.png" />
-		<image file="yc/co_grimm+face.png" cols = "3" />
+		<image file="yc/co_grimm+face.png" cols = "3" />		
+		<image file="yc/co_grimm+alt+nrm.png" />
+		<image file="yc/co_grimm+alt+info.png" />
+		<image file="yc/co_grimm+alt+face.png" cols = "3" />		
 		<image file="yc/co_sensei+nrm.png" />
 		<image file="yc/co_sensei+info.png" />
-		<image file="yc/co_sensei+face.png" cols = "3" />
+		<image file="yc/co_sensei+face.png" cols = "3" />		
+		<image file="yc/co_sensei+alt+nrm.png" />
+		<image file="yc/co_sensei+alt+info.png" />
+		<image file="yc/co_sensei+alt+face.png" cols = "3" />		
 		<image file="yc/co_sonja+nrm.png" />
 		<image file="yc/co_sonja+info.png" />
-		<image file="yc/co_sonja+face.png" cols = "3" />		
+		<image file="yc/co_sonja+face.png" cols = "3" />
+		<image file="yc/co_sonja+alt+nrm.png" />
+		<image file="yc/co_sonja+alt+info.png" />
+		<image file="yc/co_sonja+alt+face.png" cols = "3" />		
 		<image file="yc/co_rattigan+nrm.png" />
 		<image file="yc/co_rattigan+info.png" />
 		<image file="yc/co_rattigan+face.png" cols = "3" />		
@@ -267,34 +323,61 @@
 		<!-- BH -->
 		<image file="bh/co_sturm+nrm.png" />
 		<image file="bh/co_sturm+info.png" />
-		<image file="bh/co_sturm+face.png" cols = "3" />
+		<image file="bh/co_sturm+face.png" cols = "3" />		
+		<image file="bh/co_sturm+alt+nrm.png" />
+		<image file="bh/co_sturm+alt+info.png" />
+		<image file="bh/co_sturm+alt+face.png" cols = "3" />		
 		<image file="bh/co_flak+nrm.png" />
 		<image file="bh/co_flak+info.png" />
-		<image file="bh/co_flak+face.png" cols = "3" />
+		<image file="bh/co_flak+face.png" cols = "3" />		
+		<image file="bh/co_flak+alt+nrm.png" />
+		<image file="bh/co_flak+alt+info.png" />
+		<image file="bh/co_flak+alt+face.png" cols = "3" />		
 		<image file="bh/co_hawke+nrm.png" />
 		<image file="bh/co_hawke+info.png" />
-		<image file="bh/co_hawke+face.png" cols = "3" />
+		<image file="bh/co_hawke+face.png" cols = "3" />		
+		<image file="bh/co_hawke+alt+nrm.png" />
+		<image file="bh/co_hawke+alt+info.png" />
+		<image file="bh/co_hawke+alt+face.png" cols = "3" />		
 		<image file="bh/co_adder+nrm.png" />
 		<image file="bh/co_adder+info.png" />
-		<image file="bh/co_adder+face.png" cols = "3" />
+		<image file="bh/co_adder+face.png" cols = "3" />		
+		<image file="bh/co_adder+alt+nrm.png" />
+		<image file="bh/co_adder+alt+info.png" />
+		<image file="bh/co_adder+alt+face.png" cols = "3" />		
 		<image file="bh/co_lash+nrm.png" />
 		<image file="bh/co_lash+info.png" />
-		<image file="bh/co_lash+face.png" cols = "3" />
+		<image file="bh/co_lash+face.png" cols = "3" />		
+		<image file="bh/co_lash+alt+nrm.png" />
+		<image file="bh/co_lash+alt+info.png" />
+		<image file="bh/co_lash+alt+face.png" cols = "3" />		
 		<image file="bh/co_officier_bh+face.png" cols = "3" />		
 		
 		<!-- BG -->
 		<image file="bg/co_kindle+nrm.png" />
 		<image file="bg/co_kindle+info.png" />
-		<image file="bg/co_kindle+face.png" cols = "3" />
+		<image file="bg/co_kindle+face.png" cols = "3" />		
+		<image file="bg/co_kindle+alt+nrm.png" />
+		<image file="bg/co_kindle+alt+info.png" />
+		<image file="bg/co_kindle+alt+face.png" cols = "3" />		
 		<image file="bg/co_koal+nrm.png" />
 		<image file="bg/co_koal+info.png" />
-		<image file="bg/co_koal+face.png" cols = "3" />
+		<image file="bg/co_koal+face.png" cols = "3" />		
+		<image file="bg/co_koal+alt+nrm.png" />
+		<image file="bg/co_koal+alt+info.png" />
+		<image file="bg/co_koal+alt+face.png" cols = "3" />		
 		<image file="bg/co_von_bolt+nrm.png" />
 		<image file="bg/co_von_bolt+info.png" />
-		<image file="bg/co_von_bolt+face.png" cols = "3" />
+		<image file="bg/co_von_bolt+face.png" cols = "3" />		
+		<image file="bg/co_von_bolt+alt+nrm.png" />
+		<image file="bg/co_von_bolt+alt+info.png" />
+		<image file="bg/co_von_bolt+alt+face.png" cols = "3" />		
 		<image file="bg/co_jugger+nrm.png" />
 		<image file="bg/co_jugger+info.png" />
-		<image file="bg/co_jugger+face.png" cols = "3" />
+		<image file="bg/co_jugger+face.png" cols = "3" />		
+		<image file="bg/co_jugger+alt+nrm.png" />
+		<image file="bg/co_jugger+alt+info.png" />
+		<image file="bg/co_jugger+alt+face.png" cols = "3" />
 		
 		<!-- MA -->
 		<image file="ma/co_napoleon+nrm.png" />
