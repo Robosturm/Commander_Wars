@@ -1,3 +1,5 @@
+#include "qfile.h"
+
 #include "costylemenu.h"
 
 #include "coreengine/mainapp.h"
@@ -11,6 +13,8 @@
 #include "resource_management/cospritemanager.h"
 
 #include "objects/coselection.h"
+
+#include "objects/dialogcostyle.h"
 
 COStyleMenu::COStyleMenu()
     : QObject()
@@ -44,17 +48,27 @@ COStyleMenu::COStyleMenu()
     });
     connect(this, &COStyleMenu::sigExitMenue, this, &COStyleMenu::exitMenue, Qt::QueuedConnection);
 
+    oxygine::spButton pButtonEdit = ObjectManager::createButton(tr("Edit CO"));
+    pButtonEdit->attachTo(this);
+    pButtonEdit->setPosition(pApp->getSettings()->getWidth() - pButtonExit->getWidth() - 20, pApp->getSettings()->getHeight() - pButtonExit->getHeight() - 10);
+    pButtonEdit->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigEditCOStyle();
+    });
+    connect(this, &COStyleMenu::sigEditCOStyle, this, &COStyleMenu::editCOStyle, Qt::QueuedConnection);
+
     spCOSelection pCOSelection = new COSelection();
     pCOSelection->colorChanged(QColor(248, 88, 0));
     pCOSelection->setScale((Settings::getWidth() - 70) / (pCOSelection->getWidth() + 208));
     addChild(pCOSelection);
+
+
 
     m_pCurrentCO = new oxygine::Sprite();
     m_pCurrentCO->setPosition(40 + pCOSelection->getScaledWidth(), 30);
     m_pCurrentCO->setScale(pCOSelection->getScale());
     addChild(m_pCurrentCO);
     connect(pCOSelection.get(), &COSelection::coSelected, this, &COStyleMenu::selectedCOIDChanged, Qt::QueuedConnection);
-    connect(pCOSelection.get(), &COSelection::coSelected, this, &COStyleMenu::editCOStyle, Qt::QueuedConnection);
 }
 
 void COStyleMenu::exitMenue()
@@ -86,6 +100,19 @@ void COStyleMenu::editCOStyle()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+    oxygine::ResAnim* pAnim = nullptr;
+    if (!m_currentCOID.isEmpty())
+    {
+        QStringList styles = pCOSpriteManager->getCOStyles(m_currentCOID);
+        pAnim = pCOSpriteManager->getResAnim((m_currentCOID + "+nrm").toStdString().c_str());
+        QString filePath = pAnim->getResPath().c_str();
+        filePath = filePath.replace("nrm.png", "");
+        if (QFile::exists(filePath + "table.png") || styles.size() > 0)
+        {
+            spDialogCOStyle pDialogCOStyle = new DialogCOStyle(m_currentCOID);
+            addChild(pDialogCOStyle);
+        }
+    }
     pApp->continueThread();
 }

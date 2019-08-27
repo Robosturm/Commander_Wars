@@ -12,6 +12,7 @@ public:
     explicit COStyleMenu();
 signals:
     void sigExitMenue();
+    void sigEditCOStyle();
 public slots:
     void exitMenue();
     void selectedCOIDChanged(QString coid);

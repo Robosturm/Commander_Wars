@@ -61,6 +61,31 @@ QString COSpriteManager::getCOName(qint32 position)
     return "";
 }
 
+
+QStringList COSpriteManager::getCOStyles(QString id)
+{
+    for (qint32 i = 0; i < m_loadedCOs.size(); i++)
+    {
+        if (m_loadedCOs[i] == id)
+        {
+            return getCOStyles(i);
+        }
+    }
+    return QStringList();
+}
+
+QStringList COSpriteManager::getCOStyles(qint32 position)
+{
+    if ((position >= 0) && (position < m_loadedCOs.size()))
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        Interpreter* pInterpreter = pApp->getInterpreter();
+        QJSValue value = pInterpreter->doFunction(m_loadedCOs[position], "getCOStyles");
+        return value.toVariant().toStringList();
+    }
+    return QStringList();
+}
+
 void COSpriteManager::loadAll()
 {
     reset();

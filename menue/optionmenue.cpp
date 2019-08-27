@@ -632,6 +632,10 @@ void OptionMenue::showSettings()
         }
         else
         {
+            if (value != Settings::getUsername())
+            {
+                restartNeeded = true;
+            }
             Settings::setUsername(value);
         }
     });

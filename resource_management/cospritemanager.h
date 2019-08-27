@@ -88,6 +88,18 @@ public:
      * @param maskTable
      */
     void loadResAnim(QString coid, QString file, QImage& colorTable, QImage& maskTable);
+    /**
+     * @brief getCOStyles
+     * @param id
+     * @return
+     */
+    QStringList getCOStyles(QString id);
+    /**
+     * @brief getCOStyles
+     * @param id
+     * @return
+     */
+    QStringList getCOStyles(qint32 id);
 private:
     explicit COSpriteManager();
     virtual ~COSpriteManager() = default;

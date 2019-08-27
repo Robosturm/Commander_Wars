@@ -1,5 +1,12 @@
 var Constructor = function()
 {
+    this.getCOStyles = function()
+    {
+        // string array containing the endings of the alternate co style
+        // e.g. co_adder has ["+alt"]
+        return ["+alt"];
+    };
+
     this.init = function(co)
     {
         co.setPowerStars(6);

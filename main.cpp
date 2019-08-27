@@ -9,6 +9,9 @@
 
 #include "coreengine/audiothread.h"
 #include "coreengine/mainapp.h"
+
+#include "coreengine/userdata.h"
+
 #include "network/tcpserver.h"
 
 #include "coreengine/console.h"
@@ -180,7 +183,7 @@ int main(int argc, char* argv[])
     UnitSpriteManager::getInstance();
     BattleAnimationManager::getInstance();
     WikiDatabase::getInstance();
-
+    Userdata* pUserdata = Userdata::getInstance();
     /*************************************************************************************************/
     // This is the main game loop.
     app.start();
@@ -203,6 +206,8 @@ int main(int argc, char* argv[])
     {
         GameMap::getInstance()->deleteMap();
     }
+
+    pUserdata->storeUser();
 
     // If we get here, the user has requested the Application to terminate.
     // We dump and log all our created objects that have not been freed yet
