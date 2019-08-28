@@ -104,15 +104,8 @@ void COStyleMenu::editCOStyle()
     oxygine::ResAnim* pAnim = nullptr;
     if (!m_currentCOID.isEmpty())
     {
-        QStringList styles = pCOSpriteManager->getCOStyles(m_currentCOID);
-        pAnim = pCOSpriteManager->getResAnim((m_currentCOID + "+nrm").toStdString().c_str());
-        QString filePath = pAnim->getResPath().c_str();
-        filePath = filePath.replace("nrm.png", "");
-        if (QFile::exists(filePath + "table.png") || styles.size() > 0)
-        {
-            spDialogCOStyle pDialogCOStyle = new DialogCOStyle(m_currentCOID);
-            addChild(pDialogCOStyle);
-        }
+        spDialogCOStyle pDialogCOStyle = new DialogCOStyle(m_currentCOID);
+        addChild(pDialogCOStyle);
     }
     pApp->continueThread();
 }

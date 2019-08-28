@@ -29,7 +29,7 @@ void Userdata::storeUser()
     user.remove();
     user.open(QIODevice::WriteOnly);
     QDataStream pStream(&user);
-    deserializeObject(pStream);
+    serializeObject(pStream);
     user.close();
 }
 
@@ -104,6 +104,7 @@ void Userdata::deserializeObject(QDataStream& pStream)
     qint32 version = 0;
     pStream >> version;
     qint32 size = 0;
+    pStream >> size;
     for (qint32 i = 0; i < size; i++)
     {
         QString coid;

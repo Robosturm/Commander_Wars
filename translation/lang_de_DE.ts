@@ -835,13 +835,24 @@
 <context>
     <name>DialogCOStyle</name>
     <message>
-        <location filename="../objects/dialogcostyle.cpp" line="34"/>
+        <location filename="../objects/dialogcostyle.cpp" line="35"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogcostyle.cpp" line="45"/>
+        <location filename="../objects/dialogcostyle.cpp" line="47"/>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogcostyle.cpp" line="91"/>
+        <source>Predefined Styles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogcostyle.cpp" line="124"/>
+        <location filename="../objects/dialogcostyle.cpp" line="133"/>
+        <source>CO Style </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
