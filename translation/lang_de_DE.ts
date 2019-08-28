@@ -623,27 +623,30 @@
 <context>
     <name>ColorSelectionDialog</name>
     <message>
-        <location filename="../objects/colorselectiondialog.cpp" line="28"/>
+        <location filename="../objects/colorselectiondialog.cpp" line="26"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/colorselectiondialog.cpp" line="38"/>
+        <location filename="../objects/colorselectiondialog.cpp" line="36"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>ColorSelector</name>
     <message>
-        <location filename="../objects/colorselectiondialog.cpp" line="59"/>
+        <location filename="../objects/colorselector.cpp" line="40"/>
         <source>Red: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/colorselectiondialog.cpp" line="72"/>
+        <location filename="../objects/colorselector.cpp" line="53"/>
         <source>Green: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/colorselectiondialog.cpp" line="85"/>
+        <location filename="../objects/colorselector.cpp" line="66"/>
         <source>Blue: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3708,13 +3711,13 @@
 <context>
     <name>WALL</name>
     <message>
-        <location filename="../resources/scripts/terrain/WALL.js" line="15"/>
+        <location filename="../resources/scripts/terrain/WALL.js" line="14"/>
         <source>Wall</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/WALL.js" line="65"/>
-        <source>Dark Matter Walls can&apos;t be crossed by most units. They can be destroyed to create a path through them.</source>
+        <location filename="../resources/scripts/terrain/WALL.js" line="53"/>
+        <source>Dark Matter Walls can&apos;t be crossed by most units. They can be destroyed at gates and weak wall parts.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3728,6 +3731,19 @@
     <message>
         <location filename="../resources/scripts/terrain/WASTELAND.js" line="31"/>
         <source>Infantry and Mech units aside, mobility is impaired on rough terrain.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WEAK_WALL</name>
+    <message>
+        <location filename="../resources/scripts/terrain/WEAK_WALL.js" line="15"/>
+        <source>Weak Wall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/WEAK_WALL.js" line="89"/>
+        <source>Dark Matter Walls can&apos;t be crossed by most units. The wall can be destroyed here to produce a path through the wall.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -42,7 +42,7 @@ var Constructor = function()
 
     this.getBaseDamage = function(unit)
     {
-        return WEAPON.getDamageFromTable(unit, WEAPON_MOTORBIKE_MG.damageTable);
+        return WEAPON.getDamageFromTable(unit, WEAPON_MOTORBIKE_MG.damageTable, "WEAPON_MOTORBIKE_MG");
     };
 };
 

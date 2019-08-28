@@ -67,7 +67,7 @@ var Constructor = function()
 
     this.getBaseDamage = function(unit)
     {
-        return WEAPON.getDamageFromTable(unit, WEAPON_PIPERUNNER_MISSILE.damageTable);
+        return WEAPON.getDamageFromTable(unit, WEAPON_PIPERUNNER_MISSILE.damageTable, "WEAPON_PIPERUNNER_MISSILE");
     };
 };
 

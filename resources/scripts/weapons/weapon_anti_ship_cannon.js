@@ -43,7 +43,7 @@ var Constructor = function()
 
     this.getBaseDamage = function(unit)
     {
-        return WEAPON.getDamageFromTable(unit, WEAPON_ANTI_SHIP_CANNON.damageTable);
+        return WEAPON.getDamageFromTable(unit, WEAPON_ANTI_SHIP_CANNON.damageTable, "WEAPON_ANTI_SHIP_CANNON");
     };
 };
 

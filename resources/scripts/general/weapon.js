@@ -10,9 +10,9 @@ var WEAPON =
         return -1
     },
 
-    getDamageFromTable : function(unit, damageTable)
+    getDamageFromTable : function(unit, damageTable, weaponID)
     {
-        var unitID = unit.getUnitID();
+        var unitID = unit.getUnitDamageID();
         for (var i = 0; i < damageTable.length; i++)
         {
             if (damageTable[i][0] === unitID)
@@ -20,7 +20,8 @@ var WEAPON =
                return damageTable[i][1];
             }
         }
-        return -1;
+        // nothing found :(
+        return unit.getUnitDamage(weaponID);
     },
     getEnviromentDamage : function(enviromentId)
     {

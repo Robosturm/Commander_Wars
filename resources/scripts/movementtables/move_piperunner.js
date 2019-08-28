@@ -9,8 +9,6 @@ var Constructor = function()
                                 ["PIPELINE", 1],
                                 ["PIPESTATION", 1],
                                 ["DESERT_WELD", 1],
-                                ["ZGATE_E_W", 1],
-                                ["ZGATE_N_S", 1],
                                 ["DESERT_PIPELINE", 1],
                                 ["SNOW_WELD", 2],
                                 ["SNOW_PIPELINE", 2]];

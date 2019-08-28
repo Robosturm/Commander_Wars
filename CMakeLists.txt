@@ -101,6 +101,7 @@ set(${PROJECT_NAME}_SRCS
         objects/coinfoactor.cpp
         objects/tableview.cpp
         objects/dialogcostyle.cpp
+        objects/colorselector.cpp
 
         #menues
         menue/mainwindow.cpp

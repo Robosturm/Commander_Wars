@@ -63,7 +63,7 @@ var Constructor = function()
 
     this.getBaseDamage = function(unit)
     {
-        return WEAPON.getDamageFromTable(unit, WEAPON_WATERPLANE_MISSILE.damageTable);
+        return WEAPON.getDamageFromTable(unit, WEAPON_WATERPLANE_MISSILE.damageTable, "WEAPON_WATERPLANE_MISSILE");
     };
 };
 

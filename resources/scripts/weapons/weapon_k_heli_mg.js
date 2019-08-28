@@ -48,7 +48,7 @@ var Constructor = function()
 
     this.getBaseDamage = function(unit)
     {
-        return WEAPON.getDamageFromTable(unit, WEAPON_K_HELI_MG.damageTable);
+        return WEAPON.getDamageFromTable(unit, WEAPON_K_HELI_MG.damageTable, "WEAPON_K_HELI_MG");
     };
 };
 

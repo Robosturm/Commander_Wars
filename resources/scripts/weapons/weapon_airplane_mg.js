@@ -48,7 +48,7 @@ var Constructor = function()
 
     this.getBaseDamage = function(unit)
     {
-        return WEAPON.getDamageFromTable(unit, WEAPON_AIRPLANE_MG.damageTable);
+        return WEAPON.getDamageFromTable(unit, WEAPON_AIRPLANE_MG.damageTable, "WEAPON_AIRPLANE_MG");
     };
 };
 

@@ -48,7 +48,7 @@ var Constructor = function()
 
     this.getBaseDamage = function(unit)
     {
-        return WEAPON.getDamageFromTable(unit, WEAPON_HEAVY_HOVERCRAFT_MG.damageTable);
+        return WEAPON.getDamageFromTable(unit, WEAPON_HEAVY_HOVERCRAFT_MG.damageTable, "WEAPON_HEAVY_HOVERCRAFT_MG");
     };
 };
 

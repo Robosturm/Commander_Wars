@@ -47,7 +47,7 @@ var Constructor = function()
 
     this.getBaseDamage = function(unit)
     {
-        return WEAPON.getDamageFromTable(unit, WEAPON_BATTLESHIP_CANNON.damageTable);
+        return WEAPON.getDamageFromTable(unit, WEAPON_BATTLESHIP_CANNON.damageTable, "WEAPON_BATTLESHIP_CANNON");
     };
 };
 

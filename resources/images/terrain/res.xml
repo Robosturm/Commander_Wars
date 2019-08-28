@@ -247,6 +247,8 @@
 		<image file="wall+S.png" />
 		<image file="wall+S+W.png" />
 		<image file="wall+W.png" />
+		<image file="weak_wall+E+W.png" />
+		<image file="weak_wall+N+S.png" />
 		
 		<image file="bridge.png" />
 		<image file="bridge+E.png" />

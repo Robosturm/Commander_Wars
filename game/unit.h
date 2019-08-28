@@ -312,6 +312,17 @@ public slots:
      */
     QString getUnitID();
     /**
+     * @brief getUnitDamageID
+     * @return
+     */
+    QString getUnitDamageID();
+    /**
+     * @brief getUnitDamage
+     * @param weaponID
+     * @return
+     */
+    float getUnitDamage(QString weaponID);
+    /**
      * @brief getX
      * @return  x coordinates of this unit
      */

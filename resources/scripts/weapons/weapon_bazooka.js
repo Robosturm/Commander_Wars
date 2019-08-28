@@ -33,7 +33,7 @@ var Constructor = function()
 
     this.getBaseDamage = function(unit)
     {
-        return WEAPON.getDamageFromTable(unit, WEAPON_BAZOOKA.damageTable);
+        return WEAPON.getDamageFromTable(unit, WEAPON_BAZOOKA.damageTable, "WEAPON_BAZOOKA");
     };
 };
 

@@ -1480,6 +1480,40 @@ QString Unit::getUnitID()
     return m_UnitID;
 }
 
+QString Unit::getUnitDamageID()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getUnitDamageID";
+    QJSValueList args1;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    if (ret.isString())
+    {
+        QString retStr = ret.toString();
+        if (retStr.isEmpty())
+        {
+            return m_UnitID;
+        }
+        return retStr;
+    }
+        return m_UnitID;
+}
+
+float Unit::getUnitDamage(QString weaponID)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getUnitDamage";
+    QJSValueList args1;
+    args1 << weaponID;
+    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj1;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    if (ret.isNumber())
+    {
+        return static_cast<float>(ret.toNumber());
+    }
+    return -1;
+}
+
 qint32 Unit::getX() const
 {
     if (m_pTerrain != nullptr)

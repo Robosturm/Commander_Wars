@@ -1,5 +1,22 @@
 var UNIT =
 {
+    getUnitDamageID : function()
+    {
+        // empty string will be replaced by the actual unit id to find the damage value in the table
+        // else the given string is used to get the entry
+        // return something like BOMBER to give your custom unit the same weakness as a normal bomber
+        return "";
+    },
+
+    getUnitDamage : function(weaponID, defender)
+    {
+        // weaponID string of the used weaponID
+        // defender pointer to the which is attacked or used to check how much damage we will deal to it
+        // gets called if no normal damage entry was found.
+        // use this function to impl the damage this unit takes from certain weapons
+        return -1;
+    },
+
     init : function(unit)
     {
         unit.setAmmo1(0);
