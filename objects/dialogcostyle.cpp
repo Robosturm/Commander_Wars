@@ -178,6 +178,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         pApp->continueThread();
     });
     m_pPixelPanel->clearContent();
+    m_Pixels.clear();
     qint32 y = 10;
     qint32 xStep = 0;
 
