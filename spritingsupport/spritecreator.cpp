@@ -5,10 +5,11 @@
 #include "qdir.h"
 #include "qfile.h"
 #include "qfileinfo.h"
-#include "qimage.h"
 #include "qdiriterator.h"
 
-void Console::createSprites(QString input, QString colorTable, QString maskTable)
+#include "spritingsupport/spritecreator.h"
+
+void SpriteCreator::createSprites(QString input, QString colorTable, QString maskTable)
 {
     if (!QFile::exists(colorTable) && colorTable.endsWith(".png"))
     {
@@ -49,7 +50,7 @@ void Console::createSprites(QString input, QString colorTable, QString maskTable
     }
 }
 
-void Console::createSprites(QString file, QImage& colorTable, QImage maskTable)
+void SpriteCreator::createSprites(QString file, QImage& colorTable, QImage maskTable)
 {
     QString orgFile = file;
     QString maskFile = file;
@@ -87,7 +88,7 @@ void Console::createSprites(QString file, QImage& colorTable, QImage maskTable)
     maskImg.save(maskFile);
 }
 
-oxygine::ResAnim* Mainapp::createAnim(QString input, QString colorTable, QString newTable,
+oxygine::ResAnim* SpriteCreator::createAnim(QString input, QString colorTable, QString newTable,
                                       qint32 columns, qint32  rows, float scaleFactor)
 {
     if (!QFile::exists(colorTable) && colorTable.endsWith(".png"))
@@ -110,7 +111,7 @@ oxygine::ResAnim* Mainapp::createAnim(QString input, QString colorTable, QString
     return createAnim(input, colorTableImg, maskTableImg, columns, rows, scaleFactor);
 }
 
-oxygine::ResAnim* Mainapp::createAnim(QString input, QImage& colorTableImg, QImage& maskTableImg,
+oxygine::ResAnim* SpriteCreator::createAnim(QString input, QImage& colorTableImg, QImage& maskTableImg,
                                       qint32 columns, qint32  rows, float scaleFactor)
 {
     QFileInfo inputInfo(input);
@@ -125,7 +126,7 @@ oxygine::ResAnim* Mainapp::createAnim(QString input, QImage& colorTableImg, QIma
     return nullptr;
 }
 
-void Mainapp::createSprite(QString input, QImage& colorTableImg, QImage maskTableImg)
+void SpriteCreator::createSprite(QString input, QImage& colorTableImg, QImage maskTableImg)
 {
     QImage orgImg(input);
     QImage mainImg(orgImg.size(), QImage::Format_RGBA8888);
@@ -152,4 +153,41 @@ void Mainapp::createSprite(QString input, QImage& colorTableImg, QImage maskTabl
     }
     QFile::remove("temp.png");
     mainImg.save("temp.png");
+}
+
+QImage SpriteCreator::createColorTable(QImage& image)
+{
+    auto tableVector = image.colorTable();
+    qint32 maxSize = 100;
+    QImage ret(maxSize, 1, QImage::Format_RGBA8888);
+    qint32 width = 0;
+    for (qint32 x = 0; x < image.width(); x++)
+    {
+        for (qint32 y = 0; y < image.height(); y++)
+        {
+            QColor pixel = image.pixelColor(x, y);
+            if (pixel.alpha() == 255)
+            {
+                bool found = false;
+                for (qint32 i = 0; i < width; i++)
+                {
+                    if (ret.pixelColor(i, 0) == pixel)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    ret.setPixelColor(width, 0, pixel);
+                    width++;
+                }
+                if (width >= maxSize)
+                {
+                    break;
+                }
+            }
+        }
+    }
+    return ret.copy(0, 0, width, 1);
 }

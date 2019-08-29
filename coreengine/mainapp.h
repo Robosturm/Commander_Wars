@@ -89,37 +89,6 @@ public:
     void suspendThread();
     void continueThread();
     void start();
-
-
-    // todo find a better place for these global sprite rework functions
-    /**
-     * @brief createAnim creates a animation sprite from an image and replaces pixels in the sprite bases on the input and output tables
-     * @param input
-     * @param colorTable
-     * @param newTable
-     * @return
-     */
-    oxygine::ResAnim* createAnim(QString input, QString colorTable, QString newTable,
-                                 qint32 columns = 1, qint32  rows = 1, float scaleFactor = 1.0f);
-    /**
-     * @brief createAnim
-     * @param input
-     * @param colorTableImg
-     * @param maskTableImg
-     * @param columns
-     * @param rows
-     * @param scaleFactor
-     * @return
-     */
-    oxygine::ResAnim* createAnim(QString input, QImage& colorTableImg, QImage& maskTableImg,
-                                          qint32 columns = 1, qint32  rows = 1, float scaleFactor = 1.0f);
-    /**
-     * @brief createSprite
-     * @param input
-     * @param colorTableImg
-     * @param maskTableImg
-     */
-    void createSprite(QString input, QImage& colorTableImg, QImage maskTableImg);
 signals:
     void sigText(SDL_Event event);
     void sigKeyDown(SDL_Event event);

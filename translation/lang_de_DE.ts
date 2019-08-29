@@ -654,42 +654,22 @@
 <context>
     <name>Console</name>
     <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="15"/>
-        <source>The color table is not an existing file. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="21"/>
-        <source>The mask table is not an existing file. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="27"/>
-        <source>The mask table is to small. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="48"/>
-        <source>Input directory or file doesn&apos;t exists. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../coreengine/console.cpp" line="93"/>
+        <location filename="../coreengine/console.cpp" line="95"/>
         <source>Enter &quot;help()&quot; for console info.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="94"/>
+        <location filename="../coreengine/console.cpp" line="96"/>
         <source>Starting Game...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="95"/>
+        <location filename="../coreengine/console.cpp" line="97"/>
         <source>Prepare to Fight...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="96"/>
+        <location filename="../coreengine/console.cpp" line="98"/>
         <source>Read this message while waiting...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -835,23 +815,23 @@
 <context>
     <name>DialogCOStyle</name>
     <message>
-        <location filename="../objects/dialogcostyle.cpp" line="35"/>
+        <location filename="../objects/dialogcostyle.cpp" line="37"/>
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogcostyle.cpp" line="47"/>
+        <location filename="../objects/dialogcostyle.cpp" line="49"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogcostyle.cpp" line="91"/>
+        <location filename="../objects/dialogcostyle.cpp" line="96"/>
         <source>Predefined Styles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogcostyle.cpp" line="124"/>
-        <location filename="../objects/dialogcostyle.cpp" line="133"/>
+        <location filename="../objects/dialogcostyle.cpp" line="150"/>
+        <location filename="../objects/dialogcostyle.cpp" line="163"/>
         <source>CO Style </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1625,24 +1605,6 @@
     <message>
         <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="56"/>
         <source>Clear view. In Fog of War, Infantry unit&apos;s gain &lt;div c=&apos;00ff00&apos;&gt;vision +3.&lt;/div&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Mainapp</name>
-    <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="95"/>
-        <source>The color table is not an existing file. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="101"/>
-        <source>The mask table is not an existing file. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="107"/>
-        <source>The mask table is to small. </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3028,6 +2990,32 @@
         <location filename="../coreengine/settings.cpp" line="284"/>
         <location filename="../coreengine/settings.cpp" line="291"/>
         <source>Setting:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SpriteCreator</name>
+    <message>
+        <location filename="../spritingsupport/spritecreator.cpp" line="16"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="96"/>
+        <source>The color table is not an existing file. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../spritingsupport/spritecreator.cpp" line="22"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="102"/>
+        <source>The mask table is not an existing file. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../spritingsupport/spritecreator.cpp" line="28"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="108"/>
+        <source>The mask table is to small. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../spritingsupport/spritecreator.cpp" line="49"/>
+        <source>Input directory or file doesn&apos;t exists. </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7631,102 +7619,102 @@
 <context>
     <name>co_julia</name>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="163"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="168"/>
         <source>A devoted CO who embraces Dark Matter&apos;s ideals and wishes to unite the world. She excels at utilizing propaganda to demoralize her enemies.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="167"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="172"/>
         <source>The morning paper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="171"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="176"/>
         <source>The comics section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="175"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="180"/>
         <source>Units have reduced offensive power. However, firepower is unaffected by loss of HP.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="179"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="184"/>
         <source>Half of enemy units can&apos;t move next turn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="183"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="188"/>
         <source>Rallying Cry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="187"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="192"/>
         <source>All enemy units can&apos;t move next turn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="191"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="196"/>
         <source>Media Mayhem</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="195"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="200"/>
         <source>Your defeat is tomorrow&apos;s headline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="196"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="201"/>
         <source>Start the presses!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="197"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="202"/>
         <source>I don&apos;t receive the news. I make the news.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="198"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="203"/>
         <source>I am the only voice of the people.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="199"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="204"/>
         <source>Let us see how devoted your people are to your cause.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="200"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="205"/>
         <source>You will come to embrace our ideals.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="204"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="209"/>
         <source>The proof of our might will forever be etched in your minds.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="205"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="210"/>
         <source>How foolish it was of you to try to defy us.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="206"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="211"/>
         <source>This victory will be pleasing news to our citizens.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="210"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="215"/>
         <source>The news will still call this a victory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="211"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="216"/>
         <source>I will change the news...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_julia.js" line="220"/>
         <source>Julia</source>
         <translation type="unfinished"></translation>
     </message>

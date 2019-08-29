@@ -2,7 +2,7 @@ var Constructor = function()
 {
     this.init = function(co)
     {
-        co.setPowerStars(4);
+        co.setPowerStars(5);
         co.setSuperpowerStars(4);
     };
 
@@ -117,7 +117,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 1;
+        return 2;
     };
     this.getCOArmy = function()
     {
@@ -127,23 +127,28 @@ var Constructor = function()
                                  defender, defPosX, defPosY, isDefender)
     {
         var baseDamage = 70;
+        var fixedDamage = false;
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                baseDamage = 90;
-                break;
             case GameEnums.PowerMode_Power:
-                baseDamage = 90;
+                baseDamage = 80;
+                fixedDamage = true;
                 break;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    baseDamage = 90;
+                    baseDamage = 80;
+                    fixedDamage = false;
                 }
                 break;
         }
-        return baseDamage * 10 / attacker.getHpRounded() - 100;
+        if (fixedDamage)
+        {
+            return baseDamage * 10 / attacker.getHpRounded() - 100;
+        }
+        return 0;
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,

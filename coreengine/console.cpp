@@ -14,6 +14,8 @@
 
 #include "network/NetworkInterface.h"
 
+#include "spritingsupport/spritecreator.h"
+
 // values which differ from release to debug build
 #ifdef GAMEDEBUG
 Console::eLogLevels Console::LogLevel = Console::eDEBUG;
@@ -97,6 +99,11 @@ void Console::init()
     Console::print("", Console::eINFO);
     Console::createfunnymessage();
     Console::print("", Console::eINFO);
+}
+
+void Console::createSprites(QString input, QString colorTable, QString maskTable)
+{
+    SpriteCreator::createSprites(input, colorTable, maskTable);
 }
 
 void Console::dotask(const QString& message)
