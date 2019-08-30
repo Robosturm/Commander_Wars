@@ -56,6 +56,7 @@ private:
     QImage colorTable;
     QImage maskTable;
     qint32 m_CurrentIndex{0};
+    bool useColorBox{false};
     bool m_update{false};
 
 };

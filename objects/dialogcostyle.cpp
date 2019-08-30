@@ -39,8 +39,8 @@ DialogCOStyle::DialogCOStyle(QString coid)
     m_pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        Userdata::getInstance()->addCOStyle(m_currentCOID, m_ResFilePath, colorTable, maskTable);
-        pCOSpriteManager->loadResAnim(m_currentCOID, m_ResFilePath, colorTable, maskTable);
+        Userdata::getInstance()->addCOStyle(m_currentCOID, m_ResFilePath, colorTable, maskTable, useColorBox);
+        pCOSpriteManager->loadResAnim(m_currentCOID, m_ResFilePath, colorTable, maskTable, useColorBox);
         this->getParent()->removeChild(this);
         emit sigFinished();
     });
@@ -141,6 +141,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
     QFile file(m_ResFilePath + "+table.png");
     if (file.exists())
     {
+        useColorBox = false;
         QVector<QString> items;
         baseColorTable.load(m_ResFilePath + "+table.png");
         colorTable = baseColorTable.copy(0, 0, baseColorTable.width(), 1);
@@ -155,6 +156,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
     }
     else
     {
+        useColorBox = true;
         QImage src(m_ResFilePath + "+nrm.png");
         baseColorTable = SpriteCreator::createColorTable(src);
         colorTable = baseColorTable.copy(0, 0, baseColorTable.width(), 1);
@@ -272,10 +274,9 @@ void DialogCOStyle::update(const oxygine::UpdateState& us)
 {
     if (m_update)
     {
-        Mainapp* pApp = Mainapp::getInstance();
         COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
         oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((m_currentCOID + m_Styles[m_CurrentIndex] + "+nrm").toStdString().c_str());
-        m_pResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+nrm.png", colorTable, maskTable, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
+        m_pResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
         m_pCOSprites[m_CurrentIndex]->setResAnim(m_pResAnims[m_CurrentIndex].get());
         m_update = false;
     }

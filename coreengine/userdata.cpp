@@ -46,7 +46,7 @@ void Userdata::changeUser()
     }
 }
 
-void Userdata::addCOStyle(QString coid, QString file, QImage colorTable, QImage maskTable)
+void Userdata::addCOStyle(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox)
 {
     for (qint32 i = 0; i < m_customCOStyles.size(); i++)
     {
@@ -55,10 +55,11 @@ void Userdata::addCOStyle(QString coid, QString file, QImage colorTable, QImage 
             std::get<1>(m_customCOStyles[i]) = file;
             std::get<2>(m_customCOStyles[i]) = colorTable;
             std::get<3>(m_customCOStyles[i]) = maskTable;
+            std::get<4>(m_customCOStyles[i]) = useColorBox;
             return;
         }
     }
-    m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage>(coid, file, colorTable, maskTable));
+    m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(coid, file, colorTable, maskTable, useColorBox));
 }
 
 void Userdata::removeCOStyle(QString coid)
@@ -73,7 +74,7 @@ void Userdata::removeCOStyle(QString coid)
     }
 }
 
-std::tuple<QString, QString, QImage, QImage>* Userdata::getCOStyle(QString coid)
+std::tuple<QString, QString, QImage, QImage, bool>* Userdata::getCOStyle(QString coid)
 {
     for (qint32 i = 0; i < m_customCOStyles.size(); i++)
     {
@@ -95,6 +96,7 @@ void Userdata::serializeObject(QDataStream& pStream)
         pStream << std::get<1>(m_customCOStyles[i]);
         pStream << std::get<2>(m_customCOStyles[i]);
         pStream << std::get<3>(m_customCOStyles[i]);
+        pStream << std::get<4>(m_customCOStyles[i]);
     }
 }
 
@@ -111,11 +113,16 @@ void Userdata::deserializeObject(QDataStream& pStream)
         QString file;
         QImage colorTable;
         QImage maskTable;
+        bool useColorBox = false;
         pStream >> coid;
         pStream >> file;
         pStream >> colorTable;
         pStream >> maskTable;
-        pCOSpriteManager->loadResAnim(coid, file, colorTable, maskTable);
-        m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage>(coid, file, colorTable, maskTable));
+        if (version > 1)
+        {
+            pStream >> useColorBox;
+        }
+        pCOSpriteManager->loadResAnim(coid, file, colorTable, maskTable, useColorBox);
+        m_customCOStyles.append(std::tuple<QString, QString, QImage, QImage, bool>(coid, file, colorTable, maskTable, useColorBox));
     }
 }

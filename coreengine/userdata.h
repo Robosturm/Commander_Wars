@@ -36,7 +36,7 @@ public slots:
      */
     virtual qint32 getVersion()
     {
-        return 1;
+        return 2;
     }
     /**
      * @brief addCOStyle
@@ -45,7 +45,7 @@ public slots:
      * @param colorTable
      * @param maskTable
      */
-    void addCOStyle(QString coid, QString file, QImage colorTable, QImage maskTable);
+    void addCOStyle(QString coid, QString file, QImage colorTable, QImage maskTable, bool useColorBox);
     /**
      * @brief removeCOStyle
      * @param coid
@@ -56,13 +56,13 @@ public slots:
      * @param coid
      * @return
      */
-    std::tuple<QString, QString, QImage, QImage>* getCOStyle(QString coid);
+    std::tuple<QString, QString, QImage, QImage, bool>* getCOStyle(QString coid);
 private:
     explicit Userdata();
 
     static Userdata* m_pInstance;
 
-    QVector<std::tuple<QString, QString, QImage, QImage>> m_customCOStyles;
+    QVector<std::tuple<QString, QString, QImage, QImage, bool>> m_customCOStyles;
 };
 
 #endif // USERDATA_H

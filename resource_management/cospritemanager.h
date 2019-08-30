@@ -87,7 +87,7 @@ public:
      * @param colorTable
      * @param maskTable
      */
-    void loadResAnim(QString coid, QString file, QImage& colorTable, QImage& maskTable);
+    void loadResAnim(QString coid, QString file, QImage& colorTable, QImage& maskTable, bool useColorBox);
     /**
      * @brief getCOStyles
      * @param id

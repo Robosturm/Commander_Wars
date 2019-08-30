@@ -830,8 +830,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogcostyle.cpp" line="150"/>
-        <location filename="../objects/dialogcostyle.cpp" line="163"/>
+        <location filename="../objects/dialogcostyle.cpp" line="151"/>
+        <location filename="../objects/dialogcostyle.cpp" line="165"/>
         <source>CO Style </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2996,25 +2996,25 @@
 <context>
     <name>SpriteCreator</name>
     <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="16"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="96"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="18"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="98"/>
         <source>The color table is not an existing file. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="22"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="102"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="24"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="104"/>
         <source>The mask table is not an existing file. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="28"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="108"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="30"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="110"/>
         <source>The mask table is to small. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="49"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="51"/>
         <source>Input directory or file doesn&apos;t exists. </source>
         <translation type="unfinished"></translation>
     </message>
