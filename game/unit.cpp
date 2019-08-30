@@ -1803,11 +1803,19 @@ void Unit::killUnit()
     QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
     if (m_UnitRank == GameEnums::UnitRank_CO0)
     {
-        m_pOwner->getCO(0)->setCOUnit(nullptr);
+        CO* pCO = m_pOwner->getCO(0);
+        if (pCO != nullptr)
+        {
+            pCO->setCOUnit(nullptr);
+        }
     }
     else if (m_UnitRank == GameEnums::UnitRank_CO1)
     {
-        m_pOwner->getCO(1)->setCOUnit(nullptr);
+        CO* pCO = m_pOwner->getCO(1);
+        if (pCO != nullptr)
+        {
+            pCO->setCOUnit(nullptr);
+        }
     }
     if (m_CORange.get() != nullptr)
     {
