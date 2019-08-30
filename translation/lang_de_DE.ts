@@ -825,13 +825,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogcostyle.cpp" line="96"/>
+        <location filename="../objects/dialogcostyle.cpp" line="111"/>
         <source>Predefined Styles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogcostyle.cpp" line="151"/>
-        <location filename="../objects/dialogcostyle.cpp" line="165"/>
+        <location filename="../objects/dialogcostyle.cpp" line="178"/>
+        <location filename="../objects/dialogcostyle.cpp" line="192"/>
         <source>CO Style </source>
         <translation type="unfinished"></translation>
     </message>

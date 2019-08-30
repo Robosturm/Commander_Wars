@@ -78,12 +78,27 @@ DialogCOStyle::DialogCOStyle(QString coid)
     m_pSpriteBox->addChild(m_pCOPanel);
 
 
+    auto currentStyle = Userdata::getInstance()->getCOStyle(m_currentCOID);
+    QString styleID = "";
+    if (currentStyle != nullptr)
+    {
+        styleID = std::get<1>(*currentStyle);
+        styleID = styleID.toLower().remove(0, styleID.indexOf(m_currentCOID.toLower()));
+        styleID = styleID.replace(m_currentCOID.toLower(), "");
+    }
     m_Styles = pCOSpriteManager->getCOStyles(coid);
     m_Styles.push_front("");
-    addCOStyle(m_Styles[0], true);
-    for (qint32 i = 1; i < m_Styles.size(); i++)
+
+    for (qint32 i = 0; i < m_Styles.size(); i++)
     {
-        addCOStyle(m_Styles[i], false);
+        if (styleID == m_Styles[i])
+        {
+            addCOStyle(m_Styles[i], true);
+        }
+        else
+        {
+            addCOStyle(m_Styles[i], false);
+        }
     }
 
     oxygine::spTextField textField = new oxygine::TextField();
@@ -105,6 +120,16 @@ DialogCOStyle::DialogCOStyle(QString coid)
     m_pSpriteBox->addChild(m_pPixelPanel);
 
     changeCOStyle(0);
+
+    if (currentStyle != nullptr)
+    {
+        maskTable = std::get<3>(*currentStyle);
+        for (qint32 i = 0; i < maskTable.width(); i++)
+        {
+            QColor color = maskTable.pixelColor(i, 0);
+            m_Pixels[i]->setColor(color.red(), color.green(), color.blue(), 255);
+        }
+    }
 }
 
 void DialogCOStyle::selecetedColorChanged(QColor color)
@@ -119,103 +144,106 @@ void DialogCOStyle::selecetedColorChanged(QColor color)
 
 void DialogCOStyle::changeCOStyle(qint32 index)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    for (qint32 i = 0; i < m_Styles.size(); i++)
+    if (index != m_CurrentIndex)
     {
-        oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((m_currentCOID + m_Styles[i] + "+nrm").toStdString().c_str());
-        m_pCOSprites[i]->setResAnim(pAnim);
-    }
-    m_CurrentIndex = index;
-    if (m_pPredefinedStyles.get() != nullptr)
-    {
-        m_pPredefinedStyles->detach();
-        m_pPredefinedStyles = nullptr;
-    }
-    oxygine::ResAnim* pAnim =pCOSpriteManager->oxygine::Resources::getResAnim((m_currentCOID + "+nrm").toStdString().c_str());
-    QString filePath = pAnim->getResPath().c_str();
-    QString style = m_Styles[index];
-    filePath = filePath.replace("+nrm.png", "");
-    m_ResFilePath = filePath + style;
-    QFile file(m_ResFilePath + "+table.png");
-    if (file.exists())
-    {
-        useColorBox = false;
-        QVector<QString> items;
-        baseColorTable.load(m_ResFilePath + "+table.png");
-        colorTable = baseColorTable.copy(0, 0, baseColorTable.width(), 1);
-        maskTable = baseColorTable.copy(0, 0, baseColorTable.width(), 1);
-        for (qint32 i = 0; i < baseColorTable.height(); i++)
-        {
-            items.append(tr("CO Style ") + QString::number(i));
-        }
-        m_pPredefinedStyles = new DropDownmenu(200, items, true);
-        m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 70 - m_pPredefinedStyles->getHeight());
-        m_pSpriteBox->addChild(m_pPredefinedStyles);
-    }
-    else
-    {
-        useColorBox = true;
-        QImage src(m_ResFilePath + "+nrm.png");
-        baseColorTable = SpriteCreator::createColorTable(src);
-        colorTable = baseColorTable.copy(0, 0, baseColorTable.width(), 1);
-        maskTable = baseColorTable.copy(0, 0, baseColorTable.width(), 1);
-        QVector<QString> items;
-        items.append(tr("CO Style ") + QString::number(0));
-        m_pPredefinedStyles = new DropDownmenu(200, items, true);
-        m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 70 - m_pPredefinedStyles->getHeight());
-        m_pSpriteBox->addChild(m_pPredefinedStyles);
-    }
-    connect(m_pPredefinedStyles.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
-    {
+        Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
-        maskTable = baseColorTable.copy(0, item, baseColorTable.width(), 1);
+        COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+        for (qint32 i = 0; i < m_Styles.size(); i++)
+        {
+            oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((m_currentCOID + m_Styles[i] + "+nrm").toStdString().c_str());
+            m_pCOSprites[i]->setResAnim(pAnim);
+        }
+        m_CurrentIndex = index;
+        if (m_pPredefinedStyles.get() != nullptr)
+        {
+            m_pPredefinedStyles->detach();
+            m_pPredefinedStyles = nullptr;
+        }
+        oxygine::ResAnim* pAnim = pCOSpriteManager->oxygine::Resources::getResAnim((m_currentCOID + "+nrm").toStdString().c_str());
+        QString filePath = pAnim->getResPath().c_str();
+        QString style = m_Styles[index];
+        filePath = filePath.replace("+nrm.png", "");
+        m_ResFilePath = filePath + style;
+        QFile file(m_ResFilePath + "+table.png");
+        if (file.exists())
+        {
+            useColorBox = false;
+            QVector<QString> items;
+            baseColorTable.load(m_ResFilePath + "+table.png");
+            colorTable = baseColorTable.copy(0, 0, baseColorTable.width(), 1);
+            maskTable = baseColorTable.copy(0, 0, baseColorTable.width(), 1);
+            for (qint32 i = 0; i < baseColorTable.height(); i++)
+            {
+                items.append(tr("CO Style ") + QString::number(i));
+            }
+            m_pPredefinedStyles = new DropDownmenu(200, items, true);
+            m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 70 - m_pPredefinedStyles->getHeight());
+            m_pSpriteBox->addChild(m_pPredefinedStyles);
+        }
+        else
+        {
+            useColorBox = true;
+            QImage src(m_ResFilePath + "+nrm.png");
+            baseColorTable = SpriteCreator::createColorTable(src);
+            colorTable = baseColorTable.copy(0, 0, baseColorTable.width(), 1);
+            maskTable = baseColorTable.copy(0, 0, baseColorTable.width(), 1);
+            QVector<QString> items;
+            items.append(tr("CO Style ") + QString::number(0));
+            m_pPredefinedStyles = new DropDownmenu(200, items, true);
+            m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 70 - m_pPredefinedStyles->getHeight());
+            m_pSpriteBox->addChild(m_pPredefinedStyles);
+        }
+        connect(m_pPredefinedStyles.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
+        {
+            pApp->suspendThread();
+            maskTable = baseColorTable.copy(0, item, baseColorTable.width(), 1);
+            for (qint32 i = 0; i < maskTable.width(); i++)
+            {
+                QColor color = maskTable.pixelColor(i, 0);
+                m_Pixels[i]->setColor(color.red(), color.green(), color.blue(), 255);
+            }
+            m_update = true;
+            pApp->continueThread();
+        });
+        m_pPixelPanel->clearContent();
+        m_Pixels.clear();
+        qint32 y = 10;
+        qint32 xStep = 0;
+
+        m_PixelsSelector = new oxygine::ColorRectSprite();
+        m_PixelsSelector->setColor(oxygine::Color(32, 200, 32, 255));
+        m_PixelsSelector->setSize(20, 20);
+        m_PixelsSelector->setPosition(xStep * 22 - 2 + 5, 10 - 2);
+        m_PixelsSelector->setPriority(-1);
+        m_pPixelPanel->addItem(m_PixelsSelector);
         for (qint32 i = 0; i < maskTable.width(); i++)
         {
+            oxygine::spColorRectSprite pixel = new oxygine::ColorRectSprite();
+            pixel->setSize(16, 16);
             QColor color = maskTable.pixelColor(i, 0);
-            m_Pixels[i]->setColor(color.red(), color.green(), color.blue(), 255);
+            pixel->setColor(color.red(), color.green(), color.blue(), 255);
+            pixel->setPosition(xStep * 22 + 5, y);
+            pixel->addClickListener([=](oxygine::Event* pEvent)
+            {
+                pEvent->stopPropagation();
+                m_PixelsSelector->setPosition(xStep * 22 - 2 + 5, y - 2);
+                currentPixel = i;
+
+            });
+
+            m_pPixelPanel->addItem(pixel);
+            m_Pixels.append(pixel);
+            xStep++;
+            if (xStep * 22 + 60 + 5 > Settings::getWidth() - 100)
+            {
+                xStep = 0;
+                y += 22;
+            }
         }
-        m_update = true;
+        m_pPixelPanel->setContentHeigth(y + 40);
         pApp->continueThread();
-    });
-    m_pPixelPanel->clearContent();
-    m_Pixels.clear();
-    qint32 y = 10;
-    qint32 xStep = 0;
-
-    m_PixelsSelector = new oxygine::ColorRectSprite();
-    m_PixelsSelector->setColor(oxygine::Color(32, 200, 32, 255));
-    m_PixelsSelector->setSize(20, 20);
-    m_PixelsSelector->setPosition(xStep * 22 - 2 + 5, 10 - 2);
-    m_PixelsSelector->setPriority(-1);
-    m_pPixelPanel->addItem(m_PixelsSelector);
-    for (qint32 i = 0; i < maskTable.width(); i++)
-    {
-        oxygine::spColorRectSprite pixel = new oxygine::ColorRectSprite();
-        pixel->setSize(16, 16);
-        QColor color = maskTable.pixelColor(i, 0);
-        pixel->setColor(color.red(), color.green(), color.blue(), 255);
-        pixel->setPosition(xStep * 22 + 5, y);
-        pixel->addClickListener([=](oxygine::Event* pEvent)
-        {
-            pEvent->stopPropagation();
-            m_PixelsSelector->setPosition(xStep * 22 - 2 + 5, y - 2);
-            currentPixel = i;
-
-        });
-
-        m_pPixelPanel->addItem(pixel);
-        m_Pixels.append(pixel);
-        xStep++;
-        if (xStep * 22 + 60 + 5 > Settings::getWidth() - 100)
-        {
-            xStep = 0;
-            y += 22;
-        }
     }
-    m_pPixelPanel->setContentHeigth(y + 40);
-    pApp->continueThread();
 }
 
 void DialogCOStyle::addCOStyle(QString style, bool select)
