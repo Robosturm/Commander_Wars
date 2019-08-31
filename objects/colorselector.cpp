@@ -94,7 +94,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
             oxygine::spColorRectSprite pSprite = new oxygine::ColorRectSprite();
             m_RedGreenField[red].append(pSprite);
             pSprite->setPosition(red * pixelSize, green * pixelSize);
-            pSprite->setSize(pixelSize, pixelSize);
+            pSprite->setSize(pixelSize + 1, pixelSize + 1);
             pSprite->setColor(red, green, m_CurrentColor.blue(), 255);
             pSprite->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* pEvent)
             {
@@ -120,7 +120,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
         oxygine::spColorRectSprite pSprite = new oxygine::ColorRectSprite();
         m_BlueField.append(pSprite);
         pSprite->setPosition(x, blue * pixelSize);
-        pSprite->setSize(barWidth, pixelSize);
+        pSprite->setSize(barWidth, pixelSize + 1);
         pSprite->setColor(m_CurrentColor.red(), m_CurrentColor.green(), blue, 255);
         pSprite->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event* pEvent)
         {
