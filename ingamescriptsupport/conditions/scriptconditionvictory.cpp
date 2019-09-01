@@ -35,19 +35,9 @@ void ScriptConditionVictory::readCondition(QTextStream& rStream)
     }
     while (!rStream.atEnd())
     {
-        qint64 pos = rStream.pos();
-        line = rStream.readLine().simplified();
-        if (line.endsWith(ConditionVictory + " End"))
+        if (readSubCondition(rStream, ConditionVictory))
         {
             break;
-        }
-        else
-        {
-            rStream.seek(pos);
-        }
-        if (subCondition.get() == nullptr)
-        {
-            setSubCondition(createReadCondition(rStream));
         }
         spScriptEvent event = ScriptEvent::createReadEvent(rStream);
         if (event.get() != nullptr)

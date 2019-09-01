@@ -550,7 +550,7 @@
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="120"/>
-        <source>add Campaign</source>
+        <source>add Campaign Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1401,22 +1401,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="516"/>
+        <location filename="../menue/gamemenue.cpp" line="523"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="524"/>
+        <location filename="../menue/gamemenue.cpp" line="531"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="797"/>
+        <location filename="../menue/gamemenue.cpp" line="804"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="812"/>
+        <location filename="../menue/gamemenue.cpp" line="819"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1450,106 +1450,107 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="148"/>
+        <location filename="../objects/ingameinfobar.cpp" line="152"/>
+        <location filename="../objects/ingameinfobar.cpp" line="156"/>
         <source>Funds: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="155"/>
+        <location filename="../objects/ingameinfobar.cpp" line="165"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="162"/>
+        <location filename="../objects/ingameinfobar.cpp" line="172"/>
         <source>Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="231"/>
-        <location filename="../objects/ingameinfobar.cpp" line="274"/>
-        <location filename="../objects/ingameinfobar.cpp" line="278"/>
+        <location filename="../objects/ingameinfobar.cpp" line="241"/>
+        <location filename="../objects/ingameinfobar.cpp" line="284"/>
+        <location filename="../objects/ingameinfobar.cpp" line="288"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="318"/>
+        <location filename="../objects/ingameinfobar.cpp" line="328"/>
         <source>Ammo1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="334"/>
+        <location filename="../objects/ingameinfobar.cpp" line="344"/>
         <source>Ammo1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="350"/>
+        <location filename="../objects/ingameinfobar.cpp" line="360"/>
         <source>Ammo2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="366"/>
+        <location filename="../objects/ingameinfobar.cpp" line="376"/>
         <source>Ammo2: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="383"/>
+        <location filename="../objects/ingameinfobar.cpp" line="393"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="400"/>
+        <location filename="../objects/ingameinfobar.cpp" line="410"/>
         <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="529"/>
-        <location filename="../objects/ingameinfobar.cpp" line="581"/>
+        <location filename="../objects/ingameinfobar.cpp" line="539"/>
+        <location filename="../objects/ingameinfobar.cpp" line="591"/>
         <source>Owner: Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="539"/>
+        <location filename="../objects/ingameinfobar.cpp" line="549"/>
         <source>Owner: Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="549"/>
-        <location filename="../objects/ingameinfobar.cpp" line="560"/>
+        <location filename="../objects/ingameinfobar.cpp" line="559"/>
+        <location filename="../objects/ingameinfobar.cpp" line="570"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="591"/>
+        <location filename="../objects/ingameinfobar.cpp" line="601"/>
         <source>Weapon 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="603"/>
+        <location filename="../objects/ingameinfobar.cpp" line="613"/>
         <source>Weapon 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="613"/>
+        <location filename="../objects/ingameinfobar.cpp" line="623"/>
         <source>Move: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="622"/>
+        <location filename="../objects/ingameinfobar.cpp" line="632"/>
         <source>Movementpoints: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="631"/>
+        <location filename="../objects/ingameinfobar.cpp" line="641"/>
         <source>Vision: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="644"/>
+        <location filename="../objects/ingameinfobar.cpp" line="654"/>
         <source>Loaded Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="664"/>
+        <location filename="../objects/ingameinfobar.cpp" line="674"/>
         <source>Loaded Units: ?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2518,17 +2519,17 @@
 <context>
     <name>ScriptConditionBuildingCaptured</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="150"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="140"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="165"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="155"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="180"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="170"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2536,12 +2537,12 @@
 <context>
     <name>ScriptConditionBuildingDestroyed</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="119"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="109"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="134"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="124"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2549,12 +2550,12 @@
 <context>
     <name>ScriptConditionBuildingsOwned</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="138"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="128"/>
         <source>Count: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="153"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="143"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2562,17 +2563,17 @@
 <context>
     <name>ScriptConditionEachDay</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="113"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="103"/>
         <source>Each Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="124"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="114"/>
         <source>Start Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="135"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="125"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2580,7 +2581,7 @@
 <context>
     <name>ScriptConditionPlayerDefeated</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp" line="126"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp" line="116"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2588,12 +2589,12 @@
 <context>
     <name>ScriptConditionStartOfTurn</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="102"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="92"/>
         <source>At Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="113"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="103"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2601,12 +2602,12 @@
 <context>
     <name>ScriptConditionUnitDestroyed</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="136"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="126"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="151"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="141"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2614,12 +2615,12 @@
 <context>
     <name>ScriptConditionUnitsDestroyed</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="138"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="128"/>
         <source>Count: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="153"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="143"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -2627,7 +2628,7 @@
 <context>
     <name>ScriptConditionVictory</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.cpp" line="89"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.cpp" line="79"/>
         <source>Team: </source>
         <translation type="unfinished"></translation>
     </message>

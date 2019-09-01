@@ -237,7 +237,7 @@ public slots:
     /**
      * @brief pasteSelection
      */
-    void pasteSelection(qint32 x, qint32 y);
+    void pasteSelection(qint32 x, qint32 y, bool click);
 private:
     spEditorSelection m_EditorSelection{nullptr};
     EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};

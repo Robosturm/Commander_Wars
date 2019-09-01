@@ -50,6 +50,32 @@ void ScriptCondition::setSubCondition(const spScriptCondition &value)
     }
 }
 
+bool ScriptCondition::readSubCondition(QTextStream& rStream, QString id)
+{
+    qint64 pos = rStream.pos();
+    QString line = rStream.readLine().simplified();
+    if (line.endsWith(id + " End"))
+    {
+        return true;
+    }
+    rStream.seek(pos);
+    if (subCondition.get() == nullptr)
+    {
+        setSubCondition(createReadCondition(rStream));
+    }
+    if (subCondition.get() != nullptr)
+    {
+        pos = rStream.pos();
+        line = rStream.readLine().simplified();
+        if (line.endsWith(id + " End"))
+        {
+            return true;
+        }
+        rStream.seek(pos);
+    }
+    return false;
+}
+
 ScriptCondition::ConditionType ScriptCondition::getType() const
 {
     return m_Type;

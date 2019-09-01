@@ -145,6 +145,13 @@ public:
      * @return
      */
     virtual qint32 getVersion() = 0;
+    /**
+     * @brief readSubCondition
+     * @param rStream
+     * @param id
+     * @return
+     */
+    bool readSubCondition(QTextStream& rStream, QString id);
 protected:
     explicit ScriptCondition(ConditionType type);
     QVector<spScriptEvent> events;

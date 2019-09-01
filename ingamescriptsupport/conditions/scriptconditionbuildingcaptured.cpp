@@ -62,19 +62,9 @@ void ScriptConditionBuildingCaptured::readCondition(QTextStream& rStream)
     }
     while (!rStream.atEnd())
     {
-        qint64 pos = rStream.pos();
-        line = rStream.readLine().simplified();
-        if (line.endsWith(ConditionBuildingCaptured + " End"))
+        if (readSubCondition(rStream, ConditionBuildingCaptured))
         {
             break;
-        }
-        else
-        {
-            rStream.seek(pos);
-        }
-        if (subCondition.get() == nullptr)
-        {
-            setSubCondition(createReadCondition(rStream));
         }
         spScriptEvent event = ScriptEvent::createReadEvent(rStream);
         if (event.get() != nullptr)

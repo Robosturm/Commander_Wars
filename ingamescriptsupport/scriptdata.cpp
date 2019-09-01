@@ -120,6 +120,7 @@ void ScriptData::readData(QString id, QTextStream& rStream, QString& customCode,
                     break;
                 }
             }
+            continue;
         }
 
         ScriptCondition* pCondition = ScriptCondition::createReadCondition(rStream);

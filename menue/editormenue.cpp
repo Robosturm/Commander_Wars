@@ -595,7 +595,7 @@ void EditorMenue::KeyInput(SDL_Event event)
                     if (copyRect.x() >= 0 && copyRect.y() >= 0 &&
                         copyRect.width() != 0 && copyRect.height() != 0)
                     {
-                        pasteSelection(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
+                        pasteSelection(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), false);
                     }
                 }
                 break;
@@ -796,7 +796,7 @@ void EditorMenue::onMapClickedLeftDown(qint32 x, qint32 y)
         {
             if (copyRect.x() < 0)
             {
-                pasteSelection(x, y);
+                pasteSelection(x, y, true);
                 GameMap::getInstance()->addChild(copyRectActor);
                 if (copyRect.width() == 0)
                 {
@@ -829,7 +829,7 @@ void EditorMenue::onMapClickedLeftUp(qint32 x, qint32 y)
         {
             if (copyRect.x() >= 0)
             {
-                pasteSelection(x, y);
+                pasteSelection(x, y, true);
                 GameMap::getInstance()->addChild(copyRectActor);
                 if (copyRect.width() == 0)
                 {
@@ -1504,7 +1504,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
     }
 }
 
-void EditorMenue::pasteSelection(qint32 x, qint32 y)
+void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click)
 {
     GameMap* pMap = GameMap::getInstance();
     if (pMap->onMap(x, y))
@@ -1540,7 +1540,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y)
             }
             createMarkedArea(cursorActor, QPoint(0, 0), QPoint(copyRect.width() - 1, copyRect.height() - 1), CursorModes::Rect);
         }
-        else
+        else if (!click)
         {
             QRect rect(x, y, copyRect.width(), copyRect.height());
             if (pMap->onMap(rect.x(), rect.y()) &&
@@ -1614,6 +1614,7 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y)
                                         pCopyUnit->setFuel(pUnit->getFuel());
                                         pCopyUnit->setAiMode(pUnit->getAiMode());
                                         pCopyUnit->setUnitRank(pUnit->getUnitRank());
+                                        pCopyUnit->setModdingFlags(pCopyUnit->getModdingFlags());
                                     }
                                 }
                             }

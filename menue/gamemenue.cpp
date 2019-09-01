@@ -510,14 +510,21 @@ void GameMenue::showGameInfo()
     QVector<QStringList> data;
     GameMap* pMap = GameMap::getInstance();
     qint32 totalBuildings = pMap->getBuildingCount("");
+    Player* pViewPlayer = pMap->getCurrentViewPlayer();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
+        QString funds = QString::number(pMap->getPlayer(i)->getFunds());
+        if (pViewPlayer->getTeam() != pMap->getPlayer(i)->getTeam() &&
+            pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
+        {
+            funds = "?";
+        }
         qint32 buildingCount = pMap->getPlayer(i)->getBuildingCount();
         data.append({tr("Player ") + QString::number(i + 1),
                      QString::number(pMap->getGameRecorder()->getBuildedUnits(i)),
                      QString::number(pMap->getGameRecorder()->getDestroyedUnits(i)),
                      QString::number(pMap->getPlayer(i)->calcIncome()),
-                     QString::number(pMap->getPlayer(i)->getFunds()),
+                     funds,
                      QString::number(buildingCount)});
         totalBuildings -= buildingCount;
     }

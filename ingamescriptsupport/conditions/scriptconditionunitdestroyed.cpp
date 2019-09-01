@@ -24,19 +24,9 @@ void ScriptConditionUnitDestroyed::readCondition(QTextStream& rStream)
     m_y = list[2].toInt();
     while (!rStream.atEnd())
     {
-        qint64 pos = rStream.pos();
-        line = rStream.readLine().simplified();
-        if (line.endsWith(ConditionUnitDestroyed + " End"))
+        if (readSubCondition(rStream, ConditionUnitDestroyed))
         {
             break;
-        }
-        else
-        {
-            rStream.seek(pos);
-        }
-        if (subCondition.get() == nullptr)
-        {
-            setSubCondition(createReadCondition(rStream));
         }
         spScriptEvent event = ScriptEvent::createReadEvent(rStream);
         if (event.get() != nullptr)

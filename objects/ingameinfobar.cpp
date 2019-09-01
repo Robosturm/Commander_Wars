@@ -145,7 +145,17 @@ void IngameInfoBar::updatePlayerInfo()
     count = pPlayer->getFunds();
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText((tr("Funds: ") + QString::number(count)).toStdString().c_str());
+    Player* pViewPlayer = pMap->getCurrentViewPlayer();
+    if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
+        pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
+    {
+        pTextfield->setHtmlText((tr("Funds: ") + "?").toStdString().c_str());
+    }
+    else
+    {
+        pTextfield->setHtmlText((tr("Funds: ") + QString::number(count)).toStdString().c_str());
+    }
+
     pTextfield->setPosition(10, 170);
     m_pGameInfoBox->addChild(pTextfield);
 

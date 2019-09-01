@@ -59,19 +59,9 @@ void ScriptConditionEachDay::readCondition(QTextStream& rStream)
         player = items[2].toInt();
         while (!rStream.atEnd())
         {
-            qint64 pos = rStream.pos();
-            line = rStream.readLine().simplified();
-            if (line.endsWith(ConditionEachDay + " End"))
+            if (readSubCondition(rStream, ConditionEachDay))
             {
                 break;
-            }
-            else
-            {
-                rStream.seek(pos);
-            }
-            if (subCondition.get() == nullptr)
-            {
-                setSubCondition(createReadCondition(rStream));
             }
             spScriptEvent event = ScriptEvent::createReadEvent(rStream);
             if (event.get() != nullptr)
