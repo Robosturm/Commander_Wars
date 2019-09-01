@@ -67,7 +67,7 @@ public:
      */
     void setSaveGame(bool value);
 signals:
-    void buttonAllCOsRandom();
+    void sigCOsRandom(qint32 mode);
     void sigShowSelectCO(qint32 player, quint8 co);
     void buttonShowAllBuildList();
     void buttonShowPlayerBuildList(qint32 player);
@@ -90,7 +90,7 @@ public slots:
     void playerCO2Changed(QString coid, qint32 playerIdx);
     void updateCO2Sprite(QString coid, qint32 playerIdx);
     void playerCOCanceled();
-    void slotAllCOsRandom();
+    void slotCOsRandom(qint32 mode);
     void slotShowAllBuildList();
     void slotShowPlayerBuildList(qint32 player);
     void slotChangeAllBuildList(qint32, QStringList buildList);

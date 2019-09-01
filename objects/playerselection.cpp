@@ -182,9 +182,9 @@ void PlayerSelection::showPlayerSelection()
     }
     QVector<qint32> xPositions;
     qint32 labelminStepSize = (m_pPlayerSelection->getWidth() - 100) / items.size();
-    if (labelminStepSize < 150)
+    if (labelminStepSize < 190)
     {
-        labelminStepSize = 150;
+        labelminStepSize = 190;
     }
     qint32 curPos = 5;
 
@@ -216,17 +216,38 @@ void PlayerSelection::showPlayerSelection()
 
     qint32 itemIndex = 0;
     oxygine::spButton pButtonAllCOs = ObjectManager::createButton(tr("All Random"));
-    pButtonAllCOs->setPosition(xPositions[itemIndex] - 40, y);
+    pButtonAllCOs->setPosition(xPositions[itemIndex], y);
     m_pPlayerSelection->addItem(pButtonAllCOs);
     pButtonAllCOs->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        emit buttonAllCOsRandom();
+        emit sigCOsRandom(-1);
     });
-    connect(this, &PlayerSelection::buttonAllCOsRandom, this, &PlayerSelection::slotAllCOsRandom, Qt::QueuedConnection);
+    itemIndex = 1;
+    oxygine::spButton pButtonCOs1 = ObjectManager::createButton(tr("CO 1 Random"));
+    pButtonCOs1->setPosition(xPositions[itemIndex], y);
+    m_pPlayerSelection->addItem(pButtonCOs1);
+    pButtonCOs1->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigCOsRandom(0);
+    });
+
+    itemIndex = 2;
+    oxygine::spButton pButtonCOs2 = ObjectManager::createButton(tr("CO 2 Random"));
+    pButtonCOs2->setPosition(xPositions[itemIndex], y);
+    m_pPlayerSelection->addItem(pButtonCOs2);
+    pButtonCOs2->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigCOsRandom(1);
+    });
+
+
+    connect(this, &PlayerSelection::sigCOsRandom, this, &PlayerSelection::slotCOsRandom, Qt::QueuedConnection);
     if (m_pNetworkInterface.get() != nullptr ||
         m_pCampaign.get() != nullptr)
     {
         pButtonAllCOs->setVisible(false);
+        pButtonCOs1->setVisible(false);
+        pButtonCOs2->setVisible(false);
     }
 
     itemIndex = 3;
@@ -846,15 +867,21 @@ void PlayerSelection::playerCOCanceled()
     pApp->continueThread();
 }
 
-void PlayerSelection::slotAllCOsRandom()
+void PlayerSelection::slotCOsRandom(qint32 mode)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
-        playerCO1Changed("CO_RANDOM", i);
-        playerCO2Changed("CO_RANDOM", i);
+        if ((mode == 0) || mode < 0)
+        {
+            playerCO1Changed("CO_RANDOM", i);
+        }
+        if ((mode == 1) || mode < 0)
+        {
+            playerCO2Changed("CO_RANDOM", i);
+        }
     }
     pApp->continueThread();
 }

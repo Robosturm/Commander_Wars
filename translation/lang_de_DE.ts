@@ -2198,14 +2198,14 @@
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="178"/>
-        <location filename="../objects/playerselection.cpp" line="279"/>
+        <location filename="../objects/playerselection.cpp" line="300"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="178"/>
-        <location filename="../objects/playerselection.cpp" line="260"/>
-        <location filename="../objects/playerselection.cpp" line="573"/>
+        <location filename="../objects/playerselection.cpp" line="281"/>
+        <location filename="../objects/playerselection.cpp" line="594"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2225,26 +2225,36 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="281"/>
-        <location filename="../objects/playerselection.cpp" line="285"/>
-        <location filename="../objects/playerselection.cpp" line="299"/>
+        <location filename="../objects/playerselection.cpp" line="226"/>
+        <source>CO 1 Random</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/playerselection.cpp" line="235"/>
+        <source>CO 2 Random</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/playerselection.cpp" line="302"/>
+        <location filename="../objects/playerselection.cpp" line="306"/>
+        <location filename="../objects/playerselection.cpp" line="320"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="281"/>
+        <location filename="../objects/playerselection.cpp" line="302"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="281"/>
+        <location filename="../objects/playerselection.cpp" line="302"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="288"/>
-        <location filename="../objects/playerselection.cpp" line="295"/>
-        <location filename="../objects/playerselection.cpp" line="299"/>
+        <location filename="../objects/playerselection.cpp" line="309"/>
+        <location filename="../objects/playerselection.cpp" line="316"/>
+        <location filename="../objects/playerselection.cpp" line="320"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
