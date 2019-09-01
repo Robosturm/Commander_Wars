@@ -73,6 +73,21 @@ public:
         return ipAddress;
     }
 
+    static QStringList getIPAdresses()
+    {
+        QStringList ipAddresses;
+        QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
+        // use the first non-localhost IPv4 address
+        for (qint32 i = 0; i < ipAddressesList.size(); ++i)
+        {
+            if (ipAddressesList.at(i) != QHostAddress::LocalHost)
+            {
+                ipAddresses.append(ipAddressesList.at(i).toString());
+            }
+        }
+        return ipAddresses;
+    }
+
     bool getIsServer()
     {
         return isServer;

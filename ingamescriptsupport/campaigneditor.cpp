@@ -117,7 +117,7 @@ CampaignEditor::CampaignEditor()
     pSpriteBox->addChild(m_Panel);
 
     // add campaign
-    oxygine::spButton pAddCampaignButton = pObjectManager->createButton(tr("add Campaign Map"), 150);
+    oxygine::spButton pAddCampaignButton = pObjectManager->createButton(tr("add Campaign Map"), 200);
     pAddCampaignButton->setPosition(30, pApp->getSettings()->getHeight() - 30 - pAddCampaignButton->getHeight());
     pSpriteBox->addChild(pAddCampaignButton);
     pAddCampaignButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)

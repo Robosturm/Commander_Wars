@@ -23,6 +23,8 @@
 #include "objects/filedialog.h"
 #include "objects/dialogmessagebox.h"
 
+#include "ingamescriptsupport/genericbox.h"
+
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -69,24 +71,45 @@ Multiplayermenu::Multiplayermenu(QString adress, bool host)
     }
     else
     {
-        oxygine::TextStyle style = FontManager::getMainFont();
-        style.color = oxygine::Color(255, 255, 255, 255);
-        style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
-        style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-        style.multiline = true;
-
-        m_pHostAdresse = new oxygine::TextField();
+        m_pHostAdresse = ObjectManager::createButton("Show Adresses");
         addChild(m_pHostAdresse);
-        m_pHostAdresse->setStyle(style);
-        m_pHostAdresse->setHtmlText((tr("Host Adress: ") + NetworkInterface::getIPAdresse()).toStdString().c_str());
-        m_pHostAdresse->setPosition(pApp->getSettings()->getWidth() / 2 - m_pHostAdresse->getTextRect().getWidth() / 2,
-                                 pApp->getSettings()->getHeight() - m_pHostAdresse->getTextRect().getHeight() - 10);
-
+        m_pHostAdresse->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        {
+            emit sigShowIPs();
+        });
+        m_pHostAdresse->setPosition(pApp->getSettings()->getWidth() / 2 - m_pHostAdresse->getWidth() / 2,
+                                         pApp->getSettings()->getHeight() - m_pHostAdresse->getHeight() - 10);
         m_pHostAdresse->setVisible(false);
+        connect(this, &Multiplayermenu::sigShowIPs, this, &Multiplayermenu::showIPs, Qt::QueuedConnection);
     }
     connect(&m_GameStartTimer, &QTimer::timeout, this, &Multiplayermenu::countdown, Qt::QueuedConnection);
 
+}
+
+void Multiplayermenu::showIPs()
+{
+    spGenericBox pGenericBox = new GenericBox();
+    QStringList items = NetworkInterface::getIPAdresses();
+    QSize size(Settings::getWidth() - 40, Settings::getHeight() - 80);
+    spPanel pPanel = new Panel(true, size, size);
+    pPanel->setPosition(20, 20);
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = true;
+    for (qint32 i = 0; i < items.size(); i++)
+    {
+        oxygine::spTextField text = new oxygine::TextField();
+        text->setStyle(style);
+        text->setHtmlText((tr("Host Adress: ") + items[i]).toStdString().c_str());
+        text->setPosition(10, 10 + i * 40);
+        pPanel->addItem(text);
     }
+    pPanel->setContentHeigth(items.size() * 40 + 40);
+    pGenericBox->addItem(pPanel);
+    addChild(pGenericBox);
+}
 
 void Multiplayermenu::showLoadSaveGameDialog()
 {

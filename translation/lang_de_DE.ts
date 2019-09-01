@@ -1769,39 +1769,39 @@
 <context>
     <name>Multiplayermenu</name>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="40"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="42"/>
         <source>Load Savegame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="59"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="671"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="61"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="694"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="65"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="67"/>
         <source>Connecting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="81"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="105"/>
         <source>Host Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="288"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="311"/>
         <source>Host has a different game version or other mods loaded leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="438"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="456"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="461"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="479"/>
         <source>Unable to download map or game script from host a different version of the map or game script with the same name exist! Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="667"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="690"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1809,22 +1809,22 @@
 <context>
     <name>NetworkInterface</name>
     <message>
-        <location filename="../network/NetworkInterface.h" line="107"/>
+        <location filename="../network/NetworkInterface.h" line="122"/>
         <source>The server was closed by the peer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/NetworkInterface.h" line="110"/>
+        <location filename="../network/NetworkInterface.h" line="125"/>
         <source>The host was not found. Please check the host name and port settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/NetworkInterface.h" line="113"/>
+        <location filename="../network/NetworkInterface.h" line="128"/>
         <source>The connection was refused by the peer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/NetworkInterface.h" line="116"/>
+        <location filename="../network/NetworkInterface.h" line="131"/>
         <source>Error inside the Socket happened.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -36,6 +36,7 @@ public:
 signals:
     void sigConnected();
     void sigLoadSaveGame();
+    void sigShowIPs();
 public slots:
 
     // general slots
@@ -60,10 +61,11 @@ protected:
     void sendServerReady(bool value);
     void initClientGame(quint64 socketID, QDataStream &stream);
     void loadMultiplayerMap();
+    void showIPs();
 private:
     bool m_Host{false};
     spNetworkInterface m_NetworkInterface;
-    oxygine::spTextField m_pHostAdresse;
+    oxygine::spButton m_pHostAdresse;
     spChat m_Chat;
     QTimer m_GameStartTimer;
     qint32 counter{5};
