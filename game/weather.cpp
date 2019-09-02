@@ -114,13 +114,17 @@ qint32 Weather::getDefensiveModifier()
     }
 }
 
-qint32 Weather::getMovementCostModifier()
+qint32 Weather::getMovementCostModifier(Unit* pUnit, Terrain* pTerrain)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getMovementCostModifier";
     QJSValueList args1;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
     args1 << obj1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(pUnit);
+    args1 << obj2;
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(pTerrain);
+    args1 << obj3;
     QJSValue erg = pApp->getInterpreter()->doFunction(m_WeatherId, function1, args1);
     if (erg.isNumber())
     {

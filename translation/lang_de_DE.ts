@@ -7650,18 +7650,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="184"/>
-        <source>Half of enemy units can&apos;t move next turn.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_julia.js" line="188"/>
         <source>Rallying Cry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="184"/>
+        <source>Half of enemy units can&apos;t move next turn and all units are unaffected by loss of HP but get less firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_julia.js" line="192"/>
-        <source>All enemy units can&apos;t move next turn.</source>
+        <source>All enemy units can&apos;t move next turn and all units are unaffected by loss of HP but get less firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

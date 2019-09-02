@@ -21,10 +21,14 @@ var Constructor = function()
         audio.playSound("snow.wav");
     };
 
-    this.getMovementCostModifier = function()
+    this.getMovementCostModifier = function(weather, unit, terrain)
     {
-
-        return 1;
+        var id = terrain.getID();
+        if (id !== "STREET" && id !== "DESERT_PATH")
+        {
+            return 1;
+        }
+        return 0;
     };
 }
 

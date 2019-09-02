@@ -261,6 +261,13 @@ void Unit::updateSprites()
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
     args1 << obj1;
     pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+
+    setHp(hp);
+    setFuel(fuel);
+    setAmmo1(ammo1);
+    setAmmo2(ammo2);
+    setUnitRank(m_UnitRank);
+
     if (m_UnitRank == GameEnums::UnitRank_CO0)
     {
         makeCOUnit(0);

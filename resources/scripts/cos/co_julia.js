@@ -181,7 +181,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Half of enemy units can't move next turn.");
+        return qsTr("Half of enemy units can't move next turn and all units are unaffected by loss of HP but get less firepower.");
     };
     this.getPowerName = function()
     {
@@ -189,7 +189,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("All enemy units can't move next turn.");
+        return qsTr("All enemy units can't move next turn and all units are unaffected by loss of HP but get less firepower.");
     };
     this.getSuperPowerName = function()
     {

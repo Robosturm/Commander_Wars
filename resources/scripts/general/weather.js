@@ -29,7 +29,7 @@ var WEATHER =
         return 0;
     },
 
-    getMovementCostModifier : function(weather)
+    getMovementCostModifier : function(weather, unit, terrain)
     {
         // only called when the weather is active
         return 0;

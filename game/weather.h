@@ -9,6 +9,10 @@
 
 #include "coreengine/fileserializable.h"
 
+#include "game/unit.h"
+
+#include "game/terrain.h"
+
 class Weather;
 typedef oxygine::intrusive_ptr<Weather> spWeather;
 
@@ -44,7 +48,7 @@ public slots:
     QString getWeatherSymbol();
     qint32 getOffensiveModifier();
     qint32 getDefensiveModifier();
-    qint32 getMovementCostModifier();
+    qint32 getMovementCostModifier(Unit* pUnit, Terrain* pTerrain);
     qint32 getFirerangeModifier();
     qint32 getVisionrangeModifier();
     void activate();
