@@ -96,7 +96,7 @@ public:
      * @return reads a data from the action data
      */
     template<typename type>
-    qint32 readData()
+    type readData()
     {
         buffer.seek(0);
         type data = 0;

@@ -224,7 +224,7 @@ var Constructor = function()
             // this means our troops get stronger and more expensive
             while (exceed >= 0 && counter < maxCounter)
             {
-                damageModifier += 2;
+                damageModifier += 1;
                 costModifier += 0.01;
                 exceed -= income * 0.1;
                 counter++;
@@ -259,6 +259,7 @@ var Constructor = function()
         var costModVar = variables.createVariable("SANJURO_COST_MOD");
         var buildedVar = variables.createVariable("SANJURO_BUILDED_" + id);
         var builded = buildedVar.readDataBool();
+        var costMod = costModVar.readDataFloat();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
@@ -266,7 +267,7 @@ var Constructor = function()
                 if (builded === true)
                 {
                     // reduce cost of following units of the same type
-                    return -(baseCost * costModVar.readDataFloat() + baseCost) * 0.5;
+                    return -(baseCost * costMod + baseCost) * 0.5;
                 }
                 break;
             case GameEnums.PowerMode_Power:
@@ -274,7 +275,7 @@ var Constructor = function()
             default:
                 break;
         }
-        return baseCost * costModVar.readDataFloat();
+        return (baseCost * costMod);
     };
 
     this.getMovementcostModifier = function(co, unit, posX, posY)

@@ -214,7 +214,7 @@
 <context>
     <name>ACTION_JOIN</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="31"/>
+        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="33"/>
         <source>Join</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1440,117 +1440,117 @@
 <context>
     <name>IngameInfoBar</name>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="134"/>
+        <location filename="../objects/ingameinfobar.cpp" line="137"/>
         <source>Buildings: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="141"/>
+        <location filename="../objects/ingameinfobar.cpp" line="144"/>
         <source>Units: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="152"/>
-        <location filename="../objects/ingameinfobar.cpp" line="156"/>
+        <location filename="../objects/ingameinfobar.cpp" line="155"/>
+        <location filename="../objects/ingameinfobar.cpp" line="159"/>
         <source>Funds: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="165"/>
+        <location filename="../objects/ingameinfobar.cpp" line="168"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="172"/>
+        <location filename="../objects/ingameinfobar.cpp" line="175"/>
         <source>Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="241"/>
-        <location filename="../objects/ingameinfobar.cpp" line="284"/>
-        <location filename="../objects/ingameinfobar.cpp" line="288"/>
+        <location filename="../objects/ingameinfobar.cpp" line="244"/>
+        <location filename="../objects/ingameinfobar.cpp" line="287"/>
+        <location filename="../objects/ingameinfobar.cpp" line="291"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="328"/>
+        <location filename="../objects/ingameinfobar.cpp" line="331"/>
         <source>Ammo1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="344"/>
+        <location filename="../objects/ingameinfobar.cpp" line="347"/>
         <source>Ammo1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="360"/>
+        <location filename="../objects/ingameinfobar.cpp" line="363"/>
         <source>Ammo2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="376"/>
+        <location filename="../objects/ingameinfobar.cpp" line="379"/>
         <source>Ammo2: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="393"/>
+        <location filename="../objects/ingameinfobar.cpp" line="396"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="410"/>
+        <location filename="../objects/ingameinfobar.cpp" line="413"/>
         <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="539"/>
-        <location filename="../objects/ingameinfobar.cpp" line="591"/>
+        <location filename="../objects/ingameinfobar.cpp" line="542"/>
+        <location filename="../objects/ingameinfobar.cpp" line="594"/>
         <source>Owner: Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="549"/>
+        <location filename="../objects/ingameinfobar.cpp" line="552"/>
         <source>Owner: Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="559"/>
-        <location filename="../objects/ingameinfobar.cpp" line="570"/>
+        <location filename="../objects/ingameinfobar.cpp" line="562"/>
+        <location filename="../objects/ingameinfobar.cpp" line="573"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="601"/>
+        <location filename="../objects/ingameinfobar.cpp" line="604"/>
         <source>Weapon 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="613"/>
+        <location filename="../objects/ingameinfobar.cpp" line="616"/>
         <source>Weapon 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="623"/>
+        <location filename="../objects/ingameinfobar.cpp" line="626"/>
         <source>Move: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="632"/>
+        <location filename="../objects/ingameinfobar.cpp" line="635"/>
         <source>Movementpoints: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="641"/>
+        <location filename="../objects/ingameinfobar.cpp" line="644"/>
         <source>Vision: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="654"/>
+        <location filename="../objects/ingameinfobar.cpp" line="657"/>
         <source>Loaded Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="674"/>
+        <location filename="../objects/ingameinfobar.cpp" line="677"/>
         <source>Loaded Units: ?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10220,102 +10220,102 @@
 <context>
     <name>co_sanjuro</name>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="334"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="335"/>
         <source>A respected mercenary from Golden Sun. Once he accepts a job, he sees it through to the end no matter how difficult or dangerous it becomes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="338"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="339"/>
         <source>Honest work</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="342"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="343"/>
         <source>Shady business</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="346"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="347"/>
         <source>A keen mind for his finances, he spends more for better equipment when there&apos;s a surplus and focuses on getting the best deal when he&apos;s pressed for money.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="350"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="351"/>
         <source>When his units take combat damage, he recieves a portion of the value of the damage in funds.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="354"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="355"/>
         <source>Heart of Gold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="358"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="359"/>
         <source>When a unit is built, units of the same type recieve a firepower and defense boost, unhindered by terrain, and production costs reduced by half.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="362"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="363"/>
         <source>Buying Power</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="366"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="367"/>
         <source>My services are expensive, and worth every penny.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="367"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="368"/>
         <source>Consider this a free sample!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="368"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="369"/>
         <source>You&apos;re finished! Surrender now!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="369"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="370"/>
         <source>War is my livelihood. Can you handle my level of experience?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="370"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="371"/>
         <source>I was born for battle. I have no limits!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="371"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="372"/>
         <source>If you think this is strictly business, think again. The battlefield calls to me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="375"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="376"/>
         <source>I have a reputation to keep, you know.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="376"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="377"/>
         <source>Another job well done...where&apos;s the next fight?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="377"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="378"/>
         <source>Did you expect anything less from a hardened mercenary?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="381"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="382"/>
         <source>For this i get to less money</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="382"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="383"/>
         <source>Now, i know how the Romans felt like.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sanjuro.js" line="386"/>
+        <location filename="../resources/scripts/cos/co_sanjuro.js" line="387"/>
         <source>Sanjuro</source>
         <translation type="unfinished"></translation>
     </message>

@@ -117,9 +117,12 @@ void IngameInfoBar::updatePlayerInfo()
 
     pSprite = new oxygine::Sprite();
     pAnim = pGameManager->getResAnim((pMap->getGameRules()->getCurrentWeather()->getWeatherSymbol()).toStdString().c_str());
-    pSprite->setResAnim(pAnim);
-    pSprite->setPosition(100, 10);
-    pSprite->setScale(1.4f);
+    if (pAnim != nullptr)
+    {
+        pSprite->setResAnim(pAnim);
+        pSprite->setPosition(100, 10);
+        pSprite->setScale(100 / pAnim->getWidth());
+    }
     m_pGameInfoBox->addChild(pSprite);
 
     oxygine::TextStyle style = FontManager::getMainFont();

@@ -1031,7 +1031,7 @@ void Unit::makeCOUnit(quint8 co)
         }
         createCORange(pCO->getCORange());
     }
-    else
+    else if (pCO->getCOUnit() != this)
     {
         setUnitRank(GameEnums::UnitRank_Veteran);
     }
@@ -1786,7 +1786,7 @@ void Unit::moveUnitToField(qint32 x, qint32 y)
         {
             createCORange(m_pOwner->getCO(0)->getCORange());
         }
-        else
+        else //if (m_UnitRank == GameEnums::UnitRank_CO1)
         {
             createCORange(m_pOwner->getCO(1)->getCORange());
         }
@@ -1797,17 +1797,6 @@ void Unit::moveUnitToField(qint32 x, qint32 y)
 
 void Unit::removeUnit()
 {
-    m_pTerrain->setUnit(nullptr);
-}
-
-void Unit::killUnit()
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    QString function1 = "createExplosionAnimation";
-    QJSValueList args1;
-    args1 << getX();
-    args1 << getY();
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
     if (m_UnitRank == GameEnums::UnitRank_CO0)
     {
         CO* pCO = m_pOwner->getCO(0);
@@ -1828,12 +1817,25 @@ void Unit::killUnit()
     {
         GameMap::getInstance()->removeChild(m_CORange);
     }
+    m_pTerrain->setUnit(nullptr);    
+}
+
+void Unit::killUnit()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "createExplosionAnimation";
+    QJSValueList args1;
+    args1 << getX();
+    args1 << getY();
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+
     // record destruction of this unit
     GameRecorder* pRecorder = GameMap::getInstance()->getGameRecorder();
     if (pRecorder != nullptr)
     {
         GameMap::getInstance()->getGameRecorder()->lostUnit(m_pOwner->getPlayerID());
     }
+
     detach();
     removeUnit();
 }
