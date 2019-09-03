@@ -9,6 +9,7 @@ typedef oxygine::intrusive_ptr<ScriptConditionBuildingDestroyed> spScriptConditi
 
 class ScriptConditionBuildingDestroyed : public ScriptCondition
 {
+    Q_OBJECT
 public:
     ScriptConditionBuildingDestroyed();
 

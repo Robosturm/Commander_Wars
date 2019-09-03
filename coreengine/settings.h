@@ -152,8 +152,11 @@ public slots:
     static void setWidth(const qint32 &width);
     static void setHeight(const qint32 &height);
 
-    static quint32 getAnimationSpeed();
+    static float getAnimationSpeed();
     static void setAnimationSpeed(const quint32 &value);
+
+    static float getBattleAnimationSpeed();
+    static void setBattleAnimationSpeed(const quint32 &value);
 
     static SDL_Keycode getKey_up();
     static void setKey_up(const SDL_Keycode &key_up);
@@ -251,6 +254,7 @@ private:
     static GameEnums::AnimationMode showAnimations;
     static GameEnums::BattleAnimationMode battleAnimations;
     static quint32 animationSpeed;
+    static quint32 battleAnimationSpeed;
     static QString m_LastSaveGame;
     static bool m_ShowCursor;
     static bool m_AutoEndTurn;

@@ -19,6 +19,7 @@ ObjectManager::ObjectManager()
 {
     oxygine::Resources::loadXML("resources/objects/res.xml");
     oxygine::Resources::loadXML("resources/cursor/res.xml");
+
 }
 
 oxygine::spButton ObjectManager::createButton(QString text, qint32 width)

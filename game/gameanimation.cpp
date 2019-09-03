@@ -85,7 +85,7 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
         queuedAnim->add(tween);
         if (sleepAfterFinish > 0)
         {
-            oxygine::spTween tween1 = oxygine::createTween(TweenWait(), sleepAfterFinish / static_cast<qint32>(Settings::getAnimationSpeed()), 1);
+            oxygine::spTween tween1 = oxygine::createTween(TweenWait(), sleepAfterFinish / Settings::getAnimationSpeed(), 1);
             queuedAnim->add(tween1);
         }
         pSprite->setScaleX(scaleX);
@@ -156,13 +156,13 @@ void GameAnimation::setSound(QString soundFile, qint32 loops, QString folder)
 
 void GameAnimation::addTweenScale(float endScale, qint32 duration)
 {
-    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenScale(endScale), duration / static_cast<qint32>(Settings::getAnimationSpeed()));
+    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenScale(endScale), duration / Settings::getAnimationSpeed());
     this->addTween(tween1);
 }
 
 void GameAnimation::addTweenPosition(QPoint point, qint32 duration)
 {
-    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(point.x(), point.y())), duration/ static_cast<qint32>(Settings::getAnimationSpeed()));
+    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(point.x(), point.y())), duration/ Settings::getAnimationSpeed());
     this->addTween(tween1);
 }
 
@@ -178,7 +178,7 @@ void GameAnimation::addTweenColor(qint32 spriteIdx, QColor startColor, QColor en
     {
         sprite->setColor(oxygine::Color(static_cast<quint8>(startColor.red()), static_cast<quint8>(startColor.green()), static_cast<quint8>(startColor.blue()), static_cast<quint8>(startColor.alpha())));
         oxygine::Sprite::TweenColor tweenColor(oxygine::Color(static_cast<quint8>(endColor.red()), static_cast<quint8>(endColor.green()), static_cast<quint8>(endColor.blue()), static_cast<quint8>(endColor.alpha())));
-        oxygine::spTween tween = oxygine::createTween(tweenColor, duration / static_cast<qint32>(Settings::getAnimationSpeed()), 1, twoSided, delay / static_cast<qint32>(Settings::getAnimationSpeed()));
+        oxygine::spTween tween = oxygine::createTween(tweenColor, duration / Settings::getAnimationSpeed(), 1, twoSided, delay / Settings::getAnimationSpeed());
         sprite->addTween(tween);
     }
 }

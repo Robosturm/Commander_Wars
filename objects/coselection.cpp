@@ -5,6 +5,7 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/cospritemanager.h"
 #include "resource_management/fontmanager.h"
+#include "resource_management/gamemanager.h"
 
 COSelection::COSelection(QStringList coids)
     : QObject(),
@@ -15,6 +16,7 @@ COSelection::COSelection(QStringList coids)
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+    GameManager* pGameManager = GameManager::getInstance();
     pCOSpriteManager->loadAll();
     Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
     // create a co banner for each co in a different army
@@ -34,7 +36,7 @@ COSelection::COSelection(QStringList coids)
                 QString army = ret.toString();
                 if (!m_Armies.contains(army))
                 {
-                    pAnim = pObjectManager->getResAnim(army.toStdString().c_str());
+                    pAnim = pGameManager->getResAnim(army.toStdString().c_str());
                     if (pAnim != nullptr)
                     {
                         m_Armies.append(army);

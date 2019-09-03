@@ -357,7 +357,7 @@ void BattleAnimation::nextAnimatinStep()
         }
         case AnimationProgress::WaitAfterIn:
         {
-            battleTimer.start(500 / Settings::getAnimationSpeed());
+            battleTimer.start(500 / Settings::getBattleAnimationSpeed());
             break;
         }
         case AnimationProgress::AttackerFire:
@@ -387,7 +387,7 @@ void BattleAnimation::nextAnimatinStep()
             {
                 setSpritePosition(m_pDefenderAnimation, m_pDefUnit, m_pAtkUnit);
                 currentState = AnimationProgress::WaitAfterBattle;
-                battleTimer.start(500 / Settings::getAnimationSpeed());
+                battleTimer.start(500 / Settings::getBattleAnimationSpeed());
             }
             break;
         }
@@ -405,7 +405,7 @@ void BattleAnimation::nextAnimatinStep()
             m_pAttackerAnimation->setHpRounded(Mainapp::roundUp(m_atkEndHp));
             m_pAttackerAnimation->loadAnimation(BattleAnimationSprite::standingFiredAnimation, m_pAtkUnit, m_pDefUnit, m_AtkWeapon);
             setSpritePosition(m_pAttackerAnimation, m_pAtkUnit, m_pDefUnit);
-            battleTimer.start(500 / Settings::getAnimationSpeed());
+            battleTimer.start(500 / Settings::getBattleAnimationSpeed());
             break;
         }
         case AnimationProgress::Finished:
@@ -422,7 +422,7 @@ void BattleAnimation::loadMoveInAnimation(spBattleAnimationSprite pSprite, Unit*
 {
     pSprite->loadAnimation(BattleAnimationSprite::moveInAnimation, pUnit1, pUnit2, weapon);
     setSpritePosition(pSprite, pUnit1, pUnit2);
-    battleTimer.start(pSprite->getMoveInDurationMS() / static_cast<qint32>(Settings::getAnimationSpeed()));
+    battleTimer.start(pSprite->getMoveInDurationMS() / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }
 
 
@@ -430,7 +430,7 @@ void BattleAnimation::loadFireAnimation(spBattleAnimationSprite pSprite, Unit* p
 {
     pSprite->loadAnimation(BattleAnimationSprite::fireAnimation, pUnit1, pUnit2, weapon);
     setSpritePosition(pSprite, pUnit1, pUnit2);
-    battleTimer.start(pSprite->getFireDurationMS() / static_cast<qint32>(Settings::getAnimationSpeed()));
+    battleTimer.start(pSprite->getFireDurationMS() / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }
 
 void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAnimationSprite pSprite, spBattleAnimationSprite pAttackerSprite,
@@ -441,16 +441,16 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
         endHp = 0.0f;
     }
     oxygine::ColorRectSprite::TweenColor tweenColor(getHealthBarColor(endHp));
-    oxygine::spTween colorTween = oxygine::createTween(tweenColor, 800 / Settings::getAnimationSpeed());
+    oxygine::spTween colorTween = oxygine::createTween(tweenColor, 800 / Settings::getBattleAnimationSpeed());
     pColorRect->addTween(colorTween);
-    oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth(127.0f * endHp / 10.0f), 800 / Settings::getAnimationSpeed());
+    oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth(127.0f * endHp / 10.0f), 800 / Settings::getBattleAnimationSpeed());
     pColorRect->addTween(posTween);
     // add impact image
     oxygine::ColorRectSprite::TweenColor tweenColor2(oxygine::Color(255, 0, 0));
     oxygine::spActor child = pSprite->getClipActor()->getFirstChild();
     while (child)
     {
-        oxygine::spTween colorTween2 = oxygine::createTween(tweenColor2, 500 / Settings::getAnimationSpeed(), 1, true, 100);
+        oxygine::spTween colorTween2 = oxygine::createTween(tweenColor2, 500 / Settings::getBattleAnimationSpeed(), 1, true, 100);
         child->addTween(colorTween2);
         child = child->getNextSibling();
     }
@@ -480,5 +480,5 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
     pSprite->setMaxUnitCount(-1);
     pSprite->setHpRounded(curHp);
 
-    battleTimer.start(pSprite->getImpactDurationMS(pUnit1) / static_cast<qint32>(Settings::getAnimationSpeed()));
+    battleTimer.start(pSprite->getImpactDurationMS(pUnit1) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }

@@ -246,6 +246,21 @@ void OptionMenue::showGameplayAndKeys()
 
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Battle Animation Speed: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSlider pBattleAnimationSpeed = new Slider(pApp->getSettings()->getWidth() - 20 - sliderOffset, 1, 100, "");
+    pBattleAnimationSpeed->setPosition(sliderOffset - 130, y);
+    pBattleAnimationSpeed->setCurrentValue(static_cast<qint32>(pSettings->getBattleAnimationSpeed()));
+    m_pOptions->addItem(pBattleAnimationSpeed);
+    connect(pBattleAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        pSettings->setBattleAnimationSpeed(static_cast<quint32>(value));
+    });
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Auto End Turn: ").toStdString().c_str());
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);

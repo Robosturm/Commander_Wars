@@ -225,7 +225,7 @@ void BattleAnimationSprite::loadSingleMovingSprite(QString spriteID, bool addPla
         oxygine::spSprite pSprite = new oxygine::Sprite();
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, loops, false, showDelay / Settings::getAnimationSpeed());
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, loops, false, showDelay / Settings::getBattleAnimationSpeed());
             pSprite->addTween(tween);
             if (deleteAfter && moveTime <= 0)
             {
@@ -270,7 +270,7 @@ void BattleAnimationSprite::loadSingleMovingSprite(QString spriteID, bool addPla
             {
                 endX = xPos - movement.x();
             }
-            oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endX, yPos - movement.y())), moveTime / Settings::getAnimationSpeed(), loops, false, showDelay / Settings::getAnimationSpeed());
+            oxygine::spTween moveTween = oxygine::createTween(oxygine::Actor::TweenPosition(oxygine::Vector2(endX, yPos - movement.y())), moveTime / Settings::getBattleAnimationSpeed(), loops, false, showDelay / Settings::getBattleAnimationSpeed());
             if (deleteAfter)
             {
                 moveTween->addDoneCallback([=](oxygine::Event * pEvent)
@@ -286,7 +286,7 @@ void BattleAnimationSprite::loadSingleMovingSprite(QString spriteID, bool addPla
         }
         if (showDelay > 0)
         {
-            oxygine::spTween visibileTween = oxygine::createTween(TweenToggleVisibility(0.9f, 1.0f), showDelay / Settings::getAnimationSpeed(), loops);
+            oxygine::spTween visibileTween = oxygine::createTween(TweenToggleVisibility(0.9f, 1.0f), showDelay / Settings::getBattleAnimationSpeed(), loops);
             pSprite->addTween(visibileTween);
         }
         m_Actor->addChild(pSprite);

@@ -9,6 +9,7 @@ typedef oxygine::intrusive_ptr<ScriptConditionBuildingCaptured> spScriptConditio
 
 class ScriptConditionBuildingCaptured : public ScriptCondition
 {
+    Q_OBJECT
 public:
     ScriptConditionBuildingCaptured();
 

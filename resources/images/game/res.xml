@@ -175,6 +175,26 @@
 		<image file="victory_screen/c_rang.png" />
 		<image file="victory_screen/d_rang.png" />
 		<image file="victory_screen/graph.png" />		
+		
+		<!-- co selection -->
+		<image file="os.png"/>
+		<image file="bm.png"/>
+		<image file="ge.png"/>
+		<image file="yc.png"/>
+		<image file="bh.png"/>
+		<image file="bg.png"/>
+		<image file="ma.png"/>
+		<image file="ac.png"/>
+		<image file="bd.png"/>
+		<image file="gs.png"/>
+		<image file="pf.png"/>
+		<image file="ti.png"/>
+		<image file="dm.png"/>
+		<!-- aw dc armies -->
+		<image file="ib.png"/>
+		<image file="lz.png"/>
+		<image file="nr.png"/>
+		<image file="dv.png"/>
 	</atlas>
 </resources>
 

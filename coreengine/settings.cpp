@@ -49,6 +49,7 @@ bool Settings::m_Server               = false;
 GameEnums::AnimationMode Settings::showAnimations = GameEnums::AnimationMode_All;
 GameEnums::BattleAnimationMode Settings::battleAnimations = GameEnums::BattleAnimationMode_Detail;
 quint32 Settings::animationSpeed = 1;
+quint32 Settings::battleAnimationSpeed = 1;
 QString Settings::m_LastSaveGame = "";
 QString Settings::m_Username = "";
 bool Settings::m_ShowCursor = true;
@@ -292,6 +293,13 @@ void Settings::loadSettings(){
         Console::print(error, Console::eERROR);
         animationSpeed = 1u;
     }
+    battleAnimationSpeed = settings.value("BattleAnimationSpeed", 1u).toUInt(&ok);
+    if(!ok || animationSpeed <= 0 ||  animationSpeed > 100u)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " BattleAnimationSpeed";
+        Console::print(error, Console::eERROR);
+        battleAnimationSpeed = 1u;
+    }
     m_LastSaveGame = settings.value("LastSaveGame", "").toString();
     m_Username = settings.value("Username", "").toString();
     m_ShowCursor = settings.value("ShowCursor", true).toBool();
@@ -374,7 +382,8 @@ void Settings::saveSettings(){
 
     settings.beginGroup("Game");
     settings.setValue("ShowAnimations",                 static_cast<qint32>(showAnimations));
-    settings.setValue("BattleAnimations",                 static_cast<qint32>(battleAnimations));
+    settings.setValue("BattleAnimations",               static_cast<qint32>(battleAnimations));
+    settings.setValue("BattleAnimationSpeed",           static_cast<qint32>(battleAnimationSpeed));
     settings.setValue("AnimationSpeed",                 animationSpeed);
     settings.setValue("LastSaveGame",                   m_LastSaveGame);
     settings.setValue("Username",                       m_Username);
@@ -460,9 +469,13 @@ void Settings::setHeight(const qint32 &height)
     m_height = height;
 }
 
-quint32 Settings::getAnimationSpeed()
+float Settings::getAnimationSpeed()
 {
-    return animationSpeed;
+    if (animationSpeed <= 100)
+    {
+        return 100.0f / (101.0f - animationSpeed);
+    }
+    return 100;
 }
 
 void Settings::setAnimationSpeed(const quint32 &value)
@@ -470,6 +483,19 @@ void Settings::setAnimationSpeed(const quint32 &value)
     animationSpeed = value;
 }
 
+float Settings::getBattleAnimationSpeed()
+{
+    if (battleAnimationSpeed <= 100)
+    {
+        return 100.0f / (101.0f - battleAnimationSpeed);
+    }
+    return 100;
+}
+
+void Settings::setBattleAnimationSpeed(const quint32 &value)
+{
+    battleAnimationSpeed = value;
+}
 SDL_Keycode Settings::getKey_up()
 {
     return m_key_up;

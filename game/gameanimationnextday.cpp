@@ -78,7 +78,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime)
     addChild(textField);
 
     endTimer.setSingleShot(true);
-    endTimer.setInterval(1000 / static_cast<qint32>(Settings::getAnimationSpeed()));
+    endTimer.setInterval(1000 / Settings::getAnimationSpeed());
     connect(&endTimer, &QTimer::timeout, this, &GameAnimationNextDay::onFinished, Qt::QueuedConnection);
     endTimer.start();
 

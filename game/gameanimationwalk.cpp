@@ -145,7 +145,7 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
                         break;
                     }
                 }
-                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, row), static_cast<qint32>(m_frameTime) * pAnim->getRows(), 1);
+                oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, row), m_frameTime * pAnim->getRows(), 1);
                 queueAnimating->add(tween);
                 if (i == 0)
                 {
