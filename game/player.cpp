@@ -443,6 +443,7 @@ QStringList Player::getCOUnits(Building* pBuilding)
 void Player::setBuildList(const QStringList &BuildList)
 {
     m_BuildList = BuildList;
+    m_BuildlistChanged = true;
 }
 
 void Player::changeBuildlist(const QString& unitID, bool remove)
@@ -458,6 +459,16 @@ void Player::changeBuildlist(const QString& unitID, bool remove)
             m_BuildList.append(unitID);
         }
     }
+}
+
+bool Player::getBuildlistChanged() const
+{
+    return m_BuildlistChanged;
+}
+
+void Player::setBuildlistChanged(bool BuildlistChanged)
+{
+    m_BuildlistChanged = BuildlistChanged;
 }
 
 void Player::setIsDefeated(bool value)
@@ -1052,6 +1063,7 @@ void Player::serializeObject(QDataStream& pStream)
          }
      }
      pStream << m_BuildList;
+     pStream << m_BuildlistChanged;
 }
 void Player::deserializeObject(QDataStream& pStream)
 {
@@ -1141,7 +1153,11 @@ void Player::deserializeObject(QDataStream& pStream)
     {
         pStream >> m_BuildList;
     }
-    else
+    if (version > 9)
+    {
+        pStream >> m_BuildlistChanged;
+    }
+    if (!m_BuildlistChanged)
     {
         // for older versions we allow all loaded units to be buildable
         UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();

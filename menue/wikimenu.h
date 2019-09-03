@@ -19,13 +19,13 @@ public:
     explicit Wikimenu();
 signals:
     void sigExitMenue();
-    void sigSearch();
+    void sigSearch(bool onlyTag);
     void sigShowWikipage(WikiDatabase::pageData page);
 public slots:
     void exitMenue();
     void showWikipage(WikiDatabase::pageData page);
     void searchChanged(QString);
-    void search();
+    void search(bool onlyTag);
     void tagChanged(qint32 item);
 private:
     spTextbox m_SearchString;

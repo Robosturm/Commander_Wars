@@ -46,7 +46,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 9;
+        return 10;
     }
     /**
      * @brief setBaseGameInput sets the player input
@@ -64,6 +64,17 @@ public:
      * @return
      */
     QVector<spUnit> getSpEnemyUnits();
+
+    /**
+     * @brief getBuildlistChanged
+     * @return
+     */
+    bool getBuildlistChanged() const;
+    /**
+     * @brief setBuildlistChanged
+     * @param BuildlistChanged
+     */
+    void setBuildlistChanged(bool BuildlistChanged);
 signals:
 
 public slots:
@@ -391,6 +402,7 @@ private:
      * @brief m_BuildList contains all units we're allowed to build
      */
     QStringList m_BuildList;
+    bool m_BuildlistChanged{false};
 };
 
 #endif // PLAYER_H

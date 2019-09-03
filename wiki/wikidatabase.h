@@ -39,7 +39,7 @@ public:
      * @param searchTerm
      * @return
      */
-    QVector<pageData> getEntries(QString searchTerm);
+    QVector<pageData> getEntries(QString searchTerm, bool onlyTag);
     /**
      * @brief getEntries
      * @param entry

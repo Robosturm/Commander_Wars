@@ -63,7 +63,7 @@ Wikimenu::Wikimenu()
     pButton->setPosition(m_SearchString->getWidth() + m_SearchString->getX() + 10, y);
     pButton->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
-        emit sigSearch();
+        emit sigSearch(false);
     });
     connect(this, &Wikimenu::sigSearch, this, &Wikimenu::search, Qt::QueuedConnection);
     y += 50;
@@ -103,15 +103,15 @@ void Wikimenu::exitMenue()
 
 void Wikimenu::searchChanged(QString)
 {
-    search();
+    search(false);
 }
 
-void Wikimenu::search()
+void Wikimenu::search(bool onlyTag)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_MainPanel->clearContent();
-    QVector<WikiDatabase::pageData> items = WikiDatabase::getInstance()->getEntries(m_SearchString->getCurrentText());
+    QVector<WikiDatabase::pageData> items = WikiDatabase::getInstance()->getEntries(m_SearchString->getCurrentText(), onlyTag);
     qint32 itemCount = 0;
     for (qint32 i = 0; i < items.size(); i++)
     {
@@ -168,5 +168,5 @@ void Wikimenu::showWikipage(WikiDatabase::pageData page)
 void Wikimenu::tagChanged(qint32)
 {
     m_SearchString->setCurrentText(m_Tags->getCurrentItemText());
-    emit sigSearch();
+    emit sigSearch(true);
 }

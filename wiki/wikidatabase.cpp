@@ -105,12 +105,12 @@ void WikiDatabase::load()
     }
 }
 
-QVector<WikiDatabase::pageData> WikiDatabase::getEntries(QString searchTerm)
+QVector<WikiDatabase::pageData> WikiDatabase::getEntries(QString searchTerm, bool onlyTag)
 {
     QVector<pageData> ret;
     for (qint32 i = 0; i < m_Entries.size(); i++)
     {
-        if ((std::get<0>(m_Entries[i]).contains(searchTerm, Qt::CaseInsensitive)) ||
+        if ((std::get<0>(m_Entries[i]).contains(searchTerm, Qt::CaseInsensitive) && !onlyTag) ||
             (tagMatches(std::get<2>(m_Entries[i]), searchTerm)))
         {
             ret.append(m_Entries[i]);

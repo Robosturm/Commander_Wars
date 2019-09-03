@@ -823,6 +823,10 @@ void GameMap::startGame()
             }
         }
     }
+    for (qint32 i = 0; i < players.size(); i++)
+    {
+        players[i]->setBuildlistChanged(true);
+    }
 }
 
 void GameMap::clearMap()
