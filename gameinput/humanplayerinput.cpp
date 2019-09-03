@@ -54,7 +54,7 @@ HumanPlayerInput::~HumanPlayerInput()
     m_pUnitPathFindingSystem = nullptr;
 }
 
-void HumanPlayerInput::rightClickUp(qint32 x, qint32 y)
+void HumanPlayerInput::rightClickUp(qint32, qint32)
 {
     if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer)
     {
@@ -200,7 +200,9 @@ void HumanPlayerInput::cleanUpInput()
     GameMenue* pMenue = GameMenue::getInstance();
     if (pMenue != nullptr)
     {
-        pMenue->getCursor()->changeCursor("cursor+default");
+        Cursor* pCursor = pMenue->getCursor();
+        pCursor->changeCursor("cursor+default");
+        cursorMoved(pCursor->getMapPointX(), pCursor->getMapPointY());
     }
 }
 
@@ -366,12 +368,20 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                 (m_CurrentMenu.get() == nullptr))
             {
                 Unit* pUnit = m_pGameAction->getTargetUnit();
-                m_pGameAction->setMovepath(m_ArrowPoints, m_pGameAction->getCosts());
                 if (pUnit != nullptr)
                 {
-                    // we want to do something with this unit :)
-                    QStringList actions = pUnit->getActionList();
+                    m_pGameAction->setMovepath(m_ArrowPoints, m_pGameAction->getCosts());
+                    QStringList actions;
                     QStringList possibleActions;
+                    if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) > pUnit->getMovementpoints(m_pGameAction->getTarget()))
+                    {
+                        actions.append(CoreAI::ACTION_WAIT);
+                    }
+                    else
+                    {
+                        // we want to do something with this unit :)
+                        actions = pUnit->getActionList();
+                    }
                     for (qint32 i = 0; i < actions.size(); i++)
                     {
                         if (m_pGameAction->canBePerformed(actions[i]))
@@ -488,6 +498,28 @@ void HumanPlayerInput::getNextStepData()
 
 void HumanPlayerInput::finishAction()
 {
+    Unit* pUnit = m_pGameAction->getTargetUnit();
+    if (pUnit != nullptr)
+    {
+        qint32 movepoints = pUnit->getMovementpoints(m_pGameAction->getTarget());
+        if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) > movepoints)
+        {
+            // shorten path
+            QVector<QPoint> newPath = m_pUnitPathFindingSystem->getClosestReachableMovePath(m_ArrowPoints[0], movepoints);
+            m_pGameAction->setMovepath(newPath, m_pUnitPathFindingSystem->getCosts(newPath));
+            QVector<QPoint> multiTurnPath;
+            for (qint32 i = 0; i <= m_ArrowPoints.size() - newPath.size(); i++)
+            {
+                multiTurnPath.append(m_ArrowPoints[i]);
+            }
+            pUnit->setMultiTurnPath(multiTurnPath);
+        }
+        else
+        {
+            // reset path in all other cases
+            pUnit->setMultiTurnPath(QVector<QPoint>());
+        }
+    }
     emit performAction(m_pGameAction);
     m_pGameAction = nullptr;
     cleanUpInput();
@@ -542,7 +574,13 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
 {
     Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
     GameMap* pMap = GameMap::getInstance();
-    m_pUnitPathFindingSystem = new UnitPathFindingSystem(pMap->getTerrain(x, y)->getUnit(), m_pPlayer);
+    Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+    m_pUnitPathFindingSystem = new UnitPathFindingSystem(pUnit, m_pPlayer);
+    if ((pUnit->getOwner() == m_pPlayer) &&
+        pUnit->getActionList().contains(CoreAI::ACTION_WAIT))
+    {
+        m_pUnitPathFindingSystem->setMovepoints(pUnit->getFuel());
+    }
     m_pUnitPathFindingSystem->explore();
     createMarkedMoveFields();
 }
@@ -595,20 +633,30 @@ void HumanPlayerInput::createMarkedMoveFields()
     clearMarkedFields();
     if (m_pUnitPathFindingSystem != nullptr)
     {
+        qint32 movementpoints = m_pGameAction->getTargetUnit()->getMovementpoints(m_pGameAction->getTarget());
         QVector<QPoint> points = m_pUnitPathFindingSystem->getAllNodePoints();
         for (qint32 i = 0; i < points.size(); i++)
         {
-            createMarkedField(points[i], QColor(50, 230, 200, 255), Terrain::DrawPriority::MarkedFieldLow);
+            if (m_pUnitPathFindingSystem->getTargetCosts(points[i].x(), points[i].y()) > movementpoints)
+            {
+                createMarkedField(points[i], QColor(37, 151, 200, 255), Terrain::DrawPriority::MarkedFieldLow);
+            }
+            else
+            {
+                createMarkedField(points[i], QColor(50, 230, 200, 255), Terrain::DrawPriority::MarkedFieldLow);
+            }
         }
     }
 }
 
 void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
 {
-    if (GameMap::getInstance()->getCurrentPlayer() == m_pPlayer)
+    GameMap* pMap = GameMap::getInstance();
+    if (pMap->getCurrentPlayer() == m_pPlayer)
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
+
         if (m_pMarkedFieldData != nullptr)
         {
             if (m_pMarkedFieldData->getShowZData())
@@ -683,13 +731,13 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                     m_ZInformationLabel->setPosition(x * GameMap::Imagesize - GameMap::Imagesize / 2.0f,
                                                      y * GameMap::Imagesize - GameMap::Imagesize * 1.75f);
                     m_ZInformationLabel->setPriority(static_cast<qint16>(Mainapp::ZOrder::Animation));
-                    GameMap::getInstance()->addChild(m_ZInformationLabel);
+                    pMap->addChild(m_ZInformationLabel);
                 }
                 else
                 {
                     if (m_ZInformationLabel.get() != nullptr)
                     {
-                        GameMap::getInstance()->removeChild(m_ZInformationLabel);
+                        pMap->removeChild(m_ZInformationLabel);
                         m_ZInformationLabel = nullptr;
                     }
                 }
@@ -700,6 +748,20 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
             if ((m_CurrentMenu.get() == nullptr) && m_pGameAction->getActionID() == "")
             {
                 createCursorPath(x, y);
+            }
+        }
+        else
+        {
+            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+            deleteArrow();
+            if (pUnit != nullptr)
+            {
+                QVector<QPoint> multiTurnPath = pUnit->getMultiTurnPath();
+                if (pUnit->getOwner() == m_pPlayer &&
+                    multiTurnPath.size() > 0)
+                {
+                    createArrow(multiTurnPath);
+                }
             }
         }
         pApp->continueThread();
@@ -757,74 +819,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
             }
             m_pGameAction->setCosts(m_pUnitPathFindingSystem->getCosts(points));
             m_ArrowPoints = points;
-            GameMap* pMap = GameMap::getInstance();
-            GameManager* pGameManager = GameManager::getInstance();
-            for (qint32 i = 0; i < points.size() - 1; i++)
-            {
-                oxygine::spSprite pSprite = new oxygine::Sprite();
-                oxygine::ResAnim* pAnim = pGameManager->getResAnim("arrow+unit");
-                pSprite->setResAnim(pAnim);
-                pSprite->setPriority(static_cast<qint16>(points[i].y() + 3));
-                pSprite->setScale((GameMap::Imagesize + 1) / pAnim->getWidth());
-                pSprite->setPosition(points[i].x() * GameMap::Imagesize -(pSprite->getScaledWidth() - GameMap::Imagesize) / 2,  points[i].y() * GameMap::Imagesize -(pSprite->getScaledHeight() - GameMap::Imagesize));
-                pMap->addChild(pSprite);
-                m_Arrows.append(pSprite);
-
-                if (i > 0)
-                {
-                    // select arrow
-                    if (((points[i].x() < points[i + 1].x()) && (points[i].x() > points[i - 1].x())) ||
-                        ((points[i].x() < points[i - 1].x()) && (points[i].x() > points[i + 1].x())))
-                    {
-                        pSprite->setColumn(static_cast<qint32>(Arrows::LeftRight));
-                    }
-                    else if (((points[i].y() < points[i + 1].y()) && (points[i].y() > points[i - 1].y())) ||
-                             ((points[i].y() < points[i - 1].y()) && (points[i].y() > points[i + 1].y())))
-                    {
-                        pSprite->setColumn(static_cast<qint32>(Arrows::UpDown));
-                    }
-                    else if (((points[i].y() < points[i + 1].y()) && (points[i].x() < points[i - 1].x())) ||
-                             ((points[i].y() < points[i - 1].y()) && (points[i].x() < points[i + 1].x())))
-                    {
-                        pSprite->setColumn(static_cast<qint32>(Arrows::DownRight));
-                    }
-                    else if (((points[i].y() < points[i + 1].y()) && (points[i].x() > points[i - 1].x())) ||
-                             ((points[i].y() < points[i - 1].y()) && (points[i].x() > points[i + 1].x())))
-                    {
-                        pSprite->setColumn(static_cast<qint32>(Arrows::DownLeft));
-                    }
-                    else if (((points[i].y() > points[i + 1].y()) && (points[i].x() < points[i - 1].x())) ||
-                             ((points[i].y() > points[i - 1].y()) && (points[i].x() < points[i + 1].x())))
-                    {
-                        pSprite->setColumn(static_cast<qint32>(Arrows::UpRight));
-                    }
-                    else if (((points[i].y() > points[i + 1].y()) && (points[i].x() > points[i - 1].x())) ||
-                             ((points[i].y() > points[i - 1].y()) && (points[i].x() > points[i + 1].x())))
-                    {
-                        pSprite->setColumn(static_cast<qint32>(Arrows::UpLeft));
-                    }
-                }
-                else
-                {
-                    // final arrow
-                    if (points[i].x() < points[i + 1].x())
-                    {
-                        pSprite->setColumn(static_cast<qint32>(Arrows::Right));
-                    }
-                    else if (points[i].x() > points[i + 1].x())
-                    {
-                        pSprite->setColumn(static_cast<qint32>(Arrows::Left));
-                    }
-                    else if (points[i].y() < points[i + 1].y())
-                    {
-                        pSprite->setColumn(static_cast<qint32>(Arrows::Down));
-                    }
-                    else if (points[i].y() > points[i + 1].y())
-                    {
-                        pSprite->setColumn(static_cast<qint32>(Arrows::Up));
-                    }
-                }
-            }
+            createArrow(m_ArrowPoints);
         }
     }
 }
@@ -843,9 +838,80 @@ QStringList HumanPlayerInput::getEmptyActionList()
     }
 }
 
-void HumanPlayerInput::deleteArrow()
+void HumanPlayerInput::createArrow(QVector<QPoint>& points)
 {
     GameMap* pMap = GameMap::getInstance();
+    GameManager* pGameManager = GameManager::getInstance();
+    for (qint32 i = 0; i < points.size() - 1; i++)
+    {
+        oxygine::spSprite pSprite = new oxygine::Sprite();
+        oxygine::ResAnim* pAnim = pGameManager->getResAnim("arrow+unit");
+        pSprite->setResAnim(pAnim);
+        pSprite->setPriority(static_cast<qint16>(points[i].y() + 3));
+        pSprite->setScale((GameMap::Imagesize + 1) / pAnim->getWidth());
+        pSprite->setPosition(points[i].x() * GameMap::Imagesize -(pSprite->getScaledWidth() - GameMap::Imagesize) / 2,  points[i].y() * GameMap::Imagesize -(pSprite->getScaledHeight() - GameMap::Imagesize));
+        pMap->addChild(pSprite);
+        m_Arrows.append(pSprite);
+
+        if (i > 0)
+        {
+            // select arrow
+            if (((points[i].x() < points[i + 1].x()) && (points[i].x() > points[i - 1].x())) ||
+                ((points[i].x() < points[i - 1].x()) && (points[i].x() > points[i + 1].x())))
+            {
+                pSprite->setColumn(static_cast<qint32>(Arrows::LeftRight));
+            }
+            else if (((points[i].y() < points[i + 1].y()) && (points[i].y() > points[i - 1].y())) ||
+                     ((points[i].y() < points[i - 1].y()) && (points[i].y() > points[i + 1].y())))
+            {
+                pSprite->setColumn(static_cast<qint32>(Arrows::UpDown));
+            }
+            else if (((points[i].y() < points[i + 1].y()) && (points[i].x() < points[i - 1].x())) ||
+                     ((points[i].y() < points[i - 1].y()) && (points[i].x() < points[i + 1].x())))
+            {
+                pSprite->setColumn(static_cast<qint32>(Arrows::DownRight));
+            }
+            else if (((points[i].y() < points[i + 1].y()) && (points[i].x() > points[i - 1].x())) ||
+                     ((points[i].y() < points[i - 1].y()) && (points[i].x() > points[i + 1].x())))
+            {
+                pSprite->setColumn(static_cast<qint32>(Arrows::DownLeft));
+            }
+            else if (((points[i].y() > points[i + 1].y()) && (points[i].x() < points[i - 1].x())) ||
+                     ((points[i].y() > points[i - 1].y()) && (points[i].x() < points[i + 1].x())))
+            {
+                pSprite->setColumn(static_cast<qint32>(Arrows::UpRight));
+            }
+            else if (((points[i].y() > points[i + 1].y()) && (points[i].x() > points[i - 1].x())) ||
+                     ((points[i].y() > points[i - 1].y()) && (points[i].x() > points[i + 1].x())))
+            {
+                pSprite->setColumn(static_cast<qint32>(Arrows::UpLeft));
+            }
+        }
+        else
+        {
+            // final arrow
+            if (points[i].x() < points[i + 1].x())
+            {
+                pSprite->setColumn(static_cast<qint32>(Arrows::Right));
+            }
+            else if (points[i].x() > points[i + 1].x())
+            {
+                pSprite->setColumn(static_cast<qint32>(Arrows::Left));
+            }
+            else if (points[i].y() < points[i + 1].y())
+            {
+                pSprite->setColumn(static_cast<qint32>(Arrows::Down));
+            }
+            else if (points[i].y() > points[i + 1].y())
+            {
+                pSprite->setColumn(static_cast<qint32>(Arrows::Up));
+            }
+        }
+    }
+}
+
+void HumanPlayerInput::deleteArrow()
+{
     for (qint32 i = 0; i < m_Arrows.size(); i++)
     {
         m_Arrows[i]->detach();

@@ -47,7 +47,7 @@ public:
      * @param target
      * @return
      */
-    QVector<QPoint> getClosestReachableMovePath(QPoint target);
+    QVector<QPoint> getClosestReachableMovePath(QPoint target, qint32 movepoints = -1);
     /**
      * @brief setMoveCosts
      * @param movepoints how far this pfs explodes

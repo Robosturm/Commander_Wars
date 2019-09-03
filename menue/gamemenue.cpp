@@ -11,6 +11,8 @@
 
 #include "game/gameanimationfactory.h"
 
+#include "game/unitpathfindingsystem.h"
+
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
@@ -293,12 +295,72 @@ void GameMenue::editFinishedCanceled()
     setFocused(true);
 }
 
+GameAction* GameMenue::doMultiTurnMovement(GameAction* pGameAction)
+{
+    if (pGameAction->getActionID() == CoreAI::ACTION_NEXT_PLAYER ||
+        pGameAction->getActionID() == CoreAI::ACTION_SWAP_COS)
+    {
+        GameMap* pMap = GameMap::getInstance();
+        // check for units that have a multi turn avaible
+        qint32 heigth = pMap->getMapHeight();
+        qint32 width = pMap->getMapWidth();
+        Player* pPlayer = pMap->getCurrentPlayer();
+        for (qint32 y = 0; y < heigth; y++)
+        {
+            for (qint32 x = 0; x < width; x++)
+            {
+                Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                if (pUnit != nullptr)
+                {
+                    if ((pUnit->getOwner() == pPlayer) &&
+                        (pUnit->getHasMoved() == false))
+                    {
+                       QVector<QPoint> currentMultiTurnPath = pUnit->getMultiTurnPath();
+                       if (currentMultiTurnPath.size() > 0)
+                       {
+                           // replace current action with auto moving none moved units
+                           m_pStoredAction = pGameAction;
+                           GameAction* multiTurnMovement = new GameAction(CoreAI::ACTION_WAIT);
+                           multiTurnMovement->setTarget(pUnit->getPosition());
+                           UnitPathFindingSystem pfs(pUnit, pPlayer);
+                           pfs.setMovepoints(pUnit->getFuel());
+                           pfs.explore();
+                           qint32 movepoints = pUnit->getMovementpoints(multiTurnMovement->getTarget());
+                           // shorten path
+                           QVector<QPoint> newPath = pfs.getClosestReachableMovePath(currentMultiTurnPath[0], movepoints);
+                           multiTurnMovement->setMovepath(newPath, pfs.getCosts(newPath));
+                           QVector<QPoint> multiTurnPath;
+                           // still some path ahead?
+                           if (currentMultiTurnPath.size() > newPath.size())
+                           {
+                               for (qint32 i = 0; i <= currentMultiTurnPath.size() - newPath.size(); i++)
+                               {
+                                   multiTurnPath.append(currentMultiTurnPath[i]);
+                               }
+                           }
+                           pUnit->setMultiTurnPath(multiTurnPath);
+                           return multiTurnMovement;
+                       }
+                    }
+                }
+            }
+        }
+    }
+    return pGameAction;
+}
+
 void GameMenue::performAction(GameAction* pGameAction)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    m_pStoredAction = nullptr;
     GameMap* pMap = GameMap::getInstance();
     pMap->getGameRules()->pauseRoundTime();
+    if (!pGameAction->getIsLocal() &&
+        (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != BaseGameInputIF::AiTypes::ProxyAi))
+    {
+        pGameAction = doMultiTurnMovement(pGameAction);
+    }
     QVector<QPoint> path = pGameAction->getMovePath();
     Unit * pMoveUnit = pGameAction->getTargetUnit();
     if (path.size() > 0 && pMoveUnit != nullptr)
@@ -423,12 +485,19 @@ void GameMenue::actionPerformed()
     GameMap* pMap = GameMap::getInstance();
     pMap->getGameScript()->actionDone();
     pMap->getGameRules()->checkVictory();
-    pMap->getGameRules()->createFogVision();    
+    pMap->getGameRules()->createFogVision();
     if (GameAnimationFactory::getAnimationCount() == 0)
     {
-        Mainapp::setUseSeed(false);
-        pMap->getGameRules()->resumeRoundTime();
-        emit sigActionPerformed();
+        if (m_pStoredAction != nullptr)
+        {
+            performAction(m_pStoredAction);
+        }
+        else
+        {
+            Mainapp::setUseSeed(false);
+            pMap->getGameRules()->resumeRoundTime();
+            emit sigActionPerformed();
+        }
     }
     pApp->continueThread();
 }
@@ -838,3 +907,4 @@ void GameMenue::surrenderGame()
     m_Focused = true;
     pApp->continueThread();
 }
+

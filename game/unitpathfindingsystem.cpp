@@ -86,7 +86,7 @@ qint32 UnitPathFindingSystem::getCosts(QVector<QPoint> path)
     return totalCosts;
 }
 
-QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target)
+QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target, qint32 movepoints)
 {
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < m_ClosedList.size(); i++)
@@ -111,9 +111,10 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target
                 Unit* pNodeUnit = pMap->getTerrain(pCurrentNode->x, pCurrentNode->y)->getUnit();
                 // empty field or unit ignores collision and can move on the field
                 // or we are on this field
-                if (pNodeUnit == nullptr ||
-                    (m_pUnit->getIgnoreUnitCollision() && pNodeUnit != nullptr && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit)) ||
-                    (pNodeUnit == m_pUnit))
+                if ((pNodeUnit == nullptr || // empty field
+                    (m_pUnit->getIgnoreUnitCollision() && pNodeUnit != nullptr && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit)) || // oozium move
+                    (pNodeUnit == m_pUnit)) && // current field
+                    (movepoints < 0 || getTargetCosts(pCurrentNode->x, pCurrentNode->y) <= movepoints)) // inside given cost limits
                 {
                     return getPath(pCurrentNode->x, pCurrentNode->y);
                 }

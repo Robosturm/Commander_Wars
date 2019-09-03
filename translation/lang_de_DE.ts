@@ -1351,72 +1351,72 @@
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="67"/>
+        <location filename="../menue/gamemenue.cpp" line="69"/>
         <source>Waiting for Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="161"/>
+        <location filename="../menue/gamemenue.cpp" line="163"/>
         <source>A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="225"/>
+        <location filename="../menue/gamemenue.cpp" line="227"/>
         <source>Save Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="233"/>
+        <location filename="../menue/gamemenue.cpp" line="235"/>
         <source>Exit Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="509"/>
+        <location filename="../menue/gamemenue.cpp" line="578"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="509"/>
+        <location filename="../menue/gamemenue.cpp" line="578"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="509"/>
+        <location filename="../menue/gamemenue.cpp" line="578"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="509"/>
+        <location filename="../menue/gamemenue.cpp" line="578"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="509"/>
+        <location filename="../menue/gamemenue.cpp" line="578"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="509"/>
+        <location filename="../menue/gamemenue.cpp" line="578"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="523"/>
+        <location filename="../menue/gamemenue.cpp" line="592"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="531"/>
+        <location filename="../menue/gamemenue.cpp" line="600"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="804"/>
+        <location filename="../menue/gamemenue.cpp" line="873"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="819"/>
+        <location filename="../menue/gamemenue.cpp" line="888"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1775,7 +1775,7 @@
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="61"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="694"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="702"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1785,23 +1785,33 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="105"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="103"/>
+        <source>Please use one of the following IP-Adresses to connect to this Host. Not all IP-Adresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="104"/>
+        <source> may work for each client depending on the network settings. Please use cmd and the ping command to verify if an IP-Adress may work</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="113"/>
         <source>Host Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="311"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="319"/>
         <source>Host has a different game version or other mods loaded leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="461"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="479"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="469"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="487"/>
         <source>Unable to download map or game script from host a different version of the map or game script with the same name exist! Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="690"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="698"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

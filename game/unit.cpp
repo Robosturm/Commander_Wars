@@ -1986,6 +1986,16 @@ void Unit::updateIconTweens()
     }
 }
 
+QVector<QPoint> Unit::getMultiTurnPath() const
+{
+    return m_MultiTurnPath;
+}
+
+void Unit::setMultiTurnPath(const QVector<QPoint> &MultiTurnPath)
+{
+    m_MultiTurnPath = MultiTurnPath;
+}
+
 bool Unit::hasWeapons()
 {
     if (!weapon1ID.isEmpty() || !weapon2ID.isEmpty())
@@ -2144,6 +2154,13 @@ void Unit::serializeObject(QDataStream& pStream)
     pStream << static_cast<qint32>(m_AiMode);
     pStream << m_UniqueID;
     pStream << static_cast<quint8>(m_ModdingFlags);
+
+    qint32 size = m_MultiTurnPath.size();
+    pStream << size;
+    for (qint32 i = 0; i < units; i++)
+    {
+        pStream << m_MultiTurnPath[i];
+    }
 }
 
 void Unit::deserializeObject(QDataStream& pStream)
@@ -2228,6 +2245,17 @@ void Unit::deserializeObject(QDataStream& pStream)
         quint8 value = 0;
         pStream >> value;
         m_ModdingFlags = static_cast<ModdingFlags>(value);
+    }
+    if (version > 9)
+    {
+        qint32 size = m_MultiTurnPath.size();
+        pStream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            QPoint point;
+            pStream << point;
+            m_MultiTurnPath.append(point);
+        }
     }
 }
 

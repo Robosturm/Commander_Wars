@@ -60,6 +60,11 @@ public slots:
      */
     void performAction(GameAction* pGameAction);
     /**
+     * @brief doMultiTurnMovement
+     * @param pGameAction
+     */
+    GameAction* doMultiTurnMovement(GameAction* pGameAction);
+    /**
      * @brief updatePlayerinfo
      */
     void updatePlayerinfo();
@@ -156,6 +161,7 @@ private:
     bool m_SaveGame{false};
 
     QTimer m_UpdateTimer;
+    GameAction* m_pStoredAction{nullptr};
 };
 
 #endif // GAMEMENUE_H

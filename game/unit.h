@@ -71,7 +71,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 9;
+        return 10;
     }
 
 
@@ -113,6 +113,9 @@ public:
     {
         virtuellY = value;
     }
+    QVector<QPoint> getMultiTurnPath() const;
+    void setMultiTurnPath(const QVector<QPoint> &MultiTurnPath);
+
 signals:
 
 public slots:
@@ -641,6 +644,8 @@ private:
 
     qint32 virtuellX{-1};
     qint32 virtuellY{-1};
+
+    QVector<QPoint> m_MultiTurnPath;
 };
 
 #endif // UNIT_H

@@ -98,12 +98,20 @@ void Multiplayermenu::showIPs()
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
+    oxygine::spTextField info = new oxygine::TextField();
+    info->setStyle(style);
+    info->setHtmlText((tr("Please use one of the following IP-Adresses to connect to this Host. Not all IP-Adresses") +
+                      tr(" may work for each client depending on the network settings. Please use cmd and the ping command to verify if an IP-Adress may work")).toStdString().c_str());
+    info->setSize(Settings::getWidth() - 80, 500);
+    info->setPosition(10, 10);
+    pPanel->addItem(info);
+    qint32 starty = 10 + info->getTextRect().getHeight();
     for (qint32 i = 0; i < items.size(); i++)
     {
         oxygine::spTextField text = new oxygine::TextField();
         text->setStyle(style);
         text->setHtmlText((tr("Host Adress: ") + items[i]).toStdString().c_str());
-        text->setPosition(10, 10 + i * 40);
+        text->setPosition(10, starty + i * 40);
         pPanel->addItem(text);
     }
     pPanel->setContentHeigth(items.size() * 40 + 40);

@@ -45,6 +45,11 @@ public:
      */
     void deleteArrow();
     /**
+     * @brief createArrow
+     * @param points
+     */
+    void createArrow(QVector<QPoint>& points);
+    /**
      * @brief selectUnit selects the given target unit as active
      * @param x
      * @param y
