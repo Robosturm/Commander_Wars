@@ -1,1 +1,2 @@
-name=Advance Wars Dark Conflict Unit Mod by Robosturm
+name=Advance Wars Dark Conflict Unit Mod 
+description=This mod changes the damage dealt by units to that of Advance Wars Dark Conflict. Created by Robosturm

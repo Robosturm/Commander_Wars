@@ -1,1 +1,2 @@
-name=Advance Wars Dual Strike Unit Mod by Robosturm
+name=Advance Wars Dual Strike Unit Mod
+description=This mod changes all unit damges and unit effects back to the Advance Wars Dual Strike game. Created by Robosturm

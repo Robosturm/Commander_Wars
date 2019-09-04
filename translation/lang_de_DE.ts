@@ -1862,242 +1862,242 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="195"/>
+        <location filename="../menue/optionmenue.cpp" line="208"/>
         <source>Gameplay Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="202"/>
+        <location filename="../menue/optionmenue.cpp" line="215"/>
         <source>Show Ingame Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="205"/>
+        <location filename="../menue/optionmenue.cpp" line="218"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="205"/>
+        <location filename="../menue/optionmenue.cpp" line="218"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="205"/>
+        <location filename="../menue/optionmenue.cpp" line="218"/>
         <source>Own</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="205"/>
+        <location filename="../menue/optionmenue.cpp" line="218"/>
         <source>Ally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="205"/>
+        <location filename="../menue/optionmenue.cpp" line="218"/>
         <source>Enemy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="218"/>
+        <location filename="../menue/optionmenue.cpp" line="231"/>
         <source>Battle Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="221"/>
+        <location filename="../menue/optionmenue.cpp" line="234"/>
         <source>Detailed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="221"/>
+        <location filename="../menue/optionmenue.cpp" line="234"/>
         <source>Overworld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="234"/>
+        <location filename="../menue/optionmenue.cpp" line="247"/>
         <source>Animation Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="249"/>
+        <location filename="../menue/optionmenue.cpp" line="262"/>
         <source>Battle Animation Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="264"/>
+        <location filename="../menue/optionmenue.cpp" line="277"/>
         <source>Auto End Turn: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="279"/>
+        <location filename="../menue/optionmenue.cpp" line="292"/>
         <source>Show Windows Cursor: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="294"/>
+        <location filename="../menue/optionmenue.cpp" line="307"/>
         <source>Ingame Keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="301"/>
+        <location filename="../menue/optionmenue.cpp" line="314"/>
         <source>Key Up: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="312"/>
+        <location filename="../menue/optionmenue.cpp" line="325"/>
         <source>Key Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="323"/>
+        <location filename="../menue/optionmenue.cpp" line="336"/>
         <source>Key Down: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="334"/>
+        <location filename="../menue/optionmenue.cpp" line="347"/>
         <source>Key Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="345"/>
+        <location filename="../menue/optionmenue.cpp" line="358"/>
         <source>Key Confirm: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="356"/>
+        <location filename="../menue/optionmenue.cpp" line="369"/>
         <source>Key Cancel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="367"/>
+        <location filename="../menue/optionmenue.cpp" line="380"/>
         <source>Key Next: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="378"/>
+        <location filename="../menue/optionmenue.cpp" line="391"/>
         <source>Key Previous: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="389"/>
+        <location filename="../menue/optionmenue.cpp" line="402"/>
         <source>Key Quicksave 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="400"/>
+        <location filename="../menue/optionmenue.cpp" line="413"/>
         <source>Key Quickload 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="411"/>
+        <location filename="../menue/optionmenue.cpp" line="424"/>
         <source>Key Quicksave 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="422"/>
+        <location filename="../menue/optionmenue.cpp" line="435"/>
         <source>Key Quickload 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="433"/>
+        <location filename="../menue/optionmenue.cpp" line="446"/>
         <source>Key Information: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="444"/>
+        <location filename="../menue/optionmenue.cpp" line="457"/>
         <source>Key Move Map Up: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="455"/>
+        <location filename="../menue/optionmenue.cpp" line="468"/>
         <source>Key Move Map Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="466"/>
+        <location filename="../menue/optionmenue.cpp" line="479"/>
         <source>Key Move Map Down: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="477"/>
+        <location filename="../menue/optionmenue.cpp" line="490"/>
         <source>Key Move Map Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="540"/>
+        <location filename="../menue/optionmenue.cpp" line="559"/>
         <source>Screen Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="548"/>
+        <location filename="../menue/optionmenue.cpp" line="567"/>
         <source>Screen Resolution: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="564"/>
+        <location filename="../menue/optionmenue.cpp" line="583"/>
         <source>Screen Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="567"/>
+        <location filename="../menue/optionmenue.cpp" line="586"/>
         <source>Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="567"/>
+        <location filename="../menue/optionmenue.cpp" line="586"/>
         <source>Bordered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="567"/>
+        <location filename="../menue/optionmenue.cpp" line="586"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="577"/>
+        <location filename="../menue/optionmenue.cpp" line="596"/>
         <source>Audio Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="583"/>
+        <location filename="../menue/optionmenue.cpp" line="602"/>
         <source>Global Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="599"/>
+        <location filename="../menue/optionmenue.cpp" line="618"/>
         <source>Music Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="615"/>
+        <location filename="../menue/optionmenue.cpp" line="634"/>
         <source>Sound Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="630"/>
+        <location filename="../menue/optionmenue.cpp" line="649"/>
         <source>Network Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="637"/>
+        <location filename="../menue/optionmenue.cpp" line="656"/>
         <source>Username: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="663"/>
+        <location filename="../menue/optionmenue.cpp" line="682"/>
         <source>Server Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="678"/>
+        <location filename="../menue/optionmenue.cpp" line="697"/>
         <source>Lobby port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="693"/>
+        <location filename="../menue/optionmenue.cpp" line="712"/>
         <source>Server: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="709"/>
+        <location filename="../menue/optionmenue.cpp" line="728"/>
         <source>Game port: </source>
         <translation type="unfinished"></translation>
     </message>

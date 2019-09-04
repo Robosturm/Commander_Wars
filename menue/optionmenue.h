@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include <qvector.h>
+
 #include "oxygine-framework.h"
 
 #include "objects/panel.h"
@@ -30,6 +32,12 @@ public slots:
     void changeScreenSize(qint32 width, qint32 heigth);
 private:
     spPanel m_pOptions;
+
+    spPanel m_pMods;
+    spPanel m_pModDescription;
+    oxygine::spTextField m_ModDescriptionText;
+    QVector<oxygine::spActor> m_ModBoxes;
+
     bool restartNeeded{false};
 };
 

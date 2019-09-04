@@ -675,7 +675,14 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
                 {
                     if (canTerrainBePlaced(x, y))
                     {
-                        m_Cursor->changeCursor("cursor+default");
+                        if (m_EditorSelection->getSizeMode() == EditorSelection::PlacementSize::Fill)
+                        {
+                            m_Cursor->changeCursor("cursor+fill");
+                        }
+                        else
+                        {
+                            m_Cursor->changeCursor("cursor+default");
+                        }
                     }
                     else
                     {
@@ -690,7 +697,14 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
                         (pCurrentBuilding->getBuildingWidth() == 1 &&
                          pCurrentBuilding->getBuildingHeigth() == 1))
                     {
-                        m_Cursor->changeCursor("cursor+default");
+                        if (m_EditorSelection->getSizeMode() == EditorSelection::PlacementSize::Fill)
+                        {
+                            m_Cursor->changeCursor("cursor+fill");
+                        }
+                        else
+                        {
+                            m_Cursor->changeCursor("cursor+default");
+                        }
                     }
                     else
                     {
@@ -702,7 +716,14 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
                 {
                     if (canUnitBePlaced(x, y))
                     {
-                        m_Cursor->changeCursor("cursor+default");
+                        if (m_EditorSelection->getSizeMode() == EditorSelection::PlacementSize::Fill)
+                        {
+                            m_Cursor->changeCursor("cursor+fill");
+                        }
+                        else
+                        {
+                            m_Cursor->changeCursor("cursor+default");
+                        }
                     }
                     else
                     {

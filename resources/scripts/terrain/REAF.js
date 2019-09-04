@@ -43,10 +43,10 @@ var Constructor = function()
         if (terrain.getBaseTerrainID() === "SEA")
         {
             // it's a sea nice
-            var surroundings = terrain.getSurroundings("SEA", true, false, GameEnums.Directions_All);
+            var surroundings = terrain.getSurroundings("SEA", true, false, GameEnums.Directions_Direct);
             // we need sea all around us :)
 
-            if (surroundings === "+N+NE+E+SE+S+SW+W+NW")
+            if (surroundings === "+N+E+S+W")
             {
                 return true;
             }

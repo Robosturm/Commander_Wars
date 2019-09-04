@@ -1,1 +1,2 @@
-name=Advance Wars Unloading by Robosturm
+name=Advance Wars Unloading 
+description=This Mod changes the unloading system so that units can't move after beeing unloaded. Created by Robosturm

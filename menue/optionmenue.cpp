@@ -90,6 +90,14 @@ OptionMenue::OptionMenue()
     m_pOptions->setPosition(10, 20 + pButtonMods->getHeight());
     addChild(m_pOptions);
 
+    size.setWidth(pApp->getSettings()->getWidth() / 2 - 40);
+    m_pMods = new  Panel(true,  size, size);
+    m_pMods->setPosition(10, 20 + pButtonMods->getHeight());
+    addChild(m_pMods);
+    m_pModDescription = new  Panel(true,  size, size);
+    m_pModDescription->setPosition(pApp->getSettings()->getWidth() / 2 + 10, 20 + pButtonMods->getHeight());
+    addChild(m_pModDescription);
+
     showSettings();
 }
 
@@ -180,6 +188,11 @@ void OptionMenue::showGameplayAndKeys()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_pOptions->clearContent();
+    m_pMods->clearContent();
+    m_pModDescription->clearContent();
+    m_pOptions->setVisible(true);
+    m_pMods->setVisible(false);
+    m_pModDescription->setVisible(false);
     Settings* pSettings = pApp->getSettings();
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);
@@ -492,6 +505,12 @@ void OptionMenue::showSettings()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_pOptions->clearContent();
+    m_pMods->clearContent();
+    m_pModDescription->clearContent();
+    m_pOptions->setVisible(true);
+    m_pMods->setVisible(false);
+    m_pModDescription->setVisible(false);
+
     AudioThread* pAudio = pApp->getAudioThread();
     Settings* pSettings = pApp->getSettings();
     oxygine::TextStyle style = FontManager::getMainFont();
@@ -728,18 +747,29 @@ void OptionMenue::showMods()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_pOptions->clearContent();
-    QFileInfoList infoList = QDir("mods").entryInfoList(QDir::Dirs);
+    m_pMods->clearContent();
+    m_pModDescription->clearContent();
+    m_pOptions->setVisible(false);
+    m_pMods->setVisible(true);
+    m_pModDescription->setVisible(true);
 
+    QFileInfoList infoList = QDir("mods").entryInfoList(QDir::Dirs);
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    style.multiline = false;
+    style.multiline = true;
+    m_ModDescriptionText = new oxygine::TextField();
+    m_ModDescriptionText->setStyle(style);
+    m_ModDescriptionText->setSize(m_pModDescription->getContentWidth() - 20, 500);
+    m_pModDescription->addItem(m_ModDescriptionText);
 
     qint32 width = 0;
     qint32 mods = 0;
     Settings* pSettings = Mainapp::getInstance()->getSettings();
     QStringList currentMods = pSettings->getMods();
+    style.multiline = false;
 
     for (qint32 i = 0; i < infoList.size(); i++)
     {
@@ -747,6 +777,7 @@ void OptionMenue::showMods()
         if (!folder.endsWith("."))
         {
             QString name = folder;
+            QString description;
             QFile file(folder + "/mod.txt");
             if (file.exists())
             {
@@ -759,17 +790,27 @@ void OptionMenue::showMods()
                     {
                         name = line.split("=")[1];
                     }
+                    if (line.startsWith("description="))
+                    {
+                        description = line.split("=")[1];
+                    }
                 }
             }
+            oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
+            oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
+            pBox->setResAnim(pAnim);
+            pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+            pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+
             oxygine::spTextField pTextfield = new oxygine::TextField();
             pTextfield->setStyle(style);
             pTextfield->setHtmlText(name.toStdString().c_str());
-            pTextfield->setPosition(10, 10 + mods * 40);
-            m_pOptions->addItem(pTextfield);
+            pTextfield->setPosition(50, 5);
+            pBox->addChild(pTextfield);
             qint32 curWidth = pTextfield->getTextRect().getWidth() + 30;
             spCheckbox modCheck = new Checkbox();
-            modCheck->setPosition(curWidth, pTextfield->getY());
-            m_pOptions->addItem(modCheck);
+            modCheck->setPosition(10, 5);
+            pBox->addChild(modCheck);
             curWidth += modCheck->getWidth() + 10;
             if (currentMods.contains(folder))
             {
@@ -792,10 +833,26 @@ void OptionMenue::showMods()
             {
                 width = curWidth;
             }
+            pBox->setPosition(10, 10 + mods * 50);
+            pBox->setSize(curWidth + 20, 50);
+
+            pBox->addClickListener([=](oxygine::Event* pEvent)
+            {
+                pEvent->stopPropagation();
+                for (qint32 i2 = 0; i2 < m_ModBoxes.size(); i2++)
+                {
+                    m_ModBoxes[i2]->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+                }
+                pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(32, 200, 32, 0)), 300);
+                m_ModDescriptionText->setHtmlText(description.toStdString().c_str());
+                m_pModDescription->setContentHeigth(m_ModDescriptionText->getTextRect().getHeight() + 40);
+            });
+            m_ModBoxes.append(pBox);
+            m_pMods->addItem(pBox);
         }
     }
-    m_pOptions->setContentWidth(width);
-    m_pOptions->setContentHeigth(20 + mods * 40);
+    m_pMods->setContentWidth(width);
+    m_pMods->setContentHeigth(20 + mods * 50);
     pApp->continueThread();
 }
 

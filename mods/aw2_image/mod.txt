@@ -1,1 +1,2 @@
-name=Advance Wars 2 Image Mod by Robosturm
+name=Advance Wars 2 Image Mod 
+description=This mod brings back the Advance Wars Terrain Sprites to Commander Wars. Created by Robosturm
