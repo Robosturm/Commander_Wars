@@ -26,6 +26,8 @@
 
 #include "coreengine/tweentogglevisibility.h"
 
+#include "coreengine/tweenaddcolorall.h"
+
 const float Unit::animationSpeed = 1.5f;
 
 Unit::Unit()
@@ -138,6 +140,36 @@ void Unit::setOwner(Player* pOwner)
 void Unit::setTerrain(Terrain* pTerrain)
 {
     m_pTerrain = pTerrain;
+}
+
+void Unit::addShineTween()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    removeShineTween();
+    m_ShineTween = oxygine::createTween(TweenAddColorAll(oxygine::Color(50, 50, 50, 255)), 500, -1, true);
+    addTween(m_ShineTween);
+    pApp->continueThread();
+}
+
+void Unit::removeShineTween()
+{
+    if (m_ShineTween.get() != nullptr)
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
+        m_ShineTween->remove();
+        m_ShineTween = nullptr;
+        oxygine::Color addColor(0, 0, 0, 255);
+        setAddColor(addColor);
+        oxygine::spVStyleActor child = static_cast<oxygine::VStyleActor*>(getFirstChild().get());
+        while (child)
+        {
+            child->setAddColor(addColor);
+            child = static_cast<oxygine::VStyleActor*>(child->getNextSibling().get());
+        }
+        pApp->continueThread();
+    }
 }
 
 void Unit::loadSprite(QString spriteID, bool addPlayerColor)
@@ -280,6 +312,13 @@ void Unit::updateSprites()
     for (qint32 i = 0; i < m_TransportUnits.size(); i++)
     {
         m_TransportUnits[i]->updateSprites();
+    }
+    CO* pCO1 = m_pOwner->getCO(0);
+    CO* pCO2 = m_pOwner->getCO(1);
+    if ((pCO1 != nullptr && pCO1->getPowerMode() > GameEnums::PowerMode_Off) ||
+        (pCO2 != nullptr && pCO2->getPowerMode() > GameEnums::PowerMode_Off))
+    {
+        addShineTween();
     }
 }
 

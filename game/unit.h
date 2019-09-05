@@ -17,7 +17,7 @@ class Terrain;
 class Unit;
 typedef oxygine::intrusive_ptr<Unit> spUnit;
 
-class Unit : public QObject, public oxygine::Actor, public FileSerializable
+class Unit : public QObject, public oxygine::VStyleActor, public FileSerializable
 {
     Q_OBJECT
 public:
@@ -45,11 +45,6 @@ public:
     explicit Unit(QString unitID, Player* pOwner, bool aquireId);
 
     virtual ~Unit();
-    /**
-     * @brief setOwner changes the owner ship of this unit
-     * @param pOwner
-     */
-    void setOwner(Player* pOwner);
     /**
      * @brief setTerrain
      * @param pTerrain smart pointer to the terrain this building is placed on
@@ -294,6 +289,19 @@ public slots:
      * @param spriteID
      */
     void loadSprite(QString spriteID, bool addPlayerColor);
+    /**
+     * @brief addShineTween
+     */
+    void addShineTween();
+    /**
+     * @brief removeShineTween
+     */
+    void removeShineTween();
+    /**
+     * @brief setOwner changes the owner ship of this unit
+     * @param pOwner
+     */
+    void setOwner(Player* pOwner);
     /**
      * @brief getOwner
      * @return the pointer to the owner of this unit
@@ -646,6 +654,7 @@ private:
     qint32 virtuellY{-1};
 
     QVector<QPoint> m_MultiTurnPath;
+    oxygine::spTween m_ShineTween;
 };
 
 #endif // UNIT_H

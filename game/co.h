@@ -143,6 +143,10 @@ public slots:
      */
     void activateSuperpower(GameEnums::PowerMode powerMode);
     /**
+     * @brief addUnitShine
+     */
+    void addUnitShines();
+    /**
      * @brief getOffensiveBonus
      * @param pAttacker the attacking unit our unit
      * @param pDefender the defending unit the unit we attack

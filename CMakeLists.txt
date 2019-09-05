@@ -138,8 +138,6 @@ set(${PROJECT_NAME}_SRCS
         coreengine/console.cpp
         coreengine/audiothread.cpp
         coreengine/pathfindingsystem.cpp
-        coreengine/tweentogglevisibility.cpp
-        coreengine/tweenwait.cpp
         coreengine/qmlvector.cpp
         coreengine/scriptvariables.cpp
         coreengine/scriptvariable.cpp
@@ -147,6 +145,10 @@ set(${PROJECT_NAME}_SRCS
         coreengine/dijkstramap.cpp
         coreengine/timer.cpp
         coreengine/userdata.cpp
+        # tweens
+        coreengine/tweentogglevisibility.cpp
+        coreengine/tweenwait.cpp
+        coreengine/tweenaddcolorall.cpp
 
         # network engine
         network/tcpclient.cpp

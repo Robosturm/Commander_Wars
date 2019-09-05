@@ -619,6 +619,7 @@ void CO::activatePower()
     {
         GameMenue::getInstance()->updatePlayerinfo();
     }
+    addUnitShines();
 }
 
 void CO::activateSuperpower(GameEnums::PowerMode powerMode)
@@ -635,6 +636,26 @@ void CO::activateSuperpower(GameEnums::PowerMode powerMode)
     if (GameMenue::getInstance() != nullptr)
     {
         GameMenue::getInstance()->updatePlayerinfo();
+    }
+    addUnitShines();
+}
+
+void CO::addUnitShines()
+{
+    GameMap* pMap = GameMap::getInstance();
+    qint32 heigth = pMap->getMapHeight();
+    qint32 width = pMap->getMapWidth();
+    for (qint32 y = 0; y < heigth; y++)
+    {
+        for (qint32 x = 0; x < width; x++)
+        {
+            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+            if (pUnit != nullptr &&
+                pUnit->getOwner() == m_Owner)
+            {
+                pUnit->addShineTween();
+            }
+        }
     }
 }
 

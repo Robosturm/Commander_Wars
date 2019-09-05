@@ -1056,6 +1056,7 @@ void GameMap::startOfTurn(Player* pPlayer)
             {
                 if (pUnit->getOwner() == pPlayer)
                 {
+                    pUnit->removeShineTween();
                     pUnit->startOfTurn();;
                 }
                 pUnit->updateIcons(getCurrentViewPlayer());
