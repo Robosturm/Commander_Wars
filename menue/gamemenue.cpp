@@ -327,11 +327,15 @@ GameAction* GameMenue::doMultiTurnMovement(GameAction* pGameAction)
                            pfs.explore();
                            qint32 movepoints = pUnit->getMovementpoints(multiTurnMovement->getTarget());
                            // shorten path
-                           QVector<QPoint> newPath = pfs.getClosestReachableMovePath(currentMultiTurnPath[0], movepoints);
+                           QVector<QPoint> newPath = pfs.getClosestReachableMovePath(currentMultiTurnPath[0], movepoints, true);
                            multiTurnMovement->setMovepath(newPath, pfs.getCosts(newPath));
                            QVector<QPoint> multiTurnPath;
                            // still some path ahead?
-                           if (currentMultiTurnPath.size() > newPath.size())
+                           if (newPath.size() == 0)
+                           {
+                               multiTurnPath = currentMultiTurnPath;
+                           }
+                           else if (currentMultiTurnPath.size() > newPath.size())
                            {
                                for (qint32 i = 0; i <= currentMultiTurnPath.size() - newPath.size(); i++)
                                {

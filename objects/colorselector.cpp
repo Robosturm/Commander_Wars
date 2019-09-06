@@ -19,7 +19,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    qint32 space = 200;
+    qint32 space = 220;
     qint32 y = pixelSize * 256 + 20;
     qint32 barWidth = 30;
     if (pixelSize > 30)

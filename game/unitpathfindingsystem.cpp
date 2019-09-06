@@ -86,7 +86,7 @@ qint32 UnitPathFindingSystem::getCosts(QVector<QPoint> path)
     return totalCosts;
 }
 
-QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target, qint32 movepoints)
+QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target, qint32 movepoints, bool direct)
 {
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < m_ClosedList.size(); i++)
@@ -120,18 +120,25 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target
                 }
                 else
                 {
-                    // add previous nodes
-                    for (qint32 i2 = 0; i2 < pCurrentNode->previousNodes.size(); i2++)
+                    if (!direct)
                     {
-                        nextNodes.append(pCurrentNode->previousNodes[i2]);
-                    }
-                    // add next nodes which we didn't added yet.
-                    for (qint32 i2 = 0; i2 < pCurrentNode->nextNodes.size(); i2++)
-                    {
-                        if (!usedNodes.contains(pCurrentNode->nextNodes[i2]))
+                        // add previous nodes
+                        for (qint32 i2 = 0; i2 < pCurrentNode->previousNodes.size(); i2++)
                         {
-                            nextNodes.append(pCurrentNode->nextNodes[i2]);
+                            nextNodes.append(pCurrentNode->previousNodes[i2]);
                         }
+                        // add next nodes which we didn't added yet.
+                        for (qint32 i2 = 0; i2 < pCurrentNode->nextNodes.size(); i2++)
+                        {
+                            if (!usedNodes.contains(pCurrentNode->nextNodes[i2]))
+                            {
+                                nextNodes.append(pCurrentNode->nextNodes[i2]);
+                            }
+                        }
+                    }
+                    else if (pCurrentNode->previousNodes.size() > 0)
+                    {
+                        nextNodes.append(pCurrentNode->previousNodes[0]);
                     }
                 }
             }
