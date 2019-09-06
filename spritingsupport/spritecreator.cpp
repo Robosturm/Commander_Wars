@@ -246,3 +246,94 @@ QColor SpriteCreator::getImageColor(QColor maskColor, QColor imageColor)
                   blue,
                   imageColor.alpha());
 }
+
+void SpriteCreator::updateMaskImages(QString& folder, QString& filter)
+{
+    QStringList filters;
+    filters << filter;
+    QDirIterator dirIter(folder, filters, QDir::Files, QDirIterator::IteratorFlag::Subdirectories);
+    while (dirIter.hasNext())
+    {
+        dirIter.next();
+        QString file = dirIter.fileInfo().absoluteFilePath();
+        updateMaskImage(file);
+    }
+}
+
+void SpriteCreator::updateMaskImage(QString& file)
+{
+    QImage mask(file);
+    QVector<QColor> colors;
+    QColor maskMin(160, 160, 160);
+    QColor maskMax (255, 255, 255);
+    for (qint32 x = 0; x < mask.width(); x++)
+    {
+        for (qint32 y = 0; y < mask.height(); y++)
+        {
+            // color pixel or another one?
+            QColor org = mask.pixelColor(x, y);
+            if (!colors.contains(org) && org.alpha() == 255)
+            {
+                qint32 sum = org.red() + org.green() + org.blue();
+                bool inserted = false;
+                if (colors.size() == 1)
+                {
+                    if (sum > colors[0].red() + colors[0].green() + colors[0].blue())
+                    {
+                        colors.append(org);
+                    }
+                    else
+                    {
+                        colors.insert(0, org);
+                    }
+                }
+                else
+                {
+                    if (colors.size() > 0)
+                    {
+                        if (sum < colors[0].red() + colors[0].green() + colors[0].blue())
+                        {
+                            colors.insert(0, org);
+                            inserted = true;
+                        }
+                        else
+                        {
+                            for (qint32 i = 0; i < colors.size() - 1; i++)
+                            {
+                                if (sum > colors[i].red() + colors[i].green() + colors[i].blue() &&
+                                    sum < colors[i + 1].red() + colors[i + 1].green() + colors[i + 1].blue())
+                                {
+                                    colors.insert(i + 1, org);
+                                    inserted = true;
+                                }
+                            }
+                        }
+                    }
+                    if (!inserted)
+                    {
+                        colors.append(org);
+                    }
+                }
+            }
+        }
+    }
+    for (qint32 x = 0; x < mask.width(); x++)
+    {
+        for (qint32 y = 0; y < mask.height(); y++)
+        {
+            // color pixel or another one?
+            QColor org = mask.pixelColor(x, y);
+            if (org.alpha() == 255)
+            {
+                qint32 index = colors.indexOf(org);
+                float factor = static_cast<float>(index) / static_cast<float>(colors.size() - 1);
+                QColor newColor(factor * (maskMax.red() - maskMin.red()) + maskMin.red(),
+                                factor * (maskMax.green() - maskMin.green()) + maskMin.green(),
+                                factor * (maskMax.blue() - maskMin.blue()) + maskMin.blue());
+                mask.setPixelColor(x, y, newColor);
+            }
+        }
+    }
+    QFile::remove(file);
+    mask.save(file);
+}

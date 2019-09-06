@@ -59,6 +59,12 @@ public slots:
      */
     void createSprites(QString input, QString colorTable, QString maskTable);
     /**
+     * @brief updateMaskImages
+     * @param folder
+     * @param filter
+     */
+    void updateMaskImages(QString folder, QString filter);
+    /**
      * @brief help shows the helps messages between given indexes or all as default
      * @param start
      * @param end

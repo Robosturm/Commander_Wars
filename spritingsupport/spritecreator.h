@@ -78,6 +78,17 @@ public:
      * @return
      */
     static QColor getImageColor(QColor maskColor, QColor imageColor);
+    /**
+     * @brief updateMaskImages
+     * @param folder
+     * @param filter
+     */
+    static void updateMaskImages(QString& folder, QString& filter);
+    /**
+     * @brief updateMaskImage
+     * @param file
+     */
+    static void updateMaskImage(QString& file);
 };
 
 #endif // SPRITECREATOR_H

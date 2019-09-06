@@ -106,6 +106,11 @@ void Console::createSprites(QString input, QString colorTable, QString maskTable
     SpriteCreator::createSprites(input, colorTable, maskTable);
 }
 
+void Console::updateMaskImages(QString folder, QString filter)
+{
+    SpriteCreator::updateMaskImages(folder, filter);
+}
+
 void Console::dotask(const QString& message)
 {
     Mainapp* pApp = Mainapp::getInstance();
