@@ -12,14 +12,16 @@
 #include "ai/targetedunitpathfindingsystem.h"
 #include "resource_management/weaponmanager.h"
 
-const float NormalAi::minMovementDamage = 0.3f;
 const float NormalAi::notAttackableDamage = 45.0f;
 const float NormalAi::midDamage = 55.0f;
 const float NormalAi::highDamage = 65.0f;
 const float NormalAi::directIndirectRatio = 1.75f;
 
-NormalAi::NormalAi()
-    : CoreAI (BaseGameInputIF::AiTypes::Normal)
+NormalAi::NormalAi(float initMinMovementDamage, float initMinAttackFunds, float initMinSuicideDamage)
+    : CoreAI (BaseGameInputIF::AiTypes::Normal),
+      minMovementDamage(initMinMovementDamage),
+      minAttackFunds(initMinAttackFunds),
+      minSuicideDamage(initMinSuicideDamage)
 {
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
@@ -750,7 +752,7 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
                 QVector<QVector3D> ret;
                 QVector<QVector3D> moveTargetFields;
                 getBestAttacksFromField(pUnit, pAction, ret, moveTargetFields);
-                if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue()  * 3.0f / 4.0f)
+                if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue()  * minSuicideDamage)
                 {
                     qint32 selection = Mainapp::randInt(0, ret.size() - 1);
                     QVector3D target = ret[selection];
@@ -807,7 +809,7 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
                                                                 pAction->getActionTarget().y(), 1));
                     QVector<QVector3D> ret;
                     getBestAttacksFromField(pUnit, pAction, ret, moveTargets);
-                    if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue()  * 3.0f / 4.0f)
+                    if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue()  * minSuicideDamage)
                     {
                         qint32 selection = Mainapp::randInt(0, ret.size() - 1);
                         QVector3D target = ret[selection];
@@ -841,7 +843,7 @@ bool NormalAi::suicide(GameAction* pAction, Unit* pUnit, UnitPathFindingSystem& 
     QVector<QVector3D> ret;
     QVector<QVector3D> moveTargetFields;
     CoreAI::getBestTarget(pUnit, pAction, &turnPfs, ret, moveTargetFields);
-    if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue() * 3.0f / 4.0f)
+    if (ret.size() > 0 && ret[0].z() >= -pUnit->getUnitValue() * minSuicideDamage)
     {
         qint32 selection = Mainapp::randInt(0, ret.size() - 1);
         QVector3D target = ret[selection];
@@ -927,9 +929,11 @@ qint32 NormalAi::getBestAttackTarget(Unit* pUnit, QmlVectorUnit* pUnits, QVector
 {
     GameMap* pMap = GameMap::getInstance();
     qint32 target = -1;
-    qint32 currentDamage = 0;
+    qint32 currentDamage = std::numeric_limits<qint32>::min();
     qint32 deffense = 0;
     qint32 minfireRange = pUnit->getMinRange();
+    float minFundsDamage = -pUnit->getUnitValue() * minAttackFunds;
+
     for (qint32 i = 0; i < ret.size(); i++)
     {
         Unit* pEnemy = pMap->getTerrain(static_cast<qint32>(ret[i].x()), static_cast<qint32>(ret[i].y()))->getUnit();
@@ -961,7 +965,7 @@ qint32 NormalAi::getBestAttackTarget(Unit* pUnit, QmlVectorUnit* pUnits, QVector
         QPoint moveTarget(static_cast<qint32>(moveTargetFields[i].x()), static_cast<qint32>(moveTargetFields[i].y()));
         fundsDamage -= calculateCounterDamage(pUnit, pUnits, moveTarget, pEnemy, ret[i].w(), pBuildings, pEnemyBuildings);
         qint32 targetDefense = pMap->getTerrain(static_cast<qint32>(ret[i].x()), static_cast<qint32>(ret[i].y()))->getDefense(pUnit);
-        if (fundsDamage >= 0)
+        if (fundsDamage >= minFundsDamage)
         {
             if (fundsDamage > currentDamage)
             {

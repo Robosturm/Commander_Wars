@@ -2268,6 +2268,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/playerselection.cpp" line="302"/>
+        <source>Normal Off.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/playerselection.cpp" line="302"/>
+        <source>Normal Def.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/playerselection.cpp" line="309"/>
         <location filename="../objects/playerselection.cpp" line="316"/>
         <location filename="../objects/playerselection.cpp" line="320"/>

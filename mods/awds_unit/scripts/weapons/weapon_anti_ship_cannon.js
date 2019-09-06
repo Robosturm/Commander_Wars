@@ -1,21 +1,21 @@
 var idx = 0;
 idx = getIndexOf1(WEAPON_ANTI_SHIP_CANNON.damageTable, "BATTLESHIP");
 WEAPON_ANTI_SHIP_CANNON.damageTable[idx][1] = 75;
-idx = getIndexOf1(WEAPON_ANTI_SHIP_CANNON, "CANNONBOAT");
+idx = getIndexOf1(WEAPON_ANTI_SHIP_CANNON.damageTable, "CANNONBOAT");
 WEAPON_ANTI_SHIP_CANNON.damageTable[idx][1] = 95;
 
-idx = getIndexOf1(WEAPON_ANTI_SHIP_CANNON, "CRUISER");
+idx = getIndexOf1(WEAPON_ANTI_SHIP_CANNON.damageTable, "CRUISER");
 WEAPON_ANTI_SHIP_CANNON.damageTable[idx][1] = 75;
-idx = getIndexOf1(WEAPON_ANTI_SHIP_CANNON, "DESTROYER");
+idx = getIndexOf1(WEAPON_ANTI_SHIP_CANNON.damageTable, "DESTROYER");
 WEAPON_ANTI_SHIP_CANNON.damageTable[idx][1] = 55;
-idx = getIndexOf1(WEAPON_ANTI_SHIP_CANNON, "SUBMARINE");
+idx = getIndexOf1(WEAPON_ANTI_SHIP_CANNON.damageTable, "SUBMARINE");
 WEAPON_ANTI_SHIP_CANNON.damageTable[idx][1] = 65;
 
-idx = getIndexOf1(WEAPON_ANTI_SHIP_CANNON, "LANDER");
+idx = getIndexOf1(WEAPON_ANTI_SHIP_CANNON.damageTable, "LANDER");
 WEAPON_ANTI_SHIP_CANNON.damageTable[idx][1] = 95;
-idx = getIndexOf1(WEAPON_ANTI_SHIP_CANNON, "BLACK_BOAT");
+idx = getIndexOf1(WEAPON_ANTI_SHIP_CANNON.damageTable, "BLACK_BOAT");
 WEAPON_ANTI_SHIP_CANNON.damageTable[idx][1] = 95;
-idx = getIndexOf1(WEAPON_ANTI_SHIP_CANNON, "AIRCRAFTCARRIER");
+idx = getIndexOf1(WEAPON_ANTI_SHIP_CANNON.damageTable, "AIRCRAFTCARRIER");
 WEAPON_ANTI_SHIP_CANNON.damageTable[idx][1] = 75;
 
 idx = getIndexOf1(WEAPON_BATTLESHIP_CANNON.damageTable, "INFANTRY");

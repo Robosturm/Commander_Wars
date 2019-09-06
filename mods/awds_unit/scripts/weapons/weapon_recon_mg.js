@@ -5,62 +5,62 @@ WEAPON_RECON_MG.getEnviromentDamage = function(enviromentId)
 var idx = 0;
 idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "INFANTRY");
 WEAPON_RECON_MG.damageTable[idx][1] = 70;
-idx = getIndexOf1(WEAPON_RECON_MG, "MECH");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "MECH");
 WEAPON_RECON_MG.damageTable[idx][1] = 65;
-idx = getIndexOf1(WEAPON_RECON_MG, "MOTORBIKE");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "MOTORBIKE");
 WEAPON_RECON_MG.damageTable[idx][1] = 65;
-idx = getIndexOf1(WEAPON_RECON_MG, "SNIPER");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "SNIPER");
 WEAPON_RECON_MG.damageTable[idx][1] = 70;
 
 // supporter
-idx = getIndexOf1(WEAPON_RECON_MG, "APC");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "APC");
 WEAPON_RECON_MG.damageTable[idx][1] = 45;
-idx = getIndexOf1(WEAPON_RECON_MG, "FLARE");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "FLARE");
 WEAPON_RECON_MG.damageTable[idx][1] = 35;
-idx = getIndexOf1(WEAPON_RECON_MG, "RECON");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "RECON");
 WEAPON_RECON_MG.damageTable[idx][1] = 35;
 
 // tanks
-idx = getIndexOf1(WEAPON_RECON_MG, "FLAK");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "FLAK");
 WEAPON_RECON_MG.damageTable[idx][1] = 4;
-idx = getIndexOf1(WEAPON_RECON_MG, "HOVERFLAK");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "HOVERFLAK");
 WEAPON_RECON_MG.damageTable[idx][1] = 4;
-idx = getIndexOf1(WEAPON_RECON_MG, "LIGHT_TANK");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "LIGHT_TANK");
 WEAPON_RECON_MG.damageTable[idx][1] = 1;
-idx = getIndexOf1(WEAPON_RECON_MG, "HOVERCRAFT");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "HOVERCRAFT");
 WEAPON_RECON_MG.damageTable[idx][1] = 1;
 
 // heavy tanks
-idx = getIndexOf1(WEAPON_RECON_MG, "HEAVY_HOVERCRAFT");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "HEAVY_HOVERCRAFT");
 WEAPON_RECON_MG.damageTable[idx][1] = 1;
-idx = getIndexOf1(WEAPON_RECON_MG, "HEAVY_TANK");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "HEAVY_TANK");
 WEAPON_RECON_MG.damageTable[idx][1] = 1;
-idx = getIndexOf1(WEAPON_RECON_MG, "NEOTANK");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "NEOTANK");
 WEAPON_RECON_MG.damageTable[idx][1] = 1;
 
 // very heavy tanks
-idx = getIndexOf1(WEAPON_RECON_MG, "MEGATANK");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "MEGATANK");
 WEAPON_RECON_MG.damageTable[idx][1] = 1;
 
-idx = getIndexOf1(WEAPON_RECON_MG, "HOELLIUM");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "HOELLIUM");
 WEAPON_RECON_MG.damageTable[idx][1] = 20;
 
 // heli copter
-idx = getIndexOf1(WEAPON_RECON_MG, "T_HELI");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "T_HELI");
 WEAPON_RECON_MG.damageTable[idx][1] = 35;
-idx = getIndexOf1(WEAPON_RECON_MG, "K_HELI");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "K_HELI");
 WEAPON_RECON_MG.damageTable[idx][1] = 18;
 
 // ranged land units
-idx = getIndexOf1(WEAPON_RECON_MG, "ARTILLERY");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "ARTILLERY");
 WEAPON_RECON_MG.damageTable[idx][1] = 45;
 idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ARTILLERYCRAFT");
 WEAPON_A_TANK_CANNON.damageTable[idx][1] = 45;
-idx = getIndexOf1(WEAPON_RECON_MG, "ANTITANKCANNON");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "ANTITANKCANNON");
 WEAPON_RECON_MG.damageTable[idx][1] = 1;
-idx = getIndexOf1(WEAPON_RECON_MG, "MISSILE");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "MISSILE");
 WEAPON_RECON_MG.damageTable[idx][1] = 25;
-idx = getIndexOf1(WEAPON_RECON_MG, "ROCKETTHROWER");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "ROCKETTHROWER");
 WEAPON_RECON_MG.damageTable[idx][1] = 55;
-idx = getIndexOf1(WEAPON_RECON_MG, "PIPERUNNER");
+idx = getIndexOf1(WEAPON_RECON_MG.damageTable, "PIPERUNNER");
 WEAPON_RECON_MG.damageTable[idx][1] = 6;

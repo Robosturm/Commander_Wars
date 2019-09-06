@@ -152,9 +152,11 @@ public slots:
     static void setWidth(const qint32 &width);
     static void setHeight(const qint32 &height);
 
+    static float getAnimationSpeedValue();
     static float getAnimationSpeed();
     static void setAnimationSpeed(const quint32 &value);
 
+    static float getBattleAnimationSpeedValue();
     static float getBattleAnimationSpeed();
     static void setBattleAnimationSpeed(const quint32 &value);
 

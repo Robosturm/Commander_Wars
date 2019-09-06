@@ -330,47 +330,50 @@ GameEnums::UnitRanks Unit::getUnitRank() const
 void Unit::setUnitRank(const GameEnums::UnitRanks &UnitRank)
 {
     GameMap* pMap = GameMap::getInstance();
-    if (pMap->getGameRules()->getRankingSystem() ||
-        (UnitRank == GameEnums::UnitRank_CO0) ||
-        (UnitRank == GameEnums::UnitRank_CO1))
+    if (pMap != nullptr)
     {
-        m_UnitRank = UnitRank;
-    }
-    unloadIcon("lieutenant");
-    unloadIcon("general");
-    unloadIcon("veteran");
-    unloadIcon("co0");
-    unloadIcon("co1");
-    switch (m_UnitRank)
-    {
-        case GameEnums::UnitRank_None:
+        if (pMap->getGameRules()->getRankingSystem() ||
+            (UnitRank == GameEnums::UnitRank_CO0) ||
+            (UnitRank == GameEnums::UnitRank_CO1))
         {
-            break;
+            m_UnitRank = UnitRank;
         }
-        case GameEnums::UnitRank_Lieutenant:
+        unloadIcon("lieutenant");
+        unloadIcon("general");
+        unloadIcon("veteran");
+        unloadIcon("co0");
+        unloadIcon("co1");
+        switch (m_UnitRank)
         {
-            loadIcon("lieutenant", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
-            break;
-        }
-        case GameEnums::UnitRank_General:
-        {
-            loadIcon("general", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
-            break;
-        }
-        case GameEnums::UnitRank_Veteran:
-        {
-            loadIcon("veteran", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
-            break;
-        }
-        case GameEnums::UnitRank_CO0:
-        {
-            loadIcon("co0", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
-            break;
-        }
-        case GameEnums::UnitRank_CO1:
-        {
-            loadIcon("co1", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
-            break;
+            case GameEnums::UnitRank_None:
+            {
+                break;
+            }
+            case GameEnums::UnitRank_Lieutenant:
+            {
+                loadIcon("lieutenant", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+                break;
+            }
+            case GameEnums::UnitRank_General:
+            {
+                loadIcon("general", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+                break;
+            }
+            case GameEnums::UnitRank_Veteran:
+            {
+                loadIcon("veteran", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+                break;
+            }
+            case GameEnums::UnitRank_CO0:
+            {
+                loadIcon("co0", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+                break;
+            }
+            case GameEnums::UnitRank_CO1:
+            {
+                loadIcon("co1", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
+                break;
+            }
         }
     }
 }

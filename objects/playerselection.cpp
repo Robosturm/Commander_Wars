@@ -299,7 +299,7 @@ void PlayerSelection::showPlayerSelection()
     {
         teamList.append(tr("Team") + " " + QString::number(i + 1));
     }
-    QVector<QString> defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal")};
+    QVector<QString> defaultAiList = {tr("Human"), tr("Very Easy"), tr("Normal"), tr("Normal Off."), tr("Normal Def.")};
     QVector<QString> aiList = defaultAiList;
     if (m_pCampaign.get() != nullptr)
     {
@@ -505,7 +505,7 @@ void PlayerSelection::showPlayerSelection()
             }
             else
             {
-                ai = aiList.size() - 1;
+                ai = aiList.size() - 3;
                 playerAi->setCurrentItem(ai);
                 playerAi->setEnabled(false);
             }
@@ -514,7 +514,7 @@ void PlayerSelection::showPlayerSelection()
         {
             if (i > 0)
             {
-                ai = aiList.size() - 1;
+                ai = aiList.size() - 3;
                 playerAi->setCurrentItem(ai);
 
             }

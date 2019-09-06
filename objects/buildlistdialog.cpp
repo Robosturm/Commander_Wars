@@ -129,7 +129,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
             }
             else
             {
-                m_CurrentBuildList.removeOne(unitID);
+                m_CurrentBuildList.removeAll(unitID);
             }
         });
 
@@ -198,12 +198,11 @@ void BuildListDialog::setBuildlist(qint32 item)
         if (data.contains(pUnitSpriteManager->getUnitID(i)))
         {
             m_Checkboxes[i]->setChecked(true);
-            emit m_Checkboxes[i]->checkChanged(true);
         }
         else
         {
             m_Checkboxes[i]->setChecked(false);
-            emit m_Checkboxes[i]->checkChanged(false);
         }
     }
+    m_CurrentBuildList = data;
 }

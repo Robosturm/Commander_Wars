@@ -5,56 +5,56 @@ WEAPON_MOTORBIKE_MG.getEnviromentDamage = function(enviromentId)
 var idx = 0;
 idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "INFANTRY");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 65;
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "MECH");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "MECH");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 55;
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "MOTORBIKE");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "MOTORBIKE");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 55;
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "SNIPER");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "SNIPER");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 75;
 
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "APC");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "APC");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 20;
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "FLARE");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "FLARE");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 18;
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "RECON");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "RECON");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 18;
 
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "FLAK");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "FLAK");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 6;
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "HOVERFLAK");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "HOVERFLAK");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 6;
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "LIGHT_TANK");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "LIGHT_TANK");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 1;
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "HOVERCRAFT");
-WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 1;
-
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "HEAVY_HOVERCRAFT");
-WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 1;
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "HEAVY_TANK");
-WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 1;
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "NEOTANK");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "HOVERCRAFT");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 1;
 
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "MEGATANK");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "HEAVY_HOVERCRAFT");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 1;
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "HEAVY_TANK");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 1;
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "NEOTANK");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 1;
 
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "HOELLIUM");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "MEGATANK");
+WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 1;
+
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "HOELLIUM");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 20;
 
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "T_HELI");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "T_HELI");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 30;
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "K_HELI");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "K_HELI");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 10;
 
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "ARTILLERY");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "ARTILLERY");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 32;
 idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ARTILLERYCRAFT");
 WEAPON_A_TANK_CANNON.damageTable[idx][1] = 32;
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "ANTITANKCANNON");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "ANTITANKCANNON");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 45;
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "MISSILE");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "MISSILE");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 35;
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "ROCKETTHROWER");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "ROCKETTHROWER");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 35;
-idx = getIndexOf1(WEAPON_MOTORBIKE_MG, "PIPERUNNER");
+idx = getIndexOf1(WEAPON_MOTORBIKE_MG.damageTable, "PIPERUNNER");
 WEAPON_MOTORBIKE_MG.damageTable[idx][1] = 6;

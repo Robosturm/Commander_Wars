@@ -469,6 +469,11 @@ void Settings::setHeight(const qint32 &height)
     m_height = height;
 }
 
+float Settings::getAnimationSpeedValue()
+{
+    return animationSpeed;
+}
+
 float Settings::getAnimationSpeed()
 {
     if (animationSpeed <= 100)
@@ -481,6 +486,11 @@ float Settings::getAnimationSpeed()
 void Settings::setAnimationSpeed(const quint32 &value)
 {
     animationSpeed = value;
+}
+
+float Settings::getBattleAnimationSpeedValue()
+{
+    return battleAnimationSpeed;
 }
 
 float Settings::getBattleAnimationSpeed()

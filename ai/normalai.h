@@ -16,10 +16,8 @@ class Building;
 class NormalAi : public CoreAI
 {
     Q_OBJECT
-
-    static const float minMovementDamage;
 public:
-    explicit NormalAi();
+    explicit NormalAi(float initMinMovementDamage = 0.3f, float initMinAttackFunds = 0.0f, float initMinSuicideDamage = 3.0f / 4.0f);
     /**
      * @brief serialize stores the object
      * @param pStream
@@ -294,6 +292,11 @@ private:
     static const float midDamage;
     static const float highDamage;
     static const float directIndirectRatio;
+
+    float minMovementDamage;
+    float minAttackFunds;
+    float minSuicideDamage;
+
 };
 
 #endif // NORMALAI_H

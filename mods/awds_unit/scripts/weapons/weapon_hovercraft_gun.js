@@ -5,64 +5,64 @@ WEAPON_HOVERCRAFT_GUN.getEnviromentDamage = function(enviromentId)
 var idx = 0;
 idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "APC");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 75;
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "FLARE");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "FLARE");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 80;
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "RECON");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "RECON");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 85;
 
 // tanks
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "FLAK");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "FLAK");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 65;
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "HOVERFLAK");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "HOVERFLAK");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 65;
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "LIGHT_TANK");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "LIGHT_TANK");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 55;
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "HOVERCRAFT");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "HOVERCRAFT");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 55;
 
 // heavy tanks
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "HEAVY_HOVERCRAFT");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "HEAVY_HOVERCRAFT");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 15;
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "HEAVY_TANK");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "HEAVY_TANK");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 15;
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "NEOTANK");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "NEOTANK");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 15;
 
 // very heavy tanks
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "MEGATANK");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "MEGATANK");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 10;
 
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "HOELLIUM");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "HOELLIUM");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 20;
 
 // ranged land units
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "ARTILLERY");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "ARTILLERY");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 70;
 idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ARTILLERYCRAFT");
 WEAPON_A_TANK_CANNON.damageTable[idx][1] = 70;
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "ANTITANKCANNON");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "ANTITANKCANNON");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 30;
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "MISSILE");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "MISSILE");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 85;
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "ROCKETTHROWER");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "ROCKETTHROWER");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 85;
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "PIPERUNNER");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "PIPERUNNER");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 55;
 
 // ships
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "BATTLESHIP");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "BATTLESHIP");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 1;
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "CANNONBOAT");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "CANNONBOAT");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 10;
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "CRUISER");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "CRUISER");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 5;
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "DESTROYER");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "DESTROYER");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 5;
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "SUBMARINE");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "SUBMARINE");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 1;
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "LANDER");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "LANDER");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 10;
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "BLACK_BOAT");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "BLACK_BOAT");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 10;
-idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN, "AIRCRAFTCARRIER");
+idx = getIndexOf1(WEAPON_HOVERCRAFT_GUN.damageTable, "AIRCRAFTCARRIER");
 WEAPON_HOVERCRAFT_GUN.damageTable[idx][1] = 1;

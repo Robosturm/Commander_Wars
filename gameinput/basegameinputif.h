@@ -22,6 +22,8 @@ public:
         Human = 0,
         VeryEasy,
         Normal,
+        NormalOffensive,
+        NormalDefensive,
         Max,
         Open = 200
     };

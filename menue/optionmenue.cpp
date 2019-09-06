@@ -249,7 +249,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pTextfield);
     spSlider pAnimationSpeed = new Slider(pApp->getSettings()->getWidth() - 20 - sliderOffset, 1, 100, "");
     pAnimationSpeed->setPosition(sliderOffset - 130, y);
-    pAnimationSpeed->setCurrentValue(static_cast<qint32>(pSettings->getAnimationSpeed()));
+    pAnimationSpeed->setCurrentValue(static_cast<qint32>(pSettings->getAnimationSpeedValue()));
     m_pOptions->addItem(pAnimationSpeed);
     connect(pAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
     {
@@ -264,7 +264,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pTextfield);
     spSlider pBattleAnimationSpeed = new Slider(pApp->getSettings()->getWidth() - 20 - sliderOffset, 1, 100, "");
     pBattleAnimationSpeed->setPosition(sliderOffset - 130, y);
-    pBattleAnimationSpeed->setCurrentValue(static_cast<qint32>(pSettings->getBattleAnimationSpeed()));
+    pBattleAnimationSpeed->setCurrentValue(static_cast<qint32>(pSettings->getBattleAnimationSpeedValue()));
     m_pOptions->addItem(pBattleAnimationSpeed);
     connect(pBattleAnimationSpeed.get(), &Slider::sliderValueChanged, [=](qint32 value)
     {

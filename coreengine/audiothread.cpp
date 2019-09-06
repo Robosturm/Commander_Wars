@@ -129,10 +129,6 @@ void AudioThread::SlotPlayMusic(qint32 File)
     {
         currentPlayer = -1;
         m_playList->setCurrentIndex(File);
-        if (std::get<0>(m_PlayListdata[File]) > 0)
-        {
-            m_Player->setPosition(std::get<0>(m_PlayListdata[File]));
-        }
         m_Player2->stop();
         m_Player->play();
         currentMedia = File;
@@ -171,7 +167,7 @@ void AudioThread::bufferAudio()
             // load buffer on second player
             qint32 newMedia2 = Mainapp::randInt(0, size - 1);
             m_playList2->setCurrentIndex(newMedia2);
-            if (std::get<0>(m_PlayListdata[newMedia2]) > 0)
+            if (std::get<0>(m_PlayListdata[newMedia2]) > 0  && newMedia2 == newMedia)
             {
                 m_Player2->setPosition(std::get<0>(m_PlayListdata[newMedia2]));
             }
@@ -196,7 +192,7 @@ void AudioThread::stopSecondPlayer()
             // load buffe on current player
             m_Player2->stop();
             m_playList2->setCurrentIndex(newMedia);
-            if (std::get<0>(m_PlayListdata[newMedia]) > 0)
+            if (std::get<0>(m_PlayListdata[newMedia]) > 0 && newMedia == m_playList->currentIndex())
             {
                 m_Player2->setPosition(std::get<0>(m_PlayListdata[newMedia]));
             }
@@ -206,7 +202,7 @@ void AudioThread::stopSecondPlayer()
             // load buffer on current player
             m_Player->stop();
             m_playList->setCurrentIndex(newMedia);
-            if (std::get<0>(m_PlayListdata[newMedia]) > 0)
+            if (std::get<0>(m_PlayListdata[newMedia]) > 0 && newMedia == m_playList2->currentIndex())
             {
                 m_Player->setPosition(std::get<0>(m_PlayListdata[newMedia]));
             }

@@ -5,96 +5,96 @@ WEAPON_PIPERUNNER_MISSILE.getEnviromentDamage = function(enviromentId)
 var idx = 0;
 idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "INFANTRY");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 85;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "MECH");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "MECH");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 85;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "MOTORBIKE");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "MOTORBIKE");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 85;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "SNIPER");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "SNIPER");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 85;
 
 // supporter
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "APC");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "APC");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 80;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "FLARE");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "FLARE");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 80;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "RECON");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "RECON");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 80;
 
 // tanks
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "FLAK");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "FLAK");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 65;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "HOVERFLAK");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "HOVERFLAK");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 65;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "LIGHT_TANK");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "LIGHT_TANK");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 65;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "HOVERCRAFT");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "HOVERCRAFT");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 65;
 
 // heavy tanks
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "HEAVY_HOVERCRAFT");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "HEAVY_HOVERCRAFT");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 55;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "HEAVY_TANK");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "HEAVY_TANK");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 55;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "NEOTANK");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "NEOTANK");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 55;
 
 // very heavy tanks
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "MEGATANK");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "MEGATANK");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 35;
 
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "HOELLIUM");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "HOELLIUM");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 15;
 
 // heli copter
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "T_HELI");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "T_HELI");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 120;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "K_HELI");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "K_HELI");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 105;
 
 //air
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "DUSTER");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "DUSTER");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 75;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "FIGHTER");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "FIGHTER");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 75;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "BOMBER");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "BOMBER");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 75;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "STEALTHBOMBER");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "STEALTHBOMBER");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 75;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "TRANSPORTPLANE");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "TRANSPORTPLANE");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 75;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "BLACK_BOMB");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "BLACK_BOMB");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 75;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "WATERPLANE");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "WATERPLANE");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 75;
 
 // ranged land units
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "ARTILLERY");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "ARTILLERY");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 85;
 idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ARTILLERYCRAFT");
 WEAPON_A_TANK_CANNON.damageTable[idx][1] = 85;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "ANTITANKCANNON");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "ANTITANKCANNON");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 55;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "MISSILE");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "MISSILE");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 85;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "ROCKETTHROWER");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "ROCKETTHROWER");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 85;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "PIPERUNNER");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "PIPERUNNER");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 85;
 
 // ships
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "BATTLESHIP");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "BATTLESHIP");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 55;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "CANNONBOAT");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "CANNONBOAT");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 75;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "BLACK_BOAT");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "BLACK_BOAT");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 75;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "CRUISER");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "CRUISER");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 55;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "DESTROYER");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "DESTROYER");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 55;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "SUBMARINE");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "SUBMARINE");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 55;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "LANDER");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "LANDER");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 55;
-idx = getIndexOf1(WEAPON_NEOTANK_MG, "AIRCRAFTCARRIER");
+idx = getIndexOf1(WEAPON_PIPERUNNER_MISSILE.damageTable, "AIRCRAFTCARRIER");
 WEAPON_PIPERUNNER_MISSILE.damageTable[idx][1] = 55;
