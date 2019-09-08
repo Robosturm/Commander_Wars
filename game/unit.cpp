@@ -2025,6 +2025,17 @@ void Unit::updateIconTweens()
                 }
             }
         }
+        else
+        {
+            for (qint32 i2 = 0; i2 < m_pIconSprites.size(); i2++)
+            {
+                if ((m_pIconSprites[i2]->getPosition().x == x) &&
+                    (m_pIconSprites[i2]->getPosition().y == y))
+                {
+                    m_pIconSprites[i2]->setVisible(true);
+                }
+            }
+        }
     }
 }
 
