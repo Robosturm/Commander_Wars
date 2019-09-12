@@ -1,6 +1,8 @@
 #ifndef COREAI_H
 #define COREAI_H
 
+#include <qtextstream.h>
+
 #include <qvector.h>
 #include <qvector3d.h>
 #include <qvector4d.h>
@@ -202,6 +204,18 @@ public slots:
      * @param questions
      */
     static void getTrainingData(QString file, QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
+    /**
+     * @brief readTrainingFile
+     * @param stream
+     * @param questionsFound
+     * @param types
+     * @param readQuestions
+     * @param trainingData
+     * @param questions
+     */
+    static void readTrainingFile(QTextStream& stream, bool& questionsFound, QStringList& types,
+                                 QVector<spDecisionQuestion>& readQuestions,
+                                 QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions);
 protected:
     void addMenuItemData(GameAction* pGameAction, QString itemID, qint32 cost);
     void addSelectedFieldData(GameAction* pGameAction, QPoint point);

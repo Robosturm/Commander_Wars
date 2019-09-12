@@ -39,6 +39,7 @@ public:
 
 
 public slots:
+    static QString getModConfigString();
 
     static bool getShowCursor();
     static void setShowCursor(bool ShowCursor);

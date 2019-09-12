@@ -400,7 +400,13 @@ void Settings::saveSettings(){
     settings.endGroup();
 
     // mods
-    settings.beginGroup("Mods");
+    settings.beginGroup("Mods");    
+    settings.setValue("Mods",                    getModConfigString());
+    settings.endGroup();
+}
+
+QString Settings::getModConfigString()
+{
     QString modString = "";
     for (qint32 i = 0; i < m_activeMods.size(); i++)
     {
@@ -410,8 +416,7 @@ void Settings::saveSettings(){
             modString += ",";
         }
     }
-    settings.setValue("Mods",                    modString);
-    settings.endGroup();
+    return modString;
 }
 
 void Settings::setup()

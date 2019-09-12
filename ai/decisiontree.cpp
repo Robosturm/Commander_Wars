@@ -9,6 +9,7 @@
 #include <qcryptographichash.h>
 #include <qfile.h>
 #include <qdatastream.h>
+#include <coreengine/settings.h>
 
 DecisionTree::DecisionTree(spDecisionNode pRootNode)
 	: m_pRootNode(pRootNode)
@@ -33,6 +34,7 @@ DecisionTree::DecisionTree(QString treeFile, QString trainingDataFile)
     trainingFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
     QCryptographicHash myHash(QCryptographicHash::Sha3_512);
     myHash.addData(&trainingFile);
+    myHash.addData(Settings::getModConfigString().toUtf8());
     QByteArray hash = myHash.result();
     trainingFile.close();
 

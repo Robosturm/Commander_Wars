@@ -25,7 +25,6 @@
 #include "resource_management/buildingspritemanager.h"
 
 #include <qfile.h>
-#include <qtextstream.h>
 
 const QString CoreAI::ACTION_WAIT = "ACTION_WAIT";
 const QString CoreAI::ACTION_HOELLIUM_WAIT = "ACTION_HOELLIUM_WAIT";
@@ -521,12 +520,31 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
     QTextStream stream(&trainingFile);
     bool questionsFound = false;
     QStringList types;
+    QVector<spDecisionQuestion> readQuestions;
 
+    readTrainingFile(stream, questionsFound, types, readQuestions, trainingData, questions);
+
+    QStringList mods = Settings::getMods();
+    for (qint32 i = 0; i < mods.size(); i++)
+    {
+        QString modFilename = file;
+        QFile modFile(modFilename.replace("resources/", mods[i] + "/"));
+        if (modFile.exists())
+        {
+            modFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
+            QTextStream modStream(&modFile);
+            readTrainingFile(modStream, questionsFound, types, readQuestions, trainingData, questions);
+        }
+    }
+}
+
+void CoreAI::readTrainingFile(QTextStream& stream, bool& questionsFound, QStringList& types,
+                              QVector<spDecisionQuestion>& readQuestions,
+                              QVector<QVector<float>>& trainingData, QVector<QVector<spDecisionQuestion>>& questions)
+{
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
-
-    QVector<spDecisionQuestion> readQuestions;
 
     while (!stream.atEnd())
     {
@@ -556,7 +574,7 @@ void CoreAI::getTrainingData(QString file, QVector<QVector<float>>& trainingData
                              QTextStream stream(&numberFile);
                              typeLine = stream.readLine();
                         }
-                        QStringList questionString = typeLine.split(":")[1].split("|");                        
+                        QStringList questionString = typeLine.split(":")[1].split("|");
                         for (qint32 i2 = 0; i2 < questionString.size(); i2++)
                         {
                             QStringList questionData = questionString[i2].split("_");
