@@ -2236,99 +2236,99 @@
 <context>
     <name>PlayerSelection</name>
     <message>
-        <location filename="../objects/playerselection.cpp" line="178"/>
+        <location filename="../objects/playerselection.cpp" line="182"/>
         <source>CO&apos;s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="178"/>
+        <location filename="../objects/playerselection.cpp" line="182"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="178"/>
+        <location filename="../objects/playerselection.cpp" line="182"/>
         <source>AI Strength</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="178"/>
+        <location filename="../objects/playerselection.cpp" line="182"/>
         <source>Startfunds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="178"/>
+        <location filename="../objects/playerselection.cpp" line="182"/>
         <source>Income Modifier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="178"/>
-        <location filename="../objects/playerselection.cpp" line="300"/>
+        <location filename="../objects/playerselection.cpp" line="182"/>
+        <location filename="../objects/playerselection.cpp" line="304"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="178"/>
-        <location filename="../objects/playerselection.cpp" line="281"/>
-        <location filename="../objects/playerselection.cpp" line="594"/>
+        <location filename="../objects/playerselection.cpp" line="182"/>
+        <location filename="../objects/playerselection.cpp" line="285"/>
+        <location filename="../objects/playerselection.cpp" line="598"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="181"/>
+        <location filename="../objects/playerselection.cpp" line="185"/>
         <source>Connected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="213"/>
+        <location filename="../objects/playerselection.cpp" line="217"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="218"/>
+        <location filename="../objects/playerselection.cpp" line="222"/>
         <source>All Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="226"/>
+        <location filename="../objects/playerselection.cpp" line="230"/>
         <source>CO 1 Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="235"/>
+        <location filename="../objects/playerselection.cpp" line="239"/>
         <source>CO 2 Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="302"/>
         <location filename="../objects/playerselection.cpp" line="306"/>
-        <location filename="../objects/playerselection.cpp" line="320"/>
+        <location filename="../objects/playerselection.cpp" line="310"/>
+        <location filename="../objects/playerselection.cpp" line="324"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="302"/>
+        <location filename="../objects/playerselection.cpp" line="306"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="302"/>
+        <location filename="../objects/playerselection.cpp" line="306"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="302"/>
+        <location filename="../objects/playerselection.cpp" line="306"/>
         <source>Normal Off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="302"/>
+        <location filename="../objects/playerselection.cpp" line="306"/>
         <source>Normal Def.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="309"/>
-        <location filename="../objects/playerselection.cpp" line="316"/>
+        <location filename="../objects/playerselection.cpp" line="313"/>
         <location filename="../objects/playerselection.cpp" line="320"/>
+        <location filename="../objects/playerselection.cpp" line="324"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>

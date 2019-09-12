@@ -276,7 +276,7 @@ void RuleSelection::showCOBannlist()
     pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
     spCOBannListDialog pBannlist = new COBannListDialog(pMap->getGameRules()->getCOBannlist());
-    addChild(pBannlist);
+    oxygine::getStage()->addChild(pBannlist);
     connect(pBannlist.get(), &COBannListDialog::editFinished, pMap->getGameRules(), &GameRules::setCOBannlist, Qt::QueuedConnection);
     pApp->continueThread();
 }

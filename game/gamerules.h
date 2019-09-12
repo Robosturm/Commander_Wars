@@ -275,6 +275,7 @@ private:
 
     bool m_AiAttackTerrain{true};
     QStringList m_COBannlist;
+    bool m_COBannlistEdited{false};
 };
 
 #endif // GAMERULES_H

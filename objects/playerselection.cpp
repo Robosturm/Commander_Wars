@@ -141,6 +141,10 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
     {
         cos = m_pCampaign->getSelectableCOs(GameMap::getInstance(), player, co);
     }
+    else
+    {
+        cos = pMap->getGameRules()->getCOBannlist();
+    }
     if (cos.size() == 0 ||
         cos[0] != "")
     {

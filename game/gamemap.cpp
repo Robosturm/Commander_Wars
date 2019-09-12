@@ -1288,19 +1288,19 @@ void GameMap::initPlayers()
         // resolve random CO
         if (pPlayer->getCO(0) != nullptr)
         {
-            COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+            QStringList bannList = m_Rules->getCOBannlist();
             while (pPlayer->getCO(0)->getCoID() == "CO_RANDOM")
             {
-                pPlayer->setCO(pCOSpriteManager->getCOID(Mainapp::randInt(0, pCOSpriteManager->getCOCount() - 1)), 0);
+                pPlayer->setCO(bannList[Mainapp::randInt(0, bannList.size() - 1)], 0);
             }
         }
         if (pPlayer->getCO(1) != nullptr)
         {
-            COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+            QStringList bannList = m_Rules->getCOBannlist();
             while ((pPlayer->getCO(1)->getCoID() == "CO_RANDOM") ||
                    (pPlayer->getCO(1)->getCoID() == pPlayer->getCO(0)->getCoID()))
             {
-                pPlayer->setCO(pCOSpriteManager->getCOID(Mainapp::randInt(0, pCOSpriteManager->getCOCount() - 1)), 1);
+                pPlayer->setCO(bannList[Mainapp::randInt(0, bannList.size() - 1)], 1);
             }
         }
         // define army of this player
