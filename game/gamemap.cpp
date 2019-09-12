@@ -4,6 +4,8 @@
 
 #include "coreengine/mainapp.h"
 
+#include "ai/coreai.h"
+
 #include "resource_management/terrainmanager.h"
 #include "resource_management/buildingspritemanager.h"
 #include "resource_management/unitspritemanager.h"
@@ -826,6 +828,12 @@ void GameMap::startGame()
     for (qint32 i = 0; i < players.size(); i++)
     {
         players[i]->setBuildlistChanged(true);
+
+        CoreAI* pAI = dynamic_cast<CoreAI*>(players[i]->getBaseGameInput());
+        if (pAI != nullptr)
+        {
+            pAI->setEnableNeutralTerrainAttack(m_Rules->getAiAttackTerrain());
+        }
     }
 }
 

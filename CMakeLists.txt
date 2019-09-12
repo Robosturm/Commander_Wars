@@ -102,6 +102,7 @@ set(${PROJECT_NAME}_SRCS
         objects/tableview.cpp
         objects/dialogcostyle.cpp
         objects/colorselector.cpp
+        objects/cobannlistdialog.cpp
 
         #menues
         menue/mainwindow.cpp

@@ -19,7 +19,7 @@ public:
     explicit BuildListDialog(qint32 player, QStringList buildList);
     virtual ~BuildListDialog() = default;
 signals:
-    void editFinished(qint32 player, QStringList color);
+    void editFinished(qint32 player, QStringList buildList);
     void canceled();
 public slots:
     void setBuildlist(qint32 item);

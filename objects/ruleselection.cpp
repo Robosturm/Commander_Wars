@@ -12,6 +12,7 @@
 #include "objects/spinbox.h"
 #include "objects/dropdownmenu.h"
 #include "objects/timespinbox.h"
+#include "objects/cobannlistdialog.h"
 
 RuleSelection::RuleSelection(qint32 width)
     : QObject()
@@ -99,6 +100,16 @@ void RuleSelection::showRuleSelection()
     addChild(pCheckbox);
     pCheckbox->setChecked(pMap->getGameRules()->getRankingSystem());
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setRankingSystem, Qt::QueuedConnection);
+
+    y += 40;
+    oxygine::spButton coBannlist = ObjectManager::createButton(tr("Edit CO Bannlist"), 160);
+    coBannlist->setPosition(30, y);
+    coBannlist->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+    {
+        emit sigShowCOBannlist();
+    });
+    addChild(coBannlist);
+    connect(this, &RuleSelection::sigShowCOBannlist, this, &RuleSelection::showCOBannlist, Qt::QueuedConnection);
     y += 40;
     textField = new oxygine::TextField();
     textField->setStyle(style);
@@ -110,6 +121,17 @@ void RuleSelection::showRuleSelection()
     addChild(pCheckbox);
     pCheckbox->setChecked(pMap->getGameRules()->getNoPower());
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setNoPower, Qt::QueuedConnection);
+    y += 40;
+    textField = new oxygine::TextField();
+    textField->setStyle(style);
+    textField->setHtmlText(tr("AI Attack Terrain: ").toStdString().c_str());
+    textField->setPosition(30, y);
+    addChild(textField);
+    pCheckbox = new Checkbox();
+    pCheckbox->setPosition(textWidth, textField->getY());
+    addChild(pCheckbox);
+    pCheckbox->setChecked(pMap->getGameRules()->getAiAttackTerrain());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setAiAttackTerrain, Qt::QueuedConnection);
     y += 40;
     textField = new oxygine::TextField();
     textField->setStyle(style);
@@ -245,5 +267,16 @@ void RuleSelection::weatherChancesChanged()
     {
         GameMap::getInstance()->getGameRules()->changeWeatherChance(i, m_pWeatherSlider->getSliderValue(i));
     }
+    pApp->continueThread();
+}
+
+void RuleSelection::showCOBannlist()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    GameMap* pMap = GameMap::getInstance();
+    spCOBannListDialog pBannlist = new COBannListDialog(pMap->getGameRules()->getCOBannlist());
+    addChild(pBannlist);
+    connect(pBannlist.get(), &COBannListDialog::editFinished, pMap->getGameRules(), &GameRules::setCOBannlist, Qt::QueuedConnection);
     pApp->continueThread();
 }

@@ -542,6 +542,26 @@ void GameRules::initRoundTime()
     }
 }
 
+QStringList GameRules::getCOBannlist() const
+{
+    return m_COBannlist;
+}
+
+void GameRules::setCOBannlist(const QStringList &COBannlist)
+{
+    m_COBannlist = COBannlist;
+}
+
+bool GameRules::getAiAttackTerrain() const
+{
+    return m_AiAttackTerrain;
+}
+
+void GameRules::setAiAttackTerrain(bool AiAttackTerrain)
+{
+    m_AiAttackTerrain = AiAttackTerrain;
+}
+
 void GameRules::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
@@ -567,6 +587,12 @@ void GameRules::serializeObject(QDataStream& pStream)
     pStream << static_cast<qint32>(m_FogMode);
     pStream << roundTime;
     pStream << m_RoundTimer.interval();
+    pStream << m_AiAttackTerrain;
+    pStream << static_cast<qint32>(m_COBannlist.size());
+    for (qint32 i = 0; i < m_COBannlist.size(); i++)
+    {
+        pStream << m_COBannlist[i];
+    }
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -626,5 +652,16 @@ void GameRules::deserializeObject(QDataStream& pStream)
         qint32 intervall;
         pStream >> intervall;
         m_RoundTimer.setInterval(intervall);
+    }
+    if (version > 3)
+    {
+        pStream >> m_AiAttackTerrain;
+        pStream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            QString coid;
+            pStream >> coid;
+            m_COBannlist.append(coid);
+        }
     }
 }

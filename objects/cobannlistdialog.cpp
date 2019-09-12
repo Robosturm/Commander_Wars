@@ -1,0 +1,189 @@
+#include "cobannlistdialog.h"
+
+#include "coreengine/mainapp.h"
+
+#include "resource_management/objectmanager.h"
+
+#include "resource_management/fontmanager.h"
+
+#include "resource_management/cospritemanager.h"
+
+#include "game/gamemap.h"
+
+#include "objects/panel.h"
+
+COBannListDialog::COBannListDialog(QStringList cobannlist)
+    : QObject(),
+      m_CurrentCOBannList(cobannlist)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
+    pSpriteBox->setResAnim(pAnim);
+    pSpriteBox->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
+    pSpriteBox->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
+    pSpriteBox->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
+    this->addChild(pSpriteBox);
+    pSpriteBox->setPosition(0, 0);
+    pSpriteBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
+
+    // ok button
+    m_OkButton = pObjectManager->createButton(tr("Ok"), 150);
+    m_OkButton->setPosition(pApp->getSettings()->getWidth() - m_OkButton->getWidth() - 30, pApp->getSettings()->getHeight() - 30 - m_OkButton->getHeight());
+    pSpriteBox->addChild(m_OkButton);
+    m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        emit editFinished(m_CurrentCOBannList);
+        this->getParent()->removeChild(this);
+    });
+
+    // cancel button
+    m_ExitButton = pObjectManager->createButton(tr("Cancel"), 150);
+    m_ExitButton->setPosition(30, pApp->getSettings()->getHeight() - 30 - m_ExitButton->getHeight());
+    pSpriteBox->addChild(m_ExitButton);
+    m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        emit canceled();
+        this->getParent()->removeChild(this);
+    });
+
+    m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 150);
+    m_ToggleAll->setPosition(pApp->getSettings()->getWidth() / 2 + 60 , pApp->getSettings()->getHeight() - 30 - m_ToggleAll->getHeight());
+    pSpriteBox->addChild(m_ToggleAll);
+    m_ToggleAll->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        toggle = !toggle;
+        for (qint32 i = 0; i < m_Checkboxes.size(); i++)
+        {
+            m_Checkboxes[i]->setChecked(toggle);
+            emit m_Checkboxes[i]->checkChanged(toggle);
+        }
+    });
+
+    m_PredefinedLists = new DropDownmenu(230, {tr("Commander Wars"),
+                                               tr("Advance Wars DoR"),
+                                               tr("Advance Wars DS"),
+                                               tr("Advance Wars 2"),
+                                               tr("Advance Wars")}, true);
+
+    m_PredefinedLists->setPosition(pApp->getSettings()->getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), pApp->getSettings()->getHeight() - 30 - m_ToggleAll->getHeight());
+    pSpriteBox->addChild(m_PredefinedLists);
+    connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &COBannListDialog::setCOBannlist, Qt::QueuedConnection);
+
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+    // no the fun begins create checkboxes and stuff and a panel down here
+    spPanel pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110),
+                                     QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110));
+    pPanel->setPosition(30, 30);
+    pSpriteBox->addChild(pPanel);
+
+    oxygine::spTextField pLabel = new oxygine::TextField();
+    pLabel->setStyle(style);
+    pLabel->setHtmlText(tr("Build List").toStdString().c_str());
+    pLabel->setScale(2.0f);
+    pLabel->setPosition(pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth(), 10);
+    pPanel->addItem(pLabel);
+
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+    qint32 y = 30 + pLabel->getTextRect().getHeight() * 2;
+    qint32 x = 10;
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
+    {
+        QString coID = pCOSpriteManager->getCOID(i);
+
+        oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((coID.toLower() + "+face").toStdString().c_str());
+        oxygine::spSprite pCo = new oxygine::Sprite();
+        pCo->setResAnim(pAnim, 0, 0);
+
+        pLabel = new oxygine::TextField();
+        pLabel->setStyle(style);
+
+        pLabel->setHtmlText(pCOSpriteManager->getCOName(i).toStdString().c_str());
+
+        pLabel->setPosition(x, y);
+        pCo->setPosition(x + 220 - GameMap::Imagesize * 1.25f - 10, y);
+        pCo->setScale(1.0f);
+        spCheckbox pCheckbox = new Checkbox();
+        pCheckbox->setPosition(x + 220, y);
+        m_Checkboxes.append(pCheckbox);
+
+        if (m_CurrentCOBannList.contains(coID))
+        {
+            pCheckbox->setChecked(true);
+        }
+        else
+        {
+            pCheckbox->setChecked(false);
+        }
+        connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool checked)
+        {
+            if (checked)
+            {
+                m_CurrentCOBannList.append(coID);
+            }
+            else
+            {
+                m_CurrentCOBannList.removeAll(coID);
+            }
+        });
+
+        pPanel->addItem(pCheckbox);
+        pPanel->addItem(pLabel);
+        pPanel->addItem(pCo);
+
+        if (x + 320 > pPanel->getContentWidth())
+        {
+            y += 40;
+            x = 10;
+            pLabel->setPosition(x, y);
+            pCo->setPosition(x + 220 - GameMap::Imagesize * 1.25f - 10, y);
+            pCheckbox->setPosition(x + 220, y);
+        }
+        x += 280;
+    }
+    pPanel->setContentHeigth(y);
+}
+
+void COBannListDialog::setCOBannlist(qint32 item)
+{
+    QStringList data;
+    if (item == 0) // Commander Wars
+    {
+        data = QStringList({"CO_ADAM", "CO_ADDER", "CO_AIRA", "CO_ALEXANDER", "CO_ALEXIS",
+                           "CO_AMY", "CO_ANDY", "CO_BRENNER", "CO_CASSIDY", "CO_CAULDER",
+                           "CO_COLIN", "CO_CONRAD", "CO_DRAKE", "CO_EAGLE", "CO_EPOCH",
+                           "CO_FLAK", "CO_FORSYTHE", "CO_GAGE", "CO_GRAVES", "CO_GREYFIELD",
+                           "CO_GRIMM", "CO_GRIT", "CO_HACHI", "CO_HAWKE", "CO_IK_486_B7",
+                           "CO_ISABELLA", "CO_JAKE", "CO_JAVIER", "CO_JESS", "CO_JOEY",
+                           "CO_JUGGER", "CO_JULIA", "CO_KANBEI", "CO_KINDLE", "CO_KOAL",
+                           "CO_LASH", "CO_LIN", "CO_MARY", "CO_MAX", "CO_MEIYO", "CO_MELANTHE",
+                           "CO_MINA", "CO_MINAMOTO", "CO_NANA", "CO_NAPOLEON", "CO_NELL",
+                           "CO_OLAF", "CO_OZZY", "CO_PENNY", "CO_PETER", "CO_RACHEL", "CO_RANDOM",
+                           "CO_RATTIGAN", "CO_ROBOANDY", "CO_ROBOSTURM", "CO_SABAKI", "CO_SAMI",
+                           "CO_SANJURO", "CO_SASHA", "CO_SENSEI", "CO_SMITAN", "CO_SONJA", "CO_SOPHIE",
+                           "CO_STURM", "CO_TABITHA", "CO_TASHA", "CO_VARLOT", "CO_VON_BOLT",
+                           "CO_WAYLON", "CO_WILL", "CO_XAVIER", "CO_ZANDRA"});
+    }
+
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+    for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
+    {
+        if (data.contains(pCOSpriteManager->getCOID(i)))
+        {
+            m_Checkboxes[i]->setChecked(true);
+        }
+        else
+        {
+            m_Checkboxes[i]->setChecked(false);
+        }
+    }
+    m_CurrentCOBannList = data;
+}

@@ -49,7 +49,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 3;
+        return 4;
     }
     void addVictoryRule(spVictoryRule rule);
     /**
@@ -61,9 +61,30 @@ public:
     {
         return &m_RoundTimer;
     }
+
 signals:
     void signalVictory(qint32 team);
 public slots:
+    /**
+     * @brief getCOBannlist
+     * @return
+     */
+    QStringList getCOBannlist() const;
+    /**
+     * @brief setCOBannlist
+     * @param COBannlist
+     */
+    void setCOBannlist(const QStringList &COBannlist);
+    /**
+     * @brief getAiAttackTerrain
+     * @return
+     */
+    bool getAiAttackTerrain() const;
+    /**
+     * @brief setAiAttackTerrain
+     * @param AiAttackTerrain
+     */
+    void setAiAttackTerrain(bool AiAttackTerrain);
     /**
      * @brief setStartWeather
      * @param index
@@ -251,6 +272,9 @@ private:
 
     qint32 roundTime{0};
     Timer m_RoundTimer;
+
+    bool m_AiAttackTerrain{true};
+    QStringList m_COBannlist;
 };
 
 #endif // GAMERULES_H
