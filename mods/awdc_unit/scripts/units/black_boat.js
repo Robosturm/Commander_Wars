@@ -2,27 +2,25 @@ var Constructor = function()
 {
     this.init = function(unit)
     {
-        unit.setAmmo1(1);
-        unit.setMaxAmmo1(1);
-        unit.setWeapon1ID("WEAPON_ANTI_SHIP_MISSILE");
-
-        unit.setAmmo2(3);
-        unit.setMaxAmmo2(3);
+        unit.setAmmo1(0);
+        unit.setMaxAmmo1(0);
+        unit.setWeapon1ID("");
+        unit.setAmmo2(0);
+        unit.setMaxAmmo2(0);
         unit.setWeapon2ID("");
-
-        unit.setFuel(100);
-        unit.setMaxFuel(100);
+        unit.setFuel(60);
+        unit.setMaxFuel(60);
         unit.setBaseMovementPoints(6);
         unit.setMinRange(1);
         unit.setMaxRange(1);
-		unit.setVision(2);
+		unit.setVision(1);
     };
     // called for loading the main sprite
     this.loadSprites = function(unit)
     {
         // none neutral player
-        unit.loadSprite("cannonboat", false);
-        unit.loadSprite("cannonboat+mask", true);
+        unit.loadSprite("black_boat", false);
+        unit.loadSprite("black_boat+mask", true);
     };
     this.getMovementType = function()
     {
@@ -30,11 +28,11 @@ var Constructor = function()
     };
     this.getBaseCost = function()
     {
-        return 10000;
+        return 7500;
     };
     this.getName = function()
     {
-        return qsTr("Cannonboat");
+        return qsTr("Black Boat");
     };
     this.startOfTurn = function(unit)
     {
@@ -66,15 +64,11 @@ var Constructor = function()
     };
     this.getLoadingPlace = function()
     {
-        return 1;
+        return 2;
     };
     this.getTransportUnits = function()
     {
-        return ["INFANTRY", "MECH", "SNIPER"];
-    };
-    this.canMoveAndFire = function()
-    {
-        return true;
+        return ["INFANTRY", "MECH", "MOTORBIKE", "SNIPER"];
     };
     this.getTerrainAnimationBase = function(unit, terrain)
     {
@@ -91,9 +85,15 @@ var Constructor = function()
         return "back_sea";
     };
 
+    this.getActions = function()
+    {
+        // returns a string id list of the actions this unit can perform
+        return "ACTION_REPAIR,ACTION_JOIN,ACTION_LOAD,ACTION_UNLOAD,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
+    };
+
     this.getDescription = function()
     {
-        return qsTr("Naval Unit. Attacks naval units. <div c='00ff00'>Carries X 1</div> infantry units.");
+        return qsTr("Naval Unit. Has unique ability to <div c='00ff00'>repair other units.</div> Can <div c='00ff00'>carry X 1</div> infantry units.");
     };
     this.getUnitType = function()
     {
@@ -102,4 +102,4 @@ var Constructor = function()
 }
 
 Constructor.prototype = UNIT;
-var CANNONBOAT = new Constructor();
+var BLACK_BOAT = new Constructor();

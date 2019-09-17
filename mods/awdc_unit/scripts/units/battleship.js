@@ -2,39 +2,39 @@ var Constructor = function()
 {
     this.init = function(unit)
     {
-        unit.setAmmo1(1);
-        unit.setMaxAmmo1(1);
-        unit.setWeapon1ID("WEAPON_ANTI_SHIP_MISSILE");
+        unit.setAmmo1(6);
+        unit.setMaxAmmo1(6);
+        unit.setWeapon1ID("WEAPON_BATTLESHIP_CANNON");
 
-        unit.setAmmo2(3);
-        unit.setMaxAmmo2(3);
+        unit.setAmmo2(0);
+        unit.setMaxAmmo2(0);
         unit.setWeapon2ID("");
 
         unit.setFuel(100);
         unit.setMaxFuel(100);
-        unit.setBaseMovementPoints(6);
-        unit.setMinRange(1);
-        unit.setMaxRange(1);
-		unit.setVision(2);
+        unit.setBaseMovementPoints(5);
+        unit.setMinRange(3);
+        unit.setMaxRange(5);
+		unit.setVision(3);
     };
     // called for loading the main sprite
     this.loadSprites = function(unit)
     {
         // none neutral player
-        unit.loadSprite("cannonboat", false);
-        unit.loadSprite("cannonboat+mask", true);
+        unit.loadSprite("battleship", false);
+        unit.loadSprite("battleship+mask", true);
     };
     this.getMovementType = function()
     {
-        return "MOVE_BOAT";
+        return "MOVE_SHIP";
     };
     this.getBaseCost = function()
     {
-        return 10000;
+        return 25000;
     };
     this.getName = function()
     {
-        return qsTr("Cannonboat");
+        return qsTr("Battleship");
     };
     this.startOfTurn = function(unit)
     {
@@ -45,7 +45,6 @@ var Constructor = function()
             fuelCosts = 0;
         }
         unit.setFuel(unit.getFuel() - fuelCosts);
-        UNIT.transporterRefilling(unit);
     };
     this.createExplosionAnimation = function(x, y)
     {
@@ -63,14 +62,6 @@ var Constructor = function()
         animation.loadSprite(unitID + "+walk", false, 1.5);
         animation.setSound("moveship.wav", -2);
         return animation;
-    };
-    this.getLoadingPlace = function()
-    {
-        return 1;
-    };
-    this.getTransportUnits = function()
-    {
-        return ["INFANTRY", "MECH", "SNIPER"];
     };
     this.canMoveAndFire = function()
     {
@@ -93,7 +84,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Naval Unit. Attacks naval units. <div c='00ff00'>Carries X 1</div> infantry units.");
+        return qsTr("Naval Unit. Has unique ability to <div c='00ff00'>launch indirect attacks after moving</div>.");
     };
     this.getUnitType = function()
     {
@@ -102,4 +93,4 @@ var Constructor = function()
 }
 
 Constructor.prototype = UNIT;
-var CANNONBOAT = new Constructor();
+var BATTLESHIP = new Constructor();

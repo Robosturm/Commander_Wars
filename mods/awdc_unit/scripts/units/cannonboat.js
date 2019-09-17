@@ -6,8 +6,8 @@ var Constructor = function()
         unit.setMaxAmmo1(1);
         unit.setWeapon1ID("WEAPON_ANTI_SHIP_MISSILE");
 
-        unit.setAmmo2(3);
-        unit.setMaxAmmo2(3);
+        unit.setAmmo2(0);
+        unit.setMaxAmmo2(0);
         unit.setWeapon2ID("");
 
         unit.setFuel(100);
@@ -30,7 +30,7 @@ var Constructor = function()
     };
     this.getBaseCost = function()
     {
-        return 10000;
+        return 6000;
     };
     this.getName = function()
     {

@@ -179,25 +179,25 @@ void COBannListDialog::setCOBannlist(qint32 item)
     }
     else if (item == 2) // advance wars ds
     {
-        data = QStringList({"CO_ADDER", "CO_ANDY", "CO_COLIN", "CO_DRAKE", "CO_EAGLE",
+        data = QStringList({"CO_RANDOM", "CO_ADDER", "CO_ANDY", "CO_COLIN", "CO_DRAKE", "CO_EAGLE",
                            "CO_FLAK", "CO_GRIMM", "CO_GRIT", "CO_HACHI", "CO_HAWKE",
                            "CO_JAKE", "CO_JAVIER", "CO_JESS", "CO_JUGGER", "CO_KANBEI", "CO_KINDLE",
-                           "CO_KOAL", "CO_LASH", "CO_MAX", "CO_NELL", "CO_OLAF", "CO_RACHEL", "CO_RANDOM",
+                           "CO_KOAL", "CO_LASH", "CO_MAX", "CO_NELL", "CO_OLAF", "CO_RACHEL",
                            "CO_SAMI", "CO_SASHA", "CO_SENSEI", "CO_SONJA",  "CO_VON_BOLT", "CO_XAVIER"});
     }
     else if (item == 3) // advance wars 2
     {
-        data = QStringList({"CO_ADDER", "CO_ANDY", "CO_COLIN", "CO_DRAKE", "CO_EAGLE",
+        data = QStringList({"CO_RANDOM", "CO_ADDER", "CO_ANDY", "CO_COLIN", "CO_DRAKE", "CO_EAGLE",
                            "CO_FLAK", "CO_GRIT", "CO_HACHI", "CO_HAWKE",
                            "CO_JESS", "CO_KANBEI", "CO_LASH", "CO_MAX", "CO_NELL",
-                           "CO_OLAF", "CO_RANDOM", "CO_SAMI", "CO_SENSEI", "CO_SONJA",
+                           "CO_OLAF", "CO_SAMI", "CO_SENSEI", "CO_SONJA",
                            "CO_STURM"});
     }
     else if (item == 4)  // advance wars
     {
-        data = QStringList({"CO_ANDY", "CO_DRAKE", "CO_EAGLE", "CO_GRIT",
-                            "CO_KANBEI", "CO_MAX", "CO_NELL",
-                            "CO_OLAF", "CO_RANDOM", "CO_SAMI", "CO_SONJA", "CO_STURM"});
+        data = QStringList({"CO_RANDOM", "CO_ANDY", "CO_DRAKE", "CO_EAGLE", "CO_GRIT",
+                            "CO_KANBEI", "CO_MAX", "CO_OLAF",
+                            "CO_SAMI", "CO_SONJA", "CO_STURM"});
     }
 
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();

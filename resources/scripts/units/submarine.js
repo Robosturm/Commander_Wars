@@ -19,7 +19,7 @@ var Constructor = function()
     };
     this.getBaseCost = function()
     {
-        return 20000;
+        return 15000;
     };
     // called for loading the main sprite
     this.loadSprites = function(unit)

@@ -144,6 +144,10 @@ void PlayerSelection::showSelectCO(qint32 player, quint8 co)
     else
     {
         cos = pMap->getGameRules()->getCOBannlist();
+        if (cos.size() == 0)
+        {
+            cos.push_back("");
+        }
     }
     if (cos.size() == 0 ||
         cos[0] != "")

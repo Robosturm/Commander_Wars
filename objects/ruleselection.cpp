@@ -102,8 +102,13 @@ void RuleSelection::showRuleSelection()
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setRankingSystem, Qt::QueuedConnection);
 
     y += 40;
-    oxygine::spButton coBannlist = ObjectManager::createButton(tr("Edit CO Bannlist"), 160);
-    coBannlist->setPosition(30, y);
+    textField = new oxygine::TextField();
+    textField->setStyle(style);
+    textField->setHtmlText(tr("CO Bannlist: ").toStdString().c_str());
+    textField->setPosition(30, y);
+    addChild(textField);
+    oxygine::spButton coBannlist = ObjectManager::createButton(tr("Edit"), 150);
+    coBannlist->setPosition(textWidth, y - 2);
     coBannlist->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         emit sigShowCOBannlist();
