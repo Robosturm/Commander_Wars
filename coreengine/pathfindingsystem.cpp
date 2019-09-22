@@ -138,7 +138,7 @@ void PathFindingSystem::explore()
                 // create the next node
                 qint32 costs = getCosts(x, y);
                 qint32 remaingCosts = getRemainingCost(x, y, pCurrentNode->currentCost + costs);
-                if ((costs >= 0) && (remaingCosts >= 0))
+                if ((costs >= 0) && (remaingCosts > 0))
                 {
                     Node* nextNode = new Node(x, y, pCurrentNode->currentCost + costs, remaingCosts);
                     // check the next

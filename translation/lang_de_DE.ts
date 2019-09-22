@@ -12565,6 +12565,19 @@
     </message>
 </context>
 <context>
+    <name>watermine</name>
+    <message>
+        <location filename="../resources/scripts/units/watermine.js" line="41"/>
+        <source>Watermine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/watermine.js" line="143"/>
+        <source>Naval Mine. Always explodes at the start of a turn if an enemy unit is inside the explosion range. This unit is always stealthed. It deals 4 damage to all sea and ground units except Gunboats in a 2 square area on sea tiles.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>waterplane</name>
     <message>
         <location filename="../resources/scripts/units/waterplane.js" line="37"/>

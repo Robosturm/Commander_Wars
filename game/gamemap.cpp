@@ -1065,7 +1065,7 @@ void GameMap::startOfTurn(Player* pPlayer)
                 if (pUnit->getOwner() == pPlayer)
                 {
                     pUnit->removeShineTween();
-                    pUnit->startOfTurn();;
+                    pUnit->startOfTurn();
                 }
                 pUnit->updateIcons(getCurrentViewPlayer());
             }
@@ -1100,7 +1100,8 @@ void GameMap::checkFuel(Player* pPlayer)
             if (pUnit.get() != nullptr)
             {
                 if ((pUnit->getOwner() == pPlayer) &&
-                    (pUnit->getFuel() < 0))
+                    (pUnit->getFuel() < 0) &&
+                    (pUnit->getMaxFuel() > 0))
                 {
                     pUnit->killUnit();
                 }

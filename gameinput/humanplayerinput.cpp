@@ -375,7 +375,14 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
                     QStringList possibleActions;
                     if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) > pUnit->getMovementpoints(m_pGameAction->getTarget()))
                     {
-                        actions.append(CoreAI::ACTION_WAIT);
+                        if (pUnit->getActionList().contains(CoreAI::ACTION_HOELLIUM_WAIT))
+                        {
+                            actions.append(CoreAI::ACTION_HOELLIUM_WAIT);
+                        }
+                        else if (pUnit->getActionList().contains(CoreAI::ACTION_WAIT))
+                        {
+                            actions.append(CoreAI::ACTION_WAIT);
+                        }
                     }
                     else
                     {
@@ -580,6 +587,10 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
         pUnit->getActionList().contains(CoreAI::ACTION_WAIT))
     {
         m_pUnitPathFindingSystem->setMovepoints(pUnit->getFuel());
+    }
+    else
+    {
+        m_pUnitPathFindingSystem->setMovepoints(pUnit->getMovementpoints(QPoint(x, y)));
     }
     m_pUnitPathFindingSystem->explore();
     createMarkedMoveFields();

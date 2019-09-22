@@ -392,6 +392,10 @@
 		<image file="waterplane+walk+mask.png" cols = "4" rows = "4" />
 		<image file="waterplane+walk.png" cols = "4"  rows = "4" />
 		
+		<!-- watermine -->
+		<image file="watermine.png" cols = "4" />
+		<image file="watermine+mask.png" cols = "4" />
+		
 		<!-- stealthbomber -->
 		<image file="stealthbomber.png" cols = "4" />
 		<image file="stealthbomber+mask.png" cols = "4" />

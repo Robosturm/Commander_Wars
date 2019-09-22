@@ -321,6 +321,10 @@ GameAction* GameMenue::doMultiTurnMovement(GameAction* pGameAction)
                            // replace current action with auto moving none moved units
                            m_pStoredAction = pGameAction;
                            GameAction* multiTurnMovement = new GameAction(CoreAI::ACTION_WAIT);
+                           if (pUnit->getActionList().contains(CoreAI::ACTION_HOELLIUM_WAIT))
+                           {
+                               multiTurnMovement->setActionID(CoreAI::ACTION_HOELLIUM_WAIT);
+                           }
                            multiTurnMovement->setTarget(pUnit->getPosition());
                            UnitPathFindingSystem pfs(pUnit, pPlayer);
                            pfs.setMovepoints(pUnit->getFuel());

@@ -27,16 +27,9 @@ UnitPathFindingSystem::UnitPathFindingSystem(Unit* pUnit, Player* pPlayer)
 qint32 UnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint32 currentCost)
 {
     GameMap* pMap = GameMap::getInstance();
-    if (pMap->onMap(x, y))
+    if (pMap->onMap(x, y) && m_Movepoints > 0)
     {
-        if (m_Movepoints >= 0)
-        {
-            return m_Movepoints - currentCost;
-        }
-        else
-        {
-            return 1;
-        }
+        return m_Movepoints - currentCost;
     }
     else
     {

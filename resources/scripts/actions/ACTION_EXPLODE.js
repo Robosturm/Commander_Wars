@@ -86,7 +86,8 @@ var Constructor = function()
             var point = fields.at(i);
             if (map.onMap(x + point.x, y + point.y))
             {
-                var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
+                var terrain = map.getTerrain(x + point.x, y + point.y);
+                var unit = terrain.getUnit();
                 if (unit !== null)
                 {
                     unit.setHp(unit.getHpRounded() - 4);
