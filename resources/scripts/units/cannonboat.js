@@ -26,7 +26,7 @@ var Constructor = function()
     };
     this.getMovementType = function()
     {
-        return "MOVE_BOAT";
+        return "MOVE_SHIP";
     };
     this.getBaseCost = function()
     {
@@ -64,13 +64,10 @@ var Constructor = function()
         animation.setSound("moveship.wav", -2);
         return animation;
     };
-    this.getLoadingPlace = function()
+    this.getActions = function()
     {
-        return 1;
-    };
-    this.getTransportUnits = function()
-    {
-        return ["INFANTRY", "MECH", "SNIPER"];
+        // returns a string id list of the actions this unit can perform
+        return "ACTION_PLACE_WATERMINE,ACTION_FIRE,ACTION_JOIN,ACTION_LOAD,ACTION_UNLOAD,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
     };
     this.canMoveAndFire = function()
     {
@@ -93,7 +90,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Naval Unit. Attacks naval units. <div c='00ff00'>Carries X 1</div> infantry units.");
+        return qsTr("Naval Unit. Attacks naval units. Can place <div c='00ff00'>Watermines</div> on sea tiles.");
     };
     this.getUnitType = function()
     {

@@ -140,7 +140,7 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Naval Mine. Always explodes at the start of a turn if an enemy unit is inside the explosion range. This unit is always stealthed. It deals 4 damage to all sea and ground units except Gunboats in a 2 square area on sea tiles.");
+        return qsTr("Naval Mine. Always explodes at the start of a turn if an enemy unit is inside the explosion range. This unit is always stealthed. It deals 4 damage to all sea and ground units in a 2 square area on sea tiles.");
     };
     this.getUnitType = function()
     {

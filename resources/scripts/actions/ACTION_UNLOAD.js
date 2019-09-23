@@ -6,9 +6,6 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
-
-        var test = Qt.point(0, 1);
-
         if ((unit.getHasMoved() === true))
         {
             return false;

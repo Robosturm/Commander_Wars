@@ -252,6 +252,14 @@
     </message>
 </context>
 <context>
+    <name>ACTION_PLACE_WATERMINE</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="55"/>
+        <source>Place Mine</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_RATION</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_RATION.js" line="59"/>
@@ -331,12 +339,12 @@
 <context>
     <name>ACTION_UNLOAD</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="67"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="64"/>
         <source>Unload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="233"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="230"/>
         <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1419,52 +1427,52 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="582"/>
+        <location filename="../menue/gamemenue.cpp" line="586"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="582"/>
+        <location filename="../menue/gamemenue.cpp" line="586"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="582"/>
+        <location filename="../menue/gamemenue.cpp" line="586"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="582"/>
+        <location filename="../menue/gamemenue.cpp" line="586"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="582"/>
+        <location filename="../menue/gamemenue.cpp" line="586"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="582"/>
+        <location filename="../menue/gamemenue.cpp" line="586"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="596"/>
+        <location filename="../menue/gamemenue.cpp" line="600"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="604"/>
+        <location filename="../menue/gamemenue.cpp" line="608"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="877"/>
+        <location filename="../menue/gamemenue.cpp" line="881"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="892"/>
+        <location filename="../menue/gamemenue.cpp" line="896"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4576,8 +4584,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/cannonboat.js" line="96"/>
-        <source>Naval Unit. Attacks naval units. &lt;div c=&apos;00ff00&apos;&gt;Carries X 1&lt;/div&gt; infantry units.</source>
+        <location filename="../resources/scripts/units/cannonboat.js" line="93"/>
+        <source>Naval Unit. Attacks naval units. Can place &lt;div c=&apos;00ff00&apos;&gt;Watermines&lt;/div&gt; on sea tiles.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12573,7 +12581,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/units/watermine.js" line="143"/>
-        <source>Naval Mine. Always explodes at the start of a turn if an enemy unit is inside the explosion range. This unit is always stealthed. It deals 4 damage to all sea and ground units except Gunboats in a 2 square area on sea tiles.</source>
+        <source>Naval Mine. Always explodes at the start of a turn if an enemy unit is inside the explosion range. This unit is always stealthed. It deals 4 damage to all sea and ground units in a 2 square area on sea tiles.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

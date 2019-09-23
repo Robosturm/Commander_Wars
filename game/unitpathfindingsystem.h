@@ -47,17 +47,17 @@ public:
      * @param target
      * @return
      */
-    QVector<QPoint> getClosestReachableMovePath(QPoint target, qint32 movepoints = -1, bool direct = false);
+    QVector<QPoint> getClosestReachableMovePath(QPoint target, qint32 movepoints = -2, bool direct = false);
     /**
      * @brief setMoveCosts
-     * @param movepoints how far this pfs explodes
+     * @param movepoints how far this pfs explodes. -2 for infinite
      */
     void setMovepoints(const qint32 &movepoints);
 
 protected:
     Unit* m_pUnit;
     Player* m_pPlayer{nullptr};
-    qint32 m_Movepoints{-1};
+    qint32 m_Movepoints{-2};
 };
 
 #endif // UNITPATHFINDINGSYSTEM_H

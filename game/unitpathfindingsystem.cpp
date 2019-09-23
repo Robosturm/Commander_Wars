@@ -31,6 +31,10 @@ qint32 UnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint32 curren
     {
         return m_Movepoints - currentCost;
     }
+    else if (m_Movepoints == -2)
+    {
+        return m_Movepoints - currentCost;
+    }
     else
     {
         return -1;
