@@ -274,9 +274,10 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
 
 
         pAnim = pObjectManager->getResAnim("barforeground");
+        bool HpHidden = false;
         if (pUnit != nullptr)
         {
-            bool HpHidden = pUnit->getHpHidden(pMap->getCurrentViewPlayer());
+            HpHidden = pUnit->getHpHidden(pMap->getCurrentViewPlayer());
             float count = pUnit->getHp();
             qint32 hpRounded = pUnit->getHpRounded();
             float countMax = 10.0f;
@@ -469,6 +470,11 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
         {
             BattleAnimationSprite* pBattleAnimationSprite = new BattleAnimationSprite(pUnit, pUnit->getTerrain(), BattleAnimationSprite::standingAnimation);
             pBattleAnimationSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 110);
+            if (HpHidden)
+            {
+                pBattleAnimationSprite->setHpRounded(10);
+                pBattleAnimationSprite->loadAnimation(BattleAnimationSprite::standingAnimation);
+            }
             pBattleAnimationSprite->setPriority(3);
             m_pCursorInfoBox->addChild(pBattleAnimationSprite);
         }
