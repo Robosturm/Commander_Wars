@@ -512,9 +512,7 @@ void HumanPlayerInput::finishAction()
         if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) > movepoints)
         {
             // shorten path
-            // todo get actual shorten path
-            QVector<QPoint> newPath = m_pUnitPathFindingSystem->getClosestReachableMovePath(m_ArrowPoints[0], movepoints);
-
+            QVector<QPoint> newPath = m_pUnitPathFindingSystem->getClosestReachableMovePath(m_ArrowPoints, movepoints);
             m_pGameAction->setMovepath(newPath, m_pUnitPathFindingSystem->getCosts(newPath));            
             QVector<QPoint> multiTurnPath;
             for (qint32 i = 0; i <= m_ArrowPoints.size() - newPath.size(); i++)

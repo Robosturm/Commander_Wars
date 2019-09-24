@@ -108,10 +108,7 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target
                 Unit* pNodeUnit = pMap->getTerrain(pCurrentNode->x, pCurrentNode->y)->getUnit();
                 // empty field or unit ignores collision and can move on the field
                 // or we are on this field
-                if ((pNodeUnit == nullptr || // empty field
-                    (m_pUnit->getIgnoreUnitCollision() && pNodeUnit != nullptr && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit)) || // oozium move
-                    (pNodeUnit == m_pUnit)) && // current field
-                    (movepoints < 0 || getTargetCosts(pCurrentNode->x, pCurrentNode->y) <= movepoints)) // inside given cost limits
+                if (isCrossable(pNodeUnit, pCurrentNode->x, pCurrentNode->y, movepoints))
                 {
                     return getPath(pCurrentNode->x, pCurrentNode->y);
                 }
@@ -143,6 +140,51 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target
         }
     }
     return QVector<QPoint>();
+}
+
+QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoint>& path, qint32 movepoints)
+{
+    if (movepoints > 0 && path.size() > 0)
+    {
+        QVector<QPoint> ret;
+        GameMap* pMap = GameMap::getInstance();
+        QPoint lastValidPoint = path[path.size() - 1];
+        ret.append(lastValidPoint);
+        for (qint32 i = path.size() - 2; i > 0; i++)
+        {
+            Unit* pNodeUnit = pMap->getTerrain(path[i].x(), path[i].y())->getUnit();
+            if (isCrossable(pNodeUnit, path[i].x(), path[i].y(), movepoints))
+            {
+                lastValidPoint = path[i];
+                ret.append(lastValidPoint);
+            }
+            else
+            {
+                break;
+            }
+        }
+        return ret;
+    }
+    else if (movepoints == 0 && path.size() > 0)
+    {
+        return QVector<QPoint>(1, path[path.size() - 1]);
+    }
+    else
+    {
+        return path;
+    }
+}
+
+bool UnitPathFindingSystem::isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qint32 movepoints)
+{
+    if ((pNodeUnit == nullptr || // empty field
+        (m_pUnit->getIgnoreUnitCollision() && pNodeUnit != nullptr && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit)) || // oozium move
+        (pNodeUnit == m_pUnit)) && // current field
+        (movepoints < 0 || getTargetCosts(x, y) <= movepoints)) // inside given cost limits
+    {
+        return true;
+    }
+    return false;
 }
 
 void UnitPathFindingSystem::setMovepoints(const qint32 &movepoints)

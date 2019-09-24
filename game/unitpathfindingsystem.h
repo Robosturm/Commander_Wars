@@ -49,11 +49,27 @@ public:
      */
     QVector<QPoint> getClosestReachableMovePath(QPoint target, qint32 movepoints = -2, bool direct = false);
     /**
+     * @brief getClosestReachableMovePath
+     * @param path
+     * @param movepoints
+     * @param direct
+     * @return
+     */
+    QVector<QPoint> getClosestReachableMovePath(QVector<QPoint>& path, qint32 movepoints);
+    /**
      * @brief setMoveCosts
      * @param movepoints how far this pfs explodes. -2 for infinite
      */
     void setMovepoints(const qint32 &movepoints);
-
+    /**
+     * @brief isCrossable
+     * @param pNodeUnit
+     * @param x
+     * @param y
+     * @param movepoints
+     * @return
+     */
+    bool isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qint32 movepoints);
 protected:
     Unit* m_pUnit;
     Player* m_pPlayer{nullptr};
