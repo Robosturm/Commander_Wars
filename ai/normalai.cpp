@@ -800,6 +800,19 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
                         return true;
                     }
                 }
+                if (actions.contains(ACTION_PLACE_WATERMINE))
+                {
+                    pAction->setActionID(ACTION_PLACE_WATERMINE);
+                    if (pAction->canBePerformed())
+                    {
+                        MarkedFieldData* pData = pAction->getMarkedFieldStepData();
+                        QPoint point = pData->getPoints()->at(Mainapp::randInt(0, pData->getPoints()->size() - 1));
+                        CoreAI::addSelectedFieldData(pAction, point);
+                        delete pData;
+                        emit performAction(pAction);
+                        return true;
+                    }
+                }
                 if (pUnit->canMoveAndFire(pAction->getActionTarget()) ||
                     pUnit->getPosition() == pAction->getActionTarget())
                 {
