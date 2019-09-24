@@ -42,6 +42,16 @@ void GameAction::setIsLocal(bool value)
     isLocal = value;
 }
 
+QVector<QPoint> GameAction::getMultiTurnPath() const
+{
+    return m_MultiTurnPath;
+}
+
+void GameAction::setMultiTurnPath(const QVector<QPoint> &MultiTurnPath)
+{
+    m_MultiTurnPath = MultiTurnPath;
+}
+
 void GameAction::setTargetUnit(Unit *pTargetUnit)
 {
     m_pTargetUnit = pTargetUnit;
@@ -334,6 +344,12 @@ void GameAction::serializeObject(QDataStream& stream)
         stream << static_cast<qint8>(data[i]);
     }
     stream << seed;
+    qint32 size = m_MultiTurnPath.size();
+    stream << size;
+    for (qint32 i = 0; i < size; i++)
+    {
+        stream << m_MultiTurnPath[i];
+    }
 }
 
 void GameAction::deserializeObject(QDataStream& stream)
@@ -363,4 +379,15 @@ void GameAction::deserializeObject(QDataStream& stream)
         actionData << value;
     }
     stream >> seed;
+    if (version > 1)
+    {
+        qint32 size = m_MultiTurnPath.size();
+        stream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            QPoint point;
+            stream << point;
+            m_MultiTurnPath.append(point);
+        }
+    }
 }

@@ -512,14 +512,16 @@ void HumanPlayerInput::finishAction()
         if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) > movepoints)
         {
             // shorten path
+            // todo get actual shorten path
             QVector<QPoint> newPath = m_pUnitPathFindingSystem->getClosestReachableMovePath(m_ArrowPoints[0], movepoints);
-            m_pGameAction->setMovepath(newPath, m_pUnitPathFindingSystem->getCosts(newPath));
+
+            m_pGameAction->setMovepath(newPath, m_pUnitPathFindingSystem->getCosts(newPath));            
             QVector<QPoint> multiTurnPath;
             for (qint32 i = 0; i <= m_ArrowPoints.size() - newPath.size(); i++)
             {
                 multiTurnPath.append(m_ArrowPoints[i]);
             }
-            pUnit->setMultiTurnPath(multiTurnPath);
+            m_pGameAction->setMultiTurnPath(multiTurnPath);
         }
         else
         {
@@ -783,6 +785,11 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
 void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
 {
     QVector<QPoint> points = m_ArrowPoints;
+    QPoint lastPoint = QPoint(-1, -1);
+    if (points.size() > 0)
+    {
+        lastPoint = points[0];
+    }
     deleteArrow();
     if (m_pGameAction->getTarget() != QPoint(x, y) &&
         !m_pGameAction->getTargetUnit()->getHasMoved() &&
@@ -802,7 +809,9 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
                     else
                     {
                         points.push_front(QPoint(x, y));
-                        if (m_pUnitPathFindingSystem->getCosts(points)  > m_pGameAction->getTargetUnit()->getMovementpoints(QPoint(x, y)))
+                        qint32 movepoints = m_pGameAction->getTargetUnit()->getMovementpoints(QPoint(x, y));
+                        if ((m_pUnitPathFindingSystem->getCosts(x, y)  <= movepoints) &&
+                            (m_pUnitPathFindingSystem->getCosts(points)  > movepoints))
                         {
                             // not reachable this way get the ideal path
                             points = m_pUnitPathFindingSystem->getPath(x, y);

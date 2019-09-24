@@ -1427,52 +1427,52 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="586"/>
+        <location filename="../menue/gamemenue.cpp" line="593"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="586"/>
+        <location filename="../menue/gamemenue.cpp" line="593"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="586"/>
+        <location filename="../menue/gamemenue.cpp" line="593"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="586"/>
+        <location filename="../menue/gamemenue.cpp" line="593"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="586"/>
+        <location filename="../menue/gamemenue.cpp" line="593"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="586"/>
+        <location filename="../menue/gamemenue.cpp" line="593"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="600"/>
+        <location filename="../menue/gamemenue.cpp" line="607"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="608"/>
+        <location filename="../menue/gamemenue.cpp" line="615"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="881"/>
+        <location filename="../menue/gamemenue.cpp" line="888"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="896"/>
+        <location filename="../menue/gamemenue.cpp" line="903"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1523,90 +1523,90 @@
     </message>
     <message>
         <location filename="../objects/ingameinfobar.cpp" line="244"/>
-        <location filename="../objects/ingameinfobar.cpp" line="287"/>
-        <location filename="../objects/ingameinfobar.cpp" line="291"/>
+        <location filename="../objects/ingameinfobar.cpp" line="288"/>
+        <location filename="../objects/ingameinfobar.cpp" line="292"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="331"/>
+        <location filename="../objects/ingameinfobar.cpp" line="332"/>
         <source>Ammo1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="347"/>
+        <location filename="../objects/ingameinfobar.cpp" line="348"/>
         <source>Ammo1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="363"/>
+        <location filename="../objects/ingameinfobar.cpp" line="364"/>
         <source>Ammo2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="379"/>
+        <location filename="../objects/ingameinfobar.cpp" line="380"/>
         <source>Ammo2: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="396"/>
+        <location filename="../objects/ingameinfobar.cpp" line="397"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="413"/>
+        <location filename="../objects/ingameinfobar.cpp" line="414"/>
         <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="542"/>
-        <location filename="../objects/ingameinfobar.cpp" line="594"/>
+        <location filename="../objects/ingameinfobar.cpp" line="548"/>
+        <location filename="../objects/ingameinfobar.cpp" line="600"/>
         <source>Owner: Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="552"/>
+        <location filename="../objects/ingameinfobar.cpp" line="558"/>
         <source>Owner: Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="562"/>
-        <location filename="../objects/ingameinfobar.cpp" line="573"/>
+        <location filename="../objects/ingameinfobar.cpp" line="568"/>
+        <location filename="../objects/ingameinfobar.cpp" line="579"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="604"/>
+        <location filename="../objects/ingameinfobar.cpp" line="610"/>
         <source>Weapon 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="616"/>
+        <location filename="../objects/ingameinfobar.cpp" line="622"/>
         <source>Weapon 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="626"/>
+        <location filename="../objects/ingameinfobar.cpp" line="632"/>
         <source>Move: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="635"/>
+        <location filename="../objects/ingameinfobar.cpp" line="641"/>
         <source>Movementpoints: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="644"/>
+        <location filename="../objects/ingameinfobar.cpp" line="650"/>
         <source>Vision: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="657"/>
+        <location filename="../objects/ingameinfobar.cpp" line="663"/>
         <source>Loaded Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="677"/>
+        <location filename="../objects/ingameinfobar.cpp" line="683"/>
         <source>Loaded Units: ?</source>
         <translation type="unfinished"></translation>
     </message>

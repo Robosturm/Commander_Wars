@@ -57,9 +57,8 @@ public:
      */
     virtual qint32 getVersion() override
     {
-        return 1;
+        return 2;
     }
-
 
 signals:
 
@@ -267,6 +266,16 @@ public slots:
      * @param value
      */
     void setIsLocal(bool value);
+    /**
+     * @brief getMultiTurnPath
+     * @return
+     */
+    QVector<QPoint> getMultiTurnPath() const;
+    /**
+     * @brief setMultiTurnPath
+     * @param MultiTurnPath
+     */
+    void setMultiTurnPath(const QVector<QPoint> &MultiTurnPath);
 private:
     QString m_actionID;
     /**
@@ -296,6 +305,8 @@ private:
       * needed for ai simulations
       */
     Unit* m_pTargetUnit{nullptr};
+
+    QVector<QPoint> m_MultiTurnPath;
 
     bool isLocal{false};
 };

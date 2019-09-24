@@ -2210,7 +2210,7 @@ void Unit::serializeObject(QDataStream& pStream)
 
     qint32 size = m_MultiTurnPath.size();
     pStream << size;
-    for (qint32 i = 0; i < units; i++)
+    for (qint32 i = 0; i < size; i++)
     {
         pStream << m_MultiTurnPath[i];
     }
