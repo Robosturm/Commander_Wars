@@ -69,7 +69,7 @@ public:
      * @param movepoints
      * @return
      */
-    bool isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qint32 movepoints);
+    bool isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qint32 costs, qint32 movepoints);
 protected:
     Unit* m_pUnit;
     Player* m_pPlayer{nullptr};

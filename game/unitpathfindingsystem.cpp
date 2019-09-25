@@ -108,7 +108,7 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target
                 Unit* pNodeUnit = pMap->getTerrain(pCurrentNode->x, pCurrentNode->y)->getUnit();
                 // empty field or unit ignores collision and can move on the field
                 // or we are on this field
-                if (isCrossable(pNodeUnit, pCurrentNode->x, pCurrentNode->y, movepoints))
+                if (isCrossable(pNodeUnit, pCurrentNode->x, pCurrentNode->y, getTargetCosts(pCurrentNode->x, pCurrentNode->y), movepoints))
                 {
                     return getPath(pCurrentNode->x, pCurrentNode->y);
                 }
@@ -147,20 +147,32 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoin
     if (movepoints > 0 && path.size() > 0)
     {
         QVector<QPoint> ret;
+        QVector<QPoint> buffer;
+        qint32 currentCosts = 0;
         GameMap* pMap = GameMap::getInstance();
         QPoint lastValidPoint = path[path.size() - 1];
         ret.append(lastValidPoint);
-        for (qint32 i = path.size() - 2; i > 0; i++)
+        for (qint32 i = path.size() - 2; i >= 0; i--)
         {
             Unit* pNodeUnit = pMap->getTerrain(path[i].x(), path[i].y())->getUnit();
-            if (isCrossable(pNodeUnit, path[i].x(), path[i].y(), movepoints))
+            currentCosts += getCosts(path[i].x(), path[i].y());
+            if (isCrossable(pNodeUnit, path[i].x(), path[i].y(), currentCosts, movepoints))
             {
                 lastValidPoint = path[i];
-                ret.append(lastValidPoint);
+                for (qint32 i2 = 0; i2 < buffer.size(); i2++)
+                {
+                    ret.push_front(buffer[i2]);
+                }
+                ret.push_front(lastValidPoint);
+                buffer.clear();
+            }
+            else if (currentCosts > movepoints)
+            {
+                break;
             }
             else
             {
-                break;
+                buffer.append(path[i]);
             }
         }
         return ret;
@@ -175,12 +187,12 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoin
     }
 }
 
-bool UnitPathFindingSystem::isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qint32 movepoints)
+bool UnitPathFindingSystem::isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qint32 costs, qint32 movepoints)
 {
     if ((pNodeUnit == nullptr || // empty field
         (m_pUnit->getIgnoreUnitCollision() && pNodeUnit != nullptr && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit)) || // oozium move
         (pNodeUnit == m_pUnit)) && // current field
-        (movepoints < 0 || getTargetCosts(x, y) <= movepoints)) // inside given cost limits
+        (movepoints < 0 || costs <= movepoints)) // inside given cost limits
     {
         return true;
     }
