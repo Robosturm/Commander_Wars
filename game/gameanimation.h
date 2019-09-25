@@ -96,7 +96,11 @@ public slots:
      * @param twoSided
      */
     void addTweenColor(qint32 spriteIdx, QColor startColor, QColor endColor, qint32 duration, bool twoSided, qint32 delay = 0);
-
+    /**
+     * @brief addTweenWait
+     * @param duration
+     */
+    void addTweenWait(qint32 duration);
     /************ post animation stuff **************************/
     /**
      * @brief seekBuffer seeks the variable buffer to 0

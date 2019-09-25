@@ -183,6 +183,16 @@ void GameAnimation::addTweenColor(qint32 spriteIdx, QColor startColor, QColor en
     }
 }
 
+void GameAnimation::addTweenWait(qint32 duration)
+{
+    oxygine::spTween tween1 = oxygine::createTween(TweenWait(), duration / Settings::getAnimationSpeed(), 1);
+    addTween(tween1);
+    tween1->setDoneCallback([=](oxygine::Event *)->void
+    {
+        emit sigFinished();
+    });
+}
+
 void GameAnimation::setEndOfAnimationCall(QString postActionObject, QString postActionFunction)
 {
     jsPostActionObject = postActionObject;

@@ -158,18 +158,29 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
             // attacking unit
             GameAnimation* pAtk = createAnimation(pDefTerrain->getX(), pDefTerrain->getY(), 70);
             pAtk->addSprite("blackhole_shot", -GameMap::Imagesize * 0.5f, -GameMap::Imagesize * 0.5f, 0, 1.5f);
-            pAtk->setSound("talongunhit.wav", 1);
+            pAtk->setSound("talongunhit.wav", 1);            
+            GameAnimation* pDmgTextAtk = createAnimation(pDefTerrain->getX(), pDefTerrain->getY());
+            pDmgTextAtk->addText(QString::number(Mainapp::roundUp(defStartHp - defEndHp)) + " Hp", -8, 0, 1.5f, Qt::GlobalColor::red);
+            pDmgTextAtk->addTweenPosition(QPoint(pDefTerrain->getX() * GameMap::Imagesize, (pDefTerrain->getY() - 2) * GameMap::Imagesize), 1500);
+            pDmgTextAtk->addTweenWait(1500);
+            pAtk->queueAnimation(pDmgTextAtk);
             if (atkStartHp > atkEndHp)
             {
                 // counter damage
                 pRet = createAnimation(pAtkTerrain->getX(), pAtkTerrain->getY(), 70);
                 pRet->addSprite("blackhole_shot", -GameMap::Imagesize * 0.5f, -GameMap::Imagesize * 0.5f, 0, 1.5f);
                 pRet->setSound("talongunhit.wav", 1);
-                pAtk->queueAnimation(pRet);
+                pDmgTextAtk->queueAnimation(pRet);
+                GameAnimation* pDmgTextDef = createAnimation(pAtkTerrain->getX(), pAtkTerrain->getY());
+                pDmgTextDef->addText(QString::number(Mainapp::roundUp(atkStartHp - atkEndHp)) + " Hp", -8, 0, 1.5f, Qt::GlobalColor::red);
+                pDmgTextDef->addTweenPosition(QPoint(pAtkTerrain->getX() * GameMap::Imagesize, (pAtkTerrain->getY() - 2) * GameMap::Imagesize), 1500);
+                pDmgTextDef->addTweenWait(1500);
+                pRet->queueAnimation(pDmgTextDef);
+                pRet = pDmgTextDef;
             }
             else
             {
-                pRet = pAtk;
+                pRet = pDmgTextAtk;
             }
         }
     }
