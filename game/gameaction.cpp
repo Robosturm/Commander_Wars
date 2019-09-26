@@ -305,6 +305,14 @@ Building* GameAction::getMovementBuilding()
     return pBuilding;
 }
 
+Terrain* GameAction::getMovementTerrain()
+{
+    GameMap* pMap = GameMap::getInstance();
+    QPoint actionTarget = getActionTarget();
+    Terrain* pTerrain = pMap->getTerrain(actionTarget.x(), actionTarget.y());
+    return pTerrain;
+}
+
 qint32 GameAction::getCosts() const
 {
     return costs;

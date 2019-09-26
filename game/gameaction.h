@@ -157,6 +157,11 @@ public slots:
      */
     Building* getMovementBuilding();
     /**
+     * @brief getMovementTerrain the terrain on the final movement field
+     * @return
+     */
+    Terrain* getMovementTerrain();
+    /**
      * @brief getCosts gets the costs of this actions
      * @return
      */

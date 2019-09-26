@@ -111,7 +111,7 @@ var Constructor = function()
     };
     this.getCOArmy = function()
     {
-        return "TI";
+        return "BD";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)

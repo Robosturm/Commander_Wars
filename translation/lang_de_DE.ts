@@ -6038,6 +6038,513 @@
     </message>
 </context>
 <context>
+    <name>co_empty_ac</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="54"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="58"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="62"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="70"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="74"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="78"/>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="82"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="66"/>
+        <source>A Blank CO for Amber Corona.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="86"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="90"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="94"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ac.js" line="98"/>
+        <source>Amber Corona</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_bd</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="55"/>
+        <source>A Blank CO for Brown Desert.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="59"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="63"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="67"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="71"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="75"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="79"/>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="83"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="87"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="91"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="95"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bd.js" line="99"/>
+        <source>Brown Desert</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_bg</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="55"/>
+        <source>A Blank CO for the Bolt Guard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="59"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="63"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="67"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="71"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="75"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="79"/>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="83"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="87"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="91"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="95"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bg.js" line="99"/>
+        <source>Bolt Guard</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_bh</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="54"/>
+        <source>A Blank CO for Black Hole.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="58"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="62"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="66"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="70"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="74"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="78"/>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="82"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="86"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="90"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="94"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bh.js" line="98"/>
+        <source>Black Hole</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_bm</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="55"/>
+        <source>A Blank CO for Blue Moon.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="59"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="63"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="67"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="71"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="75"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="79"/>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="83"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="87"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="91"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="95"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_bm.js" line="99"/>
+        <source>Blue Moon</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_dm</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="55"/>
+        <source>A Blank CO for Dark Matter.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="59"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="63"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="67"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="71"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="75"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="79"/>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="83"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="87"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="91"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="95"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_dm.js" line="99"/>
+        <source>Dark Matter</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_ge</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="65"/>
+        <source>A Blank CO for Green Earth.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="69"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="73"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="77"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="81"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="85"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="89"/>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="93"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="97"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="101"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="105"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ge.js" line="109"/>
+        <source>Green Earth</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_gs</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="55"/>
+        <source>A Blank CO for Golden Sun.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="59"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="63"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="67"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="71"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="75"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="79"/>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="83"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="87"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="91"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="95"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_gs.js" line="99"/>
+        <source>Golden Sun</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_ma</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="54"/>
+        <source>A Blank CO for Metal Army.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="58"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="62"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="66"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="70"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="74"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="78"/>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="82"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="86"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="90"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="94"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ma.js" line="98"/>
+        <source>Metal Army</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_os</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="54"/>
+        <source>A Blank CO for Orange Star.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="58"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="62"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="66"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="70"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="74"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="78"/>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="82"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="86"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="90"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="94"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_os.js" line="98"/>
+        <source>Orange Star</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_pf</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="55"/>
+        <source>A Blank CO for Pink Frontier.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="59"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="63"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="67"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="71"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="75"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="79"/>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="83"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="87"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="91"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="95"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_pf.js" line="99"/>
+        <source>Pink Frontier</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_ti</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="55"/>
+        <source>A Blank CO for Teal Islands.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="59"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="63"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="67"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="71"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="75"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="79"/>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="83"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="87"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="91"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="95"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_ti.js" line="99"/>
+        <source>Teal Islands</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_empty_yc</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="54"/>
+        <source>A Blank CO for Yellow Comet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="58"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="62"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="66"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="70"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="74"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="78"/>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="82"/>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="86"/>
+        <source>Attack!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="90"/>
+        <source>Victory!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="94"/>
+        <source>Defeat...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_empty_yc.js" line="98"/>
+        <source>Yellow Comet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>co_epoch</name>
     <message>
         <location filename="../resources/scripts/cos/co_epoch.js" line="221"/>

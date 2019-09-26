@@ -1287,21 +1287,35 @@ void GameMap::initPlayers()
             pPlayer->swapCOs();
         }
         // resolve random CO
-        if (pPlayer->getCO(0) != nullptr)
+        if (pPlayer->getCO(0) != nullptr && pPlayer->getCO(0)->getCoID() == "CO_RANDOM")
         {
             QStringList bannList = m_Rules->getCOBannlist();
-            while (pPlayer->getCO(0)->getCoID() == "CO_RANDOM")
+            qint32 count = 0;
+            while (pPlayer->getCO(0)->getCoID() == "CO_RANDOM" || pPlayer->getCO(0)->getCoID().startsWith("CO_EMPTY_"))
             {
                 pPlayer->setCO(bannList[Mainapp::randInt(0, bannList.size() - 1)], 0);
+                count++;
+                if (count > 1000 * bannList.size())
+                {
+                    pPlayer->setCO("", 0);
+                    break;
+                }
             }
         }
-        if (pPlayer->getCO(1) != nullptr)
+        if (pPlayer->getCO(1) != nullptr && (pPlayer->getCO(1)->getCoID() == "CO_RANDOM"))
         {
             QStringList bannList = m_Rules->getCOBannlist();
+            qint32 count = 0;
             while ((pPlayer->getCO(1)->getCoID() == "CO_RANDOM") ||
-                   (pPlayer->getCO(1)->getCoID() == pPlayer->getCO(0)->getCoID()))
+                   (pPlayer->getCO(1)->getCoID() == pPlayer->getCO(0)->getCoID()) ||
+                   (pPlayer->getCO(1)->getCoID().startsWith("CO_EMPTY_")))
             {
                 pPlayer->setCO(bannList[Mainapp::randInt(0, bannList.size() - 1)], 1);
+                if (count > 1000 * bannList.size())
+                {
+                    pPlayer->setCO("", 1);
+                    break;
+                }
             }
         }
         // define army of this player

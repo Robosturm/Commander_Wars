@@ -28,6 +28,46 @@
 		<image file="atkRange.png" />
 		<image file="moveRange.png" />
 
+		<!-- empty co images -->
+		<image file="os/co_empty_os+nrm.png" />
+		<image file="os/co_empty_os+info.png" />
+		<image file="os/co_empty_os+face.png" cols = "3" />
+		<image file="ac/co_empty_ac+nrm.png" />
+		<image file="ac/co_empty_ac+info.png" />
+		<image file="ac/co_empty_ac+face.png" cols = "3" />
+		<image file="ti/co_empty_ti+nrm.png" />
+		<image file="ti/co_empty_ti+info.png" />
+		<image file="ti/co_empty_ti+face.png" cols = "3" />
+		<image file="bm/co_empty_bm+nrm.png" />
+		<image file="bm/co_empty_bm+info.png" />
+		<image file="bm/co_empty_bm+face.png" cols = "3" />
+		<image file="bd/co_empty_bd+nrm.png" />
+		<image file="bd/co_empty_bd+info.png" />
+		<image file="bd/co_empty_bd+face.png" cols = "3" />
+		<image file="dm/co_empty_dm+nrm.png" />
+		<image file="dm/co_empty_dm+info.png" />
+		<image file="dm/co_empty_dm+face.png" cols = "3" />
+		<image file="ge/co_empty_ge+nrm.png" />
+		<image file="ge/co_empty_ge+info.png" />
+		<image file="ge/co_empty_ge+face.png" cols = "3" />
+		<image file="pf/co_empty_pf+nrm.png" />
+		<image file="pf/co_empty_pf+info.png" />
+		<image file="pf/co_empty_pf+face.png" cols = "3" />
+		<image file="yc/co_empty_yc+nrm.png" />
+		<image file="yc/co_empty_yc+info.png" />
+		<image file="yc/co_empty_yc+face.png" cols = "3" />
+		<image file="gs/co_empty_gs+nrm.png" />
+		<image file="gs/co_empty_gs+info.png" />
+		<image file="gs/co_empty_gs+face.png" cols = "3" />
+		<image file="bh/co_empty_bh+nrm.png" />
+		<image file="bh/co_empty_bh+info.png" />
+		<image file="bh/co_empty_bh+face.png" cols = "3" />
+		<image file="bg/co_empty_bg+nrm.png" />
+		<image file="bg/co_empty_bg+info.png" />
+		<image file="bg/co_empty_bg+face.png" cols = "3" />
+		<image file="ma/co_empty_ma+nrm.png" />
+		<image file="ma/co_empty_ma+info.png" />
+		<image file="ma/co_empty_ma+face.png" cols = "3" />
 		
 		<!-- AC -->
 		<image file="ac/co_mary+nrm.png" />
