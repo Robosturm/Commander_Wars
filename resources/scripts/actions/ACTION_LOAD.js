@@ -1,12 +1,14 @@
-var Constructor = function()
+var Constructor = function ()
 {
     // called for loading the main sprite
-    this.canBePerformed = function(action)
+    this.canBePerformed = function (action)
     {
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
-		var targetUnit = action.getMovementTarget();
+        var targetUnit = action.getMovementTarget();
+        var transportTerrain = action.getMovementTerrain();
+
         if ((unit.getHasMoved() === true))
         {
             return false;
@@ -16,31 +18,45 @@ var Constructor = function()
         {
             if ((targetUnit.getOwner() === unit.getOwner()) &&
                 (Global[targetUnit.getUnitID()].getTransportUnits().indexOf(unit.getUnitID()) >= 0) &&
-                (targetUnit.getLoadedUnitCount() < Global[targetUnit.getUnitID()].getLoadingPlace()))
-			{
-				return true;
-			}
+                (targetUnit.getLoadedUnitCount() < Global[targetUnit.getUnitID()].getLoadingPlace())) {
+
+
+                if (targetUnit.getUnitID() === "TRANSPORTPLANE")
+                {
+                    if ((transportTerrain.getID() === "AIRPORT") ||
+                        (transportTerrain.getID() === "TEMPORARY_AIRPORT") ||
+                        (transportTerrain.getID() === "STREET"))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
         }
         return false;
-        
+
     };
 
 
-    this.getActionText = function()
+    this.getActionText = function ()
     {
         return qsTr("Load");
     };
-    this.getIcon = function()
+    this.getIcon = function ()
     {
         return "load";
     };
-    this.isFinalStep = function(action)
+    this.isFinalStep = function (action)
     {
         return true;
     };
     this.postAnimationTargetUnit = null;
     this.postAnimationUnit = null;
-    this.perform = function(action)
+    this.perform = function (action)
     {
         // we need to move the unit to the target position
         ACTION_LOAD.postAnimationUnit = action.getTargetUnit();
@@ -48,7 +64,7 @@ var Constructor = function()
         var animation = Global[ACTION_LOAD.postAnimationUnit.getUnitID()].doWalkingAnimation(action);
         animation.setEndOfAnimationCall("ACTION_LOAD", "performPostAnimation");
     };
-    this.performPostAnimation = function(postAnimation)
+    this.performPostAnimation = function (postAnimation)
     {
         ACTION_LOAD.postAnimationUnit.setHasMoved(true);
         ACTION_LOAD.postAnimationUnit.setCapturePoints(0);

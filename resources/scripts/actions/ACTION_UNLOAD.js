@@ -6,10 +6,28 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
+        var transportTerrain = map.getTerrain(actionTargetField.x, actionTargetField.y);
+
+        // GameConsole.print("We are a: " + unit.getUnitID(), 1);
+        // GameConsole.print("We are on a: " + transportTerrain.getID(), 1);
+
+        var test = Qt.point(0, 1);
+
         if ((unit.getHasMoved() === true))
         {
             return false;
         }
+
+        if (unit.getUnitID() === "TRANSPORTPLANE")
+        {
+            if ((transportTerrain.getID() !== "AIRPORT") &&
+                (transportTerrain.getID() !== "TEMPORARY_AIRPORT") &&
+                (transportTerrain.getID() !== "STREET"))
+            {
+                return false;
+            }
+        }
+
         if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
             (action.getMovementTarget() === null))
         {
