@@ -43,7 +43,16 @@ public slots:
      */
     virtual void process() override;
 protected:
-
+    /**
+     * @brief performActionSteps
+     * @param pUnits
+     * @param pEnemyUnits
+     * @param pBuildings
+     * @param pEnemyBuildings
+     * @return
+     */
+    bool performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits,
+                            QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings);
     /**
      * @brief buildCOUnit
      * @param pUnits

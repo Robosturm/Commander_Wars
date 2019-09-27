@@ -55,36 +55,27 @@ void NormalAi::process()
         else
         {
             turnMode = TurnTime::onGoingTurn;
-            if (buildCOUnit(pUnits)){}
-            else if (CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
-            else if (CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
-            else if (captureBuildings(pUnits)){}
-            // indirect units
-            else if (fireWithUnits(pUnits, 2, std::numeric_limits<qint32>::max(), pBuildings, pEnemyBuildings)){}
-            // direct units
-            else if (fireWithUnits(pUnits, 1, 1, pBuildings, pEnemyBuildings)){}
-            else if (repairUnits(pUnits, pBuildings, pEnemyBuildings)){}
-            else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, 1)){}
-            else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 2, std::numeric_limits<qint32>::max())){}            
-            else if (loadUnits(pUnits, pBuildings, pEnemyBuildings)){}
-            else if (moveRepair(pUnits)){}
-            else if (moveTransporters(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
-            else if (moveAwayFromProduction(pUnits)){}
-            else if (buildUnits(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings)){}
+            if (performActionSteps(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
             else
             {
-                clearEnemyData();
-                m_IslandMaps.clear();
-                turnMode = TurnTime::endOfTurn;
-                if (useCOPower(pUnits, pEnemyUnits))
-                {
-                    clearEnemyData();
-                    turnMode = TurnTime::onGoingTurn;
-                }
+                aiStep = AISteps::moveUnits;
+                if (performActionSteps(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
                 else
                 {
-                    turnMode = TurnTime::startOfTurn;
-                    finishTurn();
+                    aiStep = AISteps::moveUnits;
+                    clearEnemyData();
+                    m_IslandMaps.clear();
+                    turnMode = TurnTime::endOfTurn;
+                    if (useCOPower(pUnits, pEnemyUnits))
+                    {
+                        clearEnemyData();
+                        turnMode = TurnTime::onGoingTurn;
+                    }
+                    else
+                    {
+                        turnMode = TurnTime::startOfTurn;
+                        finishTurn();
+                    }
                 }
             }
         }
@@ -94,6 +85,31 @@ void NormalAi::process()
     delete pUnits;
     delete pEnemyBuildings;
     delete pEnemyUnits;
+}
+bool NormalAi::performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits,
+                                  QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
+{
+    if (aiStep <= AISteps::moveUnits && buildCOUnit(pUnits)){}
+    else if (aiStep <= AISteps::moveUnits && CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
+    else if (aiStep <= AISteps::moveUnits && CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
+    else if (aiStep <= AISteps::moveUnits && captureBuildings(pUnits)){}
+    // indirect units
+    else if (aiStep <= AISteps::moveUnits && fireWithUnits(pUnits, 2, std::numeric_limits<qint32>::max(), pBuildings, pEnemyBuildings)){}
+    // direct units
+    else if (aiStep <= AISteps::moveUnits && fireWithUnits(pUnits, 1, 1, pBuildings, pEnemyBuildings)){}
+    else if (aiStep <= AISteps::moveUnits && repairUnits(pUnits, pBuildings, pEnemyBuildings)){}
+    else if (aiStep <= AISteps::moveUnits && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, 1)){}
+    else if (aiStep <= AISteps::moveUnits && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 2, std::numeric_limits<qint32>::max())){}
+    else if (aiStep <= AISteps::loadUnits && loadUnits(pUnits, pBuildings, pEnemyBuildings)){}
+    else if (aiStep <= AISteps::moveRepairUnits && moveRepair(pUnits)){}
+    else if (aiStep <= AISteps::moveTransporters && moveTransporters(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
+    else if (aiStep <= AISteps::moveAway && moveAwayFromProduction(pUnits)){}
+    else if (aiStep <= AISteps::buildUnits && buildUnits(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings)){}
+    else
+    {
+        return false;
+    }
+    return true;
 }
 
 bool NormalAi::buildCOUnit(QmlVectorUnit* pUnits)
@@ -443,6 +459,7 @@ bool NormalAi::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
 
 bool NormalAi::loadUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
+    aiStep = AISteps::loadUnits;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -474,6 +491,7 @@ bool NormalAi::loadUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings, Q
 
 bool NormalAi::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
+    aiStep = AISteps::moveTransporters;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -638,6 +656,7 @@ bool NormalAi::moveToUnloadArea(GameAction* pAction, Unit* pUnit, QmlVectorUnit*
 
 bool NormalAi::repairUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
+    aiStep = AISteps::moveUnits;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -1285,6 +1304,7 @@ void NormalAi::clearEnemyData()
 bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                           QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)
 {
+    aiStep = AISteps::buildUnits;
     GameMap* pMap = GameMap::getInstance();
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
     qint32 enemeyCount = 0;

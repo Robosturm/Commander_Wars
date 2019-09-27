@@ -17,6 +17,8 @@ class NormalAi : public CoreAI
 {
     Q_OBJECT
 public:
+
+
     explicit NormalAi(float initMinMovementDamage = 0.3f, float initMinAttackFunds = 0.0f, float initMinSuicideDamage = 3.0f / 4.0f);
     /**
      * @brief serialize stores the object
@@ -41,6 +43,8 @@ signals:
 public slots:
     virtual void process() override;
 protected:
+    bool performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits,
+                            QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings);
     /**
      * @brief buildCOUnit
      * @param pUnits

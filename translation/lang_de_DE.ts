@@ -68,7 +68,7 @@
 <context>
     <name>ACTION_BUILD_TEMP_AIRPORT</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="29"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_AIRPORT.js" line="30"/>
         <source>Build Airport</source>
         <translation type="unfinished"></translation>
     </message>
@@ -76,7 +76,7 @@
 <context>
     <name>ACTION_BUILD_TEMP_HARBOUR</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="29"/>
+        <location filename="../resources/scripts/actions/ACTION_BUILD_TEMP_HARBOUR.js" line="30"/>
         <source>Build Harbour</source>
         <translation type="unfinished"></translation>
     </message>
@@ -105,7 +105,7 @@
 <context>
     <name>ACTION_CAPTURE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="47"/>
+        <location filename="../resources/scripts/actions/ACTION_CAPTURE.js" line="48"/>
         <source>Capture</source>
         <translation type="unfinished"></translation>
     </message>
@@ -121,7 +121,7 @@
 <context>
     <name>ACTION_CO_UNIT_0</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="32"/>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_0.js" line="33"/>
         <source>CO 1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -129,7 +129,7 @@
 <context>
     <name>ACTION_CO_UNIT_1</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="32"/>
+        <location filename="../resources/scripts/actions/ACTION_CO_UNIT_1.js" line="33"/>
         <source>CO 2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -169,7 +169,7 @@
 <context>
     <name>ACTION_EXPLODE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_EXPLODE.js" line="25"/>
+        <location filename="../resources/scripts/actions/ACTION_EXPLODE.js" line="26"/>
         <source>Explode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -177,12 +177,12 @@
 <context>
     <name>ACTION_FIRE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="63"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="64"/>
         <source>Fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="276"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="277"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -190,7 +190,7 @@
 <context>
     <name>ACTION_FLARE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="24"/>
+        <location filename="../resources/scripts/actions/ACTION_FLARE.js" line="25"/>
         <source>Flare</source>
         <translation type="unfinished"></translation>
     </message>
@@ -206,7 +206,7 @@
 <context>
     <name>ACTION_HOELLIUM_WAIT</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_HOELLIUM_WAIT.js" line="27"/>
+        <location filename="../resources/scripts/actions/ACTION_HOELLIUM_WAIT.js" line="28"/>
         <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>
@@ -214,7 +214,7 @@
 <context>
     <name>ACTION_JOIN</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="33"/>
+        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="34"/>
         <source>Join</source>
         <translation type="unfinished"></translation>
     </message>
@@ -230,7 +230,7 @@
 <context>
     <name>ACTION_LOAD</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="31"/>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="48"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -238,7 +238,7 @@
 <context>
     <name>ACTION_MISSILE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="34"/>
+        <location filename="../resources/scripts/actions/ACTION_MISSILE.js" line="35"/>
         <source>Missile</source>
         <translation type="unfinished"></translation>
     </message>
@@ -254,7 +254,7 @@
 <context>
     <name>ACTION_PLACE_WATERMINE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="55"/>
+        <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="56"/>
         <source>Place Mine</source>
         <translation type="unfinished"></translation>
     </message>
@@ -262,15 +262,15 @@
 <context>
     <name>ACTION_RATION</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="59"/>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="60"/>
         <source>Ration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="96"/>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="104"/>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="113"/>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="121"/>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="97"/>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="105"/>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="114"/>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="122"/>
         <source>RATION</source>
         <translation type="unfinished"></translation>
     </message>
@@ -278,12 +278,12 @@
 <context>
     <name>ACTION_REPAIR</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_REPAIR.js" line="26"/>
+        <location filename="../resources/scripts/actions/ACTION_REPAIR.js" line="27"/>
         <source>Repair</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_REPAIR.js" line="110"/>
+        <location filename="../resources/scripts/actions/ACTION_REPAIR.js" line="111"/>
         <source>REPAIR</source>
         <translation type="unfinished"></translation>
     </message>
@@ -299,7 +299,7 @@
 <context>
     <name>ACTION_STEALTH</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="25"/>
+        <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="26"/>
         <source>Stealth</source>
         <translation type="unfinished"></translation>
     </message>
@@ -339,12 +339,12 @@
 <context>
     <name>ACTION_UNLOAD</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="64"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="83"/>
         <source>Unload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="230"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="249"/>
         <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>
@@ -352,7 +352,7 @@
 <context>
     <name>ACTION_UNSTEALTH</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="25"/>
+        <location filename="../resources/scripts/actions/ACTION_UNSTEALTH.js" line="26"/>
         <source>Unstealth</source>
         <translation type="unfinished"></translation>
     </message>
@@ -368,7 +368,7 @@
 <context>
     <name>ACTION_WAIT</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="25"/>
+        <location filename="../resources/scripts/actions/ACTION_WAIT.js" line="26"/>
         <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>
@@ -442,7 +442,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="90"/>
+        <location filename="../objects/buildlistdialog.cpp" line="97"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>

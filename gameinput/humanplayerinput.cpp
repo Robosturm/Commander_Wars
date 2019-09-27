@@ -793,7 +793,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
         !m_pGameAction->getTargetUnit()->getHasMoved() &&
         m_FieldPoints.contains(QVector3D(x, y, 0)))
     {
-        if (m_pUnitPathFindingSystem->getCosts(x, y) > 0)
+        if (m_pUnitPathFindingSystem->getCosts(x, y) >= 0)
         {
             // is it a neighbour field to the last target?
             if (((points.size() > 0) && ((points[0].x() - x + points[0].y() - y) != 0)))

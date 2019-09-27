@@ -1180,7 +1180,7 @@ qint32 Unit::getMovementCosts(qint32 x, qint32 y)
             costs += pPlayer->getMovementcostModifier(this, QPoint(x, y));
         }
     }
-    if (baseCosts > 0)
+    if (baseCosts >= 0)
     {
         if ((costs <= 0) && (baseCosts > 0))
         {

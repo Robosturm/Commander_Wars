@@ -15,7 +15,8 @@ var Constructor = function()
 
 
         if ((unit.getHasMoved() === true) ||
-            (costs > funds))
+            (costs > funds) ||
+            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
         {
             return false;
         }

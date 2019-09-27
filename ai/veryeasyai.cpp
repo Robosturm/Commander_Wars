@@ -60,28 +60,23 @@ void VeryEasyAI::process()
     {
         turnMode = TurnTime::onGoingTurn;
         if (useBuilding(pBuildings)){}
-        else if (buildCOUnit(pUnits)){}
-        else if (captureBuildings(pUnits)){}
-        else if (CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
-        else if (CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
-        else if (fireWithIndirectUnits(pUnits)){}
-        else if (fireWithDirectUnits(pUnits)){}
-        else if (moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings)){}
-        else if (loadUnits(pUnits)){}
-        else if (moveRepair(pUnits)){}
-        else if (moveTransporters(pUnits, pEnemyUnits, pEnemyBuildings)){}
-        else if (moveAwayFromProduction(pUnits)){}
-        else if (buildUnits(pBuildings, pUnits)){}
+        else if (performActionSteps(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
         else
         {
-            turnMode = TurnTime::endOfTurn;
-            if (useCOPower(pUnits, pEnemyUnits))
-            {
-                turnMode = TurnTime::onGoingTurn;
-            }
+            aiStep = AISteps::moveUnits;
+            if (performActionSteps(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
             else
             {
-                finishTurn();
+                aiStep = AISteps::moveUnits;
+                turnMode = TurnTime::endOfTurn;
+                if (useCOPower(pUnits, pEnemyUnits))
+                {
+                    turnMode = TurnTime::onGoingTurn;
+                }
+                else
+                {
+                    finishTurn();
+                }
             }
         }
     }
@@ -90,6 +85,28 @@ void VeryEasyAI::process()
 
     delete pEnemyBuildings;
     delete pEnemyUnits;
+}
+
+bool VeryEasyAI::performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits,
+                                    QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
+{
+    if (aiStep <= AISteps::moveUnits && buildCOUnit(pUnits)){}
+    else if (aiStep <= AISteps::moveUnits && captureBuildings(pUnits)){}
+    else if (aiStep <= AISteps::moveUnits && CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
+    else if (aiStep <= AISteps::moveUnits && CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
+    else if (aiStep <= AISteps::moveUnits && fireWithIndirectUnits(pUnits)){}
+    else if (aiStep <= AISteps::moveUnits && fireWithDirectUnits(pUnits)){}
+    else if (aiStep <= AISteps::moveUnits && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings)){}
+    else if (aiStep <= AISteps::loadUnits && loadUnits(pUnits)){}
+    else if (aiStep <= AISteps::moveRepairUnits && moveRepair(pUnits)){}
+    else if (aiStep <= AISteps::moveTransporters && moveTransporters(pUnits, pEnemyUnits, pEnemyBuildings)){}
+    else if (aiStep <= AISteps::moveAway && moveAwayFromProduction(pUnits)){}
+    else if (aiStep <= AISteps::buildUnits && buildUnits(pBuildings, pUnits)){}
+    else
+    {
+        return false;
+    }
+    return true;
 }
 
 

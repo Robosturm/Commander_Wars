@@ -137,6 +137,7 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
 
 bool CoreAI::moveRepair(QmlVectorUnit* pUnits)
 {
+    aiStep = AISteps::moveRepairUnits;
     GameMap* pMap = GameMap::getInstance();
     QVector<QVector3D> unitTargets;
     QVector<QPoint> unitPos;

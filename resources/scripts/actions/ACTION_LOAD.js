@@ -9,7 +9,8 @@ var Constructor = function ()
         var targetUnit = action.getMovementTarget();
         var transportTerrain = action.getMovementTerrain();
 
-        if ((unit.getHasMoved() === true))
+        if ((unit.getHasMoved() === true) ||
+            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
         {
             return false;
         }

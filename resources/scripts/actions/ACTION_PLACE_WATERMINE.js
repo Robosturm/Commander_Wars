@@ -8,7 +8,8 @@ var Constructor = function()
         var targetField = action.getTarget();
 
         if ((unit.getHasMoved() === true) ||
-            (unit.getAmmo2() === 0))
+            (unit.getAmmo2() === 0) ||
+            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
         {
             return false;
         }

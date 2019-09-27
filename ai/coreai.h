@@ -35,6 +35,18 @@ public:
         onGoingTurn,
         endOfTurn,
     };
+    /**
+     * @brief The AISteps enum
+     */
+    enum class AISteps
+    {
+        moveUnits = 0,
+        loadUnits,
+        moveRepairUnits,
+        moveTransporters,
+        moveAway,
+        buildUnits,
+    };
     // static string list of actions so we only define them once
     static const QString ACTION_WAIT;
     static const QString ACTION_HOELLIUM_WAIT;
@@ -323,6 +335,7 @@ protected:
     float buildingValue{1.0f};
     float ownUnitValue{1.0f};
     TurnTime turnMode{TurnTime::startOfTurn};
+    AISteps aiStep;
 private:
     bool finish{false};
 };

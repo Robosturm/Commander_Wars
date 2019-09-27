@@ -468,6 +468,7 @@ QRectF CoreAI::calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage,
 
 bool CoreAI::moveAwayFromProduction(QmlVectorUnit* pUnits)
 {
+    aiStep = AISteps::moveAway;
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pUnits->size(); i++)
     {

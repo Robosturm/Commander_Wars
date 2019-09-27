@@ -64,15 +64,22 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
         }
     });
 
-    m_PredefinedLists = new DropDownmenu(230, {tr("Commander Wars"),
-                                               tr("Advance Wars DoR"),
-                                               tr("Advance Wars DS"),
-                                               tr("Advance Wars 2"),
-                                               tr("Advance Wars")}, true);
+    QVector<QString> items = {tr("Commander Wars"),
+                              tr("Advance Wars DoR"),
+                              tr("Advance Wars DS"),
+                              tr("Advance Wars 2"),
+                              tr("Advance Wars")};
+
+    m_PredefinedLists = new DropDownmenu(230, items, true);
 
     m_PredefinedLists->setPosition(pApp->getSettings()->getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), pApp->getSettings()->getHeight() - 30 - m_ToggleAll->getHeight());
     pSpriteBox->addChild(m_PredefinedLists);
     connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &BuildListDialog::setBuildlist, Qt::QueuedConnection);
+
+//    oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
+//    pSave->setPosition(pApp->getSettings()->getWidth() / 2 + 60 + m_PredefinedLists->getWidth(), pApp->getSettings()->getHeight() - 30 - m_ToggleAll->getHeight());
+//    pSpriteBox->addChild(pSave);
+
 
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);

@@ -13,7 +13,8 @@ var Constructor = function()
 
         var test = Qt.point(0, 1);
 
-        if ((unit.getHasMoved() === true))
+        if ((unit.getHasMoved() === true) ||
+            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
         {
             return false;
         }

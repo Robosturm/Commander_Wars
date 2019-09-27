@@ -158,6 +158,9 @@ public slots:
      * @param list the list as string split with ,
      * @param blacklist use black or whitelist for given arguments
      * @param searchType use GameMap::Directions here
+     * @param useMapBorder if true the terrain is treated as searched terrain
+     * @param useBuildingID if building ID's are used or only terrain id's
+     * @param recursionCount how deep the game searches for base terrain id's -1 for infinite
      * @return
      */
     QString getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder = true, bool useBuildingID = false, qint32 recursionCount = -1);
