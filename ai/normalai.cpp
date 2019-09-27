@@ -1168,6 +1168,23 @@ float NormalAi::calculateCounteBuildingDamage(Unit* pUnit, QPoint newPosition, Q
         Building* pBuilding = pEnemyBuildings->at(i);
         counterDamage += calcBuildingDamage(pUnit, newPosition, pBuilding);
     }
+    QmlVectorPoint* pCircle = Mainapp::getCircle(1, 2);
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < pCircle->size(); i++)
+    {
+        QPoint pos = newPosition + pCircle->at(i);
+        if (pMap->onMap(pos.x(), pos.y()))
+        {
+            Unit* pMine = pMap->getTerrain(pos.x(), pos.y())->getUnit();
+            if (pMine != nullptr &&
+                !pMine->isStealthed(m_pPlayer) &&
+                pMine->getUnitID() == "WATERMINE")
+            {
+                counterDamage +=  4;
+            }
+        }
+    }
+    delete pCircle;
     return counterDamage;
 }
 

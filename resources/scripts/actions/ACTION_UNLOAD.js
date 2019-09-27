@@ -68,7 +68,9 @@ var Constructor = function()
                     var defUnit = terrain.getUnit();
                     // can the transported unit move over the terrain?
                     if ((Global[transportUnit.getMovementType()].getMovementpoints(terrain, transportUnit) > 0) &&
-                        (defUnit === null || defUnit.isStealthed(unit.getOwner())))
+                        (defUnit === null ||
+                         defUnit.isStealthed(unit.getOwner()) ||
+                         (((defUnit !== null) && (defUnit === unit)))))
                     {
                         ret.push(targetFields[i]);
                     }
