@@ -19,3 +19,7 @@ CANNONBOAT.getBaseCost = function()
 {
     return 6000;
 };
+CANNONBOAT.getDescription = function()
+{
+    return qsTr("Naval unit can attack Naval units. Can <div c='00ff00'>transport X 2 </div> infantry units.");
+};
