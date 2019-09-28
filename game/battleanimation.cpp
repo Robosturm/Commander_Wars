@@ -15,7 +15,7 @@
 #include "game/co.h"
 
 BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
-                                 Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon)
+                                 Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
     : GameAnimation(static_cast<quint32>(GameMap::frameTime)),
       m_pAtkTerrain(pAtkTerrain),
       m_pAtkUnit(pAtkUnit),
@@ -26,7 +26,8 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
       m_pDefUnit(pDefUnit),
       m_defStartHp(defStartHp),
       m_defEndHp(defEndHp),
-      m_DefWeapon(defWeapon)
+      m_DefWeapon(defWeapon),
+      m_DefenderDamage(defenderDamage)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -379,7 +380,7 @@ void BattleAnimation::nextAnimatinStep()
         {
             m_pDefenderAnimation->setHpRounded(Mainapp::roundUp(m_defEndHp));
             m_pDefenderAnimation->loadAnimation(BattleAnimationSprite::standingAnimation, m_pDefUnit, m_pAtkUnit, m_DefWeapon);
-            if (m_atkEndHp != m_atkStartHp)
+            if (m_DefenderDamage > 0)
             {
                 loadFireAnimation(m_pDefenderAnimation, m_pDefUnit, m_pAtkUnit, m_DefWeapon);
             }

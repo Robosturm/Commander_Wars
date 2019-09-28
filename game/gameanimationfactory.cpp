@@ -138,7 +138,7 @@ GameAnimationCapture* GameAnimationFactory::createGameAnimationCapture(qint32 x,
 }
 
 GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
-                                                           Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon)
+                                                           Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage)
 {
     GameAnimation* pRet = nullptr;
     if (pDefUnit != nullptr)
@@ -146,7 +146,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
         if (Settings::getBattleAnimations() == GameEnums::BattleAnimationMode_Detail)
         {
             pRet = new BattleAnimation(pAtkTerrain, pAtkUnit, atkStartHp, atkEndHp, atkWeapon,
-                                       pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon);
+                                       pDefTerrain, pDefUnit, defStartHp, defEndHp, defWeapon, defenderDamage);
             pRet->setScale(2.0f);
             pRet->setPosition(Settings::getWidth() / 2 - pRet->getScaledWidth() / 2,
                               Settings::getHeight() / 2 - pRet->getScaledHeight() / 2);
@@ -164,7 +164,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
             pDmgTextAtk->addTweenPosition(QPoint(pDefTerrain->getX() * GameMap::Imagesize, (pDefTerrain->getY() - 2) * GameMap::Imagesize), 1500);
             pDmgTextAtk->addTweenWait(1500);
             pAtk->queueAnimation(pDmgTextAtk);
-            if (atkStartHp > atkEndHp)
+            if (defenderDamage > 0)
             {
                 // counter damage
                 pRet = createAnimation(pAtkTerrain->getX(), pAtkTerrain->getY(), 70);

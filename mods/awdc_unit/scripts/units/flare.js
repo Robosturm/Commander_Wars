@@ -15,3 +15,7 @@ FLARE.init = function(unit)
     unit.setMaxRange(1);
     unit.setVision(2);
 };
+FLARE.getBaseCost = function()
+{
+    return 5000;
+};

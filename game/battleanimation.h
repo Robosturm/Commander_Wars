@@ -28,7 +28,7 @@ public:
     };
 
     BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atkStartHp, float atkEndHp, qint32 atkWeapon,
-                    Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon);
+                    Terrain* pDefTerrain, Unit* pDefUnit, float defStartHp, float defEndHp, qint32 defWeapon, float defenderDamage);
 
     virtual void restart() override;
     virtual void stop() override;
@@ -122,6 +122,7 @@ private:
     float m_defStartHp;
     float m_defEndHp;
     qint32 m_DefWeapon{0};
+    float m_DefenderDamage{-1};
 
     AnimationProgress currentState{AnimationProgress::AttackerImpact};
 

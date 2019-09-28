@@ -1,11 +1,11 @@
 AIRCRAFTCARRIER.init = function(unit)
 {
-    unit.setAmmo1(4);
-    unit.setMaxAmmo1(4);
+    unit.setAmmo1(-1);
+    unit.setMaxAmmo1(-1);
     unit.setWeapon1ID("WEAPON_CARRIER_ANTI_AIR_MISSILE");
 
-    unit.setAmmo2(0);
-    unit.setMaxAmmo2(0);
+    unit.setAmmo2(4);
+    unit.setMaxAmmo2(4);
     unit.setWeapon2ID("");
 
     unit.setFuel(100);

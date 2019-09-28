@@ -6,8 +6,8 @@ var Constructor = function()
         unit.setMaxAmmo1(9);
         unit.setWeapon1ID("WEAPON_CARRIER_ANTI_AIR_MISSILE");
 
-        unit.setAmmo2(0);
-        unit.setMaxAmmo2(0);
+        unit.setAmmo2(-1);
+        unit.setMaxAmmo2(-1);
         unit.setWeapon2ID("");
 
         unit.setFuel(100);

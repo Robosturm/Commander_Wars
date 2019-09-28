@@ -38,7 +38,7 @@ IslandMap::IslandMap(QString unitID, Player* pOwner)
                 if (pUnit->canMoveOver(x, y))
                 {
                     UnitPathFindingSystem pfs(pUnit.get());
-                    pfs.setMovepoints(-1);
+                    pfs.setMovepoints(-2);
                     pfs.setStartPoint(x, y);
                     pfs.explore();
                     QVector<QPoint> nodes = pfs.getAllNodePoints();

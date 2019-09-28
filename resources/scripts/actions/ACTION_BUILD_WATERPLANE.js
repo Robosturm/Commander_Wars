@@ -16,7 +16,8 @@ var Constructor = function()
 
         if ((unit.getHasMoved() === true) ||
             (costs > funds) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
+            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0) ||
+            (!unit.hasAmmo2()))
         {
             return false;
         }
@@ -59,6 +60,7 @@ var Constructor = function()
         var player = map.getCurrentPlayer();
         var costs = player.getCosts(unitID);
         var unit = action.getTargetUnit();
+        unit.reduceAmmo2(1);
         // pay for the unit
         player.addFunds(-costs);
         map.getGameRecorder().buildUnit(player.getPlayerID());
