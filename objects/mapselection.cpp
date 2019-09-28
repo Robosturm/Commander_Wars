@@ -9,7 +9,8 @@
 #include "QDir"
 
 MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
-    : QObject()
+    : QObject(),
+      m_currentFolder(QCoreApplication::applicationDirPath() + "/maps/")
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -222,7 +223,8 @@ void MapSelection::changeFolder(QString folder)
 
             if (infoList[i].isDir())
             {
-                m_Files.append(infoList[i].absoluteFilePath().replace(folder, ""));
+                QString path = infoList[i].absoluteFilePath();
+                m_Files.append(path);
             }
             else if (infoList[i].isFile())
             {
