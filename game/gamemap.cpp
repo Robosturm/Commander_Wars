@@ -272,120 +272,123 @@ void GameMap::removePlayer(qint32 index)
 
 Unit* GameMap::spawnUnit(qint32 x, qint32 y, QString unitID, Player* owner, qint32 range)
 {
-    qint32 heigth = getMapHeight();
-    qint32 width = getMapWidth();
-    if (range < 0)
+    if (owner != nullptr)
     {
-        range = width + heigth;
-    }
-    spPlayer pPlayer = nullptr;
-    for (qint32 i = 0; i < players.size(); i++)
-    {
-        if (owner == players[i].get())
+        qint32 heigth = getMapHeight();
+        qint32 width = getMapWidth();
+        if (range < 0)
         {
-            pPlayer = players[i];
-            break;
+            range = width + heigth;
         }
-        else if (i == players.size() - 1)
+        spPlayer pPlayer = nullptr;
+        for (qint32 i = 0; i < players.size(); i++)
         {
-            // cancel since we have no owner for the unit
+            if (owner == players[i].get())
+            {
+                pPlayer = players[i];
+                break;
+            }
+            else if (i == players.size() - 1)
+            {
+                // cancel since we have no owner for the unit
+                return nullptr;
+            }
+        }
+
+        qint32 unitLimit = m_Rules->getUnitLimit();
+        qint32 unitCount = pPlayer->getUnitCount();
+        if (unitLimit > 0 && unitCount >= unitLimit)
+        {
             return nullptr;
         }
-    }
-
-    qint32 unitLimit = m_Rules->getUnitLimit();
-    qint32 unitCount = pPlayer->getUnitCount();
-    if (unitLimit > 0 && unitCount >= unitLimit)
-    {
-        return nullptr;
-    }
-    spUnit pUnit = new Unit(unitID, pPlayer.get(), true);
-    MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
-    QString movementType = pUnit->getMovementType();
-    if (onMap(x, y))
-    {
-        spTerrain pTerrain = getTerrain(x, y);
-        if ((pTerrain->getUnit() == nullptr) &&
-            (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pUnit.get()) > 0))
+        spUnit pUnit = new Unit(unitID, pPlayer.get(), true);
+        MovementTableManager* pMovementTableManager = MovementTableManager::getInstance();
+        QString movementType = pUnit->getMovementType();
+        if (onMap(x, y))
         {
-            pTerrain->setUnit(pUnit);
-            return pUnit.get();
-        }
-    }
-
-    qint32 currentRadius = 0;
-    qint32 x2 = 0;
-    qint32 y2 = 0;
-    bool found = false;
-    while ((found == false) && (currentRadius <= range) && (range > 0))
-    {
-        currentRadius += 1;
-        x2 = -currentRadius;
-        y2 = 0;
-        for (qint32 i = 0; i < currentRadius; i++)
-        {
-            x2 += 1;
-            y2 += 1;
-            if (onMap(x + x2, y + y2))
+            spTerrain pTerrain = getTerrain(x, y);
+            if ((pTerrain->getUnit() == nullptr) &&
+                (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pUnit.get()) > 0))
             {
-                spTerrain pTerrain = getTerrain(x + x2 - currentRadius, y + y2);
-                if ((pTerrain->getUnit() == nullptr) &&
-                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pUnit.get()) > 0))
-                {
-                    pTerrain->setUnit(pUnit);
-                    return pUnit.get();
-                }
-            }
-        }
-        for (qint32 i = 0; i < currentRadius; i++)
-        {
-            x2 += 1;
-            y2 -= 1;
-            if (onMap(x + x2, y + y2))
-            {
-                spTerrain pTerrain = getTerrain(x + x2, y + y2);
-                if ((pTerrain->getUnit() == nullptr) &&
-                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pUnit.get()) > 0))
-                {
-                    pTerrain->setUnit(pUnit);
-                    return pUnit.get();
-                }
-            }
-        }
-        for (qint32 i = 0; i < currentRadius; i++)
-        {
-            x2 -= 1;
-            y2 -= 1;
-            if (onMap(x + x2, y + y2))
-            {
-                spTerrain pTerrain = getTerrain(x + x2, y + y2);
-                if ((pTerrain->getUnit() == nullptr) &&
-                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pUnit.get()) > 0))
-                {
-                    pTerrain->setUnit(pUnit);
-                    return pUnit.get();
-                }
-            }
-        }
-        for (qint32 i = 0; i < currentRadius; i++)
-        {
-            x2 -= 1;
-            y2 += 1;
-            if (onMap(x + x2, y + y2))
-            {
-                spTerrain pTerrain = getTerrain(x + x2, y + y2);
-                if ((pTerrain->getUnit() == nullptr) &&
-                    (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pUnit.get()) > 0))
-                {
-                    pTerrain->setUnit(pUnit);
-                    return pUnit.get();
-                }
+                pTerrain->setUnit(pUnit);
+                return pUnit.get();
             }
         }
 
-        if (currentRadius > getMapWidth() && currentRadius > getMapHeight())
+        qint32 currentRadius = 0;
+        qint32 x2 = 0;
+        qint32 y2 = 0;
+        bool found = false;
+        while ((found == false) && (currentRadius <= range) && (range > 0))
         {
-            break;
+            currentRadius += 1;
+            x2 = -currentRadius;
+            y2 = 0;
+            for (qint32 i = 0; i < currentRadius; i++)
+            {
+                x2 += 1;
+                y2 += 1;
+                if (onMap(x + x2, y + y2))
+                {
+                    spTerrain pTerrain = getTerrain(x + x2 - currentRadius, y + y2);
+                    if ((pTerrain->getUnit() == nullptr) &&
+                        (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pUnit.get()) > 0))
+                    {
+                        pTerrain->setUnit(pUnit);
+                        return pUnit.get();
+                    }
+                }
+            }
+            for (qint32 i = 0; i < currentRadius; i++)
+            {
+                x2 += 1;
+                y2 -= 1;
+                if (onMap(x + x2, y + y2))
+                {
+                    spTerrain pTerrain = getTerrain(x + x2, y + y2);
+                    if ((pTerrain->getUnit() == nullptr) &&
+                        (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pUnit.get()) > 0))
+                    {
+                        pTerrain->setUnit(pUnit);
+                        return pUnit.get();
+                    }
+                }
+            }
+            for (qint32 i = 0; i < currentRadius; i++)
+            {
+                x2 -= 1;
+                y2 -= 1;
+                if (onMap(x + x2, y + y2))
+                {
+                    spTerrain pTerrain = getTerrain(x + x2, y + y2);
+                    if ((pTerrain->getUnit() == nullptr) &&
+                        (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pUnit.get()) > 0))
+                    {
+                        pTerrain->setUnit(pUnit);
+                        return pUnit.get();
+                    }
+                }
+            }
+            for (qint32 i = 0; i < currentRadius; i++)
+            {
+                x2 -= 1;
+                y2 += 1;
+                if (onMap(x + x2, y + y2))
+                {
+                    spTerrain pTerrain = getTerrain(x + x2, y + y2);
+                    if ((pTerrain->getUnit() == nullptr) &&
+                        (pMovementTableManager->getBaseMovementPoints(movementType, pTerrain.get(), pUnit.get()) > 0))
+                    {
+                        pTerrain->setUnit(pUnit);
+                        return pUnit.get();
+                    }
+                }
+            }
+
+            if (currentRadius > getMapWidth() && currentRadius > getMapHeight())
+            {
+                break;
+            }
         }
     }
     return nullptr;
@@ -1042,10 +1045,13 @@ void GameMap::refillAll()
 
 void GameMap::refillTransportedUnits(Unit* pUnit)
 {
-    for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
+    if (pUnit != nullptr)
     {
-        pUnit->getLoadedUnit(i)->refill();
-        refillTransportedUnits(pUnit->getLoadedUnit(i));
+        for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
+        {
+            pUnit->getLoadedUnit(i)->refill();
+            refillTransportedUnits(pUnit->getLoadedUnit(i));
+        }
     }
 }
 
@@ -1141,19 +1147,22 @@ Unit* GameMap::getUnit(qint32 uniqueID)
 
 Unit* GameMap::getUnit(Unit* pUnit, qint32 uniqueID)
 {
-    for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
+    if (pUnit != nullptr)
     {
-        Unit* pLoadedUnit = pUnit->getLoadedUnit(i);
-        if (pLoadedUnit->getUniqueID() == uniqueID)
+        for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
         {
-            return pLoadedUnit;
-        }
-        else
-        {
-            Unit* pUnit2 = getUnit(pLoadedUnit, uniqueID);
-            if (pUnit2 != nullptr)
+            Unit* pLoadedUnit = pUnit->getLoadedUnit(i);
+            if (pLoadedUnit->getUniqueID() == uniqueID)
             {
-                return pUnit2;
+                return pLoadedUnit;
+            }
+            else
+            {
+                Unit* pUnit2 = getUnit(pLoadedUnit, uniqueID);
+                if (pUnit2 != nullptr)
+                {
+                    return pUnit2;
+                }
             }
         }
     }

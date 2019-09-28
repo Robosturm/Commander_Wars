@@ -408,66 +408,69 @@ void GameRules::createFogVision()
     }
     // get player for which we should create the vision
     Player* pPlayer = pMap->getCurrentViewPlayer();
-    for (qint32 x = 0; x < width; x++)
+    if (pPlayer != nullptr)
     {
-        for (qint32 y = 0; y < heigth; y++)
+        for (qint32 x = 0; x < width; x++)
         {
-            bool visible = pPlayer->getFieldVisible(x, y);
-            Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
-            Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
-            switch (m_FogMode)
+            for (qint32 y = 0; y < heigth; y++)
             {
-                case GameEnums::Fog_Off:
+                bool visible = pPlayer->getFieldVisible(x, y);
+                Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+                switch (m_FogMode)
                 {
-                    if (m_FogSprites[x][y].get() != nullptr)
+                    case GameEnums::Fog_Off:
                     {
-                        pMap->removeChild(m_FogSprites[x][y]);
-                        m_FogSprites[x][y] = nullptr;
+                        if (m_FogSprites[x][y].get() != nullptr)
+                        {
+                            pMap->removeChild(m_FogSprites[x][y]);
+                            m_FogSprites[x][y] = nullptr;
+                        }
+                        if (pUnit != nullptr)
+                        {
+                            showHideStealthUnit(pPlayer, pUnit);
+                        }
+                        if (pBuilding != nullptr)
+                        {
+                            pBuilding->updatePlayerColor(true);
+                        }
+                        break;
                     }
-                    if (pUnit != nullptr)
+                    case GameEnums::Fog_OfWar:
                     {
-                        showHideStealthUnit(pPlayer, pUnit);
-                    }
-                    if (pBuilding != nullptr)
-                    {
-                        pBuilding->updatePlayerColor(true);
-                    }
-                    break;
-                }
-                case GameEnums::Fog_OfWar:
-                {
-                    if (pUnit != nullptr)
-                    {
-                        showHideStealthUnit(pPlayer, pUnit);
+                        if (pUnit != nullptr)
+                        {
+                            showHideStealthUnit(pPlayer, pUnit);
+                            if (!visible)
+                            {
+                                pUnit->setUnitVisible(false);
+                            }
+                        }
+                        if (pBuilding != nullptr)
+                        {
+                            pBuilding->updatePlayerColor(visible);
+                        }
                         if (!visible)
                         {
-                            pUnit->setUnitVisible(false);
+                            if (m_FogSprites[x][y].get() == nullptr)
+                            {
+                                // create fog of war sprite
+                                oxygine::spColorRectSprite sprite = new oxygine::ColorRectSprite();
+                                sprite->setSize(GameMap::Imagesize, GameMap::Imagesize);
+                                sprite->setColor(70, 70, 70, 100);
+                                sprite->setPosition(GameMap::Imagesize * x, y * GameMap::Imagesize);
+                                sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
+                                pMap->addChild(sprite);
+                                m_FogSprites[x][y] = sprite;
+                            }
                         }
-                    }
-                    if (pBuilding != nullptr)
-                    {
-                        pBuilding->updatePlayerColor(visible);
-                    }
-                    if (!visible)
-                    {
-                        if (m_FogSprites[x][y].get() == nullptr)
+                        else if (m_FogSprites[x][y].get() != nullptr)
                         {
-                            // create fog of war sprite
-                            oxygine::spColorRectSprite sprite = new oxygine::ColorRectSprite();
-                            sprite->setSize(GameMap::Imagesize, GameMap::Imagesize);
-                            sprite->setColor(70, 70, 70, 100);
-                            sprite->setPosition(GameMap::Imagesize * x, y * GameMap::Imagesize);
-                            sprite->setPriority(static_cast<qint16>(Mainapp::ZOrder::FogFields));
-                            pMap->addChild(sprite);
-                            m_FogSprites[x][y] = sprite;
+                            pMap->removeChild(m_FogSprites[x][y]);
+                            m_FogSprites[x][y] = nullptr;
                         }
+                        break;
                     }
-                    else if (m_FogSprites[x][y].get() != nullptr)
-                    {
-                        pMap->removeChild(m_FogSprites[x][y]);
-                        m_FogSprites[x][y] = nullptr;
-                    }
-                    break;
                 }
             }
         }
