@@ -136,11 +136,14 @@ void Unit::applyMod()
 void Unit::setOwner(Player* pOwner)
 {
     // change ownership
-    m_pOwner = pOwner;
-    if (m_pOwner != nullptr)
+    if (m_UnitRank <= GameEnums::UnitRank_CO0)
     {
-        // update sprites :)
-        updateSprites();
+        m_pOwner = pOwner;
+        if (m_pOwner != nullptr)
+        {
+            // update sprites :)
+            updateSprites();
+        }
     }
 }
 
@@ -592,7 +595,8 @@ bool Unit::canBeRepaired(QPoint position)
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         Player* pPlayer = pMap->getPlayer(i);
-        if (m_pOwner->isEnemy(pPlayer))
+        if (pPlayer != nullptr &&
+            m_pOwner->isEnemy(pPlayer))
         {
             CO* pCO = pPlayer->getCO(0);
             if (pCO != nullptr)
@@ -785,7 +789,8 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         Player* pPlayer = pMap->getPlayer(i);
-        if (m_pOwner->isEnemy(pPlayer))
+        if (pPlayer != nullptr &&
+            m_pOwner->isEnemy(pPlayer))
         {
             pCO0 = pPlayer->getCO(0);
             if (pCO0 != nullptr)
@@ -929,7 +934,8 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         Player* pPlayer = pMap->getPlayer(i);
-        if (m_pOwner->isEnemy(pPlayer))
+        if (pPlayer != nullptr &&
+            m_pOwner->isEnemy(pPlayer))
         {
             pCO = pPlayer->getCO(0);
             if (pCO != nullptr)
@@ -1181,8 +1187,9 @@ qint32 Unit::getMovementCosts(qint32 x, qint32 y)
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         Player* pPlayer = pMap->getPlayer(i);
-        if (pPlayer->isEnemy(m_pOwner) ||
-            m_pOwner == pPlayer)
+        if (pPlayer != nullptr &&
+            (pPlayer->isEnemy(m_pOwner) ||
+            m_pOwner == pPlayer))
         {
             costs += pPlayer->getMovementcostModifier(this, QPoint(x, y));
         }
@@ -1491,10 +1498,13 @@ void Unit::updateIcons(Player* pPlayer)
 bool Unit::getTransportHidden(Player* pPlayer)
 {
     GameMap* pMap = GameMap::getInstance();
-    if ((pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off) &&
-        (pPlayer->isEnemy(m_pOwner)) && getLoadingPlace() > 0)
+    if (pPlayer != nullptr)
     {
-        return true;
+        if ((pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off) &&
+            (pPlayer->isEnemy(m_pOwner)) && getLoadingPlace() > 0)
+        {
+            return true;
+        }
     }
     return false;
 }
@@ -1744,8 +1754,9 @@ void Unit::moveUnitAction(GameAction* pAction)
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         Player* pPlayer = pMap->getPlayer(i);
-        if (pPlayer->isEnemy(m_pOwner) ||
-            m_pOwner == pPlayer)
+        if (pPlayer != nullptr &&
+            (pPlayer->isEnemy(m_pOwner) ||
+            m_pOwner == pPlayer))
         {
             CO* pCO = pPlayer->getCO(0);
             if (pCO != nullptr)
@@ -2140,7 +2151,8 @@ void Unit::setHidden(bool Hidden)
 
 bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 testX, qint32 testY)
 {
-    if (pPlayer->checkAlliance(m_pOwner) == GameEnums::Alliance_Enemy)
+    if (pPlayer != nullptr &&
+        pPlayer->checkAlliance(m_pOwner) == GameEnums::Alliance_Enemy)
     {
         GameMap* pMap = GameMap::getInstance();
         qint32 x = getX();

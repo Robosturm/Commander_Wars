@@ -4271,6 +4271,19 @@
     </message>
 </context>
 <context>
+    <name>action_place_watermine</name>
+    <message>
+        <location filename="../resources/scripts/wiki/action_place_watermine.js" line="8"/>
+        <source>Places a stealthed Watermine at a given Position. The Mine automatically explodes at the start of a turn if an enemy is in explosion range.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/wiki/action_place_watermine.js" line="18"/>
+        <source>Place Watermine</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>action_ration</name>
     <message>
         <location filename="../resources/scripts/wiki/action_ration.js" line="8"/>
