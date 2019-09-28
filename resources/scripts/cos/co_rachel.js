@@ -120,6 +120,7 @@ var Constructor = function()
                 }
             }
         }
+        fields.remove();
         return animation;
     }
 

@@ -67,19 +67,33 @@ var Constructor = function()
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true);
         powerNameAnimation.queueAnimation(animation2);
 
+        animation2.setEndOfAnimationCall("CO_VON_BOLT", "postAnimationLaserray");
+        CO_VON_BOLT.postAnimationLaserrayTarget = meteorTarget;
+        CO_VON_BOLT.postAnimationLaserrayDamage = damage;
+        CO_VON_BOLT.postAnimationLaserrayRange = range;
+    };
+
+    this.postAnimationLaserrayTarget = null;
+    this.postAnimationLaserrayDamage = 0;
+    this.postAnimationLaserrayRange = 0;
+    this.postAnimationLaserray = function(animation)
+    {
+        var laserTarget = CO_VON_BOLT.postAnimationLaserrayTarget;
+        var damage = CO_VON_BOLT.postAnimationLaserrayDamage;
+        var range = CO_VON_BOLT.postAnimationLaserrayRange;
         var fields = globals.getCircle(0, range);
-        // check all fields we can attack
+        // check all target fields
         for (var i = 0; i < fields.size(); i++)
         {
-            var x = fields.at(i).x + meteorTarget.x;
-            var y = fields.at(i).y + meteorTarget.y;
+            var x = fields.at(i).x + laserTarget.x;
+            var y = fields.at(i).y + laserTarget.y;
             // check with which weapon we can attack and if we could deal damage with this weapon
             if (map.onMap(x, y))
             {
                 var unit = map.getTerrain(x, y).getUnit();
                 if (unit !== null)
                 {
-					unit.setHasMoved(true);
+                    unit.setHasMoved(true);
                     var hp = unit.getHpRounded();
                     if (hp <= damage)
                     {
@@ -93,7 +107,12 @@ var Constructor = function()
                 }
             }
         }
-    }
+        fields.remove();
+        CO_VON_BOLT.postAnimationLaserrayTarget = null;
+        CO_VON_BOLT.postAnimationLaserrayDamage = 0;
+        CO_VON_BOLT.postAnimationLaserrayRange = 0;
+    };
+
 
     this.getCOUnitRange = function(co)
     {

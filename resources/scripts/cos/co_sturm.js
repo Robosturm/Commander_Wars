@@ -73,14 +73,24 @@ var Constructor = function()
         animation2.addSprite2("white_pixel", 0, 0, 4200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true, 1000);
         powerNameAnimation.queueAnimation(animation2);
+        animation.setEndOfAnimationCall("CO_STURM", "postAnimationThrowMeteor");
+        CO_STURM.postAnimationThrowMeteorTarget = meteorTarget;
+        CO_STURM.postAnimationThrowMeteorDamage = damage;
+    };
 
+    this.postAnimationThrowMeteorTarget = null;
+    this.postAnimationThrowMeteorDamage = 0;
+    this.postAnimationThrowMeteor = function(animation)
+    {
+        var meteorTarget = CO_STURM.postAnimationThrowMeteorTarget;
+        var damage = CO_STURM.postAnimationThrowMeteorDamage;
         var fields = globals.getCircle(0, 2);
-        // check all fields we can attack
+        // check all target fields
         for (var i = 0; i < fields.size(); i++)
         {
             var x = fields.at(i).x + meteorTarget.x;
             var y = fields.at(i).y + meteorTarget.y;
-            // check with which weapon we can attack and if we could deal damage with this weapon
+            // check if the target is on the map
             if (map.onMap(x, y))
             {
                 var unit = map.getTerrain(x, y).getUnit();
@@ -99,7 +109,10 @@ var Constructor = function()
                 }
             }
         }
-    }
+        fields.remove();
+        CO_STURM.postAnimationThrowMeteorTarget = null;
+        CO_STURM.postAnimationThrowMeteorDamage = 0;
+    };
 
     this.getCOUnitRange = function(co)
     {

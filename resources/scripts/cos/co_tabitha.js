@@ -66,14 +66,24 @@ var Constructor = function()
         animation2.addSprite2("white_pixel", 0, 0, 4200, map.getMapWidth(), map.getMapHeight());
         animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true, 1000);
         powerNameAnimation.queueAnimation(animation2);
+        animation.setEndOfAnimationCall("CO_TABITHA", "postAnimationThrowMeteor");
+        CO_TABITHA.postAnimationThrowMeteorTarget = meteorTarget;
+        CO_TABITHA.postAnimationThrowMeteorDamage = damage;
+    };
 
+    this.postAnimationThrowMeteorTarget = null;
+    this.postAnimationThrowMeteorDamage = 0;
+    this.postAnimationThrowMeteor = function(animation)
+    {
+        var meteorTarget = CO_TABITHA.postAnimationThrowMeteorTarget;
+        var damage = CO_TABITHA.postAnimationThrowMeteorDamage;
         var fields = globals.getCircle(0, 2);
-        // check all fields we can attack
+        // check all target fields
         for (var i = 0; i < fields.size(); i++)
         {
             var x = fields.at(i).x + meteorTarget.x;
             var y = fields.at(i).y + meteorTarget.y;
-            // check with which weapon we can attack and if we could deal damage with this weapon
+            // check if the target is on the map
             if (map.onMap(x, y))
             {
                 var unit = map.getTerrain(x, y).getUnit();
@@ -92,7 +102,10 @@ var Constructor = function()
                 }
             }
         }
-    }
+        fields.remove();
+        CO_TABITHA.postAnimationThrowMeteorTarget = null;
+        CO_TABITHA.postAnimationThrowMeteorDamage = 0;
+    };
 
     this.getCOUnitRange = function(co)
     {
