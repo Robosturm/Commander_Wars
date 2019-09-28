@@ -1119,14 +1119,14 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
             pMap->getTerrain(curX, curY)->setBuilding(pBuilding);
             if (points.size() < 14)
             {
-                pMap->updateTerrain(x, y);
-                pMap->updateSprites(x, y);
-            }
-            else
-            {
-                pMap->updateSprites();
+                pMap->updateTerrain(points.at(i).x(), points.at(i).y());
+                pMap->updateSprites(points.at(i).x(), points.at(i).y());
             }
         }
+    }
+    if (points.size() >= 14)
+    {
+        pMap->updateSprites();
     }
     pApp->continueThread();
 }

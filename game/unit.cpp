@@ -623,27 +623,30 @@ bool Unit::canBeRepaired(QPoint position)
 bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange)
 {
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
-    if (m_pOwner->getFieldVisible(pDefender->getX(), pDefender->getY()) || ignoreOutOfVisionRange)
+    if (pDefender != nullptr)
     {
-        if (!pDefender->isStealthed(m_pOwner, ignoreOutOfVisionRange))
+        if (m_pOwner->getFieldVisible(pDefender->getX(), pDefender->getY()) || ignoreOutOfVisionRange)
         {
-            if (!pDefender->getHidden() ||
-                (pDefender->getHidden() && pDefender->getUnitType() == getUnitType()))
+            if (!pDefender->isStealthed(m_pOwner, ignoreOutOfVisionRange))
             {
-                if (m_pOwner->isEnemyUnit(pDefender) == true)
+                if (!pDefender->getHidden() ||
+                    (pDefender->getHidden() && pDefender->getUnitType() == getUnitType()))
                 {
-                    if (hasAmmo1() && !weapon1ID.isEmpty())
+                    if (m_pOwner->isEnemyUnit(pDefender) == true)
                     {
-                        if (pWeaponManager->getBaseDamage(weapon1ID, pDefender) > 0)
+                        if (hasAmmo1() && !weapon1ID.isEmpty())
                         {
-                            return true;
+                            if (pWeaponManager->getBaseDamage(weapon1ID, pDefender) > 0)
+                            {
+                                return true;
+                            }
                         }
-                    }
-                    if (hasAmmo2() && !weapon2ID.isEmpty())
-                    {
-                        if (pWeaponManager->getBaseDamage(weapon2ID, pDefender) > 0)
+                        if (hasAmmo2() && !weapon2ID.isEmpty())
                         {
-                            return true;
+                            if (pWeaponManager->getBaseDamage(weapon2ID, pDefender) > 0)
+                            {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -1876,6 +1879,7 @@ void Unit::removeUnit()
     if (m_CORange.get() != nullptr)
     {
         GameMap::getInstance()->removeChild(m_CORange);
+        m_CORange = nullptr;
     }
     m_pTerrain->setUnit(nullptr);    
 }
