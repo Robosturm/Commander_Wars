@@ -35,6 +35,8 @@ Unit::Unit()
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
+    setHeight(GameMap::Imagesize);
+    setWidth(GameMap::Imagesize);
 }
 
 Unit::Unit(QString unitID, Player* pOwner, bool aquireId)
@@ -42,6 +44,8 @@ Unit::Unit(QString unitID, Player* pOwner, bool aquireId)
       m_UnitID(unitID),
       m_pOwner(pOwner)
 {
+    setHeight(GameMap::Imagesize);
+    setWidth(GameMap::Imagesize);
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
@@ -133,8 +137,11 @@ void Unit::setOwner(Player* pOwner)
 {
     // change ownership
     m_pOwner = pOwner;
-    // update sprites :)
-    updateSprites();
+    if (m_pOwner != nullptr)
+    {
+        // update sprites :)
+        updateSprites();
+    }
 }
 
 void Unit::setTerrain(Terrain* pTerrain)

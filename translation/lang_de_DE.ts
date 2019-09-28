@@ -3894,7 +3894,7 @@
 <context>
     <name>Wikipage</name>
     <message>
-        <location filename="../wiki/wikipage.cpp" line="31"/>
+        <location filename="../wiki/wikipage.cpp" line="34"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>

@@ -6,8 +6,11 @@
 
 #include "resource_management/fontmanager.h"
 
+#include "game/player.h"
+
 #include "resource_management/gamemanager.h"
 #include "resource_management/cospritemanager.h"
+#include "resource_management/unitspritemanager.h"
 #include "wiki/wikidatabase.h"
 
 Wikipage::Wikipage()
@@ -91,12 +94,27 @@ void Wikipage::loadImage(QString file, float scale)
     }
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = new oxygine::Sprite();
+         oxygine::spSprite pSprite = new oxygine::Sprite();
         pSprite->setResAnim(pAnim);
         pSprite->setScale(scale);
         pSprite->setPosition(m_pPanel->getContentWidth() / 2 - pSprite->getScaledWidth() / 2.0f, y);
         m_pPanel->addItem(pSprite);
         y += pSprite->getScaledHeight() + 10;
+    }
+    else
+    {
+        UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+        if (pUnitSpriteManager->existsUnit(file))
+        {
+            spPlayer pPlayer = new Player();
+            pPlayer->init();
+            spUnit pSprite = new Unit(file, pPlayer.get(), false);
+            pSprite->setOwner(nullptr);
+            pSprite->setScale(scale);
+            pSprite->setPosition(m_pPanel->getContentWidth() / 2 - pSprite->getScaledWidth() / 2.0f, y);
+            m_pPanel->addItem(pSprite);
+            y += pSprite->getScaledHeight() + 10;
+        }
     }
 }
 

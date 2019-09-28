@@ -53,33 +53,43 @@ var Constructor = function()
     };
     this.perform = function(action)
     {
-        var maxCapturePoints = 20;
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
         var animation = Global[unit.getUnitID()].doWalkingAnimation(action);
+        animation.setEndOfAnimationCall("ACTION_CAPTURE", "performPostAnimation");
         // move unit to target position
         unit.moveUnitAction(action);
+        ACTION_CAPTURE.postAnimationUnit = unit;
+        ACTION_CAPTURE.postAnimationBuilding = action.getMovementBuilding();
+        ACTION_CAPTURE.postAnimationTarget = action.getActionTarget();
+    };
+    this.postAnimationUnit = null;
+    this.postAnimationBuilding = null;
+    this.postAnimationTarget = null;
+    this.performPostAnimation = function(postAnimation)
+    {
+        var maxCapturePoints = 20;
         // capture the building
-        var capturePoints = unit.getCapturePoints();
-        var building = action.getMovementBuilding();
-        unit.increaseCapturePoints(action.getActionTarget());
+        var capturePoints = ACTION_CAPTURE.postAnimationUnit.getCapturePoints();
+        var building = ACTION_CAPTURE.postAnimationBuilding;
+        ACTION_CAPTURE.postAnimationUnit.increaseCapturePoints(ACTION_CAPTURE.postAnimationTarget);
         var captured = false;
         // check if the capture points are high enough
-        if (unit.getCapturePoints() >= maxCapturePoints)
+        if (ACTION_CAPTURE.postAnimationUnit.getCapturePoints() >= maxCapturePoints)
         {
             captured = true;
-            unit.setCapturePoints(0);
+            ACTION_CAPTURE.postAnimationUnit.setCapturePoints(0);
         }
-        var targetX = action.getActionTarget().x;
-        var targetY = action.getActionTarget().y;
+        var targetX = ACTION_CAPTURE.postAnimationTarget.x;
+        var targetY = ACTION_CAPTURE.postAnimationTarget.y;
         var viewPlayer = map.getCurrentViewPlayer();
-        if (viewPlayer === unit.getOwner() || viewPlayer.getFieldVisible(targetX, targetY))
+        if (viewPlayer === ACTION_CAPTURE.postAnimationUnit.getOwner() || viewPlayer.getFieldVisible(targetX, targetY))
         {
             var x = targetX * map.getImageSize() - 10;
             var y = targetY * map.getImageSize() - 30;
-            var captureAnimation = GameAnimationFactory.createGameAnimationCapture(x , y, capturePoints, unit.getCapturePoints(), maxCapturePoints);
+            var captureAnimation = GameAnimationFactory.createGameAnimationCapture(x , y, capturePoints, ACTION_CAPTURE.postAnimationUnit.getCapturePoints(), maxCapturePoints);
             captureAnimation.addBackgroundSprite("capture_background");
-            var armyName = unit.getOwner().getArmy().toLowerCase();
+            var armyName = ACTION_CAPTURE.postAnimationUnit.getOwner().getArmy().toLowerCase();
             // bh and bg have the same sprites
             if (armyName === "bg")
             {
@@ -102,17 +112,16 @@ var Constructor = function()
             {
                 color = building.getOwner().getColor();
             }
-            Global[building.getBuildingID()].addCaptureAnimationBuilding(captureAnimation, building, color, unit.getOwner().getColor());
-            captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , unit.getOwner().getColor(), true);
-            captureAnimation.addSoldierSprite("soldier+" + armyName , unit.getOwner().getColor(), false);
-            animation.queueAnimation(captureAnimation);
+            Global[building.getBuildingID()].addCaptureAnimationBuilding(captureAnimation, building, color, ACTION_CAPTURE.postAnimationUnit.getOwner().getColor());
+            captureAnimation.addSoldierSprite("soldier+" + armyName + "+mask" , ACTION_CAPTURE.postAnimationUnit.getOwner().getColor(), true);
+            captureAnimation.addSoldierSprite("soldier+" + armyName , ACTION_CAPTURE.postAnimationUnit.getOwner().getColor(), false);
         }
 
         if (captured)
         {
             if (building.getBuildingID() === "HQ")
             {
-                map.getGameRecorder().addSpecialEvent(unit.getOwner().getPlayerID(),
+                map.getGameRecorder().addSpecialEvent(ACTION_CAPTURE.postAnimationUnit.getOwner().getPlayerID(),
                                                       GameEnums.GameRecord_SpecialEvents_HQCaptured);
                 if (building.getOwner() !== null)
                 {
@@ -120,10 +129,13 @@ var Constructor = function()
                                                           GameEnums.GameRecord_SpecialEvents_HQLost);
                 }
             }
-            building.setUnitOwner(unit);
+            building.setUnitOwner(ACTION_CAPTURE.postAnimationUnit);
         }
         // disable unit commandments for this turn
-        unit.setHasMoved(true);
+        ACTION_CAPTURE.postAnimationUnit.setHasMoved(true);
+        ACTION_CAPTURE.postAnimationUnit = null;
+        ACTION_CAPTURE.postAnimationBuilding = null;
+        ACTION_CAPTURE.postAnimationTarget = null;
     };
     this.isFinalStep = function(action)
     {
