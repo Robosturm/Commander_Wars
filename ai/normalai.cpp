@@ -1761,11 +1761,16 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
                     {
                         factor /= 2.0f;
                     }
-                    if (attackCount[i3].y() == 0.0f)
+                    if (attackCount[i3].y() == 0.0f &&
+                        attackCount[i3].x() == 0.0f &&
+                        attackCount[i3].z() == 0.0f &&
+                        attackCount[i3].w() == 0.0f)
                     {
                         notAttackableCount += notAttackableValue;
                     }
-                    else if (attackCount[i3].x() == 0.0f)
+                    else if (attackCount[i3].y() == 0.0f &&
+                             attackCount[i3].z() == 0.0f &&
+                             attackCount[i3].w() == 0.0f)
                     {
                         notAttackableCount  += notAttackableValue / 2.0f;
                     }
@@ -1797,11 +1802,16 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
                     {
                         factor /= 2.0f;
                     }
-                    if (attackCount[i3].y() == 0.0f)
+                    if (attackCount[i3].y() == 0.0f &&
+                        attackCount[i3].x() == 0.0f &&
+                        attackCount[i3].z() == 0.0f &&
+                        attackCount[i3].w() == 0.0f)
                     {
                         notAttackableCount += notAttackableValue / 2.0f;
                     }
-                    else if (attackCount[i3].x() == 0.0f)
+                    else if (attackCount[i3].x() == 0.0f &&
+                             attackCount[i3].z() == 0.0f &&
+                             attackCount[i3].w() == 0.0f)
                     {
                         notAttackableCount  += notAttackableValue / 4.0f;
                     }

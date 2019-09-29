@@ -650,7 +650,7 @@ void HumanPlayerInput::createMarkedMoveFields()
         {
             if (m_pUnitPathFindingSystem->getTargetCosts(points[i].x(), points[i].y()) > movementpoints)
             {
-                createMarkedField(points[i], QColor(37, 151, 200, 255), Terrain::DrawPriority::MarkedFieldLow);
+                createMarkedField(points[i], QColor(30, 100, 150, 255), Terrain::DrawPriority::MarkedFieldLow);
             }
             else
             {
