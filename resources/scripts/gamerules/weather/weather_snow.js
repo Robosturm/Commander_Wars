@@ -24,7 +24,9 @@ var Constructor = function()
     this.getMovementCostModifier = function(weather, unit, terrain)
     {
         var id = terrain.getID();
-        if (id !== "STREET" && id !== "DESERT_PATH")
+        if (id !== "STREET" &&
+            id !== "DESERT_PATH" &&
+            terrain.getBuilding() === null)
         {
             return 1;
         }

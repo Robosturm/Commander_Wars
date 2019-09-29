@@ -77,24 +77,47 @@ var Constructor = function()
         var powerNameAnimation = co.createPowerScreen(powerMode);
         dialogAnimation.queueAnimation(powerNameAnimation);
 
-        var ret = CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_HpLowMoney, powerNameAnimation);
-        ret = CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_HpHighMoney, ret);
-        CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_Money, ret);
+        var ret = CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_HpLowMoney, powerNameAnimation, 0);
+        ret = CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_HpHighMoney, ret, 1);
+        CO_RACHEL.throwRocket(co, 3, GameEnums.RocketTarget_Money, ret, 2);
         audio.clearPlayList();
         CO_RACHEL.loadCOMusic(co);
         audio.playRandom();
     };
 
-    this.throwRocket = function(co, damage, targetType, animation2)
+    this.throwRocket = function(co, damage, targetType, animation2, index)
     {
         // let a rocket fall :D
         var rocketTarget = co.getOwner().getRockettarget(2, damage, 1.2, targetType);
         
         var animation = GameAnimationFactory.createAnimation(rocketTarget.x - 2, rocketTarget.y - 2 - 1);
         animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 1.5, 0);
+        animation.setSound("missle_explosion.wav", 1);
+        animation.setEndOfAnimationCall("CO_RACHEL", "postAnimationThrowRocket" + index.toString());
         animation2.queueAnimation(animation);
-        audio.playSound("explosion+land.wav");
+        CO_RACHEL.postAnimationThrowRocketTarget[index] = rocketTarget;
+        CO_RACHEL.postAnimationThrowRocketDamage[index] = damage;
+        return animation;
+    };
+    this.postAnimationThrowRocketTarget = [null, null, null];
+    this.postAnimationThrowRocketDamage = [0, 0, 0];
 
+    this.postAnimationThrowRocket0 = function( animation)
+    {
+        CO_RACHEL.postAnimationThrowRocket(0);
+    };
+    this.postAnimationThrowRocket1 = function( animation)
+    {
+        CO_RACHEL.postAnimationThrowRocket(1);
+    };
+    this.postAnimationThrowRocket2 = function( animation)
+    {
+        CO_RACHEL.postAnimationThrowRocket(2);
+    };
+    this.postAnimationThrowRocket = function(index)
+    {
+        var rocketTarget = CO_RACHEL.postAnimationThrowRocketTarget[index];
+        var damage = CO_RACHEL.postAnimationThrowRocketDamage[index];
         var fields = globals.getCircle(0, 2);
         // check all fields we can attack
         for (var i = 0; i < fields.size(); i++)
@@ -121,8 +144,9 @@ var Constructor = function()
             }
         }
         fields.remove();
-        return animation;
-    }
+        CO_RACHEL.postAnimationThrowRocketTarget[index] = null;
+        CO_RACHEL.postAnimationThrowRocketDamage[index] = 0;
+    };
 
     this.getCOUnitRange = function(co)
     {

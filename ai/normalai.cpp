@@ -42,7 +42,7 @@ void NormalAi::process()
     else
     {
         pUnits = m_pPlayer->getUnits();
-        pUnits->sortShortestMovementRange();
+        pUnits->sortShortestMovementRange(true);
         pEnemyUnits = m_pPlayer->getEnemyUnits();
         pEnemyUnits->randomize();
         pEnemyBuildings = m_pPlayer->getEnemyBuildings();
@@ -1020,8 +1020,9 @@ float NormalAi::calculateCaptureBonus(Unit* pUnit, float newLife)
 {
     float ret = 1.0f;
     qint32 capturePoints = pUnit->getCapturePoints();
+    Building* pBuilding = pUnit->getTerrain()->getBuilding();
     if (capturePoints > 0)
-    {
+    {        
         qint32 restCapture = 20 - capturePoints;
         qint32 currentHp = pUnit->getHpRounded();
         qint32 newHp = Mainapp::roundUp(newLife);
@@ -1061,6 +1062,13 @@ float NormalAi::calculateCaptureBonus(Unit* pUnit, float newLife)
                 ret = ret / 2.0f + 3.0f;
             }
         }
+    }
+    if (pBuilding != nullptr &&
+        pBuilding->getOwner() == m_pPlayer &&
+        pBuilding->getBuildingID() == "HQ" &&
+        pUnit->getActionList().contains(ACTION_CAPTURE))
+    {
+        ret *= 50;
     }
     return ret;
 }
@@ -1810,13 +1818,27 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
     float damage = damageCount / attacksCount;
     if (damage > 0)
     {
+        float value = (attacksCount) / static_cast<float>(pEnemyUnits->size());
         if (attacksCount > 5)
         {
-            damage *= (attacksCount + 5) / (pEnemyUnits->size());
+            damage *= (attacksCount + 5) / static_cast<float>(pEnemyUnits->size());
         }
         else
         {
-            damage *= (attacksCount) / (pEnemyUnits->size());
+            damage *= value;
+        }
+        // reduce effectiveness of units who can't attack a lot of units
+        if (value < 0.2f)
+        {
+            damage /= 4.0f;
+        }
+        else if (value < 0.35f)
+        {
+            damage /= 3.0f;
+        }
+        else if (value < 0.5f)
+        {
+            damage /= 2.0f;
         }
     }
     return std::tuple<float, qint32>(damage, notAttackableCount);

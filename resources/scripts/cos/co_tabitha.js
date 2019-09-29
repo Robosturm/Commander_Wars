@@ -53,21 +53,14 @@ var Constructor = function()
     this.throwMeteor = function(co, damage, powerNameAnimation)
     {
         // let a meteor fall :D
-        var meteorTarget = co.getOwner().getRockettarget(2, damage);
+        var rocketTarget = co.getOwner().getRockettarget(2, damage);
         // create cool meteor animation :)
-        var animation = GameAnimationFactory.createAnimation(meteorTarget.x + 2, meteorTarget.y - 4);
-        animation.addSprite("meteor", 0, 0, 2500, 3.0);
-        animation.addTweenPosition(Qt.point((meteorTarget.x - 2) * map.getImageSize(), (meteorTarget.y - 2) * map.getImageSize()), 1000);
-        animation.addTweenScale(120 / 192, 1000);
-        animation.addTweenColor(0, "#FFFFFFFF", "#00FFFFFF", 1000, false, 1200);
+        var animation = GameAnimationFactory.createAnimation(rocketTarget.x - 2, rocketTarget.y - 2 - 1);
+        animation.addSprite("explosion+silo", -map.getImageSize() / 2, 0, 0, 1.5, 0);
+        animation.setSound("missle_explosion.wav", 1);
+        animation.setEndOfAnimationCall("CO_TABITHA", "postAnimationThrowMeteor");        
         powerNameAnimation.queueAnimation(animation);
-
-        var animation2 = GameAnimationFactory.createAnimation(0, 0);
-        animation2.addSprite2("white_pixel", 0, 0, 4200, map.getMapWidth(), map.getMapHeight());
-        animation2.addTweenColor(0, "#00FFFFFF", "#FFFFFFFF", 3000, true, 1000);
-        powerNameAnimation.queueAnimation(animation2);
-        animation.setEndOfAnimationCall("CO_TABITHA", "postAnimationThrowMeteor");
-        CO_TABITHA.postAnimationThrowMeteorTarget = meteorTarget;
+        CO_TABITHA.postAnimationThrowMeteorTarget = rocketTarget;
         CO_TABITHA.postAnimationThrowMeteorDamage = damage;
     };
 

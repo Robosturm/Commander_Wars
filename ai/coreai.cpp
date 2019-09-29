@@ -144,87 +144,54 @@ bool CoreAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
     data.append(pEnemyUnits->size());
     data.append(m_pPlayer->getFunds());
     data.append(static_cast<float>(turnMode));
-    CO* pCO = m_pPlayer->getCO(0);
-    if (pCO != nullptr)
+
+    for (quint8 i = 0; i <= 1; i++)
     {
-        data[0] = COSpriteManager::getInstance()->getCOIndex(pCO->getCoID());
-        if (pCO->canUseSuperpower())
+        CO* pCO = m_pPlayer->getCO(i);
+        if (pCO != nullptr)
         {
-            data[1] = 2;
-        }
-        else if (pCO->canUsePower())
-        {
-            data[1] = 1;
-        }
-        else
-        {
-            data[1] = 0;
-        }
-        data[2] = pCO->getPowerFilled() - pCO->getPowerStars();
-        float result = m_COPowerTree.getDecision(data);
-        if (result == 1.0f)
-        {
-            GameAction* pAction = new GameAction(ACTION_ACTIVATE_POWER_CO_0);
-            if (pAction->canBePerformed())
+            data[0] = COSpriteManager::getInstance()->getCOIndex(pCO->getCoID());
+            if (pCO->canUseSuperpower())
             {
-                emit performAction(pAction);
-                return true;
+                data[1] = 2;
             }
-        }
-        else if (result == 2.0f)
-        {
-            GameAction* pAction = new GameAction(ACTION_ACTIVATE_SUPERPOWER_CO_0);
-            if (pAction->canBePerformed())
+            else if (pCO->canUsePower())
             {
-                pAction->setActionID(ACTION_ACTIVATE_TAGPOWER);
+                data[1] = 1;
+            }
+            else
+            {
+                data[1] = 0;
+            }
+            data[2] = pCO->getPowerFilled() - pCO->getPowerStars();
+            float result = m_COPowerTree.getDecision(data);
+            if (result == 1.0f)
+            {
+                GameAction* pAction = new GameAction(ACTION_ACTIVATE_POWER_CO_0);
                 if (pAction->canBePerformed())
                 {
                     emit performAction(pAction);
                     return true;
                 }
-                else
+            }
+            else if (result == 2.0f)
+            {
+                GameAction* pAction = new GameAction(ACTION_ACTIVATE_SUPERPOWER_CO_0);
+                if (pAction->canBePerformed())
                 {
-                    pAction->setActionID(ACTION_ACTIVATE_SUPERPOWER_CO_0);
+                    pAction->setActionID(ACTION_ACTIVATE_TAGPOWER);
+                    if (pAction->canBePerformed())
+                    {
+                        emit performAction(pAction);
+                        return true;
+                    }
+                    else
+                    {
+                        pAction->setActionID(ACTION_ACTIVATE_SUPERPOWER_CO_0);
+                    }
+                    emit performAction(pAction);
+                    return true;
                 }
-                emit performAction(pAction);
-                return true;
-            }
-        }
-    }
-    pCO = m_pPlayer->getCO(1);
-    if (pCO != nullptr)
-    {
-        data[0] = COSpriteManager::getInstance()->getCOIndex(pCO->getCoID());
-        if (pCO->canUseSuperpower())
-        {
-            data[1] = 2;
-        }
-        else if (pCO->canUsePower())
-        {
-            data[1] = 1;
-        }
-        else
-        {
-            data[1] = 0;
-        }
-        data[2] = pCO->getPowerFilled() - pCO->getPowerStars();
-        float result = m_COPowerTree.getDecision(data);
-        if (result == 1.0f && data[2] < 0.5f)
-        {
-            GameAction* pAction = new GameAction(ACTION_ACTIVATE_POWER_CO_1);
-            if (pAction->canBePerformed())
-            {
-                emit performAction(pAction);
-                return true;
-            }
-        }
-        else if (result == 2.0f)
-        {
-            GameAction* pAction = new GameAction(ACTION_ACTIVATE_SUPERPOWER_CO_1);
-            if (pAction->canBePerformed())
-            {
-                emit performAction(pAction);
-                return true;
             }
         }
     }

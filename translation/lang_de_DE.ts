@@ -1427,52 +1427,52 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="590"/>
+        <location filename="../menue/gamemenue.cpp" line="594"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="590"/>
+        <location filename="../menue/gamemenue.cpp" line="594"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="590"/>
+        <location filename="../menue/gamemenue.cpp" line="594"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="590"/>
+        <location filename="../menue/gamemenue.cpp" line="594"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="590"/>
+        <location filename="../menue/gamemenue.cpp" line="594"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="590"/>
+        <location filename="../menue/gamemenue.cpp" line="594"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="604"/>
+        <location filename="../menue/gamemenue.cpp" line="610"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="612"/>
+        <location filename="../menue/gamemenue.cpp" line="618"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="885"/>
+        <location filename="../menue/gamemenue.cpp" line="892"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="900"/>
+        <location filename="../menue/gamemenue.cpp" line="907"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10171,102 +10171,102 @@
 <context>
     <name>co_rachel</name>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="187"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="211"/>
         <source>Brings a breath of fresh air to her troops. Strives to follow in the footsteps of her older sister, Nell. Led the Allied Nations during the Omega war. Rocket Girl</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="191"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="215"/>
         <source>Hard Work</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="195"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="219"/>
         <source>Excuses</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="199"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="223"/>
         <source>Her troops are quite hardworking, and they increase repairs by one on properties.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="203"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="227"/>
         <source>Has a chance to strike with more damage than expected. Lucky!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="207"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="231"/>
         <source>Lucky Lass</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="211"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="235"/>
         <source>Launches three missiles from Orange Star HQ in Omega Land.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="239"/>
         <source>Covering Fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="243"/>
         <source>I will protect this land to the end!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="244"/>
         <source>This time, I&apos;m serious!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="245"/>
         <source>You don&apos;t have a chance!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="222"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="246"/>
         <source>I&apos;m going to send you packing!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="223"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="247"/>
         <source>Don&apos;t pick a fight with me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="248"/>
         <source>Finally, some real competition!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="228"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="252"/>
         <source>Another one down... Who&apos;s next?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="253"/>
         <source>I never give up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="230"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="254"/>
         <source>Don&apos;t take me lightly just because I&apos;m cute!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="258"/>
         <source>You beat me! Hmmm... Not bad!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="235"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="259"/>
         <source>You&apos;ve got to be kidding me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_rachel.js" line="239"/>
+        <location filename="../resources/scripts/cos/co_rachel.js" line="263"/>
         <source>Rachel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11554,92 +11554,92 @@
 <context>
     <name>co_tabitha</name>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="159"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="152"/>
         <source>Belongs to the private army of Dark Matter. Eldest daughter of Caulder. Extremly cruel.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="163"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="156"/>
         <source>Breakfast in bed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="167"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="160"/>
         <source>Stupid weak people</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="171"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="164"/>
         <source>Her co unit is strong weak outside of that she gets no bonuses.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="175"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="168"/>
         <source>A small attack from the great owl that deals 4 HP of damage to all affected units. Also increases the firepower of all units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="179"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="172"/>
         <source>Firestorm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="183"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="176"/>
         <source>A giant attack from the great owl that deals 8 HP of damage to all affected units. Firepower and defense is increased.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="187"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="180"/>
         <source>Apocalypse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="191"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="184"/>
         <source>Input enemy&apos;s coordinates... And now let&apos;s enjoy the show!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="192"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="185"/>
         <source>Isn&apos;t this so much fun?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="193"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="186"/>
         <source>I hope you don&apos;t think i&apos;m picking on you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="194"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="187"/>
         <source>Can you really be this weak? At least try to put up a fight.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="198"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="191"/>
         <source>That was hardly worth the trouble.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="199"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="192"/>
         <source>At least put up a fight!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="200"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="193"/>
         <source>I pity the weak!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="204"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="197"/>
         <source>I&apos;m not stronger?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="205"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="198"/>
         <source>I had no breakfast that&apos;s the problem.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_tabitha.js" line="209"/>
+        <location filename="../resources/scripts/cos/co_tabitha.js" line="202"/>
         <source>Tabitha</source>
         <translation type="unfinished"></translation>
     </message>

@@ -157,7 +157,7 @@ void Unit::addShineTween()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     removeShineTween();
-    m_ShineTween = oxygine::createTween(TweenAddColorAll(oxygine::Color(50, 50, 50, 255)), 500, -1, true);
+    m_ShineTween = oxygine::createTween(TweenAddColorAll(oxygine::Color(50, 50, 50, 0)), 500, -1, true);
     addTween(m_ShineTween);
     pApp->continueThread();
 }
@@ -170,7 +170,7 @@ void Unit::removeShineTween()
         pApp->suspendThread();
         m_ShineTween->remove();
         m_ShineTween = nullptr;
-        oxygine::Color addColor(0, 0, 0, 255);
+        oxygine::Color addColor(0, 0, 0, 0);
         setAddColor(addColor);
         oxygine::spVStyleActor child = static_cast<oxygine::VStyleActor*>(getFirstChild().get());
         while (child)

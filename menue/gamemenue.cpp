@@ -297,8 +297,9 @@ void GameMenue::editFinishedCanceled()
 
 GameAction* GameMenue::doMultiTurnMovement(GameAction* pGameAction)
 {
-    if (pGameAction->getActionID() == CoreAI::ACTION_NEXT_PLAYER ||
-        pGameAction->getActionID() == CoreAI::ACTION_SWAP_COS)
+    if (pGameAction != nullptr &&
+        (pGameAction->getActionID() == CoreAI::ACTION_NEXT_PLAYER ||
+        pGameAction->getActionID() == CoreAI::ACTION_SWAP_COS))
     {
         GameMap* pMap = GameMap::getInstance();
         // check for units that have a multi turn avaible
@@ -361,128 +362,131 @@ void GameMenue::performAction(GameAction* pGameAction)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    m_pStoredAction = nullptr;
-    GameMap* pMap = GameMap::getInstance();
-    pMap->getGameRules()->pauseRoundTime();
-    if (!pGameAction->getIsLocal() &&
-        (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != BaseGameInputIF::AiTypes::ProxyAi))
+    if (pGameAction != nullptr)
     {
-        pGameAction = doMultiTurnMovement(pGameAction);
-    }
-    QVector<QPoint> path = pGameAction->getMovePath();
-    Unit * pMoveUnit = pGameAction->getTargetUnit();
-    if (path.size() > 0 && pMoveUnit != nullptr)
-    {
-        QVector<QPoint> trapPath;
-        qint32 trapPathCost = 0;
-        for (qint32 i = path.size() - 1; i >= 0; i--)
+        m_pStoredAction = nullptr;
+        GameMap* pMap = GameMap::getInstance();
+        pMap->getGameRules()->pauseRoundTime();
+        if (!pGameAction->getIsLocal() &&
+            (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != BaseGameInputIF::AiTypes::ProxyAi))
         {
-            // check the movepath for a trap
-            QPoint point = path[i];
+            pGameAction = doMultiTurnMovement(pGameAction);
+        }
+        QVector<QPoint> path = pGameAction->getMovePath();
+        Unit * pMoveUnit = pGameAction->getTargetUnit();
+        if (path.size() > 0 && pMoveUnit != nullptr)
+        {
+            QVector<QPoint> trapPath;
+            qint32 trapPathCost = 0;
+            for (qint32 i = path.size() - 1; i >= 0; i--)
+            {
+                // check the movepath for a trap
+                QPoint point = path[i];
 
-            Unit* pUnit = pMap->getTerrain(point.x(), point.y())->getUnit();
-            if ((pUnit != nullptr) &&
-                (pUnit->isStealthed(pMap->getCurrentPlayer())))
-            {
-                GameAction* pTrapAction = new GameAction("ACTION_TRAP");
-                pTrapAction->setMovepath(trapPath, trapPathCost);
-                pTrapAction->writeDataInt32(point.x());
-                pTrapAction->writeDataInt32(point.y());
-                pTrapAction->setTarget(pGameAction->getTarget());
-                delete pGameAction;
-                pGameAction = pTrapAction;
-                break;
-            }
-            else
-            {
-                trapPath.push_front(point);
-                if (point.x() != pMoveUnit->getX() ||
-                    point.y() != pMoveUnit->getY())
+                Unit* pUnit = pMap->getTerrain(point.x(), point.y())->getUnit();
+                if ((pUnit != nullptr) &&
+                    (pUnit->isStealthed(pMap->getCurrentPlayer())))
                 {
-                    trapPathCost += pMoveUnit->getMovementCosts(point.x(), point.y());
+                    GameAction* pTrapAction = new GameAction("ACTION_TRAP");
+                    pTrapAction->setMovepath(trapPath, trapPathCost);
+                    pTrapAction->writeDataInt32(point.x());
+                    pTrapAction->writeDataInt32(point.y());
+                    pTrapAction->setTarget(pGameAction->getTarget());
+                    delete pGameAction;
+                    pGameAction = pTrapAction;
+                    break;
+                }
+                else
+                {
+                    trapPath.push_front(point);
+                    if (point.x() != pMoveUnit->getX() ||
+                        point.y() != pMoveUnit->getY())
+                    {
+                        trapPathCost += pMoveUnit->getMovementCosts(point.x(), point.y());
+                    }
                 }
             }
         }
-    }
-    // send action to other players if needed
-    if (!pGameAction->getIsLocal() && m_pNetworkInterface.get() != nullptr &&
-        pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != BaseGameInputIF::AiTypes::ProxyAi)
-    {
-        QByteArray data;
-        QDataStream stream(&data, QIODevice::WriteOnly);
-        stream << pMap->getCurrentPlayer()->getPlayerID();
-        pGameAction->serializeObject(stream);
-        emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Game, true);
-    }
-    // perform action
-    Mainapp::seed(pGameAction->getSeed());
-    Mainapp::setUseSeed(true);
-    if (pMoveUnit != nullptr)
-    {
-        pMoveUnit->setMultiTurnPath(pGameAction->getMultiTurnPath());
-    }
-    pGameAction->perform();
-    // clean up the action
-    delete pGameAction;
-    if (GameAnimationFactory::getAnimationCount() == 0)
-    {
-        GameAnimationFactory::getInstance()->removeAnimation(nullptr);
-    }
-    else
-    {
-        bool skipAnimations = false;
-        switch (Settings::getShowAnimations())
+        // send action to other players if needed
+        if (!pGameAction->getIsLocal() && m_pNetworkInterface.get() != nullptr &&
+            pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != BaseGameInputIF::AiTypes::ProxyAi)
         {
-            case GameEnums::AnimationMode_None:
-            {
-                skipAnimations = true;
-                break;
-            }
-            case GameEnums::AnimationMode_All:
-            {
-                break;
-            }
-            case GameEnums::AnimationMode_Own:
-            {
-                if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != BaseGameInputIF::AiTypes::Human)
-                {
-                    skipAnimations = true;
-                }
-                break;
-            }
-            case GameEnums::AnimationMode_Ally:
-            {
-                Player * pPlayer1 = pMap->getCurrentPlayer();
-                Player * pPlayer2 = pMap->getCurrentViewPlayer();
-                if (pPlayer2->isEnemy(pPlayer1))
-                {
-                    skipAnimations = true;
-                }
-                break;
-            }
-            case GameEnums::AnimationMode_Enemy:
-            {
-                if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
-                {
-                    skipAnimations = true;
-                }
-                break;
-            }
+            QByteArray data;
+            QDataStream stream(&data, QIODevice::WriteOnly);
+            stream << pMap->getCurrentPlayer()->getPlayerID();
+            pGameAction->serializeObject(stream);
+            emit m_pNetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Game, true);
         }
-        if (skipAnimations)
+        // perform action
+        Mainapp::seed(pGameAction->getSeed());
+        Mainapp::setUseSeed(true);
+        if (pMoveUnit != nullptr)
         {
-            while (GameAnimationFactory::getAnimationCount() > 0)
+            pMoveUnit->setMultiTurnPath(pGameAction->getMultiTurnPath());
+        }
+        pGameAction->perform();
+        // clean up the action
+        delete pGameAction;
+        if (GameAnimationFactory::getAnimationCount() == 0)
+        {
+            GameAnimationFactory::getInstance()->removeAnimation(nullptr);
+        }
+        else
+        {
+            bool skipAnimations = false;
+            switch (Settings::getShowAnimations())
             {
-                GameAnimationFactory::finishAllAnimations();
+                case GameEnums::AnimationMode_None:
+                {
+                    skipAnimations = true;
+                    break;
+                }
+                case GameEnums::AnimationMode_All:
+                {
+                    break;
+                }
+                case GameEnums::AnimationMode_Own:
+                {
+                    if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != BaseGameInputIF::AiTypes::Human)
+                    {
+                        skipAnimations = true;
+                    }
+                    break;
+                }
+                case GameEnums::AnimationMode_Ally:
+                {
+                    Player * pPlayer1 = pMap->getCurrentPlayer();
+                    Player * pPlayer2 = pMap->getCurrentViewPlayer();
+                    if (pPlayer2->isEnemy(pPlayer1))
+                    {
+                        skipAnimations = true;
+                    }
+                    break;
+                }
+                case GameEnums::AnimationMode_Enemy:
+                {
+                    if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
+                    {
+                        skipAnimations = true;
+                    }
+                    break;
+                }
+            }
+            if (skipAnimations)
+            {
+                while (GameAnimationFactory::getAnimationCount() > 0)
+                {
+                    GameAnimationFactory::finishAllAnimations();
+                }
             }
         }
-    }
 
-    if (pMap->getCurrentPlayer()->getIsDefeated())
-    {
-        GameAction* pAction = new GameAction();
-        pAction->setActionID(CoreAI::ACTION_NEXT_PLAYER);
-        performAction(pAction);
+        if (pMap->getCurrentPlayer()->getIsDefeated())
+        {
+            GameAction* pAction = new GameAction();
+            pAction->setActionID(CoreAI::ACTION_NEXT_PLAYER);
+            performAction(pAction);
+        }
     }
     pApp->continueThread();
 }
@@ -592,40 +596,43 @@ void GameMenue::showGameInfo()
     GameMap* pMap = GameMap::getInstance();
     qint32 totalBuildings = pMap->getBuildingCount("");
     Player* pViewPlayer = pMap->getCurrentViewPlayer();
-    for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
+    if (pViewPlayer != nullptr)
     {
-        QString funds = QString::number(pMap->getPlayer(i)->getFunds());
-        if (pViewPlayer->getTeam() != pMap->getPlayer(i)->getTeam() &&
-            pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
+        for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
-            funds = "?";
+            QString funds = QString::number(pMap->getPlayer(i)->getFunds());
+            if (pViewPlayer->getTeam() != pMap->getPlayer(i)->getTeam() &&
+                pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
+            {
+                funds = "?";
+            }
+            qint32 buildingCount = pMap->getPlayer(i)->getBuildingCount();
+            data.append({tr("Player ") + QString::number(i + 1),
+                         QString::number(pMap->getGameRecorder()->getBuildedUnits(i)),
+                         QString::number(pMap->getGameRecorder()->getDestroyedUnits(i)),
+                         QString::number(pMap->getPlayer(i)->calcIncome()),
+                         funds,
+                         QString::number(buildingCount)});
+            totalBuildings -= buildingCount;
         }
-        qint32 buildingCount = pMap->getPlayer(i)->getBuildingCount();
-        data.append({tr("Player ") + QString::number(i + 1),
-                     QString::number(pMap->getGameRecorder()->getBuildedUnits(i)),
-                     QString::number(pMap->getGameRecorder()->getDestroyedUnits(i)),
-                     QString::number(pMap->getPlayer(i)->calcIncome()),
-                     funds,
-                     QString::number(buildingCount)});
-        totalBuildings -= buildingCount;
-    }
-    data.append({tr("Neutral"), "", "", "", "", QString::number(totalBuildings)});
+        data.append({tr("Neutral"), "", "", "", "", QString::number(totalBuildings)});
 
-    spGenericBox pGenericBox = new GenericBox();
-    QSize size(Settings::getWidth() - 40, Settings::getHeight() - 80);
-    spPanel pPanel = new Panel(true, size, size);
-    pPanel->setPosition(20, 20);
-    qint32 width = (Settings::getWidth() - 120 - 5 * (header.size() + 1)) / header.size();
-    spTableView pTableView = new TableView(width * header.size() + 5 * (header.size() + 1), data, header, false);
-    pTableView->setPosition(20, 20);
-    pPanel->addItem(pTableView);
-    pPanel->setContentHeigth(pTableView->getHeight() + 40);
-    pGenericBox->addItem(pPanel);
-    addChild(pGenericBox);
-    connect(pGenericBox.get(), &GenericBox::sigFinished, [=]()
-    {
-        m_Focused = true;
-    });
+        spGenericBox pGenericBox = new GenericBox();
+        QSize size(Settings::getWidth() - 40, Settings::getHeight() - 80);
+        spPanel pPanel = new Panel(true, size, size);
+        pPanel->setPosition(20, 20);
+        qint32 width = (Settings::getWidth() - 120 - 5 * (header.size() + 1)) / header.size();
+        spTableView pTableView = new TableView(width * header.size() + 5 * (header.size() + 1), data, header, false);
+        pTableView->setPosition(20, 20);
+        pPanel->addItem(pTableView);
+        pPanel->setContentHeigth(pTableView->getHeight() + 40);
+        pGenericBox->addItem(pPanel);
+        addChild(pGenericBox);
+        connect(pGenericBox.get(), &GenericBox::sigFinished, [=]()
+        {
+            m_Focused = true;
+        });
+    }
     pApp->continueThread();
 }
 

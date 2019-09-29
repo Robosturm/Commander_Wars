@@ -80,7 +80,7 @@ public slots:
     /**
      * @brief sortShortestMovementRange
      */
-    void sortShortestMovementRange();
+    void sortShortestMovementRange(bool infantriesLast);
 private:
     QVector<Unit*> m_Vector;
 };
