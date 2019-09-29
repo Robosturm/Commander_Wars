@@ -170,7 +170,7 @@ bool NormalAi::buildCOUnit(QmlVectorUnit* pUnits)
                     }
                 }
             }
-            if (unitIdx > 0 && bestScore > 5000 && (active > 5 || expensive))
+            if (unitIdx >= 0 && bestScore > 5000 && (active > 5 || expensive))
             {
                 Unit* pUnit = pUnits->at(unitIdx);
                 pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
