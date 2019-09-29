@@ -131,13 +131,15 @@ bool NormalAi::buildCOUnit(QmlVectorUnit* pUnits)
         if (pCO != nullptr &&
             pCO->getCOUnit() == nullptr)
         {
-            bool active = false;
+            qint32 active = 0;
+            bool expensive = false;
             for (qint32 i = 0; i < pUnits->size(); i++)
             {
                 Unit* pUnit = pUnits->at(i);
+
                 if (pUnit->getUnitValue() >= 6000 && pUnit->getUnitRank() < GameEnums::UnitRank_CO0)
                 {
-                    active = true;
+                    active++;
                 }
                 pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
                 if (pAction->canBePerformed())
@@ -154,6 +156,10 @@ bool NormalAi::buildCOUnit(QmlVectorUnit* pUnits)
                                 score += pUnit->getUnitValue() * 1.1;
                             }
                             score += pUnit->getUnitValue();
+                            if (pUnit->getUnitValue() >= 6000)
+                            {
+                                expensive = true;
+                            }
                             score -= 1000 * pUnit->getUnitRank();
                             if (score > bestScore)
                             {
@@ -164,7 +170,7 @@ bool NormalAi::buildCOUnit(QmlVectorUnit* pUnits)
                     }
                 }
             }
-            if (unitIdx > 0 && bestScore > 5000 && active)
+            if (unitIdx > 0 && bestScore > 5000 && (active > 5 || expensive))
             {
                 Unit* pUnit = pUnits->at(unitIdx);
                 pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
@@ -1830,14 +1836,17 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
         // reduce effectiveness of units who can't attack a lot of units
         if (value < 0.2f)
         {
+            notAttackableCount /= 4;
             damage /= 4.0f;
         }
         else if (value < 0.35f)
         {
+            notAttackableCount /= 3;
             damage /= 3.0f;
         }
         else if (value < 0.5f)
         {
+            notAttackableCount /= 2;
             damage /= 2.0f;
         }
     }
