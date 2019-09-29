@@ -12,7 +12,7 @@
 #include "ai/targetedunitpathfindingsystem.h"
 #include "resource_management/weaponmanager.h"
 
-const float NormalAi::notAttackableDamage = 45.0f;
+const float NormalAi::notAttackableDamage = 25.0f;
 const float NormalAi::midDamage = 55.0f;
 const float NormalAi::highDamage = 65.0f;
 const float NormalAi::directIndirectRatio = 1.75f;
@@ -770,8 +770,7 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
                 pAction->setMovepath(path, turnPfs.getCosts(path));
             }
             // when we don't move try to attack if possible
-            if (pAction->getMovePath()[0] == QPoint(pUnit->getX(), pUnit->getY()) &&
-                (pUnit->getHp() > 3.5f))
+            if ((pUnit->getHp() > 3.5f))
             {
                 pAction->setActionID(ACTION_FIRE);
                 QVector<QVector3D> ret;
@@ -1397,15 +1396,18 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
             float dmg1 = 0.0f;
             float hpValue = pUnit->getHpRounded() / 10.0f;
             Unit* pEnemyUnit = pEnemyUnits->at(i2);
+            // get weapon 1 damage
             if (!pUnit->getWeapon1ID().isEmpty())
             {
                 dmg1 = pWeaponManager->getBaseDamage(pUnit->getWeapon1ID(), pEnemyUnit) * hpValue;
             }
+            // get weapon 2 damage
             float dmg2 = 0.0f;
             if (!pUnit->getWeapon2ID().isEmpty())
             {
                 dmg2 = pWeaponManager->getBaseDamage(pUnit->getWeapon2ID(), pEnemyUnit) * hpValue;
             }
+
             if ((dmg1 > notAttackableDamage || dmg2 > notAttackableDamage) &&
                 pEnemyUnit->getMovementpoints(QPoint(pEnemyUnit->getX(), pEnemyUnit->getY())) - pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY())) < 2)
             {
@@ -1834,20 +1836,23 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
             damage *= value;
         }
         // reduce effectiveness of units who can't attack a lot of units
-        if (value < 0.2f)
+        if (dummy.getMinRange() > 1)
         {
-            notAttackableCount /= 4;
-            damage /= 4.0f;
-        }
-        else if (value < 0.35f)
-        {
-            notAttackableCount /= 3;
-            damage /= 3.0f;
-        }
-        else if (value < 0.5f)
-        {
-            notAttackableCount /= 2;
-            damage /= 2.0f;
+            if (value < 0.2f)
+            {
+                notAttackableCount /= 4;
+                damage /= 4.0f;
+            }
+            else if (value < 0.35f)
+            {
+                notAttackableCount /= 3;
+                damage /= 3.0f;
+            }
+            else if (value < 0.5f)
+            {
+                notAttackableCount /= 2;
+                damage /= 2.0f;
+            }
         }
     }
     return std::tuple<float, qint32>(damage, notAttackableCount);
