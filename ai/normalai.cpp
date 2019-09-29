@@ -1020,8 +1020,9 @@ float NormalAi::calculateCaptureBonus(Unit* pUnit, float newLife)
 {
     float ret = 1.0f;
     qint32 capturePoints = pUnit->getCapturePoints();
+    Building* pBuilding = pUnit->getTerrain()->getBuilding();
     if (capturePoints > 0)
-    {
+    {        
         qint32 restCapture = 20 - capturePoints;
         qint32 currentHp = pUnit->getHpRounded();
         qint32 newHp = Mainapp::roundUp(newLife);
@@ -1061,6 +1062,13 @@ float NormalAi::calculateCaptureBonus(Unit* pUnit, float newLife)
                 ret = ret / 2.0f + 3.0f;
             }
         }
+    }
+    if (pBuilding != nullptr &&
+        pBuilding->getOwner() == m_pPlayer &&
+        pBuilding->getBuildingID() == "HQ" &&
+        pUnit->getActionList().contains(ACTION_CAPTURE))
+    {
+        ret *= 50;
     }
     return ret;
 }
