@@ -192,6 +192,7 @@ bool UnitPathFindingSystem::isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qin
     if ((pNodeUnit == nullptr || // empty field
         (m_pUnit->getIgnoreUnitCollision() && pNodeUnit != nullptr && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit)) || // oozium move
         (pNodeUnit == m_pUnit)) && // current field
+        (getCosts(x, y) > 0) &&
         (movepoints < 0 || costs <= movepoints)) // inside given cost limits
     {
         return true;

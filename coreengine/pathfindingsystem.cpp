@@ -233,19 +233,22 @@ qint32 PathFindingSystem::getNodeIndex(qint32 x, qint32 y)
 QVector<QPoint> PathFindingSystem::getPath(qint32 x, qint32 y)
 {
     QVector<QPoint> points;
-    for (qint32 i = 0; i < m_ClosedList.size(); i++)
+    if (getCosts(x, y) > 0)
     {
-        if ((m_ClosedList[i]->x == x) && (m_ClosedList[i]->y == y))
+        for (qint32 i = 0; i < m_ClosedList.size(); i++)
         {
-            points.append(QPoint(m_ClosedList[i]->x, m_ClosedList[i]->y));
-            Node* pNode = m_ClosedList[i];
-            while (pNode->previousNodes.size() > 0)
+            if ((m_ClosedList[i]->x == x) && (m_ClosedList[i]->y == y))
             {
-                // use a random node?
-                pNode = pNode->previousNodes[0];
-                points.append(QPoint(pNode->x, pNode->y));
+                points.append(QPoint(m_ClosedList[i]->x, m_ClosedList[i]->y));
+                Node* pNode = m_ClosedList[i];
+                while (pNode->previousNodes.size() > 0)
+                {
+                    // use a random node?
+                    pNode = pNode->previousNodes[0];
+                    points.append(QPoint(pNode->x, pNode->y));
+                }
+                return points;
             }
-            return points;
         }
     }
     return points;
@@ -253,11 +256,14 @@ QVector<QPoint> PathFindingSystem::getPath(qint32 x, qint32 y)
 
 qint32 PathFindingSystem::getTargetCosts(qint32 x, qint32 y)
 {
-    for (qint32 i = 0; i < m_ClosedList.size(); i++)
+    if (getCosts(x, y) > 0)
     {
-        if ((m_ClosedList[i]->x == x) && (m_ClosedList[i]->y == y))
+        for (qint32 i = 0; i < m_ClosedList.size(); i++)
         {
-            return m_ClosedList[i]->currentCost;
+            if ((m_ClosedList[i]->x == x) && (m_ClosedList[i]->y == y))
+            {
+                return m_ClosedList[i]->currentCost;
+            }
         }
     }
     return -1;
@@ -265,11 +271,14 @@ qint32 PathFindingSystem::getTargetCosts(qint32 x, qint32 y)
 
 bool PathFindingSystem::isReachable(qint32 x, qint32 y)
 {
-    for (qint32 i = 0; i < m_ClosedList.size(); i++)
+    if (getCosts(x, y) > 0)
     {
-        if ((m_ClosedList[i]->x == x) && (m_ClosedList[i]->y == y))
+        for (qint32 i = 0; i < m_ClosedList.size(); i++)
         {
-            return true;
+            if ((m_ClosedList[i]->x == x) && (m_ClosedList[i]->y == y))
+            {
+                return true;
+            }
         }
     }
     return false;

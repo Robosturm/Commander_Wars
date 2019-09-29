@@ -11,7 +11,8 @@ var Constructor = function()
                                 ["DESERT_WELD", 1],
                                 ["DESERT_PIPELINE", 1],
                                 ["SNOW_WELD", 2],
-                                ["SNOW_PIPELINE", 2]];
+                                ["SNOW_PIPELINE", 2],
+                                ["TELEPORTTILE", 0]];
 
     this.getMovementpoints = function(terrain, unit)
     {

@@ -26,6 +26,7 @@ var Constructor = function()
         var id = terrain.getID();
         if (id !== "STREET" &&
             id !== "DESERT_PATH" &&
+            id !== "TELEPORTTILE" &&
             terrain.getBuilding() === null)
         {
             return 1;

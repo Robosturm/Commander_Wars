@@ -381,7 +381,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/BEACH.js" line="95"/>
+        <location filename="../resources/scripts/terrain/BEACH.js" line="118"/>
         <source>Beachs over great landing places for landing ground troops.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1457,22 +1457,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/gamemenue.cpp" line="594"/>
+        <source>Killed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/gamemenue.cpp" line="610"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="618"/>
+        <location filename="../menue/gamemenue.cpp" line="619"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="892"/>
+        <location filename="../menue/gamemenue.cpp" line="893"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="907"/>
+        <location filename="../menue/gamemenue.cpp" line="908"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3163,6 +3168,19 @@
     <message>
         <location filename="../network/tcpserver.cpp" line="147"/>
         <source>New Client connection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TELEPORTTILE</name>
+    <message>
+        <location filename="../resources/scripts/terrain/TELEPORTTILE.js" line="15"/>
+        <source>Teleport Tile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/terrain/TELEPORTTILE.js" line="51"/>
+        <source>A mysterious tile that costs 0MP to move over.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

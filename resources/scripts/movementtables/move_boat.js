@@ -10,7 +10,8 @@ var Constructor = function()
                                 ["FOG", 1],
                                 ["SEA", 1],
                                 ["ROUGH_SEA", 2],
-                                ["REAF", 2]];
+                                ["REAF", 2],
+                                ["TELEPORTTILE", 0]];
 
     this.getMovementpoints = function(terrain, unit)
     {

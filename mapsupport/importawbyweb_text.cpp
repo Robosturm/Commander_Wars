@@ -33,7 +33,14 @@ void GameMap::importAWByWebMap(QString file)
             mapIDs.append(QVector<quint32>());
             for (qint32 i = 0; i < ids.size(); i++)
             {
-                mapIDs[mapIDs.size() - 1].append(ids[i].toUInt());
+                if (ids[i].isEmpty())
+                {
+                    mapIDs[mapIDs.size() - 1].append(std::numeric_limits<quint32>::max());
+                }
+                else
+                {
+                    mapIDs[mapIDs.size() - 1].append(ids[i].toUInt());
+                }
             }
         }
         // load 16 players :)
@@ -62,6 +69,11 @@ void GameMap::importAWByWebMap(QString file)
             {
                 switch (mapIDs[y][x])
                 {
+                    case std::numeric_limits<quint32>::max():
+                    {
+                        replaceTerrain("TELEPORTTILE", x, y);
+                        break;
+                    }
                     case 0:
                         break;
                         // plains
@@ -741,7 +753,7 @@ void GameMap::importAWByWebMap(QString file)
                     case 153:
                     {
                         Building* pBuilding = new Building("HQ");
-                        pBuilding->setOwner(getPlayer(11));
+                        pBuilding->setOwner(getPlayer(10));
                         getTerrain(x, y)->setBuilding(pBuilding);
                         break;
                     }

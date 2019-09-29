@@ -137,7 +137,11 @@
 		<image file="beach+W+land+N+E+S.png" />
 		<image file="beach+W+land+N+S.png" />
 		<image file="beach+W+land+S.png" />
-
+		<image file="beach+E+S.png" />
+		<image file="beach+N+E.png" />
+		<image file="beach+N+W.png" />
+		<image file="beach+S+W.png" />
+		<image file="beach.png" />
 		
 		<image file="ruin+0.png" />
 		<image file="ruin+1.png" />
@@ -370,5 +374,23 @@
 		<image file="desert_path+S.png" />
 		<image file="desert_path+S+W.png" />
 		<image file="desert_path+W.png" />
+		
+		<!-- teleport tile -->
+		<image file="teleporttile.png" />
+		<image file="teleporttile+E.png" />
+		<image file="teleporttile+E+S.png" />
+		<image file="teleporttile+E+S+W.png" />
+		<image file="teleporttile+E+W.png" />
+		<image file="teleporttile+N.png" />
+		<image file="teleporttile+N+E.png" />
+		<image file="teleporttile+N+E+S.png" />
+		<image file="teleporttile+N+E+S+W.png" />
+		<image file="teleporttile+N+E+W.png" />
+		<image file="teleporttile+N+S.png" />
+		<image file="teleporttile+N+S+W.png" />
+		<image file="teleporttile+N+W.png" />
+		<image file="teleporttile+S.png" />
+		<image file="teleporttile+S+W.png" />
+		<image file="teleporttile+W.png" />
 	</atlas>
 </resources>

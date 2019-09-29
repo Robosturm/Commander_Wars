@@ -168,6 +168,10 @@ bool CoreAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
             if (result == 1.0f)
             {
                 GameAction* pAction = new GameAction(ACTION_ACTIVATE_POWER_CO_0);
+                if (i == 1)
+                {
+                    pAction->setActionID(ACTION_ACTIVATE_POWER_CO_1);
+                }
                 if (pAction->canBePerformed())
                 {
                     emit performAction(pAction);
@@ -177,6 +181,10 @@ bool CoreAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
             else if (result == 2.0f)
             {
                 GameAction* pAction = new GameAction(ACTION_ACTIVATE_SUPERPOWER_CO_0);
+                if (i == 1)
+                {
+                    pAction->setActionID(ACTION_ACTIVATE_SUPERPOWER_CO_1);
+                }
                 if (pAction->canBePerformed())
                 {
                     pAction->setActionID(ACTION_ACTIVATE_TAGPOWER);
