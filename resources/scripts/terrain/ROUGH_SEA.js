@@ -33,13 +33,12 @@ var Constructor = function()
             // it's a sea nice
             var surroundings = terrain.getSurroundings("SEA", true, false, GameEnums.Directions_Direct);
             // we need sea all around us :)
-
             if (surroundings === "+N+E+S+W")
             {
                 return true;
             }
         }
-            return false;
+        return false;
     };
     this.getMiniMapIcon = function()
     {

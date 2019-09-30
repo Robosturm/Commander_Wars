@@ -24,6 +24,10 @@ var Constructor = function()
         {
             terrain.loadBaseTerrain("DESERT");
         }
+        else if (currentTerrainID === "SEA")
+        {
+            terrain.loadBaseTerrain("SEA");
+        }
         else
         {
             terrain.loadBaseTerrain("PLAINS");
@@ -95,11 +99,28 @@ var Constructor = function()
                 map.replaceTerrain(baseID, field.x, field.y);
             }
         }
+        var testFields =  globals.getCircle(1, 1);
         for (i = 0; i < plasmaFields.length; i++)
         {
             field = plasmaFields[i];
             map.getTerrain(field.x, field.y).loadSprites();
+            // update sprites for surrounding meteors
+            for (var i2 = 0; i2 < testFields.size(); i2++)
+            {
+                var pos = testFields.at(i2);
+                var posX = field.x + pos.x;
+                var posY = field.y + pos.y;
+                if (map.onMap(posX, posY))
+                {
+                    var terrain2 = map.getTerrain(posX, posY);
+                    if (terrain2.getID() === "METEOR")
+                    {
+                        terrain2.loadSprites();
+                    }
+                }
+            }
         }
+        testFields.remove();
         var animation = GameAnimationFactory.createAnimation(x, y);
         animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
         audio.playSound("explosion+land.wav");

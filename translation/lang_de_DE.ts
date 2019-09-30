@@ -1672,7 +1672,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/METEOR.js" line="126"/>
+        <location filename="../resources/scripts/terrain/METEOR.js" line="147"/>
         <source>Meteor pieces which can be attacked and destroyed &lt;div c=&apos;00ff00&apos;&gt;to eliminate plasma.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2421,7 +2421,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="58"/>
+        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="57"/>
         <source>Movement of naval units is impeded but air units are not affected.</source>
         <translation type="unfinished"></translation>
     </message>
