@@ -20,6 +20,23 @@ var Constructor = function()
     };
     this.loadOverlaySprite = function(terrain)
     {
+        var surroundingsPlains = terrain.getSurroundings("BEACH", false, false, GameEnums.Directions_Direct, false);
+        if (surroundingsPlains.includes("+N"))
+        {
+            terrain.loadOverlaySprite("sea+beach+N");
+        }
+        if (surroundingsPlains.includes("+E"))
+        {
+            terrain.loadOverlaySprite("sea+beach+E");
+        }
+        if (surroundingsPlains.includes("+S"))
+        {
+            terrain.loadOverlaySprite("sea+beach+S");
+        }
+        if (surroundingsPlains.includes("+W"))
+        {
+            terrain.loadOverlaySprite("sea+beach+W");
+        }
         var surroundings = terrain.getSurroundings("SEA", true, true, GameEnums.Directions_Direct, false);
         if (surroundings !== "")
         {

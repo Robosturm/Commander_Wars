@@ -591,7 +591,7 @@ void GameMenue::showGameInfo()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_Focused = false;
-    QStringList header = {tr("Player"), tr("Produced"), tr("Lost"), tr("Income"), tr("Funds"), tr("Bases")};
+    QStringList header = {tr("Player"), tr("Produced"), tr("Lost"), tr("Killed"), tr("Income"), tr("Funds"), tr("Bases")};
     QVector<QStringList> data;
     GameMap* pMap = GameMap::getInstance();
     qint32 totalBuildings = pMap->getBuildingCount("");
@@ -609,13 +609,14 @@ void GameMenue::showGameInfo()
             qint32 buildingCount = pMap->getPlayer(i)->getBuildingCount();
             data.append({tr("Player ") + QString::number(i + 1),
                          QString::number(pMap->getGameRecorder()->getBuildedUnits(i)),
+                         QString::number(pMap->getGameRecorder()->getLostUnits(i)),
                          QString::number(pMap->getGameRecorder()->getDestroyedUnits(i)),
                          QString::number(pMap->getPlayer(i)->calcIncome()),
                          funds,
                          QString::number(buildingCount)});
             totalBuildings -= buildingCount;
         }
-        data.append({tr("Neutral"), "", "", "", "", QString::number(totalBuildings)});
+        data.append({tr("Neutral"), "", "", "", "", "", QString::number(totalBuildings)});
 
         spGenericBox pGenericBox = new GenericBox();
         QSize size(Settings::getWidth() - 40, Settings::getHeight() - 80);

@@ -274,6 +274,21 @@ void OptionMenue::showGameplayAndKeys()
 
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Multi Turn Plantime: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSlider pMultiTurnCounter = new Slider(pApp->getSettings()->getWidth() - 20 - sliderOffset, 1, 100, "");
+    pMultiTurnCounter->setPosition(sliderOffset - 130, y);
+    pMultiTurnCounter->setCurrentValue(static_cast<qint32>(pSettings->getMultiTurnCounter()));
+    m_pOptions->addItem(pMultiTurnCounter);
+    connect(pMultiTurnCounter.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        pSettings->setMultiTurnCounter(static_cast<quint32>(value));
+    });
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Auto End Turn: ").toStdString().c_str());
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);

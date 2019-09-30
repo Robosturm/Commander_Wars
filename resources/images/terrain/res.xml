@@ -136,12 +136,13 @@
 		<image file="beach+S+W+land+N+E.png" />
 		<image file="beach+W+land+N+E+S.png" />
 		<image file="beach+W+land+N+S.png" />
-		<image file="beach+W+land+S.png" />
-		<image file="beach+E+S.png" />
-		<image file="beach+N+E.png" />
-		<image file="beach+N+W.png" />
-		<image file="beach+S+W.png" />
+		<image file="beach+W+land+S.png" />		
 		<image file="beach.png" />
+		<image file="sea+beach+E.png" />
+		<image file="sea+beach+W.png" />
+		<image file="sea+beach+S.png" />
+		<image file="sea+beach+N.png" />
+		
 		
 		<image file="ruin+0.png" />
 		<image file="ruin+1.png" />

@@ -441,7 +441,17 @@ QStringList  Building::getConstructionList()
     }
     if (coUnits.size() > 0)
     {
-        buildList.append(coUnits);
+        for (qint32 i = 0; i < coUnits.size(); i++)
+        {
+            if (coUnits.startsWith("-"))
+            {
+                buildList.removeAll(coUnits[i].replace("-", ""));
+            }
+            else
+            {
+                buildList.append(coUnits[i]);
+            }
+        }
     }
     QStringList returnList;
     if (m_pOwner != nullptr)

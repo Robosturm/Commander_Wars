@@ -37,9 +37,11 @@ public:
 
 
 
-
 public slots:
     static QString getModConfigString();
+
+    static quint32 getMultiTurnCounter();
+    static void setMultiTurnCounter(const quint32 &value);
 
     static bool getShowCursor();
     static void setShowCursor(bool ShowCursor);
@@ -258,6 +260,7 @@ private:
     static GameEnums::BattleAnimationMode battleAnimations;
     static quint32 animationSpeed;
     static quint32 battleAnimationSpeed;
+    static quint32 multiTurnCounter;
     static QString m_LastSaveGame;
     static bool m_ShowCursor;
     static bool m_AutoEndTurn;

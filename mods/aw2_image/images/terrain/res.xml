@@ -56,7 +56,6 @@
 		<image file="mountain+E+W.png" />
 		<image file="mountain+W.png" />
 		
-		<!--
 		<image file="beach+E+land+N.png" />
 		<image file="beach+E+land+N+S.png" />
 		<image file="beach+E+land+N+S+W.png" />		
@@ -106,7 +105,7 @@
 		<image file="beach+W+land+N+E+S.png" />
 		<image file="beach+W+land+N+S.png" />
 		<image file="beach+W+land+S.png" />
-		-->
+		<image file="beach.png" />
 		
 		<image file="forest+0.png" />
 		<image file="forest+1.png" />

@@ -586,7 +586,12 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
     if ((pUnit->getOwner() == m_pPlayer) &&
         pUnit->getActionList().contains(CoreAI::ACTION_WAIT))
     {
-        m_pUnitPathFindingSystem->setMovepoints(pUnit->getFuel());
+        qint32 points = pUnit->getMovementpoints(QPoint(x, y)) * static_cast<qint32>(Settings::getMultiTurnCounter());
+        if (pUnit->getFuel() < points)
+        {
+            points = pUnit->getFuel();
+        }
+        m_pUnitPathFindingSystem->setMovepoints(points);
     }
     else
     {

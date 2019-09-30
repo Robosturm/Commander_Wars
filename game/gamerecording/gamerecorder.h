@@ -89,6 +89,12 @@ public slots:
      */
     void lostUnit(qint32 player);
     /**
+     * @brief getLostUnits
+     * @param player
+     * @return
+     */
+    quint32 getLostUnits(qint32 player);
+    /**
      * @brief destroyedUnit
      * @param player
      */

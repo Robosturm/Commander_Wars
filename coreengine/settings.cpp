@@ -50,6 +50,7 @@ GameEnums::AnimationMode Settings::showAnimations = GameEnums::AnimationMode_All
 GameEnums::BattleAnimationMode Settings::battleAnimations = GameEnums::BattleAnimationMode_Detail;
 quint32 Settings::animationSpeed = 1;
 quint32 Settings::battleAnimationSpeed = 1;
+quint32 Settings::multiTurnCounter = 4;
 QString Settings::m_LastSaveGame = "";
 QString Settings::m_Username = "";
 bool Settings::m_ShowCursor = true;
@@ -300,6 +301,14 @@ void Settings::loadSettings(){
         Console::print(error, Console::eERROR);
         battleAnimationSpeed = 1u;
     }
+    multiTurnCounter = settings.value("MultiTurnCounter", 4u).toUInt(&ok);
+    if(!ok || animationSpeed <= 0 || multiTurnCounter > 100u)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " MultiTurnCounter";
+        Console::print(error, Console::eERROR);
+        battleAnimationSpeed = 4u;
+    }
+
     m_LastSaveGame = settings.value("LastSaveGame", "").toString();
     m_Username = settings.value("Username", "").toString();
     m_ShowCursor = settings.value("ShowCursor", true).toBool();
@@ -385,6 +394,7 @@ void Settings::saveSettings(){
     settings.setValue("BattleAnimations",               static_cast<qint32>(battleAnimations));
     settings.setValue("BattleAnimationSpeed",           static_cast<qint32>(battleAnimationSpeed));
     settings.setValue("AnimationSpeed",                 animationSpeed);
+    settings.setValue("MultiTurnCounter",               multiTurnCounter);
     settings.setValue("LastSaveGame",                   m_LastSaveGame);
     settings.setValue("Username",                       m_Username);
     settings.setValue("ShowCursor",                     m_ShowCursor);
@@ -639,6 +649,16 @@ SDL_Keycode Settings::getKey_information()
 void Settings::setKey_information(const SDL_Keycode &key_information)
 {
     m_key_information = key_information;
+}
+
+quint32 Settings::getMultiTurnCounter()
+{
+    return multiTurnCounter;
+}
+
+void Settings::setMultiTurnCounter(const quint32 &value)
+{
+    multiTurnCounter = value;
 }
 
 GameEnums::BattleAnimationMode Settings::getBattleAnimations()
