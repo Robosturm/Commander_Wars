@@ -1,5 +1,7 @@
 #include "cobannlistdialog.h"
 
+#include "qdiriterator.h"
+
 #include "coreengine/mainapp.h"
 
 #include "resource_management/objectmanager.h"
@@ -11,6 +13,8 @@
 #include "game/gamemap.h"
 
 #include "objects/panel.h"
+
+#include "objects/dialogtextinput.h"
 
 COBannListDialog::COBannListDialog(QStringList cobannlist)
     : QObject(),
@@ -62,16 +66,35 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
             emit m_Checkboxes[i]->checkChanged(toggle);
         }
     });
-
-    m_PredefinedLists = new DropDownmenu(230, {tr("Commander Wars"),
-                                               tr("Advance Wars DoR"),
-                                               tr("Advance Wars DS"),
-                                               tr("Advance Wars 2"),
-                                               tr("Advance Wars")}, true);
+    QVector<QString> items = {tr("Commander Wars"),
+                              tr("Advance Wars DoR"),
+                              tr("Advance Wars DS"),
+                              tr("Advance Wars 2"),
+                              tr("Advance Wars")};
+    QStringList filters;
+    filters << "*.bl";
+    QDirIterator dirIter("data/cobannlist/", filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
+    while (dirIter.hasNext())
+    {
+        dirIter.next();
+        QString file = dirIter.fileInfo().absoluteFilePath();
+        std::tuple<QString, QStringList> data = Mainapp::readList(file);
+        items.append(std::get<0>(data));
+    }
+    m_PredefinedLists = new DropDownmenu(230, items, true);
 
     m_PredefinedLists->setPosition(pApp->getSettings()->getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), pApp->getSettings()->getHeight() - 30 - m_ToggleAll->getHeight());
     pSpriteBox->addChild(m_PredefinedLists);
     connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &COBannListDialog::setCOBannlist, Qt::QueuedConnection);
+
+    oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
+    pSave->setPosition(pApp->getSettings()->getWidth() / 2 - pSave->getWidth() / 2, pApp->getSettings()->getHeight() - 75 - m_ToggleAll->getHeight());
+    pSave->addClickListener([=](oxygine::Event*)
+    {
+        emit sigShowSaveBannlist();
+    });
+    pSpriteBox->addChild(pSave);
+    connect(this, &COBannListDialog::sigShowSaveBannlist, this, &COBannListDialog::showSaveBannlist, Qt::QueuedConnection);
 
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);
@@ -79,8 +102,8 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     // no the fun begins create checkboxes and stuff and a panel down here
-    spPanel pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110),
-                                     QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110));
+    spPanel pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 150),
+                                     QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 150));
     pPanel->setPosition(30, 30);
     pSpriteBox->addChild(pPanel);
 
@@ -199,6 +222,12 @@ void COBannListDialog::setCOBannlist(qint32 item)
                             "CO_KANBEI", "CO_MAX", "CO_OLAF",
                             "CO_SAMI", "CO_SONJA", "CO_STURM"});
     }
+    else
+    {
+        QString file = m_PredefinedLists->getCurrentItemText();
+        auto fileData = Mainapp::readList(file + ".bl", "data/cobannlist/");
+        data = std::get<1>(fileData);
+    }
 
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
@@ -213,4 +242,22 @@ void COBannListDialog::setCOBannlist(qint32 item)
         }
     }
     m_CurrentCOBannList = data;
+}
+
+void COBannListDialog::showSaveBannlist()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    spDialogTextInput pSaveInput = new DialogTextInput(tr("Bannlist Name"), true, "");
+    connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &COBannListDialog::saveBannlist, Qt::QueuedConnection);
+    addChild(pSaveInput);
+    pApp->continueThread();
+}
+
+void COBannListDialog::saveBannlist(QString filename)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    Mainapp::storeList(filename, m_CurrentCOBannList, "data/cobannlist/");
+    pApp->continueThread();
 }

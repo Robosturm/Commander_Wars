@@ -21,8 +21,21 @@ public:
 signals:
     void editFinished(qint32 player, QStringList buildList);
     void canceled();
+    void sigShowSaveBannlist();
 public slots:
+    /**
+     * @brief setBuildlist
+     * @param item
+     */
     void setBuildlist(qint32 item);
+    /**
+     * @brief showSaveBannlist
+     */
+    void showSaveBannlist();
+    /**
+     * @brief saveBannlist
+     */
+    void saveBannlist(QString filename);
 private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_ToggleAll;

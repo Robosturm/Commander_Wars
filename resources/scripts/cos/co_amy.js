@@ -237,11 +237,11 @@ var Constructor = function()
     this.getPowerSentences = function()
     {
         return [qsTr("EMP? Why, it stands for Electromagnetic Pulse. You'll soon understand."),
-                qsTr("Quantum... you probably don’t even know what it means."),
+                qsTr("Quantum... you probably don't even know what it means."),
                 qsTr("Do you know how much energy splitting of the atom produces? Let's see."),
                 qsTr("Allow me demonstrate how flimsy hovercrafts are not."),
                 qsTr("For your sake, I hope your machines are magnetically shielded."),
-                qsTr("Without science we wouldn’t be doing what we are now.")];
+                qsTr("Without science we wouldn't be doing what we are now.")];
     };
     this.getVictorySentences = function()
     {
@@ -252,7 +252,7 @@ var Constructor = function()
     this.getDefeatSentences = function()
     {
         return [qsTr("My theory didn't work in practice!"),
-                qsTr("Ok, I’ll need to put more efford to put my theory into practice.")];
+                qsTr("Ok, I'll need to put more efford to put my theory into practice.")];
     };
     this.getName = function()
     {

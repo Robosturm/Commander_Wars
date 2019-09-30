@@ -402,96 +402,116 @@
 <context>
     <name>BuildListDialog</name>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="35"/>
+        <location filename="../objects/buildlistdialog.cpp" line="39"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="45"/>
+        <location filename="../objects/buildlistdialog.cpp" line="49"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="54"/>
+        <location filename="../objects/buildlistdialog.cpp" line="58"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="67"/>
+        <location filename="../objects/buildlistdialog.cpp" line="71"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="68"/>
+        <location filename="../objects/buildlistdialog.cpp" line="72"/>
         <source>Advance Wars DoR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="69"/>
+        <location filename="../objects/buildlistdialog.cpp" line="73"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="70"/>
+        <location filename="../objects/buildlistdialog.cpp" line="74"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="71"/>
+        <location filename="../objects/buildlistdialog.cpp" line="75"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="97"/>
+        <location filename="../objects/buildlistdialog.cpp" line="93"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/buildlistdialog.cpp" line="116"/>
         <source>Build List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/buildlistdialog.cpp" line="247"/>
+        <source>Bannlist Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>COBannListDialog</name>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="34"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="38"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="44"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="48"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="53"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="57"/>
         <source>Un/Select All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="66"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="69"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="67"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="70"/>
         <source>Advance Wars DoR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="68"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="71"/>
         <source>Advance Wars DS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="69"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="72"/>
         <source>Advance Wars 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="70"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="73"/>
         <source>Advance Wars</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="89"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="90"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/cobannlistdialog.cpp" line="112"/>
         <source>Build List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/cobannlistdialog.cpp" line="251"/>
+        <source>Bannlist Name</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5221,7 +5241,17 @@
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_amy.js" line="240"/>
-        <source>Quantum... you probably donâ€™t even know what it means.</source>
+        <source>Quantum... you probably don&apos;t even know what it means.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="244"/>
+        <source>Without science we wouldn&apos;t be doing what we are now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="255"/>
+        <source>Ok, I&apos;ll need to put more efford to put my theory into practice.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5237,11 +5267,6 @@
     <message>
         <location filename="../resources/scripts/cos/co_amy.js" line="243"/>
         <source>For your sake, I hope your machines are magnetically shielded.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="244"/>
-        <source>Without science we wouldnâ€™t be doing what we are now.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5262,11 +5287,6 @@
     <message>
         <location filename="../resources/scripts/cos/co_amy.js" line="254"/>
         <source>My theory didn&apos;t work in practice!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="255"/>
-        <source>Ok, Iâ€™ll need to put more efford to put my theory into practice.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

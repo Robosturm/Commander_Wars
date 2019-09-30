@@ -89,6 +89,26 @@ public:
     void suspendThread();
     void continueThread();
     void start();
+    /**
+     * @brief Mainapp::storeList
+     * @param file
+     * @param items
+     * @param folder
+     */
+    static void storeList(QString file, QStringList items, QString folder);
+    /**
+     * @brief Mainapp::readList
+     * @param file
+     * @return
+     */
+    static std::tuple<QString, QStringList> readList(QString file);
+    /**
+     * @brief readList
+     * @param file
+     * @param folder
+     * @return
+     */
+    static std::tuple<QString, QStringList> readList(QString file, QString folder);
 signals:
     void sigText(SDL_Event event);
     void sigKeyDown(SDL_Event event);
@@ -146,7 +166,10 @@ public slots:
      * @brief quitGame quits this game
      */
     void quitGame();
-
+    /**
+     * @brief getGameVersion
+     * @return
+     */
     static QString getGameVersion()
     {
         return "Version: " + QString::number(MAJOR) + "." + QString::number(MINOR) + "." + QString::number(REVISION);

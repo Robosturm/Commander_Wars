@@ -1,5 +1,7 @@
 #include "buildlistdialog.h"
 
+#include "qdiriterator.h"
+
 #include "coreengine/mainapp.h"
 
 #include "resource_management/objectmanager.h"
@@ -11,6 +13,8 @@
 #include "game/gamemap.h"
 
 #include "objects/panel.h"
+
+#include "objects/dialogtextinput.h"
 
 BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     : QObject(),
@@ -69,6 +73,16 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
                               tr("Advance Wars DS"),
                               tr("Advance Wars 2"),
                               tr("Advance Wars")};
+    QStringList filters;
+    filters << "*.bl";
+    QDirIterator dirIter("data/unitbannlist/", filters, QDir::Files, QDirIterator::IteratorFlag::NoIteratorFlags);
+    while (dirIter.hasNext())
+    {
+        dirIter.next();
+        QString file = dirIter.fileInfo().absoluteFilePath();
+        std::tuple<QString, QStringList> data = Mainapp::readList(file);
+        items.append(std::get<0>(data));
+    }
 
     m_PredefinedLists = new DropDownmenu(230, items, true);
 
@@ -76,9 +90,14 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     pSpriteBox->addChild(m_PredefinedLists);
     connect(m_PredefinedLists.get(), &DropDownmenu::sigItemChanged, this, &BuildListDialog::setBuildlist, Qt::QueuedConnection);
 
-//    oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
-//    pSave->setPosition(pApp->getSettings()->getWidth() / 2 + 60 + m_PredefinedLists->getWidth(), pApp->getSettings()->getHeight() - 30 - m_ToggleAll->getHeight());
-//    pSpriteBox->addChild(pSave);
+    oxygine::spButton pSave = pObjectManager->createButton(tr("Save"), 150);
+    pSave->setPosition(pApp->getSettings()->getWidth() / 2 - pSave->getWidth() / 2, pApp->getSettings()->getHeight() - 75 - m_ToggleAll->getHeight());
+    pSave->addClickListener([=](oxygine::Event*)
+    {
+        emit sigShowSaveBannlist();
+    });
+    pSpriteBox->addChild(pSave);
+    connect(this, &BuildListDialog::sigShowSaveBannlist, this, &BuildListDialog::showSaveBannlist, Qt::QueuedConnection);
 
 
     oxygine::TextStyle style = FontManager::getMainFont();
@@ -87,8 +106,8 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
     // no the fun begins create checkboxes and stuff and a panel down here
-    spPanel pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110),
-                                     QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110));
+    spPanel pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 150),
+                                     QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 150));
     pPanel->setPosition(30, 30);
     pSpriteBox->addChild(pPanel);
 
@@ -162,13 +181,14 @@ void BuildListDialog::setBuildlist(qint32 item)
     QStringList data;
     if (item == 0) // Commander Wars
     {
-        data = QStringList({QString("APC"), QString("ARTILLERY"), QString("BATTLESHIP"), QString("BOMBER"), QString("CRUISER"), QString("FIGHTER"), QString("FLAK"),
-                QString("HEAVY_TANK"), QString("INFANTRY"), QString("K_HELI"), QString("LANDER"), QString("LIGHT_TANK"), QString("MECH"), QString("MISSILE"),
-                QString("RECON"), QString("ROCKETTHROWER"), QString("SUBMARINE"), QString("T_HELI"), QString("NEOTANK"), QString("MEGATANK"),
-                QString("AIRCRAFTCARRIER"), QString("ANTITANKCANNON"), QString("CANNONBOAT"), QString("DUSTER"), QString("FLARE"),
-                QString("MOTORBIKE"), QString("WATERPLANE"), QString("BLACK_BOAT"), QString("BLACK_BOMB"), QString("PIPERUNNER"),
-                QString("STEALTHBOMBER"), QString("DESTROYER"), QString("HEAVY_HOVERCRAFT"), QString("HOVERCRAFT"),
-                QString("HOVERFLAK"), QString("TRANSPORTPLANE"), QString("HOELLIUM")});
+        data = QStringList({QString("APC"), QString("ARTILLERY"), QString("ARTILLERYCRAFT"), QString("BATTLESHIP"), QString("BOMBER"),
+                            QString("CRUISER"), QString("FIGHTER"), QString("FLAK"), QString("SNIPER"), QString("WATERMINE"),
+                            QString("HEAVY_TANK"), QString("INFANTRY"), QString("K_HELI"), QString("LANDER"), QString("LIGHT_TANK"), QString("MECH"), QString("MISSILE"),
+                            QString("RECON"), QString("ROCKETTHROWER"), QString("SUBMARINE"), QString("T_HELI"), QString("NEOTANK"), QString("MEGATANK"),
+                            QString("AIRCRAFTCARRIER"), QString("ANTITANKCANNON"), QString("CANNONBOAT"), QString("DUSTER"), QString("FLARE"),
+                            QString("MOTORBIKE"), QString("WATERPLANE"), QString("BLACK_BOAT"), QString("BLACK_BOMB"), QString("PIPERUNNER"),
+                            QString("STEALTHBOMBER"), QString("DESTROYER"), QString("HEAVY_HOVERCRAFT"), QString("HOVERCRAFT"),
+                            QString("HOVERFLAK"), QString("TRANSPORTPLANE"), QString("HOELLIUM")});
     }
     else if (item == 1) // advance wars dc
     {
@@ -197,6 +217,12 @@ void BuildListDialog::setBuildlist(qint32 item)
                 QString("HEAVY_TANK"), QString("INFANTRY"), QString("K_HELI"), QString("LANDER"), QString("LIGHT_TANK"), QString("MECH"), QString("MISSILE"),
                 QString("RECON"), QString("ROCKETTHROWER"), QString("SUBMARINE"), QString("T_HELI")});
     }
+    else
+    {
+        QString file = m_PredefinedLists->getCurrentItemText();
+        auto fileData = Mainapp::readList(file + ".bl", "data/unitbannlist/");
+        data = std::get<1>(fileData);
+    }
 
 
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
@@ -212,4 +238,22 @@ void BuildListDialog::setBuildlist(qint32 item)
         }
     }
     m_CurrentBuildList = data;
+}
+
+void BuildListDialog::showSaveBannlist()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    spDialogTextInput pSaveInput = new DialogTextInput(tr("Bannlist Name"), true, "");
+    connect(pSaveInput.get(), &DialogTextInput::sigTextChanged, this, &BuildListDialog::saveBannlist, Qt::QueuedConnection);
+    addChild(pSaveInput);
+    pApp->continueThread();
+}
+
+void BuildListDialog::saveBannlist(QString filename)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    Mainapp::storeList(filename, m_CurrentBuildList, "data/unitbannlist/");
+    pApp->continueThread();
 }

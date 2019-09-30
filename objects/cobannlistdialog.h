@@ -21,8 +21,17 @@ public:
 signals:
     void editFinished(QStringList cobannlist);
     void canceled();
+    void sigShowSaveBannlist();
 public slots:
     void setCOBannlist(qint32 item);
+    /**
+     * @brief showSaveBannlist
+     */
+    void showSaveBannlist();
+    /**
+     * @brief saveBannlist
+     */
+    void saveBannlist(QString filename);
 private:
     oxygine::spButton m_OkButton;
     oxygine::spButton m_ToggleAll;

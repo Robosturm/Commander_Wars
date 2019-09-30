@@ -14,6 +14,8 @@
 
 #include "qfile.h"
 
+#include "qdir.h"
+
 Mainapp* Mainapp::m_pMainapp;
 QRandomGenerator Mainapp::randGenerator;
 QThread Mainapp::m_Workerthread;
@@ -213,6 +215,44 @@ bool Mainapp::isEven(qint32 value)
     {
         return false;
     }
+}
+
+void Mainapp::storeList(QString file, QStringList items, QString folder)
+{
+    QDir dir(folder);
+    dir.mkpath(".");
+    QFile dataFile(folder + file + ".bl");
+    dataFile.open(QIODevice::WriteOnly);
+    QDataStream stream(&dataFile);
+    stream << file;
+    stream << static_cast<qint32>(items.size());
+    for (qint32 i = 0; i < items.size(); i++)
+    {
+        stream << items[i];
+    }
+}
+
+std::tuple<QString, QStringList> Mainapp::readList(QString file, QString folder)
+{
+    return readList(folder + file);
+}
+
+std::tuple<QString, QStringList> Mainapp::readList(QString file)
+{
+    QFile dataFile(file);
+    dataFile.open(QIODevice::ReadOnly);
+    QDataStream stream(&dataFile);
+    std::tuple<QString, QStringList> ret;
+    stream >> std::get<0>(ret);
+    qint32 size = 0;
+    stream >> size;
+    for (qint32 i = 0; i < size; i++)
+    {
+        QString name;
+        stream >> name;
+        std::get<1>(ret).append(name);
+    }
+    return ret;
 }
 
 void Mainapp::quitGame()
