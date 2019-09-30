@@ -5250,11 +5250,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="255"/>
-        <source>Ok, I&apos;ll need to put more efford to put my theory into practice.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_amy.js" line="241"/>
         <source>Do you know how much energy splitting of the atom produces? Let&apos;s see.</source>
         <translation type="unfinished"></translation>
@@ -5287,6 +5282,11 @@
     <message>
         <location filename="../resources/scripts/cos/co_amy.js" line="254"/>
         <source>My theory didn&apos;t work in practice!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="255"/>
+        <source>Ok, I&apos;ll need to put more effort to put my theory into practice.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

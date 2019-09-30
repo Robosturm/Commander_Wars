@@ -106,6 +106,10 @@
 		<image file="beach+W+land+N+S.png" />
 		<image file="beach+W+land+S.png" />
 		<image file="beach.png" />
+		<image file="sea+beach+E.png" />
+		<image file="sea+beach+W.png" />
+		<image file="sea+beach+S.png" />
+		<image file="sea+beach+N.png" />
 		
 		<image file="forest+0.png" />
 		<image file="forest+1.png" />

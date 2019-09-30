@@ -252,7 +252,7 @@ var Constructor = function()
     this.getDefeatSentences = function()
     {
         return [qsTr("My theory didn't work in practice!"),
-                qsTr("Ok, I'll need to put more efford to put my theory into practice.")];
+                qsTr("Ok, I'll need to put more effort to put my theory into practice.")];
     };
     this.getName = function()
     {
