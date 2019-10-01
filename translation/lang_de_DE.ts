@@ -13119,6 +13119,19 @@
     </message>
 </context>
 <context>
+    <name>victoryrule_counitlost</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_counitlost.js" line="5"/>
+        <source>A player looses if he lost the given amount of co units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_counitlost.js" line="9"/>
+        <source>Co Units lost</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>victoryrule_nohq</name>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_nohq.js" line="5"/>
