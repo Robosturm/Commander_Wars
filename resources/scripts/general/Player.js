@@ -13,7 +13,7 @@ var PLAYER =
         switch (index)
         {
             case 0:
-                color = "#f85800";
+                color = "#ff5a00";
                 break;
             case 1:
                 color = "#0068e8";
@@ -40,7 +40,7 @@ var PLAYER =
                 color = "peru";
                 break;
             case 9:
-                color = "gold";
+                color = "goldenrod";
                 break;                
             case 10:
                 color = "magenta";
@@ -67,7 +67,7 @@ var PLAYER =
                 color = "#FFFF00";
                 break;
             case 18:
-                color = "goldenrod";
+                color = "olive";
                 break;
             case 19:
                 color = "#0000FF";
