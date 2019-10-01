@@ -40,7 +40,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     pLabel->setHtmlText(tr("Red: ").toStdString().c_str());
     pLabel->setPosition(space * 0, y);
     addChild(pLabel);
-    m_SpinBoxRed = new SpinBox(space - pLabel->getTextRect().getWidth() - 40, 0, 255);
+    m_SpinBoxRed = new SpinBox(space - pLabel->getTextRect().getWidth() - 20, 0, 255);
     m_SpinBoxRed->setPosition(pLabel->getX() + 10 + pLabel->getTextRect().getWidth(), y);
     addChild(m_SpinBoxRed);
     connect(m_SpinBoxRed.get(), &SpinBox::sigValueChanged, [=](float value)
@@ -53,7 +53,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     pLabel->setHtmlText(tr("Green: ").toStdString().c_str());
     pLabel->setPosition(space * 1, y);
     addChild(pLabel);
-    m_SpinBoxGreen = new SpinBox(space - pLabel->getTextRect().getWidth() - 40, 0, 255);
+    m_SpinBoxGreen = new SpinBox(space - pLabel->getTextRect().getWidth() - 20, 0, 255);
     m_SpinBoxGreen->setPosition(pLabel->getX() + 10 + pLabel->getTextRect().getWidth(), y);
     addChild(m_SpinBoxGreen);
     connect(m_SpinBoxGreen.get(), &SpinBox::sigValueChanged, [=](float value)
@@ -66,7 +66,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     pLabel->setHtmlText(tr("Blue: ").toStdString().c_str());
     pLabel->setPosition(space * 2, y);
     addChild(pLabel);
-    m_SpinBoxBlue= new SpinBox(space - pLabel->getTextRect().getWidth() - 40, 0, 255);
+    m_SpinBoxBlue= new SpinBox(space - pLabel->getTextRect().getWidth() - 20, 0, 255);
     m_SpinBoxBlue->setPosition(pLabel->getX() + 10 + pLabel->getTextRect().getWidth(), y);
     addChild(m_SpinBoxBlue);
     connect(m_SpinBoxBlue.get(), &SpinBox::sigValueChanged, [=](float value)
