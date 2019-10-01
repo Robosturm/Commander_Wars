@@ -63,7 +63,7 @@ public slots:
      * @param folder
      * @param filter
      */
-    void updateMaskImages(QString folder, QString filter);
+    void updateMaskImages(QString folder, QString filter, qint32 min);
     /**
      * @brief help shows the helps messages between given indexes or all as default
      * @param start

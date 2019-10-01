@@ -83,12 +83,12 @@ public:
      * @param folder
      * @param filter
      */
-    static void updateMaskImages(QString& folder, QString& filter);
+    static void updateMaskImages(QString& folder, QString& filter, qint32 min);
     /**
      * @brief updateMaskImage
      * @param file
      */
-    static void updateMaskImage(QString& file);
+    static void updateMaskImage(QString& file, qint32 min);
 };
 
 #endif // SPRITECREATOR_H

@@ -21,10 +21,20 @@ var Constructor = function()
         {
             armyName = "os";
         }
-        sprite.loadSprite("submarine+" + armyName,  false,
-                          BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20));
-        sprite.loadSprite("submarine+" + armyName + "+mask",  true,
-                          BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20));
+        if(unit.getHidden() === true)
+        {
+            sprite.loadSprite("submarine+hidden+" + armyName,  false,
+                              BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20));
+            sprite.loadSprite("submarine+hidden+" + armyName + "+mask",  true,
+                              BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20));
+        }
+        else
+        {
+            sprite.loadSprite("submarine+" + armyName,  false,
+                              BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20));
+            sprite.loadSprite("submarine+" + armyName + "+mask",  true,
+                              BATTLEANIMATION_SUBMARINE.getMaxUnitCount(), Qt.point(0, 20));
+        }
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)

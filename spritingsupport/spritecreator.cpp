@@ -247,7 +247,7 @@ QColor SpriteCreator::getImageColor(QColor maskColor, QColor imageColor)
                   imageColor.alpha());
 }
 
-void SpriteCreator::updateMaskImages(QString& folder, QString& filter)
+void SpriteCreator::updateMaskImages(QString& folder, QString& filter, qint32 min)
 {
     QStringList filters;
     filters << filter;
@@ -256,15 +256,15 @@ void SpriteCreator::updateMaskImages(QString& folder, QString& filter)
     {
         dirIter.next();
         QString file = dirIter.fileInfo().absoluteFilePath();
-        updateMaskImage(file);
+        updateMaskImage(file, min);
     }
 }
 
-void SpriteCreator::updateMaskImage(QString& file)
+void SpriteCreator::updateMaskImage(QString& file, qint32 min)
 {
     QImage mask(file);
     QVector<QColor> colors;
-    QColor maskMin(160, 160, 160);
+    QColor maskMin(min, min, min);
     QColor maskMax (255, 255, 255);
     for (qint32 x = 0; x < mask.width(); x++)
     {
