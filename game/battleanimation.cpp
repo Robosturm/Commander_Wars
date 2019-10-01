@@ -419,6 +419,16 @@ void BattleAnimation::nextAnimatinStep()
     pApp->continueThread();
 }
 
+Unit *BattleAnimation::getDefUnit() const
+{
+    return m_pDefUnit;
+}
+
+Unit *BattleAnimation::getAtkUnit() const
+{
+    return m_pAtkUnit;
+}
+
 void BattleAnimation::loadMoveInAnimation(spBattleAnimationSprite pSprite, Unit* pUnit1, Unit* pUnit2, qint32 weapon)
 {
     pSprite->loadAnimation(BattleAnimationSprite::moveInAnimation, pUnit1, pUnit2, weapon);

@@ -108,6 +108,12 @@ public slots:
      */
     static qint32 getAnimationCount();
     /**
+     * @brief getAnimation
+     * @param index
+     * @return
+     */
+    static GameAnimation* getAnimation(qint32 index);
+    /**
      * @brief removeAnimation deletes the given animation
      * @param pAnimation pointer of the animation
      */

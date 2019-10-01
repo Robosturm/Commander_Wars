@@ -215,8 +215,10 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setHtmlText(tr("Show Ingame Animations: ").toStdString().c_str());
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
-    QVector<QString> items = {tr("None"), tr("All"), tr("Own"), tr("Ally"), tr("Enemy")};
-    spDropDownmenu pAnimationMode = new DropDownmenu(300, items);
+    QVector<QString> items = {tr("None"), tr("All"), tr("Own"), tr("Ally"), tr("Enemy"),
+                             tr("Only Detailed Battle All"), tr("Only Detailed Battle Own"),
+                             tr("Only Detailed Battle Ally"), tr("Only Detailed Battle Enemy")};
+    spDropDownmenu pAnimationMode = new DropDownmenu(400, items);
     pAnimationMode->setCurrentItem(static_cast<qint32>(pSettings->getShowAnimations()));
     pAnimationMode->setPosition(sliderOffset - 130, y);
     m_pOptions->addItem(pAnimationMode);
@@ -232,7 +234,7 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     items = {tr("Detailed"), tr("Overworld")};
-    spDropDownmenu pBattleAnimationMode = new DropDownmenu(300, items);
+    spDropDownmenu pBattleAnimationMode = new DropDownmenu(400, items);
     pBattleAnimationMode->setCurrentItem(static_cast<qint32>(pSettings->getBattleAnimations()));
     pBattleAnimationMode->setPosition(sliderOffset - 130, y);
     m_pOptions->addItem(pBattleAnimationMode);

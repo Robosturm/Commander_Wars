@@ -125,6 +125,10 @@ public:
         AnimationMode_Own,
         AnimationMode_Ally,
         AnimationMode_Enemy,
+        AnimationMode_OnlyBattleAll,
+        AnimationMode_OnlyBattleOwn,
+        AnimationMode_OnlyBattleAlly,
+        AnimationMode_OnlyBattleEnemy,
     };
     Q_ENUM(AnimationMode)
 

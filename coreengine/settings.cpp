@@ -274,7 +274,7 @@ void Settings::loadSettings(){
 
     settings.beginGroup("Game");
     showAnimations  = static_cast<GameEnums::AnimationMode>(settings.value("ShowAnimations", 1).toInt(&ok));
-    if (!ok || showAnimations < GameEnums::AnimationMode_None || showAnimations > GameEnums::AnimationMode_Enemy)
+    if (!ok || showAnimations < GameEnums::AnimationMode_None || showAnimations > GameEnums::AnimationMode_OnlyBattleEnemy)
     {
         QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " ShowAnimations";
         Console::print(error, Console::eERROR);

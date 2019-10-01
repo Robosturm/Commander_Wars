@@ -36,8 +36,18 @@ public:
      * @brief onFinished called when the animation is finished
      */
     virtual bool onFinished() override;
-public slots:
 
+public slots:
+    /**
+     * @brief getPAtkUnit
+     * @return
+     */
+    Unit *getAtkUnit() const;
+    /**
+     * @brief getPDefUnit
+     * @return
+     */
+    Unit *getDefUnit() const;
 private:
     /**
      * @brief getIsRight

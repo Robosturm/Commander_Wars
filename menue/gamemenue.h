@@ -60,6 +60,10 @@ public slots:
      */
     void performAction(GameAction* pGameAction);
     /**
+     * @brief skipAnimations
+     */
+    void skipAnimations();
+    /**
      * @brief doMultiTurnMovement
      * @param pGameAction
      */

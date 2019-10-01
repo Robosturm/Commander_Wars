@@ -199,6 +199,15 @@ qint32 GameAnimationFactory::getAnimationCount()
     return m_Animations.size();
 }
 
+GameAnimation* GameAnimationFactory::getAnimation(qint32 index)
+{
+    if ((index >= 0) && (index < m_Animations.size()))
+    {
+        return m_Animations[index].get();
+    }
+    return nullptr;
+}
+
 void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation)
 {
     Mainapp* pApp = Mainapp::getInstance();
