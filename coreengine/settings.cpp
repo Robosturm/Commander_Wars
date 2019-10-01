@@ -302,7 +302,7 @@ void Settings::loadSettings(){
         battleAnimationSpeed = 1u;
     }
     multiTurnCounter = settings.value("MultiTurnCounter", 4u).toUInt(&ok);
-    if(!ok || animationSpeed <= 0 || multiTurnCounter > 100u)
+    if(!ok || animationSpeed <= 0 || multiTurnCounter > 10u)
     {
         QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " MultiTurnCounter";
         Console::print(error, Console::eERROR);

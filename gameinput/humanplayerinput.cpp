@@ -92,7 +92,25 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
             }
             else if (m_CurrentMenu.get() == nullptr)
             {
-                cleanUpInput();
+                Unit* pUnit = m_pGameAction->getTargetUnit();
+                if (pUnit != nullptr)
+                {
+                    qint32 costs = m_pUnitPathFindingSystem->getTargetCosts(x, y);
+                    if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) != costs &&
+                        costs > 0)
+                    {
+                        m_ArrowPoints = m_pUnitPathFindingSystem->getPath(x, y);
+                        createCursorPath(x, y);
+                    }
+                    else
+                    {
+                        cleanUpInput();
+                    }
+                }
+                else
+                {
+                    cleanUpInput();
+                }
             }
             else
             {

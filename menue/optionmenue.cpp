@@ -277,7 +277,7 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setHtmlText(tr("Multi Turn Plantime: ").toStdString().c_str());
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
-    spSlider pMultiTurnCounter = new Slider(pApp->getSettings()->getWidth() - 20 - sliderOffset, 1, 100, "");
+    spSlider pMultiTurnCounter = new Slider(pApp->getSettings()->getWidth() - 20 - sliderOffset, 1, 10, "");
     pMultiTurnCounter->setPosition(sliderOffset - 130, y);
     pMultiTurnCounter->setCurrentValue(static_cast<qint32>(pSettings->getMultiTurnCounter()));
     m_pOptions->addItem(pMultiTurnCounter);
