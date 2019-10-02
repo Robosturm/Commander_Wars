@@ -158,7 +158,7 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
         pLabel = new oxygine::TextField();
         pLabel->setWidth(width);
         pLabel->setStyle(style);
-        if (costs > 0)
+        if (costs >= 0)
         {
             pLabel->setHtmlText(QString::number(costs).toStdString().c_str());
         }

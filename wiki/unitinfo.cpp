@@ -252,7 +252,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pLabel = new oxygine::TextField();
         pLabel->setWidth(width);
         pLabel->setStyle(style);
-        if (costs > 0)
+        if (costs >= 0)
         {
             pLabel->setHtmlText(QString::number(static_cast<qint32>(costs)).toStdString().c_str());
         }
