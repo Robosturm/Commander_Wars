@@ -163,6 +163,7 @@ private:
     QVector<quint64> m_ReadySockets;
     oxygine::spTextField m_CurrentRoundTime;
     bool m_SaveGame{false};
+    bool m_Multiplayer{false};
 
     QTimer m_UpdateTimer;
     GameAction* m_pStoredAction{nullptr};

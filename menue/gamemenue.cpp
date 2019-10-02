@@ -183,6 +183,10 @@ void GameMenue::loadGameMenue()
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
     m_pInstance = this;
+    if (m_pNetworkInterface.get() != nullptr)
+    {
+        m_Multiplayer = true;
+    }
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
@@ -813,7 +817,8 @@ void GameMenue::saveGame()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     QVector<QString> wildcards;
-    if (m_pNetworkInterface.get() != nullptr)
+    if (m_pNetworkInterface.get() != nullptr ||
+        m_Multiplayer)
     {
         wildcards.append("*.msav");
     }
