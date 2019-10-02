@@ -119,7 +119,7 @@ qint32 Player::getPlayerID() const
                 return i;
             }
         }
-        return -1;
+        return 0;
     }
     return 0;
 }
