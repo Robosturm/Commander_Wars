@@ -2329,7 +2329,7 @@ void Unit::deserializeObject(QDataStream& pStream)
         for (qint32 i = 0; i < size; i++)
         {
             QPoint point;
-            pStream << point;
+            pStream >> point;
             m_MultiTurnPath.append(point);
         }
     }
