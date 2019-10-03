@@ -178,6 +178,11 @@ var Constructor = function()
     {
         return qsTr("All units have superior firepower and defense.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nUnits have 30% increased firepower and 20% increased defense.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Fires shock waves that disables electical systems and all forces in range become paralyzed. Affected units suffer one HP of damage. Firepower and defense rises.");

@@ -250,6 +250,11 @@ var Constructor = function()
     {
         return qsTr("Rattigan's troops are trained to be extremely capable at dealing with large regiments of units, but are taken off guard by lone units.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nUnits have 10% increased firepower against large regiments of units and 5% reduced firepower against lone units.") +
+               qsTr("\nCO Zone Effect:\nUnits have 30% increased firepower against large regiments of units.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Receives a small offensive boost when attacking enemies in groups. Movement is increased by one space.");

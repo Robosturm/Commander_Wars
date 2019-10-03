@@ -184,6 +184,11 @@ var Constructor = function()
     {
         return qsTr("Ozzy's defensive tactics lowers the amount of damage his units take.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effect.") +
+               qsTr("\nCO Zone Effect:\nDefense is increased by 40%.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Units gain a modest defense boost. Enemy counterattacks are less effective.");

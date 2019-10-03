@@ -145,13 +145,13 @@ var Constructor = function()
             {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (attacker.getHp() > defender.getHp())
+                if (attacker.getHp() >= defender.getHp())
                 {
                     return 80;
                 }
                 return 30;
             case GameEnums.PowerMode_Power:
-                if (attacker.getHp() > defender.getHp())
+                if (attacker.getHp() >= defender.getHp())
                 {
                     return 60;
                 }
@@ -159,7 +159,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    if (attacker.getHp() > defender.getHp())
+                    if (attacker.getHp() >= defender.getHp())
                     {
                         return 30;
                     }
@@ -197,11 +197,16 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Cassidy's units show no mercy. Increased firepower when attacking a unit with less HP.");
+        return qsTr("Cassidy's units show no mercy. Increased firepower when attacking a unit with equal or less health.");
+    };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo bonus.") +
+               qsTr("\nCO Zone Effect:\nUnits gain additional 30% firepower when attacking units with equal or less health.");
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Firepower is increased even further when attacking a unit with less HP.");
+        return qsTr("Firepower is increased even further when attacking a unit with equal or less health.");
     };
     this.getPowerName = function()
     {
@@ -209,7 +214,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("All enemies suffer one HP of damage. Firepower is greatly increased when attacking a unit with less HP.");
+        return qsTr("All enemies suffer one HP of damage. Firepower is greatly increased when attacking a unit with equal or less health.");
     };
     this.getSuperPowerName = function()
     {

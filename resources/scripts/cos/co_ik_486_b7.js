@@ -211,6 +211,11 @@ var Constructor = function()
     {
         return qsTr("His direct units can do indirect attacks when they don't move. However they loose a fraction of firepower when doing so.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nDirect Units gain an additional firerange when they don't move. However firepower is reduced by 10% in doing so. Normal attacks are 10% stronger.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("The defense of his direct units raises and the firerange is increased by 1 when they don't move.");

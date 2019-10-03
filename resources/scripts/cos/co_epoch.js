@@ -232,6 +232,11 @@ var Constructor = function()
     {
         return qsTr("Epoch is blessed with simple programming so it has only basic command abilities. Powers charge at an unmatched speed.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo effects") +
+               qsTr("\nCO Zone Effect:\nUnits have 10% increased firepower and 10% Luck.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Firepower is increased and unit HP is hidden from opponents.");

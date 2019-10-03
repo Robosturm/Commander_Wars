@@ -258,6 +258,11 @@ var Constructor = function()
     {
         return qsTr("Joey likes to live on the edge. Units are stronger when engaging stronger units, but firepower is reduced when engaging a weaker unit.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nUnits are 10% stronger when engaging stronger units, but firepower is reduced by 10% when engaging a weaker unit.") +
+               qsTr("\nCO Zone Effect:\nUnits are 30% stronger when engaging stronger units");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Units receive a large firepower boost when engaging a stronger unit.");

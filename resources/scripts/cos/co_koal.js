@@ -202,6 +202,11 @@ var Constructor = function()
     {
         return qsTr("A master of road-based battles. Firepower of all units increased on roads.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nUnits gain 30% increased firepower on street.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Movement range for all units is increased by one space. Units have more firepower on roads.");

@@ -251,6 +251,11 @@ var Constructor = function()
     {
         return qsTr("As an infantry specialist, her foot soldiers do more damage and capture faster. Non-infantry direct-combat units have weaker firepower.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nTransporter have 1 more movement point and 50% increased capture rate. Non-infantry direct-combat units have weaker 10% firepower.") +
+               qsTr("\nCO Zone Effect:\nInfantry Units have 40% increased firepower.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Infantry units receive a movement bonus of one space. Their attack also increases. ");

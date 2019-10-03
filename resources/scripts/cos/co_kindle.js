@@ -252,6 +252,11 @@ var Constructor = function()
     {
         return qsTr("An upper-crust CO who excels at urban warfare. Firepower of all units increased on properties.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nUnits on buildings have 50% increased firepower.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Inflicts three HP of damage to enemy units on properties. Also increases firepower of all units on a property.");

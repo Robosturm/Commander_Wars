@@ -195,6 +195,11 @@ var Constructor = function()
     {
         return qsTr("High firepower, but he relies solely on strength. His shoddy technique sometimes reduces the damage his units deal.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nUnits have 10% Luck and 5% Misfortune") +
+               qsTr("\nCO Zone Effect:\nUnits have 25% Luck and 10% Misfortune");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Firepower rises, but so does his chances of reduced firepower.");

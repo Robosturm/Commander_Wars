@@ -264,6 +264,11 @@ var Constructor = function()
     {
         return qsTr("Indirect attacks deal one HP of damage to all nearby units, no matter their allegiance.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nIndirect attacks deal one HP of damage to all nearby units, no matter their allegiance.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Direct attacks deal one HP of damage to the nearest enemy unit. Nana's units are no longer affected by collateral damage.");

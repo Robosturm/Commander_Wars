@@ -153,6 +153,11 @@ var Constructor = function()
     {
         return qsTr("Uses secret trade routes to get slightly lower deployment costs for all units.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nUnits are 10% cheaper") +
+               qsTr("\nCO Zone Effect:\nUnits have 10% more firepower and defense.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Speaks with such authority that he obtains even lower deployment costs.");

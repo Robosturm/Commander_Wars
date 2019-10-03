@@ -147,7 +147,7 @@ var Constructor = function()
         if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
                 co.getPowerMode() > GameEnums.PowerMode_Off)
         {
-            return 10;
+            return 15;
         }
         return 0;
     };
@@ -204,6 +204,11 @@ var Constructor = function()
     this.getCODescription = function()
     {
         return qsTr("Enemy units reduced to two or less HP by Graves' units become paralyzed.");
+    };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nEnemy units reduced to two or less HP by Graves' units become paralyzed.") +
+               qsTr("\nCO Zone Effect:\nUnits have 15% offensive bonus.");
     };
     this.getPowerDescription = function()
     {

@@ -218,6 +218,11 @@ var Constructor = function()
     {
         return qsTr("She can command hovercraft units at optimal level. Reefs pose no problem for Amy's units.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nReaf costs are always 1.") +
+               qsTr("\nCO Zone Effect:\nHovercrafts gain a 40% firepower boost.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Hovercraft units are strengthened, and they gain one extra movement and get cheaper.");

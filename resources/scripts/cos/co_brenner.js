@@ -171,6 +171,11 @@ var Constructor = function()
     {
         return qsTr("His units have a higher defence than normal units.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo bonus.") +
+               qsTr("\nCO Zone Effect:\nUnits gain additional 30% defense.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Heals 3 hp of his units and increases his defence.");

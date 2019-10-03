@@ -170,6 +170,11 @@ var Constructor = function()
     {
         return qsTr("Firepower of all units is increased, thanks to his daredevil nature, but their defenses are reduced.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nUnits have 20% reduced defense and 25% increased firepower.") +
+               qsTr("\nCO Zone Effect:\nUnits have 50% offensive bonus and 10% defensive malus.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Increases the attack of all units.");

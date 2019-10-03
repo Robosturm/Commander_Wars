@@ -98,7 +98,7 @@ var Constructor = function()
 
     this.getCOUnitRange = function(co)
     {
-        return 2;
+        return 1;
     };
     this.getCOArmy = function()
     {
@@ -156,6 +156,11 @@ var Constructor = function()
     this.getCODescription = function()
     {
         return qsTr("The heir to a vast fortune who can purchase units at bargain-basement prices. Troops' low firepower stems from his lack of confidence.");
+    };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nUnits are 20% cheaper and have 15% less firepower.") +
+               qsTr("\nCO Zone Effect:\nUnits have only 5% weaker firepower.");
     };
     this.getPowerDescription = function()
     {

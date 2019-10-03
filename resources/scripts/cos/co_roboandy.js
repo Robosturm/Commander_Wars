@@ -153,7 +153,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(posX, posY), unit))
                 {
-                    return co.getPowerFilled() * 2;
+                    return co.getPowerFilled();
                 }
                 break;
         }
@@ -213,6 +213,11 @@ var Constructor = function()
     this.getCODescription = function()
     {
         return qsTr("He gets firepower for his powermeter, but his firepower may also drop drastically.");
+    };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nUnits gain 1% firepower and 1% misfortune per star.") +
+               qsTr("\nCO Zone Effect:\nUnits gain 4% firepower and 1% misfortune per star.");
     };
     this.getPowerDescription = function()
     {

@@ -207,6 +207,11 @@ var Constructor = function()
     {
         return qsTr("Skilled at taking advantage of terrain features. Can turn terrain effects into firepower bonuses.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nUnits gain 10% increased firepower per defense star.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("All units' movements are unhindered by terrain.");

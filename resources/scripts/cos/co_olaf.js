@@ -206,6 +206,11 @@ var Constructor = function()
     {
         return qsTr("Winter poses no problem for Olaf or his troops. Snow causes his firepower to rise, and his troops can move through it without any penalties.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nWinter poses no problem for Olaf or his troops.") +
+               qsTr("\nCO Zone Effect:\nFirepower is increased by 30% during Snow.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Causes snow to fall for two days, causing his firepower to rise.");

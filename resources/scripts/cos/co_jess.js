@@ -256,6 +256,11 @@ var Constructor = function()
     {
         return qsTr("Vehicular units have superior firepower. Air and naval units are comparatively weak.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nAir and Sea Units are 10% weaker and Ground Units have 10% increased firepower.") +
+               qsTr("\nCO Zone Effect:\nGround Units have 30% increased firepower.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Movement range of vehicles increases by one space and their firepower increases. All units' fuel and ammunition supplies are replenished.");

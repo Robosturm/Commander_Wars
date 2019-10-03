@@ -230,6 +230,11 @@ var Constructor = function()
     {
         return qsTr("Unit's have high defensive capabilities.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nDefense is increased by 25% and by 45% against indirect units.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Units cannot take damage that is more than half of their starting HP in a single attack.");

@@ -258,6 +258,11 @@ var Constructor = function()
     {
         return qsTr("Units near mountains have increased firepower.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nUnits near Mountains gain an additional 40% firepower.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Direct units can blow lighter enemies away when attacking.");

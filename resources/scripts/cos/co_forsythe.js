@@ -169,6 +169,11 @@ var Constructor = function()
     {
         return qsTr("He has a large CO-Zone which boosts both offensive and defensive.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nUnits have 20% offensive and defensive bonus.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Increases offensive and defensive.");

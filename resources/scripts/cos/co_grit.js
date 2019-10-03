@@ -235,6 +235,11 @@ var Constructor = function()
     {
         return qsTr("Indirect-combat units cause more damage and have increased firerange. Weak in non-infantry direct combat.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nIndirect units have 1 increased firerange and non-infantry direct units have 20% reduced firepower.") +
+               qsTr("\nCO Zone Effect:\nIndirect units  have 30% offensive bonus.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Increases range of indirect units by one space. Firepower of these units also rise.");

@@ -62,7 +62,7 @@ var Constructor = function()
             var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
             animation.writeDataInt32(unit.getX());
             animation.writeDataInt32(unit.getY());
-            animation.writeDataInt32(1);
+            animation.writeDataInt32(2);
             animation.setEndOfAnimationCall("CO_MEIYO", "postAnimationRanking");
 
             if (animations.length < 5)
@@ -299,6 +299,11 @@ var Constructor = function()
     {
         return qsTr("Firepower rises the higher a rank of a unit is. However unexperienced units are weaker.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nUnit Ranks are 50% more effective. Units without a Rank loose 5% firepower.") +
+               qsTr("\nCO Zone Effect:\nUnit Ranks are 100% more effective.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Units with a higher rank have even higher defence and offense.");
@@ -309,7 +314,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Units with a higher rank have even higher defence and offense. All units gain one rank.");
+        return qsTr("Units with a higher rank have even higher defence and offense. All units gain two ranks.");
     };
     this.getSuperPowerName = function()
     {

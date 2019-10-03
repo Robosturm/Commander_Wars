@@ -236,6 +236,11 @@ var Constructor = function()
     {
         return qsTr("Fights well in the open. Firepower of all units increased on plains.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nUnits have 20% increased defense and firepower.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Firepower is increased on plains. Firing range of indirect-combat units is increased by one.");

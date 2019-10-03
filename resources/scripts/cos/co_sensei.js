@@ -217,6 +217,11 @@ var Constructor = function()
     {
         return qsTr("Copters have incredibly high firepower, but naval units have weak attacks. Foot soldiers have increased firepower.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nCopters have 25% increased firepower and Naval Units are 10% weaker.") +
+               qsTr("\nCO Zone Effect:\nCopters have 50% increased firepower and infantries have 30% increased firepower.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Copter firepower increases and copter movement increases. Infantry firepower rises greatly.");

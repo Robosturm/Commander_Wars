@@ -211,6 +211,11 @@ var Constructor = function()
     {
         return qsTr("His direct ground units are slightly stronger.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nDirect Ground Units have 30% increased firepower.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Boost movement by 1 and increases the firepower of direct ground units.");

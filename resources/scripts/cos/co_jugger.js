@@ -135,7 +135,7 @@ var Constructor = function()
                 }
                 break;
         }
-        return 12;
+        return 14;
     };
 	
     this.getBonusMisfortune = function(co, unit, posX, posY)
@@ -193,6 +193,11 @@ var Constructor = function()
     this.getCODescription = function()
     {
         return qsTr("Units may suddenly deal more damage than expected, but units' firepower is inherently low.");
+    };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nUnits have 14% Luck and 7% Misfortune") +
+               qsTr("\nCO Zone Effect:\nUnits have 30% Luck and 15% Misfortune");
     };
     this.getPowerDescription = function()
     {

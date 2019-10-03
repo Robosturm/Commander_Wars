@@ -182,6 +182,11 @@ var Constructor = function()
     {
         return qsTr("Highly skilled at salvaging parts, Sabaki's units can drain HP from enemies.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nUnits have 20% lifesteal.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Units can drain even more HP.");

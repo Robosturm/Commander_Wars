@@ -209,6 +209,11 @@ var Constructor = function()
     {
         return qsTr("Peter's units plow through enemy direct-combat units with ease. However, thicker terrain weakens his attacks.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nDirect Units have 7% increased firepower and loose additional 5% firepower per terrain star.") +
+               qsTr("\nCO Zone Effect:\nDirect Units have 30% increased firepower.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Firepower is greatly increases against enemy direct-combat units.");

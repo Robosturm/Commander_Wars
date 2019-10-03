@@ -233,6 +233,11 @@ var Constructor = function()
     {
         return qsTr("Her ground units are very strong. Her other units have normal power.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nGround Units gain 30% firepower and defense.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Increases vision range by 1 and allows her to view into hidden places. Also increases the power of her ground units.");

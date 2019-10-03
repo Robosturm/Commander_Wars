@@ -230,6 +230,11 @@ var Constructor = function()
     {
         return qsTr("Indirect-combat units and sea units cause more damage and have increased firerange.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nIndirect and Sea Units have 30% offensive and 20% defensive bonus.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Increases range of indirect units by two space. Firepower of sea and indirect units also rise.");

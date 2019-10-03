@@ -240,6 +240,11 @@ var Constructor = function()
     {
         return qsTr("Unit's have no basic luck instead they deal a fix amount of damage. Firepower increases as more units are within vision range. Weak counters.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nUnits deal no luck damage. Units gain 1% firepower for own units in vision range. Counter attacks are 20% weaker.") +
+               qsTr("\nCO Zone Effect:\nUnits gain 2% firepower for own units in vision range.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Unit vision is extended. Firepower increases even more as more units are within vision range.");

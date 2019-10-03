@@ -217,6 +217,11 @@ var Constructor = function()
     {
         return qsTr("Her troops are immune to all weather effects");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nHer troops are immune to all weather effects.") +
+               qsTr("\nCO Zone Effect:\n10% increased firepower and defense.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Changes the weather to a random one.");

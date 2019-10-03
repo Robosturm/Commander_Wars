@@ -155,8 +155,6 @@ var Constructor = function()
         return "PF";
     };
 
-
-
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
@@ -225,6 +223,11 @@ var Constructor = function()
     this.getCODescription = function()
     {
         return qsTr("Aira never felt a need to specialize, so all units are average.");
+    };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo bonus.") +
+               qsTr("\nCO Zone Effect:\nUnits gain additional 20% firepower.");
     };
     this.getPowerDescription = function()
     {

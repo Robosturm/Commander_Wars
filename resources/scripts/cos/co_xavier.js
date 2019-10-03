@@ -243,7 +243,12 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("When Xavier's units drop below 5 HP, they are able to strike for maximum luck damage.");
+        return qsTr("When Xavier's units drop to 5 HP or less, they are able to strike for maximum luck damage.");
+    };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nUnits with 5 HP or less deal maximum luck damage.") +
+               qsTr("\nCO Zone Effect:\nUnits have 20% increased firepower.");
     };
     this.getPowerDescription = function()
     {

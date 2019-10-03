@@ -174,6 +174,11 @@ var Constructor = function()
     {
         return qsTr("Sometimes strikes with slightly more force than expected. She's the first to tell you she was born lucky.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects") +
+               qsTr("\nCO Zone Effect:\nUnits have 15% Luck.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Has a chance to strike with more damage than expected. Lucky!");

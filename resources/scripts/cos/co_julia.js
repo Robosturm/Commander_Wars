@@ -179,6 +179,11 @@ var Constructor = function()
     {
         return qsTr("Units have reduced offensive power. However, firepower is unaffected by loss of HP.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nUnits loose 20% firepower but they firepower is unaffected by loss of HP.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Half of enemy units can't move next turn and all units are unaffected by loss of HP but get less firepower.");

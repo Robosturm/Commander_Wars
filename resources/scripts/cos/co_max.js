@@ -229,6 +229,11 @@ var Constructor = function()
     {
         return qsTr("Non-infantry direct-combat units are tops.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nDirect Units gain 15% additional firepower and indirect Units loose 10% firepower and 1 firerange.") +
+               qsTr("\nCO Zone Effect:\nDirect Units gain 35% additional firepower.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Firepower and movement of all non-infantry direct-combat units rises.");

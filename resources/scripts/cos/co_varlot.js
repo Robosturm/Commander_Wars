@@ -242,6 +242,11 @@ var Constructor = function()
     {
         return qsTr("Varlot reduces the income from a property he captures by an amount proportional to its Capture Points.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nIncome is reduced for buildings he captures.") +
+               qsTr("\nCO Zone Effect:\nUnits have 20% increased firepower.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("His troops get a capture bonus. Varlot also gains a fraction of the enemy income.");

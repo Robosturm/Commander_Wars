@@ -186,6 +186,11 @@ var Constructor = function()
     {
         return qsTr("Adept at making quick command decisions, he stores up energy for his CO Power more rapidly than other CO's.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo bonus.") +
+               qsTr("\nCO Zone Effect:\nUnits gain additional 20% firepower.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Movement range for all units is increased by one space.");

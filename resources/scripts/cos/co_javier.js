@@ -193,6 +193,11 @@ var Constructor = function()
     {
         return qsTr("Units possess superior defenses vs. indirect attacks and Comtowers have a higher impact.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nUnits have 20% increased defense against indirect units. Units gain additional 5% firepower and defense per Comtower.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Improves defense vs. indirect attacks and firepower slightly rises the more Comtower he owns.");

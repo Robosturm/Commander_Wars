@@ -208,6 +208,11 @@ var Constructor = function()
     {
         return qsTr("Mina's troops have no real strength or weakness.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nUnits gain an additional 20% firepower.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Unit's defenses may unexpectedly rise.");

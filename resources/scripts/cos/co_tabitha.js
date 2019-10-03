@@ -163,6 +163,11 @@ var Constructor = function()
     {
         return qsTr("Her co unit is strong weak outside of that she gets no bonuses.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects") +
+               qsTr("\nCO Zone Effect:\nUnits have 60% increased firepower and defense.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("A small attack from the great owl that deals 4 HP of damage to all affected units. Also increases the firepower of all units.");

@@ -206,6 +206,11 @@ var Constructor = function()
     {
         return qsTr("Her units are slightly stronger.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nUnits have 20% firepower and defense bonus.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Increases her movement range and firerange by 1.");

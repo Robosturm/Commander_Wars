@@ -234,6 +234,11 @@ var Constructor = function()
     {
         return qsTr("Copter, seaplanes and sea units have higher firepower and defense.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\n Sea Units have 20% offensive and 50% defensive bonus.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("All units get resupplied and his copter, seaplanes and sea units have higher firepower and defense.");

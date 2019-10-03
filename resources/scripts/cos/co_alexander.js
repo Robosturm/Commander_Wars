@@ -171,6 +171,11 @@ var Constructor = function()
     {
         return qsTr("Alexander captures revolt against capturing each day which increases the resistance 1.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nHis Buildings that get captured revolt and increase the resistance 1 by one each day.") +
+               qsTr("\nCO Zone Effect:\nUnits gain additional 10% firepower.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Alexander's troops capture at a faster rate, while enemy captures are forced to restart.");

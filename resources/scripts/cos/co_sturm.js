@@ -193,6 +193,11 @@ var Constructor = function()
     {
         return qsTr("His troops are not affected by terrain only snow can stop him.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nHis troops are not affected by terrain only snow can stop him.") +
+               qsTr("\nCO Zone Effect:\nUnits have 30% increased firepower and defense.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("A small Meteor fall from space and deal 4 HP of damage to all affected units.");

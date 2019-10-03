@@ -212,7 +212,12 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("His units are superior in his CO-Zone but weaker outside. On top his troops heal 5 Hp each turn inside his CO-Zone.");
+        return qsTr("His units are superior in his CO-Zone but weaker outside. On top his troops heal 5 HP each turn inside his CO-Zone.");
+    };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nUnits loose firepower by 20% and defense by 10%.") +
+               qsTr("\nCO Zone Effect:\nUnits gain 60% firepower and 60% defense. They also heal 5HP each turn..");
     };
     this.getPowerDescription = function()
     {

@@ -190,6 +190,11 @@ var Constructor = function()
     {
         return qsTr("All units possess superior firepower. However, his CO power gauge is longer than it should be.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects.") +
+               qsTr("\nCO Zone Effect:\nUnits have 30% more firepower.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("All enemy units suffer one HP of damage. In addition, all allied units recover one HP.");

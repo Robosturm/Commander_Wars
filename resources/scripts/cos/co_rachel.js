@@ -222,6 +222,11 @@ var Constructor = function()
     {
         return qsTr("Her troops are quite hardworking, and they increase repairs by one on properties.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nUnits have increased repairs by one on properties.") +
+               qsTr("\nCO Zone Effect:\nUnits have 20% increased firepower.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Has a chance to strike with more damage than expected. Lucky!");

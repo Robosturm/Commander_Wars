@@ -346,6 +346,12 @@ var Constructor = function()
     {
         return qsTr("A keen mind for his finances, he spends more for better equipment when there's a surplus and focuses on getting the best deal when he's pressed for money.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nUnit costs are decreased when he has more income than funds and firepower is decreased.") +
+               qsTr("\nCO Zone Effect:\nGlobal firepower effects are doubled.");
+    };
+
     this.getPowerDescription = function()
     {
         return qsTr("When his units take combat damage, he recieves a portion of the value of the damage in funds.");

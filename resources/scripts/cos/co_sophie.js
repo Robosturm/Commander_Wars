@@ -245,6 +245,11 @@ var Constructor = function()
     {
         return qsTr("Enemy counterattacks deal less damage to Sophie's units.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo Effects") +
+               qsTr("\nCO Zone Effect:\nEnemy counterattacks deal 20% less damage. Units gain 10% firepower and defense.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Enemy counterattacks deal no damage to Sophie's units.");

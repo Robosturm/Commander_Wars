@@ -241,7 +241,12 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Effects of natural terrain are increased by one star and firepower is increased on natural terrain");
+        return qsTr("Effects of natural terrain are increased by one star and firepower is increased on natural terrain. Units are repaired by 1 HP less on Buildings.");
+    };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nUnits gain an additional defense point on natural terrain. Units are repaired by 1 HP less on Buildings.") +
+               qsTr("\nCO Zone Effect:\nUnits gain an additional 30% firepower on natural terrain.");
     };
     this.getPowerDescription = function()
     {

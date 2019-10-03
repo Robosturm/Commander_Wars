@@ -187,6 +187,11 @@ var Constructor = function()
     {
         return qsTr("No real weaknesses. Proficient with air, sea and land units. Ready to fight wherever and whenever.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nNo bonus.") +
+               qsTr("\nCO Zone Effect:\nUnits gain additional 20% firepower.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Restores two HP to all units.");

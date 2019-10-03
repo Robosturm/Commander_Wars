@@ -184,6 +184,11 @@ var Constructor = function()
     {
         return qsTr("Being the heir to a vast fortune, she gets an additional 10% funds from allied properties.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nShe gets an additional 10% funds from allied properties.") +
+               qsTr("\nCO Zone Effect:\nUnits gain 10% additional firepower and defense.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("The more funds she has, the more she can decrease the enemy's CO power gauge.");

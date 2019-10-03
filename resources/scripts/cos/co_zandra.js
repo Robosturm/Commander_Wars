@@ -209,6 +209,11 @@ var Constructor = function()
     {
         return qsTr("Zandra's units are unaffected by sandstorms. They fight even better during them.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nUnits are unaffected by sandstorms and have 10% increased firepower during sandstorm.") +
+               qsTr("\nCO Zone Effect:\nUnits have 30% increased firepower during sandstorm.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Causes sandstorm to fall for two days. Increasing the firerange of indirects by 1 and increasing her firepower.");

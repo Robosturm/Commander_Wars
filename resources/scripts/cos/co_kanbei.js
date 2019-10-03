@@ -188,6 +188,11 @@ var Constructor = function()
     {
         return qsTr("All units have high offensive and defensive capabilities, but are expensive to deploy.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nUnits have 20% stronger firepower and defense and are 20% more expensive.") +
+               qsTr("\nCO Zone Effect:\nUnits have 40% stronger firepower and defense.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("Increases firepower and defence of all units.");

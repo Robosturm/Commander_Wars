@@ -232,6 +232,11 @@ var Constructor = function()
     {
         return qsTr("Air units use less fuel and have superior firepower. Naval units have weaker firepower.");
     };
+    this.getLongCODescription = function()
+    {
+        return qsTr("\nGlobal Effect:\nAir units are 10% stronger and Sea units 10% weaker") +
+               qsTr("\nCO Zone Effect:\nAir units have 30% increased firepower.");
+    };
     this.getPowerDescription = function()
     {
         return qsTr("All non-infantry units that have already carried out orders may move again, but their firepower is cut in half.");
