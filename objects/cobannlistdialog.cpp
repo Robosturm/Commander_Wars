@@ -171,7 +171,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
         }
         x += 280;
     }
-    pPanel->setContentHeigth(y);
+    pPanel->setContentHeigth(y + 50);
 }
 
 void COBannListDialog::setCOBannlist(qint32 item)

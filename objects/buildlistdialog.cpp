@@ -173,7 +173,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
         }
         x += 280;
     }
-    pPanel->setContentHeigth(y);
+    pPanel->setContentHeigth(y + 50);
 }
 
 void BuildListDialog::setBuildlist(qint32 item)
