@@ -15,7 +15,7 @@
 const float NormalAi::notAttackableDamage = 25.0f;
 const float NormalAi::midDamage = 55.0f;
 const float NormalAi::highDamage = 65.0f;
-const float NormalAi::directIndirectRatio = 1.75f;
+const float NormalAi::directIndirectRatio = 1.5f;
 
 NormalAi::NormalAi(float initMinMovementDamage, float initMinAttackFunds, float initMinSuicideDamage)
     : CoreAI (BaseGameInputIF::AiTypes::Normal),
@@ -1369,13 +1369,16 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
         {
             infantryUnits++;
         }
-        if (pUnit->getBaseMaxRange() > 1)
+        else if (pUnit->hasWeapons())
         {
-            indirectUnits++;
-        }
-        else
-        {
-            directUnits++;
+            if (pUnit->getBaseMaxRange() > 1)
+            {
+                indirectUnits++;
+            }
+            else
+            {
+                directUnits++;
+            }
         }
         if (pUnit->getLoadingPlace() > 0)
         {
@@ -1427,16 +1430,28 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
             }
         }
     }
-
-    float fundsPerFactory = m_pPlayer->getFunds() / static_cast<float>(productionBuildings);
+    float funds = m_pPlayer->getFunds();
+    // calc average costs if we would build same cost units on every building
+    float fundsPerFactory = funds / (static_cast<float>(productionBuildings));
+    if (productionBuildings > 2)
+    {
+        // if we have a bigger number of buildings we wanna spam out units but not at an average costs overall buildings
+        // but more a small amount of strong ones and a large amount of cheap ones
+        // so we use a small (x - a) / (x - b) function here
+        float test = funds * ((productionBuildings - 2.5f) / (static_cast<float>(productionBuildings) - 1.65f));
+        if (test > fundsPerFactory)
+        {
+            fundsPerFactory = test;
+        }
+    }
     // position 0 direct to indirect ratio
     if (indirectUnits > 0)
     {
-        data[0] = directUnits / static_cast<float>(indirectUnits);
+        data[0] = static_cast<float>(directUnits) / static_cast<float>(indirectUnits);
     }
     else
     {
-        data[0] = directUnits;
+        data[0] = static_cast<float>(directUnits);
     }
     // position 1 infatry to unit count ratio
     if (pUnits->size() > 0)
@@ -1559,6 +1574,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                             {
                                 score = calcTransporterScore(dummy, pUnits, pEnemyUnits, pEnemyBuildings, transportTargets, data);
                             }
+                            score *= BaseGameInputIF::getUnitBuildValue(dummy.getUnitID());
                             if (score > bestScore)
                             {
                                 bestScore = score;
@@ -1699,6 +1715,10 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
             if (counterDmg > 100.0f)
             {
                 counterDmg = 100.0f;
+            }
+            else if (counterDmg < 7.5f)
+            {
+                counterDmg = 0.0f;
             }
             float resDamage = 0;
             float myMovepoints = dummy.getBaseMovementPoints();
@@ -2082,7 +2102,7 @@ float NormalAi::calcBuildScore(QVector<float>& data)
     // apply co buff bonus
     score += data[10] * 10;
 
-    if (data[14] > 0)
+    if (data[14] > 0 && data[11] > 0)
     {
         score += 10.0f / Mainapp::roundUp(data[14] / data[11]);
     }
@@ -2112,6 +2132,12 @@ void NormalAi::serializeObject(QDataStream& stream)
 {
     stream << getVersion();
     stream << enableNeutralTerrainAttack;
+    stream << static_cast<qint32>(m_BuildingChanceModifier.size());
+    for (qint32 i = 0; i < m_BuildingChanceModifier.size(); i++)
+    {
+        stream << std::get<0>(m_BuildingChanceModifier[i]);
+        stream << std::get<1>(m_BuildingChanceModifier[i]);
+    }
 }
 void NormalAi::deserializeObject(QDataStream& stream)
 {
@@ -2120,5 +2146,18 @@ void NormalAi::deserializeObject(QDataStream& stream)
     if (version > 1)
     {
         stream >> enableNeutralTerrainAttack;
+    }
+    if (version > 2)
+    {
+        qint32 size = 0;
+        stream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            QString unitID;
+            float value = 1.0f;
+            stream >> unitID;
+            stream >> value;
+            m_BuildingChanceModifier.append(std::tuple<QString, float>(unitID, value));
+        }
     }
 }

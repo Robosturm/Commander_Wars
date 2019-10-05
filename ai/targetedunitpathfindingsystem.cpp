@@ -44,9 +44,9 @@ QPoint TargetedUnitPathFindingSystem::getReachableTargetField(qint32 movepoints)
     if (m_FinishNode >= 0)
     {
         Node* pNode = m_ClosedList[m_FinishNode];
-        while (pNode->previousNodes.size() > 0 &&
-               pNode->currentCost > movepoints &&
-               getCosts(pNode->x, pNode->y) <= 0)
+        while ((pNode->previousNodes.size() > 0 &&
+               pNode->currentCost > movepoints) ||
+               (getCosts(pNode->x, pNode->y) == 0))
         {
             // use a random node?
             pNode = pNode->previousNodes[0];

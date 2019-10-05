@@ -125,3 +125,30 @@ BaseGameInputIF::AiTypes BaseGameInputIF::getAiType() const
 {
     return m_AiType;
 }
+
+void BaseGameInputIF::setUnitBuildValue(QString unitID, float value)
+{
+    // modify existing value
+    for (qint32 i = 0; i < m_BuildingChanceModifier.size(); i++)
+    {
+        if (std::get<0>(m_BuildingChanceModifier[i]) == unitID)
+        {
+            std::get<1>(m_BuildingChanceModifier[i]) = value;
+            return;
+        }
+    }
+    // add modifier
+    m_BuildingChanceModifier.append(std::tuple<QString, float>(unitID, value));
+}
+
+float BaseGameInputIF::getUnitBuildValue(QString unitID)
+{
+    for (qint32 i = 0; i < m_BuildingChanceModifier.size(); i++)
+    {
+        if (std::get<0>(m_BuildingChanceModifier[i]) == unitID)
+        {
+            return std::get<1>(m_BuildingChanceModifier[i]);
+        }
+    }
+    return 1.0f;
+}

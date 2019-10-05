@@ -2,6 +2,7 @@
 #define BASEGAMEINPUTIF_H
 
 #include <QObject>
+#include <QVector>
 
 #include "oxygine-framework.h"
 
@@ -52,10 +53,23 @@ public slots:
      * @param value
      */
     void setEnableNeutralTerrainAttack(bool value);
+    /**
+     * @brief setUnitBuildValue only applies to Normal AI and better
+     * @param unitID unit to alter the building score
+     * @param value score modification value. value <= 0 means won't be produced. value means 1.0 normal chance. value 2.0 means doubled score mostlikely AI will only build this unit
+     */
+    void setUnitBuildValue(QString unitID, float value);
+    /**
+     * @brief getUnitBuildValue only applies to Normal AI and better
+     * @param unitID unit to alter the building score
+     * @return value score modification value. value <= 0 means won't be produced. value means 1.0 normal chance. value 2.0 means doubled score mostlikely AI will only build this unit
+     */
+    float getUnitBuildValue(QString unitID);
 protected:
     Player* m_pPlayer{nullptr};
     AiTypes m_AiType{AiTypes::Human};
     bool enableNeutralTerrainAttack{true};
+    QVector<std::tuple<QString, float>> m_BuildingChanceModifier;
 };
 
 #endif // BASEGAMEINPUTIF_H
