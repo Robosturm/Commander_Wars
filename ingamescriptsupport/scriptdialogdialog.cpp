@@ -74,27 +74,33 @@ void ScriptDialogDialog::updateDialog()
     pApp->suspendThread();
     m_Panel->clearContent();
     qint32 count = m_Event->getDialogSize();
+    qint32 panelWidth = pApp->getSettings()->getWidth();
+    if (panelWidth < 1000)
+    {
+        panelWidth = 1000;
+    }
+
     for (qint32 i = 0; i < count; i++)
     {
         ScriptEventDialog::Dialog* pDialog = m_Event->getDialog(i);
         qint32 y = i * 40;
-        spTextbox pTextbox = new Textbox(pApp->getSettings()->getWidth() - 600);
+        spTextbox pTextbox = new Textbox(panelWidth - 800);
         pTextbox->setPosition(0, y);
         pTextbox->setCurrentText(pDialog->text);
         m_Panel->addItem(pTextbox);
-        bool up = false;
-        if (i >= 5)
-        {
-            up = true;
-        }
         connect(pTextbox.get(), &Textbox::sigTextChanged, [=](QString text)
         {
             pDialog->text = text;
         });
 
+        bool up = false;
+        if (i >= 5)
+        {
+            up = true;
+        }
         QVector<QString> moods = {tr("Normal"), tr("Happy"), tr("Sad")};
         spDropDownmenu moodMenu = new DropDownmenu(150, moods, up);
-        moodMenu->setPosition(pApp->getSettings()->getWidth() - 600, y);
+        moodMenu->setPosition(pApp->getSettings()->getWidth() - 800, y);
         moodMenu->setCurrentItem(static_cast<qint32>(pDialog->mood));
         m_Panel->addItem(moodMenu);
         connect(moodMenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
@@ -104,7 +110,7 @@ void ScriptDialogDialog::updateDialog()
 
         QVector<QString> ids = COSpriteManager::getInstance()->getSpriteCOIDs();
         spDropDownmenu coidsMenu = new DropDownmenu(200, ids, up);
-        coidsMenu->setPosition(pApp->getSettings()->getWidth() - 450, y);
+        coidsMenu->setPosition(pApp->getSettings()->getWidth() - 650, y);
         coidsMenu->setCurrentItem(pDialog->coid);
         m_Panel->addItem(coidsMenu);
         connect(coidsMenu.get(), &DropDownmenu::sigItemChanged, [=](qint32)
@@ -127,15 +133,21 @@ void ScriptDialogDialog::updateDialog()
             playerColors.append(QColor(ret.toString()));
         }
         spDropDownmenuColor colors = new DropDownmenuColor(110, playerColors, up);
-        colors->setPosition(pApp->getSettings()->getWidth() - 250, y);
+        colors->setPosition(pApp->getSettings()->getWidth() - 450, y);
         colors->setCurrentItem(pDialog->color);
         m_Panel->addItem(colors);
         connect(colors.get(), &DropDownmenuColor::sigItemChanged, [=](QColor color)
         {
             pDialog->color = color;
         });
+
+        oxygine::spButton pBackgroundTextbox = ObjectManager::createButton(tr("load Background"), 200);
+        pBackgroundTextbox->setPosition(pApp->getSettings()->getWidth() - 340, y);
+        m_Panel->addItem(pBackgroundTextbox);
+
     }
     m_Panel->setContentHeigth(count * 40 + 20);
+    m_Panel->setContentWidth(panelWidth);
     pApp->continueThread();
 
 }

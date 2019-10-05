@@ -24,6 +24,7 @@ public:
         QString coid;
         GameEnums::COMood mood{GameEnums::COMood_Normal};
         QColor color;
+        QString background;
     };
 
     ScriptEventDialog();

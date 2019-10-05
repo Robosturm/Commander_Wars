@@ -2797,18 +2797,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="95"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="101"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="95"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="101"/>
         <source>Happy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="95"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="101"/>
         <source>Sad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="144"/>
+        <source>load Background</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -56,10 +56,16 @@ public slots:
      * @param speed
      */
     void setTextSpeed(qint32 speed);
-
+    /**
+     * @brief loadBackground
+     * @param file path relative to the Commander Wars.exe
+     */
+    void loadBackground(QString file);
 protected:
     virtual void update(const oxygine::UpdateState& us) override;
     void startFinishTimer();
+
+    void _loadBackground();
 private:
     QString m_Text;
     qint32 writePosition{0};
@@ -73,6 +79,11 @@ private:
     oxygine::spTextField m_TextField;
     QTime textTimer;
     qint32 textSpeed;
+
+    // background sprite handling
+    QString m_BackgroundFile;
+    oxygine::spSprite m_BackgroundSprite;
+    oxygine::spResAnim m_BackgroundAnim;
 
     float textScale{1.7f};
 

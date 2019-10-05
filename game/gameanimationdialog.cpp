@@ -6,6 +6,8 @@
 
 #include "game/gameanimationfactory.h"
 
+#include "qfile.h"
+
 #include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
 #include "resource_management/cospritemanager.h"
@@ -22,6 +24,9 @@ GameAnimationDialog::GameAnimationDialog(quint32 frameTime)
     connect(&finishTimer, &QTimer::timeout, this, &GameAnimationDialog::onFinished, Qt::QueuedConnection);
 
     Settings* pSetting = Mainapp::getInstance()->getSettings();
+
+    m_BackgroundSprite = new oxygine::Sprite();
+    addChild(m_BackgroundSprite);
 
     float scale = 2.0f;
 
@@ -153,6 +158,11 @@ void GameAnimationDialog::startFinishTimer()
 
 void GameAnimationDialog::update(const oxygine::UpdateState& us)
 {
+    // update background if wanted
+    if (!m_BackgroundFile.isEmpty())
+    {
+        _loadBackground();
+    }
     if (textTimer.elapsed() > textSpeed && !paused)
     {
         writePosition += 1;
@@ -223,10 +233,12 @@ void GameAnimationDialog::setPositionTop(bool value)
     if (value)
     {
         setY(0);
+        m_BackgroundSprite->setY(0);
     }
     else
     {
         setY(Mainapp::getInstance()->getSettings()->getHeight() - m_TextBackground->getScaledHeight());
+        m_BackgroundSprite->setY(-getY());
     }
 }
 
@@ -264,4 +276,24 @@ void GameAnimationDialog::restart()
 {
     m_stopped = false;
     GameMenue::getInstance()->addChild(this);
+}
+
+void GameAnimationDialog::loadBackground(QString file)
+{
+    m_BackgroundFile = file;
+}
+
+void GameAnimationDialog::_loadBackground()
+{
+    if (QFile::exists(m_BackgroundFile))
+    {
+        oxygine::SingleResAnim* pAnim = new oxygine::SingleResAnim();
+        pAnim->setResPath(m_BackgroundFile.toStdString());
+        pAnim->init(m_BackgroundFile.toStdString(), 1, 1, 1.0f);
+        m_BackgroundAnim = pAnim;
+        m_BackgroundSprite->setResAnim(m_BackgroundAnim.get());
+        m_BackgroundSprite->setScaleX(Settings::getWidth() / pAnim->getWidth());
+        m_BackgroundSprite->setScaleY(Settings::getHeight() / pAnim->getHeight());
+    }
+    m_BackgroundFile = "";
 }
