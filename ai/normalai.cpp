@@ -613,7 +613,7 @@ bool NormalAi::moveToUnloadArea(GameAction* pAction, Unit* pUnit, QmlVectorUnit*
                             else if (unloadFields[i].size() > 0 &&
                                      pUnit->getLoadedUnit(i)->getActionList().contains(ACTION_CAPTURE))
                             {
-                                for (qint32 i2 = 0; i2 < unloadFields.size(); i2++)
+                                for (qint32 i2 = 0; i2 < unloadFields[i].size(); i2++)
                                 {
                                     QPoint unloadField = unloadFields[i][i2].toPoint();
                                     Building* pBuilding = pMap->getTerrain(unloadField.x(),

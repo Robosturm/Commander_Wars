@@ -193,6 +193,10 @@ bool CoreAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
                         emit performAction(pAction);
                         return true;
                     }
+                    else if (i == 1)
+                    {
+                        pAction->setActionID(ACTION_ACTIVATE_SUPERPOWER_CO_1);
+                    }
                     else
                     {
                         pAction->setActionID(ACTION_ACTIVATE_SUPERPOWER_CO_0);
