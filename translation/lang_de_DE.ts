@@ -936,119 +936,124 @@
 <context>
     <name>DialogModifyUnit</name>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="40"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="41"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="61"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="74"/>
         <source>Unit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="70"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="83"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="73"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="86"/>
         <source>HP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="86"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="99"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="89"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="102"/>
         <source>Fuel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="111"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="124"/>
         <source>Ammo 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="114"/>
-        <location filename="../objects/dialogmodifyunit.cpp" line="139"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="127"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="152"/>
         <source>Ammo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="136"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="149"/>
         <source>Ammo 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="160"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="173"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="167"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="180"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="182"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="195"/>
         <source>AI-Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="185"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="198"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="185"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="198"/>
         <source>Offensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="185"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="198"/>
         <source>Defensive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="185"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="198"/>
         <source>Hold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="198"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="211"/>
         <source>Unit Rank: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="201"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="214"/>
         <source>Soldier</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="201"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="214"/>
         <source>Lieutenant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="201"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="214"/>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="201"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="214"/>
         <source>Veteran</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="201"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="214"/>
         <source>CO 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="201"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="214"/>
         <source>CO 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyunit.cpp" line="247"/>
+        <source>Loaded Unit </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1672,7 +1677,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/METEOR.js" line="147"/>
+        <location filename="../resources/scripts/terrain/METEOR.js" line="149"/>
         <source>Meteor pieces which can be attacked and destroyed &lt;div c=&apos;00ff00&apos;&gt;to eliminate plasma.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2255,7 +2260,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="31"/>
+        <location filename="../resources/scripts/terrain/PLAINS_PLASMA.js" line="46"/>
         <source>Ground units move easily on this terrain.</source>
         <translation type="unfinished"></translation>
     </message>

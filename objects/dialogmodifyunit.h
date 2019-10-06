@@ -7,6 +7,8 @@
 
 #include "objects/checkbox.h"
 
+#include "objects/panel.h"
+
 class Unit;
 
 class DialogModifyUnit;
@@ -20,8 +22,16 @@ public:
     virtual ~DialogModifyUnit() = default;
 signals:
     void sigFinished();
+    void sigUpdateData();
+    void sigLoadUnit(QString unitID, qint32 index);
 public slots:
+
+protected slots:
+    void updateData();
+    void loadUnit(QString unitID, qint32 index);
 private:
+    void addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y);
+    spPanel m_pPanel;
     Unit* m_pUnit{nullptr};
     oxygine::spButton m_OkButton;
 };

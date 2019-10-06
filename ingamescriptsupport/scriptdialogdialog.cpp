@@ -146,7 +146,7 @@ void ScriptDialogDialog::updateDialog()
         });
 
         oxygine::spButton pBackgroundTextbox = ObjectManager::createButton(tr("load Background"), 200);
-        pBackgroundTextbox->setPosition(pApp->getSettings()->getWidth() - 340, y);
+        pBackgroundTextbox->setPosition(pApp->getSettings()->getWidth() - 335, y);
         m_Panel->addItem(pBackgroundTextbox);
         pBackgroundTextbox->addClickListener([=](oxygine::Event*)
         {

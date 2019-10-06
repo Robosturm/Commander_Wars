@@ -90,7 +90,9 @@ var Constructor = function()
             field = plasmaFields[i];
             var placeTerrain = map.getTerrain(field.x, field.y);
             var baseID = placeTerrain.getBaseTerrainID();
-            if (baseID === "PLAINS")
+            if (baseID === "PLAINS" ||
+                baseID === "SNOW" ||
+                baseID === "DESERT")
             {
                 map.replaceTerrain("PLAINS_PLASMA", field.x, field.y);
             }

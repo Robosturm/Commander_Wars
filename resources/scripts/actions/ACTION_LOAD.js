@@ -18,8 +18,8 @@ var Constructor = function ()
             (targetUnit !== null))
         {
             if ((targetUnit.getOwner() === unit.getOwner()) &&
-                (Global[targetUnit.getUnitID()].getTransportUnits().indexOf(unit.getUnitID()) >= 0) &&
-                (targetUnit.getLoadedUnitCount() < Global[targetUnit.getUnitID()].getLoadingPlace())) {
+                (targetUnit.getTransportUnits().indexOf(unit.getUnitID()) >= 0) &&
+                (targetUnit.getLoadedUnitCount() < targetUnit.getLoadingPlace())) {
 
 
                 if (targetUnit.getUnitID() === "TRANSPORTPLANE")

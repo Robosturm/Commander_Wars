@@ -692,9 +692,20 @@ bool Unit::canMoveAndFire(QPoint position)
 
 void Unit::loadUnit(Unit* pUnit)
 {
-    m_TransportUnits.append(pUnit->getTerrain()->getSpUnit());
-    pUnit->removeUnit();
-    updateIcons(GameMap::getInstance()->getCurrentViewPlayer());
+    if (m_TransportUnits.size() < getLoadingPlace())
+    {
+        m_TransportUnits.append(pUnit);
+        pUnit->removeUnit();
+        GameMap* pMap = GameMap::getInstance();
+        if (pMap != nullptr)
+        {
+            updateIcons(pMap->getCurrentViewPlayer());
+        }
+        else
+        {
+            updateIcons(nullptr);
+        }
+    }
 }
 
 Unit* Unit::spawnUnit(QString unitID)
@@ -728,18 +739,40 @@ Unit* Unit::getLoadedUnit(qint32 index)
 void Unit::unloadUnit(Unit* pUnit, QPoint position)
 {
     GameMap* pMap = GameMap::getInstance();
-    if (pMap != nullptr)
+    if (pMap != nullptr && pMap->onMap(position.x(), position.y()))
     {
         for (qint32 i = 0; i < m_TransportUnits.size(); i++)
         {
             if (m_TransportUnits[i] == pUnit)
             {
+
                 pMap->getTerrain(position.x(), position.y())->setUnit(m_TransportUnits[i]);
                 m_TransportUnits.removeAt(i);
                 break;
             }
         }
         updateIcons(pMap->getCurrentViewPlayer());
+    }
+}
+
+void Unit::unloadUnit(qint32 index, QPoint position)
+{
+    GameMap* pMap = GameMap::getInstance();
+    if (index >= 0 && index < m_TransportUnits.size())
+    {
+        if (pMap != nullptr && pMap->onMap(position.x(), position.y()))
+        {
+            pMap->getTerrain(position.x(), position.y())->setUnit(m_TransportUnits[index]);
+        }
+        m_TransportUnits.removeAt(index);
+    }
+    if (pMap != nullptr)
+    {
+        updateIcons(pMap->getCurrentViewPlayer());
+    }
+    else
+    {
+        updateIcons(nullptr);
     }
 }
 
@@ -773,6 +806,7 @@ bool Unit::canTransportUnit(Unit* pUnit, bool ignoreLoadingPlace)
     }
     return false;
 }
+
 
 qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender)
 {
@@ -1881,7 +1915,10 @@ void Unit::removeUnit()
         GameMap::getInstance()->removeChild(m_CORange);
         m_CORange = nullptr;
     }
-    m_pTerrain->setUnit(nullptr);    
+    if (m_pTerrain != nullptr)
+    {
+        m_pTerrain->setUnit(nullptr);
+    }
 }
 
 void Unit::killUnit()

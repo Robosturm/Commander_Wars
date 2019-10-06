@@ -436,6 +436,12 @@ public slots:
      */
     void unloadUnit(Unit* pUnit, QPoint position);
     /**
+     * @brief unloadUnit
+     * @param index
+     * @param position
+     */
+    void unloadUnit(qint32 index, QPoint position);
+    /**
      * @brief getLoadedUnitCount
      * @return number of units loaded by this unit
      */

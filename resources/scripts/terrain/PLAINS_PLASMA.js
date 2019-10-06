@@ -17,6 +17,21 @@ var Constructor = function()
     {
         return 1;
     };
+    this.loadBaseTerrain = function(terrain, currentTerrainID)
+    {
+        if (currentTerrainID === "SNOW")
+        {
+            terrain.loadBaseTerrain("SNOW");
+        }
+        else if (currentTerrainID === "DESERT")
+        {
+            terrain.loadBaseTerrain("DESERT");
+        }
+        else
+        {
+            terrain.loadBaseTerrain("PLAINS");
+        }
+    };
     this.loadBaseSprite = function(terrain, currentTerrainID)
     {
         var surroundings = terrain.getSurroundings("PLAINS_PLASMA", false, false, GameEnums.Directions_Direct);

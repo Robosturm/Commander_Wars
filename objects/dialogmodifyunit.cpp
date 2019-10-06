@@ -12,9 +12,10 @@
 
 #include "resource_management/fontmanager.h"
 
+#include "resource_management/unitspritemanager.h"
+
 #include "game/gamemap.h"
 
-#include "objects/panel.h"
 #include "objects/slider.h"
 #include "objects/dropdownmenu.h"
 
@@ -46,22 +47,34 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
         emit sigFinished();
     });
 
+
+    m_pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110),
+                                     QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110));
+    m_pPanel->setPosition(30, 30);
+    pSpriteBox->addChild(m_pPanel);
+
+    connect(this, &DialogModifyUnit::sigUpdateData, this, &DialogModifyUnit::updateData, Qt::QueuedConnection);
+    connect(this, &DialogModifyUnit::sigLoadUnit, this, &DialogModifyUnit::loadUnit, Qt::QueuedConnection);
+    updateData();
+}
+
+void DialogModifyUnit::updateData()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    m_pPanel->clearContent();
+
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
-    spPanel pPanel = new Panel(true, QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110),
-                                     QSize(pApp->getSettings()->getWidth() - 60, pApp->getSettings()->getHeight() - 110));
-    pPanel->setPosition(30, 30);
-    pSpriteBox->addChild(pPanel);
-
     oxygine::spTextField pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
     pLabel->setHtmlText((tr("Unit: ") + m_pUnit->getName()).toStdString().c_str());
     pLabel->setScale(2.0f);
-    pLabel->setPosition(pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth(), 10);
-    pPanel->addItem(pLabel);
+    pLabel->setPosition(m_pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth(), 10);
+    m_pPanel->addItem(pLabel);
 
     qint32 sliderOffset = 400;
     qint32 y = 30 + pLabel->getTextRect().getHeight() * 2;
@@ -69,7 +82,7 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("HP: ").toStdString().c_str());
     pLabel->setPosition(10, y);
-    pPanel->addItem(pLabel);
+    m_pPanel->addItem(pLabel);
     spSlider pSlider = new Slider(pApp->getSettings()->getWidth() - 40 - sliderOffset, 1, 10, tr("HP"));
     pSlider->setPosition(sliderOffset - 160, y);
     pSlider->setCurrentValue(m_pUnit->getHpRounded());
@@ -77,7 +90,7 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
     {
         m_pUnit->setHp(value);
     });
-    pPanel->addItem(pSlider);
+    m_pPanel->addItem(pSlider);
     y += 40;
     if (m_pUnit->getMaxFuel() > 0)
     {
@@ -85,7 +98,7 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
         pLabel->setStyle(style);
         pLabel->setHtmlText(tr("Fuel: ").toStdString().c_str());
         pLabel->setPosition(10, y);
-        pPanel->addItem(pLabel);
+        m_pPanel->addItem(pLabel);
         spSlider pSlider = new Slider(pApp->getSettings()->getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxFuel(), tr("Fuel"));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getFuel());
@@ -101,7 +114,7 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
                 m_pUnit->setModdingFlags(static_cast<Unit::ModdingFlags>(m_pUnit->getModdingFlags() | Unit::ModdingFlags::FlagFuel));
             }
         });
-        pPanel->addItem(pSlider);
+        m_pPanel->addItem(pSlider);
         y += 40;
     }
     if (m_pUnit->getMaxAmmo1() > 0)
@@ -110,7 +123,7 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
         pLabel->setStyle(style);
         pLabel->setHtmlText(tr("Ammo 1: ").toStdString().c_str());
         pLabel->setPosition(10, y);
-        pPanel->addItem(pLabel);
+        m_pPanel->addItem(pLabel);
         spSlider pSlider = new Slider(pApp->getSettings()->getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxAmmo1(), tr("Ammo"));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getAmmo1());
@@ -126,7 +139,7 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
                 m_pUnit->setModdingFlags(static_cast<Unit::ModdingFlags>(m_pUnit->getModdingFlags() | Unit::ModdingFlags::FlagAmmo1));
             }
         });
-        pPanel->addItem(pSlider);
+        m_pPanel->addItem(pSlider);
         y += 40;
     }
     if (m_pUnit->getMaxAmmo2() > 0)
@@ -135,7 +148,7 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
         pLabel->setStyle(style);
         pLabel->setHtmlText(tr("Ammo 2: ").toStdString().c_str());
         pLabel->setPosition(10, y);
-        pPanel->addItem(pLabel);
+        m_pPanel->addItem(pLabel);
         spSlider pSlider = new Slider(pApp->getSettings()->getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxAmmo2(), tr("Ammo"));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getAmmo2());
@@ -151,7 +164,7 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
                 m_pUnit->setModdingFlags(static_cast<Unit::ModdingFlags>(m_pUnit->getModdingFlags() | Unit::ModdingFlags::FlagAmmo2));
             }
         });
-        pPanel->addItem(pSlider);
+        m_pPanel->addItem(pSlider);
         y += 40;
     }
 
@@ -159,14 +172,14 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Player: ").toStdString().c_str());
     pLabel->setPosition(10, y);
-    pPanel->addItem(pLabel);
+    m_pPanel->addItem(pLabel);
     QVector<QString> items;
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         items.append(tr("Player ") + QString::number(i + 1));
     }
-    spDropDownmenu pDropdownmenu = new DropDownmenu(200, items);
+    spDropDownmenu pDropdownmenu = new DropDownmenu(300, items);
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(m_pUnit->getOwner()->getPlayerID());
     connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
@@ -174,40 +187,107 @@ DialogModifyUnit::DialogModifyUnit(Unit* pUnit)
         m_pUnit->setOwner(pMap->getPlayer(value));
 
     });
-    pPanel->addItem(pDropdownmenu);
+    m_pPanel->addItem(pDropdownmenu);
     y += 40;
 
     pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("AI-Mode: ").toStdString().c_str());
     pLabel->setPosition(10, y);
-    pPanel->addItem(pLabel);
+    m_pPanel->addItem(pLabel);
     items = {tr("Normal"), tr("Offensive"), tr("Defensive"), tr("Hold")};
-    pDropdownmenu = new DropDownmenu(200, items);
+    pDropdownmenu = new DropDownmenu(300, items);
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(static_cast<qint32>(m_pUnit->getAiMode()));
     connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
         m_pUnit->setAiMode(static_cast<GameEnums::GameAi>(value));
     });
-    pPanel->addItem(pDropdownmenu);
+    m_pPanel->addItem(pDropdownmenu);
     y += 40;
 
     pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
     pLabel->setHtmlText(tr("Unit Rank: ").toStdString().c_str());
     pLabel->setPosition(10, y);
-    pPanel->addItem(pLabel);
+    m_pPanel->addItem(pLabel);
     items = {tr("Soldier"), tr("Lieutenant"), tr("General"), tr("Veteran"), tr("CO 1"), tr("CO 2")};
-    pDropdownmenu = new DropDownmenu(200, items);
+    pDropdownmenu = new DropDownmenu(300, items);
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(static_cast<qint32>(m_pUnit->getUnitRank()));
     connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
         m_pUnit->setUnitRank(static_cast<GameEnums::UnitRanks>(value));
     });
-    pPanel->addItem(pDropdownmenu);
+    m_pPanel->addItem(pDropdownmenu);
     y += 40;
 
-    pPanel->setContentHeigth(y);
+    for (qint32 i = 0; i < m_pUnit->getLoadedUnitCount(); i++)
+    {
+        addLoadUnit(i, sliderOffset, y);
+    }
+    if (m_pUnit->getLoadedUnitCount() < m_pUnit->getLoadingPlace())
+    {
+        addLoadUnit(m_pUnit->getLoadedUnitCount(), sliderOffset, y);
+    }
+    m_pPanel->setContentHeigth(y);
+    pApp->continueThread();
+}
+
+void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
+{
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    oxygine::TextStyle style = FontManager::getMainFont();
+    style.color = oxygine::Color(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+    oxygine::spTextField  pLabel = new oxygine::TextField();
+    pLabel->setStyle(style);
+    pLabel->setHtmlText((tr("Loaded Unit ") + QString::number(index + 1) + ": ").toStdString().c_str());
+    pLabel->setPosition(10, y);
+    m_pPanel->addItem(pLabel);
+    QVector<QString> items = {"-"};
+    QStringList units = m_pUnit->getTransportUnits();
+    for (qint32 i = 0; i < units.size(); i++)
+    {
+        if (pUnitSpriteManager->existsUnit(units[i]))
+        {
+            items.append(units[i]);
+        }
+    }
+    spDropDownmenu pDropdownmenu = new DropDownmenu(300, items);
+    pDropdownmenu->setPosition(sliderOffset - 160, y);
+    Unit* pLoadedUnit = m_pUnit->getLoadedUnit(index);
+    if (pLoadedUnit != nullptr)
+    {
+        pDropdownmenu->setCurrentItem(pLoadedUnit->getUnitID());
+    }
+    else
+    {
+        pDropdownmenu->setCurrentItem("-");
+    }
+    connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32)
+    {
+        emit sigLoadUnit(pDropdownmenu->getCurrentItemText(), index);
+    });
+    m_pPanel->addItem(pDropdownmenu);
+    y += 40;
+}
+
+void DialogModifyUnit::loadUnit(QString unitID, qint32 index)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    if (unitID == "-")
+    {
+        m_pUnit->unloadUnit(index, QPoint(-1, -1));
+    }
+    else
+    {
+        Unit* pUnit = new Unit(unitID, m_pUnit->getOwner(), false);
+        m_pUnit->loadUnit(pUnit);
+    }
+    emit sigUpdateData();
+    pApp->continueThread();
 }
