@@ -37,6 +37,10 @@ signals:
      * @brief sigAddItem
      */
     void sigAddItem();
+    /**
+     * @brief sigShowChangeBackground
+     */
+    void sigShowChangeBackground();
 public slots:
     /**
      * @brief addItem
@@ -50,9 +54,19 @@ public slots:
      * @brief updateDialog
      */
     void updateDialog();
+    /**
+     * @brief showChangeBackground
+     */
+    void showChangeBackground();
+    /**
+     * @brief setCurrentDialogBackground
+     * @param file
+     */
+    void setCurrentDialogBackground(QString file);
 private:
     oxygine::spBox9Sprite m_pSpriteBox;
     spScriptEventDialog m_Event;
+    qint32 dialogIndex{-1};
     spPanel m_Panel;
 };
 

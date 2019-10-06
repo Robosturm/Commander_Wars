@@ -8,6 +8,9 @@
 
 #include "coreengine/mainapp.h"
 
+#include "objects/filedialog.h"
+#include "qfileinfo.h"
+
 ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     : QObject(),
       m_Event(scriptEventDialog)
@@ -59,6 +62,7 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     });
     connect(this, &ScriptDialogDialog::sigRemoveLast, this, &ScriptDialogDialog::removeLast, Qt::QueuedConnection);
     connect(this, &ScriptDialogDialog::sigAddItem, this, &ScriptDialogDialog::addItem, Qt::QueuedConnection);
+    connect(this, &ScriptDialogDialog::sigShowChangeBackground, this, &ScriptDialogDialog::showChangeBackground, Qt::QueuedConnection);
     updateDialog();
 }
 
@@ -144,7 +148,11 @@ void ScriptDialogDialog::updateDialog()
         oxygine::spButton pBackgroundTextbox = ObjectManager::createButton(tr("load Background"), 200);
         pBackgroundTextbox->setPosition(pApp->getSettings()->getWidth() - 340, y);
         m_Panel->addItem(pBackgroundTextbox);
-
+        pBackgroundTextbox->addClickListener([=](oxygine::Event*)
+        {
+            dialogIndex = i;
+            emit sigShowChangeBackground();
+        });
     }
     m_Panel->setContentHeigth(count * 40 + 20);
     m_Panel->setContentWidth(panelWidth);
@@ -158,4 +166,38 @@ void ScriptDialogDialog::removeLast()
     {
         m_Event->removeDialog(m_Event->getDialogSize() - 1);
     }
+}
+
+void ScriptDialogDialog::showChangeBackground()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    ScriptEventDialog::Dialog* pDialog = m_Event->getDialog(dialogIndex);
+    QFileInfo file(pDialog->background);
+    QString folder = "maps/";
+    QString fileName = "";
+    if (file.exists() && file.isFile())
+    {
+        folder = file.path();
+        fileName = file.fileName();
+    }
+    spFileDialog pFileDialog = new FileDialog(folder, QVector<QString>(1, "*.png"), fileName);
+    addChild(pFileDialog);
+    connect(pFileDialog.get(), &FileDialog::sigFileSelected, this, &ScriptDialogDialog::setCurrentDialogBackground, Qt::QueuedConnection);
+    pApp->continueThread();
+}
+
+void ScriptDialogDialog::setCurrentDialogBackground(QString file)
+{
+    QFileInfo fileInfo(file);
+    ScriptEventDialog::Dialog* pDialog = m_Event->getDialog(dialogIndex);
+    if (fileInfo.exists() && fileInfo.isFile())
+    {
+        pDialog->background = file.replace(QCoreApplication::applicationDirPath() + "/", "");
+    }
+    else
+    {
+        pDialog->background = "";
+    }
+    dialogIndex = -1;
 }

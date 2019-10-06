@@ -64,7 +64,17 @@ void ScriptEventDialog::readEvent(QTextStream& rStream)
                                     .replace("\"), \"", ",")
                                     .replace("\", GameEnums.COMood_", ",")
                                     .replace(", \"", ",")
-                                    .replace("\"); // ", ",").split(",");
+                                    .replace("\"); // ", ",").
+                                    replace(" " + ScriptEventDialogItem, "," + ScriptEventDialogItem).split(",");
+            qint32 version = 0;
+
+            if (items.size() >= 2)
+            {
+                version = items[items.size() - 2].toInt();
+                items = line.replace("\"); dialog" + QString::number(m_Dialog.size()) + ".loadBackground(\"", ",")
+                                            .split(",");
+            }
+
             if (items.size() >= 4)
             {
                 Dialog dialog;
@@ -83,6 +93,10 @@ void ScriptEventDialog::readEvent(QTextStream& rStream)
                     dialog.mood = GameEnums::COMood_Happy;
                 }
                 dialog.color = items[3];
+                if (version > 0 && items.size() >= 5)
+                {
+                    dialog.background = items[4];
+                }
                 m_Dialog.append(dialog);
             }
         }
@@ -115,7 +129,9 @@ void ScriptEventDialog::writeEvent(QTextStream& rStream)
                 break;
             }
         }
-        rStream << ", \"" << m_Dialog[i].color.name() << "\"); // " << QString::number(getVersion()) << " " << ScriptEventDialogItem << "\n";
+        rStream << ", \"" << m_Dialog[i].color.name() << "\"); ";
+        rStream << "dialog" << QString::number(i) << ".loadBackground(\"" << m_Dialog[i].background << "\"); ";
+        rStream << "// " << QString::number(getVersion()) << " " << ScriptEventDialogItem << "\n";
     }
     for (qint32 i = 0; i < m_Dialog.size() - 1; i++)
     {

@@ -82,7 +82,7 @@ public:
      */
     virtual qint32 getVersion() override
     {
-        return 0;
+        return 1;
     }
 private:
     QVector<Dialog> m_Dialog;

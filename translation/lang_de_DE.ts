@@ -2782,37 +2782,37 @@
 <context>
     <name>ScriptDialogDialog</name>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="35"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="38"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="45"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="48"/>
         <source>add Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="53"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="56"/>
         <source>remove Last</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="101"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="105"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="101"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="105"/>
         <source>Happy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="101"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="105"/>
         <source>Sad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="144"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="148"/>
         <source>load Background</source>
         <translation type="unfinished"></translation>
     </message>
