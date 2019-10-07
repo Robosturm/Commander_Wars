@@ -597,7 +597,6 @@ void GameMenue::skipAnimations()
             }
         }
     }
-
 }
 
 void GameMenue::actionPerformed()

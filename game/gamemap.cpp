@@ -1201,7 +1201,7 @@ QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer)
         for (qint32 x = 0; x < width; x++)
         {
             spBuilding pBuilding = fields.at(y)->at(x)->getSpBuilding();
-            if (pBuilding.get() != nullptr)
+            if (pBuilding.get() != nullptr && pBuilding->getTerrain() == fields.at(y)->at(x).get())
             {
                 if ((pBuilding->getOwner() == pPlayer))
                 {

@@ -167,8 +167,15 @@ public slots:
 
     qint32 getHp() const;
     void setHp(const qint32 &Hp);
-
+    /**
+     * @brief getFireCount should be 0 for beeing able to fire and 1 for one turn left before firing again. Else the AI may do weird moves
+     * @return
+     */
     qint32 getFireCount() const;
+    /**
+     * @brief setFireCount  should be 0 for beeing able to fire and 1 for one turn left before firing again. Else the AI may do weird moves
+     * @param value
+     */
     void setFireCount(const qint32 &value);
     /**
      * @brief getBaseIncome

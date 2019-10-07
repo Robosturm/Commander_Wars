@@ -1452,57 +1452,57 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="703"/>
+        <location filename="../menue/gamemenue.cpp" line="702"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="703"/>
+        <location filename="../menue/gamemenue.cpp" line="702"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="703"/>
+        <location filename="../menue/gamemenue.cpp" line="702"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="703"/>
-        <source>Income</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/gamemenue.cpp" line="703"/>
-        <source>Funds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/gamemenue.cpp" line="703"/>
-        <source>Bases</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/gamemenue.cpp" line="703"/>
+        <location filename="../menue/gamemenue.cpp" line="702"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="719"/>
+        <location filename="../menue/gamemenue.cpp" line="702"/>
+        <source>Income</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/gamemenue.cpp" line="702"/>
+        <source>Funds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/gamemenue.cpp" line="702"/>
+        <source>Bases</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/gamemenue.cpp" line="718"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="728"/>
+        <location filename="../menue/gamemenue.cpp" line="727"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1003"/>
+        <location filename="../menue/gamemenue.cpp" line="1002"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1018"/>
+        <location filename="../menue/gamemenue.cpp" line="1017"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1728,13 +1728,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="133"/>
-        <source>Wiki</source>
+        <location filename="../menue/mainwindow.cpp" line="122"/>
+        <source>CO Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="122"/>
-        <source>CO Style</source>
+        <location filename="../menue/mainwindow.cpp" line="133"/>
+        <source>Wiki</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5359,11 +5359,6 @@ Hovercrafts gain a 40% firepower boost.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_amy.js" line="249"/>
-        <source>Without science we wouldn&apos;t be doing what we are now.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_amy.js" line="246"/>
         <source>Do you know how much energy splitting of the atom produces? Let&apos;s see.</source>
         <translation type="unfinished"></translation>
@@ -5376,6 +5371,11 @@ Hovercrafts gain a 40% firepower boost.</source>
     <message>
         <location filename="../resources/scripts/cos/co_amy.js" line="248"/>
         <source>For your sake, I hope your machines are magnetically shielded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_amy.js" line="249"/>
+        <source>Without science we wouldn&apos;t be doing what we are now.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5656,11 +5656,6 @@ Units gain additional 30% defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_cassidy.js" line="213"/>
-        <source>Rampage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_cassidy.js" line="200"/>
         <source>Cassidy&apos;s units show no mercy. Increased firepower when attacking a unit with equal or less health.</source>
         <translation type="unfinished"></translation>
@@ -5682,6 +5677,11 @@ Units gain additional 30% firepower when attacking units with equal or less heal
     <message>
         <location filename="../resources/scripts/cos/co_cassidy.js" line="209"/>
         <source>Firepower is increased even further when attacking a unit with equal or less health.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_cassidy.js" line="213"/>
+        <source>Rampage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8777,16 +8777,6 @@ Units have 30% Luck and 15% Misfortune</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="193"/>
-        <source>Rallying Cry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_julia.js" line="189"/>
-        <source>Half of enemy units can&apos;t move next turn and all units are unaffected by loss of HP but get less firepower.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_julia.js" line="184"/>
         <source>
 Global Effect:
@@ -8798,6 +8788,16 @@ No Effects.</source>
         <source>
 CO Zone Effect:
 Units loose 20% firepower but they firepower is unaffected by loss of HP.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="189"/>
+        <source>Half of enemy units can&apos;t move next turn and all units are unaffected by loss of HP but get less firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_julia.js" line="193"/>
+        <source>Rallying Cry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -32,7 +32,7 @@ bool CoreAI::moveOoziums(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
         {
             if (pUnit->getActionList().contains(ACTION_HOELLIUM_WAIT))
             {
-                TargetedUnitPathFindingSystem pfs(pUnit, targets);
+                TargetedUnitPathFindingSystem pfs(pUnit, targets, &m_MoveCostMap);
                 pfs.explore();
                 qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY()));
                 QPoint targetFields = pfs.getReachableTargetField(movepoints);
@@ -116,7 +116,7 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
                 }
                 else
                 {
-                    TargetedUnitPathFindingSystem pfs(pUnit, enemyTargets);
+                    TargetedUnitPathFindingSystem pfs(pUnit, enemyTargets, &m_MoveCostMap);
                     pfs.explore();
                     qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY()));
                     QPoint targetFields = pfs.getReachableTargetField(movepoints);
@@ -362,7 +362,7 @@ void CoreAI::processPredefinedAiOffensive(Unit* pUnit, QmlVectorUnit* pEnemyUnit
         QVector<QVector3D> targets;
         pAction->setActionID(ACTION_WAIT);
         appendAttackTargets(pUnit, pEnemyUnits, targets);
-        TargetedUnitPathFindingSystem targetPfs(pUnit, targets);
+        TargetedUnitPathFindingSystem targetPfs(pUnit, targets, &m_MoveCostMap);
         targetPfs.explore();
         qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY()));
         QPoint targetFields = targetPfs.getReachableTargetField(movepoints);

@@ -778,7 +778,7 @@ QmlVectorBuilding* Player::getEnemyBuildings()
         for (qint32 x = 0; x < width; x++)
         {
             Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
-            if (pBuilding != nullptr)
+            if (pBuilding != nullptr && pBuilding->getTerrain() == pMap->getTerrain(x, y))
             {
                 if (isEnemy(pBuilding->getOwner()))
                 {

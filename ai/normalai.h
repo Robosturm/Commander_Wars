@@ -20,24 +20,6 @@ public:
 
 
     explicit NormalAi(float initMinMovementDamage = 0.3f, float initMinAttackFunds = 0.0f, float initMinSuicideDamage = 3.0f / 4.0f);
-    /**
-     * @brief serialize stores the object
-     * @param pStream
-     */
-    virtual void serializeObject(QDataStream& pStream) override;
-    /**
-     * @brief deserialize restores the object
-     * @param pStream
-     */
-    virtual void deserializeObject(QDataStream& pStream) override;
-    /**
-     * @brief getVersion version of the file
-     * @return
-     */
-    virtual qint32 getVersion() override
-    {
-        return 3;
-    }
 signals:
 
 public slots:
@@ -202,13 +184,6 @@ protected:
      * @return
      */
     float calculateCounteBuildingDamage(Unit* pUnit, QPoint newPosition, QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings);
-    /**
-     * @brief calcBuildingDamage
-     * @param pUnit
-     * @param pBuilding
-     * @return
-     */
-    float calcBuildingDamage(Unit* pUnit, QPoint newPosition, Building* pBuilding);
     /**
      * @brief clearEnemyData
      */

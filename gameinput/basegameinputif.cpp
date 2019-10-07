@@ -152,3 +152,22 @@ float BaseGameInputIF::getUnitBuildValue(QString unitID)
     }
     return 1.0f;
 }
+
+void BaseGameInputIF::setMoveCostMapValue(qint32 x, qint32 y, qint32 value)
+{
+    if ((m_MoveCostMap.size() > x && x >= 0) &&
+        (m_MoveCostMap[x].size() > y && y >= 0))
+    {
+        m_MoveCostMap[x][y] = std::tuple<qint32, bool>(value, true);
+    }
+}
+
+qint32 BaseGameInputIF::getMoveCostMapValue(qint32 x, qint32 y)
+{
+    if ((m_MoveCostMap.size() > x && x >= 0) &&
+        (m_MoveCostMap[x].size() > y && y >= 0))
+    {
+        return std::get<0>(m_MoveCostMap[x][y]);
+    }
+    return 0.0f;
+}

@@ -5,8 +5,9 @@
 
 class TargetedUnitPathFindingSystem : public UnitPathFindingSystem
 {
+    Q_OBJECT
 public:
-    explicit TargetedUnitPathFindingSystem(Unit* pUnit, QVector<QVector3D>& targets);
+    explicit TargetedUnitPathFindingSystem(Unit* pUnit, QVector<QVector3D>& targets, QVector<QVector<std::tuple<qint32, bool>>>* pMoveCostMap);
     /**
      * @brief getRemainingCost
      * @param x
@@ -14,6 +15,8 @@ public:
      * @return the remaining costs for this node to reach the target
      */
     virtual qint32 getRemainingCost(qint32 x, qint32 y, qint32) override;
+
+
     /**
      * @brief finished checks if this would be the target node to reach
      * @param x
@@ -31,9 +34,17 @@ public:
      * @return
      */
     QPoint getReachableTargetField(qint32 movepoints);
+    /**
+     * @brief getCosts
+     * @param x
+     * @param y
+     * @return the exact costs needed to get onto the given field. -1 = unreachable
+     */
+    virtual qint32 getCosts(qint32 x, qint32 y)  override;
 private:
     QVector<QVector3D> m_Targets;
     QVector<std::tuple<qint32, qint32, qint32, float>> m_FinishNodes;
+    QVector<QVector<std::tuple<qint32, bool>>>* m_pMoveCostMap;
 };
 
 #endif // TARGETEDUNITPATHFINDINGSYSTEM_H

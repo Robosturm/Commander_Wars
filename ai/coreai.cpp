@@ -67,6 +67,18 @@ void CoreAI::init()
 {
     connect(GameMenue::getInstance(), &GameMenue::sigActionPerformed, this, &CoreAI::nextAction, Qt::QueuedConnection);
     connect(this, &CoreAI::performAction, GameMenue::getInstance(), &GameMenue::performAction, Qt::QueuedConnection);
+
+    GameMap* pMap = GameMap::getInstance();
+    qint32 heigth = pMap->getMapHeight();
+    qint32 width = pMap->getMapWidth();
+    for (qint32 x = 0; x < width; x++)
+    {
+        m_MoveCostMap.append(QVector<std::tuple<qint32, bool>>());
+        for (qint32 y = 0; y < heigth; y++)
+        {
+            m_MoveCostMap[x].append(std::tuple<qint32, bool>(0, false));
+        }
+    }
 }
 
 void CoreAI::nextAction()
@@ -210,6 +222,94 @@ bool CoreAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
     return false;
 }
 
+float CoreAI::calcBuildingDamage(Unit* pUnit, QPoint newPosition, Building* pBuilding)
+{
+    float counterDamage = 0.0f;
+    GameEnums::BuildingTarget targets = pBuilding->getBuildingTargets();
+    if (targets == GameEnums::BuildingTarget_All ||
+       (targets == GameEnums::BuildingTarget_Enemy && m_pPlayer->isEnemy(pBuilding->getOwner())) ||
+       (targets == GameEnums::BuildingTarget_Own && m_pPlayer == pBuilding->getOwner()))
+    {
+        if (pBuilding->getFireCount() <= 1)
+        {
+            QPoint pos = newPosition - pBuilding->getActionTargetOffset() - pBuilding->getPosition();
+            QmlVectorPoint* pTargets = pBuilding->getActionTargetFields();
+            if (pTargets != nullptr)
+            {
+                if (pTargets->contains(pos))
+                {
+                    float damage = pBuilding->getDamage(pUnit);
+                    if (damage > pUnit->getHp())
+                    {
+                        damage = pBuilding->getHp();
+                    }
+                    counterDamage = damage / 10 * pUnit->getUnitCosts();
+                }
+            }
+            delete pTargets;
+        }
+    }
+    return counterDamage;
+}
+
+void CoreAI::createMovementMap(QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
+{
+    GameMap* pMap = GameMap::getInstance();
+    qint32 heigth = pMap->getMapHeight();
+    qint32 width = pMap->getMapWidth();
+    for (qint32 x = 0; x < width; x++)
+    {
+        for (qint32 y = 0; y < heigth; y++)
+        {
+            if (std::get<1>(m_MoveCostMap[x][y]) == false)
+            {
+                std::get<0>(m_MoveCostMap[x][y]) = 0.0f;
+            }
+        }
+    }
+    for (qint32 i = 0; i < pBuildings->size(); i++)
+    {
+        Building* pBuilding = pBuildings->at(i);
+        float damage = pBuilding->getDamage(nullptr);
+        addMovementMap(pBuilding, damage);
+    }
+    for (qint32 i = 0; i < pEnemyBuildings->size(); i++)
+    {
+        Building* pBuilding = pEnemyBuildings->at(i);
+        float damage = pBuilding->getDamage(nullptr);
+        addMovementMap(pBuilding, damage);
+    }
+}
+
+void CoreAI::addMovementMap(Building* pBuilding, float damage)
+{
+    GameEnums::BuildingTarget targets = pBuilding->getBuildingTargets();
+    QPoint offset = pBuilding->getPosition() + pBuilding->getActionTargetOffset() ;
+    if (targets == GameEnums::BuildingTarget_All ||
+       (targets == GameEnums::BuildingTarget_Enemy && m_pPlayer->isEnemy(pBuilding->getOwner())))
+    {
+        if (pBuilding->getFireCount() <= 1)
+        {
+            QmlVectorPoint* pTargets = pBuilding->getActionTargetFields();
+            if (pTargets != nullptr)
+            {
+                for (qint32 i2 = 0; i2 < pTargets->size(); i2++)
+                {
+                    QPoint point = pTargets->at(i2) + offset;
+                    if ((m_MoveCostMap.size() > point.x() && point.x() >= 0) &&
+                        (m_MoveCostMap[point.x()].size() > point.y() && point.y() >= 0))
+                    {
+                        if (std::get<1>(m_MoveCostMap[point.x()][point.y()]) == false)
+                        {
+                            std::get<0>(m_MoveCostMap[point.x()][point.y()]) += damage;
+                        }
+                    }
+                }
+            }
+            delete pTargets;
+        }
+    }
+}
 
 void CoreAI::getBestTarget(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem* pPfs, QVector<QVector3D>& ret, QVector<QVector3D>& moveTargetFields)
 {
@@ -1352,4 +1452,63 @@ bool CoreAI::useBuilding(QmlVectorBuilding* pBuildings)
         }
     }
     return false;
+}
+
+void CoreAI::serializeObject(QDataStream& stream)
+{
+    stream << getVersion();
+    stream << enableNeutralTerrainAttack;
+    stream << static_cast<qint32>(m_BuildingChanceModifier.size());
+    for (qint32 i = 0; i < m_BuildingChanceModifier.size(); i++)
+    {
+        stream << std::get<0>(m_BuildingChanceModifier[i]);
+        stream << std::get<1>(m_BuildingChanceModifier[i]);
+    }
+    stream << m_MoveCostMap.size();
+    for (qint32 x = 0; x < m_MoveCostMap.size(); x++)
+    {
+        stream << m_MoveCostMap[x].size();
+        for (qint32 y = 0; y < m_MoveCostMap[x].size(); y++)
+        {
+            stream << std::get<0>(m_MoveCostMap[x][y]);
+            stream << std::get<1>(m_MoveCostMap[x][y]);
+        }
+    }
+}
+void CoreAI::deserializeObject(QDataStream& stream)
+{
+    qint32 version;
+    stream >> version;
+    if (version > 1)
+    {
+        stream >> enableNeutralTerrainAttack;
+    }
+    if (version > 2)
+    {
+        qint32 size = 0;
+        stream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            QString unitID;
+            float value = 1.0f;
+            stream >> unitID;
+            stream >> value;
+            m_BuildingChanceModifier.append(std::tuple<QString, float>(unitID, value));
+        }
+    }
+    if (version > 3)
+    {
+        qint32 size = 0;
+        stream >> size;
+        for (qint32 x = 0; x < size; x++)
+        {
+            qint32 ysize = 0;
+            stream >> ysize;
+            for (qint32 y = 0; y < ysize; y++)
+            {
+                stream >> std::get<0>(m_MoveCostMap[x][y]);
+                stream >> std::get<1>(m_MoveCostMap[x][y]);
+            }
+        }
+    }
 }

@@ -41,6 +41,7 @@ public:
     enum class AISteps
     {
         moveUnits = 0,
+        moveToTargets,
         loadUnits,
         moveRepairUnits,
         moveTransporters,
@@ -92,6 +93,24 @@ public:
      * @return
      */
     static qint32 index(QVector<QVector3D>& points, QPoint point);
+    /**
+     * @brief serialize stores the object
+     * @param pStream
+     */
+    virtual void serializeObject(QDataStream& pStream) override;
+    /**
+     * @brief deserialize restores the object
+     * @param pStream
+     */
+    virtual void deserializeObject(QDataStream& pStream) override;
+    /**
+     * @brief getVersion version of the file
+     * @return
+     */
+    virtual qint32 getVersion() override
+    {
+        return 4;
+    }
 signals:
     /**
      * @brief performAction signal with an action to be performed the action has to be deleted by the reciever of this slot. Only one slot can be connected to this signal
@@ -110,6 +129,23 @@ public slots:
      * @return
      */
     bool useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits);
+    /**
+     * @brief calcBuildingDamage
+     * @param pUnit
+     * @param pBuilding
+     * @return
+     */
+    float calcBuildingDamage(Unit* pUnit, QPoint newPosition, Building* pBuilding);
+    /**
+     * @brief createMovementMap
+     */
+    void createMovementMap(QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings);
+    /**
+     * @brief addMovementMap
+     * @param pBuilding
+     * @param damage
+     */
+    void addMovementMap(Building* pBuilding, float damage);
     /**
      * @brief useBuilding
      * @param pBuildings
@@ -210,6 +246,7 @@ public slots:
      * @param targets
      */
     void appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets);
+
     /**
      * @brief getTrainingData reads the training data from a training file for a pipeline either decision tree or neural network
      * @param file
@@ -328,7 +365,6 @@ protected:
      */
     void createIslandMap(QString movementType, QString unitID);
 
-
 protected:
     DecisionTree m_COPowerTree;
     QVector<spIslandMap> m_IslandMaps;
@@ -336,8 +372,11 @@ protected:
     float ownUnitValue{1.0f};
     TurnTime turnMode{TurnTime::startOfTurn};
     AISteps aiStep;
+
 private:
     bool finish{false};
+
+
 };
 
 #endif // COREAI_H

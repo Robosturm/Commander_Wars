@@ -98,8 +98,8 @@ bool NormalAi::performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUn
     // direct units
     else if (aiStep <= AISteps::moveUnits && fireWithUnits(pUnits, 1, 1, pBuildings, pEnemyBuildings)){}
     else if (aiStep <= AISteps::moveUnits && repairUnits(pUnits, pBuildings, pEnemyBuildings)){}
-    else if (aiStep <= AISteps::moveUnits && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, 1)){}
-    else if (aiStep <= AISteps::moveUnits && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 2, std::numeric_limits<qint32>::max())){}
+    else if (aiStep <= AISteps::moveToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, 1)){}
+    else if (aiStep <= AISteps::moveToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 2, std::numeric_limits<qint32>::max())){}
     else if (aiStep <= AISteps::loadUnits && loadUnits(pUnits, pBuildings, pEnemyBuildings)){}
     else if (aiStep <= AISteps::moveRepairUnits && moveRepair(pUnits)){}
     else if (aiStep <= AISteps::moveTransporters && moveTransporters(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
@@ -424,6 +424,11 @@ bool NormalAi::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
                          QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
                          qint32 minfireRange, qint32 maxfireRange)
 {
+    if (aiStep < AISteps::moveToTargets)
+    {
+        createMovementMap(pBuildings, pEnemyBuildings);
+    }
+    aiStep = AISteps::moveToTargets;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -562,7 +567,7 @@ bool NormalAi::moveToUnloadArea(GameAction* pAction, Unit* pUnit, QmlVectorUnit*
 {
     GameMap* pMap = GameMap::getInstance();
     Mainapp* pApp = Mainapp::getInstance();
-    TargetedUnitPathFindingSystem pfs(pUnit, targets);
+    TargetedUnitPathFindingSystem pfs(pUnit, targets, &m_MoveCostMap);
     pfs.explore();
     qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY()));
     QPoint targetFields = pfs.getReachableTargetField(movepoints);
@@ -702,7 +707,7 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
                         bool shortenPathForTarget,
                         QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
-    TargetedUnitPathFindingSystem pfs(pUnit, targets);
+    TargetedUnitPathFindingSystem pfs(pUnit, targets, &m_MoveCostMap);
     pfs.explore();
     qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY()));
     QPoint targetFields = pfs.getReachableTargetField(movepoints);
@@ -1198,33 +1203,6 @@ float NormalAi::calculateCounteBuildingDamage(Unit* pUnit, QPoint newPosition, Q
         }
     }
     delete pCircle;
-    return counterDamage;
-}
-
-float NormalAi::calcBuildingDamage(Unit* pUnit, QPoint newPosition, Building* pBuilding)
-{
-    float counterDamage = 0.0f;
-    GameEnums::BuildingTarget targets = pBuilding->getBuildingTargets();
-    if (targets == GameEnums::BuildingTarget_All ||
-       (targets == GameEnums::BuildingTarget_Enemy && m_pPlayer->isEnemy(pBuilding->getOwner())) ||
-       (targets == GameEnums::BuildingTarget_Own && m_pPlayer == pBuilding->getOwner()))
-    {
-        QPoint pos = newPosition - pBuilding->getActionTargetOffset() - pBuilding->getPosition();
-        QmlVectorPoint* pTargets = pBuilding->getActionTargetFields();
-        if (pTargets != nullptr)
-        {
-            if (pTargets->contains(pos))
-            {
-                float damage = pBuilding->getDamage(pUnit);
-                if (damage > pUnit->getHp())
-                {
-                    damage = pBuilding->getHp();
-                }
-                counterDamage = damage / 10 * pUnit->getUnitCosts();
-            }
-        }
-        delete pTargets;
-    }
     return counterDamage;
 }
 
@@ -2126,38 +2104,4 @@ float NormalAi::calcCostScore(QVector<float>& data)
         score += (2.5f + data[12] - data[5]) / 0.10f;
     }
     return score;
-}
-
-void NormalAi::serializeObject(QDataStream& stream)
-{
-    stream << getVersion();
-    stream << enableNeutralTerrainAttack;
-    stream << static_cast<qint32>(m_BuildingChanceModifier.size());
-    for (qint32 i = 0; i < m_BuildingChanceModifier.size(); i++)
-    {
-        stream << std::get<0>(m_BuildingChanceModifier[i]);
-        stream << std::get<1>(m_BuildingChanceModifier[i]);
-    }
-}
-void NormalAi::deserializeObject(QDataStream& stream)
-{
-    qint32 version;
-    stream >> version;
-    if (version > 1)
-    {
-        stream >> enableNeutralTerrainAttack;
-    }
-    if (version > 2)
-    {
-        qint32 size = 0;
-        stream >> size;
-        for (qint32 i = 0; i < size; i++)
-        {
-            QString unitID;
-            float value = 1.0f;
-            stream >> unitID;
-            stream >> value;
-            m_BuildingChanceModifier.append(std::tuple<QString, float>(unitID, value));
-        }
-    }
 }

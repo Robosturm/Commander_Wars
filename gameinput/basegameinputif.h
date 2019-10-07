@@ -65,11 +65,28 @@ public slots:
      * @return value score modification value. value <= 0 means won't be produced. value means 1.0 normal chance. value 2.0 means doubled score mostlikely AI will only build this unit
      */
     float getUnitBuildValue(QString unitID);
+    /**
+     * @brief setMoveCostMapValue
+     * @param x
+     * @param y
+     */
+    void setMoveCostMapValue(qint32 x, qint32 y, qint32 value);
+    /**
+     * @brief getMoveCostMapValue
+     * @param x
+     * @param y
+     * @return
+     */
+    qint32 getMoveCostMapValue(qint32 x, qint32 y);
 protected:
     Player* m_pPlayer{nullptr};
     AiTypes m_AiType{AiTypes::Human};
     bool enableNeutralTerrainAttack{true};
     QVector<std::tuple<QString, float>> m_BuildingChanceModifier;
+    /**
+     * @brief m_MoveCostMap move cost modifier map for the ai
+     */
+    QVector<QVector<std::tuple<qint32, bool>>> m_MoveCostMap;
 };
 
 #endif // BASEGAMEINPUTIF_H

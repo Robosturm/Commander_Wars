@@ -17,26 +17,6 @@ class VeryEasyAI : public CoreAI
 public:
 
     VeryEasyAI();
-
-
-    /**
-     * @brief serialize stores the object
-     * @param pStream
-     */
-    virtual void serializeObject(QDataStream& pStream) override;
-    /**
-     * @brief deserialize restores the object
-     * @param pStream
-     */
-    virtual void deserializeObject(QDataStream& pStream) override;
-    /**
-     * @brief getVersion version of the file
-     * @return
-     */
-    virtual qint32 getVersion() override
-    {
-        return 2;
-    }
 public slots:
     /**
      * @brief process

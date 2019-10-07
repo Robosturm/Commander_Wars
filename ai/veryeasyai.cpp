@@ -96,7 +96,7 @@ bool VeryEasyAI::performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemy
     else if (aiStep <= AISteps::moveUnits && CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
     else if (aiStep <= AISteps::moveUnits && fireWithIndirectUnits(pUnits)){}
     else if (aiStep <= AISteps::moveUnits && fireWithDirectUnits(pUnits)){}
-    else if (aiStep <= AISteps::moveUnits && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings)){}
+    else if (aiStep <= AISteps::moveToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings)){}
     else if (aiStep <= AISteps::loadUnits && loadUnits(pUnits)){}
     else if (aiStep <= AISteps::moveRepairUnits && moveRepair(pUnits)){}
     else if (aiStep <= AISteps::moveTransporters && moveTransporters(pUnits, pEnemyUnits, pEnemyBuildings)){}
@@ -330,6 +330,11 @@ bool VeryEasyAI::attack(Unit* pUnit)
 bool VeryEasyAI::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
                            QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)
 {
+    if (aiStep < AISteps::moveToTargets)
+    {
+        createMovementMap(pBuildings, pEnemyBuildings);
+    }
+    aiStep = AISteps::moveToTargets;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -379,6 +384,7 @@ bool VeryEasyAI::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
 
 bool VeryEasyAI::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)
 {
+    aiStep = AISteps::moveTransporters;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -440,6 +446,7 @@ bool VeryEasyAI::moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUn
 
 bool VeryEasyAI::loadUnits(QmlVectorUnit* pUnits)
 {
+    aiStep = AISteps::loadUnits;
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
@@ -472,7 +479,7 @@ bool VeryEasyAI::loadUnits(QmlVectorUnit* pUnits)
 bool VeryEasyAI::moveUnit(GameAction* pAction, Unit* pUnit, QStringList& actions,
                           QVector<QVector3D>& targets, QVector<QVector3D>& transporterTargets, bool unload)
 {
-    TargetedUnitPathFindingSystem pfs(pUnit, targets);
+    TargetedUnitPathFindingSystem pfs(pUnit, targets, &m_MoveCostMap);
     pfs.explore();
     qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY()));
     QPoint targetFields = pfs.getReachableTargetField(movepoints);
@@ -684,19 +691,3 @@ bool VeryEasyAI::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits
     }
     return false;
 }
-
-void VeryEasyAI::serializeObject(QDataStream& stream)
-{
-    stream << getVersion();
-    stream << enableNeutralTerrainAttack;
-}
-void VeryEasyAI::deserializeObject(QDataStream& stream)
-{
-    qint32 version;
-    stream >> version;
-    if (version > 1)
-    {
-        stream >> enableNeutralTerrainAttack;
-    }
-}
-
