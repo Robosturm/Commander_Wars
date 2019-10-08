@@ -61,6 +61,12 @@ var Constructor = function()
     {
         return GameEnums.UnitType_Ground;
     };
+    this.createExplosionAnimation = function(x, y, unit)
+    {
+        var animation = GameAnimationFactory.createAnimation(x, y, 200);
+        animation.addSprite3("hoellium_die+mask", 0, 0, unit.getOwner().getColor(), 0, 1.5, 1.5);
+        return animation;
+    };
 }
 
 Constructor.prototype = UNIT;

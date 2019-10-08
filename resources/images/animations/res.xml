@@ -68,6 +68,12 @@
 		<image file="minicanon_north.png" cols = "8" />
 		<image file="minicanon_west.png" cols = "8" />
 		<image file="minicanon_south.png" cols = "8" />
+		
+		<image file="undive.png" cols = "6" />
+		<image file="dive.png" cols = "8" />
+		<image file="stealth.png" cols = "8" />
+		<image file="hoellium_die+mask.png" cols = "9" />
+
 				
 		<!-- static -->
 		<image file="ration.png" />

@@ -53,7 +53,10 @@ namespace oxygine
                 const int destpitch = dest.pitch;
                 for (int h = 0; h < srch; h++)
                 {
-                    memcpy(destLine, srcLine, bppPitch);
+                    if (bppPitch > 0)
+                    {
+                        memcpy(destLine, srcLine, bppPitch);
+                    }
                     srcLine += srcpitch;
                     destLine += destpitch;
                 }

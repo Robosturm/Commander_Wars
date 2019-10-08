@@ -36,7 +36,7 @@ var Constructor = function()
     {
         return qsTr("Transportplane");
     };
-    this.createExplosionAnimation = function(x, y)
+    this.createExplosionAnimation = function(x, y, unit)
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
         animation.addSprite("explosion+air", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);

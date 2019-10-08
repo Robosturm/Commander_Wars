@@ -1948,6 +1948,8 @@ void Unit::killUnit()
     QJSValueList args1;
     args1 << getX();
     args1 << getY();
+    QJSValue obj = pApp->getInterpreter()->newQObject(this);
+    args1 << obj;
     QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
 
     // record destruction of this unit

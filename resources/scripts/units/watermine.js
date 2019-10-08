@@ -107,7 +107,7 @@ var Constructor = function()
             map.getGameRecorder().destroyedUnit(owner.getPlayerID());
         }
     };
-    this.createExplosionAnimation = function(x, y)
+    this.createExplosionAnimation = function(x, y, unit)
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
         animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);

@@ -54,7 +54,7 @@ var UNIT =
         return -1;
     },
 
-    createExplosionAnimation : function(x, y)
+    createExplosionAnimation : function(x, y, unit)
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
         animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);

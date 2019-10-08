@@ -47,7 +47,7 @@ var Constructor = function()
         unit.setFuel(unit.getFuel() - fuelCosts);
         UNIT.transporterRefilling(unit);
     };
-    this.createExplosionAnimation = function(x, y)
+    this.createExplosionAnimation = function(x, y, unit)
     {
         var animation = GameAnimationFactory.createAnimation(x, y);
         animation.addSprite("explosion+water", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);

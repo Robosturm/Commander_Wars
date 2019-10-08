@@ -37,13 +37,30 @@ var Constructor = function()
     {
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
-        Global[unit.getUnitID()].doWalkingAnimation(action);
+        var animation = Global[unit.getUnitID()].doWalkingAnimation(action);
+        animation.setEndOfAnimationCall("ACTION_STEALTH", "performPostAnimation");
         // move unit to target position
         unit.moveUnitAction(action);
-        // disable unit commandments for this turn
-        unit.setHasMoved(true);
-        unit.setHidden(true);
+        ACTION_STEALTH.postAnimationUnit = unit;
+
     };
+    this.postAnimationUnit = null;
+    this.performPostAnimation = function(action)
+    {
+        // disable unit commandments for this turn
+        var animation = GameAnimationFactory.createAnimation(ACTION_STEALTH.postAnimationUnit.getX(), ACTION_STEALTH.postAnimationUnit.getY());
+        if (ACTION_STEALTH.postAnimationUnit.getUnitID() === "SUBMARINE")
+        {
+            animation.addSprite("dive", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 1.5);
+        }
+        else
+        {
+            animation.addSprite("stealth", -map.getImageSize() / 2, -map.getImageSize() / 2, 0, 1.5);
+        }
+        ACTION_STEALTH.postAnimationUnit.setHasMoved(true);
+        ACTION_STEALTH.postAnimationUnit.setHidden(true);
+        ACTION_STEALTH.postAnimationUnit = null;
+    }
 }
 
 Constructor.prototype = ACTION;
