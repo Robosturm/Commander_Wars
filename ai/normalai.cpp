@@ -17,11 +17,13 @@ const float NormalAi::midDamage = 55.0f;
 const float NormalAi::highDamage = 65.0f;
 const float NormalAi::directIndirectRatio = 1.5f;
 
-NormalAi::NormalAi(float initMinMovementDamage, float initMinAttackFunds, float initMinSuicideDamage)
+NormalAi::NormalAi(float initMinMovementDamage, float initMinAttackFunds, float initMinSuicideDamage,
+                   float spamingFunds)
     : CoreAI (BaseGameInputIF::AiTypes::Normal),
       minMovementDamage(initMinMovementDamage),
       minAttackFunds(initMinAttackFunds),
-      minSuicideDamage(initMinSuicideDamage)
+      minSuicideDamage(initMinSuicideDamage),
+      m_spamingFunds(spamingFunds)
 {
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
@@ -1418,6 +1420,10 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
         // but more a small amount of strong ones and a large amount of cheap ones
         // so we use a small (x - a) / (x - b) function here
         float test = funds * ((productionBuildings - 2.5f) / (static_cast<float>(productionBuildings) - 1.65f));
+        if (test > m_spamingFunds)
+        {
+            test = m_spamingFunds;
+        }
         if (test > fundsPerFactory)
         {
             fundsPerFactory = test;

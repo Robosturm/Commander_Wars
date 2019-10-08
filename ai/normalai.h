@@ -19,7 +19,8 @@ class NormalAi : public CoreAI
 public:
 
 
-    explicit NormalAi(float initMinMovementDamage = 0.3f, float initMinAttackFunds = 0.0f, float initMinSuicideDamage = 3.0f / 4.0f);
+    explicit NormalAi(float initMinMovementDamage = 0.3f, float initMinAttackFunds = 0.0f, float initMinSuicideDamage = 3.0f / 4.0f,
+                      float spamingFunds = 7500);
 signals:
 
 public slots:
@@ -275,6 +276,7 @@ private:
     float minMovementDamage;
     float minAttackFunds;
     float minSuicideDamage;
+    float m_spamingFunds;
 
 };
 

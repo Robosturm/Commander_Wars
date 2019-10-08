@@ -148,8 +148,10 @@
 		<image file="ruin+1.png" />
 		<image file="ruin+2.png" />
 		
-		<image file="forest+0.png" />
-		<image file="forest+1.png" />
+		<image file="forest.png" />
+		<image file="forest+E.png" />
+		<image file="forest+E+W.png" />
+		<image file="forest+W.png" />
 		
 		<image file="wasteland+0.png" />
 		<image file="wasteland+1.png" />

@@ -1379,7 +1379,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/FOREST.js" line="53"/>
+        <location filename="../resources/scripts/terrain/FOREST.js" line="54"/>
         <source>In Fog of War conditions, the woods provide ground unit &lt;div c=&apos;00ff00&apos;&gt;hiding places.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>

@@ -23,8 +23,9 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var random = globals.randInt(0, 1);
-        terrain.loadBaseSprite("forest+" + random.toString());
+        var surroundings = terrain.getSurroundings("FOREST", false, false, GameEnums.Directions_East, false);
+        surroundings += terrain.getSurroundings("FOREST", false, false, GameEnums.Directions_West, false);
+        terrain.loadBaseSprite("forest" + surroundings);
     };
     this.getMiniMapIcon = function()
     {
