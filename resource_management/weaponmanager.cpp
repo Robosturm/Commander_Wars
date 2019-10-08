@@ -73,7 +73,24 @@ float WeaponManager::getBaseDamage(const QString& weaponID, Unit* pDefender)
     }
     else
     {
-        return 0.0f;
+        return -1.0f;
+    }
+}
+
+float WeaponManager::getEnviromentDamage(const QString& weaponID, QString terrainID)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getEnviromentDamage";
+    QJSValueList args1;
+    args1 << terrainID;
+    QJSValue erg = pApp->getInterpreter()->doFunction(weaponID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toNumber();
+    }
+    else
+    {
+        return -1.0f;
     }
 }
 

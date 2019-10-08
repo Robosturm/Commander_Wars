@@ -454,6 +454,7 @@ bool NormalAi::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
             }
             appendAttackTargets(pUnit, pEnemyUnits, targets);
             appendAttackTargetsIgnoreOwnUnits(pUnit, pEnemyUnits, targets);
+            appendTerrainBuildingAttackTargets(pUnit, pEnemyBuildings, targets);
             if (targets.size() == 0)
             {
                 appendRepairTargets(pUnit, pBuildings, targets);

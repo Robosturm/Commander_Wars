@@ -312,7 +312,24 @@ protected:
      * @param pEnemyBuildings
      */
     void appendUnloadTargetsForCapturing(Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
-
+    /**
+     * @brief appendTerrainBuildingAttackTargets
+     * @param pUnit
+     * @param pEnemyBuildings
+     * @param targets
+     */
+    void appendTerrainBuildingAttackTargets(Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
+    /**
+     * @brief checkIslandForUnloading
+     * @param pLoadedUnit
+     * @param checkedIslands
+     * @param unitIslandIdx
+     * @param unitIsland
+     * @param loadedUnitIslandIdx
+     * @param targetIsland
+     * @param pUnloadArea
+     * @param targets
+     */
     void checkIslandForUnloading(Unit* pLoadedUnit, QVector<qint32>& checkedIslands,
                                  qint32 unitIslandIdx, qint32 unitIsland,
                                  qint32 loadedUnitIslandIdx, qint32 targetIsland,

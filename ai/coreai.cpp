@@ -230,7 +230,8 @@ float CoreAI::calcBuildingDamage(Unit* pUnit, QPoint newPosition, Building* pBui
        (targets == GameEnums::BuildingTarget_Enemy && m_pPlayer->isEnemy(pBuilding->getOwner())) ||
        (targets == GameEnums::BuildingTarget_Own && m_pPlayer == pBuilding->getOwner()))
     {
-        if (pBuilding->getFireCount() <= 1)
+        if (pBuilding->getFireCount() <= 1 &&
+            pBuilding->getOwner() != nullptr)
         {
             QPoint pos = newPosition - pBuilding->getActionTargetOffset() - pBuilding->getPosition();
             QmlVectorPoint* pTargets = pBuilding->getActionTargetFields();
@@ -276,8 +277,11 @@ void CoreAI::createMovementMap(QmlVectorBuilding* pBuildings, QmlVectorBuilding*
     for (qint32 i = 0; i < pEnemyBuildings->size(); i++)
     {
         Building* pBuilding = pEnemyBuildings->at(i);
-        float damage = pBuilding->getDamage(nullptr);
-        addMovementMap(pBuilding, damage);
+        if (pBuilding->getOwner() != nullptr)
+        {
+            float damage = pBuilding->getDamage(nullptr);
+            addMovementMap(pBuilding, damage);
+        }
     }
 }
 
@@ -404,13 +408,13 @@ void CoreAI::getBestAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<Q
 void CoreAI::appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets)
 {
     GameMap* pMap = GameMap::getInstance();
+    qint32 firerange = pUnit->getMaxRange();
+    QmlVectorPoint* pTargetFields = Mainapp::getCircle(firerange, firerange);
     for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
     {
         Unit* pEnemy = pEnemyUnits->at(i2);
         if (pUnit->isAttackable(pEnemy, true))
         {
-            qint32 firerange = pUnit->getMaxRange();
-            QmlVectorPoint* pTargetFields = Mainapp::getCircle(firerange, firerange);
             for (qint32 i3 = 0; i3 < pTargetFields->size(); i3++)
             {
                 qint32 x = pTargetFields->at(i3).x() + pEnemy->getX();
@@ -428,9 +432,9 @@ void CoreAI::appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVecto
                     }
                 }
             }
-            delete pTargetFields;
         }
     }
+    delete pTargetFields;
 }
 
 void CoreAI::getAttackTargets(Unit* pUnit, GameAction* pAction, UnitPathFindingSystem* pPfs, QVector<QVector4D>& ret, QVector<QVector3D>& moveTargetFields)
@@ -1230,6 +1234,91 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, QmlVectorBuilding* pEn
     }
 }
 
+void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets)
+{
+    GameMap* pMap = GameMap::getInstance();
+    qint32 firerange = pUnit->getMaxRange();
+    QmlVectorPoint* pTargetFields = Mainapp::getCircle(firerange, firerange);
+    for (qint32 i = 0; i < pEnemyBuildings->size(); i++)
+    {
+        Building* pBuilding = pEnemyBuildings->at(i);
+        if (pBuilding->getHp() > 0 &&
+            pUnit->isEnvironmentAttackable(pBuilding->getBuildingID()))
+        {
+            qint32 width = pBuilding->getBuildingWidth();
+            qint32 heigth = pBuilding->getBuildingHeigth();
+            QPoint pos = pBuilding->getPosition();
+            QVector<QPoint> attackPosition;
+            // find all attackable fields
+            for (qint32 x = -width; x <= 0; x++)
+            {
+                for (qint32 y = -heigth; y <= 0; y++)
+                {
+                    if (pBuilding->getIsAttackable(x + pos.x(), y + pos.y()))
+                    {
+                        attackPosition.append(QPoint(pos.x() + x, pos.y() + y));
+                    }
+                }
+            }
+            // find attackable fields
+            for (qint32 i3 = 0; i3 < pTargetFields->size(); i3++)
+            {
+                for (qint32 i4 = 0; i4 < attackPosition.size(); i4++)
+                {
+                    qint32 x = pTargetFields->at(i3).x() + attackPosition[i4].x();
+                    qint32 y = pTargetFields->at(i3).y() + attackPosition[i4].y();
+                    if (pMap->onMap(x, y) &&
+                        pMap->getTerrain(x, y)->getUnit() == nullptr)
+                    {
+                        if (pUnit->canMoveOver(x, y))
+                        {
+                            QVector3D possibleTarget(x, y, 2);
+                            if (!targets.contains(possibleTarget))
+                            {
+                                targets.append(possibleTarget);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if (enableNeutralTerrainAttack)
+    {
+        // find terrains
+        qint32 width = pMap->getMapWidth();
+        qint32 heigth = pMap->getMapHeight();
+        for (qint32 x = 0; x < width; x++)
+        {
+            for (qint32 y = 0; y < heigth; y++)
+            {
+                Terrain* pTerrain = pMap->getTerrain(x, y);
+                if (pTerrain->getHp() > 0 &&
+                    pUnit->isEnvironmentAttackable(pTerrain->getID()))
+                {
+                    for (qint32 i3 = 0; i3 < pTargetFields->size(); i3++)
+                    {
+                        qint32 x1 = pTargetFields->at(i3).x() + x;
+                        qint32 y1 = pTargetFields->at(i3).y() + y;
+                        if (pMap->onMap(x1, y1) &&
+                            pMap->getTerrain(x1, y1)->getUnit() == nullptr)
+                        {
+                            if (pUnit->canMoveOver(x1, y1))
+                            {
+                                QVector3D possibleTarget(x1, y1, 2);
+                                if (!targets.contains(possibleTarget))
+                                {
+                                    targets.append(possibleTarget);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    delete pTargetFields;
+}
 
 void CoreAI::rebuildIsland(QmlVectorUnit* pUnits)
 {

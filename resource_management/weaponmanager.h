@@ -35,6 +35,13 @@ public:
      */
     float getBaseDamage(const QString& weaponID, Unit* pDefender);
     /**
+     * @brief getEnviromentDamage
+     * @param weaponID
+     * @param terrainID
+     * @return
+     */
+    float getEnviromentDamage(const QString& weaponID, QString terrainID);
+    /**
      * @brief getWeaponCount
      * @return
      */

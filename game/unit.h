@@ -584,6 +584,12 @@ public slots:
      */
     bool isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange = false);
     /**
+     * @brief isEnvironmentAttackable
+     * @param terrainID
+     * @return
+     */
+    bool isEnvironmentAttackable(QString terrainID);
+    /**
      * @brief canMoveOver
      * @param x
      * @param y

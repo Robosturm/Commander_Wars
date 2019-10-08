@@ -620,6 +620,26 @@ bool Unit::canBeRepaired(QPoint position)
     return true;
 }
 
+bool Unit::isEnvironmentAttackable(QString terrainID)
+{
+    WeaponManager* pWeaponManager = WeaponManager::getInstance();
+    if (hasAmmo1() && !weapon1ID.isEmpty())
+    {
+        if (pWeaponManager->getEnviromentDamage(weapon1ID, terrainID) > 0)
+        {
+            return true;
+        }
+    }
+    if (hasAmmo2() && !weapon2ID.isEmpty())
+    {
+        if (pWeaponManager->getEnviromentDamage(weapon2ID, terrainID) > 0)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange)
 {
     WeaponManager* pWeaponManager = WeaponManager::getInstance();

@@ -357,6 +357,7 @@ bool VeryEasyAI::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
             }
             appendAttackTargets(pUnit, pEnemyUnits, targets);
             appendAttackTargetsIgnoreOwnUnits(pUnit, pEnemyUnits, targets);
+            appendTerrainBuildingAttackTargets(pUnit, pEnemyBuildings, targets);
             if (targets.size() == 0)
             {
                 if ((pUnit->getMaxAmmo1() > 0 && !pUnit->hasAmmo1()) ||
