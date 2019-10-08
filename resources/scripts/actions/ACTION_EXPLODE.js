@@ -98,14 +98,14 @@ var Constructor = function()
                         map.getGameRecorder().destroyedUnit(unit.getOwner().getPlayerID());
                         unit.killUnit();
                     }
-                }
-                var animation = GameAnimationFactory.createAnimation(x + point.x, y + point.y);
-                animation.addSprite("explosion+land", -map.getImageSize() / 2, -map.getImageSize(), 0, 1.5);
-                audio.playSound("explosion+land.wav");
+                }                
             }
         }
         fields.remove();
         ACTION_EXPLODE.postAnimationUnit.killUnit();
+        var animation = GameAnimationFactory.createAnimation(x - 2, y - 3);
+        animation.addSprite("explosion+black_bomb", 0, map.getImageSize() / 2, 0, 1.875);
+        audio.playSound("explosion+land.wav");
         // we destroyed a unit
         map.getGameRecorder().destroyedUnit(owner.getPlayerID());
         ACTION_EXPLODE.postAnimationUnit = null;
