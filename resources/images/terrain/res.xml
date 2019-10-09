@@ -287,8 +287,14 @@
 		<image file="snow+E.png" />
 		<image file="snow+N.png" />
 		<image file="snow_forest.png" />
+		<image file="snow_forest+E.png" />
+		<image file="snow_forest+E+W.png" />
+		<image file="snow_forest+W.png" />
 		<image file="snow_wasteland.png" />
 		<image file="snow_mountain.png" />
+		<image file="snow_mountain+E.png" />
+		<image file="snow_mountain+E+W.png" />
+		<image file="snow_mountain+W.png" />
 		
 		<image file="snow_destroyedweld+E+W.png" />
 		<image file="snow_destroyedweld+N+S.png" />

@@ -2597,7 +2597,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="51"/>
+        <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="53"/>
         <source>In Fog of War conditions, the snowy woods provide ground unit &lt;div c=&apos;00ff00&apos;&gt;hiding places.&lt;/div&gt; It&apos;s hard for ground units to cross this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2610,7 +2610,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="54"/>
+        <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="56"/>
         <source>Clear view. In Fog of War, Infantry unit&apos;s gain &lt;div c=&apos;00ff00&apos;&gt;vision +3.&lt;/div&gt; Extremly high movement costs for infantry units.</source>
         <translation type="unfinished"></translation>
     </message>

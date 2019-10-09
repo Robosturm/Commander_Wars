@@ -23,7 +23,9 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        terrain.loadBaseSprite("snow_mountain");
+        var surroundings = terrain.getSurroundings("SNOW_MOUNTAIN", false, false, GameEnums.Directions_East, false);
+        surroundings += terrain.getSurroundings("SNOW_MOUNTAIN", false, false, GameEnums.Directions_West, false);
+        terrain.loadBaseSprite("snow_mountain" + surroundings);
     };
     this.getMiniMapIcon = function()
     {

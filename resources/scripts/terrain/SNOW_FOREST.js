@@ -19,11 +19,13 @@ var Constructor = function()
     };
     this.loadBaseTerrain = function(terrain, currentTerrainID)
     {
-		terrain.loadBaseTerrain("SNOW");
+        terrain.loadBaseTerrain("SNOW");
     };
     this.loadBaseSprite = function(terrain)
     {
-        terrain.loadBaseSprite("snow_forest");
+        var surroundings = terrain.getSurroundings("SNOW_FOREST", false, false, GameEnums.Directions_East, false);
+        surroundings += terrain.getSurroundings("SNOW_FOREST", false, false, GameEnums.Directions_West, false);
+        terrain.loadBaseSprite("snow_forest" + surroundings);
     };
     this.getMiniMapIcon = function()
     {
