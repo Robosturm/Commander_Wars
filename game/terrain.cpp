@@ -12,6 +12,8 @@
 
 #include <QFileInfo>
 
+#include <QFile>
+
 #include "game/player.h"
 
 #include "game/co.h"
@@ -253,10 +255,35 @@ void Terrain::loadBaseSprite(QString spriteID)
         m_terrainSpriteName = spriteID;
         m_pTerrainSprite = pSprite;
     }
+    else if (QFile::exists(m_terrainSpriteName))
+    {
+        oxygine::spSprite pSprite = new oxygine::Sprite();
+        pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
+        this->addChild(pSprite);
+        m_terrainSpriteName = spriteID;
+        m_pTerrainSprite = pSprite;
+        loadSprite = true;
+    }
     else
     {
         Console::print("Unable to load terrain sprite: " + spriteID, Console::eERROR);
     }
+}
+
+void Terrain::update(const oxygine::UpdateState& us)
+{
+    if (loadSprite)
+    {
+        oxygine::SingleResAnim* pAnim = new oxygine::SingleResAnim();
+        pAnim->setResPath(m_terrainSpriteName.toStdString());
+        pAnim->init(m_terrainSpriteName.toStdString(), 1, 1, 1.0f);
+        m_SpriteAnim = pAnim;
+        m_pTerrainSprite->setResAnim(pAnim);
+        m_pTerrainSprite->setScale((GameMap::Imagesize + 1) / pAnim->getWidth() );
+        m_pTerrainSprite->setPosition(-(m_pTerrainSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(m_pTerrainSprite->getScaledHeight() - GameMap::Imagesize));
+        loadSprite = false;
+    }
+    oxygine::Actor::update(us);
 }
 
 QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool blacklist, qint32 searchType, bool useMapBorder, bool useBuildingID, qint32 recursionCount)

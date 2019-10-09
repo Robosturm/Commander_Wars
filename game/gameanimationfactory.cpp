@@ -161,7 +161,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
             pAtk->setSound("talongunhit.wav", 1);            
             GameAnimation* pDmgTextAtk = createAnimation(pDefTerrain->getX(), pDefTerrain->getY());
             pDmgTextAtk->addText(QString::number(Mainapp::roundUp(defStartHp - defEndHp)) + " Hp", -8, 0, 1.5f, Qt::GlobalColor::red);
-            pDmgTextAtk->addTweenPosition(QPoint(pDefTerrain->getX() * GameMap::Imagesize, (pDefTerrain->getY() - 2) * GameMap::Imagesize), 1500);
+            pDmgTextAtk->addTweenPosition(QPoint(pDefTerrain->getX() * GameMap::Imagesize, (pDefTerrain->getY() - 2) * GameMap::Imagesize), 1000);
             pDmgTextAtk->addTweenWait(1500);
             pAtk->queueAnimation(pDmgTextAtk);
             if (defenderDamage > 0)
@@ -173,7 +173,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
                 pDmgTextAtk->queueAnimation(pRet);
                 GameAnimation* pDmgTextDef = createAnimation(pAtkTerrain->getX(), pAtkTerrain->getY());
                 pDmgTextDef->addText(QString::number(Mainapp::roundUp(atkStartHp - atkEndHp)) + " Hp", -8, 0, 1.5f, Qt::GlobalColor::red);
-                pDmgTextDef->addTweenPosition(QPoint(pAtkTerrain->getX() * GameMap::Imagesize, (pAtkTerrain->getY() - 2) * GameMap::Imagesize), 1500);
+                pDmgTextDef->addTweenPosition(QPoint(pAtkTerrain->getX() * GameMap::Imagesize, (pAtkTerrain->getY() - 2) * GameMap::Imagesize), 1000);
                 pDmgTextDef->addTweenWait(1500);
                 pRet->queueAnimation(pDmgTextDef);
                 pRet = pDmgTextDef;

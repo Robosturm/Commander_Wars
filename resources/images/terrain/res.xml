@@ -313,14 +313,27 @@
 		<image file="snow_Pipeline+W.png" />
 		
 		<!-- desert stuff here comes zandra -->
-		<image file="desert.png" />
+		<image file="desert+0.png" />
+		<image file="desert+1.png" />
+		<image file="desert+2.png" />
+		<image file="desert+3.png" />
+		<image file="desert+4.png" />
+		<image file="desert+5.png" />
+		<image file="desert+6.png" />
+		<image file="desert+7.png" />
 		<image file="desert+W.png" />
 		<image file="desert+S.png" />
 		<image file="desert+E.png" />
 		<image file="desert+N.png" />
 		<image file="desert_forest.png" />
+		<image file="desert_forest+E.png" />
+		<image file="desert_forest+E+W.png" />
+		<image file="desert_forest+W.png" />
 		<image file="desert_wasteland.png" />
 		<image file="desert_rock.png" />
+		<image file="desert_rock+E.png" />
+		<image file="desert_rock+E+W.png" />
+		<image file="desert_rock+W.png" />
 
 		<image file="desert_destroyedweld+E+W.png" />
 		<image file="desert_destroyedweld+N+S.png" />

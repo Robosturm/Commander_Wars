@@ -159,6 +159,61 @@ var Constructor = function()
     {
         return qsTr("Beachs over great landing places for landing ground troops.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["beach+E+land+N",
+                "beach+E+land+N+S",
+                "beach+E+land+N+S+W",
+                "beach+E+land+N+W",
+                "beach+E+land+S",
+                "beach+E+land+S+W",
+                "beach+E+S+land+N+W",
+                "beach+E+W+land+N",
+                "beach+E+W+land+N+S",
+                "beach+E+W+land+S",
+                "beach+land+E",
+                "beach+land+E+S",
+                "beach+land+E+S+W",
+                "beach+land+E+W",
+                "beach+land+N",
+                "beach+land+N+E",
+                "beach+land+N+E+S",
+                "beach+land+N+E+S+W",
+                "beach+land+N+E+W",
+                "beach+land+N+S",
+                "beach+land+N+S+W",
+                "beach+land+N+W",
+                "beach+land+S",
+                "beach+land+S+W",
+                "beach+land+W",
+                "beach+N+E+land+S+W",
+                "beach+N+land+E",
+                "beach+N+land+E+S+W",
+                "beach+N+land+E+W",
+                "beach+N+land+E+S",
+                "beach+N+land+S+W",
+                "beach+N+land+W",
+                "beach+N+S+land+E",
+                "beach+N+S+land+E+W",
+                "beach+N+S+land+W",
+                "beach+N+W+land+E+S",
+                "beach+S+land+E",
+                "beach+S+land+W",
+                "beach+S+land+E+W",
+                "beach+S+land+N+E",
+                "beach+S+land+N+E+W",
+                "beach+S+land+N+W",
+                "beach+W+land+E+S",
+                "beach+W+land+N",
+                "beach+W+land+N+E",
+                "beach+S+W+land+N+E",
+                "beach+W+land+N+E+S",
+                "beach+W+land+N+S",
+                "beach+W+land+S",
+                "beach"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var BEACH = new Constructor();

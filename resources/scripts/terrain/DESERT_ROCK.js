@@ -23,7 +23,9 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        terrain.loadBaseSprite("desert_rock");
+        var surroundings = terrain.getSurroundings("DESERT_ROCK", false, false, GameEnums.Directions_East, false);
+        surroundings += terrain.getSurroundings("DESERT_ROCK", false, false, GameEnums.Directions_West, false);
+        terrain.loadBaseSprite("desert_rock" + surroundings);
     };
     this.getFirerangeModifier = function(terrain, unit)
     {

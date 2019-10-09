@@ -21,6 +21,15 @@ var Constructor = function()
     this.loadBaseSprite = function(terrain, currentTerrainID)
     {
 		terrain.loadBaseSprite("desert");
+        var random = globals.randInt(0, 140);
+        if (random >= 8)
+        {
+            terrain.loadBaseSprite("desert+0");
+        }
+        else
+        {
+            terrain.loadBaseSprite("desert+" + random.toString());
+        }
     };
     this.getFirerangeModifier = function(terrain, unit)
     {

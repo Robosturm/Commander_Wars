@@ -46,22 +46,6 @@ var TERRAIN =
     {
         return "";
     },
-    /***********************************************************************************/
-    // this section deals with map editor hints
-    // these functions have no influence in the game.
-    /***********************************************************************************/
-    // defines if a terrain can be placed in the editor at a given location
-    canBePlaced : function(x, y)
-    {
-        return true;
-    },
-    // only bridges use this function for now.
-    // all other replace the terrain complete with themself
-    // and their base terrain
-    useTerrainAsBaseTerrain : function()
-    {
-        return false;
-    },
 
     // vision created by this field
     getVision : function()
@@ -149,5 +133,27 @@ var TERRAIN =
     getDescription : function()
     {
         return "";
+    },
+    /***********************************************************************************/
+    // this section deals with map editor hints
+    // these functions have no influence in the game.
+    /***********************************************************************************/
+    // defines if a terrain can be placed in the editor at a given location
+    canBePlaced : function(x, y)
+    {
+        return true;
+    },
+    // only bridges use this function for now.
+    // all other replace the terrain complete with themself
+    // and their base terrain
+    useTerrainAsBaseTerrain : function()
+    {
+        return false;
+    },
+
+    getTerrainSprites : function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return [];
     },
 };

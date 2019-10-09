@@ -766,7 +766,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT.js" line="73"/>
+        <location filename="../resources/scripts/terrain/DESERT.js" line="82"/>
         <source>Ground units move easily on this terrain, but it reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -792,7 +792,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_FOREST.js" line="55"/>
+        <location filename="../resources/scripts/terrain/DESERT_FOREST.js" line="57"/>
         <source>In Fog of War conditions, the woods provide ground unit hiding places.&lt;div c=&apos;00ff00&apos;&gt; It reduces the firerange of indirect units by 1.&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -831,7 +831,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="59"/>
+        <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="61"/>
         <source>Clear view. In Fog of War, Infantry unit&apos;s gain &lt;div c=&apos;00ff00&apos;&gt;vision +3.&lt;/div&gt; It reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3717,7 +3717,7 @@
 <context>
     <name>Terrain</name>
     <message>
-        <location filename="../game/terrain.cpp" line="55"/>
+        <location filename="../game/terrain.cpp" line="57"/>
         <source>Unable to load Terrain </source>
         <translation type="unfinished"></translation>
     </message>

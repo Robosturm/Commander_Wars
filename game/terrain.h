@@ -84,8 +84,11 @@ public:
     {
         return 2;
     }
-
-
+    /**
+     * @brief update
+     * @param us
+     */
+    virtual void update(const oxygine::UpdateState& us) override;
 public slots:
     /**
      * @brief getDescription
@@ -279,10 +282,6 @@ private:
      */
     QString terrainID;
     /**
-     * @brief terrainSprite which terrain sprite we loaded
-     */
-    QString m_terrainSpriteName;
-    /**
      * @brief m_pTerrainSprite actor holding our sprite data
      */
     oxygine::spSprite m_pTerrainSprite{nullptr};
@@ -291,6 +290,18 @@ private:
      * @brief fixedSprite stores if the selected sprite is fixed or will be loaded based on the surrounding and random factors
      */
     bool m_FixedSprite{false};
+    /**
+     * @brief terrainSprite which terrain sprite we loaded
+     */
+    QString m_terrainSpriteName;
+    /**
+     * @brief m_SpriteAnim
+     */
+    oxygine::spResAnim m_SpriteAnim;
+    /**
+     * @brief loadSprite
+     */
+    bool loadSprite{false};
     /**
      * @brief m_pBaseTerrain base terrain of this terrain
      */

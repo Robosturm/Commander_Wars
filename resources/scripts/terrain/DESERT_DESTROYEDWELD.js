@@ -97,6 +97,12 @@ var Constructor = function()
     {
         return qsTr("Ground units move easily on this terrain, but it reduces the firerange of indirect units by 1.");
     };
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["desert_destroyedweld+E+W",
+                "desert_destroyedweld+N+S"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_DESTROYEDWELD = new Constructor();

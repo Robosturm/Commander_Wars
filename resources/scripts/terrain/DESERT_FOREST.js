@@ -23,7 +23,9 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        terrain.loadBaseSprite("desert_forest");
+        var surroundings = terrain.getSurroundings("DESERT_FOREST", false, false, GameEnums.Directions_East, false);
+        surroundings += terrain.getSurroundings("DESERT_FOREST", false, false, GameEnums.Directions_West, false);
+        terrain.loadBaseSprite("desert_forest" + surroundings);
     };
     this.getMiniMapIcon = function()
     {
