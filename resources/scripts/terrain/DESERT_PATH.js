@@ -34,7 +34,7 @@ var Constructor = function()
     };
     this.loadBaseSprite = function(terrain)
     {
-        var surroundings = terrain.getSurroundings("STREET,BRIDGE,AIRPORT,FACTORY,HARBOUR,HQ,LABOR,MINE,SILO,SILO_ROCKET,TOWER,TOWN,RADAR,PIPESTATION,DESERT_PATH",
+        var surroundings = terrain.getSurroundings("STREET,BRIDGE,DESERT_PATH",
                                                    false, false, GameEnums.Directions_Direct, false, true);
         terrain.loadBaseSprite("desert_path" + surroundings);
     };

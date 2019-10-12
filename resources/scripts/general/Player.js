@@ -108,36 +108,28 @@ var PLAYER =
     getDefaultArmy : function (player)
     {
         var id = player.getPlayerID() % 13;
-        switch (id)
-        {
-            case 0:
-                return "OS";
-            case 1:
-                return "BM";
-            case 2:
-                return "GE";
-            case 3:
-                return "YC";
-            case 4:
-                return "BH";
-            case 5:
-                return "BG";
-            case 6:
-                return "MA";
-            case 7:
-                return "AC";
-            case 8:
-                return "BD";
-            case 9:
-                return "GS";
-            case 10:
-                return "PF";
-            case 11:
-                return "TI";
-            case 12:
-                return "DM";
-        }
+        var armies = PLAYER.getArmies();
+        return armies[id];
     },
+
+    getArmies : function()
+    {
+        return ["OS",
+                "BM",
+                "GE",
+                "YC",
+                "BH",
+                "BG",
+                "MA",
+                "AC",
+                "BD",
+                "GS",
+                "PF",
+                "TI",
+                "DM"];
+    },
+
+
     getArmyName : function (army)
     {
         switch (army)

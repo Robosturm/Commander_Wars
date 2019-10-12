@@ -16,7 +16,7 @@ COSelection::COSelection(QStringList coids)
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    GameManager* pGameManager = GameManager::getInstance();
+
     pCOSpriteManager->loadAll();
     Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
     // create a co banner for each co in a different army
@@ -24,6 +24,14 @@ COSelection::COSelection(QStringList coids)
     qint32 y = 0;
     oxygine::ResAnim* pAnim = nullptr;
     oxygine::spSprite pSprite;
+    QString function1 = "getArmies";
+    QJSValueList args1;
+    QJSValue ret = pApp->getInterpreter()->doFunction("PLAYER", function1, args1);
+    m_Armies = ret.toVariant().toStringList();
+    for (qint32 i = 0; i < m_Armies.size(); i++)
+    {
+        loadArmy(m_Armies[i], bannerX, y, i);
+    }
     for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
     {
         QString coid = pCOSpriteManager->getCOID(i);
@@ -36,31 +44,8 @@ COSelection::COSelection(QStringList coids)
                 QString army = ret.toString();
                 if (!m_Armies.contains(army))
                 {
-                    pAnim = pGameManager->getResAnim(army.toStdString().c_str());
-                    if (pAnim != nullptr)
-                    {
-                        m_Armies.append(army);
-                        oxygine::spClipRectActor pRect = new oxygine::ClipRectActor();
-                        pRect->setPosition(bannerX, 0);
-                        pRect->setSize(pAnim->getWidth(), pAnim->getHeight());
-                        pSprite = new oxygine::Sprite();
-                        pSprite->setResAnim(pAnim);
-                        if (i != 0)
-                        {
-                            pSprite->setPosition(0, -12);
-                        }
-                        pRect->addChild(pSprite);
-                        m_ArmyBanners.append(pSprite);
-
-                        qint32 index = m_ArmyBanners.size() - 1;
-                        pSprite->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
-                        {
-                            armyBannerClicked(army, index);
-                        });
-                        addChild(pRect);
-                        bannerX += pAnim->getWidth();
-                        y = pAnim->getHeight() + 5;
-                    }
+                    m_Armies.append(army);
+                    loadArmy(army, bannerX, y, i);
                 }
             }
         }
@@ -139,6 +124,35 @@ COSelection::COSelection(QStringList coids)
     addChild(m_CODescRect);
 
     armyBannerClicked(m_Armies[0], 0);
+}
+
+void COSelection::loadArmy(QString army, qint32& bannerX, qint32& y, qint32 i)
+{
+    GameManager* pGameManager = GameManager::getInstance();
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim(army.toStdString().c_str());
+    if (pAnim != nullptr)
+    {
+        oxygine::spClipRectActor pRect = new oxygine::ClipRectActor();
+        pRect->setPosition(bannerX, 0);
+        pRect->setSize(pAnim->getWidth(), pAnim->getHeight());
+        oxygine::spSprite pSprite = new oxygine::Sprite();
+        pSprite->setResAnim(pAnim);
+        if (i != 0)
+        {
+            pSprite->setPosition(0, -12);
+        }
+        pRect->addChild(pSprite);
+        m_ArmyBanners.append(pSprite);
+
+        qint32 index = m_ArmyBanners.size() - 1;
+        pSprite->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event*)
+        {
+            armyBannerClicked(army, index);
+        });
+        addChild(pRect);
+        bannerX += pAnim->getWidth();
+        y = pAnim->getHeight() + 5;
+    }
 }
 
 void COSelection::armyBannerClicked(QString army, qint32 index)

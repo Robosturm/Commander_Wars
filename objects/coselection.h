@@ -31,6 +31,7 @@ public slots:
     void hoveredCOChanged(QString);
 protected:
     void armyBannerClicked(QString army, qint32 index);
+    void loadArmy(QString army, qint32& bannerX, qint32& y, qint32 i);
 private:
     QStringList m_Armies;
     QVector<oxygine::spSprite> m_ArmyBanners;

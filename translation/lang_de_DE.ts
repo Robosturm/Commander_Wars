@@ -766,7 +766,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT.js" line="82"/>
+        <location filename="../resources/scripts/terrain/DESERT.js" line="81"/>
         <source>Ground units move easily on this terrain, but it reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
