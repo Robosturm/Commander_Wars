@@ -56,6 +56,15 @@ var Constructor = function()
     {
         return qsTr("In Fog of War conditions, the woods provide ground unit hiding places.<div c='00ff00'> It reduces the firerange of indirect units by 1.</div>");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["desert_forest.png",
+                "desert_forest+E",
+                "desert_forest+E+W",
+                "desert_forest+W"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_FOREST = new Constructor();

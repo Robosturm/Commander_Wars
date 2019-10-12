@@ -92,6 +92,12 @@ var Constructor = function()
     {
         return qsTr("Ground units move easily on this terrain.");
     };
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["destroyedweld+E+W",
+                "destroyedweld+N+S"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESTROYEDWELD = new Constructor();

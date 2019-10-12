@@ -104,6 +104,13 @@ var Constructor = function()
     {
         return qsTr("Black Hole Pipeline Weld can be destroyed to cross the pipeline.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["snow_weld+E+W",
+                "snow_weld+N+S"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var SNOW_WELD = new Constructor();

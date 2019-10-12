@@ -148,6 +148,19 @@ var Constructor = function()
     {
         return qsTr("Meteor pieces which can be attacked and destroyed <div c='00ff00'>to eliminate plasma.</div>");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["meteor",
+                "meteor+E",
+                "meteor+E+S",
+                "meteor+E+S+W",
+                "meteor+E+W",
+                "meteor+S",
+                "meteor+S+W",
+                "meteor+W"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var METEOR = new Constructor();

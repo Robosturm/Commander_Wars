@@ -75,6 +75,26 @@ var Constructor = function()
     {
         return qsTr("Black Hole Pipeline which can't be crossed by most units.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["pipeline+E",
+                "pipeline+E+S",
+                "pipeline+E+S+W",
+                "pipeline+E+W",
+                "pipeline+N",
+                "pipeline+N+E",
+                "pipeline+N+E+S",
+                "pipeline+N+E+S+W",
+                "pipeline+N+E+W",
+                "pipeline+N+S",
+                "pipeline+N+S+W",
+                "pipeline+N+W",
+                "pipeline+S",
+                "pipeline+S+W",
+                "pipeline+W"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var PIPELINE = new Constructor();

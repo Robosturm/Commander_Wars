@@ -60,6 +60,15 @@ var Constructor = function()
     {
         return qsTr("Clear view. In Fog of War, Infantry unit's gain <div c='00ff00'>vision +3.</div> It reduces the firerange of indirect units by 1.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["desert_rock.png",
+                "desert_rock+E",
+                "desert_rock+E+W",
+                "desert_rock+W"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_ROCK = new Constructor();

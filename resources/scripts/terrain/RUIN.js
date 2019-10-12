@@ -45,6 +45,14 @@ var Constructor = function()
     {
         return qsTr("In Fog of War conditions, the ruins provide ground unit <div c='00ff00'>hiding places.</div>");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["ruin+0",
+                "ruin+1",
+                "ruin+2"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var RUIN = new Constructor();

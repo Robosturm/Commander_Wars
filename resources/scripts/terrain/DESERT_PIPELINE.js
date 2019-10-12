@@ -79,6 +79,26 @@ var Constructor = function()
     {
         return qsTr("Black Hole Pipeline which can't be crossed by most units. It reduces the firerange of indirect units by 1.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["desert_pipeline+E",
+                "desert_pipeline+E+S",
+                "desert_pipeline+E+S+W",
+                "desert_pipeline+E+W",
+                "desert_pipeline+N",
+                "desert_pipeline+N+E",
+                "desert_pipeline+N+E+S",
+                "desert_pipeline+N+E+S+W",
+                "desert_pipeline+N+E+W",
+                "desert_pipeline+N+S",
+                "desert_pipeline+N+S+W",
+                "desert_pipeline+N+W",
+                "desert_pipeline+S",
+                "desert_pipeline+S+W",
+                "desert_pipeline+W"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_PIPELINE = new Constructor();

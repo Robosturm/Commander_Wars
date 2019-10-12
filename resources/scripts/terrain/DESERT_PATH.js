@@ -50,6 +50,27 @@ var Constructor = function()
     {
         return qsTr("Kinda well-surfaced path through the desert provides optimum mobility but little cover. It reduces the firerange of indirect units by 1.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["desert_path",
+                "desert_path+E",
+                "desert_path+E+S",
+                "desert_path+E+S+W",
+                "desert_path+E+W",
+                "desert_path+N",
+                "desert_path+N+E",
+                "desert_path+N+E+S",
+                "desert_path+N+E+S+W",
+                "desert_path+N+E+W",
+                "desert_path+N+S",
+                "desert_path+N+S+W",
+                "desert_path+N+W",
+                "desert_path+S",
+                "desert_path+S+W",
+                "desert_path+W"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_PATH = new Constructor();

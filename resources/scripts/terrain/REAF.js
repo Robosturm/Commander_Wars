@@ -70,6 +70,15 @@ var Constructor = function()
     {
         return qsTr("This spiky reaf provides ideal <div c='00ff00'>hiding places</div> for naval units in Fog of War.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["reaf+N+E+S+W",
+                "reaf+1+N+E+S+W",
+                "reaf+2+N+E+S+W",
+                "reaf+3+N+E+S+W"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var REAF = new Constructor();

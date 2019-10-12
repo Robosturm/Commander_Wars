@@ -52,6 +52,15 @@ var Constructor = function()
     {
         return qsTr("In Fog of War conditions, the snowy woods provide ground unit <div c='00ff00'>hiding places.</div> It's hard for ground units to cross this terrain.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["snow_forest.png",
+                "snow_forest+E",
+                "snow_forest+E+W",
+                "snow_forest+W"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var SNOW_FOREST = new Constructor();

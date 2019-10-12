@@ -50,6 +50,27 @@ var Constructor = function()
     {
         return qsTr("A mysterious tile that costs 0MP to move over.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["teleporttile",
+                "teleporttile+E",
+                "teleporttile+E+S",
+                "teleporttile+E+S+W",
+                "teleporttile+E+W",
+                "teleporttile+N",
+                "teleporttile+N+E",
+                "teleporttile+N+E+S",
+                "teleporttile+N+E+S+W",
+                "teleporttile+N+E+W",
+                "teleporttile+N+S",
+                "teleporttile+N+S+W",
+                "teleporttile+N+W",
+                "teleporttile+S",
+                "teleporttile+S+W",
+                "teleporttile+W"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var TELEPORTTILE = new Constructor();

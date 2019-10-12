@@ -56,6 +56,15 @@ var Constructor = function()
     {
         return qsTr("This heavy fog provides ideal hiding places<div c='00ff00'> for naval units in Fog of War.</div>");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["fire.png",
+                "fire+E",
+                "fire+E+W",
+                "fire+W"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var FOG = new Constructor();

@@ -52,6 +52,26 @@ var Constructor = function()
     {
         return qsTr("Dark Matter Walls can't be crossed by most units. They can be destroyed at gates and weak wall parts.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["wall+E",
+                "wall+E+S",
+                "wall+E+S+W",
+                "wall+E+W",
+                "wall+N",
+                "wall+N+E",
+                "wall+N+E+S",
+                "wall+N+E+S+W",
+                "wall+N+E+W",
+                "wall+N+S",
+                "wall+N+S+W",
+                "wall+N+W",
+                "wall+S",
+                "wall+S+W",
+                "wall+W"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var WALL = new Constructor();

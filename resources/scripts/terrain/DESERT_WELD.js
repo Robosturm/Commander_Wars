@@ -108,6 +108,12 @@ var Constructor = function()
     {
         return qsTr("Black Hole Pipeline Weld can be destroyed to cross the pipeline. It reduces the firerange of indirect units by 1.");
     };
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["desert_weld+E+W",
+                "desert_weld+N+S"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_WELD = new Constructor();

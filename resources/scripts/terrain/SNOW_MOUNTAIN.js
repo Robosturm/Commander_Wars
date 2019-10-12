@@ -55,6 +55,15 @@ var Constructor = function()
     {
         return qsTr("Clear view. In Fog of War, Infantry unit's gain <div c='00ff00'>vision +3.</div> Extremly high movement costs for infantry units.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["snow_mountain.png",
+                "snow_mountain+E",
+                "snow_mountain+E+W",
+                "snow_mountain+W"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var SNOW_MOUNTAIN = new Constructor();

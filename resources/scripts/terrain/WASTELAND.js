@@ -30,6 +30,15 @@ var Constructor = function()
     {
         return qsTr("Infantry and Mech units aside, mobility is impaired on rough terrain.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["wasteland+0",
+                "wasteland+1",
+                "wasteland+2",
+                "wasteland+3"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var WASTELAND = new Constructor();

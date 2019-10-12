@@ -75,6 +75,32 @@ var Constructor = function()
     {
         return qsTr("Ground units move easily on this terrain.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["plains+0",
+                "plains+1",
+                "plains+2",
+                "plains+3",
+                "plains+4",
+                "plains+5",
+                "plains+6",
+                "plains+7",
+                "plains+8",
+                "plains+9",
+                "plains+10",
+                "plains+11",
+                "plains+12",
+                "plains+13",
+                "plains+14",
+                "plains+15",
+                "plains+16",
+                "plains+17",
+                "plains+18",
+                "plains+19",
+                "plains+20"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var PLAINS = new Constructor();

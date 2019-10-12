@@ -92,6 +92,13 @@ var Constructor = function()
     {
         return qsTr("Snowy terrain reduces rough to cross.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["snow_destroyedweld+E+W",
+                "snow_destroyedweld+N+S"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var SNOW_DESTROYEDWELD = new Constructor();

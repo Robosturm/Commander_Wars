@@ -80,6 +80,19 @@ var Constructor = function()
     {
         return qsTr("Ground units move easily on this terrain, but it reduces the firerange of indirect units by 1.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["desert+0",
+                "desert+1",
+                "desert+2",
+                "desert+3",
+                "desert+4",
+                "desert+5",
+                "desert+6",
+                "desert+7"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT = new Constructor();

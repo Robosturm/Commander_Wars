@@ -54,6 +54,27 @@ var Constructor = function()
     {
         return qsTr("Once a river. Now an empty Riverbed that can be crossed by most units doesn't provide cover. It reduces the firerange of indirect units by 1.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["desert_try_river",
+                "desert_try_river+E",
+                "desert_try_river+E+S",
+                "desert_try_river+E+S+W",
+                "desert_try_river+E+W",
+                "desert_try_river+N",
+                "desert_try_river+N+E",
+                "desert_try_river+N+E+S",
+                "desert_try_river+N+E+S+W",
+                "desert_try_river+N+E+W",
+                "desert_try_river+N+S",
+                "desert_try_river+N+S+W",
+                "desert_try_river+N+W",
+                "desert_try_river+S",
+                "desert_try_river+S+W",
+                "desert_try_river+W"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var DESERT_TRY_RIVER = new Constructor();

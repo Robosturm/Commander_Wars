@@ -45,6 +45,27 @@ var Constructor = function()
     {
         return qsTr("Eectric charge us impassable but disappears if <div c='00ff00'> meteor pieces</div> are destroyed.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["plasma",
+                "plasma+E",
+                "plasma+E+S",
+                "plasma+E+S+W",
+                "plasma+E+W",
+                "plasma+N",
+                "plasma+N+E",
+                "plasma+N+E+S",
+                "plasma+N+E+S+W",
+                "plasma+N+E+W",
+                "plasma+N+S",
+                "plasma+N+S+W",
+                "plasma+N+W",
+                "plasma+S",
+                "plasma+S+W",
+                "plasma+W"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var PLASMA = new Constructor();

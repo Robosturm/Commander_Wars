@@ -53,6 +53,15 @@ var Constructor = function()
     {
         return qsTr("In Fog of War conditions, the woods provide ground unit <div c='00ff00'>hiding places.</div>");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["forest.png",
+                "forest+E",
+                "forest+E+W",
+                "forest+W"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var FOREST = new Constructor();

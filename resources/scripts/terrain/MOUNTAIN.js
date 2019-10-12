@@ -55,6 +55,14 @@ var Constructor = function()
     {
         return qsTr("Clear view. In Fog of War, Infantry unit's gain <div c='00ff00'>vision +3.</div>");
     };
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["mountain.png",
+                "mountain+E",
+                "mountain+E+W",
+                "mountain+W"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var MOUNTAIN = new Constructor();

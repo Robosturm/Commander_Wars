@@ -88,6 +88,13 @@ var Constructor = function()
     {
         return qsTr("Dark Matter Walls can't be crossed by most units. The wall can be destroyed here to produce a path through the wall.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["weak_wall+E+W",
+                "weak_wall+N+S"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var WEAK_WALL = new Constructor();

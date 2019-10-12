@@ -46,6 +46,27 @@ var Constructor = function()
     {
         return qsTr("Well-surfaced roads provides optimum mobility but little cover.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["street",
+                "street+E",
+                "street+E+S",
+                "street+E+S+W",
+                "street+E+W",
+                "street+N",
+                "street+N+E",
+                "street+N+E+S",
+                "street+N+E+S+W",
+                "street+N+E+W",
+                "street+N+S",
+                "street+N+S+W",
+                "street+N+W",
+                "street+S",
+                "street+S+W",
+                "street+W"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var STREET = new Constructor();

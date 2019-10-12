@@ -80,6 +80,27 @@ var Constructor = function()
     {
         return qsTr("Most infantry and Hovercraft units are the only ground unit that can cross rivers.");
     };
+
+    this.getTerrainSprites = function()
+    {
+        // array of sprites that can be selected as fix sprites for this terrain
+        return ["river",
+                "river+E",
+                "river+E+S",
+                "river+E+S+W",
+                "river+E+W",
+                "river+N",
+                "river+N+E",
+                "river+N+E+S",
+                "river+N+E+S+W",
+                "river+N+E+W",
+                "river+N+S",
+                "river+N+S+W",
+                "river+N+W",
+                "river+S",
+                "river+S+W",
+                "river+W"];
+    };
 };
 Constructor.prototype = TERRAIN;
 var RIVER = new Constructor();
