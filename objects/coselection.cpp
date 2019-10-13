@@ -28,6 +28,40 @@ COSelection::COSelection(QStringList coids)
     QJSValueList args1;
     QJSValue ret = pApp->getInterpreter()->doFunction("PLAYER", function1, args1);
     m_Armies = ret.toVariant().toStringList();
+    QStringList allowedArmies;
+    // delete unused armies
+    // first search avaible armies if the selection is set like that
+    for (qint32 i = 0; i < m_Coids.size(); i++)
+    {
+        QString function1 = "getCOArmy";
+        QJSValue ret = pInterpreter->doFunction(m_Coids[i], function1);
+        if (ret.isString())
+        {
+            QString army = ret.toString();
+            if (!allowedArmies.contains(army))
+            {
+                allowedArmies.append(army);
+            }
+        }
+    }
+    // we have allowed armies? Else allow everything
+    if (allowedArmies.size() > 0)
+    {
+        // delete all other armies
+        qint32 iter = 0;
+        while (iter < m_Armies.size())
+        {
+            if (allowedArmies.contains(m_Armies[iter]))
+            {
+                iter++;
+            }
+            else
+            {
+                m_Armies.removeAt(iter);
+            }
+        }
+    }
+
     for (qint32 i = 0; i < m_Armies.size(); i++)
     {
         loadArmy(m_Armies[i], bannerX, y, i);
@@ -150,8 +184,8 @@ void COSelection::loadArmy(QString army, qint32& bannerX, qint32& y, qint32 i)
             armyBannerClicked(army, index);
         });
         addChild(pRect);
-        bannerX += pAnim->getWidth();
-        y = pAnim->getHeight() + 5;
+        bannerX += static_cast<qint32>(pAnim->getWidth());
+        y = static_cast<qint32>(pAnim->getHeight()) + 5;
     }
 }
 
@@ -182,39 +216,66 @@ void COSelection::armyChanged(QString army)
         removeChild(m_COFields[i]);
     }
     m_COFields.clear();
-    m_CoIDs.clear();
-    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    m_CoIDs.clear();    
+
+    QJSValue ret = pApp->getInterpreter()->doFunction("PLAYER", "getArmyCOs" + army);
+    QStringList preSetCOOrder = ret.toVariant().toStringList();
+    qint32 index = 0;
+    if (m_Coids.size() > 0)
+    {
+        // delete all unallowed co's
+        while (index < preSetCOOrder.size())
+        {
+            if (m_Coids.contains(preSetCOOrder[index]))
+            {
+                index++;
+            }
+            else
+            {
+                preSetCOOrder.removeAt(index);
+            }
+        }
+    }
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
-    qint32 coStartIndex = 0;
-    oxygine::ResAnim* pAnim = nullptr;
-    oxygine::spSprite pSprite;
-    for (qint32 y = 0; y < 5; y++)
+    qint32 startX = 0;
+    qint32 startY = 0;
+    for (qint32 i = 0; i < preSetCOOrder.size(); i++)
     {
-        for (qint32 x = 0; x < 3; x++)
+        addCO(preSetCOOrder[i], "dummy", startX, startY, "dummy");
+        startX++;
+        if (startX >= 3)
         {
-            oxygine::spActor actor = new oxygine::Actor();
+            startY++;
+            startX = 0;
+        }
+    }
+    qint32 y = startY;
+    while (y < 5)
+    {
+        qint32 x = startX;
+        if (y != startY)
+        {
+            x = 0;
+        }
+        while (x < 3)
+        {
             bool coFound = false;
-            QString coid = "";
-            for (qint32 i = coStartIndex; i < pCOSpriteManager->getCOCount(); i++)
+            for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
             {
-                coid = pCOSpriteManager->getCOID(i);
-                if (m_Coids.isEmpty() || m_Coids.contains(coid))
+                QString coid = pCOSpriteManager->getCOID(i);
+                if ((m_Coids.isEmpty() || m_Coids.contains(coid)) &&
+                    !m_CoIDs.contains(coid))
                 {
                     QString function1 = "getCOArmy";
                     QJSValue ret = pInterpreter->doFunction(coid, function1);
                     if (ret.isString())
                     {
                         QString COArmy = ret.toString();
-                        if (COArmy == army)
+                        if (COArmy == army && !m_CoIDs.contains(coid))
                         {
-                            coStartIndex = i + 1;
                             coFound = true;
-                            QString resAnim = coid.toLower() + "+face";
-                            pAnim = pCOSpriteManager->getResAnim(resAnim.toStdString().c_str());
-                            pSprite = new oxygine::Sprite();
-                            pSprite->setResAnim(pAnim);
-                            actor->addChild(pSprite);
+                            addCO(coid, COArmy, x, y, army);
                             break;
                         }
                     }
@@ -222,37 +283,62 @@ void COSelection::armyChanged(QString army)
             }
             if (!coFound)
             {
-                pAnim = pObjectManager->getResAnim("no_co");
-                pSprite = new oxygine::Sprite();
-                pSprite->setResAnim(pAnim);
-                actor->addChild(pSprite);
-                coid = "";
-
+                coFound = true;
+                addCO("", "", x, y, army);
             }
-            m_CoIDs.append(coid);
-            pAnim = pObjectManager->getResAnim("co_background");
-            pSprite = new oxygine::Sprite();
-            pSprite->setResAnim(pAnim);
-            actor->addChild(pSprite);
-
-            actor->setPosition(5 + x * 51, 7 + y * 51 + m_BackgroundMask->getY());
-            actor->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
-            {
-                m_Cursor->setPosition(5 + x * 51, 7 + y * 51 + m_BackgroundMask->getY());
-                m_CurrentCO = coid;
-                emit sigHoveredCOChanged(m_CurrentCO);
-            });
-            connect(this, &COSelection::sigHoveredCOChanged, this, &COSelection::hoveredCOChanged, Qt::QueuedConnection);
-            actor->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
-            {
-                emit coSelected(m_CurrentCO);
-            });
-            m_COFields.append(actor);
-            addChild(actor);
+            x++;
         }
+        y++;
     }
     colorChanged(m_CurrentColor);
     pApp->continueThread();
+}
+
+void COSelection::addCO(QString coid, QString COArmy, qint32 x, qint32 y, QString army)
+{
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+    oxygine::ResAnim* pAnim = nullptr;
+    oxygine::spSprite pSprite;
+    oxygine::spActor actor = new oxygine::Actor();
+    if (COArmy == army)
+    {
+        QString resAnim = coid.toLower() + "+face";
+        pAnim = pCOSpriteManager->getResAnim(resAnim.toStdString().c_str());
+        pSprite = new oxygine::Sprite();
+        pSprite->setResAnim(pAnim);
+        actor->addChild(pSprite);
+    }
+    else
+    {
+        pAnim = pObjectManager->getResAnim("no_co");
+        pSprite = new oxygine::Sprite();
+        pSprite->setResAnim(pAnim);
+        actor->addChild(pSprite);
+        coid = "";
+
+    }
+
+    pAnim = pObjectManager->getResAnim("co_background");
+    pSprite = new oxygine::Sprite();
+    pSprite->setResAnim(pAnim);
+    actor->addChild(pSprite);
+
+    actor->setPosition(5 + x * 51, 7 + y * 51 + m_BackgroundMask->getY());
+    actor->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    {
+        m_Cursor->setPosition(5 + x * 51, 7 + y * 51 + m_BackgroundMask->getY());
+        m_CurrentCO = coid;
+        emit sigHoveredCOChanged(m_CurrentCO);
+    });
+    connect(this, &COSelection::sigHoveredCOChanged, this, &COSelection::hoveredCOChanged, Qt::QueuedConnection);
+    actor->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        emit coSelected(m_CurrentCO);
+    });
+    m_COFields.append(actor);
+    addChild(actor);
+    m_CoIDs.append(coid);
 }
 
 void COSelection::colorChanged(QColor color)

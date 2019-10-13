@@ -112,24 +112,6 @@ var PLAYER =
         return armies[id];
     },
 
-    getArmies : function()
-    {
-        return ["OS",
-                "BM",
-                "GE",
-                "YC",
-                "BH",
-                "BG",
-                "MA",
-                "AC",
-                "BD",
-                "GS",
-                "PF",
-                "TI",
-                "DM"];
-    },
-
-
     getArmyName : function (army)
     {
         switch (army)
@@ -161,5 +143,102 @@ var PLAYER =
             case "DM":
                 return tr("Dark Matters");
         }
+    },
+
+    // co selection infos
+    getArmies : function()
+    {
+        return ["OS",
+                "BM",
+                "GE",
+                "YC",
+                "BH",
+                "BG",
+                "MA",
+                "AC",
+                "BD",
+                "GS",
+                "PF",
+                "TI",
+                "DM"];
+    },
+
+    getArmyCOsOS : function()
+    {
+        return ["CO_EMPTY_OS", "CO_ANDY", "CO_MAX", "CO_SAMI", "CO_JAKE",
+                "CO_RACHEL", "CO_NELL", "CO_HACHI", "CO_RANDOM"];
+    },
+
+    getArmyCOsBM : function()
+    {
+        return ["CO_EMPTY_BM", "CO_GRIT", "CO_COLIN", "CO_SASHA", "CO_OLAF",
+                "CO_ALEXANDER", "CO_RANDOM"];
+    },
+
+    getArmyCOsGE : function()
+    {
+        return ["CO_EMPTY_GE", "CO_DRAKE", "CO_EAGLE", "CO_JESS", "CO_JAVIER",
+                "CO_PETER", "CO_SMITAN", "CO_RANDOM"];
+    },
+
+    getArmyCOsYC : function()
+    {
+        return ["CO_EMPTY_YC", "CO_SONJA", "CO_SENSEI", "CO_GRIMM", "CO_KANBEI",
+                "CO_RATTIGAN", "CO_RANDOM"];
+    },
+
+    getArmyCOsBH : function()
+    {
+        return ["CO_EMPTY_BH", "CO_FLAK", "CO_ADDER", "CO_LASH", "CO_HAWKE",
+                "CO_STURM", "CO_RANDOM"];
+    },
+
+    getArmyCOsBG : function()
+    {
+        return ["CO_EMPTY_BG", "CO_JUGGER", "CO_KOAL", "CO_KINDLE",
+                "CO_VON_BOLT", "CO_RANDOM"];
+    },
+
+    getArmyCOsMA : function()
+    {
+        return ["CO_EMPTY_MA", "CO_EPOCH", "CO_ROBOANDY", "CO_IK_486_B7", "CO_NAPOLEON",
+                "CO_ROBOSTURM", "CO_RANDOM"];
+    },
+
+    getArmyCOsAC : function()
+    {
+        return ["CO_EMPTY_AC", "CO_WILL", "CO_ISABELLA", "CO_LIN", "CO_BRENNER",
+                "CO_SABAKI", "CO_SOPHIE", "CO_OZZY", "CO_MARY", "CO_RANDOM"];
+    },
+
+    getArmyCOsBD : function()
+    {
+        return ["CO_EMPTY_BD", "CO_GAGE", "CO_TASHA", "CO_ADAM", "CO_FORSYTHE",
+                "CO_ZANDRA", "CO_RANDOM"];
+    },
+
+    getArmyCOsGS : function()
+    {
+        return ["CO_EMPTY_GS", "CO_MINAMOTO", "CO_XAVIER", "CO_SANJURO",
+                "CO_MEIYO", "CO_RANDOM"];
+    },
+
+    getArmyCOsPF : function()
+    {
+        return ["CO_EMPTY_PF", "CO_MINA", "CO_AIRA", "CO_ALEXIS",
+                "CO_NANA", "CO_AMY", "CO_RANDOM"];
+    },
+
+    getArmyCOsTI : function()
+    {
+        return ["CO_EMPTY_TI", "CO_CONRAD", "CO_CASSIDY", "CO_WAYLON",
+                "CO_GREYFIELD", "CO_JOEY", "CO_RANDOM"];
+    },
+
+    getArmyCOsDM : function()
+    {
+        return ["CO_EMPTY_DM", "CO_PENNY", "CO_TABITHA", "CO_CAULDER",
+                "CO_MELANTHE", "CO_JULIA", "CO_GRAVES", "CO_VARLOT",
+                "CO_RANDOM"];
     },
 }

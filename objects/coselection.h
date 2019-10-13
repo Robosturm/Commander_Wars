@@ -32,6 +32,7 @@ public slots:
 protected:
     void armyBannerClicked(QString army, qint32 index);
     void loadArmy(QString army, qint32& bannerX, qint32& y, qint32 i);
+    void addCO(QString coid, QString COArmy, qint32 x, qint32 y, QString army);
 private:
     QStringList m_Armies;
     QVector<oxygine::spSprite> m_ArmyBanners;
