@@ -149,6 +149,19 @@ void OptionMenue::changeScreenMode(qint32 mode)
             pApp->getSettings()->setBorderless(false);
         }
     }
+    qint32 currentMode = 0;
+    qint32 count = 0;
+    while (currentMode != mode)
+    {
+        currentMode = getScreenMode();
+        QThread::msleep(300);
+        count++;
+        if (count > 10 * 60)
+        {
+            break;
+        }
+    }
+
     pApp->continueThread();
 }
 
@@ -180,6 +193,19 @@ void OptionMenue::changeScreenSize(qint32 width, qint32 heigth)
     Console::print("Leaving Option Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new OptionMenue());
     oxygine::Actor::detach();
+    qint32 w = 0;
+    qint32 h = 0;
+    qint32 count = 0;
+    while (w != width || h != heigth)
+    {
+        SDL_GetWindowSize(oxygine::core::getWindow(), &w, &h);
+        QThread::msleep(300);
+        count++;
+        if (count > 10 * 60)
+        {
+            break;
+        }
+    }
     pApp->continueThread();
 }
 

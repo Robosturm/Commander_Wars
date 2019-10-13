@@ -281,28 +281,40 @@ void AudioThread::SlotPlaySound(QString file, qint32 loops, QString folder, qint
     QUrl url = QUrl::fromLocalFile(folder + file);
     if (url.isValid())
     {
-        QSoundEffect* pSoundEffect = new QSoundEffect();
-        qreal value = QAudio::convertVolume(sound,
-                                            QAudio::LogarithmicVolumeScale,
-                                            QAudio::LinearVolumeScale);
-        QTimer* pTimer = new QTimer();
-        pTimer->moveToThread(Mainapp::getInstance()->getAudioWorker());
-        pSoundEffect->setVolume(value);
-        pSoundEffect->setSource(url);
-        pSoundEffect->setLoopCount(loops);
-        connect(pSoundEffect, &QSoundEffect::playingChanged, this, &AudioThread::SlotSoundEnded, Qt::QueuedConnection);
-        if (delay > 0)
+        qint32 count = 0;
+        for (qint32 i = 0; i < m_Sounds.size(); i++)
         {
-            connect(pTimer, &QTimer::timeout, this, &AudioThread::SlotSoundStart, Qt::QueuedConnection);
-            pTimer->setSingleShot(true);
-            pTimer->start(delay);
+            if (m_Sounds[i]->source().path() == url.path())
+            {
+                count++;
+            }
         }
-        else
+        if (count < 3)
         {
-            pSoundEffect->play();
+
+            QSoundEffect* pSoundEffect = new QSoundEffect();
+            qreal value = QAudio::convertVolume(sound,
+                                                QAudio::LogarithmicVolumeScale,
+                                                QAudio::LinearVolumeScale);
+            QTimer* pTimer = new QTimer();
+            pTimer->moveToThread(Mainapp::getInstance()->getAudioWorker());
+            pSoundEffect->setVolume(value);
+            pSoundEffect->setSource(url);
+            pSoundEffect->setLoopCount(loops);
+            connect(pSoundEffect, &QSoundEffect::playingChanged, this, &AudioThread::SlotSoundEnded, Qt::QueuedConnection);
+            if (delay > 0)
+            {
+                connect(pTimer, &QTimer::timeout, this, &AudioThread::SlotSoundStart, Qt::QueuedConnection);
+                pTimer->setSingleShot(true);
+                pTimer->start(delay);
+            }
+            else
+            {
+                pSoundEffect->play();
+            }
+            m_Sounds.push_back(pSoundEffect);
+            m_SoundTimers.push_back(pTimer);
         }
-        m_Sounds.push_back(pSoundEffect);
-        m_SoundTimers.push_back(pTimer);
     }
 }
 
