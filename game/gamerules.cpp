@@ -188,6 +188,18 @@ void GameRules::changeWeatherChance(qint32 index, qint32 weatherChance)
     }
 }
 
+Weather* GameRules::getWeatherAtDay(qint32 futureDay, qint32 player)
+{
+    if (futureDay >= 0 &&
+        futureDay < m_WeatherDays.size() &&
+        player >= 0 &&
+        player < m_WeatherDays[futureDay].size())
+    {
+        return getWeather(m_WeatherDays[futureDay][player]);
+    }
+    return nullptr;
+}
+
 Weather* GameRules::getWeather(qint32 index)
 {
     if ((index >= 0) && (index < m_Weathers.size()))
@@ -617,6 +629,16 @@ void GameRules::initRoundTime()
     }
 }
 
+bool GameRules::getWeatherPrediction() const
+{
+    return m_WeatherPrediction;
+}
+
+void GameRules::setWeatherPrediction(bool WeatherPrediction)
+{
+    m_WeatherPrediction = WeatherPrediction;
+}
+
 QStringList GameRules::getCOBannlist() const
 {
     return m_COBannlist;
@@ -678,7 +700,8 @@ void GameRules::serializeObject(QDataStream& pStream)
     for (qint32 i = 0; i < m_COBannlist.size(); i++)
     {
         pStream << m_COBannlist[i];
-    }
+    }    
+    pStream << m_WeatherPrediction;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -821,5 +844,9 @@ void GameRules::deserializeObject(QDataStream& pStream)
         {
             m_COBannlist.append(pCOSpriteManager->getCOID(i));
         }
+    }
+    if (version > 5)
+    {
+        pStream >> m_WeatherPrediction;
     }
 }

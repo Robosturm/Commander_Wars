@@ -49,7 +49,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 5;
+        return 6;
     }
     void addVictoryRule(spVictoryRule rule);
     /**
@@ -62,9 +62,20 @@ public:
         return &m_RoundTimer;
     }
 
+
 signals:
     void signalVictory(qint32 team);
 public slots:
+    /**
+     * @brief getWeatherPrediction
+     * @return
+     */
+    bool getWeatherPrediction() const;
+    /**
+     * @brief setWeatherPrediction
+     * @param WeatherPrediction
+     */
+    void setWeatherPrediction(bool WeatherPrediction);
     /**
      * @brief getCOBannlist
      * @return
@@ -133,6 +144,14 @@ public slots:
         }
         return nullptr;
     }
+    /**
+     * @brief getWeatherAtDay
+     * @param futureDay
+     * @param player
+     * @return
+     */
+    Weather* getWeatherAtDay(qint32 futureDay, qint32 player);
+
     inline qint32 getCurrentWeatherId()
     {
         return m_CurrentWeather;
@@ -251,6 +270,8 @@ public slots:
      * @brief startRoundTime
      */
     void initRoundTime();
+
+
 private:
     // victory conditions
     QVector<spVictoryRule> m_VictoryRules;
@@ -276,6 +297,7 @@ private:
     bool m_AiAttackTerrain{true};
     QStringList m_COBannlist;
     bool m_COBannlistEdited{false};
+    bool m_WeatherPrediction{true};
 };
 
 #endif // GAMERULES_H

@@ -81,6 +81,7 @@ void IngameInfoBar::updatePlayerInfo()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_pGameInfoBox->removeChildren();
+
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     GameManager* pGameManager = GameManager::getInstance();
     GameMap* pMap = GameMap::getInstance();
@@ -98,7 +99,7 @@ void IngameInfoBar::updatePlayerInfo()
     }
     pSprite->setScale(1.8f);
     pSprite->setResAnim(pAnim);
-    pSprite->setPosition(10, 10);
+    pSprite->setPosition(12, 10);
     m_pGameInfoBox->addChild(pSprite);
     pSprite = new oxygine::Sprite();
     pCO = pPlayer->getCO(1);
@@ -111,7 +112,7 @@ void IngameInfoBar::updatePlayerInfo()
         pAnim = pCOSpriteManager->getResAnim("no_co+face");
     }
     pSprite->setResAnim(pAnim);
-    pSprite->setPosition(210, 10);
+    pSprite->setPosition(205, 10);
     pSprite->setScale(1.8f);
     m_pGameInfoBox->addChild(pSprite);
 
@@ -120,10 +121,62 @@ void IngameInfoBar::updatePlayerInfo()
     if (pAnim != nullptr)
     {
         pSprite->setResAnim(pAnim);
-        pSprite->setPosition(100, 10);
-        pSprite->setScale(100 / pAnim->getWidth());
+        pSprite->setPosition(110, 12);
+        pSprite->setScale(85 / pAnim->getWidth());
     }
     m_pGameInfoBox->addChild(pSprite);
+
+    // boxes for co's and weather
+    ObjectManager* pObjectManager = ObjectManager::getInstance();
+    pAnim = pObjectManager->getResAnim("panel_transparent");
+    oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
+    pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    pBox->setResAnim(pAnim);
+    pBox->setSize(95, 95);
+    pBox->setPosition(200, 8);
+    m_pGameInfoBox->addChild(pBox);
+    pBox = new oxygine::Box9Sprite();
+    pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    pBox->setResAnim(pAnim);
+    pBox->setSize(95, 95);
+    pBox->setPosition(7, 8);
+    m_pGameInfoBox->addChild(pBox);
+    // weather box
+    pBox = new oxygine::Box9Sprite();
+    pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    pBox->setResAnim(pAnim);
+    pBox->setSize(95, 95);
+    pBox->setPosition(104, 8);
+    m_pGameInfoBox->addChild(pBox);
+
+    if (pMap->getGameRules()->getWeatherPrediction())
+    {
+        pSprite = new oxygine::Sprite();
+        Weather* pWeather = pMap->getGameRules()->getWeatherAtDay(1, pMap->getCurrentPlayer()->getPlayerID());
+        if (pWeather != nullptr)
+        {
+            pAnim = pGameManager->getResAnim((pWeather->getWeatherSymbol()).toStdString().c_str());
+            if (pAnim != nullptr)
+            {
+                pSprite->setResAnim(pAnim);
+                pSprite->setPosition(165, 68);
+                pSprite->setScale(30 / pAnim->getWidth());
+            }
+        }
+        m_pGameInfoBox->addChild(pSprite);
+        pBox = new oxygine::Box9Sprite();
+        pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+        pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+        pAnim = pObjectManager->getResAnim("panel_transparent");
+        pBox->setResAnim(pAnim);
+        pBox->setSize(40, 40);
+        pBox->setPosition(159, 64);
+        m_pGameInfoBox->addChild(pBox);
+    }
+
 
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = oxygine::Color(255, 255, 255, 255);

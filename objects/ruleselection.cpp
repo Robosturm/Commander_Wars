@@ -81,9 +81,20 @@ void RuleSelection::showRuleSelection()
     connect(startWeather.get(), &DropDownmenu::sigItemChanged, this, &RuleSelection::startWeatherChanged, Qt::QueuedConnection);
     addChild(startWeather);
     startWeatherChanged(0);
+    y += 40;
+
+    textField = new oxygine::TextField();
+    textField->setStyle(style);
+    textField->setHtmlText(tr("Weather Prediction: ").toStdString().c_str());
+    textField->setPosition(30, y);
+    addChild(textField);
+    pCheckbox = new Checkbox();
+    pCheckbox->setPosition(textWidth, textField->getY());
+    addChild(pCheckbox);
+    pCheckbox->setChecked(pMap->getGameRules()->getWeatherPrediction());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setWeatherPrediction, Qt::QueuedConnection);
 
     y = textField->getY() + 50;
-
     textField = new oxygine::TextField();
     textField->setStyle(style);
     textField->setHtmlText(tr("Gameplay").toStdString().c_str());
