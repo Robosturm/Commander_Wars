@@ -1803,11 +1803,10 @@ QStringList Unit::getActionList()
     }
 }
 
-void Unit::moveUnitAction(GameAction* pAction)
+qint32 Unit::getMovementFuelCostModifier(qint32 fuelCost)
 {
-    // reduce fuel
     GameMap* pMap = GameMap::getInstance();
-    qint32 fuelCost = pAction->getCosts();
+    qint32 ret = 0;
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         Player* pPlayer = pMap->getPlayer(i);
@@ -1818,15 +1817,23 @@ void Unit::moveUnitAction(GameAction* pAction)
             CO* pCO = pPlayer->getCO(0);
             if (pCO != nullptr)
             {
-                fuelCost += pCO->getMovementFuelCostModifier(this, fuelCost);
+                ret += pCO->getMovementFuelCostModifier(this, fuelCost);
             }
             pCO = pPlayer->getCO(1);
             if (pCO != nullptr)
             {
-                fuelCost += pCO->getMovementFuelCostModifier(this, fuelCost);
+                ret += pCO->getMovementFuelCostModifier(this, fuelCost);
             }
         }
     }
+    return ret;
+}
+
+void Unit::moveUnitAction(GameAction* pAction)
+{
+    // reduce fuel
+    qint32 fuelCost = pAction->getCosts();
+    fuelCost += getMovementFuelCostModifier(fuelCost);
     if (fuelCost < 0)
     {
         fuelCost = 0;

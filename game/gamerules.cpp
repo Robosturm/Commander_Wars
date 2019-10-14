@@ -221,45 +221,62 @@ qint32 GameRules::getWeatherChance(QString weatherId)
     return 0;
 }
 
-void GameRules::reduceWeatherDuration(qint32 duration)
-{
-    m_weatherDuration -= duration;
-}
-
-void GameRules::startOfTurn()
+void GameRules::startOfTurn(bool newDay)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
-    m_weatherDuration -= 1;
-    if (m_weatherDuration <= 0)
+    if (newDay && m_WeatherDays.size() > 0)
     {
+        // delete last day weather
+        m_WeatherDays.removeAt(0);
+    }
+    // todo maybe make this changeable some day
+    qint32 predictionSize = 3;
 
+    qint32 startDay = -1;
+    qint32 currentPlayer = pMap->getCurrentPlayer()->getPlayerID();
+    if (m_WeatherDays.size() < predictionSize)
+    {
+        startDay = m_WeatherDays.size();
+    }
+    else if (m_WeatherDays[0][currentPlayer] < 0)
+    {
+        startDay = 0;
+    }
+    if (startDay >= 0)
+    {
         qint32 playerCount = pMap->getPlayerCount();
-        if (m_randomWeather)
+        // increase weather prediction till enough data is avaiable
+        while(m_WeatherDays.size() < predictionSize)
         {
-            qint32 totalWeatherChances = 0;
-            for (qint32 i = 0; i < m_WeatherChances.size(); i++)
+            if (m_randomWeather)
             {
-                totalWeatherChances += m_WeatherChances[i];
-            }
-            qint32 erg = Mainapp::randInt(0, totalWeatherChances);
-            totalWeatherChances = 0;
-            for (qint32 i = 0; i < m_WeatherChances.size(); i++)
-            {
-                if (erg < totalWeatherChances + m_WeatherChances[i])
+                qint32 totalWeatherChances = 0;
+                for (qint32 i = 0; i < m_WeatherChances.size(); i++)
                 {
-                    changeWeather(m_Weathers[i]->getWeatherId() , playerCount);
-                    break;
+                    totalWeatherChances += m_WeatherChances[i];
                 }
-                totalWeatherChances += m_WeatherChances[i];
+                qint32 erg = Mainapp::randInt(0, totalWeatherChances);
+                totalWeatherChances = 0;
+                for (qint32 i = 0; i < m_WeatherChances.size(); i++)
+                {
+                    if (erg < totalWeatherChances + m_WeatherChances[i])
+                    {
+                        changeWeather(m_Weathers[i]->getWeatherId() , playerCount, startDay);
+                        break;
+                    }
+                    totalWeatherChances += m_WeatherChances[i];
+                }
             }
-        }
-        else
-        {
-            changeWeather(m_Weathers[getStartWeather()]->getWeatherId() , playerCount);
+            else
+            {
+                changeWeather(m_Weathers[getStartWeather()]->getWeatherId() , playerCount, startDay);
+            }
+            startDay++;
         }
     }
+    setCurrentWeather(m_WeatherDays[0][currentPlayer]);
     createFogVision();
     pApp->continueThread();
 }
@@ -269,19 +286,71 @@ void GameRules::setStartWeather(qint32 index)
     m_StartWeather = index;
 }
 
-void GameRules::changeWeather(QString weatherId, qint32 duration)
+void GameRules::changeWeather(QString weatherId, qint32 duration, qint32 startDay)
 {
     for (qint32 i = 0; i < m_Weathers.size(); i++)
     {
         if (m_Weathers[i]->getWeatherId() == weatherId)
         {
-            changeWeather(i, duration);
+            changeWeather(i, duration, startDay);
             break;
         }
     }
 }
 
-void GameRules::changeWeather(qint32 weatherId, qint32 duration)
+void GameRules::changeWeather(qint32 weatherId, qint32 duration, qint32 startDay)
+{
+    if (weatherId >= 0 && weatherId < m_Weathers.size())
+    {
+        GameMap* pMap = GameMap::getInstance();
+        qint32 startPlayer = pMap->getCurrentPlayer()->getPlayerID();
+        qint32 playerCount = pMap->getPlayerCount();
+        qint32 day = startDay;
+        while (duration > 0)
+        {
+            if (day >= m_WeatherDays.size())
+            {
+                m_WeatherDays.append(QVector<qint32>(playerCount, -1));
+                if (startPlayer > 0)
+                {
+                    m_WeatherDays.append(QVector<qint32>(playerCount, -1));
+                }
+            }
+            // current player to end
+            for (qint32 i = startPlayer; i < playerCount; i++)
+            {
+                if (duration > 0)
+                {
+                    // set weather for the day
+                    m_WeatherDays[day][i] = weatherId;
+                    duration--;
+                }
+            }
+            day++;
+            // player 0 to start player
+            for (qint32 i = 0; i < startPlayer; i++)
+            {
+                if (duration > 0)
+                {
+                    // set weather for the day
+                    m_WeatherDays[day][i] = weatherId;
+                    duration--;
+                }
+            }
+
+        }
+        if (startPlayer > 0)
+        {
+            for (qint32 i = startPlayer; i < playerCount; i++)
+            {
+                m_WeatherDays[day][i] = m_WeatherDays[startDay][0];
+            }
+        }
+        setCurrentWeather(m_WeatherDays[0][startPlayer]);
+    }
+}
+
+void GameRules::setCurrentWeather(qint32 weatherId)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
@@ -293,13 +362,11 @@ void GameRules::changeWeather(qint32 weatherId, qint32 duration)
         }
         m_CurrentWeather = weatherId;
         m_Weathers[m_CurrentWeather]->activate();
-        m_weatherDuration = duration;
+        // create weather sprites :)
+        createWeatherSprites();
     }
-    // create weather sprites :)
-    createWeatherSprites();
     pApp->continueThread();
 }
-
 void GameRules::createWeatherSprites()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -586,7 +653,16 @@ void GameRules::serializeObject(QDataStream& pStream)
         m_Weathers[i]->serializeObject(pStream);
         pStream << m_WeatherChances[i];
     }
-    pStream << m_weatherDuration;
+
+    pStream << static_cast<qint32>(m_WeatherDays.size());
+    for (qint32 i = 0; i < m_WeatherDays.size(); i++)
+    {
+        pStream << static_cast<qint32>(m_WeatherDays[i].size());
+        for (qint32 i2 = 0; i2 < m_WeatherDays[i].size(); i2++)
+        {
+            pStream << m_WeatherDays[i][i2];
+        }
+    }
     pStream << m_CurrentWeather;
     pStream << m_StartWeather;
     pStream << m_randomWeather;
@@ -639,12 +715,74 @@ void GameRules::deserializeObject(QDataStream& pStream)
             }
         }
     }
-    pStream >> m_weatherDuration;
+    qint32 weatherDuration = 0;
+    if (version > 4)
+    {
+        qint32 size = 0;
+        pStream >> size;
+        for (qint32 i = 0; i < size; i++)
+        {
+            qint32 size2 = 0;
+            pStream >> size2;
+            m_WeatherDays.append(QVector<qint32>());
+            for (qint32 i2 = 0; i2 < size2; i2++)
+            {
+                qint32 value = 0;
+                pStream >> value;
+                m_WeatherDays[i].append(value);
+            }
+        }
+    }
+    else
+    {
+
+        pStream >> weatherDuration;
+    }
     pStream >> m_CurrentWeather;
     pStream >> m_StartWeather;
     if (m_StartWeather < 0 || m_StartWeather >= m_Weathers.size())
     {
         m_StartWeather = 0;
+    }
+    if (version <= 4)
+    {
+        GameMap* pMap = GameMap::getInstance();
+        qint32 startPlayer  = pMap->getCurrentPlayer()->getPlayerID();
+        qint32 playerCount = pMap->getPlayerCount();
+        qint32 day = 0;
+        // loop while remaining counter >= 0
+        while (weatherDuration > 0)
+        {
+            // add new day
+            m_WeatherDays.append(QVector<qint32>(playerCount, -1));
+            if (day == 0)
+            {
+                // start at current player
+                for (qint32 i = startPlayer; i < playerCount; i++)
+                {
+                    if (weatherDuration > 0)
+                    {
+                        // set weather for the day
+                        m_WeatherDays[day][i] = m_CurrentWeather;
+                        weatherDuration--;
+                    }
+                }
+            }
+            else
+            {
+                // start at player 0
+                for (qint32 i = 0; i < playerCount; i++)
+                {
+                    if (weatherDuration > 0)
+                    {
+                        // set weather for the day
+                        m_WeatherDays[day][i] = m_CurrentWeather;
+                        weatherDuration--;
+                    }
+                }
+            }
+            day ++;
+        }
     }
     pStream >> m_randomWeather;
     pStream >> m_RankingSystem;

@@ -912,10 +912,6 @@ bool GameMap::nextPlayer()
             found = true;
             break;
         }
-        else
-        {
-            m_Rules->reduceWeatherDuration();
-        }
     }
     if (!found)
     {
@@ -927,10 +923,6 @@ bool GameMap::nextPlayer()
             if (!m_CurrentPlayer->getIsDefeated())
             {
                 break;
-            }
-            else
-            {
-                m_Rules->reduceWeatherDuration();
             }
         }
     }
@@ -1235,7 +1227,7 @@ void GameMap::nextTurn()
         startOfTurn(nullptr);
         m_Recorder->newDay();
     }
-    m_Rules->startOfTurn();
+    m_Rules->startOfTurn(nextDay);
     m_CurrentPlayer->earnMoney();
     startOfTurn(m_CurrentPlayer.get());
     checkFuel(m_CurrentPlayer.get());

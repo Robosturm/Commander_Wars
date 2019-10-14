@@ -49,7 +49,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 4;
+        return 5;
     }
     void addVictoryRule(spVictoryRule rule);
     /**
@@ -163,26 +163,26 @@ public slots:
         return m_Weathers.size();
     }
     /**
-     * @brief reduceWeatherDuration
-     * @param duration
-     */
-    void reduceWeatherDuration(qint32 duration = 1);
-    /**
      * @brief startOfTurn
      */
-    void startOfTurn();
+    void startOfTurn(bool newDay);
     /**
      * @brief changeWeather
      * @param weatherId
      * @param duration
      */
-    void changeWeather(QString weatherId, qint32 duration);
+    void changeWeather(QString weatherId, qint32 duration, qint32 startDay = 0);
     /**
-     * @brief changeWeather
+     * @brief changeWeather changes the weather for n-days
      * @param weatherId
      * @param duration
      */
-    void changeWeather(qint32 weatherId, qint32 duration);
+    void changeWeather(qint32 weatherId, qint32 duration, qint32 startDay = 0);
+    /**
+     * @brief setCurrentWeather sets the current weather
+     * @param weatherId
+     */
+    void setCurrentWeather(qint32 weatherId);
 
     bool getRankingSystem() const;
     void setRankingSystem(bool RankingSystem);
@@ -257,7 +257,7 @@ private:
     // weather chances
     QVector<spWeather> m_Weathers;
     QVector<qint32> m_WeatherChances;
-    qint32 m_weatherDuration{0};
+    QVector<QVector<qint32>> m_WeatherDays;
     qint32 m_CurrentWeather{-1};
     qint32 m_StartWeather{-1};
     bool m_randomWeather{true};

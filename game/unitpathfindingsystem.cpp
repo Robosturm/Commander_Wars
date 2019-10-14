@@ -12,8 +12,7 @@
 UnitPathFindingSystem::UnitPathFindingSystem(Unit* pUnit, Player* pPlayer)
     : PathFindingSystem(pUnit->getX(), pUnit->getY()),
       m_pUnit(pUnit),
-      m_pPlayer(pPlayer),
-      m_Movepoints(m_pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY())))
+      m_pPlayer(pPlayer)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -22,6 +21,7 @@ UnitPathFindingSystem::UnitPathFindingSystem(Unit* pUnit, Player* pPlayer)
     {
         m_pPlayer = m_pUnit->getOwner();
     }
+    setMovepoints(m_pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY())));
 }
 
 qint32 UnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint32 currentCost)
@@ -203,4 +203,17 @@ bool UnitPathFindingSystem::isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qin
 void UnitPathFindingSystem::setMovepoints(const qint32 &movepoints)
 {
     m_Movepoints = movepoints;
+    if (m_Movepoints > 0)
+    {
+        qint32 fuel = m_pUnit->getFuel();
+        if (fuel >= 0)
+        {
+            qint32 fuelCosts = m_pUnit->getMovementFuelCostModifier(m_Movepoints) + m_Movepoints;
+            while (fuelCosts > fuel && m_Movepoints > 0)
+            {
+                m_Movepoints--;
+                fuelCosts = m_pUnit->getMovementFuelCostModifier(m_Movepoints) + m_Movepoints;
+            }
+        }
+    }
 }

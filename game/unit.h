@@ -367,6 +367,12 @@ public slots:
      */
     bool getHasMoved();
     /**
+     * @brief getMovementFuelCostModifier fuel modification when moving this unit from a to b
+     * @param fuelCost
+     * @return
+     */
+    qint32 getMovementFuelCostModifier(qint32 fuelCost);
+    /**
      * @brief moveUnit moves the unit to the target position of this unit
      * @param pAction
      */

@@ -70,7 +70,6 @@ var Constructor = function()
         map.getGameRules().setNoPower(false); // no co power
         map.getGameRules().setRandomWeather(false); // no random weather
         map.getGameRules().setFogMode(GameEnums.Fog_OfWar); // no fog of war or GameEnums.Fog_OfWar -> for on
-        // map.getGameRules().changeWeatherChance("WEATHER_1SUN", 90); // sets the weather chance of sun to 90. The actual chance is the the value divided through the sum of all chances
         // here we decide how you can win the game
         map.getGameRules().addVictoryRule("VICTORYRULE_TURNLIMIT");
         var turnLimit = map.getGameRules().getVictoryRule("VICTORYRULE_TURNLIMIT"); // loose if the turn limit is gone

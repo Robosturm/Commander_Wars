@@ -887,8 +887,8 @@ void GameMenue::startGame()
         pMap->startGame();
         pMap->setCurrentPlayer(GameMap::getInstance()->getPlayerCount() - 1);
         GameRules* pRules = pMap->getGameRules();
-        pRules->changeWeather(pRules->getWeather(pRules->getStartWeather())->getWeatherId(), pMap->getPlayerCount() + 1);
         pMap->nextTurn();
+        pRules->changeWeather(pRules->getWeather(pRules->getStartWeather())->getWeatherId(), pMap->getPlayerCount());
         updatePlayerinfo();
     }
     else

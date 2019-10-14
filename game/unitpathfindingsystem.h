@@ -74,6 +74,7 @@ protected:
     Unit* m_pUnit;
     Player* m_pPlayer{nullptr};
     qint32 m_Movepoints{-2};
+    qint32 m_MaxFuelCost{-1};
 };
 
 #endif // UNITPATHFINDINGSYSTEM_H
