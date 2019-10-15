@@ -77,7 +77,7 @@
 		<image file="superpowerstarhalf.png" cols = "13" />
 		
 		<!-- on map stuff -->
-		<image file="marked+field.png" cols = "2" />
+		<image file="marked+field.png" cols = "4" />
 		<image file="co+range+marker.png" cols = "4" />
 		<image file="defenseStar.png" />
 		

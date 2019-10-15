@@ -270,7 +270,7 @@ var Constructor = function()
                     data.addPoint(fields[i3]);
                 }
             }
-            data.setColor("#1E90FF");
+            data.setColor("#0000FF");
         }
     };
 

@@ -14,6 +14,19 @@ namespace oxygine
             _end = _resAnim->getColumns() - 1;
     }
 
+    TweenAnim::TweenAnim(const ResAnim* resAnim, float initFrame, int row)
+        :_resAnim(resAnim),
+          _row(row),
+          _start(0),
+          _end(0),
+         _initFrame(initFrame)
+      {
+          if (_resAnim)
+          {
+              _end = _resAnim->getColumns() - 1;
+          }
+      }
+
     TweenAnim::TweenAnim(const ResAnim* resAnim, int startFrame, int endFrame):
         _resAnim(resAnim),
         _row(-1),
@@ -60,13 +73,25 @@ namespace oxygine
         OX_ASSERT(_resAnim);
         int frame;
 
+        p += _initFrame;
+        if (p > 1.0f)
+        {
+            p -= 1.0f;
+        }
+
         if (p >= 1.0f)
+        {
             p = 0.9999999f;
+        }
 
         if (_start > _end)
+        {
             frame = - int((_start + 1 - _end) * p);
+        }
         else
+        {
             frame =   int((_end   + 1 - _start) * p);
+        }
 
         frame += _start;
 

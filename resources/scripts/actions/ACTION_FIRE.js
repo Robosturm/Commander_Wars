@@ -272,7 +272,7 @@ var Constructor = function()
         var targetField = action.getTarget();
         var actionTargetField = action.getActionTarget();
         var fields = globals.getCircle(unit.getMinRange(), unit.getMaxRange(targetField));
-        data.setColor("#C8FF0000");
+        data.setColor("#FFFF0000");
         data.setZLabelColor("#ff4500");
         data.setZLabelText(qsTr("Damage"))
         data.setShowZData(true);

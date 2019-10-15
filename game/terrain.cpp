@@ -248,7 +248,7 @@ void Terrain::loadBaseSprite(QString spriteID)
         {
             pSprite->setResAnim(pAnim);
         }
-        pSprite->setScale((GameMap::Imagesize + 1) / pAnim->getWidth() );
+        pSprite->setScale((GameMap::Imagesize) / pAnim->getWidth() );
 
         pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
         this->addChild(pSprite);
@@ -279,7 +279,7 @@ void Terrain::update(const oxygine::UpdateState& us)
         pAnim->init(m_terrainSpriteName.toStdString(), 1, 1, 1.0f);
         m_SpriteAnim = pAnim;
         m_pTerrainSprite->setResAnim(pAnim);
-        m_pTerrainSprite->setScale((GameMap::Imagesize + 1) / pAnim->getWidth() );
+        m_pTerrainSprite->setScale((GameMap::Imagesize) / pAnim->getWidth() );
         m_pTerrainSprite->setPosition(-(m_pTerrainSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(m_pTerrainSprite->getScaledHeight() - GameMap::Imagesize));
         loadSprite = false;
     }
@@ -457,7 +457,7 @@ void Terrain::loadOverlaySprite(QString spriteID)
     {
         pSprite->setResAnim(pAnim);
     }
-    pSprite->setScale((GameMap::Imagesize + 1) / pAnim->getWidth());
+    pSprite->setScale((GameMap::Imagesize) / pAnim->getWidth());
     pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
     this->addChild(pSprite);
     m_pOverlaySprites.append(pSprite);

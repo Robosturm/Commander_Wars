@@ -288,6 +288,17 @@ void GameRules::startOfTurn(bool newDay)
             startDay++;
         }
     }
+    if (newDay)
+    {
+        if (m_randomWeather)
+        {
+            m_DayWeather = m_WeatherDays[0][currentPlayer];
+        }
+        else
+        {
+            m_DayWeather = m_StartWeather;
+        }
+    }
     setCurrentWeather(m_WeatherDays[0][currentPlayer]);
     createFogVision();
     pApp->continueThread();
@@ -355,7 +366,7 @@ void GameRules::changeWeather(qint32 weatherId, qint32 duration, qint32 startDay
         {
             for (qint32 i = startPlayer; i < playerCount; i++)
             {
-                m_WeatherDays[day][i] = m_WeatherDays[startDay][0];
+                m_WeatherDays[day][i] = m_DayWeather;
             }
         }
         setCurrentWeather(m_WeatherDays[0][startPlayer]);
@@ -702,6 +713,7 @@ void GameRules::serializeObject(QDataStream& pStream)
         pStream << m_COBannlist[i];
     }    
     pStream << m_WeatherPrediction;
+    pStream << m_DayWeather;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -848,5 +860,6 @@ void GameRules::deserializeObject(QDataStream& pStream)
     if (version > 5)
     {
         pStream >> m_WeatherPrediction;
+        pStream >> m_DayWeather;
     }
 }

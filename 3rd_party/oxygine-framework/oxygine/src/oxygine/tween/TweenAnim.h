@@ -18,6 +18,8 @@ namespace oxygine
         /**Row/Column mode. Plays single row. if resanim == 0 will be used current*/
         TweenAnim(const ResAnim* resAnim, int row = 0);
 
+        TweenAnim(const ResAnim* resAnim, float initFrame, int row);
+
         /**Frames mode. Play animation in interval [start, end]*/
         TweenAnim(const ResAnim* resAnim, int startFrame, int endFrame);
 
@@ -43,5 +45,6 @@ namespace oxygine
         int _row;
         int _start;
         int _end;
+        float _initFrame{0.0f};
     };
 }

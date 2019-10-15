@@ -85,7 +85,7 @@ void RuleSelection::showRuleSelection()
 
     textField = new oxygine::TextField();
     textField->setStyle(style);
-    textField->setHtmlText(tr("Weather Prediction: ").toStdString().c_str());
+    textField->setHtmlText(tr("Weather Forecast: ").toStdString().c_str());
     textField->setPosition(30, y);
     addChild(textField);
     pCheckbox = new Checkbox();

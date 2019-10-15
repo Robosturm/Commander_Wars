@@ -2483,7 +2483,7 @@
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="88"/>
-        <source>Weather Prediction: </source>
+        <source>Weather Forecast: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>

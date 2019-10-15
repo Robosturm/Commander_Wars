@@ -281,6 +281,7 @@ private:
     QVector<QVector<qint32>> m_WeatherDays;
     qint32 m_CurrentWeather{-1};
     qint32 m_StartWeather{-1};
+    qint32 m_DayWeather{-1};
     bool m_randomWeather{true};
 
     bool m_RankingSystem{true};
@@ -298,6 +299,7 @@ private:
     QStringList m_COBannlist;
     bool m_COBannlistEdited{false};
     bool m_WeatherPrediction{true};
+
 };
 
 #endif // GAMERULES_H

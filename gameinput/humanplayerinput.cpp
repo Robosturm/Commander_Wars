@@ -629,7 +629,18 @@ void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::Dr
         oxygine::ResAnim* pAnim = pGameManager->getResAnim("marked+field");
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+            float initFrame = 0;
+            if (point.x() % 2 == 0 &&
+                point.y() % 2 != 0)
+            {
+                initFrame = 0.5f;
+            }
+            else if (point.y() % 2 == 0 &&
+                     point.x() % 2 != 0)
+            {
+                initFrame = 0.5f;
+            }
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, initFrame, 0), pAnim->getTotalFrames() * GameMap::frameTime, -1);
             pSprite->addTween(tween);
         }
         else
@@ -639,8 +650,6 @@ void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::Dr
         oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), color.alpha()));
         oxygine::spTween tween2 = oxygine::createTween(tweenColor, 1);
         pSprite->addTween(tween2);
-
-
 
         if (drawPriority == Terrain::DrawPriority::MarkedFieldMap)
         {
@@ -652,7 +661,7 @@ void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::Dr
         }
         else
         {
-            pSprite->setScale((GameMap::Imagesize + 1) / pAnim->getWidth());
+            pSprite->setScale((GameMap::Imagesize) / pAnim->getWidth());
             pSprite->setPriority(static_cast<qint16>(drawPriority));
             pSprite->setPosition(-(pSprite->getScaledWidth() - GameMap::Imagesize) / 2, -(pSprite->getScaledHeight() - GameMap::Imagesize));
             pMap->getSpTerrain(point.x(), point.y())->addChild(pSprite);
@@ -673,11 +682,11 @@ void HumanPlayerInput::createMarkedMoveFields()
         {
             if (m_pUnitPathFindingSystem->getTargetCosts(points[i].x(), points[i].y()) > movementpoints)
             {
-                createMarkedField(points[i], QColor(30, 100, 150, 255), Terrain::DrawPriority::MarkedFieldLow);
+                createMarkedField(points[i], QColor(128, 0, 255, 255), Terrain::DrawPriority::MarkedFieldLow);
             }
             else
             {
-                createMarkedField(points[i], QColor(120, 240, 220, 255), Terrain::DrawPriority::MarkedFieldLow);
+                createMarkedField(points[i], QColor(0, 128, 255, 255), Terrain::DrawPriority::MarkedFieldLow);
             }
         }
     }
@@ -889,7 +898,7 @@ void HumanPlayerInput::createArrow(QVector<QPoint>& points)
         oxygine::ResAnim* pAnim = pGameManager->getResAnim("arrow+unit");
         pSprite->setResAnim(pAnim);
         pSprite->setPriority(static_cast<qint16>(points[i].y() + 3));
-        pSprite->setScale((GameMap::Imagesize + 1) / pAnim->getWidth());
+        pSprite->setScale((GameMap::Imagesize) / pAnim->getWidth());
         pSprite->setPosition(points[i].x() * GameMap::Imagesize -(pSprite->getScaledWidth() - GameMap::Imagesize) / 2,  points[i].y() * GameMap::Imagesize -(pSprite->getScaledHeight() - GameMap::Imagesize));
         pMap->addChild(pSprite);
         m_Arrows.append(pSprite);
