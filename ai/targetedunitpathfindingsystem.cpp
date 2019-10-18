@@ -41,12 +41,12 @@ qint32 TargetedUnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint3
     return minCost;
 }
 
-qint32 TargetedUnitPathFindingSystem::getCosts(qint32 x, qint32 y)
+qint32 TargetedUnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y)
 {
-    qint32 costs = UnitPathFindingSystem::getCosts(x, y);
+    qint32 costs = UnitPathFindingSystem::getCosts(index, x, y);
     if (costs < 0)
     {
-        return costs;
+        return movecosts[index];
     }
     qint32 simulationCost = 0;
     if (m_pMoveCostMap != nullptr)
@@ -69,29 +69,28 @@ QPoint TargetedUnitPathFindingSystem::getReachableTargetField(qint32 movepoints)
 {
     if (m_FinishNode >= 0)
     {
-        Node* pNode = m_ClosedList[m_FinishNode];
-        QVector<QPoint> path = getPath(pNode->x, pNode->y);
+        QVector<QPoint> path = getPath(m_FinishNodeX, m_FinishNodeY);
         qint32 cost = UnitPathFindingSystem::getCosts(path);
-        while ((pNode->previousNodes.size() > 0 &&
+        qint32 curX = m_FinishNodeX;
+        qint32 curY = m_FinishNodeY;
+        while (((curX != m_StartPoint.x() || curY != m_StartPoint.y()) &&
                 cost > movepoints) ||
-               (UnitPathFindingSystem::getCosts(pNode->x, pNode->y) == 0))
+               (UnitPathFindingSystem::getCosts(getIndex(curX, curY), curX, curY) == 0))
         {
-            // use a random node?
-            pNode = pNode->previousNodes[0];
-            path = getPath(pNode->x, pNode->y);
+            path.removeFirst();
             cost = UnitPathFindingSystem::getCosts(path);
         }
-        return QPoint(pNode->x, pNode->y);
+        return path[0];
     }
     return QPoint(-1, -1);
 }
 
-bool TargetedUnitPathFindingSystem::finished(qint32 x, qint32 y, qint32 costs)
+bool TargetedUnitPathFindingSystem::finished(qint32 x, qint32 y, qint32 movementCosts)
 {
     qint32 index = CoreAI::index(m_Targets, QPoint(x, y));
     if (index >= 0)
     {
-        m_FinishNodes.append(std::tuple<qint32, qint32, qint32, float>(x, y, costs, m_Targets[index].z()));
+        m_FinishNodes.append(std::tuple<qint32, qint32, qint32, float>(x, y, movementCosts, m_Targets[index].z()));
     }
     if (GameMap::getInstance()->getTerrain(x, y)->getUnit() == nullptr)
     {
@@ -100,7 +99,7 @@ bool TargetedUnitPathFindingSystem::finished(qint32 x, qint32 y, qint32 costs)
     return false;
 }
 
-void TargetedUnitPathFindingSystem::setFinishNode()
+void TargetedUnitPathFindingSystem::setFinishNode(qint32, qint32)
 {
     if (m_FinishNodes.size() > 0)
     {
@@ -117,6 +116,6 @@ void TargetedUnitPathFindingSystem::setFinishNode()
                 y = std::get<1>(m_FinishNodes[i]);
             }
         }
-        m_FinishNode = PathFindingSystem::getNodeIndex(x, y);
+        PathFindingSystem::setFinishNode(x, y);
     }
 }

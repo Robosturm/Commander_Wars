@@ -110,7 +110,6 @@ public:
     }
     QVector<QPoint> getMultiTurnPath() const;
     void setMultiTurnPath(const QVector<QPoint> &MultiTurnPath);
-
 signals:
 
 public slots:
@@ -312,6 +311,11 @@ public slots:
      * @return
      */
     QString getMovementType();
+    /**
+     * @brief setMovementType
+     * @param Movementtype
+     */
+    void setMovementType(const QString &movementType);;
     /**
      * @brief getLoadingPlace
      * @return
@@ -673,6 +677,7 @@ private:
 
     QVector<QPoint> m_MultiTurnPath;
     oxygine::spTween m_ShineTween;
+    QString m_MovementType;
 };
 
 #endif // UNIT_H

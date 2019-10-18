@@ -15,21 +15,21 @@ public:
      * @param y
      * @return the remaining costs for this node to reach the target
      */
-    virtual qint32 getRemainingCost(qint32 x, qint32 y, qint32 currentCost);
+    virtual qint32 getRemainingCost(qint32 x, qint32 y, qint32 currentCost) override;
     /**
      * @brief finished checks if this would be the target node to reach
      * @param x
      * @param y
      * @return
      */
-    virtual bool finished(qint32 x, qint32 y, qint32 costs);
+    virtual bool finished(qint32 x, qint32 y, qint32 costs) override;
     /**
      * @brief getCosts
      * @param x
      * @param y
      * @return the exact costs needed to get onto the given field. -1 = unreachable
      */
-    virtual qint32 getCosts(qint32 x, qint32 y);
+    virtual qint32 getCosts(qint32 index, qint32 x, qint32 y) override;
 public slots:
     /**
      * @brief killTerrainFindingSystem

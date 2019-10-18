@@ -68,6 +68,7 @@ void RuleSelection::showRuleSelection()
     addChild(pCheckbox);
     pCheckbox->setChecked(pMap->getGameRules()->getRandomWeather());
     connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setRandomWeather, Qt::QueuedConnection);
+    y += 40;
 
     textField = new oxygine::TextField();
     textField->setStyle(style);
@@ -81,7 +82,7 @@ void RuleSelection::showRuleSelection()
     connect(startWeather.get(), &DropDownmenu::sigItemChanged, this, &RuleSelection::startWeatherChanged, Qt::QueuedConnection);
     addChild(startWeather);
     startWeatherChanged(0);
-    y += 40;
+    y += 50;
 
     textField = new oxygine::TextField();
     textField->setStyle(style);

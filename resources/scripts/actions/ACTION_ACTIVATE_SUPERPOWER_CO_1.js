@@ -15,7 +15,7 @@ var Constructor = function()
     };
     this.getActionText = function()
     {
-        return qsTr("Superpower of CO 2");
+        return qsTr("Superpower of ")  + map.getCurrentPlayer().getCO(1).getCOName();
     };
     this.getIcon = function()
     {

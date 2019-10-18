@@ -1233,7 +1233,7 @@ void Unit::setBaseMovementPoints(const qint32 &value)
 qint32 Unit::getBaseMovementCosts(qint32 x, qint32 y)
 {
     GameMap* pMap = GameMap::getInstance();
-    return MovementTableManager::getInstance()->getBaseMovementPoints(getMovementType(), pMap->getTerrain(x, y), this);
+    return MovementTableManager::getInstance()->getBaseMovementPoints(m_MovementType, pMap->getTerrain(x, y), this);
 }
 
 qint32 Unit::getMovementCosts(qint32 x, qint32 y)
@@ -1271,7 +1271,13 @@ qint32 Unit::getMovementCosts(qint32 x, qint32 y)
 void Unit::initUnit()
 {
     Mainapp* pApp = Mainapp::getInstance();
-    QString function1 = "init";
+    QString function1 = "getMovementType";
+    QJSValue  erg = pApp->getInterpreter()->doFunction(m_UnitID, function1);
+    if (erg.isString())
+    {
+        m_MovementType = erg.toString();
+    }
+    function1 = "init";
     QJSValueList args1;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
     args1 << obj1;
@@ -1568,18 +1574,7 @@ bool Unit::getTransportHidden(Player* pPlayer)
 
 QString Unit::getMovementType()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    QString function1 = "getMovementType";
-    QJSValueList args1;
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
-    if (ret.isString())
-    {
-        return ret.toString();
-    }
-    else
-    {
-        return "";
-    }
+    return m_MovementType;
 }
 
 qint32 Unit::getLoadingPlace()
@@ -2125,6 +2120,11 @@ void Unit::updateIconTweens()
             }
         }
     }
+}
+
+void Unit::setMovementType(const QString &movementType)
+{
+    m_MovementType = movementType;
 }
 
 QVector<QPoint> Unit::getMultiTurnPath() const

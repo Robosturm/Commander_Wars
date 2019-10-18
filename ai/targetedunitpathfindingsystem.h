@@ -23,11 +23,11 @@ public:
      * @param y
      * @return
      */
-    virtual bool finished(qint32 x, qint32 y, qint32 costs)  override;
+    virtual bool finished(qint32 x, qint32 y, qint32 movementCosts)  override;
     /**
      * @brief setFinishNode
      */
-    virtual void setFinishNode() override;
+    virtual void setFinishNode(qint32, qint32) override;
     /**
      * @brief getTargetPath gets the target path shortened by the movepoints of this unit
      * @param movepoints
@@ -40,7 +40,7 @@ public:
      * @param y
      * @return the exact costs needed to get onto the given field. -1 = unreachable
      */
-    virtual qint32 getCosts(qint32 x, qint32 y)  override;
+    virtual qint32 getCosts(qint32 index, qint32 x, qint32 y)  override;
 private:
     QVector<QVector3D> m_Targets;
     QVector<std::tuple<qint32, qint32, qint32, float>> m_FinishNodes;

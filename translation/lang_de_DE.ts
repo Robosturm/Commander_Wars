@@ -5,7 +5,7 @@
     <name>ACTION_ACTIVATE_POWER_CO_0</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_0.js" line="18"/>
-        <source>Power of CO 1</source>
+        <source>Power of </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -13,7 +13,7 @@
     <name>ACTION_ACTIVATE_POWER_CO_1</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_POWER_CO_1.js" line="18"/>
-        <source>Power of CO 2</source>
+        <source>Power of </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -21,7 +21,7 @@
     <name>ACTION_ACTIVATE_SUPERPOWER_CO_0</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_0.js" line="18"/>
-        <source>Superpower of CO 1</source>
+        <source>Superpower of </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -29,7 +29,7 @@
     <name>ACTION_ACTIVATE_SUPERPOWER_CO_1</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_ACTIVATE_SUPERPOWER_CO_1.js" line="18"/>
-        <source>Superpower of CO 2</source>
+        <source>Superpower of </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -454,6 +454,14 @@
     <message>
         <location filename="../objects/buildlistdialog.cpp" line="247"/>
         <source>Bannlist Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CO</name>
+    <message>
+        <location filename="../game/co.cpp" line="252"/>
+        <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2477,72 +2485,72 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="74"/>
+        <location filename="../objects/ruleselection.cpp" line="75"/>
         <source>Start Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="88"/>
+        <location filename="../objects/ruleselection.cpp" line="89"/>
         <source>Weather Forecast: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="100"/>
+        <location filename="../objects/ruleselection.cpp" line="101"/>
         <source>Gameplay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="106"/>
+        <location filename="../objects/ruleselection.cpp" line="107"/>
         <source>Unit Ranking System: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="118"/>
+        <location filename="../objects/ruleselection.cpp" line="119"/>
         <source>CO Bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="121"/>
+        <location filename="../objects/ruleselection.cpp" line="122"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="132"/>
+        <location filename="../objects/ruleselection.cpp" line="133"/>
         <source>No CO Powers: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="143"/>
+        <location filename="../objects/ruleselection.cpp" line="144"/>
         <source>AI Attack Terrain: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="154"/>
+        <location filename="../objects/ruleselection.cpp" line="155"/>
         <source>Fog Of War: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="157"/>
+        <location filename="../objects/ruleselection.cpp" line="158"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="157"/>
+        <location filename="../objects/ruleselection.cpp" line="158"/>
         <source>Fog of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="169"/>
+        <location filename="../objects/ruleselection.cpp" line="170"/>
         <source>Unit Limit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="182"/>
+        <location filename="../objects/ruleselection.cpp" line="183"/>
         <source>Round Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="195"/>
+        <location filename="../objects/ruleselection.cpp" line="196"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>

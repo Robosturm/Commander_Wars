@@ -4,57 +4,67 @@
 #include <QObject>
 #include <QVector>
 #include <QPoint>
+#include <qlist.h>
 #include "coreengine/qmlvector.h"
-
 #include "oxygine-framework.h"
 
 class PathFindingSystem : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
+    static const qint32 infinite;
     /**
      * @brief node we want to check or checked already
      */
     struct Node
     {
-        Node(qint32 x, qint32 y, qint32 cost, qint32 remaingCost)
+        Node(qint32 x, qint32 y, qint32 index,
+             qint32 totalCost, qint32 currentCosts)
             : x(x),
               y(y),
-              currentCost(cost),
-              remaingCost(remaingCost)
+              index(index),
+              totalCost(totalCost),
+              currentCosts(currentCosts)
         {
         }
         /**
-         * @brief x coordinates of this node
+         * @brief x
          */
         qint32 x;
         /**
-         * @brief y coordinates of this node
+         * @brief y
          */
         qint32 y;
         /**
-         * @brief currentCost minimum costs needed to reach this field
+         * @brief index
          */
-        qint32 currentCost;
+        qint32 index;
         /**
-         * @brief remaingCost costs left to reach this field
+         * @brief totalCost total estimated cost using this path
          */
-        qint32 remaingCost;
+        qint32 totalCost;
         /**
-         * @brief nextNodes nodes we can go to
+         * @brief currentCosts
          */
-        QVector<Node*> nextNodes;
-        /**
-         * @brief previousNode node we come from
-         */
-        QVector<Node*> previousNodes;
+        qint32 currentCosts;
+
+        bool compare(const Node* pNode)
+        {
+            return (totalCost < pNode->totalCost) || // cheaper end cost
+                    // same end cost but currently cheaper cost
+                   (currentCosts < pNode->currentCosts && totalCost == pNode->totalCost) ||
+                    // same
+                   (currentCosts == pNode->currentCosts && totalCost == pNode->totalCost);
+        }
+
     };
     /**
      * @brief PathFindingSystem
      * @param startX start x for the node
      * @param startY start y for the node
      */
-    explicit PathFindingSystem(qint32 startX, qint32 startY);
+    explicit PathFindingSystem(qint32 startX, qint32 startY,
+                               qint32 width, qint32 heigth);
     virtual ~PathFindingSystem();
     /**
      * @brief setStartPoint
@@ -78,12 +88,13 @@ public:
      */
     virtual bool finished(qint32 x, qint32 y, qint32 costs) = 0;
     /**
-     * @brief getCosts
+     * @brief getCosts for optimized speed this function should fill the movecosts array and return values from their if the field was called already
+     * @param index
      * @param x
      * @param y
-     * @return the exact costs needed to get onto the given field. -1 = unreachable
+     * @return
      */
-    virtual qint32 getCosts(qint32 x, qint32 y) = 0;
+    virtual qint32 getCosts(qint32 index, qint32 x, qint32 y) = 0;
     /**
      * @brief explores the map until the open list is empty or finished returned true.
      * This will also add the start point to the open list
@@ -92,14 +103,7 @@ public:
     /**
      * @brief setFinishNode
      */
-    virtual void setFinishNode();
-    /**
-     * @brief getNodeIndex
-     * @param x
-     * @param y
-     * @return
-     */
-    qint32 getNodeIndex(qint32 x, qint32 y);
+    virtual void setFinishNode(qint32 x, qint32 y);
     /**
      * @brief get the Path to the given field as vector of qpoints. an empty vector means unreachable
      * @param x
@@ -120,14 +124,6 @@ public:
      */
     qint32 getTargetCosts(qint32 x, qint32 y);
     /**
-     * @brief getClosedList pointer to all closed nodes -> found nodes
-     * @return
-     */
-    inline const QVector<Node*>* getClosedList() const
-    {
-        return &m_ClosedList;
-    }
-    /**
      * @brief getAllNodePoints returns all reachable fields in a point vector
      * @return
      */
@@ -144,7 +140,7 @@ public slots:
      * @brief getAllNodePoints returns all reachable fields in a point vector
      * @return
      */
-    QmlVectorPoint* getAllQmlVectorPoints();
+     QmlVectorPoint* getAllQmlVectorPoints();
     /**
      * @brief getFields searches for all fields in the range of min and max ignoring all movement costs
      * @param min minimum search range
@@ -152,18 +148,27 @@ public slots:
      * @return shared pointer to the points
      */
     static QVector<QPoint> getFields(qint32 startX, qint32 startY, qint32 min, qint32 max);
+    /**
+     * @brief getIndex
+     * @param x
+     * @param y
+     * @return
+     */
+    inline qint32 getIndex(qint32 x, qint32 y)
+    {
+        return x + y * m_width;
+    }
 protected:
     QPoint m_StartPoint;
-    /**
-     * @brief closedList nodes already found
-     */
-    QVector<Node*> m_ClosedList;
-    /**
-     * @brief m_OpenList sorted list of nodes we need to check. The last item is the next item we gonna check. this should avoid a lot of resizing of the array
-     */
+    qint32 m_width;
+    qint32 m_heigth;
+    qint32 *costs;
+    qint32 *movecosts;
     QList<Node*> m_OpenList;
-
     qint32 m_FinishNode = -1;
+    qint32 m_FinishNodeX = -1;
+    qint32 m_FinishNodeY = -1;
+
 };
 
 #endif // PATHFINDINGSYSTEM_H

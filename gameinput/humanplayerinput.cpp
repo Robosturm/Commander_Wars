@@ -160,8 +160,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
         {
             Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
             qint32 minRange = pUnit->getMinRange();
-            qint32 maxRange = pUnit->getMaxRange();
-
+            qint32 maxRange = pUnit->getMaxRange();            
             UnitPathFindingSystem pfs(pMap->getTerrain(x, y)->getUnit(), m_pPlayer);
             pfs.explore();
             QVector<QPoint> points = pfs.getAllNodePoints();
@@ -565,15 +564,16 @@ void HumanPlayerInput::createActionMenu(QStringList actionIDs, qint32 x, qint32 
 
 void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
 {
+    GameMenue* pMenue = GameMenue::getInstance();
     GameMap* pMap = GameMap::getInstance();
     float posX = x * GameMap::Imagesize * pMap->getZoom() + pMap->getX();
+    if (posX + m_CurrentMenu->getWidth() > Settings::getWidth() - 40 - pMenue->getGameInfoBar()->getWidth())
+    {
+        posX = Settings::getWidth() - m_CurrentMenu->getWidth() - 40 - pMenue->getGameInfoBar()->getWidth();
+    }
     if (posX < 10)
     {
         posX = 10;
-    }
-    else if (posX + m_CurrentMenu->getWidth() > Settings::getWidth() - 40)
-    {
-        posX = Settings::getWidth() - m_CurrentMenu->getWidth() - 40;
     }
     float posY = y * GameMap::Imagesize * pMap->getZoom() + pMap->getY();
     if (posY < 10)
@@ -584,8 +584,7 @@ void HumanPlayerInput::attachActionMenu(qint32 x, qint32 y)
     {
         posY = Settings::getHeight() - m_CurrentMenu->getHeight() - 10;
     }
-    m_CurrentMenu->setPosition(posX, posY);
-    GameMenue* pMenue = GameMenue::getInstance();
+    m_CurrentMenu->setPosition(posX, posY);    
     pMenue->addChild(m_CurrentMenu);
     pMenue->setFocused(false);
     connect(m_CurrentMenu.get(), &HumanPlayerInputMenu::sigItemSelected, this, &HumanPlayerInput::menuItemSelected, Qt::QueuedConnection);
@@ -600,6 +599,9 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
     Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
     GameMap* pMap = GameMap::getInstance();
     Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+
+    auto t = std::chrono::system_clock::now();
+
     m_pUnitPathFindingSystem = new UnitPathFindingSystem(pUnit, m_pPlayer);
     if ((pUnit->getOwner() == m_pPlayer) &&
         pUnit->getActionList().contains(CoreAI::ACTION_WAIT))
@@ -616,6 +618,9 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
         m_pUnitPathFindingSystem->setMovepoints(pUnit->getMovementpoints(QPoint(x, y)));
     }
     m_pUnitPathFindingSystem->explore();
+    auto d = std::chrono::system_clock::now() - t;
+    auto rep = std::chrono::duration_cast<std::chrono::microseconds>(d).count();
+
     createMarkedMoveFields();
 }
 
@@ -825,7 +830,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
         !m_pGameAction->getTargetUnit()->getHasMoved() &&
         m_FieldPoints.contains(QVector3D(x, y, 0)))
     {
-        if (m_pUnitPathFindingSystem->getCosts(x, y) >= 0)
+        if (m_pUnitPathFindingSystem->getCosts(m_pUnitPathFindingSystem->getIndex(x, y), x, y) >= 0)
         {
             // is it a neighbour field to the last target?
             if (((points.size() > 0) && ((points[0].x() - x + points[0].y() - y) != 0)))

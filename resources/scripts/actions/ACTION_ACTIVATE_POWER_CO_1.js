@@ -15,7 +15,7 @@ var Constructor = function()
     };
     this.getActionText = function()
     {
-        return qsTr("Power of CO 2");
+        return qsTr("Power of ")  + map.getCurrentPlayer().getCO(1).getCOName();
     };
     this.getIcon = function()
     {

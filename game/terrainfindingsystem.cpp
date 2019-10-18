@@ -7,7 +7,9 @@
 #include "coreengine/mainapp.h"
 
 TerrainFindingSystem::TerrainFindingSystem(QString terrainID, qint32 startX, qint32 startY)
-    : PathFindingSystem(startX, startY),
+    : PathFindingSystem(startX, startY,
+                        GameMap::getInstance()->getMapWidth(),
+                        GameMap::getInstance()->getMapHeight()),
       m_terrainID(terrainID)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -24,17 +26,26 @@ bool TerrainFindingSystem::finished(qint32, qint32, qint32)
 {
     return false;
 }
-qint32 TerrainFindingSystem::getCosts(qint32 x, qint32 y)
+qint32 TerrainFindingSystem::getCosts(qint32 index, qint32 x, qint32 y)
 {
-    GameMap* pMap = GameMap::getInstance();
-    if (pMap->onMap(x, y))
+    if (movecosts[index] == infinite)
     {
-        if (pMap->getTerrain(x, y)->getID() == m_terrainID)
+        GameMap* pMap = GameMap::getInstance();
+        if (pMap->onMap(x, y))
         {
-            return 1;
+            if (pMap->getTerrain(x, y)->getID() == m_terrainID)
+            {
+                movecosts[index] = 1;
+                return movecosts[index];
+            }
         }
+        movecosts[index] = -1;
+        return movecosts[index];
     }
-    return -1;
+    else
+    {
+        return movecosts[index];
+    }
 }
 
 void TerrainFindingSystem::killTerrainFindingSystem()

@@ -50,6 +50,11 @@ signals:
 
 public slots:
     /**
+     * @brief getCOName
+     * @return
+     */
+    QString getCOName();
+    /**
      * @brief getCOUnits
      * @param pBuilding
      * @return

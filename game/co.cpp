@@ -238,6 +238,21 @@ qint32 CO::getVisionrangeModifier(Unit* pUnit, QPoint position)
     }
 }
 
+QString CO::getCOName()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getName";
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1);
+    if (erg.isString())
+    {
+        return erg.toString();
+    }
+    else
+    {
+        return tr("Unknown");
+    }
+}
+
 QStringList CO::getCOUnits(Building* pBuilding)
 {
     Mainapp* pApp = Mainapp::getInstance();

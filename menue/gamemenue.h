@@ -41,7 +41,14 @@ public:
      * @return always true for singleplayer games turns true on multiplayer games once all clients have started the game
      */
     bool getGameStarted() const;
-
+    /**
+     * @brief getGameInfoBar
+     * @return
+     */
+    IngameInfoBar* getGameInfoBar()
+    {
+        return m_IngameInfoBar.get();
+    }
 signals:
     void sigActionPerformed();
     void sigGameStarted();
