@@ -246,17 +246,17 @@ void GameRules::startOfTurn(bool newDay)
     // todo maybe make this changeable some day
     const qint32 predictionSize = 3;
 
-    qint32 startDay = -1;
+    qint32 dayInsert = -1;
     qint32 currentPlayer = pMap->getCurrentPlayer()->getPlayerID();
     if (m_WeatherDays.size() < predictionSize)
     {
-        startDay = m_WeatherDays.size();
+        dayInsert = m_WeatherDays.size();
     }
     else if (m_WeatherDays[0][currentPlayer] < 0)
     {
-        startDay = 0;
+        dayInsert = 0;
     }
-    if (startDay >= 0)
+    if (dayInsert >= 0)
     {
         qint32 playerCount = pMap->getPlayerCount();
         // increase weather prediction till enough data is avaiable
@@ -269,13 +269,14 @@ void GameRules::startOfTurn(bool newDay)
                 {
                     totalWeatherChances += m_WeatherChances[i];
                 }
-                qint32 erg = Mainapp::randInt(0, totalWeatherChances);
+                qint32 erg = Mainapp::randInt(0, totalWeatherChances - 1);
                 totalWeatherChances = 0;
                 for (qint32 i = 0; i < m_WeatherChances.size(); i++)
                 {
-                    if (erg < totalWeatherChances + m_WeatherChances[i])
+                    if (erg < totalWeatherChances + m_WeatherChances[i] ||
+                        i == m_WeatherChances.size() - 1)
                     {
-                        changeWeather(m_Weathers[i]->getWeatherId() , playerCount, startDay);
+                        changeWeather(i, playerCount, dayInsert, false);
                         break;
                     }
                     totalWeatherChances += m_WeatherChances[i];
@@ -283,9 +284,9 @@ void GameRules::startOfTurn(bool newDay)
             }
             else
             {
-                changeWeather(m_Weathers[getStartWeather()]->getWeatherId() , playerCount, startDay);
+                changeWeather(getStartWeather() , playerCount, dayInsert, false);
             }
-            startDay++;
+            dayInsert += 1;
         }
     }
     if (newDay)
@@ -321,10 +322,8 @@ void GameRules::changeWeather(QString weatherId, qint32 duration, qint32 startDa
     }
 }
 
-void GameRules::changeWeather(qint32 weatherId, qint32 duration, qint32 startDay)
+void GameRules::changeWeather(qint32 weatherId, qint32 duration, qint32 startDay, bool apply)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     if (weatherId >= 0 && weatherId < m_Weathers.size())
     {
         GameMap* pMap = GameMap::getInstance();
@@ -351,16 +350,23 @@ void GameRules::changeWeather(qint32 weatherId, qint32 duration, qint32 startDay
                     duration--;
                 }
             }
-            day++;
-            // player 0 to start player
-            for (qint32 i = 0; i < startPlayer; i++)
+            if (startPlayer > 0)
             {
-                if (duration > 0)
+                // player 0 to start player
+                day++;
+                for (qint32 i = 0; i < startPlayer; i++)
                 {
-                    // set weather for the day
-                    m_WeatherDays[day][i] = weatherId;
-                    duration--;
+                    if (duration > 0)
+                    {
+                        // set weather for the day
+                        m_WeatherDays[day][i] = weatherId;
+                        duration--;
+                    }
                 }
+            }
+            else
+            {
+                day++;
             }
         }
         // update day weather for cop's and effects happened during a day
@@ -371,9 +377,11 @@ void GameRules::changeWeather(qint32 weatherId, qint32 duration, qint32 startDay
                 m_WeatherDays[day][i] = m_DayWeather;
             }
         }
-        setCurrentWeather(m_WeatherDays[0][startPlayer]);
+        if (apply)
+        {
+            setCurrentWeather(m_WeatherDays[0][startPlayer]);
+        }
     }
-    pApp->continueThread();
 }
 
 void GameRules::setCurrentWeather(qint32 weatherId)

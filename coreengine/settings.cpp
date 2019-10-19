@@ -2,6 +2,8 @@
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
 
+#include "game/gamemap.h"
+
 #include <QSettings>
 #include <QTranslator>
 #include <QLocale>
@@ -55,6 +57,7 @@ QString Settings::m_LastSaveGame = "";
 QString Settings::m_Username = "";
 bool Settings::m_ShowCursor = true;
 bool Settings::m_AutoEndTurn = false;
+qint32 Settings::m_MenuItemCount = 13;
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -295,19 +298,27 @@ void Settings::loadSettings(){
         animationSpeed = 1u;
     }
     battleAnimationSpeed = settings.value("BattleAnimationSpeed", 1u).toUInt(&ok);
-    if(!ok || animationSpeed <= 0 ||  animationSpeed > 100u)
+    if(!ok || battleAnimationSpeed <= 0 ||  battleAnimationSpeed > 100u)
     {
         QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " BattleAnimationSpeed";
         Console::print(error, Console::eERROR);
         battleAnimationSpeed = 1u;
     }
     multiTurnCounter = settings.value("MultiTurnCounter", 4u).toUInt(&ok);
-    if(!ok || animationSpeed <= 0 || multiTurnCounter > 10u)
+    if(!ok || multiTurnCounter <= 0 || multiTurnCounter > 10u)
     {
         QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " MultiTurnCounter";
         Console::print(error, Console::eERROR);
         battleAnimationSpeed = 4u;
     }
+    m_MenuItemCount = settings.value("MenuItemCount", 11).toInt(&ok);
+    if(!ok || m_MenuItemCount <= 10 || m_MenuItemCount >= (m_height - GameMap::Imagesize * 2) / GameMap::Imagesize)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Game] " + tr("Setting:") + " MenuItemCount";
+        Console::print(error, Console::eERROR);
+        m_MenuItemCount = 13;
+    }
+
 
     m_LastSaveGame = settings.value("LastSaveGame", "").toString();
     m_Username = settings.value("Username", "").toString();
@@ -399,6 +410,7 @@ void Settings::saveSettings(){
     settings.setValue("Username",                       m_Username);
     settings.setValue("ShowCursor",                     m_ShowCursor);
     settings.setValue("AutoEndTurn",                    m_AutoEndTurn);
+    settings.setValue("MenuItemCount",                  m_MenuItemCount);
     settings.endGroup();
 
     // network
@@ -649,6 +661,16 @@ SDL_Keycode Settings::getKey_information()
 void Settings::setKey_information(const SDL_Keycode &key_information)
 {
     m_key_information = key_information;
+}
+
+qint32 Settings::getMenuItemCount()
+{
+    return m_MenuItemCount;
+}
+
+void Settings::setMenuItemCount(const qint32 &MenuItemCount)
+{
+    m_MenuItemCount = MenuItemCount;
 }
 
 quint32 Settings::getMultiTurnCounter()

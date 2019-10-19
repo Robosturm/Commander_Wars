@@ -1936,287 +1936,292 @@
 <context>
     <name>OptionMenue</name>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="47"/>
+        <location filename="../menue/optionmenue.cpp" line="49"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="59"/>
+        <location filename="../menue/optionmenue.cpp" line="61"/>
         <source>Mods</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="68"/>
+        <location filename="../menue/optionmenue.cpp" line="70"/>
         <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="78"/>
+        <location filename="../menue/optionmenue.cpp" line="80"/>
         <source>Gameplay &amp; Keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="234"/>
+        <location filename="../menue/optionmenue.cpp" line="236"/>
         <source>Gameplay Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="241"/>
+        <location filename="../menue/optionmenue.cpp" line="243"/>
         <source>Show Ingame Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="244"/>
+        <location filename="../menue/optionmenue.cpp" line="246"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="244"/>
+        <location filename="../menue/optionmenue.cpp" line="246"/>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="244"/>
+        <location filename="../menue/optionmenue.cpp" line="246"/>
         <source>Own</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="244"/>
+        <location filename="../menue/optionmenue.cpp" line="246"/>
         <source>Ally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="244"/>
+        <location filename="../menue/optionmenue.cpp" line="246"/>
         <source>Enemy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="245"/>
+        <location filename="../menue/optionmenue.cpp" line="247"/>
         <source>Only Detailed Battle All</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="245"/>
+        <location filename="../menue/optionmenue.cpp" line="247"/>
         <source>Only Detailed Battle Own</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="246"/>
+        <location filename="../menue/optionmenue.cpp" line="248"/>
         <source>Only Detailed Battle Ally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="246"/>
+        <location filename="../menue/optionmenue.cpp" line="248"/>
         <source>Only Detailed Battle Enemy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="259"/>
+        <location filename="../menue/optionmenue.cpp" line="261"/>
         <source>Battle Animations: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="262"/>
+        <location filename="../menue/optionmenue.cpp" line="264"/>
         <source>Detailed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="262"/>
+        <location filename="../menue/optionmenue.cpp" line="264"/>
         <source>Overworld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="275"/>
+        <location filename="../menue/optionmenue.cpp" line="277"/>
         <source>Animation Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="290"/>
+        <location filename="../menue/optionmenue.cpp" line="292"/>
         <source>Battle Animation Speed: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="305"/>
+        <location filename="../menue/optionmenue.cpp" line="307"/>
         <source>Multi Turn Plantime: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="320"/>
+        <location filename="../menue/optionmenue.cpp" line="322"/>
         <source>Auto End Turn: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="335"/>
+        <location filename="../menue/optionmenue.cpp" line="337"/>
+        <source>Menu Heigth: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/optionmenue.cpp" line="352"/>
         <source>Show Windows Cursor: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="350"/>
+        <location filename="../menue/optionmenue.cpp" line="367"/>
         <source>Ingame Keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="357"/>
+        <location filename="../menue/optionmenue.cpp" line="374"/>
         <source>Key Up: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="368"/>
+        <location filename="../menue/optionmenue.cpp" line="385"/>
         <source>Key Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="379"/>
+        <location filename="../menue/optionmenue.cpp" line="396"/>
         <source>Key Down: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="390"/>
+        <location filename="../menue/optionmenue.cpp" line="407"/>
         <source>Key Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="401"/>
+        <location filename="../menue/optionmenue.cpp" line="418"/>
         <source>Key Confirm: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="412"/>
+        <location filename="../menue/optionmenue.cpp" line="429"/>
         <source>Key Cancel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="423"/>
+        <location filename="../menue/optionmenue.cpp" line="440"/>
         <source>Key Next: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="434"/>
+        <location filename="../menue/optionmenue.cpp" line="451"/>
         <source>Key Previous: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="445"/>
+        <location filename="../menue/optionmenue.cpp" line="462"/>
         <source>Key Quicksave 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="456"/>
+        <location filename="../menue/optionmenue.cpp" line="473"/>
         <source>Key Quickload 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="467"/>
+        <location filename="../menue/optionmenue.cpp" line="484"/>
         <source>Key Quicksave 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="478"/>
+        <location filename="../menue/optionmenue.cpp" line="495"/>
         <source>Key Quickload 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="489"/>
+        <location filename="../menue/optionmenue.cpp" line="506"/>
         <source>Key Information: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="500"/>
+        <location filename="../menue/optionmenue.cpp" line="517"/>
         <source>Key Move Map Up: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="511"/>
+        <location filename="../menue/optionmenue.cpp" line="528"/>
         <source>Key Move Map Left: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="522"/>
+        <location filename="../menue/optionmenue.cpp" line="539"/>
         <source>Key Move Map Down: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="533"/>
+        <location filename="../menue/optionmenue.cpp" line="550"/>
         <source>Key Move Map Right: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="602"/>
+        <location filename="../menue/optionmenue.cpp" line="619"/>
         <source>Screen Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="610"/>
+        <location filename="../menue/optionmenue.cpp" line="627"/>
         <source>Screen Resolution: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="626"/>
+        <location filename="../menue/optionmenue.cpp" line="643"/>
         <source>Screen Mode: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="629"/>
+        <location filename="../menue/optionmenue.cpp" line="646"/>
         <source>Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="629"/>
+        <location filename="../menue/optionmenue.cpp" line="646"/>
         <source>Bordered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="629"/>
+        <location filename="../menue/optionmenue.cpp" line="646"/>
         <source>Fullscreen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="639"/>
+        <location filename="../menue/optionmenue.cpp" line="656"/>
         <source>Audio Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="645"/>
+        <location filename="../menue/optionmenue.cpp" line="662"/>
         <source>Global Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="661"/>
+        <location filename="../menue/optionmenue.cpp" line="678"/>
         <source>Music Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="677"/>
+        <location filename="../menue/optionmenue.cpp" line="694"/>
         <source>Sound Volume: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="692"/>
+        <location filename="../menue/optionmenue.cpp" line="709"/>
         <source>Network Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="699"/>
+        <location filename="../menue/optionmenue.cpp" line="716"/>
         <source>Username: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="725"/>
+        <location filename="../menue/optionmenue.cpp" line="742"/>
         <source>Server Adress: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="740"/>
+        <location filename="../menue/optionmenue.cpp" line="757"/>
         <source>Lobby port: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="755"/>
+        <location filename="../menue/optionmenue.cpp" line="772"/>
         <source>Server: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/optionmenue.cpp" line="771"/>
+        <location filename="../menue/optionmenue.cpp" line="788"/>
         <source>Game port: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3105,74 +3110,76 @@
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../coreengine/settings.cpp" line="78"/>
-        <location filename="../coreengine/settings.cpp" line="88"/>
-        <location filename="../coreengine/settings.cpp" line="94"/>
-        <location filename="../coreengine/settings.cpp" line="100"/>
-        <location filename="../coreengine/settings.cpp" line="106"/>
-        <location filename="../coreengine/settings.cpp" line="118"/>
-        <location filename="../coreengine/settings.cpp" line="124"/>
-        <location filename="../coreengine/settings.cpp" line="131"/>
-        <location filename="../coreengine/settings.cpp" line="138"/>
-        <location filename="../coreengine/settings.cpp" line="145"/>
-        <location filename="../coreengine/settings.cpp" line="152"/>
-        <location filename="../coreengine/settings.cpp" line="159"/>
-        <location filename="../coreengine/settings.cpp" line="166"/>
-        <location filename="../coreengine/settings.cpp" line="173"/>
-        <location filename="../coreengine/settings.cpp" line="180"/>
-        <location filename="../coreengine/settings.cpp" line="187"/>
-        <location filename="../coreengine/settings.cpp" line="194"/>
-        <location filename="../coreengine/settings.cpp" line="201"/>
-        <location filename="../coreengine/settings.cpp" line="208"/>
-        <location filename="../coreengine/settings.cpp" line="215"/>
-        <location filename="../coreengine/settings.cpp" line="222"/>
-        <location filename="../coreengine/settings.cpp" line="229"/>
-        <location filename="../coreengine/settings.cpp" line="236"/>
-        <location filename="../coreengine/settings.cpp" line="243"/>
-        <location filename="../coreengine/settings.cpp" line="254"/>
-        <location filename="../coreengine/settings.cpp" line="261"/>
-        <location filename="../coreengine/settings.cpp" line="268"/>
-        <location filename="../coreengine/settings.cpp" line="279"/>
-        <location filename="../coreengine/settings.cpp" line="286"/>
-        <location filename="../coreengine/settings.cpp" line="293"/>
-        <location filename="../coreengine/settings.cpp" line="300"/>
-        <location filename="../coreengine/settings.cpp" line="307"/>
+        <location filename="../coreengine/settings.cpp" line="81"/>
+        <location filename="../coreengine/settings.cpp" line="91"/>
+        <location filename="../coreengine/settings.cpp" line="97"/>
+        <location filename="../coreengine/settings.cpp" line="103"/>
+        <location filename="../coreengine/settings.cpp" line="109"/>
+        <location filename="../coreengine/settings.cpp" line="121"/>
+        <location filename="../coreengine/settings.cpp" line="127"/>
+        <location filename="../coreengine/settings.cpp" line="134"/>
+        <location filename="../coreengine/settings.cpp" line="141"/>
+        <location filename="../coreengine/settings.cpp" line="148"/>
+        <location filename="../coreengine/settings.cpp" line="155"/>
+        <location filename="../coreengine/settings.cpp" line="162"/>
+        <location filename="../coreengine/settings.cpp" line="169"/>
+        <location filename="../coreengine/settings.cpp" line="176"/>
+        <location filename="../coreengine/settings.cpp" line="183"/>
+        <location filename="../coreengine/settings.cpp" line="190"/>
+        <location filename="../coreengine/settings.cpp" line="197"/>
+        <location filename="../coreengine/settings.cpp" line="204"/>
+        <location filename="../coreengine/settings.cpp" line="211"/>
+        <location filename="../coreengine/settings.cpp" line="218"/>
+        <location filename="../coreengine/settings.cpp" line="225"/>
+        <location filename="../coreengine/settings.cpp" line="232"/>
+        <location filename="../coreengine/settings.cpp" line="239"/>
+        <location filename="../coreengine/settings.cpp" line="246"/>
+        <location filename="../coreengine/settings.cpp" line="257"/>
+        <location filename="../coreengine/settings.cpp" line="264"/>
+        <location filename="../coreengine/settings.cpp" line="271"/>
+        <location filename="../coreengine/settings.cpp" line="282"/>
+        <location filename="../coreengine/settings.cpp" line="289"/>
+        <location filename="../coreengine/settings.cpp" line="296"/>
+        <location filename="../coreengine/settings.cpp" line="303"/>
+        <location filename="../coreengine/settings.cpp" line="310"/>
+        <location filename="../coreengine/settings.cpp" line="317"/>
         <source>Error in the Ini File: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/settings.cpp" line="78"/>
-        <location filename="../coreengine/settings.cpp" line="88"/>
-        <location filename="../coreengine/settings.cpp" line="94"/>
-        <location filename="../coreengine/settings.cpp" line="100"/>
-        <location filename="../coreengine/settings.cpp" line="106"/>
-        <location filename="../coreengine/settings.cpp" line="118"/>
-        <location filename="../coreengine/settings.cpp" line="124"/>
-        <location filename="../coreengine/settings.cpp" line="131"/>
-        <location filename="../coreengine/settings.cpp" line="138"/>
-        <location filename="../coreengine/settings.cpp" line="145"/>
-        <location filename="../coreengine/settings.cpp" line="152"/>
-        <location filename="../coreengine/settings.cpp" line="159"/>
-        <location filename="../coreengine/settings.cpp" line="166"/>
-        <location filename="../coreengine/settings.cpp" line="173"/>
-        <location filename="../coreengine/settings.cpp" line="180"/>
-        <location filename="../coreengine/settings.cpp" line="187"/>
-        <location filename="../coreengine/settings.cpp" line="194"/>
-        <location filename="../coreengine/settings.cpp" line="201"/>
-        <location filename="../coreengine/settings.cpp" line="208"/>
-        <location filename="../coreengine/settings.cpp" line="215"/>
-        <location filename="../coreengine/settings.cpp" line="222"/>
-        <location filename="../coreengine/settings.cpp" line="229"/>
-        <location filename="../coreengine/settings.cpp" line="236"/>
-        <location filename="../coreengine/settings.cpp" line="243"/>
-        <location filename="../coreengine/settings.cpp" line="254"/>
-        <location filename="../coreengine/settings.cpp" line="261"/>
-        <location filename="../coreengine/settings.cpp" line="268"/>
-        <location filename="../coreengine/settings.cpp" line="279"/>
-        <location filename="../coreengine/settings.cpp" line="286"/>
-        <location filename="../coreengine/settings.cpp" line="293"/>
-        <location filename="../coreengine/settings.cpp" line="300"/>
-        <location filename="../coreengine/settings.cpp" line="307"/>
+        <location filename="../coreengine/settings.cpp" line="81"/>
+        <location filename="../coreengine/settings.cpp" line="91"/>
+        <location filename="../coreengine/settings.cpp" line="97"/>
+        <location filename="../coreengine/settings.cpp" line="103"/>
+        <location filename="../coreengine/settings.cpp" line="109"/>
+        <location filename="../coreengine/settings.cpp" line="121"/>
+        <location filename="../coreengine/settings.cpp" line="127"/>
+        <location filename="../coreengine/settings.cpp" line="134"/>
+        <location filename="../coreengine/settings.cpp" line="141"/>
+        <location filename="../coreengine/settings.cpp" line="148"/>
+        <location filename="../coreengine/settings.cpp" line="155"/>
+        <location filename="../coreengine/settings.cpp" line="162"/>
+        <location filename="../coreengine/settings.cpp" line="169"/>
+        <location filename="../coreengine/settings.cpp" line="176"/>
+        <location filename="../coreengine/settings.cpp" line="183"/>
+        <location filename="../coreengine/settings.cpp" line="190"/>
+        <location filename="../coreengine/settings.cpp" line="197"/>
+        <location filename="../coreengine/settings.cpp" line="204"/>
+        <location filename="../coreengine/settings.cpp" line="211"/>
+        <location filename="../coreengine/settings.cpp" line="218"/>
+        <location filename="../coreengine/settings.cpp" line="225"/>
+        <location filename="../coreengine/settings.cpp" line="232"/>
+        <location filename="../coreengine/settings.cpp" line="239"/>
+        <location filename="../coreengine/settings.cpp" line="246"/>
+        <location filename="../coreengine/settings.cpp" line="257"/>
+        <location filename="../coreengine/settings.cpp" line="264"/>
+        <location filename="../coreengine/settings.cpp" line="271"/>
+        <location filename="../coreengine/settings.cpp" line="282"/>
+        <location filename="../coreengine/settings.cpp" line="289"/>
+        <location filename="../coreengine/settings.cpp" line="296"/>
+        <location filename="../coreengine/settings.cpp" line="303"/>
+        <location filename="../coreengine/settings.cpp" line="310"/>
+        <location filename="../coreengine/settings.cpp" line="317"/>
         <source>Setting:</source>
         <translation type="unfinished"></translation>
     </message>

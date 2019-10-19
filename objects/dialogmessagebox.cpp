@@ -66,6 +66,6 @@ DialogMessageBox::DialogMessageBox(QString text, bool withCancel)
 
 void DialogMessageBox::remove()
 {
-    this->getParent()->removeChild(this);
+    detach();
 }
 

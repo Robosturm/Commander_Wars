@@ -68,11 +68,14 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     m_Cursor->setScale(GameMap::Imagesize / pAnim->getWidth());
     qint32 x = 0;
 
+    qint32 xCount = 0;
+
     qint32 maxY = 0;
     for (qint32 i = 0; i < actionIDs.size(); i++)
     {
-        if (i > 0 && i % itemCount == 0)
+        if (i > 0 && i % Settings::getMenuItemCount() == 0)
         {
+            xCount++;
             createBottomSprite(x, y, width);
             x += width;
             maxY = y;
@@ -168,18 +171,51 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
                 }
             });
         }
-        y += pItemBox->getHeight();
+        y += static_cast<qint32>(pItemBox->getHeight());
         if (y > maxY)
         {
             maxY = y;
         }
         itemHeigth = static_cast<qint32>(pItemBox->getHeight());
     }
+    if (xCount > 0)
+    {
+        qint32 emptyItems = ((xCount + 1) * Settings::getMenuItemCount()) - xCount * Settings::getMenuItemCount() - actionIDs.size() % Settings::getMenuItemCount();
+        for (qint32 i = 0; i < emptyItems; i++)
+        {
+            oxygine::spBox9Sprite pItemBox = new oxygine::Box9Sprite();
+            pAnim = pGameManager->getResAnim("menu+middle");
+            pItemBox->setResAnim(pAnim);
+            pItemBox->setSize(pAnim->getSize());
+            pItemBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+            pItemBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+            pItemBox->setHeight(GameMap::Imagesize);
+            pItemBox->setY(y);
+            pItemBox->setX(x);
+            pItemBox->setWidth(width);
+            pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
+            {
+                oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+                pTouchEvent->stopPropagation();
+                if (pTouchEvent != nullptr)
+                {
+                    if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
+                    {
+                        emit sigCanceled(0, 0);
+                    }
+                }
+            });
+            this->addChild(pItemBox);
+            y += static_cast<qint32>(pItemBox->getHeight());
+            itemHeigth = static_cast<qint32>(pItemBox->getHeight());
+        }
+    }
+
     qint32 bottomHeigth = createBottomSprite(x, y, width);
     this->addChild(m_Cursor);
     this->setPriority(static_cast<qint16>(Mainapp::ZOrder::FocusedObjects));
     this->setHeight(maxY + bottomHeigth);
-    this->setWidth(width * Mainapp::roundUp((actionIDs.size() / static_cast<float>(itemCount))));
+    this->setWidth(width * Mainapp::roundUp((actionIDs.size() / static_cast<float>(Settings::getMenuItemCount()))));
     GameMenue* pGameMenue = GameMenue::getInstance();
     connect(pGameMenue, &GameMenue::sigMouseMove, this, &HumanPlayerInputMenu::mouseMove, Qt::QueuedConnection);
     mouseMove(0, 0);
@@ -279,9 +315,9 @@ void HumanPlayerInputMenu::keyInput(SDL_Event event)
         if (cur == Settings::getKey_left())
         {
             Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
-            if (currentAction - itemCount >= 0)
+            if (currentAction - Settings::getMenuItemCount() >= 0)
             {
-                currentAction -= itemCount;
+                currentAction -= Settings::getMenuItemCount();
             }
             else
             {
@@ -291,10 +327,10 @@ void HumanPlayerInputMenu::keyInput(SDL_Event event)
         else if (cur == Settings::getKey_right())
         {
             Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");
-            if (currentAction + itemCount < m_ActionIDs.size())
+            if (currentAction + Settings::getMenuItemCount() < m_ActionIDs.size())
             {
 
-                currentAction += itemCount;
+                currentAction += Settings::getMenuItemCount();
             }
             else
             {
@@ -360,9 +396,9 @@ void HumanPlayerInputMenu::keyInput(SDL_Event event)
 
         qint32 x = 0;
         qint32 y = currentAction;
-        while (y >= itemCount)
+        while (y >= Settings::getMenuItemCount())
         {
-            y -= itemCount;
+            y -= Settings::getMenuItemCount();
             x++;
         }
         m_Cursor->setY(startY + y * itemHeigth + GameMap::Imagesize / 2 - m_Cursor->getScaledHeight() / 2);

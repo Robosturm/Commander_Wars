@@ -35,9 +35,10 @@ public:
 
     static void setUsername(const QString &Username);
 
-
-
 public slots:
+    static qint32 getMenuItemCount();
+    static void setMenuItemCount(const qint32 &MenuItemCount);
+
     static QString getModConfigString();
 
     static quint32 getMultiTurnCounter();
@@ -264,6 +265,7 @@ private:
     static QString m_LastSaveGame;
     static bool m_ShowCursor;
     static bool m_AutoEndTurn;
+    static qint32 m_MenuItemCount;
 
     // internal members
     static Settings* m_pInstance;

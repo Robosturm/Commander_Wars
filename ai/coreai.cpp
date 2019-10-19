@@ -1593,8 +1593,10 @@ void CoreAI::deserializeObject(QDataStream& stream)
         {
             qint32 ysize = 0;
             stream >> ysize;
+            m_MoveCostMap.append(QVector<std::tuple<qint32, bool>>());
             for (qint32 y = 0; y < ysize; y++)
             {
+                m_MoveCostMap[x].append(std::tuple<qint32, bool>(0, false));
                 stream >> std::get<0>(m_MoveCostMap[x][y]);
                 stream >> std::get<1>(m_MoveCostMap[x][y]);
             }

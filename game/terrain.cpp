@@ -91,10 +91,6 @@ void Terrain::setTerrainName(const QString &value)
 
 Terrain::~Terrain()
 {
-    if (m_Unit.get() != nullptr)
-    {
-        setUnit(nullptr);
-    }
 }
 
 void Terrain::syncAnimation()

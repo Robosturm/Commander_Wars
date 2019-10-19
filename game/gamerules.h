@@ -196,7 +196,7 @@ public slots:
      * @param weatherId
      * @param duration
      */
-    void changeWeather(qint32 weatherId, qint32 duration, qint32 startDay = 0);
+    void changeWeather(qint32 weatherId, qint32 duration, qint32 startDay = 0, bool apply = true);
     /**
      * @brief setCurrentWeather sets the current weather
      * @param weatherId

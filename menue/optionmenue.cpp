@@ -5,6 +5,8 @@
 #include "coreengine/console.h"
 #include "coreengine/settings.h"
 
+#include "game/gamemap.h"
+
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
@@ -328,6 +330,21 @@ void OptionMenue::showGameplayAndKeys()
     });
     pCheckbox->setPosition(sliderOffset - 130, y);
     m_pOptions->addItem(pCheckbox);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Menu Heigth: ").toStdString().c_str());
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    spSlider pMenuItemHeigth = new Slider(pApp->getSettings()->getWidth() - 20 - sliderOffset, 10, (Settings::getHeight() - GameMap::Imagesize * 2) / GameMap::Imagesize, "");
+    pMenuItemHeigth->setPosition(sliderOffset - 130, y);
+    pMenuItemHeigth->setCurrentValue(static_cast<qint32>(pSettings->getMenuItemCount()));
+    m_pOptions->addItem(pMenuItemHeigth);
+    connect(pMenuItemHeigth.get(), &Slider::sliderValueChanged, [=](qint32 value)
+    {
+        pSettings->setMenuItemCount(static_cast<quint32>(value));
+    });
     y += 40;
 
     pTextfield = new oxygine::TextField();
