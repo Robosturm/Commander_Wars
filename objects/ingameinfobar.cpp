@@ -112,7 +112,7 @@ void IngameInfoBar::updatePlayerInfo()
         pAnim = pCOSpriteManager->getResAnim("no_co+face");
     }
     pSprite->setResAnim(pAnim);
-    pSprite->setPosition(205, 10);
+    pSprite->setPosition(109, 10);
     pSprite->setScale(1.8f);
     m_pGameInfoBox->addChild(pSprite);
 
@@ -121,7 +121,7 @@ void IngameInfoBar::updatePlayerInfo()
     if (pAnim != nullptr)
     {
         pSprite->setResAnim(pAnim);
-        pSprite->setPosition(110, 12);
+        pSprite->setPosition(205, 12);
         pSprite->setScale(85 / pAnim->getWidth());
     }
     m_pGameInfoBox->addChild(pSprite);
@@ -134,7 +134,7 @@ void IngameInfoBar::updatePlayerInfo()
     pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setResAnim(pAnim);
     pBox->setSize(95, 95);
-    pBox->setPosition(200, 8);
+    pBox->setPosition(104, 8);
     m_pGameInfoBox->addChild(pBox);
     pBox = new oxygine::Box9Sprite();
     pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
@@ -149,7 +149,7 @@ void IngameInfoBar::updatePlayerInfo()
     pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setResAnim(pAnim);
     pBox->setSize(95, 95);
-    pBox->setPosition(104, 8);
+    pBox->setPosition(199, 8);
     m_pGameInfoBox->addChild(pBox);
 
     if (pMap->getGameRules()->getWeatherPrediction())
@@ -162,8 +162,8 @@ void IngameInfoBar::updatePlayerInfo()
             if (pAnim != nullptr)
             {
                 pSprite->setResAnim(pAnim);
-                pSprite->setPosition(165, 68);
-                pSprite->setScale(30 / pAnim->getWidth());
+                pSprite->setPosition(206, 108);
+                pSprite->setScale(37 / pAnim->getWidth());
             }
         }
         m_pGameInfoBox->addChild(pSprite);
@@ -172,8 +172,30 @@ void IngameInfoBar::updatePlayerInfo()
         pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
         pAnim = pObjectManager->getResAnim("panel_transparent");
         pBox->setResAnim(pAnim);
-        pBox->setSize(40, 40);
-        pBox->setPosition(159, 64);
+        pBox->setSize(47, 47);
+        pBox->setPosition(200, 104);
+        m_pGameInfoBox->addChild(pBox);
+
+        pSprite = new oxygine::Sprite();
+        pWeather = pMap->getGameRules()->getWeatherAtDay(2, pMap->getCurrentPlayer()->getPlayerID());
+        if (pWeather != nullptr)
+        {
+            pAnim = pGameManager->getResAnim((pWeather->getWeatherSymbol()).toStdString().c_str());
+            if (pAnim != nullptr)
+            {
+                pSprite->setResAnim(pAnim);
+                pSprite->setPosition(253, 108);
+                pSprite->setScale(37 / pAnim->getWidth());
+            }
+        }
+        m_pGameInfoBox->addChild(pSprite);
+        pBox = new oxygine::Box9Sprite();
+        pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+        pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+        pAnim = pObjectManager->getResAnim("panel_transparent");
+        pBox->setResAnim(pAnim);
+        pBox->setSize(47, 47);
+        pBox->setPosition(247, 104);
         m_pGameInfoBox->addChild(pBox);
     }
 
@@ -506,23 +528,31 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             pAnimBack = pGameManager->getResAnim(pTerrain->getTerrainAnimationBackground().toStdString().c_str(), oxygine::ep_ignore_error);
         }
         pSprite = new oxygine::Sprite();
-        pSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 110);
+        pSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 120);
         pSprite->setResAnim(pAnimBase);
         m_pCursorInfoBox->addChild(pSprite);
         pSprite = new oxygine::Sprite();
-        pSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 110);
+        pSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 120);
         pSprite->setResAnim(pAnimBack);
         m_pCursorInfoBox->addChild(pSprite);
         pSprite = new oxygine::Sprite();
-        pSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 110);
+        pSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 120);
         pSprite->setResAnim(pAnimFore);
         m_pCursorInfoBox->addChild(pSprite);
 
+        oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
+        pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+        pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+        pAnim = pObjectManager->getResAnim("panel_transparent");
+        pBox->setResAnim(pAnim);
+        pBox->setSize(136, 200);
+        pBox->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 17, 116);
+        m_pCursorInfoBox->addChild(pBox);
 
         if (pUnit != nullptr)
         {
             BattleAnimationSprite* pBattleAnimationSprite = new BattleAnimationSprite(pUnit, pUnit->getTerrain(), BattleAnimationSprite::standingAnimation);
-            pBattleAnimationSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 110);
+            pBattleAnimationSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 120);
             if (HpHidden)
             {
                 pBattleAnimationSprite->setHpRounded(10);

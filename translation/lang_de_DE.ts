@@ -1542,117 +1542,117 @@
 <context>
     <name>IngameInfoBar</name>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="190"/>
+        <location filename="../objects/ingameinfobar.cpp" line="212"/>
         <source>Buildings: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="197"/>
+        <location filename="../objects/ingameinfobar.cpp" line="219"/>
         <source>Units: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="208"/>
-        <location filename="../objects/ingameinfobar.cpp" line="212"/>
+        <location filename="../objects/ingameinfobar.cpp" line="230"/>
+        <location filename="../objects/ingameinfobar.cpp" line="234"/>
         <source>Funds: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="221"/>
+        <location filename="../objects/ingameinfobar.cpp" line="243"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="228"/>
+        <location filename="../objects/ingameinfobar.cpp" line="250"/>
         <source>Team: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="297"/>
-        <location filename="../objects/ingameinfobar.cpp" line="341"/>
-        <location filename="../objects/ingameinfobar.cpp" line="345"/>
+        <location filename="../objects/ingameinfobar.cpp" line="319"/>
+        <location filename="../objects/ingameinfobar.cpp" line="363"/>
+        <location filename="../objects/ingameinfobar.cpp" line="367"/>
         <source>HP: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="385"/>
+        <location filename="../objects/ingameinfobar.cpp" line="407"/>
         <source>Ammo1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="401"/>
+        <location filename="../objects/ingameinfobar.cpp" line="423"/>
         <source>Ammo1: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="417"/>
+        <location filename="../objects/ingameinfobar.cpp" line="439"/>
         <source>Ammo2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="433"/>
+        <location filename="../objects/ingameinfobar.cpp" line="455"/>
         <source>Ammo2: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="450"/>
+        <location filename="../objects/ingameinfobar.cpp" line="472"/>
         <source>Fuel: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="467"/>
+        <location filename="../objects/ingameinfobar.cpp" line="489"/>
         <source>Fuel: -/-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="601"/>
-        <location filename="../objects/ingameinfobar.cpp" line="653"/>
+        <location filename="../objects/ingameinfobar.cpp" line="631"/>
+        <location filename="../objects/ingameinfobar.cpp" line="683"/>
         <source>Owner: Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="611"/>
+        <location filename="../objects/ingameinfobar.cpp" line="641"/>
         <source>Owner: Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="621"/>
-        <location filename="../objects/ingameinfobar.cpp" line="632"/>
+        <location filename="../objects/ingameinfobar.cpp" line="651"/>
+        <location filename="../objects/ingameinfobar.cpp" line="662"/>
         <source>Resistance: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="663"/>
+        <location filename="../objects/ingameinfobar.cpp" line="693"/>
         <source>Weapon 1: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="675"/>
+        <location filename="../objects/ingameinfobar.cpp" line="705"/>
         <source>Weapon 2: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="685"/>
+        <location filename="../objects/ingameinfobar.cpp" line="715"/>
         <source>Move: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="694"/>
+        <location filename="../objects/ingameinfobar.cpp" line="724"/>
         <source>Movementpoints: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="703"/>
+        <location filename="../objects/ingameinfobar.cpp" line="733"/>
         <source>Vision: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="716"/>
+        <location filename="../objects/ingameinfobar.cpp" line="746"/>
         <source>Loaded Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ingameinfobar.cpp" line="736"/>
+        <location filename="../objects/ingameinfobar.cpp" line="766"/>
         <source>Loaded Units: ?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13296,6 +13296,123 @@ Units have 20% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_xavier.js" line="291"/>
         <source>Xavier</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>co_yukio</name>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="236"/>
+        <source>Darc founder of the Dark Matter Cooperation. He&apos;s the primary reason for invasions of Sturm and Von Bolt. He uses war as a way of making money and doesn&apos;t care if people die.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="240"/>
+        <source>Astromomic gains</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="244"/>
+        <source>Any loses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="248"/>
+        <source>As the leader of darc matter his troops have special armory and armor piercing weapons.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="252"/>
+        <source>
+Global Effect:
+None.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="253"/>
+        <source>
+CO Zone Effect:
+Damage is reduced by 10%. Troops deal 15% true damage if the base damage is at least 10%.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="257"/>
+        <source>A small army spawns and fights for Yukio.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="261"/>
+        <source>Invasion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="265"/>
+        <source>An army spawns and fights for Yukio. In order to support the invasion a bombardment dealing 3 Hp to half of the enemy troops is launched.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="269"/>
+        <source>Ground-Air-Invasion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="273"/>
+        <source>I show you, what true power means.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="274"/>
+        <source>I&apos;m the evil that destroys you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="275"/>
+        <source>Your weapons are the rubbish of my factories.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="276"/>
+        <source>The victory is mine!  Alea iacta est!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="277"/>
+        <source>My troops are behind you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="278"/>
+        <source>I&apos;ll become the ruler of the world.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="282"/>
+        <source>Investment...Profits...great continue.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="283"/>
+        <source>War is just another tool to make Profit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="284"/>
+        <source>Give me all your money and your lifes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="288"/>
+        <source>Even with this loss i made profit...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="289"/>
+        <source>I lost but i got your money to build a new army.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_yukio.js" line="293"/>
+        <source>Yukio</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

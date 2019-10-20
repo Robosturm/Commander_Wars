@@ -131,6 +131,14 @@ void Unit::applyMod()
     {
         setFuel(getMaxFuel());
     }
+    if (m_UnitRank == GameEnums::UnitRank_CO0)
+    {
+        makeCOUnit(0);
+    }
+    else if (m_UnitRank == GameEnums::UnitRank_CO1)
+    {
+        makeCOUnit(1);
+    }
 }
 
 void Unit::setOwner(Player* pOwner)
@@ -1143,7 +1151,7 @@ void Unit::makeCOUnit(quint8 co)
         }
         createCORange(pCO->getCORange());
     }
-    else if (pCO->getCOUnit() != this)
+    else if (pCO == nullptr || pCO->getCOUnit() != this)
     {
         setUnitRank(GameEnums::UnitRank_Veteran);
     }
@@ -2327,14 +2335,6 @@ void Unit::deserializeObject(QDataStream& pStream)
     quint32 playerID = 0;
     pStream >> playerID;
     m_pOwner = GameMap::getInstance()->getPlayer(playerID);
-    if (m_UnitRank == GameEnums::UnitRank_CO0)
-    {
-        makeCOUnit(0);
-    }
-    else if (m_UnitRank == GameEnums::UnitRank_CO1)
-    {
-        makeCOUnit(1);
-    }
     if (version > 1)
     {
         pStream >> m_Moved;

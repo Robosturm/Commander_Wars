@@ -244,7 +244,7 @@ void GameRules::startOfTurn(bool newDay)
         m_WeatherDays.removeAt(0);
     }
     // todo maybe make this changeable some day
-    const qint32 predictionSize = 3;
+    const qint32 predictionSize = 4;
 
     qint32 dayInsert = -1;
     qint32 currentPlayer = pMap->getCurrentPlayer()->getPlayerID();

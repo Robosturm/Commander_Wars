@@ -239,6 +239,6 @@ var PLAYER =
     {
         return ["CO_EMPTY_DM", "CO_PENNY", "CO_TABITHA", "CO_CAULDER",
                 "CO_MELANTHE", "CO_JULIA", "CO_GRAVES", "CO_VARLOT",
-                "CO_RANDOM"];
+                "CO_YUKIO", "CO_RANDOM"];
     },
 }
