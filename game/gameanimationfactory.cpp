@@ -119,7 +119,7 @@ GameAnimationNextDay* GameAnimationFactory::createGameAnimationNextDay(Player* p
 {
     if (GameMenue::getInstance() != nullptr)
     {
-        GameAnimationNextDay* pAnim = new GameAnimationNextDay(pPlayer, frameTime);
+        GameAnimationNextDay* pAnim = new GameAnimationNextDay(pPlayer, frameTime, false);
         GameMenue::getInstance()->addChild(pAnim);
         m_Animations.append(pAnim);
         return pAnim;

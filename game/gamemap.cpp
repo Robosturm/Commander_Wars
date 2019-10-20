@@ -26,6 +26,7 @@
 #include "game/player.h"
 #include "game/co.h"
 #include "game/gameanimationfactory.h"
+#include "game/gameanimationnextday.h"
 
 #include "menue/gamemenue.h"
 
@@ -1241,8 +1242,53 @@ void GameMap::nextTurn()
 
     m_CurrentPlayer->loadCOMusic();
     pApp->getAudioThread()->playRandom();
-
-    GameAnimationFactory::createGameAnimationNextDay(m_CurrentPlayer.get());
+    bool permanent = false;
+    bool found = false;
+    if (m_Rules->getFogMode() != GameEnums::Fog::Fog_Off)
+    {
+        if (m_CurrentPlayer->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
+        {
+            // search for previous player
+            qint32 currentPlayerID = m_CurrentPlayer->getPlayerID();
+            for (qint32 i = currentPlayerID - 1; i >= 0; i--)
+            {
+                if (players[i]->getBaseGameInput() != nullptr &&
+                    players[i]->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
+                {
+                    if (players[i]->getTeam() != m_CurrentPlayer->getTeam())
+                    {
+                        permanent = true;
+                    }
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+            {
+                for (qint32 i = players.size() - 1; i > currentPlayerID; i--)
+                {
+                    if (players[i]->getBaseGameInput() != nullptr &&
+                        players[i]->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
+                    {
+                        if (players[i]->getTeam() != m_CurrentPlayer->getTeam())
+                        {
+                            permanent = true;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    if (permanent)
+    {
+        GameAnimationNextDay* pAnim = new GameAnimationNextDay(m_CurrentPlayer.get(), GameMap::frameTime, true);
+        GameMenue::getInstance()->addChild(pAnim);
+    }
+    else
+    {
+        GameAnimationFactory::createGameAnimationNextDay(m_CurrentPlayer.get());
+    }
 }
 
 Player* GameMap::getCurrentViewPlayer()

@@ -6,6 +6,8 @@
 
 #include "resource_management/fontmanager.h"
 
+#include "resource_management/objectmanager.h"
+
 #include "coreengine/mainapp.h"
 
 #include "game/co.h"
@@ -16,8 +18,11 @@
 
 #include "menue/gamemenue.h"
 
-GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime)
-    : GameAnimation(frameTime)
+
+
+GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, bool permanent)
+    : GameAnimation(frameTime),
+      m_permanent(permanent)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -28,9 +33,16 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime)
     pSprite->setScaleX(pApp->getSettings()->getWidth() / pAnim->getWidth());
     pSprite->setScaleY(pApp->getSettings()->getHeight() / pAnim->getHeight());
     QColor color = pPlayer->getColor();
-    oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), 150));
-    oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
-    pSprite->addTween(tween);
+    if (permanent)
+    {
+        pSprite->setColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
+        this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
+    }
+    else
+    {
+        pSprite->setColor(oxygine::Color(color.red(), color.green(), color.blue(), 150));
+    }
+
 
     addChild(pSprite);
 
@@ -77,11 +89,23 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime)
     textField->setStyle(style);
     addChild(textField);
 
-    endTimer.setSingleShot(true);
-    endTimer.setInterval(1000 / Settings::getAnimationSpeed());
-    connect(&endTimer, &QTimer::timeout, this, &GameAnimationNextDay::onFinished, Qt::QueuedConnection);
-    endTimer.start();
-
+    if (!m_permanent)
+    {
+        endTimer.setSingleShot(true);
+        endTimer.setInterval(1000 / Settings::getAnimationSpeed());
+        connect(&endTimer, &QTimer::timeout, this, &GameAnimationNextDay::onFinished, Qt::QueuedConnection);
+        endTimer.start();
+    }
+    else
+    {
+        oxygine::spButton pButtonContinue = ObjectManager::createButton(tr("Continue"), 150);
+        pButtonContinue->attachTo(this);
+        pButtonContinue->setPosition(Settings::getWidth() / 2 - pButtonContinue->getWidth() / 2, Settings::getHeight() - 50);
+        pButtonContinue->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
+        {
+            emit sigRightClick();
+        });
+    }
     addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
@@ -91,14 +115,29 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime)
             {
                 emit sigRightClick();
             }
+            else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
+            {
+                if (m_permanent)
+                {
+                    emit sigRightClick();
+                }
+            }
         }
     });
+
     connect(this, &GameAnimationNextDay::sigRightClick, this, &GameAnimationNextDay::rightClick, Qt::QueuedConnection);
 }
 
 void GameAnimationNextDay::rightClick()
 {
-    GameAnimationFactory::finishAllAnimations();
+    if (!m_permanent)
+    {
+        GameAnimationFactory::finishAllAnimations();
+    }
+    else
+    {
+        detach();
+    }
 }
 
 void GameAnimationNextDay::stop()
@@ -108,17 +147,24 @@ void GameAnimationNextDay::stop()
 
 void GameAnimationNextDay::restart()
 {
-    GameMenue::getInstance()->addChild(this);
-    endTimer.start();
+    if (!m_permanent)
+    {
+        GameMenue::getInstance()->addChild(this);
+        endTimer.start();
+    }
 }
 
 bool GameAnimationNextDay::onFinished()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    GameMap* pMap = GameMap::getInstance();
-    pMap->getGameScript()->turnStart(pMap->getCurrentDay(), pMap->getCurrentPlayer()->getPlayerID());
-    bool ret = GameAnimation::onFinished();
-    pApp->continueThread();
+    bool ret = true;
+    if (!m_permanent)
+    {
+        Mainapp* pApp = Mainapp::getInstance();
+        pApp->suspendThread();
+        GameMap* pMap = GameMap::getInstance();
+        pMap->getGameScript()->turnStart(pMap->getCurrentDay(), pMap->getCurrentPlayer()->getPlayerID());
+        ret = GameAnimation::onFinished();
+        pApp->continueThread();
+    }
     return ret;
 }

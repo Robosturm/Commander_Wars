@@ -1419,6 +1419,14 @@
     </message>
 </context>
 <context>
+    <name>GameAnimationNextDay</name>
+    <message>
+        <location filename="../game/gameanimationnextday.cpp" line="101"/>
+        <source>Continue</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GameEnums</name>
     <message>
         <location filename="../game/GameEnums.cpp" line="102"/>

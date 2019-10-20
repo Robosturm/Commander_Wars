@@ -11,7 +11,7 @@ class GameAnimationNextDay : public GameAnimation
 {
     Q_OBJECT
 public:
-    GameAnimationNextDay(Player* pPlayer, quint32 frameTime);
+    GameAnimationNextDay(Player* pPlayer, quint32 frameTime, bool permanent);
 
     virtual void restart() override;
     virtual void stop() override;
@@ -23,6 +23,7 @@ public slots:
     virtual bool onFinished() override;
 private:
     QTimer endTimer;
+    bool m_permanent;
 };
 
 #endif // GAMEANIMATIONNEXTDAY_H
