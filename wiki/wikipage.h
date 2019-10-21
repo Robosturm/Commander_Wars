@@ -3,8 +3,6 @@
 
 #include <QObject>
 
-#include "oxygine-flow.h"
-
 #include "objects/panel.h"
 
 class Wikipage;

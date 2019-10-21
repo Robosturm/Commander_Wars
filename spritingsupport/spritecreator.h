@@ -5,8 +5,6 @@
 
 #include "qimage.h"
 
-#include "oxygine-flow.h"
-
 class SpriteCreator : public QObject
 {
     Q_OBJECT

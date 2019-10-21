@@ -7,9 +7,6 @@ add_definitions(${OXYGINE_DEFINITIONS})
 include_directories(${OXYGINE_INCLUDE_DIRS})
 link_directories(${OXYGINE_LIBRARY_DIRS})
 
-add_subdirectory(3rd_party/oxygine-flow oxygine-flow)
-include_directories(${OXYGINE_FLOW_INCLUDE_DIRS})
-
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -318,7 +315,6 @@ endif(WIN32)
 # link libraries
 target_link_libraries(
         ${PROJECT_NAME}
-        oxygine-flow
 	${OXYGINE_CORE_LIBS}
         Qt5::Core
         Qt5::Qml

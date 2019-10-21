@@ -6,7 +6,6 @@
 #include <QObject>
 #include <QVector>
 #include <QVector3D>
-#include "oxygine-flow.h"
 
 #include "coreengine/mainapp.h"
 
