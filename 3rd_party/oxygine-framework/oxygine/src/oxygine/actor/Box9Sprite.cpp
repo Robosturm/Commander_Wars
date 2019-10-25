@@ -1,5 +1,4 @@
 #include "Box9Sprite.h"
-#include "DebugActor.h"
 #include "../RenderState.h"
 #include "../STDRenderDelegate.h"
 #include "../STDRenderer.h"
@@ -42,8 +41,6 @@ namespace oxygine
         _guideY[0] = 0.0f;
         _guideY[1] = 0.0f;
 
-        if (DebugActor::resSystem)
-            Sprite::setResAnim(DebugActor::resSystem->getResAnim("btn"));
     }
 
     oxygine::RectF Box9Sprite::getInnerArea() const

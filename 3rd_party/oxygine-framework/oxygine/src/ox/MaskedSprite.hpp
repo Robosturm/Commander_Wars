@@ -1,1 +1,0 @@
-#include "oxygine/actor/MaskedSprite.h"

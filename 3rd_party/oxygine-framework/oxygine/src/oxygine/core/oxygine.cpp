@@ -12,7 +12,6 @@
 #include "../PointerState.h"
 #include "../PostProcess.h"
 #include "../STDRenderDelegate.h"
-#include "../actor/DebugActor.h"
 #include "../actor/Stage.h"
 #include "../actor/TextField.h"
 #include "../res/CreateResourceContext.h"
@@ -811,9 +810,6 @@ namespace oxygine
             IVideoDriver::instance = 0;
 
             Input::instance.cleanup();
-
-
-            DebugActor::release();
 
             if (Stage::instance)
                 Stage::instance->cleanup();

@@ -2428,7 +2428,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="95"/>
+        <location filename="../main.cpp" line="91"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2488,82 +2488,82 @@
 <context>
     <name>RuleSelection</name>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="39"/>
+        <location filename="../objects/ruleselection.cpp" line="45"/>
         <source>Enviroment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="63"/>
+        <location filename="../objects/ruleselection.cpp" line="69"/>
         <source>Random Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="75"/>
+        <location filename="../objects/ruleselection.cpp" line="81"/>
         <source>Start Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="89"/>
+        <location filename="../objects/ruleselection.cpp" line="95"/>
         <source>Weather Forecast: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="101"/>
+        <location filename="../objects/ruleselection.cpp" line="110"/>
         <source>Gameplay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="107"/>
+        <location filename="../objects/ruleselection.cpp" line="116"/>
         <source>Unit Ranking System: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="119"/>
+        <location filename="../objects/ruleselection.cpp" line="128"/>
         <source>CO Bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="122"/>
+        <location filename="../objects/ruleselection.cpp" line="131"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="133"/>
+        <location filename="../objects/ruleselection.cpp" line="142"/>
         <source>No CO Powers: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="144"/>
+        <location filename="../objects/ruleselection.cpp" line="153"/>
         <source>AI Attack Terrain: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="155"/>
+        <location filename="../objects/ruleselection.cpp" line="164"/>
         <source>Fog Of War: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="158"/>
+        <location filename="../objects/ruleselection.cpp" line="167"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="158"/>
+        <location filename="../objects/ruleselection.cpp" line="167"/>
         <source>Fog of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="170"/>
+        <location filename="../objects/ruleselection.cpp" line="179"/>
         <source>Unit Limit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="183"/>
+        <location filename="../objects/ruleselection.cpp" line="192"/>
         <source>Round Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="196"/>
+        <location filename="../objects/ruleselection.cpp" line="208"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11129,7 +11129,17 @@ Units have 20% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_random.js" line="48"/>
         <source></source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_random.js" line="52"/>
+        <source></source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_random.js" line="56"/>
+        <source></source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_random.js" line="60"/>

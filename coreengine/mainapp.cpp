@@ -1,8 +1,5 @@
 #include "mainapp.h"
 
-#include "ox/oxygine.hpp"
-#include "ox/Stage.hpp"
-
 #include "network/NetworkInterface.h"
 #include "network/tcpclient.h"
 #include "network/tcpserver.h"

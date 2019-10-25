@@ -1,1 +1,0 @@
-#include "oxygine/core/ImageDataOperations.h"

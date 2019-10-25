@@ -12,7 +12,6 @@
 #include "oxygine/actor/ClipRectActor.h"
 #include "oxygine/Clock.h"
 #include "oxygine/actor/ColorRectSprite.h"
-#include "oxygine/actor/DebugActor.h"
 #include "oxygine/Draggable.h"
 #include "oxygine/Event.h"
 #include "oxygine/EventDispatcher.h"

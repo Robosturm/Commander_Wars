@@ -1,2 +1,0 @@
-include 'oxygine-extension'
-project(':oxygine-extension').projectDir = new File('../extension')

@@ -19,10 +19,6 @@
 #include "coreengine/scriptvariable.h"
 #include "coreengine/scriptvariables.h"
 
-#include "ox/oxygine.hpp"
-#include "ox/Stage.hpp"
-#include "ox/DebugActor.hpp"
-
 #include "menue/ingamemenue.h"
 #include "menue/victorymenue.h"
 

@@ -1,5 +1,4 @@
 #include "Button.h"
-#include "DebugActor.h"
 #include "Stage.h"
 #include "../res/ResAnim.h"
 #include "../res/Resources.h"
@@ -15,16 +14,13 @@ namespace oxygine
         _row = src._row;
     }
 
-    Button::Button(): _state(stateNormal), _resAnim(0), _row(0), _btnPressed(0), _btnOvered(0)
+    Button::Button(): _state(stateNormal), _resAnim(nullptr), _row(0), _btnPressed(0), _btnOvered(0)
     {
         EventCallback ncb = CLOSURE(this, &Button::_mouseEvent);
         addEventListener(TouchEvent::TOUCH_DOWN, ncb);
         addEventListener(TouchEvent::OVER, ncb);
         addEventListener(TouchEvent::OUTX, ncb);
         addEventListener(TouchEvent::CLICK, ncb);
-
-        if (DebugActor::resSystem)
-            setResAnim(DebugActor::resSystem->getResAnim("button"));
     }
 
     Button::~Button()

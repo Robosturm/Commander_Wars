@@ -34,12 +34,18 @@ void RuleSelection::showRuleSelection()
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
+    oxygine::Color headerColor(0, 255, 0, 255);
+    float headerScale = 1.5f;
+
     oxygine::spTextField textField = new oxygine::TextField();
+    style.color = headerColor;
     textField->setStyle(style);
+    style.color = oxygine::Color(255, 255, 255, 255);
+    textField->setScale(headerScale);
     textField->setHtmlText(tr("Enviroment").toStdString().c_str());
-    textField->setPosition(30, y);
+    textField->setPosition(30, y);    
     addChild(textField);
-    y += 40;
+    y += 40 * headerScale;
 
     qint32 textWidth = 300;
 
@@ -97,11 +103,14 @@ void RuleSelection::showRuleSelection()
 
     y = textField->getY() + 50;
     textField = new oxygine::TextField();
+    style.color = headerColor;
     textField->setStyle(style);
+    style.color = oxygine::Color(255, 255, 255, 255);
+    textField->setScale(headerScale);
     textField->setHtmlText(tr("Gameplay").toStdString().c_str());
     textField->setPosition(30, y);
     addChild(textField);
-    y += 40;
+    y += 40 * headerScale;
     textField = new oxygine::TextField();
     textField->setStyle(style);
     textField->setHtmlText(tr("Unit Ranking System: ").toStdString().c_str());
@@ -192,11 +201,14 @@ void RuleSelection::showRuleSelection()
 
     y += 50;
     textField = new oxygine::TextField();
+    style.color = headerColor;
     textField->setStyle(style);
+    style.color = oxygine::Color(255, 255, 255, 255);
+    textField->setScale(headerScale);
     textField->setHtmlText(tr("Victory Rules").toStdString().c_str());
     textField->setPosition(30, y);
     addChild(textField);
-    y += 40;
+    y += 40 * headerScale;
     for (qint32 i = 0; i < pGameRuleManager->getVictoryRuleCount(); i++)
     {
         QString ruleID = pGameRuleManager->getVictoryRuleID(i);
