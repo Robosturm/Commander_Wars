@@ -79,14 +79,14 @@ namespace oxygine
 
         QMutexLocker al(&_mutex);
 
-        OX_ASSERT(_restoring == false);
+        Q_ASSERT(_restoring == false);
         _cb = cb;
         _userData = user;
 
         _registered = true;
 
         restorable::iterator i = findRestorable(this);
-        OX_ASSERT(i == _restorable.end());
+        Q_ASSERT(i == _restorable.end());
         _restorable.push_back(this);
     }
 
@@ -96,9 +96,9 @@ namespace oxygine
             return;
 
         QMutexLocker al(&_mutex);
-        OX_ASSERT(_restoring == false);
+        Q_ASSERT(_restoring == false);
         restorable::iterator i = findRestorable(this);
-        //OX_ASSERT(i != _restorable.end());
+        //Q_ASSERT(i != _restorable.end());
         if (i != _restorable.end())
         {
             _restorable.erase(i);

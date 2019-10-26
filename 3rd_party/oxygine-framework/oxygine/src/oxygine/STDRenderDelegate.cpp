@@ -27,7 +27,7 @@ namespace oxygine
         spActor actor = parent->getFirstChild();
         while (actor.get() != nullptr)
         {
-            OX_ASSERT(actor->getParent());
+            Q_ASSERT(actor->getParent());
             actor->render(rs);
             actor = actor->getNextSibling().get();
         }

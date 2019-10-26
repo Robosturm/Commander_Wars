@@ -44,9 +44,6 @@ namespace oxygine
 
         RectF getDestRect() const override;
 
-
-        std::string dump(const dumpOptions& opt) const override;
-
 #if OXYGINE_SDL
         void associateWithWindow(SDL_Window* wnd);
         SDL_Window* getAssociatedWindow() const;

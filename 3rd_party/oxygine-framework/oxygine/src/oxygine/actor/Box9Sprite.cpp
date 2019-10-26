@@ -2,7 +2,6 @@
 #include "../RenderState.h"
 #include "../STDRenderDelegate.h"
 #include "../STDRenderer.h"
-#include "../Serialize.h"
 #include "../math/ScalarMath.h"
 #include "../res/ResAnim.h"
 #include "../res/Resources.h"
@@ -272,25 +271,6 @@ namespace oxygine
         return "";
     }
 
-    std::string Box9Sprite::dump(const dumpOptions& options) const
-    {
-        std::stringstream stream;
-        stream << "{Box9Sprite}\n";
-        stream << "guideX1=" << _guideX[0] << " ";
-        stream << "guideX2=" << _guideX[1] << " ";
-        stream << "guideY1=" << _guideY[0] << " ";
-        stream << "guideY2=" << _guideY[1] << " ";
-
-        stream << "vert=" << stretchMode2String(_vertMode) << " ";
-        stream << "hor=" << stretchMode2String(_horzMode) << " ";
-
-        stream << "\n";
-
-
-        stream << inherited::dump(options);
-        return stream.str();
-    }
-
     void Box9Sprite::sizeChanged(const Vector2& size)
     {
         _prepared = false;
@@ -348,21 +328,5 @@ namespace oxygine
                 }
             }
         }
-    }
-
-    void Box9Sprite::serialize(serializedata* data)
-    {
-        inherited::serialize(data);
-        setAttrV2(data->node, "size", getSize(), Vector2(0, 0));
-        data->node.set_name("Box9Sprite");
-    }
-
-    Vector2 attr2Vector2(const char* data);
-
-    void Box9Sprite::deserialize(const deserializedata* data)
-    {
-        inherited::deserialize(data);
-
-        setSize(attr2Vector2(data->node.attribute("size").as_string()));
     }
 }

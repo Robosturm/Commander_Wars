@@ -1,5 +1,4 @@
 #include "oxgl.h"
-#include "../ox_debug.h"
 #include <stdlib.h>
 
 #ifdef _WIN32
@@ -261,7 +260,7 @@ namespace oxygine
         int gl_error = glGetError();
         if (gl_error != GL_NO_ERROR)
         {
-            logs::error("OpenGL error: %#x\n", gl_error);
+            qCritical("OpenGL error: %#x\n", gl_error);
             if (gl_error == GL_OUT_OF_MEMORY)
             {
                 exit(0);

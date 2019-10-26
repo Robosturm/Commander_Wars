@@ -227,7 +227,7 @@ namespace oxygine
 
     void printVec(const char* str, const Vector2& v)
     {
-        logs::messageln("%s: %.2f, %.2f", str, v.x, v.y);
+        qDebug("%s: %.2f, %.2f", str, v.x, v.y);
     }
 
 

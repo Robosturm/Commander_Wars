@@ -92,7 +92,7 @@ namespace oxygine
 
     void ResAnim::_unload()
     {
-        //OX_ASSERT(!"can't unload resanim");
+        //Q_ASSERT(!"can't unload resanim");
     }
 
     std::string ResAnim::getResPath() const
@@ -138,7 +138,7 @@ namespace oxygine
 
     const AnimationFrame&   ResAnim::getFrame(int index) const
     {
-        OX_ASSERT(index < (int)_frames.size());
+        Q_ASSERT(index < (int)_frames.size());
         if (index < (int)_frames.size())
             return _frames[index];
         return emptyFrame;
@@ -147,14 +147,14 @@ namespace oxygine
     void ResAnim::setFrame(int col, int row, const AnimationFrame& frame)
     {
         int i = row * _columns + col;
-        OX_ASSERT(i < (int)_frames.size());
+        Q_ASSERT(i < (int)_frames.size());
         if (i < (int)_frames.size())
             _frames[i] = frame;
     }
 
     const Vector2&  ResAnim::getSize() const
     {
-        OX_ASSERT(!_frames.empty());
+        Q_ASSERT(!_frames.empty());
         return _frames[0].getSize();
     }
     float   ResAnim::getWidth() const

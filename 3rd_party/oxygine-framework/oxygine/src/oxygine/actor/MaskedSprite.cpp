@@ -2,7 +2,6 @@
 #include "../MaskedRenderer.h"
 #include "../RenderDelegate.h"
 #include "../RenderState.h"
-#include "../Serialize.h"
 
 namespace oxygine
 {
@@ -41,27 +40,5 @@ namespace oxygine
     void MaskedSprite::render(const RenderState& parentRS)
     {
         _rdelegate->render(this, parentRS);
-    }
-
-
-    void MaskedSprite::serialize(serializedata* data)
-    {
-        inherited::serialize(data);
-        data->node.set_name("MaskedSprite");
-    }
-
-    void MaskedSprite::deserialize(const deserializedata* data)
-    {
-        inherited::deserialize(data);
-    }
-
-    void MaskedSprite::deserializeLink(const deserializeLinkData* data)
-    {
-        const char* id = data->node.attribute("mask").as_string(0);
-        if (!id)
-            return;
-
-        spSprite mask = data->root->getDescendantT<Sprite>(id, ep_ignore_error);
-        setMask(mask);
     }
 }

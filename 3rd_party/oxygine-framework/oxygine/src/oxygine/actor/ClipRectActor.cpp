@@ -2,8 +2,6 @@
 #include "Stage.h"
 #include "../RenderDelegate.h"
 #include "../RenderState.h"
-#include "../Serialize.h"
-#include "../core/log.h"
 #include "../core/oxygine.h"
 
 namespace oxygine
@@ -40,17 +38,5 @@ namespace oxygine
     void ClipRectActor::render(const RenderState& parentRS)
     {
         _rdelegate->render(this, parentRS);
-    }
-
-    void ClipRectActor::serialize(serializedata* data)
-    {
-        inherited::serialize(data);
-        pugi::xml_node node = data->node;
-        node.set_name("ClipRectActor");
-    }
-
-    void ClipRectActor::deserialize(const deserializedata* data)
-    {
-        inherited::deserialize(data);
     }
 }

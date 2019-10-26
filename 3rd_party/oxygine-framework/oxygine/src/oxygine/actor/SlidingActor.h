@@ -46,9 +46,6 @@ namespace oxygine
         /**stop if sliding*/
         void stop();
 
-        void serialize(serializedata* data) override;
-        void deserialize(const deserializedata* data) override;
-
     protected:
         void destroy();
 

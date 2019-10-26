@@ -69,7 +69,7 @@ namespace oxygine
     void Clock::resume()
     {
         _counter -= 1;
-        //OX_ASSERT(_counter >= 0);
+        //Q_ASSERT(_counter >= 0);
     }
     void Clock::resetPause()
     {
@@ -98,7 +98,7 @@ namespace oxygine
         if (_counter > 0)
             dt = 0;//todo destTime == srcTime ??
 
-        //logs::messageln("dt: %x %d", this, dt);
+        //qDebug("dt: %x %d", this, dt);
         _destTime += dt;
 
         _lastUpdateTime = time;
@@ -119,7 +119,7 @@ namespace oxygine
         if (_fixedStep == 0)
         {
             timeMS dt = (timeMS)(_destTime - _srcTime);
-            //OX_ASSERT(dt <= 100);
+            //Q_ASSERT(dt <= 100);
             _srcTime = _destTime;
             return dt;
         }
@@ -137,21 +137,6 @@ namespace oxygine
     {
         return _counter;
     }
-
-    std::string Clock::dump() const
-    {
-        std::stringstream stream;
-        stream << "clock={time=" << getTime() << "ms";
-        if (_counter)
-            stream << "paused=" << _counter;
-        if (_multiplier != 1.0f)
-            stream << ", multiplier=" << _multiplier;
-        if (_fixedStep)
-            stream << ", fixed_step=" << _fixedStep;
-        stream << "}";
-        return stream.str();
-    }
-
 
     timeMS getTimeMS()
     {

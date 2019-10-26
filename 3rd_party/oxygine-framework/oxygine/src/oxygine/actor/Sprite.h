@@ -54,11 +54,7 @@ namespace oxygine
         bool getInvertFlipX() const;
         void setInvertFlipX(bool value);
 
-        void serialize(serializedata* data) override;
-        void deserialize(const deserializedata* data) override;
-
         typedef oxygine::TweenAnim TweenAnim;
-        std::string dump(const dumpOptions&) const override;
 
         void doRender(const RenderState&) override;
 

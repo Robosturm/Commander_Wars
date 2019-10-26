@@ -55,7 +55,7 @@ namespace oxygine
 
     spTween TweenQueue::add(spTween t)
     {
-        OX_ASSERT(t);
+        Q_ASSERT(t);
         if (!t)
             return 0;
 

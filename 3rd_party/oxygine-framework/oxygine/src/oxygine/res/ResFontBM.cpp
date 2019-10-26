@@ -136,7 +136,7 @@ namespace oxygine
 
     void ResFontBM::_load(LoadResourcesContext* load_context)
     {
-        OX_ASSERT(!_pages.empty());
+        Q_ASSERT(!_pages.empty());
         if (_pages.empty())
             return;
 
@@ -626,7 +626,7 @@ namespace oxygine
 
     void ResFontBM::_unload()
     {
-        OX_ASSERT(!_pages.empty());
+        Q_ASSERT(!_pages.empty());
         for (pages::iterator i = _pages.begin(); i != _pages.end(); ++i)
         {
             const page& p = *i;

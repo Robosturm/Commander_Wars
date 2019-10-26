@@ -36,11 +36,6 @@ namespace oxygine
         void setProgress(float value);
         void setDirection(direction dir);
 
-        std::string dump(const dumpOptions&) const override;
-
-        void serialize(serializedata* data) override;
-        void deserialize(const deserializedata* data) override;
-
         typedef Property<float, float, ProgressBar, &ProgressBar::getProgress, &ProgressBar::setProgress> TweenProgress;
 
     private:

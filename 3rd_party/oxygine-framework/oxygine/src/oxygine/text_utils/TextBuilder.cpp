@@ -58,7 +58,7 @@ namespace oxygine
             pugi::xml_parse_result res = doc.load_buffer(str.c_str(), str.size(), flags);
             if (!res)
             {
-                OX_ASSERT(!"can't parse tagged text");
+                Q_ASSERT(!"can't parse tagged text");
             }
 
             return create(doc.first_child());

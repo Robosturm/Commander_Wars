@@ -98,7 +98,7 @@ namespace oxygine
 #ifndef   EMSCRIPTEN
         if (!gles)
         {
-            //logs::messageln("not gles version");
+            //qDebug("not gles version");
 
             static const char nonGLES[] =
                 "#define lowp\n"
@@ -142,16 +142,16 @@ namespace oxygine
 
         if (success)
         {
-            logs::messageln("compiled shader: %s", log.c_str());
+            qDebug("compiled shader: %s", log.c_str());
         }
         else
         {
             handleErrorPolicy(ep, "can't compile shader: %s", log.c_str());
 
-            logs::messageln("shader source code:");
+            qDebug("shader source code:");
             for (int i = 0; i < num; ++i)
-                logs::messageln(sources[i]);
-            logs::messageln(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                qDebug(sources[i]);
+            qDebug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
         }
 
@@ -178,7 +178,7 @@ namespace oxygine
 
         if (success)
         {
-            //logs::messageln("compiled shader: %s", log.c_str());
+            //qDebug("compiled shader: %s", log.c_str());
             oxglDetachShader(p, vs);
             oxglDetachShader(p, fs);
             if (deleteAttachedShaders)
@@ -189,7 +189,7 @@ namespace oxygine
         }
         else
         {
-            logs::error("can't link gl program: %s", log.c_str());
+            qCritical("can't link gl program: %s", log.c_str());
             oxglDeleteProgram(p);
             p = 0;
         }

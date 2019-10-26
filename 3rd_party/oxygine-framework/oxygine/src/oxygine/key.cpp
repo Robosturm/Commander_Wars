@@ -22,7 +22,7 @@ namespace oxygine
         void release()
         {
             _counter--;
-            OX_ASSERT(_counter >= 0);
+            Q_ASSERT(_counter >= 0);
         }
 
         void update()
@@ -39,14 +39,14 @@ namespace oxygine
 
         bool wasPressed(keycode key)
         {
-            OX_ASSERT(_counter);
+            Q_ASSERT(_counter);
             const Uint8* data = SDL_GetKeyboardState(0);
             return data[key] && !_keys[key];
         }
 
         bool wasReleased(keycode key)
         {
-            OX_ASSERT(_counter);
+            Q_ASSERT(_counter);
             const Uint8* data = SDL_GetKeyboardState(0);
             return !data[key] && _keys[key];
         }

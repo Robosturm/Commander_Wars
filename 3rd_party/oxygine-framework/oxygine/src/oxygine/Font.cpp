@@ -65,7 +65,7 @@ namespace oxygine
         {
             fn->_glyphs.insert(gl);
             g = findGlyph(code, opt);
-            OX_ASSERT(g);
+            Q_ASSERT(g);
         }
 
         return g;

@@ -4,7 +4,7 @@
 
 #include "../oxygine-include.h"
 //#include "ref_counter.h"
-#include "ox_debug.h"
+#include "QtGlobal"
 
 namespace oxygine
 {
@@ -45,13 +45,13 @@ namespace oxygine
 
         T& operator*() const
         {
-            OX_ASSERT(_ptr && _ptr->_ref_counter > 0);
+            Q_ASSERT(_ptr && _ptr->_ref_counter > 0);
             return *_ptr;
         }
 
         T* operator->() const
         {
-            OX_ASSERT(_ptr && _ptr->_ref_counter > 0);
+            Q_ASSERT(_ptr && _ptr->_ref_counter > 0);
             return _ptr;
         }
 

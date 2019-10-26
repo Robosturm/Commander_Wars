@@ -4,8 +4,6 @@
 #include "oxgl.h"
 #include "../../math/Color.h"
 #include "../../utils/stringUtils.h"
-#include "../log.h"
-#include "../system_data.h"
 #include "../vertex.h"
 
 #if OXYGINE_SDL
@@ -93,8 +91,8 @@ namespace oxygine
 
     void VideoDriverGLES20::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl_, const void* vdata, unsigned int verticesDataSize)
     {
-        OX_ASSERT(verticesDataSize > 0);
-        OX_ASSERT((verticesDataSize % decl_->size) == 0);
+        Q_ASSERT(verticesDataSize > 0);
+        Q_ASSERT((verticesDataSize % decl_->size) == 0);
 
         const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(decl_);
 
@@ -126,8 +124,8 @@ namespace oxygine
 
     void VideoDriverGLES20::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl_, const void* vdata, unsigned int verticesDataSize, const unsigned short* indicesData, unsigned int numIndices)
     {
-        OX_ASSERT(verticesDataSize > 0);
-        OX_ASSERT((verticesDataSize % decl_->size) == 0);
+        Q_ASSERT(verticesDataSize > 0);
+        Q_ASSERT((verticesDataSize % decl_->size) == 0);
         const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(decl_);
 
         const unsigned char* verticesData = (const unsigned char*)vdata;

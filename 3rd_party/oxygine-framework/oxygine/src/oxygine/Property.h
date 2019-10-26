@@ -44,7 +44,7 @@ namespace oxygine
 
         void update(type& t, float p, const UpdateState& us)
         {
-            OX_ASSERT(_initialized);
+            Q_ASSERT(_initialized);
             value v = lerp(_src, _dest, p);
             set(t, v);
         }

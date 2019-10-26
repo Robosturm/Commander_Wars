@@ -1,6 +1,5 @@
 #include "Image.h"
 #include "core/ImageDataOperations.h"
-#include "core/log.h"
 #include "math/Rect.h"
 #include <stdint.h>
 
@@ -77,7 +76,7 @@ namespace oxygine
         else
         {
 
-            logs::warning("Image. can't unpack data unknown file format");
+            qWarning("Image. can't unpack data unknown file format");
 
             init(16, 16, ImageData::TF_R8G8B8A8);
             fillZero();
@@ -127,10 +126,10 @@ namespace oxygine
         if (pRect)
         {
             rect = *pRect;
-            OX_ASSERT(rect.getX() >= 0);
-            OX_ASSERT(rect.getY() >= 0);
-            OX_ASSERT(rect.getX() + rect.getWidth() <= _image.w);
-            OX_ASSERT(rect.getY() + rect.getHeight() <= _image.h);
+            Q_ASSERT(rect.getX() >= 0);
+            Q_ASSERT(rect.getY() >= 0);
+            Q_ASSERT(rect.getX() + rect.getWidth() <= _image.w);
+            Q_ASSERT(rect.getY() + rect.getHeight() <= _image.h);
         }
 
         ImageData im = _image;
@@ -169,7 +168,7 @@ namespace oxygine
 
     void Image::toPOT(Image& dest)
     {
-        OX_ASSERT(this != &dest);
+        Q_ASSERT(this != &dest);
         dest.init(nextPOT(_image.w), nextPOT(_image.h), _image.format);
         dest.fillZero();
         dest.updateRegion(0, 0, _image);

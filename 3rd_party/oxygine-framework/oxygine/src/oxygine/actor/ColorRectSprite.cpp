@@ -2,7 +2,6 @@
 #include "../MaterialCache.h"
 #include "../RenderDelegate.h"
 #include "../RenderState.h"
-#include "../Serialize.h"
 #include "../utils/stringUtils.h"
 
 namespace oxygine
@@ -33,19 +32,5 @@ namespace oxygine
     void ColorRectSprite::sizeChanged(const Vector2& size)
     {
         Actor::sizeChanged(size);
-    }
-
-    void ColorRectSprite::serialize(serializedata* data)
-    {
-        VStyleActor::serialize(data);
-        pugi::xml_node node = data->node;
-        //node.append_attribute("")
-        node.set_name("ColorRectSprite");
-        //node.append_attribute("color").set_value(color2hex(_color));
-    }
-
-    void ColorRectSprite::deserialize(const deserializedata* data)
-    {
-        VStyleActor::deserialize(data);
     }
 }

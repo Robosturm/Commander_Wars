@@ -1,29 +1,11 @@
 #include "NativeTexture.h"
 #include "ImageDataOperations.h"
-#include "log.h"
 #include "../Image.h"
 #include <stdio.h>
 
 namespace oxygine
 {
     volatile int NativeTexture::created = 0;
-
-    void NativeTexture::dumpCreatedTextures()
-    {
-        logs::messageln("created native textures dump:");
-        std::vector<spNativeTexture> t = getCreatedTextures();
-
-        int n = 0;
-        for (std::vector<spNativeTexture>::iterator i = t.begin(); i != t.end(); ++i)
-        {
-            spNativeTexture nt = *i;
-
-            logs::message("%d)", n);
-            ++n;
-            nt->dumpObject();
-        }
-        logs::messageln("----");
-    }
 
     std::vector<spNativeTexture> NativeTexture::getCreatedTextures()
     {

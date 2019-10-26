@@ -75,6 +75,4 @@ namespace oxygine
 
         TextStyle withOptions(size_t opt) const { TextStyle st = *this; st.options = opt; return st; }
     };
-
-    std::string dumpStyle(const TextStyle& s, bool onlydiff);
 }

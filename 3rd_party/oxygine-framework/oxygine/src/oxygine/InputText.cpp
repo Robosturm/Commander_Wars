@@ -76,7 +76,7 @@ namespace oxygine
         _cursor->detach();
         _active = 0;
         _textActor = 0;
-        //logs::messageln("InputText::stop  %x", this);
+        //qDebug("InputText::stop  %x", this);
         releaseRef();
     }
 
@@ -177,7 +177,7 @@ namespace oxygine
                 }
 
                 SDL_TextInputEvent& te = event->text;
-                //logs::messageln("text: %d %d %d %d", (int)(te.text[0]), (int)(te.text[1]), (int)(te.text[2]), (int)(te.text[3]));
+                //qDebug("text: %d %d %d %d", (int)(te.text[0]), (int)(te.text[1]), (int)(te.text[2]), (int)(te.text[3]));
 
                 int newCode = 0;
                 getNextCode(newCode, te.text);
@@ -206,7 +206,7 @@ namespace oxygine
             break;
             case SDL_KEYDOWN:
             {
-                //logs::messageln("SDL_KEYDOWN");
+                //qDebug("SDL_KEYDOWN");
                 switch (event->key.keysym.sym)
                 {
                     case SDLK_BACKSPACE:

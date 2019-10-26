@@ -108,7 +108,7 @@ namespace oxygine
 #ifdef OX_DEBUG
             if (!_rootMeta.empty())
             {
-                //OX_ASSERT(!strcmp(_last.name(), _lastMeta.name()));
+                //Q_ASSERT(!strcmp(_last.name(), _lastMeta.name()));
             }
 #endif
 

@@ -35,7 +35,7 @@ namespace oxygine
             default:
                 break;
         }
-        OX_ASSERT(!"unknown primitive type");
+        Q_ASSERT(!"unknown primitive type");
         return PT_POINTS;
     }
 
@@ -64,7 +64,7 @@ namespace oxygine
             case BT_ONE_MINUS_DST_COLOR:
                 return GL_ONE_MINUS_DST_COLOR;
         }
-        OX_ASSERT(!"unknown blend");
+        Q_ASSERT(!"unknown blend");
         return GL_ONE;
     }
 
@@ -97,7 +97,7 @@ namespace oxygine
         glGetIntegerv(GL_VIEWPORT, vp);
 
         r = Rect(vp[0], vp[1], vp[2], vp[3]);;
-        //logs::messageln("vp %d %d %d %d", vp[0], vp[1], vp[2], vp[3]);
+        //qDebug("vp %d %d %d %d", vp[0], vp[1], vp[2], vp[3]);
         CHECKGL();
     }
 
@@ -133,7 +133,7 @@ namespace oxygine
 
     void VideoDriverGL::_begin(const Rect& viewport, const Color* clearColor)
     {
-        //  logs::messageln("begin %d %d %d %d", viewport.pos.x, viewport.pos.y, viewport.size.x, viewport.size.y);
+        //  qDebug("begin %d %d %d %d", viewport.pos.x, viewport.pos.y, viewport.size.x, viewport.size.y);
         glViewport(viewport.getX(), viewport.getY(), viewport.getWidth(), viewport.getHeight());
         glDisable(GL_SCISSOR_TEST);
         if (clearColor)
@@ -182,7 +182,7 @@ namespace oxygine
                 }
                 break;
             default:
-                OX_ASSERT(!"unknown state");
+                Q_ASSERT(!"unknown state");
         }
         CHECKGL();
     }
@@ -275,7 +275,7 @@ namespace oxygine
                 return &decl;
         }
 
-        OX_ASSERT(0);
+        Q_ASSERT(0);
         return 0;
     }
     */

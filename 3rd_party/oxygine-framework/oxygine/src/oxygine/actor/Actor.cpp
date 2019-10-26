@@ -13,7 +13,6 @@
 #include "../utils/stringUtils.h"
 #include "../RenderState.h"
 #include <stdio.h>
-#include "../Serialize.h"
 #include "../RenderDelegate.h"
 #include "../math/OBBox.h"
 
@@ -34,9 +33,9 @@ namespace oxygine
         _scale(1, 1),
         _rotation(0),
         _flags(flag_visible | flag_touchEnabled | flag_touchChildrenEnabled | flag_fastTransform),
-        _parent(0),
+        _parent(nullptr),
         _alpha(255),
-        _stage(0),
+        _stage(nullptr),
         _rdelegate(STDRenderDelegate::instance)
     {
         _transform.identity();
@@ -46,7 +45,7 @@ namespace oxygine
 
     void Actor::copyFrom(const Actor& src, cloneOptions opt)
     {
-        _stage = 0;
+        _stage = nullptr;
 
         _pos = src._pos;
         _extendedIsOn = src._extendedIsOn;
@@ -56,7 +55,7 @@ namespace oxygine
         _scale = src._scale;
         _rotation = src._rotation;
         _flags = src._flags;
-        _parent = 0;
+        _parent = nullptr;
         _alpha = src._alpha;
 
         _pressedOvered = 0;
@@ -101,7 +100,7 @@ namespace oxygine
 
     void Actor::added2stage(Stage* stage)
     {
-        OX_ASSERT(_stage == 0);
+        Q_ASSERT(_stage == nullptr);
         _stage = stage;
 
         spActor actor = _children._first;
@@ -117,7 +116,7 @@ namespace oxygine
 
     void Actor::removedFromStage()
     {
-        OX_ASSERT(_stage);
+        Q_ASSERT(_stage);
 
         onRemovedFromStage();
         _stage->removeEventListeners(this);
@@ -202,102 +201,6 @@ namespace oxygine
         }
 
         return t;
-    }
-
-    std::string Actor::dump(const dumpOptions& opt) const
-    {
-        std::stringstream stream;
-        stream << "{" << typeid(*this).name() << "}";
-        //stream << this;
-        if (__name.size())
-        {
-            stream << " name='" << div(__name, Color::Red) << "'";
-        }
-
-        stream << " id='" << getObjectID() << "'";
-        stream << "\n";
-
-        if (getUserData())
-            stream << " userData=" << (size_t)getUserData();
-
-        if (!getVisible())
-            stream << " invisible";
-
-        if (!getTouchEnabled())
-            stream << " touchEnabled=false";
-
-        if (!getTouchChildrenEnabled())
-            stream << " touchChildrenEnabled=false";
-
-        if (_flags & flag_actorHasBounds)
-            stream << " flag_actorHasBounds";
-
-        if (_flags & flag_clickableWithZeroAlpha)
-            stream << " flag_clickableWithZeroAlpha";
-
-        if (_flags & flag_cull)
-            stream << " flag_cull";
-
-        if (_flags & flag_anchorInPixels)
-            stream << " flag_anchorInPixels";
-
-        if (getAlpha() != 255)
-            stream << " alpha=" << (int)getAlpha();
-
-        if (getWidth() || getHeight())
-            stream << " size=(" << getWidth() << "," << getHeight() << ")";
-
-        if (getPriority())
-            stream << " priority=" << getPriority();
-
-        if (_extendedIsOn)
-            stream << " extendedClickArea=" << (int)_extendedIsOn;
-
-        if (getX() != 0.0f || getY() != 0.0f)
-            stream << " pos=(" << getX() << "," << getY() << ")";
-
-        if (getScaleX() != 1.0f || getScaleY() != 1.0f)
-            stream << " scale=(" << getScaleX() << "," << getScaleY() << ")";
-
-        if (getAnchor().x || getAnchor().y)
-            stream << " anchor=(" << getAnchor().x << "," << getAnchor().y << ")";
-
-        if (getRotation() != 0.0f)
-            stream << " rot=" << getRotation() / MATH_PI * 360.0f << "";
-
-        int tweensCount = 0;
-        spTween t = _tweens._first;
-        while (t)
-        {
-            t = t->getNextSibling();
-            tweensCount++;
-        }
-
-        if (tweensCount)
-            stream << " tweens=" << tweensCount << "";
-
-        if (getListenersCount())
-            stream << " listeners=" << (int)getListenersCount() << "";
-
-
-
-
-        /*
-        int handlersCount = 0;
-        spEventHandler eh = _eventHandlers._first;
-        while (eh)
-        {
-            eh = eh->getNextSibling();
-            handlersCount++;
-        }
-        if (handlersCount)
-            stream << " handlers=" << handlersCount << "";
-        */
-
-        if (getClock())
-            stream << " " << getClock()->dump();
-
-        return stream.str();
     }
 
     pointer_index Actor::getPressed(MouseButton b) const
@@ -455,12 +358,10 @@ namespace oxygine
             originalLocalScale = me->__localScale;
             me->localPosition = parent2local(originalLocalPos);
             me->__localScale *= _transform.a;
-#ifdef OX_HAS_CPP11
             if (me->__localScale == NAN)
             {
-                OX_ASSERT(0);
+                Q_ASSERT(0);
             }
-#endif
         }
 
         event->phase = Event::phase_capturing;
@@ -866,7 +767,7 @@ namespace oxygine
             child = child->getNextSibling().get();
         }
 
-        return 0;
+        return nullptr;
     }
 
     spActor  Actor::getChild(const std::string& name, error_policy ep) const
@@ -881,7 +782,7 @@ namespace oxygine
 
         handleErrorPolicy(ep, "can't find child: %s", name.c_str());
 
-        return 0;
+        return nullptr;
     }
 
     void Actor::setParent(Actor* actor, Actor* parent)
@@ -898,9 +799,9 @@ namespace oxygine
 
     void Actor::insertSiblingBefore(spActor actor)
     {
-        OX_ASSERT(actor != this);
-        OX_ASSERT(actor);
-        OX_ASSERT(_parent);
+        Q_ASSERT(actor != this);
+        Q_ASSERT(actor);
+        Q_ASSERT(_parent);
         if (!_parent)
             return;
         actor->detach();
@@ -911,9 +812,9 @@ namespace oxygine
 
     void Actor::insertSiblingAfter(spActor actor)
     {
-        OX_ASSERT(actor != this);
-        OX_ASSERT(actor);
-        OX_ASSERT(_parent);
+        Q_ASSERT(actor != this);
+        Q_ASSERT(actor);
+        Q_ASSERT(_parent);
         if (!_parent)
             return;
         actor->detach();
@@ -924,14 +825,14 @@ namespace oxygine
 
     void Actor::attachTo(spActor parent)
     {
-        OX_ASSERT(parent != this);
+        Q_ASSERT(parent != this);
         attachTo(parent.get());
     }
 
     void Actor::attachTo(Actor* parent)
     {
-        OX_ASSERT(parent != this);
-        OX_ASSERT(parent);
+        Q_ASSERT(parent != this);
+        Q_ASSERT(parent);
         if (!parent)
             return;
         parent->addChild(this);
@@ -939,11 +840,11 @@ namespace oxygine
 
     void Actor::addChild(Actor* actor)
     {
-        OX_ASSERT(actor);
+        Q_ASSERT(actor);
         if (!actor)
             return;
 
-        OX_ASSERT(actor != this);
+        Q_ASSERT(actor != this);
 
         actor->detach();
 
@@ -996,10 +897,10 @@ namespace oxygine
 
     void Actor::removeChild(spActor actor)
     {
-        OX_ASSERT(actor);
+        Q_ASSERT(actor);
         if (actor)
         {
-            OX_ASSERT(actor->_parent == this);
+            Q_ASSERT(actor->_parent == this);
             if (actor->_parent == this)
             {
                 setParent(actor.get(), nullptr);
@@ -1058,7 +959,7 @@ namespace oxygine
                 actor->update(us);
             if (!next)
             {
-                //OX_ASSERT(actor == _children._last);
+                //Q_ASSERT(actor == _children._last);
             }
             actor = next;
         }
@@ -1216,9 +1117,9 @@ namespace oxygine
 
     spTween Actor::_addTween(spTween tween, bool rel)
     {
-        OX_ASSERT(tween);
+        Q_ASSERT(tween);
         if (!tween)
-            return 0;
+            return nullptr;
 
         tween->start(*this);
         _tweens.append(tween);
@@ -1248,18 +1149,18 @@ namespace oxygine
         }
 
         handleErrorPolicy(ep, "can't find tween: %s", name.c_str());
-        return 0;
+        return nullptr;
     }
 
     void Actor::removeTween(spTween v)
     {
-        OX_ASSERT(v);
+        Q_ASSERT(v);
         if (!v)
             return;
 
         if (v->getParentList() == &_tweens)
         {
-            v->setClient(0);
+            v->setClient(nullptr);
             _tweens.remove(v);
         }
     }
@@ -1296,119 +1197,11 @@ namespace oxygine
 
 
 
-
-    void Actor::serialize(serializedata* data)
-    {
-        //node.set_name("actor");
-        pugi::xml_node node = data->node;
-
-        node.append_attribute("name").set_value(getName().c_str());
-        setAttrV2(node, "pos", getPosition(), Vector2(0, 0));
-        setAttrV2(node, "scale", getScale(), Vector2(1, 1));
-        setAttrV2(node, "size", getSize(), Vector2(0, 0));
-        setAttr(node, "rotation", getRotation(), 0.0f);
-        setAttr(node, "visible", getVisible(), true);
-        setAttr(node, "input", getTouchEnabled(), true);
-        setAttr(node, "inputch", getTouchChildrenEnabled(), true);
-        setAttr(node, "alpha", getAlpha(), (unsigned char)255);
-        setAttrV2(node, "anchor", getAnchor(), Vector2(0, 0));
-
-        if (data->withChildren)
-        {
-            spActor child = getFirstChild();
-            while (child)
-            {
-                serializedata d = *data;
-                d.node = node.append_child("-");
-                child->serialize(&d);
-                child = child->getNextSibling();
-            }
-        }
-
-        node.set_name("Actor");
-    }
-
     Vector2 attr2Vector2(const char* data)
     {
         Vector2 v;
         sscanf(data, "%f,%f", &v.x, &v.y);
         return v;
-    }
-
-    void Actor::deserialize(const deserializedata* data)
-    {
-        pugi::xml_node node = data->node;
-        pugi::xml_attribute attr = node.first_attribute();
-        while (attr)
-        {
-            const char* name = attr.name();
-
-            do
-            {
-                if (!strcmp(name, "name"))
-                {
-                    setName(attr.as_string());
-                    break;
-                }
-                if (!strcmp(name, "pos"))
-                {
-                    setPosition(attr2Vector2(attr.as_string()));
-                    break;
-                }
-                if (!strcmp(name, "anchor"))
-                {
-                    setAnchor(attr2Vector2(attr.as_string()));
-                    break;
-                }
-                if (!strcmp(name, "scale"))
-                {
-                    setScale(attr2Vector2(attr.as_string()));
-                    break;
-                }
-                if (!strcmp(name, "size"))
-                {
-                    setSize(attr2Vector2(attr.as_string()));
-                    break;
-                }
-                if (!strcmp(name, "rotation"))
-                {
-                    setRotation(attr.as_float());
-                    break;
-                }
-                if (!strcmp(name, "visible"))
-                {
-                    setVisible(attr.as_bool());
-                    break;
-                }
-                if (!strcmp(name, "input"))
-                {
-                    setTouchEnabled(attr.as_bool());
-                    break;
-                }
-                if (!strcmp(name, "inputch"))
-                {
-                    setTouchChildrenEnabled(attr.as_bool());
-                    break;
-                }
-                if (!strcmp(name, "alpha"))
-                {
-                    setAlpha(static_cast<unsigned char>(attr.as_int()));
-                    break;
-                }
-            }
-            while (0);
-
-
-            attr = attr.next_attribute();
-        }
-
-        pugi::xml_node item = node.first_child();
-        while (!item.empty())
-        {
-            spActor actor = deserializedata::deser(item, data->factory);
-            addChild(actor);
-            item = item.next_sibling();
-        }
     }
 
     Vector2 convert_global2local_(const Actor* child, const Actor* parent, Vector2 pos)

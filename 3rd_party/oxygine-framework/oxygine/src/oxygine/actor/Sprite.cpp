@@ -3,7 +3,6 @@
 #include "../MaterialCache.h"
 #include "../RenderDelegate.h"
 #include "../RenderState.h"
-#include "../Serialize.h"
 #include "../core/UberShaderProgram.h"
 #include "../res/ResAnim.h"
 #include "../utils/stringUtils.h"
@@ -49,27 +48,6 @@ namespace oxygine
         _flags &= ~flag_manageResAnim;
         if (manage)
             _flags |= flag_manageResAnim;
-    }
-
-    std::string Sprite::dump(const dumpOptions& options) const
-    {
-        std::stringstream stream;
-        stream << "{Sprite}\n";
-        stream << _vstyle.dump() << " ";
-        std::string tname = "null";
-        if (_frame.getDiffuse().base)
-            tname = _frame.getDiffuse().base->getName();
-        stream << "texture='" << tname << "' ";
-        //if (_frame.getResAnim())
-        //    stream << "resanim='" << _frame.getResAnim()->getName() << "' ";
-        if (_flags & flag_manageResAnim)
-            stream << "manageResAnim=true";
-
-        if (_localScale != Vector2(1.0f, 1.0f))
-            stream << " localScale=(" << _localScale.x << "," << _localScale.y << ")";
-
-        stream << Actor::dump(options);
-        return stream.str();
     }
 
     void Sprite::setAnimFrame(const AnimationFrame& f)
@@ -218,7 +196,7 @@ namespace oxygine
 
     void Sprite::setAnimFrame(const ResAnim* resanim, int col, int row)
     {
-        //OX_ASSERT(resanim);
+        //Q_ASSERT(resanim);
         if (!resanim)
         {
             changeAnimFrame(AnimationFrame());
@@ -339,80 +317,5 @@ namespace oxygine
     void Sprite::doRender(const RenderState& rs)
     {
         _rdelegate->doRender(this, rs);
-    }
-
-    void Sprite::serialize(serializedata* data)
-    {
-        inherited::serialize(data);
-
-        pugi::xml_node node = data->node;
-
-        const ResAnim* rs = getResAnim();
-        if (rs)
-        {
-            node.remove_attribute("size");
-
-            Resource* r = rs->getParent();
-            const char* hint = "";
-            if (r)
-            {
-                r = r->getParent();
-                if (r)
-                    hint = r->getName().c_str();
-            }
-
-            if (rs->getName().find(':') == std::string::npos)
-            {
-                char name[255];
-                safe_sprintf(name, "%s:%s", hint, rs->getName().c_str());
-                node.append_attribute("resanim").set_value(name);
-            }
-            else
-            {
-                node.append_attribute("resanim").set_value(rs->getName().c_str());
-            }
-
-            if (_frame.getColumn() != 0)
-                node.append_attribute("column").set_value(_frame.getColumn());
-            if (_frame.getRow() != 0)
-                node.append_attribute("row").set_value(_frame.getRow());
-        }
-
-        setAttr(node, "flipX", isFlippedX(), false);
-        setAttr(node, "flipY", isFlippedY(), false);
-        setAttrV2(node, "localScale", _localScale, Vector2(1, 1));
-
-        node.set_name("Sprite");
-    }
-
-    Vector2 attr2Vector2(const pugi::xml_attribute& attr, const Vector2& def)
-    {
-        if (!attr)
-            return def;
-        Vector2 v;
-        sscanf(attr.as_string(""), "%f,%f", &v.x, &v.y);
-        return v;
-    }
-
-    void Sprite::deserialize(const deserializedata* data)
-    {
-        inherited::deserialize(data);
-
-        pugi::xml_node node = data->node;
-        const char* res = node.attribute("resanim").as_string(0);
-        if (res && *res)
-        {
-            int col = node.attribute("column").as_int(0);
-            int row = node.attribute("row").as_int(0);
-            AnimationFrame frame = data->factory->getFrame(res, col, row);
-            setAnimFrame(frame);
-        }
-
-
-        _localScale = attr2Vector2(node.attribute("localScale"), Vector2(1, 1));
-        _setSize(_frame.getSize().mult(_localScale));
-
-
-        setFlipped(node.attribute("flipX").as_bool(false), node.attribute("flipY").as_bool(false));
     }
 }

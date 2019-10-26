@@ -8,14 +8,6 @@
 #include <stdarg.h>
 
 
-#if __APPLE__
-#include <TargetConditionals.h>
-#endif
-
-#if EMSCRIPTEN
-#include <emscripten.h>
-#endif
-
 
 //Round everything to whole pixels during rendering.
 // Helps to avoid artifacts in pixel art games
@@ -57,17 +49,6 @@
 #   endif
 #endif
 
-
-#if _DEBUG || DEBUG
-#   ifndef OX_DEBUG
-#       define OX_DEBUG 1
-#   endif
-#endif
-
-
-#define DYNAMIC_OBJECT_NAME 1
-
-
 #ifndef OX_DEBUG
 #   ifndef EMSCRIPTEN
 #       define USE_MEMORY_POOL 1
@@ -85,31 +66,8 @@
 
 #define OXYGINE_ASSERT2LOG 1
 
-#ifdef EMSCRIPTEN
-void emscStackTrace();
-#endif
-
 namespace oxygine { namespace logs { void error(const char* format, ...); } }
-namespace ox = oxygine;
 
-#define OX_LOG_ERROR(x)     if (!(x)) {oxygine::logs::error("Assert! %s in %s:%d", #x, __FILE__, __LINE__);}
-
-
-//assert without logs::error
-#ifdef OXYGINE_QT
-#   define OX_ASSERT_NL(x) { if (!(x)) __asm("int3"); Q_ASSERT(x);}
-#elif !OX_DEBUG || EMSCRIPTEN
-#   define OX_ASSERT_NL(x)
-#else
-#   define OX_ASSERT_NL(x) {assert(x);}
-#endif
-
-
-#if OXYGINE_ASSERT2LOG
-#   define OX_ASSERT(x) {OX_LOG_ERROR(x); OX_ASSERT_NL(x);}
-#else
-#   define OX_ASSERT(x) {OX_ASSERT_NL(x);}
-#endif
 
 #define OXYGINE_HAS_RESTORE
 
@@ -125,14 +83,6 @@ namespace ox = oxygine;
 #   pragma message("WARNING: You need to implement DEPRECATED for this compiler")
 #   define OXYGINE_DEPRECATED
 #endif
-
-
-#ifdef _MSC_VER
-#   define OVERRIDE override
-#else
-#   define OVERRIDE
-#endif
-
 
 #   if defined(_MSC_VER) || defined(__BORLANDC__)
 typedef unsigned __int64 uint64;
@@ -151,12 +101,6 @@ typedef signed long long int64;
 #ifndef EDITOR_INCLUDE
 #define EDITOR_INCLUDE(CLASS)
 #endif
-
-
-#if ( (defined(_MSC_VER) && (_MSC_VER > 1800)) || (__cplusplus > 199711L))
-#define OX_HAS_CPP11
-#endif
-
 
 #include "oxygine-forwards.h"
 #endif

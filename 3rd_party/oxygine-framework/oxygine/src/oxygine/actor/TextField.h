@@ -20,9 +20,6 @@ namespace oxygine
         TextField();
         ~TextField();
 
-        void serialize(serializedata* data) override;
-        void deserialize(const deserializedata* data) override;
-
         /**Returns current text style*/
         const TextStyle&            getStyle() const {return _style;}
         /**Returns text bounds*/
@@ -89,8 +86,6 @@ namespace oxygine
 
 
     public:
-
-        std::string dump(const dumpOptions& options) const override;
         void doRender(const RenderState&) override;
 
         text::Node* getRootNode(float scale);

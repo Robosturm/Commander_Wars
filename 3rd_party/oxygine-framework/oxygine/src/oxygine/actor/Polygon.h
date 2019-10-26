@@ -18,12 +18,6 @@ namespace oxygine
         if *own* is true Polygon will delete[] data array;
         */
         void setVertices(const void* data, int size, int bformat, bool own);
-
-        void serialize(serializedata* data) override;
-        void deserialize(const deserializedata* data) override;
-
-        std::string dump(const dumpOptions&) const override;
-
     protected:
         void doRender(const RenderState&) override;
 

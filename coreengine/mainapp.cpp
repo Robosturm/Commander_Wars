@@ -306,7 +306,7 @@ void Mainapp::update()
 void Mainapp::setup()
 {
     oxygine::EventCallback cb = CLOSURE(this, &Mainapp::onEvent);
-    ox::core::getDispatcher()->addEventListener(ox::core::EVENT_SYSTEM, cb);
+    oxygine::core::getDispatcher()->addEventListener(oxygine::core::EVENT_SYSTEM, cb);
     m_Settings.setup();
 }
 

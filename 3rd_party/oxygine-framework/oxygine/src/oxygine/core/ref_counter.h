@@ -29,7 +29,7 @@ namespace oxygine
         {
 
             _ref_counter--;
-            OX_ASSERT(_ref_counter >= 0);
+            Q_ASSERT(_ref_counter >= 0);
             if (_ref_counter == 0)
             {
                 delete this;

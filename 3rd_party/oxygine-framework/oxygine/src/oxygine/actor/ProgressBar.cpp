@@ -3,7 +3,6 @@
 #include "../RenderState.h"
 #include "../STDRenderDelegate.h"
 #include "../STDRenderer.h"
-#include "../Serialize.h"
 #include <sstream>
 
 namespace oxygine
@@ -317,39 +316,6 @@ namespace oxygine
 
         //renderer->drawBatch();
     }
-
-    std::string ProgressBar::dump(const dumpOptions& options) const
-    {
-        std::stringstream stream;
-        stream << "{ProgressBar}\n";
-
-        const char* dir = "dir_0";
-        switch (_direction)
-        {
-            case dir_90:
-                dir = "dir_90";
-                break;
-            case dir_180:
-                dir = "dir_180";
-                break;
-            case dir_270:
-                dir = "dir_270";
-                break;
-            case dir_radial_cw:
-                dir = "dir_radial_cw";
-                break;
-            case __dir_radial_ccw:
-                dir = "dir_radial_ccw";
-                break;
-            default:
-                break;
-        }
-        stream << " direction=" << dir << "";
-
-        stream << "\n" << inherited::dump(options);
-
-        return stream.str();
-    }
     void ProgressBar::setProgress(float f)
     {
         _progress = scalar::clamp(f, 0.0f, 1.0f);
@@ -381,23 +347,5 @@ namespace oxygine
     ProgressBar::direction ProgressBar::getDirection() const
     {
         return _direction;
-    }
-
-    void ProgressBar::serialize(serializedata* data)
-    {
-        inherited::serialize(data);
-        pugi::xml_node node = data->node;
-        data->node.set_name("ProgressBar");
-        data->node.append_attribute("progress").set_value(_progress);
-        data->node.append_attribute("direction").set_value((int)_direction);
-    }
-
-    void ProgressBar::deserialize(const deserializedata* data)
-    {
-        inherited::deserialize(data);
-        _direction = (direction)data->node.attribute("direction").as_int();
-        _progress = data->node.attribute("progress").as_float(1.0f);
-
-        _update();
     }
 }

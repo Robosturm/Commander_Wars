@@ -111,7 +111,7 @@ namespace oxygine
 
             void apply(Button* b) const
             {
-                OX_ASSERT(_useResAnim);
+                Q_ASSERT(_useResAnim);
                 b->setResAnim(_resAnim);
             }
         };

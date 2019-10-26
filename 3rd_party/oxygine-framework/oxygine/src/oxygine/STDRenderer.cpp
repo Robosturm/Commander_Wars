@@ -8,7 +8,6 @@
 #include "core/UberShaderProgram.h"
 #include "core/VertexDeclaration.h"
 #include "core/gl/VideoDriverGLES20.h"
-#include "core/system_data.h"
 #include "math/Rect.h"
 
 #include "qfile.h"
@@ -64,7 +63,7 @@ namespace oxygine
 
     void RenderStateCache::setTexture(int sampler, const spNativeTexture& t)
     {
-        OX_ASSERT(sampler < MAX_TEXTURES);
+        Q_ASSERT(sampler < MAX_TEXTURES);
 
 #ifdef OX_DEBUG
         if (_textures[sampler] && _driver == IVideoDriver::instance)
@@ -73,7 +72,7 @@ namespace oxygine
             oxglActiveTexture(GL_TEXTURE0 + sampler);
             glGetIntegerv(GL_TEXTURE_BINDING_2D, &whichID);
 
-            OX_ASSERT(_textures[sampler]->getHandle() == (nativeTextureHandle)(size_t)whichID);
+            Q_ASSERT(_textures[sampler]->getHandle() == (nativeTextureHandle)(size_t)whichID);
         }
 #endif
 
@@ -364,7 +363,7 @@ namespace oxygine
 
     void STDRenderer::begin()
     {
-        OX_ASSERT(_verticesData.empty() == true);
+        Q_ASSERT(_verticesData.empty() == true);
         _verticesData.clear();
         _transform.identity();
 
@@ -536,7 +535,7 @@ namespace oxygine
 
     void STDRenderer::begin(spNativeTexture nt, const Rect* viewport)
     {
-        OX_ASSERT(_prevRT == 0);
+        Q_ASSERT(_prevRT == 0);
         _prevRT = _driver->getRenderTarget();
         _driver->setRenderTarget(nt);
 

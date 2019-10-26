@@ -2,7 +2,6 @@
 #include "ImageDataOperations.h"
 #include "UberShaderProgram.h"
 #include "VertexDeclaration.h"
-#include "system_data.h"
 #include "../AnimationFrame.h"
 #include "../Image.h"
 #include "../RenderState.h"

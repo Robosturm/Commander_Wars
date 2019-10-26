@@ -262,7 +262,7 @@ namespace oxygine
                 }
                     break;
                 default:
-                    OX_ASSERT(!"unknown format");
+                    Q_ASSERT(!"unknown format");
             }
         }
 
@@ -278,7 +278,7 @@ namespace oxygine
                 }
                     break;
                 default:
-                    OX_ASSERT(!"unknown format");
+                    Q_ASSERT(!"unknown format");
             }
         }
 
@@ -294,7 +294,7 @@ namespace oxygine
                 }
                     break;
                 default:
-                    OX_ASSERT(!"unknown format");
+                    Q_ASSERT(!"unknown format");
             }
         }
     }

@@ -42,11 +42,6 @@ namespace oxygine
 
         bool isOn(const Vector2& localPosition, float localScale) override;
 
-        std::string dump(const dumpOptions&) const override;
-
-        void serialize(serializedata* data) override;
-        void deserialize(const deserializedata* data) override;
-
         RectF getDestRect() const override;
 
     protected:

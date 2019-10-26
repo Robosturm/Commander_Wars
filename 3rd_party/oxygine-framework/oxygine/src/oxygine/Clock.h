@@ -28,8 +28,6 @@ namespace oxygine
         void    update(timeMS globalTime = -1);
         timeMS  doTick();
 
-        std::string dump() const;
-
     private:
         int     _counter;
         double  _destTime;

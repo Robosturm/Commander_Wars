@@ -38,7 +38,7 @@ namespace oxygine
             const listener& ls = *i;
             if (ls.type == et && cb == ls.cb)
             {
-                OX_ASSERT(!"you are already added this event listener");
+                Q_ASSERT(!"you are already added this event listener");
             }
         }
         #endif
@@ -75,7 +75,7 @@ namespace oxygine
     {
         __doCheck();
 
-        //OX_ASSERT(_listeners);
+        //Q_ASSERT(_listeners);
         if (!_listeners)
             return;
 
@@ -86,7 +86,7 @@ namespace oxygine
             {
                 _listeners->erase(_listeners->begin() + i);
                 break;
-                //OX_ASSERT(hasEventListeners(et, cb) == false);
+                //Q_ASSERT(hasEventListeners(et, cb) == false);
                 //--i;
             }
         }
@@ -134,7 +134,7 @@ namespace oxygine
             if (ls.cb.p_this == CallbackThis)
             {
                 _listeners->erase(_listeners->begin() + i);
-                //OX_ASSERT(hasEventListeners(CallbackThis) == false);
+                //Q_ASSERT(hasEventListeners(CallbackThis) == false);
                 --i;
             }
         }
@@ -152,7 +152,7 @@ namespace oxygine
             if (ls.type == et)
             {
                 _listeners->erase(_listeners->begin() + i);
-                //OX_ASSERT(hasEventListeners(CallbackThis) == false);
+                //Q_ASSERT(hasEventListeners(CallbackThis) == false);
                 --i;
             }
         }

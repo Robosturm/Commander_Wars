@@ -3,7 +3,6 @@
 #include "../../Image.h"
 #include "../ImageDataOperations.h"
 #include "../NativeTexture.h"
-#include "../log.h"
 #include <stdio.h>
 
 #ifndef GL_COMPRESSED_RGBA8_ETC2_EAC
@@ -31,8 +30,8 @@ namespace oxygine
                 pixel.type = GL_UNSIGNED_BYTE;
                 break;
             default:
-                logs::error("unknown format: %d\n", format);
-                OX_ASSERT(!"unknown format");
+                qCritical("unknown format: %d\n", format);
+                Q_ASSERT(!"unknown format");
         }
         return pixel;
     }
@@ -97,11 +96,11 @@ namespace oxygine
             //printf("created fbo: %d\n", fbo);
 
             unsigned int status = oxglCheckFramebufferStatus(GL_FRAMEBUFFER);
-            //logs::message("fbo status %d\n", status);
+            //qDebug("fbo status %d\n", status);
             //GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES
             if (status != GL_FRAMEBUFFER_COMPLETE)
             {
-                logs::error("status != GL_FRAMEBUFFER_COMPLETE_OES");
+                qCritical("status != GL_FRAMEBUFFER_COMPLETE_OES");
             }
 
             glViewport(0, 0, w, h);
@@ -109,7 +108,7 @@ namespace oxygine
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             oxglBindFramebuffer(GL_FRAMEBUFFER, prevFBO);
-            //logs::message("fbo bind\n");
+            //qDebug("fbo bind\n");
 
             glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -144,7 +143,7 @@ namespace oxygine
             glTexImage2D(GL_TEXTURE_2D, 0, p.format, src.w, src.h, 0, p.format, p.type, src.data);
         }
 
-        OX_ASSERT(sysMemCopy == false);
+        Q_ASSERT(sysMemCopy == false);
 
         init((nativeTextureHandle)id, src.w, src.h, src.format);
         CHECKGL();
@@ -240,8 +239,8 @@ namespace oxygine
         if (src)
             r = *src;
 
-        OX_ASSERT(r.getX() + r.getWidth() <= _width);
-        OX_ASSERT(r.getY() + r.getHeight() <= _height);
+        Q_ASSERT(r.getX() + r.getWidth() <= _width);
+        Q_ASSERT(r.getY() + r.getHeight() <= _height);
 
         _lockRect = r;
 
@@ -249,7 +248,7 @@ namespace oxygine
 
         if (_lockRect.isEmpty())
         {
-            OX_ASSERT(!"_lockRect.IsEmpty()");
+            Q_ASSERT(!"_lockRect.IsEmpty()");
             return ImageData();
         }
 

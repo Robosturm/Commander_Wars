@@ -3,7 +3,6 @@
 #include "../RenderState.h"
 #include "../STDRenderDelegate.h"
 #include "../STDRenderer.h"
-#include "../Serialize.h"
 #include "../core/UberShaderProgram.h"
 #include "../core/VertexDeclaration.h"
 #include <sstream>
@@ -24,33 +23,6 @@ namespace oxygine
     void Polygon::copyFrom(const Polygon& src, cloneOptions opt)
     {
         inherited::copyFrom(src, opt);
-    }
-
-    void Polygon::serialize(serializedata* data)
-    {
-        inherited::serialize(data);
-
-        pugi::xml_node node = data->node;
-        node.set_name("Polygon");
-    }
-
-    void Polygon::deserialize(const deserializedata* data)
-    {
-        inherited::deserialize(data);
-    }
-
-    std::string Polygon::dump(const dumpOptions& options) const
-    {
-        std::stringstream stream;
-        stream << "{Polygon}\n";
-
-        if (_verticesSize)
-        {
-            stream << "vertices=" << _verticesSize / _vdecl->size << " ";
-        }
-
-        stream << inherited::dump(options);
-        return stream.str();
     }
 
     void Polygon::setVertices(const void* data, int size, int bformat, bool own)

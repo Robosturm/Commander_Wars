@@ -74,17 +74,6 @@ namespace oxygine
         //_active = true;
     }
 
-    std::string Stage::dump(const dumpOptions& opt) const
-    {
-        std::stringstream st;
-
-        st << "{Stage}\n";
-        //st << " displaySize=(" << _realDisplaySize.x << "," << _realDisplaySize.y << ")";
-        st << Actor::dump(opt);
-
-        return st.str();
-    }
-
     Rect    Stage::calcCenteredViewport(const Point& displaySize, const Point& gameSize)
     {
         float width = (float)displaySize.x;
@@ -122,7 +111,7 @@ namespace oxygine
 
     RectF Stage::getDestRect() const
     {
-//        OX_ASSERT(0);
+//        Q_ASSERT(0);
         Vector2 s = getSize() + getPosition();
         return RectF(-getPosition(), s);
     }

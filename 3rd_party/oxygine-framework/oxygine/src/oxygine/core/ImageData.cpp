@@ -12,7 +12,7 @@ namespace oxygine
             case TF_UNDEFINED:
                 return 0;
             default:
-                OX_ASSERT(!"unknown type");
+                Q_ASSERT(!"unknown type");
         }
         return 0;
     }
@@ -38,10 +38,10 @@ namespace oxygine
 
     ImageData ImageData::getRect(const Rect& r) const
     {
-        OX_ASSERT(r.getX() >= 0 && r.getX() <= w);
-        OX_ASSERT(r.getY() >= 0 && r.getY() <= h);
-        OX_ASSERT(r.getX() + r.getWidth() <= w);
-        OX_ASSERT(r.getY() + r.getHeight() <= h);
+        Q_ASSERT(r.getX() >= 0 && r.getX() <= w);
+        Q_ASSERT(r.getY() >= 0 && r.getY() <= h);
+        Q_ASSERT(r.getX() + r.getWidth() <= w);
+        Q_ASSERT(r.getY() + r.getHeight() <= h);
 
         void* ptr = (unsigned char*)data + r.getX() * bytespp + r.getY() * pitch;
         ImageData buffer(r.getWidth(), r.getHeight(), pitch, format, ptr);

@@ -40,7 +40,7 @@ namespace oxygine
 
         void insert_after(T& child, T& after)
         {
-            OX_ASSERT(after->_list == this);
+            Q_ASSERT(after->_list == this);
             child->_list = this;
 
             if (after->_next)
@@ -129,14 +129,14 @@ namespace oxygine
 
                 if (v)
                 {
-                    OX_ASSERT(v->_prev == p);
+                    Q_ASSERT(v->_prev == p);
                 }
                 else
                 {
-                    OX_ASSERT(p == _last);
+                    Q_ASSERT(p == _last);
                 }
 
-                //OX_ASSERT(v == _last && v->_next == 0);
+                //Q_ASSERT(v == _last && v->_next == 0);
             }
             while (v);
 
@@ -146,29 +146,29 @@ namespace oxygine
 
         void remove(T& child)
         {
-            OX_ASSERT(child->_list == this);
+            Q_ASSERT(child->_list == this);
             child->_list = 0;
 
             if (child->_next)
             {
-                OX_ASSERT(child->_next->_prev == child);
+                Q_ASSERT(child->_next->_prev == child);
                 child->_next->_prev = child->_prev;
             }
             else
             {
-                OX_ASSERT(child == _last);
+                Q_ASSERT(child == _last);
                 _last = child->_prev;
             }
 
 
             if (child->_prev)
             {
-                OX_ASSERT(child->_prev->_next == child);
+                Q_ASSERT(child->_prev->_next == child);
                 child->_prev->_next = child->_next;
             }
             else
             {
-                OX_ASSERT(child == _first);
+                Q_ASSERT(child == _first);
                 _first = child->_next;
             }
 

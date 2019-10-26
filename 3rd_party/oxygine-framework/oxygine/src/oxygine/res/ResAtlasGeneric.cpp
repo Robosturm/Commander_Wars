@@ -375,7 +375,7 @@ namespace oxygine
 
                             nextAtlas(w, h, tf, ad, walker.getCurrentFolder().c_str());
                             s = ad.atlas.add(&ad.mt, src, dest, offset);
-                            OX_ASSERT(s);
+                            Q_ASSERT(s);
                         }
 
                         //extend = false;

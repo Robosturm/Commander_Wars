@@ -5,7 +5,6 @@
 #include "core/gl/ShaderProgramGL.h"
 #include "core/gl/VertexDeclarationGL.h"
 #include "core/oxygine.h"
-#include "core/system_data.h"
 
 #include <qfile.h>
 #include <qtextstream.h>
@@ -164,11 +163,11 @@ namespace oxygine
 
     void RenderTargetsManager::print()
     {
-        logs::messageln("print");
+        qDebug("print");
         for (size_t i = 0, sz = _free.size(); i < sz; ++i)
         {
             spNativeTexture t = _free[i];
-            logs::messageln("texture %d %d", t->getWidth(), t->getHeight());
+            qDebug("texture %d %d", t->getWidth(), t->getHeight());
         }
     }
     bool RenderTargetsManager::isGood(const spNativeTexture& t, int w, int h, ImageData::TextureFormat tf) const
@@ -469,7 +468,7 @@ namespace oxygine
             rs.transform = rs.transform * offset;
         }
 
-        //OX_ASSERT(0);
+        //Q_ASSERT(0);
         RenderDelegate* rd = actor->getRenderDelegate();
         actor->setRenderDelegate(STDRenderDelegate::instance);
         STDRenderDelegate::instance->RenderDelegate::render(actor, rs);

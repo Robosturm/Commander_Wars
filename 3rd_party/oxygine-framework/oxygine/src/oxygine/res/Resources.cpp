@@ -3,7 +3,6 @@
 #include "ResAnim.h"
 #include "ResFont.h"
 #include "Resource.h"
-#include "../core/log.h"
 #include "../pugixml/pugixml.hpp"
 #include "../utils/stringUtils.h"
 #include <algorithm>
@@ -12,9 +11,6 @@
 
 #include "qfile.h"
 #include "qtextstream.h"
-
-//#define FS_LOG(...) logs::warning(__VA_ARGS__)
-#define FS_LOG(...) {}
 
 namespace oxygine
 {
@@ -32,7 +28,7 @@ namespace oxygine
         {
             if (!strcmp(it->id, resTypeID))
             {
-                OX_ASSERT(!"resource already registered");
+                Q_ASSERT(!"resource already registered");
                 return;
             }
         }
@@ -58,7 +54,7 @@ namespace oxygine
                 return;
             }
         }
-        OX_ASSERT(!"can't find resource type");
+        Q_ASSERT(!"can't find resource type");
     }
 
     void Resources::setDefaultMissingResAnim(ResAnim* rs)
@@ -102,7 +98,7 @@ namespace oxygine
         for (resources::iterator i = _resources.begin(); i != _resources.end(); ++i)
         {
             Resource* res = (*i).get();
-            //logs::messageln("loading res: %s", res->getName().c_str());
+            //qDebug("loading res: %s", res->getName().c_str());
             res->load(context);
             //if (cb)
             //  cb(res);
@@ -179,7 +175,7 @@ namespace oxygine
         _loadCounter = opt._loadCompletely ? 1 : 0;
 
 
-        FS_LOG("step0");
+        qDebug("step0");
         QFile file(xmlFile.c_str());
 
         if (!file.exists() || file.size() == 0)
@@ -193,7 +189,7 @@ namespace oxygine
         std::string data = stream.readAll().toStdString();
         std::vector<uchar> fb(data.begin(), data.end());
 
-        FS_LOG("step1");
+        qDebug("step1");
 
 
         updateName(xmlFile);
@@ -213,7 +209,7 @@ namespace oxygine
         const char* ox_file = ox.c_str();
 
 
-        FS_LOG("step2");
+        qDebug("step2");
 
         if (QFile::exists(ox_file))
         {
@@ -232,20 +228,20 @@ namespace oxygine
         _docs.push_back(doc);
 
         bool loaded = doc->load_buffer(&fb[0], fb.size());
-        OX_ASSERT(loaded);
+        Q_ASSERT(loaded);
 
         pugi::xml_node resources = doc->first_child();
         pugi::xml_node resources_meta = doc_meta.first_child();
         if (!resources_meta.empty())
         {
             int metaVersion = resources_meta.attribute("version").as_int(0);
-            OX_ASSERT(metaVersion <= 2 && "Incompatible atlas format. Please rebuild xmls with latest 'oxyresbuild' tool or delete .ox folder from data.");
+            Q_ASSERT(metaVersion <= 2 && "Incompatible atlas format. Please rebuild xmls with latest 'oxyresbuild' tool or delete .ox folder from data.");
         }
 
 
         std::string id;
 
-        FS_LOG("loading xml resources");
+        qDebug("loading xml resources");
 
         std::string xmlFolder = destHead;
         XmlWalker walker(&xmlFolder, "", 1.0f, opt._loadCompletely, true, resources, resources_meta);
@@ -264,8 +260,8 @@ namespace oxygine
             registeredResources::iterator i = std::lower_bound(_registeredResources.begin(), _registeredResources.end(), type);
             if (i == _registeredResources.end() || strcmp(i->id, type))
             {
-                logs::error("unknown resource. type: '%s' id: '%s'", type, Resource::extractID(context.walker.getNode(), "", "").c_str());
-                OX_ASSERT(!"unknown resource type");
+                qCritical("unknown resource. type: '%s' id: '%s'", type, Resource::extractID(context.walker.getNode(), "", "").c_str());
+                Q_ASSERT(!"unknown resource type");
                 continue;
             }
 
@@ -279,21 +275,21 @@ namespace oxygine
             context.prebuilt_folder = &prebuilt_xml_folder;
 
 
-            FS_LOG("resource: %s ", name);
+            qDebug("resource: %s ", context.xml_name->c_str());
             Resource* res = r.cb(context);
-            OX_ASSERT(res);
+            Q_ASSERT(res);
             res->setUseLoadCounter(opt._useLoadCounter);
 
             if (res)
             {
                 if (context.walker.getLoad())
-                    res->load(0);
+                    res->load(nullptr);
                 res->setParent(this);
                 _resources.push_back(res);
             }
         }
 
-        FS_LOG("xml loaded");
+        qDebug("xml loaded");
         return true;
     }
 
@@ -309,7 +305,7 @@ namespace oxygine
 
     void Resources::add(Resource* r, bool accessByShortenID)
     {
-        OX_ASSERT(r);
+        Q_ASSERT(r);
         if (!r)
             return;
 
@@ -323,10 +319,10 @@ namespace oxygine
             if (shortName != name)
             {
 #ifdef OX_DEBUG
-                OX_ASSERT(_resourcesMap.find(shortName) == _resourcesMap.end());
+                Q_ASSERT(_resourcesMap.find(shortName) == _resourcesMap.end());
                 if (_resourcesMap.find(shortName) != _resourcesMap.end())
                 {
-                    logs::error("short resource name '%s' conflicts with '%s'", r->getName().c_str(), _resourcesMap[shortName]->getName().c_str());
+                    qCritical("short resource name '%s' conflicts with '%s'", r->getName().c_str(), _resourcesMap[shortName]->getName().c_str());
                 }
 #endif
 
@@ -338,21 +334,21 @@ namespace oxygine
 
     void Resources::print() const
     {
-        logs::message("resources:\n");
+        qDebug("resources:\n");
         for (resourcesMap::const_iterator i = _resourcesMap.cbegin(); i != _resourcesMap.cend(); ++i)
         {
             spResource res = i->second;
-            logs::messageln("%s", res->getName().c_str());
+            qDebug("%s", res->getName().c_str());
         }
 
         /*
         unsigned n = _resourcesMap.bucket_count();
 
         for (unsigned i=0; i<n; ++i) {
-            logs::message("bucket %d: ", i);
+            qDebug("bucket %d: ", i);
             for (auto it = _resourcesMap.begin(i); it!=_resourcesMap.end(i); ++it)
-                logs::message("%s, ", it->first.c_str());
-            logs::messageln(" ");
+                qDebug("%s, ", it->first.c_str());
+            qDebug(" ");
         }
         */
     }

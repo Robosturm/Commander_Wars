@@ -205,16 +205,8 @@ int main(int argc, char* argv[])
 
     pUserdata->storeUser();
 
-    // If we get here, the user has requested the Application to terminate.
-    // We dump and log all our created objects that have not been freed yet
-    oxygine::ObjectBase::dumpCreatedObjects();
-
     // Releases all internal components and the stage
     oxygine::core::release();
-
-    // The dump list should be empty by now,
-    // we want to make sure that there aren't any memory leaks, so we call it again.
-    oxygine::ObjectBase::dumpCreatedObjects();
 
     oxygine::ObjectBase::__stopTracingLeaks();
     //end

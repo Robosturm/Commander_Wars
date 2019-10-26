@@ -45,9 +45,6 @@ namespace oxygine
     /** returns local app time in milliseconds (1sec = 1000ms). Counting starts from zero*/
     timeMS          getTimeMS();
 
-    void* fastAlloc(size_t size);
-    void fastFree(void* data);
-
     namespace key
     {
         typedef int keycode;
@@ -154,7 +151,6 @@ namespace oxygine
     typedef int cloneOptions;
     typedef int copyOptions;//deprecated typedef
     typedef int eventType;
-    typedef unsigned int dumpOptions;
     typedef size_t glyphOptions;
     typedef void* nativeTextureHandle;
 

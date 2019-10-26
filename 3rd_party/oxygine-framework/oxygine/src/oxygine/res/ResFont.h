@@ -5,7 +5,7 @@
 namespace oxygine
 {
     DECLARE_SMART(ResFont, spResFont);
-    class ResFont: public Resource
+    class ResFont : public Resource
     {
         INHERITED(Resource);
     public:

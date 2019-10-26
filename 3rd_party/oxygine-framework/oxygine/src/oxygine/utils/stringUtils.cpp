@@ -16,41 +16,41 @@ namespace oxygine
             char dest[255];
 
             //normalize("//", dest);
-            //OX_ASSERT(strcmp(dest, "/") == 0);
+            //Q_ASSERT(strcmp(dest, "/") == 0);
 
             normalize("ab/cd/../qw", dest);
-            OX_ASSERT(strcmp(dest, "ab/qw") == 0);
+            Q_ASSERT(strcmp(dest, "ab/qw") == 0);
             normalize("ab/cd/ef/../../qw", dest);
-            OX_ASSERT(strcmp(dest, "ab/qw") == 0);
+            Q_ASSERT(strcmp(dest, "ab/qw") == 0);
 
 
             normalize("rom://abc", dest);
-            OX_ASSERT(strcmp(dest, "rom://abc") == 0);
+            Q_ASSERT(strcmp(dest, "rom://abc") == 0);
 
             normalize("/../", dest);
-            OX_ASSERT(strcmp(dest, "/../") == 0);
+            Q_ASSERT(strcmp(dest, "/../") == 0);
 
             normalize("../c\\", dest);
-            OX_ASSERT(strcmp(dest, "../c/") == 0);
+            Q_ASSERT(strcmp(dest, "../c/") == 0);
 
             normalize("a//", dest);
-            OX_ASSERT(strcmp(dest, "a/") == 0);
+            Q_ASSERT(strcmp(dest, "a/") == 0);
 
 
             normalize("\\/\\///\\/", dest);// \n
-            OX_ASSERT(strcmp(dest, "/") == 0);
+            Q_ASSERT(strcmp(dest, "/") == 0);
 
             normalize("a/b/..\\//..///\\/../c\\\\/", dest);
-            OX_ASSERT(strcmp(dest, "../c/") == 0);
+            Q_ASSERT(strcmp(dest, "../c/") == 0);
 
             normalize("a/../c", dest);
-            OX_ASSERT(strcmp(dest, "c") == 0);
+            Q_ASSERT(strcmp(dest, "c") == 0);
 
             normalize("a/b/../../../c", dest);
-            OX_ASSERT(strcmp(dest, "../c") == 0);
+            Q_ASSERT(strcmp(dest, "../c") == 0);
 
             normalize("..a/b/..\\//..///\\/../c\\\\/", dest);
-            OX_ASSERT(strcmp(dest, "../c/") == 0);
+            Q_ASSERT(strcmp(dest, "../c/") == 0);
 
             return true;
         }
@@ -71,8 +71,8 @@ namespace oxygine
 
         void split(const char* src, char* destHead, char* destTail)
         {
-            OX_ASSERT(src != destHead);
-            OX_ASSERT(src != destTail);
+            Q_ASSERT(src != destHead);
+            Q_ASSERT(src != destTail);
 
             destHead[0] = 0;
             destTail[0] = 0;
@@ -100,8 +100,8 @@ namespace oxygine
 
         void splitExt(const char* src, char* destHead, char* destTail)
         {
-            OX_ASSERT(src != destHead);
-            OX_ASSERT(src != destTail);
+            Q_ASSERT(src != destHead);
+            Q_ASSERT(src != destTail);
 
             destHead[0] = 0;
             destTail[0] = 0;
@@ -126,7 +126,7 @@ namespace oxygine
 
         void normalize(const char* src, char* dest)
         {
-            OX_ASSERT(src != dest);
+            Q_ASSERT(src != dest);
 
             if (*src == '/' || *src == '\\')
             {
@@ -177,7 +177,7 @@ namespace oxygine
                 *dest = c;
 
                 //*(dest + 1) = 0;
-                //logs::message(copy);
+                //qDebug(copy);
 
                 ++src;
                 ++dest;
@@ -300,7 +300,7 @@ namespace oxygine
         if (warned)
         {
             warned = true;
-            logs::warning("utf8tows not implemented correctly!");
+            qWarning("utf8tows not implemented correctly!");
         }
 
         std::wstring ws;
@@ -343,7 +343,7 @@ namespace oxygine
         if (warned)
         {
             warned = true;
-            logs::warning("utf8tows not implemented correctly!");
+            qWarning("utf8tows not implemented correctly!");
         }
 
         std::string s;

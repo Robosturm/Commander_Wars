@@ -37,7 +37,7 @@ namespace oxygine
 
         if (_duration <= 0)
         {
-            OX_ASSERT(!"Tweener duration should be more than ZERO");
+            Q_ASSERT(!"Tweener duration should be more than ZERO");
             _duration = 1;
         }
     }
@@ -55,7 +55,7 @@ namespace oxygine
 
 		if (_duration <= 0)
 		{
-			OX_ASSERT(!"Tweener duration should be more than ZERO");
+			Q_ASSERT(!"Tweener duration should be more than ZERO");
 			_duration = 1;
 		}
 	}
@@ -99,12 +99,12 @@ namespace oxygine
         if (_status >= status_done)
             return;
 
-        //OX_ASSERT(_client);
+        //Q_ASSERT(_client);
 
 		if (!_client)
 			return;
 
-//OX_ASSERT(!"not implemented");
+//Q_ASSERT(!"not implemented");
 
 //not started yet because has delay
         if (_status == status_delayed)
@@ -114,7 +114,7 @@ namespace oxygine
         }
 
 
-        OX_ASSERT(_status == status_started);
+        Q_ASSERT(_status == status_started);
 //while (_status != status_remove)
         {
             UpdateState us;
@@ -123,7 +123,7 @@ namespace oxygine
             update(*_client, us);
         }
 
-        OX_ASSERT(_status == status_done);
+        Q_ASSERT(_status == status_done);
 
 //_client->removeTween(this);
     }
@@ -280,7 +280,7 @@ namespace oxygine
 
 			default:
 				t = _customEaseHandler(ease, t);
-				//OX_ASSERT(!"unsupported ease");
+				//Q_ASSERT(!"unsupported ease");
 				break;
 		}
 

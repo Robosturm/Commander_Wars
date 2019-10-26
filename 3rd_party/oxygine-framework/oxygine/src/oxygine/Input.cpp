@@ -1,9 +1,8 @@
 #include "Input.h"
 #include "actor/Stage.h"
-#include "core/log.h"
 #include <string.h>
 
-//#define LOGD(...) oxygine::logs::message("input: "); oxygine::logs::messageln(__VA_ARGS__)
+//#define LOGD(...) oxygine::qDebug("input: "); oxygine::qDebug(__VA_ARGS__)
 #define LOGD(...) ((void)0)
 
 namespace oxygine
@@ -101,13 +100,13 @@ namespace oxygine
 
     PointerState* Input::getTouchByIndex(pointer_index index_)
     {
-        OX_ASSERT(index_ != 0);
+        Q_ASSERT(index_ != 0);
 
         int index = index_;
         if (index == MAX_TOUCHES + 1)
             return &_pointerMouse;
         index -= 1;
-        OX_ASSERT(index >= 0 && index < MAX_TOUCHES);
+        Q_ASSERT(index >= 0 && index < MAX_TOUCHES);
         index = std::min(std::max(index, 0), MAX_TOUCHES);
         return &_pointers[index];
     }
@@ -136,7 +135,7 @@ namespace oxygine
             return firstEmptySlotIndex + 1;
         }
 
-        //logs::warning("can't find touch id %d", id);
+        //qWarning("can't find touch id %d", id);
         return -1;
     }
 

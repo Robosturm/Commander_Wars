@@ -1,8 +1,8 @@
 #include "TextField.h"
 #include "../Font.h"
+#include "../res/ResFont.h"
 #include "../RenderDelegate.h"
 #include "../RenderState.h"
-#include "../Serialize.h"
 #include "../core/gl/VideoDriverGLES20.h"
 #include "../res/Resources.h"
 #include "../text_utils/Node.h"
@@ -12,7 +12,7 @@
 
 namespace oxygine
 {
-    static ResFont* _defaultFont = 0;
+    static ResFont* _defaultFont = nullptr;
     void TextField::setDefaultFont(ResFont* f)
     {
         _defaultFont = f;
@@ -24,7 +24,7 @@ namespace oxygine
     }
 
     TextField::TextField():
-        _root(0),
+        _root(nullptr),
         _textRect(0, 0, 0, 0),
         _rtscale(1.0f)
     {
@@ -35,7 +35,7 @@ namespace oxygine
     TextField::~TextField()
     {
         delete _root;
-        _root = 0;
+        _root = nullptr;
     }
 
     void TextField::copyFrom(const TextField& src, cloneOptions opt)
@@ -43,7 +43,7 @@ namespace oxygine
         inherited::copyFrom(src, opt);
         _text = src._text;
         _style = src._style;
-        _root = 0;
+        _root = nullptr;
         _rtscale = 1.0f;
 
         _flags |= flag_rebuild;
@@ -171,7 +171,7 @@ namespace oxygine
 
     void TextField::matChanged()
     {
-        logs::warning("not optimal");
+        qWarning("not optimal");
         if (_flags & flag_rebuild)
             return;
 
@@ -360,117 +360,8 @@ namespace oxygine
         return "unknown";
     }
 
-    std::string dumpStyle(const TextStyle& s, bool onlydiff)
-    {
-        TextStyle def;
-        std::stringstream stream;
-        if (!onlydiff || def.hAlign != s.hAlign)
-            stream << "hAlign=" << get_halign(s.hAlign);
-        if (!onlydiff || def.vAlign != s.vAlign)
-            stream << " vAlign=" << get_valign(s.vAlign);
-        if (!onlydiff || def.multiline != s.multiline)
-            stream << " " << (s.multiline ? "multiline" : "singleline");
-        if (!onlydiff || def.breakLongWords != s.breakLongWords)
-            stream << " " << (s.breakLongWords ? "breakLongWords=1" : "breakLongWords=0");
-        if (!onlydiff || def.kerning != s.kerning)
-            stream << " kerning=" << s.kerning;
-        if (!onlydiff || def.baselineScale != s.baselineScale)
-            stream << " baselineScale=" << s.baselineScale;
-        if (!onlydiff || def.linesOffset != s.linesOffset)
-            stream << " linesOffset=" << s.linesOffset;
-        if (!onlydiff || def.fontSize != s.fontSize)
-            stream << " fontSize=" << s.fontSize;
-        if (!onlydiff || def.options != s.options)
-            stream << " options=" << s.options;
-        if (s.font)
-        {
-            stream << " font='" << s.font->getName() << "'";
-        }
-
-        return stream.str();
-    }
-
-    std::string TextField::dump(const dumpOptions& options) const
-    {
-        std::stringstream stream;
-        stream << "{TextField}\n";
-        stream << _vstyle.dump();
-        std::string text = _text;
-        if (text.size() > 15)
-        {
-            text.resize(15);
-            text += "...";
-        }
-        stream << " text=<div c='2b1a94'>'<![CDATA[" << text << "']]></div>";
-
-        std::string st = dumpStyle(_style, true);
-        if (st.size())
-            stream << " textStyle={" << st << "}";
-        if (_flags & flag_html)
-        {
-            stream << " htmlMode";
-        }
-
-        Rect r = const_cast<TextField*>(this)->getTextRect();
-        stream << " textRect=(" << r.pos.x << ", " << r.pos.y << ", " << r.size.x << ", " << r.size.y << ")";
-
-        stream << "\n" << Actor::dump(options);
-
-        return stream.str();
-
-    }
-
     void TextField::doRender(RenderState const& rs)
     {
         _rdelegate->doRender(this, rs);
-    }
-
-    void TextField::serialize(serializedata* data)
-    {
-        inherited::serialize(data);
-        pugi::xml_node node = data->node;
-
-        TextStyle def;
-
-        if (!_text.empty())
-            node.append_attribute("text").set_value(_text.c_str());
-        setAttr(node, "fontsize2scale", _style.fontSize, def.fontSize);
-        setAttr(node, "linesOffset", _style.linesOffset, def.linesOffset);
-        setAttr(node, "kerning", _style.kerning, def.kerning);
-        setAttr(node, "valign", _style.vAlign, def.vAlign);
-        setAttr(node, "halign", _style.hAlign, def.hAlign);
-        setAttr(node, "multiline", _style.multiline, def.multiline);
-        setAttr(node, "baselineScale", _style.baselineScale, def.baselineScale);
-        setAttr(node, "breakLongWords", _style.breakLongWords, def.breakLongWords);
-        if (_style.font)
-            node.append_attribute("font").set_value(_style.font->getName().c_str());
-        node.set_name("TextField");
-    }
-
-    void TextField::deserialize(const deserializedata* data)
-    {
-        inherited::deserialize(data);
-        pugi::xml_node node = data->node;
-
-        TextStyle def;
-
-        _style.vAlign = (TextStyle::VerticalAlign)node.attribute("valign").as_int(def.vAlign);
-        _style.hAlign = (TextStyle::HorizontalAlign)node.attribute("halign").as_int(def.hAlign);
-        _style.multiline = node.attribute("multiline").as_bool(def.multiline);
-        _style.breakLongWords = node.attribute("breakLongWords").as_bool(def.breakLongWords);
-        _style.fontSize = node.attribute("fontsize2scale").as_int(def.fontSize);
-        _style.linesOffset = node.attribute("linesOffset").as_int(def.linesOffset);
-        _style.kerning = node.attribute("kerning").as_int(def.kerning);
-        _style.baselineScale = node.attribute("baselineScale").as_float(def.baselineScale);
-        const char* fnt = node.attribute("font").as_string(0);
-        if (fnt && *fnt)
-        {
-            ResFont* font = data->factory->getResFont(fnt);
-            if (font)
-                _style.font = font;
-        }
-
-        needRebuild();
-        setText(node.attribute("text").as_string());
     }
 }

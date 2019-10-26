@@ -1,7 +1,6 @@
 #include "Object.h"
 #include <qmutex.h>
 #include <QMutexLocker>
-#include "log.h"
 #include "../utils/stringUtils.h"
 #include <algorithm>
 #include <stdio.h>
@@ -134,53 +133,10 @@ namespace oxygine
                 base->__traceLeak = false;
                 __createdObjects& objs = __getCreatedObjects();
                 __createdObjects::iterator i = std::find(objs.begin(), objs.end(), base);
-                OX_ASSERT(i != objs.end());
+                Q_ASSERT(i != objs.end());
                 objs.erase(i);
             }
         }
-#endif
-    }
-
-    void ObjectBase::dumpObject() const
-    {
-        const Object* o = dynamic_cast<const Object*>(this);
-        std::string name;
-
-        char refs[16] = "-";
-        if (o)
-        {
-            name = o->__name;
-        }
-
-
-        int cbs = 0;
-        if (o && o->_ref_counter)
-        {
-            const EventDispatcher *ed = dynamic_cast<const EventDispatcher*>(o);
-            if (ed)
-                cbs = ed->getListenersCount();
-        }
-
-        logs::messageln("id = %d, name = '%s', typeid = '%s', callbacks = '%d' refs = %s", this->__id, name.c_str(), typeid(*this).name(), cbs, refs);
-    }
-
-    void ObjectBase::dumpCreatedObjects()
-    {
-#ifdef OXYGINE_DEBUG_TRACE_LEAKS
-        MutexAutoLock m(getMutex());
-
-        logs::messageln("\n\n\nallocated objects:");
-        int n = 0;
-        __createdObjects& objs = __getCreatedObjects();
-        for (__createdObjects::iterator i = objs.begin(); i != objs.end(); ++i)
-        {
-            ObjectBase* object = *i;
-            //logs::message("%d)", n);
-            object->dumpObject();
-
-            ++n;
-        }
-        logs::message("total: %d -----------------------------\n\n\n", (int)objs.size());
 #endif
     }
 
@@ -200,8 +156,8 @@ namespace oxygine
 #ifdef OX_DEBUG
     void Object::__doCheck()
     {
-        OX_ASSERT(this);
-        OX_ASSERT(__check == 0xABCDEFAB);
+        Q_ASSERT(this);
+        Q_ASSERT(__check == 0xABCDEFAB);
     }
 #endif
 }

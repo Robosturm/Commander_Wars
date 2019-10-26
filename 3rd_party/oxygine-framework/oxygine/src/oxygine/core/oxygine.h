@@ -16,11 +16,6 @@ typedef int window;
 /**main oxygine namespace*/
 namespace oxygine
 {
-    class ThreadDispatcher;
-
-    void* fastAlloc(size_t size);
-    void fastFree(void* data);
-
     typedef int timeMS;
 
     /** returns local app time in milliseconds (1sec = 1000ms). Counting starts from zero*/
@@ -28,9 +23,6 @@ namespace oxygine
 
     /** returns UTC time in milliseconds */
     int64           getTimeUTCMS();
-
-    /** is any network connection available?*/
-    bool            isNetworkAvailable();
 
     /**sleep for milliseconds*/
     void    sleep(timeMS);

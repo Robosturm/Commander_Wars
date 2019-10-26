@@ -59,8 +59,8 @@ namespace oxygine
         _end = end;
 
         int num = _row == -1 ? _resAnim->getTotalFrames() : _resAnim->getColumns();
-        OX_ASSERT(_start >= 0 && _start < num);
-        OX_ASSERT(_end >= 0 && _end < num);
+        Q_ASSERT(_start >= 0 && _start < num);
+        Q_ASSERT(_end >= 0 && _end < num);
     }
 
     void TweenAnim::_setAnimFrame(Sprite& actor, const AnimationFrame& frame)
@@ -70,7 +70,7 @@ namespace oxygine
 
     void TweenAnim::update(Sprite& actor, float p, const UpdateState& us)
     {
-        OX_ASSERT(_resAnim);
+        Q_ASSERT(_resAnim);
         int frame;
 
         p += _initFrame;
@@ -100,7 +100,7 @@ namespace oxygine
         static int ltime = 0;
         if (lastFrame != frame)
         {
-            logs::messageln("%d frame %d", getTimeMS() - ltime, frame);
+            qDebug("%d frame %d", getTimeMS() - ltime, frame);
             ltime = getTimeMS();
         }
         lastFrame = frame;

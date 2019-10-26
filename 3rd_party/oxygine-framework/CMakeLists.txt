@@ -32,10 +32,8 @@ set(OXYGINE_SRC ${OXYGINE_ROOT}/src/oxygine)
 
 set(FOLDERS oxygine
     oxygine/closure
-    oxygine/minizip
     oxygine/core
     oxygine/core/gl
-    oxygine/minizip
     oxygine/math
     oxygine/actor
     oxygine/tween
@@ -63,17 +61,6 @@ foreach(ITEM ${FOLDERS})
 	string(REPLACE / \\ SGROUP ${ITEM})
 	source_group(${SGROUP} FILES ${FLS})
 endforeach(ITEM)
-
-
-if (MINGW)
-	set(OXYGINE_INCLUDE_DIRS
-		${THIRD_PARTY}/zlib)
-else()
-	set(OXYGINE_INCLUDE_DIRS
-		${THIRD_PARTY}/pthreads/include/
-		${THIRD_PARTY}/zlib)
-endif()		
-
 
 
 set(OXYGINE_LIBRARY_DIRS

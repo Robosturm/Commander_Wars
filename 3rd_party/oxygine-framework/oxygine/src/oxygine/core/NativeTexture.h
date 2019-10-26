@@ -2,7 +2,7 @@
 #include "../oxygine-include.h"
 #include "Restorable.h"
 #include "Texture.h"
-#include "ox_debug.h"
+#include "QtGlobal"
 #include "../closure/closure.h"
 
 namespace oxygine
@@ -30,8 +30,6 @@ namespace oxygine
         /**returns handle (ptr) to HW texture ID*/
         virtual nativeTextureHandle getHandle() const = 0;
 
-        //debug
-        static void dumpCreatedTextures();
         static std::vector<spNativeTexture> getCreatedTextures();
         /**debug counter of created textures*/
         static volatile int created;

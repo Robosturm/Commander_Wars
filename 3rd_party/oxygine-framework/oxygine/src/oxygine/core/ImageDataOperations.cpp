@@ -8,17 +8,17 @@ namespace oxygine
     {
         bool check(const ImageData& src, const ImageData& dest)
         {
-            OX_ASSERT(dest.w == src.w);
-            OX_ASSERT(dest.h == src.h);
+            Q_ASSERT(dest.w == src.w);
+            Q_ASSERT(dest.h == src.h);
             if (src.w)
             {
-                OX_ASSERT(src.data);
-                OX_ASSERT(dest.data);
-                OX_ASSERT(src.pitch);
-                OX_ASSERT(dest.pitch);
+                Q_ASSERT(src.data);
+                Q_ASSERT(dest.data);
+                Q_ASSERT(src.pitch);
+                Q_ASSERT(dest.pitch);
             }
-            OX_ASSERT(src.bytespp);
-            OX_ASSERT(dest.bytespp);
+            Q_ASSERT(src.bytespp);
+            Q_ASSERT(dest.bytespp);
             if (dest.w != src.w ||
                     dest.h != src.h ||
                     !src.data ||
@@ -37,7 +37,7 @@ namespace oxygine
             if (!check(src, dest))
                 return;
 
-            OX_ASSERT(src.format == dest.format);
+            Q_ASSERT(src.format == dest.format);
 
             int bppPitch = src.w * src.bytespp;
 
@@ -68,7 +68,7 @@ namespace oxygine
             if (!check(src, dest))
                 return;
 
-            OX_ASSERT(src.format == dest.format);
+            Q_ASSERT(src.format == dest.format);
 
             int bppPitch = src.w * src.bytespp;
 

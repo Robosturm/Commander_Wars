@@ -79,7 +79,7 @@ namespace oxygine
             }
 
 
-            OX_ASSERT(meta_frames && "Did you recreate atlasses?");
+            Q_ASSERT(meta_frames && "Did you recreate atlasses?");
 
             int columns = 0;
             int rows = 0;
@@ -117,7 +117,7 @@ namespace oxygine
                 ResAnim* ra = new ResAnim(this);
 
 
-                OX_ASSERT(meta_frames);
+                Q_ASSERT(meta_frames);
 
 
                 char* frames_data = (char*)meta_frames.first_child().value();

@@ -1,7 +1,6 @@
 #pragma once
 #include "../oxygine-include.h"
 #include "../EventDispatcher.h"
-#include "../Serializable.h"
 #include "../TouchEvent.h"
 #include "../core/Object.h"
 #include "../core/Renderer.h"
@@ -39,7 +38,7 @@ namespace oxygine
 
     DECLARE_SMART(Actor, spActor);
 
-    class Actor: public EventDispatcher, public intrusive_list_item<spActor>, public Serializable
+    class Actor: public EventDispatcher, public intrusive_list_item<spActor>
     {
         typedef intrusive_list_item<spActor> intr_list;
 
@@ -282,13 +281,6 @@ namespace oxygine
         typedef Property<float, float, Actor, &Actor::getScaleX, &Actor::setScaleX>                             TweenScaleX;
         typedef Property<float, float, Actor, &Actor::getScaleY, &Actor::setScaleY>                             TweenScaleY;
         typedef Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>               TweenAlpha;
-
-
-        void serialize(serializedata*) override;
-        void deserialize(const deserializedata*) override;
-
-        /**Returns detailed actor information. Used for debug purposes. */
-        virtual std::string dump(const dumpOptions& opt) const;
 
         /**Returns Stage where Actor attached to. Used for multi stage (window) mode*/
         Stage*              _getStage();

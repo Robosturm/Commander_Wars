@@ -33,11 +33,6 @@ namespace oxygine
         /**void*, uin64 and int userData is UNION!*/
         void setUserData32(int data) { __userData32 = data; }
 
-
-        void dumpObject() const;
-
-        /**Dumps into Output all created and undeleted objects. Use it for memory leaks searching*/
-        static void dumpCreatedObjects();
         /**Shows assert when object with this unique ID will be created.*/
         static void showAssertInCtor(int id);
         /**Shows assert when object with this unique ID will be destroyed.*/
@@ -101,7 +96,7 @@ namespace oxygine
             return 0;
 #ifdef OXYGINE_DEBUG_SAFECAST
         dest cast = dynamic_cast<dest>(ptr);
-        OX_ASSERT(cast && "can't cast pointer");
+        Q_ASSERT(cast && "can't cast pointer");
         return cast;
 #else
         return static_cast<dest>(ptr);
@@ -115,7 +110,7 @@ namespace oxygine
             return 0;
 #ifdef OXYGINE_DEBUG_SAFECAST
         intrusive_ptr<T> t = dynamic_cast<T*>(p.get());
-        OX_ASSERT(t && "can't cast pointer");
+        Q_ASSERT(t && "can't cast pointer");
 #endif
         return static_cast<T*>(p.get());
     }

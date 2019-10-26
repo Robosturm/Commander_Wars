@@ -18,11 +18,6 @@ namespace oxygine
         bool        getUseRChannel() const;
 
         void setMask(spSprite, bool useRChannel = false);
-
-        void serialize(serializedata* data) override;
-        void deserialize(const deserializedata* data) override;
-        void deserializeLink(const deserializeLinkData*) override;
-
     protected:
         void render(const RenderState& parentRS) override;
 
