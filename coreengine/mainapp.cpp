@@ -25,7 +25,8 @@
 #include "coreengine/userdata.h"
 
 #include "qfile.h"
-
+#include "qguiapplication.h"
+#include "qscreen.h"
 #include "qdir.h"
 
 Mainapp* Mainapp::m_pMainapp;
@@ -293,6 +294,76 @@ void Mainapp::loadRessources()
     }
     m_Timer.start(1);
 }
+
+
+void Mainapp::changeScreenMode(qint32 mode)
+{
+    hide();
+    switch (mode)
+    {
+        case 1:
+        {
+            setWindowState(Qt::WindowState::WindowNoState);
+            setFlag(Qt::FramelessWindowHint);
+            show();
+            getSettings()->setFullscreen(false);
+            getSettings()->setBorderless(true);
+            break;
+        }
+        case 2:
+        {
+            showFullScreen();
+            QScreen *screen = QGuiApplication::primaryScreen();
+            QSize  screenSize = screen->availableSize ();
+            // set window info
+            getSettings()->setFullscreen(true);
+            getSettings()->setBorderless(true);
+            getSettings()->setWidth(screenSize.width());
+            getSettings()->setHeight(screenSize.height());
+            break;
+        }
+        default:
+        {
+            setWindowState(Qt::WindowState::WindowNoState);
+            setFlag(Qt::FramelessWindowHint, false);
+            showNormal();
+            getSettings()->setFullscreen(false);
+            getSettings()->setBorderless(false);
+        }
+    }
+    // change screen size after changing the border flags
+    changeScreenSize(Settings::getWidth(), Settings::getHeight());
+}
+
+void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
+{
+    resize(width, heigth);
+    setMinimumSize(QSize(width, heigth));
+    setMaximumSize(QSize(width, heigth));
+    getSettings()->setWidth(width);
+    getSettings()->setHeight(heigth);
+    oxygine::Stage::instance->setSize(width, heigth);
+    getSettings()->saveSettings();
+    emit sigWindowLayoutChanged();
+}
+
+qint32 Mainapp::getScreenMode()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    if (pApp->getSettings()->getFullscreen())
+    {
+        return 2;
+    }
+    else if (pApp->getSettings()->getBorderless())
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 
 void Mainapp::keyPressEvent(QKeyEvent *event)
 {

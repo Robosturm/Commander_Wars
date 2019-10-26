@@ -173,6 +173,14 @@ signals:
     void sigConsoleText(oxygine::KeyEvent event);
     void sigConsoleKeyDown(oxygine::KeyEvent event);
     void sigConsoleKeyUp(oxygine::KeyEvent event);
+    /**
+     * @brief sigWindowLayoutChanged
+     */
+    void sigWindowLayoutChanged();
+public slots:
+    void changeScreenMode(qint32 mode);
+    void changeScreenSize(qint32 width, qint32 heigth);
+    qint32 getScreenMode();
 private:
     QTranslator m_Translator;
     QTimer m_Timer;

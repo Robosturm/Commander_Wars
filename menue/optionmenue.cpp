@@ -78,7 +78,8 @@ OptionMenue::OptionMenue()
         emit sigShowSettings();
     });
     connect(this, &OptionMenue::sigShowSettings, this, &OptionMenue::showSettings, Qt::QueuedConnection);
-    connect(this, &OptionMenue::sigChangeScreenSize, this, &OptionMenue::changeScreenSize, Qt::QueuedConnection);
+    connect(this, &OptionMenue::sigChangeScreenSize, pApp, &Mainapp::changeScreenSize, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigWindowLayoutChanged, this, &OptionMenue::reloadSettings, Qt::QueuedConnection);
 
     oxygine::spButton pButtonGameplayAndKeys = ObjectManager::createButton(tr("Gameplay & Keys"));
     pButtonGameplayAndKeys->attachTo(this);
@@ -125,70 +126,6 @@ void OptionMenue::exitMenue()
     pApp->continueThread();
 }
 
-void OptionMenue::changeScreenMode(qint32 mode)
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    switch (mode)
-    {
-        case 1:
-        {
-            pApp->setFlags(Qt::FramelessWindowHint);
-            pApp->show();
-            pApp->getSettings()->setFullscreen(false);
-            pApp->getSettings()->setBorderless(true);
-            break;
-        }
-        case 2:
-        {
-            pApp->showFullScreen();
-            pApp->getSettings()->setFullscreen(true);
-            pApp->getSettings()->setBorderless(true);
-            break;
-        }
-        default:
-        {
-            pApp->showNormal();
-            pApp->getSettings()->setFullscreen(false);
-            pApp->getSettings()->setBorderless(false);
-        }
-    }
-    // change screen size after changing the border flags
-    changeScreenSize(Settings::getWidth(), Settings::getHeight());
-
-    pApp->continueThread();
-}
-
-qint32 OptionMenue::getScreenMode()
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    if (pApp->getSettings()->getFullscreen())
-    {
-        return 2;
-    }
-    else if (pApp->getSettings()->getBorderless())
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
-void OptionMenue::changeScreenSize(qint32 width, qint32 heigth)
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    pApp->resize(width, heigth);
-    pApp->getSettings()->setWidth(width);
-    pApp->getSettings()->setHeight(heigth);
-    pApp->getSettings()->saveSettings();
-    Console::print("Leaving Option Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new OptionMenue());
-    oxygine::Actor::detach(); 
-    pApp->continueThread();
-}
 
 void OptionMenue::showGameplayAndKeys()
 {
@@ -539,6 +476,13 @@ void OptionMenue::showGameplayAndKeys()
     pApp->continueThread();
 }
 
+void OptionMenue::reloadSettings()
+{
+    Console::print("Leaving Option Menue", Console::eDEBUG);
+    oxygine::getStage()->addChild(new OptionMenue());
+    oxygine::Actor::detach();
+}
+
 void OptionMenue::showSettings()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -662,17 +606,25 @@ void OptionMenue::showSettings()
                                      QSize(800 ,  600 )};
     QScreen *screen = QGuiApplication::primaryScreen();
     QSize  screenSize = screen->availableSize ();
-    qint32 count = 0;
-    while  (count < supportedSizes.size())
+    if (Settings::getFullscreen())
     {
-        if (supportedSizes[count].width() <= screenSize.width() &&
-            supportedSizes[count].height() <= screenSize.height())
+        supportedSizes.clear();
+        supportedSizes.append(screenSize);
+    }
+    else
+    {
+        qint32 count = 0;
+        while  (count < supportedSizes.size())
         {
-            count++;
-        }
-        else
-        {
-            supportedSizes.removeAt(count);
+            if (supportedSizes[count].width() <= screenSize.width() &&
+                supportedSizes[count].height() <= screenSize.height())
+            {
+                count++;
+            }
+            else
+            {
+                supportedSizes.removeAt(count);
+            }
         }
     }
     QVector<QString> displaySizes;
@@ -720,9 +672,9 @@ void OptionMenue::showSettings()
     QVector<QString> items = {tr("Window"), tr("Bordered"), tr("Fullscreen")};
     spDropDownmenu pScreenModes = new DropDownmenu(400, items);
     pScreenModes->setPosition(sliderOffset - 130, y);
-    pScreenModes->setCurrentItem(getScreenMode());
+    pScreenModes->setCurrentItem(pApp->getScreenMode());
     m_pOptions->addItem(pScreenModes);
-    connect(pScreenModes.get(), &DropDownmenu::sigItemChanged, this, &OptionMenue::changeScreenMode, Qt::QueuedConnection);
+    connect(pScreenModes.get(), &DropDownmenu::sigItemChanged, pApp, &Mainapp::changeScreenMode, Qt::QueuedConnection);
     y += 40;
 
     pTextfield = new oxygine::TextField();

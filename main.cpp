@@ -72,11 +72,6 @@ int main(int argc, char* argv[])
     QGuiApplication app(argc, argv);
     Mainapp window;
     window.setTitle(QObject::tr("Commander Wars"));
-    window.resize(Settings::getWidth(), Settings::getHeight());
-    if (Settings::getBorderless())
-    {
-        window.setFlags(Qt::FramelessWindowHint);
-    }
 
     // qt metatypes we need this for js and signal slot stuff
     qRegisterMetaType<NetworkInterface::NetworkSerives>("NetworkInterface::NetworkSerives");
@@ -137,14 +132,8 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<oxygine::spActor>("oxygine::spActor");
 
     /*************************************************************************************************/
-    if (Settings::getFullscreen())
-    {
-        window.showFullScreen();
-    }
-    else
-    {
-        window.show();
-    }
+    // show window according to window mode
+    window.changeScreenMode(window.getScreenMode());
     qint32 returncode = app.exec();
     window.getWorkerthread()->exit(0);
     QDir dir("temp/");

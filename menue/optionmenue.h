@@ -14,8 +14,6 @@ class OptionMenue : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit OptionMenue();
-
-    qint32 getScreenMode();
 signals:
     void sigExitMenue();
     void sigShowMods();
@@ -28,8 +26,8 @@ public slots:
     void restart();
     void showSettings();
     void showGameplayAndKeys();
-    void changeScreenMode(qint32 mode);
-    void changeScreenSize(qint32 width, qint32 heigth);
+
+    void reloadSettings();
 private:
     spPanel m_pOptions;
 
