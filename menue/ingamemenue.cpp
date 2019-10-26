@@ -9,6 +9,7 @@
 
 #include "qcursor.h"
 
+#include <qguiapplication.h>
 
 
 InGameMenue::InGameMenue()
@@ -69,7 +70,7 @@ void InGameMenue::loadHandling()
             if (m_Focused)
             {
                 pEvent->stopPropagation();
-                emit this->sigMouseWheel(static_cast<qint32>(pTouchEvent->wheelDirection.y));
+                emit this->sigMouseWheel(static_cast<qint32>(pTouchEvent->wheelDirection.y / 100));
             }
         }
     });
@@ -182,13 +183,13 @@ void InGameMenue::loadHandling()
     });
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event *)->void
     {
-        SDL_ShowCursor(SDL_ENABLE);
+        pApp->cursor().setShape(Qt::CursorShape::BlankCursor);
     });
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::OVER, [=](oxygine::Event *)->void
     {
         if (!Settings::getShowCursor())
         {
-            SDL_ShowCursor(SDL_DISABLE);
+            pApp->cursor().setShape(Qt::CursorShape::ArrowCursor);
         }
     });
 
@@ -203,34 +204,33 @@ void InGameMenue::loadHandling()
 
 void InGameMenue::autoScroll()
 {
-    if (SDL_GetWindowFlags(oxygine::core::getWindow()) & SDL_WINDOW_MOUSE_FOCUS &&
+    Mainapp* pApp = Mainapp::getInstance();
+    if (QGuiApplication::focusWindow() == pApp &&
         m_Focused)
     {
-        qint32 curX = 0;
-        qint32 curY = 0;
-        SDL_GetMouseState(&curX, &curY);
+        QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
         GameMap* pMap = GameMap::getInstance();
 
         qint32 moveX = 0;
         qint32 moveY = 0;
-        if ((curX < autoScrollBorder.x()) &&
+        if ((curPos.x() < autoScrollBorder.x()) &&
             (pMap->getX() < autoScrollBorder.x()))
         {
             moveX = GameMap::Imagesize * pMap->getZoom();
         }
-        else if ((curX < Settings::getWidth() - autoScrollBorder.width()) &&
-            (curX > Settings::getWidth() - autoScrollBorder.width() - 50) &&
+        else if ((curPos.x() < Settings::getWidth() - autoScrollBorder.width()) &&
+            (curPos.x() > Settings::getWidth() - autoScrollBorder.width() - 50) &&
             (pMap->getX() + pMap->getMapWidth() * pMap->getZoom() * GameMap::Imagesize > Settings::getWidth() - autoScrollBorder.width() - 50))
         {
             moveX = -GameMap::Imagesize * pMap->getZoom();
         }
 
-        if ((curY < autoScrollBorder.y()) &&
+        if ((curPos.y() < autoScrollBorder.y()) &&
             (pMap->getY() < autoScrollBorder.y()))
         {
             moveY = GameMap::Imagesize * pMap->getZoom();
         }
-        else if ((curY > Settings::getHeight() - autoScrollBorder.height()) &&
+        else if ((curPos.y() > Settings::getHeight() - autoScrollBorder.height()) &&
             (pMap->getY() + pMap->getMapHeight() * pMap->getZoom() * GameMap::Imagesize > Settings::getHeight() - autoScrollBorder.height()))
         {
             moveY = -GameMap::Imagesize * pMap->getZoom();
@@ -259,7 +259,8 @@ void InGameMenue::setFocused(bool Focused)
 
 InGameMenue::~InGameMenue()
 {
-    SDL_ShowCursor(SDL_ENABLE);
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->cursor().setShape(Qt::CursorShape::ArrowCursor);
 }
 
 void InGameMenue::mouseWheel(qint32 direction)
@@ -283,12 +284,12 @@ Cursor* InGameMenue::getCursor()
     return m_Cursor.get();
 }
 
-void InGameMenue::keyInput(SDL_Event event)
+void InGameMenue::keyInput(oxygine::KeyEvent event)
 {
     if (m_Focused)
     {
         // for debugging
-        SDL_Keycode cur = event.key.keysym.sym;
+        Qt::Key cur = event.getKey();
         if (cur == Settings::getKey_up())
         {
             calcNewMousePosition(m_Cursor->getMapPointX(), m_Cursor->getMapPointY() - 1);
@@ -336,12 +337,12 @@ void InGameMenue::keyInput(SDL_Event event)
     }
 }
 
-void InGameMenue::keyUp(SDL_Event event)
+void InGameMenue::keyUp(oxygine::KeyEvent event)
 {
     if (m_Focused)
     {
         // for debugging
-        SDL_Keycode cur = event.key.keysym.sym;
+        Qt::Key cur = event.getKey();
         if (cur == Settings::getKey_cancel())
         {
             emit sigRightClickUp(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
@@ -382,7 +383,8 @@ void InGameMenue::calcNewMousePosition(qint32 x, qint32 y)
             pMap->moveMap(0, moveY);
             MousePosY += moveY;
         }
-        SDL_WarpMouseInWindow(oxygine::core::getWindow(), MousePosX, MousePosY);
+        QPoint curPos = pApp->mapToGlobal(QPoint(MousePosX, MousePosY));
+        pApp->cursor().setPos(curPos);
         emit m_Cursor->sigUpdatePosition(MousePosX, MousePosY);
     }
     pApp->continueThread();

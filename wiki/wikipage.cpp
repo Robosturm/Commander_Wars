@@ -49,12 +49,12 @@ Wikipage::Wikipage()
     connect(pApp, &Mainapp::sigKeyDown, this, &Wikipage::keyInput, Qt::QueuedConnection);
 }
 
-void Wikipage::keyInput(SDL_Event event)
+void Wikipage::keyInput(oxygine::KeyEvent event)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     // for debugging
-    SDL_Keycode cur = event.key.keysym.sym;
+    Qt::Key cur = event.getKey();
     if ((cur == Settings::getKey_information()) ||
         cur == Settings::getKey_cancel())
     {

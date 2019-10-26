@@ -975,7 +975,7 @@ void HumanPlayerInput::deleteArrow()
     m_Arrows.clear();
 }
 
-void HumanPlayerInput::keyDown(SDL_Event event)
+void HumanPlayerInput::keyDown(oxygine::KeyEvent event)
 {
     if (GameMenue::getInstance() != nullptr &&
         GameMap::getInstance()->getCurrentPlayer() == m_pPlayer &&
@@ -984,7 +984,7 @@ void HumanPlayerInput::keyDown(SDL_Event event)
         if (GameAnimationFactory::getAnimationCount() == 0)
         {
             // for debugging
-            SDL_Keycode cur = event.key.keysym.sym;
+            Qt::Key cur = event.getKey();
             if (cur == Settings::getKey_next())
             {
                 if (m_FieldPoints.size() > 0)
@@ -1011,7 +1011,7 @@ void HumanPlayerInput::keyDown(SDL_Event event)
     }
 }
 
-void HumanPlayerInput::keyUp(SDL_Event event)
+void HumanPlayerInput::keyUp(oxygine::KeyEvent)
 {
     if (GameMenue::getInstance() != nullptr &&
         GameMap::getInstance()->getCurrentPlayer() == m_pPlayer &&

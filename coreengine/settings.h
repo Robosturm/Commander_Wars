@@ -71,17 +71,17 @@ public slots:
         return m_height;
     }
 
-    inline bool getBorderless()
+    inline static bool getBorderless()
     {
         return m_borderless;
     }
 
-    inline bool getFullscreen()
+    inline static bool getFullscreen()
     {
         return m_fullscreen;
     }
 
-    inline SDL_Keycode getKeyConsole()
+    inline Qt::Key getKeyConsole()
     {
         return m_key_console;
     }
@@ -164,56 +164,56 @@ public slots:
     static float getBattleAnimationSpeed();
     static void setBattleAnimationSpeed(const quint32 &value);
 
-    static SDL_Keycode getKey_up();
-    static void setKey_up(const SDL_Keycode &key_up);
+    static Qt::Key getKey_up();
+    static void setKey_up(const Qt::Key &key_up);
 
-    static SDL_Keycode getKey_down();
-    static void setKey_down(const SDL_Keycode &key_down);
+    static Qt::Key getKey_down();
+    static void setKey_down(const Qt::Key &key_down);
 
-    static SDL_Keycode getKey_right();
-    static void setKey_right(const SDL_Keycode &key_right);
+    static Qt::Key getKey_right();
+    static void setKey_right(const Qt::Key &key_right);
 
-    static SDL_Keycode getKey_left();
-    static void setKey_left(const SDL_Keycode &key_left);
+    static Qt::Key getKey_left();
+    static void setKey_left(const Qt::Key &key_left);
 
-    static SDL_Keycode getKey_confirm();
-    static void setKey_confirm(const SDL_Keycode &key_confirm);
+    static Qt::Key getKey_confirm();
+    static void setKey_confirm(const Qt::Key &key_confirm);
 
-    static SDL_Keycode getKey_cancel();
-    static void setKey_cancel(const SDL_Keycode &key_cancel);
+    static Qt::Key getKey_cancel();
+    static void setKey_cancel(const Qt::Key &key_cancel);
 
-    static SDL_Keycode getKey_next();
-    static void setKey_next(const SDL_Keycode &key_next);
+    static Qt::Key getKey_next();
+    static void setKey_next(const Qt::Key &key_next);
 
-    static SDL_Keycode getKey_previous();
-    static void setKey_previous(const SDL_Keycode &key_previous);
+    static Qt::Key getKey_previous();
+    static void setKey_previous(const Qt::Key &key_previous);
 
-    static SDL_Keycode getKey_quicksave1();
-    static void setKey_quicksave1(const SDL_Keycode &key_quicksave1);
+    static Qt::Key getKey_quicksave1();
+    static void setKey_quicksave1(const Qt::Key &key_quicksave1);
 
-    static SDL_Keycode getKey_quicksave2();
-    static void setKey_quicksave2(const SDL_Keycode &key_quicksave2);
+    static Qt::Key getKey_quicksave2();
+    static void setKey_quicksave2(const Qt::Key &key_quicksave2);
 
-    static SDL_Keycode getKey_quickload1();
-    static void setKey_quickload1(const SDL_Keycode &key_quickload1);
+    static Qt::Key getKey_quickload1();
+    static void setKey_quickload1(const Qt::Key &key_quickload1);
 
-    static SDL_Keycode getKey_quickload2();
-    static void setKey_quickload2(const SDL_Keycode &key_quickload2);
+    static Qt::Key getKey_quickload2();
+    static void setKey_quickload2(const Qt::Key &key_quickload2);
 
-    static SDL_Keycode getKey_moveMapUp();
-    static void setKey_moveMapUp(const SDL_Keycode &key_moveMapUp);
+    static Qt::Key getKey_moveMapUp();
+    static void setKey_moveMapUp(const Qt::Key &key_moveMapUp);
 
-    static SDL_Keycode getKey_moveMapDown();
-    static void setKey_moveMapDown(const SDL_Keycode &key_moveMapDown);
+    static Qt::Key getKey_moveMapDown();
+    static void setKey_moveMapDown(const Qt::Key &key_moveMapDown);
 
-    static SDL_Keycode getKey_moveMapRight();
-    static void setKey_moveMapRight(const SDL_Keycode &key_moveMapRight);
+    static Qt::Key getKey_moveMapRight();
+    static void setKey_moveMapRight(const Qt::Key &key_moveMapRight);
 
-    static SDL_Keycode getKey_moveMapLeft();
-    static void setKey_moveMapLeft(const SDL_Keycode &key_moveMapLeft);
+    static Qt::Key getKey_moveMapLeft();
+    static void setKey_moveMapLeft(const Qt::Key &key_moveMapLeft);
 
-    static SDL_Keycode getKey_information();
-    static void setKey_information(const SDL_Keycode &key_information);
+    static Qt::Key getKey_information();
+    static void setKey_information(const Qt::Key &key_information);
 private:
     // setting variables
     static qint32 m_x;
@@ -224,25 +224,25 @@ private:
     static bool m_borderless;
     static bool m_fullscreen;
 
-    static SDL_Keycode m_key_escape;
-    static SDL_Keycode m_key_console;
-    static SDL_Keycode m_key_up;
-    static SDL_Keycode m_key_down;
-    static SDL_Keycode m_key_right;
-    static SDL_Keycode m_key_left;
-    static SDL_Keycode m_key_confirm;
-    static SDL_Keycode m_key_cancel;
-    static SDL_Keycode m_key_next;
-    static SDL_Keycode m_key_previous;
-    static SDL_Keycode m_key_quicksave1;
-    static SDL_Keycode m_key_quicksave2;
-    static SDL_Keycode m_key_quickload1;
-    static SDL_Keycode m_key_quickload2;
-    static SDL_Keycode m_key_information;
-    static SDL_Keycode m_key_moveMapUp;
-    static SDL_Keycode m_key_moveMapDown;
-    static SDL_Keycode m_key_moveMapRight;
-    static SDL_Keycode m_key_moveMapLeft;
+    static Qt::Key m_key_escape;
+    static Qt::Key m_key_console;
+    static Qt::Key m_key_up;
+    static Qt::Key m_key_down;
+    static Qt::Key m_key_right;
+    static Qt::Key m_key_left;
+    static Qt::Key m_key_confirm;
+    static Qt::Key m_key_cancel;
+    static Qt::Key m_key_next;
+    static Qt::Key m_key_previous;
+    static Qt::Key m_key_quicksave1;
+    static Qt::Key m_key_quicksave2;
+    static Qt::Key m_key_quickload1;
+    static Qt::Key m_key_quickload2;
+    static Qt::Key m_key_information;
+    static Qt::Key m_key_moveMapUp;
+    static Qt::Key m_key_moveMapDown;
+    static Qt::Key m_key_moveMapRight;
+    static Qt::Key m_key_moveMapLeft;
 
     static QString m_language;
     // Sound

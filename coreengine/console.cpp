@@ -16,6 +16,10 @@
 
 #include "spritingsupport/spritecreator.h"
 
+#include "oxygine/KeyEvent.h"
+#include "qclipboard.h"
+#include "qguiapplication.h"
+
 // values which differ from release to debug build
 #ifdef GAMEDEBUG
 Console::eLogLevels Console::LogLevel = Console::eDEBUG;
@@ -124,8 +128,8 @@ void Console::dotask(const QString& message)
         !pGameMenue->isNetworkGame())
     {
         order = order.replace("GameConsole.game:", "");
+        pApp->getInterpreter()->doString(order);
     }
-    pApp->getInterpreter()->doString(order);
     pApp->continueThread();
 }
 
@@ -147,38 +151,38 @@ void Console::print(const QString& message, eLogLevels MsgLogLevel)
         QString prefix = "";
         switch (MsgLogLevel)
         {
-        case eDEBUG:
-        {
-            qDebug(msg.toStdString().c_str());
-            prefix = "DEBUG: ";
-            break;
-        }
-        case eINFO:
-        {
-            qInfo(msg.toStdString().c_str());
-            prefix = "INFO: ";
-            break;
-        }
-        case eWARNING:
-        {
-            qWarning(msg.toStdString().c_str());
-            prefix = "WARNING: ";
-            break;
-        }
-        case eERROR:
-        {
-            qCritical(msg.toStdString().c_str());
-            prefix = "CRITICAL: ";
-            break;
-        }
-        case eFATAL:
-        {
-            prefix = "FATAL: ";
-            qFatal(msg.toStdString().c_str());
-            break;
-        }
-        default:
-            break;
+            case eDEBUG:
+            {
+                qDebug(msg.toStdString().c_str());
+                prefix = "DEBUG: ";
+                break;
+            }
+            case eINFO:
+            {
+                qInfo(msg.toStdString().c_str());
+                prefix = "INFO: ";
+                break;
+            }
+            case eWARNING:
+            {
+                qWarning(msg.toStdString().c_str());
+                prefix = "WARNING: ";
+                break;
+            }
+            case eERROR:
+            {
+                qCritical(msg.toStdString().c_str());
+                prefix = "CRITICAL: ";
+                break;
+            }
+            case eFATAL:
+            {
+                prefix = "FATAL: ";
+                qFatal(msg.toStdString().c_str());
+                break;
+            }
+            default:
+                break;
         }
 
 
@@ -1272,21 +1276,21 @@ void Console::createfunnymessage(qint32 message){
     print(printmessage, Console::eINFO);
 }
 
-void Console::TextInput(SDL_Event event)
+void Console::TextInput(oxygine::KeyEvent event)
 {
     if (show)
     {
         // for the start we don't check for upper or lower key input
-        QString msg = QString(event.text.text);
+        QString msg = event.getText();
         curmsg.insert(curmsgpos,msg);
         curmsgpos += msg.size();
     }
 }
 
-void Console::KeyInput(SDL_Event event)
+void Console::KeyInput(oxygine::KeyEvent event)
 {
     // for debugging
-    SDL_Keycode cur = event.key.keysym.sym;
+    Qt::Key cur = event.getKey();
     Mainapp* pApp = Mainapp::getInstance();
     if (cur == pApp->getSettings()->getKeyConsole())
     {
@@ -1294,34 +1298,34 @@ void Console::KeyInput(SDL_Event event)
     }
     else if (show)
     {
-        if ((event.key.keysym.mod & KMOD_CTRL) > 0)
+        if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
         {
             switch(cur)
             {
-            case SDLK_v:
-            {
-                QString text = SDL_GetClipboardText();
-                curmsg = curmsg.insert(curmsgpos, text);
-                curmsgpos = text.size();
-                break;
-            }
-            case SDLK_c:
-            {
-                SDL_SetClipboardText(curmsg.toStdString().c_str());
-                break;
-            }
-            case SDLK_x:
-            {
-                SDL_SetClipboardText(curmsg.toStdString().c_str());
-                curmsg = "";
-                curmsgpos = 0;
-                break;
-            }
-            default:
-            {
-                // nothing
-                break;
-            }
+                case Qt::Key_V:
+                {
+                    QString text = QGuiApplication::clipboard()->text();
+                    curmsg = curmsg.insert(curmsgpos, text);
+                    curmsgpos = text.size();
+                    break;
+                }
+                case Qt::Key_C:
+                {
+                    QGuiApplication::clipboard()->setText(curmsg.toStdString().c_str());
+                    break;
+                }
+                case Qt::Key_X:
+                {
+                    QGuiApplication::clipboard()->setText(curmsg.toStdString().c_str());
+                    curmsg = "";
+                    curmsgpos = 0;
+                    break;
+                }
+                default:
+                {
+                    // nothing
+                    break;
+                }
             }
         }
         else
@@ -1329,93 +1333,97 @@ void Console::KeyInput(SDL_Event event)
             //Handle Key Input for the console
             switch(cur)
             {
-            case SDLK_HOME:
-            {
-                curmsgpos = 0;
-                break;
-            }
-            case SDLK_UP:
-            {
-                curlastmsgpos--;
-                if(curlastmsgpos < 0)
-                {
-                    curlastmsgpos = lastmsgs.size() - 1;
-                }
-                if(curlastmsgpos < lastmsgs.size() && curlastmsgpos >= 0)
-                {
-                    curmsg = lastmsgs[curlastmsgpos];
-                    curmsgpos = curmsg.size();
-                }
-                break;
-            }
-            case SDLK_LEFT:
-            {
-                curmsgpos--;
-                if(curmsgpos < 0)
+                case Qt::Key_Home:
                 {
                     curmsgpos = 0;
+                    break;
                 }
-                break;
-            }
-            case SDLK_DOWN:
-            {
-                curlastmsgpos++;
-                if(curlastmsgpos >= lastmsgs.size())
+                case Qt::Key_Up:
                 {
-                    curlastmsgpos = 0;
+                    curlastmsgpos--;
+                    if(curlastmsgpos < 0)
+                    {
+                        curlastmsgpos = lastmsgs.size() - 1;
+                    }
+                    if(curlastmsgpos < lastmsgs.size() && curlastmsgpos >= 0)
+                    {
+                        curmsg = lastmsgs[curlastmsgpos];
+                        curmsgpos = curmsg.size();
+                    }
+                    break;
                 }
-                if(curlastmsgpos < lastmsgs.size())
+                case Qt::Key_Left:
                 {
-                    curmsg = lastmsgs[curlastmsgpos];
-                    curmsgpos = curmsg.size();
-                }
-                break;
-            }
-            case SDLK_RIGHT:
-            {
-                curmsgpos++;
-                if(curmsgpos > curmsg.size())
-                {
-                    curmsgpos = curmsg.size();
-                }
-                break;
-            }
-            case SDLK_KP_ENTER:
-            case SDLK_RETURN:
-            {
-                dotask(curmsg);
-                lastmsgs.append(curmsg);
-                while (lastmsgs.size() > lastMsgSize)
-                {
-                    lastmsgs.removeFirst();
-                }
-                curlastmsgpos = lastmsgs.size();
-                curmsg = "";
-                curmsgpos = 0;
-                break;
-            }
-            case SDLK_BACKSPACE:
-            {
-                if(curmsgpos > 0)
-                {
-                    curmsg.remove(curmsgpos - 1,1);
                     curmsgpos--;
+                    if(curmsgpos < 0)
+                    {
+                        curmsgpos = 0;
+                    }
+                    break;
                 }
-                break;
-            }
-            case SDLK_DELETE:
-            {
-                if (curmsgpos < curmsg.size())
+                case Qt::Key_Down:
                 {
-                    curmsg.remove(curmsgpos, 1);
+                    curlastmsgpos++;
+                    if(curlastmsgpos >= lastmsgs.size())
+                    {
+                        curlastmsgpos = 0;
+                    }
+                    if(curlastmsgpos < lastmsgs.size())
+                    {
+                        curmsg = lastmsgs[curlastmsgpos];
+                        curmsgpos = curmsg.size();
+                    }
+                    break;
                 }
-                break;
-            }
-            case SDLK_END:
-            {
-                curmsgpos = curmsg.size();
-                break;
-            }
+                case Qt::Key_Right:
+                {
+                    curmsgpos++;
+                    if(curmsgpos > curmsg.size())
+                    {
+                        curmsgpos = curmsg.size();
+                    }
+                    break;
+                }
+                case Qt::Key_Enter:
+                case Qt::Key_Return:
+                {
+                    dotask(curmsg);
+                    lastmsgs.append(curmsg);
+                    while (lastmsgs.size() > lastMsgSize)
+                    {
+                        lastmsgs.removeFirst();
+                    }
+                    curlastmsgpos = lastmsgs.size();
+                    curmsg = "";
+                    curmsgpos = 0;
+                    break;
+                }
+                case Qt::Key_Backspace:
+                {
+                    if(curmsgpos > 0)
+                    {
+                        curmsg.remove(curmsgpos - 1,1);
+                        curmsgpos--;
+                    }
+                    break;
+                }
+                case Qt::Key_Delete:
+                {
+                    if (curmsgpos < curmsg.size())
+                    {
+                        curmsg.remove(curmsgpos, 1);
+                    }
+                    break;
+                }
+                case Qt::Key_End:
+                {
+                    curmsgpos = curmsg.size();
+                    break;
+                }
+                default:
+                {
+                    // do nothing
+                }
             }
         }
     }

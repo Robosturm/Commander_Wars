@@ -5,6 +5,8 @@
 
 #include "objects/panel.h"
 
+#include "oxygine/KeyEvent.h"
+
 class Wikipage;
 typedef oxygine::intrusive_ptr<Wikipage> spWikipage;
 
@@ -24,7 +26,7 @@ public:
 signals:
     void sigFinished();
 public slots:
-    void keyInput(SDL_Event event);
+    void keyInput(oxygine::KeyEvent event);
     /**
      * @brief loadText
      * @param text

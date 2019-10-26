@@ -1,6 +1,7 @@
 #include <QObject>
 #include <QProcess>
 #include <qdir.h>
+#include "qguiapplication.h"
 
 #ifdef GAMEDEBUG
 #include <QQmlApplicationEngine>
@@ -40,30 +41,18 @@
 #include "game/terrainfindingsystem.h"
 #include "game/campaign.h"
 #include "game/gamescript.h"
-
+#include "wiki/wikidatabase.h"
 
 #include "gameinput/cursordata.h"
 #include "gameinput/basegameinputif.h"
 
 #include "game/GameEnums.h"
 
-#include "resource_management/backgroundmanager.h"
-#include "resource_management/buildingspritemanager.h"
-#include "resource_management/cospritemanager.h"
-#include "resource_management/fontmanager.h"
-#include "resource_management/gameanimationmanager.h"
-#include "resource_management/gamemanager.h"
-#include "resource_management/gamerulemanager.h"
-#include "resource_management/objectmanager.h"
-#include "resource_management/terrainmanager.h"
-#include "resource_management/unitspritemanager.h"
-#include "resource_management/battleanimationmanager.h"
-
 #include "ingamescriptsupport/events/scriptevent.h"
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 #include "qfile.h"
 
-#include "wiki/wikidatabase.h"
+#include "oxygine/KeyEvent.h"
 
 int main(int argc, char* argv[])
 {
@@ -80,33 +69,14 @@ int main(int argc, char* argv[])
 #ifdef GAMEDEBUG
     qQmlEnableDebuggingHelper.startTcpDebugServer(3768);
 #endif
-
-    Mainapp app(argc, argv);
-
-    // setup stuff is done here
-    oxygine::ObjectBase::__startTracingLeaks();
-    // Initialize Oxygine's internal stuff
-    oxygine::core::init_desc desc;
-    // translate all user visible texts with qt
-    desc.title = QObject::tr("Commander Wars").toStdString().c_str();
-
-    // The initial window size can be set up here on SDL builds, ignored on Mobile devices
-    desc.w = app.getSettings()->getWidth();
-    desc.h = app.getSettings()->getHeight();
-    desc.fullscreen = app.getSettings()->getFullscreen();
-    desc.borderless = app.getSettings()->getBorderless();
-
-    // init oxygine engine
-    oxygine::core::init(&desc);
-
-    // Create the stage. Stage is a root node for all updateable and drawable objects
-    oxygine::Stage::instance = new oxygine::Stage();
-    oxygine::Stage::instance->setVisible(false);
-
-    oxygine::Point size = oxygine::core::getDisplaySize();
-    oxygine::getStage()->setSize(size);
-
-    app.setup();
+    QGuiApplication app(argc, argv);
+    Mainapp window;
+    window.setTitle(QObject::tr("Commander Wars"));
+    window.resize(Settings::getWidth(), Settings::getHeight());
+    if (Settings::getBorderless())
+    {
+        window.setFlags(Qt::FramelessWindowHint);
+    }
 
     // qt metatypes we need this for js and signal slot stuff
     qRegisterMetaType<NetworkInterface::NetworkSerives>("NetworkInterface::NetworkSerives");
@@ -127,12 +97,12 @@ int main(int argc, char* argv[])
     qRegisterMetaType<GameEnums::BuildingTarget>("GameEnums::BuildingTarget");
     qRegisterMetaType<GameEnums::BattleAnimationMode>("GameEnums::BattleAnimationMode");
     qRegisterMetaType<GameEnums::UnitType>("GameEnums::UnitType");
-    qRegisterMetaType<SDL_Event>("SDL_Event");
     qRegisterMetaType<std::shared_ptr<QTcpSocket>>("std::shared_ptr<QTcpSocket>");
     qRegisterMetaType<spScriptEvent>("spScriptEvent");
     qRegisterMetaType<spScriptCondition>("spScriptCondition");
     qRegisterMetaType<WikiDatabase::pageData>("WikiDatabase::pageData");
     qRegisterMetaType<oxygine::spActor>("oxygine::spActor");
+    qRegisterMetaType<oxygine::KeyEvent>("oxygine::KeyEvent");
 
     qmlRegisterInterface<QmlVectorPoint>("QmlVectorPoint");
     qmlRegisterInterface<Terrain>("Terrain");
@@ -166,49 +136,34 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<Wikipage>("Wikipage");
     qmlRegisterInterface<oxygine::spActor>("oxygine::spActor");
 
-    // load ressources
-    BackgroundManager::getInstance();
-    BuildingSpriteManager::getInstance();
-    COSpriteManager::getInstance();
-    FontManager::getInstance();
-    GameAnimationManager::getInstance();
-    GameManager::getInstance();
-    GameRuleManager::getInstance();
-    ObjectManager::getInstance();
-    TerrainManager::getInstance();
-    UnitSpriteManager::getInstance();
-    BattleAnimationManager::getInstance();
-    WikiDatabase::getInstance();
-    Userdata* pUserdata = Userdata::getInstance();
     /*************************************************************************************************/
-    // This is the main game loop.
-    app.start();
-    oxygine::Stage::instance->setVisible(true);
+    if (Settings::getFullscreen())
+    {
+        window.showFullScreen();
+    }
+    else
+    {
+        window.show();
+    }
     qint32 returncode = app.exec();
-    app.getWorkerthread()->exit(0);
+    window.getWorkerthread()->exit(0);
     QDir dir("temp/");
     dir.removeRecursively();
     /*************************************************************************************************/
     // clean up section ahead
     // store current settings when closing
-    if (app.getGameServer() != nullptr)
+    if (window.getGameServer() != nullptr)
     {
-        app.stopGameServer();
+        window.stopGameServer();
     }
     networkSession.close();
-    app.getSettings()->saveSettings();
+    window.getSettings()->saveSettings();
 
     if (GameMap::getInstance() != nullptr)
     {
         GameMap::getInstance()->deleteMap();
     }
-
-    pUserdata->storeUser();
-
-    // Releases all internal components and the stage
-    oxygine::core::release();
-
-    oxygine::ObjectBase::__stopTracingLeaks();
+    Userdata::getInstance()->storeUser();
     //end
     if (returncode == 1)
     {

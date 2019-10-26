@@ -10,6 +10,8 @@
 
 #include "objects/cursor.h"
 
+#include "oxygine/KeyEvent.h"
+
 class InGameMenue : public QObject, public oxygine::Actor
 {
     Q_OBJECT
@@ -35,8 +37,8 @@ signals:
 public slots:
     void mouseWheel(qint32 direction);
     void MoveMap(qint32 x, qint32 y);
-    virtual void keyInput(SDL_Event event);
-    virtual void keyUp(SDL_Event event);
+    virtual void keyInput(oxygine::KeyEvent event);
+    virtual void keyUp(oxygine::KeyEvent event);
     virtual void autoScroll();
 protected:
     void loadBackground();

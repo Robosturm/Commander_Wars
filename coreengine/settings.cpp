@@ -8,6 +8,8 @@
 #include <QTranslator>
 #include <QLocale>
 
+#include <qguiapplication.h>
+
 const QString Settings::m_settingFile = "Commander_Wars.ini";
 float Settings::m_mouseSensitivity   = -0.75f;
 qint32 Settings::m_x                 = 0;
@@ -16,25 +18,25 @@ qint32 Settings::m_width             = 1024;
 qint32 Settings::m_height            = 800;
 bool Settings::m_borderless       = false;
 bool Settings::m_fullscreen       = false;
-SDL_Keycode Settings::m_key_escape      = SDLK_ESCAPE;
-SDL_Keycode Settings::m_key_console     = SDLK_F1;
-SDL_Keycode Settings::m_key_up          = SDLK_w;
-SDL_Keycode Settings::m_key_down        = SDLK_s;
-SDL_Keycode Settings::m_key_right       = SDLK_d;
-SDL_Keycode Settings::m_key_left        = SDLK_a;
-SDL_Keycode Settings::m_key_confirm     = SDLK_SPACE;
-SDL_Keycode Settings::m_key_cancel      = SDLK_b;
-SDL_Keycode Settings::m_key_next        = SDLK_e;
-SDL_Keycode Settings::m_key_previous    = SDLK_q;
-SDL_Keycode Settings::m_key_quicksave1  = SDLK_F9;
-SDL_Keycode Settings::m_key_quicksave2  = SDLK_F11;
-SDL_Keycode Settings::m_key_quickload1  = SDLK_F10;
-SDL_Keycode Settings::m_key_quickload2  = SDLK_F12;
-SDL_Keycode Settings::m_key_information = SDLK_i;
-SDL_Keycode Settings::m_key_moveMapUp   = SDLK_UP;
-SDL_Keycode Settings::m_key_moveMapDown = SDLK_DOWN;
-SDL_Keycode Settings::m_key_moveMapRight= SDLK_RIGHT;
-SDL_Keycode Settings::m_key_moveMapLeft = SDLK_LEFT;
+Qt::Key Settings::m_key_escape      = Qt::Key_Escape;
+Qt::Key Settings::m_key_console     = Qt::Key_F1;
+Qt::Key Settings::m_key_up          = Qt::Key_W;
+Qt::Key Settings::m_key_down        = Qt::Key_S;
+Qt::Key Settings::m_key_right       = Qt::Key_D;
+Qt::Key Settings::m_key_left        = Qt::Key_A;
+Qt::Key Settings::m_key_confirm     = Qt::Key_Space;
+Qt::Key Settings::m_key_cancel      = Qt::Key_B;
+Qt::Key Settings::m_key_next        = Qt::Key_E;
+Qt::Key Settings::m_key_previous    = Qt::Key_Q;
+Qt::Key Settings::m_key_quicksave1  = Qt::Key_F9;
+Qt::Key Settings::m_key_quicksave2  = Qt::Key_F11;
+Qt::Key Settings::m_key_quickload1  = Qt::Key_F10;
+Qt::Key Settings::m_key_quickload2  = Qt::Key_F12;
+Qt::Key Settings::m_key_information = Qt::Key_I;
+Qt::Key Settings::m_key_moveMapUp   = Qt::Key_Up;
+Qt::Key Settings::m_key_moveMapDown = Qt::Key_Down;
+Qt::Key Settings::m_key_moveMapRight= Qt::Key_Right;
+Qt::Key Settings::m_key_moveMapLeft = Qt::Key_Left;
 
 QString Settings::m_language      = "en";
 // Sound
@@ -116,136 +118,136 @@ void Settings::loadSettings(){
 
     // Keys
     settings.beginGroup("Keys");
-    m_key_escape      = static_cast<SDL_Keycode>(settings.value("key_escape", SDLK_ESCAPE).toInt(&ok));
+    m_key_escape      = static_cast<Qt::Key>(settings.value("key_escape", Qt::Key_Escape).toInt(&ok));
     if(!ok){
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_escape";
         Console::print(error, Console::eERROR);
-        m_key_escape = SDLK_ESCAPE;
+        m_key_escape = Qt::Key_Escape;
     }
-    m_key_console      = static_cast<SDL_Keycode>(settings.value("key_console", SDLK_F1).toInt(&ok));
+    m_key_console      = static_cast<Qt::Key>(settings.value("key_console", Qt::Key_F1).toInt(&ok));
     if(!ok){
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_console";
         Console::print(error, Console::eERROR);
-        m_key_console = SDLK_F1;
+        m_key_console = Qt::Key_F1;
     }
-    m_key_up = static_cast<SDL_Keycode>(settings.value("key_up", SDLK_w).toInt(&ok));
+    m_key_up = static_cast<Qt::Key>(settings.value("key_up", Qt::Key_W).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_up";
         Console::print(error, Console::eERROR);
-        m_key_up = SDLK_w;
+        m_key_up = Qt::Key_W;
     }
-    m_key_down = static_cast<SDL_Keycode>(settings.value("key_down", SDLK_s).toInt(&ok));
+    m_key_down = static_cast<Qt::Key>(settings.value("key_down", Qt::Key_S).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_down";
         Console::print(error, Console::eERROR);
-        m_key_down = SDLK_s;
+        m_key_down = Qt::Key_S;
     }
-    m_key_right = static_cast<SDL_Keycode>(settings.value("key_right", SDLK_d).toInt(&ok));
+    m_key_right = static_cast<Qt::Key>(settings.value("key_right", Qt::Key_D).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_right";
         Console::print(error, Console::eERROR);
-        m_key_right = SDLK_d;
+        m_key_right = Qt::Key_D;
     }
-    m_key_left = static_cast<SDL_Keycode>(settings.value("key_left", SDLK_a).toInt(&ok));
+    m_key_left = static_cast<Qt::Key>(settings.value("key_left", Qt::Key_A).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_left";
         Console::print(error, Console::eERROR);
-        m_key_left = SDLK_a;
+        m_key_left = Qt::Key_A;
     }
-    m_key_confirm = static_cast<SDL_Keycode>(settings.value("key_confirm", SDLK_SPACE).toInt(&ok));
+    m_key_confirm = static_cast<Qt::Key>(settings.value("key_confirm", Qt::Key_Space).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_confirm";
         Console::print(error, Console::eERROR);
-        m_key_confirm = SDLK_SPACE;
+        m_key_confirm = Qt::Key_Space;
     }
-    m_key_cancel = static_cast<SDL_Keycode>(settings.value("key_cancel", SDLK_b).toInt(&ok));
+    m_key_cancel = static_cast<Qt::Key>(settings.value("key_cancel", Qt::Key_B).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_cancel";
         Console::print(error, Console::eERROR);
-        m_key_cancel = SDLK_b;
+        m_key_cancel = Qt::Key_B;
     }
-    m_key_next = static_cast<SDL_Keycode>(settings.value("key_next", SDLK_e).toInt(&ok));
+    m_key_next = static_cast<Qt::Key>(settings.value("key_next", Qt::Key_E).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_next";
         Console::print(error, Console::eERROR);
-        m_key_next = SDLK_e;
+        m_key_next = Qt::Key_E;
     }
-    m_key_previous = static_cast<SDL_Keycode>(settings.value("key_previous", SDLK_q).toInt(&ok));
+    m_key_previous = static_cast<Qt::Key>(settings.value("key_previous", Qt::Key_Q).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_previous";
         Console::print(error, Console::eERROR);
-        m_key_previous = SDLK_q;
+        m_key_previous = Qt::Key_Q;
     }
-    m_key_quicksave1 = static_cast<SDL_Keycode>(settings.value("key_quicksave1", SDLK_F9).toInt(&ok));
+    m_key_quicksave1 = static_cast<Qt::Key>(settings.value("key_quicksave1", Qt::Key_F9).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_quicksave1";
         Console::print(error, Console::eERROR);
-        m_key_quicksave1 = SDLK_F9;
+        m_key_quicksave1 = Qt::Key_F9;
     }
-    m_key_quicksave2 = static_cast<SDL_Keycode>(settings.value("key_quicksave2", SDLK_F11).toInt(&ok));
+    m_key_quicksave2 = static_cast<Qt::Key>(settings.value("key_quicksave2", Qt::Key_F11).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_quicksave2";
         Console::print(error, Console::eERROR);
-        m_key_quicksave2 = SDLK_F11;
+        m_key_quicksave2 = Qt::Key_F11;
     }
-    m_key_quickload1 = static_cast<SDL_Keycode>(settings.value("key_quickload1", SDLK_F10).toInt(&ok));
+    m_key_quickload1 = static_cast<Qt::Key>(settings.value("key_quickload1", Qt::Key_F10).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_quickload1";
         Console::print(error, Console::eERROR);
-        m_key_quickload1 = SDLK_F10;
+        m_key_quickload1 = Qt::Key_F10;
     }
-    m_key_quickload2 = static_cast<SDL_Keycode>(settings.value("key_quickload2", SDLK_F12).toInt(&ok));
+    m_key_quickload2 = static_cast<Qt::Key>(settings.value("key_quickload2", Qt::Key_F12).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_quickload2";
         Console::print(error, Console::eERROR);
-        m_key_quickload2 = SDLK_F12;
+        m_key_quickload2 = Qt::Key_F12;
     }
-    m_key_information = static_cast<SDL_Keycode>(settings.value("key_information", SDLK_i).toInt(&ok));
+    m_key_information = static_cast<Qt::Key>(settings.value("key_information", Qt::Key_I).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_information";
         Console::print(error, Console::eERROR);
-        m_key_information = SDLK_i;
+        m_key_information = Qt::Key_I;
     }
-    m_key_moveMapUp = static_cast<SDL_Keycode>(settings.value("key_moveMapUp", SDLK_UP).toInt(&ok));
+    m_key_moveMapUp = static_cast<Qt::Key>(settings.value("key_moveMapUp", Qt::Key_Up).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_moveMapUp";
         Console::print(error, Console::eERROR);
-        m_key_moveMapUp = SDLK_UP;
+        m_key_moveMapUp = Qt::Key_Up;
     }
-    m_key_moveMapDown = static_cast<SDL_Keycode>(settings.value("key_moveMapDown", SDLK_DOWN).toInt(&ok));
+    m_key_moveMapDown = static_cast<Qt::Key>(settings.value("key_moveMapDown", Qt::Key_Down).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_moveMapDown";
         Console::print(error, Console::eERROR);
-        m_key_moveMapDown = SDLK_DOWN;
+        m_key_moveMapDown = Qt::Key_Down;
     }
-    m_key_moveMapRight = static_cast<SDL_Keycode>(settings.value("key_moveMapRight", SDLK_RIGHT).toInt(&ok));
+    m_key_moveMapRight = static_cast<Qt::Key>(settings.value("key_moveMapRight", Qt::Key_Right).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_moveMapRight";
         Console::print(error, Console::eERROR);
-        m_key_moveMapRight = SDLK_RIGHT;
+        m_key_moveMapRight = Qt::Key_Right;
     }
-    m_key_moveMapLeft = static_cast<SDL_Keycode>(settings.value("key_moveMapLeft", SDLK_LEFT).toInt(&ok));
+    m_key_moveMapLeft = static_cast<Qt::Key>(settings.value("key_moveMapLeft", Qt::Key_Left).toInt(&ok));
     if(!ok)
     {
         QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_moveMapLeft";
         Console::print(error, Console::eERROR);
-        m_key_moveMapLeft = SDLK_LEFT;
+        m_key_moveMapLeft = Qt::Key_Left;
     }
     settings.endGroup();
 
@@ -447,7 +449,7 @@ void Settings::setup()
     // load language file and install it
     if(pMainapp->getTranslator()->load(QLocale(m_language), "resources/translation/lang_" + m_language,".qm"))
     {
-        pMainapp->installTranslator(pMainapp->getTranslator());
+        QGuiApplication::installTranslator(pMainapp->getTranslator());
     }
     else if (m_language != "en")
     {
@@ -533,132 +535,132 @@ void Settings::setBattleAnimationSpeed(const quint32 &value)
 {
     battleAnimationSpeed = value;
 }
-SDL_Keycode Settings::getKey_up()
+Qt::Key Settings::getKey_up()
 {
     return m_key_up;
 }
 
-void Settings::setKey_up(const SDL_Keycode &key_up)
+void Settings::setKey_up(const Qt::Key &key_up)
 {
     m_key_up = key_up;
 }
 
-SDL_Keycode Settings::getKey_down()
+Qt::Key Settings::getKey_down()
 {
     return m_key_down;
 }
 
-void Settings::setKey_down(const SDL_Keycode &key_down)
+void Settings::setKey_down(const Qt::Key &key_down)
 {
     m_key_down = key_down;
 }
 
-SDL_Keycode Settings::getKey_right()
+Qt::Key Settings::getKey_right()
 {
     return m_key_right;
 }
 
-void Settings::setKey_right(const SDL_Keycode &key_right)
+void Settings::setKey_right(const Qt::Key &key_right)
 {
     m_key_right = key_right;
 }
 
-SDL_Keycode Settings::getKey_left()
+Qt::Key Settings::getKey_left()
 {
     return m_key_left;
 }
 
-void Settings::setKey_left(const SDL_Keycode &key_left)
+void Settings::setKey_left(const Qt::Key &key_left)
 {
     m_key_left = key_left;
 }
 
-SDL_Keycode Settings::getKey_confirm()
+Qt::Key Settings::getKey_confirm()
 {
     return m_key_confirm;
 }
 
-void Settings::setKey_confirm(const SDL_Keycode &key_confirm)
+void Settings::setKey_confirm(const Qt::Key &key_confirm)
 {
     m_key_confirm = key_confirm;
 }
 
-SDL_Keycode Settings::getKey_cancel()
+Qt::Key Settings::getKey_cancel()
 {
     return m_key_cancel;
 }
 
-void Settings::setKey_cancel(const SDL_Keycode &key_cancel)
+void Settings::setKey_cancel(const Qt::Key &key_cancel)
 {
     m_key_cancel = key_cancel;
 }
 
-SDL_Keycode Settings::getKey_next()
+Qt::Key Settings::getKey_next()
 {
     return m_key_next;
 }
 
-void Settings::setKey_next(const SDL_Keycode &key_next)
+void Settings::setKey_next(const Qt::Key &key_next)
 {
     m_key_next = key_next;
 }
 
-SDL_Keycode Settings::getKey_previous()
+Qt::Key Settings::getKey_previous()
 {
     return m_key_previous;
 }
 
-void Settings::setKey_previous(const SDL_Keycode &key_previous)
+void Settings::setKey_previous(const Qt::Key &key_previous)
 {
     m_key_previous = key_previous;
 }
 
-SDL_Keycode Settings::getKey_quicksave1()
+Qt::Key Settings::getKey_quicksave1()
 {
     return m_key_quicksave1;
 }
 
-void Settings::setKey_quicksave1(const SDL_Keycode &key_quicksave1)
+void Settings::setKey_quicksave1(const Qt::Key &key_quicksave1)
 {
     m_key_quicksave1 = key_quicksave1;
 }
 
-SDL_Keycode Settings::getKey_quicksave2()
+Qt::Key Settings::getKey_quicksave2()
 {
     return m_key_quicksave2;
 }
 
-void Settings::setKey_quicksave2(const SDL_Keycode &key_quicksave2)
+void Settings::setKey_quicksave2(const Qt::Key &key_quicksave2)
 {
     m_key_quicksave2 = key_quicksave2;
 }
 
-SDL_Keycode Settings::getKey_quickload1()
+Qt::Key Settings::getKey_quickload1()
 {
     return m_key_quickload1;
 }
 
-void Settings::setKey_quickload1(const SDL_Keycode &key_quickload1)
+void Settings::setKey_quickload1(const Qt::Key &key_quickload1)
 {
     m_key_quickload1 = key_quickload1;
 }
 
-SDL_Keycode Settings::getKey_quickload2()
+Qt::Key Settings::getKey_quickload2()
 {
     return m_key_quickload2;
 }
 
-void Settings::setKey_quickload2(const SDL_Keycode &key_quickload2)
+void Settings::setKey_quickload2(const Qt::Key &key_quickload2)
 {
     m_key_quickload2 = key_quickload2;
 }
 
-SDL_Keycode Settings::getKey_information()
+Qt::Key Settings::getKey_information()
 {
     return m_key_information;
 }
 
-void Settings::setKey_information(const SDL_Keycode &key_information)
+void Settings::setKey_information(const Qt::Key &key_information)
 {
     m_key_information = key_information;
 }
@@ -693,42 +695,42 @@ void Settings::setBattleAnimations(const GameEnums::BattleAnimationMode &value)
     battleAnimations = value;
 }
 
-SDL_Keycode Settings::getKey_moveMapLeft()
+Qt::Key Settings::getKey_moveMapLeft()
 {
     return m_key_moveMapLeft;
 }
 
-void Settings::setKey_moveMapLeft(const SDL_Keycode &key_moveMapLeft)
+void Settings::setKey_moveMapLeft(const Qt::Key &key_moveMapLeft)
 {
     m_key_moveMapLeft = key_moveMapLeft;
 }
 
-SDL_Keycode Settings::getKey_moveMapRight()
+Qt::Key Settings::getKey_moveMapRight()
 {
     return m_key_moveMapRight;
 }
 
-void Settings::setKey_moveMapRight(const SDL_Keycode &key_moveMapRight)
+void Settings::setKey_moveMapRight(const Qt::Key &key_moveMapRight)
 {
     m_key_moveMapRight = key_moveMapRight;
 }
 
-SDL_Keycode Settings::getKey_moveMapDown()
+Qt::Key Settings::getKey_moveMapDown()
 {
     return m_key_moveMapDown;
 }
 
-void Settings::setKey_moveMapDown(const SDL_Keycode &key_moveMapDown)
+void Settings::setKey_moveMapDown(const Qt::Key &key_moveMapDown)
 {
     m_key_moveMapDown = key_moveMapDown;
 }
 
-SDL_Keycode Settings::getKey_moveMapUp()
+Qt::Key Settings::getKey_moveMapUp()
 {
     return m_key_moveMapUp;
 }
 
-void Settings::setKey_moveMapUp(const SDL_Keycode &key_moveMapUp)
+void Settings::setKey_moveMapUp(const Qt::Key &key_moveMapUp)
 {
     m_key_moveMapUp = key_moveMapUp;
 }

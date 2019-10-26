@@ -9,6 +9,21 @@
 #include "game/co.h"
 #include "network/tcpserver.h"
 
+#include "resource_management/backgroundmanager.h"
+#include "resource_management/buildingspritemanager.h"
+#include "resource_management/cospritemanager.h"
+#include "resource_management/fontmanager.h"
+#include "resource_management/gameanimationmanager.h"
+#include "resource_management/gamemanager.h"
+#include "resource_management/gamerulemanager.h"
+#include "resource_management/objectmanager.h"
+#include "resource_management/terrainmanager.h"
+#include "resource_management/unitspritemanager.h"
+#include "resource_management/battleanimationmanager.h"
+#include "wiki/wikidatabase.h"
+
+#include "coreengine/userdata.h"
+
 #include "qfile.h"
 
 #include "qdir.h"
@@ -20,16 +35,12 @@ QThread Mainapp::m_AudioWorker;
 QThread Mainapp::m_Networkthread;
 bool Mainapp::m_useSeed{false};
 
-Mainapp::Mainapp(int argc, char* argv[])
-    : QCoreApplication(argc, argv)
+Mainapp::Mainapp()
 {
     m_pMainapp = this;
     Interpreter::setCppOwnerShip(this);
     quint32 seedValue = QRandomGenerator::global()->bounded(0u, std::numeric_limits<quint32>::max());
     randGenerator.seed(seedValue);
-    // create update timer
-    m_Timer.setSingleShot(true);
-    connect(&m_Timer, &QTimer::timeout, this, &Mainapp::update, Qt::QueuedConnection);
 
     emit m_Audiothread->sigInitAudio();
     m_AudioWorker.setObjectName("AudioThread");
@@ -38,7 +49,7 @@ Mainapp::Mainapp(int argc, char* argv[])
     m_AudioWorker.start(QThread::Priority::LowPriority);
     m_Networkthread.start(QThread::Priority::NormalPriority);
     m_Workerthread.start(QThread::Priority::TimeCriticalPriority);
-
+    m_Settings.setup();
     // createTrainingData();
 }
 
@@ -252,13 +263,23 @@ std::tuple<QString, QStringList> Mainapp::readList(QString file)
     return ret;
 }
 
-void Mainapp::quitGame()
+void Mainapp::loadRessources()
 {
-    m_quit = true;
-}
+    // load ressources by creating the singletons
+    BackgroundManager::getInstance();
+    BuildingSpriteManager::getInstance();
+    COSpriteManager::getInstance();
+    FontManager::getInstance();
+    GameAnimationManager::getInstance();
+    GameManager::getInstance();
+    GameRuleManager::getInstance();
+    ObjectManager::getInstance();
+    TerrainManager::getInstance();
+    UnitSpriteManager::getInstance();
+    BattleAnimationManager::getInstance();
+    WikiDatabase::getInstance();
+    Userdata::getInstance();
 
-void Mainapp::start()
-{
     emit m_Worker->sigStart();
     while (!m_Worker->getStarted())
     {
@@ -273,97 +294,42 @@ void Mainapp::start()
     m_Timer.start(1);
 }
 
-void Mainapp::update()
+void Mainapp::keyPressEvent(QKeyEvent *event)
 {
-    m_Mutex.lock();
-    // Update engine-internal components
-    // If input events are available, they are passed to Stage::instance.handleEvent
-    // If the function returns true, it means that the user requested the application to terminate
-    bool done = oxygine::core::update();
-
-    // Update our stage
-    // Update all actors. Actor::update will also be called for all its children
-    oxygine::getStage()->update();
-
-    if (oxygine::core::beginRendering())
+    if (Console::getInstance()->getVisible())
     {
-        oxygine::Color clearColor(181, 255, 32, 255);
-        oxygine::Rect viewport(oxygine::Point(0, 0), oxygine::core::getDisplaySize());
-        // Render all actors inside the stage. Actor::render will also be called for all its children
-        oxygine::getStage()->render(clearColor, viewport);
-
-        oxygine::core::swapDisplayBuffers();
+        emit sigConsoleKeyDown(oxygine::KeyEvent(event));
     }
-    m_Mutex.unlock();
-    // check for termination
-    if (done || m_quit)
+    else
     {
-        exit();
-    }
-    m_Timer.start(13);
-}
-
-void Mainapp::setup()
-{
-    oxygine::EventCallback cb = CLOSURE(this, &Mainapp::onEvent);
-    oxygine::core::getDispatcher()->addEventListener(oxygine::core::EVENT_SYSTEM, cb);
-    m_Settings.setup();
-}
-
-void Mainapp::suspendThread()
-{
-    m_Mutex.lock();
-}
-
-void Mainapp::continueThread()
-{
-    m_Mutex.unlock();
-}
-
-void Mainapp::onEvent(oxygine::Event* ev)
-{
-    SDL_Event* event = reinterpret_cast<SDL_Event*>(ev->userData);
-
-    if (event->type == SDL_KEYDOWN)
-    {
-        if (Console::getInstance()->getVisible())
+        Qt::Key cur = static_cast<Qt::Key>(event->key());
+        if (cur == getSettings()->getKeyConsole())
         {
-            emit sigConsoleKeyDown(*event);
+            Console::getInstance()->toggleView();
         }
         else
         {
-            SDL_Keycode cur = event->key.keysym.sym;
-            if (cur == getSettings()->getKeyConsole())
-            {
-                Console::getInstance()->toggleView();
-            }
-            else
-            {
-                emit sigKeyDown(*event);
-            }
+            emit sigKeyDown(oxygine::KeyEvent(event));
         }
     }
-    if (event->type == SDL_TEXTINPUT)
+}
+void Mainapp::keyReleaseEvent(QKeyEvent *event)
+{
+    if (Console::getInstance()->getVisible())
     {
-        if (Console::getInstance()->getVisible())
-        {
-            emit sigConsoleText(*event);
-        }
-        else
-        {
-            emit sigText(*event);
-        }
+        emit sigConsoleText(oxygine::KeyEvent(event));
     }
-    else if (event->type == SDL_KEYUP)
+    else
     {
-        if (Console::getInstance()->getVisible())
-        {
-            emit sigConsoleKeyUp(*event);
-        }
-        else
-        {
-            emit sigKeyUp(*event);
-        }
+        emit sigText(oxygine::KeyEvent(event));
+    }
+    if (Console::getInstance()->getVisible())
+    {
+        emit sigConsoleKeyUp(oxygine::KeyEvent(event));
+    }
+    else
+    {
+        emit sigKeyUp(oxygine::KeyEvent(event));
     }
 }
 

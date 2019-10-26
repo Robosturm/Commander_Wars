@@ -543,43 +543,43 @@ void EditorMenue::optimizePlayers()
     pApp->continueThread();
 }
 
-void EditorMenue::KeyInput(SDL_Event event)
+void EditorMenue::KeyInput(oxygine::KeyEvent event)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     InGameMenue::keyInput(event);
     // for debugging
-    SDL_Keycode cur = event.key.keysym.sym;
+    Qt::Key cur = event.getKey();
     if (m_Focused)
     {
         switch (cur)
         {
-            case SDLK_ESCAPE:
+            case Qt::Key_Escape:
             {
                 Console::print("Leaving Editor Menue", Console::eDEBUG);
                 oxygine::getStage()->addChild(new Mainwindow());
                 oxygine::Actor::detach();
                 break;
             }
-            case SDLK_y:
+            case Qt::Key_Y:
             {
-                if ((event.key.keysym.mod & KMOD_CTRL) > 0)
+                if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
                 {
                     editorRedo();
                 }
                 break;
             }
-            case SDLK_z:
+            case Qt::Key_Z:
             {
-                if ((event.key.keysym.mod & KMOD_CTRL) > 0)
+                if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
                 {
                     editorUndo();
                 }
                 break;
             }
-            case SDLK_c:
+            case Qt::Key_C:
             {
-                if ((event.key.keysym.mod & KMOD_CTRL) > 0)
+                if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
                 {
                     m_EditorMode = EditorModes::CopySelection;
                     copyRect = QRect(-1, -1, 0, 0);
@@ -588,9 +588,9 @@ void EditorMenue::KeyInput(SDL_Event event)
                 }
                 break;
             }
-            case SDLK_v:
+            case Qt::Key_V:
             {
-                if ((event.key.keysym.mod & KMOD_CTRL) > 0)
+                if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
                 {
                     if (copyRect.x() >= 0 && copyRect.y() >= 0 &&
                         copyRect.width() != 0 && copyRect.height() != 0)

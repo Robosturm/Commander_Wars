@@ -1,7 +1,5 @@
 #include "cursor.h"
 
-#include "SDL.h"
-
 #include "resource_management/objectmanager.h"
 #include "coreengine/mainapp.h"
 #include "game/gamemap.h"

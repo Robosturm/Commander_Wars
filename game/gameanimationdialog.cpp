@@ -95,12 +95,12 @@ void GameAnimationDialog::rightClick()
     nextDialogStep();
 }
 
-void GameAnimationDialog::keyInput(SDL_Event event)
+void GameAnimationDialog::keyInput(oxygine::KeyEvent event)
 {
     if (!m_stopped && writePosition > 0)
     {
         // for debugging
-        SDL_Keycode cur = event.key.keysym.sym;
+        Qt::Key cur = event.getKey();
         if (cur == Settings::getKey_confirm())
         {
             nextDialogStep();

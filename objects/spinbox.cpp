@@ -3,6 +3,9 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
+#include "qguiapplication.h"
+#include "qclipboard.h"
+
 SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     : m_MinValue(min),
       m_MaxValue(max),
@@ -309,14 +312,14 @@ void SpinBox::setSpinSpeed(qreal SpinSpeed)
     m_SpinSpeed = SpinSpeed;
 }
 
-void SpinBox::TextInput(SDL_Event event)
+void SpinBox::TextInput(oxygine::KeyEvent event)
 {
     if (m_focused)
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
         // for the start we don't check for upper or lower key input
-        QString msg = QString(event.text.text);
+        QString msg = event.getText();
         m_Text.insert(curmsgpos, msg);
         checkInput();
         curmsgpos = m_Text.size();
@@ -324,43 +327,42 @@ void SpinBox::TextInput(SDL_Event event)
     }
 }
 
-void SpinBox::KeyInput(SDL_Event event)
+void SpinBox::KeyInput(oxygine::KeyEvent event)
 {
     // for debugging
-    SDL_Keycode cur = event.key.keysym.sym;
+    Qt::Key cur = event.getKey();
     if (m_focused)
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
-        if ((event.key.keysym.mod & KMOD_CTRL) > 0)
+        if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
         {
             switch(cur)
             {
-            case SDLK_v:
-            {
-                QString text = SDL_GetClipboardText();
-                m_Text = m_Text.insert(curmsgpos, text);
-                checkInput();
-                curmsgpos = text.size();
-                break;
-            }
-            case SDLK_c:
-            {
-                SDL_SetClipboardText(m_Text.toStdString().c_str());
-                break;
-            }
-            case SDLK_x:
-            {
-                SDL_SetClipboardText(m_Text.toStdString().c_str());
-                m_Text = "0";
-                curmsgpos = 0;
-                break;
-            }
-            default:
-            {
-                // nothing
-                break;
-            }
+                case Qt::Key_V:
+                {
+                    QString text = QGuiApplication::clipboard()->text();
+                    m_Text = m_Text.insert(curmsgpos, text);
+                    curmsgpos = text.size();
+                    break;
+                }
+                case Qt::Key_C:
+                {
+                    QGuiApplication::clipboard()->setText(m_Text);
+                    break;
+                }
+                case Qt::Key_X:
+                {
+                    QGuiApplication::clipboard()->setText(m_Text);
+                    m_Text = "";
+                    curmsgpos = 0;
+                    break;
+                }
+                default:
+                {
+                    // nothing
+                    break;
+                }
             }
         }
         else
@@ -368,58 +370,62 @@ void SpinBox::KeyInput(SDL_Event event)
             //Handle Key Input for the console
             switch(cur)
             {
-            case SDLK_HOME:
-            {
-                curmsgpos = 0;
-                break;
-            }
-            case SDLK_LEFT:
-            {
-                curmsgpos--;
-                if(curmsgpos < 0)
+                case Qt::Key_Home:
                 {
                     curmsgpos = 0;
+                    break;
                 }
-                break;
-            }
-            case SDLK_RIGHT:
-            {
-                curmsgpos++;
-                if(curmsgpos > m_Text.size())
+                case Qt::Key_Left:
+                {
+                    curmsgpos--;
+                    if(curmsgpos < 0)
+                    {
+                        curmsgpos = 0;
+                    }
+                    break;
+                }
+                case Qt::Key_Right:
+                {
+                    curmsgpos++;
+                    if(curmsgpos > m_Text.size())
+                    {
+                        curmsgpos = m_Text.size();
+                    }
+                    break;
+                }
+                case Qt::Key_Enter:
+                case Qt::Key_Return:
+                {
+                    m_focused = false;
+                    qreal value = checkInput();
+                    emit sigValueChanged(value);
+                    break;
+                }
+                case Qt::Key_Backspace:
+                {
+                    if(curmsgpos > 0){
+                        m_Text.remove(curmsgpos - 1,1);
+                        curmsgpos--;
+                    }
+                    break;
+                }
+                case Qt::Key_Delete:
+                {
+                    if (curmsgpos < m_Text.size())
+                    {
+                        m_Text.remove(curmsgpos, 1);
+                    }
+                    break;
+                }
+                case Qt::Key_End:
                 {
                     curmsgpos = m_Text.size();
+                    break;
                 }
-                break;
-            }
-            case SDLK_KP_ENTER:
-            case SDLK_RETURN:
-            {
-                m_focused = false;
-                qreal value = checkInput();
-                emit sigValueChanged(value);
-                break;
-            }
-            case SDLK_BACKSPACE:
-            {
-                if(curmsgpos > 0){
-                    m_Text.remove(curmsgpos - 1,1);
-                    curmsgpos--;
-                }
-                break;
-            }
-            case SDLK_DELETE:
-            {
-                if (curmsgpos < m_Text.size())
+                default:
                 {
-                    m_Text.remove(curmsgpos, 1);
+                    // do nothing
                 }
-                break;
-            }
-            case SDLK_END:
-            {
-                curmsgpos = m_Text.size();
-                break;
-            }
             }
         }
         pApp->continueThread();

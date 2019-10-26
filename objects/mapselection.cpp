@@ -153,7 +153,7 @@ MapSelection::MapSelection(qint32 heigth, qint32 width, QString folder)
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-           emit changeSelection(static_cast<qint32>(-pTouchEvent->wheelDirection.y) + currentStartIndex);
+           emit changeSelection(static_cast<qint32>(-pTouchEvent->wheelDirection.y / 100) + currentStartIndex);
            pTouchEvent->stopPropagation();
         }
     });

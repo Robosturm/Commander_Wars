@@ -282,12 +282,12 @@ void HumanPlayerInputMenu::setMenuPosition(qint32 x, qint32 y)
     mouseMove(0, 0);
 }
 
-void HumanPlayerInputMenu::keyInput(SDL_Event event)
+void HumanPlayerInputMenu::keyInput(oxygine::KeyEvent event)
 {
     if (m_Focused)
     {
         // for debugging
-        SDL_Keycode cur = event.key.keysym.sym;
+        Qt::Key cur = event.getKey();
         if (cur == Settings::getKey_up())
         {
             Mainapp::getInstance()->getAudioThread()->playSound("switchmenu.wav");

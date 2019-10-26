@@ -15,6 +15,8 @@
 
 #include "gameinput/humanplayerinputmenu.h"
 
+#include "oxygine/KeyEvent.h"
+
 class GameAction;
 class UnitPathFindingSystem;
 
@@ -142,8 +144,8 @@ public slots:
     void rightClickUp(qint32 x, qint32 y);
     void leftClick(qint32 x, qint32 y);
     void cursorMoved(qint32 x, qint32 y);
-    void keyDown(SDL_Event event);
-    void keyUp(SDL_Event event);
+    void keyDown(oxygine::KeyEvent event);
+    void keyUp(oxygine::KeyEvent event);
     void menuItemSelected(QString itemID, qint32 cost);
     void markedFieldSelected(QPoint point);
     QStringList getEmptyActionList();

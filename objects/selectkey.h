@@ -4,6 +4,8 @@
 #include <QObject>
 #include "oxygine-framework.h"
 
+#include "oxygine/KeyEvent.h"
+
 class SelectKey;
 typedef oxygine::intrusive_ptr<SelectKey> spSelectKey;
 
@@ -11,20 +13,20 @@ class SelectKey : public QObject, public oxygine::Actor
 {
     Q_OBJECT
 public:
-    explicit SelectKey(SDL_Keycode code);
+    explicit SelectKey(Qt::Key code);
     virtual ~SelectKey() = default;
 
-    static QString getKeycodeText(SDL_Keycode code);
+    static QString getKeycodeText(Qt::Key code);
 signals:
-    void sigKeyChanged(SDL_Keycode key);
+    void sigKeyChanged(Qt::Key key);
 
 public slots:
-    void keyInput(SDL_Event event);
+    void keyInput(oxygine::KeyEvent event);
 protected:
-    void setKeycode(SDL_Keycode code);
+    void setKeycode(Qt::Key code);
 private:
     oxygine::spButton m_Button;
-    SDL_Keycode currentCode{SDLK_SPACE};
+    Qt::Key currentCode{Qt::Key_Space};
     bool active{false};
 
 };

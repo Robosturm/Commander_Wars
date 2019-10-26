@@ -5,7 +5,7 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
-SelectKey::SelectKey(SDL_Keycode code)
+SelectKey::SelectKey(Qt::Key code)
     : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -27,88 +27,88 @@ SelectKey::SelectKey(SDL_Keycode code)
     connect(pApp, &Mainapp::sigKeyDown, this, &SelectKey::keyInput, Qt::QueuedConnection);
 }
 
-void SelectKey::keyInput(SDL_Event event)
+void SelectKey::keyInput(oxygine::KeyEvent event)
 {
     if (active)
     {
-        SDL_Keycode cur = event.key.keysym.sym;
+        Qt::Key cur = event.getKey();
         setKeycode(cur);
     }
 }
 
-QString SelectKey::getKeycodeText(SDL_Keycode code)
+QString SelectKey::getKeycodeText(Qt::Key code)
 {
     QString codeText = tr("Unknown");
     const oxygine::Font* pFont = FontManager::getMainFont()->getFont();
-    if (code == SDLK_SPACE)
+    if (code == Qt::Key_Space)
     {
         codeText = tr("Space");
     }
-    else if (code == SDLK_F2)
+    else if (code == Qt::Key_F2)
     {
         codeText = tr("F2");
     }
-    else if (code == SDLK_F3)
+    else if (code == Qt::Key_F3)
     {
         codeText = tr("F3");
     }
-    else if (code == SDLK_F4)
+    else if (code == Qt::Key_F4)
     {
         codeText = tr("F4");
     }
-    else if (code == SDLK_F5)
+    else if (code == Qt::Key_F5)
     {
         codeText = tr("F5");
     }
-    else if (code == SDLK_F6)
+    else if (code == Qt::Key_F6)
     {
         codeText = tr("F6");
     }
-    else if (code == SDLK_F7)
+    else if (code == Qt::Key_F7)
     {
         codeText = tr("F7");
     }
-    else if (code == SDLK_F8)
+    else if (code == Qt::Key_F8)
     {
         codeText = tr("F8");
     }
-    else if (code == SDLK_F9)
+    else if (code == Qt::Key_F9)
     {
         codeText = tr("F9");
     }
-    else if (code == SDLK_F10)
+    else if (code == Qt::Key_F10)
     {
         codeText = tr("F10");
     }
-    else if (code == SDLK_F11)
+    else if (code == Qt::Key_F11)
     {
         codeText = tr("F11");
     }
-    else if (code == SDLK_F12)
+    else if (code == Qt::Key_F12)
     {
         codeText = tr("F12");
     }
-    else if (code == SDLK_UP)
+    else if (code == Qt::Key_Up)
     {
         codeText = tr("Up");
     }
-    else if (code == SDLK_DOWN)
+    else if (code == Qt::Key_Down)
     {
         codeText = tr("Down");
     }
-    else if (code == SDLK_LEFT)
+    else if (code == Qt::Key_Left)
     {
         codeText = tr("Left");
     }
-    else if (code == SDLK_RIGHT)
+    else if (code == Qt::Key_Right)
     {
         codeText = tr("Right");
     }
-    else if (code == SDLK_RETURN)
+    else if (code == Qt::Key_Return)
     {
         codeText = tr("Return");
     }
-    else if (code == SDLK_TAB)
+    else if (code == Qt::Key_Tab)
     {
         codeText = tr("Tab");
     }
@@ -123,7 +123,7 @@ QString SelectKey::getKeycodeText(SDL_Keycode code)
     return codeText;
 }
 
-void SelectKey::setKeycode(SDL_Keycode code)
+void SelectKey::setKeycode(Qt::Key code)
 {
     QString codeText = getKeycodeText(code);
     if (codeText != tr("Unknown"))

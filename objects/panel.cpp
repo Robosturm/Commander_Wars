@@ -51,8 +51,8 @@ Panel::Panel(bool useBox, QSize size, QSize contentSize)
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
         {
-           emit m_HScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y * 100.0f / getContentHeigth());
-           emit m_VScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.x * 100.0f / getContentWidth());
+           emit m_HScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.y / getContentHeigth());
+           emit m_VScrollbar->sigChangeScrollValue(-pTouchEvent->wheelDirection.x / getContentWidth());
            pTouchEvent->stopPropagation();
         }
     });

@@ -5,6 +5,8 @@
 #include <QTime>
 #include "oxygine-framework.h"
 
+#include "oxygine/KeyEvent.h"
+
 class Textbox;
 typedef oxygine::intrusive_ptr<Textbox> spTextbox;
 
@@ -35,8 +37,8 @@ signals:
     void sigTextChanged(QString text);
     void sigEnterPressed(QString text);
 public slots:
-    void TextInput(SDL_Event event);
-    void KeyInput(SDL_Event event);
+    void TextInput(oxygine::KeyEvent event);
+    void KeyInput(oxygine::KeyEvent event);
 private:
     bool m_focused{false};
     oxygine::spBox9Sprite m_Textbox;

@@ -18,7 +18,9 @@
 
 #include "network/tcpserver.h"
 
-class Mainapp : public QCoreApplication
+#include "oxygine/core/gamewindow.h"
+
+class Mainapp : public oxygine::GameWindow
 {
     Q_OBJECT
 public:
@@ -41,7 +43,7 @@ public:
         Console
     };
 
-    explicit Mainapp(int argc, char* argv[]);
+    explicit Mainapp();
     virtual ~Mainapp();
 
     static Mainapp* getInstance();
@@ -60,10 +62,6 @@ public:
     {
         return m_Audiothread;
     }    
-
-    void setup();
-    static bool getUseSeed();
-    static void setUseSeed(bool useSeed);
 
     inline static QThread* getWorkerthread()
     {
@@ -85,10 +83,12 @@ public:
     {
         return &m_AudioWorker;
     }
-
-    void suspendThread();
-    void continueThread();
-    void start();
+    /**
+     * @brief loadRessources
+     */
+    virtual void loadRessources() override;
+    static bool getUseSeed();
+    static void setUseSeed(bool useSeed);
     /**
      * @brief Mainapp::storeList
      * @param file
@@ -109,21 +109,13 @@ public:
      * @return
      */
     static std::tuple<QString, QStringList> readList(QString file, QString folder);
-signals:
-    void sigText(SDL_Event event);
-    void sigKeyDown(SDL_Event event);
-    void sigKeyUp(SDL_Event event);
 
-    void sigConsoleText(SDL_Event event);
-    void sigConsoleKeyDown(SDL_Event event);
-    void sigConsoleKeyUp(SDL_Event event);
 
 public slots:
     inline Settings* getSettings()
     {
         return &m_Settings;
     }
-    void update();
     static void seed(quint32 seed);
     static qint32 randInt(qint32 low, qint32 high);
     /**
@@ -163,10 +155,6 @@ public slots:
      */
     static QmlVectorPoint* getEmptyPointArray();
     /**
-     * @brief quitGame quits this game
-     */
-    void quitGame();
-    /**
      * @brief getGameVersion
      * @return
      */
@@ -175,7 +163,16 @@ public slots:
         return "Version: " + QString::number(MAJOR) + "." + QString::number(MINOR) + "." + QString::number(REVISION);
     }
 protected:
-    void onEvent(oxygine::Event* ev);
+    virtual void keyPressEvent(QKeyEvent *event) override;
+    virtual void keyReleaseEvent(QKeyEvent *event) override;
+signals:
+    void sigText(oxygine::KeyEvent event);
+    void sigKeyDown(oxygine::KeyEvent event);
+    void sigKeyUp(oxygine::KeyEvent event);
+
+    void sigConsoleText(oxygine::KeyEvent event);
+    void sigConsoleKeyDown(oxygine::KeyEvent event);
+    void sigConsoleKeyUp(oxygine::KeyEvent event);
 private:
     QTranslator m_Translator;
     QTimer m_Timer;
@@ -189,13 +186,7 @@ private:
     spTCPServer m_pGameServer{nullptr};
     AudioThread* m_Audiothread{new AudioThread()};
     WorkerThread* m_Worker{new WorkerThread()};
-
-
     Settings m_Settings;
-    bool m_quit{false};
-
-    QMutex m_Mutex{QMutex::RecursionMode::Recursive};
-
     void createTrainingData();
 };
 

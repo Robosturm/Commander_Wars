@@ -7,6 +7,7 @@
 
 #include <QTimer>
 #include <QTime>
+#include "oxygine/KeyEvent.h"
 
 class GameAnimationDialog : public GameAnimation
 {
@@ -25,7 +26,7 @@ signals:
     void sigLeftClick();
 public slots:
     void rightClick();
-    void keyInput(SDL_Event event);
+    void keyInput(oxygine::KeyEvent event);
     virtual bool onFinished() override;
     /**
      * @brief setPositionTop wether dialog appears on top or bottom of the game

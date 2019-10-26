@@ -117,7 +117,7 @@ public slots:
      * @brief keyInput
      * @param event
      */
-    virtual void keyInput(SDL_Event event) override;
+    virtual void keyInput(oxygine::KeyEvent event) override;
     /**
      * @brief editFinishedCanceled
      */

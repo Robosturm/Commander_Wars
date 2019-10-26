@@ -1,12 +1,6 @@
 cmake_minimum_required (VERSION 3.1.0)
 project (Commander_Wars)
 
-# add oxygen as our engine
-add_subdirectory(3rd_party/oxygine-framework/ oxygine-framework)
-add_definitions(${OXYGINE_DEFINITIONS})
-include_directories(${OXYGINE_INCLUDE_DIRS})
-link_directories(${OXYGINE_LIBRARY_DIRS})
-
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -19,14 +13,18 @@ set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};$ENV{QT5_BASE_DIR};$ENV{QT5_BASE_DIR
 message("Module Path: ${CMAKE_PREFIX_PATH}")
 message("C-Compiler Path: ${CMAKE_C_COMPILER}")
 message("C++-Compiler Path: ${CMAKE_CXX_COMPILER}")
+
+
 find_package(Qt5Core REQUIRED)
 # Qt5LinguistTools
 find_package(Qt5LinguistTools REQUIRED)
-find_package(Qt5QML REQUIRED)
+find_package(Qt5Qml REQUIRED)
 find_package(Qt5Multimedia REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+find_package(Qt5OpenGL REQUIRED)
+find_package(OpenGL REQUIRED)
 
 # build dependend defines
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
@@ -51,6 +49,99 @@ add_definitions(
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OXYGINE_CXX_FLAGS}")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,10000000")
+
+###################################################################################
+# start oxygine stuff -> qoxygine
+###################################################################################
+set(OXYGINE_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/3rd_party/oxygine-framework)
+include_directories(${OXYGINE_ROOT})
+
+set(${PROJECT_NAME}_OXYGINE_SRCS
+    # top level
+    ${OXYGINE_ROOT}/oxygine/AnimationFrame.cpp
+    ${OXYGINE_ROOT}/oxygine/Clock.cpp
+    ${OXYGINE_ROOT}/oxygine/Draggable.cpp
+    ${OXYGINE_ROOT}/oxygine/EventDispatcher.cpp
+    ${OXYGINE_ROOT}/oxygine/Font.cpp
+    ${OXYGINE_ROOT}/oxygine/Image.cpp
+    ${OXYGINE_ROOT}/oxygine/Input.cpp
+    ${OXYGINE_ROOT}/oxygine/MaskedRenderer.cpp
+    ${OXYGINE_ROOT}/oxygine/Material.cpp
+    ${OXYGINE_ROOT}/oxygine/MaterialCache.cpp
+    ${OXYGINE_ROOT}/oxygine/PointerState.cpp
+    ${OXYGINE_ROOT}/oxygine/PostProcess.cpp
+    ${OXYGINE_ROOT}/oxygine/RenderDelegate.cpp
+    ${OXYGINE_ROOT}/oxygine/STDRenderDelegate.cpp
+    ${OXYGINE_ROOT}/oxygine/STDRenderer.cpp
+    ${OXYGINE_ROOT}/oxygine/VisualStyle.cpp
+    #core
+    ${OXYGINE_ROOT}/oxygine/core/ImageData.cpp
+    ${OXYGINE_ROOT}/oxygine/core/ImageDataOperations.cpp
+    ${OXYGINE_ROOT}/oxygine/core/NativeTexture.cpp
+    ${OXYGINE_ROOT}/oxygine/core/Object.cpp
+    ${OXYGINE_ROOT}/oxygine/core/oxygine.cpp
+    ${OXYGINE_ROOT}/oxygine/core/Renderer.cpp
+    ${OXYGINE_ROOT}/oxygine/core/Restorable.cpp
+    ${OXYGINE_ROOT}/oxygine/core/Texture.cpp
+    ${OXYGINE_ROOT}/oxygine/core/UberShaderProgram.cpp
+    ${OXYGINE_ROOT}/oxygine/core/VideoDriver.cpp
+	${OXYGINE_ROOT}/oxygine/core/gamewindow.cpp
+    # core gl
+    ${OXYGINE_ROOT}/oxygine/core/gl/NativeTextureGLES.cpp
+    ${OXYGINE_ROOT}/oxygine/core/gl/ShaderProgramGL.cpp
+    ${OXYGINE_ROOT}/oxygine/core/gl/VertexDeclarationGL.cpp
+    ${OXYGINE_ROOT}/oxygine/core/gl/VideoDriverGL.cpp
+    ${OXYGINE_ROOT}/oxygine/core/gl/VideoDriverGLES20.cpp
+    # math
+    ${OXYGINE_ROOT}/oxygine/math/AffineTransform.cpp
+    ${OXYGINE_ROOT}/oxygine/math/Color.cpp
+    # actor
+    ${OXYGINE_ROOT}/oxygine/actor/Actor.cpp
+    ${OXYGINE_ROOT}/oxygine/actor/Box9Sprite.cpp
+    ${OXYGINE_ROOT}/oxygine/actor/Button.cpp
+    ${OXYGINE_ROOT}/oxygine/actor/ClipRectActor.cpp
+    ${OXYGINE_ROOT}/oxygine/actor/ColorRectSprite.cpp
+    ${OXYGINE_ROOT}/oxygine/actor/MaskedSprite.cpp
+    ${OXYGINE_ROOT}/oxygine/actor/Polygon.cpp
+    ${OXYGINE_ROOT}/oxygine/actor/ProgressBar.cpp
+    ${OXYGINE_ROOT}/oxygine/actor/SlidingActor.cpp
+    ${OXYGINE_ROOT}/oxygine/actor/Sprite.cpp
+    ${OXYGINE_ROOT}/oxygine/actor/Stage.cpp
+    ${OXYGINE_ROOT}/oxygine/actor/TextField.cpp
+    # tween
+    ${OXYGINE_ROOT}/oxygine/tween/Tween.cpp
+    ${OXYGINE_ROOT}/oxygine/tween/TweenAlphaFade.cpp
+    ${OXYGINE_ROOT}/oxygine/tween/TweenAnim.cpp
+    ${OXYGINE_ROOT}/oxygine/tween/TweenGlow.cpp
+    ${OXYGINE_ROOT}/oxygine/tween/TweenOutline.cpp
+    ${OXYGINE_ROOT}/oxygine/tween/TweenQueue.cpp
+    # pugi xml todo replace with qt xml
+    ${OXYGINE_ROOT}/oxygine/pugixml/pugixml.cpp
+    # res stuff
+    ${OXYGINE_ROOT}/oxygine/res/CreateResourceContext.cpp
+    ${OXYGINE_ROOT}/oxygine/res/ResAnim.cpp
+    ${OXYGINE_ROOT}/oxygine/res/ResAtlas.cpp
+    ${OXYGINE_ROOT}/oxygine/res/ResAtlasGeneric.cpp
+    ${OXYGINE_ROOT}/oxygine/res/ResAtlasPrebuilt.cpp
+    ${OXYGINE_ROOT}/oxygine/res/ResBuffer.cpp
+    ${OXYGINE_ROOT}/oxygine/res/ResFont.cpp
+    ${OXYGINE_ROOT}/oxygine/res/ResFontBM.cpp
+    ${OXYGINE_ROOT}/oxygine/res/Resource.cpp
+    ${OXYGINE_ROOT}/oxygine/res/Resources.cpp
+    ${OXYGINE_ROOT}/oxygine/res/ResStarlingAtlas.cpp
+    ${OXYGINE_ROOT}/oxygine/res/SingleResAnim.cpp
+    # text utils
+    ${OXYGINE_ROOT}/oxygine/text_utils/Aligner.cpp
+    ${OXYGINE_ROOT}/oxygine/text_utils/Node.cpp
+    ${OXYGINE_ROOT}/oxygine/text_utils/TextBuilder.cpp
+    # text utils
+    ${OXYGINE_ROOT}/oxygine/utils/AtlasBuilder.cpp
+    ${OXYGINE_ROOT}/oxygine/utils/cdecode.c
+    ${OXYGINE_ROOT}/oxygine/utils/stringUtils.cpp
+)
+###################################################################################
+# end oxygine stuff -> qoxygine
+###################################################################################
 
 # source list we start slow here with the main cpp
 set(${PROJECT_NAME}_SRCS
@@ -304,6 +395,7 @@ add_custom_target(${PROJECT_NAME}_translations DEPENDS ${QM_FILES})
 # create executable
 add_executable(
         ${PROJECT_NAME}
+        ${${PROJECT_NAME}_OXYGINE_SRCS}
         ${${PROJECT_NAME}_SRCS}
         ICON.rc
 )
@@ -312,32 +404,28 @@ if (WIN32) #disable console mode for VC++
         set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE TRUE)
 endif(WIN32)
 
+
+
+qt5_use_modules(${PROJECT_NAME}
+    Core
+    LinguistTools
+    Qml
+    Multimedia
+    Network
+    Gui
+    Widgets
+    OpenGL
+)
+
 # link libraries
 target_link_libraries(
         ${PROJECT_NAME}
-	${OXYGINE_CORE_LIBS}
-        Qt5::Core
-        Qt5::Qml
-        Qt5::Multimedia
-        Qt5::Network
-        Qt5::Gui
-        Qt5::Widgets
+        ${QT_LIBRARIES}
+        ${OPENGL_LIBRARIES}
 )
 
 # install section
 set(CMAKE_INSTALL_PREFIX "../install/${CMAKE_BUILD_TYPE}")
-
-# select libs to install
-set(${PROJECT_NAME}_INSTALL_LIBS
-    Libs/libeay32.dll
-    Libs/libssh2.dll
-    Libs/libzlib.dll
-    Libs/pthreadVCE2.dll
-    Libs/SDL2.dll
-    Libs/ssleay32.dll
-    Libs/zlib.dll
-    Libs/libSDL2.dll
-)
 
 get_target_property(_qmake_executable Qt5::qmake IMPORTED_LOCATION)
 get_filename_component(QT_BIN_DIR "${_qmake_executable}" DIRECTORY)

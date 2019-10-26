@@ -23,6 +23,9 @@
 #include <QTextStream>
 #include <QProcess>
 
+#include <qguiapplication.h>
+#include <qscreen.h>
+
 OptionMenue::OptionMenue()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -130,39 +133,28 @@ void OptionMenue::changeScreenMode(qint32 mode)
     {
         case 1:
         {
-            SDL_SetWindowBordered(oxygine::core::getWindow(), SDL_bool::SDL_FALSE);
-            SDL_SetWindowFullscreen(oxygine::core::getWindow(), 0);
+            pApp->setFlags(Qt::FramelessWindowHint);
+            pApp->show();
             pApp->getSettings()->setFullscreen(false);
             pApp->getSettings()->setBorderless(true);
             break;
         }
         case 2:
         {
-            SDL_SetWindowFullscreen(oxygine::core::getWindow(), SDL_WINDOW_FULLSCREEN);
+            pApp->showFullScreen();
             pApp->getSettings()->setFullscreen(true);
             pApp->getSettings()->setBorderless(true);
             break;
         }
         default:
         {
-            SDL_SetWindowBordered(oxygine::core::getWindow(), SDL_bool::SDL_TRUE);
-            SDL_SetWindowFullscreen(oxygine::core::getWindow(), 0);
+            pApp->showNormal();
             pApp->getSettings()->setFullscreen(false);
             pApp->getSettings()->setBorderless(false);
         }
     }
-    qint32 currentMode = -1;
-    qint32 count = 0;
-    while (currentMode != mode)
-    {
-        currentMode = getScreenMode();
-        QThread::msleep(300);
-        count++;
-        if (count > 10 * 60)
-        {
-            break;
-        }
-    }
+    // change screen size after changing the border flags
+    changeScreenSize(Settings::getWidth(), Settings::getHeight());
 
     pApp->continueThread();
 }
@@ -188,26 +180,13 @@ void OptionMenue::changeScreenSize(qint32 width, qint32 heigth)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    SDL_SetWindowSize(oxygine::core::getWindow(), width, heigth);
+    pApp->resize(width, heigth);
     pApp->getSettings()->setWidth(width);
     pApp->getSettings()->setHeight(heigth);
     pApp->getSettings()->saveSettings();
     Console::print("Leaving Option Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new OptionMenue());
-    oxygine::Actor::detach();
-    qint32 w = -1;
-    qint32 h = -1;
-    qint32 count = 0;
-    while (w != width || h != heigth)
-    {
-        SDL_GetWindowSize(oxygine::core::getWindow(), &w, &h);
-        QThread::msleep(300);
-        count++;
-        if (count > 10 * 60)
-        {
-            break;
-        }
-    }
+    oxygine::Actor::detach(); 
     pApp->continueThread();
 }
 
@@ -580,25 +559,120 @@ void OptionMenue::showSettings()
     style.multiline = false;
 
     qint32 y = 10;
+
+
     // cache all supported display modes
-    SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, nullptr};
-    qint32 modes = SDL_GetNumDisplayModes(0);
-    QVector<QSize> supportedSizes;
-    for  (qint32 i = 0; i < modes; i++)
+    // we're cheating here little bit since qt offers no way to get the screen resolutions from the hardware driver
+    QVector<QSize> supportedSizes = {QSize(15360, 8640),
+                                     QSize(8192 , 8192),
+                                     QSize(10240, 4320),
+                                     QSize(8192 , 4608),
+                                     QSize(8192 , 4320),
+                                     QSize(7680 , 4800),
+                                     QSize(7680 , 4320),
+                                     QSize(6400 , 4800),
+                                     QSize(6400 , 4096),
+                                     QSize(5120 , 4096),
+                                     QSize(5120 , 3200),
+                                     QSize(5120 , 2880),
+                                     QSize(5120 , 2160),
+                                     QSize(4500 , 3000),
+                                     QSize(4096 , 3072),
+                                     QSize(4096 , 2160),
+                                     QSize(3840 , 2400),
+                                     QSize(3840 , 2160),
+                                     QSize(3840 , 1600),
+                                     QSize(3440 , 1440),
+                                     QSize(3240 , 2160),
+                                     QSize(3200 , 2400),
+                                     QSize(3200 , 2048),
+                                     QSize(3200 , 1800),
+                                     QSize(3000 , 2000),
+                                     QSize(2960 , 1440),
+                                     QSize(2880 , 1800),
+                                     QSize(2880 , 1620),
+                                     QSize(2880 , 1440),
+                                     QSize(2880 , 900 ),
+                                     QSize(2800 , 2100),
+                                     QSize(2736 , 1824),
+                                     QSize(2732 , 2048),
+                                     QSize(2560 , 2048),
+                                     QSize(2560 , 1920),
+                                     QSize(2560 , 1800),
+                                     QSize(2560 , 1700),
+                                     QSize(2560 , 1600),
+                                     QSize(2560 , 1440),
+                                     QSize(2560 , 1080),
+                                     QSize(2538 , 1080),
+                                     QSize(2436 , 1125),
+                                     QSize(2304 , 1728),
+                                     QSize(2256 , 1504),
+                                     QSize(2304 , 1440),
+                                     QSize(2280 , 1080),
+                                     QSize(2160 , 1440),
+                                     QSize(2160 , 1200),
+                                     QSize(2160 , 1080),
+                                     QSize(2048 , 1536),
+                                     QSize(2048 , 1280),
+                                     QSize(2048 , 1152),
+                                     QSize(2048 , 1080),
+                                     QSize(1920 , 1440),
+                                     QSize(1920 , 1400),
+                                     QSize(1920 , 1280),
+                                     QSize(1920 , 1200),
+                                     QSize(1920 , 1080),
+                                     QSize(1856 , 1392),
+                                     QSize(1800 , 1440),
+                                     QSize(1792 , 1344),
+                                     QSize(1776 , 1000),
+                                     QSize(1680 , 1050),
+                                     QSize(1600 , 1280),
+                                     QSize(1600 , 1200),
+                                     QSize(1600 , 1024),
+                                     QSize(1600 , 900 ),
+                                     QSize(1600 , 768 ),
+                                     QSize(1440 , 1440),
+                                     QSize(1440 , 1080),
+                                     QSize(1440 , 1024),
+                                     QSize(1440 , 960 ),
+                                     QSize(1440 , 900 ),
+                                     QSize(1400 , 1050),
+                                     QSize(1366 , 768 ),
+                                     QSize(1334 , 750 ),
+                                     QSize(1280 , 1024),
+                                     QSize(1280 , 960 ),
+                                     QSize(1280 , 854 ),
+                                     QSize(1280 , 800 ),
+                                     QSize(1280 , 768 ),
+                                     QSize(1280 , 720 ),
+                                     QSize(1152 , 900 ),
+                                     QSize(1152 , 864 ),
+                                     QSize(1152 , 768 ),
+                                     QSize(1152 , 720 ),
+                                     QSize(1136 , 640 ),
+                                     QSize(1120 , 832 ),
+                                     QSize(1080 , 1200),
+                                     QSize(1024 , 1024),
+                                     QSize(1024 , 800 ),
+                                     QSize(1024 , 768 ),
+                                     QSize(1024 , 640 ),
+                                     QSize(1024 , 600 ),
+                                     QSize(960 ,  720 ),
+                                     QSize(960 ,  640 ),
+                                     QSize(800 ,  600 )};
+    QScreen *screen = QGuiApplication::primaryScreen();
+    QSize  screenSize = screen->availableSize ();
+    qint32 count = 0;
+    while  (count < supportedSizes.size())
     {
-        if (SDL_GetDisplayMode(0, i, &mode) == 0)
+        if (supportedSizes[count].width() <= screenSize.width() &&
+            supportedSizes[count].height() <= screenSize.height())
         {
-            QSize newSize(mode.w, mode.h);
-            if (!supportedSizes.contains(newSize) &&
-                newSize.width() >= 800 &&
-                newSize.height() >= 600)
-            {
-                supportedSizes.append(newSize);
-            }
+            count++;
         }
         else
         {
-            Console::print(QString("SDL_GetDisplayMode failed: ") + QString(SDL_GetError()), Console::eLogLevels::eERROR);
+            supportedSizes.removeAt(count);
         }
     }
     QVector<QString> displaySizes;

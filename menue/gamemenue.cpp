@@ -36,6 +36,8 @@
 
 #include <QFile>
 
+#include <qguiapplication.h>
+
 GameMenue* GameMenue::m_pInstance = nullptr;
 
 GameMenue::GameMenue(spNetworkInterface pNetworkInterface, bool saveGame)
@@ -904,11 +906,11 @@ void GameMenue::startGame()
     pApp->continueThread();
 }
 
-void GameMenue::keyInput(SDL_Event event)
+void GameMenue::keyInput(oxygine::KeyEvent event)
 {
     InGameMenue::keyInput(event);
     // for debugging
-    SDL_Keycode cur = event.key.keysym.sym;
+    Qt::Key cur = event.getKey();
     if (m_Focused && m_pNetworkInterface.get() == nullptr)
     {
         if (cur == Settings::getKey_quicksave1())
@@ -970,7 +972,7 @@ void GameMenue::keyInput(SDL_Event event)
     }
     else if (m_Focused)
     {
-        if (cur == SDLK_ESCAPE)
+        if (cur == Qt::Key_Escape)
         {
             emit sigShowExitGame();
         }
@@ -979,15 +981,14 @@ void GameMenue::keyInput(SDL_Event event)
 
 void GameMenue::autoScroll()
 {
-    if (SDL_GetWindowFlags(oxygine::core::getWindow()) & SDL_WINDOW_MOUSE_FOCUS &&
+    Mainapp* pApp = Mainapp::getInstance();
+    if (QGuiApplication::focusWindow() == pApp &&
         m_Focused)
     {
-        qint32 curX = 0;
-        qint32 curY = 0;
-        SDL_GetMouseState(&curX, &curY);
-        if ((curY > m_pPlayerinfo->getScaledHeight() && curX < autoScrollBorder.y()) || // mouse is below the co info part
-            (curY < m_pPlayerinfo->getScaledHeight() && curX > autoScrollBorder.x() - autoScrollBorder.y() && curX < autoScrollBorder.x()) || // mouse is in the co info part
-            (curX > autoScrollBorder.x())) // default case
+        QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());
+        if ((curPos.y() > m_pPlayerinfo->getScaledHeight() && curPos.x() < autoScrollBorder.y()) || // mouse is below the co info part
+            (curPos.y() < m_pPlayerinfo->getScaledHeight() && curPos.x() > autoScrollBorder.x() - autoScrollBorder.y() && curPos.x() < autoScrollBorder.x()) || // mouse is in the co info part
+            (curPos.x() > autoScrollBorder.x())) // default case
         {
             InGameMenue::autoScroll();
         }

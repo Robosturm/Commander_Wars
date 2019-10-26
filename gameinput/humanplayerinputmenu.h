@@ -9,6 +9,7 @@
 
 #include "oxygine-framework.h"
 
+#include "oxygine/KeyEvent.h"
 
 class HumanPlayerInputMenu;
 typedef oxygine::intrusive_ptr<HumanPlayerInputMenu> spHumanPlayerInputMenu;
@@ -30,7 +31,7 @@ signals:
     void sigCanceled(qint32 x, qint32 y);
 public slots:
     void leftClick(qint32 x, qint32 y);
-    void keyInput(SDL_Event event);
+    void keyInput(oxygine::KeyEvent event);
     void mouseMove(qint32 x, qint32 y);
 private:
     oxygine::spSprite m_Cursor;

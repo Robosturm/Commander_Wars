@@ -5,6 +5,8 @@
 #include <QTime>
 #include "oxygine-framework.h"
 
+#include "oxygine/KeyEvent.h"
+
 class SpinBox;
 typedef oxygine::intrusive_ptr<SpinBox> spSpinBox;
 
@@ -45,8 +47,8 @@ public:
 signals:
     void sigValueChanged(qreal value);
 public slots:
-    void TextInput(SDL_Event event);
-    void KeyInput(SDL_Event event);
+    void TextInput(oxygine::KeyEvent event);
+    void KeyInput(oxygine::KeyEvent event);
 protected:
     /**
      * @brief checkInput checks if the input is correct and updates it if needed and returns the new value

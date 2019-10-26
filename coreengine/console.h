@@ -6,6 +6,8 @@
 
 #include "oxygine-framework.h"
 
+#include "QKeyEvent"
+
 class QString;
 class QMutex;
 class QKeyEvent;
@@ -75,12 +77,12 @@ public slots:
      * @brief KeyInput event called when a key is pressed
      * @param event
      */
-    void KeyInput(SDL_Event event);
+    void KeyInput(oxygine::KeyEvent event);
     /**
      * @brief TextInput event called when we recieved a text from the keyboard
      * @param event
      */
-    void TextInput(SDL_Event event);
+    void TextInput(oxygine::KeyEvent event);
     /**
      * @brief toggleView
      */

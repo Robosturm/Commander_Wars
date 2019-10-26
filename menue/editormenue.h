@@ -9,6 +9,8 @@
 
 #include "objects/topbar.h"
 
+#include "oxygine/KeyEvent.h"
+
 class EditorMenue : public InGameMenue
 {
     Q_OBJECT
@@ -138,7 +140,7 @@ public slots:
      * @brief KeyInput called on any key input
      * @param event
      */
-    void KeyInput(SDL_Event event);
+    void KeyInput(oxygine::KeyEvent event);
     /**
      * @brief clickedTopbar event handling for the top bar
      * @param itemID
