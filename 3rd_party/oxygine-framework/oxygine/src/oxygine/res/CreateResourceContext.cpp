@@ -209,23 +209,14 @@ namespace oxygine
         Image* src = task->src.get();
         NativeTexture* dest = task->dest.get();
 
-        bool done = false;
+        Rect textureRect(0, 0, src->getWidth(), src->getHeight());
 
-        if (isCompressedFormat(src->getFormat()))
+        if (dest->getHandle() == nullptr)
         {
-            dest->init(src->lock(), false);
-            done = true;
+            dest->init(textureRect.getWidth(), textureRect.getHeight(), src->getFormat());
         }
-        else
-        {
 
-            Rect textureRect(0, 0, src->getWidth(), src->getHeight());
-
-            if (dest->getHandle() == 0)
-                dest->init(textureRect.getWidth(), textureRect.getHeight(), src->getFormat());
-
-            dest->updateRegion(0, 0, src->lock());
-        }
+        dest->updateRegion(0, 0, src->lock());
 
         task->ready();
     }
@@ -238,6 +229,6 @@ namespace oxygine
 
     bool MTLoadingResourcesContext::isNeedProceed(spNativeTexture t)
     {
-        return t->getHandle() == 0;
+        return t->getHandle() == nullptr;
     }
 }

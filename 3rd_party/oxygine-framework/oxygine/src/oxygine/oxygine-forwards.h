@@ -96,7 +96,6 @@ namespace oxygine
     DECLARE_SMART(ThreadLoader, spThreadLoader);
     DECLARE_SMART(Tween, spTween);
     DECLARE_SMART(TweenQueue, spTweenQueue);
-    DECLARE_SMART(WebImage, spWebImage);
     DECLARE_SMART(Material, spMaterialX);
 
     class Actor;

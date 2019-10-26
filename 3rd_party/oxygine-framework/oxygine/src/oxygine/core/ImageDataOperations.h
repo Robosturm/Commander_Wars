@@ -250,54 +250,52 @@ namespace oxygine
         }
 
 
-
-
-#define FORMAT_OP1(format) case TF_##format: \
-        { \
-            Pixel##format d; \
-            applyOperationT(op, s, d, src, dest); \
-        } \
-        break;
-
         template<class Src, class Op>
         void SwitchSrcDestT(const Op& op, const Src& s, const ImageData& src, const ImageData& dest)
         {
-#define FORMAT_CASE FORMAT_OP1
-            ALL_FORMATS_SWITCH(dest.format);
-#undef FORMAT_CASE
+            switch(dest.format)
+            {
+                case ImageData::TF_R8G8B8A8:
+                {
+                    PixelR8G8B8A8 d;
+                    applyOperationT(op, s, d, src, dest);
+                }
+                    break;
+                default:
+                    OX_ASSERT(!"unknown format");
+            }
         }
-
-
-#define FORMAT_OP2(format) case TF_##format: \
-        { \
-            Pixel##format s; \
-            SwitchSrcDestT(op, s, src, dest); \
-        } \
-        break;
-
 
         template <class Op>
         void applyOperation(const Op& op, const ImageData& src, const ImageData& dest)
         {
-#define FORMAT_CASE FORMAT_OP2
-            ALL_FORMATS_SWITCH(src.format);
-#undef FORMAT_CASE
+            switch(dest.format)
+            {
+                case ImageData::TF_R8G8B8A8:
+                {
+                    PixelR8G8B8A8 s;
+                    SwitchSrcDestT(op, s, src, dest);
+                }
+                    break;
+                default:
+                    OX_ASSERT(!"unknown format");
+            }
         }
-
-
-#define FORMAT_OP3(format) case TF_##format: \
-        { \
-            Pixel##format d; \
-            applyOperationT(op, d, dest); \
-        } \
-        break;
 
         template <class Op>
         void applyOperation(const Op& op, const ImageData& dest)
         {
-#define FORMAT_CASE FORMAT_OP3
-            ALL_FORMATS_SWITCH(dest.format);
-#undef FORMAT_CASE
+            switch(dest.format)
+            {
+                case ImageData::TF_R8G8B8A8:
+                {
+                    PixelR8G8B8A8 d;
+                    applyOperationT(op, d, dest);
+                }
+                    break;
+                default:
+                    OX_ASSERT(!"unknown format");
+            }
         }
     }
 }

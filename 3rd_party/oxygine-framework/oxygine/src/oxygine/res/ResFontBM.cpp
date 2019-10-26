@@ -55,7 +55,7 @@ namespace oxygine
     }
 
 
-    ResFontBM::ResFontBM(): _font(0), _format(TF_R8G8B8A8), _premultipliedAlpha(false), _sdf(false)
+    ResFontBM::ResFontBM(): _font(0), _format(ImageData::TF_R8G8B8A8), _premultipliedAlpha(false), _sdf(false)
     {
 
     }
@@ -123,10 +123,8 @@ namespace oxygine
 
         spImage mt = new Image;
 
-        file::buffer bf;
-        file::read(p.file, bf);
-
-        mt->init(bf, !_premultipliedAlpha, _format);
+        QImage img(p.file.c_str());
+        mt->init(img, !_premultipliedAlpha);
         CreateTextureTask opt;
         opt.src = mt;
         opt.dest = p.texture;
@@ -434,7 +432,7 @@ namespace oxygine
         p.texture->setName(p.file);
 
         if (tw)
-            p.texture->init(0, tw, th, TF_UNDEFINED);
+            p.texture->init(0, tw, th, ImageData::TF_UNDEFINED);
 
         _pages.push_back(p);
     }
@@ -458,9 +456,7 @@ namespace oxygine
 
     void ResFontBM::_createFont(CreateResourceContext* context, bool sd, bool bmc, int downsample)
     {
-        _sdf = sd;
-        if (sd)
-            _format = TF_L8;
+        _sdf = false;
 
         if (context)
         {
@@ -533,7 +529,7 @@ namespace oxygine
 
 
         if (!tw)
-            load(0);
+            load(nullptr);
 
 
         fontSize = abs(fontSize);

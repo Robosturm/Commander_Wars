@@ -55,10 +55,9 @@ namespace oxygine
 
     void ResAnim::init(const std::string& file, int columns, int rows, float scaleFactor)
     {
-        file::buffer bf;
-        file::read(file, bf);
+        QImage img(file.c_str());
         Image mt;
-        mt.init(bf, true);
+        mt.init(img, true);
         init(&mt, columns, rows, scaleFactor);
     }
 

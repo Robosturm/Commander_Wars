@@ -250,7 +250,7 @@ namespace oxygine
     void STDRenderer::restore()
     {
         Image memwhite;
-        memwhite.init(4, 4, TF_R8G8B8A8);
+        memwhite.init(4, 4, ImageData::TF_R8G8B8A8);
 
         oxygine::operations::op_fill fill;
         ImageData im = memwhite.lock();

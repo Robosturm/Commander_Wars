@@ -22,10 +22,9 @@ namespace oxygine
         spImage mt = new Image;
 
         LOGD("loading atlas: %s", file.c_str());
-        file::buffer bf;
-        file::read(file, bf);
+        QImage img (file.c_str());
         LOGD("atlas file loaded: %s", file.c_str());
-        mt->init(bf, true, nt->getFormat());
+        mt->init(img, true);
         im = mt->lock();
         LOGD("atlas size: %d %d", im.w, im.h);
 
@@ -55,7 +54,7 @@ namespace oxygine
         setNode(rs, node);
     }
 
-    void ResAtlas::addAtlas(TextureFormat tf, const std::string& base, const std::string& alpha, int w, int h)
+    void ResAtlas::addAtlas(ImageData::TextureFormat tf, const std::string& base, const std::string& alpha, int w, int h)
     {
         atlas atl;
         atl.base = IVideoDriver::instance->createTexture();
@@ -140,7 +139,7 @@ namespace oxygine
             if (atl.alpha.get() == texture)
             {
                 load_texture(atl.alpha_path, atl.alpha, _linearFilter, _clamp2edge, &RestoreResourcesContext::instance);
-                atl.alpha->reg(CLOSURE(this, &ResAtlas::_restore), 0);
+                atl.alpha->reg(CLOSURE(this, &ResAtlas::_restore), nullptr);
                 break;
             }
         }

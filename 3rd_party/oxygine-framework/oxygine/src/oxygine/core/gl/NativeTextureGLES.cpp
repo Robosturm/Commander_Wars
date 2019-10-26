@@ -20,71 +20,16 @@ namespace oxygine
         bool compressed;
     };
 
-    glPixel SurfaceFormat2GL(TextureFormat format)
+    glPixel SurfaceFormat2GL(ImageData::TextureFormat format)
     {
         glPixel pixel;
         pixel.compressed = false;
         //ADD_SF - dont remove this comment
         switch (format)
         {
-            case TF_R8G8B8A8:
+            case ImageData::TF_R8G8B8A8:
                 pixel.format = GL_RGBA;
                 pixel.type = GL_UNSIGNED_BYTE;
-                break;
-
-            case TF_A8L8:
-                pixel.format = GL_LUMINANCE_ALPHA;
-                pixel.type = GL_UNSIGNED_BYTE;
-                break;
-
-            case TF_L8:
-                pixel.format = GL_LUMINANCE;
-                pixel.type = GL_UNSIGNED_BYTE;
-                break;
-
-            case TF_R5G6B5:
-                pixel.format = GL_RGB;
-                pixel.type = GL_UNSIGNED_SHORT_5_6_5;
-                break;
-
-            case TF_R4G4B4A4:
-                pixel.format = GL_RGBA;
-                pixel.type = GL_UNSIGNED_SHORT_4_4_4_4;
-                break;
-
-            case TF_R5G5B5A1:
-                pixel.format = GL_RGBA;
-                pixel.type = GL_UNSIGNED_SHORT_5_5_5_1;
-                break;
-            case TF_PVRTC_2RGB:
-                pixel.format = GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
-                pixel.type = 0;
-                pixel.compressed = true;
-                break;
-            case TF_PVRTC_2RGBA:
-                pixel.format = GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
-                pixel.type = 0;
-                pixel.compressed = true;
-                break;
-            case TF_PVRTC_4RGB:
-                pixel.format = GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
-                pixel.type = 0;
-                pixel.compressed = true;
-                break;
-            case TF_PVRTC_4RGBA:
-                pixel.format = GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
-                pixel.type = 0;
-                pixel.compressed = true;
-                break;
-            case TF_ETC1:
-                pixel.format = GL_ETC1_RGB8_OES;
-                pixel.type = 0;
-                pixel.compressed = true;
-                break;
-            case TF_ETC2:
-                pixel.format = GL_COMPRESSED_RGBA8_ETC2_EAC;
-                pixel.type = 0;
-                pixel.compressed = true;
                 break;
             default:
                 logs::error("unknown format: %d\n", format);
@@ -114,12 +59,12 @@ namespace oxygine
         return id;
     }
 
-    NativeTextureGLES::NativeTextureGLES(): _id(0), _fbo(0), _width(0), _height(0), _format(TF_UNDEFINED), _lockFlags(0)
+    NativeTextureGLES::NativeTextureGLES(): _id(0), _fbo(0), _width(0), _height(0), _format(ImageData::TF_UNDEFINED), _lockFlags(0)
     {
 
     }
 
-    void NativeTextureGLES::init(int w, int h, TextureFormat tf, bool rt)
+    void NativeTextureGLES::init(int w, int h, ImageData::TextureFormat tf, bool rt)
     {
         release();
 
@@ -179,7 +124,7 @@ namespace oxygine
         CHECKGL();
     }
 
-    void NativeTextureGLES::init(nativeTextureHandle id, int w, int h, TextureFormat tf)
+    void NativeTextureGLES::init(nativeTextureHandle id, int w, int h, ImageData::TextureFormat tf)
     {
         release();
         _id = (size_t)id;
@@ -280,7 +225,7 @@ namespace oxygine
         return _height;
     }
 
-    TextureFormat NativeTextureGLES::getFormat() const
+    ImageData::TextureFormat NativeTextureGLES::getFormat() const
     {
         return _format;
     }

@@ -55,7 +55,7 @@ namespace oxygine
 
         Point _extend;
         spNativeTexture _rt;
-        TextureFormat _format;
+        ImageData::TextureFormat _format;
         Transform _transform;
         Rect _screen;
 
@@ -103,13 +103,13 @@ namespace oxygine
     public:
         RenderTargetsManager();
 
-        spNativeTexture get(spNativeTexture current, int w, int h, TextureFormat tf);
+        spNativeTexture get(spNativeTexture current, int w, int h, ImageData::TextureFormat tf);
         void update();
         void reset();
 
     protected:
         void print();
-        bool isGood(const spNativeTexture& t, int w, int h, TextureFormat tf) const;
+        bool isGood(const spNativeTexture& t, int w, int h, ImageData::TextureFormat tf) const;
 
         typedef std::vector<spNativeTexture> rts;
         rts _rts;

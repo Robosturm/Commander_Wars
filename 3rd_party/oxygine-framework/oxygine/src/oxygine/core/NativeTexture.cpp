@@ -47,12 +47,12 @@ namespace oxygine
     }
 
 
-    void NativeTextureNull::init(nativeTextureHandle, int w, int h, TextureFormat tf)
+    void NativeTextureNull::init(nativeTextureHandle, int w, int h, ImageData::TextureFormat tf)
     {
 
     }
 
-    void NativeTextureNull::init(int w, int h, TextureFormat tf, bool renderTarget)
+    void NativeTextureNull::init(int w, int h, ImageData::TextureFormat tf, bool renderTarget)
     {
 
     }
@@ -105,7 +105,7 @@ namespace oxygine
     /**returns handle (ptr) to HW texture ID*/
     nativeTextureHandle NativeTextureNull::getHandle() const
     {
-        return 0;
+        return nullptr;
     }
 
     int NativeTextureNull::getWidth() const
@@ -117,8 +117,8 @@ namespace oxygine
     {
         return 0;
     }
-    TextureFormat NativeTextureNull::getFormat() const
+    ImageData::TextureFormat NativeTextureNull::getFormat() const
     {
-        return TF_UNDEFINED;
+        return ImageData::TF_UNDEFINED;
     }
 }

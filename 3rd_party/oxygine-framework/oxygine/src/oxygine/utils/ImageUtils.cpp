@@ -17,7 +17,7 @@ namespace oxygine
         Image src;
         src.init(im_);
         Image dest;
-        src.convert(dest, TF_B8G8R8A8);
+        src.convert(dest, ImageData::TF_R8G8B8A8);
         const ImageData& im = dest.lock();
 
         file::handle h = file::open(path, "wb");

@@ -47,7 +47,7 @@ namespace oxygine
         {
             int textureWidth = meta.attribute("tw").as_int();
             int textureHeight = meta.attribute("th").as_int();
-            _texture->init(0, textureWidth, textureHeight, TF_R8G8B8A8);
+            _texture->init(0, textureWidth, textureHeight, ImageData::TF_R8G8B8A8);
         }
         else
         {
@@ -59,24 +59,12 @@ namespace oxygine
                 size = file::read(ac.getHandle(), buff, sizeof(buff));
             }
 
-            int width = 0;
-            int height = 0;
-            ImageType type;
+            RefHolder<Image> mt;
 
-            if (getImageInfo(buff, size, img.c_str(), type, width, height))
-            {
-                _texture->init(0, width, height, TF_R8G8B8A8);
-            }
-            else
-            {
-                RefHolder<Image> mt;
+            QImage img(_imagePath.c_str());
 
-                file::buffer bf;
-                file::read(_imagePath, bf);
-
-                mt.init(bf, true, _texture->getFormat());
-                _texture->init(mt.lock(), false);
-            }
+            mt.init(img, true);
+            _texture->init(mt.lock(), false);
         }
 
 

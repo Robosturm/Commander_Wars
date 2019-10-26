@@ -22,7 +22,7 @@ namespace oxygine
 
         void cleanup();
 
-        const Font* getFont(const char* name = 0, int size = 0) const override;
+        const Font* getFont(const char* name = nullptr, int size = 0) const override;
         const Font* getClosestFont(float worldScale, int styleFontSize, float& resScale) const override;
 
     private:
@@ -47,7 +47,7 @@ namespace oxygine
         Font* _font;
         bool _sdf;
 
-        TextureFormat _format;
+        ImageData::TextureFormat _format;
 
         std::string _file;
         bool _premultipliedAlpha;

@@ -10,8 +10,8 @@ namespace oxygine
     public:
         ~NativeTextureGLES();
 
-        void init(nativeTextureHandle id, int w, int h, TextureFormat tf);
-        void init(int w, int h, TextureFormat tf, bool renderTarget);
+        void init(nativeTextureHandle id, int w, int h, ImageData::TextureFormat tf);
+        void init(int w, int h, ImageData::TextureFormat tf, bool renderTarget);
         void init(const ImageData& src, bool sysMemCopy);
         void release();
         void swap(NativeTexture*) ;
@@ -19,7 +19,7 @@ namespace oxygine
         nativeTextureHandle getHandle() const;
         int                 getWidth() const;
         int                 getHeight() const;
-        TextureFormat       getFormat() const;
+        ImageData::TextureFormat       getFormat() const;
         unsigned int        getFboID() const;
 
         ImageData lock(lock_flags, const Rect* src);
@@ -40,7 +40,7 @@ namespace oxygine
         size_t _id;
         size_t _fbo;
 
-        TextureFormat _format;
+        ImageData::TextureFormat _format;
         int _width;
         int _height;
 

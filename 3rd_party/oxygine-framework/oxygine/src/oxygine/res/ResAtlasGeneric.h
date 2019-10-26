@@ -16,7 +16,7 @@ namespace oxygine
 
         //std::string _xmlFolder;
 
-        void nextAtlas(int w, int h, TextureFormat tf, atlas_data& ad, const char* name);
+        void nextAtlas(int w, int h, ImageData::TextureFormat tf, atlas_data& ad, const char* name);
         void applyAtlas(atlas_data& ad, bool linear, bool clamp2edge);
 
         void loadAtlas(CreateResourceContext& context);

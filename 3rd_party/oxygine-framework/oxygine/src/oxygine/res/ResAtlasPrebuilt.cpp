@@ -14,13 +14,10 @@ namespace oxygine
     {
         pugi::xml_node node = context.walker.getNode();
         pugi::xml_node meta = context.walker.getMeta();
-
-        const char* format = node.attribute("format").as_string("8888");
-
         loadBase(node);
 
 
-        TextureFormat tf = string2TextureFormat(format);
+        ImageData::TextureFormat tf = ImageData::TF_R8G8B8A8;
 
         pugi::xml_node meta_image = meta.child("atlas");
 
@@ -44,14 +41,6 @@ namespace oxygine
 
             int w = meta_image.attribute("w").as_int();
             int h = meta_image.attribute("h").as_int();
-
-            const char* file_format = meta_image.attribute("format").as_string(0);
-            TextureFormat ffmt = TF_UNDEFINED;
-            if (file_format)
-            {
-                ffmt = string2TextureFormat(file_format);
-                compressed = isCompressedFormat(ffmt);
-            }
 
             std::string alpha_file = meta_image.attribute("alpha").as_string("");
             if (!alpha_file.empty())

@@ -39,7 +39,6 @@
 #include "oxygine/VisualStyle.h"
 #include "oxygine/Serialize.h"
 #include "oxygine/STDRenderer.h"
-#include "oxygine/actor/WebImage.h"
 #include "oxygine/key.h"
 #include "oxygine/actor/Polygon.h"
 #include "oxygine/tween/TweenOutline.h"

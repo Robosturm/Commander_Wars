@@ -198,7 +198,7 @@ namespace oxygine
         LoadResourcesContext::get()->createTexture(task);
     }
 
-    void ResAtlasGeneric::nextAtlas(int w, int h, TextureFormat tf, atlas_data& ad, const char* name)
+    void ResAtlasGeneric::nextAtlas(int w, int h, ImageData::TextureFormat tf, atlas_data& ad, const char* name)
     {
         ad.mt.init(w, h, tf);
         ad.mt.fillZero();
@@ -256,7 +256,7 @@ namespace oxygine
         atlas_data ad;
 
 
-        TextureFormat tf = string2TextureFormat(format);
+        ImageData::TextureFormat tf = ImageData::TF_R8G8B8A8;
 
 
         bool compressed = false;
@@ -303,11 +303,8 @@ namespace oxygine
             float frame_scale = 1.0f;
             bool loaded = false;
 
-
-            file::buffer bf;
-            file::read(walker.getPath("file"), bf);
-
-            mt.init(bf, true, tf);
+            QImage img(walker.getPath("file").c_str());
+            mt.init(img, true);
             im = mt.lock();
             if (im.w)
             {

@@ -9,6 +9,7 @@ set(OX_HAVE_HTTP 0)
 set(OX_USE_SDL2 1)
 
 find_package(Qt5Core REQUIRED)
+find_package(Qt5Gui REQUIRED)
 find_package(OpenGL)
 
 
@@ -135,43 +136,6 @@ elseif (WIN32)
 		ws2_32)
 endif()
 
-if (OX_HAVE_LIBPNG)		
-	set(OX_DEFINITIONS	${OX_DEFINITIONS} -DOX_HAVE_LIBPNG)
-
-	if (EMSCRIPTEN)
-		
-	else(EMSCRIPTEN)
-
-		include_directories(${THIRD_PARTY}/libpng)
-		set(LIBPNG ${libprefix}png)
-
-		if (MSVC)		
-			if(NOT (MSVC_VERSION LESS 1900))
-				set(LIBPNG ${LIBPNG}-2015)
-			endif()
-		endif()		
-	
-		set(CORE_LIBS ${CORE_LIBS} ${LIBPNG})
-
-	endif(EMSCRIPTEN)
-
-endif(OX_HAVE_LIBPNG)
-
-
-if (OX_HAVE_LIBJPEG)	
-	set(OX_DEFINITIONS	${OX_DEFINITIONS} -DOX_HAVE_LIBJPEG)
-	include_directories(${THIRD_PARTY}/libjpeg)
-	set(LIBJPEG ${libprefix}jpeg)
-	
-	if (MSVC)
-		if(NOT (MSVC_VERSION LESS 1900))
-			set(LIBJPEG ${LIBJPEG}-2015)
-		endif()	
-	endif()
-
-	set(CORE_LIBS ${CORE_LIBS} ${LIBJPEG})
-endif(OX_HAVE_LIBJPEG)
-
 
 if (NOT EMSCRIPTEN)
 	set(CORE_LIBS ${CORE_LIBS}
@@ -190,6 +154,7 @@ include_directories(${OXYGINE_SRC})
 include_directories(${OXYGINE_INCLUDE_DIRS})
 add_library(oxygine-framework STATIC ${SOURCES})
 
+target_link_libraries(oxygine-framework Qt5::Core Qt5::Gui)
 
 set(OXYGINE_LIBRARY_DIRS
 	${OXYGINE_LIBRARY_DIRS}

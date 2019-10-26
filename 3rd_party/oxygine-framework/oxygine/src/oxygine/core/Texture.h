@@ -35,7 +35,7 @@ namespace oxygine
 
         virtual int getWidth() const = 0;
         virtual int getHeight() const = 0;
-        virtual TextureFormat getFormat() const = 0;
+        virtual ImageData::TextureFormat getFormat() const = 0;
 
         virtual ImageData lock(lock_flags, const Rect* src) = 0;
         virtual void unlock() = 0;

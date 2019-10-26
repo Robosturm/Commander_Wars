@@ -8,7 +8,6 @@
 #include "actor/SlidingActor.h"
 #include "actor/Sprite.h"
 #include "actor/TextField.h"
-#include "actor/WebImage.h"
 
 namespace oxygine
 {
@@ -28,8 +27,6 @@ namespace oxygine
         CREATE(ClipRectActor);
         CREATE(Polygon);
         CREATE(MaskedSprite);
-        CREATE(WebImage);
-
 
         return 0;
     }

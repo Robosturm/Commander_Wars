@@ -3,21 +3,10 @@
 #include "core/Texture.h"
 #include "core/file.h"
 
+#include <qimage.h>
+
 namespace oxygine
 {
-    enum ImageType
-    {
-        IT_UNKNOWN,
-        IT_PNG,
-        IT_PKM,
-        IT_PVR2,
-        IT_PVR,
-        IT_TGA,
-        IT_JPEG
-    };
-
-    bool getImageInfo(const void* data, size_t size, const char* name, ImageType& type, int& width, int& height);
-
     DECLARE_SMART(Image, spImage);
 
     class Image : public Texture
@@ -26,16 +15,12 @@ namespace oxygine
         Image();
         ~Image();
 
-        bool init(file::buffer& bf, bool premultiplied = false, TextureFormat format = TF_UNDEFINED);
+        bool init(QImage& bf, bool premultiplied);
         void init(const ImageData& src);
-        void init(int w, int h, TextureFormat Format);
+        void init(int w, int h, ImageData::TextureFormat Format);
 
         void cleanup();
-        void convert(Image& dest, TextureFormat format);
-        //void convert2pot(MemoryTexture &dest);
-
-        OXYGINE_DEPRECATED
-        void fill_zero();
+        void convert(Image& dest, ImageData::TextureFormat format);
 
         void fillZero() { fill(0); }
         void fill(unsigned int val);
@@ -44,7 +29,7 @@ namespace oxygine
         int             getWidth() const;
         int             getHeight() const;
         const Point&    getSize() const;
-        TextureFormat   getFormat() const;
+        ImageData::TextureFormat   getFormat() const;
 
         ImageData   lock(lock_flags f = 0, const Rect* pRect = 0);
         ImageData   lock(const Rect* pRect);
@@ -65,9 +50,4 @@ namespace oxygine
         size_t _offset;//buffer offset
         std::vector<unsigned char> _buffer;
     };
-
-    typedef bool (*cbLoadImageFromBuffer)(Image& mt, void* data, int nSize, bool premultiplied, TextureFormat format);
-    void setJpegImageLoader(cbLoadImageFromBuffer);
-    void setPngImageLoader(cbLoadImageFromBuffer);
-    void setCustomImageLoader(cbLoadImageFromBuffer);
 }

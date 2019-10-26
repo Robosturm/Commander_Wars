@@ -116,8 +116,8 @@ namespace oxygine
     public:
         int _w;
         int _h;
-        TextureFormat _tf;
-        NTP(int w, int h, TextureFormat tf) : _w(w), _h(h), _tf(tf) {}
+        ImageData::TextureFormat _tf;
+        NTP(int w, int h, ImageData::TextureFormat tf) : _w(w), _h(h), _tf(tf) {}
 
         bool operator()(const spNativeTexture& t1, const spNativeTexture& t2) const
         {
@@ -154,7 +154,7 @@ namespace oxygine
             logs::messageln("texture %d %d", t->getWidth(), t->getHeight());
         }
     }
-    bool RenderTargetsManager::isGood(const spNativeTexture& t, int w, int h, TextureFormat tf) const
+    bool RenderTargetsManager::isGood(const spNativeTexture& t, int w, int h, ImageData::TextureFormat tf) const
     {
         if (!t)
             return false;
@@ -175,7 +175,7 @@ namespace oxygine
         return false;
     }
 
-    spNativeTexture RenderTargetsManager::get(spNativeTexture current, int w, int h, TextureFormat tf)
+    spNativeTexture RenderTargetsManager::get(spNativeTexture current, int w, int h, ImageData::TextureFormat tf)
     {
         w = alignTextureSize(w);
         h = alignTextureSize(h);
@@ -358,7 +358,7 @@ namespace oxygine
         driver->setTexture(0, 0);
     }
 
-    PostProcess::PostProcess(const PostProcessOptions& opt) : _options(opt), _format(TF_R4G4B4A4), _extend(2, 2)
+    PostProcess::PostProcess(const PostProcessOptions& opt) : _options(opt), _format(ImageData::TF_R8G8B8A8), _extend(2, 2)
     {
     }
 
