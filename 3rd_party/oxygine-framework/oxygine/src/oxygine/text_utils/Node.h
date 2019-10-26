@@ -35,7 +35,7 @@ namespace oxygine
             Color primary;
         };
 
-        class Node: public PoolObject
+        class Node
         {
         public:
             Node();

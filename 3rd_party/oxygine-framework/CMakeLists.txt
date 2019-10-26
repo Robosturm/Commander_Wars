@@ -42,8 +42,7 @@ set(FOLDERS oxygine
     oxygine/pugixml
     oxygine/res
     oxygine/text_utils
-    oxygine/utils
-    oxygine/winnie_alloc)
+    oxygine/utils)
 
 set(PLATFORM win32_mingw)
 

@@ -6,17 +6,8 @@
 
 namespace oxygine
 {
-    class PoolObject
-    {
-    public:
-#if OBJECT_POOL_ALLOCATOR
-        void* operator new(size_t size);
-        void operator delete(void* data, size_t size);
-#endif
-    };
-
     /**Base class for each oxygine object. Each object has unique internal ID and name. Debug build is tracking all created and deleted objects. Using memory pools*/
-    class ObjectBase: public PoolObject
+    class ObjectBase
     {
     public:
         ObjectBase(const ObjectBase& src);
@@ -65,16 +56,7 @@ namespace oxygine
         static void __addToDebugList(ObjectBase* base);
         static void __removeFromDebugList(ObjectBase* base);
         void __generateID();
-
-#if     DYNAMIC_OBJECT_NAME
-        //some objects dont need name
-        mutable std::string* __name;
-#else
-        mutable std::string __name;
-#endif
-        std::string* __getName() const;
-        void __freeName() const;
-
+        std::string __name;
         int __id;
 
         union

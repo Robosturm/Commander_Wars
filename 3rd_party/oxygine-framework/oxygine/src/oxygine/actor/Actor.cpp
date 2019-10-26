@@ -83,9 +83,7 @@ namespace oxygine
             setRotation(0);
             setScale(1);
         }
-
-        if (src.__getName())
-            setName(src.getName());
+        setName(src.getName());
     }
 
 
@@ -211,14 +209,10 @@ namespace oxygine
         std::stringstream stream;
         stream << "{" << typeid(*this).name() << "}";
         //stream << this;
-
-#if DYNAMIC_OBJECT_NAME
-        if (__name && __name->size())
-            stream << " name='" << div(*__name, Color::Red) << "'";
-#else
         if (__name.size())
+        {
             stream << " name='" << div(__name, Color::Red) << "'";
-#endif
+        }
 
         stream << " id='" << getObjectID() << "'";
         stream << "\n";

@@ -3,7 +3,6 @@
 #include <QMutexLocker>
 #include "log.h"
 #include "../utils/stringUtils.h"
-#include "../winnie_alloc/winnie_alloc.h"
 #include <algorithm>
 #include <stdio.h>
 #include <string.h>
@@ -11,29 +10,7 @@
 #include "../EventDispatcher.h"
 
 namespace oxygine
-{
-    extern QMutex mutexAlloc;
-    void* fastAlloc(size_t size)
-    {
-#ifndef USE_MEMORY_POOL
-        void* data = malloc(size);
-#else
-        QMutexLocker m(&mutexAlloc);
-        void* data = Winnie::Alloc(size);
-#endif
-        return data;
-    }
-
-    void fastFree(void* data)
-    {
-#ifndef USE_MEMORY_POOL
-        free(data);
-#else
-        QMutexLocker m(&mutexAlloc);
-        Winnie::Free(data);
-#endif
-    }
-
+{    
     ObjectBase::__createdObjects&   ObjectBase::__getCreatedObjects()
     {
         static __createdObjects __objects;
@@ -55,39 +32,9 @@ namespace oxygine
         return mutex;
     }
 
-#if OBJECT_POOL_ALLOCATOR
-    void* PoolObject::operator new(size_t size)
-    {
-        return fastAlloc(size);
-    }
-
-    void PoolObject::operator delete(void* data, size_t size)
-    {
-#ifdef OX_DEBUG
-        memset(data, 0xCDCDCDCD, size);
-#endif
-
-        fastFree(data);
-    }
-#endif
-
-    std::string* ObjectBase::__getName() const
-    {
-#if DYNAMIC_OBJECT_NAME
-        if (!__name)
-        {
-            __name = (std::string*)fastAlloc(sizeof(std::string));
-            new(__name)std::string;
-        }
-        return __name;
-#else
-        return &__name;
-#endif
-    }
-
     const std::string& ObjectBase::getName() const
     {
-        return *__getName();
+        return __name;
     }
 
     bool ObjectBase::isName(const std::string& name) const
@@ -97,20 +44,16 @@ namespace oxygine
 
     bool ObjectBase::isName(const char* name) const
     {
-#if DYNAMIC_OBJECT_NAME
-        if (__name && !strcmp(__name->c_str(), name))
-            return true;
-#else
         if (__name == name)
+        {
             return true;
-#endif
+        }
         return false;
     }
 
     void ObjectBase::setName(const std::string& name)
     {
-        std::string* n = __getName();
-        *n = name;
+        __name = name;
     }
 
     ObjectBase::ObjectBase(const ObjectBase& src)
@@ -120,12 +63,7 @@ namespace oxygine
         __addToDebugList(this);
 
         __userData64 = src.__userData64;
-#if DYNAMIC_OBJECT_NAME
-        if (src.__name)
-            setName(*src.__name);
-#else
         setName(src.__name);
-#endif
         __generateID();
     }
 
@@ -137,20 +75,11 @@ namespace oxygine
     void ObjectBase::__generateID()
     {
         __id = ++_lastID;
-
-        //OX_ASSERT(__id != 266);
-#ifdef OX_DEBUG
-        OX_ASSERT(_assertCtorID != __id);
-#endif
     }
 
     ObjectBase::ObjectBase(bool assignID): __id(0)
     {
         __userData64 = 0;
-
-#if DYNAMIC_OBJECT_NAME
-        __name = nullptr;
-#endif
         __addToDebugList(this);
 
         if (assignID)
@@ -167,33 +96,9 @@ namespace oxygine
         _assertDtorID = id;
     }
 
-    void ObjectBase::__freeName() const
-    {
-#if DYNAMIC_OBJECT_NAME
-        if (__name)
-        {
-            using namespace std;
-
-            __name->~string();
-            fastFree(__name);
-            __name = nullptr;
-        }
-#else
-        __name.clear();
-#endif
-    }
-
     ObjectBase::~ObjectBase()
     {
-#ifdef OX_DEBUG
-        OX_ASSERT(_assertDtorID != __id);
-#endif
 
-#ifdef OXYGINE_DEBUG_TRACE_LEAKS
-        __removeFromDebugList(this);
-#endif
-
-        __freeName();
     }
 
     void ObjectBase::__startTracingLeaks()
@@ -244,12 +149,7 @@ namespace oxygine
         char refs[16] = "-";
         if (o)
         {
-#if DYNAMIC_OBJECT_NAME
-            if (o->__name)
-                name = *o->__name;
-#else
             name = o->__name;
-#endif
         }
 
 

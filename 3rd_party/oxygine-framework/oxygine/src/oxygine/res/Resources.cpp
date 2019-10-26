@@ -126,8 +126,6 @@ namespace oxygine
         for (size_t i = 0; i < _docs.size(); ++i)
             delete _docs[i];
         _docs.clear();
-
-        __freeName();
     }
 
     bool Resources::isEmpty() const

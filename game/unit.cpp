@@ -65,28 +65,9 @@ Unit::Unit(QString unitID, Player* pOwner, bool aquireId)
 
 Unit::~Unit()
 {
-    if (m_pOwner != nullptr)
+    if (m_CORange.get() != nullptr)
     {
-        CO* pCO = m_pOwner->getCO(0);
-        if (pCO != nullptr && pCO->getCOUnit() != nullptr)
-        {
-            if (pCO->getCOUnit() == this)
-            {
-                pCO->setCOUnit(nullptr);
-            }
-        }
-        pCO = m_pOwner->getCO(1);
-        if (pCO != nullptr && pCO->getCOUnit() != nullptr)
-        {
-            if (pCO->getCOUnit() == this)
-            {
-                pCO->setCOUnit(nullptr);
-            }
-        }
-        if (m_CORange.get() != nullptr)
-        {
-            m_CORange->removeChildren();
-        }
+        m_CORange->removeChildren();
     }
 }
 

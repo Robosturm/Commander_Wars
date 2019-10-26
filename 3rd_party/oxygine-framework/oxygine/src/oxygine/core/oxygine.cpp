@@ -18,7 +18,6 @@
 #include "../res/ResFontBM.h"
 #include "../res/ResStarlingAtlas.h"
 #include "../res/Resources.h"
-#include "../winnie_alloc/winnie_alloc.h"
 #include "gl/VideoDriverGLES20.h"
 #include "gl/oxgl.h"
 #include <stdio.h>
