@@ -4,7 +4,6 @@
 #include "../core/ImageDataOperations.h"
 #include "../core/VideoDriver.h"
 #include "../utils/AtlasBuilder.h"
-#include "../utils/ImageUtils.h"
 #include "../utils/stringUtils.h"
 #include <stdint.h>
 

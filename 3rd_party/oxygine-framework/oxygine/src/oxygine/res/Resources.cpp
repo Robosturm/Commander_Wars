@@ -3,13 +3,15 @@
 #include "ResAnim.h"
 #include "ResFont.h"
 #include "Resource.h"
-#include "../core/file.h"
 #include "../core/log.h"
 #include "../pugixml/pugixml.hpp"
 #include "../utils/stringUtils.h"
 #include <algorithm>
 #include <stdarg.h>
 #include <stdio.h>
+
+#include "qfile.h"
+#include "qtextstream.h"
 
 //#define FS_LOG(...) logs::warning(__VA_ARGS__)
 #define FS_LOG(...) {}
@@ -180,16 +182,18 @@ namespace oxygine
 
 
         FS_LOG("step0");
-        file::buffer fb;
-        int sz = file::read(xmlFile, fb);
+        QFile file(xmlFile.c_str());
 
-
-        if (!sz)
+        if (!file.exists() || file.size() == 0)
         {
-            logs::error("can't load xml file: '%s'", xmlFile.c_str());
-            OX_ASSERT(!"can't find xml file");
+            qCritical("can't load xml file: '%s'", xmlFile.c_str());
+            Q_ASSERT(!"can't find xml file");
             return false;
         }
+        file.open(QIODevice::ReadOnly);
+        QTextStream stream(&file);
+        std::string data = stream.readAll().toStdString();
+        std::vector<uchar> fb(data.begin(), data.end());
 
         FS_LOG("step1");
 
@@ -205,7 +209,7 @@ namespace oxygine
         if (prebuilt_folder[0] == '/')
             prebuilt_folder.erase(prebuilt_folder.begin());
 
-        file::buffer fb_meta;
+        std::vector<uchar> fb_meta;
         pugi::xml_document doc_meta;
         std::string ox = prebuilt_folder + "meta.xml";
         const char* ox_file = ox.c_str();
@@ -213,18 +217,23 @@ namespace oxygine
 
         FS_LOG("step2");
 
-        if (file::exists(ox_file))
+        if (QFile::exists(ox_file))
         {
-            file::read(ox_file, fb_meta, ep_ignore_error);
-            if (fb_meta.getSize())
-                doc_meta.load_buffer_inplace(&fb_meta.data[0], fb_meta.data.size());
+            QFile ox_fileData(ox_file);
+            QTextStream ox_stream(&file);
+            std::string ox_data = ox_stream.readAll().toStdString();
+            fb_meta = std::vector<uchar>(ox_data.begin(), ox_data.end());
+            if (ox_fileData.size())
+            {
+                doc_meta.load_buffer_inplace(&fb_meta[0], fb_meta.size());
+            }
         }
 
 
         pugi::xml_document* doc = new pugi::xml_document();
         _docs.push_back(doc);
 
-        bool loaded = doc->load_buffer(&fb.data[0], fb.data.size());
+        bool loaded = doc->load_buffer(&fb[0], fb.size());
         OX_ASSERT(loaded);
 
         pugi::xml_node resources = doc->first_child();

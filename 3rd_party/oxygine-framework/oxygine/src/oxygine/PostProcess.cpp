@@ -2,19 +2,19 @@
 #include "RenderState.h"
 #include "STDRenderDelegate.h"
 #include "actor/Actor.h"
-#include "core/ZipFileSystem.h"
-#include "core/file.h"
 #include "core/gl/ShaderProgramGL.h"
 #include "core/gl/VertexDeclarationGL.h"
 #include "core/oxygine.h"
 #include "core/system_data.h"
-#include "core/Zips.h"
+
+#include <qfile.h>
+#include <qtextstream.h>
 
 namespace oxygine
 {
-    ShaderProgram* PostProcess::shaderBlurV = 0;
-    ShaderProgram* PostProcess::shaderBlurH = 0;
-    ShaderProgram* PostProcess::shaderBlit = 0;
+    ShaderProgram* PostProcess::shaderBlurV = nullptr;
+    ShaderProgram* PostProcess::shaderBlurH = nullptr;
+    ShaderProgram* PostProcess::shaderBlit = nullptr;
     bool _ppBuilt = false;
 
     void PostProcess::initShaders()
@@ -27,29 +27,38 @@ namespace oxygine
 
         IVideoDriver* driver = IVideoDriver::instance;
 
-
-
-        file::Zips zp;
-        zp.add(system_data, system_size);
-
-
         const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(IVideoDriver::instance->getVertexDeclaration(vertexPCT2::FORMAT));
 
-        file::buffer vs_h;
-        file::buffer vs_v;
-        file::buffer fs_blur;
-        zp.read("system/pp_hblur_vs.glsl", vs_h);
-        zp.read("system/pp_vblur_vs.glsl", vs_v);
-        zp.read("system/pp_rast_fs.glsl", fs_blur);
+        QString vs_h;
+        QString vs_v;
+        QString fs_blur;
+        if (QFile::exists("system/pp_hblur_vs.glsl"))
+        {
+            QFile file("system/pp_hblur_vs.glsl");
+            file.open(QIODevice::ReadOnly);
+            QTextStream stream(&file);
+            vs_h = stream.readAll();
 
-        vs_h.push_back(0);
-        vs_v.push_back(0);
-        fs_blur.push_back(0);
+        }
+        if (QFile::exists("system/pp_vblur_vs.glsl"))
+        {
+            QFile file("system/pp_vblur_vs.glsl");
+            file.open(QIODevice::ReadOnly);
+            QTextStream stream(&file);
+            vs_v = stream.readAll();
 
+        }
+        if (QFile::exists("system/pp_rast_fs.glsl"))
+        {
+            QFile file("system/pp_rast_fs.glsl");
+            file.open(QIODevice::ReadOnly);
+            QTextStream stream(&file);
+            fs_blur = stream.readAll();
+        }
 
-        unsigned int h = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_h.front());
-        unsigned int v = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_v.front());
-        unsigned int ps = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)&fs_blur.front());
+        unsigned int h = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)vs_h.data());
+        unsigned int v = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)vs_v.data());
+        unsigned int ps = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)fs_blur.data());
 
 
         shaderBlurV = new ShaderProgramGL(ShaderProgramGL::createProgram(v, ps, decl));
@@ -65,17 +74,25 @@ namespace oxygine
         oxglDeleteShader(v);
         oxglDeleteShader(ps);
 
-        file::buffer vs_blit;
-        file::buffer fs_blit;
-        zp.read("system/pp_blit_vs.glsl", vs_blit);
-        zp.read("system/pp_blit_fs.glsl", fs_blit);
+        QString vs_blit;
+        QString fs_blit;
+        if (QFile::exists("system/pp_blit_vs.glsl"))
+        {
+            QFile file("system/pp_blit_vs.glsl");
+            file.open(QIODevice::ReadOnly);
+            QTextStream stream(&file);
+            vs_blit = stream.readAll();
+        }
+        if (QFile::exists("system/pp_blit_fs.glsl"))
+        {
+            QFile file("system/pp_blit_fs.glsl");
+            file.open(QIODevice::ReadOnly);
+            QTextStream stream(&file);
+            fs_blit = stream.readAll();
+        }
 
-        vs_blit.push_back(0);
-        fs_blit.push_back(0);
-
-
-        unsigned int vs = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_blit.front(), "", "");
-        unsigned int fs = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)&fs_blit.front(), "", "");
+        unsigned int vs = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)vs_blit.data(), "", "");
+        unsigned int fs = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)fs_blit.data(), "", "");
 
         shaderBlit = new ShaderProgramGL(ShaderProgramGL::createProgram(vs, fs, decl, true));
         driver->setShaderProgram(shaderBlit);

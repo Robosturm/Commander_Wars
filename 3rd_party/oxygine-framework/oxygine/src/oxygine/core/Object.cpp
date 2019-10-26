@@ -1,5 +1,6 @@
 #include "Object.h"
-#include "Mutex.h"
+#include <qmutex.h>
+#include <QMutexLocker>
 #include "log.h"
 #include "../utils/stringUtils.h"
 #include "../winnie_alloc/winnie_alloc.h"
@@ -11,13 +12,13 @@
 
 namespace oxygine
 {
-    extern Mutex mutexAlloc;
+    extern QMutex mutexAlloc;
     void* fastAlloc(size_t size)
     {
 #ifndef USE_MEMORY_POOL
         void* data = malloc(size);
 #else
-        MutexAutoLock m(mutexAlloc);
+        QMutexLocker m(&mutexAlloc);
         void* data = Winnie::Alloc(size);
 #endif
         return data;
@@ -28,7 +29,7 @@ namespace oxygine
 #ifndef USE_MEMORY_POOL
         free(data);
 #else
-        MutexAutoLock m(mutexAlloc);
+        QMutexLocker m(&mutexAlloc);
         Winnie::Free(data);
 #endif
     }
@@ -48,9 +49,9 @@ namespace oxygine
 
     //Mutex mutexDebugList;
 
-    Mutex& getMutex()
+    QMutex& getMutex()
     {
-        static Mutex mutex;
+        static QMutex mutex;
         return mutex;
     }
 

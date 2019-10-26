@@ -3,7 +3,6 @@
 #include "../../Image.h"
 #include "../ImageDataOperations.h"
 #include "../NativeTexture.h"
-#include "../file.h"
 #include "../log.h"
 #include <stdio.h>
 

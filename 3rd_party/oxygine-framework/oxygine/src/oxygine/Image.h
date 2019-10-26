@@ -1,7 +1,6 @@
 #pragma once
 #include "oxygine-include.h"
 #include "core/Texture.h"
-#include "core/file.h"
 
 #include <qimage.h>
 

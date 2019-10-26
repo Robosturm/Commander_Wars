@@ -329,9 +329,7 @@ set(CMAKE_INSTALL_PREFIX "../install/${CMAKE_BUILD_TYPE}")
 
 # select libs to install
 set(${PROJECT_NAME}_INSTALL_LIBS
-    Libs/libcurl.dll
     Libs/libeay32.dll
-    Libs/libpng16.dll
     Libs/libssh2.dll
     Libs/libzlib.dll
     Libs/pthreadVCE2.dll
@@ -432,6 +430,7 @@ else("Release")
 endif()
 
 # install libs
+install(DIRECTORY system DESTINATION ".")
 install(DIRECTORY resources DESTINATION ".")
 install(DIRECTORY maps DESTINATION ".")
 install(DIRECTORY mods DESTINATION ".")

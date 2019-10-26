@@ -7,19 +7,18 @@
 #include "core/ImageDataOperations.h"
 #include "core/UberShaderProgram.h"
 #include "core/VertexDeclaration.h"
-#include "core/ZipFileSystem.h"
-#include "core/file.h"
 #include "core/gl/VideoDriverGLES20.h"
 #include "core/system_data.h"
 #include "math/Rect.h"
-#include "core/Zips.h"
-//#define EXP_SORT
+
+#include "qfile.h"
+#include "qtextstream.h"
 
 namespace oxygine
 {
-    bool _restored = false;
-    STDRenderer* STDRenderer::instance = 0;
-    STDRenderer* STDRenderer::current = 0;
+    static bool _restored = false;
+    STDRenderer* STDRenderer::instance = nullptr;
+    STDRenderer* STDRenderer::current = nullptr;
 
 
     spNativeTexture STDRenderer::white;
@@ -195,15 +194,18 @@ namespace oxygine
 
         maxVertices = indices16.size() / 3 * 2;
 
-        file::buffer shaderBody;
-        file::read("shader.glsl", shaderBody, ep_ignore_error);
-        uberShaderBody = shaderBody.data;
-        if (!shaderBody.getSize())
+        std::string shaderBody;
+        if (QFile::exists("system/shader.glsl"))
         {
-            file::Zips zp;
-            zp.add(system_data, system_size);
-            zp.read("system/shader.glsl", shaderBody);
-            uberShaderBody = shaderBody.data;
+            QFile file("system/shader.glsl");
+            file.open(QIODevice::ReadOnly);
+            QTextStream stream(&file);
+            shaderBody = stream.readAll().toStdString();
+            uberShaderBody = std::vector<uchar>(shaderBody.begin(), shaderBody.end());
+        }
+        else
+        {
+            shaderBody = "\0";
         }
 
         uberShader.init(uberShaderBody);
@@ -380,7 +382,7 @@ namespace oxygine
         if (_prevRT)
         {
             _driver->setRenderTarget(_prevRT);
-            _prevRT = 0;
+            _prevRT = nullptr;
         }
 
     }

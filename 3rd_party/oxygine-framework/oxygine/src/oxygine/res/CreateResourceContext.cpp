@@ -2,16 +2,14 @@
 #include "pthread.h"
 #include "../Image.h"
 #include "../core/NativeTexture.h"
-#include "../core/ThreadDispatcher.h"
 #include "../core/oxygine.h"
 
 namespace oxygine
 {
     LoadResourcesContext* LoadResourcesContext::get()
     {
-        LoadResourcesContext* mtcontext = &MTLoadingResourcesContext::instance;
         LoadResourcesContext* scontext = &SingleThreadResourcesContext::instance;
-        return core::isMainThread() ? scontext : mtcontext;
+        return scontext;
     }
 
     CreateTextureTask::CreateTextureTask(): linearFilter(true), clamp2edge(true)
@@ -196,39 +194,5 @@ namespace oxygine
     bool SingleThreadResourcesContext::isNeedProceed(spNativeTexture t)
     {
         return t->getHandle() == 0;
-    }
-
-
-    MTLoadingResourcesContext MTLoadingResourcesContext::instance;
-
-    void copyTexture(const ThreadDispatcher::message& msg)
-    {
-        const CreateTextureTask* task = (const CreateTextureTask*)msg.cbData;
-
-
-        Image* src = task->src.get();
-        NativeTexture* dest = task->dest.get();
-
-        Rect textureRect(0, 0, src->getWidth(), src->getHeight());
-
-        if (dest->getHandle() == nullptr)
-        {
-            dest->init(textureRect.getWidth(), textureRect.getHeight(), src->getFormat());
-        }
-
-        dest->updateRegion(0, 0, src->lock());
-
-        task->ready();
-    }
-
-    void MTLoadingResourcesContext::createTexture(const CreateTextureTask& opt)
-    {
-        core::getMainThreadDispatcher().sendCallback(0, 0, copyTexture, (void*)&opt);
-        //core::getMainThreadDispatcher().postCallback(0, 0, 0, copyTexture, (void*)&opt);
-    }
-
-    bool MTLoadingResourcesContext::isNeedProceed(spNativeTexture t)
-    {
-        return t->getHandle() == nullptr;
     }
 }

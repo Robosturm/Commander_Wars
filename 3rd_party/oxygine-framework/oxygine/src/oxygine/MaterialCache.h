@@ -1,10 +1,11 @@
 #pragma once
 #include "oxygine-include.h"
-#include "core/Mutex.h"
 #include "core/intrusive_ptr.h"
 #include "core/ref_counter.h"
 #include <unordered_map>
 #include <vector>
+
+#include <qmutex.h>
 
 namespace oxygine
 {
@@ -40,7 +41,7 @@ namespace oxygine
         typedef std::unordered_multimap<size_t, spMaterialX> materials;
         materials _materials;
 
-        Mutex _lock;
+        QMutex _lock;
         int _addCounter;
 
         Material* clone_(const Material& other);

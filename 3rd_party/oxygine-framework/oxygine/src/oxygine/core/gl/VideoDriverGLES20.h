@@ -3,7 +3,6 @@
 #include "VideoDriverGL.h"
 #include "../../core/Restorable.h"
 #include "../ShaderProgram.h"
-#include "../file.h"
 
 namespace oxygine
 {

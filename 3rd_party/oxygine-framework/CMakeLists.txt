@@ -1,11 +1,6 @@
 cmake_minimum_required (VERSION 2.6)
 project (OXYGINE)
 
-
-set(OX_HAVE_LIBJPEG 0)
-set(OX_HAVE_LIBPNG 0)
-set(OX_HAVE_LIBCURL 0)
-set(OX_HAVE_HTTP 0)
 set(OX_USE_SDL2 1)
 
 find_package(Qt5Core REQUIRED)
@@ -55,18 +50,6 @@ set(PLATFORM win32_mingw)
 set(THIRD_PARTY ${OXYGINE_ROOT}/third_party/${PLATFORM})
 
 set(libprefix lib)
-
-set(OX_HAVE_LIBPNG 1)
-set(OX_HAVE_LIBCURL 1)
-set(OX_HAVE_HTTP 1)
-
-if (OX_HAVE_LIBCURL)	
-	set(FOLDERS ${FOLDERS} oxygine/core/curl)
-	include_directories(${THIRD_PARTY}/curl/)
-	set(OX_DEFINITIONS ${OX_DEFINITIONS} -DOX_HAVE_LIBCURL)
-endif(OX_HAVE_LIBCURL)	
-
-
 
 if (NOT OX_HAVE_HTTP)
 	set(OX_DEFINITIONS ${OX_DEFINITIONS} -DOX_NO_HTTP)
@@ -125,15 +108,13 @@ endif(OX_USE_SDL2)
 if (MINGW) 
 
 	set(CORE_LIBS mingw32 pthread ${CORE_LIBS} psapi
-		libcurl_imp
 		ws2_32)
 
 elseif (WIN32)
 
 	set(CORE_LIBS ${CORE_LIBS}
 		pthreadVCE2
-		libcurl_imp
-		ws2_32)
+                ws2_32)
 endif()
 
 

@@ -1,6 +1,7 @@
 #include "ResBuffer.h"
 #include "CreateResourceContext.h"
 #include "Resources.h"
+#include "qtextstream.h"
 
 namespace oxygine
 {
@@ -37,11 +38,16 @@ namespace oxygine
 
     void ResBuffer::_load(LoadResourcesContext*)
     {
-        file::read(_path, _buffer);
+        QFile file(_path.c_str());
+        file.open(QIODevice::ReadOnly);
+        QTextStream stream(&file);
+        // copy data to buffer
+        std::string data = stream.readAll().toStdString();
+        _buffer = std::vector<uchar>(data.begin(), data.end());
     }
 
     void ResBuffer::_unload()
     {
-        _buffer.data.clear();
+        _buffer.clear();
     }
 }

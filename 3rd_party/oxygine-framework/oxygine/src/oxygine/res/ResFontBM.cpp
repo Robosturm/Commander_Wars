@@ -5,16 +5,18 @@
 #include "../Image.h"
 #include "../core/NativeTexture.h"
 #include "../core/VideoDriver.h"
-#include "../core/file.h"
 #include "../pugixml/pugixml.hpp"
 #include "../utils/stringUtils.h"
 #include <vector>
+
+#include <qfile.h>
+#include "qtextstream.h"
 
 namespace oxygine
 {
     Resource* ResFontBM::create(CreateResourceContext& context)
     {
-        ResFontBM* font = 0;
+        ResFontBM* font = nullptr;
 
         font = new ResFontBM();
         font->_createFont(&context, false, false, 1);
@@ -475,18 +477,26 @@ namespace oxygine
         }
 
         std::string path = _file;
-        file::buffer fb;
-        file::read(path, fb);
+
+        std::vector<uchar> fb;
+        QFile file(path.c_str());
+        if (file.exists())
+        {
+            file.open(QIODevice::ReadOnly);
+            QTextStream stream(&file);
+            std::string data = stream.readAll().toStdString();
+            fb = std::vector<uchar>(data.begin(), data.end());
+        }
 
         if (fb.empty())
             return;
 
         pugi::xml_document doc;
-        bool isXml = doc.load_buffer_inplace(&fb.data[0], fb.data.size());
+        bool isXml = doc.load_buffer_inplace(&fb[0], fb.size());
 
         if (!isXml)
         {
-            _createFontFromTxt(context, reinterpret_cast<char*>(fb.getData()), path, downsample);
+            _createFontFromTxt(context, reinterpret_cast<char*>(&fb[0]), path, downsample);
             return;
         }
         /////////////////////////////////////////////////

@@ -1,8 +1,8 @@
 #pragma once
 #include "../oxygine-include.h"
 #include "Resource.h"
-#include "../core/file.h"
 #include <vector>
+#include "qfile.h"
 
 namespace oxygine
 {
@@ -17,13 +17,13 @@ namespace oxygine
 
         void init(const char* file);
 
-        const file::buffer& getBuffer() const {return _buffer;}
+        const std::vector<uchar>& getBuffer() const {return _buffer;}
 
     private:
         void _load(LoadResourcesContext*) override;
         void _unload() override;
 
-        file::buffer _buffer;
+        std::vector<uchar> _buffer;
         std::string _path;
     };
 }

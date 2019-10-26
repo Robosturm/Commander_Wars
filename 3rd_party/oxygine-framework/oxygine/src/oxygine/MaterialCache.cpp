@@ -2,11 +2,13 @@
 #include "Material.h"
 #include "core/oxygine.h"
 
+#include "QMutexLocker"
+
 namespace oxygine
 {
     Material* MaterialCache::clone_(const Material& other)
     {
-        MutexAutoLock alock(_lock);
+        QMutexLocker alock(&_lock);
 
         size_t hash;
         Material::compare cm;
@@ -65,7 +67,7 @@ namespace oxygine
 
     void MaterialCache::removeUnused()
     {
-        MutexAutoLock alock(_lock);
+        QMutexLocker alock(&_lock);
         removeUnusedNoLock();
     }
 
@@ -76,7 +78,7 @@ namespace oxygine
 
     void MaterialCache::clear()
     {
-        MutexAutoLock alock(_lock);
+        QMutexLocker alock(&_lock);
         _addCounter = 0;
         _materials.clear();
     }

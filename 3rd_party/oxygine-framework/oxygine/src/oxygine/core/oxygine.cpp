@@ -1,7 +1,5 @@
 #include "oxygine.h"
-#include "Mutex.h"
-#include "STDFileSystem.h"
-#include "ThreadDispatcher.h"
+#include "qmutex.h"
 #include "VideoDriver.h"
 #include "log.h"
 #include "../Image.h"
@@ -24,19 +22,6 @@
 #include "gl/VideoDriverGLES20.h"
 #include "gl/oxgl.h"
 #include <stdio.h>
-
-#ifdef EMSCRIPTEN
-#include <sys/time.h>
-#include <emscripten.h>
-//#include <SDL.h>
-//#include <SDL_compat.h>
-#include <SDL_events.h>
-#elif __ANDROID__
-#include "../core/android/jniUtils.h"
-#elif __APPLE__
-#include <TargetConditionals.h>
-#include "ios/ios.h"
-#endif
 
 #include "pthread.h"
 
@@ -116,9 +101,7 @@ void emscStackTrace()
 
 namespace oxygine
 {
-    static ThreadDispatcher _threadMessages;
-    static ThreadDispatcher _uiMessages;
-    Mutex mutexAlloc;
+    QMutex mutexAlloc;
 
     bool _useTouchAPI = false;
 
@@ -173,33 +156,6 @@ namespace oxygine
                 initGLExtensions(SDL_GL_GetProcAddress);
             }
 #endif
-        }
-
-        bool isMainThread()
-        {
-#ifdef OX_NO_MT
-            return true;
-#else
-            return pthread_equal(_mainThread, pthread_self()) != 0;
-#endif
-        }
-
-#ifdef EMSCRIPTEN
-        void SDL_handleEvent(SDL_Event& event, bool& done);
-        int SDL_eventsHandler(void*, SDL_Event* e)
-        {
-            bool done = false;
-            SDL_handleEvent(*e, done);
-            return 0;
-        }
-#endif
-
-
-
-        void updateUIMessages()
-        {
-            ThreadDispatcher::peekMessage msg;
-            while (_uiMessages.peek(msg, true)) {}
         }
 
         void init2();
@@ -376,11 +332,6 @@ namespace oxygine
 
 #endif
 
-#if __ANDROID__ || TARGET_OS_IPHONE
-            //if (SDL_GetNumTouchDevices() > 0)
-            _useTouchAPI = true;
-#endif
-
 #endif
 
             init2();
@@ -403,7 +354,6 @@ namespace oxygine
             //setlocale(LC_ALL, "POSIX");
 #endif
 
-            file::init(desc.companyName, desc.appName);
 
 #ifdef OXYGINE_SDL
             initGLExtensions(SDL_GL_GetProcAddress);
@@ -759,9 +709,6 @@ namespace oxygine
             IVideoDriver::_stats = IVideoDriver::Stats();
             IVideoDriver::_stats.duration = duration;
 
-            ThreadDispatcher::peekMessage msg;
-            while (_threadMessages.peek(msg, true)) {}
-
 #if OXYGINE_SDL
 
             //logs::messageln("update");
@@ -791,8 +738,6 @@ namespace oxygine
 
             rsCache().reset();
             rsCache().setDriver(0);
-            _threadMessages.clear();
-            _uiMessages.clear();
 
             clearPostProcessItems();
             PostProcess::freeShaders();
@@ -814,8 +759,6 @@ namespace oxygine
             if (Stage::instance)
                 Stage::instance->cleanup();
             Stage::instance = 0;
-            file::free();
-
 
             Resources::unregisterResourceType("atlas");
             Resources::unregisterResourceType("buffer");
@@ -836,33 +779,6 @@ namespace oxygine
             _dispatcher = 0;
         }
 
-        void execute(const char* str)
-        {
-#ifdef OXYGINE_EDITOR
-#elif __ANDROID__
-            jniBrowse(str);
-#elif EMSCRIPTEN
-            EM_ASM_INT(
-            {
-                var url = Pointer_stringify($0);
-                window.open(url, '_blank');
-            }, str);
-#elif __APPLE__
-            iosNavigate(str);
-#else
-            OX_ASSERT(!"execute not implemented");
-#endif
-        }
-
-        std::string getPackage()
-        {
-#ifdef __ANDROID__
-            return jniGetPackage();
-#else
-            return "unknown";
-#endif
-        }
-
         void requestQuit()
         {
             logs::messageln("requestQuit");
@@ -872,17 +788,6 @@ namespace oxygine
             SDL_PushEvent(&ev);
 #endif
         }
-
-        ThreadDispatcher& getMainThreadDispatcher()
-        {
-            return _threadMessages;
-        }
-
-        ThreadDispatcher& getUiThreadMessages()
-        {
-            return _uiMessages;
-        }
-
 
         Point getDisplaySize()
         {
@@ -930,27 +835,6 @@ namespace oxygine
         return jniIsNetworkAvailable();
 #endif
         return true;
-    }
-
-    int64 getFreeSpace(const char* fullpath /*= 0*/)
-    {
-#ifdef __ANDROID__
-        if (fullpath)
-            return jniGetFreeSpace(fullpath);
-        return jniGetFreeSpace(file::wfs().getFullPath("").c_str());
-#elif __APPLE__
-        return iosGetFreeDiskspace();
-#endif
-
-        return std::numeric_limits<int64>::max();
-    }
-
-    std::string     getLanguage()
-    {
-#ifdef __ANDROID__
-        return jniGetLanguage();
-#endif
-        return "en";
     }
 
     void    sleep(timeMS time)

@@ -5,8 +5,10 @@
 #include "../Image.h"
 #include "../core/NativeTexture.h"
 #include "../core/VideoDriver.h"
-#include "../core/file.h"
 #include "../utils/stringUtils.h"
+
+#include <qfile.h>
+#include <qtextstream.h>
 
 namespace oxygine
 {
@@ -23,11 +25,18 @@ namespace oxygine
     {
         std::string xml_path = context.walker.getPath("file");
 
-        file::buffer fb;
-        file::read(xml_path, fb);
+        std::vector<uchar> fb;
+        QFile file(xml_path.c_str());
+        if (file.exists())
+        {
+            file.open(QIODevice::ReadOnly);
+            QTextStream stream(&file);
+            std::string data = stream.readAll().toStdString();
+            fb = std::vector<uchar>(data.begin(), data.end());
+        }
 
         pugi::xml_document doc;
-        doc.load_buffer_inplace(&fb.data[0], fb.data.size());
+        doc.load_buffer_inplace(&fb[0], fb.size());
 
         pugi::xml_node starling_xml = doc.first_child();
 
@@ -50,15 +59,7 @@ namespace oxygine
             _texture->init(0, textureWidth, textureHeight, ImageData::TF_R8G8B8A8);
         }
         else
-        {
-
-            unsigned char buff[64];
-            unsigned int size = 0;
-            {
-                file::autoClose ac(file::open(_imagePath, "rb"));
-                size = file::read(ac.getHandle(), buff, sizeof(buff));
-            }
-
+        {            
             RefHolder<Image> mt;
 
             QImage img(_imagePath.c_str());
@@ -71,7 +72,7 @@ namespace oxygine
         float iw = 1.0f / _texture->getWidth();
         float ih = 1.0f / _texture->getHeight();
 
-        ResAnim* resAnim = 0;
+        ResAnim* resAnim = nullptr;
         pugi::xml_node sub = starling_xml.first_child();
 
         animationFrames frames;

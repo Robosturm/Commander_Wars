@@ -1,12 +1,13 @@
 #include "Restorable.h"
-#include "Mutex.h"
+#include <qmutex.h>
+#include <QMutexLocker>
 #include <algorithm>
 
 namespace oxygine
 {
-    Restorable::restorable _restorable;
-    bool _restoring = false;
-    Mutex _mutex;
+    static Restorable::restorable _restorable;
+    static bool _restoring = false;
+    static QMutex _mutex;
 
     Restorable::restorable::iterator  findRestorable(Restorable* r)
     {
@@ -24,7 +25,7 @@ namespace oxygine
         restorable rs;
 
         {
-            MutexAutoLock al(_mutex);
+            QMutexLocker al(&_mutex);
             swap(rs, _restorable);
         }
 
@@ -45,7 +46,7 @@ namespace oxygine
     {
         restorable rs;
         {
-            MutexAutoLock al(_mutex);
+            QMutexLocker al(&_mutex);
             swap(rs, _restorable);
         }
 
@@ -56,7 +57,7 @@ namespace oxygine
         }
 
         {
-            MutexAutoLock al(_mutex);
+            QMutexLocker al(&_mutex);
             swap(rs, _restorable);
         }
     }
@@ -76,7 +77,7 @@ namespace oxygine
         if (_registered)
             return;
 
-        MutexAutoLock al(_mutex);
+        QMutexLocker al(&_mutex);
 
         OX_ASSERT(_restoring == false);
         _cb = cb;
@@ -94,7 +95,7 @@ namespace oxygine
         if (!_registered)
             return;
 
-        MutexAutoLock al(_mutex);
+        QMutexLocker al(&_mutex);
         OX_ASSERT(_restoring == false);
         restorable::iterator i = findRestorable(this);
         //OX_ASSERT(i != _restorable.end());

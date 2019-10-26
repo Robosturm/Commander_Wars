@@ -110,14 +110,6 @@ namespace oxygine
         bool isNeedProceed(spNativeTexture t) override;
     };
 
-    class MTLoadingResourcesContext : public LoadResourcesContext
-    {
-    public:
-        static MTLoadingResourcesContext instance;
-        void createTexture(const CreateTextureTask& opt) override;
-        bool isNeedProceed(spNativeTexture t) override;
-    };
-
     class RestoreResourcesContext: public LoadResourcesContext
     {
     public:

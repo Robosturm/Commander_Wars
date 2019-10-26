@@ -32,13 +32,6 @@ namespace oxygine
     /** is any network connection available?*/
     bool            isNetworkAvailable();
 
-
-    int64           getFreeSpace(const char* fullpath = 0);
-
-    /**returns locale. ISO 639-1 */
-    std::string     getLanguage();
-
-
     /**sleep for milliseconds*/
     void    sleep(timeMS);
 
@@ -108,23 +101,11 @@ namespace oxygine
         /** Swap Video buffers*/
         void swapDisplayBuffers(window i = 0);
 
-        /**Opens browser*/
-        void execute(const char* url);
-
-        /**returns app package, example: com.company.apps*/
-        std::string getPackage();
-
         /** Returns display size in pixels*/
         Point getDisplaySize();
 
-        ThreadDispatcher& getMainThreadDispatcher();
-        ThreadDispatcher& getUiThreadMessages();
-
         bool isActive();
         bool hasFocus();
-
-        bool isMainThread();
-
 
 #ifdef OXYGINE_SDL
         SDL_GLContext   getGLContext();

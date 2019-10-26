@@ -15,13 +15,11 @@
 #include "oxygine/Draggable.h"
 #include "oxygine/Event.h"
 #include "oxygine/EventDispatcher.h"
-#include "oxygine/HttpRequestTask.h"
 #include "oxygine/Font.h"
 #include "oxygine/initActor.h"
 #include "oxygine/Input.h"
 #include "oxygine/InputText.h"
 #include "oxygine/Image.h"
-#include "oxygine/ThreadLoader.h"
 #include "oxygine/PointerState.h"
 #include "oxygine/actor/ProgressBar.h"
 #include "oxygine/RenderState.h"
@@ -52,12 +50,10 @@
 //#include "oxygine/closure/closure_impl.h"
 
 //core/
-#include "oxygine/core/file.h"
 #include "oxygine/core/ImageData.h"
 #include "oxygine/core/ImageDataOperations.h"
 #include "oxygine/core/intrusive_ptr.h"
 #include "oxygine/core/log.h"
-#include "oxygine/core/Mutex.h"
 #include "oxygine/core/NativeTexture.h"
 #include "oxygine/core/Object.h"
 #include "oxygine/core/oxygine.h"
@@ -70,7 +66,6 @@
 #include "oxygine/core/vertex.h"
 #include "oxygine/core/VertexDeclaration.h"
 #include "oxygine/core/VideoDriver.h"
-#include "oxygine/core/STDFileSystem.h"
 #include "oxygine/core/UberShaderProgram.h"
 
 //core/gl/
@@ -125,7 +120,6 @@
 
 //utils/
 #include "oxygine/utils/AtlasBuilder.h"
-#include "oxygine/utils/ImageUtils.h"
 #include "oxygine/utils/intrusive_list.h"
 #include "oxygine/utils/stringUtils.h"
 
@@ -133,9 +127,5 @@
 //#include "oxygine/winnie_alloc/system_alloc.h"
 //#include "oxygine/winnie_alloc/winnie_alloc.h"
 //#include "oxygine/winnie_alloc/winnie_alloc_config.h"
-
-#ifdef OUT
-#undef OUT
-#endif
 
 #endif
