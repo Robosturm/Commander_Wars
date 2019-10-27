@@ -7,7 +7,6 @@ namespace oxygine
     DECLARE_SMART(Stage, spStage);
     class Stage : public Actor
     {
-        INHERITED(Actor);
     public:
         enum
         {

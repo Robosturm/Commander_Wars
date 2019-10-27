@@ -8,8 +8,8 @@
 #include <sstream>
 #include <typeinfo>
 
-#define _USE_MATH_DEFINES
-#include <math.h>
+#include "qmath.h"
+
 #include "../utils/stringUtils.h"
 #include "../RenderState.h"
 #include <stdio.h>
@@ -569,7 +569,7 @@ namespace oxygine
 
     void Actor::setRotationDegrees(float degr)
     {
-        float rad = degr * MATH_PI / 180.0f;
+        float rad = degr * M_PI / 180.0f;
         setRotation(rad);
     }
 
@@ -678,8 +678,8 @@ namespace oxygine
             float s = 0.0f;
             if (_rotation)
             {
-                c = cosf(_rotation);
-                s = sinf(_rotation);
+                c = qCos(_rotation);
+                s = qSin(_rotation);
             }
 
             tr = AffineTransform(
@@ -1324,11 +1324,11 @@ namespace oxygine
 
     void decompose(const Transform& t, Vector2& pos, float& angle, Vector2& scale)
     {
-        scale.x = sqrtf(t.a * t.a + t.c * t.c);
-        scale.y = sqrtf(t.b * t.b + t.d * t.d);
+        scale.x = qSqrt(t.a * t.a + t.c * t.c);
+        scale.y = qSqrt(t.b * t.b + t.d * t.d);
 
         angle = -atan2(t.c, t.a);
-        float an = angle / MATH_PI * 180;
+        float an = angle / M_PI * 180;
         pos.x = t.x;
         pos.y = t.y;
     }
@@ -1374,8 +1374,8 @@ namespace oxygine
         br = tr.transform(br);
 
         Vector2 size = Vector2(
-                           abs(br.x - tl.x),
-                           abs(br.y - tl.y));
+                           qAbs(br.x - tl.x),
+                           qAbs(br.y - tl.y));
 
         Vector2 ntl;
         ntl.x = std::min(tl.x, br.x);

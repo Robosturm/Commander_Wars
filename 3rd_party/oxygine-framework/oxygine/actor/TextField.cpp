@@ -40,7 +40,7 @@ namespace oxygine
 
     void TextField::copyFrom(const TextField& src, cloneOptions opt)
     {
-        inherited::copyFrom(src, opt);
+        VStyleActor::copyFrom(src, opt);
         _text = src._text;
         _style = src._style;
         _root = nullptr;
@@ -191,11 +191,6 @@ namespace oxygine
         }
     }
 
-    void TextField::setText(const std::wstring& str)
-    {
-        setText(ws2utf8(str.c_str()));
-    }
-
     void TextField::setHtmlText(const std::string& str)
     {
         _flags |= flag_html;
@@ -204,11 +199,6 @@ namespace oxygine
             _text = str;
             needRebuild();
         }
-    }
-
-    void TextField::setHtmlText(const std::wstring& str)
-    {
-        setHtmlText(ws2utf8(str.c_str()));
     }
 
     int            TextField::getFontSize() const
@@ -285,7 +275,7 @@ namespace oxygine
             return _root;
 
 
-        globalScale = scalar::abs(globalScale);
+        globalScale = qAbs(globalScale);
 
         float scale = 1.0f;
         const Font* font = _style.font->getClosestFont(globalScale, _style.fontSize, scale);

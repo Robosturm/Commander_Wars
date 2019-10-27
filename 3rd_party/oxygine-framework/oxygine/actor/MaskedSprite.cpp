@@ -15,7 +15,7 @@ namespace oxygine
 
     void MaskedSprite::copyFrom(const MaskedSprite& src, cloneOptions opt)
     {
-        inherited::copyFrom(src, opt);
+        Sprite::copyFrom(src, opt);
         _useRChannel = src._useRChannel;
         //_mask = src._mask;
     }

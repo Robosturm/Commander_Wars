@@ -7,7 +7,6 @@ namespace oxygine
     DECLARE_SMART(MaskedSprite, spMaskedSprite);
     class MaskedSprite: public Sprite
     {
-        INHERITED(Sprite);
     public:
         DECLARE_COPYCLONE_NEW(MaskedSprite);
 
@@ -26,5 +25,3 @@ namespace oxygine
         bool _useRChannel;
     };
 }
-
-EDITOR_INCLUDE(MaskedSprite);

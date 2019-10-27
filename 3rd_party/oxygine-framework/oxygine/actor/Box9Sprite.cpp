@@ -11,7 +11,7 @@ namespace oxygine
 {
     void Box9Sprite::copyFrom(const Box9Sprite& src, cloneOptions opt)
     {
-        inherited::copyFrom(src, opt);
+        Sprite::copyFrom(src, opt);
 
         _prepared = src._prepared;
 
@@ -97,7 +97,7 @@ namespace oxygine
     void Box9Sprite::changeAnimFrame(const AnimationFrame& f)
     {
         Vector2 size = getSize();
-        inherited::changeAnimFrame(f);
+        Sprite::changeAnimFrame(f);
         setSize(size);
     }
 
@@ -128,7 +128,7 @@ namespace oxygine
             attr = resanim->getAttribute("horizontal");
             _horzMode = (StretchMode)attr.as_uint(STRETCHING);
         }
-        inherited::animFrameChanged(f);
+        Sprite::animFrameChanged(f);
     }
 
     RectF Box9Sprite::getDestRect() const

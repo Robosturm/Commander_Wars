@@ -10,7 +10,6 @@ namespace oxygine
     DECLARE_SMART(SlidingActor, spSlidingActor);
     class SlidingActor: public Actor
     {
-        INHERITED(Actor);
     public:
         static void setDefaultTouchThreshold(float val);
 
@@ -88,5 +87,3 @@ namespace oxygine
         pointer_index _finger;
     };
 }
-
-EDITOR_INCLUDE(SlidingActor);

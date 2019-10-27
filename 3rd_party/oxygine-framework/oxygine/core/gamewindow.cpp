@@ -27,6 +27,8 @@
 #include "../res/Resources.h"
 #include "gl/VideoDriverGLES20.h"
 
+#include "QMutexLocker"
+
 namespace oxygine
 {
     GameWindow* GameWindow::_window = nullptr;
@@ -89,7 +91,7 @@ namespace oxygine
 
     void GameWindow::paintGL()
     {
-        m_Mutex.lock();
+        QMutexLocker lock(&m_Mutex);
         updateData();
         oxygine::getStage()->update();
         if (beginRendering())
@@ -106,7 +108,6 @@ namespace oxygine
         {
            QApplication::exit();
         }
-        m_Mutex.unlock();
     }
 
     bool GameWindow::beginRendering()
@@ -188,6 +189,7 @@ namespace oxygine
 
     void GameWindow::resizeGL(int w, int h)
     {
+        QMutexLocker lock(&m_Mutex);
         qDebug("core::restore()");
         IVideoDriver::instance->restore();
         STDRenderer::restore();
@@ -198,6 +200,7 @@ namespace oxygine
 
     void GameWindow::mousePressEvent(QMouseEvent *event)
     {
+        QMutexLocker lock(&m_Mutex);
         if (!_useTouchAPI)
         {
             MouseButton b = MouseButton_Left;
@@ -232,6 +235,7 @@ namespace oxygine
 
     void GameWindow::mouseReleaseEvent(QMouseEvent *event)
     {
+        QMutexLocker lock(&m_Mutex);
         if (!_useTouchAPI)
         {
             MouseButton b = MouseButton_Left;
@@ -266,11 +270,13 @@ namespace oxygine
 
     void GameWindow::wheelEvent(QWheelEvent *event)
     {
+        QMutexLocker lock(&m_Mutex);
         Input* input = &Input::instance;
         input->sendPointerWheelEvent(oxygine::getStage(), Vector2(event->angleDelta().x(), event->angleDelta().y()), &input->_pointerMouse);
     }
     void GameWindow::mouseMoveEvent(QMouseEvent *event)
     {
+        QMutexLocker lock(&m_Mutex);
         if (!_useTouchAPI)
         {
             Input* input = &Input::instance;

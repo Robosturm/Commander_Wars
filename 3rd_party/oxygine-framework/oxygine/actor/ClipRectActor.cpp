@@ -8,7 +8,7 @@ namespace oxygine
 {
     void ClipRectActor::copyFrom(const ClipRectActor& src, cloneOptions opt)
     {
-        inherited::copyFrom(src, opt);
+        Actor::copyFrom(src, opt);
         _clipping = src._clipping;
     }
 
@@ -32,7 +32,7 @@ namespace oxygine
                 return;
         }
 
-        inherited::handleEvent(event);
+        Actor::handleEvent(event);
     }
 
     void ClipRectActor::render(const RenderState& parentRS)

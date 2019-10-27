@@ -2,11 +2,6 @@
 #include "core/ref_counter.h"
 #include "closure/closure.h"
 
-
-#ifdef OXYGINE_SDL
-typedef struct SDL_Window SDL_Window;
-#endif
-
 #define DECLARE_SMART(class_name, spname) \
     class class_name;\
     typedef oxygine::intrusive_ptr<class_name> spname;
@@ -17,9 +12,6 @@ typedef struct SDL_Window SDL_Window;
         class class_name;\
         typedef oxygine::intrusive_ptr<class_name> spname;\
     }
-
-
-struct SDL_KeyboardEvent;
 
 namespace pugi
 {
@@ -44,14 +36,6 @@ namespace oxygine
 
     /** returns local app time in milliseconds (1sec = 1000ms). Counting starts from zero*/
     timeMS          getTimeMS();
-
-    namespace key
-    {
-        typedef int keycode;
-        bool isPressed(keycode);
-        bool wasPressed(keycode);
-        bool wasReleased(keycode);
-    }
 
     namespace text
     {

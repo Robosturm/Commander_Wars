@@ -7,12 +7,6 @@
 #include "../math/Rect.h"
 #include <vector>
 
-#if OXYGINE_NO_SUBPIXEL_RENDERING
-#define SNAP_PIXEL(arg) floor(arg)
-#else
-#define SNAP_PIXEL(arg) (arg)
-#endif
-
 namespace oxygine
 {
     typedef AffineTransform Transform;
@@ -60,29 +54,29 @@ namespace oxygine
 
         vt.z = 0;
 
-        vt.x = SNAP_PIXEL(p1.x);
-        vt.y = SNAP_PIXEL(p1.y);
+        vt.x = p1.x;
+        vt.y = p1.y;
         vt.u = u;
         vt.v = v;
         *pv = vt;
         ++pv;
 
-        vt.x = SNAP_PIXEL(p2.x);
-        vt.y = SNAP_PIXEL(p2.y);
+        vt.x = p2.x;
+        vt.y = p2.y;
         vt.u = u;
         vt.v = v + dv;
         *pv = vt;
         ++pv;
 
-        vt.x = SNAP_PIXEL(p3.x);
-        vt.y = SNAP_PIXEL(p3.y);
+        vt.x = p3.x;
+        vt.y = p3.y;
         vt.u = u + du;
         vt.v = v;
         *pv = vt;
         ++pv;
 
-        vt.x = SNAP_PIXEL(p4.x);
-        vt.y = SNAP_PIXEL(p4.y);
+        vt.x = p4.x;
+        vt.y = p4.y;
         vt.u = u + du;
         vt.v = v + dv;
         *pv = vt;
@@ -112,29 +106,29 @@ namespace oxygine
 
         vt.z = Z;
 
-        vt.x = SNAP_PIXEL(p1.x);
-        vt.y = SNAP_PIXEL(p1.y);
+        vt.x = p1.x;
+        vt.y = p1.y;
         vt.u = u;
         vt.v = v;
         *pv = vt;
         ++pv;
 
-        vt.x = SNAP_PIXEL(p2.x);
-        vt.y = SNAP_PIXEL(p2.y);
+        vt.x = p2.x;
+        vt.y = p2.y;
         vt.u = u;
         vt.v = v + dv;
         *pv = vt;
         ++pv;
 
-        vt.x = SNAP_PIXEL(p3.x);
-        vt.y = SNAP_PIXEL(p3.y);
+        vt.x = p3.x;
+        vt.y = p3.y;
         vt.u = u + du;
         vt.v = v;
         *pv = vt;
         ++pv;
 
-        vt.x = SNAP_PIXEL(p4.x);
-        vt.y = SNAP_PIXEL(p4.y);
+        vt.x = p4.x;
+        vt.y = p4.y;
         vt.u = u + du;
         vt.v = v + dv;
         *pv = vt;
@@ -176,8 +170,8 @@ namespace oxygine
 
         vt.z = 0;
 
-        vt.x = SNAP_PIXEL(p1.x);
-        vt.y = SNAP_PIXEL(p1.y);
+        vt.x = p1.x;
+        vt.y = p1.y;
         vt.u = u;
         vt.v = v;
         vt.u2 = u2;
@@ -185,8 +179,8 @@ namespace oxygine
         *pv = vt;
         ++pv;
 
-        vt.x = SNAP_PIXEL(p2.x);
-        vt.y = SNAP_PIXEL(p2.y);
+        vt.x = p2.x;
+        vt.y = p2.y;
         vt.u = u;
         vt.v = v + dv;
         vt.u2 = u2;
@@ -194,8 +188,8 @@ namespace oxygine
         *pv = vt;
         ++pv;
 
-        vt.x = SNAP_PIXEL(p3.x);
-        vt.y = SNAP_PIXEL(p3.y);
+        vt.x = p3.x;
+        vt.y = p3.y;
         vt.u = u + du;
         vt.v = v;
         vt.u2 = u2 + du2;
@@ -203,8 +197,8 @@ namespace oxygine
         *pv = vt;
         ++pv;
 
-        vt.x = SNAP_PIXEL(p4.x);
-        vt.y = SNAP_PIXEL(p4.y);
+        vt.x = p4.x;
+        vt.y = p4.y;
         vt.u = u + du;
         vt.v = v + dv;
         vt.u2 = u2 + du2;

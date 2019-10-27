@@ -108,7 +108,7 @@ namespace oxygine
         return &_pointers[index];
     }
 
-    int Input::touchID2index(int64 id)
+    int Input::touchID2index(qint64 id)
     {
         // We can't be sure that SDL's fingerId is not 0,
         // but 0 is reserved for empty slot, so increment id by one:
@@ -117,7 +117,7 @@ namespace oxygine
         int firstEmptySlotIndex = -1;
         for (int i = 0; i < MAX_TOUCHES; ++i)
         {
-            int64& d = _ids[i];
+            qint64& d = _ids[i];
 
             if (d == id)
                 return i + 1;
@@ -136,7 +136,7 @@ namespace oxygine
         return -1;
     }
 
-    PointerState* Input::getTouchByID(int64 id)
+    PointerState* Input::getTouchByID(qint64 id)
     {
         int i = touchID2index(id);
         if (i == -1)

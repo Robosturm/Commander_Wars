@@ -9,7 +9,6 @@ namespace oxygine
     DECLARE_SMART(TextField, spTextField);
     class TextField : public VStyleActor
     {
-        INHERITED(VStyleActor);
     public:
         static void setDefaultFont(ResFont*);
         static ResFont* getDefaultFont();
@@ -71,8 +70,6 @@ namespace oxygine
         void setStyle(const TextStyle& st);
         /**Changes text utf-8 string*/
         void setText(const std::string& str);
-        /**Changes text widestring*/
-        void setText(const std::wstring& str);
         /**Changes text.
         Supports pseudo html style tags:  <br/> - break line,  <div color='FFFFFF'/>colored text </div>, <div c='FFFFFF'/>colored text</div>,
         in pair with oxygine-freetype you may use 'opt': <div opt=123>custom option</div>, <div c='ffffff' opt=123>custom option with color</div>
@@ -80,7 +77,6 @@ namespace oxygine
         This is <div c='ff0000'/> colored text <div/>supports  <div c='00ff00AA'/>nested tags</div><br/> with broken line.
         */
         void setHtmlText(const std::string& str);
-        void setHtmlText(const std::wstring& str);
 
         bool isOn(const Vector2& localPosition, float localScale = 1.0f) override;
 
@@ -109,5 +105,3 @@ namespace oxygine
         void matChanged() override;
     };
 }
-
-EDITOR_INCLUDE(TextField);

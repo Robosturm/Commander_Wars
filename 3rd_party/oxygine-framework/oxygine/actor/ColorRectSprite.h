@@ -8,7 +8,6 @@ namespace oxygine
 
     class ColorRectSprite: public Sprite
     {
-        INHERITED(Sprite);
     public:
         DECLARE_COPYCLONE_NEW(ColorRectSprite);
         ColorRectSprite();
@@ -22,5 +21,3 @@ namespace oxygine
         void sizeChanged(const Vector2& size) override;
     };
 }
-
-EDITOR_INCLUDE(ColorRectSprite);

@@ -37,7 +37,6 @@ namespace oxygine
 
     class Resources: public Resource
     {
-        INHERITED(Resource);
     public:
         typedef std::vector<spResource> resources;
         typedef std::unordered_map<std::string, spResource> resourcesMap;

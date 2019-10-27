@@ -318,8 +318,8 @@ namespace oxygine
     template <class T>
     inline MatrixT<T>& MatrixT<T>::rotationX(MatrixT& out, T angle)
     {
-        T s = scalar::sin(angle);
-        T c = scalar::cos(angle);
+        T s = qSin(angle);
+        T c = qCos(angle);
 
         out = MatrixT(
                   1, 0, 0, 0,
@@ -332,8 +332,8 @@ namespace oxygine
     template <class T>
     inline MatrixT<T>& MatrixT<T>::rotationY(MatrixT& out, T angle)
     {
-        T s = scalar::sin(angle);
-        T c = scalar::cos(angle);
+        T s = qSin(angle);
+        T c = qCos(angle);
         out = MatrixT(
                   c, 0, -s, 0,
                   0, 1, 0, 0,
@@ -345,8 +345,8 @@ namespace oxygine
     template <class T>
     inline MatrixT<T>& MatrixT<T>::rotationZ(MatrixT& out, T angle)
     {
-        T s = scalar::sin(angle);
-        T c = scalar::cos(angle);
+        T s = qSin(angle);
+        T c = qCos(angle);
         out = MatrixT(
                   c, s, 0, 0,
                   -s, c, 0, 0,
@@ -383,7 +383,7 @@ namespace oxygine
     template <class T>
     inline MatrixT<T>& MatrixT<T>::perspectiveFovLH(MatrixT& out, T fovy, T aspect, T zNear, T zFar)
     {
-        float y = T(1) / scalar::tan(T(0.5) * fovy);
+        float y = T(1) / qTan(T(0.5) * fovy);
         float x = y / aspect;
 
         out = matrix(
@@ -397,7 +397,7 @@ namespace oxygine
     template <class T>
     inline MatrixT<T>& MatrixT<T>::perspectiveFovRH(MatrixT& out, T fovy, T aspect, T zNear, T zFar)
     {
-        float y = T(1) / scalar::tan(T(0.5) * fovy);
+        float y = T(1) / qTan(T(0.5) * fovy);
         float x = y / aspect;
 
         out = matrix(
@@ -459,7 +459,7 @@ namespace oxygine
 
         T det = mat.m11 * t1 - mat.m12 * t2 + mat.m13 * t3 - mat.m14 * t4;
 
-        if (scalar::abs(det) < T(0.00000001))
+        if (qAbs(det) < T(0.00000001))
         {
             out.identity();
             return out;

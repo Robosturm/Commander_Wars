@@ -77,10 +77,6 @@ namespace oxygine
             void xupdateMaterial(const STDMaterial& mat) override;
 
             Symbol* getSymbol(int& pos) override;
-
-#ifdef OX_DEBUG
-            std::string _text;//only for debug
-#endif
         };
 
         class DivNode: public Node

@@ -10,7 +10,6 @@ namespace oxygine
     */
     class ClipRectActor : public Actor
     {
-        INHERITED(Actor);
     public:
         DECLARE_COPYCLONE_NEW(ClipRectActor);
         ClipRectActor();
@@ -30,5 +29,3 @@ namespace oxygine
         bool _clipping;
     };
 }
-
-EDITOR_INCLUDE(ClipRectActor);

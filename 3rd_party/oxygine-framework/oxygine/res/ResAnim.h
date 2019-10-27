@@ -12,7 +12,6 @@ namespace oxygine
     DECLARE_SMART(ResAnim, spResAnim);
     class ResAnim: public Resource
     {
-        INHERITED(Resource);
     public:
         ResAnim(Resource* atlas = 0);
         ~ResAnim();

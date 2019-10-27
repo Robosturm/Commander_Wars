@@ -14,10 +14,6 @@ Many thanks to Wolfhound
 #ifndef CLOSURE_HEADER_
 #define CLOSURE_HEADER_
 
-#ifdef _MSC_VER
-#  pragma once
-#endif
-
 #if !defined(OXYGINE_EDITOR)
 #define CLOSURE_FUNCTION 1
 #endif

@@ -109,17 +109,8 @@ namespace oxygine
 
         virtual void addVertices(const void* data, unsigned int size);
 
-
-        //debug utils
-#ifdef OXYGINE_DEBUG_T2P
-        static void showTexel2PixelErrors(bool show);
-#endif
-
         void swapVerticesData(std::vector<unsigned char>& data);
         void swapVerticesData(STDRenderer& r);
-
-        OXYGINE_DEPRECATED
-        void setViewProjTransform(const Matrix& viewProj);
 
         void pushShaderSetHook(ShaderProgramChangedHook* hook);
         void popShaderSetHook();

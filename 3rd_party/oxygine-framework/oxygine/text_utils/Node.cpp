@@ -112,34 +112,9 @@ namespace oxygine
             xupdateMaterial(mat);
         }
 
-        /*
-        bool test()
-        {
-            string utf = ws2utf8(L"A");
-            wstring ws = utf8tows(utf.c_str());
-
-            const char *bf = (char*)ws.c_str();
-
-            const char *utfstr = utf.c_str();
-            int code = 0;
-            while (getNextSingleCode(code, utfstr))
-            {
-                int q = 0;
-            }
-
-
-            return true;
-        }
-
-        bool b = test();
-        */
 
         TextNode::TextNode(const char* v)
         {
-#ifdef OX_DEBUG
-            _text = v;
-#endif
-
             const char* utfstr = v;
             int code = 0;
             utfstr = getNextCode(code, utfstr);

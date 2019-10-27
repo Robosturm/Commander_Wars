@@ -75,8 +75,8 @@ namespace oxygine
 
         void rotate(T v)
         {
-            T sin_ = scalar::sin(v);
-            T cos_ = scalar::cos(v);
+            T sin_ = qSin(v);
+            T cos_ = qCos(v);
 
             affineTransform rot(cos_, sin_, -sin_, cos_, 0, 0);
             *this = *this * rot;

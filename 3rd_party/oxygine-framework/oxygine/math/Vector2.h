@@ -1,7 +1,8 @@
 #pragma once
 #include "../oxygine-include.h"
 #include "ScalarMath.h"
-//#include "../math/vector3.h"
+
+#include "qmath.h"
 
 namespace oxygine
 {
@@ -55,7 +56,7 @@ namespace oxygine
         //inline T &operator[](int i){return m[i];}
         //inline const T &operator[](int i)const{return m[i];}
 
-        T length() const {return (T)scalar::sqrt(x * x + y * y);}
+        T length() const {return (T)qSqrt(x * x + y * y);}
         T sqlength() const {return dot(*this);}
 
         void normalize() { normalize(*this, *this); }
@@ -147,7 +148,7 @@ namespace oxygine
     template <class T>
     inline VectorT2<T>& VectorT2<T>::normalize(VectorT2<T>& out, const VectorT2<T>& v)
     {
-        T norm = T(1.0) / scalar::sqrt(v.x * v.x + v.y * v.y);
+        T norm = T(1.0) / qSqrt(v.x * v.x + v.y * v.y);
         out = v;
         /*
         if (norm < 0.0001)

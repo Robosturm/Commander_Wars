@@ -8,7 +8,6 @@ namespace oxygine
 {
     class ResBuffer: public Resource
     {
-        INHERITED(Resource);
     public:
         static Resource* create(CreateResourceContext&);
 

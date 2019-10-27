@@ -323,7 +323,7 @@ namespace oxygine
         if (!tw)
             load(0);
 
-        fontSize = abs(fontSize);
+        fontSize = qAbs(fontSize);
         Font* font = new Font();
         font->init(getName().c_str(), fontSize, fontSize, lineHeight + fontSize - base, _sdf);
         _size = fontSize;
@@ -542,7 +542,7 @@ namespace oxygine
             load(nullptr);
 
 
-        fontSize = abs(fontSize);
+        fontSize = qAbs(fontSize);
         Font* font = new Font();
         font->init(getName().c_str(), fontSize, fontSize, lineHeight + fontSize - base, _sdf);
         _size = fontSize;

@@ -5,6 +5,8 @@
 #include "../STDRenderer.h"
 #include <sstream>
 
+#include <qmath.h>
+
 namespace oxygine
 {
     void fill_tex_coord(vertexPCT2& vt, unsigned int rgba, const Vector2& pnt, float nu, float nv)
@@ -22,8 +24,8 @@ namespace oxygine
     {
         Vector2 vh;
 
-        vh.x = v.x * cosf(rad) - v.y * sinf(rad);
-        vh.y = v.x * sinf(rad) + v.y * cosf(rad);
+        vh.x = v.x * qCos(rad) - v.y * qSin(rad);
+        vh.y = v.x * qSin(rad) + v.y * qCos(rad);
 
         v = vh;
     }
@@ -35,9 +37,9 @@ namespace oxygine
             Vector2 s = current, t = *pRelative;
 
             s.normalize(); t.normalize();
-            return acosf(s.dot(t));
+            return qCos(s.dot(t));
         }
-        else return atan2f(current.y, current.x);
+        else return qAtan2(current.y, current.x);
     }
 
     ProgressBar::ProgressBar(): _progress(1.0f), _direction(dir_0)
@@ -55,7 +57,7 @@ namespace oxygine
 
     void ProgressBar::copyFrom(const ProgressBar& src, cloneOptions opt)
     {
-        inherited::copyFrom(src, opt);
+        Sprite::copyFrom(src, opt);
         _progress = src._progress;
         _direction = src._direction;
         _originalFrame = src._originalFrame;
@@ -65,7 +67,7 @@ namespace oxygine
     {
         _originalFrame = f;
         _update();
-        inherited::animFrameChanged(f);
+        Sprite::animFrameChanged(f);
     }
 
     void ProgressBar::_update()
@@ -108,7 +110,7 @@ namespace oxygine
     {
         if (((_direction != __dir_radial_ccw) && (_direction != dir_radial_cw)) || (_progress == 1.0f))
         {
-            inherited::doRender(rs);
+            Sprite::doRender(rs);
             return;
         }
 
@@ -124,7 +126,7 @@ namespace oxygine
             //rsCache().setBlendMode(getBlendMode());
             //renderer->setTexture(df.base, df.alpha, df.premultiplied);
 
-            RectF destRect = inherited::getDestRect();
+            RectF destRect = Sprite::getDestRect();
 
             RectF srcRect = _frame.getSrcRect();
             float u = srcRect.pos.x;
@@ -150,7 +152,7 @@ namespace oxygine
 
             float progress = _progress;
 
-            float fP = MATH_PI * 2.f * progress;
+            float fP = M_PI * 2.f * progress;
 
             rotateVector(vecRad, fP);
 

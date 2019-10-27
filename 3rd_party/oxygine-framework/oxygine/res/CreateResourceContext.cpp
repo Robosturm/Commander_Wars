@@ -105,13 +105,6 @@ namespace oxygine
             const char* name = _last.name();
             pugi::xml_attribute attr;
 
-#ifdef OX_DEBUG
-            if (!_rootMeta.empty())
-            {
-                //Q_ASSERT(!strcmp(_last.name(), _lastMeta.name()));
-            }
-#endif
-
             if (!strcmp(name, "set"))
             {
                 _checkSetAttributes(_last);

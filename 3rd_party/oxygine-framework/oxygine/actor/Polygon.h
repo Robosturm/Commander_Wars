@@ -7,7 +7,6 @@ namespace oxygine
     DECLARE_SMART(Polygon, spPolygon);
     class Polygon : public Sprite
     {
-        INHERITED(Sprite);
     public:
         DECLARE_COPYCLONE_NEW(Polygon);
 
@@ -27,5 +26,3 @@ namespace oxygine
         int _verticesSize;
     };
 }
-
-EDITOR_INCLUDE(Polygon);

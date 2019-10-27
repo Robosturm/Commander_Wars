@@ -9,7 +9,6 @@ namespace oxygine
     DECLARE_SMART(Resource, spResource);
     class Resource: public Object
     {
-        INHERITED(Object);
     public:
         Resource();
         ~Resource();
@@ -55,6 +54,3 @@ namespace oxygine
         const Resource& operator=(const Resource&);
     };
 }
-
-
-EDITOR_INCLUDE(Resource);

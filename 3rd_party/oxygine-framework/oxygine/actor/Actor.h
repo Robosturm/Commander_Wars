@@ -91,7 +91,7 @@ namespace oxygine
         /**Returns rotation angle in radians*/
         float               getRotation() const {return _rotation;}
         /**Returns rotation angle in degrees*/
-        float               getRotationDegrees() const {return _rotation / MATH_PI * 180.0f;}
+        float               getRotationDegrees() const {return _rotation / M_PI * 180.0f;}
         int                 getPriority() const {return _zOrder;}
         bool                getVisible() const {return (_flags & flag_visible) != 0;}
         Actor*              getParent() {return _parent;}
@@ -429,6 +429,3 @@ namespace oxygine
         void update(Actor&, float , const UpdateState& ) {}
     };
 }
-
-
-EDITOR_INCLUDE(Actor);

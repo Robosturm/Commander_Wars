@@ -8,7 +8,6 @@ namespace oxygine
 
     class Box9Sprite: public Sprite
     {
-        INHERITED(Sprite);
     public:
         DECLARE_COPYCLONE_NEW(Box9Sprite);
         enum StretchMode
@@ -67,6 +66,3 @@ namespace oxygine
         void doRender(const RenderState&) override;
     };
 }
-
-
-EDITOR_INCLUDE(Box9Sprite);

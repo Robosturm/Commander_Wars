@@ -27,7 +27,7 @@ namespace oxygine
 
     void Sprite::copyFrom(const Sprite& src, cloneOptions opt)
     {
-        inherited::copyFrom(src, opt);
+        VStyleActor::copyFrom(src, opt);
 
         _frame = src._frame;
         _localScale = src._localScale;

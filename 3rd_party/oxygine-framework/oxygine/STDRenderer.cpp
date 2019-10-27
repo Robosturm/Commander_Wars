@@ -65,17 +65,6 @@ namespace oxygine
     {
         Q_ASSERT(sampler < MAX_TEXTURES);
 
-#ifdef OX_DEBUG
-        if (_textures[sampler] && _driver == IVideoDriver::instance)
-        {
-            GLint whichID;
-            oxglActiveTexture(GL_TEXTURE0 + sampler);
-            glGetIntegerv(GL_TEXTURE_BINDING_2D, &whichID);
-
-            Q_ASSERT(_textures[sampler]->getHandle() == (nativeTextureHandle)(size_t)whichID);
-        }
-#endif
-
         if (_textures[sampler] == t)
             return;
         _textures[sampler] = t;
@@ -343,11 +332,6 @@ namespace oxygine
         _driver->setUniform("mat", _vp);
     }
 
-    void STDRenderer::setViewProjTransform(const Matrix& viewProj)
-    {
-        setViewProj(viewProj);
-    }
-
     void STDRenderer::pushShaderSetHook(ShaderProgramChangedHook* hook)
     {
         _sphookLast->next = hook;
@@ -448,24 +432,24 @@ namespace oxygine
         Vector2 tc2(v2->u, v2->v);
         Vector3 dp_ = p1 - p2;
         Vector2 dp(dp_.x, dp_.y);
-        dp.x = scalar::abs(dp.x);
-        dp.y = scalar::abs(dp.y);
+        dp.x = qAbs(dp.x);
+        dp.y = qAbs(dp.y);
 
         Vector2 dtc = tc1 - tc2;
-        dtc.x = scalar::abs(dtc.x) * w;
-        dtc.y = scalar::abs(dtc.y) * h;
+        dtc.x = qAbs(dtc.x) * w;
+        dtc.y = qAbs(dtc.y) * h;
 
         const float EPS = 0.05f;
 
         Vector2 d = dp - dtc;
-        if (scalar::abs(d.x) >= EPS || scalar::abs(d.y) >= EPS)
+        if (qAbs(d.x) >= EPS || qAbs(d.y) >= EPS)
             return false;
 
-        p1.x = scalar::abs(p1.x);
-        p1.y = scalar::abs(p1.y);
+        p1.x = qAbs(p1.x);
+        p1.y = qAbs(p1.y);
 
-        if (scalar::abs(p1.x - int(p1.x + EPS)) > EPS ||
-                scalar::abs(p1.y - int(p1.y + EPS)) > EPS)
+        if (qAbs(p1.x - int(p1.x + EPS)) > EPS ||
+                qAbs(p1.y - int(p1.y + EPS)) > EPS)
             return false;
 
         return true;
@@ -505,13 +489,6 @@ namespace oxygine
     }
 
     bool _showTexel2PixelErrors = false;
-
-#ifdef OXYGINE_DEBUG_T2P
-    void STDRenderer::showTexel2PixelErrors(bool show)
-    {
-        _showTexel2PixelErrors = show;
-    }
-#endif
 
     void STDRenderer::swapVerticesData(STDRenderer& r)
     {
@@ -559,27 +536,6 @@ namespace oxygine
 
         vertexPCT2 v[4];
         fillQuadT(v, srcRect, destRect, _transform, color.rgba());
-
-
-#ifdef OXYGINE_DEBUG_T2P
-        if (_showTexel2PixelErrors)
-        {
-            spNativeTexture base = rsCache().getTexture(UberShaderProgram::SAMPLER_BASE);
-            if (base != white)
-            {
-                Rect viewport;
-                _driver->getViewport(viewport);
-
-                bool t = checkT2P(viewport, _vp, &v[0], &v[3], base->getWidth(), base->getHeight());
-                if (!t)
-                {
-                    float c = (sinf((float)getTimeMS() / 200 + v[0].x * v[0].y) + 1) / 2.0f;
-                    Color b = lerp(Color(rand() % 255, rand() % 255, rand() % 255, 255), color, c);
-                    fillQuadT(v, srcRect, destRect, _transform, b.rgba());
-                }
-            }
-        }
-#endif
 
         addVertices(v, sizeof(v));
     }

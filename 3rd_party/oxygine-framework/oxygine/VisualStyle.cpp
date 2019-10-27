@@ -23,7 +23,7 @@ namespace oxygine
 
     void VStyleActor::copyFrom(const VStyleActor& src, cloneOptions opt)
     {
-        inherited::copyFrom(src, opt);
+        Actor::copyFrom(src, opt);
         _vstyle = src._vstyle;
     }
 

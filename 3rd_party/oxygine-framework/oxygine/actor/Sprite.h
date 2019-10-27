@@ -13,7 +13,6 @@ namespace oxygine
     DECLARE_SMART(Sprite, spSprite);
     class Sprite : public VStyleActor
     {
-        INHERITED(VStyleActor);
     public:
         DECLARE_COPYCLONE_NEW(Sprite)
 
@@ -76,5 +75,3 @@ namespace oxygine
         bool invertFlipX{false};
     };
 }
-
-EDITOR_INCLUDE(Sprite);

@@ -14,6 +14,7 @@
 #include "res/ResFont.h"
 #include "text_utils/Node.h"
 
+#include <qmath.h>
 #include "core/gamewindow.h"
 
 namespace oxygine
@@ -124,9 +125,6 @@ namespace oxygine
 
         STDRenderer* renderer = STDRenderer::getCurrent();
 
-
-
-#if 1
         ClipUV clipUV = ClipUV(
                             world.transform(maskDest.getLeftTop()),
                             world.transform(maskDest.getRightTop()),
@@ -175,24 +173,6 @@ namespace oxygine
 
         renderer->popShaderSetHook();
         renderer->setBaseShaderFlags(sflags);
-#else
-
-        MaskedRenderer mr(maskTexture, maskSrc, maskDest, world, rchannel, renderer->getDriver());
-        renderer->swapVerticesData(mr);
-
-        mr.setViewProj(renderer->getViewProjection());
-        mr.begin();
-
-        RenderState rs = parentRS;
-        sprite->Sprite::render(rs);
-        mr.end();
-
-        Material::null->apply();
-
-        renderer->swapVerticesData(mr);
-        renderer->begin();
-#endif
-
     }
 
     void STDRenderDelegate::doRender(Sprite* sprite, const RenderState& rs)
@@ -209,7 +189,7 @@ namespace oxygine
 
     void STDRenderDelegate::doRender(TextField* tf, const RenderState& rs)
     {
-        float scale = sqrtf(rs.transform.a * rs.transform.a + rs.transform.c * rs.transform.c);
+        float scale = qSqrt(rs.transform.a * rs.transform.a + rs.transform.c * rs.transform.c);
 
         text::Node* root = tf->getRootNode(scale);
         if (!root)

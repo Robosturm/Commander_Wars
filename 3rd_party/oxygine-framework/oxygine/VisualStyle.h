@@ -25,7 +25,6 @@ namespace oxygine
     DECLARE_SMART(VStyleActor, spVStyleActor);
     class VStyleActor : public Actor
     {
-        INHERITED(Actor);
     public:
         DECLARE_COPYCLONE_NEW(VStyleActor)
         VStyleActor();
@@ -60,5 +59,3 @@ namespace oxygine
     };
 
 }
-
-EDITOR_INCLUDE(VStyleActor);

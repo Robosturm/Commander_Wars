@@ -8,7 +8,6 @@ namespace oxygine
 
     class Button: public Sprite
     {
-        INHERITED(Sprite);
     public:
         DECLARE_COPYCLONE_NEW(Button);
 
@@ -44,5 +43,3 @@ namespace oxygine
         void setState(state s);
     };
 }
-
-EDITOR_INCLUDE(Button);

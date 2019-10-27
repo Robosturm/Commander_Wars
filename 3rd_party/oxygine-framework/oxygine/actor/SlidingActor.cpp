@@ -205,7 +205,7 @@ namespace oxygine
 
     void SlidingActor::handleEvent(Event* event)
     {
-        inherited::handleEvent(event);
+        Actor::handleEvent(event);
     }
 
     void SlidingActor::_newEvent(Event* event)

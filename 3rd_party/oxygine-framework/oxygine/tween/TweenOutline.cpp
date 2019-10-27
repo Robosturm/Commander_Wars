@@ -73,27 +73,6 @@ namespace oxygine
             spNativeTexture rt = _pp._rt;
             spNativeTexture rt2 = getRTManager().get(0, w, h, _pp._format);
 
-#if 0
-            driver->setShaderProgram(PostProcess::shaderBlit);
-            pass(rt, Rect(0, 0, w, h), rt2, Rect(0, 0, w / 2, h / 2));
-
-            w /= 2;
-            h /= 2;
-            _downsample *= 2;
-#endif
-
-#if 0
-
-            rt = getRTManager().get(w / 2, h / 2, _pp._format);
-            _pp._rt = rt;
-            pass(rt2, Rect(0, 0, w, h), rt, Rect(0, 0, w / 2, h / 2));
-
-            w /= 2;
-            h /= 2;
-            _downsample *= 2;
-#endif
-
-
             Rect rc(0, 0, w, h);
 
 

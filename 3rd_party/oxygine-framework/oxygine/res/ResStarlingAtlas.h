@@ -6,7 +6,6 @@ namespace oxygine
 {
     class ResStarlingAtlas: public Resource
     {
-        INHERITED(Resource);
     public:
         static Resource* create(CreateResourceContext& context);
 

@@ -22,7 +22,7 @@ namespace oxygine
 
     void Polygon::copyFrom(const Polygon& src, cloneOptions opt)
     {
-        inherited::copyFrom(src, opt);
+        Sprite::copyFrom(src, opt);
     }
 
     void Polygon::setVertices(const void* data, int size, int bformat, bool own)

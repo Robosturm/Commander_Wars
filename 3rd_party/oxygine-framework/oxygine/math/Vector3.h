@@ -2,6 +2,8 @@
 #include "../oxygine-include.h"
 #include "Vector2.h"
 
+#include "qmath.h"
+
 namespace oxygine
 {
     template <class T>
@@ -172,7 +174,7 @@ namespace oxygine
     template <class T>
     T VectorT3<T>::length() const
     {
-        return scalar::sqrt(x * x + y * y + z * z);
+        return qSqrt(x * x + y * y + z * z);
     }
 
     template <class T>
@@ -218,7 +220,7 @@ namespace oxygine
     template <class T>
     inline VectorT3<T>& VectorT3<T>::normalize(VectorT3<T>& out, const VectorT3<T>& v)
     {
-        T norm = T(1.0) / scalar::sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+        T norm = T(1.0) / qSqrt(v.x * v.x + v.y * v.y + v.z * v.z);
         out = v;
         out.x *= norm;
         out.y *= norm;

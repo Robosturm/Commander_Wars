@@ -27,11 +27,9 @@ namespace oxygine
     DECLARE_SMART(EventDispatcher, spEventDispatcher);
     class EventDispatcher: public Object
     {
-        INHERITED(Object);
     public:
         EventDispatcher(const EventDispatcher& ed)
-            :
-              inherited(ed),
+            : Object(ed),
               _lastID(0),
               _listeners(nullptr)
         {

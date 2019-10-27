@@ -69,15 +69,6 @@ namespace oxygine
 
         size_t id = createTexture();
 
-        if (rt)
-        {
-            if (!HAVE_NPOT_RT())
-            {
-                w = nextPOT(w);
-                h = nextPOT(h);
-            }
-        }
-
         glPixel p = SurfaceFormat2GL(tf);
         glTexImage2D(GL_TEXTURE_2D, 0, p.format, w, h, 0, p.format, p.type, 0);
 

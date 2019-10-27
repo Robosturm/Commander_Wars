@@ -2,6 +2,7 @@
 #include "../actor/Actor.h"
 #include "../actor/ColorRectSprite.h"
 #include <limits.h>
+#include <qmath.h>
 
 namespace oxygine
 {
@@ -247,7 +248,7 @@ namespace oxygine
     }
 
 
-	Tween::easeHandler _customEaseHandler = 0;
+    Tween::easeHandler _customEaseHandler = nullptr;
 
     float Tween::calcEase(EASE ease, float t)
     {
@@ -257,35 +258,92 @@ namespace oxygine
         {
             case ease_linear:
                 return t;
+                // quad
+            case ease_inQuad:
+                return (t * t);
+            case ease_outQuad:
+                return 1 - calcEase(ease_inQuad, 1 - t);
+            case ease_inOutQuad:
+                return t <= 0.5f ? calcEase(ease_inQuad, t * 2) / 2 : 1 - calcEase(ease_inQuad, 2 - t * 2) / 2;
+            case ease_outInQuad:
+                return t <= 0.5f ? calcEase(ease_inQuad, t * 2) / 2 : 1 - calcEase(ease_inQuad, 2 - t * 2) / 2;
+                // cubic
+            case ease_inCubic:
+                return (t * t * t);
+            case ease_outCubic:
+                return 1 - calcEase(ease_inCubic, 1 - t);
+            case ease_inOutCubic:
+                return t <= 0.5f ? calcEase(ease_inCubic, t * 2) / 2 : 1 - calcEase(ease_inCubic, 2 - t * 2) / 2;
+            case ease_outInCubic:
+                return t <= 0.5f ? calcEase(ease_inCubic, t * 2) / 2 : 1 - calcEase(ease_inCubic, 2 - t * 2) / 2;
+                // Quart
+            case ease_inQuart:
+                return (qPow(t, 4));
+            case ease_outQuart:
+                return 1 - calcEase(ease_inQuart, 1 - t);
+            case ease_inOutQuart:
+                return t <= 0.5f ? calcEase(ease_inQuart, t * 2) / 2 : 1 - calcEase(ease_inQuart, 2 - t * 2) / 2;
+            case ease_outInQuart:
+                return t <= 0.5f ? calcEase(ease_inQuart, t * 2) / 2 : 1 - calcEase(ease_inQuart, 2 - t * 2) / 2;
 
-			#define DEF_EASY_FROM_IN(EasyPost, formula) \
-			case ease_in ## EasyPost: \
-				return (formula); \
-			case ease_out ## EasyPost: \
-				return 1 - calcEase(ease_in ## EasyPost, 1 - t); \
-			case ease_inOut ## EasyPost: \
-				return t <= 0.5f ? calcEase(ease_in ## EasyPost, t * 2) / 2 : 1 - calcEase(ease_in ## EasyPost, 2 - t * 2) / 2; \
-			case ease_outIn ## EasyPost: \
-				return t <= 0.5f ? calcEase(ease_in ## EasyPost, t * 2) / 2 : 1 - calcEase(ease_in ## EasyPost, 2 - t * 2) / 2; \
+            case ease_inQuint:
+                return (qPow(t, 5));
+            case ease_outQuint:
+                return 1 - calcEase(ease_inQuint, 1 - t);
+            case ease_inOutQuint:
+                return t <= 0.5f ? calcEase(ease_inQuint, t * 2) / 2 : 1 - calcEase(ease_inQuint, 2 - t * 2) / 2;
+            case ease_outInQuint:
+                return t <= 0.5f ? calcEase(ease_inQuint, t * 2) / 2 : 1 - calcEase(ease_inQuint, 2 - t * 2) / 2;
+                // Sin
+            case ease_inSin:
+                return (1.0f - qCos(t * (M_PI / 2.0f)));
+            case ease_outSin:
+                return 1 - calcEase(ease_inSin, 1 - t);
+            case ease_inOutSin:
+                return t <= 0.5f ? calcEase(ease_inSin, t * 2) / 2 : 1 - calcEase(ease_inSin, 2 - t * 2) / 2;
+            case ease_outInSin:
+                return t <= 0.5f ? calcEase(ease_inSin, t * 2) / 2 : 1 - calcEase(ease_inSin, 2 - t * 2) / 2;
+                // Expo
+            case ease_inExpo:
+                return (qPow(2, 10 * (t - 1)));
+            case ease_outExpo:
+                return 1 - calcEase(ease_inExpo, 1 - t);
+            case ease_inOutExpo:
+                return t <= 0.5f ? calcEase(ease_inExpo, t * 2) / 2 : 1 - calcEase(ease_inExpo, 2 - t * 2) / 2;
+            case ease_outInExpo:
+                return t <= 0.5f ? calcEase(ease_inExpo, t * 2) / 2 : 1 - calcEase(ease_inExpo, 2 - t * 2) / 2;
+                // Circ
+            case ease_inCirc:
+                return (-1.0f * (qSqrt(1 - t * t) - 1));
+            case ease_outCirc:
+                return 1 - calcEase(ease_inCirc, 1 - t);
+            case ease_inOutCirc:
+                return t <= 0.5f ? calcEase(ease_inCirc, t * 2) / 2 : 1 - calcEase(ease_inCirc, 2 - t * 2) / 2;
+            case ease_outInCirc:
+                return t <= 0.5f ? calcEase(ease_inCirc, t * 2) / 2 : 1 - calcEase(ease_inCirc, 2 - t * 2) / 2;
+                // Back
+            case ease_inBack:
+                return (t * t * ((s + 1) * t - s));
+            case ease_outBack:
+                return 1 - calcEase(ease_inBack, 1 - t);
+            case ease_inOutBack:
+                return t <= 0.5f ? calcEase(ease_inBack, t * 2) / 2 : 1 - calcEase(ease_inBack, 2 - t * 2) / 2;
+            case ease_outInBack:
+                return t <= 0.5f ? calcEase(ease_inBack, t * 2) / 2 : 1 - calcEase(ease_inBack, 2 - t * 2) / 2;
 
-				DEF_EASY_FROM_IN(Quad, t * t);
-				DEF_EASY_FROM_IN(Cubic, t * t * t);
-				DEF_EASY_FROM_IN(Quart, powf(t, 4));
-				DEF_EASY_FROM_IN(Quint, powf(t, 5));
-				DEF_EASY_FROM_IN(Sin, 1.0f - scalar::cos(t * (MATH_PI / 2.0f)));
-				DEF_EASY_FROM_IN(Expo, powf(2, 10 * (t - 1)));
-				DEF_EASY_FROM_IN(Circ, -1.0f * (sqrt(1 - t * t) - 1));
-				DEF_EASY_FROM_IN(Back, t * t * ((s + 1) * t - s));
-				DEF_EASY_FROM_IN(Bounce, 1 - outBounce(1 - t));
-
+            case ease_inBounce:
+                return (1 - outBounce(1 - t));
+            case ease_outBounce:
+                return 1 - calcEase(ease_inBounce, 1 - t);
+            case ease_inOutBounce:
+                return t <= 0.5f ? calcEase(ease_inBounce, t * 2) / 2 : 1 - calcEase(ease_inBounce, 2 - t * 2) / 2;
+            case ease_outInBounce:
+                return t <= 0.5f ? calcEase(ease_inBounce, t * 2) / 2 : 1 - calcEase(ease_inBounce, 2 - t * 2) / 2;
 			default:
 				t = _customEaseHandler(ease, t);
 				//Q_ASSERT(!"unsupported ease");
 				break;
 		}
-
-		#undef DEF_EASY_FROM_IN
-
 		return t;
 	}
 

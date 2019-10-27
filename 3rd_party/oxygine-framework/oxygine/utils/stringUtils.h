@@ -39,9 +39,6 @@ namespace oxygine
 
     std::string lower(const std::string& str);
 
-    std::wstring    utf8tows(const char* utf8str);
-    std::string     ws2utf8(const wchar_t* wstr);
-
     /**returns next character and utf8 packed to int*/
     const char* getNextCode(int& code, const char* utf8str);
 
@@ -59,11 +56,7 @@ namespace oxygine
     {
         va_list args;
         va_start(args, format);
-#if defined(_MSC_VER)
-        size_t r = vsnprintf_s(str, N, format, args);
-#else
         size_t r = vsnprintf(str, N, format, args);
-#endif
         va_end(args);
         return r;
     }

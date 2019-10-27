@@ -3,10 +3,6 @@
 #include <algorithm>
 #include <string.h>
 
-#ifdef OXYGINE_SDL
-#include "SDL_stdinc.h"
-#endif
-
 namespace oxygine
 {
     namespace path
@@ -54,10 +50,6 @@ namespace oxygine
 
             return true;
         }
-
-#ifdef OX_DEBUG
-        bool b = unitTest();
-#endif
 
         void reverse(char* str)
         {
@@ -272,90 +264,6 @@ namespace oxygine
         std::string data = str;
         std::transform(data.begin(), data.end(), data.begin(), ::tolower);//todo optimize
         return data;
-    }
-
-    std::wstring utf8tows(const char* utf8str)
-    {
-        if (!utf8str)
-            return L"";
-
-        int n = (int)strlen(utf8str) + 1;
-        if (n == 1)
-            return L"";
-
-
-#if defined(OXYGINE_SDL) && !defined(EMSCRIPTEN)
-        wchar_t* s = 0;
-        if (sizeof(wchar_t) == 2)
-            s = (wchar_t*)SDL_iconv_string("UCS-2-INTERNAL", "UTF-8", utf8str, n);
-        else
-            s = (wchar_t*)SDL_iconv_string("UCS-4-INTERNAL", "UTF-8", utf8str, n);
-
-        std::wstring str = s;
-        str.reserve(n);
-        SDL_free(s);
-        return str;
-#else
-        static bool warned = false;
-        if (warned)
-        {
-            warned = true;
-            qWarning("utf8tows not implemented correctly!");
-        }
-
-        std::wstring ws;
-        ws.reserve(n);
-
-        int code = 0;
-        while (true)
-        {
-            utf8str = getNextCode(code, utf8str);
-            if (!code)
-                break;
-            ws.push_back(code);
-        }
-
-        return ws;
-#endif
-    }
-
-    std::string ws2utf8(const wchar_t* wstr)
-    {
-        if (!wstr)
-            return "";
-
-        int n = (int)wcslen(wstr) + 1;
-        if (n == 1)
-            return "";
-
-#if defined(OXYGINE_SDL) && !defined(EMSCRIPTEN)
-        char*  s = 0;
-        if (sizeof(wchar_t) == 2)
-            s = SDL_iconv_string("UTF-8", "UCS-2-INTERNAL", (const char*)wstr, n * sizeof(wchar_t));
-        else
-            s = SDL_iconv_string("UTF-8", "UCS-4-INTERNAL", (const char*)wstr, n * sizeof(wchar_t));
-
-        std::string str = s;
-        SDL_free(s);
-        return str;
-#else
-        static bool warned = false;
-        if (warned)
-        {
-            warned = true;
-            qWarning("utf8tows not implemented correctly!");
-        }
-
-        std::string s;
-        int i = 0;
-        while (wchar_t t = wstr[i])
-        {
-            ++i;
-            charCode2Bytes(s, t);
-        }
-        return s;
-#endif
-        return "";
     }
 
     Color   hex2color(const char* str)

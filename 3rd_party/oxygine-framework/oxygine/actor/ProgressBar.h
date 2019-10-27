@@ -8,7 +8,6 @@ namespace oxygine
 
     class ProgressBar: public Sprite
     {
-        INHERITED(Sprite);
     public:
         enum { PROGRESS_CHANGED = sysEventID('P', 'C', 'h') };
 
@@ -50,5 +49,3 @@ namespace oxygine
         AnimationFrame _originalFrame;
     };
 }
-
-EDITOR_INCLUDE(ProgressBar);

@@ -172,22 +172,8 @@ namespace oxygine
         int aw = w % 4;
         aw = aw ? w + 4 - aw : w;
 
-
         ImageData reg = ad.mt.lock().getRect(Rect(0, 0, aw, h));
         mt->init(reg);
-
-#if 0
-        if (ad.mt.getFormat() == TF_R5G5B5A1)
-            int q = 0;
-        static int n = 0;
-        n++;
-        char name[255];
-        safe_sprintf(name, "test%d.tga", n);
-        saveImage(mt->lock(), name);
-
-        safe_sprintf(name, "test%d_.tga", n);
-        saveImage(ad.mt.lock(), name);
-#endif
 
         CreateTextureTask task;
         task.linearFilter = linear;

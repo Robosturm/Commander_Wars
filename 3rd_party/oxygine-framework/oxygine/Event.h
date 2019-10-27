@@ -24,7 +24,7 @@ namespace oxygine
         int listenerID;
         union
         {
-            uint64 userData64;
+            quint64 userData64;
             int    userData32;
             bool   userDataBool;
             void*  userData;

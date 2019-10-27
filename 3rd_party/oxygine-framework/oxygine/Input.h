@@ -23,15 +23,15 @@ namespace oxygine
         /**index should be in range [1, MAX_TOUCHES]*/
         PointerState* getTouchByIndex(pointer_index index);
 
-        int touchID2index(int64 id);
-        PointerState* getTouchByID(int64 id);
+        int touchID2index(qint64 id);
+        PointerState* getTouchByID(qint64 id);
 
 
         //internal:
         PointerState _pointers[MAX_TOUCHES];
         PointerState _pointerMouse;
 
-        int64 _ids[MAX_TOUCHES + 1];
+        qint64 _ids[MAX_TOUCHES + 1];
 
 
         void sendPointerButtonEvent(spStage, MouseButton button, float x, float y, float pressure, int type, PointerState*);
