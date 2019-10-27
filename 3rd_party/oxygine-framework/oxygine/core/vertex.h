@@ -1,4 +1,7 @@
 #pragma once
+#ifndef OXYGINE_VERTEX
+#define OXYGINE_VERTEX
+
 #include "../oxygine-include.h"
 #include "../math/Vector2.h"
 
@@ -19,10 +22,34 @@ namespace oxygine
         NUM_TEX_COORD_MASK = (0x7 << NUM_TEX_COORD_BIT),
         TEX_COORD_SIZE_MASK = (0x7 << TEX_COORD_SIZE_BIT),
     };
-
-#define VERTEX_USERDATA_SIZE(_n)            ((_n) << USER_DATA_SIZE_BIT)
-#define VERTEX_NUM_TEXCOORDS(_n)            ((_n) << NUM_TEX_COORD_BIT)
-#define VERTEX_TEXCOORD_SIZE(_stage, _n)    ((_n) << (TEX_COORD_SIZE_BIT + (3*_stage)))
+    /**
+     * @brief VERTEX_USERDATA_SIZE
+     * @param _n
+     * @return
+     */
+    static constexpr qint32 VERTEX_USERDATA_SIZE(qint32 _n)
+    {
+        return ((_n) << USER_DATA_SIZE_BIT);
+    }
+    /**
+     * @brief VERTEX_NUM_TEXCOORDS
+     * @param _n
+     * @return
+     */
+    static constexpr qint32 VERTEX_NUM_TEXCOORDS(qint32 _n)
+    {
+        return ((_n) << NUM_TEX_COORD_BIT);
+    }
+    /**
+     * @brief VERTEX_TEXCOORD_SIZE
+     * @param _stage
+     * @param _n
+     * @return
+     */
+    static constexpr qint32 VERTEX_TEXCOORD_SIZE(qint32 _stage ,qint32 _n)
+    {
+        return ((_n) << (TEX_COORD_SIZE_BIT + (3 * _stage)));
+    }
 
     typedef unsigned int bvertex_format;
 
@@ -111,8 +138,5 @@ namespace oxygine
         enum { FORMAT = VERTEX_POSITION | VERTEX_COLOR | VERTEX_NUM_TEXCOORDS(3) | VERTEX_TEXCOORD_SIZE(0, 2) | VERTEX_TEXCOORD_SIZE(1, 2) | VERTEX_TEXCOORD_SIZE(2, 2) };
         float u3, v3;
     };
-
-#define VERTEX_PCT2 vertexPCT2::FORMAT
-#define VERTEX_PCT2T2 vertexPCT2T2::FORMAT
-
 }
+#endif // OXYGINE_VERTEX

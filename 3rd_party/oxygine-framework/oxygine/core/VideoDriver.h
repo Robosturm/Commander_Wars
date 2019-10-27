@@ -106,9 +106,6 @@ namespace oxygine
         void setUniform(const char* id, const Vector3& v);
         void setUniform(const char* id, const Vector2& v);
         void setUniform(const char* id, const Matrix&  v);
-
-
-        void _debugAddPrimitives(PRIMITIVE_TYPE pt, int num);
     };
 
     class VideoDriverNull: public IVideoDriver

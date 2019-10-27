@@ -245,12 +245,6 @@ namespace oxygine
         return p;
     }
 
-    std::string ease2String(Tween::EASE ease);
-
-
-
-
-
 
     DECLARE_SMART(TweenObj, spTweenObj);
     class TweenObj : public Object

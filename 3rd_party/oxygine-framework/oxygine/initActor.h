@@ -115,66 +115,6 @@ namespace oxygine
                 b->setResAnim(_resAnim);
             }
         };
-
-
-#define arg_position args::position()
-#define arg_pos arg_position
-#define arg_x args::x()
-#define arg_y args::y()
-
-#define arg_anchor args::anchor()
-
-#define arg_rotation args::rotation()
-#define arg_rot arg_rotation
-
-#define arg_visible args::visible()
-#define arg_vis args::visible()
-
-#define arg_width args::width()
-#define arg_w arg_width
-#define arg_height args::height()
-#define arg_h arg_height
-#define arg_size args::size()
-
-#define arg_scale args::scale()
-#define arg_scale2 args::scale2()
-#define arg_scaleX args::scaleX()
-#define arg_scaleY args::scaleY()
-
-#define arg_name args::name()
-
-#define arg_alpha args::alpha()
-#define arg_color args::color()
-#define arg_blend args::blend()
-
-#define arg_input args::input()
-#define arg_attachTo args::attachTo()
-#define arg_priority args::priority()
-#define arg_userData args::userData()
-
-#define arg_extendedClickArea args::extendedClickArea()
-
-
-
-//sprite or button
-#define arg_animFrame args::animFrame(false, 0, 0)
-#define arg_resAnim args::animFrame(false, 0, 0)
-#define arg_managedResAnim args::animFrame(true, 0, 0)
-
-//TextField
-#define arg_style args::style()
-#define arg_text args::text()
-#define arg_htmlText args::htmlText()
-#define arg_hAlign args::hAlign()
-#define arg_vAlign args::vAlign()
-#define arg_fontSize args::fontSize()
-#define arg_font args::font()
-#define arg_multiline args::multiline()
-#define arg_tcolor args::color()
-//Button
-#define arg_onClick args::onClick()
-
-
     }
 
     template<class T>

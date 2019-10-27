@@ -14,14 +14,10 @@ Many thanks to Wolfhound
 #ifndef CLOSURE_HEADER_
 #define CLOSURE_HEADER_
 
-#if !defined(OXYGINE_EDITOR)
 #define CLOSURE_FUNCTION 1
-#endif
 
-#ifdef CLOSURE_FUNCTION
-#	include <functional>
-#	include <memory>
-#endif
+#include <functional>
+#include <memory>
 
 #define TEMPLATE_PARAM_LIST class R
 #define PARAM_TYPE_LIST 

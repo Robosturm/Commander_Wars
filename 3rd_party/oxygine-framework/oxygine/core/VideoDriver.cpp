@@ -32,15 +32,6 @@ namespace oxygine
         setUniform(id, &v, 1);
     }
 
-    void IVideoDriver::_debugAddPrimitives(PRIMITIVE_TYPE pt, int primitives)
-    {
-#if OXYGINE_TRACE_VIDEO_STATS
-        _stats.elements[pt] += primitives;
-        _stats.batches += 1;
-#endif
-
-    }
-
     IVideoDriver::Stats IVideoDriver::_stats;
 
     spNativeTexture VideoDriverNull::createTexture()

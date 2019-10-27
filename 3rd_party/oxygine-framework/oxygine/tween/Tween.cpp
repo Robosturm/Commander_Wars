@@ -351,41 +351,4 @@ namespace oxygine
 	{
 		_customEaseHandler = h;
 	}
-
-
-	std::string ease2String(Tween::EASE ease)
-	{
-		#define STRINGIFY(x) #x
-		#define S(x) STRINGIFY(x)
-
-		switch (ease)
-		{
-		case Tween::ease_linear:
-			return "linear";
-
-		#define DEF_EASY_FROM_IN(EasyPost) \
-		case Tween::ease_in ## EasyPost: \
-			return  "in" S(EasyPost);\
-		case Tween::ease_out ## EasyPost: \
-			return "out" S(EasyPost); \
-		case Tween::ease_inOut ## EasyPost: \
-			return "inOut" S(EasyPost); \
-		case Tween::ease_outIn ## EasyPost: \
-			return "outIn" S(EasyPost);
-
-			DEF_EASY_FROM_IN(Quad);
-			DEF_EASY_FROM_IN(Cubic);
-			DEF_EASY_FROM_IN(Quart);
-			DEF_EASY_FROM_IN(Quint);
-			DEF_EASY_FROM_IN(Sin);
-			DEF_EASY_FROM_IN(Expo);
-			DEF_EASY_FROM_IN(Circ);
-			DEF_EASY_FROM_IN(Back);
-			DEF_EASY_FROM_IN(Bounce);
-        default:
-            break;
-		}
-
-		return "unknown";
-	}
 }

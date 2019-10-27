@@ -64,6 +64,19 @@ QString COSpriteManager::getCOName(qint32 position)
 }
 
 
+QString COSpriteManager::getCOName(QString coid)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = pApp->getInterpreter();
+    QJSValue value = pInterpreter->doFunction(coid, "getName");
+    if (value.isString())
+    {
+        return value.toString();
+    }
+    return "";
+}
+
+
 QStringList COSpriteManager::getCOStyles(QString id)
 {
     for (qint32 i = 0; i < m_loadedCOs.size(); i++)

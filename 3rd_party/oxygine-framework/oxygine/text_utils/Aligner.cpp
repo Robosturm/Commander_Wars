@@ -7,8 +7,6 @@ namespace oxygine
 {
     namespace text
     {
-#define GSCALE 1
-
         Aligner::Aligner(const TextStyle& Style, spSTDMaterial mt, const Font* font, float gscale, const Vector2& size): width((int)size.x), height((int)size.y), _x(0), _y(0), _lineWidth(0),
             bounds(0, 0, 0, 0), style(Style), _scale(gscale), _font(font), mat(mt)
         {

@@ -46,6 +46,12 @@ public:
      */
     QString getCOName(qint32 position);
     /**
+     * @brief getCOName
+     * @param coid
+     * @return
+     */
+    QString getCOName(QString coid);
+    /**
      * @brief getCOIDs
      * @return
      */

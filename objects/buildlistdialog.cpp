@@ -119,12 +119,32 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     pPanel->addItem(pLabel);
 
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    QVector<GameEnums::UnitType> unitTypes;
+    for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+    {
+        GameEnums::UnitType unitType = pUnitSpriteManager->getUnitType(i);
+        if (!unitTypes.contains(unitType))
+        {
+            unitTypes.append(unitType);
+        }
+    }
+    for (qint32 i2 = 0; i2 < unitTypes.size(); i2++)
+    {
+        for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+        {
+            if (pUnitSpriteManager->getUnitType(i) == unitTypes[i2])
+            {
+                m_UnitList.append(pUnitSpriteManager->getUnitID(i));
+            }
+        }
+    }
+
     qint32 y = 30 + pLabel->getTextRect().getHeight() * 2;
     qint32 x = 10;
     GameMap* pMap = GameMap::getInstance();
-    for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+    for (qint32 i = 0; i < m_UnitList.size(); i++)
     {
-        QString unitID = pUnitSpriteManager->getUnitID(i);
+        QString unitID = m_UnitList[i];
 
         spUnit pUnit = new Unit(unitID, pMap->getPlayer(player), false);
 
@@ -223,12 +243,9 @@ void BuildListDialog::setBuildlist(qint32 item)
         auto fileData = Mainapp::readList(file + ".bl", "data/unitbannlist/");
         data = std::get<1>(fileData);
     }
-
-
-    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+    for (qint32 i = 0; i < m_UnitList.size(); i++)
     {
-        if (data.contains(pUnitSpriteManager->getUnitID(i)))
+        if (data.contains(m_UnitList[i]))
         {
             m_Checkboxes[i]->setChecked(true);
         }

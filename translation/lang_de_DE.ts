@@ -452,7 +452,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="247"/>
+        <location filename="../objects/buildlistdialog.cpp" line="264"/>
         <source>Bannlist Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -514,11 +514,11 @@
     </message>
     <message>
         <location filename="../objects/cobannlistdialog.cpp" line="112"/>
-        <source>Build List</source>
+        <source>CO Bann List</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/cobannlistdialog.cpp" line="251"/>
+        <location filename="../objects/cobannlistdialog.cpp" line="293"/>
         <source>Bannlist Name</source>
         <translation type="unfinished"></translation>
     </message>

@@ -81,6 +81,12 @@ namespace oxygine
         static vector3& transformVec3(vector3& out, const vector3& in, const MatrixT& mat);
         static vector4& transformVec4(vector4& out, const vector4& in, const MatrixT& mat);
 
+        constexpr T rcDot4(const MatrixT<T>& n, qint32 r, qint32 c) const
+        {
+            const vector4* mrows = (vector4*)ml;
+            const vector4* nrows = (vector4*)n.ml;
+            return (mrows[r].x * nrows[0][c] + mrows[r].y * nrows[1][c] + mrows[r].z * nrows[2][c] + mrows[r].w * nrows[3][c]);
+        }
 
         union
         {
@@ -238,19 +244,15 @@ namespace oxygine
         return vector3(rows[3].x, rows[3].y, rows[3].z);
     }
 
-#define rcDot4(r, c) (mrows[r].x * nrows[0][c] + mrows[r].y * nrows[1][c] + mrows[r].z * nrows[2][c] + mrows[r].w * nrows[3][c])
-
     template <class T>
     MatrixT<T> MatrixT<T>::operator *(const MatrixT<T>& n) const
     {
-        const vector4* mrows = (vector4*)ml;
-        const vector4* nrows = (vector4*)n.ml;
         matrix mat
         (
-            rcDot4(0, 0), rcDot4(0, 1), rcDot4(0, 2), rcDot4(0, 3),
-            rcDot4(1, 0), rcDot4(1, 1), rcDot4(1, 2), rcDot4(1, 3),
-            rcDot4(2, 0), rcDot4(2, 1), rcDot4(2, 2), rcDot4(2, 3),
-            rcDot4(3, 0), rcDot4(3, 1), rcDot4(3, 2), rcDot4(3, 3)
+            rcDot4(n, 0, 0), rcDot4(n, 0, 1), rcDot4(n, 0, 2), rcDot4(n, 0, 3),
+            rcDot4(n, 1, 0), rcDot4(n, 1, 1), rcDot4(n, 1, 2), rcDot4(n, 1, 3),
+            rcDot4(n, 2, 0), rcDot4(n, 2, 1), rcDot4(n, 2, 2), rcDot4(n, 2, 3),
+            rcDot4(n, 3, 0), rcDot4(n, 3, 1), rcDot4(n, 3, 2), rcDot4(n, 3, 3)
         );
         return mat;
     }

@@ -7,26 +7,6 @@ namespace oxygine
 {
     class MaterialCache;
 
-#define MATX(cl) \
-    cl(){\
-        typedef bool (*fn)(const cl&a, const cl&b);\
-        fn f = &cl::cmp;\
-        _compare = (compare)f;\
-        init();\
-    }\
-    void copyTo(cl &d) const{d = *this;}\
-    void copyFrom(const cl &d) {*this = d;}\
-    cl* clone() const override {return new cl(*this);}\
-    void update(size_t &hash, compare &cm) const override {\
-        typedef bool (*fn)(const cl&a, const cl&b);\
-        fn f = &cl::cmp;\
-        cm = (compare)f;\
-        hash = 0;\
-        rehash(hash);\
-    }
-
-
-
     class Material : public ref_counter
     {
     public:
@@ -76,7 +56,24 @@ namespace oxygine
     class NullMaterialX : public Material
     {
     public:
-        MATX(NullMaterialX)
+        NullMaterialX()
+        {
+            typedef bool (*fn)(const NullMaterialX&a, const NullMaterialX&b);
+            fn f = &NullMaterialX::cmp;
+            _compare = (compare)f;
+            init();
+        }
+        void copyTo(NullMaterialX &d) const{d = *this;}
+        void copyFrom(const NullMaterialX &d) {*this = d;}
+        NullMaterialX* clone() const override {return new NullMaterialX(*this);}
+        void update(size_t &hash, compare &cm) const override
+        {
+            typedef bool (*fn)(const NullMaterialX&a, const NullMaterialX&b);
+            fn f = &NullMaterialX::cmp;\
+            cm = (compare)f;\
+            hash = 0;\
+            rehash(hash);
+        }
         static bool cmp(const NullMaterialX& a, const NullMaterialX& b) { return false; }
         void rehash(size_t& hash) const override {}
     };
@@ -85,7 +82,24 @@ namespace oxygine
     class STDMaterial: public Material
     {
     public:
-        MATX(STDMaterial)
+        STDMaterial()
+        {
+            typedef bool (*fn)(const STDMaterial&a, const STDMaterial&b);
+            fn f = &STDMaterial::cmp;
+            _compare = (compare)f;
+            init();
+        }
+        void copyTo(STDMaterial &d) const{d = *this;}
+        void copyFrom(const STDMaterial &d) {*this = d;}
+        STDMaterial* clone() const override {return new STDMaterial(*this);}
+        void update(size_t &hash, compare &cm) const override
+        {
+            typedef bool (*fn)(const STDMaterial&a, const STDMaterial&b);
+            fn f = &STDMaterial::cmp;\
+            cm = (compare)f;\
+            hash = 0;\
+            rehash(hash);
+        }
 
         spNativeTexture    _base;
         spNativeTexture    _alpha;

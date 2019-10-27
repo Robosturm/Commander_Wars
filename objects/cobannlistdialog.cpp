@@ -109,17 +109,60 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
 
     oxygine::spTextField pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("Build List").toStdString().c_str());
+    pLabel->setHtmlText(tr("CO Bann List").toStdString().c_str());
     pLabel->setScale(2.0f);
     pLabel->setPosition(pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth(), 10);
     pPanel->addItem(pLabel);
 
+    // load default army and co sets
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    qint32 y = 30 + pLabel->getTextRect().getHeight() * 2;
-    qint32 x = 10;
+    QString function1 = "getArmies";
+    QJSValueList args1;
+    QJSValue ret = pApp->getInterpreter()->doFunction("PLAYER", function1, args1);
+    QStringList m_Armies = ret.toVariant().toStringList();
+    QStringList coids;
+    // go through armies
+    for (qint32 i = 0; i < m_Armies.size(); i++)
+    {
+        // add default co order
+        ret = pApp->getInterpreter()->doFunction("PLAYER", "getArmyCOs" + m_Armies[i]);
+        coids.append(ret.toVariant().toStringList());
+        // add unadded co's of this army
+        for (qint32 i2 = 0; i2 < pCOSpriteManager->getCOCount(); i2++)
+        {
+            QString coID = pCOSpriteManager->getCOID(i2);
+            QString function1 = "getCOArmy";
+            QJSValue ret = pApp->getInterpreter()->doFunction(coID, function1);
+            if (ret.isString())
+            {
+                QString COArmy = ret.toString();
+                if (COArmy == m_Armies[i] && !coids.contains(coID))
+                {
+                    coids.append(coID);
+                    break;
+                }
+            }
+        }
+    }
+    // add unadded co's
     for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
     {
         QString coID = pCOSpriteManager->getCOID(i);
+        if (!coids.contains(coID))
+        {
+            coids.append(coID);
+        }
+    }
+    // remove multiple appearance of random co from selection and add him last
+    coids.removeAll("CO_RANDOM");
+    coids.append("CO_RANDOM");
+    m_COIDs = coids;
+
+    qint32 y = 30 + pLabel->getTextRect().getHeight() * 2;
+    qint32 x = 10;
+    for (qint32 i = 0; i < coids.size(); i++)
+    {
+        QString coID = coids[i];
 
         oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((coID.toLower() + "+face").toStdString().c_str());
         oxygine::spSprite pCo = new oxygine::Sprite();
@@ -128,7 +171,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
         pLabel = new oxygine::TextField();
         pLabel->setStyle(style);
 
-        pLabel->setHtmlText(pCOSpriteManager->getCOName(i).toStdString().c_str());
+        pLabel->setHtmlText(pCOSpriteManager->getCOName(coID).toStdString().c_str());
 
         pLabel->setPosition(x, y);
         pCo->setPosition(x + 220 - GameMap::Imagesize * 1.25f - 10, y);
@@ -229,10 +272,9 @@ void COBannListDialog::setCOBannlist(qint32 item)
         data = std::get<1>(fileData);
     }
 
-    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
+    for (qint32 i = 0; i < m_COIDs.size(); i++)
     {
-        if (data.contains(pCOSpriteManager->getCOID(i)))
+        if (data.contains(m_COIDs[i]))
         {
             m_Checkboxes[i]->setChecked(true);
         }

@@ -38,6 +38,7 @@ private:
     oxygine::spButton m_ExitButton;
     spDropDownmenu m_PredefinedLists;
     QVector<spCheckbox> m_Checkboxes;
+    QStringList m_COIDs;
     bool toggle{true};
     QStringList m_CurrentCOBannList;
 };

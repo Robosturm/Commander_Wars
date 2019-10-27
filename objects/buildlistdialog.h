@@ -42,6 +42,7 @@ private:
     oxygine::spButton m_ExitButton;
     spDropDownmenu m_PredefinedLists;
     QVector<spCheckbox> m_Checkboxes;
+    QStringList m_UnitList;
     bool toggle{true};
     QStringList m_CurrentBuildList;
     qint32 m_Player;

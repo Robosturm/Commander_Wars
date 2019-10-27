@@ -113,9 +113,6 @@ namespace oxygine
             window->glDisableVertexAttribArray(el->index);
             el++;
         }
-
-
-        _debugAddPrimitives(pt, (int)primitives);
     }
 
     void VideoDriverGLES20::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl_, const void* vdata, unsigned int verticesDataSize, const unsigned short* indicesData, unsigned int numIndices)
@@ -144,7 +141,6 @@ namespace oxygine
             window->glDisableVertexAttribArray(el->index);
             el++;
         }
-        _debugAddPrimitives(pt, numIndices);
     }
 
     void VideoDriverGLES20::setDefaultSettings()
