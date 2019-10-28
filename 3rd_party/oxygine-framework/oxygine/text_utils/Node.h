@@ -68,7 +68,7 @@ namespace oxygine
         public:
             static void setDefaultMissingSymbol(int);
 
-            TextNode(const char* v);
+            TextNode(std::string v);
 
             text_data _data;
             void xresize(Aligner& rd) override;

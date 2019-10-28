@@ -3,6 +3,8 @@
 #include "../utils/stringUtils.h"
 #include <stdio.h>
 
+#include "qfileinfo.h"
+
 namespace oxygine
 {
     Resource::Resource(): _loadCounter(0), _useLoadCounter(false), _parent(0)
@@ -49,14 +51,8 @@ namespace oxygine
 
     std::string Resource::extractID(const std::string& file)
     {
-        char head[255];
-        char tail[255];
-        path::split(file.c_str(), head, tail);
-
-        char name[255];
-        char ext[255];
-        path::splitExt(tail, name, ext);
-        return lower(name);
+        QFileInfo info(file.c_str());
+        return info.baseName().toLower().toStdString();
     }
 
 

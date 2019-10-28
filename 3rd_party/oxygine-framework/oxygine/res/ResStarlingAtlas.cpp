@@ -8,6 +8,8 @@
 #include "../utils/stringUtils.h"
 
 #include <qfile.h>
+#include <qdir.h>
+#include <qfileinfo.h>
 #include <qtextstream.h>
 
 namespace oxygine
@@ -43,10 +45,8 @@ namespace oxygine
         pugi::xml_node root = doc.root().first_child();
         const std::string& img = root.attribute("imagePath").as_string();
 
-        char head[255];
-        char tail[255];
-        path::split(xml_path.c_str(), head, tail);
-        _imagePath = std::string(head) + img;
+        QDir dir = QFileInfo(xml_path.c_str()).dir();
+        _imagePath = dir.path().toStdString() + img;
 
         _texture = IVideoDriver::instance->createTexture();
 

@@ -10,6 +10,8 @@
 #include <vector>
 
 #include <qfile.h>
+#include <qfileinfo.h>
+#include <qdir.h>
 #include "qtextstream.h"
 
 namespace oxygine
@@ -30,7 +32,7 @@ namespace oxygine
 
     Resource* ResFontBM::createBM(CreateResourceContext& context)
     {
-        ResFontBM* font = 0;
+        ResFontBM* font = nullptr;
 
         font = new ResFontBM();
         font->_createFont(&context, false, true, 1);
@@ -296,11 +298,7 @@ namespace oxygine
         lineHeight /= downsample;
         base /= downsample;
         fontSize /= downsample;
-
-        char tail[255];
-        char head[255];
-        path::split(fontPath.c_str(), head, tail);
-
+        QDir dir = QFileInfo(fontPath.c_str()).dir();
         // page blocks
         for (int i = 0; i < nPages; i++)
         {
@@ -309,7 +307,9 @@ namespace oxygine
                 if (prmFound)
                 {
                     if (!strcmp(key, "file"))
-                        addPage(tw, th, head, value);
+                    {
+                        addPage(tw, th, dir.path().toStdString().c_str(), value);
+                    }
                 }
                 if (endOfLine)
                 {
@@ -526,15 +526,11 @@ namespace oxygine
         tw /= downsample;
         th /= downsample;
 
-
-        char folder[255];
-        char tail[255];
-        path::split(path.c_str(), folder, tail);
-
+        QDir dir = QFileInfo(path.c_str()).dir();
         for (pugi::xml_node page_node = pages.child("page"); page_node; page_node = page_node.next_sibling("page"))
         {
             const char* textureFile = page_node.attribute("file").value();
-            addPage(tw, th, folder, textureFile);
+            addPage(tw, th, dir.path().toStdString().c_str(), textureFile);
         }
 
 

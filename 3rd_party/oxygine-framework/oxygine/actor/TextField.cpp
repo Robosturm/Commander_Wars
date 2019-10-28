@@ -295,7 +295,7 @@ namespace oxygine
             }
             else
             {
-                _root = new text::TextNode(_text.c_str());
+                _root = new text::TextNode(_text);
             }
 
             text::Aligner rd(_style, _mat, font, scale, getSize());

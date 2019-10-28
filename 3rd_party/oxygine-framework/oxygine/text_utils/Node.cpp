@@ -113,18 +113,13 @@ namespace oxygine
         }
 
 
-        TextNode::TextNode(const char* v)
+        TextNode::TextNode(std::string v)
         {
-            const char* utfstr = v;
-            int code = 0;
-            utfstr = getNextCode(code, utfstr);
-            while (code)
+            for (quint32 i = 0; i < v.size(); i++)
             {
                 Symbol s;
-                s.code = code;
+                s.code = v[i];
                 _data.push_back(s);
-
-                utfstr = getNextCode(code, utfstr);
             }
         }
 

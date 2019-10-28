@@ -10,6 +10,8 @@
 #include <stdio.h>
 
 #include "qfile.h"
+#include "qfileinfo.h"
+#include "qdir.h"
 #include "qtextstream.h"
 
 namespace oxygine
@@ -131,11 +133,8 @@ namespace oxygine
 
     void Resources::updateName(const std::string& filename)
     {
-        char head[256];
-        char tail[256];
-        path::split(filename.c_str(), head, tail);
-
-        setName(tail);
+        QFile file(filename.c_str());
+        setName(file.fileName().toStdString());
     }
 
 
@@ -193,36 +192,8 @@ namespace oxygine
 
 
         updateName(xmlFile);
-
-        char destHead[255];
-        char destTail[255];
-        path::split(xmlFile.c_str(), destHead, destTail);
-
-        std::string prebuilt_folder = path::normalize(opt._prebuilFolder + "/" + destTail + ".ox/");
-
-        if (prebuilt_folder[0] == '/')
-            prebuilt_folder.erase(prebuilt_folder.begin());
-
-        std::vector<uchar> fb_meta;
-        pugi::xml_document doc_meta;
-        std::string ox = prebuilt_folder + "meta.xml";
-        const char* ox_file = ox.c_str();
-
-
+        QDir dir = QFileInfo(xmlFile.c_str()).dir();
         qDebug("step2");
-
-        if (QFile::exists(ox_file))
-        {
-            QFile ox_fileData(ox_file);
-            QTextStream ox_stream(&file);
-            std::string ox_data = ox_stream.readAll().toStdString();
-            fb_meta = std::vector<uchar>(ox_data.begin(), ox_data.end());
-            if (ox_fileData.size())
-            {
-                doc_meta.load_buffer_inplace(&fb_meta[0], fb_meta.size());
-            }
-        }
-
 
         pugi::xml_document* doc = new pugi::xml_document();
         _docs.push_back(doc);
@@ -231,19 +202,13 @@ namespace oxygine
         Q_ASSERT(loaded);
 
         pugi::xml_node resources = doc->first_child();
-        pugi::xml_node resources_meta = doc_meta.first_child();
-        if (!resources_meta.empty())
-        {
-            int metaVersion = resources_meta.attribute("version").as_int(0);
-            Q_ASSERT(metaVersion <= 2 && "Incompatible atlas format. Please rebuild xmls with latest 'oxyresbuild' tool or delete .ox folder from data.");
-        }
-
+        pugi::xml_node resources_meta = pugi::xml_node();
 
         std::string id;
 
         qDebug("loading xml resources");
 
-        std::string xmlFolder = destHead;
+        std::string xmlFolder = dir.path().toStdString();
         XmlWalker walker(&xmlFolder, "", 1.0f, opt._loadCompletely, true, resources, resources_meta);
 
         while (true)
@@ -270,10 +235,6 @@ namespace oxygine
 
             context.xml_name = &xmlFile;
             context.resources = this;
-
-            std::string prebuilt_xml_folder = prebuilt_folder + type + "/";
-            context.prebuilt_folder = &prebuilt_xml_folder;
-
 
             qDebug("resource: %s ", context.xml_name->c_str());
             Resource* res = r.cb(context);
@@ -315,7 +276,8 @@ namespace oxygine
 
         if (accessByShortenID)
         {
-            std::string shortName = path::extractFileName(name);
+            QFileInfo file(name.c_str());
+            std::string shortName = file.fileName().toStdString();
             if (shortName != name)
             {
                 _resourcesMap[shortName] = r;
