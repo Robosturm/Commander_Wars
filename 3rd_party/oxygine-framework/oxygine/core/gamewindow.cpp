@@ -27,6 +27,8 @@
 #include "../res/Resources.h"
 #include "gl/VideoDriverGLES20.h"
 
+#include "../Clock.h"
+
 #include "QMutexLocker"
 
 namespace oxygine
@@ -116,16 +118,16 @@ namespace oxygine
         {
             return false;
         }
-        if (!QWindow::isActive())
-        {
-           return false;
-        }
+//        if (!QWindow::isActive())
+//        {
+//           return false;
+//        }
 
         bool ready = STDRenderer::isReady();
         if (ready)
         {
             rsCache().reset();
-            IVideoDriver::_stats.start = getTimeMS();
+            IVideoDriver::_stats.start = Clock::getTimeMS();
             updatePortProcessItems();
             rsCache().reset();
         }
@@ -146,7 +148,7 @@ namespace oxygine
 
     void GameWindow::swapDisplayBuffers()
     {
-        IVideoDriver::_stats.duration = getTimeMS() - IVideoDriver::_stats.start;
+        IVideoDriver::_stats.duration = Clock::getTimeMS() - IVideoDriver::_stats.start;
         //sleep(1000/50);
     }
 

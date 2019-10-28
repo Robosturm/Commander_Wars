@@ -71,16 +71,16 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, QColor startColor
         }
 
         // going down of the building
-        qint32 jumpingDuration = static_cast<qint32>(m_frameTime) * jumpSprites * jumpingCount + static_cast<qint32>(m_frameTime) * ayeAyeSprites;
+        oxygine::timeMS jumpingDuration = oxygine::timeMS(m_frameTime * jumpSprites * jumpingCount + m_frameTime * ayeAyeSprites);
         // dummy tween doing nothing except sync the animation
         oxygine::spTween dummyTween = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f - startPercent), jumpingDuration, 1);
         queueAnimating->add(dummyTween);
-        oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f - percentDone), capturingFactor * static_cast<qint32>(m_frameTime), 1);
+        oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f - percentDone), oxygine::timeMS(capturingFactor * m_frameTime), 1);
         queueAnimating->add(tween);
         // dummy tween doing nothing except sync the animation
         oxygine::spTween dummyTween2 = oxygine::createTween(oxygine::Actor::TweenY(startPosition), jumpingDuration, 1);
         queueMoving->add(dummyTween2);
-        oxygine::spTween tween2 = oxygine::createTween(oxygine::Actor::TweenY(buildingOffsetY + percentDone * movingHeight), capturingFactor * static_cast<qint32>(m_frameTime), 1);
+        oxygine::spTween tween2 = oxygine::createTween(oxygine::Actor::TweenY(buildingOffsetY + percentDone * movingHeight), oxygine::timeMS(capturingFactor * m_frameTime), 1);
         queueMoving->add(tween2);
         if (m_endPoints == 0)
         {
@@ -90,18 +90,18 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, QColor startColor
             }
             oxygine::Sprite::TweenColor tweenColor(oxygine::Color(static_cast<quint8>(capturedColor.red()), static_cast<quint8>(capturedColor.green()), static_cast<quint8>(capturedColor.blue()), 255));
             oxygine::Sprite::TweenColor tweenColor1(oxygine::Color(static_cast<quint8>(capturedColor.red()), static_cast<quint8>(capturedColor.green()), static_cast<quint8>(capturedColor.blue()), 255));
-            oxygine::spTween tween5 = oxygine::createTween(tweenColor, 1);
-            oxygine::spTween tween6 = oxygine::createTween(tweenColor1, 1);
+            oxygine::spTween tween5 = oxygine::createTween(tweenColor, oxygine::timeMS(1));
+            oxygine::spTween tween6 = oxygine::createTween(tweenColor1, oxygine::timeMS(1));
             queueAnimating->add(tween5);
             queueMoving->add(tween6);
             tween6->addDoneCallback([=](oxygine::Event *)
             {
                 Mainapp::getInstance()->getAudioThread()->playSound("capture.wav");
             });
-            oxygine::spTween tween3 = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f), capturingFactor * static_cast<qint32>(m_frameTime), 1, false);
+            oxygine::spTween tween3 = oxygine::createTween(oxygine::Actor::TweenScaleY(1.0f), oxygine::timeMS(capturingFactor * m_frameTime), 1, false);
             queueAnimating->add(tween3);
 
-            oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenY(buildingOffsetY), capturingFactor * static_cast<qint32>(m_frameTime), 1, false);
+            oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenY(buildingOffsetY), oxygine::timeMS(capturingFactor * m_frameTime), 1, false);
             queueMoving->add(tween4);
         }
 
@@ -113,7 +113,7 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, QColor startColor
         if (addColor)
         {
             oxygine::Sprite::TweenColor tweenColor(oxygine::Color(static_cast<quint8>(startColor.red()), static_cast<quint8>(startColor.green()), static_cast<quint8>(startColor.blue()), 255));
-            oxygine::spTween tween7 = oxygine::createTween(tweenColor, 1);
+            oxygine::spTween tween7 = oxygine::createTween(tweenColor, oxygine::timeMS(1));
             pSprite->addTween(tween7);
         }
 
@@ -145,21 +145,21 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, QColor color, bool
         {
             // jumping
             oxygine::spTweenQueue queueAnimating = new oxygine::TweenQueue();
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, 0, jumpSprites - 1), jumpSprites * static_cast<qint32>(m_frameTime), jumpingCount);
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, 0, jumpSprites - 1), oxygine::timeMS(jumpSprites * m_frameTime), jumpingCount);
             queueAnimating->add(tween);
             // cool aye aye sir
-            oxygine::spTween tween2 = oxygine::createTween(oxygine::TweenAnim(pAnim, jumpSprites, jumpSprites + ayeAyeSprites - 1), ayeAyeSprites * static_cast<qint32>(m_frameTime), 1);
+            oxygine::spTween tween2 = oxygine::createTween(oxygine::TweenAnim(pAnim, jumpSprites, jumpSprites + ayeAyeSprites - 1), oxygine::timeMS(ayeAyeSprites * m_frameTime), 1);
             queueAnimating->add(tween2);
             // going down on the building
             float endPosition = unitOffsetY + percentDone * buildingHigh;
-            oxygine::spTween tween3 = oxygine::createTween(oxygine::Actor::TweenY(endPosition), capturingFactor * static_cast<qint32>(m_frameTime), 1);
+            oxygine::spTween tween3 = oxygine::createTween(oxygine::Actor::TweenY(endPosition), oxygine::timeMS(capturingFactor * m_frameTime), 1);
             queueAnimating->add(tween3);
             // maybe going up again as well
             if (m_endPoints == 0)
             {
-                oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenY(unitOffsetY), capturingFactor * static_cast<qint32>(m_frameTime), 1);
+                oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenY(unitOffsetY), oxygine::timeMS(capturingFactor * m_frameTime), 1);
                 queueAnimating->add(tween4);
-                oxygine::spTween tween5 = oxygine::createTween(oxygine::Actor::TweenY(unitOffsetY), static_cast<qint32>(m_frameTime), 1);
+                oxygine::spTween tween5 = oxygine::createTween(oxygine::Actor::TweenY(unitOffsetY), oxygine::timeMS(m_frameTime), 1);
                 queueAnimating->add(tween5);
                 tween5->addDoneCallback([=](oxygine::Event *)->void
                 {
@@ -184,7 +184,7 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, QColor color, bool
         if (addColor)
         {
             oxygine::Sprite::TweenColor tweenColor(oxygine::Color(static_cast<quint8>(color.red()), static_cast<quint8>(color.green()), static_cast<quint8>(color.blue()), 255));
-            oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
+            oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
             pSprite->addTween(tween);
         }
         pSprite->setPosition(12, startPosition);

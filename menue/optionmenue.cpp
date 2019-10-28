@@ -927,9 +927,9 @@ void OptionMenue::showMods()
                 pEvent->stopPropagation();
                 for (qint32 i2 = 0; i2 < m_ModBoxes.size(); i2++)
                 {
-                    m_ModBoxes[i2]->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+                    m_ModBoxes[i2]->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), oxygine::timeMS(300));
                 }
-                pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(32, 200, 32, 0)), 300);
+                pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(32, 200, 32, 0)), oxygine::timeMS(300));
                 m_ModDescriptionText->setHtmlText(description.toStdString().c_str());
                 m_pModDescription->setContentHeigth(m_ModDescriptionText->getTextRect().getHeight() + 40);
             });

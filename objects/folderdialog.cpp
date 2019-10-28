@@ -83,11 +83,11 @@ FolderDialog::FolderDialog(QString startFolder)
     // add some event handling :)
     pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
-        pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(32, 200, 32, 0)), 300);
+        pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(32, 200, 32, 0)), oxygine::timeMS(300));
     });
     pBox->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+        pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), oxygine::timeMS(300));
     });
     pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -172,11 +172,11 @@ void FolderDialog::showFolder(QString folder)
         // add some event handling :)
         pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
         {
-            pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(32, 200, 32, 0)), 300);
+            pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(32, 200, 32, 0)), oxygine::timeMS(300));
         });
         pBox->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
         {
-            pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+            pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), oxygine::timeMS(300));
         });
         pBox->setPosition(0, 40 + itemCount * 40);
 

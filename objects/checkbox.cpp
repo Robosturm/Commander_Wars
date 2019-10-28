@@ -14,7 +14,7 @@ Checkbox::Checkbox()
     setResAnim(pAnim);
     addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
-        addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), 300);
+        addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), oxygine::timeMS(300));
         if (m_Checked)
         {
             setAnimFrame(pAnim, 2);
@@ -27,7 +27,7 @@ Checkbox::Checkbox()
 
     addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+        addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), oxygine::timeMS(300));
         if (m_Checked)
         {
             setAnimFrame(pAnim, 3);

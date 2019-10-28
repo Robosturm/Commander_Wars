@@ -93,7 +93,7 @@ namespace oxygine
         Tween();
         ~Tween();
 
-        void init(timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = 0, EASE ease = Tween::ease_linear);//todo twoSide find better name
+        void init(timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = timeMS(0), EASE ease = Tween::ease_linear);//todo twoSide find better name
         void init2(const TweenOptions& opt);
         /**if you reset internal Tween state it could be reused and added to actor again */
         void reset();
@@ -136,7 +136,7 @@ namespace oxygine
         void detachWhenDone(bool detach = true) { _detach = detach; }
 
         /**immediately completes tween, calls doneCallback and mark tween as completed and removes self from Actor. If tween has infinity loops (=-1) then do nothing*/
-        virtual void complete(timeMS deltaTime = TWEEN_COMPLETE_DT);
+        virtual void complete(timeMS deltaTime = timeMS(TWEEN_COMPLETE_DT));
 
         /**removes self from Actor, complete callback not called*/
         void remove();
@@ -230,7 +230,7 @@ namespace oxygine
 
 
     template <typename GS>
-    TweenT<GS>* createTween(const GS& gs, timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = 0, Tween::EASE ease = Tween::ease_linear)
+    TweenT<GS>* createTween(const GS& gs, timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = oxygine::timeMS(0), Tween::EASE ease = Tween::ease_linear)
     {
         TweenT<GS>* p = new TweenT<GS>(gs);
         p->init(duration, loops, twoSides, delay, ease);

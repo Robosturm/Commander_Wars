@@ -95,17 +95,6 @@ namespace oxygine
 
         frame += _start;
 
-        /*
-        static int lastFrame = -1;
-        static int ltime = 0;
-        if (lastFrame != frame)
-        {
-            qDebug("%d frame %d", getTimeMS() - ltime, frame);
-            ltime = getTimeMS();
-        }
-        lastFrame = frame;
-        */
-
         const AnimationFrame& fr = _row == -1 ? _resAnim->getFrame(frame) : _resAnim->getFrame(frame, _row);
         _setAnimFrame(actor, fr);
     }

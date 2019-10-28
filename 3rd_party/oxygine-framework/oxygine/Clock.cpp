@@ -4,13 +4,12 @@
 
 namespace oxygine
 {
-    static std::chrono::system_clock::time_point startTime;
+
     Clock::Clock():
         _counter(0), _destTime(0), _srcTime(0),
         _multiplier(1.0f), _fixedStep(0),
         _lastUpdateTime(-1), _lastDT(0)
     {
-        startTime = std::chrono::system_clock::now();
     }
 
     Clock::~Clock()
@@ -66,14 +65,14 @@ namespace oxygine
     void Clock::update(timeMS globalTime)
     {
         timeMS time = globalTime;
-        const double neg = -1;
-        if (time == neg)
-            time = getTimeMS();
+        const timeMS neg =  std::chrono::milliseconds(-1);
+        if (time <= neg)
+            time = Clock::getTimeMS();
 
-        if (_lastUpdateTime == neg)
+        if (_lastUpdateTime <= neg)
             _lastUpdateTime = time;
 
-        double dt = (time - _lastUpdateTime) * _multiplier;
+        double dt = (time - _lastUpdateTime).count() * _multiplier;
         if (dt < 1 && dt > 0)
             dt = 1;
 
@@ -98,37 +97,30 @@ namespace oxygine
     timeMS Clock::doTick()
     {
         if (_counter > 0)
-            return 0;
+            return timeMS(0);
 
         if (_srcTime + _fixedStep > _destTime)
-            return 0;
+            return timeMS(0);
 
         if (_fixedStep == 0)
         {
-            timeMS dt = (timeMS)(_destTime - _srcTime);
+            timeMS dt = timeMS(static_cast<qint64>(_destTime - _srcTime));
             //Q_ASSERT(dt <= 100);
             _srcTime = _destTime;
             return dt;
         }
 
         _srcTime += _fixedStep;
-        return (timeMS)_fixedStep;
+        return timeMS(static_cast<qint64>(_fixedStep));
     }
 
     timeMS Clock::getTime() const
     {
-        return (timeMS)_srcTime;
+        return timeMS(static_cast<qint64>(_srcTime));
     }
 
     int Clock::getPauseCounter() const
     {
         return _counter;
     }
-
-    timeMS getTimeMS()
-    {
-        std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>((std::chrono::system_clock::now() - startTime));
-        return static_cast<timeMS>(ms.count());
-    }
-
 }

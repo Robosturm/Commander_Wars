@@ -8,6 +8,8 @@
 
 #include "core/gamewindow.h"
 
+#include "Clock.h"
+
 #include <qfile.h>
 #include <qtextstream.h>
 
@@ -114,7 +116,7 @@ namespace oxygine
     }
 
     const int ALIGN_SIZE = 256;
-    const int TEXTURE_LIVE = 3000;
+    const timeMS TEXTURE_LIVE = timeMS(3000);
     const int MAX_FREE_TEXTURES = 3;
 
     using namespace std;
@@ -194,7 +196,7 @@ namespace oxygine
         h = alignTextureSize(h);
         if (isGood(current, w, h, tf))
         {
-            current->setUserData((void*)(size_t)getTimeMS());
+            current->setCreationTime(Clock::getTimeMS());
             return current;
         }
 
@@ -219,7 +221,7 @@ namespace oxygine
             result->init(w, h, tf, true);
         }
 
-        result->setUserData((void*)(size_t)getTimeMS());
+        result->setCreationTime(Clock::getTimeMS());
         _rts.push_back(result);
 
         //print();
@@ -231,7 +233,7 @@ namespace oxygine
 
     void RenderTargetsManager::update()
     {
-        timeMS tm = getTimeMS();
+        timeMS tm = Clock::getTimeMS();
         for (size_t i = 0, sz = _rts.size(); i < sz; ++i)
         {
             spNativeTexture& texture = _rts[i];
@@ -249,7 +251,7 @@ namespace oxygine
         for (size_t i = 0, sz = _free.size(); i < sz; ++i)
         {
             spNativeTexture& t = _free[i];
-            timeMS createTime = (timeMS)(size_t)t->getUserData();
+            timeMS createTime = t->getCreationTime();
             if (createTime + TEXTURE_LIVE > tm)
                 continue;
             _free.erase(_free.begin() + i);

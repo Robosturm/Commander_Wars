@@ -348,7 +348,7 @@ VictoryMenue::VictoryMenue(bool multiplayer)
                     pTextMask->setPosition(5, 5 + y);
                     QColor color = pPlayer->getColor();
                     oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), color.alpha()));
-                    oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
+                    oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
                     pTextMask->addTween(tween);
                     m_VictoryPanel->addItem(pTextMask);
 

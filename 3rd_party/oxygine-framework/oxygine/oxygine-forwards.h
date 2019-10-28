@@ -2,6 +2,8 @@
 #include "core/ref_counter.h"
 #include "closure/closure.h"
 
+#include <chrono>
+
 #define DECLARE_SMART(class_name, spname) \
     class class_name;\
     typedef oxygine::intrusive_ptr<class_name> spname;
@@ -31,11 +33,8 @@ namespace oxygine
 
     void handleErrorPolicy(error_policy ep, const char* format, ...);
 
-    typedef int timeMS;
+    typedef std::chrono::milliseconds timeMS;
     typedef unsigned char pointer_index;
-
-    /** returns local app time in milliseconds (1sec = 1000ms). Counting starts from zero*/
-    timeMS          getTimeMS();
 
     namespace text
     {

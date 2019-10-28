@@ -436,19 +436,19 @@ message(${QT_BIN_DIR})
 
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
     set(${PROJECT_NAME}_INSTALL_QT_LIBS
-         ${QT_BIN_DIR}/Qt5Qmld.dll
-         ${QT_BIN_DIR}/Qt5Cored.dll
-         ${QT_BIN_DIR}/Qt5Networkd.dll
-         ${QT_BIN_DIR}/Qt5Multimediad.dll
-         ${QT_BIN_DIR}/Qt5Guid.dll
-         ${QT_BIN_DIR}/Qt5Widgetsd.dll
-         ${QT_BIN_DIR}/libgcc_s_dw2-1.dll
-         ${QT_BIN_DIR}/libstdc++-6.dll
-         ${QT_BIN_DIR}/libwinpthread-1.dll
          ${QT_BIN_DIR}/d3dcompiler_47.dll
          ${QT_BIN_DIR}/libEGLd.dll
+         ${QT_BIN_DIR}/libgcc_s_dw2-1.dll
          ${QT_BIN_DIR}/libGLESv2d.dll
+         ${QT_BIN_DIR}/libstdc++-6.dll
+         ${QT_BIN_DIR}/libwinpthread-1.dll
+         ${QT_BIN_DIR}/Qt5Cored.dll
+         ${QT_BIN_DIR}/Qt5Guid.dll
+         ${QT_BIN_DIR}/Qt5Multimediad.dll
+         ${QT_BIN_DIR}/Qt5Networkd.dll
+         ${QT_BIN_DIR}/Qt5Qmld.dll
          ${QT_BIN_DIR}/Qt5Svgd.dll
+         ${QT_BIN_DIR}/Qt5Widgetsd.dll
     )
 
     set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS

@@ -150,13 +150,13 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                         if (powerFilled >= static_cast<float>(i2 + 1))
                         {
                             pAnim = pGameManager->getResAnim("superpowerstarfull");
-                            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
                             pSprite->addTween(tween);
                         }
                         else if (powerFilled >= static_cast<float>(i2 + 1) - 0.5f)
                         {
                             pAnim = pGameManager->getResAnim("superpowerstarhalf");
-                            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
                             pSprite->addTween(tween);
                         }
                         else
@@ -169,7 +169,7 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                         pSprite->setScale(2.0f);
                         if (useSuperpower)
                         {
-                            oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenY(pSprite->getY() - 7), 500, -1, true, i2 * 50);
+                            oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenY(pSprite->getY() - 7), oxygine::timeMS(500), -1, true, oxygine::timeMS(i2 * 50));
                             pSprite->addTween(tween);
                         }
                         this->addChild(pSprite);
@@ -180,13 +180,13 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                         if (powerFilled >= static_cast<float>(i2 + 1))
                         {
                             pAnim = pGameManager->getResAnim("powerstarfull");
-                            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
                             pSprite->addTween(tween);
                         }
                         else if (powerFilled >= static_cast<float>(i2 + 1) - 0.5f)
                         {
                             pAnim = pGameManager->getResAnim("powerstarhalf");
-                            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
                             pSprite->addTween(tween);
                         }
                         else
@@ -199,7 +199,7 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                         pSprite->setScale(2.0f);
                         if (usePower)
                         {
-                            oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenY(pSprite->getY() - 7), 500, -1, true, i2 * 50);
+                            oxygine::spTween tween = oxygine::createTween(oxygine::Actor::TweenY(pSprite->getY() - 7), oxygine::timeMS(500), -1, true, oxygine::timeMS(i2 * 50));
                             pSprite->addTween(tween);
                         }
                         this->addChild(pSprite);
@@ -218,11 +218,11 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                 Text->setScale(1.0f);
                 oxygine::spTweenQueue queue = new oxygine::TweenQueue();
                 oxygine::Sprite::TweenColor tweenColor1(oxygine::Color(255, 255, 255, 255));
-                oxygine::spTween tween1 = oxygine::createTween(tweenColor1, 100, 1, false);
+                oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(100), 1, false);
                 oxygine::Sprite::TweenColor tweenColor2(oxygine::Color(255, 0, 0, 255));
-                oxygine::spTween tween2 = oxygine::createTween(tweenColor2, 100, 1, false);
+                oxygine::spTween tween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(100), 1, false);
                 oxygine::Sprite::TweenColor tweenColor3(oxygine::Color(0, 255, 0, 255));
-                oxygine::spTween tween3 = oxygine::createTween(tweenColor3, 100, 1, false);
+                oxygine::spTween tween3 = oxygine::createTween(tweenColor3, oxygine::timeMS(100), 1, false);
                 queue->add(tween1);
                 queue->add(tween2);
                 queue->add(tween3);
@@ -242,11 +242,11 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                 Text->setScale(1.0f);
                 oxygine::spTweenQueue queue = new oxygine::TweenQueue();
                 oxygine::Sprite::TweenColor tweenColor1(oxygine::Color(255, 255, 255, 255));
-                oxygine::spTween tween1 = oxygine::createTween(tweenColor1, 100, 1, false);
+                oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(100), 1, false);
                 oxygine::Sprite::TweenColor tweenColor2(oxygine::Color(255, 0, 0, 255));
-                oxygine::spTween tween2 = oxygine::createTween(tweenColor2, 100, 1, false);
+                oxygine::spTween tween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(100), 1, false);
                 oxygine::Sprite::TweenColor tweenColor3(oxygine::Color(0, 255, 0, 255));
-                oxygine::spTween tween3 = oxygine::createTween(tweenColor3, 100, 1, false);
+                oxygine::spTween tween3 = oxygine::createTween(tweenColor3, oxygine::timeMS(100), 1, false);
                 queue->add(tween1);
                 queue->add(tween2);
                 queue->add(tween3);
@@ -266,11 +266,11 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                 Text->setScale(1.0f);
                 oxygine::spTweenQueue queue = new oxygine::TweenQueue();
                 oxygine::Sprite::TweenColor tweenColor1(oxygine::Color(255, 255, 255, 255));
-                oxygine::spTween tween1 = oxygine::createTween(tweenColor1, 100, 1, false);
+                oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(100), 1, false);
                 oxygine::Sprite::TweenColor tweenColor2(oxygine::Color(255, 0, 0, 255));
-                oxygine::spTween tween2 = oxygine::createTween(tweenColor2, 100, 1, false);
+                oxygine::spTween tween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(100), 1, false);
                 oxygine::Sprite::TweenColor tweenColor3(oxygine::Color(0, 255, 0, 255));
-                oxygine::spTween tween3 = oxygine::createTween(tweenColor3, 100, 1, false);
+                oxygine::spTween tween3 = oxygine::createTween(tweenColor3, oxygine::timeMS(100), 1, false);
                 queue->add(tween1);
                 queue->add(tween2);
                 queue->add(tween3);

@@ -645,7 +645,7 @@ void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::Dr
             {
                 initFrame = 0.5f;
             }
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, initFrame, 0), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, initFrame, 0), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
             pSprite->addTween(tween);
         }
         else
@@ -653,7 +653,7 @@ void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::Dr
             pSprite->setResAnim(pAnim);
         }
         oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), color.alpha()));
-        oxygine::spTween tween2 = oxygine::createTween(tweenColor, 1);
+        oxygine::spTween tween2 = oxygine::createTween(tweenColor, oxygine::timeMS(1));
         pSprite->addTween(tween2);
 
         if (drawPriority == Terrain::DrawPriority::MarkedFieldMap)
@@ -723,7 +723,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                     oxygine::ResAnim* pAnim = pGameManager->getResAnim("z_information_label");
                     if (pAnim->getTotalFrames() > 1)
                     {
-                        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+                        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
                         pSprite->addTween(tween);
                     }
                     else
@@ -734,7 +734,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                     oxygine::ResAnim* pAnim2 = pGameManager->getResAnim("z_information_label+mask");
                     if (pAnim2->getTotalFrames() > 1)
                     {
-                        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim2), pAnim2->getTotalFrames() * GameMap::frameTime, -1);
+                        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim2), oxygine::timeMS(pAnim2->getTotalFrames() * GameMap::frameTime), -1);
                         pSprite2->addTween(tween);
                     }
                     else

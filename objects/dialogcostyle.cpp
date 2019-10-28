@@ -269,10 +269,10 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
         {
             if (m_pCOBoxes[i].get() != pBox.get())
             {
-                m_pCOBoxes[i]->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+                m_pCOBoxes[i]->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), oxygine::timeMS(300));
             }
         }
-        pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(32, 200, 32, 0)), 300);
+        pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(32, 200, 32, 0)), oxygine::timeMS(300));
         emit sigCOStyleChanged(index);
     });
     if (select)
@@ -281,7 +281,7 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
         {
             if (m_pCOBoxes[i].get() != pBox.get())
             {
-                m_pCOBoxes[i]->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+                m_pCOBoxes[i]->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), oxygine::timeMS(300));
             }
         }
         pBox->setAddColor(oxygine::Color(32, 200, 32, 0));

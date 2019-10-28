@@ -26,9 +26,13 @@ namespace oxygine
         void    resume();
         void    resetPause();
 
-        void    update(timeMS globalTime = -1);
+        void    update(timeMS globalTime = timeMS(-1));
         timeMS  doTick();
 
+        static inline timeMS getTimeMS()
+        {
+            return std::chrono::duration_cast<std::chrono::milliseconds>((std::chrono::system_clock::now().time_since_epoch()));
+        }
     private:
         int     _counter;
         double  _destTime;

@@ -23,7 +23,7 @@ namespace oxygine
 
     void Tween::reset()
     {
-        _elapsed = 0;
+        _elapsed = timeMS(0);
         _status = status_not_started;
 		_loopsDone = 0;
     }
@@ -36,10 +36,10 @@ namespace oxygine
         _twoSides = twoSides;
         _delay = delay;
 
-        if (_duration <= 0)
+        if (_duration <= timeMS(0))
         {
             Q_ASSERT(!"Tweener duration should be more than ZERO");
-            _duration = 1;
+            _duration = timeMS(1);
         }
     }
 
@@ -54,10 +54,10 @@ namespace oxygine
 		_globalEase = opt._globalEase;
 		_cbDone = opt._callback;
 
-		if (_duration <= 0)
+        if (_duration <= timeMS(0))
 		{
 			Q_ASSERT(!"Tweener duration should be more than ZERO");
-			_duration = 1;
+            _duration = timeMS(1);
 		}
 	}
 
@@ -133,7 +133,7 @@ namespace oxygine
     {
         _client = &actor;
         _status = status_delayed;
-        if (_delay == 0)
+        if (_delay == timeMS(0))
         {
             _status = status_started;
             _start(actor);
@@ -156,19 +156,19 @@ namespace oxygine
             break;
             case status_started:
             {
-                if (_duration)
+                if (_duration > timeMS(0))
                 {
                     timeMS localElapsed = _elapsed - _delay;
 					
 					if (_globalEase != ease_linear)
 					{
-						float p = localElapsed / float(_duration * _loops);						
-						timeMS nv = static_cast<timeMS>(calcEase(_globalEase, std::min(p, 1.0f)) * _duration * _loops);
+                        float p = localElapsed.count() / float(_duration.count() * _loops);
+                        timeMS nv = timeMS(static_cast<qint64>(calcEase(_globalEase, std::min(p, 1.0f)) * _duration.count() * _loops));
 						localElapsed = nv;
 					}
 
 					int loopsDone = localElapsed / _duration;					
-					_percent = _calcEase(((float)(localElapsed - loopsDone * _duration)) / _duration);
+                    _percent = _calcEase(((float)(localElapsed.count() - loopsDone * _duration.count())) / _duration.count());
 
 					while(_loopsDone < loopsDone)
 					{

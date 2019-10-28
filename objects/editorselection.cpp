@@ -46,7 +46,7 @@ EditorSelection::EditorSelection()
     m_CurrentSelector->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     if (pAnim->getTotalFrames() > 1)
     {
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
         m_CurrentSelector->addTween(tween);
     }
     else
@@ -60,12 +60,12 @@ EditorSelection::EditorSelection()
     oxygine::Sprite* ptr = pButtonTop.get();
     pButtonTop->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
-        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), 300);
+        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), oxygine::timeMS(300));
     });
 
     pButtonTop->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), oxygine::timeMS(300));
     });
     pButtonTop->setFlippedY(true);
     pButtonTop->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
@@ -89,12 +89,12 @@ EditorSelection::EditorSelection()
     ptr = pButtonDown.get();
     pButtonDown->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
-        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), 300);
+        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), oxygine::timeMS(300));
     });
 
     pButtonDown->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), oxygine::timeMS(300));
     });
     pButtonDown->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -237,7 +237,7 @@ void EditorSelection::createBoxPlacementSize()
     m_CurrentSelectorSize->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     if (pAnimMarker->getTotalFrames() > 1)
     {
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimMarker), pAnimMarker->getTotalFrames() * GameMap::frameTime, -1);
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimMarker), oxygine::timeMS(pAnimMarker->getTotalFrames() * GameMap::frameTime), -1);
         m_CurrentSelectorSize->addTween(tween);
     }
     else
@@ -312,12 +312,12 @@ void EditorSelection::createPlayerSelection()
     oxygine::Sprite* ptr = pButtonLeft.get();
     pButtonLeft->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
-        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), 300);
+        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), oxygine::timeMS(300));
     });
 
     pButtonLeft->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), oxygine::timeMS(300));
     });
     pButtonLeft->setFlippedX(true);
     pButtonLeft->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
@@ -338,12 +338,12 @@ void EditorSelection::createPlayerSelection()
     ptr = pButtonRight.get();
     pButtonRight->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
-        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), 300);
+        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), oxygine::timeMS(300));
     });
 
     pButtonRight->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), oxygine::timeMS(300));
     });
     pButtonRight->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -456,7 +456,7 @@ void EditorSelection::createBoxSelectionMode()
     m_CurrentSelectorMode->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     if (pAnimMarker->getTotalFrames() > 1)
     {
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimMarker), pAnimMarker->getTotalFrames() * GameMap::frameTime, -1);
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnimMarker), oxygine::timeMS(pAnimMarker->getTotalFrames() * GameMap::frameTime), -1);
         m_CurrentSelectorMode->addTween(tween);
     }
     else

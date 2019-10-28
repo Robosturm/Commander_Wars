@@ -108,7 +108,7 @@ void Building::loadSprite(QString spriteID, bool addPlayerColor)
         oxygine::spSprite pSprite = new oxygine::Sprite();
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), static_cast<qint32>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed), -1);
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(static_cast<qint64>(pAnim->getTotalFrames() * GameMap::frameTime * animationSpeed)), -1);
             pSprite->addTween(tween);
         }
         else
@@ -120,13 +120,13 @@ void Building::loadSprite(QString spriteID, bool addPlayerColor)
         {
             QColor color = m_pOwner->getColor();
             oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
-            oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
+            oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
             pSprite->addTween(tween);
         }
         else if (addPlayerColor)
         {
             oxygine::Sprite::TweenColor tweenColor(oxygine::Color(150, 150, 150, 255));
-            oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
+            oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
             pSprite->addTween(tween);
         }
         qint32 width = getBuildingWidth();

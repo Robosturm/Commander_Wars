@@ -974,7 +974,7 @@ namespace oxygine
             _clock->update();
 
             timeMS dt = _clock->doTick();
-            while (dt > 0)
+            while (dt > timeMS(0))
             {
                 us.dt = dt;
                 us.time = _clock->getTime();
@@ -1281,7 +1281,7 @@ namespace oxygine
     {
         if (!root)
             root = getStage().get();
-        dur = std::max(dur, 1);
+        dur = timeMS(std::max(dur.count(), 1ll));
         spTween t = root->addTween(TweenDummy(), dur);
         t->setDoneCallback(cb);
         return t;

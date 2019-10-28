@@ -8,11 +8,6 @@
 /**main oxygine namespace*/
 namespace oxygine
 {
-    typedef int timeMS;
-
-    /** returns local app time in milliseconds (1sec = 1000ms). Counting starts from zero*/
-    timeMS          getTimeMS();
-
     namespace core
     {
 

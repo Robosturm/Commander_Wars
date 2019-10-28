@@ -36,7 +36,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     firstSpriteMask->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
 
     oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), color.alpha()));
-    oxygine::spTween tween = oxygine::createTween(tweenColor, 1);
+    oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
     firstSpriteMask->addTween(tween);
 
     // second sprite for rotating
@@ -45,7 +45,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     secondSpriteMask->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
     secondSpriteMask->setVerticalMode(oxygine::Box9Sprite::TILING_FULL);
     secondSpriteMask->setHorizontalMode(oxygine::Box9Sprite::TILING_FULL);
-    oxygine::spTween tween2 = oxygine::createTween(tweenColor, 1);
+    oxygine::spTween tween2 = oxygine::createTween(tweenColor, oxygine::timeMS(1));
     secondSpriteMask->addTween(tween2);
 
     // rotating sprite
@@ -62,7 +62,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     m_CO->setScale((pApp->getSettings()->getHeight() - 400) / pAnim->getHeight());
     m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
     m_CO->setPosition(pApp->getSettings()->getWidth() - m_CO->getScaledWidth() - 20, - m_CO->getScaledHeight());
-    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenY(pApp->getSettings()->getHeight() / 2 -  m_CO->getScaledHeight() / 2), static_cast<qint32>(m_frameTime) * 30);
+    oxygine::spTween tween1 = oxygine::createTween(oxygine::Actor::TweenY(pApp->getSettings()->getHeight() / 2 -  m_CO->getScaledHeight() / 2), oxygine::timeMS(m_frameTime * 30));
     m_CO->addTween(tween1);
     addChild(m_CO);
 
@@ -99,7 +99,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
             m_CO->setScale((pApp->getSettings()->getHeight() - 400) / pAnim->getHeight());
             m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
             m_CO->setPosition(pApp->getSettings()->getWidth() - m_CO->getScaledWidth() * 2 - 40, pApp->getSettings()->getHeight());
-            tween1 = oxygine::createTween(oxygine::Actor::TweenY(pApp->getSettings()->getHeight() / 2 -  m_CO->getScaledHeight() / 2), static_cast<qint32>(m_frameTime) * 30);
+            tween1 = oxygine::createTween(oxygine::Actor::TweenY(pApp->getSettings()->getHeight() / 2 -  m_CO->getScaledHeight() / 2), oxygine::timeMS(m_frameTime * 30));
             m_CO->addTween(tween1);
             addChild(m_CO);
         }
@@ -149,9 +149,9 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
             textField->setY(pApp->getSettings()->getHeight());
         }
         oxygine::spTweenQueue queue = new oxygine::TweenQueue();
-        oxygine::spTween tween2 = oxygine::createTween(TweenWait(), static_cast<qint32>(m_frameTime) * 2 * i + 1);
-        oxygine::spTween tween3 = oxygine::createTween(TweenToggleVisibility(0, 1.0f), 1);
-        oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenY(pApp->getSettings()->getHeight() / 2 - heigth / 2 * scale), static_cast<qint32>(m_frameTime) * 4);
+        oxygine::spTween tween2 = oxygine::createTween(TweenWait(), oxygine::timeMS(m_frameTime * 2 * i + 1));
+        oxygine::spTween tween3 = oxygine::createTween(TweenToggleVisibility(0, 1.0f), oxygine::timeMS(1));
+        oxygine::spTween tween4 = oxygine::createTween(oxygine::Actor::TweenY(pApp->getSettings()->getHeight() / 2 - heigth / 2 * scale), oxygine::timeMS(m_frameTime * 4));
         queue->add(tween2);
         queue->add(tween3);
         queue->add(tween4);

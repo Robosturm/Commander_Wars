@@ -3,6 +3,8 @@
 #include "actor/Stage.h"
 #include "math/AffineTransform.h"
 
+#include "Clock.h"
+
 namespace oxygine
 {
     Vector2 convertPosUp(Actor* src, Actor* dest, const Vector2& pos, bool direction)
@@ -111,7 +113,7 @@ namespace oxygine
 
     void Draggable::startDrag(const Vector2& localCenter)
     {
-        _startTm = getTimeMS();
+        _startTm = Clock::getTimeMS();
         _pressed = true;
         _dragPos = localCenter;
         _clientPos = _dragClient->getPosition();
@@ -169,7 +171,7 @@ namespace oxygine
                 {
                     _pressed = false;
                     _actor->_getStage()->removeEventListeners(this);
-                    if (getTimeMS() - _startTm < 2)
+                    if (Clock::getTimeMS() - _startTm < timeMS(2))
                     {
                         _actor->setPosition(_clientPos);
                     }

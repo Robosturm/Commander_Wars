@@ -27,7 +27,7 @@ void Cursor::changeCursor(const QString& spriteID, qint32 xOffset, qint32 yOffse
     m_CurrentCursor = new oxygine::Sprite();
     if (pAnim->getTotalFrames() > 1)
     {
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * 200, -1);
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * 200), -1);
         m_CurrentCursor->addTween(tween);
     }
     else

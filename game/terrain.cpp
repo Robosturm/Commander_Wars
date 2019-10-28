@@ -237,7 +237,7 @@ void Terrain::loadBaseSprite(QString spriteID)
         oxygine::spSprite pSprite = new oxygine::Sprite();
         if (pAnim->getTotalFrames() > 1)
         {
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
             pSprite->addTween(tween);
         }
         else
@@ -446,7 +446,7 @@ void Terrain::loadOverlaySprite(QString spriteID)
     oxygine::spSprite pSprite = new oxygine::Sprite();
     if (pAnim->getTotalFrames() > 1)
     {
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), pAnim->getTotalFrames() * GameMap::frameTime, -1);
+        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
         pSprite->addTween(tween);
     }
     else

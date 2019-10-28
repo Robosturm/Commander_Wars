@@ -4,7 +4,8 @@
 #include "../PointerState.h"
 #include "../UpdateState.h"
 #include "../initActor.h"
-//#include "../Draggable.h"
+
+#include "../Clock.h"
 
 namespace oxygine
 {
@@ -80,19 +81,19 @@ namespace oxygine
             _content->detach();
         }
 
-        _downTime = 0;
+        _downTime = timeMS(0);
 
         _current = 0;
-        _lastIterTime = 0;
+        _lastIterTime = timeMS(0);
         _sliding = false;
 
         //_prev[0].pos = _content->getPosition();
         //_prev[0].tm = tm;
 
         for (int i = 0; i < NUM; ++i)
-            _prev[i].tm = 0;
+            _prev[i].tm = timeMS(0);
 
-        _holded = 0; //event->target;
+        _holded = nullptr; //event->target;
         //_downPos = te->localPosition;
         //_downTime = tm;
         _finger = 0;
@@ -124,7 +125,7 @@ namespace oxygine
         _drag.setDragBounds(bounds);
     }
 
-    const timeMS fdt = 1000 / 60;
+    const timeMS fdt = timeMS(1000 / 60);
     //const float fdt = 20;
 
     void SlidingActor::doUpdate(const UpdateState& us)
@@ -136,7 +137,7 @@ namespace oxygine
         //ml = max(_speed.length(), ml);
         //qDebug("sp: %.2f", ml);
 
-        int ct = getTimeMS();
+        timeMS ct = Clock::getTimeMS();
         if (_lastIterTime + NUM * fdt < ct)
             _lastIterTime = ct;
 
@@ -157,7 +158,7 @@ namespace oxygine
             while (_lastIterTime + fdt <= ct)
             {
                 Vector2 pos = _content->getPosition();
-                Vector2 newpos = pos + _speed * (fdt / 1000.0f);
+                Vector2 newpos = pos + _speed * (fdt.count() / 1000.0f);
                 if (newpos.x < bounds.getLeft())
                 {
                     newpos.x = bounds.getLeft();
@@ -215,7 +216,7 @@ namespace oxygine
 
         TouchEvent* te = safeCast<TouchEvent*>(event);
         //if (te->)
-        timeMS tm = getTimeMS();
+        timeMS tm = Clock::getTimeMS();
         switch (te->type)
         {
             case TouchEvent::TOUCH_DOWN:
@@ -228,7 +229,7 @@ namespace oxygine
                 _prev[0].tm = tm;
 
                 for (int i = 1; i < NUM; ++i)
-                    _prev[i].tm = 0;
+                    _prev[i].tm = timeMS(0);
 
                 _holded = event->target;
                 _downPos = te->localPosition;
@@ -246,7 +247,7 @@ namespace oxygine
                 if (_drag.getDragEnabled() && te->index == _finger && _ignoreTouchUp == false)
                 {
                     _finger = 0;
-                    _downTime = 0;
+                    _downTime = timeMS(0);
                     Vector2 pos = _content->getPosition();
 
                     _holded = 0;
@@ -258,13 +259,13 @@ namespace oxygine
                     for (int i = 1; i < NUM; ++i)
                     {
                         int n = (_current + NUM - i) % NUM;
-                        if (_prev[n].tm)
+                        if (_prev[n].tm > timeMS(0))
                             last = _prev + n;
                         else
                             break;
-                        if (!mid && (last->tm + 50 <= tm))
+                        if (!mid && (last->tm + timeMS(50) <= tm))
                             mid = last;
-                        if (last->tm + 150 <= tm)
+                        if (last->tm + timeMS(150) <= tm)
                         {
                             old = last;
                             break;
@@ -284,12 +285,14 @@ namespace oxygine
                     else
                     {
                         timeMS v = tm - old->tm;
-                        if (!v)
+                        if (v == timeMS(0))
+                        {
                             return;
+                        }
 
                         Vector2 dr = pos - old->pos;
 
-                        Vector2 ns = (dr * 1000.0f) / v;
+                        Vector2 ns = (dr * 1000.0f) / v.count();
 
                         if (_speed.dot(ns) < 0)
                             _speed = ns;

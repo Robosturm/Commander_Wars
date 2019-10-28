@@ -128,10 +128,10 @@ namespace oxygine
 
     void Stage::update()
     {
-        timeMS t = getTimeMS();
+        timeMS t = Clock::getTimeMS();
         UpdateState us;
         Actor::update(us);
 
-        _statUpdate = getTimeMS() - t;
+        _statUpdate = Clock::getTimeMS() - t;
     }
 }

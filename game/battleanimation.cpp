@@ -452,16 +452,16 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
         endHp = 0.0f;
     }
     oxygine::ColorRectSprite::TweenColor tweenColor(getHealthBarColor(endHp));
-    oxygine::spTween colorTween = oxygine::createTween(tweenColor, 800 / Settings::getBattleAnimationSpeed());
+    oxygine::spTween colorTween = oxygine::createTween(tweenColor, oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
     pColorRect->addTween(colorTween);
-    oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth(127.0f * endHp / 10.0f), 800 / Settings::getBattleAnimationSpeed());
+    oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth(127.0f * endHp / 10.0f), oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
     pColorRect->addTween(posTween);
     // add impact image
     oxygine::ColorRectSprite::TweenColor tweenColor2(oxygine::Color(255, 0, 0));
     oxygine::spActor child = pSprite->getClipActor()->getFirstChild();
     while (child)
     {
-        oxygine::spTween colorTween2 = oxygine::createTween(tweenColor2, 500 / Settings::getBattleAnimationSpeed(), 1, true, 100);
+        oxygine::spTween colorTween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(static_cast<qint64>(500 / Settings::getBattleAnimationSpeed())), 1, true, oxygine::timeMS(100));
         child->addTween(colorTween2);
         child = child->getNextSibling();
     }

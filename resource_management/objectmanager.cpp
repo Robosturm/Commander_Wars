@@ -58,12 +58,12 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width)
     oxygine::Sprite* ptr = pButton.get();
     pButton->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
-        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), 300);
+        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), oxygine::timeMS(300));
     });
 
     pButton->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), 300);
+        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), oxygine::timeMS(300));
     });
     pButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {

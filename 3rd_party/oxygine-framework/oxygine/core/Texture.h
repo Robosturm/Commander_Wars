@@ -41,5 +41,17 @@ namespace oxygine
         virtual void unlock() = 0;
         virtual void updateRegion(int x, int y, const ImageData& data) = 0;
         virtual void apply(const Rect* rect = 0) = 0;
+
+        timeMS getCreationTime()
+        {
+            return m_CreationTime;
+        }
+
+        void setCreationTime(timeMS time)
+        {
+            m_CreationTime = time;
+        }
+    private:
+        timeMS m_CreationTime;
     };
 }
