@@ -11,14 +11,14 @@ namespace oxygine
 
         VisualStyle();
 
-        const Color&        getColor() const {return _color;}
+        const QColor&        getColor() const {return _color;}
         blend_mode          getBlendMode() const {return _blend;}
 
-        void setColor(const Color& color);
+        void setColor(const QColor& color);
         void setBlendMode(blend_mode mode);
 
     protected:
-        Color _color;
+        QColor _color;
         blend_mode _blend;
     };
 
@@ -30,31 +30,31 @@ namespace oxygine
         VStyleActor();
 
         blend_mode              getBlendMode() const {return _vstyle.getBlendMode();}
-        const Color&            getColor() const;
-        const Color&            getAddColor() const;
+        const QColor&            getColor() const;
+        const QColor&            getAddColor() const;
 
-        void                    setColor(const Color& color);
+        void                    setColor(const QColor& color);
         void                    setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
         void                    setBlendMode(blend_mode mode);
-        void                    setAddColor(const Color& color);
+        void                    setAddColor(const QColor& color);
         void                    setAddColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a = 0);
 
         virtual void setEnabled(bool value) override;
 
-        typedef Property<Color, const Color&, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor> TweenColor;
-        typedef Property<Color, const Color&, VStyleActor, &VStyleActor::getAddColor, &VStyleActor::setAddColor> TweenAddColor;
+        typedef Property<QColor, const QColor&, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor> TweenColor;
+        typedef Property<QColor, const QColor&, VStyleActor, &VStyleActor::getAddColor, &VStyleActor::setAddColor> TweenAddColor;
 
         void                    setMaterial(spSTDMaterial mat);
         void                    resetMaterial();
         spSTDMaterial _mat;
 
-        Color getDisableColor() const;
-        void setDisableColor(const Color &value);
+        QColor getDisableColor() const;
+        void setDisableColor(const QColor &value);
 
     protected:
         virtual void matChanged() {}
         VisualStyle _vstyle;
-        Color disableColor{75, 75, 75, 0};
+        QColor disableColor{75, 75, 75, 0};
 
     };
 

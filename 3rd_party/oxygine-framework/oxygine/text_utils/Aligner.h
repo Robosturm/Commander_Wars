@@ -4,7 +4,6 @@
 #include "../Material.h"
 #include "../TextStyle.h"
 #include "../core/NativeTexture.h"
-#include "../math/Color.h"
 #include "../math/Rect.h"
 #include <vector>
 

@@ -13,10 +13,10 @@ namespace oxygine
             transform.identity();
         }
 
-        Color getFinalColor(const Color& clr) const
+        QColor getFinalColor(const QColor& clr) const
         {
-            Color color = clr;
-            color = clr.withAlpha((int(color.a) * alpha) / 255);
+            QColor color = clr;
+            color.setAlpha((color.alpha() * static_cast<qint32>(alpha)) / 255);
             return color;
         }
 

@@ -260,7 +260,7 @@ namespace oxygine
 
         void DivNode::draw(DrawContext& dc)
         {
-            Color prev = dc.color;
+            QColor prev = dc.color;
 
             dc.color = color * dc.primary;
             drawChildren(dc);
@@ -276,7 +276,12 @@ namespace oxygine
                 if (!strcmp(attr.name(), "c") ||
                         !strcmp(attr.name(), "color"))
                 {
-                    color = hex2color(attr.value());
+                    QString colorText(attr.value());
+                    if (!colorText.startsWith("#"))
+                    {
+                        colorText.push_front("#");
+                    }
+                    color = QColor(colorText);
                 }
                 else if (!strcmp(attr.name(), "opt"))
                 {

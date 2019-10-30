@@ -63,10 +63,10 @@ Console::Console()
     m_pBackgroundsprite->setPosition(0, 0);
     m_pBackgroundsprite->setSize(pApp->getSettings()->getWidth(), pApp->getSettings()->getHeight());
     m_pBackgroundsprite->attachTo(this);
-    m_pBackgroundsprite->setColor(oxygine::Color(0,0,0, 180));
+    m_pBackgroundsprite->setColor(QColor(0,0,0, 180));
 
     m_text = new oxygine::TextField();
-    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getTimesFont10()).withColor(oxygine::Color(255,127,39)).alignLeft();
+    oxygine::TextStyle style = oxygine::TextStyle(FontManager::getTimesFont10()).withColor(QColor(255,127,39)).alignLeft();
     m_text->setStyle(style);
 
     m_text->attachTo(this);

@@ -118,7 +118,7 @@ EditorMenue::EditorMenue()
     pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     pButtonBox->setResAnim(pAnim);
     oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
+    style.color = QColor(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -1406,9 +1406,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                 }
                 oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+top");
                 pSprite->setResAnim(pAnim);
-                pSprite->setColor(oxygine::Color(static_cast<quint8>(color.red()),
-                                                 static_cast<quint8>(color.green()),
-                                                 static_cast<quint8>(color.blue())));
+                pSprite->setColor(color);
                 pSprite->setPosition(GameMap::Imagesize * i,
                                      GameMap::Imagesize * y);
                 pActor->addChild(pSprite);
@@ -1420,9 +1418,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                 pSprite = new oxygine::Sprite();
                 pAnim = pObjectManager->getResAnim("cursor+border+bottom");
                 pSprite->setResAnim(pAnim);
-                pSprite->setColor(oxygine::Color(static_cast<quint8>(color.red()),
-                                                 static_cast<quint8>(color.green()),
-                                                 static_cast<quint8>(color.blue())));
+                pSprite->setColor(color);
                 pSprite->setPosition(GameMap::Imagesize * i,
                                      GameMap::Imagesize * y);
                 pActor->addChild(pSprite);
@@ -1437,9 +1433,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                 }
                 oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+left");
                 pSprite->setResAnim(pAnim);
-                pSprite->setColor(oxygine::Color(static_cast<quint8>(color.red()),
-                                                 static_cast<quint8>(color.green()),
-                                                 static_cast<quint8>(color.blue())));
+                pSprite->setColor(color);
                 pSprite->setPosition(GameMap::Imagesize * x,
                                      GameMap::Imagesize * i);
                 pActor->addChild(pSprite);
@@ -1451,9 +1445,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                 pSprite = new oxygine::Sprite();
                 pAnim = pObjectManager->getResAnim("cursor+border+right");
                 pSprite->setResAnim(pAnim);
-                pSprite->setColor(oxygine::Color(static_cast<quint8>(color.red()),
-                                                 static_cast<quint8>(color.green()),
-                                                 static_cast<quint8>(color.blue())));
+                pSprite->setColor(color);
                 pSprite->setPosition(GameMap::Imagesize * x,
                                      GameMap::Imagesize * i);
                 pActor->addChild(pSprite);
@@ -1474,9 +1466,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                         oxygine::spSprite pSprite = new oxygine::Sprite();
                         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+right");
                         pSprite->setResAnim(pAnim);
-                        pSprite->setColor(oxygine::Color(static_cast<quint8>(color.red()),
-                                                         static_cast<quint8>(color.green()),
-                                                         static_cast<quint8>(color.blue())));
+                        pSprite->setColor(color);
                         pSprite->setPosition(GameMap::Imagesize * (p1.x() + point.x()),
                                              GameMap::Imagesize * (p1.y() + point.y()));
                         pActor->addChild(pSprite);
@@ -1486,9 +1476,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                         oxygine::spSprite pSprite = new oxygine::Sprite();
                         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+left");
                         pSprite->setResAnim(pAnim);
-                        pSprite->setColor(oxygine::Color(static_cast<quint8>(color.red()),
-                                                         static_cast<quint8>(color.green()),
-                                                         static_cast<quint8>(color.blue())));
+                        pSprite->setColor(color);
                         pSprite->setPosition(GameMap::Imagesize * (p1.x() + point.x()),
                                              GameMap::Imagesize * (p1.y() + point.y()));
                         pActor->addChild(pSprite);
@@ -1498,9 +1486,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                         oxygine::spSprite pSprite = new oxygine::Sprite();
                         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+bottom");
                         pSprite->setResAnim(pAnim);
-                        pSprite->setColor(oxygine::Color(static_cast<quint8>(color.red()),
-                                                         static_cast<quint8>(color.green()),
-                                                         static_cast<quint8>(color.blue())));
+                        pSprite->setColor(color);
                         pSprite->setPosition(GameMap::Imagesize * (p1.x() + point.x()),
                                              GameMap::Imagesize * (p1.y() + point.y()));
                         pActor->addChild(pSprite);
@@ -1510,9 +1496,7 @@ void EditorMenue::createMarkedArea(oxygine::spActor pActor, QPoint p1, QPoint p2
                         oxygine::spSprite pSprite = new oxygine::Sprite();
                         oxygine::ResAnim* pAnim = pObjectManager->getResAnim("cursor+border+top");
                         pSprite->setResAnim(pAnim);
-                        pSprite->setColor(oxygine::Color(static_cast<quint8>(color.red()),
-                                                         static_cast<quint8>(color.green()),
-                                                         static_cast<quint8>(color.blue())));
+                        pSprite->setColor(color);
                         pSprite->setPosition(GameMap::Imagesize * (p1.x() + point.x()),
                                              GameMap::Imagesize * (p1.y() + point.y()));
                         pActor->addChild(pSprite);

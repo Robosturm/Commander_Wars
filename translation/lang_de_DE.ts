@@ -1421,7 +1421,7 @@
 <context>
     <name>GameAnimationNextDay</name>
     <message>
-        <location filename="../game/gameanimationnextday.cpp" line="101"/>
+        <location filename="../game/gameanimationnextday.cpp" line="102"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>

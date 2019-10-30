@@ -35,12 +35,13 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
     QColor color = pPlayer->getColor();
     if (permanent)
     {
-        pSprite->setColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
+        pSprite->setColor(color);
         this->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
     }
     else
     {
-        pSprite->setColor(oxygine::Color(color.red(), color.green(), color.blue(), 150));
+        color.setAlpha(150);
+        pSprite->setColor(color);
     }
 
 
@@ -73,7 +74,7 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
 
     oxygine::ResFont* font = FontManager::getMainFont();
     oxygine::TextStyle style = font;
-    style.color = oxygine::Color(255, 255, 255, 255);
+    style.color = QColor(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;

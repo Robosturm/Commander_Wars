@@ -1,16 +1,11 @@
 #pragma once
 #include "../oxygine-include.h"
-#include "../math/Color.h"
 #include <stdarg.h>
 #include <string>
 
 namespace oxygine
 {
     std::string lower(const std::string& str);
-
-    /**str - should be int RGB or RGBA hex format*/
-    Color       hex2color(const char* str);
-    std::string color2hex(const Color&);
 
     template <size_t N>
     inline

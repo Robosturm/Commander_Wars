@@ -80,7 +80,7 @@ private:
      * @param pColorBar
      * @param hp
      */
-    oxygine::Color getHealthBarColor(float hp);
+    QColor getHealthBarColor(float hp);
     /**
      * @brief loadMoveInAnimation
      * @param pSprite

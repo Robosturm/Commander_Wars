@@ -1,7 +1,8 @@
 #pragma once
 #include "oxygine-include.h"
-#include "math/Color.h"
 #include <string>
+
+#include "qcolor.h"
 
 namespace oxygine
 {
@@ -47,7 +48,7 @@ namespace oxygine
         bool multiline;
         int fontSize;
         bool breakLongWords;//works with multiline flag. breakLongWords = false doesn't allow to break too long words
-        Color color;
+        QColor color;
         float baselineScale;//baseline distance multiplier
         size_t options;//additional flags could be used for generating custom glyphs
 
@@ -69,7 +70,7 @@ namespace oxygine
 
         TextStyle withKerning(int kerning) const { TextStyle st = *this; st.kerning = kerning; return st; }
         TextStyle withMultiline(bool multiline = true) const { TextStyle st = *this; st.multiline = multiline; return st; }
-        TextStyle withColor(const Color& color) const { TextStyle st = *this; st.color = color; return st; }
+        TextStyle withColor(const QColor& color) const { TextStyle st = *this; st.color = color; return st; }
 
         TextStyle withFontSize(int size) const { TextStyle st = *this; st.fontSize = size; return st; }
 

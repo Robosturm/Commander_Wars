@@ -292,7 +292,7 @@ namespace oxygine
             {
                 renderer->setTransform(rs.transform);
 
-                Color color = rs.getFinalColor(getColor());
+                QColor color = rs.getFinalColor(getColor());
 
                 // number of vertical blocks
                 int vc = (int)_pointsX.size() - 1;

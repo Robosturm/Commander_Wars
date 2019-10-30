@@ -33,7 +33,7 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width)
     //Create Actor with Text and add it to button as child
     oxygine::spTextField textField = new oxygine::TextField();
     oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
+    style.color = QColor(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_MIDDLE;
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = false;
@@ -58,12 +58,12 @@ oxygine::spButton ObjectManager::createButton(QString text, qint32 width)
     oxygine::Sprite* ptr = pButton.get();
     pButton->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
-        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), oxygine::timeMS(300));
+        ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
 
     pButton->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        ptr->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), oxygine::timeMS(300));
+        ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
     pButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {

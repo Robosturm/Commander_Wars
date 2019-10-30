@@ -74,8 +74,8 @@ namespace oxygine
 
         virtual spNativeTexture createTexture() = 0;
 
-        virtual void clear(const Color& color) = 0;
-        virtual void begin(const Rect& viewport, const Color* color) = 0;
+        virtual void clear(const QColor& color) = 0;
+        virtual void begin(const Rect& viewport, const QColor* color) = 0;
         virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize) = 0;
         virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize, const unsigned short* indicesData, unsigned int numIndices) = 0;
 
@@ -115,7 +115,7 @@ namespace oxygine
 
 
         void clear(const Color& color) {}
-        void begin(const Rect& viewport, const Color* clearColor);
+        void begin(const Rect& viewport, const QColor* clearColor);
         bool isReady() const {return true;}
         void getViewport(Rect& r) const;
         bool getScissorRect(Rect&) const;

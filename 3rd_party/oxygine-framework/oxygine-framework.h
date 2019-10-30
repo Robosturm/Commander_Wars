@@ -71,7 +71,6 @@
 
 //math/
 #include "oxygine/math/AffineTransform.h"
-#include "oxygine/math/Color.h"
 #include "oxygine/math/Matrix.h"
 #include "oxygine/math/Rect.h"
 #include "oxygine/math/ScalarMath.h"

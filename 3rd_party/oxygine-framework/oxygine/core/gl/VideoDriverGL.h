@@ -32,7 +32,7 @@ namespace oxygine
         unsigned int getPT(IVideoDriver::PRIMITIVE_TYPE pt);
         unsigned int getBT(IVideoDriver::BLEND_TYPE pt);
 
-        void _begin(const Rect& viewport, const Color* clearColor);
+        void _begin(const Rect& viewport, const QColor* clearColor);
         spNativeTextureGLES _rt;
 
         mutable VertexDeclarations<VertexDeclarationGL> _vdeclarations;

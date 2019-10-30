@@ -9,11 +9,11 @@ namespace oxygine
     class TweenOutlineImpl : public TweenPostProcess
     {
     public:
-        Color _color;
+        QColor _color;
         int _downsample;
         spSTDMaterial _matx;
 
-        TweenOutlineImpl(const Color& c, const PostProcessOptions& opt) : TweenPostProcess(opt), _color(c), _downsample(1)
+        TweenOutlineImpl(const QColor& c, const PostProcessOptions& opt) : TweenPostProcess(opt), _color(c), _downsample(1)
         {
             _matx = new STDMaterial;
             _matx->_blend = blend_premultiplied_alpha;
@@ -42,8 +42,9 @@ namespace oxygine
             renderer->setTransform(tr);
 
 
-            Color color = Color(Color::White).withAlpha(255).premultiplied();
-            renderer->addQuad(color.rgba(), src, dest);
+            QColor color = Qt::white;
+            color.setAlpha(255);
+            renderer->addQuad(qRgba(premultiply(color)), src, dest);
 
 
             RenderState r = rs;
@@ -84,11 +85,17 @@ namespace oxygine
             int alpha = lerp(0, 255, _progress);
             //qDebug("tween alpha %d", alpha);
 
-            Color c;
+            QColor c;
             if (_pp._options._flags & PostProcessOptions::flag_singleR2T)
+            {
                 c = _color;
+            }
             else
-                c = _color.withAlpha(alpha).premultiplied();
+            {
+                c = _color;
+                c.setAlpha(alpha);
+                c = premultiply(c);
+            }
 
             driver->setShaderProgram(PostProcess::shaderBlurV);
             driver->setUniform("step", 1.0f / rt2->getHeight());
@@ -98,7 +105,7 @@ namespace oxygine
     };
 
 
-    TweenOutline::TweenOutline(const Color& color, const PostProcessOptions& opt) : TweenProxy(new TweenOutlineImpl(color, opt))
+    TweenOutline::TweenOutline(const QColor& color, const PostProcessOptions& opt) : TweenProxy(new TweenOutlineImpl(color, opt))
     {
     }
 }

@@ -81,7 +81,7 @@ namespace oxygine
     }
     */
 
-    void Stage::render(const Color* clearColor, const Rect& viewport, const Matrix& view, const Matrix& proj)
+    void Stage::render(const QColor* clearColor, const Rect& viewport, const Matrix& view, const Matrix& proj)
     {
 
         IVideoDriver* driver = IVideoDriver::instance;
@@ -113,7 +113,7 @@ namespace oxygine
         Material::null->apply();
     }
 
-    void Stage::render(const Color& clearColor, const Rect& viewport)
+    void Stage::render(const QColor& clearColor, const Rect& viewport)
     {
         //initialize projection and view matrix
         Matrix proj;

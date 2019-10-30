@@ -88,8 +88,8 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, QColor startColor
             {
                 capturedColor.setRgb(255, 255, 255);
             }
-            oxygine::Sprite::TweenColor tweenColor(oxygine::Color(static_cast<quint8>(capturedColor.red()), static_cast<quint8>(capturedColor.green()), static_cast<quint8>(capturedColor.blue()), 255));
-            oxygine::Sprite::TweenColor tweenColor1(oxygine::Color(static_cast<quint8>(capturedColor.red()), static_cast<quint8>(capturedColor.green()), static_cast<quint8>(capturedColor.blue()), 255));
+            oxygine::Sprite::TweenColor tweenColor(capturedColor);
+            oxygine::Sprite::TweenColor tweenColor1(capturedColor);
             oxygine::spTween tween5 = oxygine::createTween(tweenColor, oxygine::timeMS(1));
             oxygine::spTween tween6 = oxygine::createTween(tweenColor1, oxygine::timeMS(1));
             queueAnimating->add(tween5);
@@ -112,7 +112,7 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, QColor startColor
 
         if (addColor)
         {
-            oxygine::Sprite::TweenColor tweenColor(oxygine::Color(static_cast<quint8>(startColor.red()), static_cast<quint8>(startColor.green()), static_cast<quint8>(startColor.blue()), 255));
+            oxygine::Sprite::TweenColor tweenColor(startColor);
             oxygine::spTween tween7 = oxygine::createTween(tweenColor, oxygine::timeMS(1));
             pSprite->addTween(tween7);
         }
@@ -183,7 +183,7 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, QColor color, bool
 
         if (addColor)
         {
-            oxygine::Sprite::TweenColor tweenColor(oxygine::Color(static_cast<quint8>(color.red()), static_cast<quint8>(color.green()), static_cast<quint8>(color.blue()), 255));
+            oxygine::Sprite::TweenColor tweenColor(color);
             oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
             pSprite->addTween(tween);
         }

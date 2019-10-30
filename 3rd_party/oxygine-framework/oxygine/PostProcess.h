@@ -24,13 +24,13 @@ namespace oxygine
         PostProcessOptions& singleRender(bool enable = true) { _flags = enable ? (_flags | flag_singleR2T) : (_flags  & (~flag_singleR2T)); return *this; }
         //loops -(2, 3, 4, ...),  final size: 2^loops
         PostProcessOptions& downscale(int loops = 2) { _downscale = loops; return *this; }
-        PostProcessOptions& clear(const Color& c) { _clearColor = c; return *this; }
+        PostProcessOptions& clear(const QColor& c) { _clearColor = c; return *this; }
         PostProcessOptions& fixedBounds(const RectF& b) { _fixedBounds = b; _flags |= flag_fixedBounds; return *this; }
 
         int _flags;
         int _downscale;
         RectF _fixedBounds;
-        Color _clearColor;
+        QColor _clearColor;
     };
 
 
@@ -118,7 +118,7 @@ namespace oxygine
         free _free;
     };
 
-    void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const Color& color = Color::White);
+    void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const QColor& color = Qt::white);
 
     RenderTargetsManager& getRTManager();
 

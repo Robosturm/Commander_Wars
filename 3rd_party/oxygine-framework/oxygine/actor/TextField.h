@@ -35,7 +35,7 @@ namespace oxygine
         bool                        getMultiline() const;
         bool                        getBreakLongWords() const;
         text::Symbol*               getSymbolAt(int pos) const;
-        const Color&                getStyleColor() const;
+        const QColor&                getStyleColor() const;
         float                       getBaselineScale() const;
         size_t                      getOptions() const;
 
@@ -60,7 +60,7 @@ namespace oxygine
         /**Overwrites TextStyle fontSize*/
         void setFontSize(int size);
         /**Overwrites TextStyle color*/
-        void setStyleColor(const Color&);
+        void setStyleColor(const QColor&);
         /**Overwrites TextStyle options*/
         void setOptions(size_t opt);
 

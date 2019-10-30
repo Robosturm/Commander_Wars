@@ -67,7 +67,7 @@ void PlayerInfo::updateData()
             }
             pSprite->setResAnim(pAnim);
             QColor color = pPlayer->getColor();
-            pSprite->setColor(oxygine::Color(static_cast<unsigned char>(color.red()), static_cast<unsigned char>(color.green()), static_cast<unsigned char>(color.blue())));
+            pSprite->setColor(color);
             pSprite->setY(yPos);
             this->addChild(pSprite);
             qint32 itemHeigth = static_cast<qint32>(pAnim->getHeight()) + 5;
@@ -217,11 +217,11 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                 Text->setX(68 - 4);
                 Text->setScale(1.0f);
                 oxygine::spTweenQueue queue = new oxygine::TweenQueue();
-                oxygine::Sprite::TweenColor tweenColor1(oxygine::Color(255, 255, 255, 255));
+                oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
                 oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(100), 1, false);
-                oxygine::Sprite::TweenColor tweenColor2(oxygine::Color(255, 0, 0, 255));
+                oxygine::Sprite::TweenColor tweenColor2(QColor(255, 0, 0, 255));
                 oxygine::spTween tween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(100), 1, false);
-                oxygine::Sprite::TweenColor tweenColor3(oxygine::Color(0, 255, 0, 255));
+                oxygine::Sprite::TweenColor tweenColor3(QColor(0, 255, 0, 255));
                 oxygine::spTween tween3 = oxygine::createTween(tweenColor3, oxygine::timeMS(100), 1, false);
                 queue->add(tween1);
                 queue->add(tween2);
@@ -241,11 +241,11 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                 Text->setX(68);
                 Text->setScale(1.0f);
                 oxygine::spTweenQueue queue = new oxygine::TweenQueue();
-                oxygine::Sprite::TweenColor tweenColor1(oxygine::Color(255, 255, 255, 255));
+                oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
                 oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(100), 1, false);
-                oxygine::Sprite::TweenColor tweenColor2(oxygine::Color(255, 0, 0, 255));
+                oxygine::Sprite::TweenColor tweenColor2(QColor(255, 0, 0, 255));
                 oxygine::spTween tween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(100), 1, false);
-                oxygine::Sprite::TweenColor tweenColor3(oxygine::Color(0, 255, 0, 255));
+                oxygine::Sprite::TweenColor tweenColor3(QColor(0, 255, 0, 255));
                 oxygine::spTween tween3 = oxygine::createTween(tweenColor3, oxygine::timeMS(100), 1, false);
                 queue->add(tween1);
                 queue->add(tween2);
@@ -265,11 +265,11 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                 Text->setX(68);
                 Text->setScale(1.0f);
                 oxygine::spTweenQueue queue = new oxygine::TweenQueue();
-                oxygine::Sprite::TweenColor tweenColor1(oxygine::Color(255, 255, 255, 255));
+                oxygine::Sprite::TweenColor tweenColor1(QColor(255, 255, 255, 255));
                 oxygine::spTween tween1 = oxygine::createTween(tweenColor1, oxygine::timeMS(100), 1, false);
-                oxygine::Sprite::TweenColor tweenColor2(oxygine::Color(255, 0, 0, 255));
+                oxygine::Sprite::TweenColor tweenColor2(QColor(255, 0, 0, 255));
                 oxygine::spTween tween2 = oxygine::createTween(tweenColor2, oxygine::timeMS(100), 1, false);
-                oxygine::Sprite::TweenColor tweenColor3(oxygine::Color(0, 255, 0, 255));
+                oxygine::Sprite::TweenColor tweenColor3(QColor(0, 255, 0, 255));
                 oxygine::spTween tween3 = oxygine::createTween(tweenColor3, oxygine::timeMS(100), 1, false);
                 queue->add(tween1);
                 queue->add(tween2);

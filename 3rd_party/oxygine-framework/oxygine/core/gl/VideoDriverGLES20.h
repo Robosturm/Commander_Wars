@@ -21,8 +21,8 @@ namespace oxygine
 
         bool isReady() const  override;
 
-        void begin(const Rect& viewport, const Color* clearColor) override;
-        void clear(const Color& color) override;
+        void begin(const Rect& viewport, const QColor* clearColor) override;
+        void clear(const QColor& color) override;
 
         ShaderProgram*  getShaderProgram() const override { return _p; }
 

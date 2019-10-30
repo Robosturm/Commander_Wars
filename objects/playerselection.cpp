@@ -178,7 +178,7 @@ void PlayerSelection::showPlayerSelection()
     GameMap* pMap = GameMap::getInstance();
     // font style
     oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
+    style.color = QColor(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
@@ -398,7 +398,7 @@ void PlayerSelection::showPlayerSelection()
         spriteCO1->setPosition(xPositions[itemIndex], y);
         spriteCO1->setSize(32, 12);
         spriteCO1->setScale(2.0f);
-        spriteCO1->setDisableColor(oxygine::Color(0, 0, 0, 0));
+        spriteCO1->setDisableColor(QColor(0, 0, 0, 0));
         m_pPlayerSelection->addItem(spriteCO1);
         m_playerCO1.append(spriteCO1);
 
@@ -430,7 +430,7 @@ void PlayerSelection::showPlayerSelection()
         spriteCO2->setPosition(xPositions[itemIndex], y + 24);
         spriteCO2->setSize(32, 12);
         spriteCO2->setScale(2.0f);
-        spriteCO2->setDisableColor(oxygine::Color(0, 0, 0, 0));
+        spriteCO2->setDisableColor(QColor(0, 0, 0, 0));
         m_pPlayerSelection->addItem(spriteCO2);
         m_playerCO2.append(spriteCO2);
                 spriteCO2->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)

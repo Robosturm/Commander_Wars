@@ -125,7 +125,7 @@ namespace oxygine
     }
 
     template<class V, class XY>
-    void fillQuad(V* v, const RectF& uv, XY* positions, const Color& color)
+    void fillQuad(V* v, const RectF& uv, XY* positions, const QColor& color)
     {
         const XY& p1 = positions[0];
         const XY& p2 = positions[1];
@@ -133,7 +133,7 @@ namespace oxygine
         const XY& p4 = positions[3];
 
         V vt;
-        vt.color = color.rgba();
+        vt.color = qRgba(color);
         vt.z = 0;
 
         vt.x = p1.x;
@@ -530,12 +530,11 @@ namespace oxygine
     }
 
 
-    void STDRenderer::addQuad(const Color& clr, const RectF& srcRect, const RectF& destRect)
+    void STDRenderer::addQuad(const QColor& clr, const RectF& srcRect, const RectF& destRect)
     {
-        Color color = clr.premultiplied();
-
+        QColor color = clr;
         vertexPCT2 v[4];
-        fillQuadT(v, srcRect, destRect, _transform, color.rgba());
+        fillQuadT(v, srcRect, destRect, _transform, qRgba(premultiply(color)));
 
         addVertices(v, sizeof(v));
     }

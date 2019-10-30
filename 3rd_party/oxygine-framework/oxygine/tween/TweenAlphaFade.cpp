@@ -34,8 +34,9 @@ namespace oxygine
             renderer->setTransform(tr);
 
 
-            Color color = Color(Color::White).withAlpha(_a).premultiplied();
-            renderer->addQuad(color.rgba(), src, dest);
+            QColor color = QColor(Qt::white);
+            color.setAlpha(_a);
+            renderer->addQuad(qRgba(premultiply(color)), src, dest);
         }
 
         bool _fadeIn;

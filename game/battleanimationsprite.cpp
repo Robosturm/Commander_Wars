@@ -247,9 +247,7 @@ void BattleAnimationSprite::loadSingleMovingSprite(QString spriteID, bool addPla
         if (addPlayerColor)
         {
             QColor color = m_pUnit->getOwner()->getColor();
-            oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
-            oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
-            pSprite->addTween(tween);
+            pSprite->setColor(color);
         }
         pSprite->setPriority(priority);
         pSprite->setScale(scale);

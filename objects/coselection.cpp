@@ -109,7 +109,7 @@ COSelection::COSelection(QStringList coids)
 
     connect(this, &COSelection::armySelectedChange, this, &COSelection::armyChanged, Qt::QueuedConnection);
     oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
+    style.color = QColor(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -345,15 +345,15 @@ void COSelection::colorChanged(QColor color)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    oxygine::Color oxColor(color.red(), color.green(), color.blue(), 255);
-    oxygine::Color oxColorAlpha(color.red(), color.green(), color.blue(), 120);
-    m_BackgroundMask->setColor(oxColor);
+    QColor colorAlpha(color);
+    colorAlpha.setAlpha(120);
+    m_BackgroundMask->setColor(color);
     for (qint32 i = 0; i < m_COFields.size(); i++)
     {
         oxygine::Sprite* pSprite = dynamic_cast<oxygine::Sprite*>(m_COFields[i]->getLastChild().get());
-        pSprite->setColor(oxColorAlpha);
+        pSprite->setColor(colorAlpha);
     }
-    m_Cursor->setColor(oxColor);
+    m_Cursor->setColor(color);
     m_CurrentColor = color;
     pApp->continueThread();
 }

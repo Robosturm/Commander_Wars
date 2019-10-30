@@ -41,7 +41,7 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items, bool u
     m_Colorfield->setScaleX((m_Colorbox->getWidth() - 20 - 45) / pAnim->getWidth());
     m_Colorfield->setScaleY((m_Colorbox->getHeight() - 20) / pAnim->getHeight());
     m_Colorfield->setColor(m_ItemColors[0].red(), m_ItemColors[0].green(), m_ItemColors[0].blue(), 255);
-    m_Colorfield->setDisableColor(oxygine::Color(0, 0, 0, 0));
+    m_Colorfield->setDisableColor(QColor(0, 0, 0, 0));
     pClipActor->setWidth(m_Colorfield->getScaledWidth());
     pClipActor->setHeight(m_Colorfield->getScaledHeight());
     pClipActor->setX(10);
@@ -74,11 +74,11 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items, bool u
     m_pArrowDown->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     m_pArrowDown->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
-        m_pArrowDown->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(16, 16, 16, 0)), oxygine::timeMS(300));
+        m_pArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
     });
     m_pArrowDown->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        m_pArrowDown->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), oxygine::timeMS(300));
+        m_pArrowDown->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
     m_pArrowDown->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -170,11 +170,11 @@ void DropDownmenuColor::addDropDownItem(QColor color, qint32 id)
     // add some event handling :)
     pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
-        pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(32, 200, 32, 0)), oxygine::timeMS(300));
+        pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
     });
     pBox->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), oxygine::timeMS(300));
+        pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
     pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {

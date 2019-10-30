@@ -18,11 +18,11 @@ TableView::TableView(qint32 width, QVector<QStringList> data, QStringList header
     this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     setWidth(width);
     setHeight((data.size() + 1) * 45);
-    oxygine::Color color(255, 127, 39);
-    oxygine::Color color2(0, 255, 0);
+    QColor color(255, 127, 39);
+    QColor color2(0, 255, 0);
     qint32 fieldWidth = (width - 5 * (header.size() + 1))  / header.size();
     oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
+    style.color = QColor(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -119,8 +119,8 @@ TableView::TableView(qint32 width, QVector<QStringList> data, QStringList header
 
 void TableView::setCurrentItem(qint32 i)
 {
-    oxygine::Color color(255, 127, 39);
-    oxygine::Color color2(0, 255, 0);
+    QColor color(255, 127, 39);
+    QColor color2(0, 255, 0);
     for (qint32 i3 = 0; i3 < m_HLines.size(); i3++)
     {
         m_HLines[i3]->setColor(color);

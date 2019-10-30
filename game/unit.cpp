@@ -146,7 +146,7 @@ void Unit::addShineTween()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     removeShineTween();
-    m_ShineTween = oxygine::createTween(TweenAddColorAll(oxygine::Color(50, 50, 50, 0)), oxygine::timeMS(500), -1, true);
+    m_ShineTween = oxygine::createTween(TweenAddColorAll(QColor(50, 50, 50, 0)), oxygine::timeMS(500), -1, true);
     addTween(m_ShineTween);
     pApp->continueThread();
 }
@@ -159,7 +159,7 @@ void Unit::removeShineTween()
         pApp->suspendThread();
         m_ShineTween->remove();
         m_ShineTween = nullptr;
-        oxygine::Color addColor(0, 0, 0, 0);
+        QColor addColor(0, 0, 0, 0);
         setAddColor(addColor);
         oxygine::spVStyleActor child = static_cast<oxygine::VStyleActor*>(getFirstChild().get());
         while (child)
@@ -196,7 +196,7 @@ void Unit::loadSprite(QString spriteID, bool addPlayerColor)
         if (addPlayerColor)
         {
             QColor color = m_pOwner->getColor();
-            oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
+            oxygine::Sprite::TweenColor tweenColor(QColor(color.red(), color.green(), color.blue(), 255));
             oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
             pSprite->addTween(tween);
         }
@@ -205,7 +205,7 @@ void Unit::loadSprite(QString spriteID, bool addPlayerColor)
         this->addChild(pSprite);
         m_pUnitSprites.append(pSprite);
 
-        oxygine::Sprite::TweenColor tweenColor(oxygine::Color(100, 100, 100, 170));
+        oxygine::Sprite::TweenColor tweenColor(QColor(100, 100, 100, 170));
         oxygine::spTween tweenWait = oxygine::createTween(tweenColor, oxygine::timeMS(1));
         pWaitSprite->addTween(tweenWait);
         pWaitSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
@@ -2404,8 +2404,8 @@ void Unit::createCORange(qint32 coRange)
         x2 = -coRange;
         y2 = 0;
         QColor color = m_pOwner->getColor();
-        oxygine::Color playerColor = oxygine::Color(color.red(), color.green(), color.blue());
-        oxygine::Color inversColor = oxygine::Color(playerColor.r, playerColor.g, playerColor.b, 255);
+        QColor playerColor = color;
+        QColor inversColor = playerColor;
         for (qint32 i = 0; i < coRange; i++)
         {
             x2 += 1;

@@ -94,7 +94,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     ${OXYGINE_ROOT}/oxygine/core/gl/VideoDriverGLES20.cpp
     # math
     ${OXYGINE_ROOT}/oxygine/math/AffineTransform.cpp
-    ${OXYGINE_ROOT}/oxygine/math/Color.cpp
     # actor
     ${OXYGINE_ROOT}/oxygine/actor/Actor.cpp
     ${OXYGINE_ROOT}/oxygine/actor/Box9Sprite.cpp

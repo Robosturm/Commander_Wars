@@ -18,7 +18,7 @@ MapSelectionView::MapSelectionView()
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
 
     oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
+    style.color = QColor(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -112,7 +112,7 @@ MapSelectionView::MapSelectionView()
     m_pBuildingBackground->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_pBuildingBackground->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     oxygine::TextStyle styleTimes10 = FontManager::getTimesFont10();
-    styleTimes10.color = oxygine::Color(255, 255, 255, 255);
+    styleTimes10.color = QColor(255, 255, 255, 255);
     styleTimes10.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     styleTimes10.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     styleTimes10.multiline = false;

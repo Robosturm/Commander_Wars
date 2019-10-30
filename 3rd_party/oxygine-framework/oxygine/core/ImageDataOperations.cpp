@@ -1,5 +1,4 @@
 #include "ImageDataOperations.h"
-#include "../math/Color.h"
 #include <string.h>
 
 namespace oxygine
@@ -114,13 +113,13 @@ namespace oxygine
             blitPremultiply(dest, dest);
         }
 
-        void blitColored(const ImageData& src, const ImageData& dest, const Color& c)
+        void blitColored(const ImageData& src, const ImageData& dest, const QColor& c)
         {
             Pixel p;
-            p.r = c.r;
-            p.g = c.g;
-            p.b = c.b;
-            p.a = c.a;
+            p.r = c.red();
+            p.g = c.green();
+            p.b = c.blue();
+            p.a = c.alpha();
 
             op_blit_colored op(p);
             applyOperation(op, src, dest);

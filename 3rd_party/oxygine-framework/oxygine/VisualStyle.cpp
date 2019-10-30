@@ -7,7 +7,7 @@
 
 namespace oxygine
 {
-    VisualStyle::VisualStyle(): _color(Color::White), _blend(blend_premultiplied_alpha)
+    VisualStyle::VisualStyle(): _color(Qt::white), _blend(blend_premultiplied_alpha)
     {
 
     }
@@ -27,7 +27,7 @@ namespace oxygine
         _vstyle = src._vstyle;
     }
 
-    void VisualStyle::setColor(const Color& color)
+    void VisualStyle::setColor(const QColor& color)
     {
         _color = color;
     }
@@ -37,27 +37,27 @@ namespace oxygine
         _blend = mode;
     }
 
-    const Color& VStyleActor::getColor() const
+    const QColor& VStyleActor::getColor() const
     {
         return _vstyle.getColor();
     }
 
-    const Color& VStyleActor::getAddColor() const
+    const QColor& VStyleActor::getAddColor() const
     {
         return _mat->_addColor;
     }
 
-    void VStyleActor::setColor(const Color& color)
+    void VStyleActor::setColor(const QColor& color)
     {
         _vstyle.setColor(color);
     }
 
     void VStyleActor::setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
     {
-        setColor(Color(r, g, b, a));
+        setColor(QColor(r, g, b, a));
     }
 
-    void VStyleActor::setAddColor(const Color& color)
+    void VStyleActor::setAddColor(const QColor& color)
     {
         if (getAddColor() == color)
             return;
@@ -70,7 +70,7 @@ namespace oxygine
 
     void VStyleActor::setAddColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a /*= 0*/)
     {
-        setAddColor(Color(r, g, b, a));
+        setAddColor(QColor(r, g, b, a));
     }
 
     void VStyleActor::setBlendMode(blend_mode mode)
@@ -99,12 +99,12 @@ namespace oxygine
         setMaterial(_mat->cloneDefaultShader());
     }
 
-    Color VStyleActor::getDisableColor() const
+    QColor VStyleActor::getDisableColor() const
     {
         return disableColor;
     }
 
-    void VStyleActor::setDisableColor(const Color &value)
+    void VStyleActor::setDisableColor(const QColor &value)
     {
         disableColor = value;
     }

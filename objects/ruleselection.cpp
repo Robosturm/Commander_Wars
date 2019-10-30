@@ -30,17 +30,17 @@ void RuleSelection::showRuleSelection()
     qint32 y = 20;
     // font style
     oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
+    style.color = QColor(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
 
-    oxygine::Color headerColor(0, 255, 0, 255);
+    QColor headerColor(0, 255, 0, 255);
     float headerScale = 1.5f;
 
     oxygine::spTextField textField = new oxygine::TextField();
     style.color = headerColor;
     textField->setStyle(style);
-    style.color = oxygine::Color(255, 255, 255, 255);
+    style.color = QColor(255, 255, 255, 255);
     textField->setScale(headerScale);
     textField->setHtmlText(tr("Enviroment").toStdString().c_str());
     textField->setPosition(30, y);    
@@ -105,7 +105,7 @@ void RuleSelection::showRuleSelection()
     textField = new oxygine::TextField();
     style.color = headerColor;
     textField->setStyle(style);
-    style.color = oxygine::Color(255, 255, 255, 255);
+    style.color = QColor(255, 255, 255, 255);
     textField->setScale(headerScale);
     textField->setHtmlText(tr("Gameplay").toStdString().c_str());
     textField->setPosition(30, y);
@@ -203,7 +203,7 @@ void RuleSelection::showRuleSelection()
     textField = new oxygine::TextField();
     style.color = headerColor;
     textField->setStyle(style);
-    style.color = oxygine::Color(255, 255, 255, 255);
+    style.color = QColor(255, 255, 255, 255);
     textField->setScale(headerScale);
     textField->setHtmlText(tr("Victory Rules").toStdString().c_str());
     textField->setPosition(30, y);

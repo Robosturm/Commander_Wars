@@ -29,7 +29,7 @@ VictoryMenue::VictoryMenue(bool multiplayer)
     Console::print("Entering Victory Menue", Console::eDEBUG);
     GameMap* pMap = GameMap::getInstance();
     oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
+    style.color = QColor(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -347,7 +347,7 @@ VictoryMenue::VictoryMenue(bool multiplayer)
                     pTextMask->setResAnim(pAnim);
                     pTextMask->setPosition(5, 5 + y);
                     QColor color = pPlayer->getColor();
-                    oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), color.alpha()));
+                    oxygine::Sprite::TweenColor tweenColor(color);
                     oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
                     pTextMask->addTween(tween);
                     m_VictoryPanel->addItem(pTextMask);

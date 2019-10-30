@@ -104,7 +104,7 @@ namespace oxygine
         needRebuild();
     }
 
-    void TextField::setStyleColor(const Color& color)
+    void TextField::setStyleColor(const QColor& color)
     {
         _style.color = color;
         needRebuild();
@@ -236,7 +236,7 @@ namespace oxygine
         return _style.kerning;
     }
 
-    const oxygine::Color& TextField::getStyleColor() const
+    const QColor& TextField::getStyleColor() const
     {
         return _style.color;
     }

@@ -103,7 +103,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
 
     oxygine::spTextField textField = new oxygine::TextField();
     oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
+    style.color = QColor(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = false;
@@ -212,7 +212,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         qint32 xStep = 0;
 
         m_PixelsSelector = new oxygine::ColorRectSprite();
-        m_PixelsSelector->setColor(oxygine::Color(32, 200, 32, 255));
+        m_PixelsSelector->setColor(QColor(32, 200, 32, 255));
         m_PixelsSelector->setSize(20, 20);
         m_PixelsSelector->setPosition(xStep * 22 - 2 + 5, 10 - 2);
         m_PixelsSelector->setPriority(-1);
@@ -269,10 +269,10 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
         {
             if (m_pCOBoxes[i].get() != pBox.get())
             {
-                m_pCOBoxes[i]->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), oxygine::timeMS(300));
+                m_pCOBoxes[i]->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
             }
         }
-        pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(32, 200, 32, 0)), oxygine::timeMS(300));
+        pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
         emit sigCOStyleChanged(index);
     });
     if (select)
@@ -281,10 +281,10 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
         {
             if (m_pCOBoxes[i].get() != pBox.get())
             {
-                m_pCOBoxes[i]->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), oxygine::timeMS(300));
+                m_pCOBoxes[i]->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
             }
         }
-        pBox->setAddColor(oxygine::Color(32, 200, 32, 0));
+        pBox->setAddColor(QColor(32, 200, 32, 0));
     }
     oxygine::spSprite pCO = new oxygine::Sprite();
     pCO->setResAnim(pAnim);

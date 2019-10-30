@@ -171,7 +171,7 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
         if (addPlayerColor)
         {
             QColor color = m_pUnit->getOwner()->getColor();
-            oxygine::Sprite::TweenColor tweenColor(oxygine::Color(static_cast<quint8>(color.red()), static_cast<quint8>(color.green()), static_cast<quint8>(color.blue()), 255));
+            oxygine::Sprite::TweenColor tweenColor(color);
             oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
 
             pSprite->addTween(tween);

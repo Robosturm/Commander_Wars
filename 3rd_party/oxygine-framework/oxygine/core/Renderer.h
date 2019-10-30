@@ -3,7 +3,6 @@
 #include "NativeTexture.h"
 #include "VideoDriver.h"
 #include "../math/AffineTransform.h"
-#include "../math/Color.h"
 #include "../math/Rect.h"
 #include <vector>
 

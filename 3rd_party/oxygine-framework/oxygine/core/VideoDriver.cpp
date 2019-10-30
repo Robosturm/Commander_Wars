@@ -1,11 +1,10 @@
 #include "VideoDriver.h"
 #include "NativeTexture.h"
 #include "ShaderProgram.h"
-#include "../math/Color.h"
 
 namespace oxygine
 {
-    IVideoDriver* IVideoDriver::instance = 0;
+    IVideoDriver* IVideoDriver::instance = nullptr;
 
     IVideoDriver::~IVideoDriver()
     {
@@ -37,10 +36,10 @@ namespace oxygine
     spNativeTexture VideoDriverNull::createTexture()
     {
         //return new NativeTextureNull;
-        return 0;
+        return nullptr;
     }
 
-    void VideoDriverNull::begin(const Rect& viewport, const Color* clearColor)
+    void VideoDriverNull::begin(const Rect& viewport, const QColor* clearColor)
     {
 
     }

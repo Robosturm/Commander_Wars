@@ -652,7 +652,7 @@ void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::Dr
         {
             pSprite->setResAnim(pAnim);
         }
-        oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), color.alpha()));
+        oxygine::Sprite::TweenColor tweenColor(QColor(color.red(), color.green(), color.blue(), color.alpha()));
         oxygine::spTween tween2 = oxygine::createTween(tweenColor, oxygine::timeMS(1));
         pSprite->addTween(tween2);
 
@@ -748,7 +748,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                     // add text to the label
                     oxygine::spTextField textField = new oxygine::TextField();
                     oxygine::TextStyle style = oxygine::TextStyle(FontManager::getTimesFont10()).
-                                               withColor(oxygine::Color(0, 0, 0)).
+                                               withColor(QColor(0, 0, 0)).
                                                alignLeft().
                                                alignTop();
                     textField->setStyle(style);

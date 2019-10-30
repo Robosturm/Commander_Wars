@@ -1,6 +1,5 @@
 #include "VideoDriverGL.h"
 #include "NativeTextureGLES.h"
-#include "../../math/Color.h"
 #include "../../utils/stringUtils.h"
 
 #include "../gamewindow.h"
@@ -117,14 +116,14 @@ namespace oxygine
         window->glBindFramebuffer(GL_FRAMEBUFFER, _rt->getFboID());
     }
 
-    void VideoDriverGL::_begin(const Rect& viewport, const Color* clearColor)
+    void VideoDriverGL::_begin(const Rect& viewport, const QColor* clearColor)
     {
         //  qDebug("begin %d %d %d %d", viewport.pos.x, viewport.pos.y, viewport.size.x, viewport.size.y);
         glViewport(viewport.getX(), viewport.getY(), viewport.getWidth(), viewport.getHeight());
         glDisable(GL_SCISSOR_TEST);
         if (clearColor)
         {
-            Vector4 c = clearColor->toVector();
+            Vector4 c = Vector4(clearColor->redF(), clearColor->greenF(), clearColor->blueF(), clearColor->alphaF());
             glClearColor(c.x, c.y, c.z, c.w);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         }

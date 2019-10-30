@@ -122,7 +122,7 @@ namespace oxygine
         if (df.base)
         {
 
-            unsigned int color = rs.getFinalColor(getColor()).rgba();
+            unsigned int color = qRgba(rs.getFinalColor(getColor()));
             //rsCache().setBlendMode(getBlendMode());
             //renderer->setTexture(df.base, df.alpha, df.premultiplied);
 

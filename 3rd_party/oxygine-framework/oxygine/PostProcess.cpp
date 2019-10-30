@@ -346,13 +346,13 @@ namespace oxygine
     }
 
 
-    void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const Color& color)
+    void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const QColor& color)
     {
         IVideoDriver* driver = IVideoDriver::instance;
 
         const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(driver->getVertexDeclaration(vertexPCT2::FORMAT));
         driver->setRenderTarget(destTexture);
-        driver->clear(0);
+        driver->clear(QColor(0, 0, 0, 0));
 
         driver->setViewport(destRect);
 
@@ -366,7 +366,7 @@ namespace oxygine
         fillQuadT(v,
                   dst,
                   RectF(-1, -1, 2, 2),
-                  AffineTransform::getIdentity(), color.rgba());
+                  AffineTransform::getIdentity(), qRgba(color));
 
 
         driver->draw(IVideoDriver::PT_TRIANGLE_STRIP, decl, v, sizeof(v));

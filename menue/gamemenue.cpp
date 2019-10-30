@@ -212,7 +212,7 @@ void GameMenue::loadGameMenue()
     pButtonBox->setResAnim(pAnim);
     qint32 roundTime = pMap->getGameRules()->getRoundTimeMs();
     oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
+    style.color = QColor(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;

@@ -21,7 +21,7 @@ COInfoActor::COInfoActor(qint32 width)
     Mainapp* pApp = Mainapp::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
+    style.color = QColor(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -287,7 +287,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_SuperPowerDesc->setHtmlText(coSuperpowerDesc.toStdString().c_str());
 
     oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
+    style.color = QColor(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;

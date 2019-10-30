@@ -12,10 +12,10 @@ namespace oxygine
     class TweenGlowImpl : public TweenPostProcess
     {
     public:
-        Color _color;
+        QColor _color;
         int _downsample;
 
-        TweenGlowImpl(const Color& c, const PostProcessOptions& opt) : TweenPostProcess(opt), _color(c), _downsample(1) {}
+        TweenGlowImpl(const QColor& c, const PostProcessOptions& opt) : TweenPostProcess(opt), _color(c), _downsample(1) {}
 
         void render(Actor* actor, const RenderState& rs) override
         {
@@ -41,8 +41,8 @@ namespace oxygine
             AffineTransform tr = _pp._transform * _actor->computeGlobalTransform();
             renderer->setTransform(tr);
             //renderer->applySimpleMode(true);
-            Color color = Color(Color::White).withAlpha(255).premultiplied();
-            color = Color::White;
+//            Color color = Color(Color::White).withAlpha(255).premultiplied();
+//            color = QColor::White;
             rsCache().setBlendMode(blend_add);
             //renderer->draw(_pp._rt, color.rgba(), src, dest);
             renderer->flush();
@@ -76,16 +76,17 @@ namespace oxygine
             int alpha = lerp(0, 255, _progress);
             //qDebug("tween alpha %d", alpha);
 
-            Color c = _color.withAlpha(64).premultiplied();
+            QColor c = _color;
+            c.setAlpha(64);
             driver->setShaderProgram(PostProcess::shaderBlurV);
             driver->setUniform("step", 1.0f / rt2->getHeight());
 
-            pass(rt2, rc, rt, rc, c);
+            pass(rt2, rc, rt, rc, qRgba(premultiply(c)));
         }
     };
 
 
-    TweenGlow::TweenGlow(const Color& color, const PostProcessOptions& opt) : TweenProxy(new TweenGlowImpl(color, opt))
+    TweenGlow::TweenGlow(const QColor& color, const PostProcessOptions& opt) : TweenProxy(new TweenGlowImpl(color, opt))
     {
     }
 }

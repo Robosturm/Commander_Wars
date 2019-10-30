@@ -20,13 +20,6 @@ namespace oxygine
 {
     CREATE_COPYCLONE_NEW(Actor);
 
-    std::string div(const std::string& val, const Color& color)
-    {
-        char str[255];
-        safe_sprintf(str, "<div c='%s'>%s</div>", color2hex(color).c_str(), val.c_str());
-        return str;
-    }
-
     Actor::Actor():
         _extendedIsOn(0),
         _zOrder(0),

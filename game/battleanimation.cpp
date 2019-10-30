@@ -310,20 +310,20 @@ void BattleAnimation::setCOMood(oxygine::spSprite pSprite, float hp1, float hp2)
     pSprite->setColumn(static_cast<qint32>(mood));
 }
 
-oxygine::Color BattleAnimation::getHealthBarColor(float hp)
+QColor BattleAnimation::getHealthBarColor(float hp)
 {
     float divider = hp / 10.0f;
     if (divider > 2.0f / 3.0f)
     {
-        return oxygine::Color(0, 255, 0, 255);
+        return QColor(0, 255, 0, 255);
     }
     else if (divider > 1.0f / 3.0f)
     {
-        return oxygine::Color(255, 128, 0, 255);
+        return QColor(255, 128, 0, 255);
     }
     else
     {
-        return oxygine::Color(255, 0, 0, 255);
+        return QColor(255, 0, 0, 255);
     }
 }
 
@@ -457,7 +457,7 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
     oxygine::spTween posTween = oxygine::createTween(oxygine::Actor::TweenWidth(127.0f * endHp / 10.0f), oxygine::timeMS(static_cast<qint64>(800 / Settings::getBattleAnimationSpeed())));
     pColorRect->addTween(posTween);
     // add impact image
-    oxygine::ColorRectSprite::TweenColor tweenColor2(oxygine::Color(255, 0, 0));
+    oxygine::ColorRectSprite::TweenColor tweenColor2(QColor(255, 0, 0));
     oxygine::spActor child = pSprite->getClipActor()->getFirstChild();
     while (child)
     {

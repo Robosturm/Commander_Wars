@@ -94,7 +94,7 @@ namespace oxygine
 
         /**Sets World transformation.*/
         void setTransform(const Transform& world);
-        void addQuad(const Color&, const RectF& srcRect, const RectF& destRect);
+        void addQuad(const QColor&, const RectF& srcRect, const RectF& destRect);
 
         /**Begins rendering into RenderTexture or into primary framebuffer if rt is null*/
         void begin();

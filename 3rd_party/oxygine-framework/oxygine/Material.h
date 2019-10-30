@@ -35,8 +35,8 @@ namespace oxygine
         virtual void update(size_t& hash, compare&) const = 0;
         virtual void rehash(size_t& hash) const = 0;
 
-        virtual void render(const AffineTransform& tr, const Color& c, const RectF& src, const RectF& dest) {}
-        virtual void render(const Color& c, const RectF& src, const RectF& dest) {}
+        virtual void render(const AffineTransform& tr, const QColor& c, const RectF& src, const RectF& dest) {}
+        virtual void render(const QColor& c, const RectF& src, const RectF& dest) {}
 
         void apply();
         void flush();
@@ -105,7 +105,7 @@ namespace oxygine
         spNativeTexture    _alpha;
         blend_mode         _blend;
         UberShaderProgram* _uberShader;
-        Color              _addColor;
+        QColor              _addColor;
         int                _flags;
 
         static bool cmp(const STDMaterial& a, const STDMaterial& b);
@@ -116,8 +116,8 @@ namespace oxygine
         void xapply() override;
         void xflush() override;
 
-        void render(const AffineTransform& tr, const Color& c, const RectF& src, const RectF& dest) override;
-        void render(const Color& c, const RectF& src, const RectF& dest) override;
+        void render(const AffineTransform& tr, const QColor& c, const RectF& src, const RectF& dest) override;
+        void render(const QColor& c, const RectF& src, const RectF& dest) override;
 
         spSTDMaterial cloneDefaultShader() const;
     };

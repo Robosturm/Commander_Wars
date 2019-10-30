@@ -2,7 +2,6 @@
 #include "../oxygine-include.h"
 #include "Aligner.h"
 #include "../core/Object.h"
-#include "../math/Color.h"
 #include "../math/Vector2.h"
 #include <string>
 #include <vector>
@@ -31,8 +30,8 @@ namespace oxygine
         public:
             DrawContext() {}
 
-            Color color;
-            Color primary;
+            QColor color;
+            QColor primary;
         };
 
         class Node
@@ -87,7 +86,7 @@ namespace oxygine
             void resize(Aligner& rd) override;
             void draw(DrawContext& dc) override;
 
-            Color color;
+            QColor color;
             unsigned int options;
         };
 

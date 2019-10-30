@@ -2,7 +2,6 @@
 #include "NativeTextureGLES.h"
 #include "ShaderProgramGL.h"
 
-#include "../../math/Color.h"
 #include "../../utils/stringUtils.h"
 #include "../vertex.h"
 
@@ -43,14 +42,14 @@ namespace oxygine
     }
 
 
-    void VideoDriverGLES20::begin(const Rect& viewport, const Color* clearColor)
+    void VideoDriverGLES20::begin(const Rect& viewport, const QColor* clearColor)
     {
         _begin(viewport, clearColor);
     }
 
-    void VideoDriverGLES20::clear(const Color& color)
+    void VideoDriverGLES20::clear(const QColor& color)
     {
-        Vector4 c = color.toVector();
+        Vector4 c = Vector4(color.redF(), color.greenF(), color.blueF(), color.alphaF());
         glClearColor(c.x, c.y, c.z, c.w);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }

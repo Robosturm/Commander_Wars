@@ -181,7 +181,7 @@ namespace oxygine
             return;
 
 
-        Color color = rs.getFinalColor(sprite->getColor());
+        QColor color = rs.getFinalColor(sprite->getColor());
 
         sprite->_mat->apply();
         sprite->_mat->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
@@ -200,7 +200,7 @@ namespace oxygine
 
         STDRenderer* renderer = STDRenderer::getCurrent();
 
-        dc.primary = rs.getFinalColor(tf->getColor()).premultiplied();
+        dc.primary = premultiply(rs.getFinalColor(tf->getColor()));
         dc.color = tf->getStyle().color * dc.primary;
 
         //renderer->setBlendMode(tf->getBlendMode());
@@ -211,7 +211,7 @@ namespace oxygine
     void STDRenderDelegate::doRender(ColorRectSprite* sprite, const RenderState& rs)
     {
         sprite->_mat->apply();
-        Color color = rs.getFinalColor(sprite->getColor());
+        QColor color = rs.getFinalColor(sprite->getColor());
         sprite->_mat->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
     }
 

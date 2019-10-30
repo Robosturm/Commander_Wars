@@ -28,7 +28,7 @@ namespace oxygine
 
     void STDMaterial::init()
     {
-        _addColor = 0;
+        _addColor = QColor(0, 0, 0, 0);
         _blend = blend_premultiplied_alpha;
         _flags = 0;
         _uberShader = &STDRenderer::uberShader;
@@ -41,7 +41,7 @@ namespace oxygine
         hash_combine(hash, (int)_blend);
         hash_combine(hash, _flags);
         hash_combine(hash, _uberShader);
-        hash_combine(hash, _addColor.argb);
+        hash_combine(hash, qRgba(_addColor));
     }
 
     void STDMaterial::xapply()
@@ -49,14 +49,16 @@ namespace oxygine
         STDRenderer* r = STDRenderer::getCurrent();
         r->setUberShaderProgram(_uberShader);
 
-        if (_addColor.argb)
+        if (_addColor.rgba())
         {
             r->setShaderFlags(_flags | UberShaderProgram::ADD_COLOR);
-            Vector4 vec = _addColor.toVector();
+            Vector4 vec = Vector4(_addColor.redF(), _addColor.greenF(), _addColor.blueF(), _addColor.alphaF());
             r->getDriver()->setUniform("add_color", vec);
         }
         else
+        {
             r->setShaderFlags(_flags);
+        }
 
         rsCache().setTexture(UberShaderProgram::SAMPLER_BASE, _base);
         rsCache().setTexture(UberShaderProgram::SAMPLER_ALPHA, _alpha);
@@ -69,13 +71,13 @@ namespace oxygine
     }
 
 
-    void STDMaterial::render(const AffineTransform& tr, const Color& c, const RectF& src, const RectF& dest)
+    void STDMaterial::render(const AffineTransform& tr, const QColor& c, const RectF& src, const RectF& dest)
     {
         STDRenderer::getCurrent()->setTransform(tr);
         STDRenderer::getCurrent()->addQuad(c, src, dest);
     }
 
-    void STDMaterial::render(const Color& c, const RectF& src, const RectF& dest)
+    void STDMaterial::render(const QColor& c, const RectF& src, const RectF& dest)
     {
         STDRenderer::getCurrent()->addQuad(c, src, dest);
     }

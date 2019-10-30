@@ -93,7 +93,7 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
         pSprite->addTween(queuedAnim);
         if (color != Qt::white)
         {
-            oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), color.alpha()));
+            oxygine::Sprite::TweenColor tweenColor(color);
             oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
             pSprite->addTween(tween);
         }
@@ -114,7 +114,7 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
 void GameAnimation::addText(QString text, float offsetX, float offsetY, float scale, QColor color)
 {
     oxygine::TextStyle style = FontManager::getTimesFont10();
-    style.color = oxygine::Color(static_cast<quint8>(color.red()), static_cast<quint8>(color.green()), static_cast<quint8>(color.blue()), static_cast<quint8>(color.alpha()));
+    style.color = color;
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = false;
@@ -176,8 +176,8 @@ void GameAnimation::addTweenColor(qint32 spriteIdx, QColor startColor, QColor en
     oxygine::Sprite* sprite = dynamic_cast<oxygine::Sprite*>(actor.get());
     if (sprite != nullptr)
     {
-        sprite->setColor(oxygine::Color(static_cast<quint8>(startColor.red()), static_cast<quint8>(startColor.green()), static_cast<quint8>(startColor.blue()), static_cast<quint8>(startColor.alpha())));
-        oxygine::Sprite::TweenColor tweenColor(oxygine::Color(static_cast<quint8>(endColor.red()), static_cast<quint8>(endColor.green()), static_cast<quint8>(endColor.blue()), static_cast<quint8>(endColor.alpha())));
+        sprite->setColor(startColor);
+        oxygine::Sprite::TweenColor tweenColor(endColor);
         oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(static_cast<qint64>(duration / Settings::getAnimationSpeed())), 1, twoSided, oxygine::timeMS(static_cast<qint64>(delay / Settings::getAnimationSpeed())));
         sprite->addTween(tween);
     }

@@ -7,6 +7,6 @@ namespace oxygine
     class TweenOutline : public TweenProxy
     {
     public:
-        TweenOutline(const Color& color, const PostProcessOptions& opt = PostProcessOptions());
+        TweenOutline(const QColor& color, const PostProcessOptions& opt = PostProcessOptions());
     };
 }

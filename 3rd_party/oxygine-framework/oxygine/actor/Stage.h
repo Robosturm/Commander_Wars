@@ -30,9 +30,9 @@ namespace oxygine
         /**use Scissor test for outer Stage area*/
         void setClipOuterArea(bool clip) {_clipOuter = clip;}
         /**Render all actors*/
-        void render(const Color* clearColor, const Rect& viewport, const Matrix& view, const Matrix& proj);
+        void render(const QColor* clearColor, const Rect& viewport, const Matrix& view, const Matrix& proj);
         /**Render all actors, simplified version*/
-        void render(const Color& clearColor, const Rect& viewport);
+        void render(const QColor& clearColor, const Rect& viewport);
 
         //const Rect    &getArea();
 

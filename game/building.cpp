@@ -119,13 +119,13 @@ void Building::loadSprite(QString spriteID, bool addPlayerColor)
         if (addPlayerColor && m_pOwner != nullptr)
         {
             QColor color = m_pOwner->getColor();
-            oxygine::Sprite::TweenColor tweenColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
+            oxygine::Sprite::TweenColor tweenColor(color);
             oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
             pSprite->addTween(tween);
         }
         else if (addPlayerColor)
         {
-            oxygine::Sprite::TweenColor tweenColor(oxygine::Color(150, 150, 150, 255));
+            oxygine::Sprite::TweenColor tweenColor(QColor(150, 150, 150, 255));
             oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
             pSprite->addTween(tween);
         }
@@ -168,7 +168,7 @@ void Building::updatePlayerColor(bool visible)
                     if (m_addPlayerColor[i])
                     {
                         QColor color = m_pOwner->getColor();
-                        m_pBuildingSprites[i]->setColor(oxygine::Color(color.red(), color.green(), color.blue(), 255));
+                        m_pBuildingSprites[i]->setColor(color);
                     }
                 }
             }

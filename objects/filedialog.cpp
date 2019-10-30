@@ -93,7 +93,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     pBox->setResAnim(pAnim);
     oxygine::spTextField textField = new oxygine::TextField();
     oxygine::TextStyle style = FontManager::getMainFont();
-    style.color = oxygine::Color(255, 255, 255, 255);
+    style.color = QColor(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
     style.multiline = true;
@@ -110,11 +110,11 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     // add some event handling :)
     pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
-        pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(32, 200, 32, 0)), oxygine::timeMS(300));
+        pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
     });
     pBox->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), oxygine::timeMS(300));
+        pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
     });
     pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -189,7 +189,7 @@ void FileDialog::showFolder(QString folder)
         pBox->setResAnim(pAnim);
         oxygine::spTextField textField = new oxygine::TextField();
         oxygine::TextStyle style = FontManager::getMainFont();
-        style.color = oxygine::Color(255, 255, 255, 255);
+        style.color = QColor(255, 255, 255, 255);
         style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
         style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
         style.multiline = false;
@@ -205,11 +205,11 @@ void FileDialog::showFolder(QString folder)
         // add some event handling :)
         pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
         {
-            pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(32, 200, 32, 0)), oxygine::timeMS(300));
+            pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(32, 200, 32, 0)), oxygine::timeMS(300));
         });
         pBox->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
         {
-            pBox->addTween(oxygine::Sprite::TweenAddColor(oxygine::Color(0, 0, 0, 0)), oxygine::timeMS(300));
+            pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
         });
         pBox->setPosition(0, 40 + itemCount * 40);
 

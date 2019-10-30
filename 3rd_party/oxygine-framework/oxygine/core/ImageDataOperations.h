@@ -13,7 +13,7 @@ namespace oxygine
         void move(const ImageData& src, const ImageData& dest);
 
         void blit(const ImageData& src, const ImageData& dest);
-        void blitColored(const ImageData& src, const ImageData& dest, const Color& c);
+        void blitColored(const ImageData& src, const ImageData& dest, const QColor& c);
         void blitPremultiply(const ImageData& src, const ImageData& dest);
         void premultiply(const ImageData& dest);
         void flipY(const ImageData& src, const ImageData& dest);

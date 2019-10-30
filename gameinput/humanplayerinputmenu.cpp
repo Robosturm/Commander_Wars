@@ -113,11 +113,11 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
         // set color font based
         if (!enabled)
         {
-            style.color = oxygine::Color(255, 0, 0, 255);
+            style.color = QColor(255, 0, 0, 255);
         }
         else
         {
-            style.color = oxygine::Color(255, 255, 255, 255);
+            style.color = QColor(255, 255, 255, 255);
         }
         textField->setStyle(style);
         textField->setHtmlText(texts[i].toStdString().c_str());
