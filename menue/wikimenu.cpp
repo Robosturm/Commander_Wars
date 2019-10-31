@@ -51,7 +51,7 @@ Wikimenu::Wikimenu()
     qint32 y = 10;
     oxygine::spTextField pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
-    pTextfield->setText(tr("Search: ").toStdString().c_str());
+    pTextfield->setText(tr("Search: "));
     pTextfield->setPosition(10, y);
     addChild(pTextfield);
     m_SearchString = new Textbox(Settings::getWidth() - 380);
@@ -70,7 +70,7 @@ Wikimenu::Wikimenu()
 
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
-    pTextfield->setText(tr("Search Tags: ").toStdString().c_str());
+    pTextfield->setText(tr("Search Tags: "));
     pTextfield->setPosition(10, y);
     addChild(pTextfield);
     m_Tags = new DropDownmenu(300, WikiDatabase::getInstance()->getTags());
@@ -149,7 +149,7 @@ void Wikimenu::search(bool onlyTag)
 
         // loop through all entries :)
         QString item = std::get<0>(items[i]);
-        textField->setHtmlText(item.toStdString().c_str());
+        textField->setHtmlText(item);
         pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
             emit sigShowWikipage(items[i]);

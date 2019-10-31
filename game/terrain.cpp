@@ -855,7 +855,7 @@ qint32 Terrain::getBonusVision(Unit* pUnit)
 void Terrain::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
-    pStream << terrainID.toStdString().c_str();
+    pStream << terrainID;
     if (m_pBaseTerrain.get() == nullptr)
     {
         pStream << false;
@@ -897,9 +897,16 @@ void Terrain::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
-    char* id;
-    pStream >> id;
-    terrainID = id;
+    if (version > 2)
+    {
+        pStream >> terrainID;
+    }
+    else
+    {
+        char* id;
+        pStream >> id;
+        terrainID = id;
+    }
     init();
     bool hasBaseTerrain = false;
     pStream >> hasBaseTerrain;

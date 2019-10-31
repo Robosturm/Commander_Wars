@@ -34,7 +34,7 @@ DialogRandomMap::DialogRandomMap()
     oxygine::spTextField text = new oxygine::TextField();
     oxygine::TextStyle style = FontManager::getMainFont();
     text->setStyle(style);
-    text->setHtmlText(tr("Map name:").toStdString().c_str());
+    text->setHtmlText(tr("Map name:"));
     text->setPosition(30, y);
     pPanel->addItem(text);
     m_MapName = new Textbox(pApp->getSettings()->getWidth() - 150 - width);
@@ -46,7 +46,7 @@ DialogRandomMap::DialogRandomMap()
     // Label
     text = new oxygine::TextField();
     text->setStyle(style);
-    text->setHtmlText(tr("Map Author:").toStdString().c_str());
+    text->setHtmlText(tr("Map Author:"));
     text->setPosition(30, y);
     pPanel->addItem(text);
     m_MapAuthor = new Textbox(pApp->getSettings()->getWidth() - 150 - width);
@@ -58,7 +58,7 @@ DialogRandomMap::DialogRandomMap()
     // Label
     text = new oxygine::TextField();
     text->setStyle(style);
-    text->setHtmlText(tr("Map Description:").toStdString().c_str());
+    text->setHtmlText(tr("Map Description:"));
     text->setPosition(30, y);
     pPanel->addItem(text);
     m_MapDescription = new Textbox(pApp->getSettings()->getWidth() - 150 - width);
@@ -70,7 +70,7 @@ DialogRandomMap::DialogRandomMap()
     // Label
     text = new oxygine::TextField();
     text->setStyle(style);
-    text->setHtmlText(tr("Map width:").toStdString().c_str());
+    text->setHtmlText(tr("Map width:"));
     text->setPosition(30, 5 + y );
     pPanel->addItem(text);
     m_MapWidth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
@@ -82,7 +82,7 @@ DialogRandomMap::DialogRandomMap()
     y += 40;
     text = new oxygine::TextField();
     text->setStyle(style);
-    text->setHtmlText(tr("Map heigth:").toStdString().c_str());
+    text->setHtmlText(tr("Map heigth:"));
     text->setPosition(30, 5 + y + text->getHeight());
     pPanel->addItem(text);
     m_MapHeigth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
@@ -94,7 +94,7 @@ DialogRandomMap::DialogRandomMap()
     y += 40;
     text = new oxygine::TextField();
     text->setStyle(style);
-    text->setHtmlText(tr("Map Player:").toStdString().c_str());
+    text->setHtmlText(tr("Map Player:"));
     text->setPosition(30, 5 + y + text->getHeight());
     pPanel->addItem(text);
     m_MapPlayerCount = new SpinBox(300, 2, 40, SpinBox::Mode::Int);
@@ -106,7 +106,7 @@ DialogRandomMap::DialogRandomMap()
     y += 40;
     text = new oxygine::TextField();
     text->setStyle(style);
-    text->setHtmlText(tr("Map Seed:").toStdString().c_str());
+    text->setHtmlText(tr("Map Seed:"));
     text->setPosition(30, 5 + y + text->getHeight());
     pPanel->addItem(text);
     m_Seed = new SpinBox(300, 0, std::numeric_limits<qint32>::max() - 1, SpinBox::Mode::Int);
@@ -118,7 +118,7 @@ DialogRandomMap::DialogRandomMap()
     y += 40;
     text = new oxygine::TextField();
     text->setStyle(style);
-    text->setHtmlText(tr("Create Road:").toStdString().c_str());
+    text->setHtmlText(tr("Create Road:"));
     text->setPosition(30, 5 + y + text->getHeight());
     pPanel->addItem(text);
     m_CreateRoad = new Checkbox();
@@ -130,7 +130,7 @@ DialogRandomMap::DialogRandomMap()
     y += 40;
     text = new oxygine::TextField();
     text->setStyle(style);
-    text->setHtmlText(tr("Terrain Distribution").toStdString().c_str());
+    text->setHtmlText(tr("Terrain Distribution"));
     text->setPosition(30, 5 + y + text->getHeight());
     pPanel->addItem(text);
 
@@ -145,7 +145,7 @@ DialogRandomMap::DialogRandomMap()
     y += 40 * terrainStrings.size();
     text = new oxygine::TextField();
     text->setStyle(style);
-    text->setHtmlText(tr("Building Distribution").toStdString().c_str());
+    text->setHtmlText(tr("Building Distribution"));
     text->setPosition(30, 5 + y + text->getHeight());
     pPanel->addItem(text);
 

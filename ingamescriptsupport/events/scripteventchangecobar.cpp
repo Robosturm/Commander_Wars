@@ -86,7 +86,7 @@ void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
 
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Player: ").toStdString().c_str());
+    pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, 9999);
@@ -101,7 +101,7 @@ void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("CO: ").toStdString().c_str());
+    pText->setHtmlText(tr("CO: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 1, 2);
@@ -117,7 +117,7 @@ void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Stars: ").toStdString().c_str());
+    pText->setHtmlText(tr("Stars: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, -100, 100, SpinBox::Mode::Float);

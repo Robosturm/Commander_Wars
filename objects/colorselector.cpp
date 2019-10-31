@@ -37,7 +37,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
     }
     oxygine::spTextField pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("Red: ").toStdString().c_str());
+    pLabel->setHtmlText(tr("Red: "));
     pLabel->setPosition(space * 0, y);
     addChild(pLabel);
     m_SpinBoxRed = new SpinBox(space - pLabel->getTextRect().getWidth() - 20, 0, 255);
@@ -50,7 +50,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
 
     pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("Green: ").toStdString().c_str());
+    pLabel->setHtmlText(tr("Green: "));
     pLabel->setPosition(space * 1, y);
     addChild(pLabel);
     m_SpinBoxGreen = new SpinBox(space - pLabel->getTextRect().getWidth() - 20, 0, 255);
@@ -63,7 +63,7 @@ ColorSelector::ColorSelector(QColor color, qint32 pixelSize)
 
     pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("Blue: ").toStdString().c_str());
+    pLabel->setHtmlText(tr("Blue: "));
     pLabel->setPosition(space * 2, y);
     addChild(pLabel);
     m_SpinBoxBlue= new SpinBox(space - pLabel->getTextRect().getWidth() - 20, 0, 255);

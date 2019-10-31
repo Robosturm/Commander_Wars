@@ -94,7 +94,7 @@ void Textbox::update(const oxygine::UpdateState& us)
         {
             toggle.start();
         }
-        m_Textfield->setHtmlText(drawText.toStdString().c_str());
+        m_Textfield->setHtmlText(drawText);
 
         if (m_Text.size() > 0)
         {
@@ -124,7 +124,7 @@ void Textbox::update(const oxygine::UpdateState& us)
     }
     else
     {
-        m_Textfield->setHtmlText(m_Text.toStdString().c_str());
+        m_Textfield->setHtmlText(m_Text);
     }
     oxygine::Actor::update(us);
 }

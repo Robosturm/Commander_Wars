@@ -83,7 +83,11 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Attack power high. Can <div c='00ff00'>capture </div> bases. <div c='00ff00'>Vision +3 </div> when on mountains.");
+        return "<r>" + qsTr("Attack power high. Can ") + "</r>" +
+               "<div c='#00ff00'>" + qsTr("capture ") + "</div>" +
+               "<r>" + qsTr(" bases. ") + "</r>" +
+               "<div c='#00ff00'>" + qsTr("Vision +3 ") + "</div>" +
+               "<r>" + qsTr(" when on mountains.") + "</r>";
     };
     this.getUnitType = function()
     {

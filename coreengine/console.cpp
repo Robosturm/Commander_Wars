@@ -236,7 +236,7 @@ void Console::update(const oxygine::UpdateState& us)
             toggle.start();
         }
         drawText += "> " + curprintmsg;
-        m_text->setHtmlText(drawText.toStdString().c_str());
+        m_text->setHtmlText(drawText);
     }
     oxygine::Actor::update(us);
 }
@@ -1311,12 +1311,12 @@ void Console::KeyInput(oxygine::KeyEvent event)
                 }
                 case Qt::Key_C:
                 {
-                    QGuiApplication::clipboard()->setText(curmsg.toStdString().c_str());
+                    QGuiApplication::clipboard()->setText(curmsg);
                     break;
                 }
                 case Qt::Key_X:
                 {
-                    QGuiApplication::clipboard()->setText(curmsg.toStdString().c_str());
+                    QGuiApplication::clipboard()->setText(curmsg);
                     curmsg = "";
                     curmsgpos = 0;
                     break;

@@ -284,7 +284,7 @@ void GameMenue::updateTimer()
     {
         roundTime = 0;
     }
-    m_CurrentRoundTime->setHtmlText(QTime::fromMSecsSinceStartOfDay(roundTime).toString("hh:mm:ss").toStdString().c_str());
+    m_CurrentRoundTime->setHtmlText(QTime::fromMSecsSinceStartOfDay(roundTime).toString("hh:mm:ss"));
     pApp->continueThread();
 }
 

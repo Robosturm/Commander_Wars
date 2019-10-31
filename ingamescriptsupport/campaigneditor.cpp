@@ -61,7 +61,7 @@ CampaignEditor::CampaignEditor()
     style.multiline = false;
     oxygine::spTextField pText = new  oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Campaign Folder:").toStdString().c_str());
+    pText->setHtmlText(tr("Campaign Folder:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
     m_CampaignFolder = new Textbox(pApp->getSettings()->getWidth() - 500);
@@ -80,7 +80,7 @@ CampaignEditor::CampaignEditor()
     y += 40;
     pText = new  oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Campaign Name:").toStdString().c_str());
+    pText->setHtmlText(tr("Campaign Name:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
     m_Name = new Textbox(pApp->getSettings()->getWidth() - 500);
@@ -91,7 +91,7 @@ CampaignEditor::CampaignEditor()
     y += 40;
     pText = new  oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Campaign Author:").toStdString().c_str());
+    pText->setHtmlText(tr("Campaign Author:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
     m_Author = new Textbox(pApp->getSettings()->getWidth() - 500);
@@ -102,7 +102,7 @@ CampaignEditor::CampaignEditor()
     y += 40;
     pText = new  oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Campaign Description:").toStdString().c_str());
+    pText->setHtmlText(tr("Campaign Description:"));
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
     m_Description = new Textbox(pApp->getSettings()->getWidth() - 500);
@@ -258,7 +258,7 @@ void CampaignEditor::updateCampaignData()
         style.multiline = false;
         oxygine::spTextField pText = new  oxygine::TextField();
         pText->setStyle(style);
-        pText->setHtmlText(mapDatas[i].mapName.toStdString().c_str());
+        pText->setHtmlText(mapDatas[i].mapName);
         pText->setPosition(10, 10 + i * 40);
         m_Panel->addItem(pText);
 
@@ -289,7 +289,7 @@ void CampaignEditor::updateCampaignData()
 
         pText = new  oxygine::TextField();
         pText->setStyle(style);
-        pText->setHtmlText(tr("Last Map").toStdString().c_str());
+        pText->setHtmlText(tr("Last Map"));
         pText->setPosition(670, 10 + i * 40);
         m_Panel->addItem(pText);
 
@@ -618,7 +618,7 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
 
     oxygine::spTextField pText = new  oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Enable Map Count:").toStdString().c_str());
+    pText->setHtmlText(tr("Enable Map Count:"));
     pText->setPosition(10, 10);
     pPanel->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 0, mapDatas.size() - 1);
@@ -638,7 +638,7 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
         {
             pText = new  oxygine::TextField();
             pText->setStyle(style);
-            pText->setHtmlText(mapDatas[i].mapName.toStdString().c_str());
+            pText->setHtmlText(mapDatas[i].mapName);
             pText->setPosition(10, 50 + counter * 40);
             pPanel->addItem(pText);
 
@@ -688,7 +688,7 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
 
     oxygine::spTextField pText = new  oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Disable Map Count:").toStdString().c_str());
+    pText->setHtmlText(tr("Disable Map Count:"));
     pText->setPosition(10, 10);
     pPanel->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, mapDatas.size() - 1);
@@ -706,7 +706,7 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
     {
         pText = new  oxygine::TextField();
         pText->setStyle(style);
-        pText->setHtmlText(mapDatas[i].mapName.toStdString().c_str());
+        pText->setHtmlText(mapDatas[i].mapName);
         pText->setPosition(10, 50 + counter * 40);
         pPanel->addItem(pText);
 

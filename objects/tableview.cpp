@@ -42,7 +42,7 @@ TableView::TableView(qint32 width, QVector<QStringList> data, QStringList header
         pClipRect->setPosition(i * (fieldWidth + 5) + 5, 8);
         oxygine::spTextField pTextfield = new oxygine::TextField();
         pTextfield->setStyle(style);
-        pTextfield->setHtmlText(header[i].toStdString().c_str());
+        pTextfield->setHtmlText(header[i]);
         pClipRect->addChild(pTextfield);
         addChild(pClipRect);
 
@@ -102,7 +102,7 @@ TableView::TableView(qint32 width, QVector<QStringList> data, QStringList header
             pClipRect->setPosition(i2 * (fieldWidth + 5) + 5, 8 + (i + 1) * 40);
             oxygine::spTextField pTextfield = new oxygine::TextField();
             pTextfield->setStyle(style);
-            pTextfield->setHtmlText(data[i][i2].toStdString().c_str());
+            pTextfield->setHtmlText(data[i][i2]);
             pClipRect->addChild(pTextfield);
             addChild(pClipRect);
             if (selectable)

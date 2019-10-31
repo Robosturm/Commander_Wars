@@ -15,7 +15,7 @@ SelectKey::SelectKey(Qt::Key code)
     m_Button->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event * )->void
     {
         oxygine::TextField* pText = dynamic_cast<oxygine::TextField*>(m_Button->getFirstChild().get());
-        pText->setHtmlText(tr("Press Key").toStdString().c_str());
+        pText->setHtmlText(tr("Press Key"));
         active = true;
     });
     addEventListener(oxygine::TouchEvent::OUTX, [=](oxygine::Event * )->void
@@ -130,7 +130,7 @@ void SelectKey::setKeycode(Qt::Key code)
     {
         currentCode = code;
         oxygine::TextField* pText = dynamic_cast<oxygine::TextField*>(m_Button->getFirstChild().get());
-        pText->setHtmlText((tr("Key ") + codeText).toStdString().c_str());
+        pText->setHtmlText((tr("Key ") + codeText));
         active = false;
         emit sigKeyChanged(currentCode);
     }

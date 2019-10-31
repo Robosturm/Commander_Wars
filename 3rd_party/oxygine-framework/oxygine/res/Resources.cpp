@@ -17,7 +17,7 @@
 namespace oxygine
 {
     Resources::registeredResources Resources::_registeredResources;
-    ResAnim* _defaultMissingRS = 0;
+    ResAnim* _defaultMissingRS = nullptr;
 
     void Resources::registerResourceType(Resources::createResourceCallback creationCallback, const char* resTypeID)
     {
@@ -244,7 +244,9 @@ namespace oxygine
             if (res)
             {
                 if (context.walker.getLoad())
+                {
                     res->load(nullptr);
+                }
                 res->setParent(this);
                 _resources.push_back(res);
             }

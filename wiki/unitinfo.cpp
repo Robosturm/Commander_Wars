@@ -35,7 +35,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     qint32 y = 0;
     oxygine::spTextField pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText((tr("Unit Information ") + name).toStdString().c_str());
+    pLabel->setHtmlText((tr("Unit Information ") + name));
     pLabel->setScale(2.0f);
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth(), 0);
     addChild(pLabel);
@@ -44,7 +44,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     pLabel = new oxygine::TextField();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
-    pLabel->setHtmlText(description.toStdString().c_str());
+    pLabel->setHtmlText(description);
     pLabel->setScale(1.0f);
     pLabel->setPosition(0, y);
     addChild(pLabel);
@@ -71,14 +71,14 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     pLabel = new oxygine::TextField();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("Unit Type:").toStdString().c_str());
+    pLabel->setHtmlText(tr("Unit Type:"));
     pLabel->setScale(1.0f);
     pLabel->setPosition(0, y);
     addChild(pLabel);
     pLabel = new oxygine::TextField();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
-    pLabel->setHtmlText(GameEnums::getUnitTypeText(pUnit->getUnitType()).toStdString().c_str());
+    pLabel->setHtmlText(GameEnums::getUnitTypeText(pUnit->getUnitType()));
     pLabel->setScale(1.0f);
     pLabel->setPosition(xOffset, y);
     addChild(pLabel);
@@ -92,14 +92,14 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pLabel = new oxygine::TextField();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
-        pLabel->setHtmlText(tr("Firerange:").toStdString().c_str());
+        pLabel->setHtmlText(tr("Firerange:"));
         pLabel->setScale(1.0f);
         pLabel->setPosition(0, y);
         addChild(pLabel);
         pLabel = new oxygine::TextField();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
-        pLabel->setHtmlText((QString::number(pUnit->getMinRange()) + " - " + QString::number(pUnit->getBaseMaxRange())).toStdString().c_str());
+        pLabel->setHtmlText((QString::number(pUnit->getMinRange()) + " - " + QString::number(pUnit->getBaseMaxRange())));
         pLabel->setScale(1.0f);
         pLabel->setPosition(xOffset, y);
         addChild(pLabel);
@@ -110,14 +110,14 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     pLabel = new oxygine::TextField();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("Movementpoints:").toStdString().c_str());
+    pLabel->setHtmlText(tr("Movementpoints:"));
     pLabel->setScale(1.0f);
     pLabel->setPosition(0, y);
     addChild(pLabel);
     pLabel = new oxygine::TextField();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
-    pLabel->setHtmlText((QString::number(pUnit->getBaseMovementPoints())).toStdString().c_str());
+    pLabel->setHtmlText((QString::number(pUnit->getBaseMovementPoints())));
     pLabel->setScale(1.0f);
     pLabel->setPosition(xOffset, y);
     addChild(pLabel);
@@ -127,14 +127,14 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     pLabel = new oxygine::TextField();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("Vision:").toStdString().c_str());
+    pLabel->setHtmlText(tr("Vision:"));
     pLabel->setScale(1.0f);
     pLabel->setPosition(0, y);
     addChild(pLabel);
     pLabel = new oxygine::TextField();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
-    pLabel->setHtmlText((QString::number(pUnit->getBaseVision())).toStdString().c_str());
+    pLabel->setHtmlText((QString::number(pUnit->getBaseVision())));
     pLabel->setScale(1.0f);
     pLabel->setPosition(xOffset, y);
     addChild(pLabel);
@@ -144,7 +144,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     pLabel = new oxygine::TextField();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("Fuel:").toStdString().c_str());
+    pLabel->setHtmlText(tr("Fuel:"));
     pLabel->setScale(1.0f);
     pLabel->setPosition(0, y);
     addChild(pLabel);
@@ -153,7 +153,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     pLabel->setStyle(style);
     if (pUnit->getMaxFuel() > 0)
     {
-        pLabel->setHtmlText((QString::number(pUnit->getFuel()) + " / " + QString::number(pUnit->getMaxFuel())).toStdString().c_str());
+        pLabel->setHtmlText((QString::number(pUnit->getFuel()) + " / " + QString::number(pUnit->getMaxFuel())));
     }
     else
     {
@@ -170,14 +170,14 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pLabel = new oxygine::TextField();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
-        pLabel->setHtmlText(tr("Ammo 1:").toStdString().c_str());
+        pLabel->setHtmlText(tr("Ammo 1:"));
         pLabel->setScale(1.0f);
         pLabel->setPosition(0, y);
         addChild(pLabel);
         pLabel = new oxygine::TextField();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
-        pLabel->setHtmlText((QString::number(pUnit->getAmmo1()) + " / " + QString::number(pUnit->getMaxAmmo1())).toStdString().c_str());
+        pLabel->setHtmlText((QString::number(pUnit->getAmmo1()) + " / " + QString::number(pUnit->getMaxAmmo1())));
         pLabel->setScale(1.0f);
         pLabel->setPosition(xOffset, y);
         addChild(pLabel);
@@ -189,14 +189,14 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pLabel = new oxygine::TextField();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
-        pLabel->setHtmlText(tr("Ammo 2:").toStdString().c_str());
+        pLabel->setHtmlText(tr("Ammo 2:"));
         pLabel->setScale(1.0f);
         pLabel->setPosition(0, y);
         addChild(pLabel);
         pLabel = new oxygine::TextField();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
-        pLabel->setHtmlText((QString::number(pUnit->getAmmo2()) + " / " + QString::number(pUnit->getMaxAmmo2())).toStdString().c_str());
+        pLabel->setHtmlText((QString::number(pUnit->getAmmo2()) + " / " + QString::number(pUnit->getMaxAmmo2())));
         pLabel->setScale(1.0f);
         pLabel->setPosition(xOffset, y);
         addChild(pLabel);
@@ -209,14 +209,14 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pLabel = new oxygine::TextField();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
-        pLabel->setHtmlText(tr("Loading Place:").toStdString().c_str());
+        pLabel->setHtmlText(tr("Loading Place:"));
         pLabel->setScale(1.0f);
         pLabel->setPosition(0, y);
         addChild(pLabel);
         pLabel = new oxygine::TextField();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
-        pLabel->setHtmlText((QString::number(pUnit->getLoadedUnitCount()) + " / " + QString::number(pUnit->getLoadingPlace())).toStdString().c_str());
+        pLabel->setHtmlText((QString::number(pUnit->getLoadedUnitCount()) + " / " + QString::number(pUnit->getLoadingPlace())));
         pLabel->setScale(1.0f);
         pLabel->setPosition(xOffset, y);
         addChild(pLabel);
@@ -233,7 +233,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     name = pMovementTableManager->getMovementName(id);
     pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText((tr("Movement ") + name).toStdString().c_str());
+    pLabel->setHtmlText((tr("Movement ") + name));
     pLabel->setScale(2.0f);
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth(), y);
     addChild(pLabel);
@@ -254,7 +254,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pLabel->setStyle(style);
         if (costs >= 0)
         {
-            pLabel->setHtmlText(QString::number(static_cast<qint32>(costs)).toStdString().c_str());
+            pLabel->setHtmlText(QString::number(static_cast<qint32>(costs)));
         }
         else
         {
@@ -298,7 +298,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pLabel->setStyle(style);
         if (costs > 0)
         {
-            pLabel->setHtmlText(QString::number(static_cast<qint32>(costs)).toStdString().c_str());
+            pLabel->setHtmlText(QString::number(static_cast<qint32>(costs)));
         }
         else
         {
@@ -320,7 +320,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     {
         pLabel = new oxygine::TextField();
         pLabel->setStyle(style);
-        pLabel->setHtmlText((tr("Weapon 1 ") + pWeaponManager->getWeaponName(pUnit->getWeapon1ID())).toStdString().c_str());
+        pLabel->setHtmlText((tr("Weapon 1 ") + pWeaponManager->getWeaponName(pUnit->getWeapon1ID())));
         pLabel->setScale(2.0f);
         pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth(), y);
         addChild(pLabel);
@@ -332,7 +332,7 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     {
         pLabel = new oxygine::TextField();
         pLabel->setStyle(style);
-        pLabel->setHtmlText((tr("Weapon 2 ") + pWeaponManager->getWeaponName(pUnit->getWeapon2ID())).toStdString().c_str());
+        pLabel->setHtmlText((tr("Weapon 2 ") + pWeaponManager->getWeaponName(pUnit->getWeapon2ID())));
         pLabel->setScale(2.0f);
         pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth(), y);
         addChild(pLabel);
@@ -364,7 +364,7 @@ void UnitInfo::createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint3
         pLabel->setStyle(style);
         if (damage > 0)
         {
-            pLabel->setHtmlText((QString::number(static_cast<qint32>(damage))  + " %").toStdString().c_str());
+            pLabel->setHtmlText((QString::number(static_cast<qint32>(damage))  + " %"));
         }
         else
         {

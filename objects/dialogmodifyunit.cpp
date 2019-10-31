@@ -71,7 +71,7 @@ void DialogModifyUnit::updateData()
     style.multiline = false;
     oxygine::spTextField pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText((tr("Unit: ") + m_pUnit->getName()).toStdString().c_str());
+    pLabel->setHtmlText((tr("Unit: ") + m_pUnit->getName()));
     pLabel->setScale(2.0f);
     pLabel->setPosition(m_pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth(), 10);
     m_pPanel->addItem(pLabel);
@@ -80,7 +80,7 @@ void DialogModifyUnit::updateData()
     qint32 y = 30 + pLabel->getTextRect().getHeight() * 2;
     pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("HP: ").toStdString().c_str());
+    pLabel->setHtmlText(tr("HP: "));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
     spSlider pSlider = new Slider(pApp->getSettings()->getWidth() - 40 - sliderOffset, 1, 10, tr("HP"));
@@ -96,7 +96,7 @@ void DialogModifyUnit::updateData()
     {
         pLabel = new oxygine::TextField();
         pLabel->setStyle(style);
-        pLabel->setHtmlText(tr("Fuel: ").toStdString().c_str());
+        pLabel->setHtmlText(tr("Fuel: "));
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
         spSlider pSlider = new Slider(pApp->getSettings()->getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxFuel(), tr("Fuel"));
@@ -121,7 +121,7 @@ void DialogModifyUnit::updateData()
     {
         pLabel = new oxygine::TextField();
         pLabel->setStyle(style);
-        pLabel->setHtmlText(tr("Ammo 1: ").toStdString().c_str());
+        pLabel->setHtmlText(tr("Ammo 1: "));
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
         spSlider pSlider = new Slider(pApp->getSettings()->getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxAmmo1(), tr("Ammo"));
@@ -146,7 +146,7 @@ void DialogModifyUnit::updateData()
     {
         pLabel = new oxygine::TextField();
         pLabel->setStyle(style);
-        pLabel->setHtmlText(tr("Ammo 2: ").toStdString().c_str());
+        pLabel->setHtmlText(tr("Ammo 2: "));
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
         spSlider pSlider = new Slider(pApp->getSettings()->getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxAmmo2(), tr("Ammo"));
@@ -170,7 +170,7 @@ void DialogModifyUnit::updateData()
 
     pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("Player: ").toStdString().c_str());
+    pLabel->setHtmlText(tr("Player: "));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
     QVector<QString> items;
@@ -192,7 +192,7 @@ void DialogModifyUnit::updateData()
 
     pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("AI-Mode: ").toStdString().c_str());
+    pLabel->setHtmlText(tr("AI-Mode: "));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
     items = {tr("Normal"), tr("Offensive"), tr("Defensive"), tr("Hold")};
@@ -208,7 +208,7 @@ void DialogModifyUnit::updateData()
 
     pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("Unit Rank: ").toStdString().c_str());
+    pLabel->setHtmlText(tr("Unit Rank: "));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
     items = {tr("Soldier"), tr("Lieutenant"), tr("General"), tr("Veteran"), tr("CO 1"), tr("CO 2")};
@@ -244,7 +244,7 @@ void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
     style.multiline = false;
     oxygine::spTextField  pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText((tr("Loaded Unit ") + QString::number(index + 1) + ": ").toStdString().c_str());
+    pLabel->setHtmlText((tr("Loaded Unit ") + QString::number(index + 1) + ": "));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
     QVector<QString> items = {"-"};

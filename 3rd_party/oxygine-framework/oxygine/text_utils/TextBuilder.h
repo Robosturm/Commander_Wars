@@ -2,6 +2,8 @@
 #include "../oxygine-include.h"
 #include <string>
 
+class QXmlStreamReader;
+
 namespace oxygine
 {
     namespace text
@@ -14,7 +16,10 @@ namespace oxygine
             TextBuilder();
             virtual ~TextBuilder();
 
-            text::Node* parse(const std::string& str);
+            text::Node* parse(const QString& str);
+
+        private:
+            text::Node*  create(QXmlStreamReader& reader);
         };
     }
 }

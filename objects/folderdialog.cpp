@@ -183,7 +183,7 @@ void FolderDialog::showFolder(QString folder)
         // loop through all entries :)
         if (infoList[i].isDir())
         {
-            textField->setHtmlText(infoList[i].absoluteFilePath().replace(folder, "").toStdString().c_str());
+            textField->setHtmlText(infoList[i].absoluteFilePath().replace(folder, ""));
             pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
             {
                 emit sigShowFolder(myPath);

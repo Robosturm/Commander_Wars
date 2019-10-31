@@ -397,21 +397,21 @@ void COSelection::hoveredCOChanged(QString coid)
         {
             coSuperpower = value.toString();
         }
-        m_COName->setHtmlText(coName.toStdString().c_str());
+        m_COName->setHtmlText(coName);
         m_COName->setX(165 + m_COName->getScaledWidth() / 2 - m_COName->getTextRect().getWidth() / 2);
 
-        m_COBio->setHtmlText(coBio.toStdString().c_str());
+        m_COBio->setHtmlText(coBio);
         m_COBio->setHeight(m_COBio->getTextRect().getHeight() + 20);
         m_COBioRect->setContent(m_COBio);
         m_COBioRect->snap();
 
-        m_CODesc->setHtmlText(coDesc.toStdString().c_str());
+        m_CODesc->setHtmlText(coDesc);
         m_CODesc->setHeight(m_CODesc->getTextRect().getHeight() + 20);
         m_CODescRect->setContent(m_CODesc);
         m_CODescRect->snap();
 
-        m_COPower->setHtmlText(coPower.toStdString().c_str());
-        m_COSuperpower->setHtmlText(coSuperpower.toStdString().c_str());
+        m_COPower->setHtmlText(coPower);
+        m_COSuperpower->setHtmlText(coSuperpower);
     }
     pApp->continueThread();
 }

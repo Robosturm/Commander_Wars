@@ -87,7 +87,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
 
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Player: ").toStdString().c_str());
+    pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, 9999);
@@ -102,7 +102,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Unit ID: ").toStdString().c_str());
+    pText->setHtmlText(tr("Unit ID: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     QVector<QString> items;
@@ -128,7 +128,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Remove: ").toStdString().c_str());
+    pText->setHtmlText(tr("Remove: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
 

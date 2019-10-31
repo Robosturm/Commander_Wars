@@ -43,7 +43,8 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("In Fog of War conditions, the ruins provide ground unit <div c='00ff00'>hiding places.</div>");
+        return "<r>" + qsTr("In Fog of War conditions, the ruins provide ground unit ") + "</r>" +
+               "<div c='#00ff00'>" + qsTr("hiding places.") + "</div>";
     };
 
     this.getTerrainSprites = function()

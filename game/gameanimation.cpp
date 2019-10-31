@@ -120,7 +120,7 @@ void GameAnimation::addText(QString text, float offsetX, float offsetY, float sc
     style.multiline = false;
     oxygine::spTextField pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText(text.toStdString().c_str());
+    pTextfield->setHtmlText(text);
     pTextfield->setPosition(offsetX, offsetY);
     pTextfield->setScale(scale);
     addChild(pTextfield);

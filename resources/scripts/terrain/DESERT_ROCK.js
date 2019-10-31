@@ -58,7 +58,9 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Clear view. In Fog of War, Infantry unit's gain <div c='00ff00'>vision +3.</div> It reduces the firerange of indirect units by 1.");
+        return "<r>" + qsTr("Clear view. In Fog of War, Infantry unit's gain ") + "</r>" +
+               "<div c='#00ff00'>" + qsTr("vision +3.") + "</div>" +
+               "<r>" + qsTr(" It reduces the firerange of indirect units by 1.") + "</r>";
     };
 
     this.getTerrainSprites = function()

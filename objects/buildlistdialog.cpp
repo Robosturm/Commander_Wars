@@ -113,7 +113,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
 
     oxygine::spTextField pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("Build List").toStdString().c_str());
+    pLabel->setHtmlText(tr("Build List"));
     pLabel->setScale(2.0f);
     pLabel->setPosition(pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth(), 10);
     pPanel->addItem(pLabel);
@@ -150,7 +150,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
 
         pLabel = new oxygine::TextField();
         pLabel->setStyle(style);
-        pLabel->setHtmlText(pUnit->getName().toStdString().c_str());
+        pLabel->setHtmlText(pUnit->getName());
 
         pLabel->setPosition(x, y);
         pUnit->setPosition(x + 220 - GameMap::Imagesize * 1.25f - 10, y);

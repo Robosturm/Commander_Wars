@@ -281,7 +281,7 @@ void MapSelection::updateSelection(qint32 startIndex)
             QDir dir(m_Files[currentStartIndex + i]);
             if (m_Files[currentStartIndex + i] == "..")
             {
-                m_Items[i]->setHtmlText(m_Files[currentStartIndex + i].toStdString().c_str());
+                m_Items[i]->setHtmlText(m_Files[currentStartIndex + i]);
             }
             else if (dir.exists())
             {
@@ -297,7 +297,7 @@ void MapSelection::updateSelection(qint32 startIndex)
                     }
                     item += data3[i2].replace(0, 1, data3[i2][0].toUpper());
                 }
-                m_Items[i]->setHtmlText(item.toStdString().c_str());
+                m_Items[i]->setHtmlText(item);
             }
             else
             {
@@ -320,11 +320,11 @@ void MapSelection::updateSelection(qint32 startIndex)
                         }
                         item += data3[i2].replace(0, 1, data3[i2][0].toUpper());
                     }
-                    m_Items[i]->setHtmlText(item.toStdString().c_str());
+                    m_Items[i]->setHtmlText(item);
                 }
                 else
                 {
-                    m_Items[i]->setHtmlText(name.toStdString().c_str());
+                    m_Items[i]->setHtmlText(name);
                 }
             }
         }

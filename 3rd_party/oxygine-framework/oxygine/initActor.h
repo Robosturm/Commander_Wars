@@ -65,8 +65,8 @@ namespace oxygine
         typedef argT<char, char, Actor, &Actor::setExtendedClickArea> extendedClickArea;
 
         typedef argT<TextStyle, const TextStyle&, TextField, &TextField::setStyle> style;
-        typedef argT<std::string, const std::string&, TextField, &TextField::setText> text;
-        typedef argT<std::string, const std::string&, TextField, &TextField::setHtmlText> htmlText;
+        typedef argT<QString, const QString&, TextField, &TextField::setText> text;
+        typedef argT<QString, const QString&, TextField, &TextField::setHtmlText> htmlText;
         typedef argT<TextStyle::HorizontalAlign, TextStyle::HorizontalAlign, TextField, &TextField::setHAlign> hAlign;
         typedef argT<TextStyle::VerticalAlign, TextStyle::VerticalAlign, TextField, &TextField::setVAlign> vAlign;
         typedef argT<int, int, TextField, &TextField::setFontSize> fontSize;

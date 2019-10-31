@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+#include <qxmlstream.h>
+
 namespace pugi
 {
     class xml_node;
@@ -67,7 +69,7 @@ namespace oxygine
         public:
             static void setDefaultMissingSymbol(int);
 
-            TextNode(std::string v);
+            TextNode(QString v);
 
             text_data _data;
             void xresize(Aligner& rd) override;
@@ -81,7 +83,7 @@ namespace oxygine
         class DivNode: public Node
         {
         public:
-            DivNode(const pugi::xml_node& node);
+            DivNode(QXmlStreamReader& reader);
 
             void resize(Aligner& rd) override;
             void draw(DrawContext& dc) override;

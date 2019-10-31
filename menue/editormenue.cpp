@@ -644,7 +644,7 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_Topbar->hide();
-    xyTextInfo->setHtmlText(("X: " + QString::number(x) + " Y: " + QString::number(y)).toStdString().c_str());
+    xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
 
     GameMap* pMap = GameMap::getInstance();
     copyRectActor->detach();

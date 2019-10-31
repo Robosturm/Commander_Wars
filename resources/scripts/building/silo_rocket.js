@@ -26,7 +26,9 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Missile can be launched once, by Infantry unit. Damage across <div c='00ff00'>13 square </div>area.");
+        return "<r>" + qsTr("Missile can be launched once, by Infantry unit. Damage across ") + "</r>" +
+               "<div c='#00ff00'>" + qsTr("13 square ") + "</div>" +
+               "<r>" + qsTr("area.") + "</r>";
     };
 }
 

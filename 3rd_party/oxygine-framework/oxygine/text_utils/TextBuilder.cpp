@@ -1,6 +1,6 @@
 #include "TextBuilder.h"
 #include "Node.h"
-#include "../pugixml/pugixml.hpp"
+#include <qxmlstream.h>
 #include "../utils/stringUtils.h"
 
 namespace oxygine
@@ -17,51 +17,69 @@ namespace oxygine
 
         }
 
-        text::Node* create(const pugi::xml_node& node)
+        text::Node* TextBuilder::create(QXmlStreamReader& reader)
         {
-            const char* v = node.value();
-            text::Node* tn = 0;
-
-
-            if (!strcmp(node.name(), "div"))
-            {
-                tn = new text::DivNode(node);
-            }
-            else if (!strcmp(node.name(), "br"))
-            {
-                tn = new text::BrNode();
-            }
-            else if (v && v[0])
-            {
-                tn = new text::TextNode(v);
-            }
-            else
-                tn = new text::Node;
-
-            pugi::xml_node child = node.first_child();
-            while (child)
-            {
-                text::Node* tnchild = create(child);
-                tn->appendNode(tnchild);
-                child = child.next_sibling();
-            }
-
-            return tn;
-        }
-
-        text::Node* TextBuilder::parse(const std::string& st)
-        {
-            std::string str = "<r>" + st + "</r>";
-            pugi::xml_document doc;
-
-            int flags = pugi::parse_default | pugi::parse_ws_pcdata;
-            pugi::xml_parse_result res = doc.load_buffer(str.c_str(), str.size(), flags);
-            if (!res)
+            text::Node* tn = nullptr;
+            if (reader.hasError())
             {
                 Q_ASSERT(!"can't parse tagged text");
             }
+            QString name = reader.name().toString();
+            if (name == "div")
+            {
+                tn = new text::DivNode(reader);
+                QString text = reader.readElementText();
+                tn->appendNode(new text::TextNode(text));
+                return tn;
+            }
+            else if (name == "br")
+            {
+                tn = new text::BrNode();
+                QString text = reader.readElementText();
+                tn->appendNode(new text::TextNode(text));
+                return tn;
+            }
+            else if (name == "r")
+            {
+                QString text = reader.readElementText();
+                tn = new text::TextNode(text);
+            }
+            else if (name == "data")
+            {
+                tn = new text::Node;
+            }
+            else
+            {
+                return nullptr;
+            }
+            while (!reader.atEnd() &&
+                   !reader.hasError())
+            {
+                reader.readNext();
+                text::Node* tnchild = create(reader);
+                if (tnchild != nullptr)
+                {
+                    tn->appendNode(tnchild);
+                }
+            }
+            return tn;
+        }
 
-            return create(doc.first_child());
+        text::Node* TextBuilder::parse(const QString& st)
+        {
+            QString str;
+            if (st.startsWith("<"))
+            {
+                str = "<data>" + st + "</data>";
+            }
+            else
+            {
+                str = "<r>" + st + "</r>";
+            }
+            QXmlStreamReader reader;
+            reader.addData(str);
+            reader.readNextStartElement();
+            return create(reader);
         }
     }
 }

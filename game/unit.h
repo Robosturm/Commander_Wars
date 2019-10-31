@@ -66,7 +66,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 10;
+        return 11;
     }
 
 

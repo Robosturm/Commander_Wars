@@ -36,7 +36,7 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
     qint32 y = 0;
     oxygine::spTextField pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText((tr("Terrain Information ") + name).toStdString().c_str());
+    pLabel->setHtmlText((tr("Terrain Information ") + name));
     pLabel->setScale(2.0f);
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth(), 0);
     addChild(pLabel);
@@ -45,7 +45,7 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
     pLabel = new oxygine::TextField();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
-    pLabel->setHtmlText(description.toStdString().c_str());
+    pLabel->setHtmlText(description);
     pLabel->setScale(1.0f);
     pLabel->setPosition(0, y);
     addChild(pLabel);
@@ -56,14 +56,14 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
     pLabel = new oxygine::TextField();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("Defense:").toStdString().c_str());
+    pLabel->setHtmlText(tr("Defense:"));
     pLabel->setScale(1.0f);
     pLabel->setPosition(0, y);
     addChild(pLabel);
     pLabel = new oxygine::TextField();
     pLabel->setWidth(width - 10);
     pLabel->setStyle(style);
-    pLabel->setHtmlText((QString::number(pTerrain->getDefense(nullptr))).toStdString().c_str());
+    pLabel->setHtmlText((QString::number(pTerrain->getDefense(nullptr))));
     pLabel->setScale(1.0f);
     pLabel->setPosition(xOffset, y);
     addChild(pLabel);
@@ -75,14 +75,14 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
         pLabel = new oxygine::TextField();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
-        pLabel->setHtmlText(tr("Income:").toStdString().c_str());
+        pLabel->setHtmlText(tr("Income:"));
         pLabel->setScale(1.0f);
         pLabel->setPosition(0, y);
         addChild(pLabel);
         pLabel = new oxygine::TextField();
         pLabel->setWidth(width - 10);
         pLabel->setStyle(style);
-        pLabel->setHtmlText((QString::number(pBuilding->getIncome())).toStdString().c_str());
+        pLabel->setHtmlText((QString::number(pBuilding->getIncome())));
         pLabel->setScale(1.0f);
         pLabel->setPosition(xOffset, y);
         addChild(pLabel);
@@ -95,11 +95,11 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
             pLabel->setStyle(style);
             if (pBuilding->getActionList().contains(CoreAI::ACTION_BUILD_UNITS))
             {
-                pLabel->setHtmlText(tr("Builds and Supplies").toStdString().c_str());
+                pLabel->setHtmlText(tr("Builds and Supplies"));
             }
             else
             {
-                pLabel->setHtmlText(tr("Supplies").toStdString().c_str());
+                pLabel->setHtmlText(tr("Supplies"));
             }
             pLabel->setScale(2.0f);
             pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth(), y);
@@ -135,7 +135,7 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
 
     pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("Movement Costs").toStdString().c_str());
+    pLabel->setHtmlText(tr("Movement Costs"));
     pLabel->setScale(2.0f);
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth(), y);
     addChild(pLabel);
@@ -151,7 +151,7 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
         pLabel = new oxygine::TextField();
         pLabel->setWidth(width);
         pLabel->setStyle(style);
-        pLabel->setHtmlText((name + ":").toStdString().c_str());
+        pLabel->setHtmlText((name + ":"));
         pLabel->setScale(1.0f);
         pLabel->setPosition(x, y);
         addChild(pLabel);
@@ -160,7 +160,7 @@ TerrainInfo::TerrainInfo(Terrain* pTerrain, qint32 width)
         pLabel->setStyle(style);
         if (costs >= 0)
         {
-            pLabel->setHtmlText(QString::number(costs).toStdString().c_str());
+            pLabel->setHtmlText(QString::number(costs));
         }
         else
         {

@@ -28,7 +28,7 @@ COInfoActor::COInfoActor(qint32 width)
 
     oxygine::spTextField pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("CO Information").toStdString().c_str());
+    pLabel->setHtmlText(tr("CO Information"));
     pLabel->setScale(2.0f);
     pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth(), 10);
     addChild(pLabel);
@@ -59,7 +59,7 @@ COInfoActor::COInfoActor(qint32 width)
     pTextField->setPosition(14, 1);
     pTextField->setStyle(style);
     pTextField->setScale(1 / m_HitSprite->getScaleX());
-    pTextField->setHtmlText(tr("Hit").toStdString().c_str());
+    pTextField->setHtmlText(tr("Hit"));
     m_HitSprite->setWidth(pTextField->getTextRect().getWidth() / m_HitSprite->getScaleX() + 21);
     m_HitSprite->addChild(pTextField);
     addChild(m_HitSprite);
@@ -77,7 +77,7 @@ COInfoActor::COInfoActor(qint32 width)
     pTextField->setPosition(14, 1);
     pTextField->setStyle(style);
     pTextField->setScale(1 / m_MissSprite->getScaleX());
-    pTextField->setHtmlText(tr("Miss").toStdString().c_str());
+    pTextField->setHtmlText(tr("Miss"));
     m_MissSprite->setWidth(pTextField->getTextRect().getWidth() / m_MissSprite->getScaleX()  + 21);
     m_MissSprite->addChild(pTextField);
     addChild(m_MissSprite);
@@ -95,7 +95,7 @@ COInfoActor::COInfoActor(qint32 width)
     pTextField->setPosition(3, 2);
     pTextField->setStyle(style);
     pTextField->setScale(1 / m_InfoSprite->getScaleX());
-    pTextField->setHtmlText(tr("Info").toStdString().c_str());
+    pTextField->setHtmlText(tr("Info"));
     m_InfoSprite->setWidth(pTextField->getTextRect().getWidth() / m_InfoSprite->getScaleX() + 12);
     m_InfoSprite->addChild(pTextField);
     m_InfoSprite->setX((pApp->getSettings()->getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_InfoSprite->getScaledWidth() / 2);
@@ -136,7 +136,7 @@ COInfoActor::COInfoActor(qint32 width)
     addChild(m_SuperPowerDesc);
     m_SynergyText = new oxygine::TextField();
     m_SynergyText->setStyle(style);
-    m_SynergyText->setHtmlText(tr("Synergy").toStdString().c_str());
+    m_SynergyText->setHtmlText(tr("Synergy"));
     m_SynergyText->setX(10);
     addChild(m_SynergyText);
 
@@ -184,7 +184,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
             coName = value.toString();
         }
     }
-    m_COName->setHtmlText(coName.toStdString().c_str());
+    m_COName->setHtmlText(coName);
     m_COName->setPosition((pApp->getSettings()->getWidth() - m_pCurrentCO->getScaledWidth()) / 2 - m_COName->getTextRect().getWidth(), 60);
     if (pCO.get() != nullptr)
     {
@@ -199,7 +199,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
             coBio += " " + value.toString();
         }
     }
-    m_COBio->setHtmlText(coBio.toStdString().c_str());
+    m_COBio->setHtmlText(coBio);
 
     if (pCO.get() != nullptr)
     {
@@ -210,7 +210,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         }
     }
     m_HitSprite->setY(m_COBio->getY() + m_COBio->getTextRect().getHeight() + 10);
-    m_HitText->setHtmlText(coHits.toStdString().c_str());
+    m_HitText->setHtmlText(coHits);
     m_HitText->setY(m_HitSprite->getY());
 
     if (pCO.get() != nullptr)
@@ -222,7 +222,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         }
     }
     m_MissSprite->setY(m_HitSprite->getY() + 50);
-    m_MissText->setHtmlText(coMiss.toStdString().c_str());
+    m_MissText->setHtmlText(coMiss);
     m_MissText->setY(m_MissSprite->getY());
 
     if (pCO.get() != nullptr)
@@ -239,7 +239,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         }
     }
     m_InfoSprite->setY(m_MissSprite->getY() + 50);
-    m_InfoText->setHtmlText((coDesc + "\n\n" + tr("CO-Zone-Range: ") + QString::number(corange)).toStdString().c_str());
+    m_InfoText->setHtmlText((coDesc + "\n\n" + tr("CO-Zone-Range: ") + QString::number(corange)));
     m_InfoText->setY(m_InfoSprite->getY() + 50);
 
     if (pCO.get() != nullptr)
@@ -261,8 +261,8 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_PowerSprite->setY(m_InfoText->getY() + m_InfoText->getTextRect().getHeight() + 20);
     m_Powername->setY(m_PowerSprite->getY());
     m_PowerDesc->setY(m_Powername->getY() + 40);
-    m_Powername->setHtmlText(coPower.toStdString().c_str());
-    m_PowerDesc->setHtmlText(coPowerDesc.toStdString().c_str());
+    m_Powername->setHtmlText(coPower);
+    m_PowerDesc->setHtmlText(coPowerDesc);
 
     if (pCO.get() != nullptr)
     {
@@ -283,8 +283,8 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     m_SuperPowerSprite->setY(m_PowerDesc->getY() + m_PowerDesc->getTextRect().getHeight() + 20);
     m_SuperPowername->setY(m_SuperPowerSprite->getY());
     m_SuperPowerDesc->setY(m_SuperPowername->getY() + 40);
-    m_SuperPowername->setHtmlText(coSuperpower.toStdString().c_str());
-    m_SuperPowerDesc->setHtmlText(coSuperpowerDesc.toStdString().c_str());
+    m_SuperPowername->setHtmlText(coSuperpower);
+    m_SuperPowerDesc->setHtmlText(coSuperpowerDesc);
 
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = QColor(255, 255, 255, 255);
@@ -332,7 +332,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
                     }
                     oxygine::spTextField pText = new oxygine::TextField();
                     pText->setStyle(style);
-                    pText->setHtmlText(coSynergyName.toStdString().c_str());
+                    pText->setHtmlText(coSynergyName);
                     pText->setX(10);
                     pText->setY(y);
                     addChild(pText);
@@ -409,11 +409,11 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
             pText->setStyle(style);
             if (firerangeBonus > 0)
             {
-                pText->setHtmlText(("+" + QString::number(firerangeBonus)).toStdString().c_str());
+                pText->setHtmlText(("+" + QString::number(firerangeBonus)));
             }
             else
             {
-                pText->setHtmlText((QString::number(firerangeBonus)).toStdString().c_str());
+                pText->setHtmlText((QString::number(firerangeBonus)));
             }
             pText->setPosition(pSprite->getX() + pSprite->getScaledWidth() + 2, pSprite->getY() - 2);
             pText->setScale(0.75f);
@@ -430,11 +430,11 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
             pText->setStyle(style);
             if (movementBonus > 0)
             {
-                pText->setHtmlText(("+" + QString::number(movementBonus)).toStdString().c_str());
+                pText->setHtmlText(("+" + QString::number(movementBonus)));
             }
             else
             {
-                pText->setHtmlText((QString::number(movementBonus)).toStdString().c_str());
+                pText->setHtmlText((QString::number(movementBonus)));
             }
 
             pText->setPosition(pSprite->getX() + pSprite->getScaledWidth() + 2, pSprite->getY() - 2);

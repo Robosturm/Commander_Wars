@@ -115,7 +115,11 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("<div c='00ff00'>Battle ends </div>when an army's last HQ is captured. <div c='00ff00'>Ground </div>units can <div c='00ff00'>resupply.</div>");
+        return "<div c='#00ff00'>"+ qsTr("Battle ends ") + "</div>" +
+               "<r>" + qsTr("when an army's last HQ is captured. ") + "</r>" +
+               "<div c='#00ff00'>" + qsTr("Ground ") + "</div>" +
+               "<r>" + qsTr("units can ") + "</r>" +
+               "<div c='#00ff00'>" + qsTr("resupply.") + "</div>";
     };
 }
 

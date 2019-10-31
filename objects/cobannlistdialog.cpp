@@ -109,7 +109,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
 
     oxygine::spTextField pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText(tr("CO Bann List").toStdString().c_str());
+    pLabel->setHtmlText(tr("CO Bann List"));
     pLabel->setScale(2.0f);
     pLabel->setPosition(pPanel->getWidth() / 2 - pLabel->getTextRect().getWidth(), 10);
     pPanel->addItem(pLabel);
@@ -171,7 +171,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
         pLabel = new oxygine::TextField();
         pLabel->setStyle(style);
 
-        pLabel->setHtmlText(pCOSpriteManager->getCOName(coID).toStdString().c_str());
+        pLabel->setHtmlText(pCOSpriteManager->getCOName(coID));
 
         pLabel->setPosition(x, y);
         pCo->setPosition(x + 220 - GameMap::Imagesize * 1.25f - 10, y);

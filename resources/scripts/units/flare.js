@@ -58,7 +58,11 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("In Fog of War, can fire <div c='00ff00'>flare rocket</div>. Illuminates <div c='00ff00'>2 square area</div> where it lands.");
+        return "<r>" + qsTr("In Fog of War, can fire ") + "</r>" +
+               "<div c='#00ff00'>" + qsTr("flare rocket") + "</div>" +
+               "<r>" + qsTr(". Illuminates ") + "</r>" +
+               "<div c='#00ff00'>" + qsTr("2 square area") + "</div>" +
+               "<r>" + qsTr(" where it lands.") + "</r>";
     };
     this.getUnitType = function()
     {

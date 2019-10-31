@@ -776,7 +776,7 @@ void Building::setHp(const qint32 &Hp)
 void Building::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
-    pStream << m_BuildingID.toStdString().c_str();
+    pStream << m_BuildingID;
     if (m_pOwner == nullptr)
     {
         pStream << static_cast<qint32>(-1);
@@ -794,9 +794,16 @@ void Building::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
-    char* id;
-    pStream >> id;
-    m_BuildingID = id;
+    if (version > 3)
+    {
+        pStream >> m_BuildingID;
+    }
+    else
+    {
+        char* id;
+        pStream >> id;
+        m_BuildingID = id;
+    }
     init();
     qint32 playerID = -1;
     pStream >> playerID;

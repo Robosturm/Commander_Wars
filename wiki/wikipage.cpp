@@ -73,7 +73,7 @@ void Wikipage::loadText(QString text)
     style.multiline = true;
     oxygine::spTextField pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText(text.toStdString().c_str());
+    pLabel->setHtmlText(text);
     pLabel->setScale(1.0f);
     pLabel->setWidth(m_pPanel->getContentWidth() - 80);
     pLabel->setPosition(10, y);
@@ -127,7 +127,7 @@ void Wikipage::loadHeadline(QString text)
     style.multiline = true;
     oxygine::spTextField pLabel = new oxygine::TextField();
     pLabel->setStyle(style);
-    pLabel->setHtmlText(text.toStdString().c_str());
+    pLabel->setHtmlText(text);
     pLabel->setScale(2.0f);
     pLabel->setPosition(m_pPanel->getContentWidth() / 2 - pLabel->getTextRect().getWidth(), y);
     m_pPanel->addItem(pLabel);

@@ -108,7 +108,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
     style.hAlign = oxygine::TextStyle::HALIGN_MIDDLE;
     style.multiline = false;
     textField->setStyle(style);
-    textField->setHtmlText(tr("Predefined Styles").toStdString().c_str());
+    textField->setHtmlText(tr("Predefined Styles"));
     textField->setPosition(Settings::getWidth() / 2 - 10 - textField->getTextRect().getWidth(),  Settings::getHeight() - 70);
     textField->attachTo(m_pSpriteBox);
 

@@ -113,7 +113,7 @@ void ScriptConditionPlayerDefeated::showEditCondition(spScriptEditor pScriptEdit
 
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Player: ").toStdString().c_str());
+    pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, 99999);

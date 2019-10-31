@@ -58,7 +58,7 @@ Multiplayermenu::Multiplayermenu(QString adress, bool host)
         hideMapSelection();
         m_MapSelectionStep = MapSelectionStep::selectPlayer;
         // change the name of the start button
-        dynamic_cast<oxygine::TextField*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready").toStdString().c_str());
+        dynamic_cast<oxygine::TextField*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready"));
         // quit on host connection lost
         connect(m_NetworkInterface.get(), &NetworkInterface::sigDisconnected, this, &Multiplayermenu::disconnected, Qt::QueuedConnection);
         connect(m_NetworkInterface.get(), &NetworkInterface::recieveData, this, &Multiplayermenu::recieveData, Qt::QueuedConnection);
@@ -101,7 +101,7 @@ void Multiplayermenu::showIPs()
     oxygine::spTextField info = new oxygine::TextField();
     info->setStyle(style);
     info->setHtmlText((tr("Please use one of the following IP-Adresses to connect to this Host. Not all IP-Adresses") +
-                      tr(" may work for each client depending on the network settings. Please use cmd and the ping command to verify if an IP-Adress may work")).toStdString().c_str());
+                      tr(" may work for each client depending on the network settings. Please use cmd and the ping command to verify if an IP-Adress may work")));
     info->setSize(Settings::getWidth() - 80, 500);
     info->setPosition(10, 10);
     pPanel->addItem(info);
@@ -110,7 +110,7 @@ void Multiplayermenu::showIPs()
     {
         oxygine::spTextField text = new oxygine::TextField();
         text->setStyle(style);
-        text->setHtmlText((tr("Host Adress: ") + items[i]).toStdString().c_str());
+        text->setHtmlText((tr("Host Adress: ") + items[i]));
         text->setPosition(10, starty + i * 40);
         pPanel->addItem(text);
     }
@@ -695,11 +695,11 @@ void Multiplayermenu::startGame()
         m_pPlayerSelection->setPlayerReady(!m_pPlayerSelection->getPlayerReady());
         if (m_pPlayerSelection->getPlayerReady())
         {
-            dynamic_cast<oxygine::TextField*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Not Ready").toStdString().c_str());
+            dynamic_cast<oxygine::TextField*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Not Ready"));
         }
         else
         {
-            dynamic_cast<oxygine::TextField*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready").toStdString().c_str());
+            dynamic_cast<oxygine::TextField*>(m_pButtonStart->getFirstChild().get())->setHtmlText(tr("Ready"));
         }
         QByteArray sendData;
         QDataStream sendStream(&sendData, QIODevice::WriteOnly);
@@ -723,7 +723,7 @@ void Multiplayermenu::startGame()
             m_GameStartTimer.setInterval(std::chrono::seconds(1));
             m_GameStartTimer.setSingleShot(false);
             m_GameStartTimer.start();
-            emit m_Chat->sigSendText((QString::number(counter) + "...").toStdString().c_str());
+            emit m_Chat->sigSendText(QString::number(counter) + "...");
         }
     }
 }
@@ -760,7 +760,7 @@ void Multiplayermenu::countdown()
     counter--;
     if (getGameReady())
     {
-        emit m_Chat->sigSendText((QString::number(counter) + "...").toStdString().c_str());
+        emit m_Chat->sigSendText(QString::number(counter) + "...");
         if (counter == 0)
         {
             Mainapp* pApp = Mainapp::getInstance();

@@ -113,12 +113,13 @@ namespace oxygine
         }
 
 
-        TextNode::TextNode(std::string v)
+        TextNode::TextNode(QString v)
         {
-            for (quint32 i = 0; i < v.size(); i++)
+            auto data = v.toUtf8();
+            for (qint32 i = 0; i < data.size(); i++)
             {
                 Symbol s;
-                s.code = v[i];
+                s.code = data[i];
                 _data.push_back(s);
             }
         }
@@ -267,27 +268,26 @@ namespace oxygine
             dc.color = prev;
         }
 
-        DivNode::DivNode(const pugi::xml_node& node)
+        DivNode::DivNode(QXmlStreamReader& reader)
         {
-            options = -1;
-            pugi::xml_attribute attr = node.first_attribute();
-            while (attr)
+            options = std::numeric_limits<quint32>::max();
+            QXmlStreamAttributes attr = reader.attributes();
+            for (qint32 i = 0; i < attr.size(); i++)
             {
-                if (!strcmp(attr.name(), "c") ||
-                        !strcmp(attr.name(), "color"))
+                if (attr[i].name() == "c" ||
+                    attr[i].name() == "color")
                 {
-                    QString colorText(attr.value());
+                    QString colorText(attr[i].value().toString());
                     if (!colorText.startsWith("#"))
                     {
                         colorText.push_front("#");
                     }
                     color = QColor(colorText);
                 }
-                else if (!strcmp(attr.name(), "opt"))
+                else if (attr[i].name() == "opt")
                 {
-                    options = attr.as_uint();
+                    options = attr[i].value().toUInt();
                 }
-                attr = attr.next_attribute();
             }
         }
     }

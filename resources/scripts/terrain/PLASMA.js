@@ -43,7 +43,9 @@ var Constructor = function()
     };
     this.getDescription = function()
     {
-        return qsTr("Eectric charge us impassable but disappears if <div c='00ff00'> meteor pieces</div> are destroyed.");
+        return "<r>" + qsTr("Eectric charge us impassable but disappears if ") + "</r>" +
+               "<div c='#00ff00'>" + qsTr(" meteor pieces") + "</div>" +
+               "<r>" + qsTr(" are destroyed.") + "</r>";
     };
 
     this.getTerrainSprites = function()

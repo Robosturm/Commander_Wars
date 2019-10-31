@@ -216,7 +216,7 @@ void FileDialog::showFolder(QString folder)
         // loop through all entries :)
         if (infoList[i].isDir())
         {
-            textField->setHtmlText(infoList[i].absoluteFilePath().replace(folder, "").toStdString().c_str());
+            textField->setHtmlText(infoList[i].absoluteFilePath().replace(folder, ""));
             pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
             {
                 emit sigShowFolder(myPath);
@@ -225,7 +225,7 @@ void FileDialog::showFolder(QString folder)
         else if (infoList[i].isFile())
         {
             QString file = infoList[i].fileName();
-            textField->setHtmlText(file.toStdString().c_str());
+            textField->setHtmlText(file);
             pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
             {
                 m_CurrentFile->setCurrentText(file);

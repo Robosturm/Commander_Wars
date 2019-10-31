@@ -69,7 +69,7 @@ void ScriptEventAddFunds::showEditEvent(spScriptEditor pScriptEditor)
 
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Player: ").toStdString().c_str());
+    pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, 9999);
@@ -84,7 +84,7 @@ void ScriptEventAddFunds::showEditEvent(spScriptEditor pScriptEditor)
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Funds: ").toStdString().c_str());
+    pText->setHtmlText(tr("Funds: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 0, 999999);

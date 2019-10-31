@@ -2264,7 +2264,7 @@ bool Unit::isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange, qint32 test
 void Unit::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
-    pStream << m_UnitID.toStdString().c_str();
+    pStream << m_UnitID;
     pStream << hp;
     pStream << ammo1;
     pStream << ammo2;
@@ -2298,9 +2298,16 @@ void Unit::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
-    char* id;
-    pStream >> id;
-    m_UnitID = id;
+    if (version > 10)
+    {
+        pStream >> m_UnitID;
+    }
+    else
+    {
+        char* id;
+        pStream >> id;
+        m_UnitID = id;
+    }
     initUnit();
     pStream >> hp;
     setHp(hp);

@@ -114,7 +114,7 @@ void GameAnimationDialog::nextDialogStep()
     {
         paused = false;
         writePosition += 1;
-        m_TextField->setHtmlText(m_Text.mid(0, writePosition).toStdString().c_str());
+        m_TextField->setHtmlText(m_Text.mid(0, writePosition));
     }
     else
     {
@@ -132,7 +132,7 @@ void GameAnimationDialog::nextDialogStep()
             while (writePosition < m_Text.size())
             {
                 writePosition += 1;
-                m_TextField->setHtmlText(m_Text.mid(0, writePosition).toStdString().c_str());
+                m_TextField->setHtmlText(m_Text.mid(0, writePosition));
                 textHeight = m_TextField->getTextRect().getHeight();
                 if (textHeight > nextHeight)
                 {
@@ -173,7 +173,7 @@ void GameAnimationDialog::update(const oxygine::UpdateState& us)
         {
             nextHeight += dialogHeigth;
         }
-        m_TextField->setHtmlText(m_Text.mid(0, writePosition).toStdString().c_str());
+        m_TextField->setHtmlText(m_Text.mid(0, writePosition));
         textHeight = m_TextField->getTextRect().getHeight();
         if (textHeight > nextHeight)
         {
@@ -205,7 +205,7 @@ void GameAnimationDialog::update(const oxygine::UpdateState& us)
 
 void GameAnimationDialog::updateShownText()
 {
-    m_TextField->setHtmlText(m_Text.mid(0, writePosition).toStdString().c_str());
+    m_TextField->setHtmlText(m_Text.mid(0, writePosition));
     float textHeight = m_TextField->getTextRect().getHeight();
     m_TextField->setHeight(textHeight);
     if (textHeight > dialogHeigth)

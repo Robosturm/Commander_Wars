@@ -37,7 +37,9 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Once captured the Tower boosts your <div c='00ff00'>attack and defence powers</div>.");
+        return "<r>" + qsTr("Once captured the Tower boosts your ") + "</r>" +
+               "<div c='#00ff00'>" + qsTr("attack and defence powers") + "</div>" +
+               "<r>" + "." + "</r>";
     };
 }
 

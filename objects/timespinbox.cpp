@@ -174,7 +174,7 @@ void TimeSpinBox::update(const oxygine::UpdateState& us)
         {
             toggle.start();
         }
-        m_Textfield->setHtmlText(drawText.toStdString().c_str());
+        m_Textfield->setHtmlText(drawText);
 
         if (m_Text.size() > 0)
         {
@@ -216,7 +216,7 @@ void TimeSpinBox::update(const oxygine::UpdateState& us)
             checkInput();
         }
         QString drawText = m_Text;
-        m_Textfield->setHtmlText(drawText.toStdString().c_str());
+        m_Textfield->setHtmlText(drawText);
     }
     oxygine::Actor::update(us);
 }
@@ -238,7 +238,7 @@ qint32 TimeSpinBox::checkInput()
 void TimeSpinBox::setValue(qint32 value)
 {
     m_Text = QTime::fromMSecsSinceStartOfDay(value).toString("hh:mm:ss");
-    m_Textfield->setHtmlText(m_Text.toStdString().c_str());
+    m_Textfield->setHtmlText(m_Text);
 }
 
 qint32 TimeSpinBox::getSpinSpeed() const

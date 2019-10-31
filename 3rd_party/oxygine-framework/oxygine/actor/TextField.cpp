@@ -181,7 +181,7 @@ namespace oxygine
         _root->updateMaterial(*_mat.get());
     }
 
-    void TextField::setText(const std::string& str)
+    void TextField::setText(const QString& str)
     {
         _flags &= ~flag_html;
         if (_text != str)
@@ -191,7 +191,7 @@ namespace oxygine
         }
     }
 
-    void TextField::setHtmlText(const std::string& str)
+    void TextField::setHtmlText(const QString& str)
     {
         _flags |= flag_html;
         if (_text != str)
@@ -201,7 +201,7 @@ namespace oxygine
         }
     }
 
-    int            TextField::getFontSize() const
+    int TextField::getFontSize() const
     {
         return _style.fontSize;
     }

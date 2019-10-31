@@ -125,7 +125,7 @@ void ScriptConditionUnitsDestroyed::showEditCondition(spScriptEditor pScriptEdit
 
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Count: ").toStdString().c_str());
+    pText->setHtmlText(tr("Count: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, 99999);
@@ -140,7 +140,7 @@ void ScriptConditionUnitsDestroyed::showEditCondition(spScriptEditor pScriptEdit
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Player: ").toStdString().c_str());
+    pText->setHtmlText(tr("Player: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 1, 99999);

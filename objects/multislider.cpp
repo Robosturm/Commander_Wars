@@ -19,7 +19,7 @@ Multislider::Multislider(QVector<QString> texts, qint32 width, QVector<qint32> v
     {
         m_Textfields.append(new oxygine::TextField());
         m_Textfields[i]->setStyle(style);
-        m_Textfields[i]->setHtmlText(texts[i].toStdString().c_str());
+        m_Textfields[i]->setHtmlText(texts[i]);
         m_Textfields[i]->setY(i * 40);
         if (m_Textfields[i]->getTextRect().getWidth() > textWidth)
         {

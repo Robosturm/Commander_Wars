@@ -90,7 +90,9 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Naval Unit. Attacks naval units. Can place <div c='00ff00'>Watermines</div> on sea tiles.");
+        return "<r>" + qsTr("Naval Unit. Attacks naval units. Can place ") + "</r>" +
+               "<div c='#00ff00'>" + qsTr("Watermines") + "</div>" +
+               "<r>" + qsTr(" on sea tiles.") + "</r>";
     };
     this.getUnitType = function()
     {

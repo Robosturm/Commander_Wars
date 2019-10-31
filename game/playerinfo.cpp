@@ -113,7 +113,7 @@ void PlayerInfo::updateData()
             {
                 number = "?";
             }
-            Text->setHtmlText(number.toStdString().c_str());
+            Text->setHtmlText(number);
             Text->setY(yPos + 20);
             Text->setX(0);
             Text->setScale(1.0f);
@@ -212,7 +212,7 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                 oxygine::TextStyle style = FontManager::getMainFont();
                 oxygine::spTextField Text = new oxygine::TextField();
                 Text->setStyle(style);
-                Text->setHtmlText(tr("Power").toStdString().c_str());
+                Text->setHtmlText(tr("Power"));
                 Text->setY(yPos);
                 Text->setX(68 - 4);
                 Text->setScale(1.0f);
@@ -236,7 +236,7 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                 oxygine::TextStyle style = FontManager::getMainFont();
                 oxygine::spTextField Text = new oxygine::TextField();
                 Text->setStyle(style);
-                Text->setHtmlText(tr("Superpower").toStdString().c_str());
+                Text->setHtmlText(tr("Superpower"));
                 Text->setY(yPos - 4);
                 Text->setX(68);
                 Text->setScale(1.0f);
@@ -260,7 +260,7 @@ void PlayerInfo::drawPowerMeter(CO* pCO, qint32 yPos)
                 oxygine::TextStyle style = FontManager::getMainFont();
                 oxygine::spTextField Text = new oxygine::TextField();
                 Text->setStyle(style);
-                Text->setHtmlText(tr("Tagpower").toStdString().c_str());
+                Text->setHtmlText(tr("Tagpower"));
                 Text->setY(yPos - 4);
                 Text->setX(68);
                 Text->setScale(1.0f);

@@ -209,14 +209,14 @@ void IngameInfoBar::updatePlayerInfo()
     qint32 count = pPlayer->getBuildingCount();
     oxygine::spTextField pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText((tr("Buildings: ") + QString::number(count)).toStdString().c_str());
+    pTextfield->setHtmlText((tr("Buildings: ") + QString::number(count)));
     pTextfield->setPosition(10, 100);
     m_pGameInfoBox->addChild(pTextfield);
 
     count = pPlayer->getUnitCount();
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText((tr("Units: ") + QString::number(count)).toStdString().c_str());
+    pTextfield->setHtmlText((tr("Units: ") + QString::number(count)));
     pTextfield->setPosition(10, 135);
     m_pGameInfoBox->addChild(pTextfield);
 
@@ -227,11 +227,11 @@ void IngameInfoBar::updatePlayerInfo()
     if (pViewPlayer->getTeam() != pPlayer->getTeam() &&
         pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off)
     {
-        pTextfield->setHtmlText((tr("Funds: ") + "?").toStdString().c_str());
+        pTextfield->setHtmlText((tr("Funds: ") + "?"));
     }
     else
     {
-        pTextfield->setHtmlText((tr("Funds: ") + QString::number(count)).toStdString().c_str());
+        pTextfield->setHtmlText((tr("Funds: ") + QString::number(count)));
     }
 
     pTextfield->setPosition(10, 170);
@@ -240,14 +240,14 @@ void IngameInfoBar::updatePlayerInfo()
     count = pPlayer->getPlayerID();
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText((tr("Player: ") + QString::number(count + 1)).toStdString().c_str());
+    pTextfield->setHtmlText((tr("Player: ") + QString::number(count + 1)));
     pTextfield->setPosition(10, 205);
     m_pGameInfoBox->addChild(pTextfield);
 
     count = pPlayer->getTeam();
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
-    pTextfield->setHtmlText((tr("Team: ") + QString::number(count + 1)).toStdString().c_str());
+    pTextfield->setHtmlText((tr("Team: ") + QString::number(count + 1)));
     pTextfield->setPosition(10, 240);
     m_pGameInfoBox->addChild(pTextfield);
     pApp->continueThread();
@@ -316,7 +316,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             {
                 hpMax = hp;
             }
-            pTextfield->setHtmlText((tr("HP: ") + QString::number(hp) + "/" + QString::number(hpMax)).toStdString().c_str());
+            pTextfield->setHtmlText((tr("HP: ") + QString::number(hp) + "/" + QString::number(hpMax)));
             pTextfield->setPosition(10, 10);
             m_pCursorInfoBox->addChild(pTextfield);
             oxygine::spColorRectSprite pColorBar = new oxygine::ColorRectSprite();
@@ -360,11 +360,11 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             pTextfield->setStyle(style);
             if (HpHidden)
             {
-                pTextfield->setHtmlText((tr("HP: ") + "?/10").toStdString().c_str());
+                pTextfield->setHtmlText((tr("HP: ") + "?/10"));
             }
             else
             {
-                pTextfield->setHtmlText((tr("HP: ") + QString::number(hpRounded) + "/" + QString::number(countMax, 'f', 0)).toStdString().c_str());
+                pTextfield->setHtmlText((tr("HP: ") + QString::number(hpRounded) + "/" + QString::number(countMax, 'f', 0)));
             }
             pTextfield->setPosition(10, 10);
             m_pCursorInfoBox->addChild(pTextfield);
@@ -404,7 +404,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             pTextfield->setStyle(style);
             if (countMaxInt > 0)
             {
-                pTextfield->setHtmlText((tr("Ammo1: ") + QString::number(countInt) + "/" + QString::number(countMaxInt)).toStdString().c_str());
+                pTextfield->setHtmlText((tr("Ammo1: ") + QString::number(countInt) + "/" + QString::number(countMaxInt)));
                 pColorBar = new oxygine::ColorRectSprite();
                 divider = static_cast<float>(countInt) / static_cast<float>(countMaxInt);
                 pColorBar->setColor(139, 69, 19, 255);
@@ -420,7 +420,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             }
             else
             {
-                pTextfield->setHtmlText(tr("Ammo1: -/-").toStdString().c_str());
+                pTextfield->setHtmlText(tr("Ammo1: -/-"));
                 pColorBar = new oxygine::ColorRectSprite();
                 pColorBar->setColor(127, 127, 127, 255);
                 pColorBar->setSize(pAnim->getWidth(), pAnim->getHeight());
@@ -436,7 +436,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             pTextfield->setStyle(style);
             if (countMaxInt > 0)
             {
-                pTextfield->setHtmlText((tr("Ammo2: ") + QString::number(countInt) + "/" + QString::number(countMaxInt)).toStdString().c_str());
+                pTextfield->setHtmlText((tr("Ammo2: ") + QString::number(countInt) + "/" + QString::number(countMaxInt)));
                 pColorBar = new oxygine::ColorRectSprite();
                 divider = static_cast<float>(countInt) / static_cast<float>(countMaxInt);
                 pColorBar->setColor(255, 255, 0, 255);
@@ -452,7 +452,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             }
             else
             {
-                pTextfield->setHtmlText(tr("Ammo2: -/-").toStdString().c_str());
+                pTextfield->setHtmlText(tr("Ammo2: -/-"));
                 pColorBar = new oxygine::ColorRectSprite();
                 pColorBar->setColor(127, 127, 127, 255);
                 pColorBar->setSize(pAnim->getWidth(), pAnim->getHeight());
@@ -469,7 +469,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             pTextfield->setStyle(style);
             if (countMaxInt > 0)
             {
-                pTextfield->setHtmlText((tr("Fuel: ") + QString::number(countInt) + "/" + QString::number(countMaxInt)).toStdString().c_str());
+                pTextfield->setHtmlText((tr("Fuel: ") + QString::number(countInt) + "/" + QString::number(countMaxInt)));
 
                 pColorBar = new oxygine::ColorRectSprite();
                 divider = static_cast<float>(countInt) / static_cast<float>(countMaxInt);
@@ -486,7 +486,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             }
             else
             {
-                pTextfield->setHtmlText(tr("Fuel: -/-").toStdString().c_str());
+                pTextfield->setHtmlText(tr("Fuel: -/-"));
                 pColorBar = new oxygine::ColorRectSprite();
                 pColorBar->setColor(127, 127, 127, 255);
                 pColorBar->setSize(pAnim->getWidth(), pAnim->getHeight());
@@ -612,7 +612,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
         {
             name = pTerrain->getTerrainName();
         }
-        pTextfield->setHtmlText(name.toStdString().c_str());
+        pTextfield->setHtmlText(name);
         m_pCursorInfoBox->addChild(pTextfield);
 
 
@@ -628,7 +628,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 pTextfield->setPosition(10, y2);
                 pTextfield->setStyle(style);
                 pTextfield->setScale(unitInfoScale);
-                pTextfield->setHtmlText((tr("Owner: Player ") + QString::number(pBuilding->getOwner()->getPlayerID() + 1)).toStdString().c_str());
+                pTextfield->setHtmlText((tr("Owner: Player ") + QString::number(pBuilding->getOwner()->getPlayerID() + 1)));
                 m_pCursorInfoBox->addChild(pTextfield);
                 y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
             }
@@ -638,7 +638,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 pTextfield->setPosition(10, y2);
                 pTextfield->setStyle(style);
                 pTextfield->setScale(unitInfoScale);
-                pTextfield->setHtmlText(tr("Owner: Neutral").toStdString().c_str());
+                pTextfield->setHtmlText(tr("Owner: Neutral"));
                 m_pCursorInfoBox->addChild(pTextfield);
                 y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
             }
@@ -648,8 +648,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 pTextfield->setPosition(10, y2);
                 pTextfield->setStyle(style);
                 pTextfield->setScale(unitInfoScale);
-                pTextfield->setHtmlText((tr("Resistance: ") +
-                                     QString::number(20)).toStdString().c_str());
+                pTextfield->setHtmlText((tr("Resistance: ") + QString::number(20)));
                 m_pCursorInfoBox->addChild(pTextfield);
                 y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
             }
@@ -659,8 +658,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 pTextfield->setPosition(10, y2);
                 pTextfield->setStyle(style);
                 pTextfield->setScale(unitInfoScale);
-                pTextfield->setHtmlText((tr("Resistance: ") +
-                                     QString::number(20 - pUnit->getCapturePoints())).toStdString().c_str());
+                pTextfield->setHtmlText((tr("Resistance: ") + QString::number(20 - pUnit->getCapturePoints())));
                 m_pCursorInfoBox->addChild(pTextfield);
                 y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
             }
@@ -672,7 +670,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             pTextfield->setPosition(10, y2);
             pTextfield->setStyle(style);
             pTextfield->setScale(unitInfoScale);
-            pTextfield->setHtmlText(pUnit->getName().toStdString().c_str());
+            pTextfield->setHtmlText(pUnit->getName());
             m_pCursorInfoBox->addChild(pTextfield);
             y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
 
@@ -680,7 +678,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             pTextfield->setPosition(10, y2);
             pTextfield->setStyle(style);
             pTextfield->setScale(unitInfoScale);
-            pTextfield->setHtmlText((tr("Owner: Player ") + QString::number(pUnit->getOwner()->getPlayerID() + 1)).toStdString().c_str());
+            pTextfield->setHtmlText((tr("Owner: Player ") + QString::number(pUnit->getOwner()->getPlayerID() + 1)));
             m_pCursorInfoBox->addChild(pTextfield);
             y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
 
@@ -691,7 +689,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 pTextfield->setStyle(style);
                 pTextfield->setScale(unitInfoScale);
                 pTextfield->setHtmlText((tr("Weapon 1: ") +
-                                     WeaponManager::getInstance()->getWeaponName(pUnit->getWeapon1ID())).toStdString().c_str());
+                                     WeaponManager::getInstance()->getWeaponName(pUnit->getWeapon1ID())));
                 m_pCursorInfoBox->addChild(pTextfield);
                 y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
             }
@@ -703,7 +701,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                 pTextfield->setStyle(style);
                 pTextfield->setScale(unitInfoScale);
                 pTextfield->setHtmlText((tr("Weapon 2: ") +
-                                     WeaponManager::getInstance()->getWeaponName(pUnit->getWeapon2ID())).toStdString().c_str());
+                                     WeaponManager::getInstance()->getWeaponName(pUnit->getWeapon2ID())));
                 m_pCursorInfoBox->addChild(pTextfield);
                 y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
             }
@@ -713,7 +711,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             pTextfield->setStyle(style);
             pTextfield->setScale(unitInfoScale);
             pTextfield->setHtmlText((tr("Move: ") +
-                                 MovementTableManager::getInstance()->getMovementName(pUnit->getMovementType())).toStdString().c_str());
+                                 MovementTableManager::getInstance()->getMovementName(pUnit->getMovementType())));
             m_pCursorInfoBox->addChild(pTextfield);
             y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
 
@@ -722,7 +720,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             pTextfield->setStyle(style);
             pTextfield->setScale(unitInfoScale);
             pTextfield->setHtmlText((tr("Movementpoints: ") +
-                                 QString::number(pUnit->getMovementpoints(QPoint(x, y)))).toStdString().c_str());
+                                 QString::number(pUnit->getMovementpoints(QPoint(x, y)))));
             m_pCursorInfoBox->addChild(pTextfield);
             y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
 
@@ -731,7 +729,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
             pTextfield->setStyle(style);
             pTextfield->setScale(unitInfoScale);
             pTextfield->setHtmlText((tr("Vision: ") +
-                                 QString::number(pUnit->getVision(QPoint(pUnit->getX(), pUnit->getY())))).toStdString().c_str());
+                                 QString::number(pUnit->getVision(QPoint(pUnit->getX(), pUnit->getY())))));
             m_pCursorInfoBox->addChild(pTextfield);
             y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
 
@@ -743,7 +741,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                     pTextfield->setPosition(10, y2);
                     pTextfield->setStyle(style);
                     pTextfield->setScale(unitInfoScale);
-                    pTextfield->setHtmlText(tr("Loaded Units").toStdString().c_str());
+                    pTextfield->setHtmlText(tr("Loaded Units"));
                     m_pCursorInfoBox->addChild(pTextfield);
                     y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
                     for (qint32 i = 0; i < pUnit->getLoadedUnitCount(); i++)
@@ -752,7 +750,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                         pTextfield->setPosition(10, y2);
                         pTextfield->setStyle(style);
                         pTextfield->setScale(unitInfoScale);
-                        pTextfield->setHtmlText((pUnit->getLoadedUnit(i)->getName()).toStdString().c_str());
+                        pTextfield->setHtmlText((pUnit->getLoadedUnit(i)->getName()));
                         m_pCursorInfoBox->addChild(pTextfield);
                         y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
                     }
@@ -763,7 +761,7 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
                     pTextfield->setPosition(10, y2);
                     pTextfield->setStyle(style);
                     pTextfield->setScale(unitInfoScale);
-                    pTextfield->setHtmlText(tr("Loaded Units: ?").toStdString().c_str());
+                    pTextfield->setHtmlText(tr("Loaded Units: ?"));
                     m_pCursorInfoBox->addChild(pTextfield);
                     y2 += pTextfield->getTextRect().getHeight() * unitInfoScale + yAdvance;
                 }

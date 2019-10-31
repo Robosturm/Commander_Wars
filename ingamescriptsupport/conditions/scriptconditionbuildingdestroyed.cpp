@@ -106,7 +106,7 @@ void ScriptConditionBuildingDestroyed::showEditCondition(spScriptEditor pScriptE
 
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("X: ").toStdString().c_str());
+    pText->setHtmlText(tr("X: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 0, 99999);
@@ -121,7 +121,7 @@ void ScriptConditionBuildingDestroyed::showEditCondition(spScriptEditor pScriptE
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Y: ").toStdString().c_str());
+    pText->setHtmlText(tr("Y: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 0, 99999);

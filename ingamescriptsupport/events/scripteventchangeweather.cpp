@@ -72,7 +72,7 @@ void ScriptEventChangeWeather::showEditEvent(spScriptEditor pScriptEditor)
 
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Days: ").toStdString().c_str());
+    pText->setHtmlText(tr("Days: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, 9999);
@@ -87,7 +87,7 @@ void ScriptEventChangeWeather::showEditEvent(spScriptEditor pScriptEditor)
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Weather: ").toStdString().c_str());
+    pText->setHtmlText(tr("Weather: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
 

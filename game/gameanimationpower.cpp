@@ -133,7 +133,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     for (qint32 i = 0; i < text.size(); i++)
     {
         oxygine::spTextField textField = new oxygine::TextField();
-        textField->setHtmlText(QString(text[i]).toStdString().c_str());
+        textField->setHtmlText(QString(text[i]));
         textField->setPosition(xPos, 0);
         textField->setScale(scale);
         textField->setStyle(style);

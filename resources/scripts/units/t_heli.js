@@ -93,7 +93,9 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Air unit. <div c='00ff00'>Carries X 1 </div> Infantry units. No attack capability.");
+        return "<r>" + qsTr("Air unit. ") + "</r>" +
+               "<div c='#00ff00'>" + qsTr("Carries X 1 ") + "</div>" +
+               "<r>" + qsTr("Infantry units. No attack capability.") + "</r>";
     };
     this.getUnitType = function()
     {

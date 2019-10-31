@@ -175,7 +175,7 @@ void SpinBox::update(const oxygine::UpdateState& us)
         {
             toggle.start();
         }
-        m_Textfield->setHtmlText(drawText.toStdString().c_str());
+        m_Textfield->setHtmlText(drawText);
 
         if (m_Text.size() > 0)
         {
@@ -217,7 +217,7 @@ void SpinBox::update(const oxygine::UpdateState& us)
             checkInput();
         }
         QString drawText = m_Text;
-        m_Textfield->setHtmlText(drawText.toStdString().c_str());
+        m_Textfield->setHtmlText(drawText);
     }
     oxygine::Actor::update(us);
 }
@@ -289,7 +289,7 @@ void SpinBox::setValue(qreal value)
             }
         }
     }
-    m_Textfield->setHtmlText(m_Text.toStdString().c_str());
+    m_Textfield->setHtmlText(m_Text);
 }
 
 qreal SpinBox::getInfinityValue() const

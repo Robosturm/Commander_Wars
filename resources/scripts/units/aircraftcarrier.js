@@ -96,7 +96,11 @@ var Constructor = function()
 
     this.getDescription = function()
     {
-        return qsTr("Naval Unit. Can <div c='00ff00'>carry X 2</div> air units and <div c='00ff00'>produce </div>Waterplanes.");
+        return "<r>" + qsTr("Naval Unit. Can ") + "</r>" +
+               "<div c='#00ff00'>"+ qsTr("carry X 2") + "</div>" +
+               "<r>" + qsTr(" air units and ") + "</r>" +
+               "<div c='#00ff00'>" + qsTr("produce ") + "</div>" +
+               "<r>" + qsTr("Waterplanes") + "</r>";
     };
     this.getUnitType = function()
     {
