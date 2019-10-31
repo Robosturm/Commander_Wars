@@ -202,14 +202,13 @@ namespace oxygine
         Q_ASSERT(loaded);
 
         pugi::xml_node resources = doc->first_child();
-        pugi::xml_node resources_meta = pugi::xml_node();
 
         std::string id;
 
         qDebug("loading xml resources");
 
         std::string xmlFolder = dir.path().toStdString();
-        XmlWalker walker(&xmlFolder, "", 1.0f, opt._loadCompletely, true, resources, resources_meta);
+        XmlWalker walker(&xmlFolder, "", 1.0f, opt._loadCompletely, true, resources);
 
         while (true)
         {

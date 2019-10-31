@@ -14,7 +14,7 @@ namespace oxygine
                   const std::string& path,
                   float scaleFactor,
                   bool load, bool alpha,
-                  pugi::xml_node xml, pugi::xml_node meta);
+                  pugi::xml_node xml);
 
         bool empty() const {return _root.empty();}
 
@@ -22,7 +22,6 @@ namespace oxygine
         const std::string&  getXmlFolder() const { return *_xmlFolder; }
         std::string         getPath(const char* attrName) const;
         pugi::xml_node      getNode() const {return _root;}
-        pugi::xml_node      getMeta() const {return _rootMeta;}
         float               getScaleFactor() const {return _scaleFactor;}
         bool                getLoad() const {return _load;}
         bool                getAlphaHitTest() const { return _alphaHitTest; }
@@ -33,7 +32,6 @@ namespace oxygine
 
 
         XmlWalker       next();
-        pugi::xml_node  nextMeta();
 
     private:
         void            _checkSetAttributes(pugi::xml_node node);
@@ -45,11 +43,7 @@ namespace oxygine
         pugi::xml_node _root;
         pugi::xml_node _last;
 
-        pugi::xml_node _rootMeta;
-        pugi::xml_node _lastMeta;
-
         bool _notStarted;
-        bool _notStartedMeta;
 
         float _scaleFactor;
         bool _load;
@@ -61,7 +55,7 @@ namespace oxygine
     {
     public:
         CreateResourceContext() : resources(0), xml_name(0), prebuilt_folder(0), options(0),
-            walker(0, "", 1.0f, true, false, pugi::xml_node(), pugi::xml_node())
+            walker(0, "", 1.0f, true, false, pugi::xml_node())
         {
         }
 

@@ -1,6 +1,5 @@
 #include "ResAtlas.h"
 #include "ResAtlasGeneric.h"
-#include "ResAtlasPrebuilt.h"
 #include "Resources.h"
 #include "../Image.h"
 #include "../core/VideoDriver.h"
@@ -73,20 +72,10 @@ namespace oxygine
     Resource* ResAtlas::create(CreateResourceContext& context)
     {
         context.walker.checkSetAttributes();
-        ResAtlas* ra = 0;
-        if (context.walker.getMeta())
-        {
-            ResAtlasPrebuilt* rs = new ResAtlasPrebuilt(context);
-
-            ra = rs;
-        }
-        else
-        {
-            ResAtlasGeneric* rs = new ResAtlasGeneric();
-            rs->loadAtlas(context);
-
-            ra = rs;
-        }
+        ResAtlas* ra = nullptr;
+        ResAtlasGeneric* rs = new ResAtlasGeneric();
+        rs->loadAtlas(context);
+        ra = rs;
 
         ra->setName(Resource::extractID(context.walker.getNode(), "", std::string("!atlas:") + *context.xml_name));
         context.resources->add(ra);

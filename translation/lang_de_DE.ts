@@ -2491,7 +2491,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="74"/>
+        <location filename="../main.cpp" line="117"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4529,7 +4529,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/wiki/action_stealth.js" line="20"/>
-        <source>Unstealth</source>
+        <source>Stealth</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4683,7 +4683,7 @@
     </message>
     <message>
         <location filename="../resources/scripts/units/apc.js" line="75"/>
-        <source>infantry unit, </source>
+        <source> infantry unit, </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14124,7 +14124,7 @@ Units have 30% increased firepower during sandstorm.</source>
     </message>
     <message>
         <location filename="../resources/scripts/building/labor.js" line="37"/>
-        <source>of </source>
+        <source> of </source>
         <translation type="unfinished"></translation>
     </message>
     <message>

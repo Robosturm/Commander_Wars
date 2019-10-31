@@ -268,26 +268,30 @@ namespace oxygine
             dc.color = prev;
         }
 
-        DivNode::DivNode(QXmlStreamReader& reader)
+        DivNode::DivNode(QDomElement& reader)
         {
             options = std::numeric_limits<quint32>::max();
-            QXmlStreamAttributes attr = reader.attributes();
-            for (qint32 i = 0; i < attr.size(); i++)
+            if (reader.hasAttribute("c"))
             {
-                if (attr[i].name() == "c" ||
-                    attr[i].name() == "color")
+                QString colorText(reader.attributeNode("c").value());
+                if (!colorText.startsWith("#"))
                 {
-                    QString colorText(attr[i].value().toString());
-                    if (!colorText.startsWith("#"))
-                    {
-                        colorText.push_front("#");
-                    }
-                    color = QColor(colorText);
+                    colorText.push_front("#");
                 }
-                else if (attr[i].name() == "opt")
+                color = QColor(colorText);
+            }
+            else if (reader.hasAttribute("color"))
+            {
+                QString colorText(reader.attributeNode("color").value());
+                if (!colorText.startsWith("#"))
                 {
-                    options = attr[i].value().toUInt();
+                    colorText.push_front("#");
                 }
+                color = QColor(colorText);
+            }
+            else if (reader.hasAttribute("opt"))
+            {
+                options = reader.attributeNode("opt").value().toUInt();
             }
         }
     }

@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-#include <qxmlstream.h>
+#include <QDomElement>
 
 namespace pugi
 {
@@ -83,7 +83,7 @@ namespace oxygine
         class DivNode: public Node
         {
         public:
-            DivNode(QXmlStreamReader& reader);
+            DivNode(QDomElement& reader);
 
             void resize(Aligner& rd) override;
             void draw(DrawContext& dc) override;

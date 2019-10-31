@@ -30,12 +30,9 @@ namespace oxygine
         float scaleFactor,
         bool load,
         bool alpha,
-        pugi::xml_node xml, pugi::xml_node meta) :
-
-        _rootMeta(meta),
+        pugi::xml_node xml) :
         _root(xml),
         _notStarted(true),
-        _notStartedMeta(true),
         _scaleFactor(scaleFactor),
         _load(load),
         _alphaHitTest(alpha),
@@ -99,9 +96,6 @@ namespace oxygine
                 _last = _last.next_sibling();
             }
 
-            nextMeta();
-
-
             const char* name = _last.name();
             pugi::xml_attribute attr;
 
@@ -114,7 +108,7 @@ namespace oxygine
             break;
         }
 
-        return XmlWalker(_xmlFolder, _path, _scaleFactor, _load, _alphaHitTest, _last, _lastMeta);
+        return XmlWalker(_xmlFolder, _path, _scaleFactor, _load, _alphaHitTest, _last);
     }
 
     void XmlWalker::_checkSetAttributes(pugi::xml_node node)
@@ -148,20 +142,6 @@ namespace oxygine
     void XmlWalker::checkSetAttributes()
     {
         _checkSetAttributes(_root);
-    }
-
-    pugi::xml_node XmlWalker::nextMeta()
-    {
-        if (_notStartedMeta)
-        {
-            _lastMeta = _rootMeta.first_child();
-            _notStartedMeta = false;
-        }
-        else
-            _lastMeta = _lastMeta.next_sibling();
-
-
-        return _lastMeta;
     }
 
     RestoreResourcesContext RestoreResourcesContext::instance;

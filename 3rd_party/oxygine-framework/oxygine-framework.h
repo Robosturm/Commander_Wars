@@ -91,7 +91,6 @@
 #include "oxygine/res/ResFontBM.h"
 #include "oxygine/res/Resource.h"
 #include "oxygine/res/Resources.h"
-#include "oxygine/res/ResStarlingAtlas.h"
 #include "oxygine/res/SingleResAnim.h"
 
 //text_utils/

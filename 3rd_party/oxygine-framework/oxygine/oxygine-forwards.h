@@ -104,7 +104,6 @@ namespace oxygine
     class ResAtlas;
     class ResFont;
     class ResFontBM;
-    class ResStarlingAtlas;
     class Resource;
     class Resources;
     class ResourcesLoadOptions;

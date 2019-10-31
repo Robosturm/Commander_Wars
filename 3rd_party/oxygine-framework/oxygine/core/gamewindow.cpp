@@ -23,7 +23,6 @@
 #include "../res/ResAtlas.h"
 #include "../res/ResBuffer.h"
 #include "../res/ResFontBM.h"
-#include "../res/ResStarlingAtlas.h"
 #include "../res/Resources.h"
 #include "gl/VideoDriverGLES20.h"
 
@@ -74,7 +73,6 @@ namespace oxygine
         Resources::unregisterResourceType("font");
         Resources::unregisterResourceType("bmfc_font");
         Resources::unregisterResourceType("sdfont");
-        Resources::unregisterResourceType("starling");
     }
 
     void GameWindow::timerEvent(QTimerEvent *)
@@ -171,7 +169,6 @@ namespace oxygine
         Resources::registerResourceType(ResFontBM::create, "font");
         Resources::registerResourceType(ResFontBM::createBM, "bmfc_font");
         Resources::registerResourceType(ResFontBM::createSD, "sdfont");
-        Resources::registerResourceType(ResStarlingAtlas::create, "starling");
 
         STDRenderer::instance = new STDRenderer;
         STDRenderDelegate::instance = new STDRenderDelegate;

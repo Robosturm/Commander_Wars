@@ -1,6 +1,6 @@
 #include "TextBuilder.h"
 #include "Node.h"
-#include <qxmlstream.h>
+#include <QDomDocument>
 #include "../utils/stringUtils.h"
 
 namespace oxygine
@@ -17,52 +17,59 @@ namespace oxygine
 
         }
 
-        text::Node* TextBuilder::create(QXmlStreamReader& reader)
+        text::Node* TextBuilder::create(QDomNode& reader)
         {
-            text::Node* tn = nullptr;
-            if (reader.hasError())
+            QDomElement element = reader.toElement();
+            if (!element.isNull())
             {
-                Q_ASSERT(!"can't parse tagged text");
-            }
-            QString name = reader.name().toString();
-            if (name == "div")
-            {
-                tn = new text::DivNode(reader);
-                QString text = reader.readElementText();
-                tn->appendNode(new text::TextNode(text));
+                text::Node* tn = nullptr;
+                QString name = element.tagName();
+                if (name == "div")
+                {
+                    tn = new text::DivNode(element);
+                    QString text = element.text();
+                    tn->appendNode(new text::TextNode(text));
+                }
+                else if (name == "br")
+                {
+                    tn = new text::BrNode();
+                    QString text = element.text();
+                    tn->appendNode(new text::TextNode(text));
+                }
+                else if (name == "r")
+                {
+                    QString text = element.text();
+                    tn = new text::TextNode(text);
+                }
+                else if (name == "data")
+                {
+                    tn = new text::Node;
+                }
+                else
+                {
+                    return nullptr;
+                }
+                if (reader.hasChildNodes())
+                {
+
+                }
+                // loop through current node childs
+                QDomNode child = reader.firstChild();
+                while(!child.isNull())
+                {
+                    text::Node* tnchild = create(child);
+                    if (tnchild != nullptr)
+                    {
+                        tn->appendNode(tnchild);
+                    }
+                    child = child.nextSibling();
+                }
                 return tn;
-            }
-            else if (name == "br")
-            {
-                tn = new text::BrNode();
-                QString text = reader.readElementText();
-                tn->appendNode(new text::TextNode(text));
-                return tn;
-            }
-            else if (name == "r")
-            {
-                QString text = reader.readElementText();
-                tn = new text::TextNode(text);
-            }
-            else if (name == "data")
-            {
-                tn = new text::Node;
             }
             else
             {
-                return nullptr;
+                return new text::Node;
             }
-            while (!reader.atEnd() &&
-                   !reader.hasError())
-            {
-                reader.readNext();
-                text::Node* tnchild = create(reader);
-                if (tnchild != nullptr)
-                {
-                    tn->appendNode(tnchild);
-                }
-            }
-            return tn;
         }
 
         text::Node* TextBuilder::parse(const QString& st)
@@ -74,12 +81,24 @@ namespace oxygine
             }
             else
             {
-                str = "<r>" + st + "</r>";
+                str = "<data><r>" + st + "</r></data>";
             }
-            QXmlStreamReader reader;
-            reader.addData(str);
-            reader.readNextStartElement();
-            return create(reader);
+            QDomDocument doc;
+            doc.setContent(str);
+            QDomElement root = doc.documentElement();
+            QDomNode node = root.firstChild();
+            // loop through root childs
+            auto tn = new text::Node;
+            while(!node.isNull())
+            {
+                text::Node* tnchild = create(node);
+                if (tnchild != nullptr)
+                {
+                    tn->appendNode(tnchild);
+                }
+                node = node.nextSibling();
+            }
+            return tn;
         }
     }
 }

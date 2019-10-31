@@ -2,7 +2,7 @@
 #include "../oxygine-include.h"
 #include <string>
 
-class QXmlStreamReader;
+class QDomNode;
 
 namespace oxygine
 {
@@ -19,7 +19,7 @@ namespace oxygine
             text::Node* parse(const QString& str);
 
         private:
-            text::Node*  create(QXmlStreamReader& reader);
+            text::Node*  create(QDomNode& reader);
         };
     }
 }

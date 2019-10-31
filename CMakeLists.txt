@@ -24,6 +24,7 @@ find_package(Qt5Network REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5OpenGL REQUIRED)
+find_package(Qt5Xml REQUIRED)
 find_package(OpenGL REQUIRED)
 
 # build dependend defines
@@ -121,13 +122,11 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     ${OXYGINE_ROOT}/oxygine/res/ResAnim.cpp
     ${OXYGINE_ROOT}/oxygine/res/ResAtlas.cpp
     ${OXYGINE_ROOT}/oxygine/res/ResAtlasGeneric.cpp
-    ${OXYGINE_ROOT}/oxygine/res/ResAtlasPrebuilt.cpp
     ${OXYGINE_ROOT}/oxygine/res/ResBuffer.cpp
     ${OXYGINE_ROOT}/oxygine/res/ResFont.cpp
     ${OXYGINE_ROOT}/oxygine/res/ResFontBM.cpp
     ${OXYGINE_ROOT}/oxygine/res/Resource.cpp
     ${OXYGINE_ROOT}/oxygine/res/Resources.cpp
-    ${OXYGINE_ROOT}/oxygine/res/ResStarlingAtlas.cpp
     ${OXYGINE_ROOT}/oxygine/res/SingleResAnim.cpp
     # text utils
     ${OXYGINE_ROOT}/oxygine/text_utils/Aligner.cpp
@@ -135,7 +134,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     ${OXYGINE_ROOT}/oxygine/text_utils/TextBuilder.cpp
     # text utils
     ${OXYGINE_ROOT}/oxygine/utils/AtlasBuilder.cpp
-    ${OXYGINE_ROOT}/oxygine/utils/cdecode.c
     ${OXYGINE_ROOT}/oxygine/utils/stringUtils.cpp
 )
 ###################################################################################
@@ -414,6 +412,7 @@ qt5_use_modules(${PROJECT_NAME}
     Gui
     Widgets
     OpenGL
+    Xml
 )
 
 # link libraries
@@ -448,6 +447,7 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
          ${QT_BIN_DIR}/Qt5Qmld.dll
          ${QT_BIN_DIR}/Qt5Svgd.dll
          ${QT_BIN_DIR}/Qt5Widgetsd.dll
+         ${QT_BIN_DIR}/Qt5Xmld.dll
     )
 
     set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
@@ -488,6 +488,7 @@ else("Release")
         ${QT_BIN_DIR}/libEGL.dll
         ${QT_BIN_DIR}/libGLESv2.dll
         ${QT_BIN_DIR}/Qt5Svg.dll
+        ${QT_BIN_DIR}/Qt5Xml.dll
     )
 
     set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS

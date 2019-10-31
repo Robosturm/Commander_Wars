@@ -331,7 +331,7 @@ namespace oxygine
 
         if (context)
         {
-            float scale = context->walker.getMeta().attribute("sf").as_float(1.0f) / context->walker.getScaleFactor();
+            float scale = 1.0f / context->walker.getScaleFactor();
             _font->setScale(scale);
         }
 
@@ -546,7 +546,7 @@ namespace oxygine
 
         if (context)
         {
-            float scale = context->walker.getMeta().attribute("sf").as_float(1.0f) / context->walker.getScaleFactor();
+            float scale = 1.0f / context->walker.getScaleFactor();
             _font->setScale(scale);
         }
 

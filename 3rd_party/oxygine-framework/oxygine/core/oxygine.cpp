@@ -14,7 +14,6 @@
 #include "../res/ResAtlas.h"
 #include "../res/ResBuffer.h"
 #include "../res/ResFontBM.h"
-#include "../res/ResStarlingAtlas.h"
 #include "../res/Resources.h"
 #include "gl/VideoDriverGLES20.h"
 #include <stdio.h>
