@@ -17,7 +17,7 @@ GameManager::GameManager()
     {
         if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/game/res.xml"))
         {
-            oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/game/res.xml").toStdString());
+            oxygine::Resources::loadXML(pMainapp->getSettings()->getMods().at(i) + "/images/game/res.xml");
         }
     }
 }

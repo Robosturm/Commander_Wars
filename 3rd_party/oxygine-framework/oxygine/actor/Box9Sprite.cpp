@@ -110,23 +110,52 @@ namespace oxygine
         {
             float scaleFactor = resanim->getScaleFactor();
 
-            pugi::xml_attribute attr = resanim->getAttribute("guideX1");
-            _guideX[0] = attr.as_float(0) * scaleFactor;
+            QString attr = resanim->getAttribute("guideX1");
+            bool ok = false;
+            _guideX[0] = attr.toFloat(&ok);
+            if (!ok)
+            {
+                _guideX[0] = 0;
+            }
+            _guideX[0] *= scaleFactor;
 
             attr = resanim->getAttribute("guideX2");
-            _guideX[1] = attr.as_float(resanim->getWidth()) * scaleFactor;
+            _guideX[1] = attr.toFloat(&ok);
+            if (!ok)
+            {
+                _guideX[1] = resanim->getWidth();
+            }
+            _guideX[1] *= scaleFactor;
 
             attr = resanim->getAttribute("guideY1");
-            _guideY[0] = attr.as_float(0) * scaleFactor;
+            _guideY[0] = attr.toFloat(&ok);
+            if (!ok)
+            {
+                _guideY[0] = 0;
+            }
+            _guideY[0] *= scaleFactor;
 
             attr = resanim->getAttribute("guideY2");
-            _guideY[1] = attr.as_float(resanim->getHeight()) * scaleFactor;
+            _guideY[1] = attr.toFloat(&ok);
+            if (!ok)
+            {
+                _guideY[1] = resanim->getHeight();
+            }
+            _guideY[1] *= scaleFactor;
 
             attr = resanim->getAttribute("vertical");
-            _vertMode = (StretchMode)attr.as_uint(STRETCHING);
+            _vertMode = static_cast<StretchMode>(attr.toUInt(&ok));
+            if (!ok)
+            {
+                _vertMode = STRETCHING;
+            }
 
             attr = resanim->getAttribute("horizontal");
-            _horzMode = (StretchMode)attr.as_uint(STRETCHING);
+            _horzMode = static_cast<StretchMode>(attr.toUInt(&ok));
+            if (!ok)
+            {
+                _horzMode = STRETCHING;
+            }
         }
         Sprite::animFrameChanged(f);
     }
@@ -254,21 +283,6 @@ namespace oxygine
         }
 
         _prepared = true;
-    }
-
-    std::string stretchMode2String(Box9Sprite::StretchMode s)
-    {
-        switch (s)
-        {
-            case Box9Sprite::TILING:
-                return "tiling";
-            case Box9Sprite::TILING_FULL:
-                return "tiling_full";
-            case Box9Sprite::STRETCHING:
-                return "stretching";
-        }
-
-        return "";
     }
 
     void Box9Sprite::sizeChanged(const Vector2& size)

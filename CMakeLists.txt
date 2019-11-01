@@ -115,8 +115,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     ${OXYGINE_ROOT}/oxygine/tween/TweenGlow.cpp
     ${OXYGINE_ROOT}/oxygine/tween/TweenOutline.cpp
     ${OXYGINE_ROOT}/oxygine/tween/TweenQueue.cpp
-    # pugi xml todo replace with qt xml
-    ${OXYGINE_ROOT}/oxygine/pugixml/pugixml.cpp
     # res stuff
     ${OXYGINE_ROOT}/oxygine/res/CreateResourceContext.cpp
     ${OXYGINE_ROOT}/oxygine/res/ResAnim.cpp
@@ -134,7 +132,6 @@ set(${PROJECT_NAME}_OXYGINE_SRCS
     ${OXYGINE_ROOT}/oxygine/text_utils/TextBuilder.cpp
     # text utils
     ${OXYGINE_ROOT}/oxygine/utils/AtlasBuilder.cpp
-    ${OXYGINE_ROOT}/oxygine/utils/stringUtils.cpp
 )
 ###################################################################################
 # end oxygine stuff -> qoxygine

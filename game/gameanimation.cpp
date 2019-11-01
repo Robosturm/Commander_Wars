@@ -75,7 +75,7 @@ void GameAnimation::addSprite2(QString spriteID, float offsetX, float offsetY, q
 void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
-    oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID.toStdString());
+    oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
         oxygine::spSprite pSprite = new oxygine::Sprite();

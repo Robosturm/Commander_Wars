@@ -181,12 +181,12 @@ QPoint BattleAnimationSprite::getUnitPosition(qint32 unitCount, qint32 maxUnitCo
 
 void BattleAnimationSprite::loadSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,
                                        qint32 loops, float scale, short priority, qint32 showDelay,
-                                       bool invertFlipX, bool deleteAfter)
+                                       bool _invertFlipX, bool deleteAfter)
 {
     loadMovingSprite(spriteID, addPlayerColor, maxUnitCount, offset,
                      QPoint(0, 0), 0, deleteAfter,
                      loops, scale, priority, showDelay,
-                     invertFlipX);
+                     _invertFlipX);
 }
 
 qint32 BattleAnimationSprite::getUnitCount(qint32 maxUnitCount)
@@ -197,7 +197,7 @@ qint32 BattleAnimationSprite::getUnitCount(qint32 maxUnitCount)
 void BattleAnimationSprite::loadMovingSprite(QString spriteID, bool addPlayerColor, qint32 maxUnitCount, QPoint offset,
                                              QPoint movement, qint32 moveTime, bool deleteAfter,
                                              qint32 loops, float scale, short priority, qint32 showDelay,
-                                             bool invertFlipX)
+                                             bool _invertFlipX)
 {    
     qint32 value = getUnitCount(maxUnitCount);
     for (qint32 i = maxUnitCount; i >= maxUnitCount - value + 1; i--)
@@ -209,17 +209,17 @@ void BattleAnimationSprite::loadMovingSprite(QString spriteID, bool addPlayerCol
         }
         QPoint posOffset = getUnitPositionOffset(i);
         loadSingleMovingSprite(spriteID, addPlayerColor, offset + position + posOffset, movement, moveTime, deleteAfter,
-                               loops, scale, i + priority, showDelay, invertFlipX);
+                               loops, scale, i + priority, showDelay, _invertFlipX);
     }
 }
 
 void BattleAnimationSprite::loadSingleMovingSprite(QString spriteID, bool addPlayerColor, QPoint offset,
                 QPoint movement, qint32 moveTime, bool deleteAfter,
                 qint32 loops, float scale, short priority, qint32 showDelay,
-                bool invertFlipX)
+                bool _invertFlipX)
 {
     BattleAnimationManager* pBattleAnimationManager = BattleAnimationManager::getInstance();
-    oxygine::ResAnim* pAnim = pBattleAnimationManager->getResAnim(spriteID.toStdString());
+    oxygine::ResAnim* pAnim = pBattleAnimationManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
         oxygine::spSprite pSprite = new oxygine::Sprite();
@@ -251,7 +251,7 @@ void BattleAnimationSprite::loadSingleMovingSprite(QString spriteID, bool addPla
         }
         pSprite->setPriority(priority);
         pSprite->setScale(scale);
-        pSprite->setInvertFlipX(invertFlipX);
+        pSprite->setInvertFlipX(_invertFlipX);
 
         qint32 xPos = offset.x();
         if (isFlippedX())

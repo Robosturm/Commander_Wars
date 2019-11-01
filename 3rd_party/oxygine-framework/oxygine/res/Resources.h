@@ -3,11 +3,10 @@
 #include "Resource.h"
 #include "../closure/closure.h"
 #include "../core/Object.h"
-#include "../pugixml/pugixml.hpp"
-#include <list>
-#include <string.h>
-#include <string>
-#include <unordered_map>
+#include "QDomDocument"
+#include <qvector.h>
+#include <qstring.h>
+#include <qmap.h>
 
 namespace oxygine
 {
@@ -23,7 +22,7 @@ namespace oxygine
         ResourcesLoadOptions& useLoadCounter(bool v = true) { _useLoadCounter = v; return *this; }
 
         //use not standard folder with prebuilt resources (atlasses, fonts, etc)
-        ResourcesLoadOptions& prebuiltFolder(const std::string& folder) {_prebuilFolder = folder; return *this; }
+        ResourcesLoadOptions& prebuiltFolder(const QString& folder) {_prebuilFolder = folder; return *this; }
 
         //use load counter internally
         ResourcesLoadOptions& shortenIDS(bool v = true) { _shortenIDS = v; return *this; }
@@ -32,14 +31,14 @@ namespace oxygine
         bool _loadCompletely;
         bool _useLoadCounter;
         bool _shortenIDS;
-        std::string _prebuilFolder;
+        QString _prebuilFolder;
     };
 
     class Resources: public Resource
     {
     public:
-        typedef std::vector<spResource> resources;
-        typedef std::unordered_map<std::string, spResource> resourcesMap;
+        typedef QVector<spResource> resources;
+        typedef QMap<QString, spResource> resourcesMap;
 
         typedef Resource* (*createResourceCallback)(CreateResourceContext& context);
         typedef Closure<void (Resource*)> ResLoadedCallback;
@@ -48,8 +47,8 @@ namespace oxygine
         @param creation callback
         @param resource type string identifier. Max id length is 15 chars. These IDs are already occupied: 'set', 'atlas', ' image', 'font', 'buffer'
         */
-        static void registerResourceType(createResourceCallback creationCallback, const char* resTypeID);
-        static void unregisterResourceType(const char* resTypeID);
+        static void registerResourceType(createResourceCallback creationCallback, QString resTypeID);
+        static void unregisterResourceType(QString resTypeID);
         static void setDefaultMissingResAnim(ResAnim*);
 
         Resources();
@@ -59,7 +58,7 @@ namespace oxygine
         @param xml file paths
         @param options
         */
-        bool loadXML(const std::string& xmlFile, const ResourcesLoadOptions& opt = ResourcesLoadOptions());
+        bool loadXML(const QString xmlFile, const ResourcesLoadOptions& opt = ResourcesLoadOptions());
 
         /**Adds Resource*/
         void add(Resource* r, bool accessByShortenID = false);
@@ -79,20 +78,20 @@ namespace oxygine
         /** get resource by id, no case sensitive
         @param resource id
         */
-        Resource* get(const std::string& id, error_policy ep = ep_show_error, Resource* defIfNotFound = 0) const;
+        Resource* get(const QString& id, error_policy ep = ep_show_error, Resource* defIfNotFound = 0) const;
 
         /** get resource by id
         @param resource id
         */
-        virtual ResAnim* getResAnim(const std::string& id, error_policy ep = ep_show_error) const;
+        virtual ResAnim* getResAnim(const QString& id, error_policy ep = ep_show_error) const;
 
         /** get animation resource by id
         @param resource id
         */
-        ResFont* getResFont(const std::string& id, error_policy ep = ep_show_error) const;
+        ResFont* getResFont(const QString& id, error_policy ep = ep_show_error) const;
 
         template<class T>
-        T* getT(const std::string& id, error_policy ep = ep_show_error, T* defIfNotFound = 0) const { return safeCast<T*>(get(id, ep, defIfNotFound)); }
+        T* getT(const QString& id, error_policy ep = ep_show_error, T* defIfNotFound = 0) const { return safeCast<T*>(get(id, ep, defIfNotFound)); }
 
         /**debug function. prints all loaded resources*/
         void print() const;
@@ -104,30 +103,30 @@ namespace oxygine
         resourcesMap& _getResourcesMap();
 
     protected:
-        void updateName(const std::string& filename);
+        void updateName(const QString& filename);
         void _load(LoadResourcesContext* context) override;
         void _unload() override;
 
 
         struct registeredResource
         {
-            registeredResource() {id[0] = 0;}
-            char id[16];
+            registeredResource() {id;}
+            QString id;
             createResourceCallback cb;
 
-            static bool comparePred2(const registeredResource& ob1, const char* ob)
+            static bool comparePred2(const registeredResource& ob1, QString ob)
             {
-                return strcmp(ob1.id, ob) > 0;
+                return ob1.id > ob;
             }
 
             static bool comparePred(const registeredResource& ob1, const registeredResource& ob2)
             {
-                return strcmp(ob1.id, ob2.id) > 0;
+                return ob1.id > ob2.id;
             }
 
-            bool operator < (const char* ob2) const
+            bool operator < (QString ob2) const
             {
-                return strcmp(this->id, ob2) > 0;
+                return this->id > ob2;
             }
         };
 
@@ -136,10 +135,10 @@ namespace oxygine
         resourcesMap _resourcesMap;
 
 
-        typedef std::vector< registeredResource > registeredResources;
+        typedef QVector< registeredResource > registeredResources;
         static registeredResources _registeredResources;
 
-        std::string _name;
-        std::vector<pugi::xml_document*> _docs;
+        QString _name;
+        QVector<QDomDocument*> _docs;
     };
 }

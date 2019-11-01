@@ -69,7 +69,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+face";
-        oxygine::ResAnim* pAnimCO = pCOSpriteManager->getResAnim(resAnim.toStdString().c_str());
+        oxygine::ResAnim* pAnimCO = pCOSpriteManager->getResAnim(resAnim);
         m_AtkCO0->setResAnim(pAnimCO);
         setCOMood(m_AtkCO0, atkStartHp, defStartHp);
         if (getIsLeft(pAtkUnit, pDefUnit))
@@ -94,7 +94,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+face";
-        oxygine::ResAnim* pAnimCO = pCOSpriteManager->getResAnim(resAnim.toStdString().c_str());
+        oxygine::ResAnim* pAnimCO = pCOSpriteManager->getResAnim(resAnim);
         m_AtkCO1->setResAnim(pAnimCO);
         setCOMood(m_AtkCO1, atkStartHp, defStartHp);
         if (getIsLeft(pAtkUnit, pDefUnit))
@@ -120,7 +120,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+face";
-        oxygine::ResAnim* pAnimCO = pCOSpriteManager->getResAnim(resAnim.toStdString().c_str());
+        oxygine::ResAnim* pAnimCO = pCOSpriteManager->getResAnim(resAnim);
         m_DefCO0->setResAnim(pAnimCO);
         setCOMood(m_DefCO0, defStartHp, atkStartHp);
         if (getIsLeft(pDefUnit, pAtkUnit))
@@ -145,7 +145,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+face";
-        oxygine::ResAnim* pAnimCO = pCOSpriteManager->getResAnim(resAnim.toStdString().c_str());
+        oxygine::ResAnim* pAnimCO = pCOSpriteManager->getResAnim(resAnim);
         m_DefCO1->setResAnim(pAnimCO);
         setCOMood(m_DefCO1, defStartHp, atkStartHp);
         if (getIsLeft(pDefUnit, pAtkUnit))
@@ -275,9 +275,9 @@ oxygine::spSprite BattleAnimation::loadTerrainSprite(Unit* pUnit)
     oxygine::ResAnim* pAnimBase = nullptr;
     oxygine::ResAnim* pAnimFore = nullptr;
     oxygine::ResAnim* pAnimBack = nullptr;
-    pAnimBase = pGameManager->getResAnim(pUnit->getTerrainAnimationBase().toStdString().c_str(), oxygine::ep_ignore_error);
-    pAnimFore = pGameManager->getResAnim(pUnit->getTerrainAnimationForeground().toStdString().c_str(), oxygine::ep_ignore_error);
-    pAnimBack = pGameManager->getResAnim(pUnit->getTerrainAnimationBackground().toStdString().c_str(), oxygine::ep_ignore_error);
+    pAnimBase = pGameManager->getResAnim(pUnit->getTerrainAnimationBase(), oxygine::ep_ignore_error);
+    pAnimFore = pGameManager->getResAnim(pUnit->getTerrainAnimationForeground(), oxygine::ep_ignore_error);
+    pAnimBack = pGameManager->getResAnim(pUnit->getTerrainAnimationBackground(), oxygine::ep_ignore_error);
     oxygine::spSprite pSprite = new oxygine::Sprite();
     pSprite->setResAnim(pAnimBase);
     ret->addChild(pSprite);

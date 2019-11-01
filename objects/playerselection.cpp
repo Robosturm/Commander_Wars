@@ -802,7 +802,7 @@ void PlayerSelection::updateCO1Sprite(QString coid, qint32 playerIdx)
     }
     else
     {
-        pAnim = pCOSpriteManager->getResAnim((coid + "+info").toStdString().c_str());
+        pAnim = pCOSpriteManager->getResAnim((coid + "+info"));
     }
     m_playerCO1[playerIdx]->setResAnim(pAnim);
 }
@@ -834,7 +834,7 @@ void PlayerSelection::updateCO2Sprite(QString coid, qint32 playerIdx)
     }
     else
     {
-        pAnim = pCOSpriteManager->getResAnim((coid + "+info").toStdString().c_str());
+        pAnim = pCOSpriteManager->getResAnim((coid + "+info"));
     }
     m_playerCO2[playerIdx]->setResAnim(pAnim);
 }

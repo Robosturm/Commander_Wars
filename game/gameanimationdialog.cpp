@@ -258,7 +258,7 @@ void GameAnimationDialog::setCO(QString coid, GameEnums::COMood mood)
 {
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     QString resAnim = coid.toLower() + "+face";
-    oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim(resAnim.toStdString().c_str());
+    oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim(resAnim);
     m_COSprite->setResAnim(pAnim, static_cast<qint32>(mood));
 }
 
@@ -288,8 +288,8 @@ void GameAnimationDialog::_loadBackground()
     if (QFile::exists(m_BackgroundFile))
     {
         oxygine::SingleResAnim* pAnim = new oxygine::SingleResAnim();
-        pAnim->setResPath(m_BackgroundFile.toStdString());
-        pAnim->init(m_BackgroundFile.toStdString(), 1, 1, 1.0f);
+        pAnim->setResPath(m_BackgroundFile);
+        pAnim->init(m_BackgroundFile, 1, 1, 1.0f);
         m_BackgroundAnim = pAnim;
         m_BackgroundSprite->setResAnim(m_BackgroundAnim.get());
         m_BackgroundSprite->setScaleX(Settings::getWidth() / pAnim->getWidth());

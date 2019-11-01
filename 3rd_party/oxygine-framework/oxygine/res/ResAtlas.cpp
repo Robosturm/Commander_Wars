@@ -4,22 +4,24 @@
 #include "../Image.h"
 #include "../core/VideoDriver.h"
 
+#include "qvariant.h"
+
 namespace oxygine
 {
-    static load_texture_hook _hook = 0;
+    static load_texture_hook _hook = nullptr;
     void set_load_texture_hook(load_texture_hook hook)
     {
         _hook = hook;
     }
 
-    void load_texture_internal(const std::string& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
+    void load_texture_internal(const QString& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
     {
         ImageData im;
         spImage mt = new Image;
 
-        qDebug("loading atlas: %s", file.c_str());
-        QImage img (file.c_str());
-        qDebug("atlas file loaded: %s", file.c_str());
+        qDebug("loading atlas: %s", file.toStdString().c_str());
+        QImage img (file);
+        qDebug("atlas file loaded: %s", file.toStdString().c_str());
         mt->init(img, true);
         im = mt->lock();
         qDebug("atlas size: %d %d", im.w, im.h);
@@ -32,7 +34,7 @@ namespace oxygine
         load_context->createTexture(opt);
     }
 
-    void load_texture(const std::string& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
+    void load_texture(const QString& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
     {
         if (_hook)
         {
@@ -44,26 +46,26 @@ namespace oxygine
     }
 
 
-    void ResAtlas::init_resAnim(ResAnim* rs, const std::string& file, pugi::xml_node node)
+    void ResAtlas::init_resAnim(ResAnim* rs, const QString& file, QDomElement node)
     {
         rs->setName(Resource::extractID(node, file, ""));
         setNode(rs, node);
     }
 
-    void ResAtlas::addAtlas(ImageData::TextureFormat tf, const std::string& base, const std::string& alpha, int w, int h)
+    void ResAtlas::addAtlas(ImageData::TextureFormat tf, const QString& base, const QString& alpha, int w, int h)
     {
         atlas atl;
         atl.base = IVideoDriver::instance->createTexture();
         atl.base_path = base;
         atl.base->setName(base);
-        atl.base->init(0, w, h, tf);
+        atl.base->init(nullptr, w, h, tf);
 
-        if (!alpha.empty())
+        if (!alpha.isEmpty())
         {
             atl.alpha = IVideoDriver::instance->createTexture();
             atl.alpha_path = alpha;
             atl.alpha->setName(alpha);
-            atl.alpha->init(0, w, h, tf);
+            atl.alpha->init(nullptr, w, h, tf);
         }
 
         _atlasses.push_back(atl);
@@ -77,7 +79,7 @@ namespace oxygine
         rs->loadAtlas(context);
         ra = rs;
 
-        ra->setName(Resource::extractID(context.walker.getNode(), "", std::string("!atlas:") + *context.xml_name));
+        ra->setName(Resource::extractID(context.walker.getNode(), "", QString("!atlas:") + context.xml_name));
         context.resources->add(ra);
         setNode(ra, context.walker.getNode());
 
@@ -102,10 +104,26 @@ namespace oxygine
     }
 
 
-    void ResAtlas::loadBase(pugi::xml_node node)
+    void ResAtlas::loadBase(QDomElement node)
     {
-        _linearFilter = node.attribute("linearFilter").as_bool(true);
-        _clamp2edge = node.attribute("clamp2edge").as_bool(true);
+        QVariant value = QVariant(node.attribute("linearFilter"));
+        if (value.type() == QVariant::Type::Bool)
+        {
+            _linearFilter = value.toBool();
+        }
+        else
+        {
+            _linearFilter = true;
+        }
+        value = QVariant(node.attribute("clamp2edge"));
+        if (value.type() == QVariant::Type::Bool)
+        {
+            _clamp2edge = value.toBool();
+        }
+        else
+        {
+            _clamp2edge = true;
+        }
     }
 
     void ResAtlas::_restore(Restorable* r, void*)
@@ -118,7 +136,7 @@ namespace oxygine
             if (atl.base.get() == texture)
             {
                 load_texture(atl.base_path, atl.base, _linearFilter, _clamp2edge, &RestoreResourcesContext::instance);
-                atl.base->reg(CLOSURE(this, &ResAtlas::_restore), 0);
+                atl.base->reg(CLOSURE(this, &ResAtlas::_restore), nullptr);
                 break;
             }
 
@@ -140,12 +158,12 @@ namespace oxygine
                 continue;
 
             load_texture(atl.base_path, atl.base, _linearFilter, _clamp2edge, load_context);
-            atl.base->reg(CLOSURE(this, &ResAtlas::_restore), 0);
+            atl.base->reg(CLOSURE(this, &ResAtlas::_restore), nullptr);
 
             if (atl.alpha)
             {
                 load_texture(atl.alpha_path, atl.alpha, _linearFilter, _clamp2edge, load_context);
-                atl.alpha->reg(CLOSURE(this, &ResAtlas::_restore), 0);
+                atl.alpha->reg(CLOSURE(this, &ResAtlas::_restore), nullptr);
             }
         }
     }
@@ -166,7 +184,7 @@ namespace oxygine
     ResAnim* ResAtlas::createEmpty(const XmlWalker& walker, CreateResourceContext& context)
     {
         ResAnim* ra = new ResAnim(this);
-        ra->init(0, 0, 0, walker.getScaleFactor());
+        ra->init(nullptr, 0, 0, walker.getScaleFactor());
         init_resAnim(ra, "", walker.getNode());
         ra->setParent(this);
         context.resources->add(ra);

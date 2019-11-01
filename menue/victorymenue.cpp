@@ -365,7 +365,7 @@ VictoryMenue::VictoryMenue(bool multiplayer)
                     pCOSprite->setScale(scale);
                     pCOSprite->setPosition(5, 3 * scale + y);
                     QString resAnim = pCO->getCoID().toLower() + "+face";
-                    pAnim = pCOSpriteManager->getResAnim(resAnim.toStdString().c_str());
+                    pAnim = pCOSpriteManager->getResAnim(resAnim);
                     QString sentence = "";
                     if (winnerTeam == pPlayer->getTeam())
                     {

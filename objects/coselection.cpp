@@ -163,7 +163,7 @@ COSelection::COSelection(QStringList coids)
 void COSelection::loadArmy(QString army, qint32& bannerX, qint32& y, qint32 i)
 {
     GameManager* pGameManager = GameManager::getInstance();
-    oxygine::ResAnim* pAnim = pGameManager->getResAnim(army.toStdString().c_str());
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim(army);
     if (pAnim != nullptr)
     {
         oxygine::spClipRectActor pRect = new oxygine::ClipRectActor();
@@ -304,7 +304,7 @@ void COSelection::addCO(QString coid, QString COArmy, qint32 x, qint32 y, QStrin
     if (COArmy == army)
     {
         QString resAnim = coid.toLower() + "+face";
-        pAnim = pCOSpriteManager->getResAnim(resAnim.toStdString().c_str());
+        pAnim = pCOSpriteManager->getResAnim(resAnim);
         pSprite = new oxygine::Sprite();
         pSprite->setResAnim(pAnim);
         actor->addChild(pSprite);

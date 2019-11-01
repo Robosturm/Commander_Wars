@@ -4,9 +4,7 @@
 #include "../MaterialCache.h"
 #include "../RenderState.h"
 #include "../STDRenderDelegate.h"
-#include "../pugixml/pugixml.hpp"
 #include "../res/ResFont.h"
-#include "../utils/stringUtils.h"
 
 namespace oxygine
 {

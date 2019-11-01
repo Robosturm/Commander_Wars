@@ -5,7 +5,6 @@
 #include "../RenderState.h"
 #include "../core/UberShaderProgram.h"
 #include "../res/ResAnim.h"
-#include "../utils/stringUtils.h"
 #include <sstream>
 
 namespace oxygine

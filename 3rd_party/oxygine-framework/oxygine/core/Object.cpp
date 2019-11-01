@@ -1,7 +1,6 @@
 #include "Object.h"
 #include <qmutex.h>
 #include <QMutexLocker>
-#include "../utils/stringUtils.h"
 #include <algorithm>
 #include <stdio.h>
 #include <string.h>
@@ -20,32 +19,23 @@ namespace oxygine
     int ObjectBase::_assertCtorID = -1;
     int ObjectBase::_assertDtorID = -1;
 
-    const std::string& ObjectBase::getName() const
+    const QString& ObjectBase::getName() const
     {
         return __name;
     }
 
-    bool ObjectBase::isName(const std::string& name) const
+    bool ObjectBase::isName(const QString& name) const
     {
-        return isName(name.c_str());
+        return name == __name;
     }
 
-    bool ObjectBase::isName(const char* name) const
-    {
-        if (__name == name)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    void ObjectBase::setName(const std::string& name)
+    void ObjectBase::setName(const QString& name)
     {
         __name = name;
     }
 
     ObjectBase::ObjectBase(const ObjectBase& src)
-        : __name(nullptr),
+        : __name(""),
           __id(0)
     {
         __userData64 = src.__userData64;

@@ -53,9 +53,9 @@ namespace oxygine
         init(frames, columns, scaleFactor);
     }
 
-    void ResAnim::init(const std::string& file, int columns, int rows, float scaleFactor)
+    void ResAnim::init(const QString& file, int columns, int rows, float scaleFactor)
     {
-        QImage img(file.c_str());
+        QImage img(file);
         Image mt;
         mt.init(img, true);
         init(&mt, columns, rows, scaleFactor);
@@ -95,12 +95,12 @@ namespace oxygine
         //Q_ASSERT(!"can't unload resanim");
     }
 
-    std::string ResAnim::getResPath() const
+    QString ResAnim::getResPath() const
     {
         return resPath;
     }
 
-    void ResAnim::setResPath(const std::string &value)
+    void ResAnim::setResPath(const QString &value)
     {
         resPath = value;
     }

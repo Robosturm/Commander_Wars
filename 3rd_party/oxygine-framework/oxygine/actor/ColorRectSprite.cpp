@@ -2,7 +2,6 @@
 #include "../MaterialCache.h"
 #include "../RenderDelegate.h"
 #include "../RenderState.h"
-#include "../utils/stringUtils.h"
 
 namespace oxygine
 {

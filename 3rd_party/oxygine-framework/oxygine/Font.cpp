@@ -11,7 +11,7 @@ namespace oxygine
     {
     }
 
-    void Font::init(const char* name, int realSize, int baselineDistance, int lineHeight, bool sdf)
+    void Font::init(QString name, int realSize, int baselineDistance, int lineHeight, bool sdf)
     {
         setName(name);
         _sdf = sdf;

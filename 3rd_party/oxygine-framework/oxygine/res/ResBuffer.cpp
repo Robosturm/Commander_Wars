@@ -8,11 +8,11 @@ namespace oxygine
     Resource* ResBuffer::create(CreateResourceContext& context)
     {
         ResBuffer* rs = new ResBuffer();
-        pugi::xml_node node = context.walker.getNode();
-        std::string file = node.attribute("file").value();
+        QDomElement node = context.walker.getNode();
+        QString file = node.attribute("file");
 
         rs->setName(Resource::extractID(node, file, ""));
-        rs->init(context.walker.getPath("file").c_str());
+        rs->init(context.walker.getPath("file"));
         setNode(rs, node);
 
         context.resources->add(rs);
@@ -31,19 +31,18 @@ namespace oxygine
 
     }
 
-    void ResBuffer::init(const char* file)
+    void ResBuffer::init(QString file)
     {
         _path = file;
     }
 
     void ResBuffer::_load(LoadResourcesContext*)
     {
-        QFile file(_path.c_str());
+        QFile file(_path);
         file.open(QIODevice::ReadOnly);
         QTextStream stream(&file);
         // copy data to buffer
-        std::string data = stream.readAll().toStdString();
-        _buffer = std::vector<uchar>(data.begin(), data.end());
+        _buffer = stream.readAll();
     }
 
     void ResBuffer::_unload()

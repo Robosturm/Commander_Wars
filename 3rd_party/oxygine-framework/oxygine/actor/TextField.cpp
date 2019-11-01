@@ -7,7 +7,6 @@
 #include "../res/Resources.h"
 #include "../text_utils/Node.h"
 #include "../text_utils/TextBuilder.h"
-#include "../utils/stringUtils.h"
 #include <sstream>
 
 namespace oxygine

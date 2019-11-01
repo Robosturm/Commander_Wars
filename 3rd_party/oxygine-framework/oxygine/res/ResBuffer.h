@@ -14,15 +14,15 @@ namespace oxygine
         ResBuffer();
         ~ResBuffer();
 
-        void init(const char* file);
+        void init(QString file);
 
-        const std::vector<uchar>& getBuffer() const {return _buffer;}
+        const QString& getBuffer() const {return _buffer;}
 
     private:
         void _load(LoadResourcesContext*) override;
         void _unload() override;
 
-        std::vector<uchar> _buffer;
-        std::string _path;
+        QString _buffer;
+        QString _path;
     };
 }

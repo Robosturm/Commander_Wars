@@ -14,7 +14,7 @@ UnitSpriteManager::UnitSpriteManager()
     {
         if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/units/res.xml"))
         {
-            oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/units/res.xml").toStdString());
+            oxygine::Resources::loadXML(pMainapp->getSettings()->getMods().at(i) + "/images/units/res.xml");
         }
     }
 }

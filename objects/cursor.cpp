@@ -23,7 +23,7 @@ void Cursor::changeCursor(const QString& spriteID, qint32 xOffset, qint32 yOffse
         this->removeChild(m_CurrentCursor);
         m_CurrentCursor = nullptr;
     }
-    oxygine::ResAnim* pAnim = pObjectManager->getResAnim(spriteID.toStdString());
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim(spriteID);
     m_CurrentCursor = new oxygine::Sprite();
     if (pAnim->getTotalFrames() > 1)
     {

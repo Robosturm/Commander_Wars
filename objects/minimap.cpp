@@ -57,7 +57,7 @@ void Minimap::updateMinimap(GameMap* pMap, bool useVision)
                 Building* pBuilding = pTerrain->getBuilding();
                 if (pBuilding != nullptr)
                 {
-                    oxygine::ResAnim* pAnim = pGameManager->getResAnim(pBuilding->getMinimapIcon().toStdString().c_str());
+                    oxygine::ResAnim* pAnim = pGameManager->getResAnim(pBuilding->getMinimapIcon());
                     if (pAnim != nullptr)
                     {
                         oxygine::spSprite pSprite = new oxygine::Sprite();
@@ -82,7 +82,7 @@ void Minimap::updateMinimap(GameMap* pMap, bool useVision)
                 }
                 else
                 {
-                    oxygine::ResAnim* pAnim = pGameManager->getResAnim(pTerrain->getMinimapIcon().toStdString().c_str());
+                    oxygine::ResAnim* pAnim = pGameManager->getResAnim(pTerrain->getMinimapIcon());
                     if (pAnim != nullptr)
                     {
                         oxygine::spSprite pSprite = new oxygine::Sprite();

@@ -3,8 +3,6 @@
 #include "ResAnim.h"
 #include "ResFont.h"
 #include "Resource.h"
-#include "../pugixml/pugixml.hpp"
-#include "../utils/stringUtils.h"
 #include <algorithm>
 #include <stdarg.h>
 #include <stdio.h>
@@ -19,16 +17,16 @@ namespace oxygine
     Resources::registeredResources Resources::_registeredResources;
     ResAnim* _defaultMissingRS = nullptr;
 
-    void Resources::registerResourceType(Resources::createResourceCallback creationCallback, const char* resTypeID)
+    void Resources::registerResourceType(Resources::createResourceCallback creationCallback, QString resTypeID)
     {
         registeredResource r;
         r.cb = creationCallback;
-        strcpy(r.id, resTypeID);
+        r.id = resTypeID;
 
         registeredResources::iterator it = std::lower_bound(_registeredResources.begin(), _registeredResources.end(), r.id, registeredResource::comparePred2);
         if (it != _registeredResources.end())
         {
-            if (!strcmp(it->id, resTypeID))
+            if (it->id == resTypeID)
             {
                 Q_ASSERT(!"resource already registered");
                 return;
@@ -45,12 +43,12 @@ namespace oxygine
         */
     }
 
-    void Resources::unregisterResourceType(const char* resTypeID)
+    void Resources::unregisterResourceType(QString resTypeID)
     {
         registeredResources::iterator it = std::lower_bound(_registeredResources.begin(), _registeredResources.end(), resTypeID, registeredResource::comparePred2);
         if (it != _registeredResources.end())
         {
-            if (!strcmp(it->id, resTypeID))
+            if (it->id == resTypeID)
             {
                 _registeredResources.erase(it);
                 return;
@@ -73,12 +71,12 @@ namespace oxygine
         free();
     }
 
-    ResAnim* Resources::getResAnim(const std::string& id, error_policy ep) const
+    ResAnim* Resources::getResAnim(const QString& id, error_policy ep) const
     {
         return getT<ResAnim>(id, ep, _defaultMissingRS);
     }
 
-    ResFont* Resources::getResFont(const std::string& id, error_policy ep) const
+    ResFont* Resources::getResFont(const QString& id, error_policy ep) const
     {
         return getT<ResFont>(id, ep);
     }
@@ -131,84 +129,72 @@ namespace oxygine
         return _docs.empty();
     }
 
-    void Resources::updateName(const std::string& filename)
+    void Resources::updateName(const QString& filename)
     {
-        QFile file(filename.c_str());
-        setName(file.fileName().toStdString());
+        QFile file(filename);
+        setName(file.fileName());
     }
 
 
     class ObjectBasePredicate
     {
     public:
-        bool operator()(const ObjectBase* res, const char* name) const
+        bool operator()(const ObjectBase* res, QString name) const
         {
-            return strcmp(res->getName().c_str(), name) < 0;
+            return res->getName() < name;
         }
 
-        bool operator()(const spResource& res, const char* name) const
+        bool operator()(const spResource& res, QString name) const
         {
-            return strcmp(res->getName().c_str(), name) < 0;
+            return res->getName() < name;
         }
 
         bool operator()(const spResource& resA, const spResource& resB) const
         {
-            return strcmp(resA->getName().c_str(), resB->getName().c_str()) < 0;
+            return resA->getName() < resB->getName();
         }
 
-        bool operator()(const char* name, const ObjectBase* res) const
+        bool operator()(QString name, const ObjectBase* res) const
         {
-            return strcmp(res->getName().c_str(), name) < 0;
+            return name < res->getName();
         }
 
         bool operator()(const ObjectBase* resA, const ObjectBase* resB) const
         {
-            return strcmp(resA->getName().c_str(), resB->getName().c_str()) < 0;
+            return resA->getName() < resB->getName();
         }
     };
 
 
-    bool Resources::loadXML(const std::string& xmlFile, const ResourcesLoadOptions& opt)
+    bool Resources::loadXML(const QString xmlFile, const ResourcesLoadOptions& opt)
     {
         _name = xmlFile;
         _loadCounter = opt._loadCompletely ? 1 : 0;
 
 
         qDebug("step0");
-        QFile file(xmlFile.c_str());
+        QFile file(xmlFile);
 
         if (!file.exists() || file.size() == 0)
         {
-            qCritical("can't load xml file: '%s'", xmlFile.c_str());
+            qCritical("can't load xml file: '%s'", xmlFile.toStdString().c_str());
             Q_ASSERT(!"can't find xml file");
             return false;
         }
         file.open(QIODevice::ReadOnly);
-        QTextStream stream(&file);
-        std::string data = stream.readAll().toStdString();
-        std::vector<uchar> fb(data.begin(), data.end());
-
         qDebug("step1");
-
-
         updateName(xmlFile);
-        QDir dir = QFileInfo(xmlFile.c_str()).dir();
         qDebug("step2");
 
-        pugi::xml_document* doc = new pugi::xml_document();
+        QDomDocument* doc = new QDomDocument();
         _docs.push_back(doc);
-
-        bool loaded = doc->load_buffer(&fb[0], fb.size());
+        bool loaded = doc->setContent(&file);
         Q_ASSERT(loaded);
 
-        pugi::xml_node resources = doc->first_child();
-
-        std::string id;
-
+        QDomElement resources = doc->documentElement();
+        QString id;
         qDebug("loading xml resources");
-
-        std::string xmlFolder = dir.path().toStdString();
-        XmlWalker walker(&xmlFolder, "", 1.0f, opt._loadCompletely, true, resources);
+        XmlWalker walker("", 1.0f, opt._loadCompletely, true, resources);
 
         while (true)
         {
@@ -218,13 +204,13 @@ namespace oxygine
             if (context.walker.empty())
                 break;
 
-
-            const char* type = context.walker.getType();
+            QString type = context.walker.getType();
 
             registeredResources::iterator i = std::lower_bound(_registeredResources.begin(), _registeredResources.end(), type);
-            if (i == _registeredResources.end() || strcmp(i->id, type))
+            if (i == _registeredResources.end() || (i->id != type))
             {
-                qCritical("unknown resource. type: '%s' id: '%s'", type, Resource::extractID(context.walker.getNode(), "", "").c_str());
+                qCritical("unknown resource. type: '%s' id: '%s'", type.toStdString().c_str(),
+                          Resource::extractID(context.walker.getNode(), "", "").toStdString().c_str());
                 Q_ASSERT(!"unknown resource type");
                 continue;
             }
@@ -232,10 +218,10 @@ namespace oxygine
             registeredResource& r = *i;
 
 
-            context.xml_name = &xmlFile;
+            context.xml_name = xmlFile;
             context.resources = this;
 
-            qDebug("resource: %s ", context.xml_name->c_str());
+            qDebug("resource: %s ", context.xml_name.toStdString().c_str());
             Resource* res = r.cb(context);
             Q_ASSERT(res);
             res->setUseLoadCounter(opt._useLoadCounter);
@@ -259,7 +245,7 @@ namespace oxygine
     {
         for (resourcesMap::const_iterator i = _resourcesMap.cbegin(); i != _resourcesMap.cend(); ++i)
         {
-            spResource res = i->second;
+            spResource res = i.value();
             r.push_back(res);
         }
 
@@ -271,14 +257,14 @@ namespace oxygine
         if (!r)
             return;
 
-        std::string name = lower(r->getName());
+        QString name = r->getName().toLower();
         r->setName(name);
         _resourcesMap[name] = r;
 
         if (accessByShortenID)
         {
-            QFileInfo file(name.c_str());
-            std::string shortName = file.fileName().toStdString();
+            QFileInfo file(name);
+            QString shortName = file.fileName();
             if (shortName != name)
             {
                 _resourcesMap[shortName] = r;
@@ -292,8 +278,8 @@ namespace oxygine
         qDebug("resources:\n");
         for (resourcesMap::const_iterator i = _resourcesMap.cbegin(); i != _resourcesMap.cend(); ++i)
         {
-            spResource res = i->second;
-            qDebug("%s", res->getName().c_str());
+            spResource res = i.value();
+            qDebug("%s", res->getName().toStdString().c_str());
         }
 
         /*
@@ -318,20 +304,22 @@ namespace oxygine
         return _resourcesMap;
     }
 
-    Resource* Resources::get(const std::string& id_, error_policy ep, Resource* defIfNotFound) const
+    Resource* Resources::get(const QString& id_, error_policy ep, Resource* defIfNotFound) const
     {
-        std::string id = lower(id_);
+        QString id = id_.toLower();
 
         resourcesMap::const_iterator it = _resourcesMap.find(id);
 
         if (it != _resourcesMap.end())
         {
-            return it->second.get();
+            return it.value().get();
         }
 
-        handleErrorPolicy(ep, "can't find resource: '%s' in '%s'", id.c_str(), _name.c_str());
+        handleErrorPolicy(ep, "can't find resource: '%s' in '%s'", id.toStdString().c_str(), _name.toStdString().c_str());
         if (ep == ep_show_error)
+        {
             return defIfNotFound;
-        return 0;
+        }
+        return nullptr;
     }
 }

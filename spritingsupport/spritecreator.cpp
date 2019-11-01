@@ -121,7 +121,7 @@ oxygine::ResAnim* SpriteCreator::createAnim(QString input, QImage& colorTableImg
     {
         createSprite(input, colorTableImg, maskTableImg, useColorBox);
         oxygine::SingleResAnim* pRet = new oxygine::SingleResAnim();
-        pRet->setResPath(input.toStdString());
+        pRet->setResPath(input);
         pRet->init("temp.png", columns, rows, scaleFactor);
         QFile::remove("temp.png");
         return pRet;

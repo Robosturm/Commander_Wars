@@ -29,7 +29,7 @@ void MenuData::addData(QString text, QString actionID, QString icon, qint32 cost
     GameManager* pGameManager = GameManager::getInstance();
     GameMap* pMap = GameMap::getInstance();
     // ignore error since we want to test if the icon exists
-    oxygine::ResAnim* pAnim = pGameManager->getResAnim(icon.toStdString().c_str(), oxygine::ep_ignore_error);
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim(icon, oxygine::ep_ignore_error);
     if (pAnim != nullptr)
     {
         iconList.append(getIconSprite(icon));
@@ -52,7 +52,7 @@ oxygine::spSprite MenuData::getIconSprite(QString icon)
 {
     oxygine::spSprite pSprite = new oxygine::Sprite();
     GameManager* pGameManager = GameManager::getInstance();
-    oxygine::ResAnim* pAnim = pGameManager->getResAnim(icon.toStdString().c_str());
+    oxygine::ResAnim* pAnim = pGameManager->getResAnim(icon);
     if (pAnim != nullptr)
     {
         if (pAnim->getTotalFrames() > 1)

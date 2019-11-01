@@ -231,7 +231,7 @@ void Terrain::loadBaseSprite(QString spriteID)
 {
 
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
-    oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID.toStdString());
+    oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
         oxygine::spSprite pSprite = new oxygine::Sprite();
@@ -271,8 +271,8 @@ void Terrain::update(const oxygine::UpdateState& us)
     if (loadSprite)
     {
         oxygine::SingleResAnim* pAnim = new oxygine::SingleResAnim();
-        pAnim->setResPath(m_terrainSpriteName.toStdString());
-        pAnim->init(m_terrainSpriteName.toStdString(), 1, 1, 1.0f);
+        pAnim->setResPath(m_terrainSpriteName);
+        pAnim->init(m_terrainSpriteName, 1, 1, 1.0f);
         m_SpriteAnim = pAnim;
         m_pTerrainSprite->setResAnim(pAnim);
         m_pTerrainSprite->setScale((GameMap::Imagesize) / pAnim->getWidth() );
@@ -442,7 +442,7 @@ QString Terrain::getSurroundings(QString list, bool useBaseTerrainID, bool black
 void Terrain::loadOverlaySprite(QString spriteID)
 {
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
-    oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID.toStdString());
+    oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID);
     oxygine::spSprite pSprite = new oxygine::Sprite();
     if (pAnim->getTotalFrames() > 1)
     {

@@ -4,6 +4,8 @@
 #include "../core/NativeTexture.h"
 #include "../core/oxygine.h"
 
+#include "qvariant.h"
+
 namespace oxygine
 {
     LoadResourcesContext* LoadResourcesContext::get()
@@ -24,61 +26,21 @@ namespace oxygine
             dest->setClamp2Edge(clamp2edge);
     }
 
-    XmlWalker::XmlWalker(
-        const std::string* xmlFolder,
-        const std::string& path,
-        float scaleFactor,
-        bool load,
-        bool alpha,
-        pugi::xml_node xml) :
-        _root(xml),
-        _notStarted(true),
-        _scaleFactor(scaleFactor),
-        _load(load),
-        _alphaHitTest(alpha),
-        _xmlFolder(xmlFolder),
-        _path(path)
+    XmlWalker::XmlWalker(const QString& path, float scaleFactor, bool load, bool alpha, QDomElement xml)
+        : _root(xml),
+          _notStarted(true),
+          _scaleFactor(scaleFactor),
+          _load(load),
+          _alphaHitTest(alpha),
+          _path(path)
     {
         //_alphaTracking = true;
     }
 
-    const char* isRelative(const char* str)
+
+    QString XmlWalker::getPath(QString attrName) const
     {
-        const char* str_ = str;
-        if (*str == '.')
-        {
-            ++str;
-            if (!*str || *str == '\\' || *str == '/')
-                return str;
-        }
-
-        return 0;
-    }
-
-    std::string XmlWalker::connectPath(const char* currentPath, const char* str)
-    {
-        std::string s;
-
-        const char* rl = isRelative(str);
-        if (rl)
-        {
-            s = currentPath;
-            s += rl;
-            return s;
-        }
-        return str;
-    }
-
-
-    std::string XmlWalker::getPath(const char* attrName) const
-    {
-        const char* str = _root.attribute(attrName).as_string();
-        const char* rl = isRelative(str);
-        if (rl)
-        {
-            return *_xmlFolder + rl;
-        }
-
+        QString str = _root.attribute(attrName);
         return _path + str;
     }
 
@@ -86,56 +48,68 @@ namespace oxygine
     {
         while (1)
         {
+            QDomNode node;
             if (_notStarted)
             {
-                _last = _root.first_child();
+                node = _root.firstChild();
                 _notStarted = false;
             }
             else
             {
-                _last = _last.next_sibling();
+                node = _last.nextSibling();
             }
+            // skip comment nodes for the greater good
+            while (node.isComment())
+            {
+                node = node.nextSibling();
+            }
+            _last = node.toElement();
 
-            const char* name = _last.name();
-            pugi::xml_attribute attr;
-
-            if (!strcmp(name, "set"))
+            QString name = _last.nodeName();
+            if (name == "set")
             {
                 _checkSetAttributes(_last);
                 continue;
             }
 
+
             break;
         }
 
-        return XmlWalker(_xmlFolder, _path, _scaleFactor, _load, _alphaHitTest, _last);
+        return XmlWalker(_path, _scaleFactor, _load, _alphaHitTest, _last);
     }
 
-    void XmlWalker::_checkSetAttributes(pugi::xml_node node)
+    void XmlWalker::_checkSetAttributes(QDomElement node)
     {
-        pugi::xml_attribute attr = node.first_attribute();
-        while (attr)
+        auto attr = node.attributes();
+        for (qint32 i = 0; i < attr.size(); i++)
         {
-            if (!strcmp(attr.name(), "path"))
+            QDomNode node = attr.item(i);
+            if (node.nodeName() == "path")
             {
-                _path = connectPath(_xmlFolder->c_str(), attr.value());
-                if (!_path.empty())
+                _path = node.nodeValue();
+                if (!_path.isEmpty())
+                {
                     _path += "/";
+                }
             }
-            else if (!strcmp(attr.name(), "load"))
+            else if (node.nodeName() ==  "load")
             {
-                _load = attr.as_bool();
+                _load = QVariant(node.nodeValue()).toBool();
             }
-            else if (!strcmp(attr.name(), "scale_factor"))
+            else if (node.nodeName() ==  "scale_factor")
             {
-                _scaleFactor = attr.as_float(1.0f);
+                bool ok = false;
+                _scaleFactor = node.nodeValue().toFloat(&ok);
+                if (!ok)
+                {
+                    _scaleFactor = 1.0f;
+                }
             }
-            else if (!strcmp(attr.name(), "hit_test"))
+            else if (node.nodeName() ==  "hit_test")
             {
-                _alphaHitTest = attr.as_bool(false);
+                _alphaHitTest = QVariant(node.nodeValue()).toBool();
             }
-
-            attr = attr.next_attribute();
         }
     }
 

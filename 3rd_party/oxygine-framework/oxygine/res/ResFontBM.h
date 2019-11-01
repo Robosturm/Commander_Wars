@@ -16,9 +16,8 @@ namespace oxygine
         ResFontBM();
         ~ResFontBM();
 
-        /**loads "fnt" font from file, supported XML and text format*/
-        void init(const char* fntPath, bool premultipliedAlpha = false);
-        void initSD(const char* fntPath, int downsample);
+        /**loads "fnt" font from file, supported XML */
+        void init(QString fntPath, bool premultipliedAlpha = false);
 
         void cleanup();
 
@@ -28,18 +27,17 @@ namespace oxygine
     private:
         struct page
         {
-            std::string file;
+            QString file;
             spNativeTexture texture;
         };
 
-        void addPage(int tw, int th, const char* head, const char* file);
+        void addPage(int tw, int th, QString head, QString file);
 
         void _loadPage(const page& p, LoadResourcesContext*);
         void _load(LoadResourcesContext*) override;
         void _unload() override;
         void _restore(Restorable*, void*);
         void _createFont(CreateResourceContext* context, bool sd, bool bmc, int downsample);
-        void _createFontFromTxt(CreateResourceContext* context, char* fontData, const std::string& fontPath, int downsample);
         void _finalize();
 
         typedef std::vector<page> pages;
@@ -49,7 +47,7 @@ namespace oxygine
 
         ImageData::TextureFormat _format;
 
-        std::string _file;
+        QString _file;
         bool _premultipliedAlpha;
     };
 }

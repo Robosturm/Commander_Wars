@@ -83,14 +83,14 @@ void Wikipage::loadText(QString text)
 
 void Wikipage::loadImage(QString file, float scale)
 {
-    oxygine::ResAnim* pAnim = WikiDatabase::getInstance()->getResAnim(file.toStdString().c_str(), oxygine::error_policy::ep_ignore_error);
+    oxygine::ResAnim* pAnim = WikiDatabase::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
     if (pAnim == nullptr)
     {
-        pAnim = COSpriteManager::getInstance()->getResAnim(file.toStdString().c_str(), oxygine::error_policy::ep_ignore_error);
+        pAnim = COSpriteManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
     }
     if (pAnim == nullptr)
     {
-        pAnim = GameManager::getInstance()->getResAnim(file.toStdString().c_str(), oxygine::error_policy::ep_ignore_error);
+        pAnim = GameManager::getInstance()->getResAnim(file, oxygine::error_policy::ep_ignore_error);
     }
     if (pAnim != nullptr)
     {

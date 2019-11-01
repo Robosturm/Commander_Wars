@@ -102,7 +102,7 @@ qint32 Building::getOwnerID()
 void Building::loadSprite(QString spriteID, bool addPlayerColor)
 {
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
-    oxygine::ResAnim* pAnim = pBuildingSpriteManager->getResAnim(spriteID.toStdString());
+    oxygine::ResAnim* pAnim = pBuildingSpriteManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
         oxygine::spSprite pSprite = new oxygine::Sprite();

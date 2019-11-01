@@ -1,6 +1,4 @@
 #include "VertexDeclarationGL.h"
-#include "../../utils/stringUtils.h"
-
 
 namespace oxygine
 {
@@ -12,7 +10,7 @@ namespace oxygine
         Element* dest = elements;
         if (fmt & VERTEX_POSITION)
         {
-            strcpy(dest->name, "position");
+            dest->name = "position";
             dest->elemType = GL_FLOAT;
             dest->size = 3;
             dest->offset = offset;
@@ -26,7 +24,7 @@ namespace oxygine
 
         if (fmt & VERTEX_COLOR)
         {
-            strcpy(dest->name, "color");
+            dest->name = "color";
             dest->elemType = GL_UNSIGNED_BYTE;
             dest->size = 4;
             dest->offset = offset;
@@ -43,9 +41,13 @@ namespace oxygine
         {
             int coordSize = texCoordSize(j, fmt);
             if (j == 0)
-                strcpy(dest->name, "uv");
+            {
+                dest->name = "uv";
+            }
             else
-                safe_sprintf(dest->name, "uv%d", j + 1);
+            {
+                dest->name = "uv" + QString::number(j + 1);
+            }
 
             dest->elemType = GL_FLOAT;
             dest->size = coordSize;

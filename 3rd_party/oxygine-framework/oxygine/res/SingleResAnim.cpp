@@ -8,7 +8,7 @@ namespace oxygine
     void makeAlpha(const ImageData& srcImage, Rect& bounds, std::vector<unsigned char>& alpha, HitTestData& adata, bool hittest);
 
 
-    void SingleResAnim::init(const std::string& file, int columns /* = 1 */, int rows /* = 1 */, float scaleFactor /* = 1.0f */)
+    void SingleResAnim::init(const QString& file, int columns /* = 1 */, int rows /* = 1 */, float scaleFactor /* = 1.0f */)
     {
         ResAnim::init(file, columns, rows, scaleFactor);
     }

@@ -52,7 +52,7 @@ namespace oxygine
         typedef argT<Vector2, const Vector2&, Actor, &Actor::setSize> size;
         typedef argT<float, float, Actor, &Actor::setScale> scale;
         typedef argT<Vector2, const Vector2&, Actor, &Actor::setScale> scale2;
-        typedef argT<std::string, const std::string&, ObjectBase, &ObjectBase::setName> name;
+        typedef argT<QString, const QString&, ObjectBase, &ObjectBase::setName> name;
         typedef argT<float, float, Actor, &Actor::setScaleX> scaleX;
         typedef argT<float, float, Actor, &Actor::setScaleY> scaleY;
         typedef argT<unsigned char, unsigned char, Actor, &Actor::setAlpha> alpha;

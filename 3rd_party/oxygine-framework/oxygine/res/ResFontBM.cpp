@@ -5,8 +5,6 @@
 #include "../Image.h"
 #include "../core/NativeTexture.h"
 #include "../core/VideoDriver.h"
-#include "../pugixml/pugixml.hpp"
-#include "../utils/stringUtils.h"
 #include <vector>
 
 #include <qfile.h>
@@ -39,14 +37,12 @@ namespace oxygine
         setNode(font, context.walker.getNode());
         context.resources->add(font);
 
-        //context.meta = context.meta.next_sibling();
-
         return font;
     }
 
     Resource* ResFontBM::createSD(CreateResourceContext& context)
     {
-        ResFontBM* font = 0;
+        ResFontBM* font = nullptr;
 
         font = new ResFontBM();
         font->_createFont(&context, true, false, 1);
@@ -59,7 +55,7 @@ namespace oxygine
     }
 
 
-    ResFontBM::ResFontBM(): _font(0), _format(ImageData::TF_R8G8B8A8), _premultipliedAlpha(false), _sdf(false)
+    ResFontBM::ResFontBM(): _font(nullptr), _format(ImageData::TF_R8G8B8A8), _premultipliedAlpha(false), _sdf(false)
     {
 
     }
@@ -79,19 +75,11 @@ namespace oxygine
         return _font;
     }
 
-    void ResFontBM::init(const char* path, bool premultipliedAlpha)
+    void ResFontBM::init(QString path, bool premultipliedAlpha)
     {
         _premultipliedAlpha = premultipliedAlpha;
         _file = path;
-        _createFont(0, false, false, 1);
-    }
-
-    void ResFontBM::initSD(const char* fntPath, int downsample)
-    {
-        _sdf = true;
-        _premultipliedAlpha = true;
-        _file = fntPath;
-        _createFont(0, true, false, downsample);
+        _createFont(nullptr, false, false, 1);
     }
 
     void ResFontBM::cleanup()
@@ -103,7 +91,7 @@ namespace oxygine
         }
         _pages.clear();
         delete _font;
-        _font = 0;
+        _font = nullptr;
         _loadCounter = 0;
     }
 
@@ -127,13 +115,13 @@ namespace oxygine
 
         spImage mt = new Image;
 
-        QImage img(p.file.c_str());
+        QImage img(p.file);
         mt->init(img, !_premultipliedAlpha);
         CreateTextureTask opt;
         opt.src = mt;
         opt.dest = p.texture;
         load_context->createTexture(opt);
-        p.texture->reg(CLOSURE(this, &ResFontBM::_restore), 0);
+        p.texture->reg(CLOSURE(this, &ResFontBM::_restore), nullptr);
     }
 
     void ResFontBM::_load(LoadResourcesContext* load_context)
@@ -176,255 +164,10 @@ namespace oxygine
         return -1;
     }
 
-
-    ////////////////////////////////////////////////////
-    char* _parse(char* data, char** key, char** value, bool& endOfLine, bool& prmFound)
-    {
-        prmFound = false;
-        *key = NULL;
-        *value = NULL;
-
-        while ((*data == ' ') || (*data == '\r'))
-            data++;
-        if (*data == '\n')
-        {
-            endOfLine = true;
-            *data = 0;
-            data++;
-            return data;
-        }
-
-        *key = data;
-        while (*data != '\0') // we get key
-        {
-            if ((*data == ' ') || (*data == '\n'))
-            {
-                if (*data == '\n')
-                    endOfLine = true;
-                *data = 0;
-                data++;
-                return data;
-            }
-            data++;
-
-            if (*data == '=')
-            {
-                *data = 0;
-                break;
-            }
-        }
-        data++;
-
-        while ((*data == '\"') || (*data == '\r'))
-            data++;
-        *value = data;
-        prmFound = true;
-
-        while (*data != '\0') // we get value
-        {
-            if ((*data == '\"') || (*data == '\r'))
-            {
-                *data = 0;
-                data++;
-            }
-            if ((*data == ' ') || (*data == '\n'))
-            {
-                if (*data == '\n')
-                    endOfLine = true;
-                *data = 0;
-                data++;
-                return data;
-            }
-            data++;
-        }
-
-        *data = 0;
-        return data;
-    }
-
-    void ResFontBM::_createFontFromTxt(CreateResourceContext* context, char* fontData, const std::string& fontPath, int downsample)
-    {
-        char* key = 0;
-        char* value = 0;
-        bool endOfLine = false;
-        bool prmFound = false;
-
-        // info block
-        int fontSize = 0;
-        while (*(fontData = _parse(fontData, &key, &value, endOfLine, prmFound)) != 0)
-        {
-            if (prmFound)
-            {
-                if (!strcmp(key, "size"))
-                    fontSize = atoi(value);
-            }
-            if (endOfLine)
-            {
-                endOfLine = false;
-                break;
-            }
-        }
-
-        // common block
-        int nPages = 0;
-        int lineHeight = 0;
-        int base = 0;
-        int tw = 0;
-        int th = 0;
-        while (*(fontData = _parse(fontData, &key, &value, endOfLine, prmFound)) != 0)
-        {
-            if (prmFound)
-            {
-                if (!strcmp(key, "lineHeight"))
-                    lineHeight = atoi(value);
-                else if (!strcmp(key, "base"))
-                    base = atoi(value);
-                else if (!strcmp(key, "scaleW"))
-                    tw = atoi(value);
-                else if (!strcmp(key, "scaleH"))
-                    th = atoi(value);
-                else if (!strcmp(key, "pages"))
-                    nPages = atoi(value);
-            }
-            if (endOfLine)
-            {
-                endOfLine = false;
-                break;
-            }
-        }
-
-        tw /= downsample;
-        th /= downsample;
-        lineHeight /= downsample;
-        base /= downsample;
-        fontSize /= downsample;
-        QDir dir = QFileInfo(fontPath.c_str()).dir();
-        // page blocks
-        for (int i = 0; i < nPages; i++)
-        {
-            while (*(fontData = _parse(fontData, &key, &value, endOfLine, prmFound)) != 0)
-            {
-                if (prmFound)
-                {
-                    if (!strcmp(key, "file"))
-                    {
-                        addPage(tw, th, dir.path().toStdString().c_str(), value);
-                    }
-                }
-                if (endOfLine)
-                {
-                    endOfLine = false;
-                    break;
-                }
-            }
-        }
-
-        // create font
-        if (!tw)
-            load(0);
-
-        fontSize = qAbs(fontSize);
-        Font* font = new Font();
-        font->init(getName().c_str(), fontSize, fontSize, lineHeight + fontSize - base, _sdf);
-        _size = fontSize;
-        _font = font;
-
-        if (context)
-        {
-            float scale = 1.0f / context->walker.getScaleFactor();
-            _font->setScale(scale);
-        }
-
-        // chars block
-        int numChars = 0;
-        while (*(fontData = _parse(fontData, &key, &value, endOfLine, prmFound)) != 0)
-        {
-            if (prmFound)
-            {
-                if (!strcmp(key, "count"))
-                    numChars = atoi(value);
-            }
-            if (endOfLine)
-            {
-                endOfLine = false;
-                break;
-            }
-        }
-
-        // chars blocks
-        for (int i = 0; i < numChars; i++)
-        {
-            int charID = -1;
-            int xpos = 0;
-            int ypos = 0;
-            int width = 0;
-            int height = 0;
-            int xoffset = 0;
-            int yoffset = 0;
-            int xadvance = 0;
-            int page_ = 0;
-
-            while (*(fontData = _parse(fontData, &key, &value, endOfLine, prmFound)) != 0)
-            {
-                if (prmFound)
-                {
-                    if (!strcmp(key, "id"))
-                        charID = atoi(value);
-                    else if (!strcmp(key, "x"))
-                        xpos = atoi(value);
-                    else if (!strcmp(key, "y"))
-                        ypos = atoi(value);
-                    else if (!strcmp(key, "width"))
-                        width = atoi(value);
-                    else if (!strcmp(key, "height"))
-                        height = atoi(value);
-                    else if (!strcmp(key, "xoffset"))
-                        xoffset = atoi(value);
-                    else if (!strcmp(key, "yoffset"))
-                        yoffset = atoi(value);
-                    else if (!strcmp(key, "xadvance"))
-                        xadvance = atoi(value);
-                    else if (!strcmp(key, "page"))
-                        page_ = atoi(value);
-                }
-                if (endOfLine)
-                {
-                    endOfLine = false;
-                    break;
-                }
-            }
-
-            spTexture t = _pages[page_].texture;
-            float iw = 1.0f / t->getWidth() / downsample;
-            float ih = 1.0f / t->getHeight() / downsample;
-
-            glyph gl;
-            gl.src = RectF(xpos * iw, ypos * ih, width * iw, height * ih);
-            gl.sw = width / downsample;
-            gl.sh = height / downsample;
-            gl.offset_x = xoffset / downsample;
-            gl.offset_y = yoffset / downsample - base;
-            gl.advance_x = xadvance / downsample;
-            gl.advance_y = 0;
-
-            int code = 0;
-            ucs2_to_utf8(charID, (unsigned char*)&code);
-            gl.ch = code;
-            gl.opt = 0;
-            gl.texture = _pages[page_].texture;
-
-            _font->addGlyph(gl);
-        }
-
-        _font->sortGlyphs();
-        _finalize();
-    }
-    /////////////////////////////////////////////////////////
-
-    void ResFontBM::addPage(int tw, int th, const char* head, const char* textureFile)
+    void ResFontBM::addPage(int tw, int th, QString head, QString textureFile)
     {
         page p;
-        if (*head)
+        if (!head.isEmpty())
         {
             p.file = head;
             p.file += "//";
@@ -434,7 +177,7 @@ namespace oxygine
         p.texture->setName(p.file);
 
         if (tw)
-            p.texture->init(0, tw, th, ImageData::TF_UNDEFINED);
+            p.texture->init(nullptr, tw, th, ImageData::TF_UNDEFINED);
 
         _pages.push_back(p);
     }
@@ -462,85 +205,82 @@ namespace oxygine
 
         if (context)
         {
-            pugi::xml_node node = context->walker.getNode();
-
-            downsample = node.attribute("downsample").as_int(1);
-            _premultipliedAlpha = node.attribute("premultiplied_alpha").as_bool(_premultipliedAlpha);
+            QDomElement node = context->walker.getNode();
+            bool ok = false;
+            downsample = node.attribute("downsample").toInt(&ok);
+            if (!ok)
+            {
+                downsample = 1;
+            }
+            QVariant value(node.attribute("premultiplied_alpha"));
+            if (value.type() == QVariant::Type::Bool)
+            {
+                _premultipliedAlpha = value.toBool();
+            }
 
             _file = context->walker.getPath("file");
             setName(Resource::extractID(node, _file, ""));
 
             if (bmc)
             {
-                _file = *context->prebuilt_folder + getName() + ".fnt";
+                _file = context->prebuilt_folder + getName() + ".fnt";
             }
         }
 
-        std::string path = _file;
+        QString path = _file;
 
-        std::vector<uchar> fb;
-        QFile file(path.c_str());
-        if (file.exists())
+        QString data;
+        QFile file(path);
+        if (!file.exists())
+        {
+            return;
+        }
+        else
         {
             file.open(QIODevice::ReadOnly);
-            QTextStream stream(&file);
-            std::string data = stream.readAll().toStdString();
-            fb = std::vector<uchar>(data.begin(), data.end());
         }
 
-        if (fb.empty())
-            return;
-
-        pugi::xml_document doc;
-        bool isXml = doc.load_buffer_inplace(&fb[0], fb.size());
+        QDomDocument doc;
+        bool isXml = doc.setContent(&file);
 
         if (!isXml)
         {
-            _createFontFromTxt(context, reinterpret_cast<char*>(&fb[0]), path, downsample);
             return;
         }
         /////////////////////////////////////////////////
 
-
-
-
-        pugi::xml_node root = doc.first_child();
-        pugi::xml_node info = root.child("info");
+        QDomElement root = doc.documentElement();
+        QDomElement info = root.firstChildElement("info");
 
         //<info face="Century Gothic" size="-24" bold="0" italic="0" charset="" unicode="1" stretchH="100" smooth="1" aa="1" padding="0,0,0,0" spacing="1,1" outline="0"/>
-        int fontSize = info.attribute("size").as_int() / downsample;
+        int fontSize = info.attribute("size").toInt() / downsample;
 
+        QDomElement common = info.firstChildElement("common");
+        int lineHeight = common.attribute("lineHeight").toInt() / downsample;
+        int base = common.attribute("base").toInt() / downsample;
+        int tw = common.attribute("scaleW").toInt();
+        int th = common.attribute("scaleH").toInt();
 
-
-
-        pugi::xml_node common = info.next_sibling("common");
-        int lineHeight = common.attribute("lineHeight").as_int() / downsample;
-        int base = common.attribute("base").as_int() / downsample;
-
-        pugi::xml_node pages = common.next_sibling("pages");
-
-        int tw = common.attribute("scaleW").as_int();
-        int th = common.attribute("scaleH").as_int();
-
-
+        QDomElement pages = common.firstChildElement("pages");
         tw /= downsample;
         th /= downsample;
 
-        QDir dir = QFileInfo(path.c_str()).dir();
-        for (pugi::xml_node page_node = pages.child("page"); page_node; page_node = page_node.next_sibling("page"))
+        QDir dir = QFileInfo(path).dir();
+        for (QDomElement page_node = pages.firstChildElement("page"); !page_node.isNull(); page_node = page_node.nextSiblingElement("page"))
         {
-            const char* textureFile = page_node.attribute("file").value();
+            QString textureFile = page_node.attribute("file");
             addPage(tw, th, dir.path().toStdString().c_str(), textureFile);
         }
 
 
         if (!tw)
+        {
             load(nullptr);
-
+        }
 
         fontSize = qAbs(fontSize);
         Font* font = new Font();
-        font->init(getName().c_str(), fontSize, fontSize, lineHeight + fontSize - base, _sdf);
+        font->init(getName(), fontSize, fontSize, lineHeight + fontSize - base, _sdf);
         _size = fontSize;
         _font = font;
 
@@ -550,9 +290,9 @@ namespace oxygine
             _font->setScale(scale);
         }
 
-        pugi::xml_node chars = pages.next_sibling("chars");
-        pugi::xml_node child = chars.first_child();
-        while (!child.empty())
+        QDomElement chars = pages.firstChildElement("chars");
+        QDomElement child = chars.firstChildElement();
+        while (!child.isNull())
         {
             int charID = 0;
             int xpos = 0;
@@ -564,32 +304,31 @@ namespace oxygine
             int xadvance = 0;
             int page = 0;
 
-            pugi::xml_attribute attr = child.first_attribute();
-            while (!attr.empty())
+            auto attr = child.attributes();
+            for (qint32 i = 0; i < attr.size(); i++)
             {
-                const char* attr_name = attr.name();
-                int value = attr.as_int();
+                QDomNode attribute = attr.item(i);
+                QString attr_name = attribute.nodeName();
+                int value = attribute.nodeValue().toInt();
 
-                if (!strcmp(attr_name, "id"))
+                if (attr_name == "id")
                     charID = value;
-                else if (!strcmp(attr_name, "x"))
+                else if (attr_name == "x")
                     xpos = value;
-                else if (!strcmp(attr_name, "y"))
+                else if (attr_name == "y")
                     ypos = value;
-                else if (!strcmp(attr_name, "width"))
+                else if (attr_name == "width")
                     width = value;
-                else if (!strcmp(attr_name, "height"))
+                else if (attr_name == "height")
                     height = value;
-                else if (!strcmp(attr_name, "xoffset"))
+                else if (attr_name == "xoffset")
                     xoffset = value;
-                else if (!strcmp(attr_name, "yoffset"))
+                else if (attr_name == "yoffset")
                     yoffset = value;
-                else if (!strcmp(attr_name, "xadvance"))
+                else if (attr_name == "xadvance")
                     xadvance = value;
-                else if (!strcmp(attr_name, "page"))
+                else if (attr_name == "page")
                     page = value;
-
-                attr = attr.next_attribute();
             }
 
             spTexture t = _pages[page].texture;
@@ -613,7 +352,7 @@ namespace oxygine
 
             font->addGlyph(gl);
 
-            child = child.next_sibling();
+            child = child.nextSiblingElement();
         }
 
         font->sortGlyphs();

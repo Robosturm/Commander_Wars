@@ -59,46 +59,6 @@
 int main(int argc, char* argv[])
 {
 
-//    QFile file("resources/images/backgrounds/res.xml");
-//    file.open(QIODevice::ReadOnly);
-//    QDomDocument doc;
-//    //doc.setContent(&file);
-//    doc.setContent("<data>" + QString("<r>") + ("Naval Unit. Can ") + "</r>" +
-//                   "<div c='#00ff00'>"+ ("carry X 2") + "</div>" +
-//                   "<r>" + (" air units and ") + "</r>" +
-//                   "<div c='#00ff00'>" + ("produce ") + "</div>" +
-//                   "<r>" + ("Waterplanes") + "</r>" + "</data>");
-//    file.close();
-
-//    QDomElement root = doc.documentElement();
-//    QDomNode n = root.firstChild();
-//    if(!n.isNull())
-//    {
-//        qDebug(root.nodeName().toStdString().c_str());
-//        qDebug(root.text().toStdString().c_str());
-//    }
-//    while(!n.isNull()) {
-//        QDomElement e = n.toElement(); // try to convert the node to an element.
-//        if(!e.isNull())
-//        {
-//            qDebug(e.nodeName().toStdString().c_str());
-//            qDebug(e.text().toStdString().c_str());
-//        }
-
-//        QDomNode n2 = n.firstChild();
-//        while(!n2.isNull()) {
-//            QDomElement e = n2.toElement(); // try to convert the node to an element.
-//            if(!e.isNull())
-//            {
-//                qDebug(e.nodeName().toStdString().c_str());
-//                qDebug(e.text().toStdString().c_str());
-//            }
-//            n2 = n2.nextSibling();
-//        }
-
-//        n = n.nextSibling();
-//    }
-
     QThread::currentThread()->setPriority(QThread::TimeCriticalPriority);
     /*************************************************************************************************/
     // setup network session support

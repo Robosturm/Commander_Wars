@@ -151,7 +151,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
         COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
         for (qint32 i = 0; i < m_Styles.size(); i++)
         {
-            oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((m_currentCOID + m_Styles[i] + "+nrm").toStdString().c_str());
+            oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((m_currentCOID + m_Styles[i] + "+nrm"));
             m_pCOSprites[i]->setResAnim(pAnim);
         }
         m_CurrentIndex = index;
@@ -160,8 +160,8 @@ void DialogCOStyle::changeCOStyle(qint32 index)
             m_pPredefinedStyles->detach();
             m_pPredefinedStyles = nullptr;
         }
-        oxygine::ResAnim* pAnim = pCOSpriteManager->oxygine::Resources::getResAnim((m_currentCOID + "+nrm").toStdString().c_str());
-        QString filePath = pAnim->getResPath().c_str();
+        oxygine::ResAnim* pAnim = pCOSpriteManager->oxygine::Resources::getResAnim((m_currentCOID + "+nrm"));
+        QString filePath = pAnim->getResPath();
         QString style = m_Styles[index];
         filePath = filePath.replace("+nrm.png", "");
         m_ResFilePath = filePath + style;
@@ -253,7 +253,7 @@ void DialogCOStyle::addCOStyle(QString style, bool select)
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
     oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
     pBox->setResAnim(pAnim);
-    pAnim = pCOSpriteManager->getResAnim((m_currentCOID + style + "+nrm").toStdString().c_str());
+    pAnim = pCOSpriteManager->getResAnim((m_currentCOID + style + "+nrm"));
     float scale = (m_pCOPanel->getHeight() - 120) / pAnim->getHeight();
     pBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     pBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
@@ -303,7 +303,7 @@ void DialogCOStyle::update(const oxygine::UpdateState& us)
     if (m_update)
     {
         COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-        oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((m_currentCOID + m_Styles[m_CurrentIndex] + "+nrm").toStdString().c_str());
+        oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((m_currentCOID + m_Styles[m_CurrentIndex] + "+nrm"));
         m_pResAnims[m_CurrentIndex] = SpriteCreator::createAnim(m_ResFilePath + "+nrm.png", colorTable, maskTable, useColorBox, pAnim->getColumns(), pAnim->getRows(), pAnim->getScaleFactor());
         m_pCOSprites[m_CurrentIndex]->setResAnim(m_pResAnims[m_CurrentIndex].get());
         m_update = false;

@@ -27,7 +27,7 @@ GameAnimationCapture::GameAnimationCapture(qint32 startPoints, qint32 endPoints,
 void GameAnimationCapture::addBuildingSprite(QString spriteID, QColor startColor, QColor capturedColor, bool addColor)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
-    oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID.toStdString());
+    oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
         oxygine::spSprite pSprite = new oxygine::Sprite();
@@ -128,7 +128,7 @@ void GameAnimationCapture::addBuildingSprite(QString spriteID, QColor startColor
 void GameAnimationCapture::addSoldierSprite(QString spriteID, QColor color, bool addColor)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
-    oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID.toStdString());
+    oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
         float endPoints = m_endPoints;
@@ -201,7 +201,7 @@ void GameAnimationCapture::addSoldierSprite(QString spriteID, QColor color, bool
 void GameAnimationCapture::addBackgroundSprite(QString spriteID)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
-    oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID.toStdString());
+    oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
         oxygine::spSprite pSprite = new oxygine::Sprite();

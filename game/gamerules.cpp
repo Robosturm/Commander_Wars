@@ -423,7 +423,7 @@ void GameRules::createWeatherSprites()
         QString weatherSprite = m_Weathers[m_CurrentWeather]->getWeatherTerrainSprite();
         if (!weatherSprite.isEmpty())
         {
-            oxygine::ResAnim* pAnim = GameManager::getInstance()->getResAnim(weatherSprite.toStdString().c_str());
+            oxygine::ResAnim* pAnim = GameManager::getInstance()->getResAnim(weatherSprite);
             if (pAnim != nullptr)
             {
                 for (qint32 x = 0; x < width; x++)

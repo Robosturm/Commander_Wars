@@ -164,7 +164,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     {
         QString coID = coids[i];
 
-        oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((coID.toLower() + "+face").toStdString().c_str());
+        oxygine::ResAnim* pAnim = pCOSpriteManager->getResAnim((coID.toLower() + "+face"));
         oxygine::spSprite pCo = new oxygine::Sprite();
         pCo->setResAnim(pAnim, 0, 0);
 

@@ -151,7 +151,7 @@ namespace oxygine
 
         for (int i = 0; i < decl->numElements; ++i)
         {
-            window->glBindAttribLocation(p, decl->elements[i].index, decl->elements[i].name);
+            window->glBindAttribLocation(p, decl->elements[i].index, decl->elements[i].name.toStdString().c_str());
         }
 
         window->glLinkProgram(p);

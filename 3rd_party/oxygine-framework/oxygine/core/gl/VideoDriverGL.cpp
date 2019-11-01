@@ -1,6 +1,5 @@
 #include "VideoDriverGL.h"
 #include "NativeTextureGLES.h"
-#include "../../utils/stringUtils.h"
 
 #include "../gamewindow.h"
 

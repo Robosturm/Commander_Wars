@@ -56,7 +56,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     addChild(rotSprite);
 
     QString resAnim = coid.toLower() + "+nrm";
-    oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(resAnim.toStdString().c_str());
+    oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(resAnim);
     oxygine::spSprite m_CO = new oxygine::Sprite();
     m_CO->setResAnim(pAnim);
     m_CO->setScale((pApp->getSettings()->getHeight() - 400) / pAnim->getHeight());
@@ -93,7 +93,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
         if (pCO1 != nullptr)
         {
             resAnim = pCO1->getCoID().toLower() + "+nrm";
-            pAnim = COSpriteManager::getInstance()->getResAnim(resAnim.toStdString().c_str());
+            pAnim = COSpriteManager::getInstance()->getResAnim(resAnim);
             m_CO = new oxygine::Sprite();
             m_CO->setResAnim(pAnim);
             m_CO->setScale((pApp->getSettings()->getHeight() - 400) / pAnim->getHeight());

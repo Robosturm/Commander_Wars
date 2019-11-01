@@ -12,7 +12,7 @@ namespace oxygine
 
         struct Element
         {
-            char name[16];
+            QString name;
             int index;
             bool normalized;
             GLint size;

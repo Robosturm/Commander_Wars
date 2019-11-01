@@ -67,7 +67,7 @@ GameEnums::Directions GameAnimationWalk::getMovementDirection(qint32 x, qint32 y
 void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float scaling)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID.toStdString());
+    oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
         Player* pPlayer = GameMap::getInstance()->getCurrentViewPlayer();

@@ -42,7 +42,7 @@ namespace oxygine
         Font();
         ~Font();
 
-        void init(const char* name, int size, int baselineDistance, int lineHeight, bool sdf = false);
+        void init(QString name, int size, int baselineDistance, int lineHeight, bool sdf = false);
 
         void addGlyph(const glyph& g);
         void sortGlyphs() {}

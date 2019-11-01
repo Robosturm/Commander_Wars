@@ -2,7 +2,6 @@
 #include "NativeTextureGLES.h"
 #include "ShaderProgramGL.h"
 
-#include "../../utils/stringUtils.h"
 #include "../vertex.h"
 
 #include "../gamewindow.h"

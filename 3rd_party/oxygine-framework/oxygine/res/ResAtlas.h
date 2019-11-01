@@ -13,17 +13,17 @@ namespace oxygine
         struct atlas
         {
             spNativeTexture base;
-            std::string base_path;
+            QString base_path;
 
             spNativeTexture alpha;
-            std::string alpha_path;
+            QString alpha_path;
         };
 
 
         ResAtlas();
         ~ResAtlas();
 
-        void addAtlas(ImageData::TextureFormat tf, const std::string& base, const std::string& alpha, int w, int h);
+        void addAtlas(ImageData::TextureFormat tf, const QString& base, const QString& alpha, int w, int h);
 
         const atlas& getAtlas(int i) const {return _atlasses[i];}
         int          getNum() const { return (int)_atlasses.size(); }
@@ -36,14 +36,14 @@ namespace oxygine
 
         //void loadAtlas(CreateResourceContext& context);
         ResAnim* createEmpty(const XmlWalker& walker, CreateResourceContext& context);
-        static void init_resAnim(ResAnim* rs, const std::string& file, pugi::xml_node node);
+        static void init_resAnim(ResAnim* rs, const QString& file, QDomElement node);
 
     protected:
         //settings from xml
         bool _linearFilter;
         bool _clamp2edge;
 
-        void loadBase(pugi::xml_node node);
+        void loadBase(QDomElement node);
 
         std::vector<unsigned char> _hitTestBuffer;
 
@@ -51,7 +51,7 @@ namespace oxygine
         atlasses _atlasses;
     };
 
-    typedef void(*load_texture_hook)(const std::string& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
+    typedef void(*load_texture_hook)(const QString& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
     void set_load_texture_hook(load_texture_hook);
-    void load_texture_internal(const std::string& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
+    void load_texture_internal(const QString& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
 }

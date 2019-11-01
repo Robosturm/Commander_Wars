@@ -174,7 +174,7 @@ void Unit::removeShineTween()
 void Unit::loadSprite(QString spriteID, bool addPlayerColor)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID.toStdString());
+    oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
         oxygine::spSprite pSprite = new oxygine::Sprite();
@@ -1977,14 +1977,14 @@ void Unit::loadIcon(QString iconID, qint32 x, qint32 y)
 {
     for (qint32 i = 0; i < m_pIconSprites.size(); i++)
     {
-        if (m_pIconSprites[i]->getResAnim()->getName() == iconID.toStdString())
+        if (m_pIconSprites[i]->getResAnim()->getName() == iconID)
         {
             // already loaded icon
             return;
         }
     }
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(iconID.toStdString());
+    oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(iconID);
     if (pAnim != nullptr)
     {
         oxygine::spSprite pSprite = new oxygine::Sprite();
@@ -2015,7 +2015,7 @@ void Unit::loadIcon(QString iconID, qint32 x, qint32 y)
 void Unit::unloadIcon(QString iconID)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(iconID.toStdString());
+    oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(iconID);
     if (pAnim != nullptr)
     {
         for (qint32 i = 0; i < m_pIconSprites.size(); i++)

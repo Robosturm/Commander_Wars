@@ -91,7 +91,7 @@ void IngameInfoBar::updatePlayerInfo()
     oxygine::ResAnim* pAnim = nullptr;
     if (pCO != nullptr)
     {
-        pAnim = pCOSpriteManager->getResAnim((pCO->getCoID() + "+face").toStdString().c_str());
+        pAnim = pCOSpriteManager->getResAnim((pCO->getCoID() + "+face"));
     }
     else
     {
@@ -105,7 +105,7 @@ void IngameInfoBar::updatePlayerInfo()
     pCO = pPlayer->getCO(1);
     if (pCO != nullptr)
     {
-        pAnim = pCOSpriteManager->getResAnim((pCO->getCoID() + "+face").toStdString().c_str());
+        pAnim = pCOSpriteManager->getResAnim((pCO->getCoID() + "+face"));
     }
     else
     {
@@ -117,7 +117,7 @@ void IngameInfoBar::updatePlayerInfo()
     m_pGameInfoBox->addChild(pSprite);
 
     pSprite = new oxygine::Sprite();
-    pAnim = pGameManager->getResAnim((pMap->getGameRules()->getCurrentWeather()->getWeatherSymbol()).toStdString().c_str());
+    pAnim = pGameManager->getResAnim((pMap->getGameRules()->getCurrentWeather()->getWeatherSymbol()));
     if (pAnim != nullptr)
     {
         pSprite->setResAnim(pAnim);
@@ -158,7 +158,7 @@ void IngameInfoBar::updatePlayerInfo()
         Weather* pWeather = pMap->getGameRules()->getWeatherAtDay(1, pMap->getCurrentPlayer()->getPlayerID());
         if (pWeather != nullptr)
         {
-            pAnim = pGameManager->getResAnim((pWeather->getWeatherSymbol()).toStdString().c_str());
+            pAnim = pGameManager->getResAnim((pWeather->getWeatherSymbol()));
             if (pAnim != nullptr)
             {
                 pSprite->setResAnim(pAnim);
@@ -180,7 +180,7 @@ void IngameInfoBar::updatePlayerInfo()
         pWeather = pMap->getGameRules()->getWeatherAtDay(2, pMap->getCurrentPlayer()->getPlayerID());
         if (pWeather != nullptr)
         {
-            pAnim = pGameManager->getResAnim((pWeather->getWeatherSymbol()).toStdString().c_str());
+            pAnim = pGameManager->getResAnim((pWeather->getWeatherSymbol()));
             if (pAnim != nullptr)
             {
                 pSprite->setResAnim(pAnim);
@@ -511,21 +511,21 @@ void IngameInfoBar::updateTerrainInfo(qint32 x, qint32 y, bool update)
         oxygine::ResAnim* pAnimBack = nullptr;
         if (pUnit != nullptr)
         {
-            pAnimBase = pGameManager->getResAnim(pUnit->getTerrainAnimationBase().toStdString().c_str(), oxygine::ep_ignore_error);
-            pAnimFore = pGameManager->getResAnim(pUnit->getTerrainAnimationForeground().toStdString().c_str(), oxygine::ep_ignore_error);
-            pAnimBack = pGameManager->getResAnim(pUnit->getTerrainAnimationBackground().toStdString().c_str(), oxygine::ep_ignore_error);
+            pAnimBase = pGameManager->getResAnim(pUnit->getTerrainAnimationBase(), oxygine::ep_ignore_error);
+            pAnimFore = pGameManager->getResAnim(pUnit->getTerrainAnimationForeground(), oxygine::ep_ignore_error);
+            pAnimBack = pGameManager->getResAnim(pUnit->getTerrainAnimationBackground(), oxygine::ep_ignore_error);
         }
         else if (pBuilding != nullptr)
         {
-            pAnimBase = pGameManager->getResAnim(pBuilding->getTerrainAnimationBase().toStdString().c_str(), oxygine::ep_ignore_error);
-            pAnimFore = pGameManager->getResAnim(pBuilding->getTerrainAnimationForeground().toStdString().c_str(), oxygine::ep_ignore_error);
-            pAnimBack = pGameManager->getResAnim(pBuilding->getTerrainAnimationBackground().toStdString().c_str(), oxygine::ep_ignore_error);
+            pAnimBase = pGameManager->getResAnim(pBuilding->getTerrainAnimationBase(), oxygine::ep_ignore_error);
+            pAnimFore = pGameManager->getResAnim(pBuilding->getTerrainAnimationForeground(), oxygine::ep_ignore_error);
+            pAnimBack = pGameManager->getResAnim(pBuilding->getTerrainAnimationBackground(), oxygine::ep_ignore_error);
         }
         else
         {
-            pAnimBase = pGameManager->getResAnim(pTerrain->getTerrainAnimationBase().toStdString().c_str(), oxygine::ep_ignore_error);
-            pAnimFore = pGameManager->getResAnim(pTerrain->getTerrainAnimationForeground().toStdString().c_str(), oxygine::ep_ignore_error);
-            pAnimBack = pGameManager->getResAnim(pTerrain->getTerrainAnimationBackground().toStdString().c_str(), oxygine::ep_ignore_error);
+            pAnimBase = pGameManager->getResAnim(pTerrain->getTerrainAnimationBase(), oxygine::ep_ignore_error);
+            pAnimFore = pGameManager->getResAnim(pTerrain->getTerrainAnimationForeground(), oxygine::ep_ignore_error);
+            pAnimBack = pGameManager->getResAnim(pTerrain->getTerrainAnimationBackground(), oxygine::ep_ignore_error);
         }
         pSprite = new oxygine::Sprite();
         pSprite->setPosition(m_pCursorInfoBox->getWidth() - pAnimBase->getWidth() - 10, 120);

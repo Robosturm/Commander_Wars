@@ -78,10 +78,6 @@
 #include "oxygine/math/Vector3.h"
 #include "oxygine/math/Vector4.h"
 
-//pugixml/
-//#include "oxygine/pugixml/pugiconfig.hpp"
-#include "oxygine/pugixml/pugixml.hpp"
-
 //res/
 #include "oxygine/res/CreateResourceContext.h"
 #include "oxygine/res/ResAnim.h"
@@ -105,11 +101,5 @@
 //utils/
 #include "oxygine/utils/AtlasBuilder.h"
 #include "oxygine/utils/intrusive_list.h"
-#include "oxygine/utils/stringUtils.h"
-
-//winnie_alloc/
-//#include "oxygine/winnie_alloc/system_alloc.h"
-//#include "oxygine/winnie_alloc/winnie_alloc.h"
-//#include "oxygine/winnie_alloc/winnie_alloc_config.h"
 
 #endif

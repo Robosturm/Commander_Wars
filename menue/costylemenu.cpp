@@ -99,7 +99,7 @@ void COStyleMenu::selectedCOIDChanged(QString coid)
     oxygine::ResAnim* pAnim = nullptr;
     if (!coid.isEmpty())
     {
-        pAnim = pCOSpriteManager->getResAnim((coid + "+nrm").toStdString().c_str());
+        pAnim = pCOSpriteManager->getResAnim((coid + "+nrm"));
     }
     m_pCurrentCO->setResAnim(pAnim);
     m_currentCOID = coid;

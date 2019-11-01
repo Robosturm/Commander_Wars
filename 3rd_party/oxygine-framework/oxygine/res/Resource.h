@@ -1,7 +1,7 @@
 #pragma once
 #include "../oxygine-include.h"
 #include "../core/Object.h"
-#include "../pugixml/pugixml.hpp"
+#include "QDomDocument"
 #include <string>
 
 namespace oxygine
@@ -21,8 +21,8 @@ namespace oxygine
         void unload();
 
         /**Returns any attribute from xml resource definition. You could use it for defining for example per animation constants like duration, specific offsets, delays.*/
-        pugi::xml_attribute getAttribute(const char* attr) const;
-        pugi::xml_node      getNode() const {return _node;}
+        QString             getAttribute(QString attr) const;
+        QDomElement         getNode() const {return _node;}
         bool                getUseLoadCounter() const {return _useLoadCounter;}
         int                 getLoadCounter() const { return _loadCounter; }
         Resource*           getParent() const {return _parent;}
@@ -32,11 +32,11 @@ namespace oxygine
         void setParent(Resource* p) {_parent = p;}
 
         /**returns id from xml node. Function is helper*/
-        static std::string extractID(const pugi::xml_node& node, const std::string& file, const std::string& def);
-        static std::string extractID(const std::string& file);
+        static QString extractID(const QDomElement& node, const QString& file, const QString& def);
+        static QString extractID(const QString& file);
 
     protected:
-        static void setNode(Resource* res, const pugi::xml_node& node) {res->_node = node;}
+        static void setNode(Resource* res, const QDomElement& node) {res->_node = node;}
 
         virtual void _load(LoadResourcesContext* context = 0) = 0;
         virtual void _unload() = 0;
@@ -46,7 +46,7 @@ namespace oxygine
         int _loadCounter;
         bool _useLoadCounter;
 
-        pugi::xml_node _node;
+        QDomElement _node;
 
     private:
         //non copyable

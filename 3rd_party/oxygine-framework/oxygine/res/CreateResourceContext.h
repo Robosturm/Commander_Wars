@@ -1,7 +1,7 @@
 #pragma once
 #include "../oxygine-include.h"
 #include "../core/Object.h"
-#include "../pugixml/pugixml.hpp"
+#include "QDomDocument"
 #include <string>
 
 namespace oxygine
@@ -10,38 +10,31 @@ namespace oxygine
     class XmlWalker
     {
     public:
-        XmlWalker(const std::string* xmlFolder,
-                  const std::string& path,
+        XmlWalker(const QString& path,
                   float scaleFactor,
                   bool load, bool alpha,
-                  pugi::xml_node xml);
+                  QDomElement xml);
 
-        bool empty() const {return _root.empty();}
+        bool empty() const {return _root.isNull();}
 
-        const std::string&  getCurrentFolder() const { return _path; }
-        const std::string&  getXmlFolder() const { return *_xmlFolder; }
-        std::string         getPath(const char* attrName) const;
-        pugi::xml_node      getNode() const {return _root;}
+        const QString&  getCurrentFolder() const { return _path; }
+        QString         getPath(QString attrName) const;
+        QDomElement        getNode() const {return _root;}
         float               getScaleFactor() const {return _scaleFactor;}
         bool                getLoad() const {return _load;}
         bool                getAlphaHitTest() const { return _alphaHitTest; }
-        const char*         getType() const {return _root.name();}
+        QString         getType() const {return _root.nodeName();}
 
         void                checkSetAttributes();
-        void                setXmlFolder(const std::string* ptr) { _xmlFolder = ptr; }
-
 
         XmlWalker       next();
 
     private:
-        void            _checkSetAttributes(pugi::xml_node node);
-        std::string connectPath(const char* currentPath, const char* str);
+        void _checkSetAttributes(QDomElement node);
+        QString _path;
 
-        const std::string* _xmlFolder;
-        std::string _path;
-
-        pugi::xml_node _root;
-        pugi::xml_node _last;
+        QDomElement _root;
+        QDomElement _last;
 
         bool _notStarted;
 
@@ -54,14 +47,14 @@ namespace oxygine
     class CreateResourceContext
     {
     public:
-        CreateResourceContext() : resources(0), xml_name(0), prebuilt_folder(0), options(0),
-            walker(0, "", 1.0f, true, false, pugi::xml_node())
+        CreateResourceContext() : resources(0), xml_name(""), prebuilt_folder(""), options(0),
+            walker("", 1.0f, true, false, QDomElement())
         {
         }
 
         Resources* resources;
-        const std::string* xml_name;
-        const std::string* prebuilt_folder;
+        QString xml_name;
+        QString prebuilt_folder;
         const ResourcesLoadOptions* options;
         XmlWalker walker;
     };

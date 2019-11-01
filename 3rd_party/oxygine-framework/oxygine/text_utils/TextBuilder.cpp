@@ -1,7 +1,6 @@
 #include "TextBuilder.h"
 #include "Node.h"
 #include <QDomDocument>
-#include "../utils/stringUtils.h"
 
 namespace oxygine
 {

@@ -2,7 +2,6 @@
 #include "MaterialCache.h"
 #include "RenderState.h"
 #include "actor/Actor.h"
-#include "utils/stringUtils.h"
 #include <sstream>
 
 namespace oxygine

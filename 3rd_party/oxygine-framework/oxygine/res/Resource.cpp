@@ -1,6 +1,5 @@
 #include "Resource.h"
 #include "CreateResourceContext.h"
-#include "../utils/stringUtils.h"
 #include <stdio.h>
 
 #include "qfileinfo.h"
@@ -36,27 +35,29 @@ namespace oxygine
         _loadCounter = _useLoadCounter ? _loadCounter - 1 : 0;
     }
 
-    std::string Resource::extractID(const pugi::xml_node& node, const std::string& file, const std::string& def)
+    QString Resource::extractID(const QDomElement& node, const QString& file, const QString& def)
     {
-        std::string id = node.attribute("id").value();
-        if (id.empty())
+        QString id = node.attribute("id");
+        if (id.isEmpty())
         {
-            if (file.empty())
-                return lower(def);
+            if (file.isEmpty())
+            {
+                return def.toLower();
+            }
             return extractID(file);
         }
 
-        return lower(id);
+        return id.toLower();
     }
 
-    std::string Resource::extractID(const std::string& file)
+    QString Resource::extractID(const QString& file)
     {
-        QFileInfo info(file.c_str());
-        return info.baseName().toLower().toStdString();
+        QFileInfo info(file);
+        return info.baseName().toLower();
     }
 
 
-    pugi::xml_attribute Resource::getAttribute(const char* attr) const
+    QString Resource::getAttribute(QString attr) const
     {
         return _node.attribute(attr);
     }

@@ -4,8 +4,8 @@
 #include "../core/ImageDataOperations.h"
 #include "../core/VideoDriver.h"
 #include "../utils/AtlasBuilder.h"
-#include "../utils/stringUtils.h"
 #include <stdint.h>
+#include <qvariant.h>
 
 namespace oxygine
 {
@@ -183,7 +183,7 @@ namespace oxygine
         LoadResourcesContext::get()->createTexture(task);
     }
 
-    void ResAtlasGeneric::nextAtlas(int w, int h, ImageData::TextureFormat tf, atlas_data& ad, const char* name)
+    void ResAtlasGeneric::nextAtlas(int w, int h, ImageData::TextureFormat tf, atlas_data& ad, QString name)
     {
         ad.mt.init(w, h, tf);
         ad.mt.fillZero();
@@ -229,52 +229,60 @@ namespace oxygine
     void ResAtlasGeneric::loadAtlas2(CreateResourceContext& context)
     {
         _current = 0;
-        pugi::xml_node node = context.walker.getNode();
+        QDomElement node = context.walker.getNode();
 
-        int w = node.attribute("width").as_int(defaultAtlasWidth);
-        int h = node.attribute("height").as_int(defaultAtlasHeight);
-
-        const char* format = node.attribute("format").as_string("8888");
+        bool ok = false;
+        int w = node.attribute("width").toInt(&ok);
+        if (!ok)
+        {
+           w = defaultAtlasWidth;
+        }
+        int h = node.attribute("height").toInt(&ok);
+        if (!ok)
+        {
+           h = defaultAtlasHeight;
+        }
 
         loadBase(node);
 
         atlas_data ad;
 
-
         ImageData::TextureFormat tf = ImageData::TF_R8G8B8A8;
-
-
-        bool compressed = false;
-
-
         std::vector<ResAnim*> anims;
-
-
         while (true)
         {
             XmlWalker walker = context.walker.next();
             if (walker.empty())
                 break;
 
-            pugi::xml_node child_node = walker.getNode();
+            QDomElement child_node = walker.getNode();
 
-            const char* name = child_node.name();
-            if (strcmp(name, "image"))
+            QString name = child_node.nodeName();
+            if (name != "image")
                 continue;
 
 
-            std::string id = child_node.attribute("id").value();
-            std::string file = child_node.attribute("file").value();
+            QString id = child_node.attribute("id");
+            QString file = child_node.attribute("file");
 
-            if (file.empty())
+            if (file.isEmpty())
             {
                 createEmpty(walker, context);
                 continue;
             }
 
-
-            bool trim = child_node.attribute("trim").as_bool(true);
-            bool extend = child_node.attribute("extend").as_bool(true);
+            QVariant value = QVariant(child_node.attribute("trim"));
+            bool trim = true;
+            if (value.type() == QVariant::Type::Bool)
+            {
+                trim = value.toBool();
+            }
+            value = QVariant(child_node.attribute("extend"));
+            bool extend = true;
+            if (value.type() == QVariant::Type::Bool)
+            {
+                extend = value.toBool();
+            }
 
             Point offset = extend ? Point(2, 2) : Point(0, 0);
 
@@ -288,15 +296,15 @@ namespace oxygine
             float frame_scale = 1.0f;
             bool loaded = false;
 
-            QImage img(walker.getPath("file").c_str());
+            QImage img(walker.getPath("file"));
             mt.init(img, true);
             im = mt.lock();
             if (im.w)
             {
-                rows = child_node.attribute("rows").as_int();
-                frame_width = child_node.attribute("frame_width").as_int();
-                columns = child_node.attribute("cols").as_int();
-                frame_height = child_node.attribute("frame_height").as_int();
+                rows = child_node.attribute("rows").toInt();
+                frame_width = child_node.attribute("frame_width").toInt();
+                columns = child_node.attribute("cols").toInt();
+                frame_height = child_node.attribute("frame_height").toInt();
 
                 if (!rows)
                     rows = 1;
@@ -350,8 +358,8 @@ namespace oxygine
 
                         if (!ad.texture)
                         {
-                            std::string atlas_id = getName();
-                            nextAtlas(w, h, tf, ad, atlas_id.c_str());
+                            QString atlas_id = getName();
+                            nextAtlas(w, h, tf, ad, atlas_id);
                         }
 
                         bool s = ad.atlas.add(&ad.mt, src, dest, offset);
@@ -359,7 +367,7 @@ namespace oxygine
                         {
                             applyAtlas(ad, _linearFilter, _clamp2edge);
 
-                            nextAtlas(w, h, tf, ad, walker.getCurrentFolder().c_str());
+                            nextAtlas(w, h, tf, ad, walker.getCurrentFolder());
                             s = ad.atlas.add(&ad.mt, src, dest, offset);
                             Q_ASSERT(s);
                         }

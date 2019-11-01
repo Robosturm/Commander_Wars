@@ -41,7 +41,7 @@ WikiDatabase::WikiDatabase()
     {
         if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/wiki/res.xml"))
         {
-            oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/wiki/res.xml").toStdString());
+            oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/wiki/res.xml"));
         }
     }
 }

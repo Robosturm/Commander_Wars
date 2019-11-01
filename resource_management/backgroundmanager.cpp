@@ -14,5 +14,5 @@ BackgroundManager* BackgroundManager::getInstance()
 
 BackgroundManager::BackgroundManager()
 {
-    oxygine::Resources::loadXML("resources/images/backgrounds/res.xml");
+    oxygine::Resources::loadXML(QString("resources/images/backgrounds/res.xml"));
 }

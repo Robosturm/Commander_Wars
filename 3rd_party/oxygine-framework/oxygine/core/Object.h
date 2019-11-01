@@ -1,7 +1,7 @@
 #pragma once
 #include "../oxygine-include.h"
 #include "ref_counter.h"
-#include <string>
+#include <qstring.h>
 #include <vector>
 
 namespace oxygine
@@ -14,17 +14,16 @@ namespace oxygine
         ObjectBase(bool assignID = true);
         virtual ~ObjectBase();
 
-        const std::string&  getName() const;
+        const QString&  getName() const;
         const void*         getUserData() const {return __userData;}
         quint64              getUserData64() const { return __userData64; }
         int                 getUserData32() const { return __userData32; }
         int                 getObjectID()const {return __id;}
-        bool                isName(const std::string& name) const;
-        bool                isName(const char* name) const;
+        bool                isName(const QString& name) const;
 
 
 
-        void setName(const std::string& name);
+        void setName(const QString& name);
 
         /**void*, uin64 and int userData is UNION!*/
         void setUserData(const void* data) { __userData64 = 0; __userData = data; }
@@ -44,7 +43,7 @@ namespace oxygine
 
     protected:
         void __generateID();
-        std::string __name;
+        QString __name;
         int __id;
 
         union

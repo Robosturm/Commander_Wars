@@ -16,7 +16,7 @@ BattleAnimationManager::BattleAnimationManager()
     {
         if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/battleanimations/res.xml"))
         {
-            oxygine::Resources::loadXML(QString(pMainapp->getSettings()->getMods().at(i) + "/images/battleanimations/res.xml").toStdString());
+            oxygine::Resources::loadXML(pMainapp->getSettings()->getMods().at(i) + "/images/battleanimations/res.xml");
         }
     }
 }

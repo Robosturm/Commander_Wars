@@ -155,7 +155,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
     }
     if (!coid.isEmpty())
     {
-        pAnim = pCOSpriteManager->getResAnim((coid + "+nrm").toStdString().c_str());
+        pAnim = pCOSpriteManager->getResAnim((coid + "+nrm"));
     }
     m_pCurrentCO->setResAnim(pAnim);
 
