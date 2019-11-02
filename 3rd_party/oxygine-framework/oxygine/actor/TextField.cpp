@@ -314,41 +314,6 @@ namespace oxygine
         return _root;
     }
 
-    const char* get_valign(TextStyle::VerticalAlign v)
-    {
-        switch (v)
-        {
-
-            case TextStyle::VALIGN_BASELINE:
-                return "baseline";
-            case TextStyle::VALIGN_TOP:
-                return "top";
-            case TextStyle::VALIGN_BOTTOM:
-                return "bottom";
-            case TextStyle::VALIGN_MIDDLE:
-                return "middle";
-            default:
-                break;
-        }
-        return "unknown";
-    }
-
-    const char* get_halign(TextStyle::HorizontalAlign v)
-    {
-        switch (v)
-        {
-            case TextStyle::HALIGN_DEFAULT:
-                return "default";
-            case TextStyle::HALIGN_LEFT:
-                return "left";
-            case TextStyle::HALIGN_RIGHT:
-                return "right";
-            case TextStyle::HALIGN_MIDDLE:
-                return "middle";
-        }
-        return "unknown";
-    }
-
     void TextField::doRender(RenderState const& rs)
     {
         _rdelegate->doRender(this, rs);

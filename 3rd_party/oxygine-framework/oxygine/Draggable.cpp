@@ -136,8 +136,6 @@ namespace oxygine
             Vector2 dragOffset = localPos - _dragPos;
 
             Vector2 converted = convertPosUp(client, client->getParent(), dragOffset, true);
-            //printVec("dragOffset", dragOffset);
-            //printVec("converted", converted);
             Vector2 np;
             bool _clientIsParent = true;
             if (!_clientIsParent)
@@ -226,12 +224,6 @@ namespace oxygine
         Actor* actor = _dragClient ? _dragClient : _actor;
         return actor;
     }
-
-    void printVec(const char* str, const Vector2& v)
-    {
-        qDebug("%s: %.2f, %.2f", str, v.x, v.y);
-    }
-
 
     void Draggable::snapClient2Bounds()
     {

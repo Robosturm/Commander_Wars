@@ -44,7 +44,8 @@
 
 //closure/
 #include "oxygine/closure/closure.h"
-//#include "oxygine/closure/closure_impl.h"
+
+#include <functional>
 
 //core/
 #include "oxygine/core/ImageData.h"

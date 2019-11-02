@@ -2013,7 +2013,7 @@
     </message>
     <message>
         <location filename="../menue/optionmenue.cpp" line="84"/>
-        <source>Gameplay &amp; Keys</source>
+        <source>Gameplay / Keys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

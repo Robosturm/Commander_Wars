@@ -21,7 +21,7 @@ namespace oxygine
 
         void cleanup();
 
-        const Font* getFont(const char* name = nullptr, int size = 0) const override;
+        const Font* getFont(QString name = "", int size = 0) const override;
         const Font* getClosestFont(float worldScale, int styleFontSize, float& resScale) const override;
 
     private:

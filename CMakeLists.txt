@@ -23,7 +23,6 @@ find_package(Qt5Multimedia REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
-find_package(Qt5OpenGL REQUIRED)
 find_package(Qt5Xml REQUIRED)
 find_package(OpenGL REQUIRED)
 
@@ -408,7 +407,6 @@ qt5_use_modules(${PROJECT_NAME}
     Network
     Gui
     Widgets
-    OpenGL
     Xml
 )
 

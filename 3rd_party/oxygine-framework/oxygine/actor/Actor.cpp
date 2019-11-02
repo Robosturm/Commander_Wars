@@ -1187,15 +1187,6 @@ namespace oxygine
         }
     }
 
-
-
-    Vector2 attr2Vector2(const char* data)
-    {
-        Vector2 v;
-        sscanf(data, "%f,%f", &v.x, &v.y);
-        return v;
-    }
-
     Vector2 convert_global2local_(const Actor* child, const Actor* parent, Vector2 pos)
     {
         if (child->getParent() && child->getParent() != parent)
