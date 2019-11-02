@@ -38,7 +38,6 @@ public:
 signals:
     void sigValueChanged(qint32 value);
 public slots:
-    void TextInput(oxygine::KeyEvent event);
     void KeyInput(oxygine::KeyEvent event);
 protected:
     /**

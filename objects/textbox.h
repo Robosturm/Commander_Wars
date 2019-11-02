@@ -37,7 +37,6 @@ signals:
     void sigTextChanged(QString text);
     void sigEnterPressed(QString text);
 public slots:
-    void TextInput(oxygine::KeyEvent event);
     void KeyInput(oxygine::KeyEvent event);
 private:
     bool m_focused{false};

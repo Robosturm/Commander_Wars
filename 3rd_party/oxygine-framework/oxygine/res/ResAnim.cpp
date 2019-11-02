@@ -53,7 +53,7 @@ namespace oxygine
         init(frames, columns, scaleFactor);
     }
 
-    void ResAnim::init(const QString& file, int columns, int rows, float scaleFactor)
+    void ResAnim::init(QString file, int columns, int rows, float scaleFactor)
     {
         QImage img(file);
         Image mt;

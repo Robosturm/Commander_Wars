@@ -24,7 +24,7 @@ class Building : public QObject, public oxygine::Actor, public FileSerializable
 public:
     static const float animationSpeed;
 
-    explicit Building(const QString& BuildingID);
+    explicit Building(QString BuildingID);
 
     virtual ~Building() = default;
     /**

@@ -20,7 +20,7 @@
 
 const float Building::animationSpeed = 4.0f;
 
-Building::Building(const QString& BuildingID)
+Building::Building(QString BuildingID)
     : m_BuildingID(BuildingID),
       m_pOwner(nullptr),
       m_pTerrain(nullptr)

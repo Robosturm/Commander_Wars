@@ -5,9 +5,11 @@
 
 #include "oxygine-framework.h"
 
+#include <QObject>
 
-class ObjectManager : public oxygine::Resources
+class ObjectManager : public QObject, public oxygine::Resources
 {
+    Q_OBJECT
 public:
     static ObjectManager* getInstance();
 

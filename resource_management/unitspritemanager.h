@@ -23,7 +23,7 @@ public:
      * @param unitID the unit that should be loaded.
      * @return true if all is fine
      */
-    bool loadUnit(const QString& unitID);
+    bool loadUnit(QString unitID);
     /**
      * @brief getUnitID
      * @param position the position in the loaded unit list

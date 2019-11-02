@@ -23,6 +23,10 @@ GameAnimation::GameAnimation(quint32 frameTime)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
+    if (m_frameTime <= 0)
+    {
+        m_frameTime = 1;
+    }
     connect(this, &GameAnimation::sigFinished, this, &GameAnimation::onFinished, Qt::QueuedConnection);
     buffer.open(QIODevice::ReadWrite);
 }

@@ -47,7 +47,6 @@ public:
 signals:
     void sigValueChanged(qreal value);
 public slots:
-    void TextInput(oxygine::KeyEvent event);
     void KeyInput(oxygine::KeyEvent event);
 protected:
     /**

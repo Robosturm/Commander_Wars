@@ -26,7 +26,7 @@ namespace oxygine
             dest->setClamp2Edge(clamp2edge);
     }
 
-    XmlWalker::XmlWalker(const QString& path, float scaleFactor, bool load, bool alpha, QDomElement xml)
+    XmlWalker::XmlWalker(QString path, float scaleFactor, bool load, bool alpha, QDomElement xml)
         : _root(xml),
           _notStarted(true),
           _scaleFactor(scaleFactor),

@@ -35,8 +35,12 @@ WikiDatabase* WikiDatabase::getInstance()
 WikiDatabase::WikiDatabase()
     : QObject()
 {
-    oxygine::Resources::loadXML("resources/images/wiki/res.xml");
     Mainapp* pMainapp = Mainapp::getInstance();
+    this->moveToThread(pMainapp->getWorkerthread());    
+    Interpreter::setCppOwnerShip(this);
+
+    oxygine::Resources::loadXML("resources/images/wiki/res.xml");
+
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
         if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/images/wiki/res.xml"))

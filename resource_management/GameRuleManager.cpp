@@ -70,7 +70,7 @@ void GameRuleManager::loadAll()
     m_loadedWeather.sort();
 }
 
-bool GameRuleManager::loadVictoryRule(const QString& victoryID)
+bool GameRuleManager::loadVictoryRule(QString victoryID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
 
@@ -98,7 +98,7 @@ bool GameRuleManager::loadVictoryRule(const QString& victoryID)
     return bRet;
 }
 
-bool GameRuleManager::loadWeather(const QString& weatherID)
+bool GameRuleManager::loadWeather(QString weatherID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
 

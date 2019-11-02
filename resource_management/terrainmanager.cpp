@@ -12,6 +12,7 @@ TerrainManager::TerrainManager() : QObject()
 {
     // load terrain
     Mainapp* pMainapp = Mainapp::getInstance();
+    this->moveToThread(pMainapp->getWorkerthread());
     oxygine::Resources::loadXML("resources/images/terrain/res.xml");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
     {
@@ -77,7 +78,7 @@ qint32 TerrainManager::getTerrainGroup(qint32 i)
     return 0;
 }
 
-bool TerrainManager::existsTerrain(const QString& TerrainID)
+bool TerrainManager::existsTerrain(QString TerrainID)
 {
     for (qint32 i = 0; i < m_loadedTerrains.size(); i++)
     {
@@ -89,7 +90,7 @@ bool TerrainManager::existsTerrain(const QString& TerrainID)
     return false;
 }
 
-bool TerrainManager::loadTerrain(const QString& TerrainID)
+bool TerrainManager::loadTerrain(QString TerrainID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
 

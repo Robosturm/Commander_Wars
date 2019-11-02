@@ -17,7 +17,7 @@ public:
 
 
 public slots:
-    virtual void connectTCP(const QString& adress, quint16 port) override;
+    virtual void connectTCP(QString adress, quint16 port) override;
     virtual void disconnectTCP() override;
     /**
      * @brief getSocket

@@ -14,16 +14,16 @@ namespace oxygine
         ObjectBase(bool assignID = true);
         virtual ~ObjectBase();
 
-        const QString&  getName() const;
+        QString  getName() const;
         const void*         getUserData() const {return __userData;}
         quint64              getUserData64() const { return __userData64; }
         int                 getUserData32() const { return __userData32; }
         int                 getObjectID()const {return __id;}
-        bool                isName(const QString& name) const;
+        bool                isName(QString name) const;
 
 
 
-        void setName(const QString& name);
+        void setName(QString name);
 
         /**void*, uin64 and int userData is UNION!*/
         void setUserData(const void* data) { __userData64 = 0; __userData = data; }

@@ -17,7 +17,7 @@ TCPServer::TCPServer()
 
 
 
-void TCPServer::connectTCP(const QString&, quint16 port)
+void TCPServer::connectTCP(QString, quint16 port)
 {
     pTCPServer = new QTcpServer(this);
     pTCPServer->moveToThread(Mainapp::getInstance()->getNetworkThread());

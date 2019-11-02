@@ -19,7 +19,7 @@ public:
      * @param actionID
      * @return
      */
-    bool loadAction(const QString& actionID);
+    bool loadAction(QString actionID);
 
     bool getLoaded()
     {

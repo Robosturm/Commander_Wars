@@ -17,6 +17,8 @@ ObjectManager* ObjectManager::getInstance()
 
 ObjectManager::ObjectManager()
 {
+    Mainapp* pMainapp = Mainapp::getInstance();
+    this->moveToThread(pMainapp->getWorkerthread());
     oxygine::Resources::loadXML("resources/objects/res.xml");
     oxygine::Resources::loadXML("resources/cursor/res.xml");
 

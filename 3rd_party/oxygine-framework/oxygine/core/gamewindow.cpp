@@ -177,6 +177,9 @@ namespace oxygine
 
         STDRenderer::current = STDRenderer::instance;
 
+        //glEnable(GL_POLYGON_SMOOTH);
+        glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+
         // Create the stage. Stage is a root node for all updateable and drawable objects
         oxygine::Stage::instance = new oxygine::Stage();
         QSize size = GameWindow::size();

@@ -20,7 +20,7 @@ public slots:
      * @param TerrainID the terrain that should be loaded.
      * @return true if all is fine
      */
-    bool loadTerrain(const QString& TerrainID);
+    bool loadTerrain(QString TerrainID);
     /**
      * @brief getTerrainID
      * @param position the position in the loaded terrain list
@@ -60,7 +60,7 @@ public slots:
      * @param TerrainID
      * @return
      */
-    bool existsTerrain(const QString& TerrainID);
+    bool existsTerrain(QString TerrainID);
 private:
     QStringList m_loadedTerrains;
     explicit TerrainManager();

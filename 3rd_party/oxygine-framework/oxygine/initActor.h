@@ -52,7 +52,7 @@ namespace oxygine
         typedef argT<Vector2, const Vector2&, Actor, &Actor::setSize> size;
         typedef argT<float, float, Actor, &Actor::setScale> scale;
         typedef argT<Vector2, const Vector2&, Actor, &Actor::setScale> scale2;
-        typedef argT<QString, const QString&, ObjectBase, &ObjectBase::setName> name;
+        typedef argT<QString, QString, ObjectBase, &ObjectBase::setName> name;
         typedef argT<float, float, Actor, &Actor::setScaleX> scaleX;
         typedef argT<float, float, Actor, &Actor::setScaleY> scaleY;
         typedef argT<unsigned char, unsigned char, Actor, &Actor::setAlpha> alpha;
@@ -65,8 +65,8 @@ namespace oxygine
         typedef argT<char, char, Actor, &Actor::setExtendedClickArea> extendedClickArea;
 
         typedef argT<TextStyle, const TextStyle&, TextField, &TextField::setStyle> style;
-        typedef argT<QString, const QString&, TextField, &TextField::setText> text;
-        typedef argT<QString, const QString&, TextField, &TextField::setHtmlText> htmlText;
+        typedef argT<QString, QString, TextField, &TextField::setText> text;
+        typedef argT<QString, QString, TextField, &TextField::setHtmlText> htmlText;
         typedef argT<TextStyle::HorizontalAlign, TextStyle::HorizontalAlign, TextField, &TextField::setHAlign> hAlign;
         typedef argT<TextStyle::VerticalAlign, TextStyle::VerticalAlign, TextField, &TextField::setVAlign> vAlign;
         typedef argT<int, int, TextField, &TextField::setFontSize> fontSize;

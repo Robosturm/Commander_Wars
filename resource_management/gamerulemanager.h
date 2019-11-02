@@ -23,7 +23,7 @@ public slots:
      * @param victoryID the victory that should be loaded.
      * @return true if all is fine
      */
-    bool loadVictoryRule(const QString& victoryID);
+    bool loadVictoryRule(QString victoryID);
     /**
      * @brief getVictoryRuleID
      * @param position the position in the loaded victory list
@@ -51,7 +51,7 @@ public slots:
      * @param weatherID the weather that should be loaded.
      * @return true if all is fine
      */
-    bool loadWeather(const QString& weatherID);
+    bool loadWeather(QString weatherID);
     /**
      * @brief getWeatherID
      * @param position the position in the loaded wearther list

@@ -4,7 +4,7 @@
 #include "../core/Object.h"
 #include "../math/Vector2.h"
 #include <qstring.h>
-#include <qvector.h>
+#include <vector>
 
 #include <QDomElement>
 
@@ -24,7 +24,7 @@ namespace oxygine
 
     namespace text
     {
-        typedef QVector<Symbol> text_data;
+        typedef std::vector<Symbol> text_data;
 
 
         class DrawContext

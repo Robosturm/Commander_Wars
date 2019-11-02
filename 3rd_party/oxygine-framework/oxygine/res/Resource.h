@@ -32,8 +32,8 @@ namespace oxygine
         void setParent(Resource* p) {_parent = p;}
 
         /**returns id from xml node. Function is helper*/
-        static QString extractID(const QDomElement& node, const QString& file, const QString& def);
-        static QString extractID(const QString& file);
+        static QString extractID(const QDomElement& node, QString file, QString def);
+        static QString extractID(QString file);
 
     protected:
         static void setNode(Resource* res, const QDomElement& node) {res->_node = node;}

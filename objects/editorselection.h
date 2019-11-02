@@ -79,9 +79,9 @@ signals:
    void sigSelectionChanged();
 public slots:
     void ClickedPlacementSelection(qint32 x, qint32 y);
-    void selectTerrain(const QString& terrainID);
-    void selectBuilding(const QString& buildingID);
-    void selectUnit(const QString& unitID);
+    void selectTerrain(QString terrainID);
+    void selectBuilding(QString buildingID);
+    void selectUnit(QString unitID);
     void updateSelectedPlayer();
 private:
     // small hints for the ui

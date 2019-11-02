@@ -31,7 +31,7 @@ public:
      * @param tableID the movement table that should be loaded.
      * @return true if all is fine
      */
-    bool loadTable(const QString& tableID);
+    bool loadTable(QString tableID);
     /**
      * @brief getMovementID
      * @param position the position in the loaded movement table list

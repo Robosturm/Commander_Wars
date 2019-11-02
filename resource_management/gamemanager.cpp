@@ -61,7 +61,7 @@ void GameManager::loadAll()
     m_loadedActions.sort();
 }
 
-bool GameManager::loadAction(const QString& actionID)
+bool GameManager::loadAction(QString actionID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
 

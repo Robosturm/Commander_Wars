@@ -136,7 +136,6 @@ SpinBox::SpinBox(qint32 width, qint32 min, qint32 max, Mode mode)
     toggle.start();
 
     connect(pApp, &Mainapp::sigKeyDown, this, &SpinBox::SpinBox::KeyInput, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigText, this, &SpinBox::TextInput, Qt::QueuedConnection);
 }
 
 
@@ -312,21 +311,6 @@ void SpinBox::setSpinSpeed(qreal SpinSpeed)
     m_SpinSpeed = SpinSpeed;
 }
 
-void SpinBox::TextInput(oxygine::KeyEvent event)
-{
-    if (m_focused)
-    {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
-        // for the start we don't check for upper or lower key input
-        QString msg = event.getText();
-        m_Text.insert(curmsgpos, msg);
-        checkInput();
-        curmsgpos = m_Text.size();
-        pApp->continueThread();
-    }
-}
-
 void SpinBox::KeyInput(oxygine::KeyEvent event)
 {
     // for debugging
@@ -424,7 +408,11 @@ void SpinBox::KeyInput(oxygine::KeyEvent event)
                 }
                 default:
                 {
-                    // do nothing
+                    // for the start we don't check for upper or lower key input
+                    QString msg = event.getText();
+                    m_Text.insert(curmsgpos, msg);
+                    checkInput();
+                    curmsgpos = m_Text.size();
                 }
             }
         }

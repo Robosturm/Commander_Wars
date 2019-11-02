@@ -180,7 +180,7 @@ namespace oxygine
         _root->updateMaterial(*_mat.get());
     }
 
-    void TextField::setText(const QString& str)
+    void TextField::setText(QString str)
     {
         _flags &= ~flag_html;
         if (_text != str)
@@ -190,7 +190,7 @@ namespace oxygine
         }
     }
 
-    void TextField::setHtmlText(const QString& str)
+    void TextField::setHtmlText(QString str)
     {
         _flags |= flag_html;
         if (_text != str)

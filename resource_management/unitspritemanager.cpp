@@ -59,7 +59,7 @@ void UnitSpriteManager::loadAll()
 }
 
 
-bool UnitSpriteManager::loadUnit(const QString& unitID)
+bool UnitSpriteManager::loadUnit(QString unitID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
 

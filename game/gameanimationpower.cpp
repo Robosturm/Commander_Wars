@@ -22,6 +22,8 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
+
     oxygine::ResAnim* pAnimMask = GameManager::getInstance()->getResAnim("power_background");
     if (powerMode == GameEnums::PowerMode_Superpower ||
         powerMode == GameEnums::PowerMode_Tagpower)

@@ -35,7 +35,7 @@ public:
         Fog,
         Arrow
     };
-    static spTerrain createTerrain(const QString& terrainID, qint32 x, qint32 y, const QString&  currentTerrainID);
+    static spTerrain createTerrain(QString terrainID, qint32 x, qint32 y, QString  currentTerrainID);
 
     virtual ~Terrain();
 
@@ -145,7 +145,7 @@ public slots:
     /**
      * @brief createBaseTerrain creates the base terrain for this terrain if it's a nullptr
      */
-    void createBaseTerrain(const QString&  currentTerrainID);
+    void createBaseTerrain(QString  currentTerrainID);
     /**
      * @brief loadBaseTerrain loads a base terrain with the given id
      * @param terrainID
@@ -272,7 +272,7 @@ protected:
      */
     void removeDownstream();
 private:
-    explicit Terrain(const QString& terrainID, qint32 x, qint32 y);
+    explicit Terrain(QString terrainID, qint32 x, qint32 y);
     /**
      * @brief terrainName terrain name shown in the game
      */

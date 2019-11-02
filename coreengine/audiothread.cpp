@@ -83,7 +83,7 @@ qint32 AudioThread::getVolume()
     return m_Player->volume();
 }
 
-void AudioThread::addMusic(const QString& File, qint64 startPointMs, qint64 endPointMs)
+void AudioThread::addMusic(QString File, qint64 startPointMs, qint64 endPointMs)
 {
     emit SignalAddMusic(File, startPointMs, endPointMs);
 }
@@ -108,7 +108,7 @@ void AudioThread::stopSound(QString file, QString folder)
     emit SignalStopSound(file, folder);
 }
 
-void AudioThread::loadFolder(const QString& folder)
+void AudioThread::loadFolder(QString folder)
 {
     emit SignalLoadFolder(folder);
 }

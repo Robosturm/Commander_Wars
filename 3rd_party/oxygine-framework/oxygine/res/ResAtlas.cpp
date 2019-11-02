@@ -14,7 +14,7 @@ namespace oxygine
         _hook = hook;
     }
 
-    void load_texture_internal(const QString& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
+    void load_texture_internal(QString file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
     {
         ImageData im;
         spImage mt = new Image;
@@ -34,7 +34,7 @@ namespace oxygine
         load_context->createTexture(opt);
     }
 
-    void load_texture(const QString& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
+    void load_texture(QString file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
     {
         if (_hook)
         {
@@ -46,13 +46,13 @@ namespace oxygine
     }
 
 
-    void ResAtlas::init_resAnim(ResAnim* rs, const QString& file, QDomElement node)
+    void ResAtlas::init_resAnim(ResAnim* rs, QString file, QDomElement node)
     {
         rs->setName(Resource::extractID(node, file, ""));
         setNode(rs, node);
     }
 
-    void ResAtlas::addAtlas(ImageData::TextureFormat tf, const QString& base, const QString& alpha, int w, int h)
+    void ResAtlas::addAtlas(ImageData::TextureFormat tf, QString base, QString alpha, int w, int h)
     {
         atlas atl;
         atl.base = IVideoDriver::instance->createTexture();

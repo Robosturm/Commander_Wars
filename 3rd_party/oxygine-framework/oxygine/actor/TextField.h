@@ -24,7 +24,7 @@ namespace oxygine
         /**Returns text bounds*/
         const Rect&                 getTextRect(float localScale = 1.0f) const;
         /**Returns current text*/
-        const QString&              getText() const { return _text; }
+        QString              getText() const { return _text; }
         const ResFont*              getFont() const;
 
         int                         getFontSize() const;
@@ -69,14 +69,14 @@ namespace oxygine
 
         void setStyle(const TextStyle& st);
         /**Changes text utf-8 string*/
-        void setText(const QString& str);
+        void setText(QString str);
         /**Changes text.
         Supports pseudo html style tags:  <br/> - break line,  <div color='FFFFFF'/>colored text </div>, <div c='FFFFFF'/>colored text</div>,
         in pair with oxygine-freetype you may use 'opt': <div opt=123>custom option</div>, <div c='ffffff' opt=123>custom option with color</div>
         example:
         This is <div c='ff0000'/> colored text <div/>supports  <div c='00ff00AA'/>nested tags</div><br/> with broken line.
         */
-        void setHtmlText(const QString& str);
+        void setHtmlText(QString str);
 
         bool isOn(const Vector2& localPosition, float localScale = 1.0f) override;
 

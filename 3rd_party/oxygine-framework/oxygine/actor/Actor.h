@@ -61,18 +61,18 @@ namespace oxygine
 
 
         /**search child by name recursively, could return self*/
-        Actor*              getDescendant(const QString& name, error_policy ep = ep_show_error);
+        Actor*              getDescendant(QString name, error_policy ep = ep_show_error);
         /**search child by name recursively and cast it to other class*/
         template<class T>
-        T*                  getDescendantT(const QString& name, error_policy ep = ep_show_error) { return safeCast<T*>(getDescendant(name, ep)); }
+        T*                  getDescendantT(QString name, error_policy ep = ep_show_error) { return safeCast<T*>(getDescendant(name, ep)); }
         /**search child by name*/
-        spActor             getChild(const QString& name, error_policy ep = ep_show_error) const;
+        spActor             getChild(QString name, error_policy ep = ep_show_error) const;
         /**search child by name and cast it to other class*/
         template<class T>
-        T*                  getChildT(const QString& name, error_policy ep = ep_show_error) const { return safeCast<T*>(getChild(name, ep).get()); }
+        T*                  getChildT(QString name, error_policy ep = ep_show_error) const { return safeCast<T*>(getChild(name, ep).get()); }
 
         /**search tween by name*/
-        spTween             getTween(const QString& name, error_policy ep = ep_show_error);
+        spTween             getTween(QString name, error_policy ep = ep_show_error);
         /**returns first tween in actor*/
         spTween             getFirstTween() const {return _tweens._first;}
         /**returns last tween in actor*/
@@ -245,7 +245,7 @@ namespace oxygine
         int addTouchUpListener(const EventCallback& cb) { return addEventListener(TouchEvent::TOUCH_UP, cb); }
 
         void removeTween(spTween);
-        void removeTweensByName(const QString& name);
+        void removeTweensByName(QString name);
         /**remove all tweens and call Tween::complete to them if callComplete == true*/
         void removeTweens(bool callComplete = false);
 
@@ -322,7 +322,7 @@ namespace oxygine
         const Vector2& _getSize() const { return _size; }
         void _setSize(const Vector2&);
         virtual void sizeChanged(const Vector2& size);
-        Actor*  _getDescendant(const QString& name);
+        Actor*  _getDescendant(QString name);
         spTween _addTween(spTween tween, bool rel);
 
         bool prepareRender(RenderState& rs, const RenderState& parentRS);

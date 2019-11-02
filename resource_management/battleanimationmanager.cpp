@@ -60,7 +60,7 @@ void BattleAnimationManager::loadAll()
 }
 
 
-bool BattleAnimationManager::loadBattleAnimations(const QString& battleAnimationsID)
+bool BattleAnimationManager::loadBattleAnimations(QString battleAnimationsID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
 

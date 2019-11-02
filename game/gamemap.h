@@ -429,7 +429,7 @@ public slots:
      * @param y position
      * @return true if this terrain can be placed
      */
-    bool canBePlaced(const QString& terrainID, qint32 x, qint32 y);
+    bool canBePlaced(QString terrainID, qint32 x, qint32 y);
     /**
      * @brief updateTerrain updates the given fields around. So all terrains are placeable.
      * @param x
@@ -442,7 +442,7 @@ public slots:
      * @param x
      * @param y
      */
-    void replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool updateSprites = false);
+    void replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain = false, bool updateSprites = false);
     /**
      * @brief getPlayerCount
      * @return number of players on the map

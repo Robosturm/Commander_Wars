@@ -16,7 +16,7 @@ namespace oxygine
             TextBuilder();
             virtual ~TextBuilder();
 
-            text::Node* parse(const QString& str);
+            text::Node* parse(QString str);
 
         private:
             text::Node*  create(QDomNode& reader);

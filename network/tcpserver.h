@@ -37,7 +37,7 @@ signals:
     void sigPauseListening();
     void sigContinueListening();
 public slots:
-    virtual void connectTCP(const QString& adress, quint16 port) override;
+    virtual void connectTCP(QString adress, quint16 port) override;
     virtual void disconnectTCP() override;
     void disconnectSocket();
     void onConnect();

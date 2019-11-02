@@ -71,12 +71,12 @@ namespace oxygine
         free();
     }
 
-    ResAnim* Resources::getResAnim(const QString& id, error_policy ep) const
+    ResAnim* Resources::getResAnim(QString id, error_policy ep) const
     {
         return getT<ResAnim>(id, ep, _defaultMissingRS);
     }
 
-    ResFont* Resources::getResFont(const QString& id, error_policy ep) const
+    ResFont* Resources::getResFont(QString id, error_policy ep) const
     {
         return getT<ResFont>(id, ep);
     }
@@ -129,7 +129,7 @@ namespace oxygine
         return _docs.empty();
     }
 
-    void Resources::updateName(const QString& filename)
+    void Resources::updateName(QString filename)
     {
         QFile file(filename);
         setName(file.fileName());
@@ -304,7 +304,7 @@ namespace oxygine
         return _resourcesMap;
     }
 
-    Resource* Resources::get(const QString& id_, error_policy ep, Resource* defIfNotFound) const
+    Resource* Resources::get(QString id_, error_policy ep, Resource* defIfNotFound) const
     {
         QString id = id_.toLower();
 

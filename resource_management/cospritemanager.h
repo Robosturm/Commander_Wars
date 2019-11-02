@@ -25,7 +25,7 @@ public:
      * @param unitID the co that should be loaded.
      * @return true if all is fine
      */
-    bool loadCO(const QString& coID);
+    bool loadCO(QString coID);
     /**
      * @brief getCOID
      * @param position the position in the loaded co list
@@ -85,7 +85,7 @@ public:
      * @param ep
      * @return
      */
-    virtual oxygine::ResAnim* getResAnim(const QString& id, oxygine::error_policy ep = oxygine::ep_show_error) const override;
+    virtual oxygine::ResAnim* getResAnim(QString id, oxygine::error_policy ep = oxygine::ep_show_error) const override;
     /**
      * @brief loadResAnim
      * @param coid

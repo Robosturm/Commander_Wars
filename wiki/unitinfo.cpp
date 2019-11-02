@@ -22,6 +22,11 @@
 UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     : QObject()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
+    Interpreter::setCppOwnerShip(this);
+
+
     this->setWidth(width);
 
     oxygine::TextStyle style = FontManager::getMainFont();

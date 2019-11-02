@@ -4,10 +4,13 @@
 #include "QString"
 #include "QStringList"
 
+#include <QObject>
+
 class Unit;
 
-class WeaponManager
+class WeaponManager : public QObject
 {
+    Q_OBJECT
 public:
     /**
      * @brief getInstance this object
@@ -22,7 +25,7 @@ public:
      * @brief loadWeapon
      * @param weaponID
      */
-    bool loadWeapon(const QString& weaponID);
+    bool loadWeapon(QString weaponID);
     /**
      * @brief reset deletes all data
      */
@@ -33,14 +36,14 @@ public:
      * @param pDefender
      * @return
      */
-    float getBaseDamage(const QString& weaponID, Unit* pDefender);
+    float getBaseDamage(QString weaponID, Unit* pDefender);
     /**
      * @brief getEnviromentDamage
      * @param weaponID
      * @param terrainID
      * @return
      */
-    float getEnviromentDamage(const QString& weaponID, QString terrainID);
+    float getEnviromentDamage(QString weaponID, QString terrainID);
     /**
      * @brief getWeaponCount
      * @return

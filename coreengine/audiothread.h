@@ -40,12 +40,12 @@ public slots:
      * @param startPointMs when this file is played the music will start at this position in ms. Values smaller 0 mean start at 0ms
      * @param endPointMs when this file is played the music will end at this position in ms and the next file will be played. Values smaller 0 mean play till end.
      */
-    void addMusic(const QString& File, qint64 startPointMs = -1, qint64 endPointMs = -1);
+    void addMusic(QString File, qint64 startPointMs = -1, qint64 endPointMs = -1);
     /**
      * @brief loadFolder loads all mp3 to the playlist
      * @param folder  the folder to be loaded
      */
-    void loadFolder(const QString& folder);
+    void loadFolder(QString folder);
     /**
      * @brief setVolume changes the volume between 0 and 100
      * @param value

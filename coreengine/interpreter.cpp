@@ -7,7 +7,7 @@
 #include <QTextStream>
 #include <QThread>
 
-Interpreter::Interpreter(const QString& script)
+Interpreter::Interpreter(QString script)
     : QQmlEngine()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -37,7 +37,7 @@ void Interpreter::init()
     installTranslatorFunctions();
 }
 
-void Interpreter::openScript(const QString& script)
+void Interpreter::openScript(QString script)
 {
         QFile scriptFile(script);
         if (!scriptFile.open(QIODevice::ReadOnly))
@@ -80,7 +80,7 @@ Interpreter::~Interpreter()
 }
 
 
-QJSValue Interpreter::doFunction(const QString& func, QJSValueList& args)
+QJSValue Interpreter::doFunction(QString func, QJSValueList& args)
 {
     QJSValue ret;
     QJSValue funcPointer = globalObject().property(func);
@@ -103,7 +103,7 @@ QJSValue Interpreter::doFunction(const QString& func, QJSValueList& args)
     return ret;
 }
 
-QJSValue Interpreter::doFunction(const QString& obj, const QString& func, const QJSValueList& args)
+QJSValue Interpreter::doFunction(QString obj, QString func, const QJSValueList& args)
 {
     QJSValue ret;
     QJSValue objPointer = globalObject().property(obj);
@@ -135,7 +135,7 @@ QJSValue Interpreter::doFunction(const QString& obj, const QString& func, const 
     return ret;
 }
 
-QJSValue Interpreter::doString(const QString& task)
+QJSValue Interpreter::doString(QString task)
 {
     QJSValue value = evaluate(task, "GameCode");
     if (value.isError())
@@ -145,22 +145,22 @@ QJSValue Interpreter::doString(const QString& task)
     return value;
 }
 
-void Interpreter::pushInt(const QString& name, qint32 value)
+void Interpreter::pushInt(QString name, qint32 value)
 {
     globalObject().setProperty(name, value);
 }
 
-void Interpreter::pushDouble(const QString& name, double value)
+void Interpreter::pushDouble(QString name, double value)
 {
     globalObject().setProperty(name, value);
 }
 
-void Interpreter::pushString(const QString& name, const QString& value)
+void Interpreter::pushString(QString name, QString value)
 {
     globalObject().setProperty(name, value);
 }
 
-void Interpreter::pushObject(const QString& name, QObject* object)
+void Interpreter::pushObject(QString name, QObject* object)
 {
     QJSValue newQObj = newQObject(object);
     globalObject().setProperty(name, newQObj);
@@ -184,7 +184,7 @@ void Interpreter::cleanMemory()
     collectGarbage();
 }
 
-qint32 Interpreter::getGlobalInt(const QString& var)
+qint32 Interpreter::getGlobalInt(QString var)
 {
     qint32 ret = 0;
     QJSValue value = globalObject().property(var);
@@ -200,7 +200,7 @@ qint32 Interpreter::getGlobalInt(const QString& var)
     return ret;
 }
 
-bool Interpreter::getGlobalBool(const QString& var)
+bool Interpreter::getGlobalBool(QString var)
 {
     bool ret = 0;
     QJSValue value = globalObject().property(var);
@@ -216,7 +216,7 @@ bool Interpreter::getGlobalBool(const QString& var)
     return ret;
 }
 
-double Interpreter::getGlobalDouble(const QString& var)
+double Interpreter::getGlobalDouble(QString var)
 {
     double ret = 0;
     QJSValue value = globalObject().property(var);
@@ -232,7 +232,7 @@ double Interpreter::getGlobalDouble(const QString& var)
     return ret;
 }
 
-QString Interpreter::getGlobalString(const QString& var)
+QString Interpreter::getGlobalString(QString var)
 {
     QString ret = "";
     QJSValue value = globalObject().property(var);
@@ -248,18 +248,18 @@ QString Interpreter::getGlobalString(const QString& var)
     return ret;
 }
 
-QJSValue Interpreter::getGlobal(const QString& var)
+QJSValue Interpreter::getGlobal(QString var)
 {
     QJSValue value = globalObject().property(var);
     return value;
 }
 
-void Interpreter::setGlobal(const QString& var, QJSValue obj)
+void Interpreter::setGlobal(QString var, QJSValue obj)
 {
     globalObject().setProperty(var, obj);
 }
 
-void Interpreter::deleteObject(const QString& name)
+void Interpreter::deleteObject(QString name)
 {
     QString order = "delete " + name + ";";
     doString(order);

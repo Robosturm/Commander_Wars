@@ -388,14 +388,6 @@ void Mainapp::keyReleaseEvent(QKeyEvent *event)
 {
     if (Console::getInstance()->getVisible())
     {
-        emit sigConsoleText(oxygine::KeyEvent(event));
-    }
-    else
-    {
-        emit sigText(oxygine::KeyEvent(event));
-    }
-    if (Console::getInstance()->getVisible())
-    {
         emit sigConsoleKeyUp(oxygine::KeyEvent(event));
     }
     else

@@ -23,7 +23,7 @@ namespace oxygine
         ResAtlas();
         ~ResAtlas();
 
-        void addAtlas(ImageData::TextureFormat tf, const QString& base, const QString& alpha, int w, int h);
+        void addAtlas(ImageData::TextureFormat tf, QString base, QString alpha, int w, int h);
 
         const atlas& getAtlas(int i) const {return _atlasses[i];}
         int          getNum() const { return (int)_atlasses.size(); }
@@ -36,7 +36,7 @@ namespace oxygine
 
         //void loadAtlas(CreateResourceContext& context);
         ResAnim* createEmpty(const XmlWalker& walker, CreateResourceContext& context);
-        static void init_resAnim(ResAnim* rs, const QString& file, QDomElement node);
+        static void init_resAnim(ResAnim* rs, QString file, QDomElement node);
 
     protected:
         //settings from xml
@@ -51,7 +51,7 @@ namespace oxygine
         atlasses _atlasses;
     };
 
-    typedef void(*load_texture_hook)(const QString& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
+    typedef void(*load_texture_hook)(QString file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
     void set_load_texture_hook(load_texture_hook);
-    void load_texture_internal(const QString& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
+    void load_texture_internal(QString file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
 }

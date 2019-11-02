@@ -18,7 +18,7 @@
 
 #include "game/co.h"
 
-spTerrain Terrain::createTerrain(const QString& terrainID, qint32 x, qint32 y, const QString&  currentTerrainID)
+spTerrain Terrain::createTerrain(QString terrainID, qint32 x, qint32 y, QString  currentTerrainID)
 {
     spTerrain pTerrain = new Terrain(terrainID, x, y);
     if (terrainID != "")
@@ -28,7 +28,7 @@ spTerrain Terrain::createTerrain(const QString& terrainID, qint32 x, qint32 y, c
     return pTerrain;
 }
 
-Terrain::Terrain(const QString& terrainID, qint32 x, qint32 y)
+Terrain::Terrain(QString terrainID, qint32 x, qint32 y)
     : terrainID(terrainID),
       x(x),
       y(y),
@@ -130,7 +130,7 @@ spBuilding Terrain::getSpBuilding()
     return m_Building;
 }
 
-void Terrain::createBaseTerrain(const QString&  currentTerrainID)
+void Terrain::createBaseTerrain(QString  currentTerrainID)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QJSValueList args;

@@ -35,7 +35,7 @@ namespace oxygine
         _loadCounter = _useLoadCounter ? _loadCounter - 1 : 0;
     }
 
-    QString Resource::extractID(const QDomElement& node, const QString& file, const QString& def)
+    QString Resource::extractID(const QDomElement& node, QString file, QString def)
     {
         QString id = node.attribute("id");
         if (id.isEmpty())
@@ -50,7 +50,7 @@ namespace oxygine
         return id.toLower();
     }
 
-    QString Resource::extractID(const QString& file)
+    QString Resource::extractID(QString file)
     {
         QFileInfo info(file);
         return info.baseName().toLower();

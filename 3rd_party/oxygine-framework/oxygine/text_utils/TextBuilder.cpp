@@ -71,7 +71,7 @@ namespace oxygine
             }
         }
 
-        text::Node* TextBuilder::parse(const QString& st)
+        text::Node* TextBuilder::parse(QString st)
         {
             QString str;
             if (st.startsWith("<"))

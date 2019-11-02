@@ -133,8 +133,6 @@ TimeSpinBox::TimeSpinBox(qint32 width)
     toggle.start();
 
     connect(pApp, &Mainapp::sigKeyDown, this, &TimeSpinBox::KeyInput, Qt::QueuedConnection);
-    connect(pApp, &Mainapp::sigText, this, &TimeSpinBox::TextInput, Qt::QueuedConnection);
-
     setCurrentValue(0);
 }
 
@@ -251,21 +249,6 @@ void TimeSpinBox::setSpinSpeed(qint32 SpinSpeed)
     m_SpinSpeed = SpinSpeed;
 }
 
-void TimeSpinBox::TextInput(oxygine::KeyEvent event)
-{
-    if (m_focused)
-    {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
-        // for the start we don't check for upper or lower key input
-        QString msg = event.getText();
-        m_Text.insert(curmsgpos, msg);
-        checkInput();
-        curmsgpos = m_Text.size();
-        pApp->continueThread();
-    }
-}
-
 void TimeSpinBox::KeyInput(oxygine::KeyEvent event)
 {
     // for debugging
@@ -363,7 +346,11 @@ void TimeSpinBox::KeyInput(oxygine::KeyEvent event)
                 }
                 default:
                 {
-                    // do nothing
+                    // for the start we don't check for upper or lower key input
+                    QString msg = event.getText();
+                    m_Text.insert(curmsgpos, msg);
+                    checkInput();
+                    curmsgpos = m_Text.size();
                 }
             }
         }

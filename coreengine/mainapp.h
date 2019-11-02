@@ -166,11 +166,9 @@ protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event) override;
 signals:
-    void sigText(oxygine::KeyEvent event);
     void sigKeyDown(oxygine::KeyEvent event);
     void sigKeyUp(oxygine::KeyEvent event);
 
-    void sigConsoleText(oxygine::KeyEvent event);
     void sigConsoleKeyDown(oxygine::KeyEvent event);
     void sigConsoleKeyUp(oxygine::KeyEvent event);
     /**

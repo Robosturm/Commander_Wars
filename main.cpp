@@ -1,7 +1,7 @@
 #include <QObject>
 #include <QProcess>
 #include <qdir.h>
-#include "qguiapplication.h"
+#include <QtGui/QGuiApplication>
 
 #ifdef GAMEDEBUG
 #include <QQmlApplicationEngine>

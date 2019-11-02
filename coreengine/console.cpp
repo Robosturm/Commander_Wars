@@ -90,7 +90,6 @@ void Console::init()
     Mainapp* pMainapp = Mainapp::getInstance();
 
     connect(pMainapp, &Mainapp::sigConsoleKeyDown, m_pConsole, &Console::KeyInput, Qt::QueuedConnection);
-    connect(pMainapp, &Mainapp::sigConsoleText, m_pConsole, &Console::TextInput, Qt::QueuedConnection);
     //Setup Lua
     QString consoleName = "console";
     pMainapp->getInterpreter()->pushObject(consoleName, m_pConsole);
@@ -115,7 +114,7 @@ void Console::updateMaskImages(QString folder, QString filter, qint32 min)
     SpriteCreator::updateMaskImages(folder, filter, min);
 }
 
-void Console::dotask(const QString& message)
+void Console::dotask(QString message)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
@@ -133,7 +132,7 @@ void Console::dotask(const QString& message)
     pApp->continueThread();
 }
 
-void Console::print(const QString& message, qint8 LogLevel)
+void Console::print(QString message, qint8 LogLevel)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
@@ -141,7 +140,7 @@ void Console::print(const QString& message, qint8 LogLevel)
     pApp->continueThread();
 }
 
-void Console::print(const QString& message, eLogLevels MsgLogLevel)
+void Console::print(QString message, eLogLevels MsgLogLevel)
 {
     QMutexLocker locker(&datalocker);
 
@@ -1276,22 +1275,12 @@ void Console::createfunnymessage(qint32 message){
     print(printmessage, Console::eINFO);
 }
 
-void Console::TextInput(oxygine::KeyEvent event)
-{
-    if (show)
-    {
-        // for the start we don't check for upper or lower key input
-        QString msg = event.getText();
-        curmsg.insert(curmsgpos,msg);
-        curmsgpos += msg.size();
-    }
-}
-
 void Console::KeyInput(oxygine::KeyEvent event)
 {
     // for debugging
     Qt::Key cur = event.getKey();
     Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     if (cur == pApp->getSettings()->getKeyConsole())
     {
         Console::toggleView();
@@ -1422,9 +1411,13 @@ void Console::KeyInput(oxygine::KeyEvent event)
                 }
                 default:
                 {
-                    // do nothing
+                    // for the start we don't check for upper or lower key input
+                    QString msg = event.getText();
+                    curmsg.insert(curmsgpos,msg);
+                    curmsgpos += msg.size();
                 }
             }
         }
     }
+    pApp->continueThread();
 }

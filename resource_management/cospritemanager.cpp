@@ -143,7 +143,7 @@ qint32 COSpriteManager::getCOIndex(QString id)
     return -1;
 }
 
-bool COSpriteManager::loadCO(const QString& coID)
+bool COSpriteManager::loadCO(QString coID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
 
@@ -242,7 +242,7 @@ void COSpriteManager::loadResAnim(QString coid, QString file, QImage& colorTable
     }
 }
 
-oxygine::ResAnim* COSpriteManager::getResAnim(const QString& id, oxygine::error_policy ep) const
+oxygine::ResAnim* COSpriteManager::getResAnim(QString id, oxygine::error_policy ep) const
 {
     for (qint32 i = 0; i < m_Ressources.size(); i++)
     {

@@ -74,7 +74,7 @@ void BuildingSpriteManager::loadAll()
 }
 
 
-bool BuildingSpriteManager::loadBuilding(const QString& buildingID)
+bool BuildingSpriteManager::loadBuilding(QString buildingID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
 
@@ -127,7 +127,7 @@ QString BuildingSpriteManager::getBuildingName(qint32 position)
     return "";
 }
 
-bool BuildingSpriteManager::existsBuilding(const QString& buildingID)
+bool BuildingSpriteManager::existsBuilding(QString buildingID)
 {
     for (qint32 i = 0; i < m_loadedBuildings.size(); i++)
     {

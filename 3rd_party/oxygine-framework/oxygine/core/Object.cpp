@@ -19,17 +19,17 @@ namespace oxygine
     int ObjectBase::_assertCtorID = -1;
     int ObjectBase::_assertDtorID = -1;
 
-    const QString& ObjectBase::getName() const
+    QString ObjectBase::getName() const
     {
         return __name;
     }
 
-    bool ObjectBase::isName(const QString& name) const
+    bool ObjectBase::isName(QString name) const
     {
         return name == __name;
     }
 
-    void ObjectBase::setName(const QString& name)
+    void ObjectBase::setName(QString name)
     {
         __name = name;
     }

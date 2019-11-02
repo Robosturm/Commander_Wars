@@ -566,7 +566,7 @@ void GameMap::zoom(float zoom)
     moveMap(0, 0);
 }
 
-void GameMap::replaceTerrain(const QString& terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool updateSprites)
+void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerrainAsBaseTerrain, bool updateSprites)
 {
     if (onMap(x, y))
     {
@@ -623,7 +623,7 @@ void GameMap::updateTerrain(qint32 x, qint32 y)
     }
 }
 
-bool GameMap::canBePlaced(const QString& terrainID, qint32 x, qint32 y)
+bool GameMap::canBePlaced(QString terrainID, qint32 x, qint32 y)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function = "canBePlaced";

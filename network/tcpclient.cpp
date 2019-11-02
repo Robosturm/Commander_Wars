@@ -22,7 +22,7 @@ TCPClient::~TCPClient()
     Console::print(tr("Client is closed"), Console::eDEBUG);
 }
 
-void TCPClient::connectTCP(const QString& adress, quint16 port)
+void TCPClient::connectTCP(QString adress, quint16 port)
 {
     // Launch Socket
     pSocket = std::shared_ptr<QTcpSocket>(new QTcpSocket(this));

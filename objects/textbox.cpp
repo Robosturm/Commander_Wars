@@ -69,7 +69,6 @@ Textbox::Textbox(qint32 width)
 
     Mainapp* pMainapp = Mainapp::getInstance();
     connect(pMainapp, &Mainapp::sigKeyDown, this, &Textbox::KeyInput, Qt::QueuedConnection);
-    connect(pMainapp, &Mainapp::sigText, this, &Textbox::TextInput, Qt::QueuedConnection);
 }
 
 void Textbox::setCurrentText(QString text)
@@ -127,20 +126,6 @@ void Textbox::update(const oxygine::UpdateState& us)
         m_Textfield->setHtmlText(m_Text);
     }
     oxygine::Actor::update(us);
-}
-
-void Textbox::TextInput(oxygine::KeyEvent event)
-{
-    if (m_focused)
-    {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->suspendThread();
-        // for the start we don't check for upper or lower key input
-        QString msg = event.getText();
-        m_Text.insert(curmsgpos, msg);
-        curmsgpos += msg.size();
-        pApp->continueThread();
-    }
 }
 
 void Textbox::KeyInput(oxygine::KeyEvent event)
@@ -240,7 +225,10 @@ void Textbox::KeyInput(oxygine::KeyEvent event)
                 }
                 default:
                 {
-                    // do nothing
+                    // for the start we don't check for upper or lower key input
+                    QString msg = event.getText();
+                    m_Text.insert(curmsgpos, msg);
+                    curmsgpos += msg.size();
                 }
             }
         }

@@ -23,7 +23,7 @@ public:
      * @param battleAnimationsID the battleAnimations that should be loaded.
      * @return true if all is fine
      */
-    bool loadBattleAnimations(const QString& battleAnimationsID);
+    bool loadBattleAnimations(QString battleAnimationsID);
     /**
      * @brief getUnitID
      * @param position the position in the loaded unit list

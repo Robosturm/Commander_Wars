@@ -37,18 +37,18 @@ public:
     };
 
     static Console* getInstance();
-    static void dotask(const QString& message);
+    static void dotask(QString message);
     static void draw();
     void init();
 // use slots here since they're part of QMetaObject thus they get published to JSEngine.
 public slots:
-    static void print(const QString& message, qint8 LogLevel);
+    static void print(QString message, qint8 LogLevel);
     /**
      * @brief Print
      * @param message
      * @param debugMessage false for Errors or Setup Messages. True for Ingame Actions used for Debugging. But unneeded in release build
      */
-    static void print(const QString& message, eLogLevels LogLevel);
+    static void print(QString message, eLogLevels LogLevel);
     static void createfunnymessage(qint32 message = -1);
     // Lua Libs Functions
     void setVolume(qint32 volume);
@@ -78,11 +78,6 @@ public slots:
      * @param event
      */
     void KeyInput(oxygine::KeyEvent event);
-    /**
-     * @brief TextInput event called when we recieved a text from the keyboard
-     * @param event
-     */
-    void TextInput(oxygine::KeyEvent event);
     /**
      * @brief toggleView
      */

@@ -10,14 +10,14 @@ namespace oxygine
     class XmlWalker
     {
     public:
-        XmlWalker(const QString& path,
+        XmlWalker(QString path,
                   float scaleFactor,
                   bool load, bool alpha,
                   QDomElement xml);
 
         bool empty() const {return _root.isNull();}
 
-        const QString&  getCurrentFolder() const { return _path; }
+        QString  getCurrentFolder() const { return _path; }
         QString         getPath(QString attrName) const;
         QDomElement        getNode() const {return _root;}
         float               getScaleFactor() const {return _scaleFactor;}

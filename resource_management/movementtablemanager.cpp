@@ -67,7 +67,7 @@ void MovementTableManager::loadAll()
 }
 
 
-bool MovementTableManager::loadTable(const QString& movementtableID)
+bool MovementTableManager::loadTable(QString movementtableID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
 

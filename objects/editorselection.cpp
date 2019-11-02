@@ -645,7 +645,7 @@ void EditorSelection::ClickedPlacementSelection(qint32 x, qint32 y)
     pApp->continueThread();
 }
 
-void EditorSelection::selectTerrain(const QString& terrainID)
+void EditorSelection::selectTerrain(QString terrainID)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
@@ -668,7 +668,7 @@ void EditorSelection::selectTerrain(const QString& terrainID)
      pApp->continueThread();
 }
 
-void EditorSelection::selectBuilding(const QString& buildingID)
+void EditorSelection::selectBuilding(QString buildingID)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
@@ -692,7 +692,7 @@ void EditorSelection::selectBuilding(const QString& buildingID)
      pApp->continueThread();
 }
 
-void EditorSelection::selectUnit(const QString& unitID)
+void EditorSelection::selectUnit(QString unitID)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();

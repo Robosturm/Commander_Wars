@@ -10,7 +10,8 @@ WeaponManager* WeaponManager::m_pInstance = nullptr;
 
 WeaponManager::WeaponManager()
 {
-
+    Mainapp* pApp = Mainapp::getInstance();
+    this->moveToThread(pApp->getWorkerthread());
 }
 
 WeaponManager* WeaponManager::getInstance()
@@ -59,7 +60,7 @@ void WeaponManager::reset()
     m_loadedWeapons.clear();
 }
 
-float WeaponManager::getBaseDamage(const QString& weaponID, Unit* pDefender)
+float WeaponManager::getBaseDamage(QString weaponID, Unit* pDefender)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getBaseDamage";
@@ -77,7 +78,7 @@ float WeaponManager::getBaseDamage(const QString& weaponID, Unit* pDefender)
     }
 }
 
-float WeaponManager::getEnviromentDamage(const QString& weaponID, QString terrainID)
+float WeaponManager::getEnviromentDamage(QString weaponID, QString terrainID)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getEnviromentDamage";
@@ -123,7 +124,7 @@ void WeaponManager::loadAll()
     }
 }
 
-bool WeaponManager::loadWeapon(const QString& weaponID)
+bool WeaponManager::loadWeapon(QString weaponID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
 

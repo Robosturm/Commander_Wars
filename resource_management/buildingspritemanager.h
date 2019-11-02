@@ -20,7 +20,7 @@ public slots:
      * @param buildingID the building that should be loaded.
      * @return true if all is fine
      */
-    bool loadBuilding(const QString& buildingID);
+    bool loadBuilding(QString buildingID);
     /**
      * @brief getBuildingID
      * @param position the position in the loaded building list
@@ -60,7 +60,7 @@ public slots:
      * @param buildingID
      * @return
      */
-    bool existsBuilding(const QString& buildingID);
+    bool existsBuilding(QString buildingID);
 private:
     QStringList m_loadedBuildings;
     explicit BuildingSpriteManager();

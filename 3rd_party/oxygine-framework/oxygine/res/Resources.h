@@ -4,7 +4,7 @@
 #include "../closure/closure.h"
 #include "../core/Object.h"
 #include "QDomDocument"
-#include <qvector.h>
+#include <vector>
 #include <qstring.h>
 #include <qmap.h>
 
@@ -22,7 +22,7 @@ namespace oxygine
         ResourcesLoadOptions& useLoadCounter(bool v = true) { _useLoadCounter = v; return *this; }
 
         //use not standard folder with prebuilt resources (atlasses, fonts, etc)
-        ResourcesLoadOptions& prebuiltFolder(const QString& folder) {_prebuilFolder = folder; return *this; }
+        ResourcesLoadOptions& prebuiltFolder(QString folder) {_prebuilFolder = folder; return *this; }
 
         //use load counter internally
         ResourcesLoadOptions& shortenIDS(bool v = true) { _shortenIDS = v; return *this; }
@@ -37,7 +37,7 @@ namespace oxygine
     class Resources: public Resource
     {
     public:
-        typedef QVector<spResource> resources;
+        typedef std::vector<spResource> resources;
         typedef QMap<QString, spResource> resourcesMap;
 
         typedef Resource* (*createResourceCallback)(CreateResourceContext& context);
@@ -78,20 +78,20 @@ namespace oxygine
         /** get resource by id, no case sensitive
         @param resource id
         */
-        Resource* get(const QString& id, error_policy ep = ep_show_error, Resource* defIfNotFound = 0) const;
+        Resource* get(QString id, error_policy ep = ep_show_error, Resource* defIfNotFound = 0) const;
 
         /** get resource by id
         @param resource id
         */
-        virtual ResAnim* getResAnim(const QString& id, error_policy ep = ep_show_error) const;
+        virtual ResAnim* getResAnim(QString id, error_policy ep = ep_show_error) const;
 
         /** get animation resource by id
         @param resource id
         */
-        ResFont* getResFont(const QString& id, error_policy ep = ep_show_error) const;
+        ResFont* getResFont(QString id, error_policy ep = ep_show_error) const;
 
         template<class T>
-        T* getT(const QString& id, error_policy ep = ep_show_error, T* defIfNotFound = 0) const { return safeCast<T*>(get(id, ep, defIfNotFound)); }
+        T* getT(QString id, error_policy ep = ep_show_error, T* defIfNotFound = 0) const { return safeCast<T*>(get(id, ep, defIfNotFound)); }
 
         /**debug function. prints all loaded resources*/
         void print() const;
@@ -103,7 +103,7 @@ namespace oxygine
         resourcesMap& _getResourcesMap();
 
     protected:
-        void updateName(const QString& filename);
+        void updateName(QString filename);
         void _load(LoadResourcesContext* context) override;
         void _unload() override;
 
@@ -135,10 +135,10 @@ namespace oxygine
         resourcesMap _resourcesMap;
 
 
-        typedef QVector< registeredResource > registeredResources;
+        typedef std::vector< registeredResource > registeredResources;
         static registeredResources _registeredResources;
 
         QString _name;
-        QVector<QDomDocument*> _docs;
+        std::vector<QDomDocument*> _docs;
     };
 }

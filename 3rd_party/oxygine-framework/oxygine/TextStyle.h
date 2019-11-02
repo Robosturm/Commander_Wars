@@ -48,7 +48,7 @@ namespace oxygine
         bool multiline;
         int fontSize;
         bool breakLongWords;//works with multiline flag. breakLongWords = false doesn't allow to break too long words
-        QColor color;
+        QColor color{Qt::white};
         float baselineScale;//baseline distance multiplier
         size_t options;//additional flags could be used for generating custom glyphs
 

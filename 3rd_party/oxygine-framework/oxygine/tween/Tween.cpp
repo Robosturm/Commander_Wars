@@ -54,7 +54,11 @@ namespace oxygine
 		_globalEase = opt._globalEase;
 		_cbDone = opt._callback;
 
-        if (_duration <= timeMS(0))
+        if (_duration == timeMS(0))
+        {
+            _duration = timeMS(1);
+        }
+        else if (_duration < timeMS(0))
 		{
 			Q_ASSERT(!"Tweener duration should be more than ZERO");
             _duration = timeMS(1);

@@ -25,7 +25,9 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
       m_permanent(permanent)
 {
     Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
+    this->moveToThread(pApp->getWorkerthread());    
+    Interpreter::setCppOwnerShip(this);
+
     oxygine::ResAnim* pAnim = GameManager::getInstance()->getResAnim("nextday");
 
     oxygine::spSprite pSprite = new oxygine::Sprite();

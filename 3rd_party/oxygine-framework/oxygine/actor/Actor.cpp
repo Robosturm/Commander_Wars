@@ -725,7 +725,7 @@ namespace oxygine
         return false;
     }
 
-    Actor* Actor::getDescendant(const QString& name, error_policy ep)
+    Actor* Actor::getDescendant(QString name, error_policy ep)
     {
         if (isName(name))
             return this;
@@ -738,7 +738,7 @@ namespace oxygine
         return actor;
     }
 
-    Actor* Actor::_getDescendant(const QString& name)
+    Actor* Actor::_getDescendant(QString name)
     {
         Actor* child = _children._first.get();
         while (child)
@@ -762,7 +762,7 @@ namespace oxygine
         return nullptr;
     }
 
-    spActor  Actor::getChild(const QString& name, error_policy ep) const
+    spActor  Actor::getChild(QString name, error_policy ep) const
     {
         spActor actor = _children._first;
         while (actor)
@@ -1130,7 +1130,7 @@ namespace oxygine
         return _addTween(tween, false);
     }
 
-    spTween Actor::getTween(const QString& name, error_policy ep)
+    spTween Actor::getTween(QString name, error_policy ep)
     {
         spTween tween = _tweens._first;
         while (tween)
@@ -1172,7 +1172,7 @@ namespace oxygine
         }
     }
 
-    void Actor::removeTweensByName(const QString& name)
+    void Actor::removeTweensByName(QString name)
     {
         spTween t = _tweens._first;
         while (t)
