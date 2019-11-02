@@ -113,31 +113,34 @@ namespace oxygine
 
         TextNode::TextNode(QString v)
         {
-            auto data = v.toUtf8();
-            for (qint32 i = 0; i < data.size(); i++)
+            for (qint32 i = 0; i < v.size(); i++)
             {
                 Symbol s;
-                s.code = data[i];
+                s.code = v[i].unicode();
                 _data.push_back(s);
             }
         }
 
         Symbol* TextNode::getSymbol(int& pos)
         {
-            if ((int)_data.size() > pos)
+            if (_data.size() > pos)
+            {
                 return &_data[pos];
+            }
             pos -= _data.size();
             return Node::getSymbol(pos);
         }
 
         void TextNode::draw(DrawContext& dc)
         {
-            size_t size = _data.size();
-            for (size_t i = 0; i < size; ++i)
+            qint32 size = _data.size();
+            for (qint32 i = 0; i < size; ++i)
             {
                 const Symbol& s = _data[i];
                 if (!s.mat)
+                {
                     continue;
+                }
 
                 s.mat->apply();
                 s.mat->render(dc.color, s.gl.src, s.destRect);

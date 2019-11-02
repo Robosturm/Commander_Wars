@@ -3,8 +3,8 @@
 #include "Aligner.h"
 #include "../core/Object.h"
 #include "../math/Vector2.h"
-#include <string>
-#include <vector>
+#include <qstring.h>
+#include <qvector.h>
 
 #include <QDomElement>
 
@@ -24,7 +24,7 @@ namespace oxygine
 
     namespace text
     {
-        typedef std::vector<Symbol> text_data;
+        typedef QVector<Symbol> text_data;
 
 
         class DrawContext
