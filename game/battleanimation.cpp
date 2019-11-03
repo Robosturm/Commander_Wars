@@ -230,7 +230,7 @@ BattleAnimation::BattleAnimation(Terrain* pAtkTerrain, Unit* pAtkUnit, float atk
     setSpritePosition(m_pDefenderAnimation, pDefUnit, pAtkUnit);
     addChild(m_pDefenderAnimation);
 
-    // battleTimer
+//    // battleTimer
     battleTimer.setSingleShot(false);
     connect(&battleTimer, &QTimer::timeout, this, &BattleAnimation::nextAnimatinStep, Qt::QueuedConnection);
     nextAnimatinStep();
@@ -341,8 +341,14 @@ void BattleAnimation::stop()
 
 bool BattleAnimation::onFinished()
 {
-    m_pAttackerAnimation->stopSound();
-    m_pDefenderAnimation->stopSound();
+    if (m_pAttackerAnimation.get() != nullptr)
+    {
+        m_pAttackerAnimation->stopSound();
+    }
+    if (m_pDefenderAnimation.get() != nullptr)
+    {
+        m_pDefenderAnimation->stopSound();
+    }
     return GameAnimation::onFinished();
 }
 
@@ -412,12 +418,15 @@ void BattleAnimation::nextAnimatinStep()
         }
         case AnimationProgress::Finished:
         {
-            onFinished();
             break;
         }
     }
     currentState = static_cast<AnimationProgress>(static_cast<qint32>(currentState) + 1);
     pApp->continueThread();
+    if (currentState >= AnimationProgress::Finished)
+    {
+        onFinished();
+    }
 }
 
 Unit *BattleAnimation::getDefUnit() const

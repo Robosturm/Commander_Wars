@@ -391,7 +391,9 @@ namespace oxygine
     void STDRenderer::checkDrawBatch()
     {
         if (_verticesData.size() / sizeof(_vdecl->size) >= maxVertices)
+        {
             flush();
+        }
     }
 
     Matrix makeViewMatrix(int w, int h, bool flipU)
