@@ -564,132 +564,50 @@ void VictoryMenue::exitMenue()
     pApp->continueThread();
 }
 
-oxygine::spPolygon VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor color)
+oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor color)
 {
-    oxygine::spPolygon poly = new oxygine::Polygon();
-    poly->setResAnim(ObjectManager::getInstance()->getResAnim("line"));
-    oxygine::vertexPCT2* vertices = new oxygine::vertexPCT2[8];
-    // convert color to agbr value who smoked to much here?
-    quint32 colorValue = static_cast <quint32>(color.alpha()) * 256u * 256u * 256u + static_cast <quint32>(color.blue()) * 256u * 256u +
-                         static_cast <quint32>(color.green()) * 256u + static_cast <quint32>(color.red());
-
+    oxygine::spActor pRet = new oxygine::Actor();
     float m = static_cast<float>(end.y()) / static_cast<float>(end.x());
     qint32 width = lineWidth;
     if (end.y() != 0)
     {
         width = qSqrt(lineWidth * lineWidth * m * m / (m * m + 1));
     }
+    oxygine::spColorRectSprite rect = new oxygine::ColorRectSprite();
+    rect->setColor(color);
+    rect->setPosition(0, 0);
+    rect->setSize(lineWidth, lineWidth);
+    pRet->addChild(rect);
+    double angle = 0;
 
-    if (end.y() < 0)
+    rect = new oxygine::ColorRectSprite();
+    rect->setColor(color);
+
+
+    qint32 x = end.x() - width;
+    if (x > 0)
     {
-        // first strip
-        vertices[0].color = colorValue;
-        vertices[0].x = -1;
-        vertices[0].y = qFloor(lineWidth);
-        vertices[0].z = 0;
-        vertices[0].u = 0;
-        vertices[0].v = 1;
-        vertices[1].color = colorValue;
-        vertices[1].x = -1;
-        vertices[1].y = 0;
-        vertices[1].z = 0;
-        vertices[1].u = 0;
-        vertices[1].v = 0;
-        vertices[2].color = colorValue;
-        vertices[2].x = qFloor(width) + 1;
-        vertices[2].y = qFloor(lineWidth);
-        vertices[2].z = 0;
-        vertices[2].u = 1;
-        vertices[2].v = 1;
-        vertices[3].color = colorValue;
-        vertices[3].x = qFloor(end.x() - width) + 1;
-        vertices[3].y = qFloor(end.y());
-        vertices[3].z = 0;
-        vertices[3].u = 1;
-        vertices[3].v = 0;
-        // second strip
-        vertices[4].color = colorValue;
-        vertices[4].x = qFloor(width) - 1;
-        vertices[4].y = qFloor(lineWidth);
-        vertices[4].z = 0;
-        vertices[4].u = 0;
-        vertices[4].v = 1;
-        vertices[5].color = colorValue;
-        vertices[5].x = qFloor(end.x() - width) - 1;
-        vertices[5].y = qFloor(end.y());
-        vertices[5].z = 0;
-        vertices[5].u = 0;
-        vertices[5].v = 0;
-        vertices[6].color = colorValue;
-        vertices[6].x = qFloor(end.x()) + 1;
-        vertices[6].y = qFloor(end.y() + lineWidth);
-        vertices[6].z = 0;
-        vertices[6].u = 1;
-        vertices[6].v = 1;
-        vertices[7].color = colorValue;
-        vertices[7].x = qFloor(end.x()) + 1;
-        vertices[7].y = qFloor(end.y());
-        vertices[7].z = 0;
-        vertices[7].u = 1;
-        vertices[7].v = 0;
-        poly->setVertices(vertices, sizeof(oxygine::vertexPCT2) * 8, oxygine::vertexPCT2::FORMAT, true);
+        angle = qAtan(end.y() / x);
+    }
+    qint32 y = end.y();
+    if (angle >= 0.0)
+    {
+        rect->setPosition(width, 0);
     }
     else
     {
-        // first strip
-        vertices[0].color = colorValue;
-        vertices[0].x = -1;
-        vertices[0].y = 0;
-        vertices[0].z = 0;
-        vertices[0].u = 0;
-        vertices[0].v = 0;
-        vertices[1].color = colorValue;
-        vertices[1].x = qFloor(width) + 1;
-        vertices[1].y = 0;
-        vertices[1].z = 0;
-        vertices[1].u = 1;
-        vertices[1].v = 0;
-        vertices[2].color = colorValue;
-        vertices[2].x = -1;
-        vertices[2].y = qFloor(lineWidth);
-        vertices[2].z = 0;
-        vertices[2].u = 0;
-        vertices[2].v = 1;
-        vertices[3].color = colorValue;
-        vertices[3].x = qFloor(end.x() - width) + 1;
-        vertices[3].y = qFloor(end.y() + lineWidth);
-        vertices[3].z = 0;
-        vertices[3].u = 1;
-        vertices[3].v = 1;
-        // second strip
-        vertices[4].color = colorValue;
-        vertices[4].x = qFloor(end.x()) + 1;
-        vertices[4].y = qFloor(end.y() + lineWidth);
-        vertices[4].z = 0;
-        vertices[4].u = 1;
-        vertices[4].v = 1;
-        vertices[5].color = colorValue;
-        vertices[5].x = qFloor(end.x() - width) - 1;
-        vertices[5].y = qFloor(end.y() + lineWidth);
-        vertices[5].z = 0;
-        vertices[5].u = 0;
-        vertices[5].v = 1;
-        vertices[6].color = colorValue;
-        vertices[6].x = qFloor(end.x()) + 1;
-        vertices[6].y = qFloor(end.y());
-        vertices[6].z = 0;
-        vertices[6].u = 1;
-        vertices[6].v = 0;
-        vertices[7].color = colorValue;
-        vertices[7].x = qFloor(width) - 1;
-        vertices[7].y = 0;
-        vertices[7].z = 0;
-        vertices[7].u = 0;
-        vertices[7].v = 0;
-        poly->setVertices(vertices, sizeof(oxygine::vertexPCT2) * 8, oxygine::vertexPCT2::FORMAT, true);
+        rect->setPosition(0, 0);
     }
-
-    return poly;
+    qint32 lineLength = qSqrt(x * x + y * y);
+    rect->setSize(lineLength, lineWidth);
+    rect->setRotation(angle);
+    pRet->addChild(rect);
+    rect = new oxygine::ColorRectSprite();
+    rect->setColor(color);
+    rect->setPosition(end.x() - lineWidth, end.y());
+    rect->setSize(lineWidth, lineWidth);
+    pRet->addChild(rect);
+    return pRet;
 }
 
 void VictoryMenue::updateGraph()
@@ -881,7 +799,7 @@ void VictoryMenue::drawGraphStep(qint32 progress)
                 qint32 lineWidth = 5;
                 startPoint.setY(m_pGraphBackground->getHeight() - startPoint.y() * m_pGraphBackground->getHeight());
                 endPoint.setY(m_pGraphBackground->getHeight() - endPoint.y() * m_pGraphBackground->getHeight());
-                oxygine::spPolygon line = createLine(endPoint - startPoint, lineWidth, pMap->getPlayer(i)->getColor());
+                oxygine::spActor line = createLine(endPoint - startPoint, lineWidth, pMap->getPlayer(i)->getColor());
                 line->setPosition(startPoint.x(), startPoint.y() - lineWidth / 2);
                 m_PlayerGraphs[static_cast<qint32>(m_CurrentGraphMode)][i]->addChild(line);
             }

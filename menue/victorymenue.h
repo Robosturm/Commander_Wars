@@ -36,7 +36,7 @@ public:
      * @param color
      * @return
      */
-    oxygine::spPolygon createLine(QPointF end, qint32 width, QColor color);
+    oxygine::spActor createLine(QPointF end, qint32 width, QColor color);
 signals:
     void sigExitMenue();
     void sigShowGraph(VictoryMenue::GraphModes mode);
