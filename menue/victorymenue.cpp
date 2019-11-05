@@ -589,6 +589,7 @@ oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor 
     {
         angle = qAtan(end.y() / x);
     }
+
     qint32 y = end.y();
     if (angle >= 0.0)
     {
@@ -599,6 +600,10 @@ oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor 
         rect->setPosition(0, 0);
     }
     qint32 lineLength = qSqrt(x * x + y * y);
+    if (angle >= 1.1)
+    {
+        lineLength += lineWidth / 2;
+    }
     rect->setSize(lineLength, lineWidth);
     rect->setRotation(angle);
     pRet->addChild(rect);
