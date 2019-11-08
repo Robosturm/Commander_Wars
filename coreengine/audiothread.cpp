@@ -208,6 +208,7 @@ void AudioThread::stopSecondPlayer()
             }
         }
     }
+    doubleBufferTimer->stop();
 }
 
 void AudioThread::SlotSetVolume(qint32 value)

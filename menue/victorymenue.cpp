@@ -600,7 +600,7 @@ oxygine::spActor VictoryMenue::createLine(QPointF end, qint32 lineWidth, QColor 
         rect->setPosition(0, 0);
     }
     qint32 lineLength = qSqrt(x * x + y * y);
-    if (angle >= 1.1)
+    if (angle >= 1.0)
     {
         lineLength += lineWidth / 2;
     }
