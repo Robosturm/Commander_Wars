@@ -176,8 +176,17 @@ bool CoreAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
                 data[1] = 0;
             }
             data[2] = pCO->getPowerFilled() - pCO->getPowerStars();
-            float result = m_COPowerTree.getDecision(data);
-            if (result == 1.0f)
+
+
+
+            GameEnums::PowerMode result = pCO->getAiUsePower(data[2], pUnits->size(), repairUnits, indirectUnits,
+                    directUnits, pEnemyUnits->size(), turnMode);
+            if (result == GameEnums::PowerMode_Unknown)
+            {
+                result = static_cast<GameEnums::PowerMode>(m_COPowerTree.getDecision(data));
+            }
+
+            if (result == GameEnums::PowerMode_Power)
             {
                 GameAction* pAction = new GameAction(ACTION_ACTIVATE_POWER_CO_0);
                 if (i == 1)
@@ -190,7 +199,7 @@ bool CoreAI::useCOPower(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
                     return true;
                 }
             }
-            else if (result == 2.0f)
+            else if (result == GameEnums::PowerMode_Superpower)
             {
                 GameAction* pAction = new GameAction(ACTION_ACTIVATE_SUPERPOWER_CO_0);
                 if (i == 1)

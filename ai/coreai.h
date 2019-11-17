@@ -29,12 +29,6 @@ class CoreAI : public BaseGameInputIF
 {
     Q_OBJECT
 public:
-    enum class TurnTime
-    {
-        startOfTurn,
-        onGoingTurn,
-        endOfTurn,
-    };
     /**
      * @brief The AISteps enum
      */
@@ -387,7 +381,7 @@ protected:
     QVector<spIslandMap> m_IslandMaps;
     float buildingValue{1.0f};
     float ownUnitValue{1.0f};
-    TurnTime turnMode{TurnTime::startOfTurn};
+    GameEnums::AiTurnMode turnMode{GameEnums::AiTurnMode_StartOfDay};
     AISteps aiStep;
 
 private:

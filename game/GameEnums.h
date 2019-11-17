@@ -16,6 +16,7 @@ public:
 
     enum PowerMode
     {
+        PowerMode_Unknown = -1,
         PowerMode_Off,
         PowerMode_Power,
         PowerMode_Superpower,
@@ -155,6 +156,14 @@ public:
     };
     Q_ENUM(UnitType)
     static QString getUnitTypeText(UnitType type);
+
+    enum AiTurnMode
+    {
+        AiTurnMode_StartOfDay,
+        AiTurnMode_DuringDay,
+        AiTurnMode_EndOfDay,
+    };
+    Q_ENUM(AiTurnMode)
 
     static void registerEnums();
 private:

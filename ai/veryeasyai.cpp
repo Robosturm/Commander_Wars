@@ -58,7 +58,7 @@ void VeryEasyAI::process()
     if (useCOPower(pUnits, pEnemyUnits)){}
     else
     {
-        turnMode = TurnTime::onGoingTurn;
+        turnMode = GameEnums::AiTurnMode_DuringDay;
         if (useBuilding(pBuildings)){}
         else if (performActionSteps(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
         else
@@ -68,10 +68,10 @@ void VeryEasyAI::process()
             else
             {
                 aiStep = AISteps::moveUnits;
-                turnMode = TurnTime::endOfTurn;
+                turnMode = GameEnums::AiTurnMode_EndOfDay;
                 if (useCOPower(pUnits, pEnemyUnits))
                 {
-                    turnMode = TurnTime::onGoingTurn;
+                    turnMode = GameEnums::AiTurnMode_DuringDay;
                 }
                 else
                 {
@@ -112,7 +112,7 @@ bool VeryEasyAI::performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemy
 
 void VeryEasyAI::finishTurn()
 {
-    turnMode = TurnTime::startOfTurn;
+    turnMode = GameEnums::AiTurnMode_StartOfDay;
     rebuildIslandMaps = true;
     CoreAI::finishTurn();
 }

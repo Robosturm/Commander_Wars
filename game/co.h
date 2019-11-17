@@ -432,6 +432,20 @@ public slots:
      * @return
      */
     bool getIsCO0();
+    /**
+     * @brief getAiUsePower
+     * @param powerSurplus
+     * @param unitCount
+     * @param repairUnits
+     * @param indirectUnits
+     * @param directUnits
+     * @param enemyUnits
+     * @param turnMode
+     * @return
+     */
+    GameEnums::PowerMode getAiUsePower(double powerSurplus, qint32 unitCount, qint32 repairUnits,
+                                       qint32 indirectUnits, qint32 directUnits, qint32 enemyUnits,
+                                       GameEnums::AiTurnMode turnMode);
 private:
     Player* m_Owner;
     QString coID;

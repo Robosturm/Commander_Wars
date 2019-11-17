@@ -4,7 +4,7 @@ var Constructor = function()
     {
         co.setPowerStars(3);
         co.setSuperpowerStars(3);
-    };
+    };    
 
     this.activatePower = function(co)
     {

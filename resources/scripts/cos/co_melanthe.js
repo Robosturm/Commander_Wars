@@ -6,6 +6,11 @@ var Constructor = function()
         co.setSuperpowerStars(4);
     };
 
+    this.getAiUsePower = function(co, powerSurplus, unitCount, repairUnits, indirectUnits, directUnits, enemyUnits, turnMode)
+    {
+        return CO.getAiUsePowerAtUnitCount(co, powerSurplus, turnMode, repairUnits);
+    };
+
     this.loadCOMusic = function(co)
     {
         // put the co music in here.

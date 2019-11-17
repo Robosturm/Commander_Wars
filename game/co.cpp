@@ -1002,6 +1002,33 @@ bool CO::getPerfectVision()
     }
 }
 
+GameEnums::PowerMode CO::getAiUsePower(double powerSurplus, qint32 unitCount, qint32 repairUnits,
+                                   qint32 indirectUnits, qint32 directUnits, qint32 enemyUnits,
+                                   GameEnums::AiTurnMode turnMode)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getPerfectVision";
+    QJSValueList args1;
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj3;
+    args1 << powerSurplus;
+    args1 << unitCount;
+    args1 << repairUnits;
+    args1 << indirectUnits;
+    args1 << directUnits;
+    args1 << enemyUnits;
+    args1 << turnMode;
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isNumber())
+    {
+        return static_cast<GameEnums::PowerMode>(erg.toInt());
+    }
+    else
+    {
+        return GameEnums::PowerMode_Unknown;
+    }
+}
+
 void CO::loadCOMusic()
 {
     Mainapp* pApp = Mainapp::getInstance();

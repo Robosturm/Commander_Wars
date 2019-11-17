@@ -56,7 +56,7 @@ void NormalAi::process()
         }
         else
         {
-            turnMode = TurnTime::onGoingTurn;
+            turnMode = GameEnums::AiTurnMode_DuringDay;
             if (performActionSteps(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
             else
             {
@@ -67,15 +67,15 @@ void NormalAi::process()
                     aiStep = AISteps::moveUnits;
                     clearEnemyData();
                     m_IslandMaps.clear();
-                    turnMode = TurnTime::endOfTurn;
+                    turnMode = GameEnums::AiTurnMode_EndOfDay;
                     if (useCOPower(pUnits, pEnemyUnits))
                     {
                         clearEnemyData();
-                        turnMode = TurnTime::onGoingTurn;
+                        turnMode = GameEnums::AiTurnMode_DuringDay;
                     }
                     else
                     {
-                        turnMode = TurnTime::startOfTurn;
+                        turnMode = GameEnums::AiTurnMode_StartOfDay;
                         finishTurn();
                     }
                 }

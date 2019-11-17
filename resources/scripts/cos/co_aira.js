@@ -6,6 +6,11 @@ var Constructor = function()
         co.setSuperpowerStars(4);
     };
 
+    this.getAiUsePower = function(co, powerSurplus, unitCount, repairUnits, indirectUnits, directUnits, enemyUnits, turnMode)
+    {
+        return CO.getAiUsePowerAlways(co, powerSurplus, turnMode);
+    };
+
     this.activatePower = function(co)
     {
 

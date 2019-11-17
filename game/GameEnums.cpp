@@ -11,6 +11,7 @@ void GameEnums::registerEnums()
     value.setProperty("Alliance_Friend", Alliance_Friend);
     value.setProperty("Alliance_Enemy", Alliance_Enemy);
 
+    value.setProperty("PowerMode_Unknown", PowerMode_Unknown);
     value.setProperty("PowerMode_Off", PowerMode_Off);
     value.setProperty("PowerMode_Power", PowerMode_Power);
     value.setProperty("PowerMode_Superpower", PowerMode_Superpower);
@@ -89,6 +90,10 @@ void GameEnums::registerEnums()
     value.setProperty("UnitType_Ground", UnitType_Ground);
     value.setProperty("UnitType_Air", UnitType_Air);
     value.setProperty("UnitType_Naval", UnitType_Naval);
+
+    value.setProperty("AiTurnMode_StartOfDay", AiTurnMode_StartOfDay);
+    value.setProperty("AiTurnMode_DuringDay", AiTurnMode_DuringDay);
+    value.setProperty("AiTurnMode_EndOfDay", AiTurnMode_EndOfDay);
 
     pInterpreter->setGlobal("GameEnums", value);
 }

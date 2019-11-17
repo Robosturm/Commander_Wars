@@ -7,6 +7,11 @@ var Constructor = function()
         return ["+alt"];
     };
 
+    this.getAiUsePower = function(co, powerSurplus, unitCount, repairUnits, indirectUnits, directUnits, enemyUnits, turnMode)
+    {
+        return CO.getAiUsePowerAtUnitCount(co, powerSurplus, turnMode, directUnits);
+    };
+
     this.init = function(co)
     {
         co.setPowerStars(3);
