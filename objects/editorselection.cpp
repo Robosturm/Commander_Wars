@@ -151,19 +151,18 @@ EditorSelection::EditorSelection()
         building->setScaleY(1.0f / static_cast<float>(heigth));
         m_Buildings.append(building);
         m_Buildings[i]->updateBuildingSprites(false);
-        oxygine::spSprite pSprite = new oxygine::Sprite();
-        pAnim = pTerrainManager->getResAnim("plains+0");
-        pSprite->setResAnim(pAnim);
+        spTerrain pSprite = Terrain::createTerrain(building->getBaseTerrain()[0], -1, -1, "");
+        pSprite->loadSprites();
         pSprite->setPriority(-100);
         pSprite->setScaleX(1 / building->getScaleX() * GameMap::Imagesize / pAnim->getWidth());
         pSprite->setScaleY(1 / building->getScaleY() * GameMap::Imagesize / pAnim->getHeight());
         if (width > 1)
         {
-            pSprite->setX(-GameMap::Imagesize * (width - 1));
+            pSprite->oxygine::Actor::setX(-GameMap::Imagesize * (width - 1));
         }
         if (heigth > 1)
         {
-            pSprite->setY(-GameMap::Imagesize * (heigth - 1));
+            pSprite->oxygine::Actor::setY(-GameMap::Imagesize * (heigth - 1));
         }
         m_Buildings[i]->addChild(pSprite);
         m_Buildings[i]->setVisible(false);

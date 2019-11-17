@@ -22,6 +22,11 @@
 		<image file="mine+mask.png" cols = "2" />
 		<image file="mine+neutral.png" />
 		
+		<!-- oilrig -->
+		<image file="oilrig.png" cols = "2" />
+		<image file="oilrig+mask.png" cols = "2" />
+		<image file="oilrig+neutral.png" />
+		
 		<!-- pipestation -->
 		<image file="pipestation.png" cols = "2" />
 		<image file="pipestation+mask.png" cols = "2" />

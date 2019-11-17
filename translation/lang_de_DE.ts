@@ -14407,6 +14407,19 @@ Units have 30% increased firepower during sandstorm.</source>
     </message>
 </context>
 <context>
+    <name>oilrig</name>
+    <message>
+        <location filename="../resources/scripts/building/oilrig.js" line="36"/>
+        <source>Oil Rig</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/building/oilrig.js" line="41"/>
+        <source>Oil rig. Once captured produces a lot of funds, but can&apos;t repair units.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>orangestar</name>
     <message>
         <location filename="../resources/scripts/wiki/orangestar.js" line="8"/>

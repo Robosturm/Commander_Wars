@@ -211,12 +211,16 @@ void Terrain::loadSprites()
         args1 << obj1;
         pApp->getInterpreter()->doFunction(terrainID, function1, args1);
     }
-    // next call starting by 0 again
-    QString function2 = "loadOverlaySprite";
-    QJSValueList args2;
-    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
-    args2 << obj2;
-    pApp->getInterpreter()->doFunction(terrainID, function2, args2);
+    // ony load this for valid positions
+    if (x >= 0 && y >= 0)
+    {
+        // next call starting by 0 again
+        QString function2 = "loadOverlaySprite";
+        QJSValueList args2;
+        QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+        args2 << obj2;
+        pApp->getInterpreter()->doFunction(terrainID, function2, args2);
+    }
 }
 
 void Terrain::loadBaseTerrain(QString terrainID)
