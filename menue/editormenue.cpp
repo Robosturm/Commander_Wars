@@ -29,6 +29,8 @@
 
 #include "objects/dialograndommap.h"
 
+#include "objects/dialogmodifyterrain.h"
+
 #include "ingamescriptsupport/scripteditor.h"
 
 #include "ingamescriptsupport/campaigneditor.h"
@@ -82,6 +84,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addItem(tr("Place Selection"), "PLACESELECTION", 2);
     m_Topbar->addItem(tr("Delete Units") + " - " + SelectKey::getKeycodeText(Settings::getKey_cancel()), "DELETEUNITS", 2);
     m_Topbar->addItem(tr("Edit Units"), "EDITUNITS", 2);
+    m_Topbar->addItem(tr("Edit Terrain"), "EDITTERRAIN", 2);
     m_Topbar->addItem(tr("Edit Players"), "EDITPLAYERS", 2);
     m_Topbar->addItem(tr("Edit Rules"), "EDITRULES", 2);
     m_Topbar->addItem(tr("Optimize Players"), "OPTIMIZEPLAYERS", 2);
@@ -425,6 +428,10 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         m_EditorMode = EditorModes::EditUnits;
     }
+    else if (itemID == "EDITTERRAIN")
+    {
+        m_EditorMode = EditorModes::EditTerrain;
+    }
     else if (itemID == "OPTIMIZEPLAYERS")
     {
         optimizePlayers();
@@ -666,6 +673,11 @@ void EditorMenue::cursorMoved(qint32 x, qint32 y)
             m_Cursor->changeCursor("cursor+edit");
             break;
         }
+        case EditorModes::EditTerrain:
+        {
+            m_Cursor->changeCursor("cursor+edit");
+            break;
+        }
         case EditorModes::PlaceEditorSelection:
         {
             // resolve cursor move
@@ -766,6 +778,7 @@ void EditorMenue::onMapClickedRight(qint32 x, qint32 y)
     {
         case EditorModes::CopySelection:
         case EditorModes::EditUnits:
+        case EditorModes::EditTerrain:
         case EditorModes::RemoveUnits:
         {
             copyRectActor->detach();
@@ -897,6 +910,19 @@ void EditorMenue::onMapClickedLeft(qint32 x, qint32 y)
                 spDialogModifyUnit pDialog = new DialogModifyUnit(pUnit);
                 addChild(pDialog);
                 connect(pDialog.get(), &DialogModifyUnit::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+                setFocused(false);
+            }
+            break;
+        }
+        case EditorModes::EditTerrain:
+        {
+            Terrain* pTerrain  = GameMap::getInstance()->getTerrain(x, y);
+            if (pTerrain->getBuilding() == nullptr)
+            {
+                createTempFile();
+                spDialogModifyTerrain pDialog = new DialogModifyTerrain(pTerrain);
+                addChild(pDialog);
+                connect(pDialog.get(), &DialogModifyTerrain::sigFinished, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
                 setFocused(false);
             }
             break;

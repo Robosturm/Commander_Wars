@@ -175,6 +175,7 @@ set(${PROJECT_NAME}_SRCS
         objects/dialogconnecting.cpp
         objects/dialogmessagebox.cpp
         objects/dialograndommap.cpp
+        objects/dialogmodifyterrain.cpp
         objects/mapselectionview.cpp
         objects/timespinbox.cpp
         objects/ruleselection.cpp

@@ -20,6 +20,7 @@ public:
         PlaceEditorSelection,
         RemoveUnits,
         EditUnits,
+        EditTerrain,
         CopySelection,
     };
 

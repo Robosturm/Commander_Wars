@@ -957,6 +957,14 @@
     </message>
 </context>
 <context>
+    <name>DialogModifyTerrain</name>
+    <message>
+        <location filename="../objects/dialogmodifyterrain.cpp" line="26"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DialogModifyUnit</name>
     <message>
         <location filename="../objects/dialogmodifyunit.cpp" line="41"/>
@@ -1226,152 +1234,157 @@
 <context>
     <name>EditorMenue</name>
     <message>
-        <location filename="../menue/editormenue.cpp" line="63"/>
+        <location filename="../menue/editormenue.cpp" line="65"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="64"/>
+        <location filename="../menue/editormenue.cpp" line="66"/>
         <source>Save Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="65"/>
+        <location filename="../menue/editormenue.cpp" line="67"/>
         <source>Load Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="66"/>
+        <location filename="../menue/editormenue.cpp" line="68"/>
         <source>Edit Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="67"/>
+        <location filename="../menue/editormenue.cpp" line="69"/>
         <source>Edit Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="68"/>
+        <location filename="../menue/editormenue.cpp" line="70"/>
         <source>Undo Strg+Z</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="69"/>
+        <location filename="../menue/editormenue.cpp" line="71"/>
         <source>Redo Strg+Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="70"/>
+        <location filename="../menue/editormenue.cpp" line="72"/>
         <source>Exit Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="72"/>
+        <location filename="../menue/editormenue.cpp" line="74"/>
         <source>Map Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="73"/>
+        <location filename="../menue/editormenue.cpp" line="75"/>
         <source>New Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="74"/>
+        <location filename="../menue/editormenue.cpp" line="76"/>
         <source>Edit Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="75"/>
+        <location filename="../menue/editormenue.cpp" line="77"/>
         <source>Flip Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="76"/>
+        <location filename="../menue/editormenue.cpp" line="78"/>
         <source>Flip Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="77"/>
+        <location filename="../menue/editormenue.cpp" line="79"/>
         <source>Rotate Map X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="78"/>
+        <location filename="../menue/editormenue.cpp" line="80"/>
         <source>Rotate Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="79"/>
+        <location filename="../menue/editormenue.cpp" line="81"/>
         <source>Random Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="81"/>
+        <location filename="../menue/editormenue.cpp" line="83"/>
         <source>Editor Commands</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="82"/>
+        <location filename="../menue/editormenue.cpp" line="84"/>
         <source>Place Selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="83"/>
+        <location filename="../menue/editormenue.cpp" line="85"/>
         <source>Delete Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="84"/>
+        <location filename="../menue/editormenue.cpp" line="86"/>
         <source>Edit Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/editormenue.cpp" line="85"/>
-        <source>Edit Players</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="86"/>
-        <source>Edit Rules</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../menue/editormenue.cpp" line="87"/>
-        <source>Optimize Players</source>
+        <source>Edit Terrain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="88"/>
-        <source>Copy Strg+C</source>
+        <source>Edit Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="89"/>
-        <source>Paste Strg+V</source>
+        <source>Edit Rules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="90"/>
+        <source>Optimize Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="91"/>
-        <source>Import/Export</source>
+        <source>Copy Strg+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="92"/>
-        <source>Import CoW Txt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../menue/editormenue.cpp" line="93"/>
-        <source>Import AWDS Aws</source>
+        <source>Paste Strg+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="94"/>
-        <source>Import AWDC Aw4</source>
+        <source>Import/Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="95"/>
+        <source>Import CoW Txt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="96"/>
+        <source>Import AWDS Aws</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="97"/>
+        <source>Import AWDC Aw4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="98"/>
         <source>Import AW by Web</source>
         <translation type="unfinished"></translation>
     </message>
