@@ -6,6 +6,7 @@ var Constructor = function()
     };
     this.movementpointsTable = [["HARBOUR", 1],
                                 ["TEMPORARY_HARBOUR", 1],
+                                ["OILRIG", 1],
                                 ["SEA", 1],
                                 ["FOG", 1],
                                 ["ROUGH_SEA", 2],

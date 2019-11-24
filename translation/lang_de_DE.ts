@@ -959,8 +959,23 @@
 <context>
     <name>DialogModifyTerrain</name>
     <message>
-        <location filename="../objects/dialogmodifyterrain.cpp" line="26"/>
+        <location filename="../objects/dialogmodifyterrain.cpp" line="34"/>
         <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyterrain.cpp" line="91"/>
+        <source>Terrain Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyterrain.cpp" line="99"/>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogmodifyterrain.cpp" line="107"/>
+        <source>Select Image</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

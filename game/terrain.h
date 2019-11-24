@@ -82,13 +82,35 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 3;
+        return 4;
     }
     /**
      * @brief update
      * @param us
      */
     virtual void update(const oxygine::UpdateState& us) override;
+
+    /**
+     * @brief getFixedSprite only avaible for ingame editor
+     * @return
+     */
+    bool getFixedSprite() const;
+    /**
+     * @brief setFixedSprite only avaible for ingame editor
+     * @return
+     */
+    void setFixedSprite(bool FixedSprite);
+    /**
+     * @brief getTerrainSpriteName only avaible for ingame editor
+     * @return
+     */
+    QString getTerrainSpriteName() const;
+    /**
+     * @brief setTerrainSpriteName only avaible for ingame editor
+     * @return
+     */
+    void setTerrainSpriteName(const QString &terrainSpriteName);
+
 public slots:
     /**
      * @brief getDescription
@@ -262,6 +284,11 @@ public slots:
      * @return
      */
     QString getTerrainAnimationBackground();
+    /**
+     * @brief getTerrainSprites
+     * @return
+     */
+    QStringList getTerrainSprites();
 protected:
     /**
      * @brief createBuildingDownStream

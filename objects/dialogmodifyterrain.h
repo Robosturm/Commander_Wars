@@ -7,6 +7,8 @@
 
 #include "objects/panel.h"
 
+#include "objects/textbox.h"
+
 class Terrain;
 
 class DialogModifyTerrain;
@@ -20,12 +22,18 @@ public:
 
 signals:
     void sigFinished();
+    void sigTerrainClicked(QString id);
+    void sigShowLoadDialog();
 public slots:
-
+    void terrainClicked(QString id);
+    void showLoadDialog();
+    void loadCustomSprite(QString id);
 private:
     Terrain* m_pTerrain{nullptr};
     spPanel m_pPanel;
+    spTextbox m_pTextbox;
     oxygine::spButton m_OkButton;
+
 };
 
 #endif // DIALOGMODIFYTERRAIN_H

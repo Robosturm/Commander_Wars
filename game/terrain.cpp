@@ -59,6 +59,26 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y)
     }
 }
 
+QString Terrain::getTerrainSpriteName() const
+{
+    return m_terrainSpriteName;
+}
+
+void Terrain::setTerrainSpriteName(const QString &terrainSpriteName)
+{
+    m_terrainSpriteName = terrainSpriteName;
+}
+
+bool Terrain::getFixedSprite() const
+{
+    return m_FixedSprite;
+}
+
+void Terrain::setFixedSprite(bool FixedSprite)
+{
+    m_FixedSprite = FixedSprite;
+}
+
 void Terrain::init()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -756,6 +776,14 @@ QString Terrain::getTerrainAnimationBackground()
     }
 }
 
+QStringList Terrain::getTerrainSprites()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getTerrainSprites";
+    QJSValue erg = pApp->getInterpreter()->doFunction(terrainID, function1);
+    return erg.toVariant().toStringList();
+}
+
 QString Terrain::getTerrainID() const
 {
     return terrainID;
@@ -859,6 +887,10 @@ qint32 Terrain::getBonusVision(Unit* pUnit)
 void Terrain::serializeObject(QDataStream& pStream)
 {
     pStream << getVersion();
+
+    pStream << m_terrainSpriteName;
+    pStream << m_FixedSprite;
+
     pStream << terrainID;
     if (m_pBaseTerrain.get() == nullptr)
     {
@@ -901,6 +933,11 @@ void Terrain::deserializeObject(QDataStream& pStream)
 {
     qint32 version = 0;
     pStream >> version;
+    if (version > 3)
+    {
+        pStream >> m_terrainSpriteName;
+        pStream >> m_FixedSprite;
+    }
     if (version > 2)
     {
         pStream >> terrainID;

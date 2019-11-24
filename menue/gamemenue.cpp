@@ -70,7 +70,7 @@ GameMenue::GameMenue(spNetworkInterface pNetworkInterface, bool saveGame)
             m_PlayerSockets = dynamic_cast<TCPServer*>(m_pNetworkInterface.get())->getConnectedSockets();
             connect(m_pNetworkInterface.get(), &NetworkInterface::sigConnected, this, &GameMenue::playerJoined, Qt::QueuedConnection);
         }
-        spDialogConnecting pDialogConnecting = new DialogConnecting(tr("Waiting for Players"));
+        spDialogConnecting pDialogConnecting = new DialogConnecting(tr("Waiting for Players"), 1000 * 60 * 5);
         addChild(pDialogConnecting);
         connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
         connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);

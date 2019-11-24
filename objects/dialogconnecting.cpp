@@ -6,7 +6,7 @@
 
 #include "resource_management/fontmanager.h"
 
-DialogConnecting::DialogConnecting(QString text)
+DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs)
     : QObject(),
       m_Message(text)
 {
@@ -48,7 +48,11 @@ DialogConnecting::DialogConnecting(QString text)
     m_Timer.setInterval(250);
     m_Timer.setSingleShot(false);
     m_Timer.start();
+    m_TimerConnectionTimeout.setInterval(timeoutMs);
+    m_TimerConnectionTimeout.setSingleShot(true);
+    m_TimerConnectionTimeout.start();
     connect(&m_Timer, &QTimer::timeout, this, &DialogConnecting::timeout, Qt::QueuedConnection);
+    connect(&m_TimerConnectionTimeout, &QTimer::timeout, this, &DialogConnecting::connectionTimeout, Qt::QueuedConnection);
 }
 
 void DialogConnecting::cancel()
@@ -59,6 +63,11 @@ void DialogConnecting::cancel()
 void DialogConnecting::connected()
 {
     this->getParent()->removeChild(this);
+}
+
+void DialogConnecting::connectionTimeout()
+{
+    emit sigCancel();
 }
 
 void DialogConnecting::timeout()
