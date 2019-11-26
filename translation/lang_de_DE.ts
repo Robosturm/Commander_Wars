@@ -1958,7 +1958,7 @@
     </message>
     <message>
         <location filename="../multiplayer/multiplayermenu.cpp" line="61"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="702"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="712"/>
         <source>Ready</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1983,18 +1983,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="319"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="329"/>
         <source>Host has a different game version or other mods loaded leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="469"/>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="487"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="479"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="497"/>
         <source>Unable to download map or game script from host a different version of the map or game script with the same name exist! Leaving the game again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../multiplayer/multiplayermenu.cpp" line="698"/>
+        <location filename="../multiplayer/multiplayermenu.cpp" line="708"/>
         <source>Not Ready</source>
         <translation type="unfinished"></translation>
     </message>

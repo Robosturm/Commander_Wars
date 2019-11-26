@@ -193,11 +193,11 @@ void Multiplayermenu::playerJoined(quint64 socketID)
             stream << Mainapp::getGameVersion();
             QStringList mods = Settings::getMods();
             stream << static_cast<qint32>(mods.size());
-            stream << saveGame;
             for (qint32 i = 0; i < mods.size(); i++)
             {
                 stream << mods[i];
             }
+            stream << saveGame;
             if (saveGame)
             {
                 m_pMapSelectionView->getCurrentMap()->serializeObject(stream);
@@ -262,11 +262,21 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 }
                 else
                 {
+                    // check mods in both directions
                     for (qint32 i = 0; i < myMods.size(); i++)
                     {
                         if (!mods.contains(myMods[i]))
                         {
                             sameMods = false;
+                            break;
+                        }
+                    }
+                    for (qint32 i = 0; i < mods.size(); i++)
+                    {
+                        if (!myMods.contains(mods[i]))
+                        {
+                            sameMods = false;
+                            break;
                         }
                     }
                 }
