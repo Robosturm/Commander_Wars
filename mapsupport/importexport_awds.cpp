@@ -918,7 +918,7 @@ void GameMap::importAWDSMap(QString file)
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
-                    // Blue Moon
+                        // Blue Moon
                     case 28:
                     {
                         spUnit pUnit = new Unit("INFANTRY", getPlayer(1), false);
@@ -1075,7 +1075,7 @@ void GameMap::importAWDSMap(QString file)
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
-                    // Green Earth
+                        // Green Earth
                     case 68:
                     {
                         spUnit pUnit = new Unit("INFANTRY", getPlayer(2), false);
@@ -1232,7 +1232,7 @@ void GameMap::importAWDSMap(QString file)
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
-                    // Yellow Comet
+                        // Yellow Comet
                     case 108:
                     {
                         spUnit pUnit = new Unit("INFANTRY", getPlayer(3), false);
@@ -1389,7 +1389,7 @@ void GameMap::importAWDSMap(QString file)
                         getTerrain(x, y)->setUnit(pUnit);
                         break;
                     }
-                    // Black Hole
+                        // Black Hole
                     case 148:
                     {
                         spUnit pUnit = new Unit("INFANTRY", getPlayer(4), false);
@@ -1613,1118 +1613,1450 @@ void GameMap::importAWDSMap(QString file)
         updateSprites();
     }
 }
-void GameMap::exportAWDSMap(QString)
+
+void GameMap::exportAWDSMap(QString file)
 {
-//    If Objektverwalter.Spielfeld.Spieler.Length <= 6 Then
-//                Using Writer As New IO.FileStream(File, IO.FileMode.OpenOrCreate, IO.FileAccess.Write, IO.FileShare.Write)
-//                    'Zuerst mal den Start weglesen brauchen wir nicht!
-//                    Writer.WriteByte(4 * 16 + 1)
-//                    Writer.WriteByte(5 * 16 + 7)
-//                    Writer.WriteByte(5 * 16 + 3)
-//                    Writer.WriteByte(4 * 16 + 13)
-//                    Writer.WriteByte(6 * 16 + 1)
-//                    Writer.WriteByte(7 * 16 + 0)
-//                    Writer.WriteByte(3 * 16 + 0)
-//                    Writer.WriteByte(3 * 16 + 0)
-//                    Writer.WriteByte(3 * 16 + 1)
-//                    Writer.WriteByte(0)
-//                    Writer.WriteByte(Objektverwalter.Spielfeld.Breite)
-//                    Writer.WriteByte(Objektverwalter.Spielfeld.Hoehe)
-//                    'Terrain Style
-//                    Writer.WriteByte(0)
-//                    For X = 0 To Objektverwalter.Spielfeld.Breite - 1
-//                        For Y = 0 To Objektverwalter.Spielfeld.Hoehe - 1
-//                            If Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).isGebaeude Then
-//                                Select Case Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude.GebaeudeID
-//                                    Case "HQ"
-//                                        Select Case Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude.Spieler
-//                                            Case 0
-//                                            Case 0
-//                                                Writer.WriteByte(94)
-//                                                Writer.WriteByte(1)
-//                                            Case 1
-//                                                Writer.WriteByte(44)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(54)
-//                                                Writer.WriteByte(1)
-//                                            Case 3
-//                                                Writer.WriteByte(64)
-//                                                Writer.WriteByte(1)
-//                                            Case 4
-//                                                Writer.WriteByte(74)
-//                                                Writer.WriteByte(1)
-//                                            Case 5
-//                                                Writer.WriteByte(84)
-//                                                Writer.WriteByte(1)
-//                                        End Select
-//                                    Case "STADT"
-//                                        Select Case Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude.Spieler
-//                                            Case 0
-//                                                Writer.WriteByte(95)
-//                                                Writer.WriteByte(1)
-//                                            Case 1
-//                                                Writer.WriteByte(45)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(55)
-//                                                Writer.WriteByte(1)
-//                                            Case 3
-//                                                Writer.WriteByte(65)
-//                                                Writer.WriteByte(1)
-//                                            Case 4
-//                                                Writer.WriteByte(75)
-//                                                Writer.WriteByte(1)
-//                                            Case 5
-//                                                Writer.WriteByte(85)
-//                                                Writer.WriteByte(1)
-//                                        End Select
-//                                    Case "BASIS"
-//                                        Select Case Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude.Spieler
-//                                            Case 0
-//                                                Writer.WriteByte(96)
-//                                                Writer.WriteByte(1)
-//                                            Case 1
-//                                                Writer.WriteByte(46)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(56)
-//                                                Writer.WriteByte(1)
-//                                            Case 3
-//                                                Writer.WriteByte(66)
-//                                                Writer.WriteByte(1)
-//                                            Case 4
-//                                                Writer.WriteByte(76)
-//                                                Writer.WriteByte(1)
-//                                            Case 5
-//                                                Writer.WriteByte(86)
-//                                                Writer.WriteByte(1)
-//                                        End Select
-//                                    Case "FLUGHAFEN"
-//                                        Select Case Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude.Spieler
-//                                            Case 0
-//                                                Writer.WriteByte(97)
-//                                                Writer.WriteByte(1)
-//                                            Case 1
-//                                                Writer.WriteByte(47)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(57)
-//                                                Writer.WriteByte(1)
-//                                            Case 3
-//                                                Writer.WriteByte(67)
-//                                                Writer.WriteByte(1)
-//                                            Case 4
-//                                                Writer.WriteByte(77)
-//                                                Writer.WriteByte(1)
-//                                            Case 5
-//                                                Writer.WriteByte(87)
-//                                                Writer.WriteByte(1)
-//                                        End Select
-//                                    Case "WERFT"
-//                                        Select Case Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude.Spieler
-//                                            Case 0
-//                                                Writer.WriteByte(98)
-//                                                Writer.WriteByte(1)
-//                                            Case 1
-//                                                Writer.WriteByte(48)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(58)
-//                                                Writer.WriteByte(1)
-//                                            Case 3
-//                                                Writer.WriteByte(68)
-//                                                Writer.WriteByte(1)
-//                                            Case 4
-//                                                Writer.WriteByte(78)
-//                                                Writer.WriteByte(1)
-//                                            Case 5
-//                                                Writer.WriteByte(88)
-//                                                Writer.WriteByte(1)
-//                                        End Select
-//                                    Case "TURM"
-//                                        Select Case Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude.Spieler
-//                                            Case 0
-//                                                Writer.WriteByte(99)
-//                                                Writer.WriteByte(1)
-//                                            Case 1
-//                                                Writer.WriteByte(49)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(59)
-//                                                Writer.WriteByte(1)
-//                                            Case 3
-//                                                Writer.WriteByte(69)
-//                                                Writer.WriteByte(1)
-//                                            Case 4
-//                                                Writer.WriteByte(79)
-//                                                Writer.WriteByte(1)
-//                                            Case 5
-//                                                Writer.WriteByte(89)
-//                                                Writer.WriteByte(1)
-//                                        End Select
-//                                    Case "LABOR"
-//                                        Select Case Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude.Spieler
-//                                            Case 0
-//                                                Writer.WriteByte(100)
-//                                                Writer.WriteByte(1)
-//                                            Case 1
-//                                                Writer.WriteByte(50)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(60)
-//                                                Writer.WriteByte(1)
-//                                            Case 3
-//                                                Writer.WriteByte(70)
-//                                                Writer.WriteByte(1)
-//                                            Case 4
-//                                                Writer.WriteByte(80)
-//                                                Writer.WriteByte(1)
-//                                            Case 5
-//                                                Writer.WriteByte(90)
-//                                                Writer.WriteByte(1)
-//                                        End Select
-//                                    Case "RAKETENSILO+RAKETE", "RAKETENSILO"
-//                                        Writer.WriteByte(94)
-//                                        Writer.WriteByte(1)
-//                                        'Spezialgebaeude
-//                                    Case "MINIGESCHUETZ+N"
-//                                        Writer.WriteByte(8 * 16 + 4)
-//                                        Writer.WriteByte(3)
-//                                    Case "MINIGESCHUETZ+W"
-//                                        Writer.WriteByte(8 * 16 + 5)
-//                                        Writer.WriteByte(3)
-//                                    Case "LASER"
-//                                        Writer.WriteByte(8 * 16 + 6)
-//                                        Writer.WriteByte(3)
-//                                    Case "MINIGESCHUETZ+O"
-//                                        Writer.WriteByte(9 * 16 + 8)
-//                                        Writer.WriteByte(3)
-//                                    Case "MINIGESCHUETZ+S"
-//                                        Writer.WriteByte(9 * 16 + 9)
-//                                        Writer.WriteByte(3)
-//                                    Case "KRISTALL"
-//                                        Writer.WriteByte(9 * 16 + 11)
-//                                        Writer.WriteByte(3)
-//                                    Case "SCHWARZE GESCHUETZ+N"
-//                                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
-//                                        Select Case G.Rechteck.X - X
-//                                            Case 1
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 1
-//                                                        Writer.WriteByte(10 * 16 + 15)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(12 * 16 + 3)
-//                                                        Writer.WriteByte(3)
-//                                                    Case -1
-//                                                        Writer.WriteByte(13 * 16 + 7)
-//                                                        Writer.WriteByte(3)
-//                                                End Select
-//                                            Case 0
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 1
-//                                                        Writer.WriteByte(11 * 16 + 0)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(12 * 16 + 4)
-//                                                        Writer.WriteByte(3)
-//                                                    Case -1
-//                                                        Writer.WriteByte(13 * 16 + 8)
-//                                                        Writer.WriteByte(3)
-//                                                End Select
-//                                            Case -1
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 1
-//                                                        Writer.WriteByte(11 * 16 + 1)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(12 * 16 + 5)
-//                                                        Writer.WriteByte(3)
-//                                                    Case -1
-//                                                        Writer.WriteByte(13 * 16 + 9)
-//                                                        Writer.WriteByte(3)
-//                                                End Select
-//                                        End Select
-//                                    Case "SCHWARZE GESCHUETZ+S"
-//                                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
-//                                        Select Case G.Rechteck.X - X
-//                                            Case 1
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 1
-//                                                        Writer.WriteByte(10 * 16 + 12)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(12 * 16 + 0)
-//                                                        Writer.WriteByte(3)
-//                                                    Case -1
-//                                                        Writer.WriteByte(13 * 16 + 4)
-//                                                        Writer.WriteByte(3)
-//                                                End Select
-//                                            Case 0
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 1
-//                                                        Writer.WriteByte(10 * 16 + 13)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(12 * 16 + 1)
-//                                                        Writer.WriteByte(3)
-//                                                    Case -1
-//                                                        Writer.WriteByte(13 * 16 + 5)
-//                                                        Writer.WriteByte(3)
-//                                                End Select
-//                                            Case -1
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 1
-//                                                        Writer.WriteByte(10 * 16 + 14)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(12 * 16 + 2)
-//                                                        Writer.WriteByte(3)
-//                                                    Case -1
-//                                                        Writer.WriteByte(13 * 16 + 6)
-//                                                        Writer.WriteByte(3)
-//                                                End Select
-//                                        End Select
-//                                    Case "SCHOCKLASER+S"
-//                                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
-//                                        Select Case G.Rechteck.X - X
-//                                            Case 1
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 1
-//                                                        Writer.WriteByte(14 * 16 + 8)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(15 * 16 + 12)
-//                                                        Writer.WriteByte(3)
-//                                                    Case -1
-//                                                        Writer.WriteByte(1 * 16 + 0)
-//                                                        Writer.WriteByte(4)
-//                                                End Select
-//                                            Case 0
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 1
-//                                                        Writer.WriteByte(14 * 16 + 9)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(15 * 16 + 13)
-//                                                        Writer.WriteByte(3)
-//                                                    Case -1
-//                                                        Writer.WriteByte(1 * 16 + 1)
-//                                                        Writer.WriteByte(4)
-//                                                End Select
-//                                            Case -1
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 1
-//                                                        Writer.WriteByte(14 * 16 + 10)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(15 * 16 + 14)
-//                                                        Writer.WriteByte(3)
-//                                                    Case -1
-//                                                        Writer.WriteByte(1 * 16 + 2)
-//                                                        Writer.WriteByte(4)
-//                                                End Select
-//                                        End Select
-//                                    Case "MONOLITH"
-//                                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
-//                                        Select Case G.Rechteck.X - X
-//                                            Case 1
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 1
-//                                                        Writer.WriteByte(14 * 16 + 11)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(15 * 16 + 15)
-//                                                        Writer.WriteByte(3)
-//                                                    Case -1
-//                                                        Writer.WriteByte(1 * 16 + 3)
-//                                                        Writer.WriteByte(4)
-//                                                End Select
-//                                            Case 0
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 1
-//                                                        Writer.WriteByte(14 * 16 + 12)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(0 * 16 + 0)
-//                                                        Writer.WriteByte(4)
-//                                                    Case -1
-//                                                        Writer.WriteByte(1 * 16 + 4)
-//                                                        Writer.WriteByte(4)
-//                                                End Select
-//                                            Case -1
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 1
-//                                                        Writer.WriteByte(14 * 16 + 13)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(0 * 16 + 1)
-//                                                        Writer.WriteByte(4)
-//                                                    Case -1
-//                                                        Writer.WriteByte(1 * 16 + 5)
-//                                                        Writer.WriteByte(4)
-//                                                End Select
-//                                        End Select
-//                                    Case "VULKAN"
-//                                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
-//                                        Select Case G.Rechteck.X - X
-//                                            Case 1
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 2
-//                                                        Writer.WriteByte(8 * 16 + 11)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 1
-//                                                        Writer.WriteByte(9 * 16 + 15)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(11 * 16 + 3)
-//                                                        Writer.WriteByte(3)
-//                                                    Case -1
-//                                                        Writer.WriteByte(12 * 16 + 7)
-//                                                        Writer.WriteByte(3)
-//                                                End Select
-//                                            Case 0
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 2
-//                                                        Writer.WriteByte(8 * 16 + 12)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 1
-//                                                        Writer.WriteByte(9 * 16 + 16)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(11 * 16 + 4)
-//                                                        Writer.WriteByte(3)
-//                                                    Case -1
-//                                                        Writer.WriteByte(12 * 16 + 8)
-//                                                        Writer.WriteByte(3)
-//                                                End Select
-//                                            Case -1
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 2
-//                                                        Writer.WriteByte(8 * 16 + 13)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 1
-//                                                        Writer.WriteByte(9 * 16 + 17)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(11 * 16 + 5)
-//                                                        Writer.WriteByte(3)
-//                                                    Case -1
-//                                                        Writer.WriteByte(12 * 16 + 9)
-//                                                        Writer.WriteByte(3)
-//                                                End Select
-//                                            Case -2
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 2
-//                                                        Writer.WriteByte(8 * 16 + 14)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 1
-//                                                        Writer.WriteByte(9 * 16 + 18)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(11 * 16 + 6)
-//                                                        Writer.WriteByte(3)
-//                                                    Case -1
-//                                                        Writer.WriteByte(12 * 16 + 10)
-//                                                        Writer.WriteByte(3)
-//                                                End Select
-//                                        End Select
-//                                    Case "FESTUNG"
-//                                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
-//                                        Select Case G.Rechteck.X - X
-//                                            Case 1
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 2
-//                                                        Writer.WriteByte(13 * 16 + 11)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 1
-//                                                        Writer.WriteByte(14 * 16 + 15)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(0 * 16 + 3)
-//                                                        Writer.WriteByte(4)
-//                                                    Case -1
-//                                                        Writer.WriteByte(1 * 16 + 7)
-//                                                        Writer.WriteByte(4)
-//                                                End Select
-//                                            Case 0
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 2
-//                                                        Writer.WriteByte(13 * 16 + 12)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 1
-//                                                        Writer.WriteByte(15 * 16 + 0)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(0 * 16 + 4)
-//                                                        Writer.WriteByte(4)
-//                                                    Case -1
-//                                                        Writer.WriteByte(1 * 16 + 8)
-//                                                        Writer.WriteByte(4)
-//                                                End Select
-//                                            Case -1
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 2
-//                                                        Writer.WriteByte(13 * 16 + 13)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 1
-//                                                        Writer.WriteByte(15 * 16 + 1)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(0 * 16 + 5)
-//                                                        Writer.WriteByte(4)
-//                                                    Case -1
-//                                                        Writer.WriteByte(1 * 16 + 9)
-//                                                        Writer.WriteByte(4)
-//                                                End Select
-//                                            Case -2
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 2
-//                                                        Writer.WriteByte(13 * 16 + 14)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 1
-//                                                        Writer.WriteByte(15 * 16 + 2)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(0 * 16 + 6)
-//                                                        Writer.WriteByte(4)
-//                                                    Case -1
-//                                                        Writer.WriteByte(1 * 16 + 10)
-//                                                        Writer.WriteByte(4)
-//                                                End Select
-//                                        End Select
-//                                    Case "OMEGARAKETE"
-//                                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
-//                                        Select Case G.Rechteck.X - X
-//                                            Case 1
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 2
-//                                                        Writer.WriteByte(8 * 16 + 15)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 1
-//                                                        Writer.WriteByte(10 * 16 + 3)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(11 * 16 + 7)
-//                                                        Writer.WriteByte(3)
-//                                                    Case -1
-//                                                        Writer.WriteByte(12 * 16 + 11)
-//                                                        Writer.WriteByte(3)
-//                                                End Select
-//                                            Case 0
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 2
-//                                                        Writer.WriteByte(9 * 16 + 0)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 1
-//                                                        Writer.WriteByte(10 * 16 + 4)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(11 * 16 + 8)
-//                                                        Writer.WriteByte(3)
-//                                                    Case -1
-//                                                        Writer.WriteByte(12 * 16 + 12)
-//                                                        Writer.WriteByte(3)
-//                                                End Select
-//                                            Case -1
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 2
-//                                                        Writer.WriteByte(9 * 16 + 1)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 1
-//                                                        Writer.WriteByte(10 * 16 + 5)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(11 * 16 + 9)
-//                                                        Writer.WriteByte(3)
-//                                                    Case -1
-//                                                        Writer.WriteByte(12 * 16 + 13)
-//                                                        Writer.WriteByte(3)
-//                                                End Select
-//                                            Case -2
-//                                                Select Case G.Rechteck.Y - Y
-//                                                    Case 2
-//                                                        Writer.WriteByte(9 * 16 + 2)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 1
-//                                                        Writer.WriteByte(10 * 16 + 6)
-//                                                        Writer.WriteByte(3)
-//                                                    Case 0
-//                                                        Writer.WriteByte(11 * 16 + 10)
-//                                                        Writer.WriteByte(3)
-//                                                    Case -1
-//                                                        Writer.WriteByte(12 * 16 + 14)
-//                                                        Writer.WriteByte(3)
-//                                                End Select
-//                                        End Select
-//                                    Case Else
-//                                        Writer.WriteByte(0)
-//                                        Writer.WriteByte(0)
-//                                End Select
-//                            Else
-//                                Select Case Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).LandschaftsID
-//                                    Case "KAPUTTESCHWEISSNAHT"
-//                                        Writer.WriteByte(10 * 16 + 7)
-//                                        Writer.WriteByte(0)
-//                                    Case "EBENE"
-//                                        Writer.WriteByte(0)
-//                                        Writer.WriteByte(0)
-//                                    Case "STRASSE"
-//                                        Writer.WriteByte(1)
-//                                        Writer.WriteByte(0)
-//                                    Case "BRUECKE"
-//                                        Dim Ausr As String = Objektverwalter.LandschaftenBilder(Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).ID).getAusrichtung(X, Y, Objektverwalter.Spielfeld)
-//                                        If Ausr = "+N+S" Then
-//                                            Writer.WriteByte(2)
-//                                            Writer.WriteByte(0)
-//                                        Else
-//                                            Writer.WriteByte(32)
-//                                            Writer.WriteByte(0)
-//                                        End If
-//                                    Case "FLUSS"
-//                                        Writer.WriteByte(3)
-//                                        Writer.WriteByte(0)
-//                                    Case "SEE"
-//                                        Writer.WriteByte(3 * 16 + 12)
-//                                        Writer.WriteByte(0)
-//                                    Case "PIPELINE"
-//                                        Writer.WriteByte(16)
-//                                        Writer.WriteByte(0)
-//                                    Case "RIFF"
-//                                        Writer.WriteByte(30)
-//                                        Writer.WriteByte(0)
-//                                    Case "STRAND"
-//                                        Writer.WriteByte(39)
-//                                        Writer.WriteByte(0)
-//                                    Case "WALD"
-//                                        Writer.WriteByte(90)
-//                                        Writer.WriteByte(0)
-//                                    Case "BERG"
-//                                        Writer.WriteByte(150)
-//                                        Writer.WriteByte(0)
-//                                    Case "EBENE+SCHROTT"
-//                                        Writer.WriteByte(167)
-//                                        Writer.WriteByte(0)
-//                                    Case "SCHWEISSNAHT"
-//                                        Writer.WriteByte(226)
-//                                        Writer.WriteByte(0)
-//                                    Case Else
-//                                        Writer.WriteByte(0)
-//                                        Writer.WriteByte(0)
-//                                End Select
-//                            End If
-//                        Next
-//                    Next
-//                    ''Die Einheiten erschaffen
-//                    For X = 0 To Objektverwalter.Spielfeld.Breite - 1
-//                        For Y = 0 To Objektverwalter.Spielfeld.Hoehe - 1
-//                            If Objektverwalter.Spielfeld.Einheiten(X, Y, 0) Is Nothing Then
-//                                Writer.WriteByte(Byte.MaxValue)
-//                                Writer.WriteByte(Byte.MaxValue)
-//                            Else
-//                                Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).EinheitenID
-//                                    Case "INF"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(244)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(28)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(68)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(108)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(148)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "MECH"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(8)
-//                                                Writer.WriteByte(2)
-//                                            Case 2
-//                                                Writer.WriteByte(48)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(88)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(128)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(168)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "TTP"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(10)
-//                                                Writer.WriteByte(2)
-//                                            Case 2
-//                                                Writer.WriteByte(50)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(90)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(130)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(170)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "HOELLIUM"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(0)
-//                                                Writer.WriteByte(2)
-//                                            Case 2
-//                                                Writer.WriteByte(40)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(80)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(120)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(160)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "SPAEHER"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(246)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(30)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(70)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(110)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(150)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "JGPZ"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(9)
-//                                                Writer.WriteByte(2)
-//                                            Case 2
-//                                                Writer.WriteByte(49)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(89)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(129)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(169)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "KPZ"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(245)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(29)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(69)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(109)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(149)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "TITANPZ"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(253)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(37)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(77)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(117)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(157)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "MEGAPZ"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(254)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(38)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(78)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(118)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(158)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "ART"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(247)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(31)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(71)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(111)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(151)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "RKW"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(11)
-//                                                Writer.WriteByte(2)
-//                                            Case 2
-//                                                Writer.WriteByte(51)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(91)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(131)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(171)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "LAEUFER"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(255)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(39)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(79)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(119)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(159)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "MISSILE"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(12)
-//                                                Writer.WriteByte(2)
-//                                            Case 2
-//                                                Writer.WriteByte(52)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(92)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(132)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(172)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "FLAK"                            'Flak OS
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(248)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(32)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(72)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(112)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(152)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "T-HELI"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(14)
-//                                                Writer.WriteByte(2)
-//                                            Case 2
-//                                                Writer.WriteByte(54)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(94)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(134)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(174)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "JAEGER" '249 'Jaeger OS
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(249)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(33)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(73)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(113)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(153)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "K-HELI" ' 250 'K-Heli OS
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(250)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(34)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(74)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(114)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(154)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "SCHLFF"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(251)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(35)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(75)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(115)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(155)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "L-BOOT"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(252)
-//                                                Writer.WriteByte(1)
-//                                            Case 2
-//                                                Writer.WriteByte(36)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(76)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(116)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(156)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "BOMBER"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(13)
-//                                                Writer.WriteByte(2)
-//                                            Case 2
-//                                                Writer.WriteByte(53)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(93)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(133)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(173)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "KREUZER"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(15)
-//                                                Writer.WriteByte(2)
-//                                            Case 2
-//                                                Writer.WriteByte(55)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(95)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(135)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(175)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "U-BOOT"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(16)
-//                                                Writer.WriteByte(2)
-//                                            Case 2
-//                                                Writer.WriteByte(56)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(96)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(136)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(176)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "S-BOOT"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(17)
-//                                                Writer.WriteByte(2)
-//                                            Case 2
-//                                                Writer.WriteByte(57)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(97)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(137)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(177)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "FLTR"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(18)
-//                                                Writer.WriteByte(2)
-//                                            Case 2
-//                                                Writer.WriteByte(58)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(98)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(138)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(178)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "TARNK"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(19)
-//                                                Writer.WriteByte(2)
-//                                            Case 2
-//                                                Writer.WriteByte(59)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(99)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(139)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(179)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case "S-BOMBE"
-//                                        Select Case Objektverwalter.Spielfeld.Einheiten(X, Y, ObjektSpielfeld.Bodenschlacht).Spieler
-//                                            Case 1
-//                                                Writer.WriteByte(20)
-//                                                Writer.WriteByte(2)
-//                                            Case 2
-//                                                Writer.WriteByte(70)
-//                                                Writer.WriteByte(2)
-//                                            Case 3
-//                                                Writer.WriteByte(100)
-//                                                Writer.WriteByte(2)
-//                                            Case 4
-//                                                Writer.WriteByte(140)
-//                                                Writer.WriteByte(2)
-//                                            Case 5
-//                                                Writer.WriteByte(180)
-//                                                Writer.WriteByte(2)
-//                                        End Select
-//                                    Case Else
-//                                        Writer.WriteByte(Byte.MaxValue)
-//                                        Writer.WriteByte(Byte.MaxValue)
-//                                End Select
-//                            End If
-//                        Next
-//                    Next
-//                    Writer.WriteByte(Objektverwalter.Spielfeld.Kartenname.Length)
-//                    Writer.WriteByte(0)
-//                    Writer.WriteByte(0)
-//                    Writer.WriteByte(0)
-//                    'Jetzt kommt der Karten Name
-//                    Dim S() As Char = Objektverwalter.Spielfeld.Kartenname.ToCharArray
-//                    For I = 0 To S.Length - 1
-//                        Writer.WriteByte(CByte(AscW(S(I))))
-//                    Next
-//                    Writer.WriteByte(Objektverwalter.Spielfeld.Autor.Length)
-//                    Writer.WriteByte(0)
-//                    Writer.WriteByte(0)
-//                    Writer.WriteByte(0)
-//                    S = Objektverwalter.Spielfeld.Autor.ToCharArray
-//                    For I = 0 To S.Length - 1
-//                        Writer.WriteByte(CByte(AscW(S(I))))
-//                    Next
-//                    ''Jetzt kommt vier Zeichen nichts
-//                    Writer.WriteByte(Objektverwalter.Spielfeld.Beschreibung.Length)
-//                    Writer.WriteByte(0)
-//                    Writer.WriteByte(0)
-//                    Writer.WriteByte(0)
-//                    S = Objektverwalter.Spielfeld.Beschreibung.ToCharArray
-//                    For I = 0 To S.Length - 1
-//                        Writer.WriteByte(CByte(AscW(S(I))))
-//                    Next
-//                End Using
-//            End If
+    GameMap* pMap = GameMap::getInstance();
+    if (pMap->getPlayerCount() <= 5)
+    {
+        QFile data(file);
+        data.open(QFile::ReadOnly);
+        QDataStream stream(&data);
+        stream << static_cast<uchar>(4 * 16 + 1);
+        stream << static_cast<uchar>(5 * 16 + 7);
+        stream << static_cast<uchar>(5 * 16 + 3);
+        stream << static_cast<uchar>(4 * 16 + 13);
+        stream << static_cast<uchar>(6 * 16 + 1);
+        stream << static_cast<uchar>(7 * 16 + 0);
+        stream << static_cast<uchar>(3 * 16 + 0);
+        stream << static_cast<uchar>(3 * 16 + 0);
+        stream << static_cast<uchar>(3 * 16 + 1);
+        stream << static_cast<uchar>(0);
+        stream << static_cast<uchar>(pMap->getMapWidth());
+        stream << static_cast<uchar>(pMap->getMapHeight());
+        // Terrain Style
+        stream << static_cast<uchar>(0);
+        for (qint32 x = 0; x < pMap->getMapWidth(); x++)
+        {
+            for (qint32 y = 0 ; y < pMap->getMapHeight(); y++)
+            {
+                Building* pBuilding = pMap->getTerrain(x, y)->getBuilding();
+                Terrain* pTerrain = pMap->getTerrain(x, y);
+                if (pBuilding != nullptr)
+                {
+                    if (pBuilding->getBuildingID() == "HQ")
+                    {
+                        switch (pBuilding->getOwnerID() + 1)
+                        {
+                            case 0:
+                                stream << static_cast<uchar>(94);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 1:
+                                stream << static_cast<uchar>(44);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(54);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(64);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(74);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(84);
+                                stream << static_cast<uchar>(1);
+                                break;
+                        }
+                    }
+                    else if (pBuilding->getBuildingID() == "TOWN")
+                    {
+                        switch (pBuilding->getOwnerID() + 1)
+                        {
+                            case 0:
+                                stream << static_cast<uchar>(95);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 1:
+                                stream << static_cast<uchar>(45);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(55);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(65);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(75);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(85);
+                                stream << static_cast<uchar>(1);
+                                break;
+                        }
+                    }
+                    else if (pBuilding->getBuildingID() == "FACTORY")
+                    {
+                        switch (pBuilding->getOwnerID() + 1)
+                        {
+                            case 0:
+                                stream << static_cast<uchar>(96);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 1:
+                                stream << static_cast<uchar>(46);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(56);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(66);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(76);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(86);
+                                stream << static_cast<uchar>(1);
+                                break;
+                        }
+                    }
+                    else if (pBuilding->getBuildingID() == "AIRPORT")
+                    {
+                        switch (pBuilding->getOwnerID() + 1)
+                        {
+                            case 0:
+                                stream << static_cast<uchar>(97);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 1:
+                                stream << static_cast<uchar>(47);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(57);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(67);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(77);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(87);
+                                stream << static_cast<uchar>(1);
+                                break;
+                        }
+                    }
+                    else if (pBuilding->getBuildingID() == "HARBOUR")
+                    {
+                        switch (pBuilding->getOwnerID() + 1)
+                        {
+                            case 0:
+                                stream << static_cast<uchar>(98);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 1:
+                                stream << static_cast<uchar>(48);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(58);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(68);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(78);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(88);
+                                stream << static_cast<uchar>(1);
+                                break;
+                        }
+                    }
+                    else if (pBuilding->getBuildingID() == "TOWER")
+                    {
+                        switch (pBuilding->getOwnerID() + 1)
+                        {
+                            case 0:
+                                stream << static_cast<uchar>(99);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 1:
+                                stream << static_cast<uchar>(49);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(59);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(69);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(79);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(89);
+                                stream << static_cast<uchar>(1);
+                                break;
+                        }
+                    }
+                    else if (pBuilding->getBuildingID() == "LABOR")
+                    {
+                        switch (pBuilding->getOwnerID() + 1)
+                        {
+                            case 0:
+                                stream << static_cast<uchar>(100);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 1:
+                                stream << static_cast<uchar>(50);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(60);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(70);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(80);
+                                stream << static_cast<uchar>(1);
+                            case 5:
+                                stream << static_cast<uchar>(90);
+                                stream << static_cast<uchar>(1);
+                                break;
+                        }
+                    }
+                    else if (pBuilding->getBuildingID() == "SILO_ROCKET" ||
+                             pBuilding->getBuildingID() ==  "SILO")
+                    {
+                        stream << static_cast<uchar>(94);
+                        stream << static_cast<uchar>(1);
+                    }
+                    else if (pBuilding->getBuildingID() == "ZMINICANNON_N")
+                    {
+                        stream << static_cast<uchar>(8 * 16 + 4);
+                        stream << static_cast<uchar>(3);
+                    }
+                    else if (pBuilding->getBuildingID() == "ZMINICANNON_W")
+                    {
+                        stream << static_cast<uchar>(8 * 16 + 5);
+                        stream << static_cast<uchar>(3);
+                    }
+                    else if (pBuilding->getBuildingID() == "LASER")
+                    {
+                        stream << static_cast<uchar>(8 * 16 + 6);
+                        stream << static_cast<uchar>(3);
+                    }
+                    else if (pBuilding->getBuildingID() == "ZMINICANNON_E")
+                    {
+                        stream << static_cast<uchar>(9 * 16 + 8);
+                        stream << static_cast<uchar>(3);
+                    }
+                    else if (pBuilding->getBuildingID() == "ZMINICANNON_S")
+                    {
+                        stream << static_cast<uchar>(9 * 16 + 9);
+                        stream << static_cast<uchar>(3);
+                    }
+                    else if (pBuilding->getBuildingID() == "ZCRYSTALL")
+                    {
+                        stream << static_cast<uchar>(9 * 16 + 11);
+                        stream << static_cast<uchar>(3);
+                    }
+                    else if (pBuilding->getBuildingID() == "ZBLACKHOLE_CANNON_N")
+                    {
+                        //                                                            switch (pBuilding->getX() )G.Rechteck.X - X
+                        //                                                            case 1
+                        //                                                            Select case G.Rechteck.Y - Y
+                        //                                                            case 1
+                        //                                                            stream << static_cast<uchar>(10 * 16 + 15)
+                        //                                                                      stream << static_cast<uchar>(3)
+                        //                                                                      case 0
+                        //                                                                      stream << static_cast<uchar>(12 * 16 + 3)
+                        //                                                                      stream << static_cast<uchar>(3)
+                        //                                                                      case -1
+                        //                                                                      stream << static_cast<uchar>(13 * 16 + 7)
+                        //                                                                      stream << static_cast<uchar>(3)
+                        //                    }
+                        //                                                                      case 0
+                        //                                                                      Select case G.Rechteck.Y - Y
+                        //                                                                      case 1
+                        //                                                                      stream << static_cast<uchar>(11 * 16 + 0)
+                        //                                                                      stream << static_cast<uchar>(3)
+                        //                                                                      case 0
+                        //                                                                      stream << static_cast<uchar>(12 * 16 + 4)
+                        //                                                                      stream << static_cast<uchar>(3)
+                        //                                                                      case -1
+                        //                                                                      stream << static_cast<uchar>(13 * 16 + 8)
+                        //                                                                      stream << static_cast<uchar>(3)
+                        //                    }
+                        //                                                                      case -1
+                        //                                                                      Select case G.Rechteck.Y - Y
+                        //                                                                      case 1
+                        //                                                                      stream << static_cast<uchar>(11 * 16 + 1)
+                        //                                                                      stream << static_cast<uchar>(3)
+                        //                                                                      case 0
+                        //                                                                      stream << static_cast<uchar>(12 * 16 + 5)
+                        //                                                                      stream << static_cast<uchar>(3)
+                        //                                                                      case -1
+                        //                                                                      stream << static_cast<uchar>(13 * 16 + 9)
+                        //                                                                      stream << static_cast<uchar>(3)
+                        //                    }
+                        //                    }
+                        //                    }
+                        //                            else if (pBuilding->getBuildingID() == "SCHWARZE GESCHUETZ+S"
+                        //                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
+                        //                        Select case G.Rechteck.X - X
+                        //                            case 1
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(10 * 16 + 12)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(12 * 16 + 0)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(13 * 16 + 4)
+                        //                        stream << static_cast<uchar>(3)
+                        //                    }
+                        //                            case 0
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(10 * 16 + 13)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(12 * 16 + 1)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(13 * 16 + 5)
+                        //                        stream << static_cast<uchar>(3)
+                        //                    }
+                        //                            case -1
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(10 * 16 + 14)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(12 * 16 + 2)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(13 * 16 + 6)
+                        //                        stream << static_cast<uchar>(3)
+                        //                    }
+                        //                    }
+                        //                            else if (pBuilding->getBuildingID() == "SCHOCKLASER+S"
+                        //                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
+                        //                        Select case G.Rechteck.X - X
+                        //                            case 1
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(14 * 16 + 8)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(15 * 16 + 12)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(1 * 16 + 0)
+                        //                        stream << static_cast<uchar>(4)
+                        //                    }
+                        //                            case 0
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(14 * 16 + 9)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(15 * 16 + 13)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(1 * 16 + 1)
+                        //                        stream << static_cast<uchar>(4)
+                        //                    }
+                        //                            case -1
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(14 * 16 + 10)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(15 * 16 + 14)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(1 * 16 + 2)
+                        //                        stream << static_cast<uchar>(4)
+                        //                    }
+                        //                    }
+                        //                            else if (pBuilding->getBuildingID() == "MONOLITH"
+                        //                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
+                        //                        Select case G.Rechteck.X - X
+                        //                            case 1
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(14 * 16 + 11)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(15 * 16 + 15)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(1 * 16 + 3)
+                        //                        stream << static_cast<uchar>(4)
+                        //                    }
+                        //                            case 0
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(14 * 16 + 12)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(0 * 16 + 0)
+                        //                        stream << static_cast<uchar>(4)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(1 * 16 + 4)
+                        //                        stream << static_cast<uchar>(4)
+                        //                    }
+                        //                            case -1
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(14 * 16 + 13)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(0 * 16 + 1)
+                        //                        stream << static_cast<uchar>(4)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(1 * 16 + 5)
+                        //                        stream << static_cast<uchar>(4)
+                        //                    }
+                        //                    }
+                        //                            else if (pBuilding->getBuildingID() == "VULKAN"
+                        //                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
+                        //                        Select case G.Rechteck.X - X
+                        //                            case 1
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 2
+                        //                        stream << static_cast<uchar>(8 * 16 + 11)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(9 * 16 + 15)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(11 * 16 + 3)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(12 * 16 + 7)
+                        //                        stream << static_cast<uchar>(3)
+                        //                    }
+                        //                            case 0
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 2
+                        //                        stream << static_cast<uchar>(8 * 16 + 12)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(9 * 16 + 16)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(11 * 16 + 4)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(12 * 16 + 8)
+                        //                        stream << static_cast<uchar>(3)
+                        //                    }
+                        //                            case -1
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 2
+                        //                        stream << static_cast<uchar>(8 * 16 + 13)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(9 * 16 + 17)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(11 * 16 + 5)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(12 * 16 + 9)
+                        //                        stream << static_cast<uchar>(3)
+                        //                    }
+                        //                            case -2
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 2
+                        //                        stream << static_cast<uchar>(8 * 16 + 14)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(9 * 16 + 18)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(11 * 16 + 6)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(12 * 16 + 10)
+                        //                        stream << static_cast<uchar>(3)
+                        //                    }
+                        //                    }
+                        //                            else if (pBuilding->getBuildingID() == "FESTUNG"
+                        //                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
+                        //                        Select case G.Rechteck.X - X
+                        //                            case 1
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 2
+                        //                        stream << static_cast<uchar>(13 * 16 + 11)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(14 * 16 + 15)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(0 * 16 + 3)
+                        //                        stream << static_cast<uchar>(4)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(1 * 16 + 7)
+                        //                        stream << static_cast<uchar>(4)
+                        //                    }
+                        //                            case 0
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 2
+                        //                        stream << static_cast<uchar>(13 * 16 + 12)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(15 * 16 + 0)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(0 * 16 + 4)
+                        //                        stream << static_cast<uchar>(4)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(1 * 16 + 8)
+                        //                        stream << static_cast<uchar>(4)
+                        //                    }
+                        //                            case -1
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 2
+                        //                        stream << static_cast<uchar>(13 * 16 + 13)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(15 * 16 + 1)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(0 * 16 + 5)
+                        //                        stream << static_cast<uchar>(4)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(1 * 16 + 9)
+                        //                        stream << static_cast<uchar>(4)
+                        //                    }
+                        //                            case -2
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 2
+                        //                        stream << static_cast<uchar>(13 * 16 + 14)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(15 * 16 + 2)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(0 * 16 + 6)
+                        //                        stream << static_cast<uchar>(4)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(1 * 16 + 10)
+                        //                        stream << static_cast<uchar>(4)
+                        //                    }
+                        //                    }
+                        //                            else if (pBuilding->getBuildingID() == "OMEGARAKETE"
+                        //                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
+                        //                        Select case G.Rechteck.X - X
+                        //                            case 1
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 2
+                        //                        stream << static_cast<uchar>(8 * 16 + 15)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(10 * 16 + 3)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(11 * 16 + 7)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(12 * 16 + 11)
+                        //                        stream << static_cast<uchar>(3)
+                        //                    }
+                        //                            case 0
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 2
+                        //                        stream << static_cast<uchar>(9 * 16 + 0)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(10 * 16 + 4)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(11 * 16 + 8)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(12 * 16 + 12)
+                        //                        stream << static_cast<uchar>(3)
+                        //                    }
+                        //                            case -1
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 2
+                        //                        stream << static_cast<uchar>(9 * 16 + 1)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(10 * 16 + 5)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(11 * 16 + 9)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(12 * 16 + 13)
+                        //                        stream << static_cast<uchar>(3)
+                        //                    }
+                        //                            case -2
+                        //                        Select case G.Rechteck.Y - Y
+                        //                            case 2
+                        //                        stream << static_cast<uchar>(9 * 16 + 2)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 1
+                        //                        stream << static_cast<uchar>(10 * 16 + 6)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case 0
+                        //                        stream << static_cast<uchar>(11 * 16 + 10)
+                        //                        stream << static_cast<uchar>(3)
+                        //                            case -1
+                        //                        stream << static_cast<uchar>(12 * 16 + 14)
+                        //                        stream << static_cast<uchar>(3)
+                        //                    }
+                    }
+                    else
+                    {
+                        stream << static_cast<uchar>(0);
+                        stream << static_cast<uchar>(0);
+                    }
+                }
+                else
+                {
+                    if (pTerrain->getTerrainID() == "DESTROYEDWELD")
+                    {
+                        stream << static_cast<uchar>(10 * 16 + 7);
+                        stream << static_cast<uchar>(0);
+                    }
+                    else if (pTerrain->getTerrainID() == "PLAINS")
+                    {
+                        stream << static_cast<uchar>(0);
+                        stream << static_cast<uchar>(0);
+                    }
+                    else if (pTerrain->getTerrainID() == "STREET")
+                    {
+                        stream << static_cast<uchar>(1);
+                        stream << static_cast<uchar>(0);
+                    }
+                    else if (pTerrain->getTerrainID() == "BRIDGE")
+                    {
+                        //                        Dim Ausr As String = Objektverwalter.LandschaftenBilder(Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).ID).getAusrichtung(X, Y, Objektverwalter.Spielfeld)
+                        //                        If Ausr = "+N+S" Then
+                        //                        stream << static_cast<uchar>(2)
+                        //                        stream << static_cast<uchar>(0)
+                        //                        Else
+                        //                        stream << static_cast<uchar>(32)
+                        //                        stream << static_cast<uchar>(0)
+                        //                        End If
+                    }
+                    else if (pTerrain->getTerrainID() == "RIVER")
+                    {
+                        stream << static_cast<uchar>(3);
+                        stream << static_cast<uchar>(0);
+                    }
+                    else if (pTerrain->getTerrainID() == "SEA")
+                    {
+                        stream << static_cast<uchar>(3 * 16 + 12);
+                        stream << static_cast<uchar>(0);
+                    }
+                    else if (pTerrain->getTerrainID() == "PIPELINE")
+                    {
+                        stream << static_cast<uchar>(16);
+                        stream << static_cast<uchar>(0);
+                    }
+                    else if (pTerrain->getTerrainID() == "REAF")
+                    {
+                        stream << static_cast<uchar>(30);
+                        stream << static_cast<uchar>(0);
+                    }
+                    else if (pTerrain->getTerrainID() == "BEACH")
+                    {
+                        stream << static_cast<uchar>(39);
+                        stream << static_cast<uchar>(0);
+                    }
+                    else if (pTerrain->getTerrainID() == "FOREST")
+                    {
+                        stream << static_cast<uchar>(90);
+                        stream << static_cast<uchar>(0);
+                    }
+                    else if (pTerrain->getTerrainID() == "MOUNTAIN")
+                    {
+                        stream << static_cast<uchar>(150);
+                        stream << static_cast<uchar>(0);
+                    }
+                    else if (pTerrain->getTerrainID() == "PLAINS+DESTROYED")
+                    {
+                        stream << static_cast<uchar>(167);
+                        stream << static_cast<uchar>(0);
+                    }
+                    else if (pTerrain->getTerrainID() == "WELD")
+                    {
+                        stream << static_cast<uchar>(226);
+                        stream << static_cast<uchar>(0);
+                    }
+                    else
+                    {
+                        stream << static_cast<uchar>(0);
+                        stream << static_cast<uchar>(0);
+                    }
+                }
+            }
+        }
+        for (qint32 x = 0; x < pMap->getMapWidth(); x++)
+        {
+            for (qint32 y = 0 ; y < pMap->getMapHeight(); y++)
+            {
+                Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
+                if (pUnit == nullptr)
+                {
+                    stream << static_cast<uchar>(std::numeric_limits<uchar>::max());
+                    stream << static_cast<uchar>(std::numeric_limits<uchar>::max());
+                }
+                else
+                {
+                    if (pUnit->getUnitID() == "INFANTRY")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(244);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(28);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(68);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(108);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(148);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "MECH")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(8);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(48);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(88);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(128);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(168);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "APC")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(10);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(50);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(90);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(130);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(170);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "HOELLIUM")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(0);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(40);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(80);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(120);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(160);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "RECON")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(246);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(30);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(70);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(110);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(150);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "LIGHT_TANK")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(9);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(49);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(89);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(129);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(169);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "HEAVY_TANK")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(245);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(29);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(69);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(109);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(149);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "NEOTANK")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(253);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(37);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(77);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(117);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(157);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "MEGATANK")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(254);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(38);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(78);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(118);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(158);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "ARTILLERY")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(247);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(31);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(71);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(111);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(151);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "ROCKETTHROWER")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(11);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(51);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(91);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(131);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(171);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "PIPERUNNER")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(255);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(39);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(79);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(119);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(159);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "MISSILE")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(12);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(52);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(92);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(132);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(172);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "FLAK")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(248);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(32);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(72);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(112);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(152);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "T_HELI")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(14);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(54);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(94);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(134);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(174);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "FIGHTER")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(249);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(33);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(73);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(113);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(153);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "K_HELI")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(250);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(34);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(74);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(114);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(154);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "BATTLESHIP")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(251);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(35);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(75);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(115);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(155);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "LANDER")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(252);
+                                stream << static_cast<uchar>(1);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(36);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(76);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(116);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(156);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "BOMBER")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(13);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(53);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(93);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(133);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(173);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "CRUISER")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(15);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(55);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(95);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(135);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(175);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "SUBMARINE")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(16);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(56);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(96);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(136);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(176);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "BLACK_BOAT")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(17);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(57);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(97);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(137);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(177);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "AIRCRAFTCARRIER")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(18);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(58);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(98);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(138);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(178);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "STEALTHBOMBER")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(19);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(59);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(99);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(139);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(179);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else if (pUnit->getUnitID() == "BLACK_BOMB")
+                    {
+                        switch (pUnit->getOwner()->getPlayerID() + 1)
+                        {
+                            case 1:
+                                stream << static_cast<uchar>(20);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 2:
+                                stream << static_cast<uchar>(70);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 3:
+                                stream << static_cast<uchar>(100);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 4:
+                                stream << static_cast<uchar>(140);
+                                stream << static_cast<uchar>(2);
+                                break;
+                            case 5:
+                                stream << static_cast<uchar>(180);
+                                stream << static_cast<uchar>(2);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        stream << static_cast<uchar>(std::numeric_limits<uchar>::max());
+                        stream << static_cast<uchar>(std::numeric_limits<uchar>::max());
+                    }
+                }
+            }
+        }
+        QString mapName = pMap->getMapName();
+        mapName = mapName.remove(254, mapName.size());
+        stream << static_cast<uchar>(mapName.length());
+        stream << static_cast<uchar>(0);
+        stream << static_cast<uchar>(0);
+        stream << static_cast<uchar>(0);
+        QByteArray array = mapName.toUtf8();
+        for (qint32 i = 0; i < array.length(); i++)
+        {
+            stream << static_cast<uchar>(array[i]);
+        }
+        QString mapAuthor = pMap->getMapAuthor();
+        mapAuthor = mapAuthor.remove(254, mapAuthor.size());
+        stream << static_cast<uchar>(mapAuthor.length());
+        stream << static_cast<uchar>(0);
+        stream << static_cast<uchar>(0);
+        stream << static_cast<uchar>(0);
+        array = mapAuthor.toUtf8();
+        for (qint32 i = 0; i < array.length(); i++)
+        {
+            stream << static_cast<uchar>(array[i]);
+        }
+        QString mapDescription = pMap->getMapDescription();
+        mapDescription = mapDescription.remove(254, mapDescription.size());
+        stream << static_cast<uchar>(mapDescription.length());
+        stream << static_cast<uchar>(0);
+        stream << static_cast<uchar>(0);
+        stream << static_cast<uchar>(0);
+        array = mapDescription.toUtf8();
+        for (qint32 i = 0; i < array.length(); i++)
+        {
+            stream << static_cast<uchar>(array[i]);
+        }
+    }
 }

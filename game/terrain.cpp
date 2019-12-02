@@ -255,7 +255,7 @@ void Terrain::loadBaseSprite(QString spriteID)
 {
 
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
-    oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID);
+    oxygine::ResAnim* pAnim = pTerrainManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error);
     if (pAnim != nullptr)
     {
         oxygine::spSprite pSprite = new oxygine::Sprite();

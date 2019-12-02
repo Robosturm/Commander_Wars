@@ -71,7 +71,7 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
             m_pPanel->addItem(pSprite);
 
             x += GameMap::Imagesize * 3 ;
-            if (x > m_pPanel->getContentWidth() - 60 - pSprite->getWidth() && i < pTerrainStyles.size() - 1)
+            if (x > m_pPanel->getContentWidth() - 100 - pSprite->getWidth() && i < pTerrainStyles.size() - 1)
             {
                 x = 20;
                 y += GameMap::Imagesize * 3;
@@ -91,10 +91,10 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
     pTextfield->setHtmlText(tr("Terrain Style"));
     pTextfield->setPosition(10, y);
     m_pPanel->addItem(pTextfield);
-    m_pTextbox = new Textbox(m_pPanel->getContentWidth() - 60 - 200 - pTextfield->getWidth());
+    m_pTextbox = new Textbox(m_pPanel->getContentWidth() - 100 - 200 - pTextfield->getWidth());
     m_pTextbox->setPosition(200 + 20 + pTextfield->getX(), y);
     m_pPanel->addItem(m_pTextbox);
-    y += 40;
+    y += 80;
 
     oxygine::spButton pButtonDefault = pObjectManager->createButton(tr("Default"), 150);
     pButtonDefault->setPosition(10, y);
