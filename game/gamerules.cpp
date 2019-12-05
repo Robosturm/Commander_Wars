@@ -390,13 +390,17 @@ void GameRules::setCurrentWeather(qint32 weatherId)
     pApp->suspendThread();
     if (weatherId >= 0 && weatherId < m_Weathers.size())
     {
-        if (m_CurrentWeather >= 0)
+        if (m_CurrentWeather != weatherId)
         {
-            m_Weathers[m_CurrentWeather]->deactivate();
+            if (m_CurrentWeather >= 0)
+            {
+                m_Weathers[m_CurrentWeather]->deactivate();
+            }
+            m_CurrentWeather = weatherId;
+            m_Weathers[m_CurrentWeather]->activate();
         }
-        m_CurrentWeather = weatherId;
-        m_Weathers[m_CurrentWeather]->activate();
         // create weather sprites :)
+
         createWeatherSprites();
     }
     pApp->continueThread();
