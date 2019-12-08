@@ -400,7 +400,6 @@ void GameRules::setCurrentWeather(qint32 weatherId)
             m_Weathers[m_CurrentWeather]->activate();
         }
         // create weather sprites :)
-
         createWeatherSprites();
     }
     pApp->continueThread();

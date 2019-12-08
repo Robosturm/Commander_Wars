@@ -134,7 +134,9 @@ void MapSelectionMapsMenue::slotButtonBack()
         {
             Console::print("Leaving Map Selection Menue", Console::eDEBUG);
             oxygine::getStage()->addChild(new Mainwindow());
+            addRef();
             oxygine::Actor::detach();
+            deleteLater();
             break;
         }
         case MapSelectionStep::selectRules:
@@ -163,7 +165,9 @@ void MapSelectionMapsMenue::slotButtonBack()
                 {
                     oxygine::getStage()->addChild(new CampaignMenu(m_pMapSelectionView->getCurrentCampaign(), false));
                 }
+                addRef();
                 oxygine::Actor::detach();
+                deleteLater();
             }
             break;
         }
@@ -207,7 +211,9 @@ void MapSelectionMapsMenue::slotButtonNext()
                     {
                         oxygine::getStage()->addChild(new CampaignMenu(m_pMapSelectionView->getCurrentCampaign(), false));
                     }
+                    addRef();
                     oxygine::Actor::detach();
+                    deleteLater();
                 }
             }
             break;
@@ -311,6 +317,8 @@ void MapSelectionMapsMenue::startGame()
     // start game
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new GameMenue());
+    addRef();
     oxygine::Actor::detach();
+    deleteLater();
     pApp->continueThread();
 }

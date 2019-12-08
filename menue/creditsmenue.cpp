@@ -133,6 +133,8 @@ void CreditsMenue::exitMenue()
     pApp->suspendThread();
     Console::print("Leaving Credits Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
+    addRef();
     oxygine::Actor::detach();
+    deleteLater();
     pApp->continueThread();
 }

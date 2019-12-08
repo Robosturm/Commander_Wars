@@ -113,7 +113,9 @@ void LobbyMenu::exitMenue()
     pApp->suspendThread();
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
+    addRef();
     oxygine::Actor::detach();
+    deleteLater();
     pApp->continueThread();
 }
 
@@ -123,7 +125,9 @@ void LobbyMenu::host()
     pApp->suspendThread();
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Multiplayermenu("", true));
+    addRef();
     oxygine::Actor::detach();
+    deleteLater();
     pApp->continueThread();
 }
 
@@ -150,6 +154,8 @@ void LobbyMenu::join(QString adress)
     pApp->suspendThread();
     Console::print("Leaving Lobby Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Multiplayermenu(adress, false));
+    addRef();
     oxygine::Actor::detach();
+    deleteLater();
     pApp->continueThread();
 }

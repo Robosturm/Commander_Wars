@@ -277,7 +277,9 @@ void EditorMenue::clickedTopbar(QString itemID)
     {
         Console::print("Leaving Editor Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new Mainwindow());
+        addRef();
         oxygine::Actor::detach();
+        deleteLater();
     }
     else if (itemID == "SAVEMAP")
     {
@@ -565,7 +567,9 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
             {
                 Console::print("Leaving Editor Menue", Console::eDEBUG);
                 oxygine::getStage()->addChild(new Mainwindow());
+                addRef();
                 oxygine::Actor::detach();
+                deleteLater();
                 break;
             }
             case Qt::Key_Y:

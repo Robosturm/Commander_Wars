@@ -121,7 +121,9 @@ void OptionMenue::exitMenue()
     {
         Console::print("Leaving Option Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new Mainwindow());
+        addRef();
         oxygine::Actor::detach();
+        deleteLater();
     }
     pApp->continueThread();
 }
@@ -480,7 +482,9 @@ void OptionMenue::reloadSettings()
 {
     Console::print("Leaving Option Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new OptionMenue());
+    addRef();
     oxygine::Actor::detach();
+    deleteLater();
 }
 
 void OptionMenue::showSettings()

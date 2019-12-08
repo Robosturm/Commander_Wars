@@ -691,7 +691,9 @@ void GameMenue::victory(qint32 team)
         }
         Console::print("Leaving Game Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new VictoryMenue(multiplayer));
+        addRef();
         oxygine::Actor::detach();
+        deleteLater();
     }
     pApp->continueThread();
 }
@@ -928,7 +930,9 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
                 Mainapp* pApp = Mainapp::getInstance();
                 pApp->suspendThread();
                 Console::print("Leaving Game Menue", Console::eDEBUG);
+                addRef();
                 oxygine::Actor::detach();
+                deleteLater();
                 GameMenue* pMenue = new GameMenue("savegames/quicksave1.sav", true);
                 oxygine::getStage()->addChild(pMenue);
                 pApp->getAudioThread()->clearPlayList();
@@ -943,7 +947,9 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
                 Mainapp* pApp = Mainapp::getInstance();
                 pApp->suspendThread();
                 Console::print("Leaving Game Menue", Console::eDEBUG);
+                addRef();
                 oxygine::Actor::detach();
+                deleteLater();
                 GameMenue* pMenue = new GameMenue("savegames/quicksave1.sav", true);
                 oxygine::getStage()->addChild(pMenue);
                 pApp->getAudioThread()->clearPlayList();

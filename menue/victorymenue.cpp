@@ -552,14 +552,18 @@ void VictoryMenue::exitMenue()
         GameMap::deleteMap();
         Console::print("Leaving Victory Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new CampaignMenu(campaign, m_Multiplayer));
+        addRef();
         oxygine::Actor::detach();
+        deleteLater();
     }
     else
     {
         GameMap::deleteMap();
         Console::print("Leaving Victory Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new Mainwindow());
+        addRef();
         oxygine::Actor::detach();
+        deleteLater();
     }
     pApp->continueThread();
 }

@@ -97,7 +97,9 @@ void Wikimenu::exitMenue()
     // save changed settings :)
     Console::print("Leaving Wiki Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new Mainwindow());
+    addRef();
     oxygine::Actor::detach();
+    deleteLater();
     pApp->continueThread();
 }
 

@@ -522,6 +522,8 @@ void Multiplayermenu::loadMultiplayerMap()
 
 void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     quint32 seed;
     stream >> seed;
     Mainapp::seed(seed);
@@ -532,8 +534,6 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
         m_pMapSelectionView->getCurrentMap()->getPlayer(i)->deserializeObject(stream);
         m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(aiType));
     }
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
     pMap->initPlayers();
     pMap->getGameScript()->gameStart();
@@ -541,7 +541,9 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     // start game
     Console::print("Leaving Map Selection Menue", Console::eDEBUG);
     oxygine::getStage()->addChild(new GameMenue(m_NetworkInterface, saveGame));
+    addRef();
     oxygine::Actor::detach();
+    deleteLater();
     pApp->continueThread();
 }
 
@@ -605,7 +607,9 @@ void Multiplayermenu::disconnected(quint64)
         disconnectNetwork();
         Console::print("Leaving Map Selection Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new LobbyMenu());
+        addRef();
         oxygine::Actor::detach();
+        deleteLater();
     }
 }
 
@@ -616,7 +620,9 @@ void Multiplayermenu::slotButtonBack()
         disconnectNetwork();
         Console::print("Leaving Map Selection Menue", Console::eDEBUG);
         oxygine::getStage()->addChild(new LobbyMenu());
+        addRef();
         oxygine::Actor::detach();
+        deleteLater();
     }
     else if (m_Host)
     {
@@ -794,7 +800,9 @@ void Multiplayermenu::countdown()
             Console::print("Leaving Map Selection Menue", Console::eDEBUG);
             oxygine::getStage()->addChild(new GameMenue(m_NetworkInterface, saveGame));
             emit m_NetworkInterface->sig_sendData(0, data, NetworkInterface::NetworkSerives::Multiplayer, false);
+            addRef();
             oxygine::Actor::detach();
+            deleteLater();
             pApp->continueThread();
         }
     }
