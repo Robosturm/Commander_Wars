@@ -632,7 +632,7 @@ void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::Dr
         GameManager* pGameManager = GameManager::getInstance();
         oxygine::spSprite pSprite = new oxygine::Sprite();
         oxygine::ResAnim* pAnim = pGameManager->getResAnim("marked+field");
-        if (pAnim->getTotalFrames() > 1)
+        if (pAnim->getTotalFrames() > 1 && !Settings::getStaticMarkedFields())
         {
             float initFrame = 0;
             if (point.x() % 2 == 0 &&
@@ -645,7 +645,7 @@ void HumanPlayerInput::createMarkedField(QPoint point, QColor color, Terrain::Dr
             {
                 initFrame = 0.5f;
             }
-            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, initFrame, 0), oxygine::timeMS(pAnim->getTotalFrames() * GameMap::frameTime), -1);
+            oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim, initFrame, 0), oxygine::timeMS(static_cast<qint32>(pAnim->getTotalFrames() * GameMap::frameTime)), -1);
             pSprite->addTween(tween);
         }
         else

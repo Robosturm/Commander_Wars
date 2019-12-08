@@ -1244,7 +1244,7 @@ void GameMap::nextTurn()
     pApp->getAudioThread()->playRandom();
     bool permanent = false;
     bool found = false;
-    if (m_Rules->getFogMode() != GameEnums::Fog::Fog_Off)
+    if (m_Rules->getFogMode() != GameEnums::Fog::Fog_Off && m_CurrentPlayer->getBaseGameInput() != nullptr)
     {
         if (m_CurrentPlayer->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
         {
