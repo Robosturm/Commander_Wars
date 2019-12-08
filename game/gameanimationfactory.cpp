@@ -160,7 +160,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
             pAtk->addSprite("blackhole_shot", -GameMap::Imagesize * 0.5f, -GameMap::Imagesize * 0.5f, 0, 1.5f);
             pAtk->setSound("talongunhit.wav", 1);            
             GameAnimation* pDmgTextAtk = createAnimation(pDefTerrain->getX(), pDefTerrain->getY());
-            pDmgTextAtk->addText(QString::number(Mainapp::roundUp(defStartHp - defEndHp)) + " Hp", -8, 0, 1.5f, Qt::GlobalColor::red);
+            pDmgTextAtk->addText(QString::number(Mainapp::roundUp(defStartHp) - Mainapp::roundUp(defEndHp)) + " Hp", -8, 0, 1.5f, Qt::GlobalColor::red);
             pDmgTextAtk->addTweenPosition(QPoint(pDefTerrain->getX() * GameMap::Imagesize, (pDefTerrain->getY() - 2) * GameMap::Imagesize), 1000);
             pDmgTextAtk->addTweenWait(1500);
             pAtk->queueAnimation(pDmgTextAtk);
@@ -172,7 +172,7 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
                 pRet->setSound("talongunhit.wav", 1);
                 pDmgTextAtk->queueAnimation(pRet);
                 GameAnimation* pDmgTextDef = createAnimation(pAtkTerrain->getX(), pAtkTerrain->getY());
-                pDmgTextDef->addText(QString::number(Mainapp::roundUp(atkStartHp - atkEndHp)) + " Hp", -8, 0, 1.5f, Qt::GlobalColor::red);
+                pDmgTextDef->addText(QString::number(Mainapp::roundUp(Mainapp::roundUp(atkStartHp) - Mainapp::roundUp(atkEndHp))) + " Hp", -8, 0, 1.5f, Qt::GlobalColor::red);
                 pDmgTextDef->addTweenPosition(QPoint(pAtkTerrain->getX() * GameMap::Imagesize, (pAtkTerrain->getY() - 2) * GameMap::Imagesize), 1000);
                 pDmgTextDef->addTweenWait(1500);
                 pRet->queueAnimation(pDmgTextDef);
