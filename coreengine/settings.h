@@ -33,9 +33,11 @@ public:
     static void setLastSaveGame(const QString &LastSaveGame);
 
 
-    static void setUsername(const QString &Username);
-
+    static void setUsername(const QString &Username);    
 public slots:
+    static bool getStaticMarkedFields();
+    static void setStaticMarkedFields(bool StaticMarkedFields);
+
     static qint32 getMenuItemCount();
     static void setMenuItemCount(const qint32 &MenuItemCount);
 
@@ -266,6 +268,7 @@ private:
     static bool m_ShowCursor;
     static bool m_AutoEndTurn;
     static qint32 m_MenuItemCount;
+    static bool m_StaticMarkedFields;
 
     // internal members
     static Settings* m_pInstance;

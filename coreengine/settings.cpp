@@ -60,6 +60,7 @@ QString Settings::m_Username = "";
 bool Settings::m_ShowCursor = true;
 bool Settings::m_AutoEndTurn = false;
 qint32 Settings::m_MenuItemCount = 13;
+bool Settings::m_StaticMarkedFields = false;
 
 // add mod path
 QStringList Settings::m_activeMods;
@@ -320,7 +321,7 @@ void Settings::loadSettings(){
         Console::print(error, Console::eERROR);
         m_MenuItemCount = 13;
     }
-
+    m_StaticMarkedFields = settings.value("StaticMarkedFields", false).toBool();
 
     m_LastSaveGame = settings.value("LastSaveGame", "").toString();
     m_Username = settings.value("Username", "").toString();
@@ -413,6 +414,7 @@ void Settings::saveSettings(){
     settings.setValue("ShowCursor",                     m_ShowCursor);
     settings.setValue("AutoEndTurn",                    m_AutoEndTurn);
     settings.setValue("MenuItemCount",                  m_MenuItemCount);
+    settings.setValue("StaticMarkedFields",             m_StaticMarkedFields);
     settings.endGroup();
 
     // network
@@ -663,6 +665,16 @@ Qt::Key Settings::getKey_information()
 void Settings::setKey_information(const Qt::Key &key_information)
 {
     m_key_information = key_information;
+}
+
+bool Settings::getStaticMarkedFields()
+{
+    return m_StaticMarkedFields;
+}
+
+void Settings::setStaticMarkedFields(bool StaticMarkedFields)
+{
+    m_StaticMarkedFields = StaticMarkedFields;
 }
 
 qint32 Settings::getMenuItemCount()

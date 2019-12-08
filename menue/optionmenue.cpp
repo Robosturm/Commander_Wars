@@ -282,6 +282,21 @@ void OptionMenue::showGameplayAndKeys()
 
     pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Animated marked Tiles: "));
+    pTextfield->setPosition(10, y);
+    m_pOptions->addItem(pTextfield);
+    pCheckbox = new Checkbox();
+    pCheckbox->setChecked(!Settings::getStaticMarkedFields());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
+    {
+        Settings::setStaticMarkedFields(!value);
+    });
+    pCheckbox->setPosition(sliderOffset - 130, y);
+    m_pOptions->addItem(pCheckbox);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
     pTextfield->setHtmlText(tr("Ingame Keys"));
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
