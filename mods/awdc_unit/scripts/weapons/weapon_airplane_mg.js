@@ -48,8 +48,8 @@ WEAPON_AIRPLANE_MG.damageTable[idx][1] = 20;
 // ranged land units
 idx = getIndexOf1(WEAPON_AIRPLANE_MG.damageTable, "ARTILLERY");
 WEAPON_AIRPLANE_MG.damageTable[idx][1] = 15;
-idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ARTILLERYCRAFT");
-WEAPON_A_TANK_CANNON.damageTable[idx][1] = 15;
+idx = getIndexOf1(WEAPON_AIRPLANE_MG.damageTable, "ARTILLERYCRAFT");
+WEAPON_AIRPLANE_MG.damageTable[idx][1] = 15;
 idx = getIndexOf1(WEAPON_AIRPLANE_MG.damageTable, "ANTITANKCANNON");
 WEAPON_AIRPLANE_MG.damageTable[idx][1] = 5;
 idx = getIndexOf1(WEAPON_AIRPLANE_MG.damageTable, "MISSILE");

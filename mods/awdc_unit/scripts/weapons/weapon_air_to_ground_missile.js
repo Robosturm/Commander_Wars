@@ -34,8 +34,8 @@ WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 25;
 
 idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "ARTILLERY");
 WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 65;
-idx = getIndexOf1(WEAPON_A_TANK_CANNON.damageTable, "ARTILLERYCRAFT");
-WEAPON_A_TANK_CANNON.damageTable[idx][1] = 65;
+idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "ARTILLERYCRAFT");
+WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 65;
 idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "ANTITANKCANNON");
 WEAPON_AIR_TO_GROUND_MISSILE.damageTable[idx][1] = 35;
 idx = getIndexOf1(WEAPON_AIR_TO_GROUND_MISSILE.damageTable, "MISSILE");
