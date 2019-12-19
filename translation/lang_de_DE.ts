@@ -1395,11 +1395,16 @@
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="97"/>
-        <source>Import AWDC Aw4</source>
+        <source>Export AWDS Aws</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="98"/>
+        <source>Import AWDC Aw4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="99"/>
         <source>Import AW by Web</source>
         <translation type="unfinished"></translation>
     </message>

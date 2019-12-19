@@ -94,6 +94,7 @@ EditorMenue::EditorMenue()
     m_Topbar->addGroup(tr("Import/Export"));
     m_Topbar->addItem(tr("Import CoW Txt"), "IMPORTCOWTXT", 3);
     m_Topbar->addItem(tr("Import AWDS Aws"), "IMPORTAWDSAWS", 3);
+    m_Topbar->addItem(tr("Export AWDS Aws"), "EXPORTAWDSAWS", 3);
     m_Topbar->addItem(tr("Import AWDC Aw4"), "IMPORTAWDCAW4", 3);
     m_Topbar->addItem(tr("Import AW by Web"), "IMPORTAWDBYWEB", 3);
 
@@ -345,6 +346,17 @@ void EditorMenue::clickedTopbar(QString itemID)
         spFileDialog fileDialog = new FileDialog(path, wildcards);
         this->addChild(fileDialog);
         connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::importAWDSAwsMap, Qt::QueuedConnection);
+        connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
+        setFocused(false);
+    }
+    else if (itemID == "EXPORTAWDSAWS")
+    {
+        QVector<QString> wildcards;
+        wildcards.append("*.aws");
+        QString path = QCoreApplication::applicationDirPath() + "/maps";
+        spFileDialog fileDialog = new FileDialog(path, wildcards);
+        this->addChild(fileDialog);
+        connect(fileDialog.get(),  &FileDialog::sigFileSelected, this, &EditorMenue::exportAWDSAwsMap, Qt::QueuedConnection);
         connect(fileDialog.get(), &FileDialog::sigCancel, this, &EditorMenue::editFinishedCanceled, Qt::QueuedConnection);
         setFocused(false);
     }
@@ -1303,6 +1315,19 @@ void EditorMenue::importAWDSAwsMap(QString filename)
             GameMap::getInstance()->importAWDSMap(filename);
             m_EditorSelection->createPlayerSelection();
         }
+    }
+    setFocused(true);
+    pApp->continueThread();
+}
+
+void EditorMenue::exportAWDSAwsMap(QString filename)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+
+    if (filename.endsWith(".aws"))
+    {
+        GameMap::getInstance()->exportAWDSMap(filename);
     }
     setFocused(true);
     pApp->continueThread();

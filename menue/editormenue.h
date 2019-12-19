@@ -168,6 +168,11 @@ public slots:
      */
     void importAWDSAwsMap(QString filename);
     /**
+     * @brief exportAWDSAwsMap
+     * @param filename
+     */
+    void exportAWDSAwsMap(QString filename);
+    /**
      * @brief importAWDCAw4Map
      * @param filename
      */
