@@ -2386,16 +2386,17 @@ void Unit::showCORange()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    if (m_CORange.get() != nullptr)
+    if (m_UnitRank == GameEnums::UnitRank_CO0)
     {
-        if (m_UnitRank == GameEnums::UnitRank_CO0)
-        {
-            createCORange(m_pOwner->getCO(0)->getCORange());
-        }
-        else //if (m_UnitRank == GameEnums::UnitRank_CO1)
-        {
-            createCORange(m_pOwner->getCO(1)->getCORange());
-        }
+        createCORange(m_pOwner->getCO(0)->getCORange());
+    }
+    else if (m_UnitRank == GameEnums::UnitRank_CO1)
+    {
+        createCORange(m_pOwner->getCO(1)->getCORange());
+    }
+    else
+    {
+        // do nothing
     }
     pApp->continueThread();
 }
