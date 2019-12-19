@@ -49,7 +49,6 @@ namespace oxygine
         virtual void paintGL() override;
         virtual void initializeGL() override;
         virtual void resizeGL(int w, int h) override;
-
         // input events
         virtual void mousePressEvent(QMouseEvent *event) override;
         virtual void mouseReleaseEvent(QMouseEvent *event) override;

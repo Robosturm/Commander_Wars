@@ -406,7 +406,7 @@ qint32 Unit::getVision(QPoint position)
             }
         }
     }
-    rangeModifier += m_pTerrain->getBonusVision(this);
+    rangeModifier += pMap->getTerrain(position.x(), position.y())->getBonusVision(this);
     qint32 points = vision + rangeModifier;
 
     if (points < 1)
@@ -756,6 +756,8 @@ void Unit::unloadUnit(Unit* pUnit, QPoint position)
             {
 
                 pMap->getTerrain(position.x(), position.y())->setUnit(m_TransportUnits[i]);
+                m_TransportUnits[i]->showCORange();
+
                 m_TransportUnits.removeAt(i);
                 break;
             }
@@ -772,6 +774,7 @@ void Unit::unloadUnit(qint32 index, QPoint position)
         if (pMap != nullptr && pMap->onMap(position.x(), position.y()))
         {
             pMap->getTerrain(position.x(), position.y())->setUnit(m_TransportUnits[index]);
+            m_TransportUnits[index]->showCORange();
         }
         m_TransportUnits.removeAt(index);
     }
@@ -1888,17 +1891,7 @@ void Unit::moveUnitToField(qint32 x, qint32 y)
     spUnit pUnit = m_pTerrain->getSpUnit();
     // teleport unit to target position
     pMap->getTerrain(x, y)->setUnit(pUnit);
-    if (m_CORange.get() != nullptr)
-    {
-        if (m_UnitRank == GameEnums::UnitRank_CO0)
-        {
-            createCORange(m_pOwner->getCO(0)->getCORange());
-        }
-        else //if (m_UnitRank == GameEnums::UnitRank_CO1)
-        {
-            createCORange(m_pOwner->getCO(1)->getCORange());
-        }
-    }
+    showCORange();
     pUnit = nullptr;
     pApp->continueThread();
 }
@@ -2389,7 +2382,23 @@ void Unit::deserializeObject(QDataStream& pStream)
     }
 }
 
-
+void Unit::showCORange()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    if (m_CORange.get() != nullptr)
+    {
+        if (m_UnitRank == GameEnums::UnitRank_CO0)
+        {
+            createCORange(m_pOwner->getCO(0)->getCORange());
+        }
+        else //if (m_UnitRank == GameEnums::UnitRank_CO1)
+        {
+            createCORange(m_pOwner->getCO(1)->getCORange());
+        }
+    }
+    pApp->continueThread();
+}
 
 void Unit::createCORange(qint32 coRange)
 {

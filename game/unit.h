@@ -393,6 +393,10 @@ public slots:
      */
     void moveUnitToField(qint32 x, qint32 y);
     /**
+     * @brief showCORange
+     */
+    void showCORange();
+    /**
      * @brief removeUnit removes this from game
      */
     void removeUnit();

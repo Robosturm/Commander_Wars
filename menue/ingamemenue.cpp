@@ -334,6 +334,14 @@ void InGameMenue::keyInput(oxygine::KeyEvent event)
         {
             emit sigRightClickDown(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
         }
+        else if (cur == Settings::getKey_MapZoomIn())
+        {
+            GameMap::getInstance()->zoom(1);
+        }
+        else if (cur == Settings::getKey_MapZoomOut())
+        {
+            GameMap::getInstance()->zoom(-1);
+        }
     }
 }
 

@@ -336,13 +336,16 @@ void Mainapp::changeScreenMode(qint32 mode)
 }
 
 void Mainapp::changeScreenSize(qint32 width, qint32 heigth)
-{
+{    
     resize(width, heigth);
     setMinimumSize(QSize(width, heigth));
     setMaximumSize(QSize(width, heigth));
     getSettings()->setWidth(width);
     getSettings()->setHeight(heigth);
-    oxygine::Stage::instance->setSize(width, heigth);
+    if (oxygine::Stage::instance.get() != nullptr)
+    {
+        oxygine::Stage::instance->setSize(width, heigth);
+    }
     getSettings()->saveSettings();
     emit sigWindowLayoutChanged();
 }

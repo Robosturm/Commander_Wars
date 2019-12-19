@@ -37,6 +37,8 @@ Qt::Key Settings::m_key_moveMapUp   = Qt::Key_Up;
 Qt::Key Settings::m_key_moveMapDown = Qt::Key_Down;
 Qt::Key Settings::m_key_moveMapRight= Qt::Key_Right;
 Qt::Key Settings::m_key_moveMapLeft = Qt::Key_Left;
+Qt::Key Settings::m_key_MapZoomOut  = Qt::Key_Minus;
+Qt::Key Settings::m_key_MapZoomIn   = Qt::Key_Plus;
 
 QString Settings::m_language      = "en";
 // Sound
@@ -250,6 +252,21 @@ void Settings::loadSettings(){
         Console::print(error, Console::eERROR);
         m_key_moveMapLeft = Qt::Key_Left;
     }
+    m_key_MapZoomOut = static_cast<Qt::Key>(settings.value("key_MapZoomOut", Qt::Key_Minus).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_MapZoomOut";
+        Console::print(error, Console::eERROR);
+        m_key_moveMapLeft = Qt::Key_Minus;
+    }
+    m_key_MapZoomIn = static_cast<Qt::Key>(settings.value("key_MapZoomIn", Qt::Key_Plus).toInt(&ok));
+    if(!ok)
+    {
+        QString error = tr("Error in the Ini File: ") + "[Key] " + tr("Setting:") + " key_MapZoomIn";
+        Console::print(error, Console::eERROR);
+        m_key_MapZoomIn = Qt::Key_Plus;
+    }
+
     settings.endGroup();
 
     // Sound
@@ -393,6 +410,8 @@ void Settings::saveSettings(){
     settings.setValue("key_moveMapDown",            m_key_moveMapDown);
     settings.setValue("key_moveMapRight",           m_key_moveMapRight);
     settings.setValue("key_moveMapLeft",            m_key_moveMapLeft);
+    settings.setValue("key_MapZoomIn",              m_key_MapZoomIn);
+    settings.setValue("key_MapZoomOut",             m_key_MapZoomOut);
 
     settings.endGroup();
 
@@ -665,6 +684,26 @@ Qt::Key Settings::getKey_information()
 void Settings::setKey_information(const Qt::Key &key_information)
 {
     m_key_information = key_information;
+}
+
+Qt::Key Settings::getKey_MapZoomIn()
+{
+    return m_key_MapZoomIn;
+}
+
+void Settings::setKey_MapZoomIn(const Qt::Key &key_MapZoomIn)
+{
+    m_key_MapZoomIn = key_MapZoomIn;
+}
+
+Qt::Key Settings::getKey_MapZoomOut()
+{
+    return m_key_MapZoomOut;
+}
+
+void Settings::setKey_MapZoomOut(const Qt::Key &key_MapZoomOut)
+{
+    m_key_MapZoomOut = key_MapZoomOut;
 }
 
 bool Settings::getStaticMarkedFields()

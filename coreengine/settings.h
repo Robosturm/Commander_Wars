@@ -33,7 +33,9 @@ public:
     static void setLastSaveGame(const QString &LastSaveGame);
 
 
-    static void setUsername(const QString &Username);    
+    static void setUsername(const QString &Username);
+
+
 public slots:
     static bool getStaticMarkedFields();
     static void setStaticMarkedFields(bool StaticMarkedFields);
@@ -216,6 +218,12 @@ public slots:
 
     static Qt::Key getKey_information();
     static void setKey_information(const Qt::Key &key_information);
+
+    static Qt::Key getKey_MapZoomOut();
+    static void setKey_MapZoomOut(const Qt::Key &key_MapZoomOut);
+
+    static Qt::Key getKey_MapZoomIn();
+    static void setKey_MapZoomIn(const Qt::Key &key_MapZoomIn);
 private:
     // setting variables
     static qint32 m_x;
@@ -245,6 +253,8 @@ private:
     static Qt::Key m_key_moveMapDown;
     static Qt::Key m_key_moveMapRight;
     static Qt::Key m_key_moveMapLeft;
+    static Qt::Key m_key_MapZoomOut;
+    static Qt::Key m_key_MapZoomIn;
 
     static QString m_language;
     // Sound

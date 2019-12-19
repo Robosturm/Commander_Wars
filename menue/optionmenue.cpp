@@ -489,6 +489,28 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pSelectKey);
     y += 40;
 
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Key Zoom In: "));
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_MapZoomIn());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_MapZoomIn, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
+    pTextfield = new oxygine::TextField();
+    pTextfield->setStyle(style);
+    pTextfield->setHtmlText(tr("Key Zoom Out: "));
+    m_pOptions->addItem(pTextfield);
+    pTextfield->setPosition(10, y);
+    pSelectKey = new SelectKey(Settings::getKey_MapZoomOut());
+    pSelectKey->setPosition(sliderOffset - 130, y);
+    connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_MapZoomOut, Qt::QueuedConnection);
+    m_pOptions->addItem(pSelectKey);
+    y += 40;
+
     m_pOptions->setContentHeigth(20 + y);
     pApp->continueThread();
 }
