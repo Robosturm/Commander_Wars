@@ -1891,86 +1891,160 @@ void GameMap::exportAWDSMap(QString file)
                     }
                     else if (pBuilding->getBuildingID() == "ZBLACKHOLE_CANNON_N")
                     {
-                        //                                                            switch (pBuilding->getX() )G.Rechteck.X - X
-                        //                                                            case 1
-                        //                                                            Select case G.Rechteck.Y - Y
-                        //                                                            case 1
-                        //                                                            stream << static_cast<uchar>(10 * 16 + 15)
-                        //                                                                      stream << static_cast<uchar>(3)
-                        //                                                                      case 0
-                        //                                                                      stream << static_cast<uchar>(12 * 16 + 3)
-                        //                                                                      stream << static_cast<uchar>(3)
-                        //                                                                      case -1
-                        //                                                                      stream << static_cast<uchar>(13 * 16 + 7)
-                        //                                                                      stream << static_cast<uchar>(3)
-                        //                    }
-                        //                                                                      case 0
-                        //                                                                      Select case G.Rechteck.Y - Y
-                        //                                                                      case 1
-                        //                                                                      stream << static_cast<uchar>(11 * 16 + 0)
-                        //                                                                      stream << static_cast<uchar>(3)
-                        //                                                                      case 0
-                        //                                                                      stream << static_cast<uchar>(12 * 16 + 4)
-                        //                                                                      stream << static_cast<uchar>(3)
-                        //                                                                      case -1
-                        //                                                                      stream << static_cast<uchar>(13 * 16 + 8)
-                        //                                                                      stream << static_cast<uchar>(3)
-                        //                    }
-                        //                                                                      case -1
-                        //                                                                      Select case G.Rechteck.Y - Y
-                        //                                                                      case 1
-                        //                                                                      stream << static_cast<uchar>(11 * 16 + 1)
-                        //                                                                      stream << static_cast<uchar>(3)
-                        //                                                                      case 0
-                        //                                                                      stream << static_cast<uchar>(12 * 16 + 5)
-                        //                                                                      stream << static_cast<uchar>(3)
-                        //                                                                      case -1
-                        //                                                                      stream << static_cast<uchar>(13 * 16 + 9)
-                        //                                                                      stream << static_cast<uchar>(3)
-                        //                    }
-                        //                    }
-                        //                    }
-                        //                            else if (pBuilding->getBuildingID() == "SCHWARZE GESCHUETZ+S"
-                        //                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
-                        //                        Select case G.Rechteck.X - X
-                        //                            case 1
-                        //                        Select case G.Rechteck.Y - Y
-                        //                            case 1
-                        //                        stream << static_cast<uchar>(10 * 16 + 12)
-                        //                        stream << static_cast<uchar>(3)
-                        //                            case 0
-                        //                        stream << static_cast<uchar>(12 * 16 + 0)
-                        //                        stream << static_cast<uchar>(3)
-                        //                            case -1
-                        //                        stream << static_cast<uchar>(13 * 16 + 4)
-                        //                        stream << static_cast<uchar>(3)
-                        //                    }
-                        //                            case 0
-                        //                        Select case G.Rechteck.Y - Y
-                        //                            case 1
-                        //                        stream << static_cast<uchar>(10 * 16 + 13)
-                        //                        stream << static_cast<uchar>(3)
-                        //                            case 0
-                        //                        stream << static_cast<uchar>(12 * 16 + 1)
-                        //                        stream << static_cast<uchar>(3)
-                        //                            case -1
-                        //                        stream << static_cast<uchar>(13 * 16 + 5)
-                        //                        stream << static_cast<uchar>(3)
-                        //                    }
-                        //                            case -1
-                        //                        Select case G.Rechteck.Y - Y
-                        //                            case 1
-                        //                        stream << static_cast<uchar>(10 * 16 + 14)
-                        //                        stream << static_cast<uchar>(3)
-                        //                            case 0
-                        //                        stream << static_cast<uchar>(12 * 16 + 2)
-                        //                        stream << static_cast<uchar>(3)
-                        //                            case -1
-                        //                        stream << static_cast<uchar>(13 * 16 + 6)
-                        //                        stream << static_cast<uchar>(3)
-                        //                    }
-                        //                    }
-                        //                            else if (pBuilding->getBuildingID() == "SCHOCKLASER+S"
+                        QPoint offset = pBuilding->getOffset(pTerrain);
+                        switch (offset.x())
+                        {
+                            case 0:
+                            {
+                                switch (offset.y())
+                                {
+                                    case 0:
+                                    {
+                                        stream << static_cast<uchar>(10 * 16 + 15);
+                                        stream << static_cast<uchar>(3);
+                                        break;
+                                    }
+                                    case 1:
+                                    {
+                                        stream << static_cast<uchar>(12 * 16 + 3);
+                                        stream << static_cast<uchar>(3);
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        stream << static_cast<uchar>(13 * 16 + 7);
+                                        stream << static_cast<uchar>(3);
+                                        break;
+                                    }
+                                }
+                            }
+                            case 1:
+                            {
+                                switch (offset.y())
+                                {
+                                    case 0:
+                                    {
+                                        stream << static_cast<uchar>(11 * 16 + 0);
+                                        stream << static_cast<uchar>(3);
+                                        break;
+                                    }
+                                    case 1:
+                                    {
+                                        stream << static_cast<uchar>(12 * 16 + 4);
+                                        stream << static_cast<uchar>(3);
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        stream << static_cast<uchar>(13 * 16 + 8);
+                                        stream << static_cast<uchar>(3);
+                                        break;
+                                    }
+                                }
+                            }
+                            case 2:
+                            {
+                                switch (offset.y())
+                                {
+                                    case 0:
+                                    {
+                                        stream << static_cast<uchar>(11 * 16 + 1);
+                                        stream << static_cast<uchar>(3);
+                                        break;
+                                    }
+                                    case 1:
+                                    {
+                                        stream << static_cast<uchar>(12 * 16 + 5);
+                                        stream << static_cast<uchar>(3);
+                                        break;
+                                    }
+                                    case 2:
+                                        stream << static_cast<uchar>(13 * 16 + 9);
+                                        stream << static_cast<uchar>(3);
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                    else if (pBuilding->getBuildingID() == "ZBLACKHOLE_CANNON_S")
+                    {
+                        QPoint offset = pBuilding->getOffset(pTerrain);
+                        switch (offset.x())
+                        {
+                            case 0:
+                            {
+                                switch (offset.y())
+                                {
+                                    case 0:
+                                    {
+                                        stream << static_cast<uchar>(10 * 16 + 12);
+                                        stream << static_cast<uchar>(3);
+                                        break;
+                                    }
+                                    case 1:
+                                    {
+                                        stream << static_cast<uchar>(12 * 16 + 0);
+                                        stream << static_cast<uchar>(3);
+                                        break;
+                                    }
+                                    case 2:
+                                        stream << static_cast<uchar>(13 * 16 + 4);
+                                        stream << static_cast<uchar>(3);
+                                        break;
+                                }
+                            }
+                            case 1:
+                            {
+                                switch (offset.y())
+                                {
+                                    case 0:
+                                    {
+                                        stream << static_cast<uchar>(10 * 16 + 13);
+                                        stream << static_cast<uchar>(3);
+                                        break;
+                                    }
+                                    case 1:
+                                    {
+                                        stream << static_cast<uchar>(12 * 16 + 1);
+                                        stream << static_cast<uchar>(3);
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        stream << static_cast<uchar>(13 * 16 + 5);
+                                        stream << static_cast<uchar>(3);
+                                        break;
+                                    }
+                                }
+                            }
+                            case 2:
+                            {
+                                switch (offset.y())
+                                {
+                                    case 0:
+                                    {
+                                        stream << static_cast<uchar>(10 * 16 + 14);
+                                        stream << static_cast<uchar>(3);
+                                        break;
+                                    }
+                                    case 1:
+                                    {
+                                        stream << static_cast<uchar>(12 * 16 + 2);
+                                        stream << static_cast<uchar>(3);
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        stream << static_cast<uchar>(13 * 16 + 6);
+                                        stream << static_cast<uchar>(3);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                                                    else if (pBuilding->getBuildingID() == "ZDEATHRAY_S")
+                    {
                         //                        Dim G As ObjektGebaeude = Objektverwalter.Spielfeld.Landschaften(X, Y, ObjektSpielfeld.Bodenschlacht).Gebaeude
                         //                        Select case G.Rechteck.X - X
                         //                            case 1

@@ -44,6 +44,12 @@ void Building::init()
     pApp->getInterpreter()->doFunction(m_BuildingID, function, args);
 }
 
+QPoint Building::getOffset(Terrain* pTerrain)
+{
+    return QPoint(m_pTerrain->getX() - pTerrain->getX(),
+                  m_pTerrain->getY() - pTerrain->getY());
+}
+
 QStringList Building::getBaseTerrain()
 {
     Mainapp* pApp = Mainapp::getInstance();

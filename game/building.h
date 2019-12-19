@@ -67,7 +67,12 @@ public:
     {
         return 4;
     }
-
+    /**
+     * @brief getOffset
+     * @param pTerrain
+     * @return
+     */
+    QPoint getOffset(Terrain* pTerrain);
 signals:
 
 public slots:
