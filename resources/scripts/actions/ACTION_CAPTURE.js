@@ -40,7 +40,7 @@ var Constructor = function()
     {
         return ["AIRPORT", "FACTORY", "HARBOUR", "HQ", "LABOR", "MINE",
                 "PIPESTATION", "RADAR", "TOWER", "TOWN", "TEMPORARY_AIRPORT",
-                "TEMPORARY_HARBOUR"];
+                "TEMPORARY_HARBOUR", "OILRIG"];
     };
 
     this.getActionText = function()
