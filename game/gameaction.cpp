@@ -12,7 +12,7 @@ GameAction::GameAction()
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    buffer.open(QIODevice::ReadWrite);
+    buffer->open(QIODevice::ReadWrite);
     seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
 }
 
@@ -23,8 +23,13 @@ GameAction::GameAction(QString actionID)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-    buffer.open(QIODevice::ReadWrite);
+    buffer->open(QIODevice::ReadWrite);
     seed = QRandomGenerator::global()->bounded(std::numeric_limits<quint32>::max());
+}
+
+GameAction::~GameAction()
+{
+    delete buffer;
 }
 
 void GameAction::deleteAction()
@@ -45,6 +50,18 @@ void GameAction::setIsLocal(bool value)
 QVector<QPoint> GameAction::getMultiTurnPath() const
 {
     return m_MultiTurnPath;
+}
+
+void GameAction::reset()
+{
+    m_actionID = "";
+    costs = 0;
+    inputStep = 0;
+    m_MultiTurnPath.clear();
+    delete buffer;
+    buffer = new QBuffer();
+    buffer->open(QIODevice::ReadWrite);
+    actionData.setDevice(buffer);
 }
 
 void GameAction::setMultiTurnPath(const QVector<QPoint> &MultiTurnPath)
@@ -345,7 +362,7 @@ void GameAction::serializeObject(QDataStream& stream)
     }
     stream << inputStep;
     stream << costs;
-    QByteArray data = buffer.data();
+    QByteArray data = buffer->data();
     stream << static_cast<qint32>(data.size());
     for (qint32 i = 0; i < data.size(); i++)
     {
@@ -377,7 +394,7 @@ void GameAction::deserializeObject(QDataStream& stream)
     stream >> inputStep;
     stream >> costs;
     stream >> size;
-    buffer.seek(0);
+    buffer->seek(0);
     for (qint32 i = 0; i < size; i++)
     {
         qint8 value = 0;

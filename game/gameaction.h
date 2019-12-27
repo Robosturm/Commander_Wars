@@ -20,7 +20,7 @@ class GameAction : public QObject, public FileSerializable
 public:
     explicit GameAction();
     explicit GameAction(QString actionID);
-    virtual ~GameAction() = default;
+    virtual ~GameAction();
     /**
      * @brief setTarget sets the target for the current action
      * @param point
@@ -198,7 +198,7 @@ public slots:
      */
     void writeDataString(QString data)
     {
-        buffer.seek(buffer.size());
+        buffer->seek(buffer->size());
         actionData << data;
     }
     /**
@@ -217,7 +217,7 @@ public slots:
      */
     void writeDataInt32(qint32 data)
     {
-        buffer.seek(buffer.size());
+        buffer->seek(buffer->size());
         actionData << data;
     }
     /**
@@ -236,7 +236,7 @@ public slots:
      */
     void writeDataFloat(float data)
     {
-        buffer.seek(buffer.size());
+        buffer->seek(buffer->size());
         actionData << data;
     }
     /**
@@ -255,7 +255,7 @@ public slots:
     void startReading()
     {
         // go to start again
-        buffer.seek(0);
+        buffer->seek(0);
     }
     /**
      * @brief deleteAction
@@ -281,6 +281,10 @@ public slots:
      * @param MultiTurnPath
      */
     void setMultiTurnPath(const QVector<QPoint> &MultiTurnPath);
+    /**
+     * @brief reset
+     */
+    void reset();
 private:
     QString m_actionID;
     /**
@@ -302,8 +306,8 @@ private:
     /**
      * @brief actionData data needed to perform this action
      */
-    QBuffer buffer;
-    QDataStream actionData{&buffer};
+    QBuffer* buffer{new QBuffer()};
+    QDataStream actionData{buffer};
 
     quint32 seed;
     /**

@@ -85,10 +85,11 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
         else if (m_pGameAction != nullptr)
         {
             Mainapp::getInstance()->getAudioThread()->playSound("cancel.wav");
-            if (m_pGameAction->getInputStep() > 0)
+            if ((m_pGameAction->getInputStep() > 0) ||
+                (m_pGameAction->getActionID() != ""))
             {
                 // todo implement go back steps
-                cleanUpInput();
+                cancelActionInput();
             }
             else if (m_CurrentMenu.get() == nullptr)
             {
@@ -131,15 +132,16 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
 void HumanPlayerInput::cancelActionInput()
 {
     Unit* pUnit = m_pGameAction->getTargetUnit();
+    GameMenue* pMenue = GameMenue::getInstance();
+    pMenue->getCursor()->changeCursor("cursor+default");
     if ((pUnit != nullptr) &&
         (!pUnit->isStealthed(m_pPlayer)))
     {
-        if (m_pGameAction->getInputStep() == 0)
-        {
-            // go one step back :)
-            clearMenu();
-            createMarkedMoveFields();
-        }
+        // go one step back :)
+        clearMenu();
+        createMarkedMoveFields();
+        // reset action
+        m_pGameAction->reset();
     }
     else
     {
