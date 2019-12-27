@@ -92,7 +92,8 @@ bool TargetedUnitPathFindingSystem::finished(qint32 x, qint32 y, qint32 movement
     {
         m_FinishNodes.append(std::tuple<qint32, qint32, qint32, float>(x, y, movementCosts, m_Targets[index].z()));
     }
-    if (GameMap::getInstance()->getTerrain(x, y)->getUnit() == nullptr)
+    if ((GameMap::getInstance()->getTerrain(x, y)->getUnit() == nullptr) ||
+        m_pUnit->getIgnoreUnitCollision())
     {
         return (index >= 0);
     }
