@@ -979,7 +979,7 @@ void OptionMenue::showMods()
         }
     }
     m_pMods->setContentWidth(width);
-    m_pMods->setContentHeigth(20 + mods * 50);
+    m_pMods->setContentHeigth(50 + mods * 50);
     pApp->continueThread();
 }
 
