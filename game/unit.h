@@ -214,13 +214,13 @@ public slots:
      * @param x
      * @param y
      */
-    qint32 getBaseMovementCosts(qint32 x, qint32 y);
+    qint32 getBaseMovementCosts(qint32 x, qint32 y, qint32 curX = -1, qint32 curY = -1);
     /**
      * @brief getMovementCosts
      * @param x
      * @param y
      */
-    qint32 getMovementCosts(qint32 x, qint32 y);
+    qint32 getMovementCosts(qint32 x, qint32 y, qint32 curX = -1, qint32 curY = -1);
 
     float getHp() const;
     void setHp(const float &value);

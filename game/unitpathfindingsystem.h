@@ -35,7 +35,7 @@ public:
      * @param y
      * @return the exact costs needed to get onto the given field. -1 = unreachable
      */
-    virtual qint32 getCosts(qint32 index, qint32 x, qint32 y)  override;
+    virtual qint32 getCosts(qint32 index, qint32 x, qint32 y, qint32 curX, qint32 curY)  override;
     /**
      * @brief getCosts returns the costs need to go the given path
      * @param path the path the unit should go
@@ -69,7 +69,7 @@ public:
      * @param movepoints
      * @return
      */
-    bool isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qint32 movementCosts, qint32 movepoints);
+    bool isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qint32 curX, qint32 curY, qint32 movementCosts, qint32 movepoints);
 protected:
     Unit* m_pUnit;
     Player* m_pPlayer{nullptr};

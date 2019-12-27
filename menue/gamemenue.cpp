@@ -417,7 +417,8 @@ void GameMenue::performAction(GameAction* pGameAction)
                     if (point.x() != pMoveUnit->getX() ||
                         point.y() != pMoveUnit->getY())
                     {
-                        trapPathCost += pMoveUnit->getMovementCosts(point.x(), point.y());
+                        QPoint previousPoint = path[i + 1];
+                        trapPathCost += pMoveUnit->getMovementCosts(point.x(), point.y(), previousPoint.x(), previousPoint.y());
                     }
                 }
             }

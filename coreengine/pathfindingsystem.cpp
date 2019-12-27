@@ -14,7 +14,7 @@ PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
       m_width(width),
       m_heigth(heigth),
       costs(new qint32[static_cast<quint32>(width * heigth)]),
-      movecosts(new qint32[static_cast<quint32>(width * heigth)])
+      movecosts(new std::array<qint32, Directions::Max>[static_cast<quint32>(width * heigth)])
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -23,7 +23,10 @@ PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
     for (int i = 0; i < count; ++i)
     {
         costs[i] = infinite;
-        movecosts[i] = infinite;
+        for (quint32 i2 = 0; i2 < Directions::Max; i2++)
+        {
+            movecosts[i][i2] = infinite;
+        }
     }
 }
 
@@ -163,7 +166,7 @@ void PathFindingSystem::explore()
                 }
             }
             // get field costs from index
-            neighboursCosts = getCosts(neighboursIndex, neighboursX, neighboursY);
+            neighboursCosts = getCosts(neighboursIndex, neighboursX, neighboursY, pCurrent->x, pCurrent->y);
             if (neighboursCosts >= 0) // passable?
             {
                 // costs to reach this field
@@ -318,7 +321,8 @@ QVector<QPoint> PathFindingSystem::getPath(qint32 x, qint32 y)
                     }
                 }
                 qint32 newCosts = getTargetCosts(testX, testY);
-                if (newCosts >= 0 && newCosts <= nextCosts)
+                qint32 fieldCosts = getCosts(getIndex(testX, testY), testX, testY, fieldX, fieldY);
+                if (newCosts >= 0 && newCosts <= nextCosts && fieldCosts >= 0)
                 {
                     curX = testX;
                     curY = testY;

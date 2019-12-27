@@ -1165,7 +1165,7 @@ void CoreAI::checkIslandForUnloading(Unit* pLoadedUnit, QVector<qint32>& checked
                     qint32 unloadY = y + pUnloadArea->at(i3).y();
                     if (pMap->onMap(unloadX, unloadY) &&
                         pMap->getTerrain(unloadX, unloadY)->getUnit() == nullptr &&
-                        pLoadedUnit->getBaseMovementCosts(unloadX, unloadY) > 0 &&
+                        pLoadedUnit->getBaseMovementCosts(unloadX, unloadY, unloadX, unloadY) > 0 &&
                         !targets.contains(QVector3D(x, y, 1)))
                     {
                         targets.append(QVector3D(x, y, 1));

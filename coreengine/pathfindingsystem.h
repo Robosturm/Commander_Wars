@@ -1,17 +1,28 @@
 #ifndef PATHFINDINGSYSTEM_H
 #define PATHFINDINGSYSTEM_H
 
+#include "QtGlobal"
 #include <QObject>
 #include <QVector>
 #include <QPoint>
 #include <qlist.h>
 #include "coreengine/qmlvector.h"
 #include "oxygine-framework.h"
+#include "array"
 
 class PathFindingSystem : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
+    enum Directions
+    {
+        West,
+        East,
+        South,
+        North,
+        Max,
+        Unknown
+    };
     static const qint32 infinite;
     /**
      * @brief node we want to check or checked already
@@ -94,7 +105,7 @@ public:
      * @param y
      * @return
      */
-    virtual qint32 getCosts(qint32 index, qint32 x, qint32 y) = 0;
+    virtual qint32 getCosts(qint32 index, qint32 x, qint32 y, qint32 curX, qint32 curY) = 0;
     /**
      * @brief explores the map until the open list is empty or finished returned true.
      * This will also add the start point to the open list
@@ -159,11 +170,35 @@ public slots:
         return x + y * m_width;
     }
 protected:
+    inline qint32 getMoveDirection(qint32 curX, qint32 curY, qint32 targetX, qint32 targetY)
+    {
+        if (curX > targetX)
+        {
+            return Directions::West;
+        }
+        else if (curX < targetX)
+        {
+            return Directions::East;
+        }
+        else if (curY < targetY)
+        {
+            return Directions::South;
+        }
+        else if (curY > targetY)
+        {
+            return Directions::North;
+        }
+        else
+        {
+            return Directions::Unknown;
+        }
+    }
+protected:
     QPoint m_StartPoint;
     qint32 m_width;
     qint32 m_heigth;
     qint32 *costs;
-    qint32 *movecosts;
+    std::array<qint32, Directions::Max> *movecosts;
     QList<Node*> m_OpenList;
     qint32 m_FinishNode = -1;
     qint32 m_FinishNodeX = -1;

@@ -1492,7 +1492,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                             qint32 x = pBuilding->getX() + pFields->at(i3).x();
                             qint32 y = pBuilding->getY() + pFields->at(i3).y();
                             if (pMap->onMap(x, y) &&
-                                dummy.getBaseMovementCosts(x, y) > 0)
+                                dummy.getBaseMovementCosts(x, y, x, y) > 0)
                             {
                                 canMove = true;
                                 break;

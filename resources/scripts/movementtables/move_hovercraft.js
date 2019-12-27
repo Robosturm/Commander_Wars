@@ -46,16 +46,46 @@ var Constructor = function()
                                 ["REAF", 3],
                                 ["TELEPORTTILE", 0]];
 
-    this.getMovementpoints = function(terrain, unit)
+    this.getMovementpoints = function(terrain, unit, currentTerrain)
     {
         var id = terrain.getID();
+        var currentId = currentTerrain.getID();
         if ((id === "ZGATE_E_W" || id === "ZGATE_N_S") &&
             (unit !== null) &&
             (unit.getOwner().isAlly(terrain.getBuilding().getOwner())))
         {
             return 1;
         }
-        return MOVEMENTTABLE.getMovementpointsFromTable(terrain, MOVE_HOVERCRAFT.movementpointsTable);
+        var costs = MOVEMENTTABLE.getMovementpointsFromTable(terrain, MOVE_HOVERCRAFT.movementpointsTable);
+        var currentGroup = currentTerrain.getTerrainGroup();
+        var targetGroup = terrain.getTerrainGroup();
+        if (currentGroup === targetGroup)
+        {
+            return costs;
+        }
+        else
+        {
+
+            // from sea to land or vice versa
+            if (currentGroup === 0 || targetGroup === 0)
+            {
+                // fields we can move from land to sea
+                var crossable = ["HARBOUR", "BEACH", "TEMPORARY_HARBOUR"];
+                for (var i = 0; i < crossable.length; i++)
+                {
+                    if (crossable[i] === id ||
+                        crossable[i] === currentId)
+                    {
+                        return costs;
+                    }
+                }
+            }
+            else
+            {
+                return costs;
+            }
+        }
+        return -1;
     };
 };
 Constructor.prototype = MOVEMENTTABLE;

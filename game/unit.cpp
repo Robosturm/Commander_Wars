@@ -566,7 +566,7 @@ QString Unit::getTerrainAnimationBackground()
 bool Unit::canMoveOver(qint32 x, qint32 y)
 {
     GameMap* pMap = GameMap::getInstance();
-    if (MovementTableManager::getInstance()->getBaseMovementPoints(getMovementType(), pMap->getTerrain(x, y), this) > 0)
+    if (MovementTableManager::getInstance()->getBaseMovementPoints(getMovementType(), pMap->getTerrain(x, y), pMap->getTerrain(x, y), this) > 0)
     {
         return true;
     }
@@ -1222,15 +1222,24 @@ void Unit::setBaseMovementPoints(const qint32 &value)
     baseMovementPoints = value;
 }
 
-qint32 Unit::getBaseMovementCosts(qint32 x, qint32 y)
+qint32 Unit::getBaseMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY)
 {
     GameMap* pMap = GameMap::getInstance();
-    return MovementTableManager::getInstance()->getBaseMovementPoints(m_MovementType, pMap->getTerrain(x, y), this);
+    Terrain* pCurTerrain = nullptr;
+    if (curX >= 0 && curY >= 0)
+    {
+        pCurTerrain = pMap->getTerrain(curX, curY);
+    }
+    else
+    {
+        pCurTerrain = pMap->getTerrain(x, y);
+    }
+    return MovementTableManager::getInstance()->getBaseMovementPoints(m_MovementType, pMap->getTerrain(x, y), pCurTerrain, this);
 }
 
-qint32 Unit::getMovementCosts(qint32 x, qint32 y)
+qint32 Unit::getMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY)
 {
-    qint32 baseCosts = getBaseMovementCosts(x, y);
+    qint32 baseCosts = getBaseMovementCosts(x, y, curX, curY);
     qint32 costs = baseCosts;
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)

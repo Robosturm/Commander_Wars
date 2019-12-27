@@ -26,25 +26,25 @@ bool TerrainFindingSystem::finished(qint32, qint32, qint32)
 {
     return false;
 }
-qint32 TerrainFindingSystem::getCosts(qint32 index, qint32 x, qint32 y)
+qint32 TerrainFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32, qint32)
 {
-    if (movecosts[index] == infinite)
+    if (movecosts[index][0] == infinite)
     {
         GameMap* pMap = GameMap::getInstance();
         if (pMap->onMap(x, y))
         {
             if (pMap->getTerrain(x, y)->getID() == m_terrainID)
             {
-                movecosts[index] = 1;
-                return movecosts[index];
+                movecosts[index][0] = 1;
+                return movecosts[index][0];
             }
         }
-        movecosts[index] = -1;
-        return movecosts[index];
+        movecosts[index][0] = -1;
+        return movecosts[index][0];
     }
     else
     {
-        return movecosts[index];
+        return movecosts[index][0];
     }
 }
 

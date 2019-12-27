@@ -41,12 +41,12 @@ qint32 TargetedUnitPathFindingSystem::getRemainingCost(qint32 x, qint32 y, qint3
     return minCost;
 }
 
-qint32 TargetedUnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y)
+qint32 TargetedUnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 curX, qint32 curY)
 {
-    qint32 costs = UnitPathFindingSystem::getCosts(index, x, y);
-    if (costs < 0)
+    qint32 costs = UnitPathFindingSystem::getCosts(index, x, y, curX, curY);
+    if (costs < 0) // not crossable
     {
-        return movecosts[index];
+        return -1;
     }
     qint32 simulationCost = 0;
     if (m_pMoveCostMap != nullptr)
@@ -74,8 +74,8 @@ QPoint TargetedUnitPathFindingSystem::getReachableTargetField(qint32 movepoints)
         qint32 curX = m_FinishNodeX;
         qint32 curY = m_FinishNodeY;
         while (((curX != m_StartPoint.x() || curY != m_StartPoint.y()) &&
-                cost > movepoints) ||
-               (UnitPathFindingSystem::getCosts(getIndex(curX, curY), curX, curY) == 0))
+               (cost > movepoints)) ||
+               (path.size() > 1 && UnitPathFindingSystem::getCosts(getIndex(curX, curY), curX, curY, path[1].x(), path[1].y()) == 0))
         {
             path.removeFirst();
             cost = UnitPathFindingSystem::getCosts(path);

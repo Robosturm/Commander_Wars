@@ -9,6 +9,8 @@
 #include "game/player.h"
 #include "game/co.h"
 
+#include "qvector4d.h"
+
 UnitPathFindingSystem::UnitPathFindingSystem(Unit* pUnit, Player* pPlayer)
     : PathFindingSystem(pUnit->getX(), pUnit->getY(),
                         GameMap::getInstance()->getMapWidth(),
@@ -48,9 +50,14 @@ bool UnitPathFindingSystem::finished(qint32, qint32, qint32)
     return false;
 }
 
-qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y)
+qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y, qint32 curX, qint32 curY)
 {
-    if (movecosts[index] == infinite)
+    qint32 direction = getMoveDirection(curX, curY, x, y);
+    if (direction == Directions::Unknown)
+    {
+        return m_pUnit->getMovementCosts(x, y, x, y);
+    }
+    else if (movecosts[index][direction] == infinite)
     {
         GameMap* pMap = GameMap::getInstance();
         if (pMap->onMap(x, y))
@@ -65,29 +72,30 @@ qint32 UnitPathFindingSystem::getCosts(qint32 index, qint32 x, qint32 y)
                     if (m_pUnit->getOwner()->isEnemyUnit(pUnit) &&
                         (!pUnit->isStealthed(m_pPlayer)))
                     {
-                        movecosts[index] = -1;
-                        return movecosts[index];
+                        movecosts[index][direction] = -1;
+                        return movecosts[index][direction];
                     }
                 }
             }
-            movecosts[index] = m_pUnit->getMovementCosts(x, y);
-            return movecosts[index];
+            movecosts[index][direction] = m_pUnit->getMovementCosts(x, y, curX, curY);
+            return movecosts[index][direction];
         }
         else
         {
-            movecosts[index] = -1;
+            movecosts[index][direction] = -1;
             return costs[index];
         }
     }
-    return movecosts[index];
+    return movecosts[index][direction];
 }
 
 qint32 UnitPathFindingSystem::getCosts(QVector<QPoint> path)
 {
     qint32 totalCosts = 0;
-    for (qint32 i = 0; i < path.size() - 1; i++)
+    for (qint32 i = path.size() - 2; i >= 0; i--)
     {
-        totalCosts += UnitPathFindingSystem::getCosts(getIndex(path[i].x(), path[i].y()), path[i].x(), path[i].y());
+        totalCosts += UnitPathFindingSystem::getCosts(getIndex(path[i].x(), path[i].y()), path[i].x(), path[i].y(),
+                                                      path[i + 1].x(), path[i + 1].y());
     }
     return totalCosts;
 }
@@ -95,10 +103,10 @@ qint32 UnitPathFindingSystem::getCosts(QVector<QPoint> path)
 QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target, qint32 movepoints, bool direct)
 {
     GameMap* pMap = GameMap::getInstance();
-    QList<QPoint> usedNodes;
-    QList<QPoint> nextNodes;
-    QList<QPoint> currentNodes;
-    currentNodes.append(target);
+    QList<QVector4D> usedNodes;
+    QList<QVector4D> nextNodes;
+    QList<QVector4D> currentNodes;
+    currentNodes.append(QVector4D(target.x(), target.y(), target.x(), target.y()));
     while (currentNodes.size() > 0 || nextNodes.size() > 0)
     {
         if (currentNodes.size() == 0)
@@ -107,14 +115,14 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target
             currentNodes.append(nextNodes);
             nextNodes.clear();
         }
-        QPoint currentNode = currentNodes.first();
+        QVector4D currentNode = currentNodes.first();
         currentNodes.removeFirst();
         usedNodes.append(currentNode);
         qint32 currentCost = getTargetCosts(currentNode.x(), currentNode.y());
         Unit* pNodeUnit = pMap->getTerrain(currentNode.x(), currentNode.y())->getUnit();
         // empty field or unit ignores collision and can move on the field
         // or we are on this field
-        if (isCrossable(pNodeUnit, currentNode.x(), currentNode.y(),
+        if (isCrossable(pNodeUnit, currentNode.x(), currentNode.y(), currentNode.z(), currentNode.w(),
                         getTargetCosts(currentNode.x(), currentNode.y()), movepoints))
         {
 
@@ -125,31 +133,31 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QPoint target
             // check surrounding nodes
             for (qint32 i = 0; i < 4; i++)
             {
-                QPoint test;
+                QVector4D test;
                 switch (i)
                 {
                     case 0:
                     {
-                        test = QPoint(currentNode.x() + 1,
-                                      currentNode.y());
+                        test = QVector4D(currentNode.x() + 1, currentNode.y(),
+                                         currentNode.x(), currentNode.y());
                         break;
                     }
                     case 1:
                     {
-                        test = QPoint(currentNode.x() - 1,
-                                      currentNode.y());
+                        test = QVector4D(currentNode.x() - 1, currentNode.y(),
+                                         currentNode.x(), currentNode.y());
                         break;
                     }
                     case 2:
                     {
-                        test = QPoint(currentNode.x(),
-                                      currentNode.y() + 1);
+                        test = QVector4D(currentNode.x(), currentNode.y() + 1,
+                                         currentNode.x(), currentNode.y());
                         break;
                     }
                     default:
                     {
-                        test = QPoint(currentNode.x(),
-                                      currentNode.y() - 1);
+                        test = QVector4D(currentNode.x(), currentNode.y() - 1,
+                                         currentNode.x(), currentNode.y());
                         break;
                     }
                 }
@@ -189,8 +197,9 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoin
         for (qint32 i = path.size() - 2; i >= 0; i--)
         {
             Unit* pNodeUnit = pMap->getTerrain(path[i].x(), path[i].y())->getUnit();
-            currentCosts += getCosts(getIndex(path[i].x(), path[i].y()), path[i].x(), path[i].y());
-            if (isCrossable(pNodeUnit, path[i].x(), path[i].y(), currentCosts, movepoints))
+            currentCosts += getCosts(getIndex(path[i].x(), path[i].y()), path[i].x(), path[i].y(),
+                                     path[i + 1].x(), path[i + 1].y());
+            if (isCrossable(pNodeUnit, path[i].x(), path[i].y(), path[i + 1].x(), path[i + 1].y(), currentCosts, movepoints))
             {
                 lastValidPoint = path[i];
                 for (qint32 i2 = 0; i2 < buffer.size(); i2++)
@@ -221,12 +230,12 @@ QVector<QPoint> UnitPathFindingSystem::getClosestReachableMovePath(QVector<QPoin
     }
 }
 
-bool UnitPathFindingSystem::isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qint32 movementCosts, qint32 movepoints)
+bool UnitPathFindingSystem::isCrossable(Unit* pNodeUnit, qint32 x, qint32 y, qint32 curX, qint32 curY, qint32 movementCosts, qint32 movepoints)
 {
     if ((pNodeUnit == nullptr || // empty field
          (m_pUnit->getIgnoreUnitCollision() && pNodeUnit != nullptr && m_pUnit->getOwner()->isEnemyUnit(pNodeUnit)) || // oozium move
          (pNodeUnit == m_pUnit)) && // current field
-        (getCosts(getIndex(x, y), x, y) > 0) &&
+        (getCosts(getIndex(x, y), x, y, curX, curY) > 0) &&
         (movepoints < 0 || movementCosts <= movepoints)) // inside given cost limits
     {
         return true;

@@ -40,7 +40,7 @@ public:
      * @param y
      * @return the exact costs needed to get onto the given field. -1 = unreachable
      */
-    virtual qint32 getCosts(qint32 index, qint32 x, qint32 y)  override;
+    virtual qint32 getCosts(qint32 index, qint32 x, qint32 y, qint32 curX, qint32 curY)  override;
 private:
     QVector<QVector3D> m_Targets;
     QVector<std::tuple<qint32, qint32, qint32, float>> m_FinishNodes;

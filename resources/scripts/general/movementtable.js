@@ -5,7 +5,7 @@ var MOVEMENTTABLE =
     {
         return qsTr("Unknown");
     },
-    getMovementpoints : function(terrain, unit)
+    getMovementpoints : function(terrain, unit, currentTerrain)
     {
         return -1;
     },

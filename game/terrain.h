@@ -113,6 +113,11 @@ public:
 
 public slots:
     /**
+     * @brief getTerrainGroup
+     * @return
+     */
+    qint32 getTerrainGroup();
+    /**
      * @brief getDescription
      * @return
      */

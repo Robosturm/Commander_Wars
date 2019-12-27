@@ -166,6 +166,18 @@ void Terrain::createBaseTerrain(QString  currentTerrainID)
     }
 }
 
+qint32 Terrain::getTerrainGroup()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getTerrainGroup";
+    QJSValue ret = pApp->getInterpreter()->doFunction(terrainID, function1);
+    if (ret.isNumber())
+    {
+        return ret.toInt();
+    }
+    return 0;
+}
+
 QString Terrain::getDescription()
 {
     Mainapp* pApp = Mainapp::getInstance();
