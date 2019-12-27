@@ -136,6 +136,7 @@ void Textbox::KeyInput(oxygine::KeyEvent event)
     {
         Mainapp* pApp = Mainapp::getInstance();
         pApp->suspendThread();
+        restartTooltiptimer();
         if ((event.getModifiers() & Qt::KeyboardModifier::ControlModifier) > 0)
         {
             switch(cur)

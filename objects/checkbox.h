@@ -1,14 +1,14 @@
 #ifndef CHECKBOX_H
 #define CHECKBOX_H
 
-#include <QObject>
+#include "objects/tooltip.h"
 
 #include "oxygine-framework.h"
 
 class Checkbox;
 typedef oxygine::intrusive_ptr<Checkbox> spCheckbox;
 
-class Checkbox : public QObject, public oxygine::Sprite
+class Checkbox : public Tooltip
 {
     Q_OBJECT
 public:

@@ -7,10 +7,12 @@
 
 #include "oxygine/KeyEvent.h"
 
+#include "objects/tooltip.h"
+
 class TimeSpinBox;
 typedef oxygine::intrusive_ptr<TimeSpinBox> spTimeSpinBox;
 
-class TimeSpinBox : public QObject, public oxygine::Actor
+class TimeSpinBox : public Tooltip
 {
     Q_OBJECT
 public:

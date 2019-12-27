@@ -84,6 +84,7 @@ void DialogModifyUnit::updateData()
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
     spSlider pSlider = new Slider(pApp->getSettings()->getWidth() - 40 - sliderOffset, 1, 10, tr("HP"));
+    pSlider->setTooltipText(tr("Selects the HP of the current unit. This is immediatly applied."));
     pSlider->setPosition(sliderOffset - 160, y);
     pSlider->setCurrentValue(m_pUnit->getHpRounded());
     connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
@@ -100,6 +101,7 @@ void DialogModifyUnit::updateData()
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
         spSlider pSlider = new Slider(pApp->getSettings()->getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxFuel(), tr("Fuel"));
+        pSlider->setTooltipText(tr("Selects the Fuel of the current unit. This is immediatly applied."));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getFuel());
         connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
@@ -125,6 +127,7 @@ void DialogModifyUnit::updateData()
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
         spSlider pSlider = new Slider(pApp->getSettings()->getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxAmmo1(), tr("Ammo"));
+        pSlider->setTooltipText(tr("Selects the Ammo 1 of the current unit. This is immediatly applied."));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getAmmo1());
         connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
@@ -150,6 +153,7 @@ void DialogModifyUnit::updateData()
         pLabel->setPosition(10, y);
         m_pPanel->addItem(pLabel);
         spSlider pSlider = new Slider(pApp->getSettings()->getWidth() - 40 - sliderOffset, 0, m_pUnit->getMaxAmmo2(), tr("Ammo"));
+        pSlider->setTooltipText(tr("Selects the Ammo 2 of the current unit. This is immediatly applied."));
         pSlider->setPosition(sliderOffset - 160, y);
         pSlider->setCurrentValue(m_pUnit->getAmmo2());
         connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
@@ -180,6 +184,7 @@ void DialogModifyUnit::updateData()
         items.append(tr("Player ") + QString::number(i + 1));
     }
     spDropDownmenu pDropdownmenu = new DropDownmenu(300, items);
+    pDropdownmenu->setTooltipText(tr("Selects the Owner of the current unit. This is immediatly applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(m_pUnit->getOwner()->getPlayerID());
     connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
@@ -197,6 +202,7 @@ void DialogModifyUnit::updateData()
     m_pPanel->addItem(pLabel);
     items = {tr("Normal"), tr("Offensive"), tr("Defensive"), tr("Hold")};
     pDropdownmenu = new DropDownmenu(300, items);
+    pDropdownmenu->setTooltipText(tr("Selects how the AI uses this unit. This is immediatly applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(static_cast<qint32>(m_pUnit->getAiMode()));
     connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
@@ -213,6 +219,7 @@ void DialogModifyUnit::updateData()
     m_pPanel->addItem(pLabel);
     items = {tr("Soldier"), tr("Lieutenant"), tr("General"), tr("Veteran"), tr("CO 1"), tr("CO 2")};
     pDropdownmenu = new DropDownmenu(300, items);
+    pDropdownmenu->setTooltipText(tr("Selects the Rank of this Unit. CO Ranks may be replaced with Veteran. This is immediatly applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(static_cast<qint32>(m_pUnit->getUnitRank()));
     connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
@@ -258,6 +265,7 @@ void DialogModifyUnit::addLoadUnit(qint32 index, qint32 sliderOffset, qint32& y)
     }
     spDropDownmenu pDropdownmenu = new DropDownmenu(300, items);
     pDropdownmenu->setPosition(sliderOffset - 160, y);
+    pDropdownmenu->setTooltipText(tr("Selects the unit loaded by the transporter. - for no unit. This is immediatly applied."));
     Unit* pLoadedUnit = m_pUnit->getLoadedUnit(index);
     if (pLoadedUnit != nullptr)
     {

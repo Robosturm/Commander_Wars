@@ -5,10 +5,12 @@
 #include <QTime>
 #include "oxygine-framework.h"
 
+#include "objects/tooltip.h"
+
 class V_Scrollbar;
 typedef oxygine::intrusive_ptr<V_Scrollbar> spV_Scrollbar;
 
-class V_Scrollbar : public QObject, public oxygine::Actor
+class V_Scrollbar : public Tooltip
 {
     Q_OBJECT
 public:

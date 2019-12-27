@@ -5,7 +5,6 @@
 #include "coreengine/mainapp.h"
 
 Multislider::Multislider(QVector<QString> texts, qint32 width, QVector<qint32> values)
-    : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());

@@ -59,6 +59,7 @@ void RuleSelection::showRuleSelection()
         weatherChances.append(pMap->getGameRules()->getWeatherChance(pWeather->getWeatherId()));
     }
     m_pWeatherSlider = new Multislider(weatherStrings, static_cast<qint32>(getWidth()), weatherChances);
+    m_pWeatherSlider->setTooltipText(tr("The chance each weather can appear if random weather is active."));
     m_pWeatherSlider->setPosition(30, y);
     addChild(m_pWeatherSlider);
     connect(m_pWeatherSlider.get(), &Multislider::signalSliderChanged, this, &RuleSelection::weatherChancesChanged, Qt::QueuedConnection);
@@ -70,6 +71,7 @@ void RuleSelection::showRuleSelection()
     textField->setPosition(30, y);
     addChild(textField);
     spCheckbox pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("If checked random weather appears during the game."));
     pCheckbox->setPosition(textWidth, textField->getY());
     addChild(pCheckbox);
     pCheckbox->setChecked(pMap->getGameRules()->getRandomWeather());
@@ -83,6 +85,7 @@ void RuleSelection::showRuleSelection()
     addChild(textField);
 
     spDropDownmenu startWeather = new DropDownmenu(200, weatherStrings);
+    startWeather->setTooltipText(tr("The weather at the start of the game."));
     startWeather->setPosition(textWidth, textField->getY());
     startWeather->setCurrentItem(pMap->getGameRules()->getCurrentWeatherId());
     connect(startWeather.get(), &DropDownmenu::sigItemChanged, this, &RuleSelection::startWeatherChanged, Qt::QueuedConnection);
@@ -96,6 +99,7 @@ void RuleSelection::showRuleSelection()
     textField->setPosition(30, y);
     addChild(textField);
     pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("If checked you can see the weather for the next few turns for each player."));
     pCheckbox->setPosition(textWidth, textField->getY());
     addChild(pCheckbox);
     pCheckbox->setChecked(pMap->getGameRules()->getWeatherPrediction());
@@ -117,6 +121,7 @@ void RuleSelection::showRuleSelection()
     textField->setPosition(30, y);
     addChild(textField);
     pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("If checked units can gain ranks by killing other units."));
     pCheckbox->setPosition(textWidth, textField->getY());
     addChild(pCheckbox);
     pCheckbox->setChecked(pMap->getGameRules()->getRankingSystem());
@@ -143,6 +148,7 @@ void RuleSelection::showRuleSelection()
     textField->setPosition(30, y);
     addChild(textField);
     pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("If checked CO's can't use CO-Powers."));
     pCheckbox->setPosition(textWidth, textField->getY());
     addChild(pCheckbox);
     pCheckbox->setChecked(pMap->getGameRules()->getNoPower());
@@ -154,6 +160,7 @@ void RuleSelection::showRuleSelection()
     textField->setPosition(30, y);
     addChild(textField);
     pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("If checked the AI attacks pipe seams and walls etc."));
     pCheckbox->setPosition(textWidth, textField->getY());
     addChild(pCheckbox);
     pCheckbox->setChecked(pMap->getGameRules()->getAiAttackTerrain());
@@ -166,6 +173,7 @@ void RuleSelection::showRuleSelection()
     addChild(textField);
     QVector<QString> fogModes = {tr("Off"), tr("Fog of War")};
     spDropDownmenu fogOfWar = new DropDownmenu(200, fogModes);
+    fogOfWar->setTooltipText(tr("Select the fog of war rule for the current game."));
     fogOfWar->setPosition(textWidth, textField->getY());
     fogOfWar->setCurrentItem(pMap->getGameRules()->getFogMode());
     connect(fogOfWar.get(), &DropDownmenu::sigItemChanged, pMap->getGameRules(), [=](qint32 value)
@@ -180,6 +188,7 @@ void RuleSelection::showRuleSelection()
     textField->setPosition(30, y);
     addChild(textField);
     spSpinBox pSpinbox = new SpinBox(150, 0, 9999);
+    pSpinbox->setTooltipText(tr("The maximum amount of units a single player can own at any time."));
     pSpinbox->setInfinityValue(0.0);
     pSpinbox->setPosition(textWidth, textField->getY());
     addChild(pSpinbox);
@@ -193,6 +202,7 @@ void RuleSelection::showRuleSelection()
     textField->setPosition(30, y);
     addChild(textField);
     spTimeSpinBox pTimeSpinbox = new TimeSpinBox(150);
+    pTimeSpinbox->setTooltipText(tr("The maximum amount of time in hh:mm::ss for each turn for each player."));
     pTimeSpinbox->setPosition(textWidth, textField->getY());
     addChild(pTimeSpinbox);
     pTimeSpinbox->setCurrentValue(pMap->getGameRules()->getRoundTimeMs());
@@ -213,6 +223,7 @@ void RuleSelection::showRuleSelection()
     {
         QString ruleID = pGameRuleManager->getVictoryRuleID(i);
         spVictoryRule pRule = new VictoryRule(ruleID);
+        QString descriptiopn = pRule->getRuleDescription();
         QString inputType = pRule->getRuleType().toLower();
         if (inputType == "checkbox")
         {
@@ -229,6 +240,7 @@ void RuleSelection::showRuleSelection()
             textField->setPosition(30, i * 50 + y);
             addChild(textField);
             spCheckbox pCheckbox = new Checkbox();
+            pCheckbox->setTooltipText(descriptiopn);
             pCheckbox->setPosition(textWidth, textField->getY());
             addChild(pCheckbox);
             pCheckbox->setChecked(defaultValue);
@@ -259,6 +271,7 @@ void RuleSelection::showRuleSelection()
             textField->setPosition(30, i * 50 + y);
             addChild(textField);
             spSpinBox pSpinbox = new SpinBox(200, startValue, 9999);
+            pSpinbox->setTooltipText(descriptiopn);
             pSpinbox->setPosition(textWidth, textField->getY());
             pSpinbox->setInfinityValue(startValue);
             addChild(pSpinbox);

@@ -38,6 +38,7 @@ DialogRandomMap::DialogRandomMap()
     text->setPosition(30, y);
     pPanel->addItem(text);
     m_MapName = new Textbox(pApp->getSettings()->getWidth() - 150 - width);
+    m_MapName->setTooltipText(tr("Selects the name of the new map."));
     m_MapName->setPosition(text->getX() + width, text->getY());
     m_MapName->setCurrentText("");
     pPanel->addItem(m_MapName);
@@ -50,6 +51,7 @@ DialogRandomMap::DialogRandomMap()
     text->setPosition(30, y);
     pPanel->addItem(text);
     m_MapAuthor = new Textbox(pApp->getSettings()->getWidth() - 150 - width);
+    m_MapAuthor->setTooltipText(tr("Selects the author of the new map."));
     m_MapAuthor->setPosition(text->getX() + width, text->getY());
     m_MapAuthor->setCurrentText(Settings::getUsername());
     pPanel->addItem(m_MapAuthor);
@@ -62,6 +64,7 @@ DialogRandomMap::DialogRandomMap()
     text->setPosition(30, y);
     pPanel->addItem(text);
     m_MapDescription = new Textbox(pApp->getSettings()->getWidth() - 150 - width);
+    m_MapDescription->setTooltipText(tr("Selects the description for the new map."));
     m_MapDescription->setPosition(text->getX() + width, text->getY());
     m_MapDescription->setCurrentText("");
     pPanel->addItem(m_MapDescription);
@@ -74,6 +77,7 @@ DialogRandomMap::DialogRandomMap()
     text->setPosition(30, 5 + y );
     pPanel->addItem(text);
     m_MapWidth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
+    m_MapWidth->setTooltipText(tr("Selects the width for the new map."));
     m_MapWidth->setPosition(text->getX() + width, text->getY());
     m_MapWidth->setCurrentValue(20);
     pPanel->addItem(m_MapWidth);
@@ -86,6 +90,7 @@ DialogRandomMap::DialogRandomMap()
     text->setPosition(30, 5 + y + text->getHeight());
     pPanel->addItem(text);
     m_MapHeigth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
+    m_MapHeigth->setTooltipText(tr("Selects the heigth for the new map."));
     m_MapHeigth->setPosition(text->getX() + width, text->getY());
     m_MapHeigth->setCurrentValue(20);
     pPanel->addItem(m_MapHeigth);
@@ -98,6 +103,7 @@ DialogRandomMap::DialogRandomMap()
     text->setPosition(30, 5 + y + text->getHeight());
     pPanel->addItem(text);
     m_MapPlayerCount = new SpinBox(300, 2, 40, SpinBox::Mode::Int);
+    m_MapPlayerCount->setTooltipText(tr("Selects the amount of players for the new map."));
     m_MapPlayerCount->setPosition(text->getX() + width, text->getY());
     m_MapPlayerCount->setCurrentValue(4);
     pPanel->addItem(m_MapPlayerCount);
@@ -110,6 +116,7 @@ DialogRandomMap::DialogRandomMap()
     text->setPosition(30, 5 + y + text->getHeight());
     pPanel->addItem(text);
     m_Seed = new SpinBox(300, 0, std::numeric_limits<qint32>::max() - 1, SpinBox::Mode::Int);
+    m_Seed->setTooltipText(tr("The seed to generate the new map. Same map settings with the same seed generate the same map."));
     m_Seed->setPosition(text->getX() + width, text->getY());
     m_Seed->setCurrentValue(Mainapp::randInt(0, std::numeric_limits<qint32>::max() - 1));
     pPanel->addItem(m_Seed);
@@ -122,6 +129,7 @@ DialogRandomMap::DialogRandomMap()
     text->setPosition(30, 5 + y + text->getHeight());
     pPanel->addItem(text);
     m_CreateRoad = new Checkbox();
+    m_CreateRoad->setTooltipText(tr("If selected roads are created between the HQ's of the players."));
     m_CreateRoad->setChecked(true);
     m_CreateRoad->setPosition(text->getX() + width, text->getY());
     pPanel->addItem(m_CreateRoad);
@@ -138,6 +146,7 @@ DialogRandomMap::DialogRandomMap()
     QVector<QString> terrainStrings = {tr("Plains"), tr("Forest"), tr("Mountain"), tr("Sea"), tr("Town")};
     QVector<qint32> terrainChances = {50, 17, 16, 0, 17};
     m_TerrainChances = new Multislider(terrainStrings, pApp->getSettings()->getWidth() - 150, terrainChances);
+    m_TerrainChances->setTooltipText(tr("The percent distribution between the different terrains and buildings."));
     m_TerrainChances->setPosition(30, y);
     pPanel->addItem(m_TerrainChances);
 
@@ -153,6 +162,7 @@ DialogRandomMap::DialogRandomMap()
     QVector<QString> buildingStrings = {tr("Factory"), tr("Airport"), tr("Harbour"), tr("Town")};
     QVector<qint32> buildingChances = {20, 10, 10, 60};
     m_BuildingChances = new Multislider(buildingStrings, pApp->getSettings()->getWidth() - 150, buildingChances);
+    m_BuildingChances->setTooltipText(tr("The percent distribution between the different buildings when a building is placed."));
     m_BuildingChances->setPosition(30, y);
     pPanel->addItem(m_BuildingChances);
 

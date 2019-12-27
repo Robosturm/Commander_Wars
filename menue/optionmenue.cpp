@@ -167,6 +167,7 @@ void OptionMenue::showGameplayAndKeys()
     spDropDownmenu pAnimationMode = new DropDownmenu(400, items);
     pAnimationMode->setCurrentItem(static_cast<qint32>(pSettings->getShowAnimations()));
     pAnimationMode->setPosition(sliderOffset - 130, y);
+    pAnimationMode->setTooltipText(tr("Select which ingame animations are played."));
     m_pOptions->addItem(pAnimationMode);
     connect(pAnimationMode.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
@@ -181,6 +182,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pTextfield);
     items = {tr("Detailed"), tr("Overworld")};
     spDropDownmenu pBattleAnimationMode = new DropDownmenu(400, items);
+    pBattleAnimationMode->setTooltipText(tr("Selects which battle animations are played when fighting an enemy."));
     pBattleAnimationMode->setCurrentItem(static_cast<qint32>(pSettings->getBattleAnimations()));
     pBattleAnimationMode->setPosition(sliderOffset - 130, y);
     m_pOptions->addItem(pBattleAnimationMode);
@@ -196,6 +198,7 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSlider pAnimationSpeed = new Slider(pApp->getSettings()->getWidth() - 20 - sliderOffset, 1, 100, "");
+    pAnimationSpeed->setTooltipText(tr("Selects the speed at which animations are played. Except battle animations."));
     pAnimationSpeed->setPosition(sliderOffset - 130, y);
     pAnimationSpeed->setCurrentValue(static_cast<qint32>(pSettings->getAnimationSpeedValue()));
     m_pOptions->addItem(pAnimationSpeed);
@@ -211,6 +214,7 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSlider pBattleAnimationSpeed = new Slider(pApp->getSettings()->getWidth() - 20 - sliderOffset, 1, 100, "");
+    pBattleAnimationSpeed->setTooltipText(tr("Selects the speed at which battle animations are played."));
     pBattleAnimationSpeed->setPosition(sliderOffset - 130, y);
     pBattleAnimationSpeed->setCurrentValue(static_cast<qint32>(pSettings->getBattleAnimationSpeedValue()));
     m_pOptions->addItem(pBattleAnimationSpeed);
@@ -226,6 +230,7 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSlider pMultiTurnCounter = new Slider(pApp->getSettings()->getWidth() - 20 - sliderOffset, 1, 10, "");
+    pMultiTurnCounter->setTooltipText(tr("Selects the amount of turns you can preplan with a unit."));
     pMultiTurnCounter->setPosition(sliderOffset - 130, y);
     pMultiTurnCounter->setCurrentValue(static_cast<qint32>(pSettings->getMultiTurnCounter()));
     m_pOptions->addItem(pMultiTurnCounter);
@@ -241,6 +246,7 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spCheckbox pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("If active the game will automatically end your turn if you can't give any orders anymore."));
     pCheckbox->setChecked(Settings::getAutoEndTurn());
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
     {
@@ -271,6 +277,7 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("If active the windows cursors is hidden during a game. Giving you a more Gameboy like feeling."));
     pCheckbox->setChecked(Settings::getShowCursor());
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
     {
@@ -286,6 +293,7 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("If active the currently selectable fiedls get animated."));
     pCheckbox->setChecked(!Settings::getStaticMarkedFields());
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
     {
@@ -308,6 +316,7 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSelectKey pSelectKey = new SelectKey(Settings::getKey_up());
+    pSelectKey->setTooltipText(tr("Key for moving the cursor up."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_up, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -319,6 +328,7 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pSelectKey = new SelectKey(Settings::getKey_left());
+    pSelectKey->setTooltipText(tr("Key for moving the cursor left."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_left, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -330,6 +340,7 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pSelectKey = new SelectKey(Settings::getKey_down());
+    pSelectKey->setTooltipText(tr("Key for moving the cursor down."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_down, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -341,6 +352,7 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pSelectKey = new SelectKey(Settings::getKey_right());
+    pSelectKey->setTooltipText(tr("Key for moving the cursor right."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_right, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -352,6 +364,7 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pSelectKey = new SelectKey(Settings::getKey_confirm());
+    pSelectKey->setTooltipText(tr("Key for confirming any action or input in the game."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_confirm, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -363,6 +376,7 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pSelectKey = new SelectKey(Settings::getKey_cancel());
+    pSelectKey->setTooltipText(tr("Key for canceling any action or input in the game."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_cancel, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -374,6 +388,7 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pSelectKey = new SelectKey(Settings::getKey_next());
+    pSelectKey->setTooltipText(tr("Key for moving the cursor to the next possible field unit etc."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_next, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -385,6 +400,7 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pSelectKey = new SelectKey(Settings::getKey_previous());
+    pSelectKey->setTooltipText(tr("Key for moving the cursor to the previous possible field unit etc."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_previous, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -396,6 +412,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pTextfield);
     pTextfield->setPosition(10, y);
     pSelectKey = new SelectKey(Settings::getKey_quicksave1());
+    pSelectKey->setTooltipText(tr("Key for quick saving slot 1."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_quicksave1, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -407,6 +424,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pTextfield);
     pTextfield->setPosition(10, y);
     pSelectKey = new SelectKey(Settings::getKey_quickload1());
+    pSelectKey->setTooltipText(tr("Key for quick loading slot 1."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_quickload1, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -418,6 +436,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pTextfield);
     pTextfield->setPosition(10, y);
     pSelectKey = new SelectKey(Settings::getKey_quicksave2());
+    pSelectKey->setTooltipText(tr("Key for quick saving slot 2."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_quicksave2, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -429,6 +448,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pTextfield);
     pTextfield->setPosition(10, y);
     pSelectKey = new SelectKey(Settings::getKey_quickload2());
+    pSelectKey->setTooltipText(tr("Key for quick loading slot 2."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_quickload2, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -440,6 +460,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pTextfield);
     pTextfield->setPosition(10, y);
     pSelectKey = new SelectKey(Settings::getKey_information());
+    pSelectKey->setTooltipText(tr("Key to show information about the current field, action, unit at any time in the game."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_information, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -451,6 +472,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pTextfield);
     pTextfield->setPosition(10, y);
     pSelectKey = new SelectKey(Settings::getKey_moveMapUp());
+    pSelectKey->setTooltipText(tr("Key to move the map a field up."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_moveMapUp, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -462,6 +484,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pTextfield);
     pTextfield->setPosition(10, y);
     pSelectKey = new SelectKey(Settings::getKey_moveMapLeft());
+    pSelectKey->setTooltipText(tr("Key to move the map a field left."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_moveMapLeft, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -473,6 +496,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pTextfield);
     pTextfield->setPosition(10, y);
     pSelectKey = new SelectKey(Settings::getKey_moveMapDown());
+    pSelectKey->setTooltipText(tr("Key to move the map a field down."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_moveMapDown, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -484,6 +508,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pTextfield);
     pTextfield->setPosition(10, y);
     pSelectKey = new SelectKey(Settings::getKey_moveMapRight());
+    pSelectKey->setTooltipText(tr("Key to move the map a field right."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_moveMapRight, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -495,6 +520,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pTextfield);
     pTextfield->setPosition(10, y);
     pSelectKey = new SelectKey(Settings::getKey_MapZoomIn());
+    pSelectKey->setTooltipText(tr("Key to zoom into the map."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_MapZoomIn, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -506,6 +532,7 @@ void OptionMenue::showGameplayAndKeys()
     m_pOptions->addItem(pTextfield);
     pTextfield->setPosition(10, y);
     pSelectKey = new SelectKey(Settings::getKey_MapZoomOut());
+    pSelectKey->setTooltipText(tr("Key to zoom out of the map."));
     pSelectKey->setPosition(sliderOffset - 130, y);
     connect(pSelectKey.get(), &SelectKey::sigKeyChanged, pSettings, &Settings::setKey_MapZoomOut, Qt::QueuedConnection);
     m_pOptions->addItem(pSelectKey);
@@ -697,6 +724,7 @@ void OptionMenue::showSettings()
     spDropDownmenu pScreenResolution = new DropDownmenu(400, displaySizes);
     pScreenResolution->setPosition(sliderOffset - 130, y);
     pScreenResolution->setCurrentItem(currentDisplayMode);
+    pScreenResolution->setTooltipText(tr("Selects the screen resolution for the game"));
     m_pOptions->addItem(pScreenResolution);
     connect(pScreenResolution.get(), &DropDownmenu::sigItemChanged, [=](qint32)
     {
@@ -712,6 +740,7 @@ void OptionMenue::showSettings()
     m_pOptions->addItem(pTextfield);
     QVector<QString> items = {tr("Window"), tr("Bordered"), tr("Fullscreen")};
     spDropDownmenu pScreenModes = new DropDownmenu(400, items);
+    pScreenModes->setTooltipText(tr("Selects the screen mode for the game"));
     pScreenModes->setPosition(sliderOffset - 130, y);
     pScreenModes->setCurrentItem(pApp->getScreenMode());
     m_pOptions->addItem(pScreenModes);
@@ -730,6 +759,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSlider pSlider = new Slider(pApp->getSettings()->getWidth() - 20 - sliderOffset, 0, 100);
+    pSlider->setTooltipText(tr("Selects the global volume for the game"));
     pSlider->setPosition(sliderOffset - 130, y);
     pSlider->setCurrentValue(pSettings->getTotalVolume());
     connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
@@ -746,6 +776,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pSlider = new Slider(pApp->getSettings()->getWidth() - 20 - sliderOffset, 0, 100);
+    pSlider->setTooltipText(tr("Selects the music volume for the game"));
     pSlider->setPosition(sliderOffset - 130, y);
     pSlider->setCurrentValue(pSettings->getMusicVolume());
     connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
@@ -762,6 +793,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pSlider = new Slider(pApp->getSettings()->getWidth() - 20 - sliderOffset, 0, 100);
+    pSlider->setTooltipText(tr("Selects the sound volume for the game"));
     pSlider->setPosition(sliderOffset - 130, y);
     pSlider->setCurrentValue(pSettings->getSoundVolume());
     connect(pSlider.get(), &Slider::sliderValueChanged, [=](qint32 value)
@@ -784,6 +816,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spTextbox pTextbox = new Textbox(pApp->getSettings()->getWidth() - 20 - sliderOffset);
+    pTextbox->setTooltipText(tr("Selects your username shown at various places of the game"));
     pTextbox->setCurrentText(Settings::getUsername());
     connect(pTextbox.get(), &Textbox::sigTextChanged, [=](QString value)
     {
@@ -810,6 +843,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     pTextbox = new Textbox(pApp->getSettings()->getWidth() - 20 - sliderOffset);
+    pTextbox->setTooltipText(tr("Selects the game server you wan't to connect to when playing a multiplayer game."));
     pTextbox->setCurrentText(Settings::getServerAdress());
     connect(pTextbox.get(), &Textbox::sigTextChanged, [=](QString value)
     {
@@ -825,6 +859,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSpinBox portBox = new SpinBox(200, 0, std::numeric_limits<quint16>::max());
+    portBox->setTooltipText(tr("Selects the chat port for used to chat with the server"));
     portBox->setCurrentValue(Settings::getServerPort());
     portBox->setPosition(sliderOffset - 130, y);
     connect(portBox.get(), &SpinBox::sigValueChanged, [=](float value)
@@ -840,6 +875,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spCheckbox pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("Enables this game as global server."));
     pCheckbox->setChecked(Settings::getServer());
     connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
     {
@@ -856,6 +892,7 @@ void OptionMenue::showSettings()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     portBox = new SpinBox(200, 0, std::numeric_limits<quint16>::max());
+    portBox->setTooltipText(tr("Selects the game port for used to play the game with the server"));
     portBox->setCurrentValue(Settings::getGamePort());
     portBox->setPosition(sliderOffset - 130, y);
     connect(portBox.get(), &SpinBox::sigValueChanged, [=](float value)

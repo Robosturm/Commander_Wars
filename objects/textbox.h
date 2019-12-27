@@ -5,12 +5,14 @@
 #include <QTime>
 #include "oxygine-framework.h"
 
+#include "objects/tooltip.h"
+
 #include "oxygine/KeyEvent.h"
 
 class Textbox;
 typedef oxygine::intrusive_ptr<Textbox> spTextbox;
 
-class Textbox : public QObject, public oxygine::Actor
+class Textbox : public Tooltip
 {
     Q_OBJECT
 public:

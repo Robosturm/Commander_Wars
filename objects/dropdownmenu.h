@@ -7,11 +7,12 @@
 #include <oxygine-framework.h>
 
 #include "objects/panel.h"
+#include "objects/tooltip.h"
 
 class DropDownmenu;
 typedef oxygine::intrusive_ptr<DropDownmenu> spDropDownmenu;
 
-class DropDownmenu : public QObject, public oxygine::Actor
+class DropDownmenu : public Tooltip
 {
     Q_OBJECT
 public:

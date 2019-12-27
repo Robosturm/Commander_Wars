@@ -6,7 +6,6 @@
 #include "resource_management/fontmanager.h"
 
 SelectKey::SelectKey(Qt::Key code)
-    : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -31,6 +30,7 @@ void SelectKey::keyInput(oxygine::KeyEvent event)
 {
     if (active)
     {
+        restartTooltiptimer();
         Qt::Key cur = event.getKey();
         setKeycode(cur);
     }

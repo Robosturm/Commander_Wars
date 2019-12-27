@@ -92,6 +92,7 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
     pTextfield->setPosition(10, y);
     m_pPanel->addItem(pTextfield);
     m_pTextbox = new Textbox(m_pPanel->getContentWidth() - 100 - 200 - pTextfield->getWidth());
+    m_pTextbox->setTooltipText(tr("Current select terrain image or terrain path or empty for default selection."));
     m_pTextbox->setPosition(200 + 20 + pTextfield->getX(), y);
     m_pPanel->addItem(m_pTextbox);
     y += 80;

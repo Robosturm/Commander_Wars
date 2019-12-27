@@ -5,12 +5,14 @@
 #include <QTime>
 #include "oxygine-framework.h"
 
+#include "objects/tooltip.h"
+
 #include "oxygine/KeyEvent.h"
 
 class SpinBox;
 typedef oxygine::intrusive_ptr<SpinBox> spSpinBox;
 
-class SpinBox : public QObject, public oxygine::Actor
+class SpinBox : public Tooltip
 {
     Q_OBJECT
 public:

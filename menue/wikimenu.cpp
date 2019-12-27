@@ -55,6 +55,7 @@ Wikimenu::Wikimenu()
     pTextfield->setPosition(10, y);
     addChild(pTextfield);
     m_SearchString = new Textbox(Settings::getWidth() - 380);
+    m_SearchString->setTooltipText(tr("Text that will be searched for in the title of each wikipage."));
     m_SearchString->setPosition(150, y);
     connect(m_SearchString.get(), &Textbox::sigTextChanged, this, &Wikimenu::searchChanged, Qt::QueuedConnection);
     addChild(m_SearchString);
@@ -74,6 +75,7 @@ Wikimenu::Wikimenu()
     pTextfield->setPosition(10, y);
     addChild(pTextfield);
     m_Tags = new DropDownmenu(300, WikiDatabase::getInstance()->getTags());
+    m_Tags->setTooltipText(tr("Shows all pages grouped under a given tag. A page can be grouped in several groups at once."));
     m_Tags->setPosition(150, y);
     connect(m_Tags.get(), &DropDownmenu::sigItemChanged, this, &Wikimenu::tagChanged, Qt::QueuedConnection);
     addChild(m_Tags);

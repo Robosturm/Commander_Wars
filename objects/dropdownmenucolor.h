@@ -8,11 +8,12 @@
 #include <oxygine-framework.h>
 
 #include "objects/panel.h"
+#include "objects/tooltip.h"
 
 class DropDownmenuColor;
 typedef oxygine::intrusive_ptr<DropDownmenuColor> spDropDownmenuColor;
 
-class DropDownmenuColor : public QObject, public oxygine::Actor
+class DropDownmenuColor : public Tooltip
 {
     Q_OBJECT
 public:

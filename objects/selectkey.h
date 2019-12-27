@@ -5,11 +5,12 @@
 #include "oxygine-framework.h"
 
 #include "oxygine/KeyEvent.h"
+#include "objects/tooltip.h"
 
 class SelectKey;
 typedef oxygine::intrusive_ptr<SelectKey> spSelectKey;
 
-class SelectKey : public QObject, public oxygine::Actor
+class SelectKey : public Tooltip
 {
     Q_OBJECT
 public:

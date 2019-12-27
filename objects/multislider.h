@@ -10,11 +10,12 @@
 #include "oxygine-framework.h"
 
 #include "objects/slider.h"
+#include "objects/tooltip.h"
 
 class Multislider;
 typedef oxygine::intrusive_ptr<Multislider> spMultislider;
 
-class Multislider : public QObject, public oxygine::Actor
+class Multislider : public Tooltip
 {
     Q_OBJECT
 public:

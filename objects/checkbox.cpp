@@ -5,7 +5,6 @@
 #include "coreengine/mainapp.h"
 
 Checkbox::Checkbox()
-    : QObject()
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());

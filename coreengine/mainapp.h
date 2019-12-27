@@ -38,8 +38,9 @@ public:
         Cursor,
         Animation,
         Objects = 31998,
-        FocusedObjects = 31999,
-        Dialogs = 32000,
+        FocusedObjects,
+        Dialogs,
+        Tooltip,
         Console
     };
 

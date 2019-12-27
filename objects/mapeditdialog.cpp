@@ -37,6 +37,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     text->setPosition(30, y);
     pSpriteBox->addChild(text);
     m_MapName = new Textbox(pApp->getSettings()->getWidth() - 60 - width);
+    m_MapName->setTooltipText(tr("The name of the map."));
     m_MapName->setPosition(text->getX() + width, text->getY());
     m_MapName->setCurrentText(mapName);
     pSpriteBox->addChild(m_MapName);
@@ -49,6 +50,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     text->setPosition(30, y);
     pSpriteBox->addChild(text);
     m_MapAuthor = new Textbox(pApp->getSettings()->getWidth() - 60 - width);
+    m_MapAuthor->setTooltipText(tr("The author of the map."));
     m_MapAuthor->setPosition(text->getX() + width, text->getY());
     m_MapAuthor->setCurrentText(author);
     pSpriteBox->addChild(m_MapAuthor);
@@ -61,6 +63,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     text->setPosition(30, y);
     pSpriteBox->addChild(text);
     m_MapDescription = new Textbox(pApp->getSettings()->getWidth() - 60 - width);
+    m_MapName->setTooltipText(tr("The description for the map."));
     m_MapDescription->setPosition(text->getX() + width, text->getY());
     m_MapDescription->setCurrentText(description);
     pSpriteBox->addChild(m_MapDescription);
@@ -76,6 +79,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     m_ScriptButton->setPosition(pApp->getSettings()->getWidth() - m_ScriptButton->getWidth() - 30, y);
     pSpriteBox->addChild(m_ScriptButton);
     m_MapScriptFile = new Textbox(m_ScriptButton->getX() - text->getX() - width);
+    m_MapScriptFile->setTooltipText(tr("The relative path from the exe to the script associated with this map."));
     m_MapScriptFile->setPosition(text->getX() + width, text->getY());
     m_MapScriptFile->setCurrentText(scriptFile);
     pSpriteBox->addChild(m_MapScriptFile);
@@ -97,6 +101,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     text->setPosition(30, 5 + y );
     pSpriteBox->addChild(text);
     m_MapWidth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
+    m_MapWidth->setTooltipText(tr("The width of the map."));
     m_MapWidth->setPosition(text->getX() + width, text->getY());
     m_MapWidth->setCurrentValue(mapWidth);
     pSpriteBox->addChild(m_MapWidth);
@@ -109,6 +114,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
     m_MapHeigth = new SpinBox(300, 1, 999, SpinBox::Mode::Int);
+    m_MapWidth->setTooltipText(tr("The heigth of the map."));
     m_MapHeigth->setPosition(text->getX() + width, text->getY());
     m_MapHeigth->setCurrentValue(mapHeigth);
     pSpriteBox->addChild(m_MapHeigth);
@@ -121,6 +127,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
     m_MapPlayerCount = new SpinBox(300, 2, 40, SpinBox::Mode::Int);
+    m_MapWidth->setTooltipText(tr("The amount of players for this map."));
     m_MapPlayerCount->setPosition(text->getX() + width, text->getY());
     m_MapPlayerCount->setCurrentValue(playerCount);
     pSpriteBox->addChild(m_MapPlayerCount);
@@ -133,6 +140,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
     m_MapTurnLimit = new SpinBox(300, 0, std::numeric_limits<qint32>::max(), SpinBox::Mode::Int);
+    m_MapTurnLimit->setTooltipText(tr("The amount of turns in which the map needs to be finished to get a maximum score."));
     m_MapTurnLimit->setPosition(text->getX() + width, text->getY());
     m_MapTurnLimit->setCurrentValue(turnLimit);
     pSpriteBox->addChild(m_MapTurnLimit);
@@ -145,6 +153,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     text->setPosition(30, 5 + y + text->getHeight());
     pSpriteBox->addChild(text);
     m_UnitBuildLimit = new SpinBox(300, 0, std::numeric_limits<qint32>::max(), SpinBox::Mode::Int);
+    m_UnitBuildLimit->setTooltipText(tr("The amount of units allowed to be deploayed to get a maximum score."));
     m_UnitBuildLimit->setPosition(text->getX() + width, text->getY());
     m_UnitBuildLimit->setCurrentValue(buildLimit);
     pSpriteBox->addChild(m_UnitBuildLimit);
