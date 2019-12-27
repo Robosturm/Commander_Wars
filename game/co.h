@@ -50,6 +50,12 @@ signals:
 
 public slots:
     /**
+     * @brief getUnitBuildValue
+     * @param unitID
+     * @return
+     */
+    float getUnitBuildValue(QString unitID);
+    /**
      * @brief getCOName
      * @return
      */

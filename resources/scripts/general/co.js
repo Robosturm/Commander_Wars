@@ -378,5 +378,10 @@ var CO =
         }
         return GameEnums.PowerMode_Off;
     },
+
+    getUnitBuildValue : function(co, unitID)
+    {
+        return 0.0;
+    },
 }
 

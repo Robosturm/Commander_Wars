@@ -45,6 +45,20 @@ void Player::init()
     team = getPlayerID();
 }
 
+float Player::getUnitBuildValue(QString unitID)
+{
+    float modifier = 0.0f;
+    if (playerCOs[0].get() != nullptr)
+    {
+        modifier += playerCOs[0]->getUnitBuildValue(unitID);
+    }
+    if (playerCOs[1].get() != nullptr)
+    {
+        modifier += playerCOs[1]->getUnitBuildValue(unitID);
+    }
+    return modifier;
+}
+
 void Player::loadVisionFields()
 {
     GameMap* pMap = GameMap::getInstance();

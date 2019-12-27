@@ -35,6 +35,25 @@ void CO::init()
     }
 }
 
+float CO::getUnitBuildValue(QString unitID)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getUnitBuildValue";
+    QJSValueList args1;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj2;
+    args1 << unitID;
+    QJSValue erg = pApp->getInterpreter()->doFunction(coID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toNumber();
+    }
+    else
+    {
+        return 0.0f;
+    }
+}
+
 void CO::setCOUnit(Unit* pUnit)
 {
     if (pUnit == nullptr && m_pCOUnit != nullptr && GameMenue::getInstance() != nullptr)

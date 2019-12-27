@@ -143,14 +143,15 @@ void BaseGameInputIF::setUnitBuildValue(QString unitID, float value)
 
 float BaseGameInputIF::getUnitBuildValue(QString unitID)
 {
+    float modifier = m_pPlayer->getUnitBuildValue(unitID);
     for (qint32 i = 0; i < m_BuildingChanceModifier.size(); i++)
     {
         if (std::get<0>(m_BuildingChanceModifier[i]) == unitID)
         {
-            return std::get<1>(m_BuildingChanceModifier[i]);
+            return std::get<1>(m_BuildingChanceModifier[i]) + modifier;
         }
     }
-    return 1.0f;
+    return 1.0f + modifier;
 }
 
 void BaseGameInputIF::setMoveCostMapValue(qint32 x, qint32 y, qint32 value)

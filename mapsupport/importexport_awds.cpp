@@ -1620,7 +1620,7 @@ void GameMap::exportAWDSMap(QString file)
     if (pMap->getPlayerCount() <= 5)
     {
         QFile data(file);
-        data.open(QFile::ReadOnly);
+        data.open(QFile::WriteOnly);
         QDataStream stream(&data);
         stream << static_cast<uchar>(4 * 16 + 1);
         stream << static_cast<uchar>(5 * 16 + 7);

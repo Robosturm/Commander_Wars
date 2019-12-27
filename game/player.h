@@ -78,6 +78,12 @@ signals:
 
 public slots:
     /**
+     * @brief getUnitBuildValue
+     * @param unitID
+     * @return
+     */
+    float getUnitBuildValue(QString unitID);
+    /**
      * @brief getBaseGameInput pointer to the ai or human player interface
      * @return
      */
