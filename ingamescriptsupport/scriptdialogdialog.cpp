@@ -88,7 +88,9 @@ void ScriptDialogDialog::updateDialog()
     {
         ScriptEventDialog::Dialog* pDialog = m_Event->getDialog(i);
         qint32 y = i * 40;
-        spTextbox pTextbox = new Textbox(panelWidth - 800);
+        qint32 boxWidth = panelWidth - 800;
+        qint32 posX = panelWidth - 800;
+        spTextbox pTextbox = new Textbox(boxWidth);
         pTextbox->setPosition(0, y);
         pTextbox->setCurrentText(pDialog->text);
         m_Panel->addItem(pTextbox);
@@ -104,7 +106,7 @@ void ScriptDialogDialog::updateDialog()
         }
         QVector<QString> moods = {tr("Normal"), tr("Happy"), tr("Sad")};
         spDropDownmenu moodMenu = new DropDownmenu(150, moods, up);
-        moodMenu->setPosition(pApp->getSettings()->getWidth() - 800, y);
+        moodMenu->setPosition(posX, y);
         moodMenu->setCurrentItem(static_cast<qint32>(pDialog->mood));
         m_Panel->addItem(moodMenu);
         connect(moodMenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)
@@ -114,7 +116,7 @@ void ScriptDialogDialog::updateDialog()
 
         QVector<QString> ids = COSpriteManager::getInstance()->getSpriteCOIDs();
         spDropDownmenu coidsMenu = new DropDownmenu(200, ids, up);
-        coidsMenu->setPosition(pApp->getSettings()->getWidth() - 650, y);
+        coidsMenu->setPosition(posX + 150, y);
         coidsMenu->setCurrentItem(pDialog->coid);
         m_Panel->addItem(coidsMenu);
         connect(coidsMenu.get(), &DropDownmenu::sigItemChanged, [=](qint32)
@@ -137,7 +139,7 @@ void ScriptDialogDialog::updateDialog()
             playerColors.append(QColor(ret.toString()));
         }
         spDropDownmenuColor colors = new DropDownmenuColor(110, playerColors, up);
-        colors->setPosition(pApp->getSettings()->getWidth() - 450, y);
+        colors->setPosition(posX + 350, y);
         colors->setCurrentItem(pDialog->color);
         m_Panel->addItem(colors);
         connect(colors.get(), &DropDownmenuColor::sigItemChanged, [=](QColor color)
@@ -146,7 +148,7 @@ void ScriptDialogDialog::updateDialog()
         });
 
         oxygine::spButton pBackgroundTextbox = ObjectManager::createButton(tr("load Background"), 200);
-        pBackgroundTextbox->setPosition(pApp->getSettings()->getWidth() - 335, y);
+        pBackgroundTextbox->setPosition(posX + 465, y);
         m_Panel->addItem(pBackgroundTextbox);
         pBackgroundTextbox->addClickListener([=](oxygine::Event*)
         {

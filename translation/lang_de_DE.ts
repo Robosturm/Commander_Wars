@@ -2974,22 +2974,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="105"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="107"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="105"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="107"/>
         <source>Happy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="105"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="107"/>
         <source>Sad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="148"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="150"/>
         <source>load Background</source>
         <translation type="unfinished"></translation>
     </message>

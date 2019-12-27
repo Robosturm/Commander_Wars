@@ -61,18 +61,17 @@ void ScriptEventDialog::readEvent(QTextStream& rStream)
             line = line.simplified();
 
             QStringList items = line.replace("var dialog" + QString::number(m_Dialog.size()) + " = GameAnimationFactory.createGameAnimationDialog(qsTr(\"", "")
-                                    .replace("\"), \"", ",")
-                                    .replace("\", GameEnums.COMood_", ",")
-                                    .replace(", \"", ",")
-                                    .replace("\"); // ", ",").
-                                    replace(" " + ScriptEventDialogItem, "," + ScriptEventDialogItem).split(",");
+                                    .replace("\"), \"", "@")
+                                    .replace("\", GameEnums.COMood_", "@")
+                                    .replace(", \"", "@")
+                                    .replace("\"); // ", "@").
+                                    replace(" " + ScriptEventDialogItem, "@" + ScriptEventDialogItem).split("@");
             qint32 version = 0;
 
             if (items.size() >= 2)
             {
                 version = items[items.size() - 2].toInt();
-                items = line.replace("\"); dialog" + QString::number(m_Dialog.size()) + ".loadBackground(\"", ",")
-                                            .split(",");
+                items = line.replace("\"); dialog" + QString::number(m_Dialog.size()) + ".loadBackground(\"", "@").split("@");
             }
 
             if (items.size() >= 4)
