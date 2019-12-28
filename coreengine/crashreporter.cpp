@@ -44,15 +44,12 @@ namespace crashReporter
         sProcess->start(QIODevice::ReadOnly);
         if (!sProcess->waitForFinished())
         {
-            return QStringLiteral( "* Error running command\n   %1 %2\n   %3" ).arg(
-                        sProcess->program(),
-                        sProcess->arguments().join( ' ' ),
-                        sProcess->errorString() );
+            return cAddrStr;
         }
         const QString  cLocationStr = QString( sProcess->readAll() ).trimmed();
         if (cLocationStr == cAddrStr)
         {
-            return QString();
+            return cAddrStr;
         }
         else
         {
