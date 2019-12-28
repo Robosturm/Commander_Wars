@@ -11,8 +11,8 @@ var Constructor = function()
         {
             return false;
         }
-        if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
-            (action.getMovementTarget() === null) &&
+        if (((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
+            (action.getMovementTarget() === null)) &&
             (ACTION_REPAIR.getRepairFields(action).length > 0))
         {
             return true;

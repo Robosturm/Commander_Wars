@@ -18,12 +18,21 @@ var Constructor = function()
         {
             return false;
         }
-
-        if (unit.getUnitID() === "TRANSPORTPLANE")
+        var unitID = unit.getUnitID();
+        if (unitID === "TRANSPORTPLANE")
         {
             if ((transportTerrain.getID() !== "AIRPORT") &&
                 (transportTerrain.getID() !== "TEMPORARY_AIRPORT") &&
                 (transportTerrain.getID() !== "STREET"))
+            {
+                return false;
+            }
+        }
+        else if (unitID === "LANDER" ||
+                 unitID === "BLACK_BOAT" ||
+                 unitID === "CANNONBOAT")
+        {
+            if ((transportTerrain.getID() === "BRIDGE"))
             {
                 return false;
             }

@@ -1,7 +1,7 @@
 #include <QObject>
 #include <QProcess>
 #include <qdir.h>
-#include <QtGui/QGuiApplication>
+#include <qapplication.h>
 
 #ifdef GAMEDEBUG
 #include <QQmlApplicationEngine>
@@ -56,9 +56,10 @@
 
 #include "QDomDocument"
 
+#include "coreengine/crashreporter.h"
+
 int main(int argc, char* argv[])
 {
-
     QThread::currentThread()->setPriority(QThread::TimeCriticalPriority);
     /*************************************************************************************************/
     // setup network session support
@@ -72,7 +73,9 @@ int main(int argc, char* argv[])
 #ifdef GAMEDEBUG
     qQmlEnableDebuggingHelper.startTcpDebugServer(3768);
 #endif
-    QGuiApplication app(argc, argv);
+    QApplication app(argc, argv);
+    app.setApplicationName(QObject::tr("Commander Wars"));
+    app.setApplicationVersion(Mainapp::getGameVersion());
     Mainapp window;
     window.setTitle(QObject::tr("Commander Wars"));
 
@@ -133,6 +136,9 @@ int main(int argc, char* argv[])
     qmlRegisterInterface<Settings>("Settings");
     qmlRegisterInterface<Wikipage>("Wikipage");
     qmlRegisterInterface<oxygine::spActor>("oxygine::spActor");
+
+    // start crash report handler
+    crashReporter::setSignalHandler(&Mainapp::showCrashReport);
 
     /*************************************************************************************************/
     // show window according to window mode

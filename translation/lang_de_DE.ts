@@ -230,7 +230,7 @@
 <context>
     <name>ACTION_LOAD</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="48"/>
+        <location filename="../resources/scripts/actions/ACTION_LOAD.js" line="57"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -339,12 +339,12 @@
 <context>
     <name>ACTION_UNLOAD</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="85"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="94"/>
         <source>Unload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="251"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="260"/>
         <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1893,6 +1893,26 @@
     </message>
 </context>
 <context>
+    <name>Mainapp</name>
+    <message>
+        <location filename="../coreengine/mainapp.cpp" line="470"/>
+        <source>Whoops Sturm crashed a meteor into the PC.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/mainapp.cpp" line="476"/>
+        <source>Please use the details or the crashlog to report a bug at 
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../coreengine/mainapp.cpp" line="478"/>
+        <source>
+ The game will be terminated sadly. :(</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Mainwindow</name>
     <message>
         <location filename="../menue/mainwindow.cpp" line="53"/>
@@ -2865,6 +2885,7 @@
     <name>QObject</name>
     <message>
         <location filename="../main.cpp" line="77"/>
+        <location filename="../main.cpp" line="80"/>
         <source>Commander Wars</source>
         <translation type="unfinished"></translation>
     </message>

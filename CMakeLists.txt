@@ -47,7 +47,8 @@ add_definitions(
     -DREVISION=0
 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OXYGINE_CXX_FLAGS}")
+message ("CXX Flags: ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,10000000")
 
 ###################################################################################
@@ -230,6 +231,7 @@ set(${PROJECT_NAME}_SRCS
         coreengine/dijkstramap.cpp
         coreengine/timer.cpp
         coreengine/userdata.cpp
+        coreengine/crashreporter.cpp
         # tweens
         coreengine/tweentogglevisibility.cpp
         coreengine/tweenwait.cpp
@@ -409,7 +411,7 @@ qt5_use_modules(${PROJECT_NAME}
     Network
     Gui
     Widgets
-    Xml
+    Xml    
 )
 
 # link libraries
@@ -417,6 +419,7 @@ target_link_libraries(
         ${PROJECT_NAME}
         ${QT_LIBRARIES}
         ${OPENGL_LIBRARIES}
+        Dbghelp
 )
 
 # install section
@@ -445,6 +448,7 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
          ${QT_BIN_DIR}/Qt5Svgd.dll
          ${QT_BIN_DIR}/Qt5Widgetsd.dll
          ${QT_BIN_DIR}/Qt5Xmld.dll
+         ${QT_BIN_DIR}/../../../tools/mingw730_32/bin/addr2line.exe
     )
 
     set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
@@ -486,6 +490,7 @@ else("Release")
         ${QT_BIN_DIR}/libGLESv2.dll
         ${QT_BIN_DIR}/Qt5Svg.dll
         ${QT_BIN_DIR}/Qt5Xml.dll
+        ${QT_BIN_DIR}/../../../tools/mingw730_32/bin/addr2line.exe
     )
 
     set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS

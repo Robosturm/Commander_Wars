@@ -163,7 +163,11 @@ public slots:
     {
         return "Version: " + QString::number(MAJOR) + "." + QString::number(MINOR) + "." + QString::number(REVISION);
     }
-
+    /**
+     * @brief showCrashReport
+     * @param log
+     */
+    static void showCrashReport(QString log);
 protected:
     virtual void keyPressEvent(QKeyEvent *event) override;
     virtual void keyReleaseEvent(QKeyEvent *event) override;
@@ -177,6 +181,11 @@ signals:
      * @brief sigWindowLayoutChanged
      */
     void sigWindowLayoutChanged();
+    /**
+     * @brief sigShowCrashReport
+     * @param log
+     */
+    void sigShowCrashReport(QString log);
 public slots:
     void changeScreenMode(qint32 mode);
     void changeScreenSize(qint32 width, qint32 heigth);
@@ -187,6 +196,7 @@ private:
     static Mainapp* m_pMainapp;
     static QRandomGenerator randGenerator;
     static bool m_useSeed;
+    static QMutex crashMutex;
 
     static QThread m_Workerthread;
     static QThread m_AudioWorker;

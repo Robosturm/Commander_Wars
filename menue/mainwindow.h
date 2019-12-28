@@ -9,7 +9,6 @@ class Mainwindow : public QObject, public oxygine::Actor
 public:
     explicit Mainwindow();
     virtual ~Mainwindow();
-
 signals:
     void sigEnterSingleplayer();
     void sigEnterMultiplayer();

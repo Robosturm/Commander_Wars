@@ -21,8 +21,8 @@ var Constructor = function ()
                 (targetUnit.getTransportUnits().indexOf(unit.getUnitID()) >= 0) &&
                 (targetUnit.getLoadedUnitCount() < targetUnit.getLoadingPlace())) {
 
-
-                if (targetUnit.getUnitID() === "TRANSPORTPLANE")
+                var unitID = targetUnit.getUnitID();
+                if (unitID === "TRANSPORTPLANE")
                 {
                     if ((transportTerrain.getID() === "AIRPORT") ||
                         (transportTerrain.getID() === "TEMPORARY_AIRPORT") ||
@@ -31,6 +31,15 @@ var Constructor = function ()
                         return true;
                     }
                     else
+                    {
+                        return false;
+                    }
+                }
+                else if (unitID === "LANDER" ||
+                         unitID === "BLACK_BOAT" ||
+                         unitID === "CANNONBOAT")
+                {
+                    if ((transportTerrain.getID() === "BRIDGE"))
                     {
                         return false;
                     }

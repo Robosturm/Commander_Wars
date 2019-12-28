@@ -29,12 +29,16 @@
 #include "qscreen.h"
 #include "qdir.h"
 
+#include "qmessagebox.h"
+#include "qthread.h"
+
 Mainapp* Mainapp::m_pMainapp;
 QRandomGenerator Mainapp::randGenerator;
 QThread Mainapp::m_Workerthread;
 QThread Mainapp::m_AudioWorker;
 QThread Mainapp::m_Networkthread;
 bool Mainapp::m_useSeed{false};
+QMutex Mainapp::crashMutex;
 
 Mainapp::Mainapp()
 {
@@ -42,6 +46,8 @@ Mainapp::Mainapp()
     Interpreter::setCppOwnerShip(this);
     quint32 seedValue = QRandomGenerator::global()->bounded(0u, std::numeric_limits<quint32>::max());
     randGenerator.seed(seedValue);
+
+    connect(this, &Mainapp::sigShowCrashReport, this, &Mainapp::showCrashReport, Qt::QueuedConnection);
 
     emit m_Audiothread->sigInitAudio();
     m_AudioWorker.setObjectName("AudioThread");
@@ -51,6 +57,7 @@ Mainapp::Mainapp()
     m_Networkthread.start(QThread::Priority::NormalPriority);
     m_Workerthread.start(QThread::Priority::TimeCriticalPriority);
     m_Settings.setup();
+
     // createTrainingData();
 }
 
@@ -451,5 +458,42 @@ void Mainapp::createTrainingData()
         stream << QRandomGenerator::global()->bounded(0, 2) << " ";
         stream << QRandomGenerator::global()->bounded(20, 100) << " ";
         stream << "\n";
+    }
+}
+
+void Mainapp::showCrashReport(QString log)
+{
+    static qint32 counter = 0;
+    if (QGuiApplication::instance()->thread() == QThread::currentThread())
+    {
+        // gui thread cool show the crash report
+        QString title = tr("Whoops Sturm crashed a meteor into the PC.");
+        // QMessageBox::critical(nullptr, title, log);
+        QMessageBox criticalBox;
+        criticalBox.setIcon(QMessageBox::Critical);
+        criticalBox.setWindowTitle(title);
+        criticalBox.setTextFormat(Qt::RichText);
+        criticalBox.setText(tr("Please use the details or the crashlog to report a bug at \n") +
+                            "<a href='https://github.com/Robosturm/Commander_Wars/issues'>https://github.com/Robosturm/Commander_Wars/issues</a>" +
+                            tr("\n The game will be terminated sadly. :("));
+        criticalBox.setDetailedText(log);
+        criticalBox.exec();
+
+        if (counter > 0)
+        {
+            // unlock crashed process
+            counter--;
+            crashMutex.unlock();
+        }
+    }
+    else
+    {
+        // swap to gui thread
+        counter++;
+        crashMutex.lock();
+        emit Mainapp::getInstance()->sigShowCrashReport(log);
+        // lock crash thread
+        crashMutex.lock();
+        crashMutex.unlock();
     }
 }
