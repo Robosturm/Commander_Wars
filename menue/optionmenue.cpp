@@ -262,6 +262,7 @@ void OptionMenue::showGameplayAndKeys()
     pTextfield->setPosition(10, y);
     m_pOptions->addItem(pTextfield);
     spSlider pMenuItemHeigth = new Slider(pApp->getSettings()->getWidth() - 20 - sliderOffset, 10, (Settings::getHeight() - GameMap::Imagesize * 2) / GameMap::Imagesize, "");
+    pMenuItemHeigth->setTooltipText(tr("Amount of items per row for ingame menus before a new row is added."));
     pMenuItemHeigth->setPosition(sliderOffset - 130, y);
     pMenuItemHeigth->setCurrentValue(static_cast<qint32>(pSettings->getMenuItemCount()));
     m_pOptions->addItem(pMenuItemHeigth);

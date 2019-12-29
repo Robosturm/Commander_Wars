@@ -188,6 +188,7 @@ set(${PROJECT_NAME}_SRCS
         objects/colorselector.cpp
         objects/cobannlistdialog.cpp
         objects/tooltip.cpp
+        objects/dialogattacklog.cpp
 
         #menues
         menue/mainwindow.cpp

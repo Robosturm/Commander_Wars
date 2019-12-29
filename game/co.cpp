@@ -1026,7 +1026,7 @@ GameEnums::PowerMode CO::getAiUsePower(double powerSurplus, qint32 unitCount, qi
                                    GameEnums::AiTurnMode turnMode)
 {
     Mainapp* pApp = Mainapp::getInstance();
-    QString function1 = "getPerfectVision";
+    QString function1 = "getAiUsePower";
     QJSValueList args1;
     QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
     args1 << obj3;

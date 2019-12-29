@@ -54,7 +54,6 @@ var Constructor = function()
 		{
             // defeat all other player
             var players = map.getPlayerCount();
-            var buildingCount = 0;
             for (var i = 0; i < players; i++)
             {
                 var defeatPlayer = map.getPlayer(i);
@@ -63,8 +62,7 @@ var Constructor = function()
                     defeatPlayer.setIsDefeated(true);
                 }
             }
-		}
-		// all players loose if the time limit is exceeded
+        }
         return GameEnums.DefeatType_Alive;
     };
     this.getRuleProgress = function(rule, player)

@@ -589,7 +589,7 @@ void PlayerSelection::showPlayerSelection()
 
         itemIndex++;
         spDropDownmenu playerTeam = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, teamList, up);
-        playerIncomeSpinBox->setTooltipText(tr("Select the team of this player. The team can't be changed and players of the same team can't attack each other."));
+        playerTeam->setTooltipText(tr("Select the team of this player. The team can't be changed and players of the same team can't attack each other."));
         playerTeam->setPosition(xPositions[itemIndex], y);
         playerTeam->setCurrentItem(pMap->getPlayer(i)->getTeam());
         m_pPlayerSelection->addItem(playerTeam);

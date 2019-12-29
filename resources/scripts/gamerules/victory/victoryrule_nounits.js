@@ -23,12 +23,12 @@ var Constructor = function()
     this.init = function(rule)
     {
         var playerCount = map.getPlayerCount();
+        var variables = rule.getVariables();
         for (var i = 0; i < playerCount; i++)
         {
             var player = map.getPlayer(i);
             var playerID = player.getPlayerID();
             var variableName = "Active" + playerID.toString();
-            var variables = rule.getVariables();
             var variable = variables.createVariable(variableName);
             if (player.getUnitCount() > 0)
             {
