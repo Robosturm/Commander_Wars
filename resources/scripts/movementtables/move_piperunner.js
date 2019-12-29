@@ -14,7 +14,7 @@ var Constructor = function()
                                 ["SNOW_PIPELINE", 2],
                                 ["TELEPORTTILE", 0]];
 
-    this.getMovementpoints = function(terrain, unit)
+    this.getMovementpoints = function(terrain, unit, currentTerrain)
     {
         return MOVEMENTTABLE.getMovementpointsFromTable(terrain, MOVE_PIPERUNNER.movementpointsTable);
     };

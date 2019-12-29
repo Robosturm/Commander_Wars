@@ -397,11 +397,28 @@ void GameMenue::performAction(GameAction* pGameAction)
             {
                 // check the movepath for a trap
                 QPoint point = path[i];
-
                 Unit* pUnit = pMap->getTerrain(point.x(), point.y())->getUnit();
                 if ((pUnit != nullptr) &&
                     (pUnit->isStealthed(pMap->getCurrentPlayer())))
                 {
+                    qint32 counter = 0;
+                    while (counter < trapPath.size() - 1)
+                    {
+                        QPoint currentPoint = trapPath[counter];
+                        QPoint previousPoint = trapPath[counter + 1];
+                        Unit* pUnit = pMap->getTerrain(currentPoint.x(), currentPoint.y())->getUnit();
+                        if (pUnit != nullptr)
+                        {
+                            trapPathCost -= pMoveUnit->getMovementCosts(currentPoint.x(), currentPoint.y(),
+                                                                        previousPoint.x(), previousPoint.y());
+                            trapPath.pop_front();
+                        }
+                        else
+                        {
+                            break;
+                        }
+                        counter++;
+                    }
                     GameAction* pTrapAction = new GameAction("ACTION_TRAP");
                     pTrapAction->setMovepath(trapPath, trapPathCost);
                     pTrapAction->writeDataInt32(point.x());

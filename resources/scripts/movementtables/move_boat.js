@@ -14,7 +14,7 @@ var Constructor = function()
                                 ["REAF", 2],
                                 ["TELEPORTTILE", 0]];
 
-    this.getMovementpoints = function(terrain, unit)
+    this.getMovementpoints = function(terrain, unit, currentTerrain)
     {
         if (terrain.getID() === "BRIDGE" && terrain.getBaseTerrainID() === "SEA")
         {

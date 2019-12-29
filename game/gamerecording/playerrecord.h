@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+#include <qvector.h>
 
 #include "coreengine/fileserializable.h"
 
@@ -16,6 +17,49 @@ class PlayerRecord : public QObject, public FileSerializable, public oxygine::re
 {
     Q_OBJECT
 public:
+    /**
+     * @brief The AttackReport struct
+     */
+    struct AttackReport
+    {
+        /**
+         * @brief attackerDamage
+         */
+        qint32 attackerDamage{0};
+        /**
+         * @brief attackerX
+         */
+        qint32  attackerX{-1};
+        /**
+         * @brief attackerY
+         */
+        qint32  attackerY{-1};
+        /**
+         * @brief attackerID
+         */
+        QString attackerID;
+        /**
+         * @brief pAttackerOwner
+         */
+        qint32 attackerOwnerID{-1};
+        /**
+         * @brief defenderX
+         */
+        qint32  defenderX{-1};
+        /**
+         * @brief defenderY
+         */
+        qint32  defenderY{-1};
+        /**
+         * @brief defenderDamage
+         */
+        qint32 defenderDamage{0};
+        /**
+         * @brief defenderID
+         */
+        QString defenderID;
+    };
+
     explicit PlayerRecord();
     explicit PlayerRecord(qint32 day, qint32 player, qint32 funds, qint32 income,
                           qint32 buildings, qint32 units, qint32 playerStrength);
@@ -36,7 +80,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 1;
+        return 2;
     }
 
 
@@ -55,6 +99,7 @@ private:
     qint32 m_Buildings{-1};
     qint32 m_Units{-1};
     qint32 m_PlayerStrength{-1};
+    QVector<AttackReport> m_Attackreports;
 };
 
 #endif // PLAYERRECORD_H

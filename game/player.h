@@ -25,7 +25,6 @@ class Player : public QObject, public oxygine::Actor, public FileSerializable
     Q_OBJECT
 
 public:
-
     explicit Player();
     void init();
     virtual ~Player() override;
