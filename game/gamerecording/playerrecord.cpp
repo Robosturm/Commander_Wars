@@ -33,19 +33,6 @@ void PlayerRecord::serializeObject(QDataStream& pStream)
     pStream << m_Buildings;
     pStream << m_Units;
     pStream << m_PlayerStrength;
-    pStream << m_Attackreports.size();
-    for (qint32 i = 0; i < m_Attackreports.size(); i++)
-    {
-        pStream << m_Attackreports[i].attackerDamage;
-        pStream << m_Attackreports[i].attackerX;
-        pStream << m_Attackreports[i].attackerY;
-        pStream << m_Attackreports[i].attackerID;
-        pStream << m_Attackreports[i].attackerOwnerID;
-        pStream << m_Attackreports[i].defenderX;
-        pStream << m_Attackreports[i].defenderY;
-        pStream << m_Attackreports[i].defenderDamage;
-        pStream << m_Attackreports[i].defenderID;
-    }
 }
 
 void PlayerRecord::deserializeObject(QDataStream& pStream)
@@ -59,24 +46,6 @@ void PlayerRecord::deserializeObject(QDataStream& pStream)
     pStream >> m_Buildings;
     pStream >> m_Units;
     pStream >> m_PlayerStrength;
-    if (version > 1)
-    {
-        qint32 size = 0;
-        pStream >> size;
-        for (qint32 i = 0; i < size; i++)
-        {
-            m_Attackreports.append(AttackReport());
-            pStream >> m_Attackreports[i].attackerDamage;
-            pStream >> m_Attackreports[i].attackerX;
-            pStream >> m_Attackreports[i].attackerY;
-            pStream >> m_Attackreports[i].attackerID;
-            pStream >> m_Attackreports[i].attackerOwnerID;
-            pStream >> m_Attackreports[i].defenderX;
-            pStream >> m_Attackreports[i].defenderY;
-            pStream >> m_Attackreports[i].defenderDamage;
-            pStream >> m_Attackreports[i].defenderID;
-        }
-    }
 }
 
 qint32 PlayerRecord::getDay() const

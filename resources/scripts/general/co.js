@@ -313,30 +313,28 @@ var CO =
 
     getAiUsePowerAlways : function(co, powerSurplus)
     {
-        if (powerSurplus <= 0.5)
+        if (co.canUseSuperpower())
         {
-            if (co.canUseSuperpower())
-            {
-                return GameEnums.PowerMode_Superpower;
-            }
-            else if (co.canUsePower())
-            {
-                return GameEnums.PowerMode_Power;
-            }
+            return GameEnums.PowerMode_Superpower;
+        }
+        else if (powerSurplus <= 0.5 &&
+                 co.canUsePower())
+        {
+            return GameEnums.PowerMode_Power;
         }
         return GameEnums.PowerMode_Off;
     },
 
     getAiUsePowerAtStart : function(co, powerSurplus, turnMode)
     {
-        if (powerSurplus <= 0.5 &&
-            turnMode === GameEnums.AiTurnMode_StartOfDay)
+        if (turnMode === GameEnums.AiTurnMode_StartOfDay)
         {
             if (co.canUseSuperpower())
             {
                 return GameEnums.PowerMode_Superpower;
             }
-            else if (co.canUsePower())
+            else if (powerSurplus <= 0.5 &&
+                     co.canUsePower())
             {
                 return GameEnums.PowerMode_Power;
             }
@@ -346,14 +344,14 @@ var CO =
 
     getAiUsePowerAtEnd : function(co, powerSurplus, turnMode)
     {
-        if (powerSurplus <= 0.5 &&
-            turnMode === GameEnums.AiTurnMode_EndOfDay)
+        if (turnMode === GameEnums.AiTurnMode_EndOfDay)
         {
             if (co.canUseSuperpower())
             {
                 return GameEnums.PowerMode_Superpower;
             }
-            else if (co.canUsePower())
+            else if (powerSurplus <= 0.5 &&
+                     co.canUsePower())
             {
                 return GameEnums.PowerMode_Power;
             }
@@ -363,15 +361,15 @@ var CO =
 
     getAiUsePowerAtUnitCount : function(co, powerSurplus, turnMode, unitCount)
     {
-        if (powerSurplus <= 0.5 &&
-            turnMode === GameEnums.AiTurnMode_StartOfDay &&
+        if (turnMode === GameEnums.AiTurnMode_StartOfDay &&
             unitCount >= 5)
         {
             if (co.canUseSuperpower())
             {
                 return GameEnums.PowerMode_Superpower;
             }
-            else if (co.canUsePower())
+            else if (powerSurplus <= 0.5 &&
+                     co.canUsePower())
             {
                 return GameEnums.PowerMode_Power;
             }

@@ -260,6 +260,7 @@ void PlayerSelection::showPlayerSelection()
 
     itemIndex = 3;
     spSpinBox allStartFundsSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
+    allStartFundsSpinBox->setTooltipText(tr("Select with how much funds all player start the game."));
     allStartFundsSpinBox->setPosition(xPositions[itemIndex], y);
     allStartFundsSpinBox->setCurrentValue(0);
     m_pPlayerSelection->addItem(allStartFundsSpinBox);
@@ -273,6 +274,7 @@ void PlayerSelection::showPlayerSelection()
 
     itemIndex = 4;
     spSpinBox allIncomeSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 10, SpinBox::Mode::Float);
+    allIncomeSpinBox->setTooltipText(tr("Select the income modifier for all players. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building."));
     allIncomeSpinBox->setPosition(xPositions[itemIndex], y);
     allIncomeSpinBox->setCurrentValue(1.0f);
     allIncomeSpinBox->setSpinSpeed(0.1f);
@@ -465,6 +467,7 @@ void PlayerSelection::showPlayerSelection()
 
         itemIndex++;
         spDropDownmenuColor playerColor = new DropDownmenuColor(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, playerColors, up);
+        playerColor->setTooltipText(tr("Select the Color for this players army."));
         playerColor->setPosition(xPositions[itemIndex], y);
         playerColor->setCurrentItem(pMap->getPlayer(i)->getColor());
         m_pPlayerSelection->addItem(playerColor);
@@ -482,6 +485,7 @@ void PlayerSelection::showPlayerSelection()
 
         itemIndex++;
         spDropDownmenu playerAi = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, aiList, up);
+        playerAi->setTooltipText(tr("Select who controls this player."));
         playerAi->setPosition(xPositions[itemIndex], y);
         if (m_pCampaign.get() != nullptr)
         {
@@ -548,6 +552,7 @@ void PlayerSelection::showPlayerSelection()
 
         itemIndex++;
         spSpinBox playerStartFundsSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
+        playerStartFundsSpinBox->setTooltipText(tr("Select with how much funds this player starts the game."));
         playerStartFundsSpinBox->setPosition(xPositions[itemIndex], y);
         playerStartFundsSpinBox->setCurrentValue(pMap->getPlayer(i)->getFunds());
         m_pPlayerSelection->addItem(playerStartFundsSpinBox);
@@ -565,6 +570,7 @@ void PlayerSelection::showPlayerSelection()
 
         itemIndex++;
         spSpinBox playerIncomeSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 10, SpinBox::Mode::Float);
+        playerIncomeSpinBox->setTooltipText(tr("Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building."));
         playerIncomeSpinBox->setPosition(xPositions[itemIndex], y);
         playerIncomeSpinBox->setCurrentValue(pMap->getPlayer(i)->getFundsModifier());
         playerIncomeSpinBox->setSpinSpeed(0.1f);
@@ -583,6 +589,7 @@ void PlayerSelection::showPlayerSelection()
 
         itemIndex++;
         spDropDownmenu playerTeam = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, teamList, up);
+        playerIncomeSpinBox->setTooltipText(tr("Select the team of this player. The team can't be changed and players of the same team can't attack each other."));
         playerTeam->setPosition(xPositions[itemIndex], y);
         playerTeam->setCurrentItem(pMap->getPlayer(i)->getTeam());
         m_pPlayerSelection->addItem(playerTeam);
@@ -618,6 +625,7 @@ void PlayerSelection::showPlayerSelection()
         if (m_pNetworkInterface.get() != nullptr)
         {
             spCheckbox pCheckbox = new Checkbox();
+            pCheckbox->setTooltipText(tr("Shows which player is ready to start the game. All players need to be checked in order to start a game."));
             pCheckbox->setPosition(xPositions[itemIndex] + labelminStepSize / 2 - pCheckbox->getWidth(), y);
             pCheckbox->setEnabled(false);
             m_pReadyBoxes.append(pCheckbox);

@@ -11,10 +11,64 @@
 class GameRecorder;
 typedef oxygine::intrusive_ptr<GameRecorder> spGameRecorder;
 
+class AttackReport;
+typedef oxygine::intrusive_ptr<AttackReport> spAttackReport;
+
+/**
+ * @brief The AttackReport struct
+ */
+class AttackReport : public oxygine::ref_counter
+{
+public:
+    qint32 day{0};
+    /**
+     * @brief attackerDamage
+     */
+    qint32 attackerDamage{0};
+    /**
+     * @brief attackerX
+     */
+    qint32  attackerX{-1};
+    /**
+     * @brief attackerY
+     */
+    qint32  attackerY{-1};
+    /**
+     * @brief attackerID
+     */
+    QString attackerID;
+    /**
+     * @brief pAttackerOwner
+     */
+    qint32 attackerOwnerID{-1};
+    /**
+     * @brief defenderX
+     */
+    qint32  defenderX{-1};
+    /**
+     * @brief defenderY
+     */
+    qint32  defenderY{-1};
+    /**
+     * @brief defenderDamage
+     */
+    qint32 defenderDamage{0};
+    /**
+     * @brief defenderID
+     */
+    QString defenderID;
+    /**
+     * @brief defenderOwnerID
+     */
+    qint32 defenderOwnerID{-1};
+};
+
 class GameRecorder : public QObject, public FileSerializable, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
+
+
     enum class Rang
     {
         S,
@@ -41,7 +95,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 3;
+        return 4;
     }
     /**
      * @brief calculateRang
@@ -141,8 +195,32 @@ public slots:
      * @param deployLimit
      */
     void setDeployLimit(const quint32 &deployLimit);
+    /**
+     * @brief logAttack
+     * @param day
+     * @param attackerDamage
+     * @param attackerX
+     * @param attackerY
+     * @param attackerID
+     * @param attackerOwnerID
+     * @param defenderX
+     * @param defenderY
+     * @param defenderDamage
+     * @param defenderID
+     * @param defenderOwnerID
+     */
+    void logAttack(qint32 day,
+                   qint32 attackerDamage, qint32 attackerX, qint32 attackerY, QString attackerID, qint32 attackerOwnerID,
+                   qint32 defenderDamage, qint32 defenderX, qint32 defenderY, QString defenderID, qint32 defenderOwnerID);
+    /**
+     * @brief getAttackLog
+     * @param player
+     * @return
+     */
+    QVector<spAttackReport> getAttackLog(qint32 player);
 private:
     QVector<spDayToDayRecord> m_Record;
+    QVector<spAttackReport> m_Attackreports;
 
     QVector<quint32> destroyedUnits;
     QVector<quint32> lostUnits;
