@@ -101,6 +101,10 @@ public slots:
      */
     void showGameInfo();
     /**
+     * @brief showAttackLog
+     */
+    void showAttackLog();
+    /**
      * @brief saveMap
      * @param file
      */

@@ -33,6 +33,7 @@
 #include "ingamescriptsupport/genericbox.h"
 
 #include "objects/tableview.h"
+#include "objects/dialogattacklog.h"
 
 #include <QFile>
 
@@ -264,6 +265,7 @@ void GameMenue::loadGameMenue()
     connect(this, &GameMenue::sigSaveGame, this, &GameMenue::saveGame, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalVictoryInfo, this, &GameMenue::victoryInfo, Qt::QueuedConnection);
     connect(pMap, &GameMap::signalShowCOInfo, this, &GameMenue::showCOInfo, Qt::QueuedConnection);
+    connect(pMap, &GameMap::sigShowAttackLog, this, &GameMenue::showAttackLog, Qt::QueuedConnection);
     connect(pMap, &GameMap::sigQueueAction, this, &GameMenue::performAction, Qt::QueuedConnection);
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap, &GameMap::centerMap, Qt::QueuedConnection);
     connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameMenue::actionPerformed, Qt::QueuedConnection);
@@ -713,6 +715,21 @@ void GameMenue::victory(qint32 team)
         oxygine::Actor::detach();
         deleteLater();
     }
+    pApp->continueThread();
+}
+
+void GameMenue::showAttackLog()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    m_Focused = false;
+
+    spDialogAttackLog pAttackLog = new DialogAttackLog(GameMap::getInstance()->getCurrentPlayer());
+    connect(pAttackLog.get(), &DialogAttackLog::sigFinished, [=]()
+    {
+        m_Focused = true;
+    });
+    addChild(pAttackLog);
     pApp->continueThread();
 }
 

@@ -815,6 +815,11 @@ void GameMap::showGameInfo()
     emit sigShowGameInfo();
 }
 
+void GameMap::showAttackLog()
+{
+    emit sigShowAttackLog();
+}
+
 void GameMap::startGame()
 {
     m_Recorder = new GameRecorder();

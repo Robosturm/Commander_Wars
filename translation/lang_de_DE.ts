@@ -912,6 +912,57 @@
     </message>
 </context>
 <context>
+    <name>DialogAttackLog</name>
+    <message>
+        <location filename="../objects/dialogattacklog.cpp" line="42"/>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogattacklog.cpp" line="66"/>
+        <source>Day </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogattacklog.cpp" line="74"/>
+        <source>Attacker: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogattacklog.cpp" line="87"/>
+        <location filename="../objects/dialogattacklog.cpp" line="124"/>
+        <source> at X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogattacklog.cpp" line="93"/>
+        <location filename="../objects/dialogattacklog.cpp" line="130"/>
+        <source> Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogattacklog.cpp" line="99"/>
+        <source> dealt </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogattacklog.cpp" line="111"/>
+        <source>to Defender </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogattacklog.cpp" line="136"/>
+        <source> and recieved </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogattacklog.cpp" line="105"/>
+        <location filename="../objects/dialogattacklog.cpp" line="142"/>
+        <source>Hp</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DialogCOStyle</name>
     <message>
         <location filename="../objects/dialogcostyle.cpp" line="37"/>
@@ -1619,77 +1670,77 @@
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="73"/>
+        <location filename="../menue/gamemenue.cpp" line="74"/>
         <source>Waiting for Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="167"/>
+        <location filename="../menue/gamemenue.cpp" line="168"/>
         <source>A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="235"/>
+        <location filename="../menue/gamemenue.cpp" line="236"/>
         <source>Save Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="243"/>
+        <location filename="../menue/gamemenue.cpp" line="244"/>
         <source>Exit Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="724"/>
+        <location filename="../menue/gamemenue.cpp" line="741"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="724"/>
+        <location filename="../menue/gamemenue.cpp" line="741"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="724"/>
+        <location filename="../menue/gamemenue.cpp" line="741"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="724"/>
+        <location filename="../menue/gamemenue.cpp" line="741"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="724"/>
+        <location filename="../menue/gamemenue.cpp" line="741"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="724"/>
+        <location filename="../menue/gamemenue.cpp" line="741"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="724"/>
+        <location filename="../menue/gamemenue.cpp" line="741"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="740"/>
+        <location filename="../menue/gamemenue.cpp" line="757"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="749"/>
+        <location filename="../menue/gamemenue.cpp" line="766"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1027"/>
+        <location filename="../menue/gamemenue.cpp" line="1044"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1042"/>
+        <location filename="../menue/gamemenue.cpp" line="1059"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15336,6 +15387,19 @@ Units have 30% increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_counitlost.js" line="9"/>
         <source>Co Units lost</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>victoryrule_elimination</name>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_elimination.js" line="5"/>
+        <source>A player wins after killing the given amount of units by attacking or explosion damage from black bombs or Black Hole Buildings. Units getting destroyed by counter attacks don&apos;t count.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_elimination.js" line="9"/>
+        <source>Elimination</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

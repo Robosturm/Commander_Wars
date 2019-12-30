@@ -32,6 +32,15 @@ Tooltip::Tooltip()
     connect(&m_TooltipTimer, &QTimer::timeout, this, &Tooltip::showTooltip, Qt::QueuedConnection);
 }
 
+Tooltip::~Tooltip()
+{
+    if (m_Tooltip.get() != nullptr)
+    {
+        m_Tooltip->detach();
+        m_Tooltip = nullptr;
+    }
+}
+
 void Tooltip::restartTooltiptimer()
 {
     m_TooltipTimer.start(std::chrono::milliseconds(500));

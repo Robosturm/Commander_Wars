@@ -14,7 +14,7 @@ class Tooltip : public QObject, public oxygine::Sprite
     Q_OBJECT
 public:
     explicit Tooltip();
-
+    virtual ~Tooltip();
 signals:
     void sigHideTooltip();
     void sigStartTooltip();
