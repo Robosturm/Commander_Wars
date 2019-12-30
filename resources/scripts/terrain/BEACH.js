@@ -50,22 +50,6 @@ var Constructor = function()
         }
         else if (surroundingsBeach !== "")
         {
-            if (surroundingsBeach === "+E+S")
-            {
-                terrain.loadBaseSprite("beach" + surroundingsBeach);
-            }
-            if (surroundingsBeach === "+N+E")
-            {
-                terrain.loadBaseSprite("beach" + surroundingsBeach);
-            }
-            if (surroundingsBeach === "+S+W")
-            {
-                terrain.loadBaseSprite("beach" + surroundingsBeach);
-            }
-            if (surroundingsBeach === "+N+W")
-            {
-                terrain.loadBaseSprite("beach" + surroundingsBeach);
-            }
             terrain.loadBaseSprite("beach");
         }
         else
