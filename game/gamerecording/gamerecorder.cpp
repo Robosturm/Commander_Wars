@@ -39,6 +39,7 @@ void GameRecorder::serializeObject(QDataStream& pStream)
     for (qint32 i = 0; i < m_Attackreports.size(); i++)
     {
         pStream << m_Attackreports[i]->day;
+        pStream << m_Attackreports[i]->attackerKilled;
         pStream << m_Attackreports[i]->attackerDamage;
         pStream << m_Attackreports[i]->attackerX;
         pStream << m_Attackreports[i]->attackerY;
@@ -49,6 +50,7 @@ void GameRecorder::serializeObject(QDataStream& pStream)
         pStream << m_Attackreports[i]->defenderDamage;
         pStream << m_Attackreports[i]->defenderID;
         pStream << m_Attackreports[i]->defenderOwnerID;
+        pStream << m_Attackreports[i]->defenderKilled;
     }
 }
 
@@ -108,6 +110,7 @@ void GameRecorder::deserializeObject(QDataStream& pStream)
         {
             m_Attackreports.append(new AttackReport());
             pStream >> m_Attackreports[i]->day;
+            pStream >> m_Attackreports[i]->attackerKilled;
             pStream >> m_Attackreports[i]->attackerDamage;
             pStream >> m_Attackreports[i]->attackerX;
             pStream >> m_Attackreports[i]->attackerY;
@@ -118,6 +121,7 @@ void GameRecorder::deserializeObject(QDataStream& pStream)
             pStream >> m_Attackreports[i]->defenderDamage;
             pStream >> m_Attackreports[i]->defenderID;
             pStream >> m_Attackreports[i]->defenderOwnerID;
+            pStream >> m_Attackreports[i]->defenderKilled;
         }
     }
 }
@@ -236,11 +240,12 @@ void GameRecorder::addSpecialEvent(qint32 player, GameEnums::GameRecord_SpecialE
 }
 
 void GameRecorder::logAttack(qint32 day,
-                             qint32 attackerDamage, qint32 attackerX, qint32 attackerY, QString attackerID, qint32 attackerOwnerID,
-                             qint32 defenderDamage, qint32 defenderX, qint32 defenderY, QString defenderID, qint32 defenderOwnerID)
+                             qint32 attackerDamage, qint32 attackerX, qint32 attackerY, QString attackerID, qint32 attackerOwnerID, bool attackerKilled,
+                             qint32 defenderDamage, qint32 defenderX, qint32 defenderY, QString defenderID, qint32 defenderOwnerID, bool defenderKilled)
 {
     m_Attackreports.append(new AttackReport());
     m_Attackreports[m_Attackreports.size() - 1]->day = day;
+    m_Attackreports[m_Attackreports.size() - 1]->attackerKilled = attackerKilled;
     m_Attackreports[m_Attackreports.size() - 1]->attackerDamage = attackerDamage;
     m_Attackreports[m_Attackreports.size() - 1]->attackerX = attackerX;
     m_Attackreports[m_Attackreports.size() - 1]->attackerY = attackerY;
@@ -251,6 +256,7 @@ void GameRecorder::logAttack(qint32 day,
     m_Attackreports[m_Attackreports.size() - 1]->defenderDamage = defenderDamage;
     m_Attackreports[m_Attackreports.size() - 1]->defenderID = defenderID;
     m_Attackreports[m_Attackreports.size() - 1]->defenderOwnerID = defenderOwnerID;
+    m_Attackreports[m_Attackreports.size() - 1]->defenderKilled = defenderKilled;
 }
 
 QVector<spAttackReport> GameRecorder::getAttackLog(qint32 player)

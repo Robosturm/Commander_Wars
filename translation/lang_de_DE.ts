@@ -914,50 +914,50 @@
 <context>
     <name>DialogAttackLog</name>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="42"/>
+        <location filename="../objects/dialogattacklog.cpp" line="44"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="66"/>
+        <location filename="../objects/dialogattacklog.cpp" line="68"/>
         <source>Day </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="74"/>
+        <location filename="../objects/dialogattacklog.cpp" line="76"/>
         <source>Attacker: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="87"/>
-        <location filename="../objects/dialogattacklog.cpp" line="124"/>
+        <location filename="../objects/dialogattacklog.cpp" line="98"/>
+        <location filename="../objects/dialogattacklog.cpp" line="144"/>
         <source> at X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="93"/>
-        <location filename="../objects/dialogattacklog.cpp" line="130"/>
+        <location filename="../objects/dialogattacklog.cpp" line="104"/>
+        <location filename="../objects/dialogattacklog.cpp" line="150"/>
         <source> Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="99"/>
+        <location filename="../objects/dialogattacklog.cpp" line="110"/>
         <source> dealt </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="111"/>
+        <location filename="../objects/dialogattacklog.cpp" line="122"/>
         <source>to Defender </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="136"/>
+        <location filename="../objects/dialogattacklog.cpp" line="156"/>
         <source> and recieved </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="105"/>
-        <location filename="../objects/dialogattacklog.cpp" line="142"/>
+        <location filename="../objects/dialogattacklog.cpp" line="116"/>
+        <location filename="../objects/dialogattacklog.cpp" line="162"/>
         <source>Hp</source>
         <translation type="unfinished"></translation>
     </message>

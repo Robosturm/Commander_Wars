@@ -22,6 +22,10 @@ class AttackReport : public oxygine::ref_counter
 public:
     qint32 day{0};
     /**
+     * @brief defenderKilled
+     */
+    bool attackerKilled{false};
+    /**
      * @brief attackerDamage
      */
     qint32 attackerDamage{0};
@@ -61,6 +65,10 @@ public:
      * @brief defenderOwnerID
      */
     qint32 defenderOwnerID{-1};
+    /**
+     * @brief defenderKilled
+     */
+    bool defenderKilled{false};
 };
 
 class GameRecorder : public QObject, public FileSerializable, public oxygine::ref_counter
@@ -210,8 +218,8 @@ public slots:
      * @param defenderOwnerID
      */
     void logAttack(qint32 day,
-                   qint32 attackerDamage, qint32 attackerX, qint32 attackerY, QString attackerID, qint32 attackerOwnerID,
-                   qint32 defenderDamage, qint32 defenderX, qint32 defenderY, QString defenderID, qint32 defenderOwnerID);
+                   qint32 attackerDamage, qint32 attackerX, qint32 attackerY, QString attackerID, qint32 attackerOwnerID, bool attackerKilled,
+                   qint32 defenderDamage, qint32 defenderX, qint32 defenderY, QString defenderID, qint32 defenderOwnerID, bool defenderKilled);
     /**
      * @brief getAttackLog
      * @param player

@@ -9,6 +9,7 @@
 #include "objects/panel.h"
 
 #include "resource_management/objectmanager.h"
+#include "resource_management/gamemanager.h"
 #include "resource_management/fontmanager.h"
 
 DialogAttackLog::DialogAttackLog(Player* pPlayer)
@@ -20,6 +21,7 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     ObjectManager* pObjectManager = ObjectManager::getInstance();
+    GameManager* pGameManager = GameManager::getInstance();
     oxygine::spBox9Sprite pSpriteBox = new oxygine::Box9Sprite();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("codialog");
     pSpriteBox->setResAnim(pAnim);
@@ -81,6 +83,15 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
         pActor->loadSprites();
         pActor->addChild(new Unit(log->attackerID, pMap->getPlayer(log->attackerOwnerID), false));
         pActor->setPosition(140, y + 8);
+        if (log->attackerKilled)
+        {
+            oxygine::spSprite pSprite = new oxygine::Sprite();
+            oxygine::ResAnim* pAnim = pGameManager->getResAnim("fire");
+            pSprite->setResAnim(pAnim);
+            pSprite->setScale(GameMap::Imagesize / pAnim->getWidth() * 0.75f);
+            pSprite->setPosition(0, GameMap::Imagesize * 1.0f / 4.0f);
+            pActor->addChild(pSprite);
+        }
         pPanel->addItem(pActor);
 
         pText = new oxygine::TextField();
@@ -117,6 +128,15 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
         pActor = Terrain::createTerrain(pTerrain->getTerrainID(), -10, -10, "");
         pActor->loadSprites();
         pActor->addChild(new Unit(log->defenderID, pMap->getPlayer(log->defenderOwnerID), false));
+        if (log->defenderKilled)
+        {
+            oxygine::spSprite pSprite = new oxygine::Sprite();
+            oxygine::ResAnim* pAnim = pGameManager->getResAnim("fire");
+            pSprite->setResAnim(pAnim);
+            pSprite->setScale(GameMap::Imagesize / pAnim->getWidth() * 0.75f);
+            pSprite->setPosition(0, GameMap::Imagesize * 1.0f / 4.0f);
+            pActor->addChild(pSprite);
+        }
         pActor->setPosition(650, y + 8);
         pPanel->addItem(pActor);
 

@@ -148,8 +148,8 @@ GameAnimation* GameAnimationFactory::createBattleAnimation(Terrain* pAtkTerrain,
         qint32 defDamage = Mainapp::roundUp(atkStartHp) - Mainapp::roundUp(atkEndHp);
         GameMap* pMap = GameMap::getInstance();
         pMap->getGameRecorder()->logAttack(pMap->getCurrentDay(),
-                                           atkDamage, pAtkTerrain->getX(), pAtkTerrain->getY(), pAtkUnit->getUnitID(), pAtkUnit->getOwner()->getPlayerID(),
-                                           defDamage, pDefTerrain->getX(), pDefTerrain->getY(), pDefUnit->getUnitID(), pDefUnit->getOwner()->getPlayerID());
+                                           atkDamage, pAtkTerrain->getX(), pAtkTerrain->getY(), pAtkUnit->getUnitID(), pAtkUnit->getOwner()->getPlayerID(), (atkEndHp <= 0),
+                                           defDamage, pDefTerrain->getX(), pDefTerrain->getY(), pDefUnit->getUnitID(), pDefUnit->getOwner()->getPlayerID(), (defEndHp <= 0));
 
         if (Settings::getBattleAnimations() == GameEnums::BattleAnimationMode_Detail)
         {

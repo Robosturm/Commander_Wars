@@ -31,7 +31,9 @@ public:
         buildingCaptured,
         playerDefeated,
         unitsDestroyed,
-        buildingsOwned
+        buildingsOwned,
+//        playerReachedArea,
+//        unitReachedArea
     };
     static const QString ConditionVictory;
     static const QString ConditionStartOfTurn;
