@@ -73,6 +73,7 @@ void ScriptEventAddFunds::showEditEvent(spScriptEditor pScriptEditor)
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, 9999);
+    spinBox->setTooltipText(tr("Player that earns the given amount of funds."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(player + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
@@ -88,6 +89,7 @@ void ScriptEventAddFunds::showEditEvent(spScriptEditor pScriptEditor)
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 0, 999999);
+    spinBox->setTooltipText(tr("The funds the given player will earn."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(funds);
     connect(spinBox.get(), &SpinBox::sigValueChanged,

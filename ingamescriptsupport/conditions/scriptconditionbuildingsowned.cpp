@@ -129,6 +129,7 @@ void ScriptConditionBuildingsOwned::showEditCondition(spScriptEditor pScriptEdit
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 0, 99999);
+    spinBox->setTooltipText(tr("Amount of Buildings that has to be owned."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_count);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
@@ -144,6 +145,7 @@ void ScriptConditionBuildingsOwned::showEditCondition(spScriptEditor pScriptEdit
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 1, 99999);
+    spinBox->setTooltipText(tr("Player that has to own the given amount of buildings."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(m_player + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged,

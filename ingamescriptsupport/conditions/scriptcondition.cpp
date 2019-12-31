@@ -19,6 +19,9 @@ const QString ScriptCondition::ConditionBuildingCaptured = "Building Captured";
 const QString ScriptCondition::ConditionPlayerDefeated = "Player Defeated";
 const QString ScriptCondition::ConditionUnitsDestroyed = "Units Destroyed";
 const QString ScriptCondition::ConditionBuildingsOwned = "Buildings Owned";
+const QString ScriptCondition::ConditionPlayerReachedArea = "Player Reached Area";
+const QString ScriptCondition::ConditionUnitReachedArea = "Unit Reached Area";
+
 
 ScriptCondition::ScriptCondition(ConditionType type)
     : QObject(),

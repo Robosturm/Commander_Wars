@@ -112,6 +112,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 0, 9999);
+    spinBox->setTooltipText(tr("X Location at which the unit gets spawned."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(x);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptEventSpawnUnit::setX, Qt::QueuedConnection);
@@ -123,6 +124,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 0, 9999);
+    spinBox->setTooltipText(tr("Y Location at which the unit gets spawned."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(y);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptEventSpawnUnit::setY, Qt::QueuedConnection);
@@ -134,6 +136,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     pText->setPosition(30, 110);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 1, 9999);
+    spinBox->setTooltipText(tr("Player for which the unit gets spawned."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(player + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
@@ -161,6 +164,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
         }
     }
     spDropDownmenu pMenu = new DropDownmenu(300, items);
+    pMenu->setTooltipText(tr("Unit id (unit) which gets spawned."));
     pMenu->setPosition(width, 150);
     pMenu->setCurrentItem(currentItem);
     pBox->addItem(pMenu);
@@ -175,6 +179,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     pText->setPosition(30, 190);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 0, 9999);
+    spinBox->setTooltipText(tr("Radius around the given location at which the unit gets tried to be spawned, if either the field is blocked or the unit can't move over the given field."));
     spinBox->setPosition(width, 190);
     spinBox->setCurrentValue(radius);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptEventSpawnUnit::setRadius, Qt::QueuedConnection);

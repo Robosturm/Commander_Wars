@@ -110,6 +110,7 @@ void ScriptConditionBuildingDestroyed::showEditCondition(spScriptEditor pScriptE
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 0, 99999);
+    spinBox->setTooltipText(tr("X Location of the Building that has to be destroyed."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_x);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
@@ -125,6 +126,7 @@ void ScriptConditionBuildingDestroyed::showEditCondition(spScriptEditor pScriptE
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 0, 99999);
+    spinBox->setTooltipText(tr("Y Location of the Building that has to be destroyed."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(m_y);
     connect(spinBox.get(), &SpinBox::sigValueChanged,

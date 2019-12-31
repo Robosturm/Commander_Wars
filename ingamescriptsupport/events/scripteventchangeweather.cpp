@@ -76,6 +76,7 @@ void ScriptEventChangeWeather::showEditEvent(spScriptEditor pScriptEditor)
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, 9999);
+    spinBox->setTooltipText(tr("The amount of days the new weather appears."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(turns);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
@@ -100,6 +101,7 @@ void ScriptEventChangeWeather::showEditEvent(spScriptEditor pScriptEditor)
     }
 
     spDropDownmenu startWeather = new DropDownmenu(200, weatherStrings);
+    startWeather->setTooltipText(tr("The new weather that appears."));
     startWeather->setPosition(150, 70);
     startWeather->setCurrentItem(weatherID);
     connect(startWeather.get(), &DropDownmenu::sigItemChanged, [=](qint32 item)

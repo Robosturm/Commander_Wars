@@ -129,6 +129,7 @@ void ScriptConditionUnitsDestroyed::showEditCondition(spScriptEditor pScriptEdit
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, 99999);
+    spinBox->setTooltipText(tr("Amount of units that has to be killed."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_count);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
@@ -141,6 +142,7 @@ void ScriptConditionUnitsDestroyed::showEditCondition(spScriptEditor pScriptEdit
     pText = new oxygine::TextField();
     pText->setStyle(style);
     pText->setHtmlText(tr("Player: "));
+    spinBox->setTooltipText(tr("Player who has to kill the units."));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 1, 99999);

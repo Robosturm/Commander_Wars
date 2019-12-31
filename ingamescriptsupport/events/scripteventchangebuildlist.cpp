@@ -91,6 +91,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, 9999);
+    spinBox->setTooltipText(tr("Player who's buildlist will be modified."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(player + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
@@ -118,6 +119,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
         }
     }
     spDropDownmenu pMenu = new DropDownmenu(300, items);
+    pMenu->setTooltipText(tr("The unit id that will be changed in the build list of the player."));
     pMenu->setPosition(width, 70);
     pMenu->setCurrentItem(currentItem);
     pBox->addItem(pMenu);
@@ -133,6 +135,7 @@ void ScriptEventChangeBuildlist::showEditEvent(spScriptEditor pScriptEditor)
     pBox->addItem(pText);
 
     spCheckbox checkBox = new Checkbox();
+    checkBox->setTooltipText(tr("If the checked the unit will be forbidden to be build, else it gets allowed to be build."));
     checkBox->setPosition(width, 110);
     checkBox->setChecked(remove);
     connect(checkBox.get(), &Checkbox::checkChanged,

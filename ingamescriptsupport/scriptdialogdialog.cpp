@@ -91,6 +91,7 @@ void ScriptDialogDialog::updateDialog()
         qint32 boxWidth = panelWidth - 800;
         qint32 posX = panelWidth - 800;
         spTextbox pTextbox = new Textbox(boxWidth);
+        pTextbox->setTooltipText(tr("The text the CO should talk."));
         pTextbox->setPosition(0, y);
         pTextbox->setCurrentText(pDialog->text);
         m_Panel->addItem(pTextbox);
@@ -106,6 +107,7 @@ void ScriptDialogDialog::updateDialog()
         }
         QVector<QString> moods = {tr("Normal"), tr("Happy"), tr("Sad")};
         spDropDownmenu moodMenu = new DropDownmenu(150, moods, up);
+        moodMenu->setTooltipText(tr("The CO Mood\Icon that will be used for the dialog."));
         moodMenu->setPosition(posX, y);
         moodMenu->setCurrentItem(static_cast<qint32>(pDialog->mood));
         m_Panel->addItem(moodMenu);
@@ -116,6 +118,7 @@ void ScriptDialogDialog::updateDialog()
 
         QVector<QString> ids = COSpriteManager::getInstance()->getSpriteCOIDs();
         spDropDownmenu coidsMenu = new DropDownmenu(200, ids, up);
+        coidsMenu->setTooltipText(tr("The ID of the CO that should talk."));
         coidsMenu->setPosition(posX + 150, y);
         coidsMenu->setCurrentItem(pDialog->coid);
         m_Panel->addItem(coidsMenu);
@@ -139,6 +142,7 @@ void ScriptDialogDialog::updateDialog()
             playerColors.append(QColor(ret.toString()));
         }
         spDropDownmenuColor colors = new DropDownmenuColor(110, playerColors, up);
+        colors->setTooltipText(tr("The background color of the dialog."));
         colors->setPosition(posX + 350, y);
         colors->setCurrentItem(pDialog->color);
         m_Panel->addItem(colors);

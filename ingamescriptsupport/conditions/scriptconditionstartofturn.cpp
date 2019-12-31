@@ -93,6 +93,7 @@ void ScriptConditionStartOfTurn::showEditCondition(spScriptEditor pScriptEditor)
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, 9999);
+    spinBox->setTooltipText(tr("Day at which the events get executed at the start of this turn."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(day);
     connect(spinBox.get(), &SpinBox::sigValueChanged, this, &ScriptConditionStartOfTurn::setDay, Qt::QueuedConnection);
@@ -104,6 +105,7 @@ void ScriptConditionStartOfTurn::showEditCondition(spScriptEditor pScriptEditor)
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 1, 9999);
+    spinBox->setTooltipText(tr("Player at which the events get executed at the start of this turn."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(player + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged,

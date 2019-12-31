@@ -90,6 +90,7 @@ void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, 9999);
+    spinBox->setTooltipText(tr("Player who earns CO-Power Stars."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(player + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
@@ -105,6 +106,7 @@ void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 1, 2);
+    spinBox->setTooltipText(tr("CO who earns CO-Power Stars."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(co + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
@@ -121,6 +123,7 @@ void ScriptEventChangeCOBar::showEditEvent(spScriptEditor pScriptEditor)
     pText->setPosition(30, 110);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, -100, 100, SpinBox::Mode::Float);
+    spinBox->setTooltipText(tr("The amount of Stars that will be changed."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(stars);
     connect(spinBox.get(), &SpinBox::sigValueChanged,

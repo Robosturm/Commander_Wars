@@ -127,6 +127,7 @@ void ScriptConditionUnitDestroyed::showEditCondition(spScriptEditor pScriptEdito
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 0, 99999);
+    spinBox->setTooltipText(tr("X Location of the unit at the start of the game that needs to be destroyed. The unit is allowed to move."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_x);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
@@ -142,6 +143,7 @@ void ScriptConditionUnitDestroyed::showEditCondition(spScriptEditor pScriptEdito
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 0, 99999);
+    spinBox->setTooltipText(tr("Y Location of the unit at the start of the game that needs to be destroyed. The unit is allowed to move."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(m_y);
     connect(spinBox.get(), &SpinBox::sigValueChanged,

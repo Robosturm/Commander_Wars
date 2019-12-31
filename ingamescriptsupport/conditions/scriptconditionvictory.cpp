@@ -80,6 +80,7 @@ void ScriptConditionVictory::showEditCondition(spScriptEditor pScriptEditor)
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, 9999);
+    spinBox->setTooltipText(tr("Team that has to win the game to executed the events."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(team + 1);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
