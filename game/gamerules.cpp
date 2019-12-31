@@ -527,7 +527,7 @@ void GameRules::createFogVision()
                     {
                         if (m_FogSprites[x][y].get() != nullptr)
                         {
-                            pMap->removeChild(m_FogSprites[x][y]);
+                            m_FogSprites[x][y]->detach();
                             m_FogSprites[x][y] = nullptr;
                         }
                         if (pUnit != nullptr)
@@ -570,7 +570,7 @@ void GameRules::createFogVision()
                         }
                         else if (m_FogSprites[x][y].get() != nullptr)
                         {
-                            pMap->removeChild(m_FogSprites[x][y]);
+                            m_FogSprites[x][y]->detach();
                             m_FogSprites[x][y] = nullptr;
                         }
                         break;

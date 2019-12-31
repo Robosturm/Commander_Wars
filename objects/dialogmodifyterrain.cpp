@@ -36,7 +36,7 @@ DialogModifyTerrain::DialogModifyTerrain(Terrain* pTerrain)
     pSpriteBox->addChild(m_OkButton);
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        this->getParent()->removeChild(this);
+        detach();
         emit sigFinished();
     });
 

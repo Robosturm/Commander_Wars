@@ -55,7 +55,7 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, 
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit editFinished(m_currentCOID, m_player);
-        this->getParent()->removeChild(this);
+        detach();
     });
 
     // cancel button
@@ -65,7 +65,7 @@ COSelectionDialog::COSelectionDialog(QString coid, QColor color, qint32 player, 
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit canceled();
-        this->getParent()->removeChild(this);
+        detach();
     });
 
     // show co info button

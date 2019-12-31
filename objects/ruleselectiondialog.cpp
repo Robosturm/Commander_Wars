@@ -30,7 +30,7 @@ RuleSelectionDialog::RuleSelectionDialog()
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit sigRulesChanged();
-        this->getParent()->removeChild(this);
+        detach();
     });
     m_pRuleSelection = new RuleSelection(pApp->getSettings()->getWidth() - 80);
     QSize size(pApp->getSettings()->getWidth() - 20, pApp->getSettings()->getHeight() - 40 * 2 - m_OkButton->getHeight());

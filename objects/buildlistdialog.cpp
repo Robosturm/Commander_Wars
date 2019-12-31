@@ -42,7 +42,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit editFinished(m_Player, m_CurrentBuildList);
-        this->getParent()->removeChild(this);
+        detach();
     });
 
     // cancel button
@@ -52,7 +52,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit canceled();
-        this->getParent()->removeChild(this);
+        detach();
     });
 
     m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 150);

@@ -283,7 +283,7 @@ void Unit::updateSprites()
     Mainapp* pApp = Mainapp::getInstance();
     for (qint32 i = 0; i < m_pUnitSprites.size(); i++)
     {
-        this->removeChild(m_pUnitSprites[i]);
+        m_pUnitSprites[i]->detach();
     }
     // call the js loader function to do the rest
     m_pUnitSprites.clear();
@@ -704,7 +704,7 @@ void Unit::loadUnit(Unit* pUnit)
     if (m_TransportUnits.size() < getLoadingPlace())
     {
         m_TransportUnits.append(pUnit);
-        pUnit->removeUnit();
+        pUnit->removeUnit(false);
         GameMap* pMap = GameMap::getInstance();
         if (pMap != nullptr)
         {
@@ -1905,27 +1905,35 @@ void Unit::moveUnitToField(qint32 x, qint32 y)
     pApp->continueThread();
 }
 
-void Unit::removeUnit()
+void Unit::removeUnit(bool killed)
 {
-    if (m_UnitRank == GameEnums::UnitRank_CO0)
+    if (killed)
     {
-        CO* pCO = m_pOwner->getCO(0);
-        if (pCO != nullptr)
+        if (m_UnitRank == GameEnums::UnitRank_CO0)
         {
-            pCO->setCOUnit(nullptr);
+            CO* pCO = m_pOwner->getCO(0);
+            if (pCO != nullptr)
+            {
+                pCO->setCOUnit(nullptr);
+            }
         }
-    }
-    else if (m_UnitRank == GameEnums::UnitRank_CO1)
-    {
-        CO* pCO = m_pOwner->getCO(1);
-        if (pCO != nullptr)
+        else if (m_UnitRank == GameEnums::UnitRank_CO1)
         {
-            pCO->setCOUnit(nullptr);
+            CO* pCO = m_pOwner->getCO(1);
+            if (pCO != nullptr)
+            {
+                pCO->setCOUnit(nullptr);
+            }
+        }
+        // remove transported units as well -> may kill a co unit this way.
+        for (qint32 i = 0; i < m_TransportUnits.size(); i++)
+        {
+            m_TransportUnits[i]->removeUnit();
         }
     }
     if (m_CORange.get() != nullptr)
     {
-        GameMap::getInstance()->removeChild(m_CORange);
+        m_CORange->detach();
         m_CORange = nullptr;
     }
     if (m_pTerrain != nullptr)
@@ -1951,7 +1959,6 @@ void Unit::killUnit()
     {
         GameMap::getInstance()->getGameRecorder()->lostUnit(m_pOwner->getPlayerID());
     }
-
     detach();
     removeUnit();
 }

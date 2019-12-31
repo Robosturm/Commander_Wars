@@ -28,7 +28,7 @@ PlayerSelectionDialog::PlayerSelectionDialog()
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit sigPlayersChanged();
-        this->getParent()->removeChild(this);
+        detach();
     });
 
     m_pPlayerSelection = new PlayerSelection(pApp->getSettings()->getWidth() - 60,

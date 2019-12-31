@@ -578,7 +578,7 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
         spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getBaseTerrainID());
         if (useTerrainAsBaseTerrain)
         {            
-            this->removeChild(pTerrainOld);
+            pTerrainOld->detach();
             pTerrain->setBaseTerrain(pTerrainOld);
             fields.at(y)->replace(x, pTerrain);
             this->addChild(pTerrain);
@@ -587,7 +587,7 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
         }
         else
         {
-            this->removeChild(pTerrainOld);
+            pTerrainOld->detach();
             fields.at(y)->replace(x, pTerrain);
             this->addChild(pTerrain);
             pTerrain->setPosition(x * Imagesize, y * Imagesize);
@@ -858,7 +858,7 @@ void GameMap::clearMap()
             {
                 pUnit->detach();
             }
-            this->removeChild(fields.at(y)->at(x));
+            fields.at(y)->at(x)->detach();
         }
         fields.at(y)->clear();
     }

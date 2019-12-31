@@ -45,7 +45,7 @@ FolderDialog::FolderDialog(QString startFolder)
         {
             emit sigFolderSelected(m_CurrentFolder->getCurrentText());
         }
-        this->getParent()->removeChild(this);
+        detach();
     });
     // cancel button
     m_CancelButton = pObjectManager->createButton(tr("Cancel"), 150);
@@ -54,7 +54,7 @@ FolderDialog::FolderDialog(QString startFolder)
     pSpriteBox->addChild(m_CancelButton);
     m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        this->getParent()->removeChild(this);
+        detach();
         emit sigCancel();
     });
 

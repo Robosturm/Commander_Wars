@@ -41,7 +41,7 @@ ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit sigFinished();
-        this->getParent()->removeChild(this);
+        detach();
     });
 
     // add Dialog button

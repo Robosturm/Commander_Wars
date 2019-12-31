@@ -117,7 +117,7 @@ void Panel::addItem(oxygine::spActor pActor)
 
 void Panel::removeItem(oxygine::spActor pActor)
 {
-    m_ContentRect->removeChild(pActor);
+    pActor->detach();
 }
 
 void Panel::clearContent()

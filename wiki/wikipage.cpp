@@ -39,7 +39,7 @@ Wikipage::Wikipage()
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit sigFinished();
-        this->getParent()->removeChild(this);
+        detach();
     });
 
     // no the fun begins create checkboxes and stuff and a panel down here
@@ -61,7 +61,7 @@ void Wikipage::keyInput(oxygine::KeyEvent event)
         cur == Settings::getKey_cancel())
     {
         emit sigFinished();
-        this->getParent()->removeChild(this);
+        detach();
     }
     pApp->continueThread();
 }

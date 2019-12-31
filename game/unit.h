@@ -399,7 +399,7 @@ public slots:
     /**
      * @brief removeUnit removes this from game
      */
-    void removeUnit();
+    void removeUnit(bool killed = true);
     /**
      * @brief killUnit removes the unit from the game and let it explode
      */

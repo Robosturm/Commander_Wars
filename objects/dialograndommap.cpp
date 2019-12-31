@@ -185,7 +185,7 @@ DialogRandomMap::DialogRandomMap()
                          m_BuildingChances->getSliderValue(0), m_BuildingChances->getSliderValue(1),
                          m_BuildingChances->getSliderValue(2)
                          );
-        this->getParent()->removeChild(this);
+        detach();
     });
 
     // cancel button
@@ -194,7 +194,7 @@ DialogRandomMap::DialogRandomMap()
     pSpriteBox->addChild(m_ExitButton);
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        this->getParent()->removeChild(this);
+        detach();
         emit sigCancel();
     });
 }

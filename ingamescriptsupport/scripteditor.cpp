@@ -117,7 +117,7 @@ ScriptEditor::ScriptEditor()
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit sigFinished();
-        this->getParent()->removeChild(this);
+        detach();
     });
 
     oxygine::spButton pSaveButton = pObjectManager->createButton(tr("Save Script"), 150);

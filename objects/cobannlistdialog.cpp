@@ -41,7 +41,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit editFinished(m_CurrentCOBannList);
-        this->getParent()->removeChild(this);
+        detach();
     });
 
     // cancel button
@@ -51,7 +51,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit canceled();
-        this->getParent()->removeChild(this);
+        detach();
     });
 
     m_ToggleAll = pObjectManager->createButton(tr("Un/Select All"), 150);

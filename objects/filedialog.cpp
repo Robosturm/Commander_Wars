@@ -68,7 +68,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
         {
             emit sigFileSelected(file);
         }
-        this->getParent()->removeChild(this);
+        detach();
     });
     // drop down menu
     m_DropDownmenu = new DropDownmenu(m_CurrentFile->getWidth(), wildcards, true);
@@ -81,7 +81,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
     pSpriteBox->addChild(m_CancelButton);
     m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        this->getParent()->removeChild(this);
+        detach();
         emit sigCancel();
     });
 

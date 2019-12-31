@@ -50,7 +50,7 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
         if (!currentText.isEmpty())
         {
             emit sigTextChanged(currentText);
-            this->getParent()->removeChild(this);
+            detach();
         }
     });
     if (showCancel)
@@ -62,7 +62,7 @@ DialogTextInput::DialogTextInput(QString text, bool showCancel, QString startInp
         m_CancelButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
             emit sigCancel();
-            this->getParent()->removeChild(this);
+            detach();
         });
     }
 }

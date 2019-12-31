@@ -169,7 +169,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
                           static_cast<qint32>(m_MapWidth->getCurrentValue()), static_cast<qint32>(m_MapHeigth->getCurrentValue()),
                           static_cast<qint32>(m_MapPlayerCount->getCurrentValue()), static_cast<qint32>(m_MapTurnLimit->getCurrentValue()),
                           static_cast<quint32>(m_UnitBuildLimit->getCurrentValue()));
-        this->getParent()->removeChild(this);
+        detach();
     });
 
     // cancel button
@@ -178,7 +178,7 @@ MapEditDialog::MapEditDialog(QString mapName, QString author, QString descriptio
     pSpriteBox->addChild(m_ExitButton);
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        this->getParent()->removeChild(this);
+        detach();
         emit sigCanceled();
     });
 }

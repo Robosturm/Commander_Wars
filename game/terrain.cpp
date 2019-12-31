@@ -199,7 +199,7 @@ void Terrain::setBaseTerrain(spTerrain terrain)
 {
     if (m_pBaseTerrain.get() != nullptr)
     {
-        this->removeChild(m_pBaseTerrain);
+        m_pBaseTerrain->detach();
         m_pBaseTerrain = nullptr;
     }
     m_pBaseTerrain = terrain;
@@ -213,14 +213,14 @@ void Terrain::loadSprites()
     // unload old stuff
     if (m_pTerrainSprite.get() != nullptr)
     {
-        this->removeChild(m_pTerrainSprite);
+        m_pTerrainSprite->detach();
         m_pTerrainSprite = nullptr;
     }
     if (m_pOverlaySprites.size() > 0)
     {
         for (qint32 i = 0; i < m_pOverlaySprites.size(); i++)
         {
-            this->removeChild(m_pOverlaySprites[i]);
+            m_pOverlaySprites[i]->detach();
         }
         m_pOverlaySprites.clear();
     }
@@ -624,7 +624,7 @@ void Terrain::removeBuilding()
         if (m_Building->getTerrain() == this)
         {
             // delete it
-            this->removeChild(m_Building);
+            m_Building->detach();
             qint32 width = m_Building->getBuildingWidth();
             qint32 heigth = m_Building->getBuildingHeigth();
             GameMap* pMap = GameMap::getInstance();

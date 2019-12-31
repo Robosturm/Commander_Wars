@@ -57,12 +57,12 @@ DialogConnecting::DialogConnecting(QString text, qint32 timeoutMs)
 
 void DialogConnecting::cancel()
 {
-    this->getParent()->removeChild(this);
+    detach();
 }
 
 void DialogConnecting::connected()
 {
-    this->getParent()->removeChild(this);
+    detach();
 }
 
 void DialogConnecting::connectionTimeout()

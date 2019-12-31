@@ -29,7 +29,7 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color)
     m_OkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit editFinished(m_pColorSelector->getCurrentColor());
-        this->getParent()->removeChild(this);
+        detach();
     });
 
     // cancel button
@@ -39,7 +39,7 @@ ColorSelectionDialog::ColorSelectionDialog(QColor color)
     m_ExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit canceled();
-        this->getParent()->removeChild(this);
+        detach();
     });
     qint32 pixelSize = (pApp->getSettings()->getHeight() - 120) / 256;
     // add spin boxes for red green and blue

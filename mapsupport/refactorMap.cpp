@@ -61,7 +61,7 @@ void GameMap::changeMap(qint32 width, qint32 heigth, qint32 playerCount)
         {
             while (width < fields[y]->size())
             {
-                this->removeChild(fields.at(y)->at(fields.at(y)->size() - 1));
+                fields.at(y)->at(fields.at(y)->size() - 1)->detach();
                 fields.at(y)->removeLast();
             }
         }
@@ -88,7 +88,7 @@ void GameMap::changeMap(qint32 width, qint32 heigth, qint32 playerCount)
         {
             for (qint32 x = 0; x < fields.at(fields.size() - 1)->size(); x++)
             {
-                this->removeChild(fields.at(fields.size() - 1)->at(x));
+                fields.at(fields.size() - 1)->at(x)->detach();
             }
             fields.at(fields.size() - 1)->clear();
             fields.removeLast();

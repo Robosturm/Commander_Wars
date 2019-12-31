@@ -210,7 +210,7 @@ void Building::updateBuildingSprites(bool neutral)
     Mainapp* pApp = Mainapp::getInstance();
     for (qint32 i = 0; i < m_pBuildingSprites.size(); i++)
     {
-        this->removeChild(m_pBuildingSprites[i]);
+        m_pBuildingSprites[i]->detach();
     }
     // call the js loader function to do the rest
     m_pBuildingSprites.clear();

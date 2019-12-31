@@ -150,7 +150,7 @@ CampaignEditor::CampaignEditor()
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         emit sigFinished();
-        this->getParent()->removeChild(this);
+        detach();
     });
 
     connect(this, &CampaignEditor::sigShowAddCampaign, this, &CampaignEditor::showAddCampaign, Qt::QueuedConnection);

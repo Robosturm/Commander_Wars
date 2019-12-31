@@ -41,7 +41,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
     {
         Userdata::getInstance()->addCOStyle(m_currentCOID, m_ResFilePath, colorTable, maskTable, useColorBox);
         pCOSpriteManager->loadResAnim(m_currentCOID, m_ResFilePath, colorTable, maskTable, useColorBox);
-        this->getParent()->removeChild(this);
+        detach();
         emit sigFinished();
     });
 
@@ -51,7 +51,7 @@ DialogCOStyle::DialogCOStyle(QString coid)
     m_pSpriteBox->addChild(pExitButton);
     pExitButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        this->getParent()->removeChild(this);
+        detach();
         emit sigCancel();
     });
     qint32 heigth = Settings::getHeight() - 220;

@@ -241,17 +241,9 @@ void HumanPlayerInput::clearMenu()
 
 void HumanPlayerInput::clearMarkedFields()
 {
-    GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < m_Fields.size(); i++)
     {
-        if (static_cast<qint32>(m_FieldPoints[i].z()) == 0)
-        {
-            pMap->getTerrain(static_cast<qint32>(m_FieldPoints[i].x()), static_cast<qint32>(m_FieldPoints[i].y()))->removeChild(m_Fields[i]);
-        }
-        else
-        {
-            pMap->removeChild(m_Fields[i]);
-        }
+        m_Fields[i]->detach();
     }
     m_FieldPoints.clear();
     m_Fields.clear();
@@ -262,7 +254,7 @@ void HumanPlayerInput::clearMarkedFields()
     }
     if (m_ZInformationLabel.get() != nullptr)
     {
-        GameMap::getInstance()->removeChild(m_ZInformationLabel);
+        m_ZInformationLabel->detach();
         m_ZInformationLabel = nullptr;
     }
 }
@@ -716,7 +708,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                 {
                     if (m_ZInformationLabel.get() != nullptr)
                     {
-                        GameMap::getInstance()->removeChild(m_ZInformationLabel);
+                        m_ZInformationLabel->detach();
                         m_ZInformationLabel = nullptr;
                     }
                     m_ZInformationLabel = new oxygine::Actor();
@@ -787,7 +779,7 @@ void HumanPlayerInput::cursorMoved(qint32 x, qint32 y)
                 {
                     if (m_ZInformationLabel.get() != nullptr)
                     {
-                        pMap->removeChild(m_ZInformationLabel);
+                        m_ZInformationLabel->detach();
                         m_ZInformationLabel = nullptr;
                     }
                 }
