@@ -42,6 +42,14 @@
     </message>
 </context>
 <context>
+    <name>ACTION_ATTACKLOG</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_ATTACKLOG.js" line="10"/>
+        <source>Attack Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ACTION_BLACKHOLEFACTORY_DOOR1</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_BLACKHOLEFACTORY_DOOR1.js" line="23"/>
@@ -2858,14 +2866,14 @@
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="186"/>
-        <location filename="../objects/playerselection.cpp" line="310"/>
+        <location filename="../objects/playerselection.cpp" line="311"/>
         <source>Team</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/playerselection.cpp" line="186"/>
-        <location filename="../objects/playerselection.cpp" line="291"/>
-        <location filename="../objects/playerselection.cpp" line="609"/>
+        <location filename="../objects/playerselection.cpp" line="292"/>
+        <location filename="../objects/playerselection.cpp" line="611"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2900,71 +2908,71 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="277"/>
+        <location filename="../objects/playerselection.cpp" line="278"/>
         <source>Select the income modifier for all players. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="312"/>
-        <location filename="../objects/playerselection.cpp" line="316"/>
-        <location filename="../objects/playerselection.cpp" line="330"/>
+        <location filename="../objects/playerselection.cpp" line="313"/>
+        <location filename="../objects/playerselection.cpp" line="317"/>
+        <location filename="../objects/playerselection.cpp" line="331"/>
         <source>Human</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="312"/>
+        <location filename="../objects/playerselection.cpp" line="313"/>
         <source>Very Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="312"/>
+        <location filename="../objects/playerselection.cpp" line="313"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="312"/>
+        <location filename="../objects/playerselection.cpp" line="313"/>
         <source>Normal Off.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="312"/>
+        <location filename="../objects/playerselection.cpp" line="313"/>
         <source>Normal Def.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="319"/>
-        <location filename="../objects/playerselection.cpp" line="326"/>
-        <location filename="../objects/playerselection.cpp" line="330"/>
+        <location filename="../objects/playerselection.cpp" line="320"/>
+        <location filename="../objects/playerselection.cpp" line="327"/>
+        <location filename="../objects/playerselection.cpp" line="331"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="470"/>
+        <location filename="../objects/playerselection.cpp" line="471"/>
         <source>Select the Color for this players army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="488"/>
+        <location filename="../objects/playerselection.cpp" line="489"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="555"/>
+        <location filename="../objects/playerselection.cpp" line="556"/>
         <source>Select with how much funds this player starts the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="573"/>
+        <location filename="../objects/playerselection.cpp" line="575"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="592"/>
+        <location filename="../objects/playerselection.cpp" line="594"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="628"/>
+        <location filename="../objects/playerselection.cpp" line="630"/>
         <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>

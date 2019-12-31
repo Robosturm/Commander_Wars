@@ -261,6 +261,7 @@ void PlayerSelection::showPlayerSelection()
     itemIndex = 3;
     spSpinBox allStartFundsSpinBox = new SpinBox(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, 0, 100000);
     allStartFundsSpinBox->setTooltipText(tr("Select with how much funds all player start the game."));
+    allStartFundsSpinBox->setSpinSpeed(500);
     allStartFundsSpinBox->setPosition(xPositions[itemIndex], y);
     allStartFundsSpinBox->setCurrentValue(0);
     m_pPlayerSelection->addItem(allStartFundsSpinBox);
@@ -555,6 +556,7 @@ void PlayerSelection::showPlayerSelection()
         playerStartFundsSpinBox->setTooltipText(tr("Select with how much funds this player starts the game."));
         playerStartFundsSpinBox->setPosition(xPositions[itemIndex], y);
         playerStartFundsSpinBox->setCurrentValue(pMap->getPlayer(i)->getFunds());
+        playerStartFundsSpinBox->setSpinSpeed(500);
         m_pPlayerSelection->addItem(playerStartFundsSpinBox);
         m_playerStartFunds.append(playerStartFundsSpinBox);
         connect(playerStartFundsSpinBox.get(), &SpinBox::sigValueChanged, this, [=](float value)
