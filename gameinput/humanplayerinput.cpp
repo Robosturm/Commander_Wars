@@ -593,9 +593,6 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
     Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
     GameMap* pMap = GameMap::getInstance();
     Unit* pUnit = pMap->getTerrain(x, y)->getUnit();
-
-    auto t = std::chrono::system_clock::now();
-
     m_pUnitPathFindingSystem = new UnitPathFindingSystem(pUnit, m_pPlayer);
     if ((pUnit->getOwner() == m_pPlayer) &&
         pUnit->getActionList().contains(CoreAI::ACTION_WAIT))
@@ -612,9 +609,6 @@ void HumanPlayerInput::selectUnit(qint32 x, qint32 y)
         m_pUnitPathFindingSystem->setMovepoints(pUnit->getMovementpoints(QPoint(x, y)));
     }
     m_pUnitPathFindingSystem->explore();
-    auto d = std::chrono::system_clock::now() - t;
-    auto rep = std::chrono::duration_cast<std::chrono::microseconds>(d).count();
-
     createMarkedMoveFields();
 }
 

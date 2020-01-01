@@ -6,7 +6,18 @@
 
 #include "coreengine/mainapp.h"
 
+#include <algorithm>
+
 const qint32 PathFindingSystem::infinite = std::numeric_limits<qint32>::max();
+
+bool operator<(const PathFindingSystem::Node& pNodeLhs, const PathFindingSystem::Node& pNodeRhs)
+{
+    return (pNodeLhs.totalCost < pNodeRhs.totalCost) || // cheaper end cost
+            // same end cost but currently cheaper cost
+           (pNodeLhs.currentCosts < pNodeRhs.currentCosts && pNodeLhs.totalCost == pNodeRhs.totalCost) ||
+            // same
+           (pNodeLhs.currentCosts == pNodeRhs.currentCosts && pNodeLhs.totalCost == pNodeRhs.totalCost);
+}
 
 PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
                                      qint32 width, qint32 heigth)
@@ -51,34 +62,28 @@ void PathFindingSystem::setFinishNode(qint32 x, qint32 y)
 void PathFindingSystem::explore()
 {
     qint32 neighboursIndex = getIndex(m_StartPoint.x(), m_StartPoint.y());
-    Node* pCurrent = new Node(m_StartPoint.x(), m_StartPoint.y(), neighboursIndex, 0, 0);
-    m_OpenList.append(pCurrent);
+    m_OpenList.append(Node(m_StartPoint.x(), m_StartPoint.y(), neighboursIndex, 0, 0));
     qint32 remainingCosts;
     qint32 neighboursX = -1;
     qint32 neighboursY = -1;
     qint32 fieldCost = -1;
     qint32 neighboursCosts = -1;
-    qint32 mid = -1;
-    qint32 low = -1;
-    qint32 high = -1;
     // explore till we reached the end
     while (!m_OpenList.empty())
     {
         // get current node and pop it
-        pCurrent = m_OpenList.last();
-        m_OpenList.removeLast();
-        if (costs[pCurrent->index] != infinite)
+        Node pCurrent = m_OpenList.takeFirst();
+        if (costs[pCurrent.index] != infinite)
         {
             // already searched item
-            delete pCurrent;
             continue;
         }
         // still the best node?
-        qint32 currentCost = pCurrent->currentCosts;
-        costs[pCurrent->index] = currentCost;
-        if (finished(pCurrent->x, pCurrent->y, pCurrent->totalCost))
+        qint32 currentCost = pCurrent.currentCosts;
+        costs[pCurrent.index] = currentCost;
+        if (finished(pCurrent.x, pCurrent.y, pCurrent.totalCost))
         {
-            setFinishNode(pCurrent->x, pCurrent->y);
+            setFinishNode(pCurrent.x, pCurrent.y);
             break;
         }
         // right
@@ -88,17 +93,17 @@ void PathFindingSystem::explore()
             // calculate neighbour node data
             if (i == 0)
             {
-                if (pCurrent->x + 1 < m_width)
+                if (pCurrent.x + 1 < m_width)
                 {
-                    neighboursIndex = pCurrent->index + 1;
+                    neighboursIndex = pCurrent.index + 1;
                     fieldCost = costs[neighboursIndex];
                     if (fieldCost != infinite)
                     {
                         // skip searched fields
                         continue;
                     }
-                    neighboursX = pCurrent->x + 1;
-                    neighboursY = pCurrent->y;
+                    neighboursX = pCurrent.x + 1;
+                    neighboursY = pCurrent.y;
                 }
                 else
                 {
@@ -108,17 +113,17 @@ void PathFindingSystem::explore()
             else if (i == 1)
             {
                 // left
-                if (pCurrent->x > 0)
+                if (pCurrent.x > 0)
                 {
-                    neighboursIndex = pCurrent->index - 1;
+                    neighboursIndex = pCurrent.index - 1;
                     fieldCost = costs[neighboursIndex];
                     if (fieldCost != infinite)
                     {
                         // skip searched fields
                         continue;
                     }
-                    neighboursX = pCurrent->x - 1;
-                    neighboursY = pCurrent->y;
+                    neighboursX = pCurrent.x - 1;
+                    neighboursY = pCurrent.y;
                 }
                 else
                 {
@@ -128,17 +133,17 @@ void PathFindingSystem::explore()
             else if (i == 2)
             {
                 // bottom
-                if (pCurrent->y + 1 < m_heigth)
+                if (pCurrent.y + 1 < m_heigth)
                 {
-                    neighboursIndex = pCurrent->index + m_width;
+                    neighboursIndex = pCurrent.index + m_width;
                     fieldCost = costs[neighboursIndex];
                     if (fieldCost != infinite)
                     {
                         // skip searched fields
                         continue;
                     }
-                    neighboursX = pCurrent->x;
-                    neighboursY = pCurrent->y + 1;
+                    neighboursX = pCurrent.x;
+                    neighboursY = pCurrent.y + 1;
                 }
                 else
                 {
@@ -148,17 +153,17 @@ void PathFindingSystem::explore()
             else
             {
                 // top
-                if (pCurrent->y > 0)
+                if (pCurrent.y > 0)
                 {
-                    neighboursIndex = pCurrent->index - m_width;
+                    neighboursIndex = pCurrent.index - m_width;
                     fieldCost = costs[neighboursIndex];
                     if (fieldCost != infinite)
                     {
                         // skip searched fields
                         continue;
                     }
-                    neighboursX = pCurrent->x;
-                    neighboursY = pCurrent->y - 1;
+                    neighboursX = pCurrent.x;
+                    neighboursY = pCurrent.y - 1;
                 }
                 else
                 {
@@ -166,7 +171,7 @@ void PathFindingSystem::explore()
                 }
             }
             // get field costs from index
-            neighboursCosts = getCosts(neighboursIndex, neighboursX, neighboursY, pCurrent->x, pCurrent->y);
+            neighboursCosts = getCosts(neighboursIndex, neighboursX, neighboursY, pCurrent.x, pCurrent.y);
             if (neighboursCosts >= 0) // passable?
             {
                 // costs to reach this field
@@ -177,43 +182,11 @@ void PathFindingSystem::explore()
                 {
                     qint32 totalCost = newCosts + remainingCosts;
                     // node we want to insert
-                    Node* workNode = new Node(neighboursX, neighboursY, neighboursIndex, totalCost, newCosts);
-                    // iterate over the list and find the best position to insert the item
-                    // also check if an open node with the same field is in the open list
-                    if (m_OpenList.empty())
-                    {
-                        m_OpenList.append(workNode);
-                    }
-                    // best node?
-                    else if (workNode->compare(m_OpenList.last()))
-                    {
-                        m_OpenList.append(workNode);
-                    }
-                    else
-                    {
-                        // binary tree search insertion
-                        high =  m_OpenList.size() - 1;
-                        while (high > 0)
-                        {
-                            // divide by two by shifting
-                            mid = high >> 1;
-                            if (workNode->compare(m_OpenList[mid]))
-                            {
-                                low = mid + 1;
-                                high = high - mid - 1;
-                            }
-                            else
-                            {
-                                high = mid;
-
-                            }
-                        }
-                        m_OpenList.insert(mid, workNode);
-                    }
+                    Node workNode = Node(neighboursX, neighboursY, neighboursIndex, totalCost, newCosts);
+                    m_OpenList.insert(std::upper_bound(m_OpenList.begin(), m_OpenList.end(), workNode), workNode);
                 }
             }
         }
-        delete pCurrent;
     }
 }
 

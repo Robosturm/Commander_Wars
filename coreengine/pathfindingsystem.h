@@ -58,16 +58,6 @@ public:
          * @brief currentCosts
          */
         qint32 currentCosts;
-
-        bool compare(const Node* pNode)
-        {
-            return (totalCost < pNode->totalCost) || // cheaper end cost
-                    // same end cost but currently cheaper cost
-                   (currentCosts < pNode->currentCosts && totalCost == pNode->totalCost) ||
-                    // same
-                   (currentCosts == pNode->currentCosts && totalCost == pNode->totalCost);
-        }
-
     };
     /**
      * @brief PathFindingSystem
@@ -199,11 +189,12 @@ protected:
     qint32 m_heigth;
     qint32 *costs;
     std::array<qint32, Directions::Max> *movecosts;
-    QList<Node*> m_OpenList;
+    QList<Node> m_OpenList;
     qint32 m_FinishNode = -1;
     qint32 m_FinishNodeX = -1;
     qint32 m_FinishNodeY = -1;
 
 };
+
 
 #endif // PATHFINDINGSYSTEM_H
