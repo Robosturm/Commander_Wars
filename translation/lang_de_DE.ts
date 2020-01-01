@@ -275,10 +275,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="97"/>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="105"/>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="114"/>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="122"/>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="101"/>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="113"/>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="126"/>
+        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="138"/>
         <source>RATION</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5643,7 +5643,7 @@
 <context>
     <name>building</name>
     <message>
-        <location filename="../resources/scripts/general/building.js" line="159"/>
+        <location filename="../resources/scripts/general/building.js" line="161"/>
         <source>REPAIR</source>
         <translation type="unfinished"></translation>
     </message>

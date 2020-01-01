@@ -154,9 +154,12 @@ var BUILDING =
                 unit.refill();
                 var repairAmount = 2 + unit.getRepairBonus(Qt.point(x, y));
                 UNIT.repairUnit(unit, repairAmount);
-                var animation = GameAnimationFactory.createAnimation(x, y);
-                animation.addSprite("repair", map.getImageSize() / 2, map.getImageSize() / 3, 1400);
-                animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 15, map.getImageSize() / 3, 0.7);
+                if (!unit.isStealthed(map.getCurrentViewPlayer()))
+                {
+                    var animation = GameAnimationFactory.createAnimation(x, y);
+                    animation.addSprite("repair", map.getImageSize() / 2, map.getImageSize() / 3, 1400);
+                    animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 15, map.getImageSize() / 3, 0.7);
+                }
             }
         }
     },
