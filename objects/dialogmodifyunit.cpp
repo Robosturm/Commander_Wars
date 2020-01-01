@@ -289,7 +289,7 @@ void DialogModifyUnit::loadUnit(QString unitID, qint32 index)
     pApp->suspendThread();
     if (unitID == "-")
     {
-        m_pUnit->unloadUnit(index, QPoint(-1, -1));
+        m_pUnit->unloadUnitAtIndex(index, QPoint(-1, -1));
     }
     else
     {

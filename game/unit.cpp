@@ -766,7 +766,7 @@ void Unit::unloadUnit(Unit* pUnit, QPoint position)
     }
 }
 
-void Unit::unloadUnit(qint32 index, QPoint position)
+void Unit::unloadUnitAtIndex(qint32 index, QPoint position)
 {
     GameMap* pMap = GameMap::getInstance();
     if (index >= 0 && index < m_TransportUnits.size())

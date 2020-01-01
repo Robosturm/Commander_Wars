@@ -347,12 +347,12 @@
 <context>
     <name>ACTION_UNLOAD</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="94"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="88"/>
         <source>Unload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="260"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="254"/>
         <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3347,13 +3347,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="155"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="144"/>
+        <source>X Location of the Building that has to be captured.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="156"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="170"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="160"/>
+        <source>Y Location of the Building that has to be captured.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="172"/>
         <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp" line="176"/>
+        <source>Player that has to capture the building.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3365,8 +3380,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="124"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="113"/>
+        <source>X Location of the Building that has to be destroyed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="125"/>
         <source>Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp" line="129"/>
+        <source>Y Location of the Building that has to be destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3378,8 +3403,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="143"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="132"/>
+        <source>Amount of Buildings that has to be owned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="144"/>
         <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp" line="148"/>
+        <source>Player that has to own the given amount of buildings.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3391,12 +3426,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="114"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="107"/>
+        <source>Periodic cycle in which this condition is executing it&apos;s events.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="115"/>
         <source>Start Day: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="125"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="119"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="131"/>
+        <source>The first day at which the events get executed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="127"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3408,6 +3454,11 @@
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp" line="120"/>
+        <source>The player that has to be defeated in order to executed the events.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScriptConditionStartOfTurn</name>
@@ -3417,8 +3468,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="103"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="96"/>
+        <source>Day at which the events get executed at the start of this turn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="104"/>
         <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionstartofturn.cpp" line="108"/>
+        <source>Player at which the events get executed at the start of this turn.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3430,8 +3491,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="141"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="130"/>
+        <source>X Location of the unit at the start of the game that needs to be destroyed. The unit is allowed to move.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="142"/>
         <source>Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="146"/>
+        <source>Y Location of the unit at the start of the game that needs to be destroyed. The unit is allowed to move.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3443,8 +3514,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="143"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="132"/>
+        <source>Amount of units that has to be killed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="144"/>
         <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp" line="145"/>
+        <source>Player who has to kill the units.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3453,6 +3534,11 @@
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.cpp" line="79"/>
         <source>Team: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionvictory.cpp" line="83"/>
+        <source>Team that has to win the game to executed the events.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3474,22 +3560,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="107"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="94"/>
+        <source>The text the CO should talk.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="108"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="107"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="108"/>
         <source>Happy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="107"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="108"/>
         <source>Sad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="150"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="110"/>
+        <source>The CO MoodIcon that will be used for the dialog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="121"/>
+        <source>The ID of the CO that should talk.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="145"/>
+        <source>The background color of the dialog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="154"/>
         <source>load Background</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3562,8 +3668,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="87"/>
+        <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="76"/>
+        <source>Player that earns the given amount of funds.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="88"/>
         <source>Funds: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="92"/>
+        <source>The funds the given player will earn.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3575,13 +3691,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="105"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="94"/>
+        <source>Player who&apos;s buildlist will be modified.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="106"/>
         <source>Unit ID: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="131"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="122"/>
+        <source>The unit id that will be changed in the build list of the player.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="133"/>
         <source>Remove: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangebuildlist.cpp" line="138"/>
+        <source>If the checked the unit will be forbidden to be build, else it gets allowed to be build.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3593,13 +3724,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="104"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="93"/>
+        <source>Player who earns CO-Power Stars.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="105"/>
         <source>CO: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="120"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="109"/>
+        <source>CO who earns CO-Power Stars.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="122"/>
         <source>Stars: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangecobar.cpp" line="126"/>
+        <source>The amount of Stars that will be changed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3611,8 +3757,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventchangeweather.cpp" line="90"/>
+        <location filename="../ingamescriptsupport/events/scripteventchangeweather.cpp" line="79"/>
+        <source>The amount of days the new weather appears.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeweather.cpp" line="91"/>
         <source>Weather: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventchangeweather.cpp" line="104"/>
+        <source>The new weather that appears.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3621,6 +3777,11 @@
     <message>
         <location filename="../ingamescriptsupport/events/scripteventdefeatplayer.cpp" line="56"/>
         <source>Player: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventdefeatplayer.cpp" line="60"/>
+        <source>The player that gets defeated.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3632,23 +3793,48 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="122"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="115"/>
+        <source>X Location at which the unit gets spawned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="123"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="133"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="127"/>
+        <source>Y Location at which the unit gets spawned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="135"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="148"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="139"/>
+        <source>Player for which the unit gets spawned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="151"/>
         <source>Unit ID: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="174"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="167"/>
+        <source>Unit id (unit) which gets spawned.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="178"/>
         <source>Spawn Radius: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="182"/>
+        <source>Radius around the given location at which the unit gets tried to be spawned, if either the field is blocked or the unit can&apos;t move over the given field.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -7,12 +7,6 @@ var Constructor = function()
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
         var transportTerrain = map.getTerrain(actionTargetField.x, actionTargetField.y);
-
-        // GameConsole.print("We are a: " + unit.getUnitID(), 1);
-        // GameConsole.print("We are on a: " + transportTerrain.getID(), 1);
-
-        var test = Qt.point(0, 1);
-
         if ((unit.getHasMoved() === true) ||
             (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
         {
