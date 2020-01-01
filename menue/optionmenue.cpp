@@ -107,6 +107,10 @@ OptionMenue::OptionMenue()
     showSettings();
 }
 
+OptionMenue::~OptionMenue()
+{
+}
+
 void OptionMenue::exitMenue()
 {
     Mainapp* pApp = Mainapp::getInstance();

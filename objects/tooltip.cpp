@@ -34,6 +34,7 @@ Tooltip::Tooltip()
 
 Tooltip::~Tooltip()
 {
+    m_TooltipTimer.stop();
     if (m_Tooltip.get() != nullptr)
     {
         m_Tooltip->detach();

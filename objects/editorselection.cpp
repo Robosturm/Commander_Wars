@@ -70,14 +70,10 @@ EditorSelection::EditorSelection()
     pButtonTop->setFlippedY(true);
     pButtonTop->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        m_PlacementActor->setY(m_PlacementActor->getY() - GameMap::Imagesize);
-        if (m_PlacementActor->getHeight() < m_PlacementSelectionSlider->getHeight())
+        m_PlacementActor->setY(m_PlacementActor->getY() + GameMap::Imagesize);
+        if (m_PlacementActor->getY() > -GameMap::Imagesize)
         {
             m_PlacementActor->setY(-GameMap::Imagesize);
-        }
-        else if (m_PlacementActor->getY() < -m_PlacementActor->getHeight() + m_PlacementSelectionSlider->getHeight())
-        {
-            m_PlacementActor->setY(-m_PlacementActor->getHeight() + m_PlacementSelectionSlider->getHeight());
         }
     });
     pButtonTop->setPosition(m_BoxPlacementSelection->getWidth() / 2 - pButtonTop->getWidth() / 2, 15);
@@ -98,10 +94,14 @@ EditorSelection::EditorSelection()
     });
     pButtonDown->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        m_PlacementActor->setY(m_PlacementActor->getY() + GameMap::Imagesize);
-        if (m_PlacementActor->getY() > -GameMap::Imagesize)
+        m_PlacementActor->setY(m_PlacementActor->getY() - GameMap::Imagesize);
+        if (m_PlacementActor->getHeight() < m_PlacementSelectionSlider->getHeight())
         {
             m_PlacementActor->setY(-GameMap::Imagesize);
+        }
+        else if (m_PlacementActor->getY() < -m_PlacementActor->getHeight() + m_PlacementSelectionSlider->getHeight())
+        {
+            m_PlacementActor->setY(-m_PlacementActor->getHeight() + m_PlacementSelectionSlider->getHeight());
         }
     });
     pButtonDown->setPosition(m_BoxPlacementSelection->getWidth() / 2 - pButtonTop->getWidth() / 2, m_BoxPlacementSelection->getHeight() - pButtonDown->getHeight() - 18);

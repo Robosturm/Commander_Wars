@@ -14,6 +14,7 @@ class OptionMenue : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit OptionMenue();
+    virtual ~OptionMenue();
 signals:
     void sigExitMenue();
     void sigShowMods();
