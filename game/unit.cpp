@@ -426,9 +426,9 @@ qint32 Unit::getBaseVision()
     return vision;
 }
 
-qint32 Unit::getMaxRange()
+qint32 Unit::getMaxRange(QPoint position)
 {
-    return getMaxRangeAtPosition(QPoint(getX(), getY()));
+    return getMaxRangeAtPosition(position);
 }
 
 qint32 Unit::getBonusMaxRange(QPoint position)

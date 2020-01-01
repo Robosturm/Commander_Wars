@@ -15,7 +15,7 @@ var Constructor = function()
         if (((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y)) ||
             ((action.getMovementTarget() === null) && unit.canMoveAndFire(targetField)))
         {
-            var fields = globals.getCircle(unit.getMinRange(), unit.getMaxRange(targetField));
+            var fields = globals.getCircle(unit.getMinRange(), unit.getMaxRange(actionTargetField));
             // check all fields we can attack
             for (var i = 0; i < fields.size(); i++)
             {
@@ -271,7 +271,7 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var targetField = action.getTarget();
         var actionTargetField = action.getActionTarget();
-        var fields = globals.getCircle(unit.getMinRange(), unit.getMaxRange(targetField));
+        var fields = globals.getCircle(unit.getMinRange(), unit.getMaxRange(actionTargetField));
         data.setColor("#FFFF0000");
         data.setZLabelColor("#ff4500");
         data.setZLabelText(qsTr("Damage"))

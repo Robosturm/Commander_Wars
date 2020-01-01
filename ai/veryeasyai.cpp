@@ -264,7 +264,7 @@ bool VeryEasyAI::fireWithDirectUnits(QmlVectorUnit* pUnits)
     {
         Unit* pUnit = pUnits->at(i);
         // can we use the unit?
-        if (!pUnit->getHasMoved() && pUnit->getMaxRange() == 1 &&
+        if (!pUnit->getHasMoved() && pUnit->getBaseMaxRange() == 1 &&
             (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0))
         {
             if (attack(pUnit))

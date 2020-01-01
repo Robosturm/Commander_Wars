@@ -28,6 +28,7 @@ public slots:
 
     void showTooltip();
     void hideTooltip();
+    void disableTooltip();
 private:
     QString m_tooltipText;
     QTimer m_TooltipTimer;

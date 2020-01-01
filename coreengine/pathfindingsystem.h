@@ -30,12 +30,16 @@ public:
     struct Node
     {
         Node(qint32 x, qint32 y, qint32 index,
-             qint32 totalCost, qint32 currentCosts)
+             qint32 totalCost, qint32 currentCosts,
+             qint32 prevNodeX, qint32 prevNodeY, qint32 distance)
             : x(x),
               y(y),
               index(index),
               totalCost(totalCost),
-              currentCosts(currentCosts)
+              currentCosts(currentCosts),
+              prevNodeX(prevNodeX),
+              prevNodeY(prevNodeY),
+              distance(distance)
         {
         }
         /**
@@ -58,6 +62,18 @@ public:
          * @brief currentCosts
          */
         qint32 currentCosts;
+        /**
+         * @brief prevNodeX
+         */
+        qint32 prevNodeX;
+        /**
+         * @brief prevNodeY
+         */
+        qint32 prevNodeY;
+        /**
+         * @brief distance
+         */
+        qint32 distance;
     };
     /**
      * @brief PathFindingSystem
@@ -160,7 +176,8 @@ public slots:
         return x + y * m_width;
     }
 protected:
-    inline qint32 getMoveDirection(qint32 curX, qint32 curY, qint32 targetX, qint32 targetY)
+    inline qint32 getMoveDirection(const qint32& curX, const qint32& curY,
+                                   const qint32& targetX, const qint32& targetY)
     {
         if (curX > targetX)
         {
@@ -188,6 +205,7 @@ protected:
     qint32 m_width;
     qint32 m_heigth;
     qint32 *costs;
+    Directions* m_DirectionMap;
     std::array<qint32, Directions::Max> *movecosts;
     QList<Node> m_OpenList;
     qint32 m_FinishNode = -1;

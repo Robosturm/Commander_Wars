@@ -417,7 +417,7 @@ void CoreAI::getBestAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<Q
 void CoreAI::appendAttackTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets)
 {
     GameMap* pMap = GameMap::getInstance();
-    qint32 firerange = pUnit->getMaxRange();
+    qint32 firerange = pUnit->getMaxRange(pUnit->getPosition());
     QmlVectorPoint* pTargetFields = Mainapp::getCircle(firerange, firerange);
     for (qint32 i2 = 0; i2 < pEnemyUnits->size(); i2++)
     {
@@ -954,7 +954,7 @@ void CoreAI::appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, QmlVectorUnit* pEnem
         Unit* pEnemy = pEnemyUnits->at(i2);
         if (pUnit->isAttackable(pEnemy, true))
         {
-            qint32 firerange = pUnit->getMaxRange();
+            qint32 firerange = pUnit->getMaxRange(pUnit->getPosition());
             QmlVectorPoint* pTargetFields = Mainapp::getCircle(firerange, firerange);
             for (qint32 i3 = 0; i3 < pTargetFields->size(); i3++)
             {
@@ -1246,7 +1246,7 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, QmlVectorBuilding* pEn
 void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets)
 {
     GameMap* pMap = GameMap::getInstance();
-    qint32 firerange = pUnit->getMaxRange();
+    qint32 firerange = pUnit->getMaxRange(pUnit->getPosition());
     QmlVectorPoint* pTargetFields = Mainapp::getCircle(firerange, firerange);
     for (qint32 i = 0; i < pEnemyBuildings->size(); i++)
     {

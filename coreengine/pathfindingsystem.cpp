@@ -16,7 +16,7 @@ bool operator<(const PathFindingSystem::Node& pNodeLhs, const PathFindingSystem:
             // same end cost but currently cheaper cost
            (pNodeLhs.currentCosts < pNodeRhs.currentCosts && pNodeLhs.totalCost == pNodeRhs.totalCost) ||
             // same
-           (pNodeLhs.currentCosts == pNodeRhs.currentCosts && pNodeLhs.totalCost == pNodeRhs.totalCost);
+           (pNodeLhs.distance < pNodeRhs.distance && pNodeLhs.currentCosts == pNodeRhs.currentCosts && pNodeLhs.totalCost == pNodeRhs.totalCost);
 }
 
 PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
@@ -25,6 +25,7 @@ PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
       m_width(width),
       m_heigth(heigth),
       costs(new qint32[static_cast<quint32>(width * heigth)]),
+      m_DirectionMap(new Directions[static_cast<quint32>(width * heigth)]),
       movecosts(new std::array<qint32, Directions::Max>[static_cast<quint32>(width * heigth)])
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -34,6 +35,7 @@ PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
     for (int i = 0; i < count; ++i)
     {
         costs[i] = infinite;
+        m_DirectionMap[i] = Directions::Unknown;
         for (quint32 i2 = 0; i2 < Directions::Max; i2++)
         {
             movecosts[i][i2] = infinite;
@@ -44,6 +46,7 @@ PathFindingSystem::PathFindingSystem(qint32 startX, qint32 startY,
 PathFindingSystem::~PathFindingSystem()
 {
     delete[] costs;
+    delete[] m_DirectionMap;
     delete[] movecosts;
 }
 
@@ -62,7 +65,8 @@ void PathFindingSystem::setFinishNode(qint32 x, qint32 y)
 void PathFindingSystem::explore()
 {
     qint32 neighboursIndex = getIndex(m_StartPoint.x(), m_StartPoint.y());
-    m_OpenList.append(Node(m_StartPoint.x(), m_StartPoint.y(), neighboursIndex, 0, 0));
+    m_OpenList.append(Node(m_StartPoint.x(), m_StartPoint.y(), neighboursIndex, 0, 0,
+                           m_StartPoint.x(), m_StartPoint.y(), 0));
     qint32 remainingCosts;
     qint32 neighboursX = -1;
     qint32 neighboursY = -1;
@@ -81,6 +85,8 @@ void PathFindingSystem::explore()
         // still the best node?
         qint32 currentCost = pCurrent.currentCosts;
         costs[pCurrent.index] = currentCost;
+        m_DirectionMap[pCurrent.index] = static_cast<Directions>(getMoveDirection(pCurrent.prevNodeX, pCurrent.prevNodeY,
+                                                                                  pCurrent.x, pCurrent.y));
         if (finished(pCurrent.x, pCurrent.y, pCurrent.totalCost))
         {
             setFinishNode(pCurrent.x, pCurrent.y);
@@ -182,7 +188,9 @@ void PathFindingSystem::explore()
                 {
                     qint32 totalCost = newCosts + remainingCosts;
                     // node we want to insert
-                    Node workNode = Node(neighboursX, neighboursY, neighboursIndex, totalCost, newCosts);
+                    Node workNode = Node(neighboursX, neighboursY, neighboursIndex, totalCost, newCosts,
+                                         pCurrent.x, pCurrent.y,
+                                         qAbs(neighboursX - m_StartPoint.x()) + qAbs(neighboursY - m_StartPoint.y()));
                     m_OpenList.insert(std::upper_bound(m_OpenList.begin(), m_OpenList.end(), workNode), workNode);
                 }
             }
@@ -253,53 +261,37 @@ QVector<QPoint> PathFindingSystem::getPath(qint32 x, qint32 y)
     qint32 startCost = getTargetCosts(x, y);
     if (startCost >= 0)
     {
-
-        qint32 nextCosts = startCost;
         qint32 curX = x;
         qint32 curY = y;
         points.append(QPoint(curX, curY));
         while (curX != m_StartPoint.x() ||
                curY != m_StartPoint.y())
         {
-            qint32 fieldX = curX;
-            qint32 fieldY = curY;
-            for (qint32 i = 0; i < 4; i++)
+            switch (m_DirectionMap[getIndex(curX, curY)])
             {
-                qint32 testX, testY;
-                switch (i)
+                case Directions::East:
                 {
-                    case 0:
-                    {
-                        testX = fieldX + 1;
-                        testY = fieldY;
-                        break;
-                    }
-                    case 1:
-                    {
-                        testX = fieldX - 1;
-                        testY = fieldY;
-                        break;
-                    }
-                    case 2:
-                    {
-                        testX = fieldX;
-                        testY = fieldY + 1;
-                        break;
-                    }
-                    default:
-                    {
-                        testX = fieldX;
-                        testY = fieldY - 1;
-                        break;
-                    }
+                    curX -= 1;
+                    break;
                 }
-                qint32 newCosts = getTargetCosts(testX, testY);
-                qint32 fieldCosts = getCosts(getIndex(testX, testY), testX, testY, fieldX, fieldY);
-                if (newCosts >= 0 && newCosts <= nextCosts && fieldCosts >= 0)
+                case Directions::West:
                 {
-                    curX = testX;
-                    curY = testY;
-                    nextCosts = newCosts;
+                    curX += 1;
+                    break;
+                }
+                case Directions::South:
+                {
+                    curY -= 1;
+                    break;
+                }
+                case Directions::North:
+                {
+                    curY += 1;
+                    break;
+                }
+                default:
+                {
+                    return points;
                 }
             }
             points.append(QPoint(curX, curY));

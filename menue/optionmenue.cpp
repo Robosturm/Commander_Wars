@@ -550,9 +550,10 @@ void OptionMenue::showGameplayAndKeys()
 void OptionMenue::reloadSettings()
 {
     Console::print("Leaving Option Menue", Console::eDEBUG);
-    oxygine::getStage()->addChild(new OptionMenue());
     addRef();
     oxygine::Actor::detach();
+
+    oxygine::getStage()->addChild(new OptionMenue());
     deleteLater();
 }
 

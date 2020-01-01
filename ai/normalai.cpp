@@ -1097,9 +1097,10 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoin
         spUnit pNextEnemy = m_EnemyUnits[i];
         if (pNextEnemy->getHp() > 0 && pNextEnemy->getTerrain() != nullptr)
         {
-            qint32 maxFireRange = pNextEnemy->getMaxRange();
+
             qint32 minFireRange = pNextEnemy->getMinRange();
             QPoint enemyPos = QPoint(pNextEnemy->getX(), pNextEnemy->getY());
+            qint32 maxFireRange = pNextEnemy->getMaxRange(enemyPos);
             qint32 moveRange = 0;
             qint32 distance = Mainapp::getDistance(newPosition, enemyPos);
             bool canMoveAndFire = pNextEnemy->canMoveAndFire(enemyPos);
@@ -1708,8 +1709,8 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
             float resDamage = 0;
             float myMovepoints = dummy.getBaseMovementPoints();
             float enemyMovepoints = pEnemyUnit->getBaseMovementPoints();
-            float myFirerange = dummy.getMaxRange();
-            float enemyFirerange = dummy.getMaxRange();
+            float myFirerange = dummy.getBaseMaxRange();
+            float enemyFirerange = dummy.getBaseMaxRange();
             float smoothing = 3;
             if (myMovepoints + myFirerange >= enemyMovepoints)
             {

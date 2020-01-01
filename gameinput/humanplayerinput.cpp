@@ -162,7 +162,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
         {
             Mainapp::getInstance()->getAudioThread()->playSound("selectunit.wav");
             qint32 minRange = pUnit->getMinRange();
-            qint32 maxRange = pUnit->getMaxRange();            
+
             UnitPathFindingSystem pfs(pMap->getTerrain(x, y)->getUnit(), m_pPlayer);
             pfs.explore();
             QVector<QPoint> points = pfs.getAllNodePoints();
@@ -171,6 +171,7 @@ void HumanPlayerInput::showAttackableFields(qint32 x, qint32 y)
                 if (pUnit->canMoveAndFire(QPoint(x, y)) ||
                    (points[i].x() == x && points[i].y() == y))
                 {
+                    qint32 maxRange = pUnit->getMaxRange(QPoint(x, y));
                     QmlVectorPoint* pPoints = Mainapp::getCircle(minRange, maxRange);
                     for (qint32 i2 = 0; i2 < pPoints->size(); i2++)
                     {
