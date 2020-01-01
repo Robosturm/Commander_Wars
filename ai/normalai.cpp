@@ -2086,7 +2086,7 @@ float NormalAi::calcBuildScore(QVector<float>& data)
         score += data[7] * 30.0f;
     }
     // apply co buff bonus
-    score += data[10] * 10;
+    score += data[10] * 17;
 
     if (data[14] > 0 && data[11] > 0)
     {
