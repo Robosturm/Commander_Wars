@@ -6172,116 +6172,116 @@ Units gain additional 10% firepower.</source>
 <context>
     <name>co_alexis</name>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="281"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="318"/>
         <source>A crystal-obsessed person. Blindly follows orders.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="285"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="322"/>
         <source>Crystals</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="289"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="326"/>
         <source>Experiments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="293"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="330"/>
         <source>Units adjacent to own properties restore one HP of health at the beginning of each turn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="297"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="334"/>
         <source>
 Global Effect:
 Units adjacent to own properties restore one HP of health at the beginning of each turn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="298"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="335"/>
         <source>
 CO Zone Effect:
 Units gain additional 10% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="302"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="339"/>
         <source>Units nearby an allied property receive offensive bonuses, and restore three HP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="306"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="343"/>
         <source>Crystal Brace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="310"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="347"/>
         <source>Units nearby an allied property receive firepower bonuses. Enemies nearby their own properties suffer three HP of damage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="314"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="351"/>
         <source>Crystal Edge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="318"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="355"/>
         <source>You&apos;ll regret angering me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="319"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="356"/>
         <source>It&apos;s time you learned the real power of the crystals!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="320"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="357"/>
         <source>You were probably enjoying this battle, until now!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="321"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="358"/>
         <source>Witness the power the Black Crystal gave to me!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="322"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="359"/>
         <source>I hope you&apos;re ready for what&apos;s coming next!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="323"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="360"/>
         <source>See, now my army really shines, like diamonds!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="327"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="364"/>
         <source>I&apos;m unbreakable, just like a diamond!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="328"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="365"/>
         <source>Haha, you were shattered!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="329"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="366"/>
         <source>I&apos;ll leave you to clean this up, &apos;kay?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="333"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="370"/>
         <source>My diamonds didn&apos;t help me.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="334"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="371"/>
         <source>My diamonds broke?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="338"/>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="375"/>
         <source>Alexis</source>
         <translation type="unfinished"></translation>
     </message>

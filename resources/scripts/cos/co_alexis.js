@@ -77,23 +77,32 @@ var Constructor = function()
 
         var animations = [];
         var counter = 0;
-        var buildings = co.getOwner().getBuildings();
+        var player = co.getOwner();
+        var buildings = player.getBuildings();
         buildings.randomize();
         var fields = globals.getCircle(0, 2);
-        for (var i2 = 0; i2 < buildings.size(); i2++)
+
+        var unit =  null;
+        var building = null;
+        var animation = null;
+        var x = 0;
+        var y = 0;
+        var i = 0;
+        var i2 = 0;
+        for (i2 = 0; i2 < buildings.size(); i2++)
         {
-            var building = buildings.at(i2);
-            var x = building.getX();
-            var y = building.getY();
-            var animation = null;
-            for (var i = 0; i < fields.size(); i++)
+            building = buildings.at(i2);
+            x = building.getX();
+            y = building.getY();
+            animation = null;
+            for (i = 0; i < fields.size(); i++)
             {
                 var point = fields.at(i);
                 if (map.onMap(x + point.x, y + point.y))
                 {
-                    var unit = map.getTerrain(x + point.x, y + point.y).getUnit();
+                    unit = map.getTerrain(x + point.x, y + point.y).getUnit();
                     if ((unit !== null) &&
-                        (unit.getOwner() === co.getOwner()))
+                        (unit.getOwner() === player))
                     {
                         animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
                         animation.writeDataInt32(unit.getX());
@@ -118,37 +127,65 @@ var Constructor = function()
                             }
                         }
                     }
-                    else if ((unit !== null) &&
-                             (co.getOwner().isEnemyUnit(unit)))
+                }
+            }
+        }
+
+        buildings.remove();
+        var playerCounter = map.getPlayerCount();
+        for (var i3 = 0; i3 < playerCounter; i3++)
+        {
+            var enemyPlayer = map.getPlayer(i3);
+            buildings = enemyPlayer.getBuildings();
+            buildings.randomize();
+            if ((enemyPlayer !== player) &&
+                (player.checkAlliance(enemyPlayer) === GameEnums.Alliance_Enemy))
+            {
+                for (i2 = 0; i2 < buildings.size(); i2++)
+                {
+                    building = buildings.at(i2);
+                    x = building.getX();
+                    y = building.getY();
+                    animation = null;
+                    for (i = 0; i < fields.size(); i++)
                     {
-                        animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
-                        animation.writeDataInt32(unit.getX());
-                        animation.writeDataInt32(unit.getY());
-                        animation.writeDataInt32(3);
-                        animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
-                        if (animations.length < 5)
+                        point = fields.at(i);
+                        if (map.onMap(x + point.x, y + point.y))
                         {
-                            animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
-                            powerNameAnimation.queueAnimation(animation);
-                            animations.push(animation);
-                        }
-                        else
-                        {
-                            animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
-                            animations[counter].queueAnimation(animation);
-                            animations[counter] = animation;
-                            counter++;
-                            if (counter >= animations.length)
+                            unit = map.getTerrain(x + point.x, y + point.y).getUnit();
+                            if ((unit !== null) &&
+                                (co.getOwner().isEnemyUnit(unit)))
                             {
-                                counter = 0;
+                                animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
+                                animation.writeDataInt32(unit.getX());
+                                animation.writeDataInt32(unit.getY());
+                                animation.writeDataInt32(3);
+                                animation.setEndOfAnimationCall("ANIMATION", "postAnimationDamage");
+                                if (animations.length < 5)
+                                {
+                                    animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5, globals.randInt(0, 400));
+                                    powerNameAnimation.queueAnimation(animation);
+                                    animations.push(animation);
+                                }
+                                else
+                                {
+                                    animation.addSprite("power4", -map.getImageSize() * 1.27, -map.getImageSize() * 1.27, 0, 1.5);
+                                    animations[counter].queueAnimation(animation);
+                                    animations[counter] = animation;
+                                    counter++;
+                                    if (counter >= animations.length)
+                                    {
+                                        counter = 0;
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
+            buildings.remove();
         }
         fields.remove();
-        buildings.remove();
 
         audio.clearPlayList();
         CO_ALEXIS.loadCOMusic(co);
@@ -290,7 +327,7 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Units adjacent to own properties restore one HP of health at the beginning of each turn.");
+        return qsTr("Units adjacent to own properties restore one HP of health at the beginning of each turn, but get repaired oone HP less on the building.");
     };
     this.getLongCODescription = function()
     {
@@ -299,7 +336,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Units nearby an allied property receive offensive bonuses, and restore three HP");
+        return qsTr("Units nearby an allied property receive firepower bonuses and restore three HP from each property.");
     };
     this.getPowerName = function()
     {
@@ -307,7 +344,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Units nearby an allied property receive firepower bonuses. Enemies nearby their own properties suffer three HP of damage.");
+        return qsTr("Units nearby an allied property receive firepower bonuses and restore three HP from each property. Enemies nearby their own property suffer three HP of damage from each property.");
     };
     this.getSuperPowerName = function()
     {
