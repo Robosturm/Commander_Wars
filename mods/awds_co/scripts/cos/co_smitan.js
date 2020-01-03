@@ -70,7 +70,7 @@ CO_SMITAN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 var x = unit.getX();
                 var y = unit.getY();
                 var distance = Math.abs(x - defPosX) + Math.abs(y - defPosY);
-                if (attacker.getBaseMaxRange() > 1)
+                if (unit.getBaseMaxRange() > 1)
                 {
                     if (unit.getMinRange() <= distance && distance <= unit.getMaxRange(unit.getPosition()))
                     {
@@ -78,6 +78,7 @@ CO_SMITAN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                     }
                 }
             }
+            units.remove();
         }
 
         switch (co.getPowerMode())

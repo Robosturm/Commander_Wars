@@ -1181,4 +1181,8 @@ void Player::deserializeObject(QDataStream& pStream)
             m_BuildList.append(pUnitSpriteManager->getUnitID(i));
         }
     }
+    if (version <= 5)
+    {
+        loadVisionFields();
+    }
 }

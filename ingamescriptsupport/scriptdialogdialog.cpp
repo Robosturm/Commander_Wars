@@ -107,7 +107,7 @@ void ScriptDialogDialog::updateDialog()
         }
         QVector<QString> moods = {tr("Normal"), tr("Happy"), tr("Sad")};
         spDropDownmenu moodMenu = new DropDownmenu(150, moods, up);
-        moodMenu->setTooltipText(tr("The CO Mood\Icon that will be used for the dialog."));
+        moodMenu->setTooltipText(tr("The CO Mood/Icon that will be used for the dialog."));
         moodMenu->setPosition(posX, y);
         moodMenu->setCurrentItem(static_cast<qint32>(pDialog->mood));
         m_Panel->addItem(moodMenu);

@@ -2509,21 +2509,21 @@ void Unit::deserializeObject(QDataStream& pStream)
                 pStream >> data;
                 m_DefensiveBonus.append(data);
             }
-            pStream << size;
+            pStream >> size;
             for (qint32 i = 0; i < size; i++)
             {
                 QPoint data;
                 pStream >> data;
                 m_VisionBonus.append(data);
             }
-            pStream << size;
+            pStream >> size;
             for (qint32 i = 0; i < size; i++)
             {
                 QPoint data;
                 pStream >> data;
                 m_MovementBonus.append(data);
             }
-            pStream << size;
+            pStream >> size;
             for (qint32 i = 0; i < size; i++)
             {
                 QPoint data;

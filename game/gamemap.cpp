@@ -813,11 +813,6 @@ void GameMap::deserializeObject(QDataStream& pStream)
             m_Campaign->deserializeObject(pStream);
         }
     }
-
-    for (qint32 i = 0; i < playerCount; i++)
-    {
-        players[i]->loadVisionFields();
-    }
 }
 
 void GameMap::exitGame()

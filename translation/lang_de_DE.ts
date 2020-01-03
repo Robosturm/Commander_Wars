@@ -3697,7 +3697,7 @@
     </message>
     <message>
         <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="110"/>
-        <source>The CO MoodIcon that will be used for the dialog.</source>
+        <source>The CO Mood/Icon that will be used for the dialog.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13163,111 +13163,111 @@ Copters have 50% increased firepower and infantries have 30% increased firepower
 <context>
     <name>co_smitan</name>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="271"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="272"/>
         <source>A violent old commander of the Green Earth army who hates limitations.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="275"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="276"/>
         <source>Dominance, yelling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="279"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="280"/>
         <source>(Victory by) Surrender</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="283"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="284"/>
         <source>Direct units gain additional firepower against enemy units which may come under fire from indirect units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="287"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="288"/>
         <source>
 Global Effect:
 No Effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="288"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="289"/>
         <source>
 CO Zone Effect:
 Direct Units gain additional 10% firepower for each indirect unit that can attack the defending unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="292"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="293"/>
         <source>Increases the range of indirect units by one space. Indirect units can move after firing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="296"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="297"/>
         <source>Scramble Tactics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="300"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="301"/>
         <source>Increases the range of indirect units by two spaces. Indirect units can fire twice and move after firing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="304"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="305"/>
         <source>Flare Drive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="308"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="309"/>
         <source>Whites of their eyes? Pahaha!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="309"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="310"/>
         <source>It&apos;s over! Get used to it!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="310"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="311"/>
         <source>Fire, you idiots!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="311"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="312"/>
         <source>What&apos;re you waiting for?! SHOOT them!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="312"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="313"/>
         <source>&apos;Calm before the storm&apos;? ... Nonsense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="313"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="314"/>
         <source>No more games! All units, full power!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="317"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="318"/>
         <source>Wasn&apos;t even any dust to settle.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="318"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="319"/>
         <source>Grah hah hah. Ooh, that was FUN.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="322"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="323"/>
         <source>Grah! Ha! Ha. Ooh! What i lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="323"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="324"/>
         <source>This and that! And what...i&apos;ve lost?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_smitan.js" line="327"/>
+        <location filename="../resources/scripts/cos/co_smitan.js" line="328"/>
         <source>Smitan</source>
         <translation type="unfinished"></translation>
     </message>

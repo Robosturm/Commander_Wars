@@ -184,7 +184,7 @@ var Constructor = function()
                 var x = unit.getX();
                 var y = unit.getY();
                 var distance = Math.abs(x - defPosX) + Math.abs(y - defPosY);
-                if (attacker.getBaseMaxRange() > 1)
+                if (unit.getBaseMaxRange() > 1)
                 {
                     if (unit.getMinRange() <= distance && distance <= unit.getMaxRange(unit.getPosition()))
                     {
@@ -192,6 +192,7 @@ var Constructor = function()
                     }
                 }
             }
+            units.remove();
         }
 
         switch (co.getPowerMode())
