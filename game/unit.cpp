@@ -380,6 +380,7 @@ void Unit::setUnitRank(const GameEnums::UnitRanks &UnitRank)
 qint32 Unit::getVision(QPoint position)
 {
     qint32 rangeModifier = 0;
+    rangeModifier += getBonus(m_VisionBonus);
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
@@ -434,6 +435,7 @@ qint32 Unit::getMaxRange(QPoint position)
 qint32 Unit::getBonusMaxRange(QPoint position)
 {
     qint32 rangeModifier = 0;
+    rangeModifier += getBonus(m_FirerangeBonus);
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
@@ -607,6 +609,31 @@ bool Unit::canBeRepaired(QPoint position)
     }
 
     return true;
+}
+
+void Unit::addOffensiveBonus(qint32 value, qint32 duration)
+{
+    m_OffensiveBonus.append(QPoint(value, duration));
+}
+
+void Unit::addDefensiveBonus(qint32 value, qint32 duration)
+{
+    m_DefensiveBonus.append(QPoint(value, duration));
+}
+
+void Unit::addVisionBonus(qint32 value, qint32 duration)
+{
+    m_VisionBonus.append(QPoint(value, duration));
+}
+
+void Unit::addMovementBonus(qint32 value, qint32 duration)
+{
+    m_MovementBonus.append(QPoint(value, duration));
+}
+
+void Unit::addFirerangeBonus(qint32 value, qint32 duration)
+{
+    m_FirerangeBonus.append(QPoint(value, duration));
 }
 
 bool Unit::isEnvironmentAttackable(QString terrainID)
@@ -823,6 +850,7 @@ bool Unit::canTransportUnit(Unit* pUnit, bool ignoreLoadingPlace)
 qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender)
 {
     qint32 bonus = 0;
+    bonus += getBonus(m_OffensiveBonus);
     GameMap* pMap = GameMap::getInstance();
     CO* pCO0 = m_pOwner->getCO(0);
     if (pCO0 != nullptr)
@@ -970,6 +998,7 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
 {
     GameMap* pMap = GameMap::getInstance();
     qint32 bonus = 0;
+    bonus += getBonus(m_DefensiveBonus);
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
@@ -1178,6 +1207,12 @@ qint32 Unit::getBonusLuck(QPoint position)
 
 void Unit::startOfTurn()
 {
+    updateBonus(m_OffensiveBonus);
+    updateBonus(m_DefensiveBonus);
+    updateBonus(m_VisionBonus);
+    updateBonus(m_MovementBonus);
+    updateBonus(m_FirerangeBonus);
+
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "startOfTurn";
     QJSValueList args1;
@@ -1729,6 +1764,7 @@ bool Unit::getFirstStrike(QPoint position, Unit* pAttacker)
 qint32 Unit::getBonusMovementpoints(QPoint position)
 {
     qint32 movementModifier = 0;
+    movementModifier += getBonus(m_MovementBonus);
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {
@@ -2045,6 +2081,33 @@ void Unit::unloadIcon(QString iconID)
     }
 }
 
+void Unit::updateBonus(QVector<QPoint>& data)
+{
+    qint32 i = 0;
+    while (i < data.size())
+    {
+        data[i].setY(data[i].y() - 1);
+        if (data[i].y() <= 0)
+        {
+            data.removeAt(i);
+        }
+        else
+        {
+            i++;
+        }
+    }
+}
+
+qint32 Unit::getBonus(QVector<QPoint>& data)
+{
+    qint32 ret = 0;
+    for (qint32 i = 0; i < data.size(); i++)
+    {
+        ret += data[i].x();
+    }
+    return ret;
+}
+
 void Unit::updateIconTweens()
 {
     for (qint32 i = 0; i < m_pIconSprites.size(); i++)
@@ -2306,6 +2369,36 @@ void Unit::serializeObject(QDataStream& pStream)
     {
         pStream << m_MultiTurnPath[i];
     }
+    size = m_OffensiveBonus.size();
+    pStream << size;
+    for (qint32 i = 0; i < size; i++)
+    {
+        pStream << m_OffensiveBonus[i];
+    }
+    size = m_DefensiveBonus.size();
+    pStream << size;
+    for (qint32 i = 0; i < size; i++)
+    {
+        pStream << m_DefensiveBonus[i];
+    }
+    size = m_VisionBonus.size();
+    pStream << size;
+    for (qint32 i = 0; i < size; i++)
+    {
+        pStream << m_VisionBonus[i];
+    }
+    size = m_MovementBonus.size();
+    pStream << size;
+    for (qint32 i = 0; i < size; i++)
+    {
+        pStream << m_MovementBonus[i];
+    }
+    size = m_FirerangeBonus.size();
+    pStream << size;
+    for (qint32 i = 0; i < size; i++)
+    {
+        pStream << m_FirerangeBonus[i];
+    }
 }
 
 void Unit::deserializeObject(QDataStream& pStream)
@@ -2392,13 +2485,51 @@ void Unit::deserializeObject(QDataStream& pStream)
     }
     if (version > 9)
     {
-        qint32 size = m_MultiTurnPath.size();
+        qint32 size = 0;
         pStream >> size;
         for (qint32 i = 0; i < size; i++)
         {
             QPoint point;
             pStream >> point;
             m_MultiTurnPath.append(point);
+        }
+        if (version > 11)
+        {
+            pStream >> size;
+            for (qint32 i = 0; i < size; i++)
+            {
+                QPoint data;
+                pStream >> data;
+                m_OffensiveBonus.append(data);
+            }
+            pStream >> size;
+            for (qint32 i = 0; i < size; i++)
+            {
+                QPoint data;
+                pStream >> data;
+                m_DefensiveBonus.append(data);
+            }
+            pStream << size;
+            for (qint32 i = 0; i < size; i++)
+            {
+                QPoint data;
+                pStream >> data;
+                m_VisionBonus.append(data);
+            }
+            pStream << size;
+            for (qint32 i = 0; i < size; i++)
+            {
+                QPoint data;
+                pStream >> data;
+                m_MovementBonus.append(data);
+            }
+            pStream << size;
+            for (qint32 i = 0; i < size; i++)
+            {
+                QPoint data;
+                pStream >> data;
+                m_FirerangeBonus.append(data);
+            }
         }
     }
 }

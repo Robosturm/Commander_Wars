@@ -66,7 +66,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 11;
+        return 12;
     }
 
 
@@ -626,11 +626,54 @@ public slots:
      * @return
      */
     bool canBeRepaired(QPoint position);
+    /**
+     * @brief addOffensiveBonus
+     * @param value
+     * @param duration
+     */
+    void addOffensiveBonus(qint32 value, qint32 duration = 1);
+    /**
+     * @brief addDefensiveBonus
+     * @param value
+     * @param duration
+     */
+    void addDefensiveBonus(qint32 value, qint32 duration = 1);
+    /**
+     * @brief addVisionBonus
+     * @param value
+     * @param duration
+     */
+    void addVisionBonus(qint32 value, qint32 duration = 1);
+    /**
+     * @brief addMovementBonus
+     * @param value
+     * @param duration
+     */
+    void addMovementBonus(qint32 value, qint32 duration = 1);
+    /**
+     * @brief addFirerangeBonus
+     * @param value
+     * @param duration
+     */
+    void addFirerangeBonus(qint32 value, qint32 duration = 1);
 protected:
     /**
      * @brief updateIconTweens creates the visibility toogle tweens for all icons
      */
     void updateIconTweens();
+    /**
+     * @brief updateBonus
+     * @param data
+     */
+    void updateBonus(QVector<QPoint>& data);
+    /**
+     * @brief getBonus
+     * @param data
+     * @return
+     */
+    qint32 getBonus(QVector<QPoint>& data);
+
+
 private:
     QVector<oxygine::spSprite> m_pUnitWaitSprites;
     QVector<oxygine::spSprite> m_pUnitSprites;
@@ -688,6 +731,12 @@ private:
     QVector<QPoint> m_MultiTurnPath;
     oxygine::spTween m_ShineTween;
     QString m_MovementType;
+
+    QVector<QPoint> m_OffensiveBonus;
+    QVector<QPoint> m_DefensiveBonus;
+    QVector<QPoint> m_VisionBonus;
+    QVector<QPoint> m_MovementBonus;
+    QVector<QPoint> m_FirerangeBonus;
 };
 
 #endif // UNIT_H
