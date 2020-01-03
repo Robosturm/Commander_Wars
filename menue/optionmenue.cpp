@@ -932,7 +932,7 @@ void OptionMenue::showMods()
     style.multiline = true;
     m_ModDescriptionText = new oxygine::TextField();
     m_ModDescriptionText->setStyle(style);
-    m_ModDescriptionText->setSize(m_pModDescription->getContentWidth() - 40, 500);
+    m_ModDescriptionText->setSize(m_pModDescription->getContentWidth() - 60, 500);
     m_pModDescription->addItem(m_ModDescriptionText);
 
     qint32 width = 0;

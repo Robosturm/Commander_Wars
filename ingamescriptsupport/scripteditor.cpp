@@ -59,6 +59,7 @@ ScriptEditor::ScriptEditor()
                               tr(ScriptCondition::ConditionPlayerReachedArea.toStdString().c_str()),
                               tr(ScriptCondition::ConditionUnitReachedArea.toStdString().c_str())};
     m_Conditions = new DropDownmenu(200, items, true);
+    m_Conditions->setTooltipText(tr("Condition type you wan't to create. If a condition is selected this condition and the selected one need to be fullfilled to activate the event."));
     m_Conditions->setPosition(30, pApp->getSettings()->getHeight() / 2 - 45);
     pSpriteBox->addChild(m_Conditions);
     // condition button
@@ -87,6 +88,7 @@ ScriptEditor::ScriptEditor()
              tr(ScriptEvent::EventChangeWeather.toStdString().c_str()),
              tr(ScriptEvent::EventChangeCOBar.toStdString().c_str())};
     m_Events = new DropDownmenu(200, items, true);
+    m_Events->setTooltipText(tr("The new event that should happen once the conditions are met."));
     m_Events->setPosition(30, pApp->getSettings()->getHeight() - 115);
     pSpriteBox->addChild(m_Events);
     // condition button

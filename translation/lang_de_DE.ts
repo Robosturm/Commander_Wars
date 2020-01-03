@@ -3724,59 +3724,69 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="65"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="62"/>
+        <source>Condition type you wan&apos;t to create. If a condition is selected this condition and the selected one need to be fullfilled to activate the event.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="66"/>
         <source>Add Condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="76"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="77"/>
         <source>Events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="93"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="91"/>
+        <source>The new event that should happen once the conditions are met.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="95"/>
         <source>Add Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="106"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="108"/>
         <source>Immediate Start: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="110"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="112"/>
         <source>If checked the game starts without beeing able to change rules, players or co&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="117"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="119"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="126"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="128"/>
         <source>Save Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="133"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="135"/>
         <source>Load Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="274"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="355"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="276"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="357"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="281"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="362"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="283"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="364"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="289"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="291"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
