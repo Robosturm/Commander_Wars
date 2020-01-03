@@ -35,6 +35,26 @@ void ScriptConditionUnitReachedArea::setUnitY(const qint32 &UnitY)
     m_UnitY = UnitY;
 }
 
+qint32 ScriptConditionUnitReachedArea::getX() const
+{
+    return m_x;
+}
+
+void ScriptConditionUnitReachedArea::setX(const qint32 &x)
+{
+    m_x = x;
+}
+
+qint32 ScriptConditionUnitReachedArea::getY() const
+{
+    return m_y;
+}
+
+void ScriptConditionUnitReachedArea::setY(const qint32 &y)
+{
+    m_y = y;
+}
+
 qint32 ScriptConditionUnitReachedArea::getWidth() const
 {
     return m_width;
@@ -55,6 +75,88 @@ void ScriptConditionUnitReachedArea::setHeigth(const qint32 &heigth)
     m_heigth = heigth;
 }
 
+void ScriptConditionUnitReachedArea::readCondition(QTextStream& rStream)
+{
+    QString line = rStream.readLine().simplified();
+
+    QStringList list = line.split("//");
+    if (list.size() >= 2)
+    {
+        QStringList items0 = list[0].replace("if (map.isUnitInArea(Qt.rect(", "")
+                             .replace(", ", ",").replace("), ", ",").split(",");
+        QStringList items1 = line.split("//")[1].split(" ");
+        if (items0.size() >= 4)
+        {
+            m_x = items0[0].toInt();
+            m_y = items0[1].toInt();
+            m_width = items0[2].toInt();
+            m_heigth = items0[3].toInt();
+        }
+        if (items1.size() >= 3)
+        {
+            m_UnitX = items1[1].toInt();
+            m_UnitY = items1[2].toInt();
+        }
+    }
+    while (!rStream.atEnd())
+    {
+        if (readSubCondition(rStream, ConditionUnitReachedArea))
+        {
+            break;
+        }
+        spScriptEvent event = ScriptEvent::createReadEvent(rStream);
+        if (event.get() != nullptr)
+        {
+            events.append(event);
+        }
+    }
+}
+
+void ScriptConditionUnitReachedArea::writePreCondition(QTextStream& rStream)
+{
+    m_executed = ScriptData::getVariableName();
+    m_unitID = ScriptData::getVariableName();
+    rStream << "        var " << m_executed << " = variables.createVariable(\"" << m_executed << "\");\n";
+    rStream << "        var " << m_unitID << " = variables.createVariable(\"" << m_unitID << "\");\n";
+    rStream << "        var " << m_unitID << "Value = " << m_unitID << ".readDataInt32();\n";
+    rStream << "        if (" << m_unitID << "Value === 0){" << m_unitID << ".writeDataInt32(map.getTerrain(" << m_UnitX << ", " << m_UnitY << ").getUnit().getUniqueID());}\n";
+    rStream << "        " << m_unitID << "Value = " << m_unitID << ".readDataInt32();\n";
+    if (subCondition.get() != nullptr)
+    {
+        subCondition->writePreCondition(rStream);
+    }
+}
+
+void ScriptConditionUnitReachedArea::writeCondition(QTextStream& rStream)
+{
+    rStream << "        if (map.isUnitInArea(Qt.rect(" << QString::number(m_x) << ", " << QString::number(m_y) << ", "
+            << QString::number(m_width) << ", " << QString::number(m_heigth) << "), "
+            << m_unitID << "Value) && " << m_executed << ".readDataBool() === false) {"
+            << "// " << m_UnitX << " " << m_UnitY << " " << QString::number(getVersion()) << " " << ConditionUnitReachedArea << "\n";
+    if (subCondition.get() != nullptr)
+    {
+        subCondition->writeCondition(rStream);
+    }
+    else if (pParent != nullptr)
+    {
+        pParent->writePostCondition(rStream);
+        for (qint32 i = 0; i < events.size(); i++)
+        {
+            events[i]->writeEvent(rStream);
+        }
+        rStream << "            " << m_executed << ".writeDataBool(true);\n";
+    }
+    else
+    {
+        for (qint32 i = 0; i < events.size(); i++)
+        {
+            events[i]->writeEvent(rStream);
+        }
+        rStream << "            " << m_executed << ".writeDataBool(true);\n";
+    }
+    rStream << "        } // " + ConditionUnitReachedArea + " End\n";
+}
+
 void ScriptConditionUnitReachedArea::writePostCondition(QTextStream& rStream)
 {
     ScriptCondition::writePostCondition(rStream);
@@ -65,15 +167,6 @@ void ScriptConditionUnitReachedArea::writePostCondition(QTextStream& rStream)
     rStream << "            " << m_executed << ".writeDataBool(true);\n";
 }
 
-void ScriptConditionUnitReachedArea::writePreCondition(QTextStream& rStream)
-{
-    m_executed = ScriptData::getVariableName();
-    rStream << "        var " << m_executed << " = variables.createVariable(\"" << m_executed << "\");\n";
-    if (subCondition.get() != nullptr)
-    {
-        subCondition->writePreCondition(rStream);
-    }
-}
 
 void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEditor)
 {
@@ -93,6 +186,7 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     pText->setPosition(30, 30);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 0, 99999);
+    spinBox->setTooltipText(tr("Start X of the unit that should reach the area."));
     spinBox->setPosition(width, 30);
     spinBox->setCurrentValue(m_UnitX);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
@@ -108,6 +202,7 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     pText->setPosition(30, 70);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 0, 99999);
+    spinBox->setTooltipText(tr("Start Y of the unit that should reach the area."));
     spinBox->setPosition(width, 70);
     spinBox->setCurrentValue(m_UnitY);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
@@ -123,6 +218,7 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     pText->setPosition(30, 110);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 0, 99999);
+    spinBox->setTooltipText(tr("Target Area X Position which the unit needs to reach."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(m_x);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
@@ -135,10 +231,11 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     pText = new oxygine::TextField();
     pText->setStyle(style);
     pText->setHtmlText(tr("Target Y: "));
-    pText->setPosition(30, 110);
+    pText->setPosition(30, 150);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 0, 99999);
-    spinBox->setPosition(width, 110);
+    spinBox->setTooltipText(tr("Target Area Y Position which the unit needs to reach."));
+    spinBox->setPosition(width, 150);
     spinBox->setCurrentValue(m_y);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
             [=](qreal value)
@@ -150,10 +247,11 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     pText = new oxygine::TextField();
     pText->setStyle(style);
     pText->setHtmlText(tr("Target Width: "));
-    pText->setPosition(30, 110);
+    pText->setPosition(30, 190);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 99999);
-    spinBox->setPosition(width, 110);
+    spinBox = new SpinBox(190, 0, 99999);
+    spinBox->setTooltipText(tr("Target Area width which the unit needs to reach."));
+    spinBox->setPosition(width, 190);
     spinBox->setCurrentValue(m_width);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
             [=](qreal value)
@@ -165,10 +263,11 @@ void ScriptConditionUnitReachedArea::showEditCondition(spScriptEditor pScriptEdi
     pText = new oxygine::TextField();
     pText->setStyle(style);
     pText->setHtmlText(tr("Target Heigth: "));
-    pText->setPosition(30, 110);
+    pText->setPosition(30, 230);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 0, 99999);
-    spinBox->setPosition(width, 110);
+    spinBox->setTooltipText(tr("Target Area heigth which the unit needs to reach."));
+    spinBox->setPosition(width, 230);
     spinBox->setCurrentValue(m_heigth);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
             [=](qreal value)

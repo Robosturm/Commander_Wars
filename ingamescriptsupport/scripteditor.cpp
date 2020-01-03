@@ -41,11 +41,11 @@ ScriptEditor::ScriptEditor()
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
     pText->setHtmlText(tr("Conditions"));
-    pText->setPosition(pApp->getSettings()->getWidth() / 4 - pText->getTextRect().getWidth() / 2, 90);
+    pText->setPosition(pApp->getSettings()->getWidth() / 2 - pText->getTextRect().getWidth() / 2, 70);
     pSpriteBox->addChild(pText);
-    QSize size(pApp->getSettings()->getWidth() / 2 - 40, pApp->getSettings()->getHeight() - 250);
+    QSize size(pApp->getSettings()->getWidth() - 40, pApp->getSettings()->getHeight() / 2 - 160);
     m_ConditionPanel = new Panel(true, size, size);
-    m_ConditionPanel->setPosition(30, 130);
+    m_ConditionPanel->setPosition(30, 110);
     pSpriteBox->addChild(m_ConditionPanel);
     QVector<QString> items = {tr(ScriptCondition::ConditionStartOfTurn.toStdString().c_str()),
                               tr(ScriptCondition::ConditionVictory.toStdString().c_str()),
@@ -55,13 +55,15 @@ ScriptEditor::ScriptEditor()
                               tr(ScriptCondition::ConditionBuildingCaptured.toStdString().c_str()),
                               tr(ScriptCondition::ConditionPlayerDefeated.toStdString().c_str()),
                               tr(ScriptCondition::ConditionUnitsDestroyed.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionBuildingsOwned.toStdString().c_str())};
+                              tr(ScriptCondition::ConditionBuildingsOwned.toStdString().c_str()),
+                              tr(ScriptCondition::ConditionPlayerReachedArea.toStdString().c_str()),
+                              tr(ScriptCondition::ConditionUnitReachedArea.toStdString().c_str())};
     m_Conditions = new DropDownmenu(200, items, true);
-    m_Conditions->setPosition(30, pApp->getSettings()->getHeight() - 115);
+    m_Conditions->setPosition(30, pApp->getSettings()->getHeight() / 2 - 45);
     pSpriteBox->addChild(m_Conditions);
     // condition button
     oxygine::spButton pConditionButton = pObjectManager->createButton(tr("Add Condition"), 150);
-    pConditionButton->setPosition(m_Conditions->getX() + m_Conditions->getWidth() + 10, pApp->getSettings()->getHeight() - 115);
+    pConditionButton->setPosition(m_Conditions->getX() + m_Conditions->getWidth() + 10, pApp->getSettings()->getHeight() / 2 - 45);
     pSpriteBox->addChild(pConditionButton);
     pConditionButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
@@ -72,10 +74,10 @@ ScriptEditor::ScriptEditor()
     pText = new oxygine::TextField();
     pText->setStyle(style);
     pText->setHtmlText(tr("Events"));
-    pText->setPosition(pApp->getSettings()->getWidth() * 3 / 4 - pText->getTextRect().getWidth() / 2, 90);
+    pText->setPosition(pApp->getSettings()->getWidth() / 2 - pText->getTextRect().getWidth() / 2, pApp->getSettings()->getHeight() / 2);
     pSpriteBox->addChild(pText);
     m_EventPanel = new Panel(true, size, size);
-    m_EventPanel->setPosition(pApp->getSettings()->getWidth() / 2 + 10, 130);
+    m_EventPanel->setPosition(30, pApp->getSettings()->getHeight() / 2 + 40);
     pSpriteBox->addChild(m_EventPanel);
     items = {tr(ScriptEvent::EventDialog.toStdString().c_str()),
              tr(ScriptEvent::EventSpawnUnit.toStdString().c_str()),
@@ -85,7 +87,7 @@ ScriptEditor::ScriptEditor()
              tr(ScriptEvent::EventChangeWeather.toStdString().c_str()),
              tr(ScriptEvent::EventChangeCOBar.toStdString().c_str())};
     m_Events = new DropDownmenu(200, items, true);
-    m_Events->setPosition(pApp->getSettings()->getWidth() / 2 + 10, pApp->getSettings()->getHeight() - 115);
+    m_Events->setPosition(30, pApp->getSettings()->getHeight() - 115);
     pSpriteBox->addChild(m_Events);
     // condition button
     oxygine::spButton pEventButton = pObjectManager->createButton(tr("Add Event"), 150);
@@ -105,6 +107,7 @@ ScriptEditor::ScriptEditor()
     pText->setPosition(30, 30);
     pSpriteBox->addChild(pText);
     m_ImmediateStart = new Checkbox();
+    m_ImmediateStart->setTooltipText(tr("If checked the game starts without beeing able to change rules, players or co's."));
     m_ImmediateStart->setPosition(200, 30);
     m_ImmediateStart->setChecked(false);
     pSpriteBox->addChild(m_ImmediateStart);
@@ -240,7 +243,7 @@ void ScriptEditor::updateConditios()
 
 void ScriptEditor::addConditionEntry(spScriptCondition pCondition, qint32& y)
 {
-    qint32 x = 250;
+    qint32 x = 450;
     oxygine::TextStyle style = FontManager::getMainFont();
     style.color = QColor(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_TOP;
@@ -405,6 +408,8 @@ void ScriptEditor::addCondition()
             case ScriptCondition::ConditionType::unitsDestroyed:
             case ScriptCondition::ConditionType::buildingsOwned:
             case ScriptCondition::ConditionType::unitDestroyed:
+            case ScriptCondition::ConditionType::unitReachedArea:
+            case ScriptCondition::ConditionType::playerReachedArea:
             {
                 pCondition = m_Data->addActionCondition(type);
                 break;

@@ -9,6 +9,8 @@
 #include "scriptconditionplayerdefeated.h"
 #include "scriptconditionunitsdestroyed.h"
 #include "scriptconditionbuildingsowned.h"
+#include "ScriptConditionUnitReachedArea.h"
+#include "scriptconditionplayerreachedarea.h"
 
 const QString ScriptCondition::ConditionVictory = "Victory";
 const QString ScriptCondition::ConditionStartOfTurn = "Start Of Turn";
@@ -19,8 +21,8 @@ const QString ScriptCondition::ConditionBuildingCaptured = "Building Captured";
 const QString ScriptCondition::ConditionPlayerDefeated = "Player Defeated";
 const QString ScriptCondition::ConditionUnitsDestroyed = "Units Destroyed";
 const QString ScriptCondition::ConditionBuildingsOwned = "Buildings Owned";
-const QString ScriptCondition::ConditionPlayerReachedArea = "Player Reached Area";
-const QString ScriptCondition::ConditionUnitReachedArea = "Unit Reached Area";
+const QString ScriptCondition::ConditionPlayerReachedArea = "Player in Area";
+const QString ScriptCondition::ConditionUnitReachedArea = "Unit in Area";
 
 
 ScriptCondition::ScriptCondition(ConditionType type)
@@ -124,6 +126,16 @@ ScriptCondition* ScriptCondition::createCondition(ConditionType type)
         {
             return new ScriptConditionBuildingsOwned();
         }
+
+        case ConditionType::playerReachedArea:
+        {
+            return new ScriptConditionPlayerReachedArea();
+        }
+
+        case ConditionType::unitReachedArea:
+        {
+            return new ScriptConditionUnitReachedArea();
+        }
     }
     return nullptr;
 }
@@ -170,6 +182,14 @@ ScriptCondition* ScriptCondition::createReadCondition(QTextStream& rStream)
     else if (line.endsWith(ConditionBuildingsOwned))
     {
         ret = new ScriptConditionBuildingsOwned();
+    }
+    else if (line.endsWith(ConditionUnitReachedArea))
+    {
+        ret = new ScriptConditionUnitReachedArea();
+    }
+    else if (line.endsWith(ConditionPlayerReachedArea))
+    {
+        ret = new ScriptConditionPlayerReachedArea();
     }
     if (ret != nullptr)
     {
@@ -233,6 +253,8 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
         case ScriptCondition::ConditionType::unitsDestroyed:
         case ScriptCondition::ConditionType::buildingsOwned:
         case ScriptCondition::ConditionType::unitDestroyed:
+        case ScriptCondition::ConditionType::unitReachedArea:
+        case ScriptCondition::ConditionType::playerReachedArea:
         {
             switch (type2)
             {
@@ -242,6 +264,8 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
                 case ScriptCondition::ConditionType::unitsDestroyed:
                 case ScriptCondition::ConditionType::buildingsOwned:
                 case ScriptCondition::ConditionType::unitDestroyed:
+                case ScriptCondition::ConditionType::unitReachedArea:
+                case ScriptCondition::ConditionType::playerReachedArea:
                 {
                     return true;
                 }

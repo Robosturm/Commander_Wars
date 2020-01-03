@@ -335,8 +335,8 @@ set(${PROJECT_NAME}_SRCS
         ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp
         ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp
         ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp
-#        ingamescriptsupport/conditions/ScriptConditionPlayerReachedArea.cpp
-#        ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp
+        ingamescriptsupport/conditions/ScriptConditionPlayerReachedArea.cpp
+        ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp
         # event stuff
         ingamescriptsupport/events/scriptevent.cpp
         ingamescriptsupport/events/scripteventdialog.cpp

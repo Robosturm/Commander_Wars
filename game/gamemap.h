@@ -243,6 +243,14 @@ public:
      * @brief initPlayers
      */
     void initPlayers();
+    /**
+     * @brief isUnitInArea
+     * @param pUnit
+     * @param area
+     * @param checkFunction
+     * @return
+     */
+    bool isInArea(const QRect& area, std::function<bool (Unit* pUnit)> checkFunction);
 signals:
     void signalExitGame();
     void signalSaveGame();
@@ -253,6 +261,20 @@ signals:
     void sigQueueAction(GameAction* pAction);
     void sigSurrenderGame();
 public slots:
+    /**
+     * @brief isUnitInArea
+     * @param area
+     * @param unitID
+     * @return
+     */
+    bool isUnitInArea(const QRect& area, qint32 unitID);
+    /**
+     * @brief isPlayerUnitInArea
+     * @param area
+     * @param unitID
+     * @return
+     */
+    bool isPlayerUnitInArea(const QRect& area, qint32 playerID);
     /**
      * @brief getUnit
      * @param uniqueID

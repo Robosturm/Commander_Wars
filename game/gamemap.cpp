@@ -102,6 +102,42 @@ qint32 GameMap::getUniqueIdCounter()
     return m_UniqueIdCounter;
 }
 
+bool GameMap::isInArea(const QRect& area, std::function<bool (Unit* pUnit)> checkFunction)
+{
+    for (qint32 x = area.x(); x < area.x() + area.width(); x++)
+    {
+        for (qint32 y = area.y(); y < area.y() + area.height(); y++)
+        {
+            if (onMap(x, y))
+            {
+                Unit* pUnit = getTerrain(x, y)->getUnit();
+                if (pUnit != nullptr &&
+                    checkFunction(pUnit))
+                {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+bool GameMap::isUnitInArea(const QRect& area, qint32 unitID)
+{
+    return isInArea(area, [=](Unit* pUnit)
+    {
+        return (pUnit->getUniqueID() == unitID);
+    });
+}
+
+bool GameMap::isPlayerUnitInArea(const QRect& area, qint32 playerID)
+{
+    return isInArea(area, [=](Unit* pUnit)
+    {
+        return (pUnit->getOwner()->getPlayerID() == playerID);
+    });
+}
+
 void GameMap::deleteMap()
 {
     if (m_pInstance.get() != nullptr)

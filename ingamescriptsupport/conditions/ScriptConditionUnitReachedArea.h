@@ -45,6 +45,15 @@ public:
      * @brief showEditConditin
      */
     virtual void showEditCondition(spScriptEditor pScriptEditor) override;
+
+    /**
+     * @brief getVersion
+     * @return
+     */
+    virtual qint32 getVersion() override
+    {
+        return 0;
+    }
     /**
      * @brief getX
      * @return
@@ -65,14 +74,6 @@ public:
      * @param y
      */
     void setY(const qint32 &y);
-    /**
-     * @brief getVersion
-     * @return
-     */
-    virtual qint32 getVersion() override
-    {
-        return 0;
-    }
     /**
      * @brief getUnitX
      * @return
@@ -122,6 +123,7 @@ private:
     qint32 m_width{0};
     qint32 m_heigth{0};
     QString m_executed;
+    QString m_unitID;
 };
 
 #endif // SCRIPTCONDITIONPLAYERREACHEDUNIT_H

@@ -20,8 +20,11 @@ void ScriptConditionUnitDestroyed::readCondition(QTextStream& rStream)
 {
     QString line = rStream.readLine().simplified();
     QStringList list = line.split("//")[1].split(" ");
-    m_x = list[1].toInt();
-    m_y = list[2].toInt();
+    if (list.size() > 2)
+    {
+        m_x = list[1].toInt();
+        m_y = list[2].toInt();
+    }
     while (!rStream.atEnd())
     {
         if (readSubCondition(rStream, ConditionUnitDestroyed))
