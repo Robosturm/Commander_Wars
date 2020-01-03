@@ -142,6 +142,10 @@ bool GameAction::canBePerformed(QString actionID, bool emptyField)
         {
             if (pUnit != nullptr)
             {
+                if (!pUnit->hasAction(actionID))
+                {
+                    return false;
+                }
                 if ((pUnit->getOwner()->getPlayerID() != pMap->getCurrentPlayer()->getPlayerID()) &&
                     (!pUnit->getHasMoved()))
                 {

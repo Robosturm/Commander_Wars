@@ -278,7 +278,7 @@ bool VeryEasyAI::fireWithDirectUnits(QmlVectorUnit* pUnits)
 
 bool VeryEasyAI::attack(Unit* pUnit)
 {
-    if (pUnit->getActionList().contains(ACTION_FIRE))
+    if (pUnit->hasAction(CoreAI::ACTION_FIRE))
     {
         // try to perform an attack
         GameAction* pAction = new GameAction(ACTION_FIRE);

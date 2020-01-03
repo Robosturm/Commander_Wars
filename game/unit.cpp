@@ -1799,6 +1799,11 @@ QStringList Unit::getActionList()
     }
 }
 
+bool Unit::hasAction(QString action)
+{
+    return getActionList().contains(action);
+}
+
 qint32 Unit::getMovementFuelCostModifier(qint32 fuelCost)
 {
     GameMap* pMap = GameMap::getInstance();

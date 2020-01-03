@@ -386,7 +386,8 @@ bool NormalAi::fireWithUnits(QmlVectorUnit* pUnits, qint32 minfireRange, qint32 
         if (!pUnit->getHasMoved() &&
             pUnit->getBaseMaxRange() >= minfireRange &&
             pUnit->getBaseMaxRange() <= maxfireRange &&
-            (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0))
+            (pUnit->getAmmo1() > 0 || pUnit->getAmmo2() > 0) &&
+            pUnit->hasAction(CoreAI::ACTION_FIRE))
         {
             GameAction* pAction = new GameAction(ACTION_FIRE);
             pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));

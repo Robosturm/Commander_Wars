@@ -81,6 +81,12 @@ public:
      */
     QStringList getActionList();
     /**
+     * @brief hasAction
+     * @param action
+     * @return
+     */
+    bool hasAction(QString action);
+    /**
      * @brief updateIcons updates icons that can be modified by the co.
      * E.g Transport sign and health point sign
      */
