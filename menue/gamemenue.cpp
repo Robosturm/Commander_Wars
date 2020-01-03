@@ -249,6 +249,26 @@ void GameMenue::loadGameMenue()
     });
     pButtonBox->addChild(exitGame);
 
+    pAnim = pObjectManager->getResAnim("panel");
+    pButtonBox = new oxygine::Box9Sprite();
+    pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+    pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+    pButtonBox->setResAnim(pAnim);
+    style.color = QColor(255, 255, 255, 255);
+    style.vAlign = oxygine::TextStyle::VALIGN_TOP;
+    style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
+    style.multiline = false;
+    xyTextInfo = new oxygine::TextField();
+    xyTextInfo->setStyle(style);
+    xyTextInfo->setHtmlText("X: 0 Y: 0");
+    xyTextInfo->setPosition(8, 8);
+    pButtonBox->addChild(xyTextInfo);
+    pButtonBox->setSize(140, 50);
+    pButtonBox->setPosition((pApp->getSettings()->getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
+    pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+    addChild(pButtonBox);
+
+
     m_UpdateTimer.setInterval(500);
     m_UpdateTimer.setSingleShot(false);
     m_UpdateTimer.start();
@@ -270,6 +290,8 @@ void GameMenue::loadGameMenue()
     connect(m_IngameInfoBar->getMinimap(), &Minimap::clicked, pMap, &GameMap::centerMap, Qt::QueuedConnection);
     connect(GameAnimationFactory::getInstance(), &GameAnimationFactory::animationsFinished, this, &GameMenue::actionPerformed, Qt::QueuedConnection);
     connect(m_Cursor.get(), &Cursor::sigCursorMoved, m_IngameInfoBar.get(), &IngameInfoBar::updateCursorInfo, Qt::QueuedConnection);
+    connect(m_Cursor.get(), &Cursor::sigCursorMoved, this, &GameMenue::cursorMoved, Qt::QueuedConnection);
+
 }
 
 void GameMenue::updateTimer()
@@ -645,6 +667,14 @@ void GameMenue::actionPerformed()
             emit sigActionPerformed();
         }
     }
+    pApp->continueThread();
+}
+
+void GameMenue::cursorMoved(qint32 x, qint32 y)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    xyTextInfo->setHtmlText("X: " + QString::number(x) + " Y: " + QString::number(y));
     pApp->continueThread();
 }
 

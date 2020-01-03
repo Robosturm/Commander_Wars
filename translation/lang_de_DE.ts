@@ -922,50 +922,55 @@
 <context>
     <name>DialogAttackLog</name>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="44"/>
+        <location filename="../objects/dialogattacklog.cpp" line="45"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="68"/>
+        <location filename="../objects/dialogattacklog.cpp" line="69"/>
         <source>Day </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="76"/>
+        <location filename="../objects/dialogattacklog.cpp" line="77"/>
         <source>Attacker: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="98"/>
-        <location filename="../objects/dialogattacklog.cpp" line="144"/>
+        <location filename="../objects/dialogattacklog.cpp" line="99"/>
+        <location filename="../objects/dialogattacklog.cpp" line="145"/>
         <source> at X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="104"/>
-        <location filename="../objects/dialogattacklog.cpp" line="150"/>
+        <location filename="../objects/dialogattacklog.cpp" line="105"/>
+        <location filename="../objects/dialogattacklog.cpp" line="151"/>
         <source> Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="110"/>
+        <location filename="../objects/dialogattacklog.cpp" line="111"/>
         <source> dealt </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="122"/>
+        <location filename="../objects/dialogattacklog.cpp" line="123"/>
         <source>to Defender </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="156"/>
+        <location filename="../objects/dialogattacklog.cpp" line="157"/>
         <source> and recieved </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogattacklog.cpp" line="116"/>
-        <location filename="../objects/dialogattacklog.cpp" line="162"/>
+        <location filename="../objects/dialogattacklog.cpp" line="168"/>
+        <source>Show Fields</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialogattacklog.cpp" line="117"/>
+        <location filename="../objects/dialogattacklog.cpp" line="163"/>
         <source>Hp</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1698,57 +1703,57 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="741"/>
+        <location filename="../menue/gamemenue.cpp" line="771"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="741"/>
+        <location filename="../menue/gamemenue.cpp" line="771"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="741"/>
+        <location filename="../menue/gamemenue.cpp" line="771"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="741"/>
+        <location filename="../menue/gamemenue.cpp" line="771"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="741"/>
+        <location filename="../menue/gamemenue.cpp" line="771"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="741"/>
+        <location filename="../menue/gamemenue.cpp" line="771"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="741"/>
+        <location filename="../menue/gamemenue.cpp" line="771"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="757"/>
+        <location filename="../menue/gamemenue.cpp" line="787"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="766"/>
+        <location filename="../menue/gamemenue.cpp" line="796"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1044"/>
+        <location filename="../menue/gamemenue.cpp" line="1074"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1059"/>
+        <location filename="../menue/gamemenue.cpp" line="1089"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>

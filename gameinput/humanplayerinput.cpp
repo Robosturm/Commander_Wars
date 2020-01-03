@@ -301,6 +301,11 @@ void HumanPlayerInput::leftClick(qint32 x, qint32 y)
             }
         }
         // no action selected
+        else if (m_Fields.size() > 0 && m_pGameAction == nullptr)
+        {
+            // do nothing
+            // some one spawned them to give some info hints player needs to remove them by canceling.
+        }
         else if (m_pGameAction == nullptr)
         {
             // prepare action

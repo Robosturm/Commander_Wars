@@ -5,6 +5,7 @@
 #include "game/gamerecording/gamerecorder.h"
 #include "game/player.h"
 #include "game/gamemap.h"
+#include "gameinput/humanplayerinput.h"
 
 #include "objects/panel.h"
 
@@ -164,8 +165,43 @@ DialogAttackLog::DialogAttackLog(Player* pPlayer)
         pText->setPosition(1000, y);
         pPanel->addItem(pText);
 
+        oxygine::spButton pButton = ObjectManager::createButton(tr("Show Fields"));
+        pButton->setPosition(1050, y);
+
+        // to copy less data for the lambda
+        qint32 posAtkX = log->attackerX;
+        qint32 posAtkY = log->attackerY;
+        qint32 playerAtk = log->attackerOwnerID;
+        qint32 posDefX = log->defenderX;
+        qint32 posDefY = log->defenderY;
+        qint32 playerDef = log->defenderOwnerID;
+        pButton->addClickListener([=](oxygine::Event*)
+        {
+            emit sigShowAttack(posAtkX, posAtkY, playerAtk, posDefX, posDefY, playerDef);
+        });
+        pPanel->addItem(pButton);
         y += 40;
     }
-    pPanel->setContentWidth(1100);
+    pPanel->setContentWidth(1300);
     pPanel->setContentHeigth(y + 40);
+
+    connect(this, &DialogAttackLog::sigShowAttack, this, &DialogAttackLog::showAttack, Qt::QueuedConnection);
+}
+
+void DialogAttackLog::showAttack(qint32 posAtkX, qint32 posAtkY, qint32 playerAtk, qint32 posDefX, qint32 posDefY, qint32 playerDef)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    GameMap* pMap = GameMap::getInstance();
+    HumanPlayerInput* pInput = dynamic_cast<HumanPlayerInput*>(pMap->getCurrentPlayer()->getBaseGameInput());
+    if (pInput != nullptr)
+    {
+        pInput->createMarkedField(QPoint(posAtkX, posAtkY), pMap->getPlayer(playerAtk)->getColor(), Terrain::DrawPriority::MarkedFieldMap);
+        pInput->createMarkedField(QPoint(posDefX, posDefY), pMap->getPlayer(playerDef)->getColor(), Terrain::DrawPriority::MarkedFieldMap);
+    }
+    addRef();
+    oxygine::Actor::detach();
+    deleteLater();
+    emit sigFinished();
+    pApp->continueThread();
 }

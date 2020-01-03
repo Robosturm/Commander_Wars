@@ -131,7 +131,7 @@ EditorMenue::EditorMenue()
     xyTextInfo->setHtmlText("X: 0 Y: 0");
     xyTextInfo->setPosition(8, 8);
     pButtonBox->addChild(xyTextInfo);
-    pButtonBox->setSize(120, 50);
+    pButtonBox->setSize(140, 50);
     pButtonBox->setPosition((pApp->getSettings()->getWidth() - m_EditorSelection->getWidth())  - pButtonBox->getWidth(), -4 + m_Topbar->getHeight());
     pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);

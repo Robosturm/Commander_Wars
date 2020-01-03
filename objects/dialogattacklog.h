@@ -22,6 +22,9 @@ public:
 
 signals:
     void sigFinished();
+    void sigShowAttack(qint32 posAtkX, qint32 posAtkY, qint32 playerAtk, qint32 posDefX, qint32 posDefY, qint32 playerDef);
+public slots:
+    void showAttack(qint32 posAtkX, qint32 posAtkY, qint32 playerAtk, qint32 posDefX, qint32 posDefY, qint32 playerDef);
 private:
     QVector<spAttackReport> m_Log;
 };

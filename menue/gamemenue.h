@@ -80,6 +80,12 @@ public slots:
      */
     void updatePlayerinfo();
     /**
+     * @brief cursorMoved
+     * @param x
+     * @param y
+     */
+    void cursorMoved(qint32 x, qint32 y);
+    /**
      * @brief victory
      * @param team
      */
@@ -167,6 +173,7 @@ protected:
 private:
     spPlayerInfo m_pPlayerinfo;
     spIngameInfoBar m_IngameInfoBar;
+    oxygine::spTextField xyTextInfo;
     static GameMenue* m_pInstance;
     spNetworkInterface m_pNetworkInterface;
     bool gameStarted{false};

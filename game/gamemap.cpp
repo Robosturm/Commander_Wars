@@ -1404,5 +1404,6 @@ void GameMap::initPlayers()
         }
         // define army of this player
         pPlayer->defineArmy();
+        pPlayer->loadVisionFields();
     }
 }
