@@ -314,7 +314,7 @@ void Player::defeatPlayer(Player* pPLayer, bool units)
                     pBuilding->setOwner(pPLayer);
                     // reset capturing for buildings we earned at this moment
                     if (pUnit.get() != nullptr &&
-                        pUnit->getOwner() == pPLayer)
+                        pUnit->getOwner()->isAlly(pPLayer))
                     {
                         pUnit->setCapturePoints(0);
                     }

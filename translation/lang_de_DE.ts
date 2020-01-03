@@ -6187,11 +6187,6 @@ Units gain additional 10% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="330"/>
-        <source>Units adjacent to own properties restore one HP of health at the beginning of each turn.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_alexis.js" line="334"/>
         <source>
 Global Effect:
@@ -6206,18 +6201,23 @@ Units gain additional 10% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="339"/>
-        <source>Units nearby an allied property receive offensive bonuses, and restore three HP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_alexis.js" line="343"/>
         <source>Crystal Brace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="330"/>
+        <source>Units adjacent to own properties restore one HP of health at the beginning of each turn, but get repaired oone HP less on the building.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="339"/>
+        <source>Units nearby an allied property receive firepower bonuses and restore three HP from each property.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_alexis.js" line="347"/>
-        <source>Units nearby an allied property receive firepower bonuses. Enemies nearby their own properties suffer three HP of damage.</source>
+        <source>Units nearby an allied property receive firepower bonuses and restore three HP from each property. Enemies nearby their own property suffer three HP of damage from each property.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
