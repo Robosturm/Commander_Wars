@@ -38,18 +38,21 @@ var Constructor = function()
     };
     this.startOfTurn = function(unit)
     {
-        // pay unit upkeep
-        var fuelCosts = 5;
-        if (unit.getHidden())
+        if (unit.getTerrain() !== null)
         {
-            fuelCosts += 3;
+            // pay unit upkeep
+            var fuelCosts = 5;
+            if (unit.getHidden())
+            {
+                fuelCosts += 3;
+            }
+            fuelCosts = fuelCosts + unit.getFuelCostModifier(Qt.point(unit.getX(), unit.getY()), fuelCosts);
+            if (fuelCosts < 0)
+            {
+                fuelCosts = 0;
+            }
+            unit.setFuel(unit.getFuel() - fuelCosts);
         }
-        fuelCosts = fuelCosts + unit.getFuelCostModifier(Qt.point(unit.getX(), unit.getY()), fuelCosts);
-        if (fuelCosts < 0)
-        {
-            fuelCosts = 0;
-        }
-        unit.setFuel(unit.getFuel() - fuelCosts);
     };
     this.createExplosionAnimation = function(x, y, unit)
     {

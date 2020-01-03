@@ -38,14 +38,17 @@ var Constructor = function()
     };
     this.startOfTurn = function(unit)
     {
-        // pay unit upkeep
-        var fuelCosts = 2 + unit.getFuelCostModifier(Qt.point(unit.getX(), unit.getY()), 2);
-        if (fuelCosts < 0)
+        if (unit.getTerrain() !== null)
         {
-            fuelCosts = 0;
+            // pay unit upkeep
+            var fuelCosts = 2 + unit.getFuelCostModifier(Qt.point(unit.getX(), unit.getY()), 2);
+            if (fuelCosts < 0)
+            {
+                fuelCosts = 0;
+            }
+            unit.setFuel(unit.getFuel() - fuelCosts);
         }
-        unit.setFuel(unit.getFuel() - fuelCosts);
-        UNIT.transporterRefilling(unit);
+        UNIT.transporterRefilling(unit);        
     };
     this.createExplosionAnimation = function(x, y, unit)
     {

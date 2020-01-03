@@ -867,6 +867,7 @@ void GameMap::startGame()
     }
     for (qint32 i = 0; i < players.size(); i++)
     {
+        players[i]->loadVisionFields();
         players[i]->setBuildlistChanged(true);
 
         CoreAI* pAI = dynamic_cast<CoreAI*>(players[i]->getBaseGameInput());

@@ -5462,27 +5462,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/aircraftcarrier.js" line="99"/>
+        <location filename="../resources/scripts/units/aircraftcarrier.js" line="102"/>
         <source>Naval Unit. Can </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/aircraftcarrier.js" line="100"/>
+        <location filename="../resources/scripts/units/aircraftcarrier.js" line="103"/>
         <source>carry X 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/aircraftcarrier.js" line="101"/>
+        <location filename="../resources/scripts/units/aircraftcarrier.js" line="104"/>
         <source> air units and </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/aircraftcarrier.js" line="102"/>
+        <location filename="../resources/scripts/units/aircraftcarrier.js" line="105"/>
         <source>produce </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/aircraftcarrier.js" line="103"/>
+        <location filename="../resources/scripts/units/aircraftcarrier.js" line="106"/>
         <source>Waterplanes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5618,17 +5618,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/battleship.js" line="87"/>
+        <location filename="../resources/scripts/units/battleship.js" line="90"/>
         <source>Naval Unit. Has unique ability to </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/battleship.js" line="88"/>
+        <location filename="../resources/scripts/units/battleship.js" line="91"/>
         <source>launch indirect attacks after moving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/battleship.js" line="89"/>
+        <location filename="../resources/scripts/units/battleship.js" line="92"/>
         <source>.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5641,27 +5641,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/black_boat.js" line="96"/>
+        <location filename="../resources/scripts/units/black_boat.js" line="99"/>
         <source>Naval Unit. Has unique ability to </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/black_boat.js" line="97"/>
+        <location filename="../resources/scripts/units/black_boat.js" line="100"/>
         <source>repair other units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/black_boat.js" line="98"/>
+        <location filename="../resources/scripts/units/black_boat.js" line="101"/>
         <source> Can </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/black_boat.js" line="99"/>
+        <location filename="../resources/scripts/units/black_boat.js" line="102"/>
         <source>carry X 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/black_boat.js" line="100"/>
+        <location filename="../resources/scripts/units/black_boat.js" line="103"/>
         <source> infantry units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5674,17 +5674,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/black_bomb.js" line="98"/>
+        <location filename="../resources/scripts/units/black_bomb.js" line="101"/>
         <source>Air Unit. Has unique ability to </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/black_bomb.js" line="99"/>
+        <location filename="../resources/scripts/units/black_bomb.js" line="102"/>
         <source>explode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/black_bomb.js" line="100"/>
+        <location filename="../resources/scripts/units/black_bomb.js" line="103"/>
         <source> in a huge explosion damaging all units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5756,7 +5756,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/bomber.js" line="92"/>
+        <location filename="../resources/scripts/units/bomber.js" line="95"/>
         <source>Air Unit. Can attack ground and naval units. Exceptional power.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5777,17 +5777,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/cannonboat.js" line="93"/>
+        <location filename="../resources/scripts/units/cannonboat.js" line="96"/>
         <source>Naval Unit. Attacks naval units. Can place </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/cannonboat.js" line="94"/>
+        <location filename="../resources/scripts/units/cannonboat.js" line="97"/>
         <source>Watermines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/cannonboat.js" line="95"/>
+        <location filename="../resources/scripts/units/cannonboat.js" line="98"/>
         <source> on sea tiles.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14628,17 +14628,17 @@ Units have 30% increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/cruiser.js" line="97"/>
+        <location filename="../resources/scripts/units/cruiser.js" line="100"/>
         <source>Naval Unit. Strong against air units and submarines. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/cruiser.js" line="98"/>
+        <location filename="../resources/scripts/units/cruiser.js" line="101"/>
         <source>Transports X 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/cruiser.js" line="99"/>
+        <location filename="../resources/scripts/units/cruiser.js" line="102"/>
         <source> Helis.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14679,7 +14679,7 @@ Units have 30% increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/destroyer.js" line="90"/>
+        <location filename="../resources/scripts/units/destroyer.js" line="93"/>
         <source>Naval Unit. Strong against all sea units and has decent firepower against air units. Can also attack ground units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14969,7 +14969,7 @@ Units have 30% increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/k_heli.js" line="91"/>
+        <location filename="../resources/scripts/units/k_heli.js" line="94"/>
         <source>Air unit. Can attack ground and naval units, and other Helicopters.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15478,17 +15478,17 @@ Units have 30% increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/stealthbomber.js" line="101"/>
+        <location filename="../resources/scripts/units/stealthbomber.js" line="104"/>
         <source>Air unit. After </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/stealthbomber.js" line="102"/>
+        <location filename="../resources/scripts/units/stealthbomber.js" line="105"/>
         <source>hiding </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/stealthbomber.js" line="103"/>
+        <location filename="../resources/scripts/units/stealthbomber.js" line="106"/>
         <source>, it remains hidden unless enemy units adjacent. Can attack any unit.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15501,17 +15501,17 @@ Units have 30% increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/submarine.js" line="96"/>
+        <location filename="../resources/scripts/units/submarine.js" line="99"/>
         <source>Naval unit. After </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/submarine.js" line="97"/>
+        <location filename="../resources/scripts/units/submarine.js" line="100"/>
         <source>diving </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/submarine.js" line="98"/>
+        <location filename="../resources/scripts/units/submarine.js" line="101"/>
         <source>, it remains hidden unless enemy units adjacent.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15524,17 +15524,17 @@ Units have 30% increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/t_heli.js" line="96"/>
+        <location filename="../resources/scripts/units/t_heli.js" line="99"/>
         <source>Air unit. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/t_heli.js" line="97"/>
+        <location filename="../resources/scripts/units/t_heli.js" line="100"/>
         <source>Carries X 1 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/t_heli.js" line="98"/>
+        <location filename="../resources/scripts/units/t_heli.js" line="101"/>
         <source>Infantry units. No attack capability.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15664,17 +15664,17 @@ Units have 30% increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/transportplane.js" line="98"/>
+        <location filename="../resources/scripts/units/transportplane.js" line="101"/>
         <source>Air unit. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/transportplane.js" line="99"/>
+        <location filename="../resources/scripts/units/transportplane.js" line="102"/>
         <source>Carries X 2 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/transportplane.js" line="100"/>
+        <location filename="../resources/scripts/units/transportplane.js" line="103"/>
         <source>ground units. No attack capability.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15778,7 +15778,7 @@ Units have 30% increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/waterplane.js" line="91"/>
+        <location filename="../resources/scripts/units/waterplane.js" line="94"/>
         <source>Air unit. Can attack any unit. Can only produced at sea by Carries.</source>
         <translation type="unfinished"></translation>
     </message>
