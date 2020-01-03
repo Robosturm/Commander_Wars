@@ -328,6 +328,7 @@ void Player::defeatPlayer(Player* pPLayer, bool units)
                     if ((pPLayer != nullptr) && units)
                     {
                         pUnit->setOwner(pPLayer);
+                        pUnit->setCapturePoints(0);
                         if (pUnit->getUnitRank() >= GameEnums::UnitRank_CO0)
                         {
                             pUnit->setUnitRank(GameEnums::UnitRank_Veteran);
