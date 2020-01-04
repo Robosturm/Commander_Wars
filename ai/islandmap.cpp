@@ -29,6 +29,7 @@ IslandMap::IslandMap(QString unitID, Player* pOwner)
     pUnit->setIgnoreUnitCollision(true);
     m_MovementType = pUnit->getMovementType();
     qint32 currentIsland = 0;
+
     for (qint32 x = 0; x < width; x++)
     {
         for (qint32 y = 0; y < heigth; y++)

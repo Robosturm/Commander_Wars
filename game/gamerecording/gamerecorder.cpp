@@ -225,7 +225,7 @@ void GameRecorder::setMapTime(const qint32 &mapTime)
 
 void GameRecorder::updatePlayerData(qint32 player)
 {
-    if (m_Record.size() > 0 && player < m_Record.size())
+    if (m_Record.size() > 0)
     {
         m_Record[m_Record.size() - 1]->addPlayerRecord(player, GameMap::getInstance()->getCurrentDay());
     }

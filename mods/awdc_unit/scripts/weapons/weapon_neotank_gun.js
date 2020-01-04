@@ -22,11 +22,11 @@ WEAPON_NEOTANK_GUN.damageTable[idx][1] = 70;
 
 // heavy tanks
 idx = getIndexOf1(WEAPON_NEOTANK_GUN.damageTable, "HEAVY_HOVERCRAFT");
-WEAPON_NEOTANK_GUN.damageTable[idx][1] = 45;
+WEAPON_NEOTANK_GUN.damageTable[idx][1] = 55;
 idx = getIndexOf1(WEAPON_NEOTANK_GUN.damageTable, "HEAVY_TANK");
-WEAPON_NEOTANK_GUN.damageTable[idx][1] = WEAPON.HighDamage;
+WEAPON_NEOTANK_GUN.damageTable[idx][1] = 55;
 idx = getIndexOf1(WEAPON_NEOTANK_GUN.damageTable, "NEOTANK");
-WEAPON_NEOTANK_GUN.damageTable[idx][1] = WEAPON.mediumDamage;
+WEAPON_NEOTANK_GUN.damageTable[idx][1] = 55;
 
 // very heavy tanks
 idx = getIndexOf1(WEAPON_NEOTANK_GUN.damageTable, "MEGATANK");

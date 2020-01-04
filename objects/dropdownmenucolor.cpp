@@ -128,6 +128,7 @@ void DropDownmenuColor::setCurrentItem(QColor color)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_currentItem = color;
+    hideTooltip();
     m_Colorfield->setColor(color.red(), color.green(), color.blue(), 255);
     pApp->continueThread();
 }

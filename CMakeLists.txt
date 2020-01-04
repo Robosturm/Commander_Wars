@@ -48,7 +48,7 @@ add_definitions(
 )
 
 message ("CXX Flags: ${CMAKE_CXX_FLAGS}")
-set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "-g ${CMAKE_CXX_FLAGS}") # -g for debug info
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,10000000")
 
 ###################################################################################

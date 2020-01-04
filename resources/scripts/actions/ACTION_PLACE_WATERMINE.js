@@ -114,9 +114,12 @@ var Constructor = function()
         var unit = map.spawnUnit(ACTION_PLACE_WATERMINE.postAnimationMinePosX,
                                  ACTION_PLACE_WATERMINE.postAnimationMinePosY,
                                  "WATERMINE", player);
-        // pay for the unit
-        map.getGameRecorder().buildUnit(player.getPlayerID());
-        unit.setHasMoved(true);
+        if (unit !== null)
+        {
+            // pay for the unit
+            map.getGameRecorder().buildUnit(player.getPlayerID());
+            unit.setHasMoved(true);
+        }
         player.buildedUnit(unit);
         audio.playSound("unload.wav");
         ACTION_PLACE_WATERMINE.postAnimationMinePosX = -1;

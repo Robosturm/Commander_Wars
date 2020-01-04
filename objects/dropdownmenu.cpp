@@ -148,6 +148,7 @@ void DropDownmenu::setCurrentItemText(QString value)
     pApp->suspendThread();
     m_Textfield->setHtmlText(value);
     m_currentItem = -1;
+    hideTooltip();
     pApp->continueThread();
 }
 

@@ -8,6 +8,7 @@ typedef oxygine::intrusive_ptr<ScriptConditionPlayerReachedArea> spScriptConditi
 
 class ScriptConditionPlayerReachedArea : public ScriptCondition
 {
+    Q_OBJECT
 public:
     ScriptConditionPlayerReachedArea();
     /**

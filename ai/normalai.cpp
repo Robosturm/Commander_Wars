@@ -1517,7 +1517,8 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                                     data[2] = 0.0;
                                     data[3] = 1.0;
                                 }
-                                if (dummy.getActionList().contains(ACTION_CAPTURE))
+                                if (dummy.getActionList().contains(ACTION_CAPTURE) &&
+                                    dummy.getLoadingPlace() == 0)
                                 {
                                     data[4] = 1.0;
                                 }
