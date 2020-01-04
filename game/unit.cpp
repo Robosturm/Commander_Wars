@@ -283,10 +283,15 @@ void Unit::updateSprites()
     Mainapp* pApp = Mainapp::getInstance();
     for (qint32 i = 0; i < m_pUnitSprites.size(); i++)
     {
-        m_pUnitSprites[i]->detach();
+        m_pUnitSprites[i]->detach();        
+    }
+    for (qint32 i = 0; i < m_pUnitWaitSprites.size(); i++)
+    {
+        m_pUnitWaitSprites[i]->detach();
     }
     // call the js loader function to do the rest
     m_pUnitSprites.clear();
+    m_pUnitWaitSprites.clear();
     QString function1 = "loadSprites";
     QJSValueList args1;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
