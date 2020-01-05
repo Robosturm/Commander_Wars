@@ -275,6 +275,7 @@ void MapSelectionMapsMenue::hideRuleSelection()
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_pRuleSelection->setVisible(false);
+    m_pRuleSelection->clearContent();
     pApp->continueThread();
 }
 
@@ -287,6 +288,7 @@ void MapSelectionMapsMenue::showRuleSelection()
     spRuleSelection pRuleSelection = new RuleSelection(pApp->getSettings()->getWidth() - 80);
     m_pRuleSelection->addItem(pRuleSelection);
     m_pRuleSelection->setContentHeigth(pRuleSelection->getHeight() + 40);
+    m_pRuleSelection->setContentWidth(pRuleSelection->getWidth());
     pApp->continueThread();
 }
 

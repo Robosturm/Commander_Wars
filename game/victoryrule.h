@@ -18,6 +18,9 @@ class VictoryRule : public QObject, public FileSerializable, public oxygine::ref
 {
     Q_OBJECT
 public:
+    static const QString checkbox;
+    static const QString spinbox;
+
     explicit VictoryRule();
     explicit VictoryRule(QString ruleID);
     virtual ~VictoryRule() = default;
@@ -42,13 +45,13 @@ public:
     }
 
 public slots:    
-    void setRuleValue(qint32 value);
-    qint32 getInfiniteValue();
-    qint32 getDefaultValue();
-    QString getRuleType();
-    QString getRuleName();
-    qint32 getRuleValue();
-    QString getRuleDescription();
+    void setRuleValue(qint32 value, qint32 itemNumber);
+    qint32 getInfiniteValue(qint32 itemNumber = 0);
+    qint32 getDefaultValue(qint32 itemNumber = 0);
+    QStringList getRuleType();
+    QString getRuleName(qint32 itemNumber = 0);
+    qint32 getRuleValue(qint32 itemNumber);
+    QString getRuleDescription(qint32 itemNumber = 0);
     qint32 getRuleProgress(Player* pPlayer);
     QString getRuleID() const;
     ScriptVariables* getVariables()

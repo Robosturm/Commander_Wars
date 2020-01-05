@@ -1,10 +1,10 @@
 var Constructor = function()
 {
-    this.getRuleDescription = function()
+    this.getRuleDescription = function(itemNumber)
     {
         return qsTr("A player looses when he looses his last HQ. All buildings will be owned by the current player.")
     };
-    this.getRuleName = function()
+    this.getRuleName = function(itemNumber)
     {
         return qsTr("No HQ's");
     };
@@ -15,7 +15,7 @@ var Constructor = function()
         return "checkbox"
     };
     // defines the default value during map selection for this rule
-    this.getDefaultRuleValue = function()
+    this.getDefaultRuleValue = function(itemNumber)
     {
         return 1;
     };

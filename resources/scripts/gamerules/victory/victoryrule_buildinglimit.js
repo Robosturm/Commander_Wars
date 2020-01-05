@@ -1,29 +1,57 @@
 var Constructor = function()
 {
-    this.getRuleDescription = function()
+    this.getRuleDescription = function(itemNumber)
     {
-        return qsTr("The player who reaches the number of buildings wins.")
+        if (itemNumber === 0)
+        {
+            return qsTr("The player who reaches the number of buildings wins.")
+        }
+        else
+        {
+            return qsTr("If checked the Team needs to capture the given number of buildings else a single player needs to capture them.");
+        }
     };
 
-    this.getRuleName = function()
+    this.getRuleName = function(itemNumber)
     {
-        return qsTr("Capture Victory");
+        if (itemNumber === 0)
+        {
+            return qsTr("Capture Victory");
+        }
+        else
+        {
+            return qsTr("Team Counter");
+        }
     };
     // the type how the rule will be represented in the map selection ui
     this.getRuleType = function()
     {
         // for now checkbox or spinbox
-        return "spinbox"
+        return ["spinbox", "checkbox"];
     };
     // defines the default value during map selection for this rule
-    this.getDefaultRuleValue = function()
+    this.getDefaultRuleValue = function(itemNumber)
     {
-        return VICTORYRULE_BUILDINGLIMIT.getMinimumCount();
+        if (itemNumber === 0)
+        {
+            return VICTORYRULE_BUILDINGLIMIT.getMinimumCount();
+        }
+        else
+        {
+            return 0;
+        }
     };
-	this.getInfiniteValue = function()
+    this.getInfiniteValue = function(itemNumber)
     {
-        // disable value of the rule for spinboxes. :)
-        return VICTORYRULE_BUILDINGLIMIT.getMinimumCount();
+        if (itemNumber === 0)
+        {
+            // disable value of the rule for spinboxes. :)
+            return VICTORYRULE_BUILDINGLIMIT.getMinimumCount();
+        }
+        else
+        {
+            return 0;
+        }
     };
 
     this.getMinimumCount = function()
@@ -45,10 +73,30 @@ var Constructor = function()
     this.init = function(rule)
     {
     };
+
+    this.getBuildings = function(rule, player)
+    {
+        var count = player.getBuildingCount();
+        var players = map.getPlayerCount();
+        var teamVictory = VICTORYRULE_BUILDINGLIMIT.getRuleValue(rule, 1);
+        if (teamVictory === 1)
+        {
+            for (var i = 0; i < players; i++)
+            {
+                var ally = map.getPlayer(i);
+                if ((player !== ally) &&
+                    (player.getTeam() === ally.getTeam()))
+                {
+                    count += ally.getBuildingCount();
+                }
+            }
+        }
+        return count;
+    };
     // checks if the selected player is declared defeated by this rule
     this.checkDefeat = function(rule, player)
     {
-        var buildings = player.getBuildingCount();
+        var buildings = VICTORYRULE_BUILDINGLIMIT.getBuildings(rule, player);
         var buildingLimit = VICTORYRULE_BUILDINGLIMIT.getRuleValue(rule);
         if (buildings >= buildingLimit)
 		{
@@ -67,7 +115,7 @@ var Constructor = function()
     };
     this.getRuleProgress = function(rule, player)
     {
-        return player.getBuildingCount();
+        return VICTORYRULE_BUILDINGLIMIT.getBuildings(rule, player);
     };
 };
 

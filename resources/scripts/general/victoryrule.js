@@ -1,6 +1,6 @@
 var VICTORYRULE =
 {
-    getRuleDescription : function()
+    getRuleDescription : function(itemNumber)
     {
         return "";
     },
@@ -11,7 +11,7 @@ var VICTORYRULE =
     },
 
     // shown name in the game
-    getRuleName : function()
+    getRuleName : function(itemNumber)
     {
         return "";
     },
@@ -19,14 +19,14 @@ var VICTORYRULE =
     getRuleType : function()
     {
         // for now checkbox or spinbox
-        return "checkbox"
+        return "checkbox";
     },
     // defines the default value during map selection for this rule
-    getDefaultRuleValue : function()
+    getDefaultRuleValue : function(itemNumber)
     {
         return 0;
     },
-    getInfiniteValue : function()
+    getInfiniteValue : function(itemNumber)
     {
         // disable value of the rule for spinboxes. :)
         return 0;
@@ -36,17 +36,18 @@ var VICTORYRULE =
     {
     },
     // sets the rule value of the spinbox
-    setRuleValue : function(rule, value)
+    setRuleValue : function(rule, value, item = 0)
     {
-        var variableName = "SpinboxValue";
+
+        var variableName = "SpinboxValue" + item.toString();
         var variables = rule.getVariables();
         var variable = variables.createVariable(variableName);
         variable.writeDataInt32(value);
     },
 
-    getRuleValue : function(rule)
+    getRuleValue : function(rule, item = 0)
     {
-        var variableName = "SpinboxValue";
+        var variableName = "SpinboxValue" + item.toString();
         var variables = rule.getVariables();
         var variable = variables.createVariable(variableName);
         return variable.readDataInt32();

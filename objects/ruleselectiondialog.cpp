@@ -38,6 +38,7 @@ RuleSelectionDialog::RuleSelectionDialog()
     pPanel->setPosition(10, 20);
     pPanel->addItem(m_pRuleSelection);
     pPanel->setContentHeigth(m_pRuleSelection->getHeight() + 40);
+    pPanel->setContentWidth(m_pRuleSelection->getWidth());
     pSpriteBox->addChild(pPanel);
 }
 

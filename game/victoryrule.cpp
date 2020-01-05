@@ -9,6 +9,9 @@
 
 #include "game/co.h"
 
+const QString VictoryRule::checkbox = "checkbox";
+const QString VictoryRule::spinbox = "spinbox";
+
 VictoryRule::VictoryRule()
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -30,26 +33,28 @@ VictoryRule::VictoryRule(QString ruleID)
     QJSValue erg = pApp->getInterpreter()->doFunction(m_RuleID, function1, args1);
 }
 
-QString VictoryRule::getRuleType()
+QStringList VictoryRule::getRuleType()
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getRuleType";
     QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1);
     if (ret.isString())
     {
-        return ret.toString();
+        return QStringList(ret.toString());
     }
     else
     {
-        return "";
+        return ret.toVariant().toStringList();
     }
 }
 
-QString VictoryRule::getRuleName()
+QString VictoryRule::getRuleName(qint32 itemNumber)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getRuleName";
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1);
+    QJSValueList args;
+    args << itemNumber;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1, args);
     if (ret.isString())
     {
         return ret.toString();
@@ -60,7 +65,7 @@ QString VictoryRule::getRuleName()
     }
 }
 
-void VictoryRule::setRuleValue(qint32 value)
+void VictoryRule::setRuleValue(qint32 value, qint32 itemNumber)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "setRuleValue";
@@ -68,14 +73,17 @@ void VictoryRule::setRuleValue(qint32 value)
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
     args << obj1;
     args << value;
+    args << itemNumber;
     QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1, args);
 }
 
-qint32 VictoryRule::getInfiniteValue()
+qint32 VictoryRule::getInfiniteValue(qint32 itemNumber)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getInfiniteValue";
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1);
+    QJSValueList args;
+    args << itemNumber;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1, args);
     if (ret.isNumber())
     {
         return ret.toInt();
@@ -86,11 +94,13 @@ qint32 VictoryRule::getInfiniteValue()
     }
 }
 
-qint32 VictoryRule::getDefaultValue()
+qint32 VictoryRule::getDefaultValue(qint32 itemNumber)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getDefaultRuleValue";
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1);
+    QJSValueList args;
+    args << itemNumber;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1, args);
     if (ret.isNumber())
     {
         return ret.toInt();
@@ -101,13 +111,14 @@ qint32 VictoryRule::getDefaultValue()
     }
 }
 
-qint32 VictoryRule::getRuleValue()
+qint32 VictoryRule::getRuleValue(qint32 itemNumber)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getRuleValue";
     QJSValueList args;
     QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
     args << obj1;
+    args << itemNumber;
     QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1, args);
     if (ret.isNumber())
     {
@@ -119,11 +130,13 @@ qint32 VictoryRule::getRuleValue()
     }
 }
 
-QString VictoryRule::getRuleDescription()
+QString VictoryRule::getRuleDescription(qint32 itemNumber)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "getRuleDescription";
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1);
+    QJSValueList args;
+    args << itemNumber;
+    QJSValue ret = pApp->getInterpreter()->doFunction(m_RuleID, function1, args);
     if (ret.isString())
     {
         return ret.toString();

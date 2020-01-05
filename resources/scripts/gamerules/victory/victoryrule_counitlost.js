@@ -1,10 +1,10 @@
 var Constructor = function()
 {
-    this.getRuleDescription = function()
+    this.getRuleDescription = function(itemNumber)
     {
         return qsTr("A player looses if he lost the given amount of co units.")
     };
-    this.getRuleName = function()
+    this.getRuleName = function(itemNumber)
     {
         return qsTr("Co Units lost");
     };
@@ -15,7 +15,7 @@ var Constructor = function()
         return "spinbox"
     };
     // defines the default value during map selection for this rule
-    this.getDefaultRuleValue = function()
+    this.getDefaultRuleValue = function(itemNumber)
     {
         return 0;
     };

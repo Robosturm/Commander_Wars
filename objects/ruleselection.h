@@ -14,6 +14,7 @@ class RuleSelection : public QObject, public oxygine::Actor
     Q_OBJECT
 public:
     explicit RuleSelection(qint32 width);
+    virtual ~RuleSelection();
     void showRuleSelection();
 signals:
     void sigShowCOBannlist();

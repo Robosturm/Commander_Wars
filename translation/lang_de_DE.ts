@@ -954,6 +954,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../objects/dialogattacklog.cpp" line="117"/>
+        <location filename="../objects/dialogattacklog.cpp" line="163"/>
+        <source>Hp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../objects/dialogattacklog.cpp" line="123"/>
         <source>to Defender </source>
         <translation type="unfinished"></translation>
@@ -966,12 +972,6 @@
     <message>
         <location filename="../objects/dialogattacklog.cpp" line="168"/>
         <source>Show Fields</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogattacklog.cpp" line="117"/>
-        <location filename="../objects/dialogattacklog.cpp" line="163"/>
-        <source>Hp</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1392,7 +1392,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogvictoryconditions.cpp" line="99"/>
+        <location filename="../objects/dialogvictoryconditions.cpp" line="102"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3069,132 +3069,132 @@
 <context>
     <name>RuleSelection</name>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="45"/>
+        <location filename="../objects/ruleselection.cpp" line="72"/>
         <source>Enviroment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="62"/>
+        <location filename="../objects/ruleselection.cpp" line="89"/>
         <source>The chance each weather can appear if random weather is active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="70"/>
+        <location filename="../objects/ruleselection.cpp" line="97"/>
         <source>Random Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="74"/>
+        <location filename="../objects/ruleselection.cpp" line="101"/>
         <source>If checked random weather appears during the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="83"/>
+        <location filename="../objects/ruleselection.cpp" line="110"/>
         <source>Start Weather: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="88"/>
+        <location filename="../objects/ruleselection.cpp" line="115"/>
         <source>The weather at the start of the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="98"/>
+        <location filename="../objects/ruleselection.cpp" line="125"/>
         <source>Weather Forecast: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="102"/>
+        <location filename="../objects/ruleselection.cpp" line="129"/>
         <source>If checked you can see the weather for the next few turns for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="114"/>
+        <location filename="../objects/ruleselection.cpp" line="141"/>
         <source>Gameplay</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="120"/>
+        <location filename="../objects/ruleselection.cpp" line="147"/>
         <source>Unit Ranking System: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="124"/>
+        <location filename="../objects/ruleselection.cpp" line="151"/>
         <source>If checked units can gain ranks by killing other units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="133"/>
+        <location filename="../objects/ruleselection.cpp" line="160"/>
         <source>CO Bannlist: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="136"/>
+        <location filename="../objects/ruleselection.cpp" line="163"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="147"/>
+        <location filename="../objects/ruleselection.cpp" line="174"/>
         <source>No CO Powers: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="151"/>
+        <location filename="../objects/ruleselection.cpp" line="178"/>
         <source>If checked CO&apos;s can&apos;t use CO-Powers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="159"/>
+        <location filename="../objects/ruleselection.cpp" line="186"/>
         <source>AI Attack Terrain: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="163"/>
+        <location filename="../objects/ruleselection.cpp" line="190"/>
         <source>If checked the AI attacks pipe seams and walls etc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="171"/>
+        <location filename="../objects/ruleselection.cpp" line="198"/>
         <source>Fog Of War: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="174"/>
+        <location filename="../objects/ruleselection.cpp" line="201"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="174"/>
+        <location filename="../objects/ruleselection.cpp" line="201"/>
         <source>Fog of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="176"/>
+        <location filename="../objects/ruleselection.cpp" line="203"/>
         <source>Select the fog of war rule for the current game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="187"/>
+        <location filename="../objects/ruleselection.cpp" line="214"/>
         <source>Unit Limit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="191"/>
+        <location filename="../objects/ruleselection.cpp" line="218"/>
         <source>The maximum amount of units a single player can own at any time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="201"/>
+        <location filename="../objects/ruleselection.cpp" line="228"/>
         <source>Round Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="205"/>
+        <location filename="../objects/ruleselection.cpp" line="232"/>
         <source>The maximum amount of time in hh:mm::ss for each turn for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="218"/>
+        <location filename="../objects/ruleselection.cpp" line="245"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6323,6 +6323,11 @@ Units gain additional 10% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="330"/>
+        <source>Units adjacent to own properties restore one HP of health at the beginning of each turn, but get repaired oone HP less on the building.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../resources/scripts/cos/co_alexis.js" line="334"/>
         <source>
 Global Effect:
@@ -6337,18 +6342,13 @@ Units gain additional 10% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="343"/>
-        <source>Crystal Brace</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_alexis.js" line="330"/>
-        <source>Units adjacent to own properties restore one HP of health at the beginning of each turn, but get repaired oone HP less on the building.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_alexis.js" line="339"/>
         <source>Units nearby an allied property receive firepower bonuses and restore three HP from each property.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_alexis.js" line="343"/>
+        <source>Crystal Brace</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -15697,13 +15697,23 @@ Units have 30% increased firepower during sandstorm.</source>
 <context>
     <name>victoryrule_buildinglimit</name>
     <message>
-        <location filename="../resources/scripts/gamerules/victory/victoryrule_buildinglimit.js" line="5"/>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_buildinglimit.js" line="7"/>
         <source>The player who reaches the number of buildings wins.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/gamerules/victory/victoryrule_buildinglimit.js" line="10"/>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_buildinglimit.js" line="11"/>
+        <source>If checked the Team needs to capture the given number of buildings else a single player needs to capture them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_buildinglimit.js" line="19"/>
         <source>Capture Victory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_buildinglimit.js" line="23"/>
+        <source>Team Counter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -15723,13 +15733,23 @@ Units have 30% increased firepower during sandstorm.</source>
 <context>
     <name>victoryrule_elimination</name>
     <message>
-        <location filename="../resources/scripts/gamerules/victory/victoryrule_elimination.js" line="5"/>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_elimination.js" line="7"/>
         <source>A player wins after killing the given amount of units by attacking or explosion damage from black bombs or Black Hole Buildings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/gamerules/victory/victoryrule_elimination.js" line="9"/>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_elimination.js" line="11"/>
+        <source>If checked the Team needs to kill the given number of units else a single player needs to kill them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_elimination.js" line="18"/>
         <source>Elimination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_elimination.js" line="22"/>
+        <source>Team Counter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -15762,13 +15782,23 @@ Units have 30% increased firepower during sandstorm.</source>
 <context>
     <name>victoryrule_turnlimit</name>
     <message>
-        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="5"/>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="7"/>
         <source>All player loose when the time is up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="9"/>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="11"/>
+        <source>The Team winning the game if the time is up. âˆž for all player loose the game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="18"/>
         <source>Turn Limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/gamerules/victory/victoryrule_turnlimit.js" line="22"/>
+        <source>Winner Team</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

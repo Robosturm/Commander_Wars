@@ -1,25 +1,39 @@
 var Constructor = function()
 {
-    this.getRuleDescription = function()
+    this.getRuleDescription = function(itemNumber)
     {
-        return qsTr("All player loose when the time is up.")
+        if (itemNumber === 0)
+        {
+            return qsTr("All player loose when the time is up.");
+        }
+        else
+        {
+            return qsTr("The Team winning the game if the time is up. ∞ for all player loose the game.");
+        }
     };
-    this.getRuleName = function()
+    this.getRuleName = function(itemNumber)
     {
-        return qsTr("Turn Limit");
+        if (itemNumber === 0)
+        {
+            return qsTr("Turn Limit");
+        }
+        else
+        {
+            return qsTr("Winner Team");
+        }
     };
     // the type how the rule will be represented in the map selection ui
     this.getRuleType = function()
     {
         // for now checkbox or spinbox
-        return "spinbox"
+        return ["spinbox", "spinbox"];
     };
     // defines the default value during map selection for this rule
-    this.getDefaultRuleValue = function()
+    this.getDefaultRuleValue = function(itemNumber)
     {
         return 0;
     };
-	this.getInfiniteValue = function()
+    this.getInfiniteValue = function(itemNumber)
     {
         // disable value of the rule for spinboxes. :)
         return 0;
@@ -34,7 +48,9 @@ var Constructor = function()
     {
         var turn = map.getCurrentDay();
 		var turnLimit = VICTORYRULE_TURNLIMIT.getRuleValue(rule);
-        if (turn <= turnLimit)
+        var victoryTeam = VICTORYRULE_TURNLIMIT.getRuleValue(rule, 1);
+        if (turn <= turnLimit ||
+            player.getTeam() === victoryTeam - 1)
 		{
 			return GameEnums.DefeatType_Alive;
 		}

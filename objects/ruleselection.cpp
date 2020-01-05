@@ -14,11 +14,38 @@
 #include "objects/timespinbox.h"
 #include "objects/cobannlistdialog.h"
 
+
 RuleSelection::RuleSelection(qint32 width)
     : QObject()
 {
     setWidth(width);
     showRuleSelection();
+}
+
+RuleSelection::~RuleSelection()
+{
+    GameRuleManager* pGameRuleManager = GameRuleManager::getInstance();
+    GameMap* pMap = GameMap::getInstance();
+    for (qint32 i = 0; i < pGameRuleManager->getVictoryRuleCount(); i++)
+    {
+        QString ruleID = pGameRuleManager->getVictoryRuleID(i);
+        spVictoryRule pRule = pMap->getGameRules()->getVictoryRule(ruleID);
+        QStringList inputTypes = pRule->getRuleType();
+        if (inputTypes[0] == VictoryRule::checkbox)
+        {
+            if (pRule->getRuleValue(0) == 0)
+            {
+                pMap->getGameRules()->removeVictoryRule(ruleID);
+            }
+        }
+        else if (inputTypes[0] == VictoryRule::spinbox)
+        {
+            if (pRule->getRuleValue(0) == pRule->getInfiniteValue(0))
+            {
+                pMap->getGameRules()->removeVictoryRule(ruleID);
+            }
+        }
+    }
 }
 
 void RuleSelection::showRuleSelection()
@@ -218,75 +245,86 @@ void RuleSelection::showRuleSelection()
     textField->setHtmlText(tr("Victory Rules"));
     textField->setPosition(30, y);
     addChild(textField);
-    y += 40 * headerScale;
+    y += 40 * headerScale;    
+
+    qint32 initCount = pMap->getGameRules()->getVictoryRuleSize();
+
     for (qint32 i = 0; i < pGameRuleManager->getVictoryRuleCount(); i++)
     {
+        qint32 xPos = 0;
         QString ruleID = pGameRuleManager->getVictoryRuleID(i);
-        spVictoryRule pRule = new VictoryRule(ruleID);
-        QString descriptiopn = pRule->getRuleDescription();
-        QString inputType = pRule->getRuleType().toLower();
-        if (inputType == "checkbox")
+        spVictoryRule pRule = pMap->getGameRules()->getVictoryRule(ruleID);
+        if (pRule.get() == nullptr)
         {
-            bool defaultValue = pRule->getDefaultValue();
-            if (defaultValue)
+            pRule = new VictoryRule(ruleID);
+
+            QStringList types = pRule->getRuleType();
+            for (qint32 i2 = 0; i2 < types.size(); i2++)
             {
-                pMap->getGameRules()->addVictoryRule(pRule);
-            }
-            // add a cool check box and a cool text
-            QString labelName = pRule->getRuleName();
-            textField = new oxygine::TextField();
-            textField->setStyle(style);
-            textField->setHtmlText(labelName);
-            textField->setPosition(30, i * 50 + y);
-            addChild(textField);
-            spCheckbox pCheckbox = new Checkbox();
-            pCheckbox->setTooltipText(descriptiopn);
-            pCheckbox->setPosition(textWidth, textField->getY());
-            addChild(pCheckbox);
-            pCheckbox->setChecked(defaultValue);
-            connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
-            {
-                if (value)
+                if (types[0] == VictoryRule::checkbox && i2 == 0)
                 {
-                    pMap->getGameRules()->addVictoryRule(ruleID);
+                    if (initCount == 0)
+                    {
+                        pRule->setRuleValue(pRule->getDefaultValue(0), 0);
+                    }
+                    else
+                    {
+                        pRule->setRuleValue(0, 0);
+                    }
                 }
                 else
                 {
-                    pMap->getGameRules()->removeVictoryRule(ruleID);
+                    pRule->setRuleValue(pRule->getDefaultValue(i2), i2);
                 }
-            });
-        }
-        else if (inputType == "spinbox")
-        {
-            qint32 defaultValue = pRule->getDefaultValue();
-            qint32 startValue = pRule->getInfiniteValue();
-            if (defaultValue != startValue)
-            {
-                pMap->getGameRules()->addVictoryRule(pRule);
             }
-            QString labelName = pRule->getRuleName();
+        }
+        QStringList inputTypes = pRule->getRuleType();
+        pMap->getGameRules()->addVictoryRule(pRule);
+        for (qint32 i2 = 0; i2 < inputTypes.size(); i2++)
+        {
+            QString inputType = inputTypes[i2];
+            QString descriptiopn = pRule->getRuleDescription(i2);
+            // add a cool check box and a cool text
+            QString labelName = pRule->getRuleName(i2);
             textField = new oxygine::TextField();
             textField->setStyle(style);
             textField->setHtmlText(labelName);
-            textField->setPosition(30, i * 50 + y);
+            textField->setPosition(xPos + 30, i * 50 + y);
             addChild(textField);
-            spSpinBox pSpinbox = new SpinBox(200, startValue, 9999);
-            pSpinbox->setTooltipText(descriptiopn);
-            pSpinbox->setPosition(textWidth, textField->getY());
-            pSpinbox->setInfinityValue(startValue);
-            addChild(pSpinbox);
-            pSpinbox->setCurrentValue(defaultValue);
-            connect(pSpinbox.get(), &SpinBox::sigValueChanged, [=](float value)
+            if (inputType == VictoryRule::checkbox)
             {
-                qint32 newValue = static_cast<qint32>(value);
-                pMap->getGameRules()->removeVictoryRule(ruleID);
-                if (newValue != startValue)
+                bool defaultValue = pRule->getRuleValue(i2);
+                spCheckbox pCheckbox = new Checkbox();
+                pCheckbox->setTooltipText(descriptiopn);
+                pCheckbox->setPosition(xPos + textWidth, textField->getY());
+                addChild(pCheckbox);
+                pCheckbox->setChecked(defaultValue);
+                connect(pCheckbox.get(), &Checkbox::checkChanged, [=](bool value)
                 {
-                    spVictoryRule pRule = new VictoryRule(ruleID);
-                    pRule->setRuleValue(newValue);
-                    pMap->getGameRules()->addVictoryRule(pRule);
-                }
-            });
+                    pRule->setRuleValue(value, i2);
+                });
+            }
+            else if (inputType == VictoryRule::spinbox)
+            {
+                qint32 defaultValue = pRule->getRuleValue(i2);
+                qint32 startValue = pRule->getInfiniteValue(i2);
+                spSpinBox pSpinbox = new SpinBox(200, startValue, 9999);
+                pSpinbox->setTooltipText(descriptiopn);
+                pSpinbox->setPosition(xPos + textWidth, textField->getY());
+                pSpinbox->setInfinityValue(startValue);
+                addChild(pSpinbox);
+                pSpinbox->setCurrentValue(defaultValue);
+                connect(pSpinbox.get(), &SpinBox::sigValueChanged, [=](float value)
+                {
+                    qint32 newValue = static_cast<qint32>(value);
+                    pRule->setRuleValue(newValue, i2);
+                });
+            }
+            xPos += textWidth * 2 * 0.85;
+            if (xPos + textWidth * 2 * 0.85 + 80 > getWidth())
+            {
+                setWidth(xPos + textWidth * 2 * 0.85 + 80);
+            }
         }
     }
     setHeight(y + pGameRuleManager->getVictoryRuleCount() * 50 + 50);

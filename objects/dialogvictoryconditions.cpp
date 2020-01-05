@@ -93,8 +93,11 @@ DialogVictoryConditions::DialogVictoryConditions()
             Player* pPlayer = pMap->getPlayer(i2);
             if (pPlayer->getIsDefeated() == false)
             {
-                qint32 ruleValue = pVictoryRule->getRuleValue();
-
+                qint32 ruleValue = pVictoryRule->getRuleValue(0);
+                if (pVictoryRule->getRuleType()[0] == VictoryRule::checkbox)
+                {
+                    ruleValue = 0;
+                }
                 qint32 playerValue = pVictoryRule->getRuleProgress(pPlayer);
                 info = tr("Player ") + QString::number(i2 + 1) + ": " + QString::number(playerValue) + "/" + QString::number(ruleValue);
                 spBuilding building = new Building("HQ");
