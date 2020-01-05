@@ -15724,7 +15724,7 @@ Units have 30% increased firepower during sandstorm.</source>
     <name>victoryrule_elimination</name>
     <message>
         <location filename="../resources/scripts/gamerules/victory/victoryrule_elimination.js" line="5"/>
-        <source>A player wins after killing the given amount of units by attacking or explosion damage from black bombs or Black Hole Buildings. Units getting destroyed by counter attacks don&apos;t count.</source>
+        <source>A player wins after killing the given amount of units by attacking or explosion damage from black bombs or Black Hole Buildings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
