@@ -327,7 +327,7 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Units adjacent to own properties restore one HP of health at the beginning of each turn, but get repaired oone HP less on the building.");
+        return qsTr("Units adjacent to own properties restore one HP of health at the beginning of each turn, but get repaired one HP less on the building.");
     };
     this.getLongCODescription = function()
     {

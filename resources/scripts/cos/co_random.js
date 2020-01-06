@@ -25,7 +25,7 @@ var Constructor = function()
     };
     this.getCODescription = function()
     {
-        return qsTr("Selects a random CO from all avaiable CO's.");
+        return qsTr("Selects a random CO from all available CO's.");
     };
     this.getPowerDescription = function()
     {
