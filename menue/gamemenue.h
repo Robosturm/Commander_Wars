@@ -11,6 +11,8 @@
 
 #include "network/NetworkInterface.h"
 
+#include "objects/chat.h"
+
 /**
  * @brief The GameMenue class handles the game :)
  */
@@ -175,6 +177,8 @@ private:
     spIngameInfoBar m_IngameInfoBar;
     oxygine::spTextField xyTextInfo;
     static GameMenue* m_pInstance;
+    spChat m_pChat{nullptr};
+    oxygine::spButton m_ChatButton{nullptr};
     spNetworkInterface m_pNetworkInterface;
     bool gameStarted{false};
     QVector<quint64> m_PlayerSockets;
@@ -185,6 +189,7 @@ private:
 
     QTimer m_UpdateTimer;
     GameAction* m_pStoredAction{nullptr};
+    spUnit m_CurrentActionUnit{nullptr};
 };
 
 #endif // GAMEMENUE_H

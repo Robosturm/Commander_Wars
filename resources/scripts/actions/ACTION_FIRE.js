@@ -436,9 +436,15 @@ var Constructor = function()
             // post battle action of the attacking unit
             attacker.getOwner().postBattleActions(attacker, damage, defUnit, false);
             defOwner.postBattleActions(attacker, damage, defUnit, true);
+            attacker.postBattleActions(damage, defUnit, false);
+            defUnit.postBattleActions(damage, attacker, true);
+
             // post battle action of the defending unit
             defOwner.postBattleActions(defUnit, counterdamage, attacker, false);
             attacker.getOwner().postBattleActions(defUnit, counterdamage, attacker, true);
+            defUnit.postBattleActions(counterdamage, attacker, false);
+            attacker.postBattleActions(counterdamage, defUnit, true);
+
             // only kill units if we should else we stop here
             if (dontKillUnits  === false)
             {

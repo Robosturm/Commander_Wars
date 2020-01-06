@@ -120,6 +120,13 @@ signals:
 
 public slots:
     /**
+     * @brief postBattleActions
+     * @param damage
+     * @param pUnit
+     * @param gotAttacked
+     */
+    void postBattleActions(float damage, Unit* pUnit, bool gotAttacked);
+    /**
      * @brief getDescription
      * @return
      */
@@ -477,11 +484,25 @@ public slots:
      */
     bool canTransportUnit(Unit* pUnit, bool ignoreLoadingPlace = false);
     /**
+     * @brief postAction
+     * @param pAction
+     */
+    void postAction();
+    /**
      * @brief getBonusOffensive
      * @param position
      * @return offensive bonus at this position
      */
     qint32 getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender);
+    /**
+     * @brief getUnitBonusOffensive
+     * @param position
+     * @param pDefender
+     * @param defPosition
+     * @param isDefender
+     * @return
+     */
+    qint32 getUnitBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender);
     /**
      * @brief getDamageReduction
      * @param pAttacker
@@ -516,6 +537,15 @@ public slots:
      * @return defense bonus at this position
      */
     qint32 getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender);
+    /**
+     * @brief getUnitBonusDefensive
+     * @param position
+     * @param pAttacker
+     * @param atkPosition
+     * @param isDefender
+     * @return
+     */
+    qint32 getUnitBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender);
     /**
      * @brief useTerrainDefense
      * @return

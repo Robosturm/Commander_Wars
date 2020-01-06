@@ -26,6 +26,8 @@
 #include "objects/dialogconnecting.h"
 #include "objects/dialogmessagebox.h"
 
+#include "coreengine/tweenaddcolorall.h"
+
 #include "multiplayer/networkcommands.h"
 
 #include "wiki/fieldinfo.h"
@@ -76,6 +78,10 @@ GameMenue::GameMenue(spNetworkInterface pNetworkInterface, bool saveGame)
         connect(pDialogConnecting.get(), &DialogConnecting::sigCancel, this, &GameMenue::exitGame, Qt::QueuedConnection);
         connect(this, &GameMenue::sigGameStarted, pDialogConnecting.get(), &DialogConnecting::connected, Qt::QueuedConnection);
 
+        m_pChat = new Chat(pNetworkInterface, QSize(Settings::getWidth(), Settings::getHeight() - 100));
+        m_pChat->setPriority(static_cast<short>(Mainapp::ZOrder::Dialogs));
+        m_pChat->setVisible(false);
+        addChild(m_pChat);
     }
     else
     {
@@ -94,6 +100,8 @@ GameMenue::GameMenue(QString map, bool saveGame)
     loadGameMenue();
 
 }
+
+
 
 void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service)
 {
@@ -137,6 +145,14 @@ void GameMenue::recieveData(quint64 socketID, QByteArray data, NetworkInterface:
                 emit sigGameStarted();
                 emit sigActionPerformed();
             }
+        }
+    }
+    else if (service == NetworkInterface::NetworkSerives::Chat)
+    {
+        if (m_pChat->getVisible() == false)
+        {
+            oxygine::spTween tween = oxygine::createTween(TweenAddColorAll(QColor(0, 200, 0, 0), false), oxygine::timeMS(1000), -1, true);
+            m_ChatButton->addTween(tween);
         }
     }
 }
@@ -267,11 +283,31 @@ void GameMenue::loadGameMenue()
     pButtonBox->setPosition((pApp->getSettings()->getWidth() - m_IngameInfoBar->getScaledWidth())  - pButtonBox->getWidth(), 0);
     pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
     addChild(pButtonBox);
-
-
     m_UpdateTimer.setInterval(500);
     m_UpdateTimer.setSingleShot(false);
     m_UpdateTimer.start();
+
+    if (m_pNetworkInterface.get() != nullptr)
+    {
+        pButtonBox = new oxygine::Box9Sprite();
+        pButtonBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+        pButtonBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+        pButtonBox->setResAnim(pAnim);
+        pButtonBox->setSize(144, 50);
+        pButtonBox->setPosition(0, Settings::getHeight() - pButtonBox->getHeight());
+        pButtonBox->setPriority(static_cast<qint16>(Mainapp::ZOrder::Objects));
+        addChild(pButtonBox);
+        m_ChatButton = pObjectManager->createButton(tr("Show Chat"), 130);
+        m_ChatButton->setPosition(8, 4);
+        m_ChatButton->addClickListener([=](oxygine::Event*)
+        {
+            m_pChat->setVisible(!m_pChat->getVisible());
+            m_ChatButton->removeTweens();
+            m_ChatButton->setAddColor(0, 0, 0, 0);
+        });
+        pButtonBox->addChild(m_ChatButton);
+    }
+
     connect(&m_UpdateTimer, &QTimer::timeout, this, &GameMenue::updateTimer, Qt::QueuedConnection);
     connect(pMap->getGameRules(), &GameRules::signalVictory, this, &GameMenue::victory, Qt::QueuedConnection);
     connect(pMap->getGameRules()->getRoundTimer(), &Timer::timeout, pMap, &GameMap::nextTurn, Qt::QueuedConnection);
@@ -481,6 +517,7 @@ void GameMenue::performAction(GameAction* pGameAction)
         {
             pMoveUnit->setMultiTurnPath(pGameAction->getMultiTurnPath());
         }
+        m_CurrentActionUnit = pMoveUnit;
         pGameAction->perform();
         // clean up the action
         delete pGameAction;
@@ -647,6 +684,11 @@ void GameMenue::actionPerformed()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    if (m_CurrentActionUnit.get() != nullptr)
+    {
+        m_CurrentActionUnit->postAction();
+        m_CurrentActionUnit = nullptr;
+    }
     m_IngameInfoBar->updateTerrainInfo(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), true);
     m_IngameInfoBar->updateMinimap();
     m_IngameInfoBar->updatePlayerInfo();
@@ -698,8 +740,11 @@ void GameMenue::victory(qint32 team)
     pApp->suspendThread();
     GameMap* pMap = GameMap::getInstance();
     bool multiplayer = false;
+
     if (m_pNetworkInterface.get() != nullptr)
     {
+        m_pChat->detach();
+        m_pChat = nullptr;
         multiplayer = true;
         emit m_pNetworkInterface->sig_close();
         m_pNetworkInterface = nullptr;

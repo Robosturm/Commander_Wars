@@ -8,7 +8,7 @@ class TweenAddColorAll
 {
 public:
     typedef oxygine::VStyleActor type;
-    TweenAddColorAll(QColor addColor);
+    TweenAddColorAll(QColor addColor, bool all = true);
 
     void update(oxygine::VStyleActor& actor, float p, const oxygine::UpdateState& us);
 
@@ -16,6 +16,7 @@ public:
     void done(oxygine::VStyleActor& actor){}
 protected:
     QColor m_addColor;
+    bool m_all{true};
 };
 
 #endif // TWEENADDCOLORALL_H

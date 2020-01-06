@@ -122,6 +122,20 @@ void Unit::applyMod()
     }
 }
 
+void Unit::postBattleActions(float damage, Unit* pUnit, bool gotAttacked)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "postBattleActions";
+    QJSValueList args1;
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj3;
+    args1 << damage;
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(pUnit);
+    args1 << obj2;
+    args1 << gotAttacked;
+    pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+}
+
 void Unit::setOwner(Player* pOwner)
 {
     // change ownership
@@ -851,11 +865,21 @@ bool Unit::canTransportUnit(Unit* pUnit, bool ignoreLoadingPlace)
     return false;
 }
 
+void Unit::postAction()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "postAction";
+    QJSValueList args1;
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj3;
+    pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+}
 
 qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender)
 {
     qint32 bonus = 0;
     bonus += getBonus(m_OffensiveBonus);
+    bonus += getUnitBonusOffensive(position, pDefender, defPosition, isDefender);
     GameMap* pMap = GameMap::getInstance();
     CO* pCO0 = m_pOwner->getCO(0);
     if (pCO0 != nullptr)
@@ -951,6 +975,31 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
     return bonus;
 }
 
+qint32 Unit::getUnitBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getBonusOffensive";
+    QJSValueList args1;
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj3;
+    args1 << position.x();
+    args1 << position.y();
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(pDefender);
+    args1 << obj2;
+    args1 << defPosition.x();
+    args1 << defPosition.y();
+    args1 << isDefender;
+    QJSValue erg = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 qint32 Unit::getTerrainDefense()
 {
     GameMap* pMap = GameMap::getInstance();
@@ -999,11 +1048,37 @@ float Unit::getTrueDamage(float damage, QPoint position, qint32 attackerBaseHp,
     return bonus;
 }
 
+qint32 Unit::getUnitBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    QString function1 = "getBonusDefensive";
+    QJSValueList args1;
+    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    args1 << obj3;
+    args1 << position.x();
+    args1 << position.y();
+    QJSValue obj2 = pApp->getInterpreter()->newQObject(pAttacker);
+    args1 << obj2;
+    args1 << atkPosition.x();
+    args1 << atkPosition.y();
+    args1 << isDefender;
+    QJSValue erg = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    if (erg.isNumber())
+    {
+        return erg.toInt();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender)
 {
     GameMap* pMap = GameMap::getInstance();
     qint32 bonus = 0;
     bonus += getBonus(m_DefensiveBonus);
+    bonus += getUnitBonusDefensive(position, pAttacker, atkPosition, isDefender);
     CO* pCO = m_pOwner->getCO(0);
     if (pCO != nullptr)
     {

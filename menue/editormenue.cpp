@@ -1622,6 +1622,10 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click)
                                 Terrain* pCopyTerrain = pMap->getTerrain(copyRect.x() + xPos, copyRect.y() + yPos);
                                 pMap->replaceTerrain(pCopyTerrain->getBaseTerrainID(1), x + xPos, y + yPos, false, false);
                                 pMap->replaceTerrain(pCopyTerrain->getBaseTerrainID(0), x + xPos, y + yPos, true, false);
+                                Terrain* pTerrain = pMap->getTerrain(x + xPos, y + yPos);
+                                QString id = pCopyTerrain->getTerrainSpriteName();
+                                pTerrain->setFixedSprite(!id.isEmpty());
+                                pTerrain->setTerrainSpriteName(id);
                             }
                         }
                         pMap->updateSprites();

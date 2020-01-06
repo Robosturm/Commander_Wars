@@ -1683,77 +1683,82 @@
 <context>
     <name>GameMenue</name>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="74"/>
+        <location filename="../menue/gamemenue.cpp" line="76"/>
         <source>Waiting for Players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="168"/>
+        <location filename="../menue/gamemenue.cpp" line="184"/>
         <source>A player has disconnected from the game! The game will now be stopped. You can save the game and reload the game to continue playing this map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="236"/>
+        <location filename="../menue/gamemenue.cpp" line="252"/>
         <source>Save Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="244"/>
+        <location filename="../menue/gamemenue.cpp" line="260"/>
         <source>Exit Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="771"/>
+        <location filename="../menue/gamemenue.cpp" line="300"/>
+        <source>Show Chat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/gamemenue.cpp" line="816"/>
         <source>Player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="771"/>
+        <location filename="../menue/gamemenue.cpp" line="816"/>
         <source>Produced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="771"/>
+        <location filename="../menue/gamemenue.cpp" line="816"/>
         <source>Lost</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="771"/>
+        <location filename="../menue/gamemenue.cpp" line="816"/>
         <source>Killed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="771"/>
+        <location filename="../menue/gamemenue.cpp" line="816"/>
         <source>Income</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="771"/>
+        <location filename="../menue/gamemenue.cpp" line="816"/>
         <source>Funds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="771"/>
+        <location filename="../menue/gamemenue.cpp" line="816"/>
         <source>Bases</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="787"/>
+        <location filename="../menue/gamemenue.cpp" line="832"/>
         <source>Player </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="796"/>
+        <location filename="../menue/gamemenue.cpp" line="841"/>
         <source>Neutral</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1074"/>
+        <location filename="../menue/gamemenue.cpp" line="1119"/>
         <source>Do you want to exit the current game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/gamemenue.cpp" line="1089"/>
+        <location filename="../menue/gamemenue.cpp" line="1134"/>
         <source>Do you want to surrender the current game?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6324,7 +6329,7 @@ Units gain additional 10% firepower.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_alexis.js" line="330"/>
-        <source>Units adjacent to own properties restore one HP of health at the beginning of each turn, but get repaired oone HP less on the building.</source>
+        <source>Units adjacent to own properties restore one HP of health at the beginning of each turn, but get repaired one HP less on the building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12209,7 +12214,7 @@ Units have 20% increased firepower.</source>
     </message>
     <message>
         <location filename="../resources/scripts/cos/co_random.js" line="28"/>
-        <source>Selects a random CO from all avaiable CO&apos;s.</source>
+        <source>Selects a random CO from all available CO&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

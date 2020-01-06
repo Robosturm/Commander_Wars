@@ -165,4 +165,25 @@ var UNIT =
     {
         return GameEnums.UnitType_Ground;
     },
+
+    // unit boosts
+    postBattleActions : function(unit, damage, otherUnit, gotAttacked)
+    {
+        // unit the unit getting postBattleAction applied
+        // damage taken (if gotAttacked = true) or dealt (if gotAttacked = false)
+        // otherUnit the other unit involved in the battle
+        // gotAttacked if true we're defending else we're attacking
+        // this function gets called twice for a unit for one attack.
+    },
+    postAction : function(unit)
+    {
+    },
+    getBonusOffensive : function(attacker, atkX, atkY, defender, defX, defY, isDefender)
+    {
+        return 0;
+    },
+    getBonusDefensive : function(defender, defX, defY, attacker, atkX, atkY, isDefender)
+    {
+        return 0;
+    },
 };
