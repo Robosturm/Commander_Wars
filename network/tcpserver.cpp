@@ -51,7 +51,9 @@ void TCPServer::disconnectTCP()
             pTCPSockets[0]->close();
             Console::print(tr("Client disconnected."), Console::eDEBUG);
         }
+        pRXTasks[0]->close();
         pRXTasks.removeAt(0);
+        pTXTasks[0]->close();
         pTXTasks.removeAt(0);
         pTCPSockets.removeAt(0);
     }

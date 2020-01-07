@@ -4222,13 +4222,13 @@
     </message>
     <message>
         <location filename="../network/tcpserver.cpp" line="52"/>
-        <location filename="../network/tcpserver.cpp" line="82"/>
-        <location filename="../network/tcpserver.cpp" line="107"/>
+        <location filename="../network/tcpserver.cpp" line="84"/>
+        <location filename="../network/tcpserver.cpp" line="109"/>
         <source>Client disconnected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../network/tcpserver.cpp" line="147"/>
+        <location filename="../network/tcpserver.cpp" line="149"/>
         <source>New Client connection.</source>
         <translation type="unfinished"></translation>
     </message>

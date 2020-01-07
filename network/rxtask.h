@@ -20,6 +20,14 @@ class RxTask : public QObject, public oxygine::ref_counter
 public:
     RxTask(std::shared_ptr<QTcpSocket> pSocket, quint64 socketID, NetworkInterface* CommIF);
     virtual ~RxTask();
+    /**
+     * @brief close
+     */
+    inline void close()
+    {
+        disconnect();
+        m_pSocket = nullptr;
+    }
 public slots:
     void recieveData();
 private:

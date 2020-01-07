@@ -4,6 +4,8 @@
 
 #include <atomic>
 
+#include <qobject.h>
+
 namespace oxygine
 {
     /** RefCounter **/
@@ -32,7 +34,15 @@ namespace oxygine
             Q_ASSERT(_ref_counter >= 0);
             if (_ref_counter == 0)
             {
-                delete this;
+                QObject* pObj = dynamic_cast<QObject*>(this);
+                if (pObj == nullptr)
+                {
+                    delete this;
+                }
+                else
+                {
+                    pObj->deleteLater();
+                }
             }
         }
 

@@ -15,7 +15,6 @@ public:
     TCPClient();
     virtual ~TCPClient();
 
-
 public slots:
     virtual void connectTCP(QString adress, quint16 port) override;
     virtual void disconnectTCP() override;
@@ -28,6 +27,8 @@ public slots:
     {
         return pSocket.get();
     }
+
+
 private:
     spRxTask pRXTask;
     spTxTask pTXTask;

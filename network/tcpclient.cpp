@@ -50,9 +50,9 @@ void TCPClient::disconnectTCP()
 {
     if (pSocket != nullptr)
     {
-        pRXTask->disconnect();
+        pRXTask->close();
         pRXTask = nullptr;
-        pTXTask->disconnect();
+        pTXTask->close();
         pTXTask = nullptr;
         pSocket->disconnect();
         pSocket->close();
