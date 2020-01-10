@@ -166,7 +166,7 @@ var Constructor = function()
         return ACTION_FIRE.calcBattleDamage3(attacker, 0, atkPos.x, atkPos.y, null, x, y, 0, luckMode);
     };
 
-    this.calcBattleDamage3 = function(attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckMode)
+    this.calcBattleDamage3 = function(attacker, attackerTakenDamage, atkPosX, atkPosY, defender, x, y, defenderTakenDamage, luckMode, ignoreOutOfVisionRange = false)
     {
         var result = Qt.rect(-1, -1, -1, -1);
         if (map.onMap(x, y))
@@ -185,7 +185,7 @@ var Constructor = function()
             var dmg2 = -1;
             if (defUnit !== null)
             {
-                if (unit.isAttackable(defUnit))
+                if (unit.isAttackable(defUnit, ignoreOutOfVisionRange))
                 {
                     if (unit.hasAmmo1() && unit.getWeapon1ID() !== "")
                     {

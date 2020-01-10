@@ -537,7 +537,8 @@ QRectF CoreAI::calcUnitDamage(GameAction* pAction, QPoint target)
 }
 
 QRectF CoreAI::calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage, QPoint atkPos,
-                                     Unit* pDefender, float defenderTakenDamage, QPoint defPos)
+                                     Unit* pDefender, float defenderTakenDamage, QPoint defPos,
+                                     bool ignoreOutOfVisionRange)
 {
     Mainapp* pApp = Mainapp::getInstance();
     QString function1 = "calcBattleDamage3";
@@ -553,6 +554,7 @@ QRectF CoreAI::calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage,
     args1 << defPos.y();
     args1 << defenderTakenDamage;
     args1 << static_cast<qint32>(GameEnums::LuckDamageMode_Average);
+    args1 << ignoreOutOfVisionRange;
     QJSValue erg = pApp->getInterpreter()->doFunction(ACTION_FIRE, function1, args1);
     return erg.toVariant().toRectF();
 }

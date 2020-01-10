@@ -186,7 +186,8 @@ public slots:
      * @return
      */
     QRectF calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage, QPoint atkPos,
-                                 Unit* pDefender, float defenderTakenDamage, QPoint defPos);
+                                 Unit* pDefender, float defenderTakenDamage, QPoint defPos,
+                                 bool ignoreOutOfVisionRange = false);
     /**
      * @brief getBestTarget
      * @param pUnit

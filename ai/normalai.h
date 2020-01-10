@@ -176,7 +176,8 @@ protected:
      */
     float calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoint newPosition,
                                  Unit* pEnemyUnit, float enemyTakenDamage,
-                                 QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings);
+                                 QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings,
+                                 bool ignoreOutOfVisionRange = false);
     /**
      * @brief calculateCounteBuildingDamage
      * @param pUnit

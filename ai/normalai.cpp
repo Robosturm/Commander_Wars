@@ -333,13 +333,24 @@ bool NormalAi::captureBuildings(QmlVectorUnit* pUnits)
                         if (!skipUnit)
                         {
                             targetIndex = 0;
+                            qint32 prio = -1;
                             // priorities production buildings over over captures
                             for (qint32 i2 = 0; i2 < captures.size(); i2++)
                             {
-                                if (pMap->getTerrain(static_cast<qint32>(captures[i2].x()), static_cast<qint32>(captures[i2].y()))->getBuilding()->getActionList().contains(ACTION_BUILD_UNITS))
+                                Building* pBuilding = pMap->getTerrain(static_cast<qint32>(captures[i2].x()), static_cast<qint32>(captures[i2].y()))->getBuilding();
+                                qint32 testPrio = std::numeric_limits<qint32>::min();
+                                if (pBuilding->getBuildingID() == "HQ")
+                                {
+                                    testPrio = std::numeric_limits<qint32>::max();
+                                }
+                                else if (pBuilding->getActionList().contains(ACTION_BUILD_UNITS))
+                                {
+                                     testPrio = pBuilding->getConstructionList().size();
+                                }
+                                if (testPrio > prio)
                                 {
                                     targetIndex = i2;
-                                    break;
+                                    prio = testPrio;
                                 }
                             }
                             perform = true;
@@ -829,8 +840,12 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
                     pAction->setActionID(ACTION_UNSTEALTH);
                     if (pAction->canBePerformed())
                     {
-                        emit performAction(pAction);
-                        return true;
+                        float counterDamage = calculateCounterDamage(pUnit, pUnits, pAction->getActionTarget(), nullptr, 0, pBuildings, pEnemyBuildings, true);
+                        if (counterDamage <= 0)
+                        {
+                            emit performAction(pAction);
+                            return true;
+                        }
                     }
                 }
                 if (actions.contains(ACTION_PLACE_WATERMINE))
@@ -1089,7 +1104,8 @@ float NormalAi::calculateCaptureBonus(Unit* pUnit, float newLife)
 
 float NormalAi::calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoint newPosition,
                                        Unit* pEnemyUnit, float enemyTakenDamage,
-                                       QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
+                                       QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings,
+                                       bool ignoreOutOfVisionRange)
 {
     GameMap* pMap = GameMap::getInstance();
     float counterDamage = 0;
@@ -1122,7 +1138,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoin
                 QVector<QPoint> targets = m_EnemyPfs[i]->getAllNodePoints();
                 if (distance >= minFireRange && distance <= maxFireRange)
                 {
-                    damageData = CoreAI::calcVirtuelUnitDamage(pNextEnemy.get(), enemyDamage, enemyPos, pUnit, 0, newPosition);
+                    damageData = CoreAI::calcVirtuelUnitDamage(pNextEnemy.get(), enemyDamage, enemyPos, pUnit, 0, newPosition, ignoreOutOfVisionRange);
                     for (qint32 i3 = 0; i3 < pUnits->size(); i3++)
                     {
                         distance = Mainapp::getDistance(QPoint(pUnits->at(i3)->getX(), pUnits->at(i3)->getY()), enemyPos);
@@ -1143,7 +1159,7 @@ float NormalAi::calculateCounterDamage(Unit* pUnit, QmlVectorUnit* pUnits, QPoin
                             (pMap->getTerrain(targets[i2].x(), targets[i2].y())->getUnit() == nullptr ||
                              (targets[i2].x() == pNextEnemy->getX() && targets[i2].y() == pNextEnemy->getY())))
                         {
-                            damageData = CoreAI::calcVirtuelUnitDamage(pNextEnemy.get(), enemyDamage, targets[i2], pUnit, 0, newPosition);
+                            damageData = CoreAI::calcVirtuelUnitDamage(pNextEnemy.get(), enemyDamage, targets[i2], pUnit, 0, newPosition, ignoreOutOfVisionRange);
                             break;
                         }
                     }
