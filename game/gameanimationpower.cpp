@@ -17,6 +17,17 @@
 #include "game/player.h"
 #include "game/co.h"
 
+GameAnimationPower* GameAnimationPower::m_pGameAnimationPower = nullptr;
+
+GameAnimationPower* GameAnimationPower::createGameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, QString coid)
+{
+    if (m_pGameAnimationPower == nullptr)
+    {
+        m_pGameAnimationPower = new GameAnimationPower(frameTime, color, powerMode, coid);
+    }
+    return m_pGameAnimationPower;
+}
+
 GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnums::PowerMode powerMode, QString coid)
     : GameAnimation (frameTime)
 {
@@ -180,6 +191,11 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
         }
     });
     connect(this, &GameAnimationPower::sigRightClick, this, &GameAnimationPower::rightClick, Qt::QueuedConnection);
+}
+
+GameAnimationPower::~GameAnimationPower()
+{
+    m_pGameAnimationPower = nullptr;
 }
 
 void GameAnimationPower::rightClick()

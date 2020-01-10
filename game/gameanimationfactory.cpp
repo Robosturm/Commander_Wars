@@ -95,7 +95,7 @@ GameAnimationWalk* GameAnimationFactory::createWalkingAnimation(Unit* pUnit, Gam
 
 GameAnimationPower* GameAnimationFactory::createAnimationPower(QColor color, GameEnums::PowerMode powerMode, QString coid, quint32 frameTime)
 {
-    GameAnimationPower* pAnim = new GameAnimationPower(frameTime, color, powerMode, coid);
+    GameAnimationPower* pAnim = GameAnimationPower::createGameAnimationPower(frameTime, color, powerMode, coid);
     pAnim->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     GameMenue::getInstance()->addChild(pAnim);
     m_Animations.append(pAnim);
