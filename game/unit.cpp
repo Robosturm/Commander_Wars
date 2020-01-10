@@ -1355,6 +1355,10 @@ qint32 Unit::getBaseMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY)
 qint32 Unit::getMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY)
 {
     qint32 baseCosts = getBaseMovementCosts(x, y, curX, curY);
+    if (baseCosts == 0)
+    {
+        return baseCosts;
+    }
     qint32 costs = baseCosts;
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
