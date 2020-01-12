@@ -149,20 +149,28 @@ void GameAnimationWalk::loadSprite(QString spriteID, bool addPlayerColor, float 
                 queueAnimating->add(tween);
                 if (i == 0)
                 {
-                    queueMoving->addDoneCallback([=](oxygine::Event *)->void
+                    if(!finishQueued)
                     {
-                        emit sigFinished();
-                    });
+                        finishQueued = true;
+                        queueMoving->addDoneCallback([=](oxygine::Event *)->void
+                        {
+                            emit sigFinished();
+                        });
+                    }
                 }
             }
         }
         //
         if (m_movePath.size() <= 1)
         {
-            queueMoving->addDoneCallback([=](oxygine::Event *)->void
+            if(!finishQueued)
             {
-                emit sigFinished();
-            });
+                finishQueued = true;
+                queueMoving->addDoneCallback([=](oxygine::Event *)->void
+                {
+                    emit sigFinished();
+                });
+            }
         }
         pSprite->addTween(queueMoving);
         pSprite->addTween(queueAnimating);

@@ -128,37 +128,43 @@ namespace crashReporter
         // see http://theorangeduck.com/page/printing-stack-trace-mingw
 #error You need to define the stack frame layout for this architecture
 #endif
-
         QStringList frameList;
-        int         frameNumber = 0;
-
-        while (StackWalk64(image, process, thread,
-                           &stackFrame, context, nullptr,
-                           SymFunctionTableAccess64, SymGetModuleBase64, nullptr))
+        try
         {
-            QString  locationStr = _addressToLine(sProgramName, reinterpret_cast<void*>(stackFrame.AddrPC.Offset));
-            // match the mangled name and demangle if we can
-            QRegularExpressionMatch match = sSymbolMatching.match(locationStr);
-            const QString  cSymbol( match.captured( 1 ) );
-            if (!cSymbol.isNull())
+            int         frameNumber = 0;
+            while (StackWalk64(image, process, thread,
+                               &stackFrame, context, nullptr,
+                               SymFunctionTableAccess64, SymGetModuleBase64, nullptr))
             {
-                int demangleStatus = 0;
-                const char *cFunctionName = abi::__cxa_demangle( cSymbol.toLatin1().constData(), nullptr, nullptr, &demangleStatus);
-                if ( demangleStatus == 0 )
+                QString  locationStr = _addressToLine(sProgramName, reinterpret_cast<void*>(stackFrame.AddrPC.Offset));
+                // match the mangled name and demangle if we can
+                QRegularExpressionMatch match = sSymbolMatching.match(locationStr);
+                const QString  cSymbol( match.captured( 1 ) );
+                if (!cSymbol.isNull())
                 {
-                    locationStr.replace(cSymbol, cFunctionName);
+                    int demangleStatus = 0;
+                    const char *cFunctionName = abi::__cxa_demangle( cSymbol.toLatin1().constData(), nullptr, nullptr, &demangleStatus);
+                    if ( demangleStatus == 0 )
+                    {
+                        locationStr.replace(cSymbol, cFunctionName);
+                    }
+                }
+                QString line = QStringLiteral("[%1] 0x%2 %3")
+                               .arg(QString::number(frameNumber))
+                               .arg(quintptr(reinterpret_cast<void*>(stackFrame.AddrPC.Offset)), 16, 16, QChar('0'))
+                               .arg(locationStr);
+                frameList += line;
+
+                ++frameNumber;
+                // anything above isn't really helpful
+                if (frameNumber > 10)
+                {
+                    break;
                 }
             }
-            frameList += QStringLiteral("[%1] 0x%2 %3")
-                         .arg(QString::number(frameNumber))
-                         .arg(quintptr(reinterpret_cast<void*>(stackFrame.AddrPC.Offset)), 16, 16, QChar('0'))
-                         .arg(locationStr);
-            ++frameNumber;
-            // anything above isn't really helpful
-            if (frameNumber > 10)
-            {
-                break;
-            }
+        } catch (...)
+        {
+
         }
         SymCleanup(GetCurrentProcess());
         return frameList;

@@ -44,30 +44,17 @@ MapSelectionView::MapSelectionView()
     m_pMinimap->setPosition(0, 0);
     m_pMinimap->setScale(2.0f);
 
-    m_MinimapSlider = new oxygine::SlidingActor();
-
-    m_MinimapSlider->setPosition(10, 10);
-    m_MinimapSlider->setSize(pApp->getSettings()->getWidth() - width - 100 - 20,
-                             pApp->getSettings()->getHeight() / 2 - 235);
-    m_MinimapSlider->setContent(m_pMinimap);
-
-    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("panel");
-    m_pMiniMapBox = new oxygine::Box9Sprite();
-    m_pMiniMapBox->setResAnim(pAnim);
-    m_pMiniMapBox->setPosition(width + 50, 50);
-    m_pMiniMapBox->setSize(pApp->getSettings()->getWidth() - width - 100,
-                           pApp->getSettings()->getHeight() / 2 - 215);
-    m_pMiniMapBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-    m_pMiniMapBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-
-
-    m_pMiniMapBox->addChild(m_MinimapSlider);
-    addChild(m_pMiniMapBox);
+    QSize size(pApp->getSettings()->getWidth() - width - 80,
+               pApp->getSettings()->getHeight() / 2 - 135);
+    m_MinimapPanel = new Panel(true, size, size);
+    m_MinimapPanel->setPosition(width + 50, 10);
+    m_MinimapPanel->addItem(m_pMinimap);
+    addChild(m_MinimapPanel);
 
     // map info text
     m_MapInfo = new Panel(true, QSize(pApp->getSettings()->getWidth() - width - 100, pApp->getSettings()->getHeight() / 2 - 60),
                           QSize(pApp->getSettings()->getWidth() - width - 100, pApp->getSettings()->getHeight() / 2 - 60));
-    m_MapInfo->setPosition(width + 50, pApp->getSettings()->getHeight() / 2 - 140);
+    m_MapInfo->setPosition(width + 50, pApp->getSettings()->getHeight() / 2 - 100);
     this->addChild(m_MapInfo);
     oxygine::spTextField pTextfield = new oxygine::TextField();
     pTextfield->setStyle(style);
@@ -103,7 +90,7 @@ MapSelectionView::MapSelectionView()
     m_MapInfo->addItem(m_MapDescription);
 
     // building count
-    pAnim = pObjectManager->getResAnim("mapSelectionBuildingInfo");
+    oxygine::ResAnim* pAnim = pObjectManager->getResAnim("mapSelectionBuildingInfo");
     m_pBuildingBackground = new oxygine::Box9Sprite();
     m_pBuildingBackground->setResAnim(pAnim);
     m_pBuildingBackground->setSize(pApp->getSettings()->getWidth() - width - 100, 60);
@@ -153,6 +140,7 @@ void MapSelectionView::loadMap(QFileInfo info)
         (info.fileName().endsWith(".map") ||
          info.fileName().endsWith(".msav")))
     {
+        m_MinimapPanel->clearContent();
         if (m_pCurrentMap != nullptr)
         {
             m_pCurrentMap->deleteMap();
@@ -161,8 +149,8 @@ void MapSelectionView::loadMap(QFileInfo info)
         m_pCurrentMap = new GameMap(info.absoluteFilePath(), true);
         m_pCurrentMap->getGameScript()->init();
         m_pMinimap->updateMinimap(m_pCurrentMap);
-        m_MinimapSlider->setContent(m_pMinimap);
-        m_MinimapSlider->snap();
+        m_MinimapPanel->addItem(m_pMinimap);
+        m_MinimapPanel->setSize(m_pMinimap->getWidth() + 50, m_pMinimap->getHeight() + 50);
         m_MapName->setHtmlText(m_pCurrentMap->getMapName());
         m_MapAuthor->setHtmlText(m_pCurrentMap->getMapAuthor());
         m_MapDescription->setHtmlText(m_pCurrentMap->getMapDescription());
@@ -177,6 +165,7 @@ void MapSelectionView::loadMap(QFileInfo info)
     }
     else if (info.isFile() && info.fileName().endsWith(".jsm"))
     {
+        m_MinimapPanel->clearContent();
         if (m_pCurrentMap != nullptr)
         {
             m_pCurrentMap->deleteMap();

@@ -2168,17 +2168,17 @@
 <context>
     <name>MapSelectionView</name>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="75"/>
+        <location filename="../objects/mapselectionview.cpp" line="62"/>
         <source>Map Name: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="85"/>
+        <location filename="../objects/mapselectionview.cpp" line="72"/>
         <source>Map Author: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/mapselectionview.cpp" line="95"/>
+        <location filename="../objects/mapselectionview.cpp" line="82"/>
         <source>Map Description </source>
         <translation type="unfinished"></translation>
     </message>

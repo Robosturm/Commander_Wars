@@ -197,6 +197,7 @@ protected:
     virtual void update(const oxygine::UpdateState& us) override;
     quint32 m_frameTime{1};
     bool m_stopped{false};
+    bool finishQueued{false};
 private:
 
     QVector<GameAnimation*> m_QueuedAnimations;

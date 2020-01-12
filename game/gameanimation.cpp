@@ -103,11 +103,15 @@ void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, Q
         }
         this->addChild(pSprite);
         pSprite->setPosition(offsetX, offsetY);
-
-        queuedAnim->setDoneCallback([=](oxygine::Event *)->void
+        if(!finishQueued)
         {
-            emit sigFinished();
-        });
+            finishQueued = true;
+            queuedAnim->setDoneCallback([=](oxygine::Event *)->void
+            {
+                emit sigFinished();
+            });
+
+        }
     }
     else
     {
@@ -191,10 +195,14 @@ void GameAnimation::addTweenWait(qint32 duration)
 {
     oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(duration / Settings::getAnimationSpeed())), 1);
     addTween(tween1);
-    tween1->setDoneCallback([=](oxygine::Event *)->void
+    if(!finishQueued)
     {
-        emit sigFinished();
-    });
+        finishQueued = true;
+        tween1->setDoneCallback([=](oxygine::Event *)->void
+        {
+            emit sigFinished();
+        });
+    }
 }
 
 void GameAnimation::setEndOfAnimationCall(QString postActionObject, QString postActionFunction)

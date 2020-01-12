@@ -70,8 +70,7 @@ private:
     oxygine::spTextField m_MapAuthor;
     oxygine::spTextField m_MapDescription;
     spMinimap m_pMinimap;
-    oxygine::spSlidingActor m_MinimapSlider;
-    oxygine::spBox9Sprite m_pMiniMapBox;
+    spPanel m_MinimapPanel;
     QVector<oxygine::spTextField> m_BuildingCountTexts;
     oxygine::spBox9Sprite m_pBuildingBackground;
 };

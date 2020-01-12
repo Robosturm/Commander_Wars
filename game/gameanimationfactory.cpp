@@ -230,11 +230,11 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation)
             break;
         }
     }
-    pApp->continueThread();
     if (m_Animations.size() == 0)
     {
         emit GameAnimationFactory::getInstance()->animationsFinished();
     }
+    pApp->continueThread();
 }
 
 void GameAnimationFactory::clearAllAnimations()
