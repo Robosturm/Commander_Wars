@@ -150,7 +150,8 @@ void MapSelectionView::loadMap(QFileInfo info)
         m_pCurrentMap->getGameScript()->init();
         m_pMinimap->updateMinimap(m_pCurrentMap);
         m_MinimapPanel->addItem(m_pMinimap);
-        m_MinimapPanel->setSize(m_pMinimap->getWidth() + 50, m_pMinimap->getHeight() + 50);
+        m_MinimapPanel->setContentWidth(m_pMinimap->getScaledWidth() + 50);
+        m_MinimapPanel->setContentHeigth(m_pMinimap->getScaledHeight() + 50);
         m_MapName->setHtmlText(m_pCurrentMap->getMapName());
         m_MapAuthor->setHtmlText(m_pCurrentMap->getMapAuthor());
         m_MapDescription->setHtmlText(m_pCurrentMap->getMapDescription());
