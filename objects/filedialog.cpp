@@ -6,7 +6,8 @@
 
 #include "QDir"
 
-FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString startFile)
+FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString startFile, bool preview)
+    : m_preview(preview)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -141,6 +142,16 @@ void FileDialog::filterChanged(qint32)
     showFolder(m_CurrentFolder->getCurrentText());
 }
 
+bool FileDialog::getPreview() const
+{
+    return m_preview;
+}
+
+void FileDialog::setPreview(bool preview)
+{
+    m_preview = preview;
+}
+
 void FileDialog::showFolder(QString folder)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -153,6 +164,9 @@ void FileDialog::showFolder(QString folder)
 
     folder = folder.replace("\\", "/");
     m_Items.clear();
+    m_ResAnims.clear();
+    m_UpdateList.clear();
+
     QDir dir(folder);
     if (!dir.exists())
     {
@@ -230,6 +244,11 @@ void FileDialog::showFolder(QString folder)
             {
                 m_CurrentFile->setCurrentText(file);
             });
+            if (m_preview)
+            {
+                m_UpdateList.append(std::tuple<oxygine::spSprite, QString>(pBox, infoList[i].filePath()));
+                textField->setX(53);
+            }
         }
         else
         {
@@ -242,3 +261,22 @@ void FileDialog::showFolder(QString folder)
     m_CurrentFolder->setCurrentText(folder);
     pApp->continueThread();
 }
+
+void FileDialog::update(const oxygine::UpdateState& us)
+{
+    for (qint32 i = 0; i < m_UpdateList.size(); i++)
+    {
+        oxygine::SingleResAnim* pAnim = new oxygine::SingleResAnim();
+        pAnim->init(std::get<1>(m_UpdateList[i]), 1, 1, 1.0f);
+        m_ResAnims.append(pAnim);
+        oxygine::spSprite pSprite = new oxygine::Sprite();
+        pSprite->setResAnim(pAnim);
+        pSprite->setScaleX(30.0f / pAnim->getWidth());
+        pSprite->setScaleY(30.0f / pAnim->getHeight());
+        pSprite->setPosition(8, 5);
+        std::get<0>(m_UpdateList[i])->addChild(pSprite);
+    }
+    m_UpdateList.clear();
+    oxygine::Actor::update(us);
+}
+

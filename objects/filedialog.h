@@ -25,9 +25,13 @@ public:
      * @param startFolder initial folder of the file dialog
      * @param wildcards wildcard items will be split at ;
      */
-    explicit FileDialog(QString startFolder, QVector<QString> wildcards, QString startFile = "");
+    explicit FileDialog(QString startFolder, QVector<QString> wildcards, QString startFile = "", bool preview = false);
     virtual ~FileDialog();
 
+    bool getPreview() const;
+    void setPreview(bool preview);
+
+    virtual void update(const oxygine::UpdateState& us);
 signals:
     void sigFileSelected(QString file);
     void sigCancel();
@@ -46,6 +50,9 @@ private:
      * @brief m_Items items directories or folders
      */
     QVector<oxygine::spBox9Sprite> m_Items;
+    bool m_preview{false};
+    QVector<oxygine::spResAnim> m_ResAnims;
+    QVector<std::tuple<oxygine::spSprite, QString>> m_UpdateList;
 };
 
 #endif // FILEDIALOG_H

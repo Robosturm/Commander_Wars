@@ -1630,12 +1630,12 @@
 <context>
     <name>FileDialog</name>
     <message>
-        <location filename="../objects/filedialog.cpp" line="41"/>
+        <location filename="../objects/filedialog.cpp" line="42"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/filedialog.cpp" line="79"/>
+        <location filename="../objects/filedialog.cpp" line="80"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
