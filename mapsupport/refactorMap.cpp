@@ -121,12 +121,12 @@ void GameMap::flipX()
     qint32 currentWidth = getMapWidth();
     for (qint32 y = 0; y < currentHeigth; y++)
     {
-        for (qint32 x = currentWidth; x < currentWidth * 2; x++)
+        for (qint32 x = currentWidth / 2; x < currentWidth; x++)
         {
-            spTerrain flipTerrain = fields.at(y)->at(currentWidth * 2 - x - 1);
+            spTerrain flipTerrain = fields.at(y)->at(currentWidth - x - 1);
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
-            fields[y]->append(pTerrain);
+            fields[y]->replace(x, pTerrain);
             pTerrain->setPosition(x * Imagesize, y * Imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
 
@@ -156,12 +156,12 @@ void GameMap::rotateX()
     qint32 currentWidth = getMapWidth();
     for (qint32 y = 0; y < currentHeigth; y++)
     {
-        for (qint32 x = currentWidth; x < currentWidth * 2; x++)
+        for (qint32 x = currentWidth / 2; x < currentWidth; x++)
         {
-            spTerrain flipTerrain = fields.at(currentHeigth - y - 1)->at(currentWidth * 2 - x - 1);
+            spTerrain flipTerrain = fields.at(currentHeigth - y - 1)->at(currentWidth - x - 1);
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
-            fields[y]->append(pTerrain);
+            fields[y]->replace(x, pTerrain);
             pTerrain->setPosition(x * Imagesize, y * Imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
 
@@ -189,15 +189,14 @@ void GameMap::flipY()
 {
     qint32 currentHeigth = getMapHeight();
     qint32 currentWidth = getMapWidth();
-    for (qint32 y = currentHeigth; y < currentHeigth * 2; y++)
+    for (qint32 y = currentHeigth / 2; y < currentHeigth; y++)
     {
-        fields.append(new QVector<spTerrain>());
         for (qint32 x = 0; x < currentWidth; x++)
         {
-            spTerrain flipTerrain = fields.at(currentHeigth * 2 - y - 1)->at(x);
+            spTerrain flipTerrain = fields.at(currentHeigth - y - 1)->at(x);
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
-            fields[y]->append(pTerrain);
+            fields[y]->replace(x, pTerrain);
             pTerrain->setPosition(x * Imagesize, y * Imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
 
@@ -225,15 +224,14 @@ void GameMap::rotateY()
 {
     qint32 currentHeigth = getMapHeight();
     qint32 currentWidth = getMapWidth();
-    for (qint32 y = currentHeigth; y < currentHeigth * 2; y++)
+    for (qint32 y = currentHeigth / 2; y < currentHeigth; y++)
     {
-        fields.append(new QVector<spTerrain>());
         for (qint32 x = 0; x < currentWidth; x++)
         {
-            spTerrain flipTerrain = fields.at(currentHeigth * 2 - y - 1)->at(currentWidth - x - 1);
+            spTerrain flipTerrain = fields.at(currentHeigth - y - 1)->at(currentWidth - x - 1);
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
-            fields[y]->append(pTerrain);
+            fields[y]->replace(x, pTerrain);
             pTerrain->setPosition(x * Imagesize, y * Imagesize);
             pTerrain->setPriority(static_cast<qint32>(Mainapp::ZOrder::Terrain) + y);
 
