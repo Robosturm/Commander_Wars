@@ -55,23 +55,29 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
     {
         QString resAnim = pCO->getCoID().toLower() + "+nrm";
         oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(resAnim);
-        m_CO->setResAnim(pAnim);
-        m_CO->setScale((pApp->getSettings()->getHeight() - 300) / pAnim->getHeight());
-        m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
-        m_CO->setPosition(pApp->getSettings()->getWidth() - m_CO->getScaledWidth() - 20, pApp->getSettings()->getHeight() / 2 -  m_CO->getScaledHeight() / 2);
-        addChild(m_CO);
+        if (pAnim != nullptr)
+        {
+            m_CO->setResAnim(pAnim);
+            m_CO->setScale((pApp->getSettings()->getHeight() - 300) / pAnim->getHeight());
+            m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
+            m_CO->setPosition(pApp->getSettings()->getWidth() - m_CO->getScaledWidth() - 20, pApp->getSettings()->getHeight() / 2 -  m_CO->getScaledHeight() / 2);
+            addChild(m_CO);
+        }
     }
     pCO = pPlayer->getCO(1);
     if (pCO != nullptr)
     {
         QString resAnim = pCO->getCoID().toLower() + "+nrm";
         oxygine::ResAnim* pAnim = COSpriteManager::getInstance()->getResAnim(resAnim);
-        m_CO = new oxygine::Sprite();
-        m_CO->setResAnim(pAnim);
-        m_CO->setScale((pApp->getSettings()->getHeight() - 300) / pAnim->getHeight());
-        m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
-        m_CO->setPosition(20, pApp->getSettings()->getHeight() / 2 -  m_CO->getScaledHeight() / 2);
-        addChild(m_CO);
+        if (pAnim != nullptr)
+        {
+            m_CO = new oxygine::Sprite();
+            m_CO->setResAnim(pAnim);
+            m_CO->setScale((pApp->getSettings()->getHeight() - 300) / pAnim->getHeight());
+            m_CO->setSize(pAnim->getWidth(), pAnim->getHeight());
+            m_CO->setPosition(20, pApp->getSettings()->getHeight() / 2 -  m_CO->getScaledHeight() / 2);
+            addChild(m_CO);
+        }
     }
 
     oxygine::ResFont* font = FontManager::getMainFont();

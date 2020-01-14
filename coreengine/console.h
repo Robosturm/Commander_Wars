@@ -82,6 +82,15 @@ public slots:
      * @brief toggleView
      */
     void toggleView();
+    /**
+     * @brief getConsoleLog
+     * @return
+     */
+    QList<QString> getConsoleLog()
+    {
+        QMutexLocker locker(&datalocker);
+        return lastmsgs;
+    }
 private:
     static eLogLevels LogLevel;
     static QString curmsg;

@@ -8,6 +8,8 @@
 #include <QTextStream>
 #include <QStandardPaths>
 
+#include <coreengine/console.h>
+
 #ifdef Q_OS_WIN
 #include <windows.h>
 #include <cxxabi.h>
@@ -85,6 +87,13 @@ namespace crashReporter
                 stream << data << endl;
                 ret += data + "\n";
             }
+            QList<QString> consoleOutput = Console::getInstance()->getConsoleLog();
+            for ( const QString &data : consoleOutput)
+            {
+                stream << data << endl;
+                ret += data + "\n";
+            }
+
             file.close();
         }
 
