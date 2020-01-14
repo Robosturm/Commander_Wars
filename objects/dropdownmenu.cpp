@@ -88,10 +88,7 @@ DropDownmenu::DropDownmenu(qint32 width, QVector<QString> items, bool up)
     });
     this->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
-        if (m_Panel->getVisible())
-        {
-            this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-        }
+        this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
         this->m_Panel->setVisible(false);
     });
     for (qint32 i = 0; i < m_ItemTexts.size(); i++)

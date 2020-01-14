@@ -1418,8 +1418,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="66"/>
+        <source>Saves a map to a give file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="67"/>
         <source>Load Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="67"/>
+        <source>Loads a map to a give file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1428,8 +1438,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="68"/>
+        <source>Edit and create a script for any map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="69"/>
         <source>Edit Campaign</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="69"/>
+        <source>Edit and create a campaign.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1438,13 +1458,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="70"/>
+        <source>Undo the last map modification.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="71"/>
         <source>Redo Strg+Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="71"/>
+        <source>Redo the last undo command.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="72"/>
         <source>Exit Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="72"/>
+        <source>Exits the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1458,8 +1493,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="75"/>
+        <source>Create a new map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="76"/>
         <source>Edit Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="76"/>
+        <source>Edit the information for a map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1468,8 +1513,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="77"/>
+        <source>Flips the map at the x-axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="78"/>
         <source>Flip Map Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="78"/>
+        <source>Flips the map at the y-axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1478,13 +1533,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="79"/>
+        <source>Flips and rotates the map at the x-axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="80"/>
         <source>Rotate Map Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="80"/>
+        <source>Flips and rotates the map at the y-axis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="81"/>
         <source>Random Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="81"/>
+        <source>Creates a new random map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1498,8 +1568,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="84"/>
+        <source>Selects the editor mode placing the current tile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="85"/>
         <source>Delete Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="85"/>
+        <source>Selects the editor mode deleting units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1508,8 +1588,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="86"/>
+        <source>Selects the editor mode modifying the stats of a unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="87"/>
         <source>Edit Terrain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="87"/>
+        <source>Selects the editor mode editing the style of a terrain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1518,8 +1608,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="88"/>
+        <source>Edit the CO&apos;s and player start setup.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="89"/>
         <source>Edit Rules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="89"/>
+        <source>Selects the editor rules for the map.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1528,13 +1628,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="90"/>
+        <source>Removes all players with no units or buildings from the map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="91"/>
         <source>Copy Strg+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="91"/>
+        <source>Enters the copy mode. Hold the left mouse key and mark the fields you want to copy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="92"/>
         <source>Paste Strg+V</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="92"/>
+        <source>Paste the current selected area. Based on the current placing mode. The copy and paste selection are not allowed to intersec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1548,8 +1663,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="95"/>
+        <source>Deletes the current map and imports an old Commander Wars Map from a file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="96"/>
         <source>Import AWDS Aws</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="96"/>
+        <source>Deletes the current map and imports an AWS Map Editor from a file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1558,13 +1683,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="97"/>
+        <source>Exports the map to an AWS Map Editor file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="98"/>
         <source>Import AWDC Aw4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../menue/editormenue.cpp" line="98"/>
+        <source>Deletes the current map and imports an AW DoR/DC Map Editor from a file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../menue/editormenue.cpp" line="99"/>
         <source>Import AW by Web</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../menue/editormenue.cpp" line="99"/>
+        <source>Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

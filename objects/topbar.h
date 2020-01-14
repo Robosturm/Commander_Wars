@@ -20,7 +20,7 @@ public:
      * @param itemID the depending id used for event handling
      * @param group the used group item number
      */
-    void addItem(QString text, QString itemID, qint32 group);
+    void addItem(QString text, QString itemID, qint32 group, QString tooltip);
     /**
      * @brief addGroup adds a group to the topbar
      * @param text

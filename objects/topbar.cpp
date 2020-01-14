@@ -3,6 +3,8 @@
 #include "resource_management/objectmanager.h"
 #include "resource_management/fontmanager.h"
 
+#include "objects/tooltip.h"
+
 Topbar::Topbar(qint32 x, qint32 width)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -43,13 +45,17 @@ void Topbar::hide()
     }
 }
 
-void Topbar::addItem(QString text, QString itemID, qint32 group)
+void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
 
     ObjectManager* pObjectManager = ObjectManager::getInstance();
     oxygine::ResAnim* pAnim = pObjectManager->getResAnim("topbar+dropdown");
+
+    spTooltip pTooltip = new Tooltip();
+    pTooltip->setTooltipText(tooltip);
+    pTooltip->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     oxygine::spBox9Sprite pBox = new oxygine::Box9Sprite();
     pBox->setVerticalMode(oxygine::Box9Sprite::TILING);
     pBox->setHorizontalMode(oxygine::Box9Sprite::TILING);
@@ -69,7 +75,7 @@ void Topbar::addItem(QString text, QString itemID, qint32 group)
     m_Items.at(group)->append(pBox);
     pBox->setVisible(false);
     pBox->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-    this->addChild(pBox);
+    pTooltip->addChild(pBox);
     // add some event handling :)
     pBox->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
     {
@@ -90,6 +96,7 @@ void Topbar::addItem(QString text, QString itemID, qint32 group)
         }
         emit sigItemClicked(itemID);
     });
+    addChild(pTooltip);
 
     pApp->continueThread();
 }

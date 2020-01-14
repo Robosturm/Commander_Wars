@@ -63,40 +63,40 @@ EditorMenue::EditorMenue()
     pApp->getAudioThread()->playRandom();
 
     m_Topbar->addGroup(tr("Menu"));
-    m_Topbar->addItem(tr("Save Map"), "SAVEMAP", 0);
-    m_Topbar->addItem(tr("Load Map"), "LOADMAP", 0);
-    m_Topbar->addItem(tr("Edit Script"), "EDITSCRIPT", 0);
-    m_Topbar->addItem(tr("Edit Campaign"), "EDITCAMPAIGN", 0);
-    m_Topbar->addItem(tr("Undo Strg+Z"), "UNDO", 0);
-    m_Topbar->addItem(tr("Redo Strg+Y"), "REDO", 0);
-    m_Topbar->addItem(tr("Exit Editor"), "EXIT", 0);
+    m_Topbar->addItem(tr("Save Map"), "SAVEMAP", 0, tr("Saves a map to a give file."));
+    m_Topbar->addItem(tr("Load Map"), "LOADMAP", 0, tr("Loads a map to a give file."));
+    m_Topbar->addItem(tr("Edit Script"), "EDITSCRIPT", 0, tr("Edit and create a script for any map."));
+    m_Topbar->addItem(tr("Edit Campaign"), "EDITCAMPAIGN", 0, tr("Edit and create a campaign."));
+    m_Topbar->addItem(tr("Undo Strg+Z"), "UNDO", 0, tr("Undo the last map modification."));
+    m_Topbar->addItem(tr("Redo Strg+Y"), "REDO", 0, tr("Redo the last undo command."));
+    m_Topbar->addItem(tr("Exit Editor"), "EXIT", 0, tr("Exits the editor"));
 
     m_Topbar->addGroup(tr("Map Info"));
-    m_Topbar->addItem(tr("New Map"), "NEWMAP", 1);
-    m_Topbar->addItem(tr("Edit Map"), "EDITMAP", 1);
-    m_Topbar->addItem(tr("Flip Map X"), "FLIPX", 1);
-    m_Topbar->addItem(tr("Flip Map Y"), "FLIPY", 1);
-    m_Topbar->addItem(tr("Rotate Map X"), "ROTATEX", 1);
-    m_Topbar->addItem(tr("Rotate Map Y"), "ROTATEY", 1);
-    m_Topbar->addItem(tr("Random Map"), "RANDOMMAP", 1);
+    m_Topbar->addItem(tr("New Map"), "NEWMAP", 1, tr("Create a new map"));
+    m_Topbar->addItem(tr("Edit Map"), "EDITMAP", 1, tr("Edit the information for a map"));
+    m_Topbar->addItem(tr("Flip Map X"), "FLIPX", 1, tr("Flips the map at the x-axis"));
+    m_Topbar->addItem(tr("Flip Map Y"), "FLIPY", 1, tr("Flips the map at the y-axis"));
+    m_Topbar->addItem(tr("Rotate Map X"), "ROTATEX", 1, tr("Flips and rotates the map at the x-axis"));
+    m_Topbar->addItem(tr("Rotate Map Y"), "ROTATEY", 1, tr("Flips and rotates the map at the y-axis"));
+    m_Topbar->addItem(tr("Random Map"), "RANDOMMAP", 1, tr("Creates a new random map."));
 
     m_Topbar->addGroup(tr("Editor Commands"));
-    m_Topbar->addItem(tr("Place Selection"), "PLACESELECTION", 2);
-    m_Topbar->addItem(tr("Delete Units") + " - " + SelectKey::getKeycodeText(Settings::getKey_cancel()), "DELETEUNITS", 2);
-    m_Topbar->addItem(tr("Edit Units"), "EDITUNITS", 2);
-    m_Topbar->addItem(tr("Edit Terrain"), "EDITTERRAIN", 2);
-    m_Topbar->addItem(tr("Edit Players"), "EDITPLAYERS", 2);
-    m_Topbar->addItem(tr("Edit Rules"), "EDITRULES", 2);
-    m_Topbar->addItem(tr("Optimize Players"), "OPTIMIZEPLAYERS", 2);
-    m_Topbar->addItem(tr("Copy Strg+C"), "COPY", 2);
-    m_Topbar->addItem(tr("Paste Strg+V"), "PASTE", 2);
+    m_Topbar->addItem(tr("Place Selection"), "PLACESELECTION", 2, tr("Selects the editor mode placing the current tile"));
+    m_Topbar->addItem(tr("Delete Units") + " - " + SelectKey::getKeycodeText(Settings::getKey_cancel()), "DELETEUNITS", 2, tr("Selects the editor mode deleting units"));
+    m_Topbar->addItem(tr("Edit Units"), "EDITUNITS", 2, tr("Selects the editor mode modifying the stats of a unit"));
+    m_Topbar->addItem(tr("Edit Terrain"), "EDITTERRAIN", 2, tr("Selects the editor mode editing the style of a terrain"));
+    m_Topbar->addItem(tr("Edit Players"), "EDITPLAYERS", 2, tr("Edit the CO's and player start setup."));
+    m_Topbar->addItem(tr("Edit Rules"), "EDITRULES", 2, tr("Selects the editor rules for the map."));
+    m_Topbar->addItem(tr("Optimize Players"), "OPTIMIZEPLAYERS", 2, tr("Removes all players with no units or buildings from the map"));
+    m_Topbar->addItem(tr("Copy Strg+C"), "COPY", 2, tr("Enters the copy mode. Hold the left mouse key and mark the fields you want to copy."));
+    m_Topbar->addItem(tr("Paste Strg+V"), "PASTE", 2, tr("Paste the current selected area. Based on the current placing mode. The copy and paste selection are not allowed to intersec."));
 
     m_Topbar->addGroup(tr("Import/Export"));
-    m_Topbar->addItem(tr("Import CoW Txt"), "IMPORTCOWTXT", 3);
-    m_Topbar->addItem(tr("Import AWDS Aws"), "IMPORTAWDSAWS", 3);
-    m_Topbar->addItem(tr("Export AWDS Aws"), "EXPORTAWDSAWS", 3);
-    m_Topbar->addItem(tr("Import AWDC Aw4"), "IMPORTAWDCAW4", 3);
-    m_Topbar->addItem(tr("Import AW by Web"), "IMPORTAWDBYWEB", 3);
+    m_Topbar->addItem(tr("Import CoW Txt"), "IMPORTCOWTXT", 3, tr("Deletes the current map and imports an old Commander Wars Map from a file."));
+    m_Topbar->addItem(tr("Import AWDS Aws"), "IMPORTAWDSAWS", 3, tr("Deletes the current map and imports an AWS Map Editor from a file."));
+    m_Topbar->addItem(tr("Export AWDS Aws"), "EXPORTAWDSAWS", 3, tr("Exports the map to an AWS Map Editor file"));
+    m_Topbar->addItem(tr("Import AWDC Aw4"), "IMPORTAWDCAW4", 3, tr("Deletes the current map and imports an AW DoR/DC Map Editor from a file."));
+    m_Topbar->addItem(tr("Import AW by Web"), "IMPORTAWDBYWEB", 3, tr("Deletes the current map and imports an  Advance Wars by Web Map from https://awbw.amarriner.com/"));
 
 
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::MOVE, [=](oxygine::Event *pEvent )->void
