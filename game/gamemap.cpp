@@ -150,8 +150,11 @@ void GameMap::deleteMap()
 GameMap::~GameMap()
 {
     // remove us from the interpreter again
-    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
-    pInterpreter->deleteObject(m_JavascriptName);
+    if (GameMap::getInstance() == nullptr)
+    {
+        Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+        pInterpreter->deleteObject(m_JavascriptName);
+    }
     // clean up session
     for (qint32 y = 0; y < fields.size(); y++)
     {

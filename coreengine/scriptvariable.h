@@ -121,6 +121,14 @@ public slots:
         writeList(data);
     }
     /**
+     * @brief readDataListInt
+     * @return reads a QList<int> from the action data
+     */
+    QList<int> readDataListInt32()
+    {
+        return readList<qint32>();
+    }
+    /**
      * @brief readDataListString
      * @return reads a QList<QString> from the action data
      */
@@ -130,21 +138,12 @@ public slots:
     }
     /**
      * @brief writeDataListString
-     * @param data writes a QList<qint32> to the action data
+     * @param data writes a QList<QString> to the action data
      */
     void writeDataListString(QList<QString> data)
     {
         writeList(data);
     }
-    /**
-     * @brief readDataListInt
-     * @return reads a QList<int> from the action data
-     */
-    QList<int> readDataListInt32()
-    {
-        return readList<qint32>();
-    }
-
     /**
      * @brief writeDataString adds a string to the action data
      * @param data

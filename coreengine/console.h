@@ -89,7 +89,7 @@ public slots:
     QList<QString> getConsoleLog()
     {
         QMutexLocker locker(&datalocker);
-        return lastmsgs;
+        return output;
     }
 private:
     static eLogLevels LogLevel;

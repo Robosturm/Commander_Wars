@@ -86,12 +86,17 @@ namespace crashReporter
             {
                 stream << data << endl;
                 ret += data + "\n";
+                stream.flush();
             }
+            stream.flush();
+            stream << "\nConsole log\n";
+            stream.flush();
             QList<QString> consoleOutput = Console::getInstance()->getConsoleLog();
-            for ( const QString &data : consoleOutput)
+            for (qint32 i = 0; i < consoleOutput.size(); i++)
             {
-                stream << data << endl;
-                ret += data + "\n";
+                stream << consoleOutput[i] << endl;
+                ret += consoleOutput[i] + "\n";
+                stream.flush();
             }
 
             file.close();
