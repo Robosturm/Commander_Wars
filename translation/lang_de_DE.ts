@@ -1634,7 +1634,7 @@
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="91"/>
-        <source>Copy Strg+C</source>
+        <source>Copy Ctrl+C</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1644,12 +1644,12 @@
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="92"/>
-        <source>Paste Strg+V</source>
+        <source>Paste the current selected area. Based on the current placing mode. The copy and paste selection are not allowed to intersec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="92"/>
-        <source>Paste the current selected area. Based on the current placing mode. The copy and paste selection are not allowed to intersec.</source>
+        <source>Paste Ctrl+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

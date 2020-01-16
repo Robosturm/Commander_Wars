@@ -104,6 +104,24 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
         endTimer.setInterval(1000 / Settings::getAnimationSpeed());
         connect(&endTimer, &QTimer::timeout, this, &GameAnimationNextDay::onFinished, Qt::QueuedConnection);
         endTimer.start();
+        addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
+        {
+            oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+            if (pTouchEvent != nullptr)
+            {
+                if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
+                {
+                    emit sigRightClick();
+                }
+                else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
+                {
+                    if (m_permanent)
+                    {
+                        emit sigRightClick();
+                    }
+                }
+            }
+        });
     }
     else
     {
@@ -115,25 +133,6 @@ GameAnimationNextDay::GameAnimationNextDay(Player* pPlayer, quint32 frameTime, b
             emit sigRightClick();
         });
     }
-    addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
-    {
-        oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
-        if (pTouchEvent != nullptr)
-        {
-            if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
-            {
-                emit sigRightClick();
-            }
-            else if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Left)
-            {
-                if (m_permanent)
-                {
-                    emit sigRightClick();
-                }
-            }
-        }
-    });
-
     connect(this, &GameAnimationNextDay::sigRightClick, this, &GameAnimationNextDay::rightClick, Qt::QueuedConnection);
 }
 
