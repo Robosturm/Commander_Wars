@@ -114,7 +114,7 @@ void RuleSelection::showRuleSelection()
     spDropDownmenu startWeather = new DropDownmenu(200, weatherStrings);
     startWeather->setTooltipText(tr("The weather at the start of the game."));
     startWeather->setPosition(textWidth, textField->getY());
-    startWeather->setCurrentItem(pMap->getGameRules()->getCurrentWeatherId());
+    startWeather->setCurrentItem(pMap->getGameRules()->getStartWeather());
     connect(startWeather.get(), &DropDownmenu::sigItemChanged, this, &RuleSelection::startWeatherChanged, Qt::QueuedConnection);
     addChild(startWeather);
     startWeatherChanged(0);

@@ -83,7 +83,7 @@ void ScriptConditionUnitReachedArea::readCondition(QTextStream& rStream)
     if (list.size() >= 2)
     {
         QStringList items0 = list[0].replace("if (map.isUnitInArea(Qt.rect(", "")
-                             .replace(", ", ",").replace("), ", ",").split(",");
+                             .replace(", ", ",").replace("),", ",").split(",");
         QStringList items1 = line.split("//")[1].split(" ");
         if (items0.size() >= 4)
         {

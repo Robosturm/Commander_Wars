@@ -95,6 +95,8 @@ void Chat::sendData(QString message)
 {
     if (!message.isEmpty())
     {
+
+
         QString text = Settings::getUsername() + ": " + message;
         addMessage(text);
         if (messages.size() > bufferSize)

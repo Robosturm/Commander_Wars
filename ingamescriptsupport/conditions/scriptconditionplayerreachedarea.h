@@ -37,7 +37,7 @@ public:
      */
     virtual QString getDescription() override
     {
-        return tr("Player: ") + QString::number(m_Player) + tr(" reached X:") +
+        return tr("Player: ") + QString::number(m_Player + 1) + tr(" reached X:") +
                QString::number(m_x) + " Y: " + QString::number(m_y) +
                tr(" width: ") + QString::number(m_width) + tr(" heigth: ") + QString::number(m_heigth);
     }
