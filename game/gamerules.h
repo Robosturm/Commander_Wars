@@ -61,8 +61,10 @@ public:
     {
         return &m_RoundTimer;
     }
-
-
+    /**
+     * @brief init
+     */
+    void init();
 signals:
     void signalVictory(qint32 team);
 public slots:

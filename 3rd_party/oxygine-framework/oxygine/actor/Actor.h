@@ -171,7 +171,7 @@ namespace oxygine
         void setRenderDelegate(RenderDelegate* mat);
 
         /**Show/Hide actor and children. Invisible Actor doesn't receive Touch events.*/
-        void setVisible(bool vis) {_flags &= ~flag_visible; if (vis) _flags |= flag_visible;}
+        virtual void setVisible(bool vis) {_flags &= ~flag_visible; if (vis) _flags |= flag_visible;}
         /**Enable/Disable culling this actor outside of clip area (use it in pair with ClipRectActor)*/
         void setCull(bool enable) {_flags &= ~flag_cull; if (enable) _flags |= flag_cull;}
         /**Sets transparency. if alpha is 0 actor and children are completely invisible. Invisible Actor doesn't receive Touch events.*/

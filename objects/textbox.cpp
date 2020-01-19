@@ -160,6 +160,13 @@ void Textbox::KeyInput(oxygine::KeyEvent event)
                     curmsgpos = 0;
                     break;
                 }
+                case Qt::Key_At:
+                {
+                    QString msg = "@";
+                    m_Text.insert(curmsgpos, msg);
+                    curmsgpos += msg.size();
+                    break;
+                }
                 default:
                 {
                     // nothing

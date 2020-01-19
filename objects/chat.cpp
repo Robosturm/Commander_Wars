@@ -9,6 +9,16 @@
 
 #include "coreengine/mainapp.h"
 
+#include "game/gamemap.h"
+
+#include "menue/gamemenue.h"
+
+static const QString chatPlayerTarget = "@Player";
+static const QString chatTeamTarget = "@Team";
+static const QString chatNotTeamTarget = "@!Team";
+static const QString chatAllyTarget = "@Ally";
+static const QString chatEnemyTarget = "@Enemy";
+
 Chat::Chat(spNetworkInterface pInterface, QSize size)
     : QObject(),
       m_pInterface(pInterface)
@@ -40,6 +50,8 @@ Chat::Chat(spNetworkInterface pInterface, QSize size)
     addChild(m_Send);
 
     m_ChatInput = new Textbox(size.width() - m_Send->getWidth() - 10);
+    setVisible(true);
+
     m_ChatInput->setPosition(0, size.height() - m_Send->getHeight());
     connect(m_ChatInput.get(), &Textbox::sigEnterPressed, this, &Chat::sendData, Qt::QueuedConnection);
     addChild(m_ChatInput);
@@ -48,6 +60,27 @@ Chat::Chat(spNetworkInterface pInterface, QSize size)
     if (m_pInterface.get() != nullptr)
     {
         connect(m_pInterface.get(), &NetworkInterface::recieveData, this, &Chat::dataRecieved, Qt::QueuedConnection);
+    }
+}
+
+void Chat::setVisible(bool vis)
+{
+    oxygine::Actor::setVisible(vis);
+    if (vis)
+    {
+        if (GameMenue::getInstance() != nullptr)
+        {
+            m_ChatInput->setTooltipText(tr("Message to send via chat. Start a message with one of the folling items to send ") +
+                                        tr("a message to specific targets. \n") +
+                                        chatAllyTarget.toStdString().c_str() + tr(" send message to all your allies.\n") +
+                                        chatEnemyTarget.toStdString().c_str() + tr(" send message to all your enemies.\n") +
+                                        chatTeamTarget.toStdString().c_str() + "X" + tr(" send message to the given team X.\n") +
+                                        chatPlayerTarget.toStdString().c_str() + "X" + tr(" send message to the given player X."));
+        }
+        else
+        {
+            m_ChatInput->setTooltipText(tr("Message to send via chat."));
+        }
     }
 }
 
@@ -71,22 +104,69 @@ void Chat::dataRecieved(quint64, QByteArray data, NetworkInterface::NetworkSeriv
     }
 }
 
-void Chat::addMessage(QString message)
+void Chat::addMessage(QString message, bool local)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    messages.append(message);
-    if (messages.size() > bufferSize)
+    spGameMap pMap = GameMap::getInstance();
+    bool show = true;
+    if (message.startsWith("@") && pMap.get() != nullptr)
     {
-        messages.pop_front();
+        QString target = message.split(" ")[0];
+        message = message.remove(0, message.indexOf(" "));
+        if (target.startsWith(chatTeamTarget))
+        {
+            qint32 team = target.replace(chatTeamTarget, "").toInt();
+            if (team - 1 != pMap->getCurrentViewPlayer()->getTeam())
+            {
+                show = false;
+            }
+        }
+        else if (target.startsWith(chatAllyTarget))
+        {
+            qint32 team = target.replace(chatAllyTarget, "").toInt();
+            if (team != pMap->getCurrentViewPlayer()->getTeam())
+            {
+                show = false;
+            }
+        }
+        else if (target.startsWith(chatNotTeamTarget))
+        {
+            qint32 team = target.replace(chatNotTeamTarget, "").toInt();
+            if (team == pMap->getCurrentViewPlayer()->getTeam())
+            {
+                show = false;
+            }
+        }
+        else if (target.startsWith(chatPlayerTarget))
+        {
+            qint32 player = target.replace(chatPlayerTarget, "").toInt();
+            if (player - 1 != pMap->getCurrentViewPlayer()->getPlayerID())
+            {
+                show = false;
+            }
+        }
+        message = message.remove(0, message.indexOf(" "));
     }
-    else
+    if (local)
     {
-        m_Panel->setContentHeigth(m_Chat->getTextRect().getHeight() + 40);
+        show = true;
     }
-    if (m_Chat->getTextRect().getHeight() > 100)
+    if (show)
     {
-        m_Panel->getH_Scrollbar()->changeScrollValue(1.0f);
+        messages.append(message);
+        if (messages.size() > bufferSize)
+        {
+            messages.pop_front();
+        }
+        else
+        {
+            m_Panel->setContentHeigth(m_Chat->getTextRect().getHeight() + 40);
+        }
+        if (m_Chat->getTextRect().getHeight() > 100)
+        {
+            m_Panel->getH_Scrollbar()->changeScrollValue(1.0f);
+        }
     }
     pApp->continueThread();
 }
@@ -95,10 +175,37 @@ void Chat::sendData(QString message)
 {
     if (!message.isEmpty())
     {
+        QString text;
+        spGameMap pMap = GameMap::getInstance();
+        if (message.startsWith("@") && pMap.get() != nullptr)
+        {
+            QStringList list = message.split(" ");
+            for (qint32 i = 0; i < list.size(); i++)
+            {
+                if (i == 0)
+                {
+                    if (list[i] == chatEnemyTarget)
+                    {
+                        list[i] = chatNotTeamTarget + QString::number(pMap->getCurrentViewPlayer()->getTeam());
+                    }
+                    else if (list[i] == chatAllyTarget)
+                    {
+                        list[i] = chatTeamTarget + QString::number(pMap->getCurrentViewPlayer()->getTeam());
+                    }
+                    text += list[i] + " " + Settings::getUsername() + ": ";
+                }
+                else
+                {
+                    text += list[i] + " ";
+                }
+            }
+        }
+        else
+        {
+            text = Settings::getUsername() + ": " + message;
+        }
 
-
-        QString text = Settings::getUsername() + ": " + message;
-        addMessage(text);
+        addMessage(text, true);
         if (messages.size() > bufferSize)
         {
             messages.pop_front();

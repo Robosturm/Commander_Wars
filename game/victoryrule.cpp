@@ -23,6 +23,11 @@ VictoryRule::VictoryRule(QString ruleID)
     : QObject(),
       m_RuleID(ruleID)
 {
+    init();
+}
+
+void VictoryRule::init()
+{
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);

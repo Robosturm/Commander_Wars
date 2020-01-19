@@ -20,6 +20,11 @@ public:
     explicit Chat(spNetworkInterface pInterface, QSize size);
 
     virtual void update(const oxygine::UpdateState& us) override;
+    /**
+     * @brief setVisible
+     * @param vis
+     */
+    virtual void setVisible(bool vis);
 signals:
     void sigSendText(QString message);
 public slots:
@@ -33,7 +38,7 @@ private:
     spTextbox m_ChatInput;
     oxygine::spButton m_Send;
 
-    void addMessage(QString message);
+    void addMessage(QString message, bool local = false);
 
     static const qint32 bufferSize = 500;
 };

@@ -109,6 +109,14 @@ void GameRules::removeVictoryRule(QString rule)
     }
 }
 
+void GameRules::init()
+{
+    for (qint32 i = 0; i < m_VictoryRules.size(); i++)
+    {
+        m_VictoryRules[i]->init();
+    }
+}
+
 void GameRules::checkVictory()
 {
     Mainapp* pApp = Mainapp::getInstance();

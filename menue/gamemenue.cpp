@@ -300,8 +300,9 @@ void GameMenue::loadGameMenue()
         m_ChatButton = pObjectManager->createButton(tr("Show Chat"), 130);
         m_ChatButton->setPosition(8, 4);
         m_ChatButton->addClickListener([=](oxygine::Event*)
-        {
+        {            
             m_pChat->setVisible(!m_pChat->getVisible());
+            setFocused(!m_pChat->getVisible());
             m_ChatButton->removeTweens();
             m_ChatButton->setAddColor(0, 0, 0, 0);
         });
@@ -1001,6 +1002,7 @@ void GameMenue::startGame()
         pMap->startGame();
         pMap->setCurrentPlayer(GameMap::getInstance()->getPlayerCount() - 1);
         GameRules* pRules = pMap->getGameRules();
+        pRules->init();
         pMap->nextTurn();
         pRules->changeWeather(pRules->getWeather(pRules->getStartWeather())->getWeatherId(), pMap->getPlayerCount());
         updatePlayerinfo();
@@ -1017,6 +1019,7 @@ void GameMenue::startGame()
     }
     pApp->continueThread();
 }
+
 
 void GameMenue::keyInput(oxygine::KeyEvent event)
 {

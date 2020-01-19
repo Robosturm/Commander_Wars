@@ -43,7 +43,10 @@ public:
     {
         return 1;
     }
-
+    /**
+     * @brief init
+     */
+    void init();
 public slots:    
     void setRuleValue(qint32 value, qint32 itemNumber);
     qint32 getInfiniteValue(qint32 itemNumber = 0);
