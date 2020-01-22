@@ -5,6 +5,7 @@
 
 class ScriptEventAnimation : public ScriptEvent
 {
+    Q_OBJECT
 public:
     ScriptEventAnimation();
     /**

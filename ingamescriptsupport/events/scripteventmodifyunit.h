@@ -5,6 +5,7 @@
 
 class ScriptEventModifyUnit  : public ScriptEvent
 {
+    Q_OBJECT
 public:
     ScriptEventModifyUnit();
     /**

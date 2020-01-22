@@ -37,9 +37,9 @@ public:
         addFunds,
         changeWeather,
         changeCOBar,
+        modifyTerrain,
         modifyUnit,
         animation,
-        modifyTerrain
     };
 
     static spScriptEvent createEvent(EventType type);

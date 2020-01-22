@@ -3929,54 +3929,54 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="91"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="92"/>
         <source>The new event that should happen once the conditions are met.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="95"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="96"/>
         <source>Add Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="108"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="109"/>
         <source>Immediate Start: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="112"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="113"/>
         <source>If checked the game starts without beeing able to change rules, players or co&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="119"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="120"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="128"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="129"/>
         <source>Save Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="135"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="136"/>
         <source>Load Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="276"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="357"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="277"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="358"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="283"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="364"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="284"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="365"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="291"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="292"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4103,6 +4103,39 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventdefeatplayer.cpp" line="60"/>
         <source>The player that gets defeated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventModifyTerrain</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyterrain.cpp" line="57"/>
+        <source>X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyterrain.cpp" line="61"/>
+        <source>X Location at which the terrain gets modified.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyterrain.cpp" line="69"/>
+        <source>Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyterrain.cpp" line="73"/>
+        <source>Y Location at which the terrain gets modified.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyterrain.cpp" line="81"/>
+        <source>Terrain: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyterrain.cpp" line="103"/>
+        <source>New Terrain which gets spawned. Note: all units on the terrain get deleted.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4902,7 +4935,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>Terrain</name>
     <message>
-        <location filename="../game/terrain.cpp" line="57"/>
+        <location filename="../game/terrain.cpp" line="58"/>
         <source>Unable to load Terrain </source>
         <translation type="unfinished"></translation>
     </message>

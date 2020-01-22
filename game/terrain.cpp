@@ -21,6 +21,7 @@
 spTerrain Terrain::createTerrain(QString terrainID, qint32 x, qint32 y, QString  currentTerrainID)
 {
     spTerrain pTerrain = new Terrain(terrainID, x, y);
+    pTerrain->setSize(GameMap::Imagesize, GameMap::Imagesize);
     if (terrainID != "")
     {
         pTerrain->createBaseTerrain(currentTerrainID);

@@ -86,7 +86,8 @@ ScriptEditor::ScriptEditor()
              tr(ScriptEvent::EventChangeBuildlist.toStdString().c_str()),
              tr(ScriptEvent::EventAddFunds.toStdString().c_str()),
              tr(ScriptEvent::EventChangeWeather.toStdString().c_str()),
-             tr(ScriptEvent::EventChangeCOBar.toStdString().c_str())};
+             tr(ScriptEvent::EventChangeCOBar.toStdString().c_str()),
+             tr(ScriptEvent::EventModifyTerrain.toStdString().c_str())};
     m_Events = new DropDownmenu(200, items, true);
     m_Events->setTooltipText(tr("The new event that should happen once the conditions are met."));
     m_Events->setPosition(30, pApp->getSettings()->getHeight() - 115);

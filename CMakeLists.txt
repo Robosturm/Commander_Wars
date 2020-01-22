@@ -348,7 +348,7 @@ set(${PROJECT_NAME}_SRCS
         ingamescriptsupport/events/scripteventchangeweather.cpp
         ingamescriptsupport/events/scripteventchangecobar.cpp
         #ingamescriptsupport/events/scripteventmodifyunit.cpp
-        #ingamescriptsupport/events/scripteventmodifyterrain.cpp
+        ingamescriptsupport/events/scripteventmodifyterrain.cpp
         #ingamescriptsupport/events/scripteventanimation.cpp
 
         # wiki stuff

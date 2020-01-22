@@ -7,6 +7,7 @@
 #include "scripteventaddfunds.h"
 #include "scripteventchangecobar.h"
 #include "scripteventchangeweather.h"
+#include "scripteventmodifyterrain.h"
 
 const QString ScriptEvent::EventDialog  = "Dialog";
 const QString ScriptEvent::EventSpawnUnit = "Spawn Unit";
@@ -59,6 +60,10 @@ spScriptEvent ScriptEvent::createReadEvent(QTextStream& rStream)
     {
          ret = new ScriptEventChangeCOBar();
     }
+    else if (line.endsWith(EventModifyTerrain))
+    {
+         ret = new ScriptEventModifyTerrain();
+    }
     if (ret != nullptr)
     {
         ret->readEvent(rStream);
@@ -102,6 +107,10 @@ spScriptEvent ScriptEvent::createEvent(EventType type)
         case EventType::changeBuildlist:
         {
             return new ScriptEventChangeBuildlist();
+        }
+        case EventType::modifyTerrain:
+        {
+            return new ScriptEventModifyTerrain();
         }
     }
     return nullptr;
