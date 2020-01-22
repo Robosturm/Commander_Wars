@@ -686,6 +686,14 @@ public slots:
      * @param duration
      */
     void addFirerangeBonus(qint32 value, qint32 duration = 1);
+    /**
+     * @brief modifyUnit
+     * @param hpChange
+     * @param ammo1Change
+     * @param ammo2Change
+     * @param fuelChange
+     */
+    void modifyUnit(qint32 hpChange, qint32 ammo1Change, qint32 ammo2Change, qint32 fuelChange);
 protected:
     /**
      * @brief updateIconTweens creates the visibility toogle tweens for all icons

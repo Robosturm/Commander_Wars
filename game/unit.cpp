@@ -2306,6 +2306,18 @@ GameEnums::GameAi Unit::getAiMode() const
     return m_AiMode;
 }
 
+void Unit::modifyUnit(qint32 hpChange, qint32 ammo1Change, qint32 ammo2Change, qint32 fuelChange)
+{
+    setHp(getHp() + hpChange);
+    if (hp <= 0.0f)
+    {
+        setHp(0.0001f);
+    }
+    setAmmo1(getAmmo1() + ammo1Change);
+    setAmmo1(getAmmo2() + ammo2Change);
+    setFuel(getFuel() + fuelChange);
+}
+
 void Unit::setAiMode(const GameEnums::GameAi &AiMode)
 {
     m_AiMode = AiMode;

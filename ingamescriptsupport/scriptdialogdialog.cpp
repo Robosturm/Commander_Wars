@@ -9,6 +9,7 @@
 #include "coreengine/mainapp.h"
 
 #include "objects/filedialog.h"
+#include "objects/dropdownmenusprite.h"
 #include "qfileinfo.h"
 
 ScriptDialogDialog::ScriptDialogDialog(spScriptEventDialog scriptEventDialog)
@@ -116,13 +117,49 @@ void ScriptDialogDialog::updateDialog()
             pDialog->mood = static_cast<GameEnums::COMood>(item);
         });
 
-        QVector<QString> ids = COSpriteManager::getInstance()->getSpriteCOIDs();
-        spDropDownmenu coidsMenu = new DropDownmenu(200, ids, up);
-        coidsMenu->setTooltipText(tr("The ID of the CO that should talk."));
+        QVector<QString> ids;
+        COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
+        ids.append(ScriptEventDialog::m_CurrentPlayerCO0);
+        ids.append(ScriptEventDialog::m_CurrentPlayerCO1);
+        for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
+        {
+            ids.append(pCOSpriteManager->getCOID(i));
+        }
+        ids.append("co_beast");
+        ids.append("co_davis");
+        ids.append("co_officier_os");
+        ids.append("co_officier_bm");
+        ids.append("co_officier_ge");
+        ids.append("co_officier_yc");
+        ids.append("co_officier_bh");
+
+        auto creator = [=](QString id)
+        {
+            oxygine::ResAnim* pAnim = nullptr;
+            if (id == ScriptEventDialog::m_CurrentPlayerCO0)
+            {
+                pAnim = COSpriteManager::getInstance()->getResAnim("co_0+info");
+            }
+            else if (id == ScriptEventDialog::m_CurrentPlayerCO1)
+            {
+                pAnim = COSpriteManager::getInstance()->getResAnim("co_1+info");
+            }
+            else
+            {
+                pAnim = COSpriteManager::getInstance()->getResAnim(id + "+info");
+            }
+            oxygine::spSprite pSprite = new oxygine::Sprite();
+            pSprite->setResAnim(pAnim);
+            pSprite->setSize(pAnim->getSize());
+            return pSprite;
+        };
+
+        spDropDownmenuSprite coidsMenu = new DropDownmenuSprite(150, ids, creator, up);
+        coidsMenu->setTooltipText(tr("The ID of the CO that should talk.\nNote: CO 1 and CO 2 represent the CO of the current Player."));
         coidsMenu->setPosition(posX + 150, y);
         coidsMenu->setCurrentItem(pDialog->coid);
         m_Panel->addItem(coidsMenu);
-        connect(coidsMenu.get(), &DropDownmenu::sigItemChanged, [=](qint32)
+        connect(coidsMenu.get(), &DropDownmenuSprite::sigItemChanged, [=](qint32)
         {
             pDialog->coid = coidsMenu->getCurrentItemText();
         });

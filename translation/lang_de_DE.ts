@@ -2163,57 +2163,57 @@
 <context>
     <name>Mainwindow</name>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="53"/>
+        <location filename="../menue/mainwindow.cpp" line="56"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="65"/>
+        <location filename="../menue/mainwindow.cpp" line="68"/>
         <source>Singleplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="76"/>
+        <location filename="../menue/mainwindow.cpp" line="79"/>
         <source>Multiplayer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="87"/>
+        <location filename="../menue/mainwindow.cpp" line="90"/>
         <source>Load Game</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="98"/>
+        <location filename="../menue/mainwindow.cpp" line="101"/>
         <source>Map Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="109"/>
+        <location filename="../menue/mainwindow.cpp" line="112"/>
         <source>Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="120"/>
+        <location filename="../menue/mainwindow.cpp" line="123"/>
         <source>CO Style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="131"/>
+        <location filename="../menue/mainwindow.cpp" line="134"/>
         <source>Wiki</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="142"/>
+        <location filename="../menue/mainwindow.cpp" line="145"/>
         <source>Credits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="153"/>
+        <location filename="../menue/mainwindow.cpp" line="156"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../menue/mainwindow.cpp" line="165"/>
+        <location filename="../menue/mainwindow.cpp" line="168"/>
         <source>Select Username</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3850,57 +3850,58 @@
 <context>
     <name>ScriptDialogDialog</name>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="38"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="39"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="48"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="49"/>
         <source>add Dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="56"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="57"/>
         <source>remove Last</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="94"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="95"/>
         <source>The text the CO should talk.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="108"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="109"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="108"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="109"/>
         <source>Happy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="108"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="109"/>
         <source>Sad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="110"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="111"/>
         <source>The CO Mood/Icon that will be used for the dialog.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="121"/>
-        <source>The ID of the CO that should talk.</source>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="158"/>
+        <source>The ID of the CO that should talk.
+Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="145"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="182"/>
         <source>The background color of the dialog.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="154"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="191"/>
         <source>load Background</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4108,52 +4109,52 @@
 <context>
     <name>ScriptEventSpawnUnit</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="111"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="115"/>
         <source>X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="115"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="119"/>
         <source>X Location at which the unit gets spawned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="123"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="127"/>
         <source>Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="127"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="131"/>
         <source>Y Location at which the unit gets spawned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="135"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="139"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="139"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="143"/>
         <source>Player for which the unit gets spawned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="151"/>
-        <source>Unit ID: </source>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="155"/>
+        <source>Unit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="167"/>
-        <source>Unit id (unit) which gets spawned.</source>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="179"/>
+        <source>Unit which gets spawned.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="178"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="190"/>
         <source>Spawn Radius: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="182"/>
+        <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="194"/>
         <source>Radius around the given location at which the unit gets tried to be spawned, if either the field is blocked or the unit can&apos;t move over the given field.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -64,7 +64,6 @@ void WorkerThread::start()
             m_pInterpreter->openScript(file);
         }
     }
-    oxygine::getStage()->addChild(new Mainwindow());
 
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     pBuildingSpriteManager->loadAll();
@@ -85,6 +84,8 @@ void WorkerThread::start()
     BattleAnimationManager* pBattleAnimationManager = BattleAnimationManager::getInstance();
     pBattleAnimationManager->loadAll();
     WikiDatabase::getInstance()->load();
+
+    oxygine::getStage()->addChild(new Mainwindow());
 
     started = true;
     pApp->continueThread();

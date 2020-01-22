@@ -55,6 +55,20 @@ void GameAnimation::queueAnimation(GameAnimation* pGameAnimation)
 
 void GameAnimation::update(const oxygine::UpdateState& us)
 {
+    for (SpriteData& data : sprites)
+    {
+        if (!data.loaded)
+        {
+            data.pAnim = new oxygine::SingleResAnim();
+            data.pAnim->setResPath(data.file);
+            data.pAnim->init(data.file, data.frames, 1, 1.0f);
+            loadSpriteAnim(data.pAnim.get(), data.offsetX, data.offsetY,
+                           data.color, data.sleepAfterFinish, data.scaleX, data.scaleY,
+                           data.delay);
+            data.loaded = true;
+        }
+    }
+
     if (!m_SoundStarted)
     {
         if (!m_soundFile.isEmpty())
@@ -76,46 +90,65 @@ void GameAnimation::addSprite2(QString spriteID, float offsetX, float offsetY, q
     addSprite3(spriteID, offsetX, offsetY, QColor(255, 255, 255), sleepAfterFinish, scaleX, scaleY, delay);
 }
 
-void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay)
+void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay, qint32 frames)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
     oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID);
     if (pAnim != nullptr)
     {
-        oxygine::spSprite pSprite = new oxygine::Sprite();
-
-        oxygine::spTweenQueue queuedAnim = new oxygine::TweenQueue();
-        oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * m_frameTime), 1, false, oxygine::timeMS(static_cast<qint64>(delay / Settings::getAnimationSpeed())));
-        queuedAnim->add(tween);
-        if (sleepAfterFinish > 0)
-        {
-            oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(sleepAfterFinish / Settings::getAnimationSpeed())), 1);
-            queuedAnim->add(tween1);
-        }
-        pSprite->setScaleX(scaleX);
-        pSprite->setScaleY(scaleY);
-        pSprite->addTween(queuedAnim);
-        if (color != Qt::white)
-        {
-            oxygine::Sprite::TweenColor tweenColor(color);
-            oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
-            pSprite->addTween(tween);
-        }
-        this->addChild(pSprite);
-        pSprite->setPosition(offsetX, offsetY);
-        if(!finishQueued)
-        {
-            finishQueued = true;
-            queuedAnim->setDoneCallback([=](oxygine::Event *)->void
-            {
-                emit sigFinished();
-            });
-
-        }
+        loadSpriteAnim(pAnim, offsetX, offsetY, color, sleepAfterFinish, scaleX, scaleY, delay);
+    }
+    else if (QFile::exists(spriteID))
+    {
+        sprites.append(SpriteData());
+        qint32 index = sprites.size() - 1;
+         sprites[index].frames = frames;
+         sprites[index].file = spriteID;
+         sprites[index].offsetX = offsetX;
+         sprites[index].offsetY = offsetY;
+         sprites[index].color = color;
+         sprites[index].sleepAfterFinish = sleepAfterFinish;
+         sprites[index].scaleX = scaleX;
+         sprites[index].scaleY = scaleY;
+         sprites[index].delay = delay;
     }
     else
     {
         Console::print("Unable to load animation sprite: " + spriteID, Console::eERROR);
+    }
+}
+
+void GameAnimation::loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay)
+{
+    oxygine::spSprite pSprite = new oxygine::Sprite();
+
+    oxygine::spTweenQueue queuedAnim = new oxygine::TweenQueue();
+    oxygine::spTween tween = oxygine::createTween(oxygine::TweenAnim(pAnim), oxygine::timeMS(pAnim->getTotalFrames() * m_frameTime), 1, false, oxygine::timeMS(static_cast<qint64>(delay / Settings::getAnimationSpeed())));
+    queuedAnim->add(tween);
+    if (sleepAfterFinish > 0)
+    {
+        oxygine::spTween tween1 = oxygine::createTween(TweenWait(), oxygine::timeMS(static_cast<qint64>(sleepAfterFinish / Settings::getAnimationSpeed())), 1);
+        queuedAnim->add(tween1);
+    }
+    pSprite->setScaleX(scaleX);
+    pSprite->setScaleY(scaleY);
+    pSprite->addTween(queuedAnim);
+    if (color != Qt::white)
+    {
+        oxygine::Sprite::TweenColor tweenColor(color);
+        oxygine::spTween tween = oxygine::createTween(tweenColor, oxygine::timeMS(1));
+        pSprite->addTween(tween);
+    }
+    this->addChild(pSprite);
+    pSprite->setPosition(offsetX, offsetY);
+    if(!finishQueued)
+    {
+        finishQueued = true;
+        queuedAnim->setDoneCallback([=](oxygine::Event *)->void
+        {
+            emit sigFinished();
+        });
+
     }
 }
 

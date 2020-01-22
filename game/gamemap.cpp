@@ -102,6 +102,7 @@ qint32 GameMap::getUniqueIdCounter()
     return m_UniqueIdCounter;
 }
 
+
 bool GameMap::isInArea(const QRect& area, std::function<bool (Unit* pUnit)> checkFunction)
 {
     for (qint32 x = area.x(); x < area.x() + area.width(); x++)

@@ -74,7 +74,7 @@ public:
      */
     virtual QString getDescription() override
     {
-        return tr("Spawn: ") + unitID;
+        return tr("Spawn Unit");
     }
     /**
      * @brief showEditEvent

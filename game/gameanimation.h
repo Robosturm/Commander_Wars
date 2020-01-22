@@ -15,6 +15,21 @@ typedef oxygine::intrusive_ptr<GameAnimation> spGameAnimation;
 class GameAnimation : public QObject, public oxygine::Sprite
 {
     Q_OBJECT
+    struct SpriteData
+    {
+        QString file;
+        qint32 frames = 0;
+        bool loaded = false;
+        float offsetX;
+        float offsetY;
+        QColor color;
+        qint32 sleepAfterFinish;
+        float scaleX;
+        float scaleY;
+        qint32 delay;
+        oxygine::spResAnim pAnim;
+    };
+
 public:
     explicit GameAnimation(quint32 frameTime);
     virtual ~GameAnimation() = default;
@@ -54,7 +69,7 @@ public slots:
       * @param scaleY
       * @param delay
       */
-    void addSprite3(QString spriteID, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish = 0, float scaleX = 1.0f, float scaleY = 1.0f, qint32 delay = 0);
+    void addSprite3(QString spriteID, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish = 0, float scaleX = 1.0f, float scaleY = 1.0f, qint32 delay = 0, qint32 frames = 0);
     /**
      * @brief addText
      * @param text
@@ -215,6 +230,19 @@ private:
     QBuffer buffer;
     QDataStream actionData{&buffer};
 
+    QVector<SpriteData> sprites;
+    /**
+     * @brief loadSpriteAnim
+     * @param pAnim
+     * @param offsetX
+     * @param offsetY
+     * @param color
+     * @param sleepAfterFinish
+     * @param scaleX
+     * @param scaleY
+     * @param delay
+     */
+    void loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay);
 };
 
 #endif // GAMEANIMATION_H

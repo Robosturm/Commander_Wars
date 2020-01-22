@@ -11,6 +11,10 @@
 #include "objects/spinbox.h"
 
 #include "objects/dropdownmenu.h"
+#include "objects/dropdownmenusprite.h"
+
+#include "game/unit.h"
+#include "game/player.h"
 
 ScriptEventSpawnUnit::ScriptEventSpawnUnit()
     : ScriptEvent (ScriptEvent::EventType::spawnUnit)
@@ -148,7 +152,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Unit ID: "));
+    pText->setHtmlText(tr("Unit: "));
     pText->setPosition(30, 150);
     pBox->addItem(pText);
     QVector<QString> items;
@@ -163,12 +167,20 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
             currentItem = i;
         }
     }
-    spDropDownmenu pMenu = new DropDownmenu(300, items);
-    pMenu->setTooltipText(tr("Unit id (unit) which gets spawned."));
+    auto creator = [=](QString id)
+    {
+        spPlayer pPlayer = new Player();
+        pPlayer->init();
+        spUnit pSprite = new Unit(id, pPlayer.get(), false);
+        pSprite->setOwner(nullptr);
+        return pSprite;
+    };
+    spDropDownmenuSprite pMenu = new DropDownmenuSprite(105, items, creator, false, 30);
+    pMenu->setTooltipText(tr("Unit which gets spawned."));
     pMenu->setPosition(width, 150);
     pMenu->setCurrentItem(currentItem);
     pBox->addItem(pMenu);
-    connect(pMenu.get(), &DropDownmenu::sigItemChanged, [=](qint32)
+    connect(pMenu.get(), &DropDownmenuSprite::sigItemChanged, [=](qint32)
     {
         unitID = pMenu->getCurrentItemText();
     });

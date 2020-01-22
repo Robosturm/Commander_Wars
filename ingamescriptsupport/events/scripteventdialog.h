@@ -17,6 +17,8 @@ class ScriptEventDialog : public ScriptEvent
     Q_OBJECT
 public:
     static const QString ScriptEventDialogItem;
+    static const QString m_CurrentPlayerCO0;
+    static const QString m_CurrentPlayerCO1;
 
     struct Dialog
     {

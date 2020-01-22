@@ -4,6 +4,9 @@
 
 #include "ingamescriptsupport/scripteditor.h"
 
+const QString ScriptEventDialog::m_CurrentPlayerCO0 = "map.getCurrentPlayer().getCO(0).getCoID()";
+const QString ScriptEventDialog::m_CurrentPlayerCO1 = "map.getCurrentPlayer().getCO(1).getCoID()";
+
 const QString ScriptEventDialog::ScriptEventDialogItem = "ScriptEventDialogItem";
 
 ScriptEventDialog::ScriptEventDialog()

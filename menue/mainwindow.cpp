@@ -23,6 +23,9 @@
 
 #include <QFile>
 
+#include "objects/dropdownmenusprite.h"
+#include "resource_management/cospritemanager.h"
+
 Mainwindow::Mainwindow()
 {
     Mainapp* pApp = Mainapp::getInstance();

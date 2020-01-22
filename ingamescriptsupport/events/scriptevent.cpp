@@ -15,6 +15,9 @@ const QString ScriptEvent::EventChangeBuildlist = "Change Buildlist";
 const QString ScriptEvent::EventAddFunds = "Add Funds";
 const QString ScriptEvent::EventChangeWeather = "Change Weather";
 const QString ScriptEvent::EventChangeCOBar = "Change CO Bar";
+const QString ScriptEvent::EventModifyUnit = "Modify Unit";
+const QString ScriptEvent::EventAnimation = "Animation";
+const QString ScriptEvent::EventModifyTerrain = "Modify Terrain";
 
 ScriptEvent::ScriptEvent(EventType type)
     : QObject(),
