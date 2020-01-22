@@ -3929,54 +3929,54 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="92"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="93"/>
         <source>The new event that should happen once the conditions are met.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="96"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="97"/>
         <source>Add Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="109"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="110"/>
         <source>Immediate Start: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="113"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="114"/>
         <source>If checked the game starts without beeing able to change rules, players or co&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="120"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="121"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="129"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="130"/>
         <source>Save Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="136"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="137"/>
         <source>Load Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="277"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="358"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="278"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="359"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="284"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="365"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="285"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="366"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="292"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="293"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4136,6 +4136,69 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyterrain.cpp" line="103"/>
         <source>New Terrain which gets spawned. Note: all units on the terrain get deleted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventModifyUnit</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyunit.cpp" line="62"/>
+        <source>X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyunit.cpp" line="66"/>
+        <source>X Location at which the unit gets modified.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyunit.cpp" line="74"/>
+        <source>Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyunit.cpp" line="78"/>
+        <source>Y Location at which the unit gets modified.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyunit.cpp" line="87"/>
+        <source>Modify HP: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyunit.cpp" line="92"/>
+        <source>HP change for the unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyunit.cpp" line="100"/>
+        <source>Modify Ammo 1: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyunit.cpp" line="105"/>
+        <source>Ammo 1 change for the unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyunit.cpp" line="113"/>
+        <source>Modify Ammo 2: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyunit.cpp" line="118"/>
+        <source>Ammo 2 change for the unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyunit.cpp" line="126"/>
+        <source>Modify Fuel: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyunit.cpp" line="131"/>
+        <source>Fuel change for the unit.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
