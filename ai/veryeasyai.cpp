@@ -574,9 +574,16 @@ bool VeryEasyAI::moveUnit(GameAction* pAction, Unit* pUnit, QStringList& actions
                     return true;
                 }
             }
-            pAction->setActionID(ACTION_WAIT);
-            emit performAction(pAction);
-            return true;
+            if (pAction->canBePerformed())
+            {
+                pAction->setActionID(ACTION_WAIT);
+                emit performAction(pAction);
+                return true;
+            }
+            else
+            {
+                Q_ASSERT(false);
+            }
         }
     }
     delete pAction;

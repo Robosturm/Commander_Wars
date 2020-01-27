@@ -757,7 +757,7 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
             {
                 movePath.append(QPoint(pUnit->getX(), pUnit->getY()));
             }
-            qint32 idx = getMoveTargetField(pUnit, pUnits, movePath, pBuildings, pEnemyBuildings);
+            qint32 idx = getMoveTargetField(pUnit, pUnits, turnPfs, movePath, pBuildings, pEnemyBuildings);
             if (idx < 0)
             {
                 std::tuple<QPoint, float, bool> target = moveToSafety(pUnit, pUnits, turnPfs, movePath[0], pBuildings, pEnemyBuildings);
@@ -888,8 +888,15 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
                     }
                 }
                 pAction->setActionID(ACTION_WAIT);
-                emit performAction(pAction);
-                return true;
+                if (pAction->canBePerformed())
+                {
+                    emit performAction(pAction);
+                    return true;
+                }
+                else
+                {
+                    Q_ASSERT(false);
+                }
             }
         }
     }
@@ -938,7 +945,10 @@ std::tuple<QPoint, float, bool> NormalAi::moveToSafety(Unit* pUnit, QmlVectorUni
     bool allFieldsEqual = true;
     for (qint32 i = 0; i < targets.size(); i++)
     {
-        if (pMap->getTerrain(targets[i].x(), targets[i].y())->getUnit() == nullptr)
+        qint32 x = targets[i].x();
+        qint32 y = targets[i].y();
+        if (pMap->getTerrain(x, y)->getUnit() == nullptr &&
+            turnPfs.getCosts(turnPfs.getIndex(x, y), x, y, x, y) > 0)
         {
             float currentDamage = calculateCounterDamage(pUnit, pUnits, targets[i], nullptr, 0.0f, pBuildings, pEnemyBuildings);
             if (leastDamageField < std::numeric_limits<float>::max() &&
@@ -964,15 +974,18 @@ std::tuple<QPoint, float, bool> NormalAi::moveToSafety(Unit* pUnit, QmlVectorUni
     return std::tuple<QPoint, float, bool>(ret, leastDamageField, allFieldsEqual);
 }
 
-qint32 NormalAi::getMoveTargetField(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QPoint>& movePath,
-                                    QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
+qint32 NormalAi::getMoveTargetField(Unit* pUnit, QmlVectorUnit* pUnits, UnitPathFindingSystem& turnPfs,
+                                    QVector<QPoint>& movePath, QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
     GameMap* pMap = GameMap::getInstance();
     for (qint32 i = 0; i < movePath.size(); i++)
     {
         // empty or own field
-        if (pMap->getTerrain(movePath[i].x(), movePath[i].y())->getUnit() == nullptr ||
-            pMap->getTerrain(movePath[i].x(), movePath[i].y())->getUnit() == pUnit)
+        qint32 x = movePath[i].x();
+        qint32 y = movePath[i].y();
+        if ((pMap->getTerrain(x, y)->getUnit() == nullptr ||
+            pMap->getTerrain(x, y)->getUnit() == pUnit) &&
+            turnPfs.getCosts(turnPfs.getIndex(x, y), x, y, x, y) > 0)
         {
             float counterDamage = calculateCounterDamage(pUnit, pUnits, movePath[i], nullptr, 0.0f, pBuildings, pEnemyBuildings);
             if (counterDamage < pUnit->getUnitValue() * minMovementDamage)

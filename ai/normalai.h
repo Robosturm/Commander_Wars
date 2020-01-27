@@ -102,8 +102,8 @@ protected:
      * @param movePath
      * @return
      */
-    qint32 getMoveTargetField(Unit* pUnit, QmlVectorUnit* pUnits, QVector<QPoint>& movePath,
-                              QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings);
+    qint32 getMoveTargetField(Unit* pUnit, QmlVectorUnit* pUnits, UnitPathFindingSystem& turnPfs,
+                              QVector<QPoint>& movePath, QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings);
     /**
      * @brief moveToSafety
      * @param pUnit
