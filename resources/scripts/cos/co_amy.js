@@ -182,7 +182,7 @@ var Constructor = function()
     {
         if (co.getPowerMode() === GameEnums.PowerMode_Power)
         {
-            var hoverUnits = ["HEAVYHOVERCRAFT", "HOVERCRAFT", "HOVERFLAK", "ARTILLERYCRAFT"]
+            var hoverUnits = ["HEAVY_HOVERCRAFT", "HOVERCRAFT", "HOVERFLAK", "ARTILLERYCRAFT"]
             if (hoverUnits.indexOf(id) >= 0)
             {
                 return -baseCost * 0.3;
