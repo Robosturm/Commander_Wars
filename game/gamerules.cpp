@@ -761,7 +761,7 @@ void GameRules::deserializeObject(QDataStream& pStream)
         {
             if (m_Weathers[i2]->getWeatherId() == pWeather->getWeatherId())
             {
-                m_Weathers[i] = pWeather;
+                m_Weathers[i2] = pWeather;
                 m_WeatherChances[i2] = chance;
                 break;
             }
