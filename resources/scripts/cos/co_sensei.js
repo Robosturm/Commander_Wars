@@ -224,7 +224,7 @@ var Constructor = function()
     };
     this.getPowerDescription = function()
     {
-        return qsTr("Copter firepower increases and copter movement increases. Infantry firepower rises greatly.");
+        return qsTr("Copter firepower increases. Infantry units with 9 HP appear in all his cities, ready to be moved.");
     };
     this.getPowerName = function()
     {
@@ -232,7 +232,7 @@ var Constructor = function()
     };
     this.getSuperPowerDescription = function()
     {
-        return qsTr("Copter firepower increases. Infantry units with 9 HP appear in all his cities, ready to be moved.");
+        return qsTr("Copter firepower increases. Mech units with 9 HP appear in all his cities, ready to be moved.");
     };
     this.getSuperPowerName = function()
     {
