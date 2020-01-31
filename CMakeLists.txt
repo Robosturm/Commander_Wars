@@ -332,6 +332,7 @@ set(${PROJECT_NAME}_SRCS
         ingamescriptsupport/conditions/scriptconditioneachday.cpp
         ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp
         ingamescriptsupport/conditions/scriptconditionbuildingdestroyed.cpp
+        ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp
         ingamescriptsupport/conditions/scriptconditionbuildingcaptured.cpp
         ingamescriptsupport/conditions/scriptconditionplayerdefeated.cpp
         ingamescriptsupport/conditions/scriptconditionunitsdestroyed.cpp

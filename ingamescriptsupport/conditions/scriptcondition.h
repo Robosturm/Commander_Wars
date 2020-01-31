@@ -28,6 +28,7 @@ public:
         eachDay,
         unitDestroyed,
         buildingDestroyed,
+        terrainDestroyed,
         buildingCaptured,
         playerDefeated,
         unitsDestroyed,
@@ -40,6 +41,7 @@ public:
     static const QString ConditionEachDay;
     static const QString ConditionUnitDestroyed;
     static const QString ConditionBuildingDestroyed;
+    static const QString ConditionTerrainDestroyed;
     static const QString ConditionBuildingCaptured;
     static const QString ConditionPlayerDefeated;
     static const QString ConditionUnitsDestroyed;

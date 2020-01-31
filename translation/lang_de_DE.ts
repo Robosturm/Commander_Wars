@@ -3726,6 +3726,29 @@
     </message>
 </context>
 <context>
+    <name>ScriptConditionTerrainDestroyed</name>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="108"/>
+        <source>X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="112"/>
+        <source>X Location of the Terrain that has to be destroyed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="124"/>
+        <source>Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionterraindestroyed.cpp" line="128"/>
+        <source>Y Location of the Terrain that has to be destroyed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ScriptConditionUnitDestroyed</name>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionunitdestroyed.cpp" line="129"/>
@@ -3914,69 +3937,69 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="62"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="63"/>
         <source>Condition type you wan&apos;t to create. If a condition is selected this condition and the selected one need to be fullfilled to activate the event.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="66"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="67"/>
         <source>Add Condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="77"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="78"/>
         <source>Events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="93"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="94"/>
         <source>The new event that should happen once the conditions are met.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="97"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="98"/>
         <source>Add Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="110"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="111"/>
         <source>Immediate Start: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="114"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="115"/>
         <source>If checked the game starts without beeing able to change rules, players or co&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="121"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="122"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="130"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="131"/>
         <source>Save Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="137"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="138"/>
         <source>Load Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="278"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="359"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="279"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="360"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="285"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="366"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="286"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="367"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="293"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="294"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13376,18 +13399,18 @@ Copters have 50% increased firepower and infantries have 30% increased firepower
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="227"/>
-        <source>Copter firepower increases and copter movement increases. Infantry firepower rises greatly.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_sensei.js" line="231"/>
         <source>Copter Command</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="235"/>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="227"/>
         <source>Copter firepower increases. Infantry units with 9 HP appear in all his cities, ready to be moved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="235"/>
+        <source>Copter firepower increases. Mech units with 9 HP appear in all his cities, ready to be moved.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

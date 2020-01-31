@@ -5,6 +5,7 @@
 #include "scriptconditionstartofturn.h"
 #include "scriptconditionunitdestroyed.h"
 #include "scriptconditionbuildingdestroyed.h"
+#include "scriptconditionterraindestroyed.h"
 #include "scriptconditionbuildingcaptured.h"
 #include "scriptconditionplayerdefeated.h"
 #include "scriptconditionunitsdestroyed.h"
@@ -17,6 +18,7 @@ const QString ScriptCondition::ConditionStartOfTurn = "Start Of Turn";
 const QString ScriptCondition::ConditionEachDay = "Each Day";
 const QString ScriptCondition::ConditionUnitDestroyed = "Unit Destroyed";
 const QString ScriptCondition::ConditionBuildingDestroyed = "Building Destroyed";
+const QString ScriptCondition::ConditionTerrainDestroyed = "Terrain Destroyed";
 const QString ScriptCondition::ConditionBuildingCaptured = "Building Captured";
 const QString ScriptCondition::ConditionPlayerDefeated = "Player Defeated";
 const QString ScriptCondition::ConditionUnitsDestroyed = "Units Destroyed";
@@ -131,10 +133,13 @@ ScriptCondition* ScriptCondition::createCondition(ConditionType type)
         {
             return new ScriptConditionPlayerReachedArea();
         }
-
         case ConditionType::unitReachedArea:
         {
             return new ScriptConditionUnitReachedArea();
+        }
+        case ConditionType::terrainDestroyed:
+        {
+            return new ScriptConditionTerrainDestroyed();
         }
     }
     return nullptr;
@@ -190,6 +195,10 @@ ScriptCondition* ScriptCondition::createReadCondition(QTextStream& rStream)
     else if (line.endsWith(ConditionPlayerReachedArea))
     {
         ret = new ScriptConditionPlayerReachedArea();
+    }
+    else if (line.endsWith(ConditionTerrainDestroyed))
+    {
+        ret = new ScriptConditionTerrainDestroyed();
     }
     if (ret != nullptr)
     {
@@ -248,6 +257,7 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
             }
         }
         case ScriptCondition::ConditionType::buildingDestroyed:
+        case ScriptCondition::ConditionType::terrainDestroyed:
         case ScriptCondition::ConditionType::buildingCaptured:
         case ScriptCondition::ConditionType::playerDefeated:
         case ScriptCondition::ConditionType::unitsDestroyed:
@@ -259,6 +269,7 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
             switch (type2)
             {
                 case ScriptCondition::ConditionType::buildingDestroyed:
+                case ScriptCondition::ConditionType::terrainDestroyed:
                 case ScriptCondition::ConditionType::buildingCaptured:
                 case ScriptCondition::ConditionType::playerDefeated:
                 case ScriptCondition::ConditionType::unitsDestroyed:

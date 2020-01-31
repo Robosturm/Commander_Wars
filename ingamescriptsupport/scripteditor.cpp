@@ -52,6 +52,7 @@ ScriptEditor::ScriptEditor()
                               tr(ScriptCondition::ConditionEachDay.toStdString().c_str()),
                               tr(ScriptCondition::ConditionUnitDestroyed.toStdString().c_str()),
                               tr(ScriptCondition::ConditionBuildingDestroyed.toStdString().c_str()),
+                              tr(ScriptCondition::ConditionTerrainDestroyed.toStdString().c_str()),
                               tr(ScriptCondition::ConditionBuildingCaptured.toStdString().c_str()),
                               tr(ScriptCondition::ConditionPlayerDefeated.toStdString().c_str()),
                               tr(ScriptCondition::ConditionUnitsDestroyed.toStdString().c_str()),
@@ -407,6 +408,7 @@ void ScriptEditor::addCondition()
                 break;
             }
             case ScriptCondition::ConditionType::buildingDestroyed:
+            case ScriptCondition::ConditionType::terrainDestroyed:
             case ScriptCondition::ConditionType::buildingCaptured:
             case ScriptCondition::ConditionType::playerDefeated:
             case ScriptCondition::ConditionType::unitsDestroyed:
