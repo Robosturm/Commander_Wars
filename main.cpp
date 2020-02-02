@@ -144,6 +144,7 @@ int main(int argc, char* argv[])
     // show window according to window mode
     window.changeScreenMode(window.getScreenMode());
     qint32 returncode = app.exec();
+    crashReporter::setSignalHandler(nullptr);
     window.getWorkerthread()->exit(0);
     QDir dir("temp/");
     dir.removeRecursively();

@@ -65,7 +65,9 @@ void ScriptEventDialog::readEvent(QTextStream& rStream)
 
             QStringList items = line.replace("var dialog" + QString::number(m_Dialog.size()) + " = GameAnimationFactory.createGameAnimationDialog(qsTr(\"", "")
                                     .replace("\"), \"", "@")
+                                    .replace("\"), ", "@")
                                     .replace("\", GameEnums.COMood_", "@")
+                                    .replace(", GameEnums.COMood_", "@")
                                     .replace(", \"", "@")
                                     .replace("\"); // ", "@").
                                     replace(" " + ScriptEventDialogItem, "@" + ScriptEventDialogItem).split("@");
@@ -112,7 +114,14 @@ void ScriptEventDialog::writeEvent(QTextStream& rStream)
     {
         rStream <<  "            var dialog" << QString::number(i) << " = GameAnimationFactory.createGameAnimationDialog(qsTr(\"";
         rStream <<  m_Dialog[i].text;
-        rStream << "\"), \"" << m_Dialog[i].coid << "\", GameEnums.COMood_";
+        if (m_Dialog[i].coid.contains("."))
+        {
+            rStream << "\"), " << m_Dialog[i].coid << ", GameEnums.COMood_";
+        }
+        else
+        {
+            rStream << "\"), \"" << m_Dialog[i].coid << "\", GameEnums.COMood_";
+        }
         switch (m_Dialog[i].mood)
         {
             case GameEnums::COMood_Sad:

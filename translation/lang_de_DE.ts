@@ -1197,7 +1197,12 @@
     </message>
     <message>
         <location filename="../objects/dialogmodifyunit.cpp" line="205"/>
-        <source>Selects how the AI uses this unit. This is immediatly applied.</source>
+        <source>Selects how the AI uses this unit
+ Normal AI uses the unit like always.
+Offensive AI the ai moves the unit to the closest enemy and attacks
+Defensive AI the ai moves the unit only if it can attack.
+Hold AI the ai only attacks but never moves with this unit.
+This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

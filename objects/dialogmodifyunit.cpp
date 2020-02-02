@@ -202,7 +202,7 @@ void DialogModifyUnit::updateData()
     m_pPanel->addItem(pLabel);
     items = {tr("Normal"), tr("Offensive"), tr("Defensive"), tr("Hold")};
     pDropdownmenu = new DropDownmenu(300, items);
-    pDropdownmenu->setTooltipText(tr("Selects how the AI uses this unit. This is immediatly applied."));
+    pDropdownmenu->setTooltipText(tr("Selects how the AI uses this unit\n Normal AI uses the unit like always.\nOffensive AI the ai moves the unit to the closest enemy and attacks\nDefensive AI the ai moves the unit only if it can attack.\nHold AI the ai only attacks but never moves with this unit.\nThis is immediatly applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(static_cast<qint32>(m_pUnit->getAiMode()));
     connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
