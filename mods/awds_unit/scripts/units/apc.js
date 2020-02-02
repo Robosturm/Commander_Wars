@@ -18,5 +18,5 @@ APC.init = function(unit)
 APC.getActions = function()
 {
     // returns a string id list of the actions this unit can perform
-    return "ACTION_LOAD,ACTION_UNLOAD,ACTION_JOIN,ACTION_RATION,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
+    return "ACTION_LOAD,ACTION_UNLOAD,ACTION_JOIN,ACTION_SUPPORTALL_RATION,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
 };

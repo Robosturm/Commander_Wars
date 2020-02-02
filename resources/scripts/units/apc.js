@@ -31,7 +31,7 @@ var Constructor = function()
     this.getActions = function()
     {
         // returns a string id list of the actions this unit can perform
-        return "ACTION_BUILD_TEMP_HARBOUR,ACTION_BUILD_TEMP_AIRPORT,ACTION_LOAD,ACTION_UNLOAD,ACTION_JOIN,ACTION_RATION,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
+        return "ACTION_BUILD_TEMP_HARBOUR,ACTION_BUILD_TEMP_AIRPORT,ACTION_LOAD,ACTION_UNLOAD,ACTION_JOIN,ACTION_SUPPORTALL_RATION,ACTION_WAIT,ACTION_CO_UNIT_0,ACTION_CO_UNIT_1";
     };
     this.getBaseCost = function()
     {
@@ -64,7 +64,7 @@ var Constructor = function()
         // pay unit upkeep
         if (unit.getTerrain() !== null)
         {
-            ACTION_RATION.giveRation(unit);
+            ACTION_SUPPORTALL_RATION.giveRation(unit);
         }
         UNIT.transporterRefilling(unit);
     };

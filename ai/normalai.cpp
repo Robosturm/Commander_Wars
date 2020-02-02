@@ -95,6 +95,7 @@ bool NormalAi::performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUn
     else if (aiStep <= AISteps::moveUnits && CoreAI::moveOoziums(pUnits, pEnemyUnits)){}
     else if (aiStep <= AISteps::moveUnits && CoreAI::moveBlackBombs(pUnits, pEnemyUnits)){}
     else if (aiStep <= AISteps::moveUnits && captureBuildings(pUnits)){}
+    else if (aiStep <= AISteps::moveUnits && moveSupport(AISteps::moveUnits, pUnits, false)){}
     // indirect units
     else if (aiStep <= AISteps::moveUnits && fireWithUnits(pUnits, 2, std::numeric_limits<qint32>::max(), pBuildings, pEnemyBuildings)){}
     // direct units
@@ -103,8 +104,8 @@ bool NormalAi::performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUn
     else if (aiStep <= AISteps::moveToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, 1)){}
     else if (aiStep <= AISteps::moveToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 2, std::numeric_limits<qint32>::max())){}
     else if (aiStep <= AISteps::loadUnits && loadUnits(pUnits, pBuildings, pEnemyBuildings)){}
-    else if (aiStep <= AISteps::moveRepairUnits && moveRepair(pUnits)){}
     else if (aiStep <= AISteps::moveTransporters && moveTransporters(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
+    else if (aiStep <= AISteps::moveSupportUnits && moveSupport(AISteps::moveSupportUnits, pUnits, true)){}
     else if (aiStep <= AISteps::moveAway && moveAwayFromProduction(pUnits)){}
     else if (aiStep <= AISteps::buildUnits && buildUnits(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings)){}
     else
@@ -472,8 +473,8 @@ bool NormalAi::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
             if (targets.size() == 0)
             {
                 appendRepairTargets(pUnit, pBuildings, targets);
+                appendSupportTargets(actions, pUnit, pUnits, pEnemyUnits, targets);
             }
-
             if (moveUnit(pAction, pUnit, pUnits, actions, targets, transporterTargets, true, pBuildings, pEnemyBuildings))
             {
                 return true;
@@ -817,13 +818,16 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
             {
                 updatePoints.append(pUnit->getPosition());
                 updatePoints.append(pAction->getActionTarget());
-                if (actions.contains(ACTION_RATION))
+                for (const auto action : actions)
                 {
-                    pAction->setActionID(ACTION_RATION);
-                    if (pAction->canBePerformed())
+                    if (action.startsWith(ACTION_SUPPORTALL))
                     {
-                        emit performAction(pAction);
-                        return true;
+                        pAction->setActionID(action);
+                        if (pAction->canBePerformed())
+                        {
+                            emit performAction(pAction);
+                            return true;
+                        }
                     }
                 }
                 if (actions.contains(ACTION_STEALTH))
@@ -848,17 +852,20 @@ bool NormalAi::moveUnit(GameAction* pAction, Unit* pUnit, QmlVectorUnit* pUnits,
                         }
                     }
                 }
-                if (actions.contains(ACTION_PLACE_WATERMINE))
+                for (const auto action : actions)
                 {
-                    pAction->setActionID(ACTION_PLACE_WATERMINE);
-                    if (pAction->canBePerformed())
+                    if (action.startsWith(ACTION_PLACE))
                     {
-                        MarkedFieldData* pData = pAction->getMarkedFieldStepData();
-                        QPoint point = pData->getPoints()->at(Mainapp::randInt(0, pData->getPoints()->size() - 1));
-                        CoreAI::addSelectedFieldData(pAction, point);
-                        delete pData;
-                        emit performAction(pAction);
-                        return true;
+                        pAction->setActionID(ACTION_PLACE);
+                        if (pAction->canBePerformed())
+                        {
+                            MarkedFieldData* pData = pAction->getMarkedFieldStepData();
+                            QPoint point = pData->getPoints()->at(Mainapp::randInt(0, pData->getPoints()->size() - 1));
+                            CoreAI::addSelectedFieldData(pAction, point);
+                            delete pData;
+                            emit performAction(pAction);
+                            return true;
+                        }
                     }
                 }
                 if (pUnit->canMoveAndFire(pAction->getActionTarget()) ||

@@ -38,18 +38,18 @@ public:
         moveUnits = 0,
         moveToTargets,
         loadUnits,
-        moveRepairUnits,
         moveTransporters,
+        moveSupportUnits,
         moveAway,
         buildUnits,
     };
     // static string list of actions so we only define them once
     static const QString ACTION_WAIT;
     static const QString ACTION_HOELLIUM_WAIT;
-    static const QString ACTION_REPAIR;
-    static const QString ACTION_RATION;
+    static const QString ACTION_SUPPORTSINGLE;
+    static const QString ACTION_SUPPORTALL;
     static const QString ACTION_UNSTEALTH;
-    static const QString ACTION_PLACE_WATERMINE;
+    static const QString ACTION_PLACE;
     static const QString ACTION_STEALTH;
     static const QString ACTION_BUILD_UNITS;
     static const QString ACTION_CAPTURE;
@@ -161,12 +161,14 @@ public slots:
      */
     bool moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits);
     /**
-     * @brief moveRepair
+     * @brief moveSupport
      * @param pUnits
      * @return
      */
-    bool moveRepair(QmlVectorUnit* pUnits);
-
+    bool moveSupport(AISteps step, QmlVectorUnit* pUnits, bool useTransporters);
+    /**
+     * @brief nextAction
+     */
     virtual void nextAction();
     /**
      * @brief calcUnitDamage
@@ -281,6 +283,7 @@ protected:
     void processPredefinedAiOffensive(Unit* pUnit, QmlVectorUnit* pEnemyUnits);
     virtual void finishTurn();
     // helper functions to get targets for unit actions
+    void appendSupportTargets(QStringList actions, Unit* pCurrentUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets);
     void appendCaptureTargets(QStringList actions, Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
     void appendAttackTargetsIgnoreOwnUnits(Unit* pUnit, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets);
     void appendRepairTargets(Unit* pUnit, QmlVectorBuilding* pBuildings, QVector<QVector3D>& targets);

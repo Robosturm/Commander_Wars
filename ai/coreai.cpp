@@ -28,14 +28,14 @@
 
 const QString CoreAI::ACTION_WAIT = "ACTION_WAIT";
 const QString CoreAI::ACTION_HOELLIUM_WAIT = "ACTION_HOELLIUM_WAIT";
-const QString CoreAI::ACTION_REPAIR = "ACTION_REPAIR";
-const QString CoreAI::ACTION_RATION = "ACTION_RATION";
+const QString CoreAI::ACTION_SUPPORTSINGLE = "ACTION_SUPPORTSINGLE";
+const QString CoreAI::ACTION_SUPPORTALL = "ACTION_SUPPORTALL";
 const QString CoreAI::ACTION_UNSTEALTH = "ACTION_UNSTEALTH";
 const QString CoreAI::ACTION_STEALTH = "ACTION_STEALTH";
 const QString CoreAI::ACTION_BUILD_UNITS = "ACTION_BUILD_UNITS";
 const QString CoreAI::ACTION_CAPTURE = "ACTION_CAPTURE";
 const QString CoreAI::ACTION_MISSILE = "ACTION_MISSILE";
-const QString CoreAI::ACTION_PLACE_WATERMINE = "ACTION_PLACE_WATERMINE";
+const QString CoreAI::ACTION_PLACE = "ACTION_PLACE";
 const QString CoreAI::ACTION_FIRE = "ACTION_FIRE";
 const QString CoreAI::ACTION_UNLOAD = "ACTION_UNLOAD";
 const QString CoreAI::ACTION_LOAD = "ACTION_LOAD";
@@ -932,6 +932,43 @@ bool CoreAI::hasTargets(Unit* pLoadingUnit, bool canCapture, QmlVectorUnit* pEne
         }
     }
     return found;
+}
+
+void CoreAI::appendSupportTargets(QStringList actions, Unit* pCurrentUnit, QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QVector<QVector3D>& targets)
+{
+    QmlVectorPoint* unitFields = Mainapp::getCircle(1, 1);
+    GameMap* pMap = GameMap::getInstance();
+    for (const auto& action : actions)
+    {
+        if (action.startsWith(ACTION_SUPPORTSINGLE) ||
+            action.startsWith(ACTION_SUPPORTALL))
+        {
+            for (qint32 i = 0; i < pUnits->size(); i++)
+            {
+                Unit* pUnit = pUnits->at(i);
+                if (pUnit != pCurrentUnit)
+                {
+                    for (qint32 i2 = 0; i2 < unitFields->size(); i2++)
+                    {
+                        if (pMap->onMap(pUnit->getX() + unitFields->at(i2).x(), pUnit->getY() + unitFields->at(i2).y()) &&
+                            pMap->getTerrain(pUnit->getX() + unitFields->at(i2).x(), pUnit->getY() + unitFields->at(i2).y())->getUnit() == nullptr)
+                        {
+                            QVector3D point = QVector3D(pUnit->getX() + unitFields->at(i2).x(), pUnit->getY() + unitFields->at(i2).y(), 2);
+                            if (!targets.contains(point) )
+                            {
+                                targets.append(point);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else if (action.startsWith(ACTION_PLACE))
+        {
+
+        }
+    }
+    delete unitFields;
 }
 
 void CoreAI::appendCaptureTargets(QStringList actions, Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets)

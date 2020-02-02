@@ -135,9 +135,11 @@ bool CoreAI::moveBlackBombs(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits)
     return false;
 }
 
-bool CoreAI::moveRepair(QmlVectorUnit* pUnits)
+
+
+bool CoreAI::moveSupport(AISteps step, QmlVectorUnit* pUnits, bool useTransporters)
 {
-    aiStep = AISteps::moveRepairUnits;
+    aiStep = step;
     GameMap* pMap = GameMap::getInstance();
     QVector<QVector3D> unitTargets;
     QVector<QPoint> unitPos;
@@ -162,40 +164,67 @@ bool CoreAI::moveRepair(QmlVectorUnit* pUnits)
             }
         }
     }
-    delete unitFields;
-
-
     for (qint32 i = 0; i < pUnits->size(); i++)
     {
         Unit* pUnit = pUnits->at(i);
-        if (!pUnit->getHasMoved() && pUnit->getLoadedUnitCount() == 0)
+        for (qint32 i2 = 0; i2 < unitFields->size(); i2++)
         {
-            if (pUnit->getActionList().contains(ACTION_REPAIR))
+            if (pMap->onMap(pUnit->getX() + unitFields->at(i2).x(), pUnit->getY() + unitFields->at(i2).y()) &&
+                pMap->getTerrain(pUnit->getX() + unitFields->at(i2).x(), pUnit->getY() + unitFields->at(i2).y())->getUnit() == nullptr)
             {
-                UnitPathFindingSystem turnPfs(pUnit);
-                turnPfs.explore();
-                QVector<QPoint> targets = turnPfs.getAllNodePoints();
-                GameAction* pAction = new GameAction(ACTION_REPAIR);
-                pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
-
-                for (qint32 i2 = 0; i2 < targets.size(); i2++)
+                QVector3D point = QVector3D(pUnit->getX() + unitFields->at(i2).x(), pUnit->getY() + unitFields->at(i2).y(), 1);
+                if (!unitTargets.contains(point) )
                 {
-                    qint32 index = CoreAI::index(unitTargets, targets[i2]);
-                    if (index >= 0 && pUnit->getPosition() != unitPos[index])
+                    unitTargets.append(point);
+                    unitPos.append(pUnit->getPosition());
+                }
+            }
+        }
+    }
+    delete unitFields;
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        Unit* pUnit = pUnits->at(i);
+        if (!pUnit->getHasMoved() &&
+            (pUnit->getLoadedUnitCount() == 0) &&
+            (pUnit->getLoadingPlace() == 0 || useTransporters))
+        {
+            QStringList actions = pUnit->getActionList();
+            for (const auto& action : actions)
+            {
+                GameAction* pAction = new GameAction(action);
+                if (action.startsWith(ACTION_SUPPORTSINGLE) ||
+                    action.startsWith(ACTION_SUPPORTALL))
+                {
+                    UnitPathFindingSystem turnPfs(pUnit);
+                    turnPfs.explore();
+                    QVector<QPoint> targets = turnPfs.getAllNodePoints();
+                    pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
+                    for (qint32 i2 = 0; i2 < targets.size(); i2++)
                     {
-                        addSelectedFieldData(pAction, unitPos[index]);
-                        QVector<QPoint> path = turnPfs.getPath(targets[i2].x(), targets[i2].y());
-                        pAction->setMovepath(path, turnPfs.getCosts(path));
-                        performAction(pAction);
-                        return true;
+                        qint32 index = CoreAI::index(unitTargets, targets[i2]);
+                        if (index >= 0 && pUnit->getPosition() != unitPos[index])
+                        {
+                            if (action.startsWith(ACTION_SUPPORTSINGLE))
+                            {
+                                addSelectedFieldData(pAction, unitPos[index]);
+                            }
+                            QVector<QPoint> path = turnPfs.getPath(targets[i2].x(), targets[i2].y());
+                            pAction->setMovepath(path, turnPfs.getCosts(path));
+                            if (pAction->canBePerformed())
+                            {
+                                performAction(pAction);
+                                return true;
+                            }
+                        }
                     }
+                    delete pAction;
                 }
             }
         }
     }
     return false;
 }
-
 
 bool CoreAI::processPredefinedAi()
 {

@@ -13,7 +13,7 @@ var Constructor = function()
         }
         if (((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
             (action.getMovementTarget() === null)) &&
-            (ACTION_REPAIR.getRepairFields(action).length > 0))
+            (ACTION_SUPPORTSINGLE_REPAIR.getRepairFields(action).length > 0))
         {
             return true;
         }
@@ -39,7 +39,7 @@ var Constructor = function()
         var unit = action.getTargetUnit();
         var actionTargetField = action.getActionTarget();
         data.setColor("#C800FF00");
-        var fields = ACTION_REPAIR.getRepairFields(action);
+        var fields = ACTION_SUPPORTSINGLE_REPAIR.getRepairFields(action);
         for (var i3 = 0; i3 < fields.length; i3++)
         {
             data.addPoint(Qt.point(fields[i3].x, fields[i3].y));
@@ -92,32 +92,32 @@ var Constructor = function()
         // we need to move the unit to the target position
         var unit = action.getTargetUnit();
         var animation = Global[unit.getUnitID()].doWalkingAnimation(action);
-        animation.setEndOfAnimationCall("ACTION_REPAIR", "performPostAnimation");
+        animation.setEndOfAnimationCall("ACTION_SUPPORTSINGLE_REPAIR", "performPostAnimation");
         // move unit to target position
         unit.moveUnitAction(action);
         // disable unit commandments for this turn
         action.startReading();
         // read action data
-        ACTION_REPAIR.postAnimationUnit = unit;
-        ACTION_REPAIR.postAnimationTargetX = action.readDataInt32();
-        ACTION_REPAIR.postAnimationTargetY = action.readDataInt32();
+        ACTION_SUPPORTSINGLE_REPAIR.postAnimationUnit = unit;
+        ACTION_SUPPORTSINGLE_REPAIR.postAnimationTargetX = action.readDataInt32();
+        ACTION_SUPPORTSINGLE_REPAIR.postAnimationTargetY = action.readDataInt32();
     };
     this.performPostAnimation = function(postAnimation)
     {
-        var terrain = map.getTerrain(ACTION_REPAIR.postAnimationTargetX, ACTION_REPAIR.postAnimationTargetY);
+        var terrain = map.getTerrain(ACTION_SUPPORTSINGLE_REPAIR.postAnimationTargetX, ACTION_SUPPORTSINGLE_REPAIR.postAnimationTargetY);
         var repairUnit = terrain.getUnit();
-        var animation = GameAnimationFactory.createAnimation(ACTION_REPAIR.postAnimationTargetX, ACTION_REPAIR.postAnimationTargetY);
+        var animation = GameAnimationFactory.createAnimation(ACTION_SUPPORTSINGLE_REPAIR.postAnimationTargetX, ACTION_SUPPORTSINGLE_REPAIR.postAnimationTargetY);
         animation.addSprite("repair", map.getImageSize() / 2, map.getImageSize() / 3, 400);
         animation.addText(qsTr("REPAIR"), map.getImageSize() / 2 + 15, map.getImageSize() / 3, 0.7);
 
         repairUnit.refill();
         UNIT.repairUnit(repairUnit, 1);
-        ACTION_REPAIR.postAnimationUnit.setHasMoved(true);
-        ACTION_REPAIR.postAnimationUnit = null;
-        ACTION_REPAIR.postAnimationTargetX = -1;
-        ACTION_REPAIR.postAnimationTargetY = -1;
+        ACTION_SUPPORTSINGLE_REPAIR.postAnimationUnit.setHasMoved(true);
+        ACTION_SUPPORTSINGLE_REPAIR.postAnimationUnit = null;
+        ACTION_SUPPORTSINGLE_REPAIR.postAnimationTargetX = -1;
+        ACTION_SUPPORTSINGLE_REPAIR.postAnimationTargetY = -1;
     };
 }
 
 Constructor.prototype = ACTION;
-var ACTION_REPAIR = new Constructor();
+var ACTION_SUPPORTSINGLE_REPAIR = new Constructor();

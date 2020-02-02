@@ -268,35 +268,6 @@
     </message>
 </context>
 <context>
-    <name>ACTION_RATION</name>
-    <message>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="60"/>
-        <source>Ration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="101"/>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="113"/>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="126"/>
-        <location filename="../resources/scripts/actions/ACTION_RATION.js" line="138"/>
-        <source>RATION</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ACTION_REPAIR</name>
-    <message>
-        <location filename="../resources/scripts/actions/ACTION_REPAIR.js" line="27"/>
-        <source>Repair</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/actions/ACTION_REPAIR.js" line="111"/>
-        <source>REPAIR</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ACTION_SAVEGAME</name>
     <message>
         <location filename="../resources/scripts/actions/ACTION_SAVEGAME.js" line="10"/>
@@ -309,6 +280,35 @@
     <message>
         <location filename="../resources/scripts/actions/ACTION_STEALTH.js" line="26"/>
         <source>Stealth</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_SUPPORTALL_RATION</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="60"/>
+        <source>Ration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="101"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="113"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="126"/>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTALL_RATION.js" line="138"/>
+        <source>RATION</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ACTION_SUPPORTSINGLE_REPAIR</name>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="27"/>
+        <source>Repair</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/actions/ACTION_SUPPORTSINGLE_REPAIR.js" line="111"/>
+        <source>REPAIR</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
