@@ -3952,54 +3952,54 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="94"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="95"/>
         <source>The new event that should happen once the conditions are met.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="98"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="99"/>
         <source>Add Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="111"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="112"/>
         <source>Immediate Start: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="115"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="116"/>
         <source>If checked the game starts without beeing able to change rules, players or co&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="122"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="123"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="131"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="132"/>
         <source>Save Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="138"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="139"/>
         <source>Load Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="279"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="360"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="280"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="361"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="286"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="367"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="287"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="368"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="294"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="295"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4024,6 +4024,120 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventaddfunds.cpp" line="92"/>
         <source>The funds the given player will earn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventAnimation</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="83"/>
+        <source>X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="87"/>
+        <source>Field X on which the animation will be shown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="99"/>
+        <source>Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="103"/>
+        <source>Field Y on which the animation will be shown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="115"/>
+        <source>Offset X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="120"/>
+        <source>X-Offset of the animation. Moving it away from the center.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="132"/>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="149"/>
+        <source>Offset Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="137"/>
+        <source>Y-Offset of the animation. Moving it away from the center.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="154"/>
+        <source>Recoloring color for the animation sprite.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="166"/>
+        <source>Sleep after finish: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="171"/>
+        <source>Time in ms the animation remains visible after all frames were played.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="183"/>
+        <source>Scale X: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="188"/>
+        <source>X-Scaling of the actual sprite.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="200"/>
+        <source>Scale Y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="205"/>
+        <source>Y-Scaling of the actual sprite.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="217"/>
+        <source>Delay: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="222"/>
+        <source>Time in ms before the animation gets played.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="234"/>
+        <source>Sprite: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="238"/>
+        <source>Current select animation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="246"/>
+        <source>Select Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="257"/>
+        <source>Frames: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventanimation.cpp" line="262"/>
+        <source>Amount of frames for the animation. Only has an effect on custom animations.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -93,7 +93,7 @@ void GameAnimation::addSprite2(QString spriteID, float offsetX, float offsetY, q
 void GameAnimation::addSprite3(QString spriteID, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay, qint32 frames)
 {
     GameAnimationManager* pGameAnimationManager = GameAnimationManager::getInstance();
-    oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID);
+    oxygine::ResAnim* pAnim = pGameAnimationManager->getResAnim(spriteID, oxygine::error_policy::ep_ignore_error);
     if (pAnim != nullptr)
     {
         loadSpriteAnim(pAnim, offsetX, offsetY, color, sleepAfterFinish, scaleX, scaleY, delay);
