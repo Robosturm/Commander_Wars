@@ -81,9 +81,18 @@ public:
     enum Fog
     {
         Fog_Off,
-        Fog_OfWar
+        Fog_OfWar,
+        Fog_OfShroud
     };
     Q_ENUM(Fog)
+
+    enum VisionType
+    {
+        VisionType_Shrouded,
+        VisionType_Fogged,
+        VisionType_Clear
+    };
+    Q_ENUM(VisionType)
 
     enum COMood
     {

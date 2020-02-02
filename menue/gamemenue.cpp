@@ -690,13 +690,14 @@ void GameMenue::actionPerformed()
         m_CurrentActionUnit->postAction();
         m_CurrentActionUnit = nullptr;
     }
-    m_IngameInfoBar->updateTerrainInfo(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), true);
-    m_IngameInfoBar->updateMinimap();
-    m_IngameInfoBar->updatePlayerInfo();
     GameMap* pMap = GameMap::getInstance();
     pMap->getGameScript()->actionDone();
     pMap->getGameRules()->checkVictory();
     pMap->getGameRules()->createFogVision();
+
+    m_IngameInfoBar->updateTerrainInfo(m_Cursor->getMapPointX(), m_Cursor->getMapPointY(), true);
+    m_IngameInfoBar->updateMinimap();
+    m_IngameInfoBar->updatePlayerInfo();
     if (GameAnimationFactory::getAnimationCount() == 0)
     {
         if (m_pStoredAction != nullptr)
@@ -1075,7 +1076,9 @@ void GameMenue::keyInput(oxygine::KeyEvent event)
             Mainapp* pApp = Mainapp::getInstance();
             pApp->suspendThread();
             GameMap* pMap = GameMap::getInstance();
-            if (pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()))
+            Player* pPlayer = pMap->getCurrentViewPlayer();
+            if (pMap->onMap(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()) &&
+                pPlayer->getFieldVisibleType(m_Cursor->getMapPointX(), m_Cursor->getMapPointY()) != GameEnums::VisionType_Shrouded)
             {
                 Terrain* pTerrain = pMap->getTerrain(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
                 spFieldInfo fieldinfo = new FieldInfo(pTerrain, pTerrain->getUnit());

@@ -64,13 +64,31 @@ void Player::loadVisionFields()
     GameMap* pMap = GameMap::getInstance();
     qint32 width = pMap->getMapWidth();
     qint32 heigth = pMap->getMapHeight();
+    GameEnums::Fog mode = pMap->getGameRules()->getFogMode();
     m_FogVisionFields.clear();
     for (qint32 x = 0; x < width; x++)
     {
-        m_FogVisionFields.append(QVector<std::tuple<bool, qint32, bool>>());
+        m_FogVisionFields.append(QVector<std::tuple<GameEnums::VisionType, qint32, bool>>());
         for (qint32 y = 0; y < heigth; y++)
         {
-            m_FogVisionFields[x].append(std::tuple<bool, qint32, bool>(false, 0, false));
+            switch (mode)
+            {
+                case GameEnums::Fog::Fog_Off:
+                {
+                    m_FogVisionFields[x].append(std::tuple<GameEnums::VisionType, qint32, bool>(GameEnums::VisionType_Clear, 0, false));
+                    break;
+                }
+                case GameEnums::Fog::Fog_OfWar:
+                {
+                    m_FogVisionFields[x].append(std::tuple<GameEnums::VisionType, qint32, bool>(GameEnums::VisionType_Fogged, 0, false));
+                    break;
+                }
+                case GameEnums::Fog::Fog_OfShroud:
+                {
+                    m_FogVisionFields[x].append(std::tuple<GameEnums::VisionType, qint32, bool>(GameEnums::VisionType_Shrouded, 0, false));
+                    break;
+                }
+            }
         }
     }
 }
@@ -493,7 +511,7 @@ void Player::setIsDefeated(bool value)
 
 void Player::addVisionField(qint32 x, qint32 y, qint32 duration, bool directView)
 {
-    std::get<0>(m_FogVisionFields[x][y]) = true;
+    std::get<0>(m_FogVisionFields[x][y]) = GameEnums::VisionType_Clear;
     if (duration > std::get<1>(m_FogVisionFields[x][y]))
     {
         std::get<1>(m_FogVisionFields[x][y]) = duration;
@@ -525,7 +543,10 @@ void Player::updatePlayerVision(bool reduceTimer)
                 qint32 duration = std::get<1>(m_FogVisionFields[x][y]);
                 if (duration <= 0)
                 {
-                    std::get<0>(m_FogVisionFields[x][y]) = false;
+                    if (std::get<0>(m_FogVisionFields[x][y]) == GameEnums::VisionType_Clear)
+                    {
+                        std::get<0>(m_FogVisionFields[x][y]) = GameEnums::VisionType_Fogged;
+                    }
                     std::get<1>(m_FogVisionFields[x][y]) = 0;
                     std::get<2>(m_FogVisionFields[x][y]) = false;
                 }
@@ -553,7 +574,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                                 ((pUnit != nullptr) && visionHide &&
                                  !pUnit->useTerrainDefense() && !pUnit->getHidden()))
                             {
-                                std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = true;
+                                std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = GameEnums::VisionType_Clear;
                             }
                         }
                     }
@@ -564,7 +585,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                     ((isAlly( pBuilding->getOwner())) ||
                      (checkAlliance(pBuilding->getOwner()) == GameEnums::Alliance_Friend)))
                 {
-                    std::get<0>(m_FogVisionFields[x][y]) = true;
+                    std::get<0>(m_FogVisionFields[x][y]) = GameEnums::VisionType_Clear;
                     qint32 visionRange = pBuilding->getVision();
                     if (visionRange >= 0)
                     {
@@ -581,7 +602,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                                     ((pUnit != nullptr) && visionHide &&
                                      !pUnit->useTerrainDefense() && !pUnit->getHidden()))
                                 {
-                                    std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = true;
+                                    std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = GameEnums::VisionType_Clear;
                                 }
                             }
                         }
@@ -607,12 +628,12 @@ void Player::updatePlayerVision(bool reduceTimer)
                                 ((pUnit != nullptr) && visionHide &&
                                  !pUnit->useTerrainDefense() && !pUnit->getHidden()))
                             {
-                                std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = true;
+                                std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = GameEnums::VisionType_Clear;
                             }
                             // terrain hides are visible if we're near it.
                             else if (((qAbs(point.x()) + qAbs(point.y())) <= 1))
                             {
-                                std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = true;
+                                std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = GameEnums::VisionType_Clear;
                             }
                             else
                             {
@@ -636,9 +657,31 @@ bool Player::getFieldVisible(qint32 x, qint32 y)
         {
             return true;
         }
+        case GameEnums::Fog_OfShroud:
         case GameEnums::Fog_OfWar:
         {
-            return std::get<0>(m_FogVisionFields[x][y]);
+            return (std::get<0>(m_FogVisionFields[x][y]) == GameEnums::VisionType_Clear);
+        }
+    }
+}
+
+GameEnums::VisionType Player::getFieldVisibleType(qint32 x, qint32 y)
+{
+    GameMap* pMap = GameMap::getInstance();
+    switch (pMap->getGameRules()->getFogMode())
+    {
+        case GameEnums::Fog_Off:
+        {
+            return GameEnums::VisionType_Clear;
+        }
+        case GameEnums::Fog_OfShroud:
+        case GameEnums::Fog_OfWar:
+        {
+            if (pMap->onMap(x, y))
+            {
+                return std::get<0>(m_FogVisionFields[x][y]);
+            }
+            return GameEnums::VisionType_Shrouded;
         }
     }
 }
@@ -1072,7 +1115,7 @@ void Player::serializeObject(QDataStream& pStream)
      {
          for (qint32 y = 0; y < heigth; y++)
          {
-             pStream << std::get<0>(m_FogVisionFields[x][y]);
+             pStream << static_cast<qint32>(std::get<0>(m_FogVisionFields[x][y]));
              pStream << std::get<1>(m_FogVisionFields[x][y]);
              pStream << std::get<2>(m_FogVisionFields[x][y]);
          }
@@ -1137,28 +1180,50 @@ void Player::deserializeObject(QDataStream& pStream)
             pStream >> heigth;
             for (qint32 x = 0; x < width; x++)
             {
-                m_FogVisionFields.append(QVector<std::tuple<bool, qint32, bool>>());
+                m_FogVisionFields.append(QVector<std::tuple<GameEnums::VisionType, qint32, bool>>());
                 for (qint32 y = 0; y < heigth; y++)
                 {                    
-                    bool value = 0;
+                    GameEnums::VisionType value = GameEnums::VisionType_Shrouded;
                     qint32 duration = 0;
                     bool directView = false;
-                    if (version > 8)
+                    if (version > 10)
                     {
-                        pStream >> value;
+                        qint32 buf = 0;
+                        pStream >> buf;
+                        value = static_cast<GameEnums::VisionType>(buf);
+                    }
+                    else if (version > 8)
+                    {
+                        bool value1 = false;
+                        pStream >> value1;
+                        if (value1)
+                        {
+                            value = GameEnums::VisionType_Clear;
+                        }
+                        else
+                        {
+                            value = GameEnums::VisionType_Fogged;
+                        }
                     }
                     else
                     {
                         qint32 buf = 0;
                         pStream >> buf;
-                        value = buf;
+                        if (buf)
+                        {
+                            value = GameEnums::VisionType_Clear;
+                        }
+                        else
+                        {
+                            value = GameEnums::VisionType_Fogged;
+                        }
                     }
                     pStream >> duration;
                     if (version > 8)
                     {
                         pStream >> directView;
                     }
-                    m_FogVisionFields[x].append(std::tuple<bool, qint32, bool>(value, duration, directView));
+                    m_FogVisionFields[x].append(std::tuple<GameEnums::VisionType, qint32, bool>(value, duration, directView));
                 }
             }
         }

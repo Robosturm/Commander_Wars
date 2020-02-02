@@ -24,6 +24,7 @@ class QmlVectorUnit;
 class QmlVectorBuilding;
 class QmlVectorPoint;
 class Building;
+class Terrain;
 
 class CoreAI : public BaseGameInputIF
 {
@@ -264,7 +265,12 @@ public slots:
 protected:
     void addMenuItemData(GameAction* pGameAction, QString itemID, qint32 cost);
     void addSelectedFieldData(GameAction* pGameAction, QPoint point);
-
+    /**
+     * @brief isAttackOnTerrainAllowed
+     * @param pTerrain
+     * @return
+     */
+    bool isAttackOnTerrainAllowed(Terrain* pTerrain);
     /**
      * @brief processPredefinedAi
      * @return

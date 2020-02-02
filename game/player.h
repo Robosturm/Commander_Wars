@@ -44,7 +44,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 10;
+        return 11;
     }
     /**
      * @brief setBaseGameInput sets the player input
@@ -348,6 +348,13 @@ public slots:
      */
     bool getFieldVisible(qint32 x, qint32 y);
     /**
+     * @brief getFieldVisibleType
+     * @param x
+     * @param y
+     * @return
+     */
+    GameEnums::VisionType getFieldVisibleType(qint32 x, qint32 y);
+    /**
      * @brief getFieldDirectVisible
      * @param x
      * @param y
@@ -401,7 +408,7 @@ private:
      */
     spBaseGameInputIF m_pBaseGameInput{nullptr};
     bool isDefeated{false};
-    QVector<QVector<std::tuple<bool, qint32, bool>>> m_FogVisionFields;
+    QVector<QVector<std::tuple<GameEnums::VisionType, qint32, bool>>> m_FogVisionFields;
     /**
      * @brief m_BuildList contains all units we're allowed to build
      */

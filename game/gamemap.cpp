@@ -880,6 +880,16 @@ void GameMap::startGame()
             pAI->setEnableNeutralTerrainAttack(m_Rules->getAiAttackTerrain());
         }
     }
+    QStringList mods = Settings::getMods();
+    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    for (const auto& mod : mods)
+    {
+        if (QFile::exists(mod + "/scripts/mapstart.js"))
+        {
+            pInterpreter->openScript(mod + "/scripts/mapstart.js");
+            pInterpreter->doFunction("MapStart", "gameStart");
+        }
+    }
 }
 
 void GameMap::clearMap()

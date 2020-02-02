@@ -383,9 +383,7 @@ void CoreAI::getBestAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<Q
             }
             else
             {
-                if ((enableNeutralTerrainAttack && pTerrain->getHp() > 0) ||
-                    (pTerrain->getBuilding() != nullptr && pTerrain->getBuilding()->getOwner() != nullptr) ||
-                    (enableNeutralTerrainAttack && pTerrain->getBuilding() != nullptr && pTerrain->getBuilding()->getOwner() == nullptr))
+                if (isAttackOnTerrainAllowed(pTerrain))
                 {
                     if (ret.size() == 0)
                     {
@@ -488,9 +486,7 @@ void CoreAI::getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVect
             }
             else
             {
-                if ((enableNeutralTerrainAttack && pTerrain->getHp() > 0) ||
-                    (pTerrain->getBuilding() != nullptr && pTerrain->getBuilding()->getOwner() != nullptr) ||
-                    (enableNeutralTerrainAttack && pTerrain->getBuilding() != nullptr && pTerrain->getBuilding()->getOwner() == nullptr))
+                if (isAttackOnTerrainAllowed(pTerrain))
                 {
                     ret.append(QVector4D(target.x(), target.y(), static_cast<float>(damage.x()) * buildingValue, damage.x()));
                     QPoint point = pAction->getActionTarget();
@@ -500,6 +496,17 @@ void CoreAI::getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVect
         }
         delete pMarkedFieldData;
     }
+}
+
+bool CoreAI::isAttackOnTerrainAllowed(Terrain* pTerrain)
+{
+    if ((enableNeutralTerrainAttack && pTerrain->getHp() > 0) ||
+        (pTerrain->getBuilding() != nullptr && pTerrain->getBuilding()->getOwner() != nullptr) ||
+        (enableNeutralTerrainAttack && pTerrain->getBuilding() != nullptr && pTerrain->getBuilding()->getOwner() == nullptr))
+    {
+        return true;
+    }
+    return false;
 }
 
 QPointF CoreAI::calcFundsDamage(QRectF damage, Unit* pAtk, Unit* pDef)
@@ -1304,7 +1311,7 @@ void CoreAI::appendTerrainBuildingAttackTargets(Unit* pUnit, QmlVectorBuilding* 
             for (qint32 y = 0; y < heigth; y++)
             {
                 Terrain* pTerrain = pMap->getTerrain(x, y);
-                if (pTerrain->getHp() > 0 &&
+                if (isAttackOnTerrainAllowed(pTerrain) &&
                     pUnit->isEnvironmentAttackable(pTerrain->getID()))
                 {
                     for (qint32 i3 = 0; i3 < pTargetFields->size(); i3++)

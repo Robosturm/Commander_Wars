@@ -7,13 +7,13 @@ var Constructor = function()
         var actionTargetField = action.getActionTarget();
         var targetField = action.getTarget();
         if ((unit.getHasMoved() === true) ||
-            (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
+                (unit.getBaseMovementCosts(actionTargetField.x, actionTargetField.y) <= 0))
         {
             return false;
         }
         // are we allowed to attack from this field?
         if (((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y)) ||
-            ((action.getMovementTarget() === null) && unit.canMoveAndFire(targetField)))
+                ((action.getMovementTarget() === null) && unit.canMoveAndFire(targetField)))
         {
             var fields = globals.getCircle(unit.getMinRange(), unit.getMaxRange(actionTargetField));
             // check all fields we can attack
@@ -21,35 +21,38 @@ var Constructor = function()
             {
                 var x = fields.at(i).x + actionTargetField.x;
                 var y = fields.at(i).y + actionTargetField.y;
-                // check with which weapon we can attack and if we could deal damage with this weapon
-                if (map.onMap(x, y))
+                if (unit.getOwner().getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
                 {
-                    var defTerrain = map.getTerrain(x, y);
-                    var defBuilding = defTerrain.getBuilding();
-                    var defUnit = defTerrain.getUnit();
-                    if (defUnit !== null)
+                    // check with which weapon we can attack and if we could deal damage with this weapon
+                    if (map.onMap(x, y))
                     {
-                        if (unit.isAttackable(defUnit))
+                        var defTerrain = map.getTerrain(x, y);
+                        var defBuilding = defTerrain.getBuilding();
+                        var defUnit = defTerrain.getUnit();
+                        if (defUnit !== null)
                         {
-                            return true
-                        }
-                    }
-                    if (((defBuilding !== null) && (defBuilding.getHp() > 0) &&
-                         (defBuilding.getIsAttackable(x, y) && unit.getOwner().isEnemy(defBuilding.getOwner()))) ||
-                         (defTerrain.getHp() > 0))
-                    {
-                        if (unit.hasAmmo1() && unit.getWeapon1ID() !== "")
-                        {
-                            if (Global[unit.getWeapon1ID()].getEnviromentDamage(defTerrain.getID()) > 0)
+                            if (unit.isAttackable(defUnit))
                             {
-                                return true;
+                                return true
                             }
                         }
-                        if (unit.hasAmmo2() && unit.getWeapon2ID() !== "")
+                        if (((defBuilding !== null) && (defBuilding.getHp() > 0) &&
+                             (defBuilding.getIsAttackable(x, y) && unit.getOwner().isEnemy(defBuilding.getOwner()))) ||
+                                (defTerrain.getHp() > 0))
                         {
-                            if (Global[unit.getWeapon2ID()].getEnviromentDamage(defTerrain.getID()) > 0)
+                            if (unit.hasAmmo1() && unit.getWeapon1ID() !== "")
                             {
-                                return true;
+                                if (Global[unit.getWeapon1ID()].getEnviromentDamage(defTerrain.getID()) > 0)
+                                {
+                                    return true;
+                                }
+                            }
+                            if (unit.hasAmmo2() && unit.getWeapon2ID() !== "")
+                            {
+                                if (Global[unit.getWeapon2ID()].getEnviromentDamage(defTerrain.getID()) > 0)
+                                {
+                                    return true;
+                                }
                             }
                         }
                     }
@@ -89,8 +92,8 @@ var Constructor = function()
     this.calcAttackerDamage = function(attacker, attackerWeapon, takenDamage, attackerPosition, defender, luckMode)
     {
         return ACTION_FIRE.calcDamage(attacker, attackerWeapon, attackerPosition, attacker.getHp() - takenDamage / 10.0,
-                          defender, defender.getPosition(), false,
-                          luckMode)
+                                      defender, defender.getPosition(), false,
+                                      luckMode)
     };
     this.calcDefenderDamage = function(attacker, attackerPosition, defender, defenderWeapon, takenDamage, luckMode)
     {
@@ -237,7 +240,7 @@ var Constructor = function()
             {
                 if (((defBuilding !== null) && (defBuilding.getHp() > 0) &&
                      (defBuilding.getIsAttackable(x, y) && unit.getOwner().isEnemy(defBuilding.getOwner()))) ||
-                     (defTerrain.getHp() > 0))
+                        (defTerrain.getHp() > 0))
                 {
                     if (unit.hasAmmo1() && unit.getWeapon1ID() !== "")
                     {
@@ -281,11 +284,15 @@ var Constructor = function()
         {
             var x = fields.at(i).x + actionTargetField.x;
             var y = fields.at(i).y + actionTargetField.y;
-            var result = ACTION_FIRE.calcBattleDamage(action, x, y, GameEnums.LuckDamageMode_Off);
-            if (result.x >= 0)
+            // generally attacks on shrouded fields are forbidden
+            if (unit.getOwner().getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
             {
-                data.addPoint(Qt.point(x, y));
-                data.addZInformation(result.x);
+                var result = ACTION_FIRE.calcBattleDamage(action, x, y, GameEnums.LuckDamageMode_Off);
+                if (result.x >= 0)
+                {
+                    data.addPoint(Qt.point(x, y));
+                    data.addZInformation(result.x);
+                }
             }
         }
         fields.remove();

@@ -94,7 +94,7 @@ void HumanPlayerInput::rightClickDown(qint32 x, qint32 y)
             else if (m_CurrentMenu.get() == nullptr)
             {
                 Unit* pUnit = m_pGameAction->getTargetUnit();
-                if (pUnit != nullptr)
+                if (pUnit != nullptr && !pUnit->getHasMoved())
                 {
                     qint32 costs = m_pUnitPathFindingSystem->getTargetCosts(x, y);
                     if (m_pUnitPathFindingSystem->getCosts(m_ArrowPoints) != costs &&
@@ -681,11 +681,11 @@ void HumanPlayerInput::createMarkedMoveFields()
         {
             if (m_pUnitPathFindingSystem->getTargetCosts(points[i].x(), points[i].y()) > movementpoints)
             {
-                createMarkedField(points[i], QColor(128, 0, 255, 255), Terrain::DrawPriority::MarkedFieldLow);
+                createMarkedField(points[i], QColor(128, 0, 255, 255), Terrain::DrawPriority::MarkedField);
             }
             else
             {
-                createMarkedField(points[i], QColor(0, 128, 255, 255), Terrain::DrawPriority::MarkedFieldLow);
+                createMarkedField(points[i], QColor(0, 128, 255, 255), Terrain::DrawPriority::MarkedField);
             }
         }
     }

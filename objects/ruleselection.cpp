@@ -198,7 +198,7 @@ void RuleSelection::showRuleSelection()
     textField->setHtmlText(tr("Fog Of War: "));
     textField->setPosition(30, y);
     addChild(textField);
-    QVector<QString> fogModes = {tr("Off"), tr("Fog of War")};
+    QVector<QString> fogModes = {tr("Off"), tr("Fog of War"), tr("Fog of Shroud")};
     spDropDownmenu fogOfWar = new DropDownmenu(200, fogModes);
     fogOfWar->setTooltipText(tr("Select the fog of war rule for the current game."));
     fogOfWar->setPosition(textWidth, textField->getY());

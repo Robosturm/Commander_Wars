@@ -224,6 +224,27 @@ public slots:
      */
     void createFogVision();
     /**
+     * @brief createFieldFogClear
+     * @param x
+     * @param y
+     * @param pPlayer
+     */
+    void createFieldFogClear(qint32 x, qint32 y, Player* pPlayer);
+    /**
+     * @brief createFieldFogWar
+     * @param x
+     * @param y
+     * @param pPlayer
+     */
+    void createFieldFogWar(qint32 x, qint32 y, Player* pPlayer);
+    /**
+     * @brief createFieldFogShrouded
+     * @param x
+     * @param y
+     * @param pPlayer
+     */
+    void createFieldFogShrouded(qint32 x, qint32 y, Player* pPlayer);
+    /**
      * @brief showHideStealthUnit
      * @param pPlayer
      * @param pUnit

@@ -29,10 +29,9 @@ public:
     {
         MarkedFieldMap,
         Terrain = 0,
-        Building = 1,
-        MarkedFieldLow = 2,
-        Unit = 3,
-        Fog,
+        Shroud,
+        Building,
+        MarkedField,
         Arrow
     };
     static spTerrain createTerrain(QString terrainID, qint32 x, qint32 y, QString  currentTerrainID);
@@ -110,7 +109,11 @@ public:
      * @return
      */
     void setTerrainSpriteName(const QString &terrainSpriteName);
-
+    /**
+     * @brief setSpriteVisibility
+     * @param value
+     */
+    void setSpriteVisibility(bool value);
 public slots:
     /**
      * @brief getTerrainGroup
@@ -317,6 +320,9 @@ private:
      * @brief m_pTerrainSprite actor holding our sprite data
      */
     oxygine::spSprite m_pTerrainSprite{nullptr};
+    /**
+     * @brief m_pOverlaySprites
+     */
     QVector<oxygine::spSprite> m_pOverlaySprites;
     /**
      * @brief fixedSprite stores if the selected sprite is fixed or will be loaded based on the surrounding and random factors

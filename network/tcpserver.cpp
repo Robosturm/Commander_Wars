@@ -51,9 +51,7 @@ void TCPServer::disconnectTCP()
             pTCPSockets[0]->close();
             Console::print(tr("Client disconnected."), Console::eDEBUG);
         }
-        pRXTasks[0]->close();
         pRXTasks.removeAt(0);
-        pTXTasks[0]->close();
         pTXTasks.removeAt(0);
         pTCPSockets.removeAt(0);
     }
@@ -135,13 +133,13 @@ void TCPServer::onConnect()
         m_SocketIDs.append(m_idCounter);
 
         // Start RX-Task
-        RxTask* pRXTask = new RxTask(pSocket, m_idCounter, this);
+        RxTask* pRXTask = new RxTask(pSocket.get(), m_idCounter, this);
         pRXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         pRXTasks.append(pRXTask);
         QObject::connect(pSocket.get(), &QTcpSocket::readyRead, pRXTask, &RxTask::recieveData);
 
         // start TX-Task
-        TxTask* pTXTask = new TxTask(pSocket, m_idCounter, this);
+        TxTask* pTXTask = new TxTask(pSocket.get(), m_idCounter, this);
         pTXTask->moveToThread(Mainapp::getInstance()->getNetworkThread());
         pTXTasks.append(pTXTask);
         QObject::connect(this, &TCPServer::sig_sendData, pTXTask, &TxTask::send);

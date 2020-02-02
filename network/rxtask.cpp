@@ -4,11 +4,11 @@
 
 #include "network/NetworkInterface.h"
 
-RxTask::RxTask(std::shared_ptr<QTcpSocket> pSocket, quint64 socketID, NetworkInterface* CommIF)
+RxTask::RxTask(QTcpSocket* pSocket, quint64 socketID, NetworkInterface* CommIF)
     : m_pSocket(pSocket),
       pIF(CommIF),
       m_SocketID(socketID),
-      m_pStream(m_pSocket.get())
+      m_pStream(m_pSocket)
 {
     m_pStream.setVersion(QDataStream::Qt_5_12);
 }

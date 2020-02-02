@@ -18,16 +18,8 @@ class TxTask : public QObject, public oxygine::ref_counter
 {
     Q_OBJECT
 public:
-    TxTask(std::shared_ptr<QTcpSocket> pSocket, quint64 socketID, NetworkInterface* CommIF);
+    TxTask(QTcpSocket* pSocket, quint64 socketID, NetworkInterface* CommIF);
     virtual ~TxTask();
-    /**
-     * @brief close
-     */
-    inline void close()
-    {
-        disconnect();
-        m_pSocket = nullptr;
-    }
 public slots:
     /**
      * @brief send sends the Object via TCP
@@ -35,7 +27,7 @@ public slots:
      */
     void send(quint64 socketID, QByteArray data, NetworkInterface::NetworkSerives service, bool forwardData);
 private:
-   std::shared_ptr<QTcpSocket> m_pSocket;
+   QTcpSocket* m_pSocket;
    quint64 m_SocketID;
    NetworkInterface* pIF;
 };

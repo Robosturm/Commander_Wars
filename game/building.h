@@ -303,6 +303,7 @@ public slots:
     GameEnums::BuildingTarget getBuildingTargets();
 private:
     QVector<oxygine::spSprite> m_pBuildingSprites;
+
     QVector<bool> m_addPlayerColor;
     /**
      * @brief m_BuildingID the id of this building

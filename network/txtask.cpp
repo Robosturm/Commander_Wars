@@ -6,10 +6,10 @@
 #include "network/txtask.h"
 #include "network/NetworkInterface.h"
 
-TxTask::TxTask(std::shared_ptr<QTcpSocket> pSocket, quint64 socketID, NetworkInterface* CommIF)
+TxTask::TxTask(QTcpSocket* pSocket, quint64 socketID, NetworkInterface* CommIF)
  : m_pSocket(pSocket),
-   pIF(CommIF),
-   m_SocketID(socketID)
+   m_SocketID(socketID),
+   pIF(CommIF)
 {
 }
 

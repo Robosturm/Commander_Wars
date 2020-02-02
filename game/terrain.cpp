@@ -60,6 +60,23 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y)
     }
 }
 
+Terrain::~Terrain()
+{
+}
+
+void Terrain::setSpriteVisibility(bool value)
+{
+    if (m_pBaseTerrain.get() != nullptr)
+    {
+        m_pBaseTerrain->setSpriteVisibility(value);
+    }
+    m_pTerrainSprite->setVisible(value);
+    for (auto& sprite : m_pOverlaySprites)
+    {
+        sprite->setVisible(value);
+    }
+}
+
 QString Terrain::getTerrainSpriteName() const
 {
     return m_terrainSpriteName;
@@ -108,10 +125,6 @@ QString Terrain::getTerrainName() const
 void Terrain::setTerrainName(const QString &value)
 {
     terrainName = value;
-}
-
-Terrain::~Terrain()
-{
 }
 
 void Terrain::syncAnimation()
