@@ -4,6 +4,8 @@
 
 #include "coreengine/tweentogglevisibility.h"
 
+#include "coreengine/audiothread.h"
+
 #include "resource_management/battleanimationmanager.h"
 
 #include "game/gamemap.h"
@@ -50,36 +52,36 @@ void BattleAnimationSprite::loadAnimation(QString animationType)
 
 void BattleAnimationSprite::loadAnimation(QString animationType, Unit* pUnit, Unit* pDefender, qint32 attackerWeapon, bool clearSprite)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     if (clearSprite)
     {
         m_Actor->removeChildren();
     }
     QString function1 = animationType;
     QJSValueList args1;
-    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
-    QJSValue obj2 = pApp->getInterpreter()->newQObject(pUnit);
+    QJSValue obj2 = pInterpreter->newQObject(pUnit);
     args1 << obj2;
-    QJSValue obj3 = pApp->getInterpreter()->newQObject(pDefender);
+    QJSValue obj3 = pInterpreter->newQObject(pDefender);
     args1 << obj3;
     args1 << attackerWeapon;
-    QJSValue erg = pApp->getInterpreter()->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1, args1);
 }
 
 QPoint BattleAnimationSprite::getUnitPositionOffset(qint32 unitIdx)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getPositionOffset";
     QJSValueList args1;
-    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
-    QJSValue obj2 = pApp->getInterpreter()->newQObject(m_pUnit);
+    QJSValue obj2 = pInterpreter->newQObject(m_pUnit);
     args1 << obj2;
-    QJSValue obj3 = pApp->getInterpreter()->newQObject(m_pTerrain);
+    QJSValue obj3 = pInterpreter->newQObject(m_pTerrain);
     args1 << obj3;
     args1 << unitIdx;
-    QJSValue erg = pApp->getInterpreter()->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1, args1);
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1, args1);
     return erg.toVariant().toPoint();
 }
 
@@ -89,9 +91,9 @@ qint32 BattleAnimationSprite::getMaxUnitCount()
     {
         return maxUnitCount;
     }
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMaxUnitCount";
-    QJSValue erg = pApp->getInterpreter()->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1);
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -109,9 +111,9 @@ qint32 BattleAnimationSprite::getImpactDurationMS()
 
 qint32 BattleAnimationSprite::getImpactDurationMS(Unit* pUnit)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getImpactDurationMS";
-    QJSValue erg = pApp->getInterpreter()->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1);
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + pUnit->getUnitID(), function1);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -124,9 +126,9 @@ qint32 BattleAnimationSprite::getImpactDurationMS(Unit* pUnit)
 
 bool BattleAnimationSprite::hasMoveInAnimation()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "hasMoveInAnimation";
-    QJSValue erg = pApp->getInterpreter()->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1);
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1);
     if (erg.isBool())
     {
         return erg.toBool();
@@ -144,9 +146,9 @@ void BattleAnimationSprite::setMaxUnitCount(const qint32 &value)
 
 qint32 BattleAnimationSprite::getFireDurationMS()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getFireDurationMS";
-    QJSValue erg = pApp->getInterpreter()->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1);
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -159,9 +161,9 @@ qint32 BattleAnimationSprite::getFireDurationMS()
 
 qint32 BattleAnimationSprite::getMoveInDurationMS()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMoveInDurationMS";
-    QJSValue erg = pApp->getInterpreter()->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1);
+    QJSValue erg = pInterpreter->doFunction("BATTLEANIMATION_" + m_pUnit->getUnitID(), function1);
     if (erg.isNumber())
     {
         return erg.toInt();

@@ -15,15 +15,15 @@ GameRuleManager::GameRuleManager()
 
 void GameRuleManager::reset()
 {
-    Mainapp* pMainapp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (qint32 i = 0; i < m_loadedVictoryRules.size(); i++)
     {
-        pMainapp->getInterpreter()->deleteObject(m_loadedVictoryRules[i]);
+        pInterpreter->deleteObject(m_loadedVictoryRules[i]);
     }
     m_loadedVictoryRules.clear();
     for (qint32 i = 0; i < m_loadedWeather.size(); i++)
     {
-        pMainapp->getInterpreter()->deleteObject(m_loadedWeather[i]);
+        pInterpreter->deleteObject(m_loadedWeather[i]);
     }
     m_loadedWeather.clear();
 }
@@ -73,7 +73,7 @@ void GameRuleManager::loadAll()
 bool GameRuleManager::loadVictoryRule(QString victoryID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
-
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/gamerules/victory");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
@@ -87,7 +87,7 @@ bool GameRuleManager::loadVictoryRule(QString victoryID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pMainapp->getInterpreter()->openScript(file);
+            pInterpreter->openScript(file);
             if (!bRet)
             {
                 m_loadedVictoryRules.append(victoryID);
@@ -101,7 +101,7 @@ bool GameRuleManager::loadVictoryRule(QString victoryID)
 bool GameRuleManager::loadWeather(QString weatherID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
-
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/gamerules/weather");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
@@ -115,7 +115,7 @@ bool GameRuleManager::loadWeather(QString weatherID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pMainapp->getInterpreter()->openScript(file);
+            pInterpreter->openScript(file);
             if (!bRet)
             {
                 m_loadedWeather.append(weatherID);

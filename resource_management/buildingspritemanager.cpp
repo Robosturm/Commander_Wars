@@ -77,7 +77,7 @@ void BuildingSpriteManager::loadAll()
 bool BuildingSpriteManager::loadBuilding(QString buildingID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
-
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/building");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
@@ -91,7 +91,7 @@ bool BuildingSpriteManager::loadBuilding(QString buildingID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pMainapp->getInterpreter()->openScript(file);
+            pInterpreter->openScript(file);
             if (!bRet)
             {
                 m_loadedBuildings.append(buildingID);
@@ -104,10 +104,10 @@ bool BuildingSpriteManager::loadBuilding(QString buildingID)
 
 void BuildingSpriteManager::reset()
 {
-    Mainapp* pMainapp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (qint32 i = 0; i < m_loadedBuildings.size(); i++)
     {
-        pMainapp->getInterpreter()->deleteObject(m_loadedBuildings[i]);
+        pInterpreter->deleteObject(m_loadedBuildings[i]);
     }
     m_loadedBuildings.clear();
 }
@@ -116,8 +116,7 @@ QString BuildingSpriteManager::getBuildingName(qint32 position)
 {
     if ((position >= 0) && (position < m_loadedBuildings.size()))
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        Interpreter* pInterpreter = pApp->getInterpreter();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValue value = pInterpreter->doFunction(m_loadedBuildings[position], "getName");
         if (value.isString())
         {

@@ -1,6 +1,7 @@
 #include "gameanimationdialog.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/audiothread.h"
 
 #include "menue/gamemenue.h"
 

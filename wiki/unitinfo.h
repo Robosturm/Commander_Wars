@@ -20,6 +20,14 @@ public:
      * @param weaponID
      */
     void createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint32 width);
+    /**
+     * @brief createLoadingTable
+     * @param pUnit
+     * @param loadables
+     * @param y
+     * @param width
+     */
+    void createLoadingTable(Unit* pUnit, QStringList loadables, qint32& y, qint32 width);
 };
 
 #endif // UNITINFO_H

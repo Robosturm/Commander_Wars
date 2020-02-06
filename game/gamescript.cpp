@@ -16,8 +16,8 @@ GameScript::GameScript()
 
 GameScript::~GameScript()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->getInterpreter()->deleteObject(scriptName);
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    pInterpreter->deleteObject(scriptName);
 }
 
 void GameScript::serializeObject(QDataStream& pStream)
@@ -36,8 +36,8 @@ void GameScript::deserializeObject(QDataStream& pStream)
     pStream >> scriptFile;
     if (!script.isEmpty())
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->getInterpreter()->loadScript(script, scriptName);
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        pInterpreter->loadScript(script, scriptName);
         loaded = true;
     }
     m_Variables.deserializeObject(pStream);
@@ -46,7 +46,7 @@ void GameScript::deserializeObject(QDataStream& pStream)
 
 void GameScript::init()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     if (!scriptFile.isEmpty())
     {
         if (QFile::exists(scriptFile))
@@ -56,14 +56,14 @@ void GameScript::init()
             QTextStream stream(&file);
             script = stream.readAll();
             file.close();
-            pApp->getInterpreter()->loadScript(script, scriptName);
+            pInterpreter->loadScript(script, scriptName);
             loaded = true;
         }
         else
         {
             scriptFile = "";
             script = "";
-            pApp->getInterpreter()->deleteObject(scriptName);
+            pInterpreter->deleteObject(scriptName);
             loaded = false;
         }
     }
@@ -73,9 +73,9 @@ QString GameScript::getVictoryInfo()
 {
     if (loaded)
     {
-        Mainapp* pApp = Mainapp::getInstance();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "getVictoryInfo";
-        QJSValue ret = pApp->getInterpreter()->doFunction(scriptName, function1);
+        QJSValue ret = pInterpreter->doFunction(scriptName, function1);
         if (ret.isString())
         {
             return ret.toString();
@@ -88,9 +88,9 @@ bool GameScript::immediateStart()
 {
     if (loaded)
     {
-        Mainapp* pApp = Mainapp::getInstance();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "immediateStart";
-        QJSValue ret = pApp->getInterpreter()->doFunction(scriptName, function1);
+        QJSValue ret = pInterpreter->doFunction(scriptName, function1);
         if (ret.isBool())
         {
             return ret.toBool();
@@ -103,11 +103,11 @@ bool GameScript::victory(qint32 team)
 {
     if (loaded && !victoryCalled)
     {
-        Mainapp* pApp = Mainapp::getInstance();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args;
         args << team;
         QString function1 = "victory";
-        pApp->getInterpreter()->doFunction(scriptName, function1, args);
+        pInterpreter->doFunction(scriptName, function1, args);
         victoryCalled = true;
         return false;
     }
@@ -121,9 +121,9 @@ void GameScript::gameStart()
 {
     if (loaded)
     {
-        Mainapp* pApp = Mainapp::getInstance();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "gameStart";
-        pApp->getInterpreter()->doFunction(scriptName, function1);
+        pInterpreter->doFunction(scriptName, function1);
     }
 }
 
@@ -131,9 +131,9 @@ void GameScript::actionDone()
 {
     if (loaded)
     {
-        Mainapp* pApp = Mainapp::getInstance();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "actionDone";
-        pApp->getInterpreter()->doFunction(scriptName, function1);
+        pInterpreter->doFunction(scriptName, function1);
     }
 }
 
@@ -141,12 +141,12 @@ void GameScript::turnStart(qint32 turn, qint32 player)
 {
     if (loaded)
     {
-        Mainapp* pApp = Mainapp::getInstance();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "turnStart";
         QJSValueList args;
         args << turn;
         args << player;
-        pApp->getInterpreter()->doFunction(scriptName, function1, args);
+        pInterpreter->doFunction(scriptName, function1, args);
     }
 }
 

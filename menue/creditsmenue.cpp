@@ -4,6 +4,7 @@
 #include "coreengine/console.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/audiothread.h"
 
 #include "resource_management/backgroundmanager.h"
 #include "resource_management/objectmanager.h"

@@ -73,11 +73,11 @@ Unit::~Unit()
 
 QString Unit::getDescription()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args;
     // load sprite of the base terrain
     QString function = "getDescription";
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function, args);
+    QJSValue ret = pInterpreter->doFunction(m_UnitID, function, args);
     if (ret.isString())
     {
         return ret.toString();
@@ -124,16 +124,16 @@ void Unit::applyMod()
 
 void Unit::postBattleActions(float damage, Unit* pUnit, bool gotAttacked)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "postBattleActions";
     QJSValueList args1;
-    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    QJSValue obj3 = pInterpreter->newQObject(this);
     args1 << obj3;
     args1 << damage;
-    QJSValue obj2 = pApp->getInterpreter()->newQObject(pUnit);
+    QJSValue obj2 = pInterpreter->newQObject(pUnit);
     args1 << obj2;
     args1 << gotAttacked;
-    pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    pInterpreter->doFunction(m_UnitID, function1, args1);
 }
 
 void Unit::setOwner(Player* pOwner)
@@ -247,9 +247,9 @@ Player* Unit::getOwner()
 
 QString Unit::getName()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getName";
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1);
+    QJSValue ret = pInterpreter->doFunction(m_UnitID, function1);
     if (ret.isString())
     {
         return ret.toString();
@@ -262,9 +262,9 @@ QString Unit::getName()
 
 GameEnums::UnitType Unit::getUnitType()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitType";
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1);
+    QJSValue ret = pInterpreter->doFunction(m_UnitID, function1);
     if (ret.isNumber())
     {
         return static_cast<GameEnums::UnitType>(ret.toInt());
@@ -294,7 +294,7 @@ qint32 Unit::getFuelCostModifier(QPoint position, qint32 costs)
 
 void Unit::updateSprites()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (qint32 i = 0; i < m_pUnitSprites.size(); i++)
     {
         m_pUnitSprites[i]->detach();        
@@ -308,9 +308,9 @@ void Unit::updateSprites()
     m_pUnitWaitSprites.clear();
     QString function1 = "loadSprites";
     QJSValueList args1;
-    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
-    pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    pInterpreter->doFunction(m_UnitID, function1, args1);
 
     setHp(hp);
     setFuel(fuel);
@@ -510,10 +510,10 @@ void Unit::setMinRange(const qint32 &value)
 
 qint32 Unit::getCosts() const
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBaseCost";
     QJSValueList args1;
-    QJSValue erg = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -526,14 +526,14 @@ qint32 Unit::getCosts() const
 
 QString Unit::getTerrainAnimationBase()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationBase";
     QJSValueList args1;
-    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
-    QJSValue obj2 = pApp->getInterpreter()->newQObject(m_pTerrain);
+    QJSValue obj2 = pInterpreter->newQObject(m_pTerrain);
     args1 << obj2;
-    QJSValue erg = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (erg.isString())
     {
         return erg.toString();
@@ -546,14 +546,14 @@ QString Unit::getTerrainAnimationBase()
 
 QString Unit::getTerrainAnimationForeground()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationForeground";
     QJSValueList args1;
-    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
-    QJSValue obj2 = pApp->getInterpreter()->newQObject(m_pTerrain);
+    QJSValue obj2 = pInterpreter->newQObject(m_pTerrain);
     args1 << obj2;
-    QJSValue erg = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (erg.isString())
     {
         return erg.toString();
@@ -566,14 +566,14 @@ QString Unit::getTerrainAnimationForeground()
 
 QString Unit::getTerrainAnimationBackground()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTerrainAnimationBackground";
     QJSValueList args1;
-    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
-    QJSValue obj2 = pApp->getInterpreter()->newQObject(m_pTerrain);
+    QJSValue obj2 = pInterpreter->newQObject(m_pTerrain);
     args1 << obj2;
-    QJSValue erg = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (erg.isString())
     {
         return erg.toString();
@@ -718,10 +718,10 @@ Terrain* Unit::getTerrain()
 
 bool Unit::canMoveAndFire(QPoint position)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "canMoveAndFire";
     QJSValueList args1;
-    QJSValue erg = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (erg.isBool() && erg.toBool())
     {
         return true;
@@ -841,12 +841,12 @@ qint32 Unit::getLoadedUnitCount()
 
 QStringList  Unit::getTransportUnits()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getTransportUnits";
     QJSValueList args1;
-    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
-    QJSValue erg = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
     return erg.toVariant().toStringList();
 }
 
@@ -867,12 +867,12 @@ bool Unit::canTransportUnit(Unit* pUnit, bool ignoreLoadingPlace)
 
 void Unit::postAction()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "postAction";
     QJSValueList args1;
-    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    QJSValue obj3 = pInterpreter->newQObject(this);
     args1 << obj3;
-    pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    pInterpreter->doFunction(m_UnitID, function1, args1);
 }
 
 qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender)
@@ -916,14 +916,14 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
     if (pCO0 != nullptr && pCO1 != nullptr &&
         pCO0->getPowerMode() == GameEnums::PowerMode_Tagpower)
     {
-        Mainapp* pApp = Mainapp::getInstance();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "getTagpower";
         QJSValueList args1;
-        QJSValue obj1 = pApp->getInterpreter()->newQObject(pCO0);
+        QJSValue obj1 = pInterpreter->newQObject(pCO0);
         args1 << obj1;
-        QJSValue obj2 = pApp->getInterpreter()->newQObject(pCO1);
+        QJSValue obj2 = pInterpreter->newQObject(pCO1);
         args1 << obj2;
-        QJSValue erg = pApp->getInterpreter()->doFunction("TAGPOWER", function1, args1);
+        QJSValue erg = pInterpreter->doFunction("TAGPOWER", function1, args1);
         if (erg.isNumber())
         {
             bonus += erg.toNumber();
@@ -977,19 +977,19 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
 
 qint32 Unit::getUnitBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBonusOffensive";
     QJSValueList args1;
-    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    QJSValue obj3 = pInterpreter->newQObject(this);
     args1 << obj3;
     args1 << position.x();
     args1 << position.y();
-    QJSValue obj2 = pApp->getInterpreter()->newQObject(pDefender);
+    QJSValue obj2 = pInterpreter->newQObject(pDefender);
     args1 << obj2;
     args1 << defPosition.x();
     args1 << defPosition.y();
     args1 << isDefender;
-    QJSValue erg = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -1050,19 +1050,19 @@ float Unit::getTrueDamage(float damage, QPoint position, qint32 attackerBaseHp,
 
 qint32 Unit::getUnitBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBonusDefensive";
     QJSValueList args1;
-    QJSValue obj3 = pApp->getInterpreter()->newQObject(this);
+    QJSValue obj3 = pInterpreter->newQObject(this);
     args1 << obj3;
     args1 << position.x();
     args1 << position.y();
-    QJSValue obj2 = pApp->getInterpreter()->newQObject(pAttacker);
+    QJSValue obj2 = pInterpreter->newQObject(pAttacker);
     args1 << obj2;
     args1 << atkPosition.x();
     args1 << atkPosition.y();
     args1 << isDefender;
-    QJSValue erg = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (erg.isNumber())
     {
         return erg.toInt();
@@ -1154,10 +1154,10 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
 
 bool Unit::useTerrainDefense()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "useTerrainDefense";
     QJSValueList args1;
-    QJSValue erg = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (erg.isBool() && erg.toBool())
     {
         return true;
@@ -1269,14 +1269,14 @@ qint32 Unit::getBonusLuck(QPoint position)
     if (pCO0 != nullptr && pCO1 != nullptr &&
         pCO0->getPowerMode() == GameEnums::PowerMode_Tagpower)
     {
-        Mainapp* pApp = Mainapp::getInstance();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "getTagstars";
         QJSValueList args1;
-        QJSValue obj1 = pApp->getInterpreter()->newQObject(pCO0);
+        QJSValue obj1 = pInterpreter->newQObject(pCO0);
         args1 << obj1;
-        QJSValue obj2 = pApp->getInterpreter()->newQObject(pCO1);
+        QJSValue obj2 = pInterpreter->newQObject(pCO1);
         args1 << obj2;
-        QJSValue erg = pApp->getInterpreter()->doFunction("TAGPOWER", function1, args1);
+        QJSValue erg = pInterpreter->doFunction("TAGPOWER", function1, args1);
         if (erg.isNumber())
         {
             bonus += erg.toInt() * 5;
@@ -1293,12 +1293,12 @@ void Unit::startOfTurn()
     updateBonus(m_MovementBonus);
     updateBonus(m_FirerangeBonus);
 
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "startOfTurn";
     QJSValueList args1;
-    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
-    pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    pInterpreter->doFunction(m_UnitID, function1, args1);
     for (qint32 i = 0; i < m_TransportUnits.size(); i++)
     {
         m_TransportUnits[i]->startOfTurn();
@@ -1390,18 +1390,18 @@ qint32 Unit::getMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY)
 
 void Unit::initUnit()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMovementType";
-    QJSValue  erg = pApp->getInterpreter()->doFunction(m_UnitID, function1);
+    QJSValue  erg = pInterpreter->doFunction(m_UnitID, function1);
     if (erg.isString())
     {
         m_MovementType = erg.toString();
     }
     function1 = "init";
     QJSValueList args1;
-    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
-    pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    pInterpreter->doFunction(m_UnitID, function1, args1);
     setFuel(fuel);
     setAmmo1(ammo1);
     setAmmo2(ammo2);
@@ -1699,10 +1699,10 @@ QString Unit::getMovementType()
 
 qint32 Unit::getLoadingPlace()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getLoadingPlace";
     QJSValueList args1;
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (ret.isNumber())
     {
         return ret.toInt();
@@ -1720,10 +1720,10 @@ QString Unit::getUnitID()
 
 QString Unit::getUnitDamageID()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitDamageID";
     QJSValueList args1;
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (ret.isString())
     {
         QString retStr = ret.toString();
@@ -1738,13 +1738,13 @@ QString Unit::getUnitDamageID()
 
 float Unit::getUnitDamage(QString weaponID)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getUnitDamage";
     QJSValueList args1;
     args1 << weaponID;
-    QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+    QJSValue obj1 = pInterpreter->newQObject(this);
     args1 << obj1;
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args1);
     if (ret.isNumber())
     {
         return static_cast<float>(ret.toNumber());
@@ -1878,9 +1878,9 @@ qint32 Unit::getMovementpoints(QPoint position)
 
 QStringList Unit::getActionList()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getActions";
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1);
+    QJSValue ret = pInterpreter->doFunction(m_UnitID, function1);
     if (ret.isString())
     {
         QStringList actionList = ret.toString().split(",");
@@ -2069,14 +2069,14 @@ void Unit::removeUnit(bool killed)
 
 void Unit::killUnit()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "createExplosionAnimation";
     QJSValueList args1;
     args1 << getX();
     args1 << getY();
-    QJSValue obj = pApp->getInterpreter()->newQObject(this);
+    QJSValue obj = pInterpreter->newQObject(this);
     args1 << obj;
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_UnitID, function1, args1);
+    QJSValue ret = pInterpreter->doFunction(m_UnitID, function1, args1);
 
     // record destruction of this unit
     GameRecorder* pRecorder = GameMap::getInstance()->getGameRecorder();

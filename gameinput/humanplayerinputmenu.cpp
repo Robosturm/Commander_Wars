@@ -9,6 +9,7 @@
 #include "objects/cursor.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/audiothread.h"
 
 #include "resource_management/gamemanager.h"
 

@@ -8,6 +8,8 @@
 
 #include "coreengine/fileserializable.h"
 
+#include "coreengine/JsCallback.h"
+
 #include "game/unit.h"
 
 #include "game/building.h"
@@ -297,6 +299,15 @@ public slots:
      * @return
      */
     QStringList getTerrainSprites();
+    /**
+     * @brief registerStartOfDay
+     * @param functionName
+     */
+    void registerStartOfDay(QString functionName);
+    /**
+     * @brief startOfDay
+     */
+    void startOfDay();
 protected:
     /**
      * @brief createBuildingDownStream
@@ -365,6 +376,7 @@ private:
       */
     qint32 hp{-1};
 
+    oxygine::intrusive_ptr<JsCallback<Terrain>> m_pStartDayCallback;
 };
 
 #endif // TERRAIN_H

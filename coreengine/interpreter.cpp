@@ -1,20 +1,24 @@
 #include "coreengine/interpreter.h"
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/audiothread.h"
 
 #include <QDir>
 #include <QQmlEngine>
 #include <QTextStream>
 #include <QThread>
 
-Interpreter::Interpreter(QString script)
-    : QQmlEngine()
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    this->moveToThread(pApp->getWorkerthread());
-    init();
-    openScript(script);
-}
+Interpreter* Interpreter::m_pInstance = nullptr;
+
+//Interpreter::Interpreter(QString script)
+//    : QQmlEngine()
+//{
+//    Mainapp* pApp = Mainapp::getInstance();
+//    this->moveToThread(pApp->getWorkerthread());
+//    init();
+//    openScript(script);
+
+//}
 
 Interpreter::Interpreter()
     : QQmlEngine()
@@ -22,6 +26,7 @@ Interpreter::Interpreter()
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     init();
+    m_pInstance = this;
 }
 
 void Interpreter::init()

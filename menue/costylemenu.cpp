@@ -4,6 +4,7 @@
 
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
+#include "coreengine/audiothread.h"
 
 #include "menue/mainwindow.h"
 
@@ -114,8 +115,6 @@ void COStyleMenu::editCOStyle()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    oxygine::ResAnim* pAnim = nullptr;
     if (!m_currentCOID.isEmpty())
     {
         spDialogCOStyle pDialogCOStyle = new DialogCOStyle(m_currentCOID);

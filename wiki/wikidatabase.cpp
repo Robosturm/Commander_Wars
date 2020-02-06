@@ -93,16 +93,16 @@ void WikiDatabase::load()
         {
             dirIter->next();
             QString file = dirIter->fileInfo().absoluteFilePath();
-            Interpreter* pInterpreter = pMainapp->getInterpreter();
+            Interpreter* pInterpreter = Interpreter::getInstance();
             pInterpreter->openScript(file);
-            QJSValue erg = pMainapp->getInterpreter()->doFunction("LOADEDWIKIPAGE", "getName");
+            QJSValue erg = pInterpreter->doFunction("LOADEDWIKIPAGE", "getName");
             QString name = "";
             if (erg.isString())
             {
                 name = erg.toString();
             }
             QStringList tags;
-            erg = pMainapp->getInterpreter()->doFunction("LOADEDWIKIPAGE", "getTags");
+            erg = pInterpreter->doFunction("LOADEDWIKIPAGE", "getTags");
             tags = erg.toVariant().toStringList();
             m_Entries.append(pageData(name, file, tags));
         }
@@ -225,12 +225,12 @@ spWikipage WikiDatabase::getPage(pageData data)
     {
         // default loader
         ret = new Wikipage();
-        Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         pInterpreter->openScript(id);
         QJSValueList args;
-        QJSValue obj1 = pApp->getInterpreter()->newQObject(ret.get());
+        QJSValue obj1 = pInterpreter->newQObject(ret.get());
         args << obj1;
-        QJSValue erg = pApp->getInterpreter()->doFunction("LOADEDWIKIPAGE", "loadPage", args);
+        QJSValue erg = pInterpreter->doFunction("LOADEDWIKIPAGE", "loadPage", args);
     }
     pApp->continueThread();
     return ret;

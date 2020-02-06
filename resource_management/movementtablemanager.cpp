@@ -23,9 +23,9 @@ MovementTableManager* MovementTableManager::getInstance()
 
 QString MovementTableManager::getMovementName(QString movementID)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getName";
-    QJSValue ret = pApp->getInterpreter()->doFunction(movementID, function1);
+    QJSValue ret = pInterpreter->doFunction(movementID, function1);
     if (ret.isString())
     {
         return ret.toString();
@@ -70,7 +70,7 @@ void MovementTableManager::loadAll()
 bool MovementTableManager::loadTable(QString movementtableID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
-
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/movementtables");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
@@ -84,7 +84,7 @@ bool MovementTableManager::loadTable(QString movementtableID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pMainapp->getInterpreter()->openScript(file);
+            pInterpreter->openScript(file);
             if (!bRet)
             {
                 m_loadedTables.append(movementtableID);
@@ -97,26 +97,26 @@ bool MovementTableManager::loadTable(QString movementtableID)
 
 void MovementTableManager::reset()
 {
-    Mainapp* pMainapp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (qint32 i = 0; i < m_loadedTables.size(); i++)
     {
-        pMainapp->getInterpreter()->deleteObject(m_loadedTables[i]);
+        pInterpreter->deleteObject(m_loadedTables[i]);
     }
     m_loadedTables.clear();
 }
 
 qint32 MovementTableManager::getBaseMovementPoints(QString movementID, Terrain* pTerrain, Terrain* pCurrentTerrain, Unit* pUnit)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getMovementpoints";
     QJSValueList args1;
-    QJSValue obj3 = pApp->getInterpreter()->newQObject(pTerrain);
+    QJSValue obj3 = pInterpreter->newQObject(pTerrain);
     args1 << obj3;
-    QJSValue obj2 = pApp->getInterpreter()->newQObject(pUnit);
+    QJSValue obj2 = pInterpreter->newQObject(pUnit);
     args1 << obj2;
-    QJSValue obj4 = pApp->getInterpreter()->newQObject(pCurrentTerrain);
+    QJSValue obj4 = pInterpreter->newQObject(pCurrentTerrain);
     args1 << obj4;
-    QJSValue ret = pApp->getInterpreter()->doFunction(movementID, function1, args1);
+    QJSValue ret = pInterpreter->doFunction(movementID, function1, args1);
     if (ret.isNumber())
     {
         return ret.toInt();

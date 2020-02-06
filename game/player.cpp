@@ -3,6 +3,7 @@
 #include "game/gamemap.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/audiothread.h"
 
 #include "gameinput/basegameinputif.h"
 
@@ -36,12 +37,12 @@ Player::Player()
 
 void Player::init()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "loadDefaultPlayerColor";
     QJSValueList args;
-    QJSValue objArg = pApp->getInterpreter()->newQObject(this);
+    QJSValue objArg = pInterpreter->newQObject(this);
     args << objArg;
-    pApp->getInterpreter()->doFunction("PLAYER", function, args);
+    pInterpreter->doFunction("PLAYER", function, args);
     team = getPlayerID();
 }
 
@@ -165,11 +166,11 @@ QString Player::getArmy()
     else
     {
         // editor memu mode
-        Mainapp* pApp = Mainapp::getInstance();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args;
-        QJSValue objArg = pApp->getInterpreter()->newQObject(this);
+        QJSValue objArg = pInterpreter->newQObject(this);
         args << objArg;
-        QJSValue ret = pApp->getInterpreter()->doFunction("PLAYER", "getDefaultArmy", args);
+        QJSValue ret = pInterpreter->doFunction("PLAYER", "getDefaultArmy", args);
         if (ret.isString())
         {
             return ret.toString();
@@ -693,8 +694,8 @@ bool Player::getFieldDirectVisible(qint32 x, qint32 y)
 
 qint32 Player::getCosts(QString id)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    QJSValue ret = pApp->getInterpreter()->doFunction(id, "getBaseCost");
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue ret = pInterpreter->doFunction(id, "getBaseCost");
     qint32 costs = 0;
     if (ret.isNumber())
     {
@@ -960,12 +961,12 @@ qint32 Player::getRocketTargetDamage(qint32 x, qint32 y, QmlVectorPoint* pPoints
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     qint32 averageCosts = 0;
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
     {
         QString unitId = pUnitSpriteManager->getUnitID(i);
-        Mainapp* pApp = Mainapp::getInstance();
         QString function1 = "getBaseCost";
-        QJSValue erg = pApp->getInterpreter()->doFunction(unitId, function1);
+        QJSValue erg = pInterpreter->doFunction(unitId, function1);
         if (erg.isNumber())
         {
              averageCosts += erg.toInt();

@@ -101,6 +101,7 @@ bool VeryEasyAI::performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemy
     else if (aiStep <= AISteps::loadUnits && loadUnits(pUnits)){}
     else if (aiStep <= AISteps::moveTransporters && moveTransporters(pUnits, pEnemyUnits, pEnemyBuildings)){}
     else if (aiStep <= AISteps::moveSupportUnits && moveSupport(AISteps::moveSupportUnits, pUnits, true)){}
+    else if (aiStep <= AISteps::moveSupportUnits && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, true)){}
     else if (aiStep <= AISteps::moveAway && moveAwayFromProduction(pUnits)){}
     else if (aiStep <= AISteps::buildUnits && buildUnits(pBuildings, pUnits)){}
     else
@@ -326,7 +327,8 @@ bool VeryEasyAI::attack(Unit* pUnit)
 }
 
 bool VeryEasyAI::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
-                           QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)
+                           QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
+                           bool supportUnits )
 {
     if (aiStep < AISteps::moveToTargets)
     {
@@ -371,7 +373,7 @@ bool VeryEasyAI::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
                 targets.clear();
                 appendRepairTargets(pUnit, pBuildings, targets);
             }
-            if (targets.size() == 0)
+            if (supportUnits)
             {
                 appendSupportTargets(actions, pUnit, pUnits, pEnemyUnits, targets);
             }

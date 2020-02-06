@@ -9,6 +9,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
 #include "coreengine/settings.h"
+#include "coreengine/audiothread.h"
 
 Wikimenu::Wikimenu()
     : QObject()

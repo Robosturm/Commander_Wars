@@ -40,7 +40,7 @@ void WorkerThread::start()
     // create the initial menue no need to store the object
     // it will add itself to the current stage
     oxygine::getStage()->addChild(pConsole);
-    m_pInterpreter = new Interpreter();
+    m_pInterpreter = Interpreter::createInstance();
     pConsole->init();
     GameEnums::registerEnums();
     // load General-Base Scripts

@@ -115,24 +115,25 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
     pPanel->addItem(pLabel);
 
     // load default army and co sets
+    Interpreter* pInterpreter = Interpreter::getInstance();
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     QString function1 = "getArmies";
     QJSValueList args1;
-    QJSValue ret = pApp->getInterpreter()->doFunction("PLAYER", function1, args1);
+    QJSValue ret = pInterpreter->doFunction("PLAYER", function1, args1);
     QStringList m_Armies = ret.toVariant().toStringList();
     QStringList coids;
     // go through armies
     for (qint32 i = 0; i < m_Armies.size(); i++)
     {
         // add default co order
-        ret = pApp->getInterpreter()->doFunction("PLAYER", "getArmyCOs" + m_Armies[i]);
+        ret = pInterpreter->doFunction("PLAYER", "getArmyCOs" + m_Armies[i]);
         coids.append(ret.toVariant().toStringList());
         // add unadded co's of this army
         for (qint32 i2 = 0; i2 < pCOSpriteManager->getCOCount(); i2++)
         {
             QString coID = pCOSpriteManager->getCOID(i2);
             QString function1 = "getCOArmy";
-            QJSValue ret = pApp->getInterpreter()->doFunction(coID, function1);
+            QJSValue ret = pInterpreter->doFunction(coID, function1);
             if (ret.isString())
             {
                 QString COArmy = ret.toString();

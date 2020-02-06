@@ -6,6 +6,7 @@
 #include "menue/editormenue.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/audiothread.h"
 
 #include "coreengine/pathfindingsystem.h"
 
@@ -1088,10 +1089,10 @@ void EditorMenue::placeTerrain(qint32 x, qint32 y)
 
             pMap->getTerrain(points.at(i).x(), points.at(i).y())->setUnit(nullptr);
 
-            Mainapp* pApp = Mainapp::getInstance();
+            Interpreter* pInterpreter = Interpreter::getInstance();
             QString function1 = "useTerrainAsBaseTerrain";
             QJSValueList args1;
-            QJSValue useTerrainAsBaseTerrain = pApp->getInterpreter()->doFunction(terrainID, function1, args1);
+            QJSValue useTerrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1, args1);
             if (points.size() < 14)
             {
                 pMap->replaceTerrain(terrainID, points.at(i).x(), points.at(i).y(), useTerrainAsBaseTerrain.toBool(), true);

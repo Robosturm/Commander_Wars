@@ -2,6 +2,7 @@
 
 #include "resource_management/objectmanager.h"
 #include "coreengine/mainapp.h"
+#include "coreengine/audiothread.h"
 #include "game/gamemap.h"
 
 Cursor::Cursor()

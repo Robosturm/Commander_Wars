@@ -3,6 +3,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/audiothread.h"
 
 ObjectManager* ObjectManager::m_pInstance = nullptr;
 

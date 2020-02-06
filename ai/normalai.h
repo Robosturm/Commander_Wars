@@ -39,7 +39,7 @@ protected:
      * @param pUnit
      * @return
      */
-    bool isUsingUnit(Unit* pUnit);
+    bool isUsingUnit(Unit* pUnit, bool ignoreHasMoved = false);
     /**
      * @brief moveUnits
      * @param pUnits
@@ -50,7 +50,7 @@ protected:
      */
     bool moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
                    QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
-                   qint32 minfireRange, qint32 maxfireRange);
+                   qint32 minfireRange, qint32 maxfireRange, bool supportUnits = false);
     /**
      * @brief moveUnit
      * @param pAction

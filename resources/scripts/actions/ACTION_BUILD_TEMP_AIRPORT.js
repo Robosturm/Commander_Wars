@@ -11,7 +11,6 @@ var Constructor = function()
         {
             return false;
         }
-        var capturableBuildings = ACTION_CAPTURE.getCapturableBuildings();
         if ((((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y)) ||
             (action.getMovementTarget() === null)) &&
              unit.hasAmmo1())

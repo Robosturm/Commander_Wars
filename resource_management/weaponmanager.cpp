@@ -25,9 +25,9 @@ WeaponManager* WeaponManager::getInstance()
 
 QString WeaponManager::getWeaponName(QString weaponID)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getName";
-    QJSValue ret = pApp->getInterpreter()->doFunction(weaponID, function1);
+    QJSValue ret = pInterpreter->doFunction(weaponID, function1);
     if (ret.isString())
     {
         return ret.toString();
@@ -52,22 +52,22 @@ bool WeaponManager::existsWeapon(QString weaponID)
 
 void WeaponManager::reset()
 {
-    Mainapp* pMainapp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (qint32 i = 0; i < m_loadedWeapons.size(); i++)
     {
-        pMainapp->getInterpreter()->deleteObject(m_loadedWeapons[i]);
+        pInterpreter->deleteObject(m_loadedWeapons[i]);
     }
     m_loadedWeapons.clear();
 }
 
 float WeaponManager::getBaseDamage(QString weaponID, Unit* pDefender)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getBaseDamage";
     QJSValueList args1;
-    QJSValue obj1 = pApp->getInterpreter()->newQObject(pDefender);
+    QJSValue obj1 = pInterpreter->newQObject(pDefender);
     args1 << obj1;
-    QJSValue erg = pApp->getInterpreter()->doFunction(weaponID, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(weaponID, function1, args1);
     if (erg.isNumber())
     {
         return erg.toNumber();
@@ -80,11 +80,11 @@ float WeaponManager::getBaseDamage(QString weaponID, Unit* pDefender)
 
 float WeaponManager::getEnviromentDamage(QString weaponID, QString terrainID)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getEnviromentDamage";
     QJSValueList args1;
     args1 << terrainID;
-    QJSValue erg = pApp->getInterpreter()->doFunction(weaponID, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(weaponID, function1, args1);
     if (erg.isNumber())
     {
         return erg.toNumber();
@@ -127,7 +127,7 @@ void WeaponManager::loadAll()
 bool WeaponManager::loadWeapon(QString weaponID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
-
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/weapons");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
@@ -141,7 +141,7 @@ bool WeaponManager::loadWeapon(QString weaponID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pMainapp->getInterpreter()->openScript(file);
+            pInterpreter->openScript(file);
             if (!bRet)
             {
                 m_loadedWeapons.append(weaponID);

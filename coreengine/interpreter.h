@@ -12,8 +12,19 @@ class Interpreter : public QQmlEngine
     Q_OBJECT
 
 public:
-    explicit Interpreter(QString script);
-    explicit Interpreter();
+    static Interpreter* getInstance()
+    {
+        return m_pInstance;
+    }
+    static Interpreter* createInstance()
+    {
+        if (m_pInstance == nullptr)
+        {
+            m_pInstance = new Interpreter();
+        }
+        return m_pInstance;
+    }
+
     virtual ~Interpreter();
 
     static void setCppOwnerShip(QObject* object);
@@ -50,8 +61,10 @@ public slots:
 
 
 private:
+    explicit Interpreter();
     void init();
 
+    static Interpreter* m_pInstance;
 };
 
 #endif // INTERPRETER_H

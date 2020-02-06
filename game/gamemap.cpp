@@ -3,6 +3,7 @@
 #include "game/gamemap.h"
 
 #include "coreengine/mainapp.h"
+#include "coreengine/audiothread.h"
 
 #include "ai/coreai.h"
 
@@ -85,7 +86,7 @@ void GameMap::loadMapData()
     deleteMap();
     m_pInstance = this;
     Interpreter::setCppOwnerShip(this);
-    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     pInterpreter->setGlobal(m_JavascriptName, pInterpreter->newQObject(this));
     pInterpreter->setGlobal(m_GameAnimationFactory, pInterpreter->newQObject(GameAnimationFactory::getInstance()));
     mapAuthor = Settings::getUsername();
@@ -153,7 +154,7 @@ GameMap::~GameMap()
     // remove us from the interpreter again
     if (GameMap::getInstance() == nullptr)
     {
-        Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         pInterpreter->deleteObject(m_JavascriptName);
     }
     // clean up session
@@ -665,12 +666,12 @@ void GameMap::updateTerrain(qint32 x, qint32 y)
 
 bool GameMap::canBePlaced(QString terrainID, qint32 x, qint32 y)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "canBePlaced";
     QJSValueList args;
     args << QJSValue(x);
     args << QJSValue(y);
-    QJSValue placeable = pApp->getInterpreter()->doFunction(terrainID, function, args);
+    QJSValue placeable = pInterpreter->doFunction(terrainID, function, args);
     if (placeable.isBool())
     {
         return placeable.toBool();
@@ -881,7 +882,7 @@ void GameMap::startGame()
         }
     }
     QStringList mods = Settings::getMods();
-    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (const auto& mod : mods)
     {
         if (QFile::exists(mod + "/scripts/mapstart.js"))
@@ -1128,6 +1129,10 @@ void GameMap::startOfTurn(Player* pPlayer)
 
                     pBuilding->startOfTurn();
                 }
+            }
+            if (pPlayer == nullptr)
+            {
+                fields.at(y)->at(x)->startOfDay();
             }
         }
     }

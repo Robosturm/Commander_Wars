@@ -72,7 +72,7 @@ protected:
      * @return
      */
     bool moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
-                    QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
+                    QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings, bool supportUnits = false);
 
     bool moveTransporters(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings);
 

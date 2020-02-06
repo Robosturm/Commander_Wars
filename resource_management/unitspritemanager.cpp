@@ -62,7 +62,7 @@ void UnitSpriteManager::loadAll()
 bool UnitSpriteManager::loadUnit(QString unitID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
-
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/units");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
@@ -76,7 +76,7 @@ bool UnitSpriteManager::loadUnit(QString unitID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pMainapp->getInterpreter()->openScript(file);
+            pInterpreter->openScript(file);
             if (!bRet)
             {
                 m_loadedUnits.append(unitID);
@@ -91,9 +91,9 @@ GameEnums::UnitType UnitSpriteManager::getUnitType(qint32 i)
 {
     if ((i >= 0) && (i < m_loadedUnits.size()))
     {
-        Mainapp* pApp = Mainapp::getInstance();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "getUnitType";
-        QJSValue ret = pApp->getInterpreter()->doFunction(m_loadedUnits[i], function1);
+        QJSValue ret = pInterpreter->doFunction(m_loadedUnits[i], function1);
         if (ret.isNumber())
         {
             return static_cast<GameEnums::UnitType>(ret.toInt());
@@ -116,10 +116,10 @@ qint32 UnitSpriteManager::getUnitIndex(QString id)
 
 void UnitSpriteManager::reset()
 {
-    Mainapp* pMainapp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (qint32 i = 0; i < m_loadedUnits.size(); i++)
     {
-        pMainapp->getInterpreter()->deleteObject(m_loadedUnits[i]);
+        pInterpreter->deleteObject(m_loadedUnits[i]);
     }
     m_loadedUnits.clear();
 }
@@ -140,8 +140,7 @@ QString UnitSpriteManager::getUnitName(qint32 position)
 {
     if ((position >= 0) && (position < m_loadedUnits.size()))
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        Interpreter* pInterpreter = pApp->getInterpreter();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValue value = pInterpreter->doFunction(m_loadedUnits[position], "getName");
         if (value.isString())
         {

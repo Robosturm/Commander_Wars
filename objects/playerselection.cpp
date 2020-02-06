@@ -332,19 +332,19 @@ void PlayerSelection::showPlayerSelection()
         }
     }
 
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function = "getDefaultPlayerColors";
     QJSValueList args;
-    QJSValue ret = pApp->getInterpreter()->doFunction("PLAYER", function, args);
+    QJSValue ret = pInterpreter->doFunction("PLAYER", function, args);
     qint32 colorCount = ret.toInt();
     QVector<QColor> playerColors;
 
     for (qint32 i = 0; i < colorCount; i++)
     {
-        Mainapp* pApp = Mainapp::getInstance();
         QString function = "getDefaultColor";
         QJSValueList args;
         args << i;
-        ret = pApp->getInterpreter()->doFunction("PLAYER", function, args);
+        ret = pInterpreter->doFunction("PLAYER", function, args);
         playerColors.append(QColor(ret.toString()));
     }
     bool allPlayer1 = true;

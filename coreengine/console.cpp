@@ -8,6 +8,7 @@
 #include "coreengine/console.h"
 #include "coreengine/mainapp.h"
 #include "coreengine/settings.h"
+#include "coreengine/audiothread.h"
 #include "resource_management/fontmanager.h"
 
 #include "menue/gamemenue.h"
@@ -88,11 +89,11 @@ void Console::init()
     toggle.start();
 
     Mainapp* pMainapp = Mainapp::getInstance();
-
+    Interpreter* pInterpreter = Interpreter::getInstance();
     connect(pMainapp, &Mainapp::sigConsoleKeyDown, m_pConsole, &Console::KeyInput, Qt::QueuedConnection);
     //Setup Lua
     QString consoleName = "console";
-    pMainapp->getInterpreter()->pushObject(consoleName, m_pConsole);
+    pInterpreter->pushObject(consoleName, m_pConsole);
     // Print some Info
 
     Console::print(tr("Enter \"help()\" for console info."), Console::eINFO);
@@ -118,6 +119,7 @@ void Console::dotask(QString message)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     print(message, Console::eINFO);
     QString order = "GameConsole." + message;
     // ignore console argument and evaluate the String on the Top-Level
@@ -127,7 +129,7 @@ void Console::dotask(QString message)
         !pGameMenue->isNetworkGame())
     {
         order = order.replace("GameConsole.game:", "");
-        pApp->getInterpreter()->doString(order);
+        pInterpreter->doString(order);
     }
     pApp->continueThread();
 }

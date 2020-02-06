@@ -30,13 +30,13 @@ Campaign::Campaign()
 
 Campaign::~Campaign()
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->getInterpreter()->deleteObject(scriptName);
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    pInterpreter->deleteObject(scriptName);
 }
 
 void Campaign::init()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     if (!scriptFile.isEmpty())
     {
         if (QFile::exists(scriptFile))
@@ -46,14 +46,14 @@ void Campaign::init()
             QTextStream stream(&file);
             script = stream.readAll();
             file.close();
-            pApp->getInterpreter()->loadScript(script, scriptName);
+            pInterpreter->loadScript(script, scriptName);
             loaded = true;
         }
         else
         {
             scriptFile = "";
             script = "";
-            pApp->getInterpreter()->deleteObject(scriptName);
+            pInterpreter->deleteObject(scriptName);
             loaded = false;
         }
     }
@@ -61,7 +61,7 @@ void Campaign::init()
 
 std::tuple<QString, QStringList> Campaign::getCampaignMaps()
 {
-    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
@@ -78,7 +78,7 @@ std::tuple<QString, QStringList> Campaign::getCampaignMaps()
 
 QStringList Campaign::getSelectableCOs(GameMap* pMap, qint32 player, quint8 coIdx)
 {
-    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
@@ -92,7 +92,7 @@ QStringList Campaign::getSelectableCOs(GameMap* pMap, qint32 player, quint8 coId
 
 bool Campaign::getCampaignFinished()
 {
-    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
@@ -109,7 +109,7 @@ bool Campaign::getCampaignFinished()
 
 void Campaign::mapFinished(bool result)
 {
-    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValueList args;
     QJSValue obj = pInterpreter->newQObject(this);
     args << obj;
@@ -121,7 +121,7 @@ void Campaign::mapFinished(bool result)
 
 QString Campaign::getAuthor()
 {
-    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getAuthor");
     if (value.isString())
     {
@@ -131,7 +131,7 @@ QString Campaign::getAuthor()
 }
 QString Campaign::getName()
 {
-    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getCampaignName");
     if (value.isString())
     {
@@ -141,7 +141,7 @@ QString Campaign::getName()
 }
 QString Campaign::getDescription()
 {
-    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue value = pInterpreter->doFunction(Campaign::scriptName, "getDescription");
     if (value.isString())
     {
@@ -165,8 +165,8 @@ void Campaign::deserializeObject(QDataStream& pStream)
     pStream >> scriptFile;
     if (!script.isEmpty())
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        pApp->getInterpreter()->loadScript(script, scriptName);
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        pInterpreter->loadScript(script, scriptName);
         loaded = true;
     }
     m_Variables.deserializeObject(pStream);

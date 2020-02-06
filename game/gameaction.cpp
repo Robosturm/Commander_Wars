@@ -76,11 +76,11 @@ void GameAction::setTargetUnit(Unit *pTargetUnit)
 
 void GameAction::perform()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "perform";
     QJSValueList args1;
-    args1 << pApp->getInterpreter()->newQObject(this);
-    pApp->getInterpreter()->doFunction(m_actionID, function1, args1);
+    args1 << pInterpreter->newQObject(this);
+    pInterpreter->doFunction(m_actionID, function1, args1);
 }
 
 void GameAction::setActionID(QString actionID)
@@ -161,11 +161,11 @@ bool GameAction::canBePerformed(QString actionID, bool emptyField)
                 }
             }
         }
-        Mainapp* pApp = Mainapp::getInstance();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "canBePerformed";
         QJSValueList args1;
-        args1 << pApp->getInterpreter()->newQObject(this);
-        QJSValue ret = pApp->getInterpreter()->doFunction(actionID, function1, args1);
+        args1 << pInterpreter->newQObject(this);
+        QJSValue ret = pInterpreter->doFunction(actionID, function1, args1);
         if (ret.isBool())
         {
             return ret.toBool();
@@ -181,11 +181,11 @@ bool GameAction::isFinalStep()
 
 bool GameAction::isFinalStep(QString actionID)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "isFinalStep";
     QJSValueList args1;
-    args1 << pApp->getInterpreter()->newQObject(this);
-    QJSValue ret = pApp->getInterpreter()->doFunction(actionID, function1, args1);
+    args1 << pInterpreter->newQObject(this);
+    QJSValue ret = pInterpreter->doFunction(actionID, function1, args1);
     if (ret.isBool())
     {
         return ret.toBool();
@@ -195,10 +195,10 @@ bool GameAction::isFinalStep(QString actionID)
 
 QString GameAction::getActionText(QString actionID)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getActionText";
     QJSValueList args1;
-    QJSValue ret = pApp->getInterpreter()->doFunction(actionID, function1, args1);
+    QJSValue ret = pInterpreter->doFunction(actionID, function1, args1);
     if (ret.isString())
     {
         return ret.toString();
@@ -208,10 +208,10 @@ QString GameAction::getActionText(QString actionID)
 
 QString GameAction::getActionIcon(QString actionID)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getIcon";
     QJSValueList args1;
-    QJSValue ret = pApp->getInterpreter()->doFunction(actionID, function1, args1);
+    QJSValue ret = pInterpreter->doFunction(actionID, function1, args1);
     if (ret.isString())
     {
         return ret.toString();
@@ -221,11 +221,11 @@ QString GameAction::getActionIcon(QString actionID)
 
 QString GameAction::getStepInputType()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getStepInputType";
     QJSValueList args1;
-    args1 << pApp->getInterpreter()->newQObject(this);
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_actionID, function1, args1);
+    args1 << pInterpreter->newQObject(this);
+    QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args1);
     if (ret.isString())
     {
         return ret.toString();
@@ -235,13 +235,13 @@ QString GameAction::getStepInputType()
 
 CursorData* GameAction::getStepCursor()
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "getStepCursor";
     CursorData* data = new CursorData();
     QJSValueList args1;
-    args1 << pApp->getInterpreter()->newQObject(this);
-    args1 << pApp->getInterpreter()->newQObject(data);
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_actionID, function1, args1);
+    args1 << pInterpreter->newQObject(this);
+    args1 << pInterpreter->newQObject(data);
+    QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args1);
     if (ret.isString())
     {
         data->setCursor(ret.toString());
@@ -253,12 +253,13 @@ MenuData* GameAction::getMenuStepData()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     MenuData* data = new MenuData;
     QString function1 = "getStepData";
     QJSValueList args1;
-    args1 << pApp->getInterpreter()->newQObject(this);
-    args1 << pApp->getInterpreter()->newQObject(data);
-    QJSValue ret = pApp->getInterpreter()->doFunction(m_actionID, function1, args1);
+    args1 << pInterpreter->newQObject(this);
+    args1 << pInterpreter->newQObject(data);
+    QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args1);
     pApp->continueThread();
     return data;
 }
@@ -266,12 +267,12 @@ MenuData* GameAction::getMenuStepData()
 MarkedFieldData* GameAction::getMarkedFieldStepData()
 {
    MarkedFieldData* data = new MarkedFieldData;
-   Mainapp* pApp = Mainapp::getInstance();
+   Interpreter* pInterpreter = Interpreter::getInstance();
    QString function1 = "getStepData";
    QJSValueList args1;
-   args1 << pApp->getInterpreter()->newQObject(this);
-   args1 << pApp->getInterpreter()->newQObject(data);
-   QJSValue ret = pApp->getInterpreter()->doFunction(m_actionID, function1, args1);
+   args1 << pInterpreter->newQObject(this);
+   args1 << pInterpreter->newQObject(data);
+   QJSValue ret = pInterpreter->doFunction(m_actionID, function1, args1);
    return data;
 }
 

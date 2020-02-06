@@ -63,7 +63,7 @@ void BattleAnimationManager::loadAll()
 bool BattleAnimationManager::loadBattleAnimations(QString battleAnimationsID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
-
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/battleanimations");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
@@ -77,7 +77,7 @@ bool BattleAnimationManager::loadBattleAnimations(QString battleAnimationsID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pMainapp->getInterpreter()->openScript(file);
+            pInterpreter->openScript(file);
             if (!bRet)
             {
                 m_loadedBattleAnimations.append(battleAnimationsID);
@@ -102,10 +102,10 @@ qint32 BattleAnimationManager::getBattleAnimationsIndex(QString id)
 
 void BattleAnimationManager::reset()
 {
-    Mainapp* pMainapp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (qint32 i = 0; i < m_loadedBattleAnimations.size(); i++)
     {
-        pMainapp->getInterpreter()->deleteObject(m_loadedBattleAnimations[i]);
+        pInterpreter->deleteObject(m_loadedBattleAnimations[i]);
     }
     m_loadedBattleAnimations.clear();
 }

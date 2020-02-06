@@ -1,4 +1,4 @@
- #include "ai/coreai.h"
+#include "ai/coreai.h"
 
 #include "ai/targetedunitpathfindingsystem.h"
 
@@ -236,8 +236,8 @@ float CoreAI::calcBuildingDamage(Unit* pUnit, QPoint newPosition, Building* pBui
     float counterDamage = 0.0f;
     GameEnums::BuildingTarget targets = pBuilding->getBuildingTargets();
     if (targets == GameEnums::BuildingTarget_All ||
-       (targets == GameEnums::BuildingTarget_Enemy && m_pPlayer->isEnemy(pBuilding->getOwner())) ||
-       (targets == GameEnums::BuildingTarget_Own && m_pPlayer == pBuilding->getOwner()))
+        (targets == GameEnums::BuildingTarget_Enemy && m_pPlayer->isEnemy(pBuilding->getOwner())) ||
+        (targets == GameEnums::BuildingTarget_Own && m_pPlayer == pBuilding->getOwner()))
     {
         if (pBuilding->getFireCount() <= 1 &&
             pBuilding->getOwner() != nullptr)
@@ -299,7 +299,7 @@ void CoreAI::addMovementMap(Building* pBuilding, float damage)
     GameEnums::BuildingTarget targets = pBuilding->getBuildingTargets();
     QPoint offset = pBuilding->getPosition() + pBuilding->getActionTargetOffset() ;
     if (targets == GameEnums::BuildingTarget_All ||
-       (targets == GameEnums::BuildingTarget_Enemy && m_pPlayer->isEnemy(pBuilding->getOwner())))
+        (targets == GameEnums::BuildingTarget_Enemy && m_pPlayer->isEnemy(pBuilding->getOwner())))
     {
         if (pBuilding->getFireCount() <= 1)
         {
@@ -531,15 +531,15 @@ QPointF CoreAI::calcFundsDamage(QRectF damage, Unit* pAtk, Unit* pDef)
 
 QRectF CoreAI::calcUnitDamage(GameAction* pAction, QPoint target)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "calcBattleDamage";
     QJSValueList args1;
-    QJSValue obj1 = pApp->getInterpreter()->newQObject(pAction);
+    QJSValue obj1 = pInterpreter->newQObject(pAction);
     args1 << obj1;
     args1 << target.x();
     args1 << target.y();
     args1 << static_cast<qint32>(GameEnums::LuckDamageMode_Average);
-    QJSValue erg = pApp->getInterpreter()->doFunction(ACTION_FIRE, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(ACTION_FIRE, function1, args1);
     return erg.toVariant().toRectF();
 }
 
@@ -547,22 +547,22 @@ QRectF CoreAI::calcVirtuelUnitDamage(Unit* pAttacker, float attackerTakenDamage,
                                      Unit* pDefender, float defenderTakenDamage, QPoint defPos,
                                      bool ignoreOutOfVisionRange)
 {
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QString function1 = "calcBattleDamage3";
     QJSValueList args1;
-    QJSValue obj1 = pApp->getInterpreter()->newQObject(pAttacker);
+    QJSValue obj1 = pInterpreter->newQObject(pAttacker);
     args1 << obj1;
     args1 << attackerTakenDamage;
     args1 << atkPos.x();
     args1 << atkPos.y();
-    QJSValue obj2 = pApp->getInterpreter()->newQObject(pDefender);
+    QJSValue obj2 = pInterpreter->newQObject(pDefender);
     args1 << obj2;
     args1 << defPos.x();
     args1 << defPos.y();
     args1 << defenderTakenDamage;
     args1 << static_cast<qint32>(GameEnums::LuckDamageMode_Average);
     args1 << ignoreOutOfVisionRange;
-    QJSValue erg = pApp->getInterpreter()->doFunction(ACTION_FIRE, function1, args1);
+    QJSValue erg = pInterpreter->doFunction(ACTION_FIRE, function1, args1);
     return erg.toVariant().toRectF();
 }
 
@@ -672,10 +672,10 @@ void CoreAI::readTrainingFile(QTextStream& stream, bool& questionsFound, QString
                     {
                         if (typeLine.startsWith("NUMBERFILE:"))
                         {
-                             QFile numberFile(typeLine.split(":")[1]);
-                             numberFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
-                             QTextStream stream(&numberFile);
-                             typeLine = stream.readLine();
+                            QFile numberFile(typeLine.split(":")[1]);
+                            numberFile.open(QIODevice::ReadOnly | QIODevice::Truncate);
+                            QTextStream stream(&numberFile);
+                            typeLine = stream.readLine();
                         }
                         QStringList questionString = typeLine.split(":")[1].split("|");
                         for (qint32 i2 = 0; i2 < questionString.size(); i2++)
@@ -965,7 +965,22 @@ void CoreAI::appendSupportTargets(QStringList actions, Unit* pCurrentUnit, QmlVe
         }
         else if (action.startsWith(ACTION_PLACE))
         {
-
+            for (qint32 i = 0; i < pEnemyUnits->size(); i++)
+            {
+                Unit* pUnit = pEnemyUnits->at(i);
+                for (qint32 i2 = 0; i2 < unitFields->size(); i2++)
+                {
+                    if (pMap->onMap(pUnit->getX() + unitFields->at(i2).x(), pUnit->getY() + unitFields->at(i2).y()) &&
+                        pMap->getTerrain(pUnit->getX() + unitFields->at(i2).x(), pUnit->getY() + unitFields->at(i2).y())->getUnit() == nullptr)
+                    {
+                        QVector3D point = QVector3D(pUnit->getX() + unitFields->at(i2).x(), pUnit->getY() + unitFields->at(i2).y(), 2);
+                        if (!targets.contains(point) )
+                        {
+                            targets.append(point);
+                        }
+                    }
+                }
+            }
         }
     }
     delete unitFields;
@@ -1185,9 +1200,9 @@ void CoreAI::appendNearestUnloadTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits,
 }
 
 void CoreAI::checkIslandForUnloading(Unit* pLoadedUnit, QVector<qint32>& checkedIslands,
-                                         qint32 unitIslandIdx, qint32 unitIsland,
-                                         qint32 loadedUnitIslandIdx, qint32 targetIsland,
-                                         QmlVectorPoint* pUnloadArea, QVector<QVector3D>& targets)
+                                     qint32 unitIslandIdx, qint32 unitIsland,
+                                     qint32 loadedUnitIslandIdx, qint32 targetIsland,
+                                     QmlVectorPoint* pUnloadArea, QVector<QVector3D>& targets)
 {
     GameMap* pMap = GameMap::getInstance();
     qint32 width = pMap->getMapWidth();
@@ -1509,12 +1524,12 @@ void CoreAI::finishTurn()
         pAction->setActionID(ACTION_SWAP_COS);
         if (pAction->canBePerformed())
         {
-           float remainingC0 = pCO0->getPowerStars() + pCO0->getSuperpowerStars() - pCO0->getPowerFilled();
-           float remainingC1 = pCO1->getPowerStars() + pCO1->getSuperpowerStars() - pCO1->getPowerFilled();
-           if (remainingC1 - 0.1f > remainingC0)
-           {
-               pAction->setActionID(ACTION_SWAP_COS);
-           }
+            float remainingC0 = pCO0->getPowerStars() + pCO0->getSuperpowerStars() - pCO0->getPowerFilled();
+            float remainingC1 = pCO1->getPowerStars() + pCO1->getSuperpowerStars() - pCO1->getPowerFilled();
+            if (remainingC1 - 0.1f > remainingC0)
+            {
+                pAction->setActionID(ACTION_SWAP_COS);
+            }
         }
         else
         {

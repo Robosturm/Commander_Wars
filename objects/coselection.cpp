@@ -18,7 +18,7 @@ COSelection::COSelection(QStringList coids)
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
 
     pCOSpriteManager->loadAll();
-    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     // create a co banner for each co in a different army
     qint32 bannerX = 0;
     qint32 y = 0;
@@ -26,7 +26,7 @@ COSelection::COSelection(QStringList coids)
     oxygine::spSprite pSprite;
     QString function1 = "getArmies";
     QJSValueList args1;
-    QJSValue ret = pApp->getInterpreter()->doFunction("PLAYER", function1, args1);
+    QJSValue ret = pInterpreter->doFunction("PLAYER", function1, args1);
     m_Armies = ret.toVariant().toStringList();
     QStringList allowedArmies;
     // delete unused armies
@@ -218,7 +218,8 @@ void COSelection::armyChanged(QString army)
     m_COFields.clear();
     m_CoIDs.clear();    
 
-    QJSValue ret = pApp->getInterpreter()->doFunction("PLAYER", "getArmyCOs" + army);
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue ret = pInterpreter->doFunction("PLAYER", "getArmyCOs" + army);
     QStringList preSetCOOrder = ret.toVariant().toStringList();
     qint32 index = 0;
     if (m_Coids.size() > 0)
@@ -237,7 +238,6 @@ void COSelection::armyChanged(QString army)
         }
     }
     COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
-    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
     qint32 startX = 0;
     qint32 startY = 0;
     for (qint32 i = 0; i < preSetCOOrder.size(); i++)
@@ -370,8 +370,7 @@ void COSelection::hoveredCOChanged(QString coid)
         QString coPower = "";
         QString coSuperpower = "";
 
-        Mainapp* pApp = Mainapp::getInstance();
-        Interpreter* pInterpreter = pApp->getInterpreter();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValue value = pInterpreter->doFunction(coid, "getName");
         if (value.isString())
         {

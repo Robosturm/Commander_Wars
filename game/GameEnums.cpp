@@ -6,7 +6,7 @@
 
 void GameEnums::registerEnums()
 {
-    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue value = pInterpreter->newQObject(new GameEnums());
     value.setProperty("Alliance_Friend", Alliance_Friend);
     value.setProperty("Alliance_Enemy", Alliance_Enemy);

@@ -106,6 +106,7 @@ bool NormalAi::performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUn
     else if (aiStep <= AISteps::loadUnits && loadUnits(pUnits, pBuildings, pEnemyBuildings)){}
     else if (aiStep <= AISteps::moveTransporters && moveTransporters(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
     else if (aiStep <= AISteps::moveSupportUnits && moveSupport(AISteps::moveSupportUnits, pUnits, true)){}
+    else if (aiStep <= AISteps::moveSupportUnits && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, std::numeric_limits<qint32>::max(), true)){}
     else if (aiStep <= AISteps::moveAway && moveAwayFromProduction(pUnits)){}
     else if (aiStep <= AISteps::buildUnits && buildUnits(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings)){}
     else
@@ -186,7 +187,7 @@ bool NormalAi::buildCOUnit(QmlVectorUnit* pUnits)
     return false;
 }
 
-bool NormalAi::isUsingUnit(Unit* pUnit)
+bool NormalAi::isUsingUnit(Unit* pUnit, bool ignoreHasMoved)
 {
     if (pUnit->getMaxFuel() > 0 &&
         pUnit->getFuel() / static_cast<float>(pUnit->getMaxFuel()) < 1.0f / 3.0f)
@@ -203,17 +204,21 @@ bool NormalAi::isUsingUnit(Unit* pUnit)
     {
         return false;
     }
-    Building* pBuilding = GameMap::getInstance()->getTerrain(pUnit->getX(), pUnit->getY())->getBuilding();
-    if (pBuilding == nullptr && pUnit->getHpRounded() < 3)
+    GameMap* pMap = GameMap::getInstance();
+    if (pMap->onMap(pUnit->getX(), pUnit->getY()))
     {
-        return false;
+        Building* pBuilding = pMap->getTerrain(pUnit->getX(), pUnit->getY())->getBuilding();
+        if (pBuilding == nullptr && pUnit->getHpRounded() < 3)
+        {
+            return false;
+        }
+        else if (pBuilding != nullptr && pBuilding->getOwner() == m_pPlayer &&
+                 pUnit->getHpRounded() < 7)
+        {
+            return false;
+        }
     }
-    else if (pBuilding != nullptr && pBuilding->getOwner() == m_pPlayer &&
-             pUnit->getHpRounded() < 7)
-    {
-        return false;
-    }
-    if (pUnit->getHasMoved())
+    if (pUnit->getHasMoved() && !ignoreHasMoved)
     {
         return false;
     }
@@ -437,7 +442,7 @@ bool NormalAi::fireWithUnits(QmlVectorUnit* pUnits, qint32 minfireRange, qint32 
 
 bool NormalAi::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
                          QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings,
-                         qint32 minfireRange, qint32 maxfireRange)
+                         qint32 minfireRange, qint32 maxfireRange, bool supportUnits)
 {
     if (aiStep < AISteps::moveToTargets)
     {
@@ -473,6 +478,9 @@ bool NormalAi::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
             if (targets.size() == 0)
             {
                 appendRepairTargets(pUnit, pBuildings, targets);
+            }
+            if (supportUnits)
+            {
                 appendSupportTargets(actions, pUnit, pUnits, pEnemyUnits, targets);
             }
             if (moveUnit(pAction, pUnit, pUnits, actions, targets, transporterTargets, true, pBuildings, pEnemyBuildings))
@@ -582,7 +590,7 @@ bool NormalAi::moveToUnloadArea(GameAction* pAction, Unit* pUnit, QmlVectorUnit*
                                 QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
     GameMap* pMap = GameMap::getInstance();
-    Mainapp* pApp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     TargetedUnitPathFindingSystem pfs(pUnit, targets, &m_MoveCostMap);
     pfs.explore();
     qint32 movepoints = pUnit->getMovementpoints(QPoint(pUnit->getX(), pUnit->getY()));
@@ -606,10 +614,10 @@ bool NormalAi::moveToUnloadArea(GameAction* pAction, Unit* pUnit, QmlVectorUnit*
                 {
                     QString function1 = "getUnloadFields";
                     QJSValueList args1;
-                    QJSValue obj1 = pApp->getInterpreter()->newQObject(pAction);
+                    QJSValue obj1 = pInterpreter->newQObject(pAction);
                     args1 << obj1;
                     args1 << i;
-                    QJSValue ret = pApp->getInterpreter()->doFunction("ACTION_UNLOAD", function1, args1);
+                    QJSValue ret = pInterpreter->doFunction("ACTION_UNLOAD", function1, args1);
                     unloadFields.append(ret.toVariant().toList());
                 }
                 MenuData* pDataMenu = pAction->getMenuStepData();
@@ -618,38 +626,41 @@ bool NormalAi::moveToUnloadArea(GameAction* pAction, Unit* pUnit, QmlVectorUnit*
                 {
                     for (qint32 i = 0; i < unloadFields.size(); i++)
                     {
-                        if (!unloadedUnits.contains(i))
+                        if (isUsingUnit(pUnit->getLoadedUnit(i), true))
                         {
-                            if (unloadFields[i].size() == 1)
+                            if (!unloadedUnits.contains(i))
                             {
-                                qint32 costs = pDataMenu->getCostList()[i];
-                                addMenuItemData(pAction, actions[i], costs);
-                                MarkedFieldData* pFields = pAction->getMarkedFieldStepData();
-                                addSelectedFieldData(pAction, pFields->getPoints()->at(0));
-                                delete pFields;
-                                unloaded = true;
-                                unloadedUnits.append(i);
-                                break;
-                            }
-                            else if (unloadFields[i].size() > 0 &&
-                                     pUnit->getLoadedUnit(i)->getActionList().contains(ACTION_CAPTURE))
-                            {
-                                for (qint32 i2 = 0; i2 < unloadFields[i].size(); i2++)
+                                if (unloadFields[i].size() == 1)
                                 {
-                                    QPoint unloadField = unloadFields[i][i2].toPoint();
-                                    Building* pBuilding = pMap->getTerrain(unloadField.x(),
-                                                                           unloadField.y())->getBuilding();
-                                    if (pBuilding != nullptr && m_pPlayer->isEnemy(pBuilding->getOwner()))
-                                    {
-                                        qint32 costs = pDataMenu->getCostList()[i];
-                                        addMenuItemData(pAction, actions[i], costs);
-                                        addSelectedFieldData(pAction, unloadField);
-                                        unloaded = true;
-                                        unloadedUnits.append(i);
-                                        break;
-                                    }
+                                    qint32 costs = pDataMenu->getCostList()[i];
+                                    addMenuItemData(pAction, actions[i], costs);
+                                    MarkedFieldData* pFields = pAction->getMarkedFieldStepData();
+                                    addSelectedFieldData(pAction, pFields->getPoints()->at(0));
+                                    delete pFields;
+                                    unloaded = true;
+                                    unloadedUnits.append(i);
+                                    break;
                                 }
-                                break;
+                                else if (unloadFields[i].size() > 0 &&
+                                         pUnit->getLoadedUnit(i)->getActionList().contains(ACTION_CAPTURE))
+                                {
+                                    for (qint32 i2 = 0; i2 < unloadFields[i].size(); i2++)
+                                    {
+                                        QPoint unloadField = unloadFields[i][i2].toPoint();
+                                        Building* pBuilding = pMap->getTerrain(unloadField.x(),
+                                                                               unloadField.y())->getBuilding();
+                                        if (pBuilding != nullptr && m_pPlayer->isEnemy(pBuilding->getOwner()))
+                                        {
+                                            qint32 costs = pDataMenu->getCostList()[i];
+                                            addMenuItemData(pAction, actions[i], costs);
+                                            addSelectedFieldData(pAction, unloadField);
+                                            unloaded = true;
+                                            unloadedUnits.append(i);
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                }
                             }
                         }
                     }

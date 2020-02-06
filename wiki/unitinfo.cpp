@@ -226,6 +226,16 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         pLabel->setPosition(xOffset, y);
         addChild(pLabel);
         y += 40;
+        pLabel = new oxygine::TextField();
+        pLabel->setStyle(style);
+        pLabel->setHtmlText(tr("Loadable Units"));
+        pLabel->setScale(2.0f);
+        pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth(), y);
+        addChild(pLabel);
+        y += 80;
+        QStringList loadingUnits = pUnit->getTransportUnits();
+        createLoadingTable(pUnit, loadingUnits, y, width);
+        y += 40;
     }
 
 
@@ -380,6 +390,25 @@ void UnitInfo::createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint3
         addChild(pLabel);
         x += 100;
         if (x + 110 > width && i < pUnitSpriteManager->getUnitCount() - 1)
+        {
+            x = 0;
+            y += 40;
+        }
+    }
+}
+
+
+void UnitInfo::createLoadingTable(Unit* pUnit, QStringList loadables, qint32& y, qint32 width)
+{
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    qint32 x = 0;
+    for (const auto& unitID : loadables)
+    {
+        spUnit pDummy = new Unit(unitID, pUnit->getOwner(), false);
+        pDummy->setPosition(x, y);
+        addChild(pDummy);
+        x += GameMap::Imagesize * 1.5f;
+        if (x + GameMap::Imagesize * 1.5f > width)
         {
             x = 0;
             y += 40;

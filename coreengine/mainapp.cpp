@@ -32,6 +32,10 @@
 #include "qmessagebox.h"
 #include "qthread.h"
 
+#include "coreengine/interpreter.h"
+#include "coreengine/audiothread.h"
+#include "coreengine/workerthread.h"
+
 Mainapp* Mainapp::m_pMainapp;
 QRandomGenerator Mainapp::randGenerator;
 QThread Mainapp::m_Workerthread;
@@ -41,6 +45,8 @@ bool Mainapp::m_useSeed{false};
 QMutex Mainapp::crashMutex;
 
 Mainapp::Mainapp()
+    : m_Audiothread(new AudioThread()),
+      m_Worker(new WorkerThread())
 {
     m_pMainapp = this;
     Interpreter::setCppOwnerShip(this);

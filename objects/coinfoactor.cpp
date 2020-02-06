@@ -174,7 +174,7 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
         corange = pCO->getCORange();
     }
 
-    Interpreter* pInterpreter = pApp->getInterpreter();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue value;
     if (pCO.get() != nullptr)
     {
@@ -314,8 +314,8 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
             spCO testCO = new CO(coid, nullptr);
 
             QJSValueList args;
-            QJSValue obj1 = pApp->getInterpreter()->newQObject(pCO.get());
-            QJSValue obj2 = pApp->getInterpreter()->newQObject(testCO.get());
+            QJSValue obj1 = pInterpreter->newQObject(pCO.get());
+            QJSValue obj2 = pInterpreter->newQObject(testCO.get());
             args << obj1;
             args << obj2;
             value = pInterpreter->doFunction("TAGPOWER", "getTagstars", args);

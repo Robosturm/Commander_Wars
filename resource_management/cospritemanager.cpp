@@ -52,8 +52,7 @@ QString COSpriteManager::getCOName(qint32 position)
 {
     if ((position >= 0) && (position < m_loadedCOs.size()))
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        Interpreter* pInterpreter = pApp->getInterpreter();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValue value = pInterpreter->doFunction(m_loadedCOs[position], "getName");
         if (value.isString())
         {
@@ -66,8 +65,7 @@ QString COSpriteManager::getCOName(qint32 position)
 
 QString COSpriteManager::getCOName(QString coid)
 {
-    Mainapp* pApp = Mainapp::getInstance();
-    Interpreter* pInterpreter = pApp->getInterpreter();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue value = pInterpreter->doFunction(coid, "getName");
     if (value.isString())
     {
@@ -93,8 +91,7 @@ QStringList COSpriteManager::getCOStyles(qint32 position)
 {
     if ((position >= 0) && (position < m_loadedCOs.size()))
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        Interpreter* pInterpreter = pApp->getInterpreter();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValue value = pInterpreter->doFunction(m_loadedCOs[position], "getCOStyles");
         return value.toVariant().toStringList();
     }
@@ -146,7 +143,7 @@ qint32 COSpriteManager::getCOIndex(QString id)
 bool COSpriteManager::loadCO(QString coID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
-
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/cos");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
@@ -160,7 +157,7 @@ bool COSpriteManager::loadCO(QString coID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pMainapp->getInterpreter()->openScript(file);
+            pInterpreter->openScript(file);
             if (!bRet)
             {
                 m_loadedCOs.append(coID);
@@ -173,10 +170,10 @@ bool COSpriteManager::loadCO(QString coID)
 
 void COSpriteManager::reset()
 {
-    Mainapp* pMainapp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (qint32 i = 0; i < m_loadedCOs.size(); i++)
     {
-        pMainapp->getInterpreter()->deleteObject(m_loadedCOs[i]);
+        pInterpreter->deleteObject(m_loadedCOs[i]);
     }
     m_loadedCOs.clear();
 }
@@ -195,7 +192,6 @@ bool COSpriteManager::existsCO(QString coID)
 
 void COSpriteManager::loadResAnim(QString coid, QString file, QImage& colorTable, QImage& maskTable, bool useColorBox)
 {
-    Mainapp* pApp = Mainapp::getInstance();
     QString coidLower = coid.toLower();
     bool nrmFound = false;
     bool faceFound = false;

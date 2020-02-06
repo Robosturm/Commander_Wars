@@ -9,16 +9,14 @@
 #include <QRandomGenerator>
 #include "QMutex"
 
-#include "coreengine/interpreter.h"
-#include "coreengine/audiothread.h"
-#include "coreengine/workerthread.h"
-#include "coreengine/settings.h"
-
 #include "coreengine/qmlvector.h"
 
+#include "oxygine/core/gamewindow.h"
+#include "coreengine/settings.h"
 #include "network/tcpserver.h"
 
-#include "oxygine/core/gamewindow.h"
+class AudioThread;
+class WorkerThread;
 
 class Mainapp : public oxygine::GameWindow
 {
@@ -52,11 +50,6 @@ public:
     inline QTranslator* getTranslator()
     {
         return &m_Translator;
-    }
-
-    inline Interpreter* getInterpreter()
-    {
-        return m_Worker->getInterpreter();
     }
 
     inline AudioThread* getAudioThread()
@@ -202,8 +195,8 @@ private:
     static QThread m_AudioWorker;
     static QThread m_Networkthread;
     spTCPServer m_pGameServer{nullptr};
-    AudioThread* m_Audiothread{new AudioThread()};
-    WorkerThread* m_Worker{new WorkerThread()};
+    AudioThread* m_Audiothread;
+    WorkerThread* m_Worker;
     Settings m_Settings;
     void createTrainingData();
 };

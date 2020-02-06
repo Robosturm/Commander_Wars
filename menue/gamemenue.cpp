@@ -5,6 +5,7 @@
 
 #include "menue/victorymenue.h"
 #include "coreengine/console.h"
+#include "coreengine/audiothread.h"
 #include "ai/proxyai.h"
 
 #include "gameinput/humanplayerinput.h"

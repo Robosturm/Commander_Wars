@@ -3,6 +3,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
 #include "coreengine/settings.h"
+#include "coreengine/audiothread.h"
 
 #include "menue/mainwindow.h"
 

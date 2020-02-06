@@ -16,6 +16,8 @@
 
 #include "coreengine/settings.h"
 
+#include "coreengine/audiothread.h"
+
 GameAnimation::GameAnimation(quint32 frameTime)
     : QObject(),
       m_frameTime(frameTime / Settings::getAnimationSpeed())
@@ -178,10 +180,11 @@ bool GameAnimation::onFinished()
     }
     if ((!jsPostActionObject.isEmpty()) && (!jsPostActionObject.isEmpty()))
     {
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValueList args1;
-        QJSValue obj1 = pApp->getInterpreter()->newQObject(this);
+        QJSValue obj1 = pInterpreter->newQObject(this);
         args1 << obj1;
-        Mainapp::getInstance()->getInterpreter()->doFunction(jsPostActionObject, jsPostActionFunction, args1);
+        pInterpreter->doFunction(jsPostActionObject, jsPostActionFunction, args1);
     }
     GameAnimationFactory::removeAnimation(this);
     pApp->continueThread();

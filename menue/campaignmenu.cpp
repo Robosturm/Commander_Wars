@@ -8,6 +8,7 @@
 #include "coreengine/mainapp.h"
 #include "coreengine/console.h"
 #include "coreengine/settings.h"
+#include "coreengine/audiothread.h"
 
 #include "game/gamemap.h"
 #include "game/gamescript.h"

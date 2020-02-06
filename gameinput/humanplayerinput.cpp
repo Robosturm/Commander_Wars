@@ -18,7 +18,7 @@
 #include "resource_management/fontmanager.h"
 
 #include "coreengine/mainapp.h"
-
+#include "coreengine/audiothread.h"
 #include "coreengine/interpreter.h"
 
 #include "gameinput/markedfielddata.h"
@@ -879,7 +879,7 @@ void HumanPlayerInput::createCursorPath(qint32 x, qint32 y)
 
 QStringList HumanPlayerInput::getEmptyActionList()
 {
-    Interpreter* pInterpreter = Mainapp::getInstance()->getInterpreter();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QJSValue value = pInterpreter->doFunction("ACTION", "getEmptyFieldActions");
     if (value.isString())
     {

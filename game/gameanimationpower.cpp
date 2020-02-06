@@ -34,7 +34,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
-
+    Interpreter* pInterpreter = Interpreter::getInstance();
     oxygine::ResAnim* pAnimMask = GameManager::getInstance()->getResAnim("power_background");
     if (powerMode == GameEnums::PowerMode_Superpower ||
         powerMode == GameEnums::PowerMode_Tagpower)
@@ -87,17 +87,17 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     {
         GameMap* pMap = GameMap::getInstance();
         QJSValueList args;
-        QJSValue obj1 = pApp->getInterpreter()->newQObject(pMap->getCurrentPlayer()->getCO(0));
+        QJSValue obj1 = pInterpreter->newQObject(pMap->getCurrentPlayer()->getCO(0));
         args << obj1;
         CO* pCO1 = pMap->getCurrentPlayer()->getCO(1);
-        QJSValue obj2 = pApp->getInterpreter()->newQObject(pCO1);
+        QJSValue obj2 = pInterpreter->newQObject(pCO1);
         args << obj2;
-        QJSValue ret = pApp->getInterpreter()->doFunction("TAGPOWER", "getTagname", args);
+        QJSValue ret = pInterpreter->doFunction("TAGPOWER", "getTagname", args);
         if (ret.isString())
         {
             text = ret.toString();
         }
-        ret = pApp->getInterpreter()->doFunction("TAGPOWER", "getTagpower", args);
+        ret = pInterpreter->doFunction("TAGPOWER", "getTagpower", args);
         if (ret.isNumber())
         {
             qint32 value = 100 + ret.toInt();
@@ -119,7 +119,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     }
     else if (powerMode == GameEnums::PowerMode_Superpower)
     {
-        QJSValue ret = pApp->getInterpreter()->doFunction(coid, "getSuperPowerName");
+        QJSValue ret = pInterpreter->doFunction(coid, "getSuperPowerName");
         if (ret.isString())
         {
             text = ret.toString();
@@ -127,7 +127,7 @@ GameAnimationPower::GameAnimationPower(quint32 frameTime, QColor color, GameEnum
     }
     else
     {
-        QJSValue ret = pApp->getInterpreter()->doFunction(coid, "getPowerName");
+        QJSValue ret = pInterpreter->doFunction(coid, "getPowerName");
         if (ret.isString())
         {
             text = ret.toString();

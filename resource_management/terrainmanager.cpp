@@ -25,10 +25,10 @@ TerrainManager::TerrainManager() : QObject()
 
 void TerrainManager::reset()
 {
-    Mainapp* pMainapp = Mainapp::getInstance();
+    Interpreter* pInterpreter = Interpreter::getInstance();
     for (qint32 i = 0; i < m_loadedTerrains.size(); i++)
     {
-        pMainapp->getInterpreter()->deleteObject(m_loadedTerrains[i]);
+        pInterpreter->deleteObject(m_loadedTerrains[i]);
     }
     m_loadedTerrains.clear();
 }
@@ -67,9 +67,9 @@ qint32 TerrainManager::getTerrainGroup(qint32 i)
 {
     if ((i >= 0) && (i < m_loadedTerrains.size()))
     {
-        Mainapp* pApp = Mainapp::getInstance();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QString function1 = "getTerrainGroup";
-        QJSValue ret = pApp->getInterpreter()->doFunction(m_loadedTerrains[i], function1);
+        QJSValue ret = pInterpreter->doFunction(m_loadedTerrains[i], function1);
         if (ret.isNumber())
         {
             return ret.toInt();
@@ -93,7 +93,7 @@ bool TerrainManager::existsTerrain(QString TerrainID)
 bool TerrainManager::loadTerrain(QString TerrainID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
-
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/terrain");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
@@ -107,7 +107,7 @@ bool TerrainManager::loadTerrain(QString TerrainID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pMainapp->getInterpreter()->openScript(file);
+            pInterpreter->openScript(file);
             if (!bRet)
             {
                 m_loadedTerrains.append(TerrainID);
@@ -131,8 +131,7 @@ QString TerrainManager::getTerrainName(qint32 position)
 {
     if ((position >= 0) && (position < m_loadedTerrains.size()))
     {
-        Mainapp* pApp = Mainapp::getInstance();
-        Interpreter* pInterpreter = pApp->getInterpreter();
+        Interpreter* pInterpreter = Interpreter::getInstance();
         QJSValue value = pInterpreter->doFunction(m_loadedTerrains[position], "getName");
         if (value.isString())
         {

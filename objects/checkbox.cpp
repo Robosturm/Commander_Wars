@@ -4,6 +4,8 @@
 
 #include "coreengine/mainapp.h"
 
+#include "coreengine/audiothread.h"
+
 Checkbox::Checkbox()
 {
     Mainapp* pApp = Mainapp::getInstance();

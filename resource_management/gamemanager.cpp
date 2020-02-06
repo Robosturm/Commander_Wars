@@ -64,7 +64,7 @@ void GameManager::loadAll()
 bool GameManager::loadAction(QString actionID)
 {
     Mainapp* pMainapp = Mainapp::getInstance();
-
+    Interpreter* pInterpreter = Interpreter::getInstance();
     QStringList searchPaths;
     searchPaths.append("resources/scripts/actions");
     for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
@@ -78,7 +78,7 @@ bool GameManager::loadAction(QString actionID)
         QFileInfo checkFile(file);
         if (checkFile.exists() && checkFile.isFile())
         {
-            pMainapp->getInterpreter()->openScript(file);
+            pInterpreter->openScript(file);
             if (!bRet)
             {
                 m_loadedActions.append(actionID);
