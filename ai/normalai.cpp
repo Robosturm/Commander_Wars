@@ -187,20 +187,9 @@ bool NormalAi::buildCOUnit(QmlVectorUnit* pUnits)
     return false;
 }
 
-bool NormalAi::isUsingUnit(Unit* pUnit, bool ignoreHasMoved)
+bool NormalAi::isUsingUnit(Unit* pUnit)
 {
-    if (pUnit->getMaxFuel() > 0 &&
-        pUnit->getFuel() / static_cast<float>(pUnit->getMaxFuel()) < 1.0f / 3.0f)
-    {
-        return false;
-    }
-    if (pUnit->getMaxAmmo1() > 0 &&
-        pUnit->getAmmo1() / static_cast<float>(pUnit->getMaxAmmo1()) < 1.0f / 3.0f)
-    {
-        return false;
-    }
-    if (pUnit->getMaxAmmo2() > 0 &&
-        pUnit->getAmmo2() / static_cast<float>(pUnit->getMaxAmmo2()) < 1.0f / 3.0f)
+    if (needsRefuel(pUnit))
     {
         return false;
     }
@@ -218,7 +207,7 @@ bool NormalAi::isUsingUnit(Unit* pUnit, bool ignoreHasMoved)
             return false;
         }
     }
-    if (pUnit->getHasMoved() && !ignoreHasMoved)
+    if (pUnit->getHasMoved())
     {
         return false;
     }
@@ -626,7 +615,7 @@ bool NormalAi::moveToUnloadArea(GameAction* pAction, Unit* pUnit, QmlVectorUnit*
                 {
                     for (qint32 i = 0; i < unloadFields.size(); i++)
                     {
-                        if (isUsingUnit(pUnit->getLoadedUnit(i), true))
+                        if (!needsRefuel(pUnit->getLoadedUnit(i)))
                         {
                             if (!unloadedUnits.contains(i))
                             {
@@ -708,6 +697,11 @@ bool NormalAi::repairUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
             // find possible targets for this unit
             pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));
             appendRepairTargets(pUnit, pBuildings, targets);
+            if (needsRefuel(pUnit))
+            {
+                appendTransporterTargets(pUnit, pUnits, transporterTargets);
+                targets.append(transporterTargets);
+            }
             if (moveUnit(pAction, pUnit, pUnits, actions, targets, transporterTargets, false, pBuildings, pEnemyBuildings))
             {
                 return true;

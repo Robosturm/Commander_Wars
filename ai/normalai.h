@@ -39,7 +39,7 @@ protected:
      * @param pUnit
      * @return
      */
-    bool isUsingUnit(Unit* pUnit, bool ignoreHasMoved = false);
+    bool isUsingUnit(Unit* pUnit);
     /**
      * @brief moveUnits
      * @param pUnits

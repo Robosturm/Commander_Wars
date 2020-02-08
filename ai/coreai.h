@@ -385,7 +385,12 @@ protected:
      * @param unitID
      */
     void createIslandMap(QString movementType, QString unitID);
-
+    /**
+     * @brief needsRefuel
+     * @param pUnit
+     * @return
+     */
+    bool needsRefuel(Unit* pUnit);
 protected:
     DecisionTree m_COPowerTree;
     QVector<spIslandMap> m_IslandMaps;

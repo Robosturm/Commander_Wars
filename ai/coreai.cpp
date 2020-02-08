@@ -1410,6 +1410,25 @@ void CoreAI::rebuildIsland(QmlVectorUnit* pUnits)
     }
 }
 
+bool CoreAI::needsRefuel(Unit *pUnit)
+{
+    if (pUnit->getMaxFuel() > 0 &&
+        pUnit->getFuel() / static_cast<float>(pUnit->getMaxFuel()) < 1.0f / 3.0f)
+    {
+        return true;
+    }
+    if (pUnit->getMaxAmmo1() > 0 &&
+        pUnit->getAmmo1() / static_cast<float>(pUnit->getMaxAmmo1()) < 1.0f / 3.0f)
+    {
+        return true;
+    }
+    if (pUnit->getMaxAmmo2() > 0 &&
+        pUnit->getAmmo2() / static_cast<float>(pUnit->getMaxAmmo2()) < 1.0f / 3.0f)
+    {
+        return true;
+    }
+    return false;
+}
 
 void CoreAI::createIslandMap(QString movementType, QString unitID)
 {
