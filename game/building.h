@@ -73,6 +73,11 @@ public:
      * @return
      */
     QPoint getOffset(Terrain* pTerrain);
+    /**
+     * @brief isValid
+     * @return
+     */
+    bool isValid();
 signals:
 
 public slots:

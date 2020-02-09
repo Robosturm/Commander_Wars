@@ -116,6 +116,11 @@ public:
      * @param value
      */
     void setSpriteVisibility(bool value);
+    /**
+     * @brief isValid
+     * @return
+     */
+    bool isValid();
 public slots:
     /**
      * @brief getTerrainGroup

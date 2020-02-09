@@ -1147,6 +1147,10 @@ void Player::deserializeObject(QDataStream& pStream)
         {
             playerCOs[0] = new CO("", this);
             playerCOs[0]->deserializeObject(pStream);
+            if (!playerCOs[0]->isValid())
+            {
+                playerCOs[0] = nullptr;
+            }
         }
         bool hasC1 = false;
         pStream >> hasC1;
@@ -1154,6 +1158,10 @@ void Player::deserializeObject(QDataStream& pStream)
         {
             playerCOs[1] = new CO("", this);
             playerCOs[1]->deserializeObject(pStream);
+            if (!playerCOs[1]->isValid())
+            {
+                playerCOs[1] = nullptr;
+            }
         }
         if (version > 3)
         {

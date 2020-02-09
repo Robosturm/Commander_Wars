@@ -44,6 +44,11 @@ void Building::init()
     pInterpreter->doFunction(m_BuildingID, function, args);
 }
 
+bool Building::isValid()
+{
+    return BuildingSpriteManager::getInstance()->existsBuilding(m_BuildingID);
+}
+
 QPoint Building::getOffset(Terrain* pTerrain)
 {
     return QPoint(m_pTerrain->getX() - pTerrain->getX(),

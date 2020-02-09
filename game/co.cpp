@@ -11,6 +11,8 @@
 #include "game/gameanimationdialog.h"
 #include "game/gameanimationpower.h"
 
+#include "resource_management/cospritemanager.h"
+
 #include "game/player.h"
 
 CO::CO(QString coID, Player* owner)
@@ -34,6 +36,11 @@ void CO::init()
         args1 << obj1;
         QJSValue erg = pInterpreter->doFunction(this->coID, function1, args1);
     }
+}
+
+bool CO::isValid()
+{
+    return COSpriteManager::getInstance()->existsCO(coID);
 }
 
 float CO::getUnitBuildValue(QString unitID)

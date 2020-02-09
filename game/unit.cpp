@@ -71,6 +71,11 @@ Unit::~Unit()
     }
 }
 
+bool Unit::isValid()
+{
+    return UnitSpriteManager::getInstance()->existsUnit(m_UnitID);
+}
+
 QString Unit::getDescription()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();
@@ -2535,7 +2540,11 @@ void Unit::deserializeObject(QDataStream& pStream)
         for (qint32 i = 0; i < units; i++)
         {
             m_TransportUnits.append(new Unit());
-            m_TransportUnits[i]->deserializeObject(pStream);
+            m_TransportUnits[m_TransportUnits.size() - 1]->deserializeObject(pStream);
+            if (!m_TransportUnits[m_TransportUnits.size() - 1]->isValid())
+            {
+                m_TransportUnits.removeLast();
+            }
         }
     }
     if (version > 2)

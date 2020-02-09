@@ -785,9 +785,16 @@ void GameMap::deserializeObject(QDataStream& pStream)
             spTerrain pTerrain = Terrain::createTerrain("", x, y, "");
             fields[y]->append(pTerrain);
             pTerrain->deserializeObject(pStream);
-            this->addChild(pTerrain);
-            pTerrain->setPosition(x * Imagesize, y * Imagesize);
-            pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
+            if (pTerrain->isValid())
+            {
+                this->addChild(pTerrain);
+                pTerrain->setPosition(x * Imagesize, y * Imagesize);
+                pTerrain->setPriority(static_cast<qint16>(Mainapp::ZOrder::Terrain) + static_cast<qint16>(y));
+            }
+            else
+            {
+                replaceTerrain("PLAINS", x, y, false, false);
+            }
         }
     }    
     setCurrentPlayer(currentPlayerIdx);

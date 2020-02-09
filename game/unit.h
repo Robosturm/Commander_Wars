@@ -116,6 +116,11 @@ public:
     }
     QVector<QPoint> getMultiTurnPath() const;
     void setMultiTurnPath(const QVector<QPoint> &MultiTurnPath);
+    /**
+     * @brief isValid
+     * @return
+     */
+    bool isValid();
 signals:
 
 public slots:

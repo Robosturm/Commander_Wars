@@ -46,6 +46,11 @@ public:
         return 3;
     }
     void init();
+    /**
+     * @brief isValid
+     * @return
+     */
+    bool isValid();
 signals:
 
 public slots:

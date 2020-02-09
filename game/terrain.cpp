@@ -65,6 +65,11 @@ Terrain::~Terrain()
 {
 }
 
+bool Terrain::isValid()
+{
+    return TerrainManager::getInstance()->existsTerrain(terrainID);
+}
+
 void Terrain::setSpriteVisibility(bool value)
 {
     if (m_pBaseTerrain.get() != nullptr)
@@ -1005,10 +1010,17 @@ void Terrain::deserializeObject(QDataStream& pStream)
     {
         m_Building = new Building("");
         m_Building->deserializeObject(pStream);
-        m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
-        m_Building->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
-        this->addChild(m_Building);
-        createBuildingDownStream();
+        if (m_Building->isValid())
+        {
+            m_Building->setPriority(static_cast<qint16>(DrawPriority::Building));
+            m_Building->setTerrain(GameMap::getInstance()->getTerrain(Terrain::x, Terrain::y));
+            this->addChild(m_Building);
+            createBuildingDownStream();
+        }
+        else
+        {
+           m_Building = nullptr;
+        }
     }
     bool hasUnit = false;
     pStream >> hasUnit;
@@ -1016,7 +1028,14 @@ void Terrain::deserializeObject(QDataStream& pStream)
     {
         m_Unit = new Unit("", nullptr, false);
         m_Unit->deserializeObject(pStream);
-        setUnit(m_Unit);
+        if (m_Unit->isValid())
+        {
+            setUnit(m_Unit);
+        }
+        else
+        {
+            m_Unit = nullptr;
+        }
     }
     if (version > 1)
     {

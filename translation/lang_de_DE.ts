@@ -468,7 +468,7 @@
 <context>
     <name>CO</name>
     <message>
-        <location filename="../game/co.cpp" line="273"/>
+        <location filename="../game/co.cpp" line="280"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
