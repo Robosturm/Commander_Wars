@@ -1,5 +1,7 @@
 #include "fontmanager.h"
 
+#include "coreengine/mainapp.h"
+
 FontManager* FontManager::m_pInstance = nullptr;
 
 FontManager* FontManager::getInstance()
@@ -15,4 +17,12 @@ FontManager* FontManager::getInstance()
 FontManager::FontManager()
 {
     oxygine::Resources::loadXML("resources/fonts/fonts.xml");
+    Mainapp* pMainapp = Mainapp::getInstance();
+    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    {
+        if (QFile::exists(pMainapp->getSettings()->getMods().at(i) + "/fonts/fonts.xml"))
+        {
+            oxygine::Resources::loadXML(pMainapp->getSettings()->getMods().at(i) + "/fonts/fonts.xml");
+        }
+    }
 }

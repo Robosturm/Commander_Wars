@@ -250,14 +250,29 @@ void AudioThread::SlotMediaStatusChanged(QMediaPlayer::MediaStatus status)
 
 void AudioThread::SlotLoadFolder(QString folder)
 {
+    QStringList loadedSounds;
+    Mainapp* pMainapp = Mainapp::getInstance();
+    for (qint32 i = 0; i < pMainapp->getSettings()->getMods().size(); i++)
+    {
+        loadMusicFolder(pMainapp->getSettings()->getMods().at(i) + "/" + folder, loadedSounds);
+    }
+    loadMusicFolder(folder, loadedSounds);
+}
+
+void AudioThread::loadMusicFolder(QString folder, QStringList& loadedSounds)
+{
     QDir directory(folder);
     QStringList filter("*.mp3");
     QStringList files = directory.entryList(filter);
-    for (QStringList::const_iterator it = files.begin(); it != files.end(); it++)
+    for (const auto& file : files)
     {
-        m_playList->addMedia(QUrl::fromLocalFile(folder + QString("/") + *it));
-        m_playList2->addMedia(QUrl::fromLocalFile(folder + QString("/") + *it));
-        m_PlayListdata.append(std::tuple<qint64, qint64>(-1, -1));
+        if (!loadedSounds.contains(file))
+        {
+            m_playList->addMedia(QUrl::fromLocalFile(folder + QString("/") + file));
+            m_playList2->addMedia(QUrl::fromLocalFile(folder + QString("/") + file));
+            m_PlayListdata.append(std::tuple<qint64, qint64>(-1, -1));
+            loadedSounds.append(file);
+        }
     }
 }
 

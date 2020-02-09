@@ -99,6 +99,8 @@ protected slots:
      */
     void stopSecondPlayer();
     void bufferAudio();
+protected:
+    void loadMusicFolder(QString folder, QStringList& loadedSounds);
 private:
     // two players one is buffering the other one is actually playing
     QMediaPlayer* m_Player{nullptr};
