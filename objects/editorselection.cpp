@@ -115,26 +115,12 @@ EditorSelection::EditorSelection()
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     // reserve vector size for fun and speed :D
     m_Terrains.reserve(pTerrainManager->getTerrainCount());
-    QVector<qint32> terrainGroups;
-    for (qint32 i = 0; i < pTerrainManager->getTerrainCount(); i++)
+    QStringList sortedTerrainIDs = pTerrainManager->getTerrainsSorted();
+    for (const auto& terrainId : sortedTerrainIDs)
     {
-        qint32 terrainGroup = pTerrainManager->getTerrainGroup(i);
-        if (!terrainGroups.contains(terrainGroup))
-        {
-            terrainGroups.append(terrainGroup);
-        }
-    }
-    for (qint32 i2 = 0; i2 < terrainGroups.size(); i2++)
-    {
-        for (qint32 i = 0; i < pTerrainManager->getTerrainCount(); i++)
-        {
-            if (pTerrainManager->getTerrainGroup(i) == terrainGroups[i2])
-            {
-                m_Terrains.append(Terrain::createTerrain(pTerrainManager->getTerrainID(i), -10, -10, ""));
-                m_Terrains[m_Terrains.size() - 1]->loadSprites();
-                m_PlacementActor->addChild(m_Terrains[m_Terrains.size() - 1]);
-            }
-        }
+        m_Terrains.append(Terrain::createTerrain(terrainId, -10, -10, ""));
+        m_Terrains[m_Terrains.size() - 1]->loadSprites();
+        m_PlacementActor->addChild(m_Terrains[m_Terrains.size() - 1]);
     }
 
     connect(this, &EditorSelection::sigClickedPlacementSelection, this, &EditorSelection::ClickedPlacementSelection, Qt::QueuedConnection);
@@ -176,48 +162,34 @@ EditorSelection::EditorSelection()
     spTerrain plains = Terrain::createTerrain("PLAINS", -1, -1, "");
     spTerrain sea = Terrain::createTerrain("SEA", -1, -1, "");
 
-    QVector<GameEnums::UnitType> unitTypes;
-    for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+    QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
+    for (const auto& unitId : sortedUnits)
     {
-        GameEnums::UnitType unitType = pUnitSpriteManager->getUnitType(i);
-        if (!unitTypes.contains(unitType))
+        spUnit unit = new Unit(unitId, m_Players.at(1)->getOwner(), false);
+        m_Units.append(unit);
+        oxygine::spSprite pSprite = new oxygine::Sprite();
+        QString movementType = unit->getMovementType();
+        if (pMovementTableManager->getBaseMovementPoints(movementType, plains.get(), plains.get(), unit.get()) > 0)
         {
-            unitTypes.append(unitType);
+            pAnim = pTerrainManager->getResAnim("plains+0");
+            pSprite->setResAnim(pAnim);
         }
-    }
-    for (qint32 i2 = 0; i2 < unitTypes.size(); i2++)
-    {
-        for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+        else if (pMovementTableManager->getBaseMovementPoints(movementType, sea.get(), sea.get(), unit.get()) > 0)
         {
-            if (pUnitSpriteManager->getUnitType(i) == unitTypes[i2])
-            {
-                spUnit unit = new Unit(pUnitSpriteManager->getUnitID(i), m_Players.at(1)->getOwner(), false);
-                m_Units.append(unit);
-                oxygine::spSprite pSprite = new oxygine::Sprite();
-                QString movementType = unit->getMovementType();
-                if (pMovementTableManager->getBaseMovementPoints(movementType, plains.get(), plains.get(), unit.get()) > 0)
-                {
-                    pAnim = pTerrainManager->getResAnim("plains+0");
-                    pSprite->setResAnim(pAnim);
-                }
-                else if (pMovementTableManager->getBaseMovementPoints(movementType, sea.get(), sea.get(), unit.get()) > 0)
-                {
-                    pAnim = pTerrainManager->getResAnim("SEA");
-                    pSprite->setResAnim(pAnim);
-                }
-                else
-                {
-                    // todo maybe to something about this here
-                    pAnim = pTerrainManager->getResAnim("plains+0");
-                    pSprite->setResAnim(pAnim);
-                }
-                pSprite->setPriority(-100);
-                pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
-                unit->addChild(pSprite);
-                unit->setVisible(false);
-                m_PlacementActor->addChild(unit);
-            }
+            pAnim = pTerrainManager->getResAnim("SEA");
+            pSprite->setResAnim(pAnim);
         }
+        else
+        {
+            // todo maybe to something about this here
+            pAnim = pTerrainManager->getResAnim("plains+0");
+            pSprite->setResAnim(pAnim);
+        }
+        pSprite->setPriority(-100);
+        pSprite->setScale(GameMap::Imagesize / pAnim->getWidth());
+        unit->addChild(pSprite);
+        unit->setVisible(false);
+        m_PlacementActor->addChild(unit);
     }
 
 

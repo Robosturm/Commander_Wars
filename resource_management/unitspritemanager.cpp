@@ -149,3 +149,39 @@ QString UnitSpriteManager::getUnitName(qint32 position)
     }
     return "";
 }
+
+QString UnitSpriteManager::getUnitName(QString id)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue value = pInterpreter->doFunction(id, "getName");
+    if (value.isString())
+    {
+        return value.toString();
+    }
+    return "";
+}
+
+QStringList UnitSpriteManager::getUnitsSorted()
+{
+    QStringList sortedUnits;
+    QVector<GameEnums::UnitType> unitTypes;
+    for (qint32 i = 0; i < getUnitCount(); i++)
+    {
+        GameEnums::UnitType unitType = getUnitType(i);
+        if (!unitTypes.contains(unitType))
+        {
+            unitTypes.append(unitType);
+        }
+    }
+    for (qint32 i2 = 0; i2 < unitTypes.size(); i2++)
+    {
+        for (qint32 i = 0; i < getUnitCount(); i++)
+        {
+            if (getUnitType(i) == unitTypes[i2])
+            {
+                sortedUnits.append(getUnitID(i));
+            }
+        }
+    }
+    return sortedUnits;
+}

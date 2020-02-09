@@ -28,6 +28,13 @@ public:
      * @param width
      */
     void createLoadingTable(Unit* pUnit, QStringList loadables, qint32& y, qint32 width);
+    /**
+     * @brief createTransportTable
+     * @param pUnit
+     * @param y
+     * @param width
+     */
+    void createTransportTable(Unit* pUnit, qint32& y, qint32 width);
 };
 
 #endif // UNITINFO_H

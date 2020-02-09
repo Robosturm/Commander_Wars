@@ -140,3 +140,39 @@ QString TerrainManager::getTerrainName(qint32 position)
     }
     return "";
 }
+
+QString TerrainManager::getTerrainName(QString terrainId)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValue value = pInterpreter->doFunction(terrainId, "getName");
+    if (value.isString())
+    {
+        return value.toString();
+    }
+    return "";
+}
+
+QStringList TerrainManager::getTerrainsSorted()
+{
+    QStringList sortedTerrains;
+    QVector<qint32> terrainGroups;
+    for (qint32 i = 0; i < getTerrainCount(); i++)
+    {
+        qint32 terrainGroup = getTerrainGroup(i);
+        if (!terrainGroups.contains(terrainGroup))
+        {
+            terrainGroups.append(terrainGroup);
+        }
+    }
+    for (qint32 i2 = 0; i2 < terrainGroups.size(); i2++)
+    {
+        for (qint32 i = 0; i < getTerrainCount(); i++)
+        {
+            if (getTerrainGroup(i) == terrainGroups[i2])
+            {
+                sortedTerrains.append(getTerrainID(i));
+            }
+        }
+    }
+    return sortedTerrains;
+}

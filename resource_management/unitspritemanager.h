@@ -80,6 +80,17 @@ public:
      * @return
      */
     QString getUnitName(qint32 position);
+    /**
+     * @brief getUnitName
+     * @param position
+     * @return
+     */
+    QString getUnitName(QString id);
+    /**
+     * @brief getUnitsSorted
+     * @return
+     */
+    QStringList getUnitsSorted();
 private:
     explicit UnitSpriteManager();
     virtual ~UnitSpriteManager() = default;

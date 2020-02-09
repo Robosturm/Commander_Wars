@@ -119,25 +119,7 @@ BuildListDialog::BuildListDialog(qint32 player, QStringList buildList)
     pPanel->addItem(pLabel);
 
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    QVector<GameEnums::UnitType> unitTypes;
-    for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
-    {
-        GameEnums::UnitType unitType = pUnitSpriteManager->getUnitType(i);
-        if (!unitTypes.contains(unitType))
-        {
-            unitTypes.append(unitType);
-        }
-    }
-    for (qint32 i2 = 0; i2 < unitTypes.size(); i2++)
-    {
-        for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
-        {
-            if (pUnitSpriteManager->getUnitType(i) == unitTypes[i2])
-            {
-                m_UnitList.append(pUnitSpriteManager->getUnitID(i));
-            }
-        }
-    }
+    m_UnitList = pUnitSpriteManager->getUnitsSorted();
 
     qint32 y = 30 + pLabel->getTextRect().getHeight() * 2;
     qint32 x = 10;

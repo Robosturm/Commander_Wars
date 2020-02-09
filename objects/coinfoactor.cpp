@@ -366,9 +366,10 @@ void COInfoActor::showCO(spCO pCO, spPlayer pPlayer)
 
     qint32 x = 10;
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+    QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
+    for (qint32 i = 0; i < sortedUnits.size(); i++)
     {
-        QString unitID = pUnitSpriteManager->getUnitID(i);
+        QString unitID = sortedUnits[i];
         m_UnitDataActors.append(new oxygine::Actor());
         m_UnitDataActors[i]->setPosition(x, y);
         addChild(m_UnitDataActors[i]);

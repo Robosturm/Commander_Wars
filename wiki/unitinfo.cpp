@@ -238,6 +238,17 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
         y += 40;
     }
 
+    pLabel = new oxygine::TextField();
+    pLabel->setStyle(style);
+    pLabel->setHtmlText(tr("Transporters"));
+    pLabel->setScale(2.0f);
+    pLabel->setPosition(width / 2 - pLabel->getTextRect().getWidth(), y);
+    addChild(pLabel);
+    y += 80;
+    createTransportTable(pUnit, y, width);
+    y += 40;
+
+
 
     if (y - yStart < 210)
     {
@@ -255,10 +266,11 @@ UnitInfo::UnitInfo(Unit* pUnit, qint32 width)
     y += 80;
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
+    QStringList sortedTerrains = pTerrainManager->getTerrainsSorted();
     qint32 x = 0;
-    for (qint32 i = 0; i < pTerrainManager->getTerrainCount(); i++)
+    for (const auto& terrainId : sortedTerrains)
     {
-        spTerrain pTerrain = Terrain::createTerrain(pTerrainManager->getTerrainID(i), -1, -1, "");
+        spTerrain pTerrain = Terrain::createTerrain(terrainId, -1, -1, "");
         pTerrain->loadSprites();
         qint32 costs = pMovementTableManager->getBaseMovementPoints(id, pTerrain.get(), pTerrain.get(), pUnit);
         pTerrain->setPosition(x, y);
@@ -368,9 +380,10 @@ void UnitInfo::createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint3
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     qint32 x = 0;
-    for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+    QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
+    for (qint32 i = 0; i < sortedUnits.size(); i++)
     {
-        spUnit pDummy = new Unit(pUnitSpriteManager->getUnitID(i), pUnit->getOwner(), false);
+        spUnit pDummy = new Unit(sortedUnits[i], pUnit->getOwner(), false);
         float damage = pWeaponManager->getBaseDamage(weaponID, pDummy.get());
         pDummy->setPosition(x, y);
         addChild(pDummy);
@@ -397,10 +410,8 @@ void UnitInfo::createWeaponTable(Unit* pUnit, QString weaponID, qint32& y, qint3
     }
 }
 
-
 void UnitInfo::createLoadingTable(Unit* pUnit, QStringList loadables, qint32& y, qint32 width)
 {
-    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
     qint32 x = 0;
     for (const auto& unitID : loadables)
     {
@@ -412,6 +423,28 @@ void UnitInfo::createLoadingTable(Unit* pUnit, QStringList loadables, qint32& y,
         {
             x = 0;
             y += 40;
+        }
+    }
+}
+
+void UnitInfo::createTransportTable(Unit* pUnit, qint32& y, qint32 width)
+{
+    UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
+    QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
+    qint32 x = 0;
+    for (const auto& unitID : sortedUnits)
+    {
+        spUnit pDummy = new Unit(unitID, pUnit->getOwner(), false);
+        if (pDummy->canTransportUnit(pUnit, true))
+        {
+            pDummy->setPosition(x, y);
+            addChild(pDummy);
+            x += GameMap::Imagesize * 1.5f;
+            if (x + GameMap::Imagesize * 1.5f > width)
+            {
+                x = 0;
+                y += 40;
+            }
         }
     }
 }

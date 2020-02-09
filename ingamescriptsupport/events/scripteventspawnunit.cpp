@@ -157,15 +157,15 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
     pBox->addItem(pText);
     QVector<QString> items;
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    qint32 currentItem = 0;
-    for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+    QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
+    qint32 currentItem = sortedUnits.indexOf(unitID);
+    if (currentItem < 0)
     {
-        QString id = pUnitSpriteManager->getUnitID(i);
-        items.append(id);
-        if (unitID == id)
-        {
-            currentItem = i;
-        }
+        currentItem = 0;
+    }
+    for (const auto& curUnitId : sortedUnits)
+    {
+        items.append(curUnitId);
     }
     auto creator = [=](QString id)
     {

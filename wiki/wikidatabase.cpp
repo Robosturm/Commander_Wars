@@ -60,9 +60,10 @@ void WikiDatabase::load()
         m_Entries.append(pageData(pCOSpriteManager->getCOName(i), pCOSpriteManager->getCOID(i), "CO"));
     }
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
-    for (qint32 i = 0; i < pTerrainManager->getTerrainCount(); i++)
+    QStringList sortedTerrains = pTerrainManager->getTerrainsSorted();
+    for (const auto& terrainId : sortedTerrains)
     {
-        m_Entries.append(pageData(pTerrainManager->getTerrainName(i), pTerrainManager->getTerrainID(i), "Terrain"));
+        m_Entries.append(pageData(pTerrainManager->getTerrainName(terrainId), terrainId, "Terrain"));
     }
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
     for (qint32 i = 0; i < pBuildingSpriteManager->getBuildingCount(); i++)
@@ -70,9 +71,10 @@ void WikiDatabase::load()
         m_Entries.append(pageData(pBuildingSpriteManager->getBuildingName(i), pBuildingSpriteManager->getBuildingID(i), "Building"));
     }
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    for (qint32 i = 0; i < pUnitSpriteManager->getUnitCount(); i++)
+    QStringList sortedUnits = pUnitSpriteManager->getUnitsSorted();
+    for (const auto& unitId : sortedUnits)
     {
-        m_Entries.append(pageData(pUnitSpriteManager->getUnitName(i), pUnitSpriteManager->getUnitID(i), "Unit"));
+        m_Entries.append(pageData(pUnitSpriteManager->getUnitName(unitId), unitId, "Unit"));
     }
 
     // load general wiki page

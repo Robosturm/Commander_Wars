@@ -83,15 +83,15 @@ void ScriptEventModifyTerrain::showEditEvent(spScriptEditor pScriptEditor)
     pBox->addItem(pText);
     QVector<QString> items;
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
-    qint32 currentItem = 0;
-    for (qint32 i = 0; i < pTerrainManager->getTerrainCount(); i++)
+    QStringList sortedTerrains = pTerrainManager->getTerrainsSorted();
+    qint32 currentItem = sortedTerrains.indexOf(m_newTerrainID);
+    if (currentItem < 0)
     {
-        QString id = pTerrainManager->getTerrainID(i);
-        items.append(id);
-        if (m_newTerrainID == id)
-        {
-            currentItem = i;
-        }
+        currentItem = 0;
+    }
+    for (const auto& curTerrainId : sortedTerrains)
+    {
+        items.append(curTerrainId);
     }
     auto creator = [=](QString id)
     {

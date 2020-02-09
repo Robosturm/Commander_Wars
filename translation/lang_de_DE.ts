@@ -460,7 +460,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/buildlistdialog.cpp" line="264"/>
+        <location filename="../objects/buildlistdialog.cpp" line="246"/>
         <source>Bannlist Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5236,17 +5236,22 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="251"/>
+        <location filename="../wiki/unitinfo.cpp" line="243"/>
+        <source>Transporters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../wiki/unitinfo.cpp" line="262"/>
         <source>Movement </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="338"/>
+        <location filename="../wiki/unitinfo.cpp" line="350"/>
         <source>Weapon 1 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../wiki/unitinfo.cpp" line="350"/>
+        <location filename="../wiki/unitinfo.cpp" line="362"/>
         <source>Weapon 2 </source>
         <translation type="unfinished"></translation>
     </message>
