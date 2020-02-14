@@ -1,0 +1,17 @@
+var Constructor = function()
+{
+	@custom
+    this.damageTable = [];
+
+    this.getName = function()
+    {
+        return qsTr("@name");
+    };
+    this.getBaseDamage = function(unit)
+    {
+        return WEAPON.getDamageFromTable(unit, @obj.damageTable, "@obj");
+    };
+};
+
+Constructor.prototype = WEAPON;
+var @obj = new Constructor();

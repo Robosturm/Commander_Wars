@@ -57,7 +57,7 @@ var Constructor = function()
         for (var i = 0; i < units.length; i++)
         {
             // check all units if they can move over this terrain
-            if (Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null) > 0)
+            if (Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y)) > 0)
             {
                 return true;
             }
@@ -74,7 +74,7 @@ var Constructor = function()
         for (var i = 0; i < units.length; i++)
         {
             // check all units if they can move over this terrain
-            if (Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null) > 0)
+            if (Global[Global[units[i]].getMovementType()].getMovementpoints(map.getTerrain(x, y), null, map.getTerrain(x, y)) > 0)
             {
                 var name = Global[units[i]].getName();
                 data.addData(name, units[i], units[i], 0, true);

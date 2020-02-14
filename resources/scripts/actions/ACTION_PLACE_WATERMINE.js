@@ -41,7 +41,7 @@ var Constructor = function()
                 var terrain = map.getTerrain(targetFields[i].x, targetFields[i].y);
                 var defUnit = terrain.getUnit();
                 // can the transported unit move over the terrain?
-                if ((Global[unit.getMovementType()].getMovementpoints(terrain, unit) > 0) &&
+                if ((Global[unit.getMovementType()].getMovementpoints(terrain, unit, terrain) > 0) &&
                     (defUnit === null))
                 {
                     ret.push(targetFields[i]);

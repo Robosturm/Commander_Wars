@@ -6,6 +6,8 @@
 
 #include "coreengine/mainapp.h"
 
+#include "modding/csvtableimporter.h"
+
 WeaponManager* WeaponManager::m_pInstance = nullptr;
 
 WeaponManager::WeaponManager()
@@ -122,6 +124,33 @@ void WeaponManager::loadAll()
             }
         }
     }
+
+    // import csv tables
+    // clean up temp folder
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QDir dir("temp/");
+    dir.removeRecursively();
+    dir.mkpath(".");
+    QStringList data;
+    QFile file("resources/scripts/weapons/weapon_csv_import.txt");
+    file.open(QIODevice::ReadOnly);
+    QTextStream stream(&file);
+    QString jsHeader = stream.readAll();
+    for (qint32 i = 0; i < searchPaths.size(); i++)
+    {
+        QString jsData = CsvTableImporter::ImportCsvTable(searchPaths[i] + "/weapontable.csv", jsHeader, "damageTable", data);
+        if (!jsData.isEmpty())
+        {
+            m_loadedWeapons.append(data);
+            QFile tmp("temp/table.js");
+            tmp.open(QIODevice::WriteOnly);
+            QTextStream stream2(&tmp);
+            stream2 << jsData;
+            tmp.close();
+            pInterpreter->openScript("temp/table.js");
+            QFile::remove("temp/table.js");
+        }
+    }
 }
 
 bool WeaponManager::loadWeapon(QString weaponID)
@@ -148,6 +177,6 @@ bool WeaponManager::loadWeapon(QString weaponID)
             }
             bRet = true;
         }
-    }
+    }    
     return bRet;
 }

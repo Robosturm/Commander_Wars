@@ -191,6 +191,9 @@ set(${PROJECT_NAME}_SRCS
         objects/dialogattacklog.cpp
         objects/dropdownmenusprite.cpp
 
+        #modding
+        modding/csvtableimporter.cpp
+
         #menues
         menue/mainwindow.cpp
         menue/ingamemenue.cpp

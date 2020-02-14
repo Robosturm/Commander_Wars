@@ -3,6 +3,8 @@
 #include "resource_management/movementtablemanager.h"
 #include "coreengine/mainapp.h"
 
+#include "modding/csvtableimporter.h"
+
 #include "game/unit.h"
 #include "game/terrain.h"
 
@@ -63,7 +65,37 @@ void MovementTableManager::loadAll()
             }
         }
     }
+
+    // import csv tables
+    // clean up temp folder
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QDir dir("temp/");
+    dir.removeRecursively();
+    dir.mkpath(".");
+    QStringList data;
+    QFile file("resources/scripts/movementtables/movement_csv_import.txt");
+    file.open(QIODevice::ReadOnly);
+    QTextStream stream(&file);
+    QString jsHeader = stream.readAll();
+    for (qint32 i = 0; i < searchPaths.size(); i++)
+    {
+        QString jsData = CsvTableImporter::ImportCsvTable(searchPaths[i] + "/movementtables.csv", jsHeader, "movementpointsTable", data);
+        if (!jsData.isEmpty())
+        {
+            m_loadedTables.append(data);
+            QFile tmp("temp/table.js");
+            tmp.open(QIODevice::WriteOnly);
+            QTextStream stream2(&tmp);
+            stream2 << jsData;
+            tmp.close();
+            pInterpreter->openScript("temp/table.js");
+            QFile::remove("temp/table.js");
+        }
+    }
+
     m_loadedTables.sort();
+
+
 }
 
 

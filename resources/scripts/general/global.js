@@ -8,5 +8,5 @@ getIndexOf1 = function(table, item)
            return i;
         }
     }
-    return 0;
+    return -1;
 }
