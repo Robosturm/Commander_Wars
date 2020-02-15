@@ -1123,6 +1123,7 @@ void Player::serializeObject(QDataStream& pStream)
      }
      pStream << m_BuildList;
      pStream << m_BuildlistChanged;
+     m_Variables.serializeObject(pStream);
 }
 void Player::deserializeObject(QDataStream& pStream)
 {
@@ -1255,6 +1256,11 @@ void Player::deserializeObject(QDataStream& pStream)
             m_BuildList.append(pUnitSpriteManager->getUnitID(i));
         }
     }
+    if (version > 11)
+    {
+        m_Variables.deserializeObject(pStream);
+    }
+
     if (version <= 5)
     {
         loadVisionFields();

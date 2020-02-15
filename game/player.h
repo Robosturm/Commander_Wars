@@ -44,7 +44,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 11;
+        return 12;
     }
     /**
      * @brief setBaseGameInput sets the player input
@@ -394,7 +394,14 @@ public slots:
      * @param unitID
      * @param remove
      */
-    void changeBuildlist(const QString unitID, bool remove = false);
+    void changeBuildlist(const QString unitID, bool remove = false);/**
+     * @brief getVariables
+     * @return
+     */
+    inline ScriptVariables* getVariables()
+    {
+        return &m_Variables;
+    }
 private:
     qint32 funds{0};
     float fundsModifier{1.0f};
@@ -414,6 +421,7 @@ private:
      */
     QStringList m_BuildList;
     bool m_BuildlistChanged{false};
+    ScriptVariables m_Variables;
 };
 
 #endif // PLAYER_H

@@ -932,6 +932,7 @@ qint32 CO::getCORange()
         QString function1 = "getCOUnitRange";
         QJSValueList args1;
         QJSValue obj1 = pInterpreter->newQObject(this);
+        args1 << obj1;
         QJSValue erg = pInterpreter->doFunction(coID, function1, args1);
         if (erg.isNumber())
         {
