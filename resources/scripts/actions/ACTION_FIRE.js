@@ -147,6 +147,7 @@ var Constructor = function()
             }
             damage += attacker.getTrueDamage(damage, attackerPosition, attackerBaseHp,
                                              defender, defenderPosition, isDefender);
+
             damage -= defender.getDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,
                                                   defenderPosition, isDefender, luckMode);
             // avoid healing through negativ damage caused by misfortune or other stuff
@@ -198,7 +199,7 @@ var Constructor = function()
                     {
                         dmg2 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon2ID(), attackerTakenDamage, actionTargetField ,defUnit, luckMode);
                     }
-                    if ((dmg1 > 0) || (dmg2 > 0))
+                    if ((dmg1 >= 0) || (dmg2 >= 0))
                     {
                         if (dmg1 >= dmg2)
                         {
