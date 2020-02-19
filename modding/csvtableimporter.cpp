@@ -32,7 +32,7 @@ QString CsvTableImporter::ImportCsvTable(QString csvTable, QString jsHeaderStrin
                     }
                     for (qint32 i = 3; i < item.size(); i++)
                     {
-                        if (!item.isEmpty())
+                        if (!item[i].isEmpty())
                         {
                             jsTable += "var idx = getIndexOf1(" + object + "." + tableName + ", \"" + header[i].toUpper() + "\");\n";
                             jsTable += "if (idx >= 0)\n{\n";
