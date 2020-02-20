@@ -2025,7 +2025,7 @@ bool NormalAi::canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, QmlVectorUnit
             // if so this is a great island
             if (pLoadedUnit->isAttackable(pEnemy, true))
             {
-                checkIslandForUnloading(pLoadedUnit, checkedIslands, unitIslandIdx, unitIsland,
+                checkIslandForUnloading(pUnit, pLoadedUnit, checkedIslands, unitIslandIdx, unitIsland,
                                         loadedUnitIslandIdx, targetIsland, pUnloadArea, targets);
                 if (targets.size() > 0)
                 {
@@ -2048,7 +2048,7 @@ bool NormalAi::canTransportToEnemy(Unit* pUnit, Unit* pLoadedUnit, QmlVectorUnit
             {
                 if (pEnemyBuilding->isCaptureOrMissileBuilding())
                 {
-                    checkIslandForUnloading(pLoadedUnit, checkedIslands, unitIslandIdx, unitIsland,
+                    checkIslandForUnloading(pUnit, pLoadedUnit, checkedIslands, unitIslandIdx, unitIsland,
                                             loadedUnitIslandIdx, targetIsland, pUnloadArea, targets);
                     if (targets.size() > 0)
                     {

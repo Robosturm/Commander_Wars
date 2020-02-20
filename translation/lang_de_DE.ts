@@ -347,12 +347,12 @@
 <context>
     <name>ACTION_UNLOAD</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="88"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="97"/>
         <source>Unload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="254"/>
+        <location filename="../resources/scripts/actions/ACTION_UNLOAD.js" line="263"/>
         <source>Wait</source>
         <translation type="unfinished"></translation>
     </message>

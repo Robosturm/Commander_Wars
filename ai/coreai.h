@@ -325,6 +325,7 @@ protected:
     void appendTerrainBuildingAttackTargets(Unit* pUnit, QmlVectorBuilding* pEnemyBuildings, QVector<QVector3D>& targets);
     /**
      * @brief checkIslandForUnloading
+     * @param pUnit
      * @param pLoadedUnit
      * @param checkedIslands
      * @param unitIslandIdx
@@ -334,10 +335,17 @@ protected:
      * @param pUnloadArea
      * @param targets
      */
-    void checkIslandForUnloading(Unit* pLoadedUnit, QVector<qint32>& checkedIslands,
+    void checkIslandForUnloading(Unit* pUnit, Unit* pLoadedUnit, QVector<qint32>& checkedIslands,
                                  qint32 unitIslandIdx, qint32 unitIsland,
                                  qint32 loadedUnitIslandIdx, qint32 targetIsland,
                                  QmlVectorPoint* pUnloadArea, QVector<QVector3D>& targets);
+    /**
+     * @brief isUnloadTerrain
+     * @param pUnit
+     * @param pTerrain
+     * @return
+     */
+    bool isUnloadTerrain(Unit* pUnit, Terrain* pTerrain);
     /**
      * @brief createIslandMap
      * @param pUnits

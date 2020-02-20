@@ -1167,7 +1167,7 @@ void CoreAI::appendNearestUnloadTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits,
                 // if so this is a great island
                 if (pLoadedUnit->isAttackable(pEnemy, true))
                 {
-                    checkIslandForUnloading(pLoadedUnit, checkedIslands[i2], unitIslandIdx, unitIsland,
+                    checkIslandForUnloading(pUnit, pLoadedUnit, checkedIslands[i2], unitIslandIdx, unitIsland,
                                             loadedUnitIslandIdx[i2], targetIsland, pUnloadArea, targets);
                 }
             }
@@ -1189,7 +1189,7 @@ void CoreAI::appendNearestUnloadTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits,
                 {
                     if (pEnemyBuilding->isCaptureOrMissileBuilding())
                     {
-                        checkIslandForUnloading(pLoadedUnit, checkedIslands[i2], unitIslandIdx, unitIsland,
+                        checkIslandForUnloading(pUnit, pLoadedUnit, checkedIslands[i2], unitIslandIdx, unitIsland,
                                                 loadedUnitIslandIdx[i2], targetIsland, pUnloadArea, targets);
                     }
                 }
@@ -1199,7 +1199,23 @@ void CoreAI::appendNearestUnloadTargets(Unit* pUnit, QmlVectorUnit* pEnemyUnits,
     delete pUnloadArea;
 }
 
-void CoreAI::checkIslandForUnloading(Unit* pLoadedUnit, QVector<qint32>& checkedIslands,
+bool CoreAI::isUnloadTerrain(Unit* pUnit, Terrain* pTerrain)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(pUnit);
+    args << obj;
+    QJSValue obj1 = pInterpreter->newQObject(pTerrain);
+    args << obj1;
+    QJSValue ret = pInterpreter->doFunction(ACTION_UNLOAD, "isUnloadTerrain", args);
+    if (ret.isBool())
+    {
+        return ret.toBool();
+    }
+    return false;
+}
+
+void CoreAI::checkIslandForUnloading(Unit* pUnit, Unit* pLoadedUnit, QVector<qint32>& checkedIslands,
                                      qint32 unitIslandIdx, qint32 unitIsland,
                                      qint32 loadedUnitIslandIdx, qint32 targetIsland,
                                      QmlVectorPoint* pUnloadArea, QVector<QVector3D>& targets)
@@ -1212,25 +1228,28 @@ void CoreAI::checkIslandForUnloading(Unit* pLoadedUnit, QVector<qint32>& checked
     {
         for (qint32 y = 0; y < heigth; y++)
         {
-            // check if this is the same island as we search for
-            // check if it's the same island our transporter is on if so we can reach the field
-            // the unloading area is also free
-            if (m_IslandMaps[loadedUnitIslandIdx]->getIsland(x, y) == targetIsland &&
-                m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland &&
-                pMap->getTerrain(x, y)->getUnit() == nullptr)
+            if (isUnloadTerrain(pUnit, pMap->getTerrain(x, y)))
             {
-                // and on top of that we have same free fields to unload the unit
-                for (qint32 i3 = 0; i3 < pUnloadArea->size(); i3++)
+                // check if this is the same island as we search for
+                // check if it's the same island our transporter is on if so we can reach the field
+                // the unloading area is also free
+                if (m_IslandMaps[loadedUnitIslandIdx]->getIsland(x, y) == targetIsland &&
+                    m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland &&
+                    pMap->getTerrain(x, y)->getUnit() == nullptr)
                 {
-                    qint32 unloadX = x + pUnloadArea->at(i3).x();
-                    qint32 unloadY = y + pUnloadArea->at(i3).y();
-                    if (pMap->onMap(unloadX, unloadY) &&
-                        pMap->getTerrain(unloadX, unloadY)->getUnit() == nullptr &&
-                        pLoadedUnit->getBaseMovementCosts(unloadX, unloadY, unloadX, unloadY) > 0 &&
-                        !targets.contains(QVector3D(x, y, 1)))
+                    // and on top of that we have same free fields to unload the unit
+                    for (qint32 i3 = 0; i3 < pUnloadArea->size(); i3++)
                     {
-                        targets.append(QVector3D(x, y, 1));
-                        break;
+                        qint32 unloadX = x + pUnloadArea->at(i3).x();
+                        qint32 unloadY = y + pUnloadArea->at(i3).y();
+                        if (pMap->onMap(unloadX, unloadY) &&
+                            pMap->getTerrain(unloadX, unloadY)->getUnit() == nullptr &&
+                            pLoadedUnit->getBaseMovementCosts(unloadX, unloadY, unloadX, unloadY) > 0 &&
+                            !targets.contains(QVector3D(x, y, 1)))
+                        {
+                            targets.append(QVector3D(x, y, 1));
+                            break;
+                        }
                     }
                 }
             }
@@ -1267,34 +1286,37 @@ void CoreAI::appendUnloadTargetsForCapturing(Unit* pUnit, QmlVectorBuilding* pEn
         {
             Building* pBuilding = pEnemyBuildings->at(i);
             QPoint point(pBuilding->getX(), pBuilding->getY());
-            if (capturUnits[0]->canMoveOver(pBuilding->getX(), pBuilding->getY()))
-            {
-                // we can capture it :)
-                if (pBuilding->isCaptureOrMissileBuilding() &&
-                    pBuilding->getTerrain()->getUnit() == nullptr)
+                if (capturUnits[0]->canMoveOver(pBuilding->getX(), pBuilding->getY()))
                 {
-                    // check unload fields
-                    for (qint32 i2 = 0; i2 < pUnloadArea->size(); i2++)
+                    // we can capture it :)
+                    if (pBuilding->isCaptureOrMissileBuilding() &&
+                        pBuilding->getTerrain()->getUnit() == nullptr)
                     {
-                        qint32 x = point.x() + pUnloadArea->at(i2).x();
-                        qint32 y = point.y() + pUnloadArea->at(i2).y();
-                        if (!targets.contains(QVector3D(x, y, 1)) &&
-                            pMap->onMap(x, y) &&
-                            pMap->getTerrain(x, y)->getUnit() == nullptr)
+                        // check unload fields
+                        for (qint32 i2 = 0; i2 < pUnloadArea->size(); i2++)
                         {
-                            // we can reach this unload field?
-                            if (m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland)
+                            qint32 x = point.x() + pUnloadArea->at(i2).x();
+                            qint32 y = point.y() + pUnloadArea->at(i2).y();
+                            if (isUnloadTerrain(pUnit, pMap->getTerrain(x, y)))
                             {
-                                for (qint32 i3 = 0; i3 < capturUnits.size(); i3++)
+                                if (!targets.contains(QVector3D(x, y, 1)) &&
+                                    pMap->onMap(x, y) &&
+                                    pMap->getTerrain(x, y)->getUnit() == nullptr)
                                 {
-                                    if (capturUnits[i3]->canMoveOver(x, y))
+                                    // we can reach this unload field?
+                                    if (m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland)
                                     {
-                                        targets.append(QVector3D(x, y, 1));
-                                        break;
+                                        for (qint32 i3 = 0; i3 < capturUnits.size(); i3++)
+                                        {
+                                            if (capturUnits[i3]->canMoveOver(x, y))
+                                            {
+                                                targets.append(QVector3D(x, y, 1));
+                                                break;
+                                            }
+                                        }
                                     }
                                 }
                             }
-                        }
                     }
                 }
             }

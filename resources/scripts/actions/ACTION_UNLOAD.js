@@ -12,6 +12,26 @@ var Constructor = function()
         {
             return false;
         }
+
+
+        if (ACTION_UNLOAD.isUnloadTerrain(unit, transportTerrain) &&
+            (actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
+            (action.getMovementTarget() === null))
+        {
+            for (var i = 0; i < unit.getLoadedUnitCount(); i++)
+            {
+                if (ACTION_UNLOAD.getUnloadFields(action, i).length > 0)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    };
+
+    this.isUnloadTerrain = function(unit, transportTerrain)
+    {
         var unitID = unit.getUnitID();
         if (unitID === "TRANSPORTPLANE")
         {
@@ -31,21 +51,9 @@ var Constructor = function()
                 return false;
             }
         }
-
-        if ((actionTargetField.x === targetField.x) && (actionTargetField.y === targetField.y) ||
-            (action.getMovementTarget() === null))
-        {
-            for (var i = 0; i < unit.getLoadedUnitCount(); i++)
-            {
-                if (ACTION_UNLOAD.getUnloadFields(action, i).length > 0)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-
+        return true;
     };
+
     this.getUnloadFields = function(action, transportUnitIdx)
     {
         var targetField = action.getActionTarget();
@@ -59,7 +67,8 @@ var Constructor = function()
         var ret = [];
         // can both units move over the current terrain?
         var moveType = Global[transportUnit.getMovementType()];
-        if ((moveType.getMovementpoints(targetTerrain, transportUnit, targetTerrain) > 0) &&
+        if (ACTION_UNLOAD.isUnloadTerrain(unit, targetTerrain) &&
+            (moveType.getMovementpoints(targetTerrain, transportUnit, targetTerrain) > 0) &&
             (Global[unit.getMovementType()].getMovementpoints(targetTerrain, unit, targetTerrain) > 0))
         {
             // check all neighbour terrains
