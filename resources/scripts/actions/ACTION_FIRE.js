@@ -123,7 +123,7 @@ var Constructor = function()
         }
         var baseDamage = Global[attackerWeapon].getBaseDamage(defender);
         var damage = baseDamage;
-        if (baseDamage > 0)
+        if (baseDamage > 0.0)
         {
             var offensive = 100 + attacker.getBonusOffensive(attackerPosition, defender, defender.getPosition(), isDefender);
             var defensive = 100 + defender.getBonusDefensive(defenderPosition, attacker, attackerPosition, isDefender);
@@ -151,9 +151,9 @@ var Constructor = function()
             damage -= defender.getDamageReduction(damage, attacker, attackerPosition, attackerBaseHp,
                                                   defenderPosition, isDefender, luckMode);
             // avoid healing through negativ damage caused by misfortune or other stuff
-            if (damage < 0)
+            if (damage <= 0.0)
             {
-                damage = 0;
+                damage = 0.0;
             }
         }
         return damage;
@@ -199,7 +199,7 @@ var Constructor = function()
                     {
                         dmg2 = ACTION_FIRE.calcAttackerDamage(unit, unit.getWeapon2ID(), attackerTakenDamage, actionTargetField ,defUnit, luckMode);
                     }
-                    if ((dmg1 >= 0) || (dmg2 >= 0))
+                    if ((dmg1 >= 0.0) || (dmg2 >= 0.0))
                     {
                         if (dmg1 >= dmg2)
                         {
@@ -229,7 +229,7 @@ var Constructor = function()
                                 defWeapon = 1;
                             }
                         }
-                        if (defDamage >= 0)
+                        if (defDamage >= 0.0)
                         {
                             result.width = defDamage
                             result.height = defWeapon
@@ -251,7 +251,7 @@ var Constructor = function()
                     {
                         dmg2 = ACTION_FIRE.calcEnviromentDamage(unit, unit.getWeapon2ID(), actionTargetField, Qt.point(x, y), defTerrain.getID());
                     }
-                    if ((dmg1 > 0) || (dmg2 > 0))
+                    if ((dmg1 > 0.0) || (dmg2 > 0.0))
                     {
                         if (dmg1 >= dmg2)
                         {
@@ -289,7 +289,7 @@ var Constructor = function()
             if (unit.getOwner().getFieldVisibleType(x, y) !== GameEnums.VisionType_Shrouded)
             {
                 var result = ACTION_FIRE.calcBattleDamage(action, x, y, GameEnums.LuckDamageMode_Off);
-                if (result.x >= 0)
+                if (result.x >= 0.0)
                 {
                     data.addPoint(Qt.point(x, y));
                     data.addZInformation(result.x);
@@ -379,6 +379,10 @@ var Constructor = function()
 
             var costs = defUnit.getCosts();
             var damage = attackerDamage / 10.0;
+            if (damage < 0.0)
+            {
+                damage = 0.0;
+            }
             var counterdamage = defenderDamage / 10.0;
             var power = 0;
 

@@ -357,5 +357,9 @@
 		<!-- waterplane -->
 		<image file="waterplane/waterplane.png" />
 		<image file="waterplane/waterplane+mask.png" />
+		
+		<!-- zeppelin -->
+		<image file="zeppelin/zeppelin.png" />
+		<image file="zeppelin/zeppelin+mask.png" />
 	</atlas>
 </resources>

@@ -144,14 +144,25 @@ void Unit::postBattleActions(float damage, Unit* pUnit, bool gotAttacked)
 void Unit::setOwner(Player* pOwner)
 {
     // change ownership
-    if (m_UnitRank <= GameEnums::UnitRank_CO0)
+    if (m_UnitRank == GameEnums::UnitRank_CO0)
     {
-        m_pOwner = pOwner;
-        if (m_pOwner != nullptr)
-        {
-            // update sprites :)
-            updateSprites();
-        }
+        m_pOwner->getCO(0)->setCOUnit(nullptr);
+        setUnitRank(GameEnums::UnitRank_Veteran);
+    }
+    else if (m_UnitRank == GameEnums::UnitRank_CO1)
+    {
+        m_pOwner->getCO(1)->setCOUnit(nullptr);
+        setUnitRank(GameEnums::UnitRank_Veteran);
+    }
+    if (m_CORange.get() != nullptr)
+    {
+        m_CORange->removeChildren();
+    }
+    m_pOwner = pOwner;
+    if (m_pOwner != nullptr)
+    {
+        // update sprites :)
+        updateSprites();
     }
 }
 

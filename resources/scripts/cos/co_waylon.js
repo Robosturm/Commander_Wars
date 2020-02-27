@@ -198,6 +198,17 @@ var Constructor = function()
         return 0;
     };
 
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "AIRPORT" ||
+            buildingId === "TEMPORARY_AIRPORT")
+        {
+            return ["ZCOUNIT_KIROV"];
+        }
+        return [];
+    };
+
     // CO - Intel
     this.getBio = function()
     {

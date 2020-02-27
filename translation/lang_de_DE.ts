@@ -262,7 +262,7 @@
 <context>
     <name>ACTION_PLACE_WATERMINE</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="56"/>
+        <location filename="../resources/scripts/actions/ACTION_PLACE_WATERMINE.js" line="61"/>
         <source>Place Mine</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14523,98 +14523,98 @@ Units have 30% increased firepower and 20% increased defense.</source>
 <context>
     <name>co_waylon</name>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="204"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="215"/>
         <source>A Teal Isle Commander. Destructive, egotistical and extremely vain.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="208"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="219"/>
         <source>Living the good life</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="223"/>
         <source>Responsibility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="216"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="227"/>
         <source>Air units have higher firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="231"/>
         <source>
 Global Effect:
 No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="232"/>
         <source>
 CO Zone Effect:
 Air Units have 30% increased firepower and 40% increased defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="225"/>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="244"/>
         <source>Air units increase firepower and highly increases defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="240"/>
         <source>Bad Company</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="248"/>
         <source>Wingman</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="241"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="252"/>
         <source>I&apos;m over here! C&apos;mon give me your best shot.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="253"/>
         <source>You think you can get the better of me? You&apos;ve got a lot to learn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="243"/>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="260"/>
         <source>Woo-hoo!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="255"/>
         <source>All i want is total air supremacy! Then i&apos;ll pick off your forces.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="259"/>
         <source>The end of the world? Fine by me...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="250"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="261"/>
         <source>How&apos;d you like that?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="254"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="265"/>
         <source>This is not the freedom i want!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="255"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="266"/>
         <source>The eagle has landed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_waylon.js" line="259"/>
+        <location filename="../resources/scripts/cos/co_waylon.js" line="270"/>
         <source>Waylon</source>
         <translation type="unfinished"></translation>
     </message>

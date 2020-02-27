@@ -402,5 +402,11 @@
 		<image file="stealthbomber+walk+mask.png" cols = "4" rows = "4" />
 		<image file="stealthbomber+walk.png" cols = "4"  rows = "4" />
 		
+		<!-- zeppelin -->
+		<image file="zeppelin.png" cols = "4" />
+		<image file="zeppelin+mask.png" cols = "4" />
+		<image file="zeppelin+walk+mask.png" cols = "4" rows = "4" />
+		<image file="zeppelin+walk.png" cols = "4"  rows = "4" />
+		
 	</atlas>
 </resources>

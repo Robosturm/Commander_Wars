@@ -32,6 +32,7 @@ var Constructor = function()
                                 ["SEA", 1],
                                 ["ROUGH_SEA", 1],
                                 ["REAF", 1],
+                                ["FOG", 1],
                                 ["MOUNTAIN", 1],
                                 ["RIVER", 1],
                                 ["DESERT", 1],
