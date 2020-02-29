@@ -208,7 +208,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect:\nWinter poses no problem for Olaf or his troops.") +
+        return qsTr("\nGlobal Effect: Winter poses no problem for Olaf or his troops.") +
                qsTr("\nCO Zone Effect:\nFirepower is increased by 30% during Snow.");
     };
     this.getPowerDescription = function()

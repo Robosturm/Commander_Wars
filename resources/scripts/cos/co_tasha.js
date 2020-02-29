@@ -224,7 +224,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect:\nNo Effects") +
+        return qsTr("\nGlobal Effect: No Effects") +
                qsTr("\nCO Zone Effect:\nAir Units have 50% increased firepower and 30% increased defense.");
     };
     this.getPowerDescription = function()

@@ -239,7 +239,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect:\nNo Effects.") +
+        return qsTr("\nGlobal Effect: No Effects.") +
                qsTr("\nCO Zone Effect:\n Sea Units have 20% offensive and 50% defensive bonus.");
     };
     this.getPowerDescription = function()

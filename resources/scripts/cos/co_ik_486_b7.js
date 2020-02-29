@@ -218,7 +218,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect:\nNo Effects.") +
+        return qsTr("\nGlobal Effect: No Effects.") +
                qsTr("\nCO Zone Effect:\nDirect Units gain an additional firerange when they don't move. However firepower is reduced by 10% in doing so. Normal attacks are 10% stronger.");
     };
     this.getPowerDescription = function()

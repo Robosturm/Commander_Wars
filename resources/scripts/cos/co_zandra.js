@@ -214,7 +214,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect:\nUnits are unaffected by sandstorms and have 10% increased firepower during sandstorm.") +
+        return qsTr("\nGlobal Effect: Units are unaffected by sandstorms and have 10% increased firepower during sandstorm.") +
                qsTr("\nCO Zone Effect:\nUnits have 30% increased firepower during sandstorm.");
     };
     this.getPowerDescription = function()

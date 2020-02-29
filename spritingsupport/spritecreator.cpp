@@ -25,6 +25,10 @@ void SpriteCreator::createSprites(QString input, QString colorTable, QString mas
         return;
     }
     QImage maskTableImg(maskTable);
+    if (!QFile::exists(maskTable))
+    {
+        maskTableImg = createColorTable(colorTableImg);
+    }
     if (maskTableImg.width() < colorTableImg.width())
     {
         Console::print(tr("The mask table is to small. ") + maskTable, Console::eERROR);

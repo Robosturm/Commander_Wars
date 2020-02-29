@@ -158,7 +158,19 @@ var Constructor = function()
         }
         return 0;
     };
-	
+
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_REPAIR_TANK"];
+        }
+        return [];
+    };
+
     // CO - Intel
     this.getBio = function()
     {
@@ -178,7 +190,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect:\nNo bonus.") +
+        return qsTr("\nSpecial Unit: Repair Tanks\nGlobal Effect: No bonus.") +
                qsTr("\nCO Zone Effect:\nUnits gain additional 30% defense.");
     };
     this.getPowerDescription = function()

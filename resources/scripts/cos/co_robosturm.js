@@ -246,7 +246,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect:\nUnits gain 1 additional movementpoint and have 20% reduced firepower.") +
+        return qsTr("\nGlobal Effect: Units gain 1 additional movementpoint and have 20% reduced firepower.") +
                qsTr("\nCO Zone Effect:\nUnits gain 20% defense and have 10% reduced firepower.");
     };
     this.getPowerDescription = function()

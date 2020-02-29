@@ -211,7 +211,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect:\nDirect Units have 7% increased firepower and loose additional 5% firepower per terrain star.") +
+        return qsTr("\nGlobal Effect: Direct Units have 7% increased firepower and loose additional 5% firepower per terrain star.") +
                qsTr("\nCO Zone Effect:\nDirect Units have 30% increased firepower.");
     };
     this.getPowerDescription = function()

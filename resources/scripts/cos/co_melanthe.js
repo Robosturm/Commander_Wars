@@ -250,7 +250,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect:\nUnits gain an additional defense point on natural terrain. Units are repaired by 1 HP less on Buildings.") +
+        return qsTr("\nGlobal Effect: Units gain an additional defense point on natural terrain. Units are repaired by 1 HP less on Buildings.") +
                qsTr("\nCO Zone Effect:\nUnits gain an additional 30% firepower on natural terrain.");
     };
     this.getPowerDescription = function()

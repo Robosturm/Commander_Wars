@@ -49,6 +49,7 @@ const QString Console::functions[] =
     QString("connectToServer"),
     QString("getServerAdresse"),
     QString("createSprites"),
+    QString("updateMaskImages"),
     QString("help"),
     QString("")
 };
@@ -130,6 +131,17 @@ void Console::dotask(QString message)
     {
         order = order.replace("GameConsole.game:", "");
         pInterpreter->doString(order);
+    }
+    else
+    {
+        for (const auto& function : functions)
+        {
+            if (message.startsWith(function + "("))
+            {
+                pInterpreter->doString(order);
+                break;
+            }
+        }
     }
     pApp->continueThread();
 }

@@ -173,7 +173,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect:\nHis Buildings that get captured revolt and increase the resistance 1 by one each day.") +
+        return qsTr("\nGlobal Effect: His Buildings that get captured revolt and increase the resistance 1 by one each day.") +
                qsTr("\nCO Zone Effect:\nUnits gain additional 10% firepower.");
     };
     this.getPowerDescription = function()

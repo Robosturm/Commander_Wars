@@ -224,7 +224,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect:\nAir units are 10% stronger and Sea units 10% weaker") +
+        return qsTr("\nGlobal Effect: Air units are 10% stronger and Sea units 10% weaker") +
                qsTr("\nCO Zone Effect:\nAir units have 30% increased firepower.");
     };
     this.getPowerDescription = function()

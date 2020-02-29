@@ -184,7 +184,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect:\nNo Effects.") +
+        return qsTr("\nGlobal Effect: No Effects.") +
                qsTr("\nCO Zone Effect:\nUnits have 20% lifesteal.");
     };
     this.getPowerDescription = function()

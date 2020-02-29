@@ -361,5 +361,9 @@
 		<!-- zeppelin -->
 		<image file="zeppelin/zeppelin.png" />
 		<image file="zeppelin/zeppelin+mask.png" />
+		
+		<!-- zeppelin -->
+		<image file="repair_tank/repair_tank.png" />
+		<image file="repair_tank/repair_tank+mask.png" />		
 	</atlas>
 </resources>

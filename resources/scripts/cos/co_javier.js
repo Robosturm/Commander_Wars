@@ -195,7 +195,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect:\nNo Effects.") +
+        return qsTr("\nGlobal Effect: No Effects.") +
                qsTr("\nCO Zone Effect:\nUnits have 20% increased defense against indirect units. Units gain additional 5% firepower and defense per Comtower.");
     };
     this.getPowerDescription = function()

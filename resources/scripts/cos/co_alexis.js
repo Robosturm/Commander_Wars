@@ -331,7 +331,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect:\nUnits adjacent to own properties restore one HP of health at the beginning of each turn.") +
+        return qsTr("\nGlobal Effect: Units adjacent to own properties restore one HP of health at the beginning of each turn.") +
                qsTr("\nCO Zone Effect:\nUnits gain additional 10% firepower.");
     };
     this.getPowerDescription = function()

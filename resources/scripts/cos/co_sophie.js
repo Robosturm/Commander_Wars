@@ -247,7 +247,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect:\nNo Effects") +
+        return qsTr("\nGlobal Effect: No Effects") +
                qsTr("\nCO Zone Effect:\nEnemy counterattacks deal 20% less damage. Units gain 10% firepower and defense.");
     };
     this.getPowerDescription = function()

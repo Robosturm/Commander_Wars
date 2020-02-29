@@ -71,7 +71,8 @@ var Constructor = function()
         return ["ANTITANKCANNON", "APC", "ARTILLERY", "FLAK", "FLARE",
                 "HEAVY_HOVERCRAFT", "HEAVY_TANK", "HOVERCRAFT", "HOVERFLAK",
                 "INFANTRY", "LIGHT_TANK", "MECH", "MEGATANK", "MISSILE",
-                "MOTORBIKE", "NEOTANK", "RECON", "ROCKETTHROWER", "SNIPER"];
+                "MOTORBIKE", "NEOTANK", "RECON", "ROCKETTHROWER", "SNIPER",
+                "ZCOUNIT_REPAIR_TANK"];
     };
     this.getTerrainAnimationBase = function(unit, terrain)
     {

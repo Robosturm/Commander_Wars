@@ -785,22 +785,22 @@
 <context>
     <name>Console</name>
     <message>
-        <location filename="../coreengine/console.cpp" line="99"/>
+        <location filename="../coreengine/console.cpp" line="100"/>
         <source>Enter &quot;help()&quot; for console info.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="100"/>
+        <location filename="../coreengine/console.cpp" line="101"/>
         <source>Starting Game...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="101"/>
+        <location filename="../coreengine/console.cpp" line="102"/>
         <source>Prepare to Fight...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="102"/>
+        <location filename="../coreengine/console.cpp" line="103"/>
         <source>Read this message while waiting...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4596,24 +4596,24 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <name>SpriteCreator</name>
     <message>
         <location filename="../spritingsupport/spritecreator.cpp" line="18"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="98"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="102"/>
         <source>The color table is not an existing file. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../spritingsupport/spritecreator.cpp" line="24"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="104"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="108"/>
         <source>The mask table is not an existing file. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="30"/>
-        <location filename="../spritingsupport/spritecreator.cpp" line="110"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="34"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="114"/>
         <source>The mask table is to small. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../spritingsupport/spritecreator.cpp" line="51"/>
+        <location filename="../spritingsupport/spritecreator.cpp" line="55"/>
         <source>Input directory or file doesn&apos;t exists. </source>
         <translation type="unfinished"></translation>
     </message>
@@ -6283,8 +6283,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../resources/scripts/cos/co_adam.js" line="320"/>
         <source>
-Global Effect:
-Units have 10% increased firepower but loose additional firepower for lost HP.</source>
+Global Effect: Units have 10% increased firepower but loose additional firepower for lost HP.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6400,8 +6399,7 @@ Units gain additional 20% firepower and finish off units when they are within ba
     <message>
         <location filename="../resources/scripts/cos/co_adder.js" line="191"/>
         <source>
-Global Effect:
-No bonus.</source>
+Global Effect: No bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6547,8 +6545,7 @@ Units gain additional 20% firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_aira.js" line="234"/>
         <source>
-Global Effect:
-No bonus.</source>
+Global Effect: No bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6664,8 +6661,7 @@ Units gain additional 20% firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_alexander.js" line="176"/>
         <source>
-Global Effect:
-His Buildings that get captured revolt and increase the resistance 1 by one each day.</source>
+Global Effect: His Buildings that get captured revolt and increase the resistance 1 by one each day.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6781,8 +6777,7 @@ Units gain additional 10% firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_alexis.js" line="334"/>
         <source>
-Global Effect:
-Units adjacent to own properties restore one HP of health at the beginning of each turn.</source>
+Global Effect: Units adjacent to own properties restore one HP of health at the beginning of each turn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6898,8 +6893,7 @@ Units gain additional 10% firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_amy.js" line="223"/>
         <source>
-Global Effect:
-Reaf costs are always 1.</source>
+Global Effect: Reaf costs are always 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6993,126 +6987,126 @@ Hovercrafts gain a 40% firepower boost.</source>
 <context>
     <name>co_andy</name>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="181"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="193"/>
         <source>A whiz with a wrench, this mechanical boy wonder earned fame as the hero who saved Macro Land in the last great war.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="185"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="197"/>
         <source>Mechanics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="189"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="201"/>
         <source>Waking up too early</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="193"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="205"/>
         <source>No real weaknesses. Proficient with air, sea and land units. Ready to fight wherever and whenever.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="197"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="209"/>
         <source>
-Global Effect:
-No bonus.</source>
+Special Unit: Repair Tanks
+Global Effect: No bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="198"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="210"/>
         <source>
 CO Zone Effect:
 Units gain additional 20% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="202"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="214"/>
         <source>Restores two HP to all units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="206"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="218"/>
         <source>Hyper Repair</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="210"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="222"/>
         <source>Restores five HP to all units. Firepower rises, and unit movement increases by one space.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="214"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="226"/>
         <source>Hyper Upgrade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="218"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="230"/>
         <source>I&apos;ve got parts to spare!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="231"/>
         <source>I&apos;m not giving up!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="220"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="232"/>
         <source>Time to roll up my sleeves!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="233"/>
         <source>I haven&apos;t even cranked the engine yet!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="222"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="234"/>
         <source>Pass me my wrench!!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="223"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="235"/>
         <source>It&apos;s time for a tune-up!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="224"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="236"/>
         <source>Never give up, and never lose! I&apos;m on my way!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="237"/>
         <source>I&apos;m not worried! I can fix anything!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="241"/>
         <source>We won! Wooooooohooo!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="230"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="242"/>
         <source>I can fix anything!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="231"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="243"/>
         <source>I did it! Did you see that!?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="235"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="247"/>
         <source>Oh, come on!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="248"/>
         <source>Next time I see you, you&apos;re in trouble!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_andy.js" line="240"/>
+        <location filename="../resources/scripts/cos/co_andy.js" line="252"/>
         <source>Andy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7120,101 +7114,101 @@ Units gain additional 20% firepower.</source>
 <context>
     <name>co_brenner</name>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="165"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="177"/>
         <source>He has faith in the goodness of humanity. Feels strong dutx to help anyone who is in trouble.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="169"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="181"/>
         <source>Helping Others</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="173"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="185"/>
         <source>Dishonor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="177"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="189"/>
         <source>His units have a higher defence than normal units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="181"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="193"/>
         <source>
-Global Effect:
-No bonus.</source>
+Special Unit: Repair Tanks
+Global Effect: No bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="182"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="194"/>
         <source>
 CO Zone Effect:
 Units gain additional 30% defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="186"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="198"/>
         <source>Heals 3 hp of his units and increases his defence.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="190"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="202"/>
         <source>Reinforce</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="194"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="206"/>
         <source>Heals 5 hp of his units and increases his defence greatly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="198"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="210"/>
         <source>First Aid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="202"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="214"/>
         <source>I want everyone to get out here alive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="203"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="215"/>
         <source>Prepare the troops. It&apos;s time to go on the offensive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="204"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="216"/>
         <source>Don&apos;t give up. We will survive that.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="205"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="217"/>
         <source>You battled brave out there. It&apos;s time to get out there.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="209"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="221"/>
         <source>The world ends - and yet war goes on...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="210"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="222"/>
         <source>The priority is attending to the casualties...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="214"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="226"/>
         <source>Where there&apos;s life, there&apos;s hope.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="215"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="227"/>
         <source>At least my troops got out...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_brenner.js" line="219"/>
+        <location filename="../resources/scripts/cos/co_brenner.js" line="231"/>
         <source>Brenner</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7244,8 +7238,7 @@ Units gain additional 30% defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_cassidy.js" line="204"/>
         <source>
-Global Effect:
-No bonus.</source>
+Global Effect: No bonus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7361,8 +7354,7 @@ Units gain additional 30% firepower when attacking units with equal or less heal
     <message>
         <location filename="../resources/scripts/cos/co_caulder.js" line="224"/>
         <source>
-Global Effect:
-Units loose firepower by 20% and defense by 10%.</source>
+Global Effect: Units loose firepower by 20% and defense by 10%.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7464,8 +7456,7 @@ Units gain 60% firepower and 60% defense. They also heal 5HP each turn..</source
     <message>
         <location filename="../resources/scripts/cos/co_colin.js" line="162"/>
         <source>
-Global Effect:
-Units are 20% cheaper and have 15% less firepower.</source>
+Global Effect: Units are 20% cheaper and have 15% less firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7581,8 +7572,7 @@ Units have only 5% weaker firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_conrad.js" line="245"/>
         <source>
-Global Effect:
-Units deal no luck damage. Units gain 1% firepower for own units in vision range. Counter attacks are 20% weaker.</source>
+Global Effect: Units deal no luck damage. Units gain 1% firepower for own units in vision range. Counter attacks are 20% weaker.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7698,8 +7688,7 @@ Units gain 2% firepower for own units in vision range.</source>
     <message>
         <location filename="../resources/scripts/cos/co_drake.js" line="248"/>
         <source>
-Global Effect:
-Naval units have 1 more movement point. Air units are 15% weaker and Sea units 10% stronger</source>
+Global Effect: Naval units have 1 more movement point. Air units are 15% weaker and Sea units 10% stronger</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7810,8 +7799,7 @@ Naval units have 30% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_eagle.js" line="227"/>
         <source>
-Global Effect:
-Air units are 10% stronger and Sea units 10% weaker</source>
+Global Effect: Air units are 10% stronger and Sea units 10% weaker</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8434,8 +8422,7 @@ Air units have 30% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_epoch.js" line="237"/>
         <source>
-Global Effect:
-No effects</source>
+Global Effect: No effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8546,8 +8533,7 @@ Units have 10% increased firepower and 10% Luck.</source>
     <message>
         <location filename="../resources/scripts/cos/co_flak.js" line="200"/>
         <source>
-Global Effect:
-Units have 10% Luck and 5% Misfortune</source>
+Global Effect: Units have 10% Luck and 5% Misfortune</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8663,8 +8649,7 @@ Units have 25% Luck and 10% Misfortune</source>
     <message>
         <location filename="../resources/scripts/cos/co_forsythe.js" line="174"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8761,8 +8746,7 @@ Units have 20% offensive and defensive bonus.</source>
     <message>
         <location filename="../resources/scripts/cos/co_gage.js" line="232"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8864,8 +8848,7 @@ Indirect and Sea Units have 30% offensive and 20% defensive bonus.</source>
     <message>
         <location filename="../resources/scripts/cos/co_graves.js" line="215"/>
         <source>
-Global Effect:
-Enemy units reduced to two or less HP by Graves&apos; units become paralyzed.</source>
+Global Effect: Enemy units reduced to two or less HP by Graves&apos; units become paralyzed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8981,8 +8964,7 @@ Units have 15% offensive bonus.</source>
     <message>
         <location filename="../resources/scripts/cos/co_greyfield.js" line="242"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9088,8 +9070,7 @@ CO Zone Effect:
     <message>
         <location filename="../resources/scripts/cos/co_grimm.js" line="175"/>
         <source>
-Global Effect:
-Units have 20% reduced defense and 25% increased firepower.</source>
+Global Effect: Units have 20% reduced defense and 25% increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9200,8 +9181,7 @@ Units have 50% offensive bonus and 10% defensive malus.</source>
     <message>
         <location filename="../resources/scripts/cos/co_grit.js" line="236"/>
         <source>
-Global Effect:
-Indirect units have 1 increased firerange and non-infantry direct units have 20% reduced firepower.</source>
+Global Effect: Indirect units have 1 increased firerange and non-infantry direct units have 20% reduced firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9317,8 +9297,7 @@ Indirect units  have 30% offensive bonus.</source>
     <message>
         <location filename="../resources/scripts/cos/co_hachi.js" line="158"/>
         <source>
-Global Effect:
-Units are 10% cheaper</source>
+Global Effect: Units are 10% cheaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9434,8 +9413,7 @@ Units have 10% more firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_hawke.js" line="200"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9551,8 +9529,7 @@ Units have 30% more firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_ik_486_b7.js" line="221"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9668,8 +9645,7 @@ Direct Units gain an additional firerange when they don&apos;t move. However fir
     <message>
         <location filename="../resources/scripts/cos/co_isabella.js" line="211"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9770,8 +9746,7 @@ Units have 20% firepower and defense bonus.</source>
     <message>
         <location filename="../resources/scripts/cos/co_jake.js" line="227"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9887,8 +9862,7 @@ Units have 20% increased defense and firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_javier.js" line="198"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10004,8 +9978,7 @@ Units have 20% increased defense against indirect units. Units gain additional 5
     <message>
         <location filename="../resources/scripts/cos/co_jess.js" line="245"/>
         <source>
-Global Effect:
-Air and Sea Units are 10% weaker and Ground Units have 10% increased firepower.</source>
+Global Effect: Air and Sea Units are 10% weaker and Ground Units have 10% increased firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10121,8 +10094,7 @@ Ground Units have 30% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_joey.js" line="263"/>
         <source>
-Global Effect:
-Units are 10% stronger when engaging stronger units, but firepower is reduced by 10% when engaging a weaker unit.</source>
+Global Effect: Units are 10% stronger when engaging stronger units, but firepower is reduced by 10% when engaging a weaker unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10243,8 +10215,7 @@ Units are 30% stronger when engaging stronger units</source>
     <message>
         <location filename="../resources/scripts/cos/co_jugger.js" line="199"/>
         <source>
-Global Effect:
-Units have 14% Luck and 7% Misfortune</source>
+Global Effect: Units have 14% Luck and 7% Misfortune</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10360,8 +10331,7 @@ Units have 30% Luck and 15% Misfortune</source>
     <message>
         <location filename="../resources/scripts/cos/co_julia.js" line="184"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10477,8 +10447,7 @@ Units loose 20% firepower but they firepower is unaffected by loss of HP.</sourc
     <message>
         <location filename="../resources/scripts/cos/co_kanbei.js" line="193"/>
         <source>
-Global Effect:
-Units have 20% stronger firepower and defense and are 20% more expensive.</source>
+Global Effect: Units have 20% stronger firepower and defense and are 20% more expensive.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10594,8 +10563,7 @@ Units have 40% stronger firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_kindle.js" line="257"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10711,8 +10679,7 @@ Units on buildings have 50% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_koal.js" line="207"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10828,8 +10795,7 @@ Units gain 30% increased firepower on street.</source>
     <message>
         <location filename="../resources/scripts/cos/co_lash.js" line="212"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10945,8 +10911,7 @@ Units gain 10% increased firepower per defense star.</source>
     <message>
         <location filename="../resources/scripts/cos/co_lin.js" line="233"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11047,8 +11012,7 @@ Ground Units gain 30% firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_mary.js" line="319"/>
         <source>
-Global Effect:
-Attacked units won&apos;t repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.</source>
+Global Effect: Attacked units won&apos;t repair from buildings for one turn. Whenever Mary destroys a unit on a property, she gains a capture bonus for that property.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11164,8 +11128,7 @@ Units gain 10% firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_max.js" line="238"/>
         <source>
-Global Effect:
-Direct Units gain 15% additional firepower and indirect Units loose 10% firepower and 1 firerange.</source>
+Global Effect: Direct Units gain 15% additional firepower and indirect Units loose 10% firepower and 1 firerange.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11281,8 +11244,7 @@ Direct Units gain 35% additional firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_meiyo.js" line="304"/>
         <source>
-Global Effect:
-Unit Ranks are 50% more effective. Units without a Rank loose 5% firepower.</source>
+Global Effect: Unit Ranks are 50% more effective. Units without a Rank loose 5% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11388,8 +11350,7 @@ Unit Ranks are 100% more effective.</source>
     <message>
         <location filename="../resources/scripts/cos/co_melanthe.js" line="253"/>
         <source>
-Global Effect:
-Units gain an additional defense point on natural terrain. Units are repaired by 1 HP less on Buildings.</source>
+Global Effect: Units gain an additional defense point on natural terrain. Units are repaired by 1 HP less on Buildings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11505,8 +11466,7 @@ Units gain an additional 30% firepower on natural terrain.</source>
     <message>
         <location filename="../resources/scripts/cos/co_mina.js" line="213"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11627,8 +11587,7 @@ Units gain an additional 20% firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_minamoto.js" line="263"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11744,8 +11703,7 @@ Units near Mountains gain an additional 40% firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_nana.js" line="269"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11866,8 +11824,7 @@ Indirect attacks deal one HP of damage to all nearby units, no matter their alle
     <message>
         <location filename="../resources/scripts/cos/co_napoleon.js" line="235"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11983,8 +11940,7 @@ Defense is increased by 25% and by 45% against indirect units.</source>
     <message>
         <location filename="../resources/scripts/cos/co_nell.js" line="179"/>
         <source>
-Global Effect:
-No Effects</source>
+Global Effect: No Effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12100,8 +12056,7 @@ Units have 15% Luck.</source>
     <message>
         <location filename="../resources/scripts/cos/co_olaf.js" line="211"/>
         <source>
-Global Effect:
-Winter poses no problem for Olaf or his troops.</source>
+Global Effect: Winter poses no problem for Olaf or his troops.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12217,8 +12172,7 @@ Firepower is increased by 30% during Snow.</source>
     <message>
         <location filename="../resources/scripts/cos/co_ozzy.js" line="189"/>
         <source>
-Global Effect:
-No Effect.</source>
+Global Effect: No Effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12334,8 +12288,7 @@ Defense is increased by 40%.</source>
     <message>
         <location filename="../resources/scripts/cos/co_penny.js" line="226"/>
         <source>
-Global Effect:
-Her troops are immune to all weather effects.</source>
+Global Effect: Her troops are immune to all weather effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12432,8 +12385,7 @@ CO Zone Effect:
     <message>
         <location filename="../resources/scripts/cos/co_peter.js" line="214"/>
         <source>
-Global Effect:
-Direct Units have 7% increased firepower and loose additional 5% firepower per terrain star.</source>
+Global Effect: Direct Units have 7% increased firepower and loose additional 5% firepower per terrain star.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12549,8 +12501,7 @@ Direct Units have 30% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_rachel.js" line="227"/>
         <source>
-Global Effect:
-Units have increased repairs by one on properties.</source>
+Global Effect: Units have increased repairs by one on properties.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12715,8 +12666,7 @@ Units have 20% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_rattigan.js" line="255"/>
         <source>
-Global Effect:
-Units have 10% increased firepower against large regiments of units and 5% reduced firepower against lone units.</source>
+Global Effect: Units have 10% increased firepower against large regiments of units and 5% reduced firepower against lone units.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12832,8 +12782,7 @@ Units have 30% increased firepower against large regiments of units.</source>
     <message>
         <location filename="../resources/scripts/cos/co_roboandy.js" line="219"/>
         <source>
-Global Effect:
-Units gain 1% firepower and 1% misfortune per star.</source>
+Global Effect: Units gain 1% firepower and 1% misfortune per star.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12949,8 +12898,7 @@ Units gain 4% firepower and 1% misfortune per star.</source>
     <message>
         <location filename="../resources/scripts/cos/co_robosturm.js" line="249"/>
         <source>
-Global Effect:
-Units gain 1 additional movementpoint and have 20% reduced firepower.</source>
+Global Effect: Units gain 1 additional movementpoint and have 20% reduced firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13066,8 +13014,7 @@ Units gain 20% defense and have 10% reduced firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_sabaki.js" line="187"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13183,8 +13130,7 @@ Units have 20% lifesteal.</source>
     <message>
         <location filename="../resources/scripts/cos/co_sami.js" line="246"/>
         <source>
-Global Effect:
-Transporter have 1 more movement point and 50% increased capture rate. Non-infantry direct-combat units have weaker 10% firepower.</source>
+Global Effect: Transporter have 1 more movement point and 50% increased capture rate. Non-infantry direct-combat units have weaker 10% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13300,8 +13246,7 @@ Infantry Units have 40% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_sanjuro.js" line="351"/>
         <source>
-Global Effect:
-Unit costs are decreased when he has more income than funds and firepower is decreased.</source>
+Global Effect: Unit costs are decreased when he has more income than funds and firepower is decreased.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13417,8 +13362,7 @@ Global firepower effects are doubled.</source>
     <message>
         <location filename="../resources/scripts/cos/co_sasha.js" line="189"/>
         <source>
-Global Effect:
-She gets an additional 10% funds from allied properties.</source>
+Global Effect: She gets an additional 10% funds from allied properties.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13532,13 +13476,6 @@ Units gain 10% additional firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="216"/>
-        <source>
-Global Effect:
-Copters have 25% increased firepower and Naval Units are 10% weaker.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_sensei.js" line="217"/>
         <source>
 CO Zone Effect:
@@ -13553,6 +13490,12 @@ Copters have 50% increased firepower and infantries have 30% increased firepower
     <message>
         <location filename="../resources/scripts/cos/co_sensei.js" line="221"/>
         <source>Copter firepower increases. Infantry units with 9 HP appear in all his cities, ready to be moved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="216"/>
+        <source>
+Global Effect: Copters have 25% increased firepower and Naval Units are 10% weaker.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13651,8 +13594,7 @@ Copters have 50% increased firepower and infantries have 30% increased firepower
     <message>
         <location filename="../resources/scripts/cos/co_smitan.js" line="288"/>
         <source>
-Global Effect:
-No Effect.</source>
+Global Effect: No Effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13763,8 +13705,7 @@ Direct Units gain additional 10% firepower for each indirect unit that can attac
     <message>
         <location filename="../resources/scripts/cos/co_sonja.js" line="184"/>
         <source>
-Global Effect:
-Keeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. Her misfortune is increased by 5%</source>
+Global Effect: Keeps HP intel hidden from foes. Reduces enemy terrain defensive cover by one. Her misfortune is increased by 5%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13880,8 +13821,7 @@ Units gain 10% firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_sophie.js" line="250"/>
         <source>
-Global Effect:
-No Effects</source>
+Global Effect: No Effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13997,8 +13937,7 @@ Enemy counterattacks deal 20% less damage. Units gain 10% firepower and defense.
     <message>
         <location filename="../resources/scripts/cos/co_sturm.js" line="198"/>
         <source>
-Global Effect:
-His troops are not affected by terrain only snow can stop him.</source>
+Global Effect: His troops are not affected by terrain only snow can stop him.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14114,8 +14053,7 @@ Units have 30% increased firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_tabitha.js" line="168"/>
         <source>
-Global Effect:
-No Effects</source>
+Global Effect: No Effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14221,8 +14159,7 @@ Units have 60% increased firepower and defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_tasha.js" line="227"/>
         <source>
-Global Effect:
-No Effects</source>
+Global Effect: No Effects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14324,8 +14261,7 @@ Air Units have 50% increased firepower and 30% increased defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_varlot.js" line="247"/>
         <source>
-Global Effect:
-Income is reduced for buildings he captures.</source>
+Global Effect: Income is reduced for buildings he captures.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14441,8 +14377,7 @@ Units have 20% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_von_bolt.js" line="183"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14558,8 +14493,8 @@ Units have 30% increased firepower and 20% increased defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_waylon.js" line="221"/>
         <source>
-Global Effect:
-No Effects.</source>
+Special Unit: Kirov
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14657,8 +14592,7 @@ Air Units have 30% increased firepower and 40% increased defense.</source>
     <message>
         <location filename="../resources/scripts/cos/co_will.js" line="211"/>
         <source>
-Global Effect:
-No Effects.</source>
+Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14760,8 +14694,7 @@ Direct Ground Units have 30% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_xavier.js" line="250"/>
         <source>
-Global Effect:
-Units with 5 HP or less deal maximum luck damage.</source>
+Global Effect: Units with 5 HP or less deal maximum luck damage.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14877,8 +14810,7 @@ Units have 20% increased firepower.</source>
     <message>
         <location filename="../resources/scripts/cos/co_yukio.js" line="252"/>
         <source>
-Global Effect:
-None.</source>
+Global Effect: None.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14994,8 +14926,7 @@ Damage is reduced by 10%. Troops deal 15% true damage if the base damage is at l
     <message>
         <location filename="../resources/scripts/cos/co_zandra.js" line="217"/>
         <source>
-Global Effect:
-Units are unaffected by sandstorms and have 10% increased firepower during sandstorm.</source>
+Global Effect: Units are unaffected by sandstorms and have 10% increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -15481,17 +15412,17 @@ Units have 30% increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/lander.js" line="93"/>
+        <location filename="../resources/scripts/units/lander.js" line="94"/>
         <source>Naval unit. Can </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/lander.js" line="94"/>
+        <location filename="../resources/scripts/units/lander.js" line="95"/>
         <source>transport X 2 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/lander.js" line="95"/>
+        <location filename="../resources/scripts/units/lander.js" line="96"/>
         <source> ground units. No attack capability.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16130,17 +16061,17 @@ Units have 30% increased firepower during sandstorm.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/transportplane.js" line="101"/>
+        <location filename="../resources/scripts/units/transportplane.js" line="102"/>
         <source>Air unit. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/transportplane.js" line="102"/>
+        <location filename="../resources/scripts/units/transportplane.js" line="103"/>
         <source>Carries X 2 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/transportplane.js" line="103"/>
+        <location filename="../resources/scripts/units/transportplane.js" line="104"/>
         <source>ground units. No attack capability.</source>
         <translation type="unfinished"></translation>
     </message>

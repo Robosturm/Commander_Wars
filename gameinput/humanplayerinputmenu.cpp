@@ -182,33 +182,36 @@ HumanPlayerInputMenu::HumanPlayerInputMenu(QStringList texts, QStringList action
     if (xCount > 0)
     {
         qint32 emptyItems = ((xCount + 1) * Settings::getMenuItemCount()) - xCount * Settings::getMenuItemCount() - actionIDs.size() % Settings::getMenuItemCount();
-        for (qint32 i = 0; i < emptyItems; i++)
+        if (emptyItems < Settings::getMenuItemCount())
         {
-            oxygine::spBox9Sprite pItemBox = new oxygine::Box9Sprite();
-            pAnim = pGameManager->getResAnim("menu+middle");
-            pItemBox->setResAnim(pAnim);
-            pItemBox->setSize(pAnim->getSize());
-            pItemBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
-            pItemBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
-            pItemBox->setHeight(GameMap::Imagesize);
-            pItemBox->setY(y);
-            pItemBox->setX(x);
-            pItemBox->setWidth(width);
-            pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
+            for (qint32 i = 0; i < emptyItems; i++)
             {
-                oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
-                pTouchEvent->stopPropagation();
-                if (pTouchEvent != nullptr)
+                oxygine::spBox9Sprite pItemBox = new oxygine::Box9Sprite();
+                pAnim = pGameManager->getResAnim("menu+middle");
+                pItemBox->setResAnim(pAnim);
+                pItemBox->setSize(pAnim->getSize());
+                pItemBox->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
+                pItemBox->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
+                pItemBox->setHeight(GameMap::Imagesize);
+                pItemBox->setY(y);
+                pItemBox->setX(x);
+                pItemBox->setWidth(width);
+                pItemBox->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent)->void
                 {
-                    if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
+                    oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
+                    pTouchEvent->stopPropagation();
+                    if (pTouchEvent != nullptr)
                     {
-                        emit sigCanceled(0, 0);
+                        if (pTouchEvent->mouseButton == oxygine::MouseButton::MouseButton_Right)
+                        {
+                            emit sigCanceled(0, 0);
+                        }
                     }
-                }
-            });
-            this->addChild(pItemBox);
-            y += static_cast<qint32>(pItemBox->getHeight());
-            itemHeigth = static_cast<qint32>(pItemBox->getHeight());
+                });
+                this->addChild(pItemBox);
+                y += static_cast<qint32>(pItemBox->getHeight());
+                itemHeigth = static_cast<qint32>(pItemBox->getHeight());
+            }
         }
     }
 

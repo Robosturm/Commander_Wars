@@ -218,7 +218,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect:\nNo Effects.") +
+        return qsTr("\nSpecial Unit: Kirov\nGlobal Effect: No Effects.") +
                qsTr("\nCO Zone Effect:\nAir Units have 30% increased firepower and 40% increased defense.");
     };
     this.getPowerDescription = function()

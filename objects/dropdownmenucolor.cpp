@@ -85,6 +85,10 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items, bool u
         if (m_Panel->getVisible())
         {
             this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+            if (m_Tooltip)
+            {
+                m_Tooltip->setVisible(false);
+            }
         }
         else
         {
@@ -98,6 +102,10 @@ DropDownmenuColor::DropDownmenuColor(qint32 width, QVector<QColor> items, bool u
         if (m_Panel->getVisible())
         {
             this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+        }
+        if (m_Tooltip)
+        {
+            m_Tooltip->setVisible(false);
         }
         this->m_Panel->setVisible(false);
     });

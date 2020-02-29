@@ -232,7 +232,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect:\nNo Effects.") +
+        return qsTr("\nGlobal Effect: No Effects.") +
                qsTr("\nCO Zone Effect:\nDefense is increased by 25% and by 45% against indirect units.");
     };
     this.getPowerDescription = function()

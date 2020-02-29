@@ -231,7 +231,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect:\nNo bonus.") +
+        return qsTr("\nGlobal Effect: No bonus.") +
                qsTr("\nCO Zone Effect:\nUnits gain additional 20% firepower.");
     };
     this.getPowerDescription = function()

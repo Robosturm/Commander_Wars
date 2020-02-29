@@ -65,6 +65,10 @@ DropDownmenuSprite::DropDownmenuSprite(qint32 width, QVector<QString>& items, st
         if (m_Panel->getVisible())
         {
             this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+            if (m_Tooltip)
+            {
+                m_Tooltip->setVisible(false);
+            }
         }
         else
         {
@@ -75,6 +79,10 @@ DropDownmenuSprite::DropDownmenuSprite(qint32 width, QVector<QString>& items, st
     this->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
         this->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+        if (m_Tooltip)
+        {
+            m_Tooltip->setVisible(false);
+        }
         this->m_Panel->setVisible(false);
     });
     for (qint32 i = 0; i < m_ItemTexts.size(); i++)

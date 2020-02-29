@@ -408,5 +408,11 @@
 		<image file="zeppelin+walk+mask.png" cols = "4" rows = "4" />
 		<image file="zeppelin+walk.png" cols = "4"  rows = "4" />
 		
+		<!-- repair_tank -->
+		<image file="repair_tank.png" cols = "4" />
+		<image file="repair_tank+mask.png" cols = "4" />
+		<image file="repair_tank+walk+mask.png" cols = "4" rows = "4" />
+		<image file="repair_tank+walk.png" cols = "4"  rows = "4" />
+		
 	</atlas>
 </resources>
