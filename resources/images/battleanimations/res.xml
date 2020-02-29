@@ -362,8 +362,13 @@
 		<image file="zeppelin/zeppelin.png" />
 		<image file="zeppelin/zeppelin+mask.png" />
 		
-		<!-- zeppelin -->
+		<!-- repair_tank -->
 		<image file="repair_tank/repair_tank.png" />
-		<image file="repair_tank/repair_tank+mask.png" />		
+		<image file="repair_tank/repair_tank+mask.png" />	
+
+		<!-- neospider_tank -->
+		<image file="neospider_tank/neospider_tank.png" />
+		<image file="neospider_tank/neospider_tank+mask.png" />	
+		
 	</atlas>
 </resources>

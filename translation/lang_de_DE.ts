@@ -10773,115 +10773,116 @@ Units gain 30% increased firepower on street.</source>
 <context>
     <name>co_lash</name>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="196"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="208"/>
         <source>The wunderkind of the Black Hole forces. She&apos;s small but fierce. Designed most of Black Hole&apos;s recent weaponry.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="200"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="212"/>
         <source>Getting her way</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="204"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="216"/>
         <source>Not getting it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="208"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="220"/>
         <source>Skilled at taking advantage of terrain features. Can turn terrain effects into firepower bonuses.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="212"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="224"/>
         <source>
+Special Unit: Neo Spider Tank
 Global Effect: No Effects.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="213"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="225"/>
         <source>
 CO Zone Effect:
 Units gain 10% increased firepower per defense star.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="217"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="229"/>
         <source>All units&apos; movements are unhindered by terrain.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="221"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="233"/>
         <source>Terrain Tactics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="225"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="237"/>
         <source>Terrain effects are doubled and used to increase firepower. Additionally, all units&apos; movements are unhindered by terrain.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="229"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="241"/>
         <source>Prime Tactics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="233"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="245"/>
         <source>Ooh!  You&apos;re so annoying!  I&apos;m gonna have to get rid of you now!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="234"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="246"/>
         <source>You&apos;re no fun... I don&apos;t like you at all!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="235"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="247"/>
         <source>I&apos;ve had enough!  I&apos;m bored now!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="236"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="248"/>
         <source>Oooo, you&apos;re driving me nuts!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="237"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="249"/>
         <source>You want to match wits with me? You&apos;re so silly!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="238"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="250"/>
         <source>Tee hee! C&apos;mon! Let&apos;s play!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="242"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="254"/>
         <source>Hee hee hee... Hm? Broken already?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="243"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="255"/>
         <source>Tee hee hee! You&apos;re a loser!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="244"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="256"/>
         <source>Huh? That&apos;s all you got? Wow, you&apos;re no fun!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="248"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="260"/>
         <source>Boo! Nothing&apos;s going right! That&apos;s enough. I&apos;m going home!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="249"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="261"/>
         <source>Oh, well. I guess I&apos;ll have to find someplace new to play. Toodles!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_lash.js" line="253"/>
+        <location filename="../resources/scripts/cos/co_lash.js" line="265"/>
         <source>Lash</source>
         <translation type="unfinished"></translation>
     </message>

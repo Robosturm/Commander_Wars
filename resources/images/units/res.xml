@@ -414,5 +414,10 @@
 		<image file="repair_tank+walk+mask.png" cols = "4" rows = "4" />
 		<image file="repair_tank+walk.png" cols = "4"  rows = "4" />
 		
+		<!-- neospider_tank -->
+		<image file="neospider_tank.png" cols = "4" />
+		<image file="neospider_tank+mask.png" cols = "4" />
+		<image file="neospider_tank+walk+mask.png" cols = "4" rows = "4" />
+		<image file="neospider_tank+walk.png" cols = "4"  rows = "4" />
 	</atlas>
 </resources>

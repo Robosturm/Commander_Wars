@@ -190,6 +190,18 @@ var Constructor = function()
         return 0;
     };
 
+    this.getCOUnits = function(co, building)
+    {
+        var buildingId = building.getBuildingID();
+        if (buildingId === "FACTORY" ||
+            buildingId === "TOWN" ||
+            buildingId === "HQ")
+        {
+            return ["ZCOUNIT_NEOSPIDER_TANK"];
+        }
+        return [];
+    };
+
     // CO - Intel
     this.getBio = function()
     {
@@ -209,7 +221,7 @@ var Constructor = function()
     };
     this.getLongCODescription = function()
     {
-        return qsTr("\nGlobal Effect: No Effects.") +
+        return qsTr("\nSpecial Unit: Neo Spider Tank\nGlobal Effect: No Effects.") +
                qsTr("\nCO Zone Effect:\nUnits gain 10% increased firepower per defense star.");
     };
     this.getPowerDescription = function()
