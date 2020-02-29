@@ -343,7 +343,7 @@ bool VeryEasyAI::moveUnits(QmlVectorUnit* pUnits, QmlVectorBuilding* pBuildings,
         {
             QVector<QVector3D> targets;
             QVector<QVector3D> transporterTargets;
-            GameAction* pAction = new GameAction(ACTION_CAPTURE);
+            GameAction* pAction = new GameAction(ACTION_WAIT);
             QStringList actions = pUnit->getActionList();
             // find possible targets for this unit
             pAction->setTarget(QPoint(pUnit->getX(), pUnit->getY()));

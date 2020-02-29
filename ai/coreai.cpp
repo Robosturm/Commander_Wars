@@ -500,9 +500,10 @@ void CoreAI::getAttacksFromField(Unit* pUnit, GameAction* pAction, QVector<QVect
 
 bool CoreAI::isAttackOnTerrainAllowed(Terrain* pTerrain)
 {
+    Building* pBuilding = pTerrain->getBuilding();
     if ((enableNeutralTerrainAttack && pTerrain->getHp() > 0) ||
-        (pTerrain->getBuilding() != nullptr && pTerrain->getBuilding()->getOwner() != nullptr) ||
-        (enableNeutralTerrainAttack && pTerrain->getBuilding() != nullptr && pTerrain->getBuilding()->getOwner() == nullptr))
+        (pBuilding != nullptr && pBuilding->getHp() > 0 && pBuilding->getOwner() != m_pPlayer) ||
+        (enableNeutralTerrainAttack && pBuilding != nullptr && pBuilding->getHp() > 0 && pBuilding->getOwner() == nullptr))
     {
         return true;
     }

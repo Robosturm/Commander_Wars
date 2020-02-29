@@ -5423,6 +5423,19 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
 </context>
 <context>
+    <name>ZCOUNIT_KIROV</name>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_KIROV.js" line="37"/>
+        <source>Kirov</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/units/ZCOUNIT_KIROV.js" line="84"/>
+        <source>Kirov reporting. Special Air Unit with extrem high defense but low mobility and no fuel comsumtion at the start of a turn. Can attack ground and naval units. Exceptional power.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>action</name>
     <message>
         <location filename="../resources/scripts/general/action.js" line="17"/>

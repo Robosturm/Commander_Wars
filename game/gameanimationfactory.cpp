@@ -220,14 +220,18 @@ void GameAnimationFactory::removeAnimation(GameAnimation* pAnimation)
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    for (qint32 i = 0; i < m_Animations.size(); i++)
+    qint32 i = 0;
+    while (i < m_Animations.size())
     {
         if (m_Animations[i].get() == pAnimation)
         {
             spGameAnimation spAnimation = m_Animations[i];
             spAnimation->detach();
             m_Animations.removeAt(i);
-            break;
+        }
+        else
+        {
+             i++;
         }
     }
     if (m_Animations.size() == 0)
