@@ -182,7 +182,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: No Effects.") +
-               qsTr("\nCO Zone Effect:\nUnits loose 20% firepower but they firepower is unaffected by loss of HP.");
+               qsTr("\nCO Zone Effect: Units loose 20% firepower but they firepower is unaffected by loss of HP.");
     };
     this.getPowerDescription = function()
     {

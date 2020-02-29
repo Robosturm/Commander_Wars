@@ -17,14 +17,20 @@ var Constructor = function()
         if ((armyName !== "yc") &&
             (armyName !== "ge") &&
             (armyName !== "bm") &&
-            (armyName !== "bh"))
+            (armyName !== "bh") &&
+            (armyName !== "ma"))
         {
             armyName = "os";
         }
+        var offset = Qt.point(-5, 5);
+        if (armyName === "ma")
+        {
+            offset = Qt.point(-20, 5);
+        }
         sprite.loadSprite("light_tank+" + armyName,  false,
-                          BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), Qt.point(-5, 5));
+                          BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), offset);
         sprite.loadSprite("light_tank+" + armyName + "+mask",  true,
-                          BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), Qt.point(-5, 5));
+                          BATTLEANIMATION_LIGHT_TANK.getMaxUnitCount(), offset);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -58,6 +64,10 @@ var Constructor = function()
             {
                 offset = Qt.point(31, 21);
             }
+            else if (armyName === "ma")
+            {
+                offset = Qt.point(17, 37);
+            }
             sprite.loadSprite("medium_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 0.5, 0, 0);
             sprite.loadSound("tank_shot.wav", 1, "resources/sounds/", 0);
@@ -81,6 +91,10 @@ var Constructor = function()
             else if (armyName === "bh")
             {
                 offset = Qt.point(32, 36);
+            }
+            else if (armyName === "ma")
+            {
+                offset = Qt.point(41, 20);
             }
             sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                               1, 1, 0, 0);

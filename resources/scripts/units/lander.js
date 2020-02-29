@@ -72,7 +72,7 @@ var Constructor = function()
                 "HEAVY_HOVERCRAFT", "HEAVY_TANK", "HOVERCRAFT", "HOVERFLAK",
                 "INFANTRY", "LIGHT_TANK", "MECH", "MEGATANK", "MISSILE",
                 "MOTORBIKE", "NEOTANK", "RECON", "ROCKETTHROWER", "SNIPER",
-                "ZCOUNIT_REPAIR_TANK"];
+                "ZCOUNIT_REPAIR_TANK", "ZCOUNIT_IRON_SHIELD_GENERATOR"];
     };
     this.getTerrainAnimationBase = function(unit, terrain)
     {

@@ -248,7 +248,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: Units with 5 HP or less deal maximum luck damage.") +
-               qsTr("\nCO Zone Effect:\nUnits have 20% increased firepower.");
+               qsTr("\nCO Zone Effect: Units have 20% increased firepower.");
     };
     this.getPowerDescription = function()
     {

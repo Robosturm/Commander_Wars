@@ -243,7 +243,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: Units deal no luck damage. Units gain 1% firepower for own units in vision range. Counter attacks are 20% weaker.") +
-               qsTr("\nCO Zone Effect:\nUnits gain 2% firepower for own units in vision range.");
+               qsTr("\nCO Zone Effect: Units gain 2% firepower for own units in vision range.");
     };
     this.getPowerDescription = function()
     {

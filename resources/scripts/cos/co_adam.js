@@ -318,7 +318,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: Units have 10% increased firepower but loose additional firepower for lost HP.") +
-               qsTr("\nCO Zone Effect:\nUnits gain additional 20% firepower and finish off units when they are within basic luck range. Whenever a unit destroy an enemy unit it gets a 15% defense boost and a 10% for every additional enemy for one turn.");
+               qsTr("\nCO Zone Effect: Units gain additional 20% firepower and finish off units when they are within basic luck range. Whenever a unit destroy an enemy unit it gets a 15% defense boost and a 10% for every additional enemy for one turn.");
     };
     this.getPowerDescription = function()
     {

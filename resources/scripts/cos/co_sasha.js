@@ -187,7 +187,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: She gets an additional 10% funds from allied properties.") +
-               qsTr("\nCO Zone Effect:\nUnits gain 10% additional firepower and defense.");
+               qsTr("\nCO Zone Effect: Units gain 10% additional firepower and defense.");
     };
     this.getPowerDescription = function()
     {

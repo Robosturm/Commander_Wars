@@ -17,7 +17,8 @@ var Constructor = function()
         if ((armyName !== "yc") &&
             (armyName !== "ge") &&
             (armyName !== "bm") &&
-            (armyName !== "bh"))
+            (armyName !== "bh") &&
+            (armyName !== "ma"))
         {
             armyName = "os";
         }
@@ -53,6 +54,10 @@ var Constructor = function()
         else if (armyName === "bh")
         {
             offset = Qt.point(70, 115);
+        }
+        else if (armyName === "ma")
+        {
+            offset = Qt.point(54, 71);
         }
         var count = sprite.getUnitCount(5);
         for (var i = 0; i < count; i++)

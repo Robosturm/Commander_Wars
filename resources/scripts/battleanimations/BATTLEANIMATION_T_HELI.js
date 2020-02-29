@@ -16,7 +16,8 @@ var Constructor = function()
         }
         if ((armyName !== "yc") &&
             (armyName !== "ge") &&
-            (armyName !== "bm"))
+            (armyName !== "bm") &&
+            (armyName !== "ma"))
         {
             armyName = "os";
         }

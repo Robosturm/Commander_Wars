@@ -17,14 +17,20 @@ var Constructor = function()
         if ((armyName !== "yc") &&
             (armyName !== "ge") &&
             (armyName !== "bm") &&
-            (armyName !== "bh"))
+            (armyName !== "bh") &&
+            (armyName !== "ma"))
         {
             armyName = "os";
         }
+        var offset = Qt.point(-5, 5);
+        if (armyName === "ma")
+        {
+            offset = Qt.point(-15, 5);
+        }
         sprite.loadSprite("flak+" + armyName,  false,
-                          BATTLEANIMATION_FLAK.getMaxUnitCount(), Qt.point(-5, 5));
+                          BATTLEANIMATION_FLAK.getMaxUnitCount(), offset);
         sprite.loadSprite("flak+" + armyName + "+mask",  true,
-                          BATTLEANIMATION_FLAK.getMaxUnitCount(), Qt.point(-5, 5));
+                          BATTLEANIMATION_FLAK.getMaxUnitCount(), offset);
     };
 
     this.loadFireAnimation = function(sprite, unit, defender, weapon)
@@ -40,7 +46,8 @@ var Constructor = function()
         if ((armyName !== "yc") &&
             (armyName !== "ge") &&
             (armyName !== "bm") &&
-            (armyName !== "bh"))
+            (armyName !== "bh") &&
+            (armyName !== "ma"))
         {
             armyName = "os";
         }
@@ -61,6 +68,10 @@ var Constructor = function()
         else if (armyName === "bh")
         {
             offset = Qt.point(-38, 5);
+        }
+        else if (armyName === "ma")
+        {
+            offset = Qt.point(24, 48);
         }
         if (armyName === "bh" ||
             armyName === "os")

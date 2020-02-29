@@ -246,7 +246,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: Naval units have 1 more movement point. Air units are 15% weaker and Sea units 10% stronger") +
-               qsTr("\nCO Zone Effect:\nNaval units have 30% increased firepower.");
+               qsTr("\nCO Zone Effect: Naval units have 30% increased firepower.");
     };
     this.getPowerDescription = function()
     {

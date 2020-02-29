@@ -244,7 +244,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: Transporter have 1 more movement point and 50% increased capture rate. Non-infantry direct-combat units have weaker 10% firepower.") +
-               qsTr("\nCO Zone Effect:\nInfantry Units have 40% increased firepower.");
+               qsTr("\nCO Zone Effect: Infantry Units have 40% increased firepower.");
     };
     this.getPowerDescription = function()
     {

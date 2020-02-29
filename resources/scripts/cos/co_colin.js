@@ -160,7 +160,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: Units are 20% cheaper and have 15% less firepower.") +
-               qsTr("\nCO Zone Effect:\nUnits have only 5% weaker firepower.");
+               qsTr("\nCO Zone Effect: Units have only 5% weaker firepower.");
     };
     this.getPowerDescription = function()
     {

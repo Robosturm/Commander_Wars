@@ -267,7 +267,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: No Effects.") +
-               qsTr("\nCO Zone Effect:\nIndirect attacks deal one HP of damage to all nearby units, no matter their allegiance.");
+               qsTr("\nCO Zone Effect: Indirect attacks deal one HP of damage to all nearby units, no matter their allegiance.");
     };
     this.getPowerDescription = function()
     {

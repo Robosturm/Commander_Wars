@@ -213,7 +213,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: Enemy units reduced to two or less HP by Graves' units become paralyzed.") +
-               qsTr("\nCO Zone Effect:\nUnits have 15% offensive bonus.");
+               qsTr("\nCO Zone Effect: Units have 15% offensive bonus.");
     };
     this.getPowerDescription = function()
     {

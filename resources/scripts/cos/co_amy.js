@@ -221,7 +221,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: Reaf costs are always 1.") +
-               qsTr("\nCO Zone Effect:\nHovercrafts gain a 40% firepower boost.");
+               qsTr("\nCO Zone Effect: Hovercrafts gain a 40% firepower boost.");
     };
     this.getPowerDescription = function()
     {

@@ -419,5 +419,12 @@
 		<image file="neospider_tank+mask.png" cols = "4" />
 		<image file="neospider_tank+walk+mask.png" cols = "4" rows = "4" />
 		<image file="neospider_tank+walk.png" cols = "4"  rows = "4" />
+		
+		<!-- neospider_tank -->
+		<image file="iron_shield_generator.png" cols = "4" />
+		<image file="iron_shield_generator+mask.png" cols = "4" />
+		<image file="iron_shield_generator+walk+mask.png" cols = "4" rows = "4" />
+		<image file="iron_shield_generator+walk.png" cols = "4"  rows = "4" />
+		
 	</atlas>
 </resources>

@@ -173,7 +173,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: Units have 20% reduced defense and 25% increased firepower.") +
-               qsTr("\nCO Zone Effect:\nUnits have 50% offensive bonus and 10% defensive malus.");
+               qsTr("\nCO Zone Effect: Units have 50% offensive bonus and 10% defensive malus.");
     };
     this.getPowerDescription = function()
     {

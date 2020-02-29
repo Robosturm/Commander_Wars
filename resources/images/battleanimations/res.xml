@@ -44,6 +44,8 @@
 		<image file="apc/apc+os+mask.png" />
 		<image file="apc/apc+yc.png" />
 		<image file="apc/apc+yc+mask.png" />
+		<image file="apc/apc+ma.png" />
+		<image file="apc/apc+ma+mask.png" />
 		
 		<!-- artillerycraft -->
 		<image file="artillerycraft/artillerycraft.png" />
@@ -60,6 +62,8 @@
 		<image file="artillery/artillery+os+mask.png" />
 		<image file="artillery/artillery+yc.png" />
 		<image file="artillery/artillery+yc+mask.png" />
+		<image file="artillery/artillery+ma.png" />
+		<image file="artillery/artillery+ma+mask.png" />
 		
 		<!-- battleship -->
 		<image file="battleship/battleship+bh.png" />
@@ -72,6 +76,8 @@
 		<image file="battleship/battleship+os+mask.png" />
 		<image file="battleship/battleship+yc.png" />
 		<image file="battleship/battleship+yc+mask.png" />
+		<image file="battleship/battleship+ma.png" />
+		<image file="battleship/battleship+ma+mask.png" />
 		
 		<!-- black_boat -->
 		<image file="black_boat/black_boat.png" />
@@ -92,6 +98,8 @@
 		<image file="bomber/bomber+os+mask.png" />
 		<image file="bomber/bomber+yc.png" />
 		<image file="bomber/bomber+yc+mask.png" />
+		<image file="bomber/bomber+ma.png" />
+		<image file="bomber/bomber+ma+mask.png" />
 		
 		<!-- cannonboat -->
 		<image file="cannonboat/cannonboat.png" />
@@ -108,6 +116,8 @@
 		<image file="cruiser/cruiser+os+mask.png" />
 		<image file="cruiser/cruiser+yc.png" />
 		<image file="cruiser/cruiser+yc+mask.png" />
+		<image file="cruiser/cruiser+ma.png" />
+		<image file="cruiser/cruiser+ma+mask.png" />
 		
 		<!-- destroyer -->
 		<image file="destroyer/destroyer.png" />
@@ -128,6 +138,8 @@
 		<image file="fighter/fighter+os+mask.png" />
 		<image file="fighter/fighter+yc.png" />
 		<image file="fighter/fighter+yc+mask.png" />
+		<image file="fighter/fighter+ma.png" />
+		<image file="fighter/fighter+ma+mask.png" />
 		
 		<!-- flak -->
 		<image file="flak/flak+bh.png" />
@@ -140,6 +152,8 @@
 		<image file="flak/flak+os+mask.png" />
 		<image file="flak/flak+yc.png" />
 		<image file="flak/flak+yc+mask.png" />
+		<image file="flak/flak+ma.png" />
+		<image file="flak/flak+ma+mask.png" />
 
 		<image file="flak/flak+bh+fire+ground+mask.png" cols = "4" />
 		<image file="flak/flak+bh+fire+ground.png" cols = "4" />
@@ -171,6 +185,8 @@
 		<image file="heavy_tank/heavy_tank+os+mask.png" />
 		<image file="heavy_tank/heavy_tank+yc.png" />
 		<image file="heavy_tank/heavy_tank+yc+mask.png" />
+		<image file="heavy_tank/heavy_tank+ma.png" />
+		<image file="heavy_tank/heavy_tank+ma+mask.png" />
 		
 		<!-- hoellium -->
 		<image file="hoellium/hoellium.png" />
@@ -195,6 +211,8 @@
 		<image file="infantry/infantry+os+mask.png" />
 		<image file="infantry/infantry+yc.png" />
 		<image file="infantry/infantry+yc+mask.png" />
+		<image file="infantry/infantry+ma.png" />
+		<image file="infantry/infantry+ma+mask.png" />
 		
 		<!-- k_heli -->
 		<image file="k_heli/k_heli+bh.png" />
@@ -207,6 +225,8 @@
 		<image file="k_heli/k_heli+os+mask.png" />
 		<image file="k_heli/k_heli+yc.png" />
 		<image file="k_heli/k_heli+yc+mask.png" />
+		<image file="k_heli/k_heli+ma.png" />
+		<image file="k_heli/k_heli+ma+mask.png" />
 		
 		<!-- lander -->
 		<image file="lander/lander+bh.png" />
@@ -219,6 +239,8 @@
 		<image file="lander/lander+os+mask.png" />
 		<image file="lander/lander+yc.png" />
 		<image file="lander/lander+yc+mask.png" />
+		<image file="lander/lander+ma.png" />
+		<image file="lander/lander+ma+mask.png" />
 		
 		<!-- light_tank -->
 		<image file="light_tank/light_tank+bh.png" />
@@ -231,6 +253,8 @@
 		<image file="light_tank/light_tank+os+mask.png" />
 		<image file="light_tank/light_tank+yc.png" />
 		<image file="light_tank/light_tank+yc+mask.png" />
+		<image file="light_tank/light_tank+ma.png" />
+		<image file="light_tank/light_tank+ma+mask.png" />
 		
 		<!-- mech -->
 		<image file="mech/mech+bh.png" />
@@ -243,6 +267,8 @@
 		<image file="mech/mech+os+mask.png" />
 		<image file="mech/mech+yc.png" />
 		<image file="mech/mech+yc+mask.png" />
+		<image file="mech/mech+ma.png" />
+		<image file="mech/mech+ma+mask.png" />
 		
 		<!-- megatank -->
 		<image file="megatank/megatank.png" />
@@ -261,6 +287,8 @@
 		<image file="missile/missile+os+mask.png" />
 		<image file="missile/missile+yc.png" />
 		<image file="missile/missile+yc+mask.png" />
+		<image file="missile/missile+ma.png" />
+		<image file="missile/missile+ma+mask.png" />
 		
 		<!-- motorbike -->
 		<image file="motorbike/motorbike.png" />
@@ -289,6 +317,8 @@
 		<image file="recon/recon+os+mask.png" />
 		<image file="recon/recon+yc.png" />
 		<image file="recon/recon+yc+mask.png" />
+		<image file="recon/recon+ma.png" />
+		<image file="recon/recon+ma+mask.png" />
 		
 		<!-- rocketthrower -->
 		<image file="rocketthrower/rocketthrower+ac.png" />
@@ -307,6 +337,8 @@
 		<image file="rocketthrower/rocketthrower+ti+mask.png" />
 		<image file="rocketthrower/rocketthrower+yc.png" />
 		<image file="rocketthrower/rocketthrower+yc+mask.png" />
+		<image file="rocketthrower/rocketthrower+ma.png" />
+		<image file="rocketthrower/rocketthrower+ma+mask.png" />
 		
 		<!-- submarine -->
 		<image file="submarine/submarine+bh.png" />
@@ -319,6 +351,8 @@
 		<image file="submarine/submarine+os+mask.png" />
 		<image file="submarine/submarine+yc.png" />
 		<image file="submarine/submarine+yc+mask.png" />
+		<image file="submarine/submarine+ma.png" />
+		<image file="submarine/submarine+ma+mask.png" />
 		
 		<image file="submarine/submarine+hidden+bh.png" />
 		<image file="submarine/submarine+hidden+bh+mask.png" />
@@ -340,10 +374,14 @@
 		<image file="t_heli/t_heli+os+mask.png" />
 		<image file="t_heli/t_heli+yc.png" />
 		<image file="t_heli/t_heli+yc+mask.png" />
+		<image file="t_heli/t_heli+ma.png" />
+		<image file="t_heli/t_heli+ma+mask.png" />
 		
 		<!-- sniper -->
 		<image file="sniper/sniper+os.png" />
 		<image file="sniper/sniper+os+mask.png" />
+		<image file="sniper/sniper+ma.png" />
+		<image file="sniper/sniper+ma+mask.png" />
 		
 		<!-- stealthbomber -->
 		<image file="stealthbomber/stealthbomber.png" />
@@ -369,6 +407,10 @@
 		<!-- neospider_tank -->
 		<image file="neospider_tank/neospider_tank.png" />
 		<image file="neospider_tank/neospider_tank+mask.png" />	
+		
+		<!-- iron_shield_generator -->
+		<image file="iron_shield_generator/iron_shield_generator.png" />
+		<image file="iron_shield_generator/iron_shield_generator+mask.png" />	
 		
 	</atlas>
 </resources>

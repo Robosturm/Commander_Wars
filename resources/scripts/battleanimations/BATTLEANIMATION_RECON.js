@@ -17,14 +17,20 @@ var Constructor = function()
         if ((armyName !== "yc") &&
             (armyName !== "ge") &&
             (armyName !== "bm") &&
-            (armyName !== "bh"))
+            (armyName !== "bh") &&
+            (armyName !== "ma"))
         {
             armyName = "os";
         }
+        var offset = Qt.point(-5, 5);
+        if (armyName === "ma")
+        {
+            offset = Qt.point(-15, 5);
+        }
         sprite.loadSprite("recon+" + armyName,  false,
-                          BATTLEANIMATION_RECON.getMaxUnitCount(), Qt.point(-5, 5));
+                          BATTLEANIMATION_RECON.getMaxUnitCount(), offset);
         sprite.loadSprite("recon+" + armyName + "+mask",  true,
-                          BATTLEANIMATION_RECON.getMaxUnitCount(), Qt.point(-5, 5));
+                          BATTLEANIMATION_RECON.getMaxUnitCount(), offset);
     };
 
 
@@ -55,6 +61,10 @@ var Constructor = function()
         else if (armyName === "bh")
         {
             offset = Qt.point(39, 30);
+        }
+        else if (armyName === "ma")
+        {
+            offset = Qt.point(38, 20);
         }
         sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                           1, 1, 0, 0);

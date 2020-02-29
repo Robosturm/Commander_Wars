@@ -187,7 +187,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: No Effect.") +
-               qsTr("\nCO Zone Effect:\nDefense is increased by 40%.");
+               qsTr("\nCO Zone Effect: Defense is increased by 40%.");
     };
     this.getPowerDescription = function()
     {

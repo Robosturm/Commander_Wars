@@ -7,8 +7,8 @@ var Constructor = function()
 	
     this.init = function(unit)
     {
-        unit.setAmmo1(1);
-        unit.setMaxAmmo1(1);
+        unit.setAmmo1(0);
+        unit.setMaxAmmo1(0);
         unit.setWeapon1ID("");
 
         unit.setAmmo2(0);
@@ -40,7 +40,7 @@ var Constructor = function()
     };
     this.getBaseCost = function()
     {
-        return 6000;
+        return 7000;
     };
     this.getName = function()
     {

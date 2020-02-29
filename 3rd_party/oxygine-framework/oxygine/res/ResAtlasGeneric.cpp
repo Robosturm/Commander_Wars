@@ -297,6 +297,10 @@ namespace oxygine
             bool loaded = false;
 
             QImage img(walker.getPath("file"));
+            if (img.width() == 0 || img.height() == 0)
+            {
+                qWarning("Image. Not found %s", walker.getPath("file").toStdString().c_str());
+            }
             mt.init(img, true);
             im = mt.lock();
             if (im.w)

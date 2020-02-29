@@ -19,7 +19,8 @@ var Constructor = function()
             (armyName !== "bm") &&
             (armyName !== "ac") &&
             (armyName !== "dm") &&
-            (armyName !== "bh"))
+            (armyName !== "bh") &&
+            (armyName !== "ma"))
         {
             armyName = "os";
         }

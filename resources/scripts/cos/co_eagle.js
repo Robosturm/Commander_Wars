@@ -225,7 +225,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: Air units are 10% stronger and Sea units 10% weaker") +
-               qsTr("\nCO Zone Effect:\nAir units have 30% increased firepower.");
+               qsTr("\nCO Zone Effect: Air units have 30% increased firepower.");
     };
     this.getPowerDescription = function()
     {

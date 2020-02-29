@@ -7,11 +7,26 @@ var Constructor = function()
 
     this.loadStandingAnimation = function(sprite, unit, defender, weapon)
     {
-        armyName = "os";
+        var player = unit.getOwner();
+        // get army name
+        var armyName = player.getArmy().toLowerCase();
+        if (armyName === "bg")
+        {
+            armyName = "bh"
+        }
+        if ((armyName !== "ma"))
+        {
+            armyName = "os";
+        }
+        var offset = Qt.point(-35, 5);
+        if (armyName === "ma")
+        {
+            offset = Qt.point(-5, 5);
+        }
         sprite.loadSprite("sniper+" + armyName,  false,
-                          BATTLEANIMATION_SNIPER.getMaxUnitCount(), Qt.point(-35, 5));
+                          BATTLEANIMATION_SNIPER.getMaxUnitCount(), offset);
         sprite.loadSprite("sniper+" + armyName + "+mask",  true,
-                          BATTLEANIMATION_SNIPER.getMaxUnitCount(), Qt.point(-35, 5));
+                          BATTLEANIMATION_SNIPER.getMaxUnitCount(), offset);
     };
 
     this.getPositionOffset = function(sprite, unit, terrain, unitIdx)
@@ -41,6 +56,10 @@ var Constructor = function()
             armyName = "bh"
         }
         var offset = Qt.point(31, 31);
+        if (armyName === "ma")
+        {
+            offset = Qt.point(31, 12);
+        }
         sprite.loadSprite("mg_shot",  false, sprite.getMaxUnitCount(), offset,
                           1, 1, 0, 0);
         sprite.loadSound("mg_impact.wav", 1, "resources/sounds/", 0);

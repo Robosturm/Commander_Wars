@@ -209,7 +209,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: No Effects.") +
-               qsTr("\nCO Zone Effect:\nDirect Ground Units have 30% increased firepower.");
+               qsTr("\nCO Zone Effect: Direct Ground Units have 30% increased firepower.");
     };
     this.getPowerDescription = function()
     {
