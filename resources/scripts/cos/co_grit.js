@@ -18,14 +18,6 @@ var Constructor = function()
         co.setSuperpowerStars(3);
     };
 
-    this.getDirectUnitIDS = function()
-    {
-        return ["BOMBER", "CANNONBOAT", "CRUISER", "DESTROYER", "DUSTER",
-                "FIGHTER", "FLAK", "FLARE", "HEAVY_HOVERCRAFT", "HEAVY_TANK",
-                "HOVERCRAFT", "HOVERFLAK", "K_HELI", "LIGHT_TANK", "MEGATANK",
-                "NEOTANK", "RECON", "STEALTHBOMBER", "SUBMARINE", "WATERPLANE"];
-    };
-
     this.loadCOMusic = function(co)
     {
         // put the co music in here.
@@ -92,7 +84,7 @@ var Constructor = function()
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         var units = co.getOwner().getUnits();
         var animations = [];
@@ -137,7 +129,6 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var tankUnits = CO_GRIT.getDirectUnitIDS();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
@@ -146,7 +137,7 @@ var Constructor = function()
                 {
                     return 70;
                 }
-                else if (tankUnits.indexOf(attacker.getUnitID()) >= 0)
+                else if (attacker.getUnitType() === GameEnums.UnitType_Ground)
                 {
                     return -10;
                 }
@@ -156,7 +147,7 @@ var Constructor = function()
                 {
                     return 50;
                 }
-                else if (tankUnits.indexOf(attacker.getUnitID()) >= 0)
+                else if (attacker.getUnitType() === GameEnums.UnitType_Ground)
                 {
                     return -10;
                 }
@@ -168,7 +159,7 @@ var Constructor = function()
                     {
                         return 30;
                     }
-                    else if (tankUnits.indexOf(attacker.getUnitID()) >= 0)
+                    else if (attacker.getUnitType() === GameEnums.UnitType_Ground)
                     {
                         return -10;
                     }
@@ -176,7 +167,7 @@ var Constructor = function()
                 }
                 break;
         }
-        if (tankUnits.indexOf(attacker.getUnitID()) >= 0)
+        if (attacker.getUnitType() === GameEnums.UnitType_Ground)
         {
             return -20;
         }

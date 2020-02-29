@@ -54,18 +54,19 @@ CO_JAKE.getFirerangeModifier = function(co, unit, posX, posY)
 {
     if (co.getIsCO0() === true)
     {
-        var indirectUnits = CO_JAKE.getGroundIndirectUnitIDS();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (indirectUnits.indexOf(unit.getUnitID()) >= 0)
+            if (unit.getBaseMaxRange() > 1 &&
+                unit.getUnitType() === GameEnums.UnitType_Ground)
             {
                 return 1;
             }
             break;
         case GameEnums.PowerMode_Power:
-            if (indirectUnits.indexOf(unit.getUnitID()) >= 0)
+            if (unit.getBaseMaxRange() > 1 &&
+                unit.getUnitType() === GameEnums.UnitType_Ground)
             {
                 return 1;
             }
@@ -80,11 +81,11 @@ CO_JAKE.getMovementpointModifier = function(co, unit, posX, posY)
 {
     if (co.getIsCO0() === true)
     {
-        var vehicleUnits = CO_JAKE.getVehicleUnitIDS();
         if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
                 co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
-            if (vehicleUnits.indexOf(unit.getUnitID()) >= 0)
+            if (unit.getBaseMaxRange() === 1 &&
+                unit.getUnitType() === GameEnums.UnitType_Ground)
             {
                 return 2;
             }

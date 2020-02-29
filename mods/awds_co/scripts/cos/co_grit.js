@@ -3,7 +3,6 @@ CO_GRIT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        var tankUnits = CO_GRIT.getDirectUnitIDS();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
@@ -12,7 +11,7 @@ CO_GRIT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 70;
             }
-            else if (tankUnits.indexOf(attacker.getUnitID()) >= 0)
+            else if (attacker.getUnitType() === GameEnums.UnitType_Ground)
             {
                 return -10;
             }
@@ -22,7 +21,7 @@ CO_GRIT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 50;
             }
-            else if (tankUnits.indexOf(attacker.getUnitID()) >= 0)
+            else if (attacker.getUnitType() === GameEnums.UnitType_Ground)
             {
                 return -10;
             }
@@ -34,7 +33,7 @@ CO_GRIT.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             }
             break;
         }
-        if (tankUnits.indexOf(attacker.getUnitID()) >= 0)
+        if (attacker.getUnitType() === GameEnums.UnitType_Ground)
         {
             return -20;
         }

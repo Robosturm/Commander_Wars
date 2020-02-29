@@ -3,18 +3,17 @@ CO_WAYLON.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        var airUnits = CO_WAYLON.getAirUnitIDS();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getUnitType() === GameEnums.UnitType_Air)
             {
                 return 60;
             }
             return 10;
         case GameEnums.PowerMode_Power:
-            if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getUnitType() === GameEnums.UnitType_Air)
             {
                 return 20;
             }
@@ -31,18 +30,17 @@ CO_WAYLON.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        var airUnits = CO_WAYLON.getAirUnitIDS();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (airUnits.indexOf(defender.getUnitID()) >= 0)
+            if (defender.getUnitType() === GameEnums.UnitType_Air)
             {
                 return 270;
             }
             break;
         case GameEnums.PowerMode_Power:
-            if (airUnits.indexOf(defender.getUnitID()) >= 0)
+            if (defender.getUnitType() === GameEnums.UnitType_Air)
             {
                 return 200;
             }

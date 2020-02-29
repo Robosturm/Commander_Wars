@@ -42,7 +42,7 @@ var Constructor = function()
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_ROBOSTURM.power(co, 2, powerNameAnimation);
         audio.clearPlayList();

@@ -6,11 +6,6 @@ var Constructor = function()
         co.setSuperpowerStars(3);
     };
 
-    this.getAirUnitIDS = function()
-    {
-        return ["BOMBER", "FIGHTER", "BLACK_BOMB", "DUSTER", "K_HELI", "T_HELI", "STEALTHBOMBER", "TRANSPORTPLANE", "WATERPLANE"];
-    };
-
     this.activatePower = function(co)
     {
         var dialogAnimation = co.createPowerSentence();
@@ -20,12 +15,11 @@ var Constructor = function()
         var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
-        var airUnitIDs = CO_WAYLON.getAirUnitIDS();
         units.randomize();
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (airUnitIDs.indexOf(unit.getUnitID())  >= 0)
+            if (unit.getUnitType() === GameEnums.UnitType_Air)
             {
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
 
@@ -59,17 +53,16 @@ var Constructor = function()
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
-        var airUnitIDs = CO_WAYLON.getAirUnitIDS();
         units.randomize();
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (airUnitIDs.indexOf(unit.getUnitID())  >= 0)
+            if (unit.getUnitType() === GameEnums.UnitType_Air)
             {
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
 
@@ -134,19 +127,17 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var airUnits = CO_WAYLON.getAirUnitIDS();
-
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
                     return 60;
                 }
                 return 10;
             case GameEnums.PowerMode_Power:
-                if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
                     return 30;
                 }
@@ -154,7 +145,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+                    if (attacker.getUnitType() === GameEnums.UnitType_Air)
                     {
                         return 30;
                     }
@@ -168,18 +159,17 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var airUnits = CO_WAYLON.getAirUnitIDS();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (airUnits.indexOf(defender.getUnitID()) >= 0)
+                if (defender.getUnitType() === GameEnums.UnitType_Air)
                 {
                     return 270;
                 }
                 return 10;
             case GameEnums.PowerMode_Power:
-                if (airUnits.indexOf(defender.getUnitID()) >= 0)
+                if (defender.getUnitType() === GameEnums.UnitType_Air)
                 {
                     return 200;
                 }
@@ -187,7 +177,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    if (airUnits.indexOf(defender.getUnitID()) >= 0)
+                    if (defender.getUnitType() === GameEnums.UnitType_Air)
                     {
                         return 40;
                     }

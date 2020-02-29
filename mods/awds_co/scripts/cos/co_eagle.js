@@ -2,8 +2,7 @@ CO_EAGLE.getFuelCostModifier = function(co, unit, costs)
 {
     if (co.getIsCO0() === true)
     {
-        var airUnits = CO_EAGLE.getAirUnitIDS();
-        if (airUnits.indexOf(unit.getUnitID()) >= 0)
+        if (unit.getUnitType() === GameEnums.UnitType_Air)
         {
             return -2;
         }
@@ -16,27 +15,25 @@ CO_EAGLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        var airUnits = CO_EAGLE.getAirUnitIDS();
-        var seaUnits = CO_EAGLE.getSeaUnitIDS();
 
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Superpower:
-            if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getUnitType() === GameEnums.UnitType_Air)
             {
                 return 30;
             }
-            else if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
+            else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
             {
                 return 0;
             }
             return 10;
         case GameEnums.PowerMode_Power:
-            if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getUnitType() === GameEnums.UnitType_Air)
             {
                 return -30;
             }
-            else if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
+            else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
             {
                 return -40;
             }
@@ -45,13 +42,13 @@ CO_EAGLE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 return -45;
             }
         default:
-            if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getUnitType() === GameEnums.UnitType_Air)
             {
                     return 20;
             }
             break;
         }
-        if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
+        if (attacker.getUnitType() === GameEnums.UnitType_Naval)
         {
             return -10;
         }

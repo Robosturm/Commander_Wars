@@ -26,11 +26,6 @@ var Constructor = function()
         }
     };
 
-    this.getSeaUnitIDS = function()
-    {
-        return ["AIRCRAFTCARRIER", "CRUISER", "BATTLESHIP", "CANNONBOAT", "BLACK_BOAT", "LANDER", "DESTROYER", "SUBMARINE"];
-    };
-
     this.activatePower = function(co)
     {
         var dialogAnimation = co.createPowerSentence();
@@ -41,11 +36,10 @@ var Constructor = function()
         var animations = [];
         var counter = 0;
         units.randomize();
-        var seaUnits = CO_GAGE.getSeaUnitIDS();
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (unit.getBaseMaxRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
+            if (unit.getBaseMaxRange() > 1 || unit.getUnitType() === GameEnums.UnitType_Naval)
             {
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
                 if (animations.length < 5)
@@ -78,17 +72,16 @@ var Constructor = function()
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
         units.randomize();
-        var seaUnits = CO_GAGE.getSeaUnitIDS();
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (unit.getBaseMaxRange() > 1 || seaUnits.indexOf(unit.getUnitID()) >= 0)
+            if (unit.getBaseMaxRange() > 1 || unit.getUnitType() === GameEnums.UnitType_Naval)
             {
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
                 if (animations.length < 5)
@@ -124,18 +117,19 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var seaUnits = CO_GAGE.getSeaUnitIDS();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (attacker.getBaseMaxRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getBaseMaxRange() > 1 ||
+                    attacker.getUnitType() === GameEnums.UnitType_Naval)
                 {
                     return 50;
                 }
                 return 10;
             case GameEnums.PowerMode_Power:
-                if (attacker.getBaseMaxRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getBaseMaxRange() > 1 ||
+                    attacker.getUnitType() === GameEnums.UnitType_Naval)
                 {
                     return 30;
                 }
@@ -143,7 +137,8 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    if (attacker.getBaseMaxRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
+                    if (attacker.getBaseMaxRange() > 1 ||
+                        attacker.getUnitType() === GameEnums.UnitType_Naval)
                     {
                         return 30;
                     }
@@ -156,18 +151,19 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var seaUnits = CO_GAGE.getSeaUnitIDS();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (defender.getBaseMaxRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
+                if (defender.getBaseMaxRange() > 1 ||
+                    defender.getUnitType() === GameEnums.UnitType_Naval)
                 {
                     return 30;
                 }
                 return 10;
             case GameEnums.PowerMode_Power:
-                if (defender.getBaseMaxRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
+                if (defender.getBaseMaxRange() > 1 ||
+                    defender.getUnitType() === GameEnums.UnitType_Naval)
                 {
                     return 20;
                 }
@@ -175,7 +171,8 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    if (defender.getBaseMaxRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
+                    if (defender.getBaseMaxRange() > 1 ||
+                        defender.getUnitType() === GameEnums.UnitType_Naval)
                     {
                         return 20;
                     }

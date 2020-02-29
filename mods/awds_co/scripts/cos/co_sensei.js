@@ -3,7 +3,6 @@ CO_SENSEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        var seaUnitIDs = CO_SENSEI.getSeaUnitIDS();
         var unitInfantryIDs = CO_SENSEI.getInfantryIDS();
         switch (co.getPowerMode())
         {
@@ -17,7 +16,7 @@ CO_SENSEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 80;
             }
-            else if (seaUnitIDs.indexOf(attacker.getUnitID()) >= 0)
+            else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
             {
                 return 0;
             }
@@ -31,7 +30,7 @@ CO_SENSEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             {
                 return 80;
             }
-            else if (seaUnitIDs.indexOf(attacker.getUnitID()) >= 0)
+            else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
             {
                 return 0;
             }
@@ -47,7 +46,7 @@ CO_SENSEI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             }
             break;
         }
-        if (seaUnitIDs.indexOf(attacker.getUnitID()) >= 0)
+        if (attacker.getUnitType() === GameEnums.UnitType_Naval)
         {
             return -10;
         }
@@ -70,8 +69,7 @@ CO_SENSEI.getMovementpointModifier = function(co, unit, posX, posY)
 {
     if (co.getIsCO0() === true)
     {
-        var unitTransportIDs = ["APC", "LANDER", "T_HELI", "TRANSPORTPLANE", "BLACK_BOOT"];
-        if (unitTransportIDs.indexOf(unit.getUnitID()) >= 0)
+        if (unit.isTransporter())
         {
             return 1;
         }

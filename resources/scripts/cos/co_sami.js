@@ -42,12 +42,11 @@ var Constructor = function()
         var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
-        var unitInfantryIDs = CO_SAMI.getInfantryIDs();
         units.randomize();
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (unitInfantryIDs.indexOf(unit.getUnitID()) >= 0)
+            if (unit.getUnitType() === GameEnums.UnitType_Infantry)
             {
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
                 if (animations.length < 5)
@@ -80,17 +79,16 @@ var Constructor = function()
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
-        var unitInfantryIDs = CO_SAMI.getInfantryIDs();
         units.randomize();
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (unitInfantryIDs.indexOf(unit.getUnitID())  >= 0)
+            if (unit.getUnitType() === GameEnums.UnitType_Infantry)
             {
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
 
@@ -128,20 +126,15 @@ var Constructor = function()
     {
         return "OS";
     };
-    this.getInfantryIDs = function()
-    {
-        return ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
-    };
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var unitInfantryIDs = CO_SAMI.getInfantryIDs();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
                 {
                     return 80;
                 }                
@@ -151,11 +144,10 @@ var Constructor = function()
                 }
                 return 10;
             case GameEnums.PowerMode_Power:
-                if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
                 {
                     return 50;
                 }
-
                 else if (attacker.getBaseMaxRange() === 1)
                 {
                     return 0;
@@ -164,7 +156,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
+                    if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
                     {
                         return 40;
                     }
@@ -174,7 +166,7 @@ var Constructor = function()
                     }
                     return 10;
                 }
-                if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
                 {
                     return 10;
                 }
@@ -212,13 +204,11 @@ var Constructor = function()
 
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
-        var unitTransportIDs = ["APC", "LANDER", "T_HELI", "TRANSPORTPLANE", "BLACK_BOAT"];
-        if (unitTransportIDs.indexOf(unit.getUnitID()) >= 0)
+        if (unit.isTransporter())
         {
             return 1;
         }
-        var unitInfantryIDs = CO_SAMI.getInfantryIDs();
-        if (unitInfantryIDs.indexOf(unit.getUnitID()) >= 0)
+        if (unit.getUnitType() === GameEnums.UnitType_Infantry)
         {
             switch (co.getPowerMode())
             {

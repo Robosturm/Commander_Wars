@@ -3,39 +3,37 @@ CO_DRAKE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        var airUnits = CO_DRAKE.getAirUnitIDS();
-        var seaUnits = CO_DRAKE.getSeaUnitIDS();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getUnitType() === GameEnums.UnitType_Naval)
             {
                 return 20;
             }
-            else if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+            else if (defender.getUnitType() === GameEnums.UnitType_Air)
             {
                 return -5;
             }
             return 10;
         case GameEnums.PowerMode_Power:
-            if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getUnitType() === GameEnums.UnitType_Naval)
             {
                 return 20;
             }
-            else if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+            else if (attacker.getUnitType() === GameEnums.UnitType_Air)
             {
                 return -5;
             }
             return 10;
         default:
-            if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getUnitType() === GameEnums.UnitType_Naval)
             {
                 return 20;
             }
             break;
         }
-        if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+        if (attacker.getUnitType() === GameEnums.UnitType_Air)
         {
             return -15;
         }
@@ -60,8 +58,7 @@ CO_DRAKE.getMovementpointModifier = function(co, unit, posX, posY)
 {
     if (co.getIsCO0() === true)
     {
-        var seaUnits = CO_DRAKE.getSeaUnitIDS();
-        if (seaUnits.indexOf(unit.getUnitID()) >= 0)
+        if (unit.getUnitType() === GameEnums.UnitType_Naval)
         {
             return 1;
         }

@@ -159,9 +159,11 @@ public:
 
     enum UnitType
     {
-        UnitType_Ground,
-        UnitType_Air,
-        UnitType_Naval,
+        UnitType_Ground = 1,
+        UnitType_Hovercraft = 2,
+        UnitType_Infantry = 4,
+        UnitType_Air = 8,
+        UnitType_Naval = 16,
     };
     Q_ENUM(UnitType)
     static QString getUnitTypeText(UnitType type);

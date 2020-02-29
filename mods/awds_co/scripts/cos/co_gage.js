@@ -3,24 +3,26 @@ CO_GAGE.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        var seaUnits = CO_GAGE.getSeaUnitIDS();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (attacker.getBaseMaxRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getBaseMaxRange() > 1 ||
+                attacker.getUnitType() === GameEnums.UnitType_Naval)
             {
                 return 50;
             }
             break;
         case GameEnums.PowerMode_Power:
-            if (attacker.getBaseMaxRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getBaseMaxRange() > 1 ||
+                attacker.getUnitType() === GameEnums.UnitType_Naval)
             {
                 return 30;
             }
             break;
         default:
-            if (attacker.getBaseMaxRange() > 1 || seaUnits.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getBaseMaxRange() > 1 ||
+                attacker.getUnitType() === GameEnums.UnitType_Naval)
             {
                 return 10;
             }
@@ -34,24 +36,26 @@ CO_GAGE.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        var seaUnits = CO_GAGE.getSeaUnitIDS();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (defender.getBaseMaxRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
+            if (defender.getBaseMaxRange() > 1 ||
+                defender.getUnitType() === GameEnums.UnitType_Naval)
             {
                 return 30;
             }
             break;
         case GameEnums.PowerMode_Power:
-            if (defender.getBaseMaxRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
+            if (defender.getBaseMaxRange() > 1 ||
+                defender.getUnitType() === GameEnums.UnitType_Naval)
             {
                 return 20;
             }
             break;
         default:
-            if (defender.getBaseMaxRange() > 1 || seaUnits.indexOf(defender.getUnitID()) >= 0)
+            if (defender.getBaseMaxRange() > 1 ||
+                defender.getUnitType() === GameEnums.UnitType_Naval)
             {
                 return 5;
             }

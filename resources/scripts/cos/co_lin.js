@@ -50,7 +50,7 @@ var Constructor = function()
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         var units = co.getOwner().getUnits();
         var animations = [];
@@ -114,28 +114,22 @@ var Constructor = function()
         return "AC";
     };
 
-    this.getSeaAirUnitIDS = function()
-    {
-        return ["BOMBER", "FIGHTER", "DUSTER", "K_HELI", "T_HELI", "STEALTHBOMBER", "TRANSPORTPLANE", "WATERPLANE",
-                "AIRCRAFTCARRIER", "CRUISER", "BATTLESHIP", "CANNONBOAT", "DESTROYER", "SUBMARINE", "LANDER",
-                "BLACK_BOMB", "BLACK_BOAT", "APC"];
-    };
-
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var seaAirUnits = CO_LIN.getSeaAirUnitIDS();
+        var seaAirUnit = (attacker.getUnitType() === GameEnums.UnitType_Air) ||
+                         (attacker.getUnitType() === GameEnums.UnitType_Naval);
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (seaAirUnits.indexOf(attacker.getUnitID()) < 0)
+                if (!seaAirUnit)
                 {
                     return 50;
                 }
                 return 10;
             case GameEnums.PowerMode_Power:
-                if (seaAirUnits.indexOf(attacker.getUnitID()) < 0)
+                if (!seaAirUnit)
                 {
                     return 30;
                 }
@@ -143,7 +137,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    if (seaAirUnits.indexOf(attacker.getUnitID()) < 0)
+                    if (!seaAirUnit)
                     {
                         return 30;
                     }
@@ -157,18 +151,19 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var seaAirUnits = CO_LIN.getSeaAirUnitIDS();
+        var seaAirUnit = (defender.getUnitType() === GameEnums.UnitType_Air) ||
+                         (defender.getUnitType() === GameEnums.UnitType_Naval);
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (seaAirUnits.indexOf(defender.getUnitID()) < 0)
+                if (!seaAirUnit)
                 {
                     return 50;
                 }
                 return 10;
             case GameEnums.PowerMode_Power:
-                if (seaAirUnits.indexOf(defender.getUnitID()) < 0)
+                if (!seaAirUnit)
                 {
                     return 30;
                 }
@@ -176,7 +171,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), defender))
                 {
-                    if (seaAirUnits.indexOf(defender.getUnitID()) < 0)
+                    if (!seaAirUnit)
                     {
                         return 30;
                     }

@@ -34,7 +34,7 @@ var Constructor = function()
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         var animation = GameAnimationFactory.createAnimation(0, 0);
         animation.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
@@ -156,42 +156,40 @@ var Constructor = function()
     {
         return "GE";
     };
-    this.getAirUnitIDS = function()
-    {
-        return ["BOMBER", "BLACK_BOMB", "FIGHTER", "DUSTER", "K_HELI", "T_HELI", "STEALTHBOMBER", "TRANSPORTPLANE", "WATERPLANE"];
-    };
-    this.getSeaUnitIDS = function()
-    {
-        return ["AIRCRAFTCARRIER", "CRUISER", "BATTLESHIP", "CANNONBOAT", "BLACK_BOAT", "LANDER", "DESTROYER", "SUBMARINE"];
-    };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var airUnits = CO_DRAKE.getAirUnitIDS();
-        var seaUnits = CO_DRAKE.getSeaUnitIDS();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                 {
                     return 20;
                 }
+                else if (attacker.getUnitType() === GameEnums.UnitType_Air)
+                {
+                    return -5;
+                }
                 break;
             case GameEnums.PowerMode_Power:
-                if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                 {
                     return 20;
+                }
+                else if (attacker.getUnitType() === GameEnums.UnitType_Air)
+                {
+                    return -5;
                 }
                 break;
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
+                    if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                     {
                         return 30;
                     }
-                    else if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+                    else if (attacker.getUnitType() === GameEnums.UnitType_Air)
                     {
                         return -5;
                     }
@@ -199,11 +197,11 @@ var Constructor = function()
                 }
                 break;
         }
-        if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
+        if (attacker.getUnitType() === GameEnums.UnitType_Naval)
         {
             return 10;
         }
-        if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+        if (attacker.getUnitType() === GameEnums.UnitType_Air)
         {
             return -15;
         }
@@ -211,8 +209,7 @@ var Constructor = function()
     };
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
-        var seaUnits = CO_DRAKE.getSeaUnitIDS();
-        if (seaUnits.indexOf(unit.getUnitID()) >= 0)
+        if (unit.getUnitType() === GameEnums.UnitType_Naval)
         {
             return 1;
         }

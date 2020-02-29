@@ -49,7 +49,7 @@ var Constructor = function()
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_SENSEI.spawnUnits(co, "MECH", 9, powerNameAnimation);
         audio.clearPlayList();
@@ -109,15 +109,10 @@ var Constructor = function()
     {
         return  ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
     }
-    this.getSeaUnitIDS = function()
-    {
-        return ["AIRCRAFTCARRIER", "CRUISER", "BATTLESHIP", "CANNONBOAT", "DESTROYER", "SUBMARINE"];
-    };
 
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var seaUnitIDs = CO_SENSEI.getSeaUnitIDS();
         var unitInfantryIDs = CO_SENSEI.getInfantryIDS();
         switch (co.getPowerMode())
         {
@@ -131,7 +126,7 @@ var Constructor = function()
                 {
                     return 80;
                 }
-                else if (seaUnitIDs.indexOf(attacker.getUnitID()) >= 0)
+                else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                 {
                     return 0;
                 }
@@ -145,7 +140,7 @@ var Constructor = function()
                 {
                     return 80;
                 }
-                else if (seaUnitIDs.indexOf(attacker.getUnitID()) >= 0)
+                else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                 {
                     return 0;
                 }
@@ -161,7 +156,7 @@ var Constructor = function()
                     {
                         return 50;
                     }
-                    else if (seaUnitIDs.indexOf(attacker.getUnitID()) >= 0)
+                    else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                     {
                         return 0;
                     }
@@ -192,8 +187,7 @@ var Constructor = function()
 
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
-        var unitTransportIDs = ["APC", "LANDER", "T_HELI", "TRANSPORTPLANE", "BLACK_BOOT"];
-        if (unitTransportIDs.indexOf(unit.getUnitID()) >= 0)
+        if (unit.isTransporter())
         {
             return 1;
         }

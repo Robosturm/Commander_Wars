@@ -27,12 +27,11 @@ var Constructor = function()
         var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
-        var unitInfantryIDs = ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
         units.randomize();
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (unitInfantryIDs.indexOf(unit.getUnitID())  < 0)
+            if (unit.getUnitType() !== GameEnums.UnitType_Infantry)
             {
                 unit.setHasMoved(false);
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
@@ -67,17 +66,16 @@ var Constructor = function()
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
-        var unitInfantryIDs = ["INFANTRY", "MECH", "SNIPER", "MOTORBIKE"];
         units.randomize();
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
-            if (unitInfantryIDs.indexOf(unit.getUnitID())  < 0)
+            if (unit.getUnitType() !== GameEnums.UnitType_Infantry)
             {
                 unit.setHasMoved(false);
                 var animation = GameAnimationFactory.createAnimation(unit.getX(), unit.getY());
@@ -137,19 +135,9 @@ var Constructor = function()
         return "GE";
     };
 
-    this.getAirUnitIDS = function()
-    {
-        return ["BOMBER", "FIGHTER", "BLACK_BOMB", "DUSTER", "K_HELI", "T_HELI", "STEALTHBOMBER", "TRANSPORTPLANE", "WATERPLANE"];
-    };
-    this.getSeaUnitIDS = function()
-    {
-        return ["AIRCRAFTCARRIER", "CRUISER", "BATTLESHIP", "CANNONBOAT", "BLACK_BOAT", "DESTROYER", "SUBMARINE"];
-    };
-
     this.getFuelCostModifier = function(co, unit, costs)
     {
-        var airUnits = CO_EAGLE.getAirUnitIDS();
-        if (airUnits.indexOf(unit.getUnitID()) >= 0)
+        if (unit.getUnitType() === GameEnums.UnitType_Air)
         {
             return -2;
         }
@@ -159,24 +147,21 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var airUnits = CO_EAGLE.getAirUnitIDS();
-        var seaUnits = CO_EAGLE.getSeaUnitIDS();
-
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
                     return 30;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
                     return -30;
                 }
-                else if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
+                else if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                 {
                     return -40;
                 }
@@ -185,7 +170,7 @@ var Constructor = function()
                     return -45;
                 }
             default:
-                if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (attacker.getUnitType() === GameEnums.UnitType_Air)
                 {
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
@@ -195,7 +180,7 @@ var Constructor = function()
                 }
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
+                    if (attacker.getUnitType() === GameEnums.UnitType_Naval)
                     {
                         return 0;
                     }
@@ -203,7 +188,7 @@ var Constructor = function()
                 }
                 break;
         }
-        if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
+        if (attacker.getUnitType() === GameEnums.UnitType_Naval)
         {
             return -10;
         }

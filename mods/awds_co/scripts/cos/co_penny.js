@@ -24,7 +24,8 @@ CO_PENNY.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 default:
                     break;
             }
-            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+            if (map.getGameRules().getCurrentWeather() !== null &&
+                map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
             {
                 // apply sandstorm buff :)
                 return 15;
@@ -49,8 +50,9 @@ CO_PENNY.getFirerangeModifier = function(co, unit, posX, posY)
 {
     if (co.getIsCO0() === true)
     {
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM" &&
-                unit.getBaseMaxRange() > 1)
+        if (map.getGameRules().getCurrentWeather() !== null &&
+            map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM" &&
+            unit.getBaseMaxRange() > 1)
         {
             if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
                 co.getPowerMode() === GameEnums.PowerMode_Tagpower)
@@ -68,7 +70,8 @@ CO_PENNY.getMovementcostModifier = function(co, unit, posX, posY)
     {
         if (unit.getOwner() === co.getOwner())
         {
-            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+            if (map.getGameRules().getCurrentWeather() !== null &&
+                map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
             {
                 // apply snow buff :)
                 return -1;
@@ -98,7 +101,8 @@ CO_PENNY.getVisionrangeModifier = function(co, unit, posX, posY)
 {
     if (co.getIsCO0() === true)
     {
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
+        if (map.getGameRules().getCurrentWeather() !== null &&
+            map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
         {
             if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
                 co.getPowerMode() === GameEnums.PowerMode_Tagpower)
@@ -115,7 +119,8 @@ CO_PENNY.getPerfectVision = function(co)
 {
     if (co.getIsCO0() === true)
     {
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
+        if (map.getGameRules().getCurrentWeather() !== null &&
+            map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
         {
             if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
                 co.getPowerMode() === GameEnums.PowerMode_Tagpower)

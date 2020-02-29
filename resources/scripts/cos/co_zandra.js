@@ -46,7 +46,7 @@ var Constructor = function()
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         var animation2 = GameAnimationFactory.createAnimation(0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
@@ -141,7 +141,8 @@ var Constructor = function()
                 default:
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                     {
-                        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                        if (map.getGameRules().getCurrentWeather() !== null &&
+                            map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                         {
                             // apply sandstorm buff :)
                             return 45;
@@ -150,7 +151,8 @@ var Constructor = function()
                     }
                     break;
             }
-            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+            if (map.getGameRules().getCurrentWeather() !== null &&
+                map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
             {
                 // apply sandstorm buff :)
                 return 25;
@@ -172,7 +174,8 @@ var Constructor = function()
     {
         if (typeof map !== 'undefined')
         {
-            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+            if (map.getGameRules().getCurrentWeather() !== null &&
+                map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
             {
                 if (unit.getBaseMaxRange() > 1)
                 {

@@ -90,7 +90,7 @@ var Constructor = function()
     };
     this.getUnitType = function()
     {
-        return GameEnums.UnitType_Ground;
+        return GameEnums.UnitType_Infantry;
     };
 }
 

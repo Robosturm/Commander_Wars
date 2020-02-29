@@ -132,7 +132,7 @@ var Constructor = function()
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_HAWKE.hawkeDamage(co, 2, powerNameAnimation);
         audio.clearPlayList();

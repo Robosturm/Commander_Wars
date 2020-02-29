@@ -3,12 +3,11 @@ CO_SAMI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        var unitInfantryIDs = CO_SAMI.getInfantryIDs();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
             {
                 return 80;
             }
@@ -18,7 +17,7 @@ CO_SAMI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             }
             return 10;
         case GameEnums.PowerMode_Power:
-            if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
             {
                 return 50;
             }
@@ -28,7 +27,7 @@ CO_SAMI.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
             }
             return 10;
         default:
-            if (unitInfantryIDs.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getUnitType() === GameEnums.UnitType_Infantry)
             {
                 return 20;
             }
@@ -74,13 +73,11 @@ CO_SAMI.getMovementpointModifier = function(co, unit, posX, posY)
 {
     if (co.getIsCO0() === true)
     {
-        var unitTransportIDs = ["APC", "LANDER", "T_HELI", "TRANSPORTPLANE", "BLACK_BOOT"];
-        if (unitTransportIDs.indexOf(unit.getUnitID()) >= 0)
+        if (unit.isTransporter())
         {
             return 1;
         }
-        var unitInfantryIDs = CO_SAMI.getInfantryIDs();
-        if (unitInfantryIDs.indexOf(unit.getUnitID()) >= 0)
+        if (unit.getUnitType() === GameEnums.UnitType_Infantry)
         {
             switch (co.getPowerMode())
             {

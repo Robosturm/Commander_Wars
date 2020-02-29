@@ -3,18 +3,17 @@ CO_TASHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        var airUnits = CO_TASHA.getAirUnitIDS();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getUnitType() === GameEnums.UnitType_Air)
             {
                 return 70;
             }
             break;
         case GameEnums.PowerMode_Power:
-            if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getUnitType() === GameEnums.UnitType_Air)
             {
                 return 50;
             }
@@ -23,7 +22,7 @@ CO_TASHA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                 return 10;
             }
         default:
-            if (airUnits.indexOf(attacker.getUnitID()) >= 0)
+            if (attacker.getUnitType() === GameEnums.UnitType_Air)
             {
                 return 15;
             }
@@ -37,17 +36,16 @@ CO_TASHA.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        var airUnits = CO_TASHA.getAirUnitIDS();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Superpower:
-            if (airUnits.indexOf(defender.getUnitID()) >= 0)
+            if (defender.getUnitType() === GameEnums.UnitType_Air)
             {
                 return 30;
             }
             return 10;
         case GameEnums.PowerMode_Power:
-            if (airUnits.indexOf(defender.getUnitID()) >= 0)
+            if (defender.getUnitType() === GameEnums.UnitType_Air)
             {
                 return 30;
             }

@@ -29,7 +29,8 @@ CO_ZANDRA.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                         return 10;
                     }
                 default:
-                    if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                    if (map.getGameRules().getCurrentWeather() !== null &&
+                        map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                     {
                         // apply sandstorm buff :)
                         return 35;
@@ -56,7 +57,8 @@ CO_ZANDRA.getFirerangeModifier = function(co, unit, posX, posY)
 {
     if (co.getIsCO0() === true)
     {
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+        if (map.getGameRules().getCurrentWeather() !== null &&
+            map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
         {
             if (unit.getBaseMaxRange() > 1)
             {

@@ -3,24 +3,25 @@ CO_LIN.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        var seaAirUnits = CO_LIN.getSeaAirUnitIDS();
+        var seaAirUnit = (attacker.getUnitType() === GameEnums.UnitType_Air) ||
+                         (attacker.getUnitType() === GameEnums.UnitType_Naval);
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (seaAirUnits.indexOf(attacker.getUnitID()) < 0)
+            if (!seaAirUnit)
             {
                 return 50;
             }
             return 10;
         case GameEnums.PowerMode_Power:
-            if (seaAirUnits.indexOf(attacker.getUnitID()) < 0)
+            if (!seaAirUnit)
             {
                 return 30;
             }
             return 10;
         default:
-            if (seaAirUnits.indexOf(attacker.getUnitID()) < 0)
+            if (!seaAirUnit)
             {
                 return 10;
             }
@@ -35,18 +36,19 @@ CO_LIN.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        var seaAirUnits = CO_LIN.getSeaAirUnitIDS();
+        var seaAirUnit = (defender.getUnitType() === GameEnums.UnitType_Air) ||
+                         (defender.getUnitType() === GameEnums.UnitType_Naval);
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (seaAirUnits.indexOf(defender.getUnitID()) < 0)
+            if (!seaAirUnit)
             {
                 return 50;
             }
             return 10;
         case GameEnums.PowerMode_Power:
-            if (seaAirUnits.indexOf(defender.getUnitID()) < 0)
+            if (!seaAirUnit)
             {
                 return 30;
             }

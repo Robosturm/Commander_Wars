@@ -36,6 +36,7 @@ GameAnimation::GameAnimation(quint32 frameTime)
 void GameAnimation::restart()
 {
     m_stopped = false;
+    m_previousAnimation = nullptr;
     GameMap::getInstance()->addChild(this);
 }
 
@@ -51,8 +52,37 @@ void GameAnimation::setRotation(float angle)
 
 void GameAnimation::queueAnimation(GameAnimation* pGameAnimation)
 {
+    pGameAnimation->setPreviousAnimation(this);
     m_QueuedAnimations.append(pGameAnimation);
     GameAnimationFactory::getInstance()->queueAnimation(pGameAnimation);
+}
+
+void GameAnimation::queueAnimationBefore(GameAnimation* pGameAnimation)
+{
+    if (m_previousAnimation != nullptr)
+    {
+        // remove ourself from previous animation and add our new ancestor
+        m_previousAnimation->removeQueuedAnimation(this);
+        m_previousAnimation->queueAnimation(pGameAnimation);
+    }
+    // queue ourself after the given animation
+    pGameAnimation->queueAnimation(this);
+}
+
+void GameAnimation::removeQueuedAnimation(GameAnimation* pGameAnimation)
+{
+    qint32 i = 0;
+    while (i < m_QueuedAnimations.size())
+    {
+        if (m_QueuedAnimations[i] == pGameAnimation)
+        {
+            m_QueuedAnimations.removeAt(i);
+        }
+        else
+        {
+            i++;
+        }
+    }
 }
 
 void GameAnimation::update(const oxygine::UpdateState& us)
@@ -80,6 +110,11 @@ void GameAnimation::update(const oxygine::UpdateState& us)
         m_SoundStarted = true;
     }
     oxygine::Sprite::update(us);
+}
+
+void GameAnimation::setPreviousAnimation(GameAnimation *previousAnimation)
+{
+    m_previousAnimation = previousAnimation;
 }
 
 void GameAnimation::addSprite(QString spriteID, float offsetX, float offsetY, qint32 sleepAfterFinish, float scale, qint32 delay)

@@ -24,7 +24,7 @@ var Constructor = function()
         var invsion = ["HEAVY_TANK", "FLAK", "LIGHT_TANK", "ARTILLERY", "LIGHT_TANK", "K_HELI", "K_HELI"];
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_YUKIO.spawnUnits(co, 0.7, invsion, powerNameAnimation);
         CO_YUKIO.yukioDamage(co, 3, powerNameAnimation);

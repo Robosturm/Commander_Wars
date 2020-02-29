@@ -6,10 +6,16 @@ var Constructor = function()
         co.setSuperpowerStars(3);
     };
 
-    this.getSeaUnitIDS = function()
+    this.isBoostUnit = function(unit)
     {
-        return ["AIRCRAFTCARRIER", "CRUISER", "BATTLESHIP", "CANNONBOAT", "BLACK_BOAT", "LANDER", "DESTROYER", "SUBMARINE",
-                "K_HELI", "T_HELI", "WATERPLANE"];
+        var unitId = unit.getUnitID();
+        var idList = ["K_HELI", "T_HELI", "WATERPLANE"];
+        if (unit.getUnitType() === GameEnums.UnitType_Naval ||
+            idList.indexOf(unitId) >= 0)
+        {
+            return true;
+        }
+        return false;
     };
 
     this.activatePower = function(co)
@@ -21,7 +27,6 @@ var Constructor = function()
         var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
-        var seaUnitIDs = CO_GREYFIELD.getSeaUnitIDS();
         units.randomize();
         for (var i = 0; i < units.size(); i++)
         {
@@ -58,12 +63,11 @@ var Constructor = function()
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
-        var seaUnitIDs = CO_GREYFIELD.getSeaUnitIDS();
         units.randomize();
         for (var i = 0; i < units.size(); i++)
         {
@@ -128,19 +132,18 @@ var Constructor = function()
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var seaUnits = CO_GREYFIELD.getSeaUnitIDS();
-
+        var boostUnit = CO_GREYFIELD.isBoostUnit(attacker);
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (boostUnit)
                 {
                     return 70;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
+                if (boostUnit)
                 {
                     return 20;
                 }
@@ -151,7 +154,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
                 {
-                    if (seaUnits.indexOf(attacker.getUnitID()) >= 0)
+                    if (boostUnit)
                     {
                         return 20;
                     }
@@ -165,18 +168,18 @@ var Constructor = function()
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
                                  defender, defPosX, defPosY, isDefender)
     {
-        var seaUnits = CO_GREYFIELD.getSeaUnitIDS();
+        var boostUnit = CO_GREYFIELD.isBoostUnit(defender);
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (seaUnits.indexOf(defender.getUnitID()) >= 0)
+                if (boostUnit)
                 {
                     return 70;
                 }
                 return 10;
             case GameEnums.PowerMode_Power:
-                if (seaUnits.indexOf(defender.getUnitID()) >= 0)
+                if (boostUnit)
                 {
                     return 50;
                 }
@@ -184,7 +187,7 @@ var Constructor = function()
             default:
                 if (co.inCORange(Qt.point(defPosX, defPosY), defender))
                 {
-                    if (seaUnits.indexOf(defender.getUnitID()) >= 0)
+                    if (boostUnit)
                     {
                         return 50;
                     }
@@ -197,12 +200,12 @@ var Constructor = function()
 
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
-        var seaUnits = CO_GREYFIELD.getSeaUnitIDS();
+        var boostUnit = CO_GREYFIELD.isBoostUnit(unit);
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (seaUnits.indexOf(unit.getUnitID()) >= 0)
+                if (boostUnit)
                 {
                     return 1;
                 }

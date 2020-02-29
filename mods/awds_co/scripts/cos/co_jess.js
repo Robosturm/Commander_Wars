@@ -3,49 +3,46 @@ CO_JESS.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
 {
     if (co.getIsCO0() === true)
     {
-        var airUnits = CO_JESS.getAirUnitIDS();
-        var seaUnits = CO_JESS.getSeaUnitIDS();
-        var infantryUnits = CO_JESS.getInfatryUnitIDS();
         switch (co.getPowerMode())
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if ((airUnits.indexOf(attacker.getUnitID()) < 0) &&
-                    (seaUnits.indexOf(attacker.getUnitID()) < 0) &&
-                    (infantryUnits.indexOf(attacker.getUnitID()) < 0))
+            if ((attacker.getUnitType() !== GameEnums.UnitType_Air) &&
+                (attacker.getUnitType() !== GameEnums.UnitType_Naval) &&
+                (attacker.getUnitType() !== GameEnums.UnitType_Infantry))
             {
                 return 70;
             }
-            else if ((airUnits.indexOf(attacker.getUnitID()) >= 0) ||
-                     (seaUnits.indexOf(attacker.getUnitID()) >= 0))
+            else if ((attacker.getUnitType() === GameEnums.UnitType_Air) ||
+                     (attacker.getUnitType() === GameEnums.UnitType_Naval))
             {
                 return 0;
             }
             return 10;
         case GameEnums.PowerMode_Power:
-            if ((airUnits.indexOf(attacker.getUnitID()) < 0) &&
-                    (seaUnits.indexOf(attacker.getUnitID()) < 0) &&
-                    (infantryUnits.indexOf(attacker.getUnitID()) < 0))
+            if ((attacker.getUnitType() !== GameEnums.UnitType_Air) &&
+                (attacker.getUnitType() !== GameEnums.UnitType_Naval) &&
+                (attacker.getUnitType() !== GameEnums.UnitType_Infantry))
             {
                 return 50;
             }
-            else if ((airUnits.indexOf(attacker.getUnitID()) >= 0) ||
-                     (seaUnits.indexOf(attacker.getUnitID()) >= 0))
+            else if ((attacker.getUnitType() === GameEnums.UnitType_Air) ||
+                     (attacker.getUnitType() === GameEnums.UnitType_Naval))
             {
                 return 0;
             }
             return 10;
         default:
-            if ((airUnits.indexOf(attacker.getUnitID()) < 0) &&
-                    (seaUnits.indexOf(attacker.getUnitID()) < 0) &&
-                    (infantryUnits.indexOf(attacker.getUnitID()) < 0))
+            if ((attacker.getUnitType() !== GameEnums.UnitType_Air) &&
+                (attacker.getUnitType() !== GameEnums.UnitType_Naval) &&
+                (attacker.getUnitType() !== GameEnums.UnitType_Infantry))
             {
                 return 20;
             }
             break;
         }
-        if ((airUnits.indexOf(attacker.getUnitID()) >= 0) ||
-                (seaUnits.indexOf(attacker.getUnitID()) >= 0))
+        if ((attacker.getUnitType() === GameEnums.UnitType_Air) ||
+            (attacker.getUnitType() === GameEnums.UnitType_Naval))
         {
             return -10;
         }
@@ -70,14 +67,11 @@ CO_JESS.getMovementpointModifier = function(co, unit, posX, posY)
 {
     if (co.getIsCO0() === true)
     {
-        var airUnits = CO_JESS.getAirUnitIDS();
-        var seaUnits = CO_JESS.getSeaUnitIDS();
-        var infantryUnits = CO_JESS.getInfatryUnitIDS();
         if (co.getPowerMode() === GameEnums.PowerMode_Power)
         {
-            if ((airUnits.indexOf(unit.getUnitID()) < 0) &&
-                    (seaUnits.indexOf(unit.getUnitID()) < 0) &&
-                    (infantryUnits.indexOf(unit.getUnitID()) < 0))
+            if ((unit.getUnitType() !== GameEnums.UnitType_Air) &&
+                (unit.getUnitType() !== GameEnums.UnitType_Naval) &&
+                (unit.getUnitType() !== GameEnums.UnitType_Infantry))
             {
                 return 1;
             }
@@ -85,9 +79,9 @@ CO_JESS.getMovementpointModifier = function(co, unit, posX, posY)
         else if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
                  co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
-            if ((airUnits.indexOf(unit.getUnitID()) < 0) &&
-                    (seaUnits.indexOf(unit.getUnitID()) < 0) &&
-                    (infantryUnits.indexOf(unit.getUnitID()) < 0))
+            if ((unit.getUnitType() !== GameEnums.UnitType_Air) &&
+                (unit.getUnitType() !== GameEnums.UnitType_Naval) &&
+                (unit.getUnitType() !== GameEnums.UnitType_Infantry))
             {
                 return 2;
             }

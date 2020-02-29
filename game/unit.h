@@ -489,6 +489,11 @@ public slots:
      */
     bool canTransportUnit(Unit* pUnit, bool ignoreLoadingPlace = false);
     /**
+     * @brief isTransporter
+     * @return
+     */
+    bool isTransporter();
+    /**
      * @brief postAction
      * @param pAction
      */

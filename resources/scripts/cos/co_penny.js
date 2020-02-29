@@ -33,7 +33,7 @@ var Constructor = function()
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         var animation2 = GameAnimationFactory.createAnimation(0, 0);
         animation2.addSprite2("white_pixel", 0, 0, 3200, map.getMapWidth(), map.getMapHeight());
@@ -104,7 +104,8 @@ var Constructor = function()
                     if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker) ||
                             co.getPowerMode() > GameEnums.PowerMode_Off)
                     {
-                        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
+                        if (map.getGameRules().getCurrentWeather() !== null &&
+                            map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM")
                         {
                             // apply sandstorm buff :)
                             return 25;
@@ -135,8 +136,9 @@ var Constructor = function()
     {
         if (typeof map !== 'undefined')
         {
-            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM" &&
-                    unit.getBaseMaxRange() > 1)
+            if (map.getGameRules().getCurrentWeather() !== null &&
+                map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SANDSTORM" &&
+                unit.getBaseMaxRange() > 1)
             {
                 if (co.getPowerMode() === GameEnums.PowerMode_Superpower)
                 {
@@ -151,7 +153,8 @@ var Constructor = function()
     {
         if (unit.getOwner() === co.getOwner())
         {
-            if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
+            if (map.getGameRules().getCurrentWeather() !== null &&
+                map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_SNOW")
             {
                 // apply snow buff :)
                 return -1;
@@ -189,7 +192,8 @@ var Constructor = function()
 
     this.getPerfectVision = function(co)
     {
-        if (map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
+        if (map.getGameRules().getCurrentWeather() !== null &&
+            map.getGameRules().getCurrentWeather().getWeatherId() === "WEATHER_RAIN")
         {
             if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
                 co.getPowerMode() === GameEnums.PowerMode_Tagpower)

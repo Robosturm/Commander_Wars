@@ -49,7 +49,7 @@ var Constructor = function()
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         CO_VON_BOLT.throwLaserray(co, 3, 3, powerNameAnimation);
         audio.clearPlayList();

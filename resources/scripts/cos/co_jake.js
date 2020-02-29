@@ -13,19 +13,6 @@ var Constructor = function()
         co.setSuperpowerStars(3);
     };
 
-    this.getVehicleUnitIDS = function()
-    {
-        return ["FLAK", "FLARE", "HEAVY_HOVERCRAFT", "HEAVY_TANK",
-                "HOVERCRAFT", "HOVERFLAK", "LIGHT_TANK", "MEGATANK",
-                "NEOTANK", "RECON", "ANTITANKCANNON", "ARTILLERY", "MISSILE",
-                "PIPERUNNER", "ROCKETTHROWER"];
-    };
-    this.getGroundIndirectUnitIDS = function()
-    {
-        return ["ANTITANKCANNON", "ARTILLERY", "MISSILE",
-                "PIPERUNNER", "ROCKETTHROWER"];
-    };
-
     this.loadCOMusic = function(co)
     {
         // put the co music in here.
@@ -56,7 +43,6 @@ var Constructor = function()
         var animations = [];
         var counter = 0;
         units.randomize();
-        var vehicleUnits = CO_JAKE.getVehicleUnitIDS();
         for (var i = 0; i < units.size(); i++)
         {
             var unit = units.at(i);
@@ -90,12 +76,11 @@ var Constructor = function()
     {
         var dialogAnimation = co.createPowerSentence();
         var powerNameAnimation = co.createPowerScreen(powerMode);
-        dialogAnimation.queueAnimation(powerNameAnimation);
+        powerNameAnimation.queueAnimationBefore(dialogAnimation);
 
         var units = co.getOwner().getUnits();
         var animations = [];
         var counter = 0;
-        var vehicleUnits = CO_JAKE.getVehicleUnitIDS();
         units.randomize();
         for (var i = 0; i < units.size(); i++)
         {
@@ -184,18 +169,19 @@ var Constructor = function()
     };
     this.getFirerangeModifier = function(co, unit, posX, posY)
     {
-        var indirectUnits = CO_JAKE.getGroundIndirectUnitIDS();
         switch (co.getPowerMode())
         {
             case GameEnums.PowerMode_Tagpower:
             case GameEnums.PowerMode_Superpower:
-                if (indirectUnits.indexOf(unit.getUnitID()) >= 0)
+                if (unit.getBaseMaxRange() > 1 &&
+                    unit.getUnitType() === GameEnums.UnitType_Ground)
                 {
                     return 1;
                 }
                 break;
             case GameEnums.PowerMode_Power:
-                if (indirectUnits.indexOf(unit.getUnitID()) >= 0)
+                if (unit.getBaseMaxRange() > 1 &&
+                    unit.getUnitType() === GameEnums.UnitType_Ground)
                 {
                     return 1;
                 }
@@ -207,11 +193,11 @@ var Constructor = function()
     };
     this.getMovementpointModifier = function(co, unit, posX, posY)
     {
-        var vehicleUnits = CO_JAKE.getVehicleUnitIDS();
         if (co.getPowerMode() === GameEnums.PowerMode_Superpower ||
             co.getPowerMode() === GameEnums.PowerMode_Tagpower)
         {
-            if (vehicleUnits.indexOf(unit.getUnitID()) >= 0)
+            if (unit.getUnitType() === GameEnums.UnitType_Ground &&
+                unit.getBaseMaxRange() === 1)
             {
                 return 2;
             }

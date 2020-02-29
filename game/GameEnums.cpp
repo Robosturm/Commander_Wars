@@ -93,6 +93,8 @@ void GameEnums::registerEnums()
     value.setProperty("BuildingTarget_Enemy", BuildingTarget_Enemy);
 
     value.setProperty("UnitType_Ground", UnitType_Ground);
+    value.setProperty("UnitType_Hovercraft", UnitType_Hovercraft);
+    value.setProperty("UnitType_Infantry", UnitType_Infantry);
     value.setProperty("UnitType_Air", UnitType_Air);
     value.setProperty("UnitType_Naval", UnitType_Naval);
 

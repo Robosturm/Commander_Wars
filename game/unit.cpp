@@ -881,6 +881,16 @@ bool Unit::canTransportUnit(Unit* pUnit, bool ignoreLoadingPlace)
     return false;
 }
 
+bool Unit::isTransporter()
+{
+    if (getLoadingPlace() > 0 &&
+        !hasWeapons())
+    {
+        return true;
+    }
+    return false;
+}
+
 void Unit::postAction()
 {
     Interpreter* pInterpreter = Interpreter::getInstance();

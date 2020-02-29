@@ -36,6 +36,7 @@ public:
 
     virtual void restart();
     virtual void stop();
+
 signals:
     void sigFinished();
 public slots:
@@ -49,6 +50,11 @@ public slots:
      * @param pGameAnimation
      */
     void queueAnimation(GameAnimation* pGameAnimation);
+    /**
+     * @brief queueBefore
+     * @param pGameAnimation
+     */
+    void queueAnimationBefore(GameAnimation* pGameAnimation);
     /**
      * @brief addSprite
      * @param spriteID
@@ -216,6 +222,7 @@ protected:
 private:
 
     QVector<GameAnimation*> m_QueuedAnimations;
+    GameAnimation* m_previousAnimation{nullptr};
     QString jsPostActionObject{""};
     QString jsPostActionFunction{""};
 
@@ -243,6 +250,16 @@ private:
      * @param delay
      */
     void loadSpriteAnim(oxygine::ResAnim* pAnim, float offsetX, float offsetY, QColor color, qint32 sleepAfterFinish, float scaleX, float scaleY, qint32 delay);
+    /**
+     * @brief setPreviousAnimation
+     * @param previousAnimation
+     */
+    void setPreviousAnimation(GameAnimation *previousAnimation);
+    /**
+     * @brief removeQueuedAnimation
+     * @param pGameAnimation
+     */
+    void removeQueuedAnimation(GameAnimation* pGameAnimation);
 };
 
 #endif // GAMEANIMATION_H
