@@ -2,7 +2,7 @@
 #define V_SCROLLBAR_H
 
 #include <QObject>
-#include <QTime>
+#include <QElapsedTimer>
 #include "oxygine-framework.h"
 
 #include "objects/tooltip.h"
@@ -55,7 +55,7 @@ private:
     float m_Scrollspeed{1.0f};
     bool m_sliding{false};
     oxygine::spBox9Sprite  m_slider;
-    QTime m_ScrollTimer;
+    QElapsedTimer m_ScrollTimer;
 };
 
 #endif // V_SCROLLBAR_H

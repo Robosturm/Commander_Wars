@@ -4,7 +4,7 @@
 #include <QObject>
 
 #include <QVector>
-#include <QTime>
+#include <QElapsedTimer>
 
 #include "oxygine-framework.h"
 
@@ -51,7 +51,7 @@ private:
     qint32 currentStartIndex{0};
     oxygine::spBox9Sprite m_SelectedItem;
     qint32 spin = 0;
-    QTime timer;
+    QElapsedTimer timer;
 
 };
 

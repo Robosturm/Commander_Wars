@@ -573,7 +573,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                             bool visionHide = visionField->getVisionHide(this);
                             if ((!visionHide) ||
                                 ((pUnit != nullptr) && visionHide &&
-                                 !pUnit->useTerrainDefense() && !pUnit->getHidden()))
+                                 !pUnit->useTerrainDefense() && !pUnit->isStatusStealthed()))
                             {
                                 std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = GameEnums::VisionType_Clear;
                             }
@@ -601,7 +601,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                                 bool visionHide = visionField->getVisionHide(this);
                                 if ((!visionHide) ||
                                     ((pUnit != nullptr) && visionHide &&
-                                     !pUnit->useTerrainDefense() && !pUnit->getHidden()))
+                                     !pUnit->useTerrainDefense() && !pUnit->isStatusStealthed()))
                                 {
                                     std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = GameEnums::VisionType_Clear;
                                 }
@@ -627,7 +627,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                             bool visionHide = visionField->getVisionHide(this);
                             if ((!visionHide) ||
                                 ((pUnit != nullptr) && visionHide &&
-                                 !pUnit->useTerrainDefense() && !pUnit->getHidden()))
+                                 !pUnit->useTerrainDefense() && !pUnit->isStatusStealthed()))
                             {
                                 std::get<0>(m_FogVisionFields[point.x() + x][point.y() + y]) = GameEnums::VisionType_Clear;
                             }

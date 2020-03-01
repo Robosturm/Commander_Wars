@@ -6,6 +6,8 @@
 #include "qguiapplication.h"
 #include "qclipboard.h"
 
+#include <QTime>
+
 TimeSpinBox::TimeSpinBox(qint32 width)
 {
     Mainapp* pApp = Mainapp::getInstance();

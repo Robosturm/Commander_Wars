@@ -700,8 +700,8 @@ bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange)
         {
             if (!pDefender->isStealthed(m_pOwner, ignoreOutOfVisionRange))
             {
-                if (!pDefender->getHidden() ||
-                    (pDefender->getHidden() && pDefender->getUnitType() == getUnitType()))
+                if (!pDefender->isStatusStealthed() ||
+                    (pDefender->isStatusStealthed() && pDefender->getUnitType() == getUnitType()))
                 {
                     if (m_pOwner->isEnemyUnit(pDefender) == true)
                     {
@@ -1313,6 +1313,7 @@ qint32 Unit::getBonusLuck(QPoint position)
 
 void Unit::startOfTurn()
 {
+    m_cloaked--;
     updateBonus(m_OffensiveBonus);
     updateBonus(m_DefensiveBonus);
     updateBonus(m_VisionBonus);
@@ -1697,10 +1698,11 @@ void Unit::updateIcons(Player* pPlayer)
         {
             loadIcon("transport+hidden", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
         }
-        else if (m_TransportUnits.size() > 0)
+        else
         {
             loadIcon("transport", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
         }
+        updateStealthIcon();
     }
 }
 
@@ -2024,7 +2026,7 @@ void Unit::moveUnit(QVector<QPoint> movePath)
                     bool visionHide = pTerrain->getVisionHide(m_pOwner);
                     if ((!visionHide) ||
                         ((pUnit != nullptr) && visionHide &&
-                         !pUnit->useTerrainDefense() && !pUnit->getHidden()))
+                         !pUnit->useTerrainDefense() && !pUnit->isStatusStealthed()))
                     {
                         m_pOwner->addVisionField(field.x(), field.y(), 1, false);
                     }
@@ -2218,6 +2220,17 @@ qint32 Unit::getBonus(QVector<QPoint>& data)
     return ret;
 }
 
+qint32 Unit::getCloaked() const
+{
+    return m_cloaked;
+}
+
+void Unit::setCloaked(qint32 cloaked)
+{
+    m_cloaked = cloaked;
+    updateStealthIcon();
+}
+
 void Unit::updateIconTweens()
 {
     for (qint32 i = 0; i < m_pIconSprites.size(); i++)
@@ -2389,6 +2402,11 @@ void Unit::setIgnoreUnitCollision(bool IgnoreUnitCollision)
     m_IgnoreUnitCollision = IgnoreUnitCollision;
 }
 
+bool Unit::isStatusStealthed() const
+{
+    return (m_Hidden || (m_cloaked > 0));
+}
+
 bool Unit::getHidden() const
 {
     return m_Hidden;
@@ -2397,7 +2415,12 @@ bool Unit::getHidden() const
 void Unit::setHidden(bool Hidden)
 {
     m_Hidden = Hidden;
-    if (m_Hidden)
+    updateStealthIcon();
+}
+
+void Unit::updateStealthIcon()
+{
+    if (isStatusStealthed())
     {
         loadIcon("dive", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
     }
@@ -2521,6 +2544,7 @@ void Unit::serializeObject(QDataStream& pStream)
     {
         pStream << m_FirerangeBonus[i];
     }
+    pStream << m_cloaked;
 }
 
 void Unit::deserializeObject(QDataStream& pStream)
@@ -2657,6 +2681,10 @@ void Unit::deserializeObject(QDataStream& pStream)
                 m_FirerangeBonus.append(data);
             }
         }
+    }
+    if (version > 12)
+    {
+        pStream >> m_cloaked;
     }
 }
 

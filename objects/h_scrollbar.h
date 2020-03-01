@@ -2,7 +2,7 @@
 #define H_SCROLLBAR_H
 
 #include <QObject>
-#include <QTime>
+#include <QElapsedTimer>
 #include "oxygine-framework.h"
 
 class H_Scrollbar;
@@ -46,7 +46,7 @@ private:
     qint32 m_scroll{0};
     bool m_sliding{false};
     oxygine::spBox9Sprite  m_slider;
-    QTime m_ScrollTimer;
+    QElapsedTimer m_ScrollTimer;
 };
 
 #endif // H_SCROLLBAR_H

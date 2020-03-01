@@ -6,7 +6,7 @@
 #include "game/GameEnums.h"
 
 #include <QTimer>
-#include <QTime>
+#include <QElapsedTimer>
 #include "oxygine/KeyEvent.h"
 
 class GameAnimationDialog : public GameAnimation
@@ -78,7 +78,7 @@ private:
     oxygine::spSprite m_COSprite;
 
     oxygine::spTextField m_TextField;
-    QTime textTimer;
+    QElapsedTimer textTimer;
     qint32 textSpeed;
 
     // background sprite handling

@@ -2,7 +2,7 @@
 #define TEXTBOX_H
 
 #include <QObject>
-#include <QTime>
+#include <QElapsedTimer>
 #include "oxygine-framework.h"
 
 #include "objects/tooltip.h"
@@ -45,7 +45,7 @@ private:
     oxygine::spBox9Sprite m_Textbox;
     oxygine::spTextField m_Textfield;
     QString m_Text;
-    QTime toggle;
+    QElapsedTimer toggle;
     qint32 curmsgpos{0};
 };
 

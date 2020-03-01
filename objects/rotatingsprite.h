@@ -1,7 +1,7 @@
 #ifndef ROTATINGSPRITE_H
 #define ROTATINGSPRITE_H
 
-#include <QTime>
+#include <QElapsedTimer>
 
 #include "oxygine-framework.h"
 
@@ -27,7 +27,7 @@ private:
     oxygine::spClipRectActor m_SecondRect;
     oxygine::spActor m_FirstSprite;
     oxygine::spActor m_SecondSprite;
-    QTime speedTimer;
+    QElapsedTimer speedTimer;
     qint32 speed{10};
     qint32 direction{1};
 };

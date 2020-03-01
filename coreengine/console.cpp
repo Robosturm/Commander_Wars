@@ -1,7 +1,6 @@
 #include <QMutex>
 #include <QMutexLocker>
 #include <QString>
-#include <QTime>
 #include <QDir>
 #include <QCoreApplication>
 
@@ -34,7 +33,7 @@ QList<QString> Console::output;
 Console* Console::m_pConsole = nullptr;
 QString Console::curmsg = nullptr;
 qint32 Console::curmsgpos = 0;
-QTime Console::toggle;
+QElapsedTimer Console::toggle;
 qint32 Console::curlastmsgpos = 0;
 QList<QString> Console::lastmsgs;
 qint32 Console::outputSize = 100;

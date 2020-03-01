@@ -443,92 +443,48 @@ get_filename_component(QT_BIN_DIR "${_qmake_executable}" DIRECTORY)
 
 message(${QT_BIN_DIR})
 
-if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-    set(${PROJECT_NAME}_INSTALL_QT_LIBS
-         ${QT_BIN_DIR}/d3dcompiler_47.dll
-         ${QT_BIN_DIR}/libEGLd.dll
-         ${QT_BIN_DIR}/libgcc_s_dw2-1.dll
-         ${QT_BIN_DIR}/libGLESv2d.dll
-         ${QT_BIN_DIR}/libstdc++-6.dll
-         ${QT_BIN_DIR}/libwinpthread-1.dll
-         ${QT_BIN_DIR}/Qt5Cored.dll
-         ${QT_BIN_DIR}/Qt5Guid.dll
-         ${QT_BIN_DIR}/Qt5Multimediad.dll
-         ${QT_BIN_DIR}/Qt5Networkd.dll
-         ${QT_BIN_DIR}/Qt5Qmld.dll
-         ${QT_BIN_DIR}/Qt5Svgd.dll
-         ${QT_BIN_DIR}/Qt5Widgetsd.dll
-         ${QT_BIN_DIR}/Qt5Xmld.dll
-         ${QT_BIN_DIR}/../../../tools/mingw730_32/bin/addr2line.exe
-    )
+set(${PROJECT_NAME}_INSTALL_QT_LIBS
+    ${QT_BIN_DIR}/Qt5Qml.dll
+    ${QT_BIN_DIR}/Qt5Core.dll
+    ${QT_BIN_DIR}/Qt5Network.dll
+    ${QT_BIN_DIR}/Qt5Multimedia.dll
+    ${QT_BIN_DIR}/Qt5Gui.dll
+    ${QT_BIN_DIR}/Qt5Widgets.dll
+    ${QT_BIN_DIR}/libgcc_s_dw2-1.dll
+    ${QT_BIN_DIR}/libstdc++-6.dll
+    ${QT_BIN_DIR}/libwinpthread-1.dll
+    ${QT_BIN_DIR}/d3dcompiler_47.dll
+    ${QT_BIN_DIR}/libEGL.dll
+    ${QT_BIN_DIR}/libGLESv2.dll
+    ${QT_BIN_DIR}/Qt5Svg.dll
+    ${QT_BIN_DIR}/Qt5Xml.dll
+    ${QT_BIN_DIR}/../../../tools/mingw730_32/bin/addr2line.exe
+)
 
-    set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
-         ${QT_BIN_DIR}/../plugins/mediaservice/dsengined.dll
-         ${QT_BIN_DIR}/../plugins/mediaservice/qtmedia_audioengined.dll
-    )
-    set(${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS
-        ${QT_BIN_DIR}/../plugins/audio/qtaudio_windowsd.dll
-    )
+set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
+     ${QT_BIN_DIR}/../plugins/mediaservice/dsengine.dll
+     ${QT_BIN_DIR}/../plugins/mediaservice/qtmedia_audioengine.dll
+)
 
-    set(${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS
-        ${QT_BIN_DIR}/../plugins/bearer/qgenericbearerd.dll
-    )
+set(${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS
+     ${QT_BIN_DIR}/../plugins/audio/qtaudio_windows.dll
+)
 
-    set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
-        ${QT_BIN_DIR}/../plugins/platforms/qwindowsd.dll
-    )
+set(${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS
+     ${QT_BIN_DIR}/../plugins/bearer/qgenericbearer.dll
+)
 
-    set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
-        ${QT_BIN_DIR}/../plugins/playlistformats/qtmultimedia_m3ud.dll
-    )
+set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
+     ${QT_BIN_DIR}/../plugins/platforms/qwindows.dll
+)
 
-    set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
-        ${QT_BIN_DIR}/../plugins/styles/qwindowsvistastyled.dll
-    )
-else("Release")
-    set(${PROJECT_NAME}_INSTALL_QT_LIBS
-        ${QT_BIN_DIR}/Qt5Qml.dll
-        ${QT_BIN_DIR}/Qt5Core.dll
-        ${QT_BIN_DIR}/Qt5Network.dll
-        ${QT_BIN_DIR}/Qt5Multimedia.dll
-        ${QT_BIN_DIR}/Qt5Gui.dll
-        ${QT_BIN_DIR}/Qt5Widgets.dll
-        ${QT_BIN_DIR}/libgcc_s_dw2-1.dll
-        ${QT_BIN_DIR}/libstdc++-6.dll
-        ${QT_BIN_DIR}/libwinpthread-1.dll
-        ${QT_BIN_DIR}/d3dcompiler_47.dll
-        ${QT_BIN_DIR}/libEGL.dll
-        ${QT_BIN_DIR}/libGLESv2.dll
-        ${QT_BIN_DIR}/Qt5Svg.dll
-        ${QT_BIN_DIR}/Qt5Xml.dll
-        ${QT_BIN_DIR}/../../../tools/mingw730_32/bin/addr2line.exe
-    )
+set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
+     ${QT_BIN_DIR}/../plugins/playlistformats/qtmultimedia_m3u.dll
+)
 
-    set(${PROJECT_NAME}_INSTALL_QT_MULTIMEDIA_LIBS
-         ${QT_BIN_DIR}/../plugins/mediaservice/dsengine.dll
-         ${QT_BIN_DIR}/../plugins/mediaservice/qtmedia_audioengine.dll
-    )
-
-    set(${PROJECT_NAME}_INSTALL_QT_AUDIO_LIBS
-         ${QT_BIN_DIR}/../plugins/audio/qtaudio_windows.dll
-    )
-
-    set(${PROJECT_NAME}_INSTALL_QT_BEARER_LIBS
-         ${QT_BIN_DIR}/../plugins/bearer/qgenericbearer.dll
-    )
-
-    set(${PROJECT_NAME}_INSTALL_QT_PLATFORMS_LIBS
-         ${QT_BIN_DIR}/../plugins/platforms/qwindows.dll
-    )
-
-    set(${PROJECT_NAME}_INSTALL_QT_PLAYLISTFORAMTS_LIBS
-         ${QT_BIN_DIR}/../plugins/playlistformats/qtmultimedia_m3u.dll
-    )
-
-    set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
-         ${QT_BIN_DIR}/../plugins/styles/qwindowsvistastyle.dll
-    )
-endif()
+set(${PROJECT_NAME}_INSTALL_QT_STYLES_LIBS
+     ${QT_BIN_DIR}/../plugins/styles/qwindowsvistastyle.dll
+)
 
 # install libs
 install(DIRECTORY system DESTINATION ".")

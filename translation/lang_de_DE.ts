@@ -811,22 +811,22 @@
 <context>
     <name>Console</name>
     <message>
-        <location filename="../coreengine/console.cpp" line="100"/>
+        <location filename="../coreengine/console.cpp" line="99"/>
         <source>Enter &quot;help()&quot; for console info.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="101"/>
+        <location filename="../coreengine/console.cpp" line="100"/>
         <source>Starting Game...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="102"/>
+        <location filename="../coreengine/console.cpp" line="101"/>
         <source>Prepare to Fight...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../coreengine/console.cpp" line="103"/>
+        <location filename="../coreengine/console.cpp" line="102"/>
         <source>Read this message while waiting...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5452,7 +5452,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <name>ZCOUNIT_IRON_SHIELD_GENERATOR</name>
     <message>
         <location filename="../resources/scripts/units/ZCOUNIT_IRON_SHIELD_GENERATOR.js" line="47"/>
-        <source>Iron Shield Generator</source>
+        <source>Iron Shield Gen.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

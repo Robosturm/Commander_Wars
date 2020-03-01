@@ -39,7 +39,7 @@ void Interpreter::init()
 
     QJSValue console = newQObject(Console::getInstance());
     globalObject().setProperty("GameConsole", console);
-    installTranslatorFunctions();
+    installExtensions(QJSEngine::AllExtensions);
 }
 
 void Interpreter::openScript(QString script)

@@ -7,7 +7,7 @@
 
 #include <QObject>
 #include <QVector>
-#include <QTime>
+#include <QElapsedTimer>
 
 class CreditsMenue : public QObject, public oxygine::Actor
 {
@@ -23,7 +23,7 @@ public slots:
     void exitMenue();
 
 private:
-    QTime speedTimer;
+    QElapsedTimer speedTimer;
     QVector<QString> m_Headlines;
     QVector<QVector<QString>> m_Authors;
     qint32 m_creditsHeigth{100};

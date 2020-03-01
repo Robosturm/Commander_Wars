@@ -3,6 +3,7 @@
 
 #include <QVector>
 #include <QObject>
+#include <QElapsedTimer>
 
 #include "oxygine-framework.h"
 
@@ -98,7 +99,7 @@ private:
     static const qint32 lastMsgSize{10};
     static qint32 curlastmsgpos;
     static qint32 curmsgpos;
-    static QTime toggle;
+    static QElapsedTimer toggle;
     static Console* m_pConsole;
     static bool show;
     static bool toggled;

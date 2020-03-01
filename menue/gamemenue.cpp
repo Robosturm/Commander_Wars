@@ -39,7 +39,7 @@
 #include "objects/dialogattacklog.h"
 
 #include <QFile>
-
+#include <QTime>
 #include <qguiapplication.h>
 
 GameMenue* GameMenue::m_pInstance = nullptr;

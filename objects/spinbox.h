@@ -2,7 +2,7 @@
 #define SPINBOX_H
 
 #include <QObject>
-#include <QTime>
+#include <QElapsedTimer>
 #include "oxygine-framework.h"
 
 #include "objects/tooltip.h"
@@ -69,7 +69,7 @@ private:
     oxygine::spButton m_pArrowDown;
     oxygine::spButton m_pArrowUp;
     QString m_Text;
-    QTime toggle;
+    QElapsedTimer toggle;
     qint32 curmsgpos{0};
     qreal m_InfinityValue{-1.0};
     qreal m_MinValue{0.0};
