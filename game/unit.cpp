@@ -1698,7 +1698,7 @@ void Unit::updateIcons(Player* pPlayer)
         {
             loadIcon("transport+hidden", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
         }
-        else
+        else if (getLoadingPlace() > 0)
         {
             loadIcon("transport", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
         }
