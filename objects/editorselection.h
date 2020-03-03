@@ -40,9 +40,7 @@ public:
 
     explicit EditorSelection();
 
-    void updateTerrainView();
-    void updateBuildingView();
-    void updateUnitView();
+
     inline EditorMode getCurrentMode() const
     {
         return m_Mode;
@@ -72,17 +70,26 @@ public:
      * @brief createPlayerSelection
      */
     void createPlayerSelection();
-    void changeSelectedPlayer(qint32 player);
+
 signals:
    void sigClickedPlacementSelection(qint32 x, qint32 y);
    void sigUpdateSelectedPlayer();
    void sigSelectionChanged();
+   void sigChangeSelectedPlayer(qint32 player);
+   void sigUpdateTerrainView();
+   void sigUpdateBuildingView();
+   void sigUpdateUnitView();
 public slots:
     void ClickedPlacementSelection(qint32 x, qint32 y);
     void selectTerrain(QString terrainID);
     void selectBuilding(QString buildingID);
     void selectUnit(QString unitID);
     void updateSelectedPlayer();
+    void changeSelectedPlayer(qint32 player);
+
+    void updateTerrainView();
+    void updateBuildingView();
+    void updateUnitView();
 private:
     // small hints for the ui
     static const qint32 frameSize = 30;

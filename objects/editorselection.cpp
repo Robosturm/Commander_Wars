@@ -125,6 +125,10 @@ EditorSelection::EditorSelection()
 
     connect(this, &EditorSelection::sigClickedPlacementSelection, this, &EditorSelection::ClickedPlacementSelection, Qt::QueuedConnection);
     connect(this, &EditorSelection::sigUpdateSelectedPlayer, this, &EditorSelection::updateSelectedPlayer);
+    connect(this, &EditorSelection::sigChangeSelectedPlayer, this, &EditorSelection::changeSelectedPlayer);
+    connect(this, &EditorSelection::sigUpdateUnitView, this, &EditorSelection::updateUnitView);
+    connect(this, &EditorSelection::sigUpdateTerrainView, this, &EditorSelection::updateTerrainView);
+    connect(this, &EditorSelection::sigUpdateBuildingView, this, &EditorSelection::updateBuildingView);
 
     // load other sprites not shown in the starting screen
     BuildingSpriteManager* pBuildingSpriteManager = BuildingSpriteManager::getInstance();
@@ -354,7 +358,7 @@ void EditorSelection::createPlayerSelection()
         pBuilding->setPosition(25 * i, 32);
         pBuilding->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
-            changeSelectedPlayer(i);
+            emit sigChangeSelectedPlayer(i);
         });
     }
     updateSelectedPlayer();
@@ -363,6 +367,8 @@ void EditorSelection::createPlayerSelection()
 
 void EditorSelection::changeSelectedPlayer(qint32 player)
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     // update buildings
     for (qint32 i2 = 0; i2 < m_Buildings.size(); i2++)
     {
@@ -388,6 +394,7 @@ void EditorSelection::changeSelectedPlayer(qint32 player)
             m_Units.at(i2)->setOwner(m_Players.at(player + 1)->getOwner());
         }
     }
+    pApp->continueThread();
 }
 
 void EditorSelection::updateSelectedPlayer()
@@ -447,7 +454,7 @@ void EditorSelection::createBoxSelectionMode()
     {
         m_Mode = EditorMode::Terrain;
         m_CurrentSelectorMode->setPosition(frameSize, yStartPos);
-        updateTerrainView();
+        emit sigUpdateTerrainView();
         emit sigClickedPlacementSelection(0, 0);
     });
     // scale marker to correct size if needed
@@ -463,7 +470,7 @@ void EditorSelection::createBoxSelectionMode()
     {
         m_Mode = EditorMode::Building;
         m_CurrentSelectorMode->setPosition(frameSize + xChange, yStartPos);
-        updateBuildingView();
+        emit sigUpdateBuildingView();
         emit sigClickedPlacementSelection(0, 0);
     });
 
@@ -477,7 +484,7 @@ void EditorSelection::createBoxSelectionMode()
     {
         m_Mode = EditorMode::Unit;
         m_CurrentSelectorMode->setPosition(frameSize + xChange * 2, yStartPos);
-        updateUnitView();
+        emit sigUpdateUnitView();
         emit sigClickedPlacementSelection(0, 0);
     });
 
@@ -500,6 +507,8 @@ oxygine::spSprite EditorSelection::createV9Box(qint32 x, qint32 y, qint32 width,
 
 void EditorSelection::updateTerrainView()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     initSelection();
     TerrainManager* pTerrainManager = TerrainManager::getInstance();
     for (qint32 i = m_StartIndex; i < pTerrainManager->getTerrainCount(); i++)
@@ -509,10 +518,13 @@ void EditorSelection::updateTerrainView()
     m_PlacementActor->setHeight(m_Terrains[m_Terrains.size() - 1]->oxygine::Actor::getY() + GameMap::Imagesize + 5);
     m_PlacementSelectionSlider->snap();
     m_PlacementActor->setY(-GameMap::Imagesize);
+    pApp->continueThread();
 }
 
 void EditorSelection::updateBuildingView()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     initSelection();
     for (qint32 i = m_StartIndex; i < m_Buildings.size(); i++)
     {
@@ -521,10 +533,13 @@ void EditorSelection::updateBuildingView()
     m_PlacementActor->setHeight(m_Buildings[m_Buildings.size() - 1]->oxygine::Actor::getY() + GameMap::Imagesize + 5);
     m_PlacementSelectionSlider->snap();
     m_PlacementActor->setY(-GameMap::Imagesize);
+     pApp->continueThread();
 }
 
 void EditorSelection::updateUnitView()
 {
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
     initSelection();
     for (qint32 i = m_StartIndex; i < m_Units.size(); i++)
     {
@@ -533,6 +548,7 @@ void EditorSelection::updateUnitView()
     m_PlacementActor->setHeight(m_Units[m_Units.size() - 1]->oxygine::Actor::getY() + GameMap::Imagesize + 5);
     m_PlacementSelectionSlider->snap();
     m_PlacementActor->setY(-GameMap::Imagesize);
+     pApp->continueThread();
 }
 
 void EditorSelection::initSelection()

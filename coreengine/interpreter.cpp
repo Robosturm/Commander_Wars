@@ -23,6 +23,7 @@ Interpreter* Interpreter::m_pInstance = nullptr;
 Interpreter::Interpreter()
     : QQmlEngine()
 {
+    setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     init();
@@ -39,7 +40,7 @@ void Interpreter::init()
 
     QJSValue console = newQObject(Console::getInstance());
     globalObject().setProperty("GameConsole", console);
-    installExtensions(QJSEngine::AllExtensions);
+    installExtensions(QJSEngine::Extension::AllExtensions);
 }
 
 void Interpreter::openScript(QString script)
