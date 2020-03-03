@@ -1698,7 +1698,7 @@ void Unit::updateIcons(Player* pPlayer)
         {
             loadIcon("transport+hidden", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
         }
-        else if (getLoadingPlace() > 0)
+        else if (getLoadedUnitCount() > 0)
         {
             loadIcon("transport", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
         }
@@ -1712,7 +1712,8 @@ bool Unit::getTransportHidden(Player* pPlayer)
     if (pPlayer != nullptr)
     {
         if ((pMap->getGameRules()->getFogMode() != GameEnums::Fog_Off) &&
-            (pPlayer->isEnemy(m_pOwner)) && getLoadingPlace() > 0)
+            (pPlayer->isEnemy(m_pOwner)) && getLoadingPlace() > 0 &&
+            !isStatusStealthed())
         {
             return true;
         }
