@@ -26,8 +26,13 @@ var Constructor = function()
     this.activate = function(weather)
     {
         var variable = weather.getVariables().createVariable("FOGMODE");
-        variable.writeDataInt32(map.getGameRules().getFogMode());
-        map.getGameRules().setFogMode(GameEnums.Fog_OfWar);
+        var fogMode = map.getGameRules().getFogMode();
+        variable.writeDataInt32(fogMode);
+        // only apply fog of war if the fog rules are softer
+        if (fogMode < GameEnums.Fog_OfWar)
+        {
+            map.getGameRules().setFogMode(GameEnums.Fog_OfWar);
+        }
         audio.playSound("rain.wav");
     };
 
