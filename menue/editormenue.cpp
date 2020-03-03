@@ -438,14 +438,17 @@ void EditorMenue::clickedTopbar(QString itemID)
     else if (itemID == "DELETEUNITS")
     {
         m_EditorMode = EditorModes::RemoveUnits;
+        createMarkedArea(cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle);
     }
     else if (itemID == "EDITUNITS")
     {
         m_EditorMode = EditorModes::EditUnits;
+        createMarkedArea(cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle);
     }
     else if (itemID == "EDITTERRAIN")
     {
         m_EditorMode = EditorModes::EditTerrain;
+        createMarkedArea(cursorActor, QPoint(0, 0), QPoint(0, 0), CursorModes::Circle);
     }
     else if (itemID == "OPTIMIZEPLAYERS")
     {
@@ -1142,12 +1145,18 @@ void EditorMenue::placeBuilding(qint32 x, qint32 y)
             break;
         }
     }
+    spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
+    if (pCurrentBuilding->getBuildingWidth() > 1 ||
+        pCurrentBuilding->getBuildingHeigth() > 1)
+    {
+        points = PathFindingSystem::getFields(x, y, 0, 0);
+    }
     for (qint32 i = 0; i < points.size(); i++)
     {
         // point still on the map great :)
         qint32 curX = points.at(i).x();
         qint32 curY = points.at(i).y();
-        spBuilding pCurrentBuilding = m_EditorSelection->getCurrentSpBuilding();
+
         if (!canBuildingBePlaced(curX, curY) &&
             pCurrentBuilding->getBuildingWidth() == 1 &&
             pCurrentBuilding->getBuildingHeigth() == 1)

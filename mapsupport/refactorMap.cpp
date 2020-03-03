@@ -123,6 +123,8 @@ void GameMap::flipX()
     {
         for (qint32 x = currentWidth / 2; x < currentWidth; x++)
         {
+            spTerrain currentTerrain = fields[y]->at(x);
+            currentTerrain->detach();
             spTerrain flipTerrain = fields.at(y)->at(currentWidth - x - 1);
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
@@ -158,6 +160,8 @@ void GameMap::rotateX()
     {
         for (qint32 x = currentWidth / 2; x < currentWidth; x++)
         {
+            spTerrain currentTerrain = fields[y]->at(x);
+            currentTerrain->detach();
             spTerrain flipTerrain = fields.at(currentHeigth - y - 1)->at(currentWidth - x - 1);
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
@@ -193,6 +197,8 @@ void GameMap::flipY()
     {
         for (qint32 x = 0; x < currentWidth; x++)
         {
+            spTerrain currentTerrain = fields[y]->at(x);
+            currentTerrain->detach();
             spTerrain flipTerrain = fields.at(currentHeigth - y - 1)->at(x);
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
@@ -228,6 +234,8 @@ void GameMap::rotateY()
     {
         for (qint32 x = 0; x < currentWidth; x++)
         {
+            spTerrain currentTerrain = fields[y]->at(x);
+            currentTerrain->detach();
             spTerrain flipTerrain = fields.at(currentHeigth - y - 1)->at(currentWidth - x - 1);
             spTerrain pTerrain = Terrain::createTerrain(flipTerrain->getTerrainID(), x, y, flipTerrain->getBaseTerrainID());
             this->addChild(pTerrain);
