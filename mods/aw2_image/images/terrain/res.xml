@@ -111,8 +111,10 @@
 		<image file="sea+beach+S.png" />
 		<image file="sea+beach+N.png" />
 		
-		<image file="forest+0.png" />
-		<image file="forest+1.png" />
+		<image file="forest.png" />
+		<image file="forest+E.png" />
+		<image file="forest+W.png" />
+		<image file="forest+E+W.png" />
 				
 		<image file="street.png" />
 		<image file="street+E.png" />
