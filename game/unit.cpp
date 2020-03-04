@@ -691,6 +691,7 @@ bool Unit::isEnvironmentAttackable(QString terrainID)
     return false;
 }
 
+
 bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange)
 {
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
@@ -701,7 +702,7 @@ bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange)
             if (!pDefender->isStealthed(m_pOwner, ignoreOutOfVisionRange))
             {
                 if (!pDefender->isStatusStealthed() ||
-                    (pDefender->isStatusStealthed() && pDefender->getUnitType() == getUnitType()))
+                    (pDefender->isStatusStealthed() && canAttackStealthedUnit(pDefender)))
                 {
                     if (m_pOwner->isEnemyUnit(pDefender) == true)
                     {
@@ -725,6 +726,22 @@ bool Unit::isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange)
         }
     }
     return false;
+}
+
+bool Unit::canAttackStealthedUnit(Unit* pDefender)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "canAttackStealthedUnit";
+    QJSValueList args1;
+    QJSValue obj1 = pInterpreter->newQObject(this);
+    args1 << obj1;
+    QJSValue obj2 = pInterpreter->newQObject(pDefender);
+    args1 << obj2;
+    QJSValue erg = pInterpreter->doFunction(m_UnitID, function1, args1);
+    if (erg.isBool() && erg.toBool())
+    {
+        return true;
+    }
 }
 
 Terrain* Unit::getTerrain()

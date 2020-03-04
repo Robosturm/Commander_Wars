@@ -186,4 +186,30 @@ var UNIT =
     {
         return 0;
     },
+
+    canAttackStealthedUnit : function(attacker, defender)
+    {
+        var attackerType = attacker.getUnitType();
+        attackerType = UNIT.unitTypeToGround(attackerType);
+        var defenderType = defender.getUnitType();
+        defenderType = UNIT.unitTypeToGround(defenderType);
+        if (attacker.getBaseMaxRange() === 1)
+        {
+            if (attackerType === defenderType)
+            {
+                return true;
+            }
+        }
+        return false;
+    },
+
+    unitTypeToGround : function(unitType)
+    {
+        if (unitType === GameEnums.UnitType_Hovercraft ||
+            unitType === GameEnums.UnitType_Ground)
+        {
+            return GameEnums.UnitType_Hovercraft;
+        }
+        return unitType;
+    }
 };

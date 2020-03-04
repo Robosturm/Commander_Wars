@@ -406,7 +406,7 @@ protected:
     float ownUnitValue{1.0f};
     GameEnums::AiTurnMode turnMode{GameEnums::AiTurnMode_StartOfDay};
     AISteps aiStep;
-
+    bool usedTransportSystem{false};
 private:
     bool finish{false};
 

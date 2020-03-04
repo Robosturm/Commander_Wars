@@ -660,6 +660,12 @@ public slots:
      */
     bool isAttackable(Unit* pDefender, bool ignoreOutOfVisionRange = false);
     /**
+     * @brief canAttackStealthedUnit
+     * @param pDefender
+     * @return
+     */
+    bool canAttackStealthedUnit(Unit* pDefender);
+    /**
      * @brief isEnvironmentAttackable
      * @param terrainID
      * @return

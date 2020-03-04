@@ -1557,6 +1557,7 @@ qint32 CoreAI::getIslandIndex(Unit* pUnit)
 
 void CoreAI::finishTurn()
 {
+    usedTransportSystem = false;
     GameAction* pAction = new GameAction(ACTION_NEXT_PLAYER);
     CO* pCO0 = m_pPlayer->getCO(0);
     CO* pCO1 = m_pPlayer->getCO(1);

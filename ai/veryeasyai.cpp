@@ -98,15 +98,24 @@ bool VeryEasyAI::performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemy
     else if (aiStep <= AISteps::moveUnits && fireWithIndirectUnits(pUnits)){}
     else if (aiStep <= AISteps::moveUnits && fireWithDirectUnits(pUnits)){}
     else if (aiStep <= AISteps::moveToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings)){}
-    else if (aiStep <= AISteps::loadUnits && loadUnits(pUnits)){}
-    else if (aiStep <= AISteps::moveTransporters && moveTransporters(pUnits, pEnemyUnits, pEnemyBuildings)){}
-    else if (aiStep <= AISteps::moveSupportUnits && moveSupport(AISteps::moveSupportUnits, pUnits, true)){}
-    else if (aiStep <= AISteps::moveSupportUnits && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, true)){}
-    else if (aiStep <= AISteps::moveAway && moveAwayFromProduction(pUnits)){}
-    else if (aiStep <= AISteps::buildUnits && buildUnits(pBuildings, pUnits)){}
+    else if (aiStep <= AISteps::loadUnits  && !usedTransportSystem && loadUnits(pUnits)){}
+    else if (aiStep <= AISteps::moveTransporters  && !usedTransportSystem && moveTransporters(pUnits, pEnemyUnits, pEnemyBuildings)){}
     else
     {
-        return false;
+        if (!usedTransportSystem)
+        {
+            usedTransportSystem = true;
+            aiStep = AISteps::moveUnits;
+            return performActionSteps(pUnits, pEnemyUnits,  pBuildings, pEnemyBuildings);
+        }
+        else if (aiStep <= AISteps::moveSupportUnits && moveSupport(AISteps::moveSupportUnits, pUnits, true)){}
+        else if (aiStep <= AISteps::moveSupportUnits && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, true)){}
+        else if (aiStep <= AISteps::moveAway && moveAwayFromProduction(pUnits)){}
+        else if (aiStep <= AISteps::buildUnits && buildUnits(pBuildings, pUnits)){}
+        else
+        {
+            return false;
+        }
     }
     return true;
 }

@@ -43,8 +43,8 @@ endif()
 add_definitions(
     -DUSE_MEMORY_POOL
     -DMAJOR=0
-    -DMINOR=10
-    -DREVISION=1
+    -DMINOR=11
+    -DREVISION=0
 )
 
 message ("CXX Flags: ${CMAKE_CXX_FLAGS}")

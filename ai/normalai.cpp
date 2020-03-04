@@ -103,15 +103,24 @@ bool NormalAi::performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUn
     else if (aiStep <= AISteps::moveUnits && repairUnits(pUnits, pBuildings, pEnemyBuildings)){}
     else if (aiStep <= AISteps::moveToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, 1)){}
     else if (aiStep <= AISteps::moveToTargets && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 2, std::numeric_limits<qint32>::max())){}
-    else if (aiStep <= AISteps::loadUnits && loadUnits(pUnits, pBuildings, pEnemyBuildings)){}
-    else if (aiStep <= AISteps::moveTransporters && moveTransporters(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
-    else if (aiStep <= AISteps::moveSupportUnits && moveSupport(AISteps::moveSupportUnits, pUnits, true)){}
-    else if (aiStep <= AISteps::moveSupportUnits && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, std::numeric_limits<qint32>::max(), true)){}
-    else if (aiStep <= AISteps::moveAway && moveAwayFromProduction(pUnits)){}
-    else if (aiStep <= AISteps::buildUnits && buildUnits(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings)){}
+    else if (aiStep <= AISteps::loadUnits && !usedTransportSystem && loadUnits(pUnits, pBuildings, pEnemyBuildings)){}
+    else if (aiStep <= AISteps::moveTransporters && !usedTransportSystem && moveTransporters(pUnits, pEnemyUnits, pBuildings, pEnemyBuildings)){}
     else
     {
-        return false;
+        if (!usedTransportSystem)
+        {
+            usedTransportSystem = true;
+            aiStep = AISteps::moveUnits;
+            return performActionSteps(pUnits, pEnemyUnits,  pBuildings, pEnemyBuildings);
+        }
+        else if (aiStep <= AISteps::moveSupportUnits && moveSupport(AISteps::moveSupportUnits, pUnits, true)){}
+        else if (aiStep <= AISteps::moveSupportUnits && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, std::numeric_limits<qint32>::max(), true)){}
+        else if (aiStep <= AISteps::moveAway && moveAwayFromProduction(pUnits)){}
+        else if (aiStep <= AISteps::buildUnits && buildUnits(pBuildings, pUnits, pEnemyUnits, pEnemyBuildings)){}
+        else
+        {
+            return false;
+        }
     }
     return true;
 }
