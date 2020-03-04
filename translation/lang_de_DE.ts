@@ -3360,61 +3360,71 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="186"/>
-        <source>AI Attack Terrain: </source>
+        <source>CO Units: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="190"/>
-        <source>If checked the AI attacks pipe seams and walls etc.</source>
+        <source>If unchecked CO-Units can&apos;t be produced.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="198"/>
+        <source>AI Attack Terrain: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="202"/>
+        <source>If checked the AI attacks pipe seams and walls etc.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="210"/>
         <source>Fog Of War: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="201"/>
+        <location filename="../objects/ruleselection.cpp" line="213"/>
         <source>Off</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="201"/>
+        <location filename="../objects/ruleselection.cpp" line="213"/>
         <source>Fog of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="201"/>
+        <location filename="../objects/ruleselection.cpp" line="213"/>
         <source>Fog of Shroud</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="203"/>
+        <location filename="../objects/ruleselection.cpp" line="215"/>
         <source>Select the fog of war rule for the current game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="214"/>
+        <location filename="../objects/ruleselection.cpp" line="226"/>
         <source>Unit Limit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="218"/>
+        <location filename="../objects/ruleselection.cpp" line="230"/>
         <source>The maximum amount of units a single player can own at any time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="228"/>
+        <location filename="../objects/ruleselection.cpp" line="240"/>
         <source>Round Time: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="232"/>
+        <location filename="../objects/ruleselection.cpp" line="244"/>
         <source>The maximum amount of time in hh:mm::ss for each turn for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="245"/>
+        <location filename="../objects/ruleselection.cpp" line="257"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>

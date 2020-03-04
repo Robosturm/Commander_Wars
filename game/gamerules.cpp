@@ -753,6 +753,16 @@ void GameRules::initRoundTime()
     }
 }
 
+bool GameRules::getCoUnits() const
+{
+    return m_coUnits;
+}
+
+void GameRules::setCoUnits(bool coUnits)
+{
+    m_coUnits = coUnits;
+}
+
 bool GameRules::getWeatherPrediction() const
 {
     return m_WeatherPrediction;
@@ -827,6 +837,7 @@ void GameRules::serializeObject(QDataStream& pStream)
     }    
     pStream << m_WeatherPrediction;
     pStream << m_DayWeather;
+    pStream << m_coUnits;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -974,5 +985,9 @@ void GameRules::deserializeObject(QDataStream& pStream)
     {
         pStream >> m_WeatherPrediction;
         pStream >> m_DayWeather;
+    }
+    if (version > 6)
+    {
+        pStream >> m_coUnits;
     }
 }

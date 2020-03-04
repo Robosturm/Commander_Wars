@@ -49,7 +49,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 6;
+        return 7;
     }
     void addVictoryRule(spVictoryRule rule);
     /**
@@ -65,6 +65,7 @@ public:
      * @brief init
      */
     void init();
+
 signals:
     void signalVictory(qint32 team);
 public slots:
@@ -293,8 +294,16 @@ public slots:
      * @brief startRoundTime
      */
     void initRoundTime();
-
-
+    /**
+      * @brief getCoUnits
+      * @return
+      */
+    bool getCoUnits() const;
+    /**
+     * @brief setCoUnits
+     * @param coUnits
+     */
+    void setCoUnits(bool coUnits);
 private:
     // victory conditions
     QVector<spVictoryRule> m_VictoryRules;
@@ -322,6 +331,7 @@ private:
     QStringList m_COBannlist;
     bool m_COBannlistEdited{false};
     bool m_WeatherPrediction{true};
+    bool m_coUnits{true};
 
 };
 

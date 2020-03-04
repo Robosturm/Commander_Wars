@@ -448,7 +448,11 @@ QStringList  Building::getConstructionList()
     QStringList coUnits;
     if (m_pOwner != nullptr)
     {
-        coUnits = m_pOwner->getCOUnits(this);
+        GameMap* pMap = GameMap::getInstance();
+        if (pMap->getGameRules()->getCoUnits())
+        {
+            coUnits = m_pOwner->getCOUnits(this);
+        }
     }
     if (coUnits.size() > 0)
     {

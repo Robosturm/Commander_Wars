@@ -183,6 +183,18 @@ void RuleSelection::showRuleSelection()
     y += 40;
     textField = new oxygine::TextField();
     textField->setStyle(style);
+    textField->setHtmlText(tr("CO Units: "));
+    textField->setPosition(30, y);
+    addChild(textField);
+    pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("If unchecked CO-Units can't be produced."));
+    pCheckbox->setPosition(textWidth, textField->getY());
+    addChild(pCheckbox);
+    pCheckbox->setChecked(pMap->getGameRules()->getCoUnits());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setCoUnits, Qt::QueuedConnection);
+    y += 40;
+    textField = new oxygine::TextField();
+    textField->setStyle(style);
     textField->setHtmlText(tr("AI Attack Terrain: "));
     textField->setPosition(30, y);
     addChild(textField);
@@ -198,7 +210,7 @@ void RuleSelection::showRuleSelection()
     textField->setHtmlText(tr("Fog Of War: "));
     textField->setPosition(30, y);
     addChild(textField);
-    QVector<QString> fogModes = {tr("Off"), tr("Fog of War"), tr("Fog of Shroud")};
+    QVector<QString> fogModes = {tr("Off"), tr("Fog of War"), tr("Shroud of War")};
     spDropDownmenu fogOfWar = new DropDownmenu(200, fogModes);
     fogOfWar->setTooltipText(tr("Select the fog of war rule for the current game."));
     fogOfWar->setPosition(textWidth, textField->getY());

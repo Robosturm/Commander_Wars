@@ -678,7 +678,7 @@ GameEnums::VisionType Player::getFieldVisibleType(qint32 x, qint32 y)
         case GameEnums::Fog_OfShroud:
         case GameEnums::Fog_OfWar:
         {
-            if (pMap->onMap(x, y))
+            if (pMap->onMap(x, y) && m_FogVisionFields.size() > 0)
             {
                 return std::get<0>(m_FogVisionFields[x][y]);
             }
