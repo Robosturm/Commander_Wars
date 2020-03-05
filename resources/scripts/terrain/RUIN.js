@@ -32,6 +32,10 @@ var Constructor = function()
             terrain.loadBaseTerrain("PLAINS");
         }
     };
+    this.getVisionHide = function()
+    {
+        return true;
+    };
     this.loadBaseSprite = function(terrain)
     {
         var random = globals.randInt(0, 2);
