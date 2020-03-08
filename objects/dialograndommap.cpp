@@ -157,8 +157,20 @@ DialogRandomMap::DialogRandomMap()
     text->setHtmlText(tr("Building Distribution"));
     text->setPosition(30, 5 + y + text->getHeight());
     pPanel->addItem(text);
-
     y += 40;
+
+    text = new oxygine::TextField();
+    text->setStyle(style);
+    text->setHtmlText(tr("Base Size:"));
+    text->setPosition(30, 5 + y + text->getHeight());
+    pPanel->addItem(text);
+    m_BaseSize = new Slider(pApp->getSettings()->getWidth() - 150 - width, 0, 100);
+    m_BaseSize->setCurrentValue(33);
+    m_BaseSize->setTooltipText(tr("The percent distribution between randomly placed buildings and buildings placed near each HQ. A lower distributes more buildings randomly across the whole map."));
+    m_BaseSize->setPosition(text->getX() + width, y);
+    pPanel->addItem(m_BaseSize);
+    y += 40;
+
     QVector<QString> buildingStrings = {tr("Factory"), tr("Airport"), tr("Harbour"), tr("Town")};
     QVector<qint32> buildingChances = {20, 10, 10, 60};
     m_BuildingChances = new Multislider(buildingStrings, pApp->getSettings()->getWidth() - 150, buildingChances);
@@ -183,8 +195,7 @@ DialogRandomMap::DialogRandomMap()
                          m_TerrainChances->getSliderValue(1), m_TerrainChances->getSliderValue(2),
                          m_TerrainChances->getSliderValue(3), m_TerrainChances->getSliderValue(4),
                          m_BuildingChances->getSliderValue(0), m_BuildingChances->getSliderValue(1),
-                         m_BuildingChances->getSliderValue(2)
-                         );
+                         m_BuildingChances->getSliderValue(2), m_BaseSize->getCurrentValue());
         detach();
     });
 

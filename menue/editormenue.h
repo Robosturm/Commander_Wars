@@ -229,7 +229,7 @@ public slots:
                          qint32 width,qint32 heigth, qint32 playerCount,
                          bool roadSupport, qint32 seed,
                          float forestchance, float mountainChance, float seachance, float buildingchance,
-                         float factoryChance, float airPortChance, float harbourChance);
+                         float factoryChance, float airPortChance, float harbourChance, float startBaseSize);
     /**
      * @brief createMarkedArea
      * @param pActor

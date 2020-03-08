@@ -23,7 +23,7 @@
 qint32 GameMap::randomMap(qint32 width,qint32 heigth, qint32 playerCount,
                           bool roadSupport, qint32 seed,
                           float forestchance, float mountainChance, float seachance, float buildingchance,
-                          float factoryChance, float airPortChance, float harbourChance)
+                          float factoryChance, float airPortChance, float harbourChance, float startBaseSize)
 {
     clearMap();
 
@@ -91,7 +91,7 @@ qint32 GameMap::randomMap(qint32 width,qint32 heigth, qint32 playerCount,
         fieldChance = minBuildings;
     }
     // place buildings
-    QVector<QPoint> basePoints = createBuildings(fieldChance, randInt, factoryChance, airPortChance, harbourChance);
+    QVector<QPoint> basePoints = createBuildings(fieldChance, randInt, factoryChance, airPortChance, harbourChance, startBaseSize);
 
     if (roadSupport)
     {
@@ -292,7 +292,7 @@ void GameMap::createRoad(QRandomGenerator& randInt, QVector<QPoint>& playerPosit
     }
 }
 
-QVector<QPoint> GameMap::createBuildings(qint32 buildings, QRandomGenerator& randInt, float factoryChance, float airPortChance, float harbourChance)
+QVector<QPoint> GameMap::createBuildings(qint32 buildings, QRandomGenerator& randInt, float factoryChance, float airPortChance, float harbourChance, float startBaseSize)
 {
     qint32 maximumBuildingTry = 1000;
     qint32 maxTries = maximumBuildingTry;
@@ -364,7 +364,7 @@ QVector<QPoint> GameMap::createBuildings(qint32 buildings, QRandomGenerator& ran
     // number of factorys at start
     qint32 factoryCount = static_cast<qint32>(Mainapp::roundUp(static_cast<float>(buildings) * factoryChance / static_cast<float>(players.size())) * players.size());
     qint32 factoryBase = players.size() * 2;
-    qint32 playerBuldings = static_cast<qint32>(Mainapp::roundUp(factoryCount * 0.6f / static_cast<float>(players.size())) * players.size());
+    qint32 playerBuldings = static_cast<qint32>(Mainapp::roundUp(factoryCount * startBaseSize / static_cast<float>(players.size())) * players.size());
     for (qint32 i = 0; i < factoryCount; i++)
     {
         qint32 x = -1;
@@ -414,7 +414,7 @@ QVector<QPoint> GameMap::createBuildings(qint32 buildings, QRandomGenerator& ran
 
     qint32 airportCount = static_cast<qint32>(Mainapp::roundUp(static_cast<float>(buildings) * airPortChance / static_cast<float>(players.size())) * players.size());
     qint32 airportBase = players.size() * 2;
-    playerBuldings = static_cast<qint32>(Mainapp::roundUp(airportCount * 0.6f / static_cast<float>(players.size())) * players.size());
+    playerBuldings = static_cast<qint32>(Mainapp::roundUp(airportCount * startBaseSize / static_cast<float>(players.size())) * players.size());
     for (qint32 i = 0; i < airportCount; i++)
     {
         qint32 x = -1;
@@ -461,7 +461,7 @@ QVector<QPoint> GameMap::createBuildings(qint32 buildings, QRandomGenerator& ran
     }
 
     qint32 harbourCount = static_cast<qint32>(Mainapp::roundUp(static_cast<float>(buildings) * harbourChance / static_cast<float>(players.size())) * players.size());
-    playerBuldings = static_cast<qint32>(Mainapp::roundUp(harbourCount * 0.6f / static_cast<float>(players.size())) * players.size());
+    playerBuldings = static_cast<qint32>(Mainapp::roundUp(harbourCount * startBaseSize / static_cast<float>(players.size())) * players.size());
     QVector<QPoint> harbourPoints;
     qint32 heigth = getMapHeight();
     qint32 width = getMapWidth();
@@ -532,7 +532,7 @@ QVector<QPoint> GameMap::createBuildings(qint32 buildings, QRandomGenerator& ran
 
     qint32 townCount = static_cast<qint32>(Mainapp::roundUp(static_cast<float>(buildings) * (1.0f - factoryChance - airPortChance - harbourChance)  / static_cast<float>(players.size())) * players.size());
     qint32 townBase = players.size() * 3;
-    playerBuldings = static_cast<qint32>(Mainapp::roundUp(townCount * 0.6f / static_cast<float>(players.size())) * players.size());
+    playerBuldings = static_cast<qint32>(Mainapp::roundUp(townCount * startBaseSize / static_cast<float>(players.size())) * players.size());
     for (qint32 i = 0; i < townCount; i++)
     {
         qint32 x = -1;

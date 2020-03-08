@@ -209,6 +209,7 @@ void ScriptDialogDialog::removeLast()
     if (m_Event->getDialogSize() > 0)
     {
         m_Event->removeDialog(m_Event->getDialogSize() - 1);
+        updateDialog();
     }
 }
 

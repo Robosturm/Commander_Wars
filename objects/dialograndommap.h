@@ -29,7 +29,7 @@ signals:
                      qint32 width,qint32 heigth, qint32 playerCount,
                      bool roadSupport, qint32 seed,
                      float forestchance, float mountainChance, float seachance, float buildingchance,
-                     float factoryChance, float airPortChance, float harbourChance);
+                     float factoryChance, float airPortChance, float harbourChance, float startBaseSize);
     void sigCancel();
 public slots:
 
@@ -47,6 +47,7 @@ private:
     spCheckbox m_CreateRoad;
     spMultislider m_TerrainChances;
     spMultislider m_BuildingChances;
+    spSlider m_BaseSize;
 
 };
 

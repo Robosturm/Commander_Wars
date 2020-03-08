@@ -1391,7 +1391,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../objects/dialograndommap.cpp" line="146"/>
-        <location filename="../objects/dialograndommap.cpp" line="162"/>
+        <location filename="../objects/dialograndommap.cpp" line="174"/>
         <source>Town</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1406,32 +1406,42 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="162"/>
+        <location filename="../objects/dialograndommap.cpp" line="164"/>
+        <source>Base Size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialograndommap.cpp" line="169"/>
+        <source>The percent distribution between randomly placed buildings and buildings placed near each HQ. A lower distributes more buildings randomly across the whole map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/dialograndommap.cpp" line="174"/>
         <source>Factory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="162"/>
+        <location filename="../objects/dialograndommap.cpp" line="174"/>
         <source>Airport</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="162"/>
+        <location filename="../objects/dialograndommap.cpp" line="174"/>
         <source>Harbour</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="165"/>
+        <location filename="../objects/dialograndommap.cpp" line="177"/>
         <source>The percent distribution between the different buildings when a building is placed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="173"/>
+        <location filename="../objects/dialograndommap.cpp" line="185"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialograndommap.cpp" line="192"/>
+        <location filename="../objects/dialograndommap.cpp" line="203"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3271,12 +3281,12 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/RUIN.js" line="46"/>
+        <location filename="../resources/scripts/terrain/RUIN.js" line="50"/>
         <source>In Fog of War conditions, the ruins provide ground unit </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/RUIN.js" line="47"/>
+        <location filename="../resources/scripts/terrain/RUIN.js" line="51"/>
         <source>hiding places.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3395,7 +3405,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="213"/>
-        <source>Fog of Shroud</source>
+        <source>Shroud of War</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
