@@ -177,7 +177,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
             {
                 items.append(tr("CO Style ") + QString::number(i));
             }
-            m_pPredefinedStyles = new DropDownmenu(200, items, true);
+            m_pPredefinedStyles = new DropDownmenu(200, items);
             m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 70 - m_pPredefinedStyles->getHeight());
             m_pSpriteBox->addChild(m_pPredefinedStyles);
         }
@@ -190,7 +190,7 @@ void DialogCOStyle::changeCOStyle(qint32 index)
             maskTable = baseColorTable.copy(0, 0, baseColorTable.width(), 1);
             QVector<QString> items;
             items.append(tr("CO Style ") + QString::number(0));
-            m_pPredefinedStyles = new DropDownmenu(200, items, true);
+            m_pPredefinedStyles = new DropDownmenu(200, items);
             m_pPredefinedStyles->setPosition(Settings::getWidth() / 2 + 10, Settings::getHeight() - 70 - m_pPredefinedStyles->getHeight());
             m_pSpriteBox->addChild(m_pPredefinedStyles);
         }

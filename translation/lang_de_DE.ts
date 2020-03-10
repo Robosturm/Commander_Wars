@@ -1480,7 +1480,7 @@ This is immediatly applied.</source>
 <context>
     <name>DropDownmenu</name>
     <message>
-        <location filename="../objects/dropdownmenu.cpp" line="33"/>
+        <location filename="../objects/dropdownmenu.cpp" line="27"/>
         <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3108,7 +3108,7 @@ This is immediatly applied.</source>
     <message>
         <location filename="../objects/playerselection.cpp" line="186"/>
         <location filename="../objects/playerselection.cpp" line="292"/>
-        <location filename="../objects/playerselection.cpp" line="611"/>
+        <location filename="../objects/playerselection.cpp" line="604"/>
         <source>Build List</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3182,32 +3182,32 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="471"/>
+        <location filename="../objects/playerselection.cpp" line="464"/>
         <source>Select the Color for this players army.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="489"/>
+        <location filename="../objects/playerselection.cpp" line="482"/>
         <source>Select who controls this player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="556"/>
+        <location filename="../objects/playerselection.cpp" line="549"/>
         <source>Select with how much funds this player starts the game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="575"/>
+        <location filename="../objects/playerselection.cpp" line="568"/>
         <source>Select the income modifier for this player. The base income for each building is multiplied with this value. For most buildings this means 1.0 equals 1000 funds and 1.1 equals 1100 funds per building.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="594"/>
+        <location filename="../objects/playerselection.cpp" line="587"/>
         <source>Select the team of this player. The team can&apos;t be changed and players of the same team can&apos;t attack each other.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/playerselection.cpp" line="630"/>
+        <location filename="../objects/playerselection.cpp" line="623"/>
         <source>Shows which player is ready to start the game. All players need to be checked in order to start a game.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3954,38 +3954,38 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="109"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="103"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="109"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="103"/>
         <source>Happy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="109"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="103"/>
         <source>Sad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="111"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="105"/>
         <source>The CO Mood/Icon that will be used for the dialog.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="158"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="152"/>
         <source>The ID of the CO that should talk.
 Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="183"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="176"/>
         <source>The background color of the dialog.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="192"/>
+        <location filename="../ingamescriptsupport/scriptdialogdialog.cpp" line="185"/>
         <source>load Background</source>
         <translation type="unfinished"></translation>
     </message>

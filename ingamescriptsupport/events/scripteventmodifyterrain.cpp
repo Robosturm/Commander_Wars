@@ -99,7 +99,7 @@ void ScriptEventModifyTerrain::showEditEvent(spScriptEditor pScriptEditor)
         pTerrain->loadSprites();
         return pTerrain;
     };
-    spDropDownmenuSprite pMenu = new DropDownmenuSprite(105, items, creator, false, 30);
+    spDropDownmenuSprite pMenu = new DropDownmenuSprite(105, items, creator, 30);
     pMenu->setTooltipText(tr("New Terrain which gets spawned. Note: all units on the terrain get deleted."));
     pMenu->setPosition(width, 150);
     pMenu->setCurrentItem(currentItem);

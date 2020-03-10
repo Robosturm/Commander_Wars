@@ -150,7 +150,7 @@ void ScriptEventAnimation::showEditEvent(spScriptEditor pScriptEditor)
     pText->setPosition(30, y);
     pBox->addItem(pText);
     QVector<QColor> colors = {Qt::white};
-    spDropDownmenuColor colorBox = new DropDownmenuColor(150, colors, true);
+    spDropDownmenuColor colorBox = new DropDownmenuColor(150, colors);
     colorBox->setTooltipText(tr("Recoloring color for the animation sprite."));
     colorBox->setPosition(width, y);
     colorBox->setCurrentItem(color);

@@ -100,14 +100,8 @@ void ScriptDialogDialog::updateDialog()
         {
             pDialog->text = text;
         });
-
-        bool up = false;
-        if (i >= 5)
-        {
-            up = true;
-        }
         QVector<QString> moods = {tr("Normal"), tr("Happy"), tr("Sad")};
-        spDropDownmenu moodMenu = new DropDownmenu(150, moods, up);
+        spDropDownmenu moodMenu = new DropDownmenu(150, moods);
         moodMenu->setTooltipText(tr("The CO Mood/Icon that will be used for the dialog."));
         moodMenu->setPosition(posX, y);
         moodMenu->setCurrentItem(static_cast<qint32>(pDialog->mood));
@@ -154,7 +148,7 @@ void ScriptDialogDialog::updateDialog()
             return pSprite;
         };
 
-        spDropDownmenuSprite coidsMenu = new DropDownmenuSprite(150, ids, creator, up);
+        spDropDownmenuSprite coidsMenu = new DropDownmenuSprite(150, ids, creator);
         coidsMenu->setTooltipText(tr("The ID of the CO that should talk.\nNote: CO 1 and CO 2 represent the CO of the current Player."));
         coidsMenu->setPosition(posX + 150, y);
         coidsMenu->setCurrentItem(pDialog->coid);
@@ -172,14 +166,13 @@ void ScriptDialogDialog::updateDialog()
         QVector<QColor> playerColors;
         for (qint32 i = 0; i < colorCount; i++)
         {
-            Mainapp* pApp = Mainapp::getInstance();
             QString function = "getDefaultColor";
             QJSValueList args;
             args << i;
             ret = pInterpreter->doFunction("PLAYER", function, args);
             playerColors.append(QColor(ret.toString()));
         }
-        spDropDownmenuColor colors = new DropDownmenuColor(110, playerColors, up);
+        spDropDownmenuColor colors = new DropDownmenuColor(110, playerColors);
         colors->setTooltipText(tr("The background color of the dialog."));
         colors->setPosition(posX + 350, y);
         colors->setCurrentItem(pDialog->color);

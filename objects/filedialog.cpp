@@ -72,7 +72,7 @@ FileDialog::FileDialog(QString startFolder, QVector<QString> wildcards, QString 
         detach();
     });
     // drop down menu
-    m_DropDownmenu = new DropDownmenu(m_CurrentFile->getWidth(), wildcards, true);
+    m_DropDownmenu = new DropDownmenu(m_CurrentFile->getWidth(), wildcards);
     pSpriteBox->addChild(m_DropDownmenu);
     m_DropDownmenu->setPosition(30, m_CurrentFile->getY() + m_CurrentFile->getHeight() + 10);
     connect(m_DropDownmenu.get(), &DropDownmenu::sigItemChanged, this, &FileDialog::filterChanged, Qt::QueuedConnection);

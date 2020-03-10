@@ -175,7 +175,7 @@ void ScriptEventSpawnUnit::showEditEvent(spScriptEditor pScriptEditor)
         pSprite->setOwner(nullptr);
         return pSprite;
     };
-    spDropDownmenuSprite pMenu = new DropDownmenuSprite(105, items, creator, false, 30);
+    spDropDownmenuSprite pMenu = new DropDownmenuSprite(105, items, creator, 30);
     pMenu->setTooltipText(tr("Unit which gets spawned."));
     pMenu->setPosition(width, 150);
     pMenu->setCurrentItem(currentItem);

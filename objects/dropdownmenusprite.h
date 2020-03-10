@@ -7,23 +7,16 @@
 #include <oxygine-framework.h>
 
 #include "objects/panel.h"
-#include "objects/tooltip.h"
+#include "objects/dropdownmenubase.h"
 
 class DropDownmenuSprite;
 typedef oxygine::intrusive_ptr<DropDownmenuSprite> spDropDownmenuSprite;
 
-class DropDownmenuSprite : public Tooltip
+class DropDownmenuSprite : public DropDownmenuBase
 {
     Q_OBJECT
 public:
-    explicit DropDownmenuSprite(qint32 width, QVector<QString>& items, std::function<oxygine::spActor(QString item)> creator, bool up = false, qint32 dropDownWidth = -1);
-
-
-    /**
-     * @brief getCurrentItem index of the current item
-     * @return
-     */
-    qint32 getCurrentItem() const;
+    explicit DropDownmenuSprite(qint32 width, QVector<QString>& items, std::function<oxygine::spActor(QString item)> creator, qint32 dropDownWidth = -1);
     /**
      * @brief getCurrentItemText text of the current item
      * @return
@@ -38,34 +31,20 @@ public:
      * @brief setCurrentItem
      * @param index
      */
-    void setCurrentItem(qint32 index);
-    /**
-     * @brief getItemCount
-     * @return
-     */
-    inline qint32 getItemCount()
-    {
-        return m_ItemTexts.size();
-    }
-
-
-    virtual void setEnabled(bool value) override;
+    virtual void setCurrentItem(qint32 index) override;
 signals:
     void sigItemChanged(qint32 item);
 public slots:
-
+    virtual void itemChanged(qint32 item) override;
+protected:
+    void addDropDownText(QString spriteID, qint32 id, qint32 dropDownWidth);
 private:
-    oxygine::spBox9Sprite m_Textbox;
-    oxygine::spClipRectActor m_pClipActor;
-    oxygine::spButton m_pArrowDown;
     QVector<QString> m_ItemTexts;
     std::function<oxygine::spActor(QString item)> m_Creator;
     QVector<oxygine::spBox9Sprite> m_Items;
     QString m_currentText;
-    spPanel m_Panel;
-    qint32 m_currentItem{0};
 
-    void addDropDownItem(QString spriteID, qint32 id, qint32 dropDownWidth);
+
 };
 
 #endif // DROPDOWNMENUSPRITE_H

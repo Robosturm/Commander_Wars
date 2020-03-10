@@ -81,7 +81,7 @@ COBannListDialog::COBannListDialog(QStringList cobannlist)
         std::tuple<QString, QStringList> data = Mainapp::readList(file);
         items.append(std::get<0>(data));
     }
-    m_PredefinedLists = new DropDownmenu(230, items, true);
+    m_PredefinedLists = new DropDownmenu(230, items);
 
     m_PredefinedLists->setPosition(pApp->getSettings()->getWidth() / 2 + 40 - m_PredefinedLists->getWidth(), pApp->getSettings()->getHeight() - 30 - m_ToggleAll->getHeight());
     pSpriteBox->addChild(m_PredefinedLists);

@@ -459,15 +459,8 @@ void PlayerSelection::showPlayerSelection()
             }
         }
 
-        bool up = false;
-        if ((pMap->getPlayerCount() - i <= 5) &&
-            (i > 5))
-        {
-            up = true;
-        }
-
         itemIndex++;
-        spDropDownmenuColor playerColor = new DropDownmenuColor(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, playerColors, up);
+        spDropDownmenuColor playerColor = new DropDownmenuColor(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, playerColors);
         playerColor->setTooltipText(tr("Select the Color for this players army."));
         playerColor->setPosition(xPositions[itemIndex], y);
         playerColor->setCurrentItem(pMap->getPlayer(i)->getColor());
@@ -485,7 +478,7 @@ void PlayerSelection::showPlayerSelection()
         }
 
         itemIndex++;
-        spDropDownmenu playerAi = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, aiList, up);
+        spDropDownmenu playerAi = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, aiList);
         playerAi->setTooltipText(tr("Select who controls this player."));
         playerAi->setPosition(xPositions[itemIndex], y);
         if (m_pCampaign.get() != nullptr)
@@ -590,7 +583,7 @@ void PlayerSelection::showPlayerSelection()
         }
 
         itemIndex++;
-        spDropDownmenu playerTeam = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, teamList, up);
+        spDropDownmenu playerTeam = new DropDownmenu(xPositions[itemIndex + 1] - xPositions[itemIndex] - 10, teamList);
         playerTeam->setTooltipText(tr("Select the team of this player. The team can't be changed and players of the same team can't attack each other."));
         playerTeam->setPosition(xPositions[itemIndex], y);
         playerTeam->setCurrentItem(pMap->getPlayer(i)->getTeam());
