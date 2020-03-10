@@ -32,6 +32,8 @@
 
 #include "objects/dialogmodifyterrain.h"
 
+#include "objects/dialogmessagebox.h"
+
 #include "ingamescriptsupport/scripteditor.h"
 
 #include "ingamescriptsupport/campaigneditor.h"
@@ -152,6 +154,10 @@ EditorMenue::EditorMenue()
     QDir dir("temp/");
     dir.removeRecursively();
     dir.mkpath(".");
+
+    m_autosaveTimer.setSingleShot(false);
+    connect(&m_autosaveTimer, &QTimer::timeout, this, &EditorMenue::autosave, Qt::QueuedConnection);
+    m_autosaveTimer.start(60 * 1000);
 }
 
 EditorMenue::~EditorMenue()
@@ -277,11 +283,14 @@ void EditorMenue::clickedTopbar(QString itemID)
     pApp->suspendThread();
     if (itemID == "EXIT")
     {
-        Console::print("Leaving Editor Menue", Console::eDEBUG);
-        oxygine::getStage()->addChild(new Mainwindow());
-        addRef();
-        oxygine::Actor::detach();
-        deleteLater();
+        m_Focused = false;
+        spDialogMessageBox pExit = new DialogMessageBox(tr("Do you want to exit the editor?"), true);
+        connect(pExit.get(), &DialogMessageBox::sigOk, this, &EditorMenue::exitEditor, Qt::QueuedConnection);
+        connect(pExit.get(), &DialogMessageBox::sigCancel, [=]()
+        {
+            m_Focused = true;
+        });
+        addChild(pExit);
     }
     else if (itemID == "SAVEMAP")
     {
@@ -581,11 +590,11 @@ void EditorMenue::KeyInput(oxygine::KeyEvent event)
         {
             case Qt::Key_Escape:
             {
-                Console::print("Leaving Editor Menue", Console::eDEBUG);
-                oxygine::getStage()->addChild(new Mainwindow());
-                addRef();
-                oxygine::Actor::detach();
-                deleteLater();
+//                Console::print("Leaving Editor Menue", Console::eDEBUG);
+//                oxygine::getStage()->addChild(new Mainwindow());
+//                addRef();
+//                oxygine::Actor::detach();
+//                deleteLater();
                 break;
             }
             case Qt::Key_Y:
@@ -1700,4 +1709,21 @@ void EditorMenue::pasteSelection(qint32 x, qint32 y, bool click)
             }
         }
     }
+}
+
+void EditorMenue::exitEditor()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    Console::print("Leaving Editor Menue", Console::eDEBUG);
+    oxygine::getStage()->addChild(new Mainwindow());
+    addRef();
+    oxygine::Actor::detach();
+    deleteLater();
+    pApp->continueThread();
+}
+
+void EditorMenue::autosave()
+{
+    saveMap("maps/autosave.map");
 }

@@ -246,6 +246,14 @@ public slots:
      * @brief pasteSelection
      */
     void pasteSelection(qint32 x, qint32 y, bool click);
+    /**
+     * @brief exitEditor
+     */
+    void exitEditor();
+    /**
+     * @brief autosave
+     */
+    void autosave();
 private:
     spEditorSelection m_EditorSelection{nullptr};
     EditorModes m_EditorMode{EditorModes::PlaceEditorSelection};
@@ -259,6 +267,8 @@ private:
     QRect copyRect{-1, -1, 0, 0};
     oxygine::spActor copyRectActor{new oxygine::Actor()};
     oxygine::spActor cursorActor{new oxygine::Actor()};
+
+    QTimer m_autosaveTimer;
 };
 
 #endif // EDITORMENUE_H
