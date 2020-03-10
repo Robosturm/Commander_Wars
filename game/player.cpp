@@ -267,6 +267,39 @@ qint32 Player::getBuildingCount(QString buildingID)
     return ret;
 }
 
+qint32 Player::getBuildingListCount(QStringList list, bool whitelist)
+{
+    qint32 ret = 0;
+    GameMap* pMap = GameMap::getInstance();
+    if (pMap != nullptr)
+    {
+        for (qint32 y = 0; y < pMap->getMapHeight(); y++)
+        {
+            for (qint32 x = 0; x < pMap->getMapWidth(); x++)
+            {
+                spBuilding pBuilding = pMap->getSpTerrain(x, y)->getSpBuilding();
+                if (pBuilding.get() != nullptr)
+                {
+                    if (pBuilding->getOwner() == this)
+                    {
+                        QString id = pBuilding->getBuildingID();
+                        if (list.isEmpty() ||
+                            (list.contains(id) && whitelist) ||
+                            (!list.contains(id) && !whitelist))
+                        {
+                            if (pBuilding->getX() == x && pBuilding->getY() == y)
+                            {
+                                ret++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return ret;
+}
+
 qint32 Player::getUnitCount(QString unitID)
 {
     qint32 ret = 0;

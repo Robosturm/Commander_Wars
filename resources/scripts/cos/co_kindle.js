@@ -200,7 +200,7 @@ var Constructor = function()
                     {
                         ret = 130;
                     }
-                    ret += co.getOwner().getBuildingCount() * 3 + 10;
+                    ret += co.getOwner().getBuildingListCount(["TEMPORARY_AIRPORT", "TEMPORARY_HARBOUR"], false) * 3 + 10;
                     return ret;
                 case GameEnums.PowerMode_Power:
                     if (building !== null)

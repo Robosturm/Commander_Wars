@@ -615,10 +615,16 @@ void GameMap::replaceTerrain(QString terrainID, qint32 x, qint32 y, bool useTerr
         pApp->suspendThread();
         spTerrain pTerrainOld = fields.at(y)->at(x);
         pTerrainOld->removeBuilding();
+        pTerrainOld->setUnit(nullptr);
 
         spTerrain pTerrain = Terrain::createTerrain(terrainID, x, y, pTerrainOld->getBaseTerrainID());
-        if (useTerrainAsBaseTerrain)
-        {            
+
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QString function1 = "useTerrainAsBaseTerrain";
+        QJSValue terrainAsBaseTerrain = pInterpreter->doFunction(terrainID, function1);
+
+        if (useTerrainAsBaseTerrain && terrainAsBaseTerrain.toBool() && canBePlaced(terrainID, x, y))
+        {
             pTerrainOld->detach();
             pTerrain->setBaseTerrain(pTerrainOld);
             fields.at(y)->replace(x, pTerrain);

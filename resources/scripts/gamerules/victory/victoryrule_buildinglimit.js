@@ -60,7 +60,7 @@ var Constructor = function()
         var buildingCount = 0;
         for (var i = 0; i < players; i++)
         {
-            var count = map.getPlayer(i).getBuildingCount();
+            var count = map.getPlayer(i).getBuildingListCount(["TEMPORARY_AIRPORT", "TEMPORARY_HARBOUR"], false);
             if (count > buildingCount)
             {
                 buildingCount = count;
@@ -76,7 +76,7 @@ var Constructor = function()
 
     this.getBuildings = function(rule, player)
     {
-        var count = player.getBuildingCount();
+        var count = player.getBuildingListCount(["TEMPORARY_AIRPORT", "TEMPORARY_HARBOUR"], false);
         var players = map.getPlayerCount();
         var teamVictory = VICTORYRULE_BUILDINGLIMIT.getRuleValue(rule, 1);
         if (teamVictory === 1)
@@ -87,7 +87,7 @@ var Constructor = function()
                 if ((player !== ally) &&
                     (player.getTeam() === ally.getTeam()))
                 {
-                    count += ally.getBuildingCount();
+                    count += ally.getBuildingListCount(["TEMPORARY_AIRPORT", "TEMPORARY_HARBOUR"], false);
                 }
             }
         }

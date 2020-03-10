@@ -36,7 +36,7 @@ void ScriptEventModifyTerrain::writeEvent(QTextStream& rStream)
     rStream <<  "            map.replaceTerrain(\""
             << m_newTerrainID << "\", "
             << QString::number(m_x) << ", "
-            << QString::number(m_y) << ", true, true); // "
+            << QString::number(m_y) << ", false, true); // "
             << QString::number(getVersion()) << " " << EventModifyTerrain << "\n";
 }
 

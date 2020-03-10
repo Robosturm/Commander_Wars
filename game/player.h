@@ -296,6 +296,13 @@ public slots:
      */
     qint32 getBuildingCount(QString buildingID = "");
     /**
+     * @brief getBuildingListCount
+     * @param list
+     * @param whitelist
+     * @return
+     */
+    qint32 getBuildingListCount(QStringList list, bool whitelist = true);
+    /**
      * @brief getUnitCount
      * @return
      */
