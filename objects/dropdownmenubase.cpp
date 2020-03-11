@@ -111,6 +111,7 @@ void DropDownmenuBase::hideDropDown()
         m_OriginalOwner->addChild(this);
         releaseRef();
         setPosition(m_OriginalPosition);
+        m_OriginalOwner = nullptr;
     }
     setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     pApp->continueThread();

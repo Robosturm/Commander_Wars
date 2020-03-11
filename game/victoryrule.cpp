@@ -195,7 +195,6 @@ void VictoryRule::checkDefeat()
     for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
     {
         Player* pPlayer = pMap->getPlayer(i);
-        Mainapp* pApp = Mainapp::getInstance();
         QString function1 = "checkDefeat";
         QJSValueList args1;
         QJSValue obj1 = pInterpreter->newQObject(this);

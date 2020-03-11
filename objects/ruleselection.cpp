@@ -33,14 +33,17 @@ RuleSelection::~RuleSelection()
         QStringList inputTypes = pRule->getRuleType();
         if (inputTypes[0] == VictoryRule::checkbox)
         {
-            if (pRule->getRuleValue(0) == 0)
+            qint32 ruleValue = pRule->getRuleValue(0);
+            if (ruleValue == 0)
             {
                 pMap->getGameRules()->removeVictoryRule(ruleID);
             }
         }
         else if (inputTypes[0] == VictoryRule::spinbox)
         {
-            if (pRule->getRuleValue(0) == pRule->getInfiniteValue(0))
+            qint32 ruleValue = pRule->getRuleValue(0);
+            qint32 infiniteValue = pRule->getInfiniteValue(0);
+            if (ruleValue <= infiniteValue)
             {
                 pMap->getGameRules()->removeVictoryRule(ruleID);
             }
