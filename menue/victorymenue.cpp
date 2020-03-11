@@ -368,15 +368,18 @@ VictoryMenue::VictoryMenue(bool multiplayer)
                     QString resAnim = pCO->getCoID().toLower() + "+face";
                     pAnim = pCOSpriteManager->getResAnim(resAnim);
                     QString sentence = "";
-                    if (winnerTeam == pPlayer->getTeam())
+                    if (pAnim != nullptr)
                     {
-                        sentence = pCO->getVictorySentence();
-                        pCOSprite->setResAnim(pAnim, static_cast<qint32>(GameEnums::COMood_Happy));
-                    }
-                    else
-                    {
-                        sentence = pCO->getDefeatSentence();
-                        pCOSprite->setResAnim(pAnim, static_cast<qint32>(GameEnums::COMood_Sad));
+                        if (winnerTeam == pPlayer->getTeam())
+                        {
+                            sentence = pCO->getVictorySentence();
+                            pCOSprite->setResAnim(pAnim, static_cast<qint32>(GameEnums::COMood_Happy));
+                        }
+                        else
+                        {
+                            sentence = pCO->getDefeatSentence();
+                            pCOSprite->setResAnim(pAnim, static_cast<qint32>(GameEnums::COMood_Sad));
+                        }
                     }
                     m_VictoryPanel->addItem(pCOSprite);
 

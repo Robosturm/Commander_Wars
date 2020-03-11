@@ -12,6 +12,8 @@
 #include "ai/targetedunitpathfindingsystem.h"
 #include "resource_management/weaponmanager.h"
 
+#include "QElapsedTimer"
+
 const float NormalAi::notAttackableDamage = 25.0f;
 const float NormalAi::midDamage = 55.0f;
 const float NormalAi::highDamage = 65.0f;
@@ -1368,6 +1370,8 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                           QmlVectorUnit* pEnemyUnits, QmlVectorBuilding* pEnemyBuildings)
 {
     aiStep = AISteps::buildUnits;
+
+
     GameMap* pMap = GameMap::getInstance();
     WeaponManager* pWeaponManager = WeaponManager::getInstance();
     qint32 enemeyCount = 0;
@@ -1517,6 +1521,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
     {
         variance = 10.0f;
     }
+    QmlVectorPoint* pFields = Mainapp::getCircle(1, 1);
     for (qint32 i = 0; i < pBuildings->size(); i++)
     {
         Building* pBuilding = pBuildings->at(i);
@@ -1528,17 +1533,19 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
             {
                 // we're allowed to build units here
                 MenuData* pData = pAction->getMenuStepData();
+                auto enableList = pData->getEnabledList();
+                auto actionIds = pData->getActionIDs();
                 QVector<qint32> actions;
                 for (qint32 i2 = 0; i2 < pData->getActionIDs().size(); i2++)
                 {
-                    if (pData->getEnabledList()[i2])
+                    if (enableList[i2])
                     {
-                        Unit dummy(pData->getActionIDs()[i2], m_pPlayer, false);
+                        Unit dummy(actionIds[i2], m_pPlayer, false);
                         dummy.setVirtuellX(pBuilding->getX());
                         dummy.setVirtuellY(pBuilding->getY());
                         createIslandMap(dummy.getMovementType(), dummy.getUnitID());
                         bool canMove = false;
-                        QmlVectorPoint* pFields = Mainapp::getCircle(1, 1);
+
                         for (qint32 i3 = 0; i3 < pFields->size(); i3++)
                         {
                             qint32 x = pBuilding->getX() + pFields->at(i3).x();
@@ -1550,7 +1557,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                                 break;
                             }
                         }
-                        delete pFields;
+
                         if (canMove)
                         {
                             float score = 0.0f;
@@ -1648,6 +1655,8 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
 
         }
     }
+    delete pFields;
+
     if (buildingIdx.size() > 0)
     {
         qint32 item = Mainapp::randInt(0, buildingIdx.size() - 1);

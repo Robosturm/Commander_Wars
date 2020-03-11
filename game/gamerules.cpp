@@ -960,6 +960,7 @@ void GameRules::deserializeObject(QDataStream& pStream)
         pStream >> intervall;
         m_RoundTimer.setInterval(intervall);
     }
+    COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
     m_COBannlist.clear();
     if (version > 3)
     {
@@ -970,12 +971,14 @@ void GameRules::deserializeObject(QDataStream& pStream)
         {
             QString coid;
             pStream >> coid;
-            m_COBannlist.append(coid);
+            if (pCOSpriteManager->existsCO(coid))
+            {
+                m_COBannlist.append(coid);
+            }
         }
     }
     if (version <= 3 || !m_COBannlistEdited)
     {
-        COSpriteManager* pCOSpriteManager = COSpriteManager::getInstance();
         for (qint32 i = 0; i < pCOSpriteManager->getCOCount(); i++)
         {
             m_COBannlist.append(pCOSpriteManager->getCOID(i));
