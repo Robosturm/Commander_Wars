@@ -144,6 +144,13 @@ void ScriptData::writeScript(QTextStream& rStream)
     rStream << "        return " + QVariant(startMode).toString() +  ";\n";
     rStream << "    }; // " + immediateStart + "\n";
 
+    rStream << "    this.getVictoryInfo = function()\n";
+    rStream << "    {\n";
+    rStream << "        var variables = map.getGameScript().getVariables();\n";
+    rStream << "        var text = variables.createVariable(\"victory_info\");\n";
+    rStream << "        return text.readDataString();\n";
+    rStream << "        };\n";
+
     rStream << "    this.victory = function(team) { // " + victory + "\n";
     for (qint32 i = 0; i < m_Victory.size(); i++)
     {

@@ -50,7 +50,7 @@ signals:
 public slots:
     virtual void itemChanged(qint32 item) = 0;
 
-private slots:
+public slots:
     void showDropDown();
     void hideDropDown();
 protected:

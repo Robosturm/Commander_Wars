@@ -27,6 +27,7 @@ public:
     static const QString EventModifyUnit;
     static const QString EventAnimation;
     static const QString EventModifyTerrain;
+    static const QString EventVictoryInfo;
 
     enum class EventType
     {
@@ -40,6 +41,7 @@ public:
         modifyTerrain,
         modifyUnit,
         animation,
+        // victoryInfo,
     };
 
     static spScriptEvent createEvent(EventType type);

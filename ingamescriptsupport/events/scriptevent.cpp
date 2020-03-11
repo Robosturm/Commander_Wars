@@ -21,6 +21,7 @@ const QString ScriptEvent::EventChangeCOBar = "Change CO Bar";
 const QString ScriptEvent::EventModifyUnit = "Modify Unit";
 const QString ScriptEvent::EventAnimation = "Animation";
 const QString ScriptEvent::EventModifyTerrain = "Modify Terrain";
+const QString ScriptEvent::EventVictoryInfo = "Victory Info";
 
 ScriptEvent::ScriptEvent(EventType type)
     : QObject(),

@@ -2,6 +2,8 @@
 #include "coreengine/mainapp.h"
 #include "resource_management/objectmanager.h"
 
+#include "objects/dropdownmenubase.h"
+
 Panel::Panel(bool useBox, QSize size, QSize contentSize)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -63,7 +65,50 @@ void Panel::scrolledY(float value)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_ContentRect->setY(-value * (m_ContentRect->getHeight() - m_ClipRect->getHeight()));
+
+    hideItems();
+
     pApp->continueThread();
+}
+
+void Panel::hideItems()
+{
+    oxygine::spActor child =  m_ContentRect->getFirstChild();
+    while (child)
+    {
+        Tooltip* pTooltip = dynamic_cast<Tooltip*>(child.get());
+        DropDownmenuBase* pDropDownmenuBase = dynamic_cast<DropDownmenuBase*>(child.get());
+        if (pTooltip != nullptr)
+        {
+            pTooltip->hideTooltip();
+        }
+        if (pDropDownmenuBase != nullptr)
+        {
+            pDropDownmenuBase->hideDropDown();
+        }
+        hideItems(child);
+        child = child->getNextSibling();
+    }
+}
+
+void Panel::hideItems(oxygine::spActor parent)
+{
+    oxygine::spActor child =  parent->getFirstChild();
+    while (child)
+    {
+        Tooltip* pTooltip = dynamic_cast<Tooltip*>(child.get());
+        DropDownmenuBase* pDropDownmenuBase = dynamic_cast<DropDownmenuBase*>(child.get());
+        if (pTooltip != nullptr)
+        {
+            pTooltip->hideTooltip();
+        }
+        if (pDropDownmenuBase != nullptr)
+        {
+            pDropDownmenuBase->hideDropDown();
+        }
+        hideItems(child);
+        child = child->getNextSibling();
+    }
 }
 
 void Panel::scrolledX(float value)
@@ -71,6 +116,7 @@ void Panel::scrolledX(float value)
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
     m_ContentRect->setX(-value * (m_ContentRect->getWidth() - m_ClipRect->getWidth()));
+    hideItems();
     pApp->continueThread();
 }
 

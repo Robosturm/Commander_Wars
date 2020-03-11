@@ -40,6 +40,9 @@ public slots:
     void scrolledY(float value);
     void scrolledX(float value);
 private:
+    void hideItems();
+    void hideItems(oxygine::spActor parent);
+private:
     oxygine::spBox9Sprite m_Panelbox;
     oxygine::spClipRectActor m_ClipRect;
     oxygine::spActor m_ContentRect;

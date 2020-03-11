@@ -97,7 +97,12 @@ void DropDownmenuBase::hideDropDown()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->suspendThread();
-    if (m_Panel->getVisible())
+    if (m_OriginalOwner.get() != nullptr &&
+        m_OriginalOwner->getParent() == nullptr)
+    {
+        m_OriginalOwner = nullptr;
+    }
+    else if (m_Panel->getVisible())
     {
         setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
         if (m_Tooltip)
