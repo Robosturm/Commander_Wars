@@ -104,17 +104,15 @@ void DropDownmenuBase::hideDropDown()
     }
     else if (m_Panel->getVisible())
     {
-        setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
-        if (m_Tooltip)
-        {
-            m_Tooltip->setVisible(false);
-        }
         m_Panel->setVisible(false);
+        hideTooltip();
+        stopTooltiptimer();
         addRef();
         m_OriginalOwner->addChild(this);
         releaseRef();
         setPosition(m_OriginalPosition);
     }
+    setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
     pApp->continueThread();
 }
 
@@ -158,7 +156,8 @@ const oxygine::Vector2& DropDownmenuBase::addDropDownItem(oxygine::spActor item,
     pBox->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
         m_currentItem = id;
-        this->m_Panel->setVisible(false);
+        pBox->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(1));
+        emit sigHideDropDown();
         emit sigItemChangedInternal(m_currentItem);
     });
     return pBox->getSize();

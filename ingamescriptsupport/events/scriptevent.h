@@ -41,7 +41,7 @@ public:
         modifyTerrain,
         modifyUnit,
         animation,
-        // victoryInfo,
+        victoryInfo,
     };
 
     static spScriptEvent createEvent(EventType type);

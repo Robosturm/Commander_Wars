@@ -16,6 +16,10 @@ Tooltip::Tooltip()
     {
         emit sigStartTooltip();
     });
+    addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    {
+        emit sigStartTooltip();
+    });
     addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
     {
         emit sigStopTooltip();
@@ -23,7 +27,7 @@ Tooltip::Tooltip()
     });
     addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        emit sigStartTooltip();
+        emit sigStopTooltip();
     });
 
     connect(this, &Tooltip::sigHideTooltip, this, &Tooltip::hideTooltip, Qt::QueuedConnection);
@@ -139,6 +143,7 @@ void Tooltip::hideTooltip()
     {
         m_Tooltip->detach();
         m_Tooltip = nullptr;
+        stopTooltiptimer();
     }
     pApp->continueThread();
 }

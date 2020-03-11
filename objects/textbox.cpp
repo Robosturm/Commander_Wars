@@ -6,7 +6,7 @@
 #include "qguiapplication.h"
 #include "qclipboard.h"
 
-Textbox::Textbox(qint32 width)
+Textbox::Textbox(qint32 width, qint32 heigth)
 {
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
@@ -23,17 +23,21 @@ Textbox::Textbox(qint32 width)
     style.color = QColor(255, 255, 255, 255);
     style.vAlign = oxygine::TextStyle::VALIGN_DEFAULT;
     style.hAlign = oxygine::TextStyle::HALIGN_LEFT;
-    style.multiline = false;
+    style.multiline = (heigth > 0);
     m_Textfield->setStyle(style);
     m_Textfield->setHtmlText("");
 
 
     oxygine::spClipRectActor pClipActor = new oxygine::ClipRectActor();
 
+    if (heigth < 0)
+    {
+        heigth = 40;
+    }
     m_Textfield->attachTo(pClipActor);
     m_Textbox->addChild(pClipActor);
-    m_Textbox->setSize(width, 40);
-    this->setSize(width, 40);
+    m_Textbox->setSize(width, heigth);
+    this->setSize(width, heigth);
     m_Textfield->setWidth(m_Textbox->getWidth() - 20);
     m_Textfield->setHeight(m_Textbox->getHeight());
     pClipActor->setSize(m_Textfield->getSize());

@@ -94,6 +94,7 @@ void Topbar::addItem(QString text, QString itemID, qint32 group, QString tooltip
                 m_Items.at(i)->at(i2)->setVisible(false);
             }
         }
+        emit pTooltip->sigHideTooltip();
         emit sigItemClicked(itemID);
     });
     addChild(pTooltip);

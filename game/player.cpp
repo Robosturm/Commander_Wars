@@ -445,8 +445,6 @@ qint32 Player::calcIncome(float modifier)
 
 void Player::earnMoney(float modifier)
 {
-
-
     setFunds(funds + calcIncome(modifier));
 }
 

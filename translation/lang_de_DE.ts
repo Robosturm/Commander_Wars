@@ -4013,54 +4013,54 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="95"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="96"/>
         <source>The new event that should happen once the conditions are met.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="99"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="100"/>
         <source>Add Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="112"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="113"/>
         <source>Immediate Start: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="116"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="117"/>
         <source>If checked the game starts without beeing able to change rules, players or co&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="123"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="124"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="132"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="133"/>
         <source>Save Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="139"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="140"/>
         <source>Load Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="280"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="361"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="281"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="362"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="287"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="368"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="288"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="369"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="295"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="296"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4450,6 +4450,14 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="194"/>
         <source>Radius around the given location at which the unit gets tried to be spawned, if either the field is blocked or the unit can&apos;t move over the given field.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ScriptEventVictoryInfo</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventvictoryinfo.cpp" line="60"/>
+        <source>Victory Info: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

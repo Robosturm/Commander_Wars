@@ -7,10 +7,10 @@
 
 #include "coreengine/mainapp.h"
 
-#include "objects/spinbox.h"
+#include "objects/textbox.h"
 
 ScriptEventVictoryInfo::ScriptEventVictoryInfo()
-    : ScriptEvent (EventType::addFunds)
+    : ScriptEvent (EventType::victoryInfo)
 {
 
 }
@@ -19,20 +19,18 @@ ScriptEventVictoryInfo::ScriptEventVictoryInfo()
 void ScriptEventVictoryInfo::readEvent(QTextStream& rStream)
 {
     QString line = rStream.readLine().simplified();
-    QStringList items = line.replace("map.getPlayer(", "")
-                            .replace(").addFunds(", ",")
-                            .replace("); // ", ",").split(",");
-    if (items.size() >= 2)
+    QStringList items = line.replace("variables.createVariable(\"victory_info\").writeDataString(\"", "")
+                            .replace("\"); // ", ",").split(",");
+    if (items.size() >= 1)
     {
-        player = items[0].toInt();
-        funds = items[1].toInt();
+        info = items[0];
     }
 }
 
 void ScriptEventVictoryInfo::writeEvent(QTextStream& rStream)
 {
-    rStream <<  "            map.getPlayer(" << QString::number(player) << ").addFunds(" + QString::number(funds) + "); // "
-            << QString::number(getVersion()) << " " << EventAddFunds << "\n";
+    rStream <<  "            variables.createVariable(\"victory_info\").writeDataString(\"" << info << "\"); // "
+            << QString::number(getVersion()) << " " << EventVictoryInfo << "\n";
 }
 
 QString ScriptEventVictoryInfo::getInfo() const
@@ -59,35 +57,19 @@ void ScriptEventVictoryInfo::showEditEvent(spScriptEditor pScriptEditor)
 
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Player: "));
+    pText->setHtmlText(tr("Victory Info: "));
     pText->setPosition(30, 30);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(150, 1, 9999);
-    spinBox->setTooltipText(tr("Player that earns the given amount of funds."));
-    spinBox->setPosition(width, 30);
-    spinBox->setCurrentValue(player + 1);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
-            [=](qreal value)
-    {
-        setPlayer(static_cast<qint32>(value) - 1);
-    });
-    pBox->addItem(spinBox);
 
-    pText = new oxygine::TextField();
-    pText->setStyle(style);
-    pText->setHtmlText(tr("Funds: "));
-    pText->setPosition(30, 70);
-    pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 999999);
-    spinBox->setTooltipText(tr("The funds the given player will earn."));
-    spinBox->setPosition(width, 70);
-    spinBox->setCurrentValue(funds);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
-            [=](qreal value)
+    spTextbox pTextBox = new Textbox(Settings::getWidth() - width - 40, Settings::getHeight() - 100);
+    pTextBox->setCurrentText(info);
+    pTextBox->setPosition(width, 30);
+    pTextBox->setTooltipText("Additional info text shown in the victory info screen. Replaces the last set text with this one.");
+    connect(pTextBox.get(), &Textbox::sigTextChanged, [=](QString value)
     {
-        setFunds(static_cast<qint32>(value));
+        setInfo(value);
     });
-    pBox->addItem(spinBox);
+    pBox->addItem(pTextBox);
 
     pScriptEditor->addChild(pBox);
     connect(pBox.get(), &GenericBox::sigFinished, pScriptEditor.get(), &ScriptEditor::updateEvents, Qt::QueuedConnection);

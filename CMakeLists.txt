@@ -355,7 +355,7 @@ set(${PROJECT_NAME}_SRCS
         ingamescriptsupport/events/scripteventmodifyunit.cpp
         ingamescriptsupport/events/scripteventmodifyterrain.cpp
         ingamescriptsupport/events/scripteventanimation.cpp
-        #ingamescriptsupport/events/scripteventvictoryinfo.cpp
+        ingamescriptsupport/events/scripteventvictoryinfo.cpp
 
         # wiki stuff
         wiki/terraininfo.cpp
