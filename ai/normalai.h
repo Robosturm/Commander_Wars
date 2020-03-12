@@ -26,8 +26,14 @@ signals:
 public slots:
     virtual void process() override;
 protected:
+    static constexpr float maxDayDistance = 6.0f;;
+
     bool performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits,
                             QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings);
+    /**
+     * @brief finishTurn
+     */
+    virtual void finishTurn() override;
     /**
      * @brief buildCOUnit
      * @param pUnits
@@ -268,6 +274,10 @@ private:
      * @brief m_VirtualEnemyData
      */
     QVector<QPointF> m_VirtualEnemyData;
+    /**
+     * @brief m_TransporterScores
+     */
+    QVector<std::tuple<float, QString, qint32, qint32>> m_TransporterScores;
 
     static const float notAttackableDamage;
     static const float midDamage;

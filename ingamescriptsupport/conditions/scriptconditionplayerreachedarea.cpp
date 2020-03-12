@@ -160,30 +160,15 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
 
     qint32 width = 300;
 
+    qint32 y = 30;
     oxygine::spTextField pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Player: "));
-    pText->setPosition(30, 30);
+    pText->setHtmlText(tr("Target X: "));
+    pText->setPosition(30, y);
     pBox->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 0, 99999);
-    spinBox->setTooltipText(tr("Player that needs to reach the area."));
-    spinBox->setPosition(width, 30);
-    spinBox->setCurrentValue(m_Player + 1);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
-            [=](qreal value)
-    {
-        setPlayer(static_cast<qint32>(value) - 1);
-    });
-    pBox->addItem(spinBox);
-
-    pText = new oxygine::TextField();
-    pText->setStyle(style);
-    pText->setHtmlText(tr("Target X: "));
-    pText->setPosition(30, 70);
-    pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 99999);
     spinBox->setTooltipText(tr("Target Area X Position which the player needs to reach."));
-    spinBox->setPosition(width, 70);
+    spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_x);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
             [=](qreal value)
@@ -191,15 +176,16 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
         setX(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
+    y += 40;
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
     pText->setHtmlText(tr("Target Y: "));
-    pText->setPosition(30, 110);
+    pText->setPosition(30, y);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 0, 99999);
     spinBox->setTooltipText(tr("Target Area Y Position which the player needs to reach."));
-    spinBox->setPosition(width, 110);
+    spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_y);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
             [=](qreal value)
@@ -207,15 +193,16 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
         setY(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
+    y += 40;
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
     pText->setHtmlText(tr("Target Width: "));
-    pText->setPosition(30, 150);
+    pText->setPosition(30, y);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 0, 99999);
     spinBox->setTooltipText(tr("Target Area width which the player needs to reach."));
-    spinBox->setPosition(width, 150);
+    spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_width);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
             [=](qreal value)
@@ -223,15 +210,16 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
         setWidth(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
+    y += 40;
 
     pText = new oxygine::TextField();
     pText->setStyle(style);
     pText->setHtmlText(tr("Target Heigth: "));
-    pText->setPosition(30, 190);
+    pText->setPosition(30, y);
     pBox->addItem(pText);
     spinBox = new SpinBox(150, 0, 99999);
     spinBox->setTooltipText(tr("Target Area heigth which the player needs to reach."));
-    spinBox->setPosition(width, 190);
+    spinBox->setPosition(width, y);
     spinBox->setCurrentValue(m_heigth);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
             [=](qreal value)
@@ -239,6 +227,24 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
         setHeigth(static_cast<qint32>(value));
     });
     pBox->addItem(spinBox);
+    y += 40;
+
+    pText = new oxygine::TextField();
+    pText->setStyle(style);
+    pText->setHtmlText(tr("Player: "));
+    pText->setPosition(30, y);
+    pBox->addItem(pText);
+    spinBox = new SpinBox(150, 0, 99999);
+    spinBox->setTooltipText(tr("One of the players that needs to reach the area with a unit."));
+    spinBox->setPosition(width, y);
+    spinBox->setCurrentValue(m_Player + 1);
+    connect(spinBox.get(), &SpinBox::sigValueChanged,
+            [=](qreal value)
+    {
+        setPlayer(static_cast<qint32>(value) - 1);
+    });
+    pBox->addItem(spinBox);
+    y += 40;
 
     pScriptEditor->addChild(pBox);
     connect(pBox.get(), &GenericBox::sigFinished, pScriptEditor.get(), &ScriptEditor::updateConditios, Qt::QueuedConnection);

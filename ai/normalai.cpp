@@ -90,6 +90,13 @@ void NormalAi::process()
     delete pEnemyBuildings;
     delete pEnemyUnits;
 }
+
+void NormalAi::finishTurn()
+{
+    m_TransporterScores.clear();
+    CoreAI::finishTurn();
+}
+
 bool NormalAi::performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUnits,
                                   QmlVectorBuilding* pBuildings, QmlVectorBuilding* pEnemyBuildings)
 {
@@ -1516,6 +1523,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
     QVector<qint32> buildingIdx;
     QVector<qint32> unitIDx;
     QVector<float> scores;
+    QVector<bool> transporters;
     float variance = pMap->getCurrentDay() - 1;
     if (variance > 10)
     {
@@ -1541,15 +1549,17 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                     if (enableList[i2])
                     {
                         Unit dummy(actionIds[i2], m_pPlayer, false);
-                        dummy.setVirtuellX(pBuilding->getX());
-                        dummy.setVirtuellY(pBuilding->getY());
+                        qint32 buildingX = pBuilding->getX();
+                        qint32 buildingY = pBuilding->getY();
+                        dummy.setVirtuellX(buildingX);
+                        dummy.setVirtuellY(buildingY);
                         createIslandMap(dummy.getMovementType(), dummy.getUnitID());
                         bool canMove = false;
 
                         for (qint32 i3 = 0; i3 < pFields->size(); i3++)
                         {
-                            qint32 x = pBuilding->getX() + pFields->at(i3).x();
-                            qint32 y = pBuilding->getY() + pFields->at(i3).y();
+                            qint32 x = buildingX + pFields->at(i3).x();
+                            qint32 y = buildingY + pFields->at(i3).y();
                             if (pMap->onMap(x, y) &&
                                 dummy.getBaseMovementCosts(x, y, x, y) > 0)
                             {
@@ -1561,6 +1571,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                         if (canMove)
                         {
                             float score = 0.0f;
+                            bool isTransporter = false;
                             if (!dummy.getWeapon1ID().isEmpty() ||
                                 !dummy.getWeapon2ID().isEmpty())
                             {
@@ -1617,7 +1628,24 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                             }
                             else
                             {
-                                score = calcTransporterScore(dummy, pUnits, pEnemyUnits, pEnemyBuildings, transportTargets, data);
+                                bool found = false;
+                                for (auto & data : m_TransporterScores)
+                                {
+                                    if (std::get<2>(data) == buildingX &&
+                                        std::get<3>(data) == buildingY &&
+                                        std::get<1>(data) == actionIds[i2])
+                                    {
+                                        score = std::get<0>(data);
+                                        found = true;
+                                        break;
+                                    }
+                                }
+                                if (!found)
+                                {
+                                    score = calcTransporterScore(dummy, pUnits, pEnemyUnits, pEnemyBuildings, transportTargets, data);
+                                    m_TransporterScores.append(std::tuple<float, QString, qint32, qint32>(score, actionIds[i2], buildingX, buildingY));
+                                }
+                                isTransporter = true;
                             }
                             score *= BaseGameInputIF::getUnitBuildValue(dummy.getUnitID());
                             if (score > bestScore)
@@ -1626,6 +1654,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                                 buildingIdx.append(i);
                                 unitIDx.append(i2);
                                 scores.append(score);
+                                transporters.append(isTransporter);
                                 qint32 index = 0;
                                 while (index < scores.size())
                                 {
@@ -1634,6 +1663,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                                         buildingIdx.removeAt(index);
                                         unitIDx.removeAt(index);
                                         scores.removeAt(index);
+                                        transporters.removeAt(index);
                                     }
                                     else
                                     {
@@ -1646,6 +1676,7 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
                                 buildingIdx.append(i);
                                 unitIDx.append(i2);
                                 scores.append(score);
+                                transporters.append(isTransporter);
                             }
                         }
                     }
@@ -1662,6 +1693,10 @@ bool NormalAi::buildUnits(QmlVectorBuilding* pBuildings, QmlVectorUnit* pUnits,
         qint32 item = Mainapp::randInt(0, buildingIdx.size() - 1);
         Building* pBuilding = pBuildings->at(buildingIdx[item]);
         pAction->setTarget(QPoint(pBuilding->getX(), pBuilding->getY()));
+        if (transporters[item])
+        {
+            m_TransporterScores.clear();
+        }
         MenuData* pData = pAction->getMenuStepData();
         CoreAI::addMenuItemData(pAction, pData->getActionIDs()[unitIDx[item]], pData->getCostList()[unitIDx[item]]);
         delete pData;
@@ -1681,10 +1716,11 @@ qint32 NormalAi::getClosestTargetDistance(qint32 posX, qint32 posY, Unit& dummy,
 {
     qint32 minDistance = std::numeric_limits<qint32>::max();
     QPoint pos(posX, posY);
+    qint32 islandIdx = CoreAI::getIslandIndex(&dummy);
     for (qint32 i = 0; i < pEnemyUnits->size(); i++)
     {
         Unit* pEnemyUnit = pEnemyUnits->at(i);
-        if (onSameIsland(dummy.getMovementType(), posX, posY, pEnemyUnit->getX(), pEnemyUnit->getY()))
+        if (onSameIsland(islandIdx, posX, posY, pEnemyUnit->getX(), pEnemyUnit->getY()))
         {
             if (dummy.isAttackable(pEnemyUnit, true))
             {
@@ -1724,176 +1760,187 @@ std::tuple<float, qint32> NormalAi::calcExpectedFundsDamage(qint32 posX, qint32 
     qint32 notAttackableCount = 0;
     float damageCount = 0;
     float attacksCount = 0;
+    float myMovepoints = dummy.getBaseMovementPoints();
+    if (myMovepoints == 0)
+    {
+        myMovepoints = 1;
+    }
+    float myFirerange = dummy.getBaseMaxRange();
+    float enemyFirerange = dummy.getBaseMaxRange();
+    QPoint position = dummy.getPosition();
     for (qint32 i3 = 0; i3 < pEnemyUnits->size(); i3++)
     {
         Unit* pEnemyUnit = pEnemyUnits->at(i3);
-        float dmg = 0.0f;
-        if (!dummy.getWeapon1ID().isEmpty())
+        QPoint enemyPosition = pEnemyUnit->getPosition();
+        float distance = Mainapp::getDistance(position, enemyPosition);
+        if (distance / myMovepoints <= maxDayDistance)
         {
-            dmg = pWeaponManager->getBaseDamage(dummy.getWeapon1ID(), pEnemyUnit);
-        }
-        if (!dummy.getWeapon2ID().isEmpty())
-        {
-            float dmg2 = pWeaponManager->getBaseDamage(dummy.getWeapon2ID(), pEnemyUnit);
-            if (dmg2 > dmg)
+            float dmg = 0.0f;
+            if (!dummy.getWeapon1ID().isEmpty())
             {
-                dmg = dmg2;
+                dmg = pWeaponManager->getBaseDamage(dummy.getWeapon1ID(), pEnemyUnit);
             }
-        }
-        if (dmg > pEnemyUnit->getHp() * 10.0f)
-        {
-            dmg = pEnemyUnit->getHp() * 10.0f;
-        }
-        if (dmg > 0.0f)
-        {
-            float counterDmg = 0;
-            if (!pEnemyUnit->getWeapon1ID().isEmpty())
+            if (!dummy.getWeapon2ID().isEmpty())
             {
-                counterDmg = pWeaponManager->getBaseDamage(pEnemyUnit->getWeapon1ID(), &dummy);
-            }
-            if (!pEnemyUnit->getWeapon2ID().isEmpty())
-            {
-                float dmg2 = pWeaponManager->getBaseDamage(pEnemyUnit->getWeapon2ID(), &dummy);
-                if (dmg2 > counterDmg)
+                float dmg2 = pWeaponManager->getBaseDamage(dummy.getWeapon2ID(), pEnemyUnit);
+                if (dmg2 > dmg)
                 {
-                    counterDmg = dmg2;
+                    dmg = dmg2;
                 }
             }
-            if (counterDmg > 100.0f)
+            if (dmg > pEnemyUnit->getHp() * 10.0f)
             {
-                counterDmg = 100.0f;
+                dmg = pEnemyUnit->getHp() * 10.0f;
             }
-            else if (counterDmg < 7.5f)
+            if (dmg > 0.0f)
             {
-                counterDmg = 0.0f;
-            }
-            float resDamage = 0;
-            float myMovepoints = dummy.getBaseMovementPoints();
-            float enemyMovepoints = pEnemyUnit->getBaseMovementPoints();
-            float myFirerange = dummy.getBaseMaxRange();
-            float enemyFirerange = dummy.getBaseMaxRange();
-            float smoothing = 3;
-            if (myMovepoints + myFirerange >= enemyMovepoints)
-            {
-                float mult = (myMovepoints + myFirerange + smoothing) / (enemyMovepoints + enemyFirerange + smoothing);
-                if (mult > 1.5f)
+                float counterDmg = 0;
+                if (!pEnemyUnit->getWeapon1ID().isEmpty())
                 {
-                    mult = 1.5f;
+                    counterDmg = pWeaponManager->getBaseDamage(pEnemyUnit->getWeapon1ID(), &dummy);
                 }
-                resDamage = dmg / (pEnemyUnit->getHp() * 10.0f) * pEnemyUnit->getUnitValue() * mult * bonusFactor -
-                            counterDmg / 100.0f * pEnemyUnit->getUnitValue();
-            }
-            else
-            {
-                float mult = (enemyMovepoints + enemyFirerange + smoothing) / (myMovepoints + myFirerange + smoothing);
-                if (mult > 1.5f)
+                if (!pEnemyUnit->getWeapon2ID().isEmpty())
                 {
-                    mult = 1.5f;
-                }
-                resDamage = dmg / (pEnemyUnit->getHp() * 10.0f) * pEnemyUnit->getUnitValue() * bonusFactor -
-                            counterDmg / 100.0f * pEnemyUnit->getUnitValue() * mult;
-            }
-            if (resDamage > pEnemyUnit->getUnitValue())
-            {
-                resDamage = pEnemyUnit->getUnitValue();
-            }
-            float factor = 1.0f;
-            if (dmg > highDamage)
-            {
-                factor += (attackCount[i3].w() + smoothing) / (attackCount[i3].x() + smoothing);
-            }
-            else if (dmg > midDamage)
-            {
-                factor += (attackCount[i3].z() + smoothing) / (attackCount[i3].z() + smoothing);
-            }
-            if (onSameIsland(dummy.getMovementType(), posX, posY, pEnemyUnit->getX(), pEnemyUnit->getY()))
-            {
-                factor += (2.0f - (Mainapp::getDistance(dummy.getPosition(), pEnemyUnit->getPosition()) / static_cast<float>(myMovepoints) * (2.0f / 5.0f)));
-                if (pEnemyUnit->hasWeapons())
-                {
-                    float notAttackableValue = 0.0f;
-                    if (dmg > highDamage)
+                    float dmg2 = pWeaponManager->getBaseDamage(pEnemyUnit->getWeapon2ID(), &dummy);
+                    if (dmg2 > counterDmg)
                     {
-                        notAttackableValue = 2.0f;
+                        counterDmg = dmg2;
                     }
-                    else if (dmg > midDamage)
+                }
+                if (counterDmg > 100.0f)
+                {
+                    counterDmg = 100.0f;
+                }
+                else if (counterDmg < 7.5f)
+                {
+                    counterDmg = 0.0f;
+                }
+                float resDamage = 0;
+
+                float enemyMovepoints = pEnemyUnit->getBaseMovementPoints();
+                float smoothing = 3;
+                if (myMovepoints + myFirerange >= enemyMovepoints)
+                {
+                    float mult = (myMovepoints + myFirerange + smoothing) / (enemyMovepoints + enemyFirerange + smoothing);
+                    if (mult > 1.5f)
                     {
-                        notAttackableValue = 1.5f;
+                        mult = 1.5f;
                     }
-                    else if (dmg > notAttackableDamage)
+                    resDamage = dmg / (pEnemyUnit->getHp() * 10.0f) * pEnemyUnit->getUnitValue() * mult * bonusFactor -
+                                counterDmg / 100.0f * pEnemyUnit->getUnitValue();
+                }
+                else
+                {
+                    float mult = (enemyMovepoints + enemyFirerange + smoothing) / (myMovepoints + myFirerange + smoothing);
+                    if (mult > 1.5f)
                     {
-                        notAttackableValue = 1.0f;
+                        mult = 1.5f;
+                    }
+                    resDamage = dmg / (pEnemyUnit->getHp() * 10.0f) * pEnemyUnit->getUnitValue() * bonusFactor -
+                                counterDmg / 100.0f * pEnemyUnit->getUnitValue() * mult;
+                }
+                if (resDamage > pEnemyUnit->getUnitValue())
+                {
+                    resDamage = pEnemyUnit->getUnitValue();
+                }
+                float factor = 1.0f;
+                if (dmg > highDamage)
+                {
+                    factor += (attackCount[i3].w() + smoothing) / (attackCount[i3].x() + smoothing);
+                }
+                else if (dmg > midDamage)
+                {
+                    factor += (attackCount[i3].z() + smoothing) / (attackCount[i3].z() + smoothing);
+                }
+                if (onSameIsland(dummy.getMovementType(), posX, posY, pEnemyUnit->getX(), pEnemyUnit->getY()))
+                {
+                    factor += (2.0f - (distance / static_cast<float>(myMovepoints) * (2.0f / 5.0f)));
+                    if (pEnemyUnit->hasWeapons())
+                    {
+                        float notAttackableValue = 0.0f;
+                        if (dmg > highDamage)
+                        {
+                            notAttackableValue = 2.0f;
+                        }
+                        else if (dmg > midDamage)
+                        {
+                            notAttackableValue = 1.5f;
+                        }
+                        else if (dmg > notAttackableDamage)
+                        {
+                            notAttackableValue = 1.0f;
+                        }
+                        else
+                        {
+                            factor /= 2.0f;
+                        }
+                        if (attackCount[i3].y() == 0.0f &&
+                            attackCount[i3].x() == 0.0f &&
+                            attackCount[i3].z() == 0.0f &&
+                            attackCount[i3].w() == 0.0f)
+                        {
+                            notAttackableCount += notAttackableValue;
+                        }
+                        else if (attackCount[i3].y() == 0.0f &&
+                                 attackCount[i3].z() == 0.0f &&
+                                 attackCount[i3].w() == 0.0f)
+                        {
+                            notAttackableCount  += notAttackableValue / 2.0f;
+                        }
                     }
                     else
                     {
-                        factor /= 2.0f;
-                    }
-                    if (attackCount[i3].y() == 0.0f &&
-                        attackCount[i3].x() == 0.0f &&
-                        attackCount[i3].z() == 0.0f &&
-                        attackCount[i3].w() == 0.0f)
-                    {
-                        notAttackableCount += notAttackableValue;
-                    }
-                    else if (attackCount[i3].y() == 0.0f &&
-                             attackCount[i3].z() == 0.0f &&
-                             attackCount[i3].w() == 0.0f)
-                    {
-                        notAttackableCount  += notAttackableValue / 2.0f;
+                        factor /= 8.0f;
                     }
                 }
                 else
                 {
-                    factor /= 8.0f;
-                }
-            }
-            else
-            {
-                factor += (1.0f - (Mainapp::getDistance(dummy.getPosition(), pEnemyUnit->getPosition()) / static_cast<float>(myMovepoints) * (1.0f / 3.0f)));
-                if (pEnemyUnit->hasWeapons())
-                {
-                    float notAttackableValue = 0.0f;
-                    if (dmg > highDamage)
+                    factor += (1.0f - (distance / static_cast<float>(myMovepoints) * (1.0f / 3.0f)));
+                    if (pEnemyUnit->hasWeapons())
                     {
-                        notAttackableValue = 2.0f;
-                    }
-                    else if (dmg > midDamage)
-                    {
-                        notAttackableValue = 1.5f;
-                    }
-                    else if (dmg > notAttackableDamage)
-                    {
-                        notAttackableValue = 1.0f;
+                        float notAttackableValue = 0.0f;
+                        if (dmg > highDamage)
+                        {
+                            notAttackableValue = 2.0f;
+                        }
+                        else if (dmg > midDamage)
+                        {
+                            notAttackableValue = 1.5f;
+                        }
+                        else if (dmg > notAttackableDamage)
+                        {
+                            notAttackableValue = 1.0f;
+                        }
+                        else
+                        {
+                            factor /= 2.0f;
+                        }
+                        if (attackCount[i3].y() == 0.0f &&
+                            attackCount[i3].x() == 0.0f &&
+                            attackCount[i3].z() == 0.0f &&
+                            attackCount[i3].w() == 0.0f)
+                        {
+                            notAttackableCount += notAttackableValue / 2.0f;
+                        }
+                        else if (attackCount[i3].x() == 0.0f &&
+                                 attackCount[i3].z() == 0.0f &&
+                                 attackCount[i3].w() == 0.0f)
+                        {
+                            notAttackableCount  += notAttackableValue / 4.0f;
+                        }
                     }
                     else
                     {
-                        factor /= 2.0f;
-                    }
-                    if (attackCount[i3].y() == 0.0f &&
-                        attackCount[i3].x() == 0.0f &&
-                        attackCount[i3].z() == 0.0f &&
-                        attackCount[i3].w() == 0.0f)
-                    {
-                        notAttackableCount += notAttackableValue / 2.0f;
-                    }
-                    else if (attackCount[i3].x() == 0.0f &&
-                             attackCount[i3].z() == 0.0f &&
-                             attackCount[i3].w() == 0.0f)
-                    {
-                        notAttackableCount  += notAttackableValue / 4.0f;
+                        factor /= 8.0f;
                     }
                 }
-                else
+                if (factor < 0)
                 {
-                    factor /= 8.0f;
+                    factor = 0;
                 }
+                damageCount += resDamage * factor;
+                attacksCount++;
             }
-            if (factor < 0)
-            {
-                factor = 0;
-            }
-            damageCount += resDamage * factor;
-            attacksCount++;
         }
     }
     if (attacksCount <= 0)
@@ -1942,24 +1989,37 @@ float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
 {
     float score = 0.0f;
     QVector<QVector3D> targets;
-    QVector<Unit*> loadingUnits = appendLoadingTargets(&dummy, pUnits, pEnemyUnits, pEnemyBuildings, false, true, targets);
+    QmlVectorUnit relevantUnits;
+    QPoint position = dummy.getPosition();
+    qint32 movement = dummy.getBaseMovementPoints();
+    if (movement == 0)
+    {
+        movement = 1;
+    }
+    qint32 loadingPlace = dummy.getLoadingPlace();
+    qint32 smallTransporterCount = 0;
+    for (qint32 i = 0; i < pUnits->size(); i++)
+    {
+        qint32 distance = Mainapp::getDistance(position, pUnits->at(i)->getPosition());
+        if (distance / movement <= maxDayDistance)
+        {
+            relevantUnits.append(pUnits->at(i));
+        }
+        if (loadingPlace == 1)
+        {
+            if (pUnits->at(i)->getLoadingPlace() == 1)
+            {
+                smallTransporterCount++;
+            }
+        }
+    }
+    QVector<Unit*> loadingUnits = appendLoadingTargets(&dummy, &relevantUnits, pEnemyUnits, pEnemyBuildings, false, true, targets);
     QVector<Unit*> transporterUnits;
     for (qint32 i2 = 0; i2 < transportTargets.size(); i2++)
     {
         if (!transporterUnits.contains(std::get<0>(transportTargets[i2])))
         {
             transporterUnits.append(std::get<0>(transportTargets[i2]));
-        }
-    }
-    qint32 smallTransporterCount = 0;
-    if (dummy.getLoadingPlace() == 1)
-    {
-        for (qint32 i = 0; i < pUnits->size(); i++)
-        {
-            if (pUnits->at(i)->getLoadingPlace() == 1)
-            {
-                smallTransporterCount++;
-            }
         }
     }
     qint32 i = 0;
@@ -1973,6 +2033,7 @@ float NormalAi::calcTransporterScore(Unit& dummy, QmlVectorUnit* pUnits,
                 if (std::get<1>(transportTargets[i2])->getPosition() == loadingUnits[i]->getPosition())
                 {
                     transporter++;
+                    break;
                 }
             }
 

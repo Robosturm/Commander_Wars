@@ -3713,53 +3713,53 @@ This is immediatly applied.</source>
 <context>
     <name>ScriptConditionPlayerReachedArea</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="165"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="234"/>
         <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="169"/>
-        <source>Player that needs to reach the area.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="181"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="166"/>
         <source>Target X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="185"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="170"/>
         <source>Target Area X Position which the player needs to reach.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="197"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="183"/>
         <source>Target Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="201"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="187"/>
         <source>Target Area Y Position which the player needs to reach.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="213"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="200"/>
         <source>Target Width: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="217"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="204"/>
         <source>Target Area width which the player needs to reach.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="229"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="217"/>
         <source>Target Heigth: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="233"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="221"/>
         <source>Target Area heigth which the player needs to reach.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="238"/>
+        <source>One of the players that needs to reach the area with a unit.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -276,6 +276,13 @@ public slots:
      */
     bool isPlayerUnitInArea(const QRect& area, qint32 playerID);
     /**
+     * @brief isPlayersUnitInArea
+     * @param area
+     * @param unitID
+     * @return
+     */
+    bool isPlayersUnitInArea(const QRect& area, QList<qint32> playerIDs);
+    /**
      * @brief getUnit
      * @param uniqueID
      * @return

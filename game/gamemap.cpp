@@ -140,6 +140,15 @@ bool GameMap::isPlayerUnitInArea(const QRect& area, qint32 playerID)
     });
 }
 
+bool GameMap::isPlayersUnitInArea(const QRect& area, QList<qint32> playerIDs)
+{
+    return isInArea(area, [=](Unit* pUnit)
+    {
+        qint32 owner = pUnit->getOwner()->getPlayerID();
+        return playerIDs.contains(owner);
+    });
+}
+
 void GameMap::deleteMap()
 {
     if (m_pInstance.get() != nullptr)

@@ -1517,16 +1517,23 @@ bool CoreAI::onSameIsland(QString movemnetType, qint32 x, qint32 y, qint32 x1, q
     {
         if (m_IslandMaps[i]->getMovementType() == movemnetType)
         {
-            if (m_IslandMaps[i]->getIsland(x, y) ==
-                m_IslandMaps[i]->getIsland(x1, y1))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return onSameIsland(i, x, y, x1, y1);
         }
+    }
+    return false;
+}
+
+
+bool CoreAI::onSameIsland(qint32 islandIdx, qint32 x, qint32 y, qint32 x1, qint32 y1)
+{
+    if (m_IslandMaps[islandIdx]->getIsland(x, y) ==
+        m_IslandMaps[islandIdx]->getIsland(x1, y1))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
     }
     return false;
 }
