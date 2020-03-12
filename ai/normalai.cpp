@@ -122,6 +122,7 @@ bool NormalAi::performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemyUn
             aiStep = AISteps::moveUnits;
             return performActionSteps(pUnits, pEnemyUnits,  pBuildings, pEnemyBuildings);
         }
+        else if (aiStep <= AISteps::loadUnits && loadUnits(pUnits, pBuildings, pEnemyBuildings)){}
         else if (aiStep <= AISteps::moveSupportUnits && moveSupport(AISteps::moveSupportUnits, pUnits, true)){}
         else if (aiStep <= AISteps::moveSupportUnits && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, 1, std::numeric_limits<qint32>::max(), true)){}
         else if (aiStep <= AISteps::moveAway && moveAwayFromProduction(pUnits)){}

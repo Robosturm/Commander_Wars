@@ -108,6 +108,7 @@ bool VeryEasyAI::performActionSteps(QmlVectorUnit* pUnits, QmlVectorUnit* pEnemy
             aiStep = AISteps::moveUnits;
             return performActionSteps(pUnits, pEnemyUnits,  pBuildings, pEnemyBuildings);
         }
+        else if (aiStep <= AISteps::loadUnits && loadUnits(pUnits)){}
         else if (aiStep <= AISteps::moveSupportUnits && moveSupport(AISteps::moveSupportUnits, pUnits, true)){}
         else if (aiStep <= AISteps::moveSupportUnits && moveUnits(pUnits, pBuildings, pEnemyUnits, pEnemyBuildings, true)){}
         else if (aiStep <= AISteps::moveAway && moveAwayFromProduction(pUnits)){}

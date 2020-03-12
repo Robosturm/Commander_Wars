@@ -842,56 +842,38 @@ QVector<Unit*> CoreAI::appendLoadingTargets(Unit* pUnit, QmlVectorUnit* pUnits,
                     found = false;
                     qint32 loadingIslandIdx = getIslandIndex(pLoadingUnit);
                     qint32 loadingIsland = getIsland(pLoadingUnit);
-                    qint32 loadingUnitX = pLoadingUnit->getX();
-                    qint32 loadingUnitY = pLoadingUnit->getY();
-                    qint32 radius = loadingUnitX;
-                    // find nearest loading field of this unit
-                    // by searching in circles around it first detect the maximum radius required for this map
-                    if (width - loadingUnitX > radius)
+                    QPoint loadingUnitPos = pLoadingUnit->getPosition();
+                    qint32 distance = std::numeric_limits<qint32>::max();
+                    qint32 targetX;
+                    qint32 targetY;
+                    for (qint32 x = 0; x < width; x++)
                     {
-                        radius = width - loadingUnitX;
-                    }
-                    if (loadingUnitY > radius)
-                    {
-                        radius = loadingUnitY;
-                    }
-                    if (heigth - loadingUnitY > radius)
-                    {
-                        radius = heigth - loadingUnitY;
-                    }
-                    // find closest field to the loading unit we can reach and add it
-                    for (qint32 r = 0; r < radius; r++)
-                    {
-                        // check fields in a radius around it
-                        QmlVectorPoint* fields = Mainapp::getCircle(r, r);
-                        for (qint32 i3 = 0; i3 < fields->size(); i3++)
+                        for (qint32 y = 0; y < heigth; y++)
                         {
-                            qint32 x = loadingUnitX + fields->at(i3).x();
-                            qint32 y = loadingUnitY + fields->at(i3).y();
-                            // is it a map point?
-                            if (pMap->onMap(x, y))
+                            qint32 dist = Mainapp::getDistance(loadingUnitPos, QPoint(x, y));
+                            if (dist < distance)
                             {
                                 // can be reached by both units and is empty
                                 // and not added yet
                                 if ((m_IslandMaps[loadingIslandIdx]->getIsland(x, y) == loadingIsland) &&
                                     (m_IslandMaps[unitIslandIdx]->getIsland(x, y) == unitIsland) &&
-                                    (pMap->getTerrain(x, y)->getUnit() == nullptr) &&
-                                    (virtualLoading || !targets.contains(QVector3D(x, y, 1))))
+                                    (pMap->getTerrain(x, y)->getUnit() == nullptr))
                                 {
-                                    // append it and and skip further searching
                                     found = true;
-                                    targets.append(QVector3D(x, y, 1));
+                                    distance = dist;
+                                    targetX = x;
+                                    targetY = y;
                                 }
                             }
                         }
-                        delete fields;
-                        // a loading field for this unit was
-                        if (found)
-                        {
-                            transportUnits.append(pLoadingUnit);
-                            break;
-                        }
                     }
+                    if (found && (virtualLoading || !targets.contains(QVector3D(targetX, targetY, 1))))
+                    {
+                        targets.append(QVector3D(targetX, targetY, 1));
+                        transportUnits.append(pLoadingUnit);
+                        break;
+                    }
+
                 }
             }
         }
