@@ -17,6 +17,9 @@ InGameMenue::InGameMenue()
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
+    m_MapMover = new MapMover(this);
+    m_MapMover->moveToThread(&m_MapMoveThread);
+    m_MapMoveThread.start();
     loadBackground();
     oxygine::Actor::addChild(GameMap::getInstance());
     loadHandling();
@@ -28,6 +31,9 @@ InGameMenue::InGameMenue(qint32 width, qint32 heigth, QString map)
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());
     Interpreter::setCppOwnerShip(this);
+    m_MapMover = new MapMover(this);
+    m_MapMover->moveToThread(&m_MapMoveThread);
+    m_MapMoveThread.start();
     loadBackground();
     // check for map creation
     if ((width > 0) && (heigth > 0))
@@ -74,7 +80,7 @@ void InGameMenue::loadHandling()
             }
         }
     });
-    connect(this, &InGameMenue::sigMouseWheel, this, &InGameMenue::mouseWheel, Qt::QueuedConnection);
+    connect(this, &InGameMenue::sigMouseWheel, m_MapMover.get(), &MapMover::mouseWheel, Qt::QueuedConnection);
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, [=](oxygine::Event *pEvent )->void
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
@@ -108,7 +114,7 @@ void InGameMenue::loadHandling()
     {
         oxygine::TouchEvent* pTouchEvent = dynamic_cast<oxygine::TouchEvent*>(pEvent);
         if (pTouchEvent != nullptr)
-        {            
+        {
             if (m_Focused)
             {
                 pEvent->stopPropagation();
@@ -131,7 +137,7 @@ void InGameMenue::loadHandling()
             }
         }
     });
-    connect(this, &InGameMenue::sigMoveMap, this, &InGameMenue::MoveMap, Qt::QueuedConnection);
+    connect(this, &InGameMenue::sigMoveMap, m_MapMover.get(), &MapMover::MoveMap, Qt::QueuedConnection);
 
     GameMap::getInstance()->addEventListener(oxygine::TouchEvent::CLICK, [=](oxygine::Event *pEvent )->void
     {
@@ -194,12 +200,9 @@ void InGameMenue::loadHandling()
     });
 
     connect(pApp, &Mainapp::sigKeyDown, this, &InGameMenue::keyInput, Qt::QueuedConnection);
+    connect(pApp, &Mainapp::sigKeyDown, m_MapMover.get(), &MapMover::keyInput, Qt::QueuedConnection);
     connect(pApp, &Mainapp::sigKeyUp, this, &InGameMenue::keyUp, Qt::QueuedConnection);
     GameMap::getInstance()->addChild(m_Cursor);
-
-    connect(&scrollTimer, &QTimer::timeout, this, &InGameMenue::autoScroll, Qt::QueuedConnection);
-    scrollTimer.setSingleShot(false);
-    scrollTimer.start(100);
 }
 
 void InGameMenue::autoScroll()
@@ -219,8 +222,8 @@ void InGameMenue::autoScroll()
             moveX = GameMap::Imagesize * pMap->getZoom();
         }
         else if ((curPos.x() < Settings::getWidth() - autoScrollBorder.width()) &&
-            (curPos.x() > Settings::getWidth() - autoScrollBorder.width() - 50) &&
-            (pMap->getX() + pMap->getMapWidth() * pMap->getZoom() * GameMap::Imagesize > Settings::getWidth() - autoScrollBorder.width() - 50))
+                 (curPos.x() > Settings::getWidth() - autoScrollBorder.width() - 50) &&
+                 (pMap->getX() + pMap->getMapWidth() * pMap->getZoom() * GameMap::Imagesize > Settings::getWidth() - autoScrollBorder.width() - 50))
         {
             moveX = -GameMap::Imagesize * pMap->getZoom();
         }
@@ -231,7 +234,7 @@ void InGameMenue::autoScroll()
             moveY = GameMap::Imagesize * pMap->getZoom();
         }
         else if ((curPos.y() > Settings::getHeight() - autoScrollBorder.height()) &&
-            (pMap->getY() + pMap->getMapHeight() * pMap->getZoom() * GameMap::Imagesize > Settings::getHeight() - autoScrollBorder.height()))
+                 (pMap->getY() + pMap->getMapHeight() * pMap->getZoom() * GameMap::Imagesize > Settings::getHeight() - autoScrollBorder.height()))
         {
             moveY = -GameMap::Imagesize * pMap->getZoom();
         }
@@ -241,6 +244,14 @@ void InGameMenue::autoScroll()
             MoveMap(moveX , moveY);
         }
     }
+}
+
+void InGameMenue::MoveMap(qint32 x, qint32 y)
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    GameMap::getInstance()->moveMap(x, y);
+    pApp->continueThread();
 }
 
 bool InGameMenue::getFocused() const
@@ -261,22 +272,9 @@ InGameMenue::~InGameMenue()
 {
     Mainapp* pApp = Mainapp::getInstance();
     pApp->cursor().setShape(Qt::CursorShape::ArrowCursor);
-}
-
-void InGameMenue::mouseWheel(qint32 direction)
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    GameMap::getInstance()->zoom(direction);
-    pApp->continueThread();
-}
-
-void InGameMenue::MoveMap(qint32 x, qint32 y)
-{
-    Mainapp* pApp = Mainapp::getInstance();
-    pApp->suspendThread();
-    GameMap::getInstance()->moveMap(x, y);
-    pApp->continueThread();
+    m_MapMover = nullptr;
+    m_MapMoveThread.exit();
+    m_MapMoveThread.wait();
 }
 
 Cursor* InGameMenue::getCursor()
@@ -284,63 +282,20 @@ Cursor* InGameMenue::getCursor()
     return m_Cursor.get();
 }
 
+
 void InGameMenue::keyInput(oxygine::KeyEvent event)
 {
     if (m_Focused)
     {
         // for debugging
         Qt::Key cur = event.getKey();
-        if (cur == Settings::getKey_up())
-        {
-            calcNewMousePosition(m_Cursor->getMapPointX(), m_Cursor->getMapPointY() - 1);
-        }
-        else if (cur == Settings::getKey_down())
-        {
-            calcNewMousePosition(m_Cursor->getMapPointX(), m_Cursor->getMapPointY() + 1);
-        }
-        else if (cur == Settings::getKey_left())
-        {
-            calcNewMousePosition(m_Cursor->getMapPointX() - 1, m_Cursor->getMapPointY());
-        }
-        else if (cur == Settings::getKey_right())
-        {
-            calcNewMousePosition(m_Cursor->getMapPointX() + 1, m_Cursor->getMapPointY());
-        }
-        else if (cur == Settings::getKey_moveMapUp())
-        {
-            GameMap::getInstance()->moveMap(0, -GameMap::Imagesize);
-            calcNewMousePosition(m_Cursor->getMapPointX(), m_Cursor->getMapPointY() + 1);
-        }
-        else if (cur == Settings::getKey_moveMapDown())
-        {
-            GameMap::getInstance()->moveMap(0, GameMap::Imagesize);
-            calcNewMousePosition(m_Cursor->getMapPointX(), m_Cursor->getMapPointY() - 1);
-        }
-        else if (cur == Settings::getKey_moveMapRight())
-        {
-            GameMap::getInstance()->moveMap(GameMap::Imagesize, 0);
-            calcNewMousePosition(m_Cursor->getMapPointX() - 1, m_Cursor->getMapPointY());
-        }
-        else if (cur == Settings::getKey_moveMapLeft())
-        {
-            GameMap::getInstance()->moveMap(-GameMap::Imagesize, 0);
-            calcNewMousePosition(m_Cursor->getMapPointX() + 1, m_Cursor->getMapPointY());
-        }
-        else if (cur == Settings::getKey_confirm())
+        if (cur == Settings::getKey_confirm())
         {
             emit sigLeftClick(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
         }
         else if (cur == Settings::getKey_cancel())
         {
             emit sigRightClickDown(m_Cursor->getMapPointX(), m_Cursor->getMapPointY());
-        }
-        else if (cur == Settings::getKey_MapZoomIn())
-        {
-            GameMap::getInstance()->zoom(1);
-        }
-        else if (cur == Settings::getKey_MapZoomOut())
-        {
-            GameMap::getInstance()->zoom(-1);
         }
     }
 }

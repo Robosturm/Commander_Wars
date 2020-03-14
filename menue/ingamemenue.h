@@ -5,12 +5,15 @@
 #include <QPoint>
 #include <qrect.h>
 #include <QTimer>
+#include <QThread>
 
 #include "oxygine-framework.h"
 
 #include "objects/cursor.h"
 
 #include "oxygine/KeyEvent.h"
+
+#include "gameinput/mapmover.h"
 
 class InGameMenue : public QObject, public oxygine::Actor
 {
@@ -24,6 +27,8 @@ public:
     bool getFocused() const;
     void setFocused(bool Focused);
     void calcNewMousePosition(qint32 x, qint32 y);
+    void MoveMap(qint32 x, qint32 y);
+    virtual void autoScroll();
 signals:
     void sigMouseWheel(qint32 direction);
     void sigMoveMap(qint32 x, qint32 y);
@@ -35,11 +40,8 @@ signals:
     void sigLeftClickUp(qint32 x, qint32 y);
     void sigMouseMove(qint32 x, qint32 y);
 public slots:
-    void mouseWheel(qint32 direction);
-    void MoveMap(qint32 x, qint32 y);
     virtual void keyInput(oxygine::KeyEvent event);
     virtual void keyUp(oxygine::KeyEvent event);
-    virtual void autoScroll();
 protected:
     void loadBackground();
     void loadHandling();
@@ -47,10 +49,11 @@ protected:
     bool m_Focused{true};
     QPoint m_MoveMapMousePoint;
 
-    QTimer scrollTimer;
-
     spCursor m_Cursor{new Cursor()};
     QRect autoScrollBorder{300, 50, 300, 50};
+
+    QThread m_MapMoveThread;
+    spMapMover m_MapMover;
 };
 
 #endif // INGAMEMENUE_H

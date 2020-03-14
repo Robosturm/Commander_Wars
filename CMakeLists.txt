@@ -291,6 +291,7 @@ set(${PROJECT_NAME}_SRCS
         gameinput/menudata.cpp
         gameinput/markedfielddata.cpp
         gameinput/cursordata.cpp
+        gameinput/mapmover.cpp
 
         # map importing/exporting support
         # and resizing etc.

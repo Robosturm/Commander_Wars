@@ -51,6 +51,10 @@ public:
     {
         return m_IngameInfoBar.get();
     }
+    /**
+     * @brief autoScroll
+     */
+    virtual void autoScroll() override;
 signals:
     void sigActionPerformed();
     void sigGameStarted();
@@ -156,10 +160,6 @@ public slots:
      * @param socketID
      */
     void playerJoined(quint64 socketID);
-    /**
-     * @brief autoScroll
-     */
-    virtual void autoScroll() override;
     /**
      * @brief showExitGame
      */
