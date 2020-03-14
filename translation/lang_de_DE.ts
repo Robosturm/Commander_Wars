@@ -3763,53 +3763,68 @@ This is immediatly applied.</source>
 <context>
     <name>ScriptConditionPlayerReachedArea</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="166"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="184"/>
         <source>Target X: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="170"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="188"/>
         <source>Target Area X Position which the player needs to reach.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="183"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="201"/>
         <source>Target Y: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="187"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="205"/>
         <source>Target Area Y Position which the player needs to reach.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="200"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="218"/>
         <source>Target Width: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="204"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="222"/>
         <source>Target Area width which the player needs to reach.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="217"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="235"/>
         <source>Target Heigth: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="221"/>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="239"/>
         <source>Target Area heigth which the player needs to reach.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="234"/>
-        <source>Player: </source>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="259"/>
+        <source>Add Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="238"/>
-        <source>One of the players that needs to reach the area with a unit.</source>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="263"/>
+        <source>Player to add to the Player reached Area list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="269"/>
+        <source>Add Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="281"/>
+        <source>Remove last Player</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="296"/>
+        <source>Players: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

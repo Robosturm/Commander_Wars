@@ -37,7 +37,7 @@ public:
      */
     virtual QString getDescription() override
     {
-        return tr("Player: ") + QString::number(m_Player + 1) + tr(" reached X:") +
+        return tr("Player reached X:") +
                QString::number(m_x) + " Y: " + QString::number(m_y) +
                tr(" width: ") + QString::number(m_width) + tr(" heigth: ") + QString::number(m_heigth);
     }
@@ -71,18 +71,8 @@ public:
      */
     virtual qint32 getVersion() override
     {
-        return 0;
+        return 1;
     }
-    /**
-     * @brief getPlayer
-     * @return
-     */
-    qint32 getPlayer() const;
-    /**
-     * @brief setPlayer
-     * @param player
-     */
-    void setPlayer(const qint32 &player);
     /**
      * @brief getWidth
      * @return
@@ -103,9 +93,13 @@ public:
      * @param heigth
      */
     void setHeigth(const qint32 &heigth);
-
+    /**
+     * @brief ScriptConditionPlayerReachedArea::getPlayerInfo
+     * @return
+     */
+    QString getPlayerInfo();
 private:
-    qint32 m_Player{0};
+    QVector<qint32> m_Player;
     qint32 m_x{0};
     qint32 m_y{0};
     qint32 m_width{0};

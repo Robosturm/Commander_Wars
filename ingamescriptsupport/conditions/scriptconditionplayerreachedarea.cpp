@@ -6,6 +6,7 @@
 #include "ingamescriptsupport/genericbox.h"
 
 #include "resource_management/fontmanager.h"
+#include "resource_management/objectmanager.h"
 
 #include "objects/spinbox.h"
 
@@ -13,16 +14,6 @@ ScriptConditionPlayerReachedArea::ScriptConditionPlayerReachedArea()
     : ScriptCondition (ConditionType::playerReachedArea)
 {
 
-}
-
-qint32 ScriptConditionPlayerReachedArea::getPlayer() const
-{
-    return m_Player;
-}
-
-void ScriptConditionPlayerReachedArea::setPlayer(const qint32 &player)
-{
-    m_Player = player;
 }
 
 qint32 ScriptConditionPlayerReachedArea::getX() const
@@ -72,15 +63,34 @@ void ScriptConditionPlayerReachedArea::readCondition(QTextStream& rStream)
     QStringList list = line.split("//");
     if (list.size() >= 2)
     {
-        QStringList items0 = list[0].replace("if (map.isPlayerUnitInArea(Qt.rect(", "")
-                             .replace(", ", ",").replace("),", ",").replace(") && ", ",").split(",");
-        if (items0.size() >= 4)
+        if (list[1].startsWith(" 0"))
         {
-            m_x = items0[0].toInt();
-            m_y = items0[1].toInt();
-            m_width = items0[2].toInt();
-            m_heigth = items0[3].toInt();
-            m_Player = items0[4].toInt();
+            QStringList items0 = list[0].replace("if (map.isPlayerUnitInArea(Qt.rect(", "")
+                                 .replace(", ", ",").replace("),", ",").replace(") && ", ",").split(",");
+            if (items0.size() >= 4)
+            {
+                m_x = items0[0].toInt();
+                m_y = items0[1].toInt();
+                m_width = items0[2].toInt();
+                m_heigth = items0[3].toInt();
+                m_Player.append(items0[4].toInt());
+            }
+        }
+        else
+        {
+            QStringList items0 = list[0].replace("if (map.isPlayersUnitInArea(Qt.rect(", "")
+                                 .replace("), [", ",").replace(", ", ",").replace("]) && ", ",").split(",");
+            if (items0.size() >= 4)
+            {
+                m_x = items0[0].toInt();
+                m_y = items0[1].toInt();
+                m_width = items0[2].toInt();
+                m_heigth = items0[3].toInt();
+                for (qint32 i = 4; i < items0.size() - 1; i++)
+                {
+                    m_Player.append(items0[i].toInt());
+                }
+            }
         }
     }
     while (!rStream.atEnd())
@@ -109,9 +119,17 @@ void ScriptConditionPlayerReachedArea::writePreCondition(QTextStream& rStream)
 
 void ScriptConditionPlayerReachedArea::writeCondition(QTextStream& rStream)
 {
-    rStream << "        if (map.isPlayerUnitInArea(Qt.rect(" << QString::number(m_x) << ", " << QString::number(m_y) << ", "
-            << QString::number(m_width) << ", " << QString::number(m_heigth) << "), "
-            << QString::number(m_Player) << ") && " << m_executed << ".readDataBool() === false) {"
+    rStream << "        if (map.isPlayersUnitInArea(Qt.rect(" << QString::number(m_x) << ", " << QString::number(m_y) << ", "
+            << QString::number(m_width) << ", " << QString::number(m_heigth) << "), [";
+    for (qint32 i = 0; i < m_Player.size(); i++)
+    {
+        rStream << QString::number(m_Player[i]);
+        if (i < m_Player.size() - 1)
+        {
+            rStream << ", ";
+        }
+    }
+    rStream << "]) && " << m_executed << ".readDataBool() === false) {"
             << "// " << QString::number(getVersion()) << " " << ConditionPlayerReachedArea << "\n";
     if (subCondition.get() != nullptr)
     {
@@ -229,23 +247,60 @@ void ScriptConditionPlayerReachedArea::showEditCondition(spScriptEditor pScriptE
     pBox->addItem(spinBox);
     y += 40;
 
+    oxygine::spTextField pTextInfo = new oxygine::TextField();
+    pTextInfo->setStyle(style);
+    pTextInfo->setHtmlText(getPlayerInfo());
+    pTextInfo->setPosition(30, y);
+    pBox->addItem(pTextInfo);
+    y += 40;
+
     pText = new oxygine::TextField();
     pText->setStyle(style);
-    pText->setHtmlText(tr("Player: "));
+    pText->setHtmlText(tr("Add Player: "));
     pText->setPosition(30, y);
     pBox->addItem(pText);
-    spinBox = new SpinBox(150, 0, 99999);
-    spinBox->setTooltipText(tr("One of the players that needs to reach the area with a unit."));
+    spinBox = new SpinBox(150, 1, 99999);
+    spinBox->setTooltipText(tr("Player to add to the Player reached Area list."));
     spinBox->setPosition(width, y);
-    spinBox->setCurrentValue(m_Player + 1);
-    connect(spinBox.get(), &SpinBox::sigValueChanged,
-            [=](qreal value)
-    {
-        setPlayer(static_cast<qint32>(value) - 1);
-    });
+    spinBox->setCurrentValue(1);
     pBox->addItem(spinBox);
     y += 40;
 
+    oxygine::spButton pButton = ObjectManager::createButton(tr("Add Player"), 200);
+    pButton->setPosition(30, y);
+    pButton->addClickListener([=](oxygine::Event*)
+    {
+        qint32 player = spinBox->getCurrentValue() - 1;
+        if (!m_Player.contains(player))
+        {
+            m_Player.append(player);
+            pTextInfo->setHtmlText(getPlayerInfo());
+        }
+    });
+    pBox->addItem(pButton);
+    pButton = ObjectManager::createButton(tr("Remove last Player"), 200);
+    pButton->setPosition(270, y);
+    pButton->addClickListener([=](oxygine::Event*)
+    {
+        m_Player.removeLast();
+        pTextInfo->setHtmlText(getPlayerInfo());
+    });
+    pBox->addItem(pButton);
+
     pScriptEditor->addChild(pBox);
     connect(pBox.get(), &GenericBox::sigFinished, pScriptEditor.get(), &ScriptEditor::updateConditios, Qt::QueuedConnection);
+}
+
+QString ScriptConditionPlayerReachedArea::getPlayerInfo()
+{
+    QString item = tr("Players: ");
+    for (qint32 i = 0; i < m_Player.size(); i++)
+    {
+        item += QString::number(m_Player[i] + 1);
+        if (i < m_Player.size() - 1)
+        {
+            item += ", ";
+        }
+    }
+    return item;
 }
