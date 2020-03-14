@@ -7,6 +7,7 @@
 #include "coreengine/mainapp.h"
 
 #include "objects/filedialog.h"
+#include "objects/dialogmessagebox.h"
 
 #include "ingamescriptsupport/conditions/scriptcondition.h"
 #include "ingamescriptsupport/events/scriptevent.h"
@@ -126,8 +127,7 @@ ScriptEditor::ScriptEditor()
     pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        emit sigFinished();
-        detach();
+         emit sigShowExitBox();
     });
 
     oxygine::spButton pSaveButton = pObjectManager->createButton(tr("Save Script"), 150);
@@ -150,6 +150,26 @@ ScriptEditor::ScriptEditor()
     connect(this, &ScriptEditor::sigUpdateEvents, this, &ScriptEditor::updateEvents, Qt::QueuedConnection);
     connect(this, &ScriptEditor::sigShowEditCondition, this, &ScriptEditor::showEditCondition, Qt::QueuedConnection);
     connect(this, &ScriptEditor::sigShowEditEvent, this, &ScriptEditor::showEditEvent, Qt::QueuedConnection);
+    connect(this, &ScriptEditor::sigShowExitBox, this, &ScriptEditor::showExitBox, Qt::QueuedConnection);
+}
+
+void ScriptEditor::showExitBox()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    spDialogMessageBox pExit = new DialogMessageBox(tr("Do you want to exit the script editor?"), true);
+    connect(pExit.get(), &DialogMessageBox::sigOk, this, &ScriptEditor::exitEditor, Qt::QueuedConnection);
+    addChild(pExit);
+    pApp->continueThread();
+}
+
+void ScriptEditor::exitEditor()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    emit sigFinished();
+    detach();
+    pApp->continueThread();
 }
 
 void ScriptEditor::showSaveScript()

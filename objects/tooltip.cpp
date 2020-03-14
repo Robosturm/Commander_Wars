@@ -75,7 +75,6 @@ void Tooltip::showTooltip()
 
     if (oxygine::getStage()->isDescendant(this))
     {
-
         if (QGuiApplication::focusWindow() == pApp && !m_tooltipText.isEmpty())
         {
             QPoint curPos = pApp->mapFromGlobal(pApp->cursor().pos());

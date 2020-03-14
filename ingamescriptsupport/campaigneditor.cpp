@@ -16,6 +16,8 @@
 
 #include "objects/spinbox.h"
 
+#include "objects/dialogmessagebox.h"
+
 #include "ingamescriptsupport/genericbox.h"
 
 #include "qdir.h"
@@ -65,6 +67,7 @@ CampaignEditor::CampaignEditor()
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
     m_CampaignFolder = new Textbox(pApp->getSettings()->getWidth() - 500);
+    m_CampaignFolder->setTooltipText(tr("Folder containing the campaign maps. All maps for this campaign should be directly below this folder. The folder name must end with .camp"));
     m_CampaignFolder->setPosition(300, y);
     m_CampaignFolder->setCurrentText("maps/");
     pSpriteBox->addChild(m_CampaignFolder);
@@ -84,6 +87,7 @@ CampaignEditor::CampaignEditor()
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
     m_Name = new Textbox(pApp->getSettings()->getWidth() - 500);
+    m_Name->setTooltipText(tr("Name of the campaign shown in the map selection screen."));
     m_Name->setPosition(300, y);
     m_Name->setCurrentText("");
     pSpriteBox->addChild(m_Name);
@@ -95,6 +99,7 @@ CampaignEditor::CampaignEditor()
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
     m_Author = new Textbox(pApp->getSettings()->getWidth() - 500);
+    m_Author->setTooltipText(tr("Name of the author shown in the map selection screen."));
     m_Author->setPosition(300, y);
     m_Author->setCurrentText(Settings::getUsername());
     pSpriteBox->addChild(m_Author);
@@ -106,6 +111,7 @@ CampaignEditor::CampaignEditor()
     pText->setPosition(30, y);
     pSpriteBox->addChild(pText);
     m_Description = new Textbox(pApp->getSettings()->getWidth() - 500);
+    m_Description->setTooltipText(tr("Description of the campaign shown in the map selection screen."));
     m_Description->setPosition(300, y);
     m_Description->setCurrentText("");
     pSpriteBox->addChild(m_Description);
@@ -149,8 +155,7 @@ CampaignEditor::CampaignEditor()
     pSpriteBox->addChild(pOkButton);
     pOkButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
     {
-        emit sigFinished();
-        detach();
+        emit sigShowExitBox();
     });
 
     connect(this, &CampaignEditor::sigShowAddCampaign, this, &CampaignEditor::showAddCampaign, Qt::QueuedConnection);
@@ -158,6 +163,28 @@ CampaignEditor::CampaignEditor()
     connect(this, &CampaignEditor::sigShowSaveCampaign, this, &CampaignEditor::showSaveCampaign, Qt::QueuedConnection);
     connect(this, &CampaignEditor::sigShowLoadCampaign, this, &CampaignEditor::showLoadCampaign, Qt::QueuedConnection);
     connect(this, &CampaignEditor::sigUpdateCampaignData, this, &CampaignEditor::updateCampaignData, Qt::QueuedConnection);
+    connect(this, &CampaignEditor::sigShowEditEnableMaps, this, &CampaignEditor::showEditEnableMaps, Qt::QueuedConnection);
+    connect(this, &CampaignEditor::sigShowEditDisableMaps, this, &CampaignEditor::showEditDisableMaps, Qt::QueuedConnection);
+    connect(this, &CampaignEditor::sigShowExitBox, this, &CampaignEditor::showExitBox, Qt::QueuedConnection);
+}
+
+void CampaignEditor::showExitBox()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    spDialogMessageBox pExit = new DialogMessageBox(tr("Do you want to exit the campaign editor?"), true);
+    connect(pExit.get(), &DialogMessageBox::sigOk, this, &CampaignEditor::exitEditor, Qt::QueuedConnection);
+    addChild(pExit);
+    pApp->continueThread();
+}
+
+void CampaignEditor::exitEditor()
+{
+    Mainapp* pApp = Mainapp::getInstance();
+    pApp->suspendThread();
+    emit sigFinished();
+    detach();
+    pApp->continueThread();
 }
 
 void CampaignEditor::showAddCampaign()
@@ -267,7 +294,7 @@ void CampaignEditor::updateCampaignData()
         m_Panel->addItem(pEnableButton);
         pEnableButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
-            showEditEnableMaps(i);
+            emit sigShowEditEnableMaps(i);
         });
 
         oxygine::spButton pDisableButton = pObjectManager->createButton(tr("Disable Maps"), 150);
@@ -275,7 +302,7 @@ void CampaignEditor::updateCampaignData()
         m_Panel->addItem(pDisableButton);
         pDisableButton->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
         {
-            showEditDisableMaps(i);
+            emit sigShowEditDisableMaps(i);
         });
 
         oxygine::spButton pRemoveButton = pObjectManager->createButton(tr("Remove Map"), 150);
@@ -295,6 +322,7 @@ void CampaignEditor::updateCampaignData()
 
         spCheckbox pBox = new Checkbox();
         pBox->setChecked(mapDatas[i].lastMap);
+        pBox->setTooltipText(tr("All maps marked as last map need to be won in order to finish the campaign"));
         pBox->setPosition(780, 10 + i * 40);
         m_Panel->addItem(pBox);
         connect(pBox.get(), &Checkbox::checkChanged, [=](bool value)
@@ -622,6 +650,7 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
     pText->setPosition(10, 10);
     pPanel->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 0, mapDatas.size() - 1);
+    spinBox->setTooltipText(tr("Number of maps that leads to this map and that need to be won in order to play this map. Can be smaller so multiple campaign paths lead to this map."));
     spinBox->setPosition(300, 10);
     spinBox->setCurrentValue(mapDatas[index].previousCount);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
@@ -643,6 +672,7 @@ void CampaignEditor::showEditEnableMaps(qint32 index)
             pPanel->addItem(pText);
 
             spCheckbox pCheckbox = new Checkbox();
+            pCheckbox->setTooltipText(tr("If checked this map leads to the selected map. Also see \"Enable Map Count\""));
             pCheckbox->setPosition(300, 50 + counter * 40);
             if (mapDatas[index].previousMaps.contains(mapDatas[i].mapName))
             {
@@ -692,6 +722,7 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
     pText->setPosition(10, 10);
     pPanel->addItem(pText);
     spSpinBox spinBox = new SpinBox(150, 1, mapDatas.size() - 1);
+    spinBox->setTooltipText(tr("Number of maps that disable this map again. They need to be won in order to make this map unplayable again. E.g. you won the selected map and you want to stop make it repeatedly playable."));
     spinBox->setPosition(300, 10);
     spinBox->setCurrentValue(mapDatas[index].disableCount);
     connect(spinBox.get(), &SpinBox::sigValueChanged,
@@ -711,6 +742,7 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
         pPanel->addItem(pText);
 
         spCheckbox pCheckbox = new Checkbox();
+        pCheckbox->setTooltipText(tr("If checked this map disables the selected map. Also see \"Disable Map Count\""));
         pCheckbox->setPosition(300, 50 + counter * 40);
         if (mapDatas[index].disableMaps.contains(mapDatas[i].mapName))
         {
@@ -734,6 +766,6 @@ void CampaignEditor::showEditDisableMaps(qint32 index)
         pPanel->addItem(pCheckbox);
         counter++;
     }
-    addChild(pBox);
+    CampaignEditor::addChild(pBox);
     pApp->continueThread();
 }

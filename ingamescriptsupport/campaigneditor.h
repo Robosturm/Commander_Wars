@@ -70,6 +70,20 @@ signals:
      * @brief sigShowSaveCampaign
      */
     void sigShowSaveCampaign();
+    /**
+     * @brief showEditEnableMaps
+     * @param index
+     */
+    void sigShowEditEnableMaps(qint32 index);
+    /**
+     * @brief showEditDisableMaps
+     * @param index
+     */
+    void sigShowEditDisableMaps(qint32 index);
+    /**
+     * @brief sigShowExitBox
+     */
+    void sigShowExitBox();
 public slots:
     /**
      * @brief showSaveCampaign
@@ -138,6 +152,14 @@ public slots:
      * @param index
      */
     void showEditDisableMaps(qint32 index);
+    /**
+     * @brief showExitBox
+     */
+    void showExitBox();
+    /**
+     * @brief exitEditor
+     */
+    void exitEditor();
 private:
     spPanel m_Panel;
     /**

@@ -284,7 +284,7 @@ void EditorMenue::clickedTopbar(QString itemID)
     if (itemID == "EXIT")
     {
         m_Focused = false;
-        spDialogMessageBox pExit = new DialogMessageBox(tr("Do you want to exit the editor?"), true);
+        spDialogMessageBox pExit = new DialogMessageBox(tr("Do you want to exit the map editor?"), true);
         connect(pExit.get(), &DialogMessageBox::sigOk, this, &EditorMenue::exitEditor, Qt::QueuedConnection);
         connect(pExit.get(), &DialogMessageBox::sigCancel, [=]()
         {

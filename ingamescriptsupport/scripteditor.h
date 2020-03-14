@@ -60,6 +60,10 @@ signals:
      * @param pEvent
      */
     void sigShowEditEvent(spScriptEvent pEvent);
+    /**
+     * @brief sigShowExitBox
+     */
+    void sigShowExitBox();
 public slots:
     /**
      * @brief saveScript
@@ -119,6 +123,14 @@ public slots:
      * @param pEvent
      */
     void showEditEvent(spScriptEvent pEvent);
+    /**
+     * @brief showExitBox
+     */
+    void showExitBox();
+    /**
+     * @brief exitEditor
+     */
+    void exitEditor();
 private:
     spPanel m_ConditionPanel;
     spPanel m_EventPanel;

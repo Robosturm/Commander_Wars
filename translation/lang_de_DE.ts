@@ -642,78 +642,128 @@
 <context>
     <name>CampaignEditor</name>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="64"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="66"/>
         <source>Campaign Folder:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="72"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="70"/>
+        <source>Folder containing the campaign maps. All maps for this campaign should be directly below this folder. The folder name must end with .camp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="75"/>
         <source>Select Folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="83"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="86"/>
         <source>Campaign Name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="94"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="90"/>
+        <source>Name of the campaign shown in the map selection screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="98"/>
         <source>Campaign Author:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="105"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="102"/>
+        <source>Name of the author shown in the map selection screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="110"/>
         <source>Campaign Description:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="120"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="114"/>
+        <source>Description of the campaign shown in the map selection screen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="126"/>
         <source>add Campaign Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="129"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="135"/>
         <source>load Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="138"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="144"/>
         <source>save Campaign</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="147"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="153"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="265"/>
-        <source>Enable Maps</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="273"/>
-        <source>Disable Maps</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="281"/>
-        <source>Remove Map</source>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="175"/>
+        <source>Do you want to exit the campaign editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../ingamescriptsupport/campaigneditor.cpp" line="292"/>
+        <source>Enable Maps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="300"/>
+        <source>Disable Maps</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="308"/>
+        <source>Remove Map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="319"/>
         <source>Last Map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="621"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="325"/>
+        <source>All maps marked as last map need to be won in order to finish the campaign</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="649"/>
         <source>Enable Map Count:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="691"/>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="653"/>
+        <source>Number of maps that leads to this map and that need to be won in order to play this map. Can be smaller so multiple campaign paths lead to this map.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="675"/>
+        <source>If checked this map leads to the selected map. Also see &quot;Enable Map Count&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="721"/>
         <source>Disable Map Count:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="725"/>
+        <source>Number of maps that disable this map again. They need to be won in order to make this map unplayable again. E.g. you won the selected map and you want to stop make it repeatedly playable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/campaigneditor.cpp" line="745"/>
+        <source>If checked this map disables the selected map. Also see &quot;Disable Map Count&quot;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1724,12 +1774,12 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="95"/>
-        <source>Paste the current selected area. Based on the current placing mode. The copy and paste selection are not allowed to intersec.</source>
+        <source>Paste Ctrl+V</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="95"/>
-        <source>Paste Ctrl+V</source>
+        <source>Paste the current selected area. Based on the current placing mode. The copy and paste selection are not allowed to intersec.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1789,7 +1839,7 @@ This is immediatly applied.</source>
     </message>
     <message>
         <location filename="../menue/editormenue.cpp" line="287"/>
-        <source>Do you want to exit the editor?</source>
+        <source>Do you want to exit the map editor?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3713,11 +3763,6 @@ This is immediatly applied.</source>
 <context>
     <name>ScriptConditionPlayerReachedArea</name>
     <message>
-        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="234"/>
-        <source>Player: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="166"/>
         <source>Target X: </source>
         <translation type="unfinished"></translation>
@@ -3755,6 +3800,11 @@ This is immediatly applied.</source>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="221"/>
         <source>Target Area heigth which the player needs to reach.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditionplayerreachedarea.cpp" line="234"/>
+        <source>Player: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3993,47 +4043,47 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEditor</name>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="43"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="44"/>
         <source>Conditions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="63"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="64"/>
         <source>Condition type you wan&apos;t to create. If a condition is selected this condition and the selected one need to be fullfilled to activate the event.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="67"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="68"/>
         <source>Add Condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="78"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="79"/>
         <source>Events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="96"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="97"/>
         <source>The new event that should happen once the conditions are met.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="100"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="101"/>
         <source>Add Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="113"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="114"/>
         <source>Immediate Start: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="117"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="118"/>
         <source>If checked the game starts without beeing able to change rules, players or co&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="124"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="125"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4048,19 +4098,24 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="281"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="362"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="160"/>
+        <source>Do you want to exit the campaign editor?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="301"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="382"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="288"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="369"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="308"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="389"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="296"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="316"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13534,16 +13589,6 @@ CO Zone Effect: Units gain 10% additional firepower and defense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="225"/>
-        <source>Copter Command</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../resources/scripts/cos/co_sensei.js" line="221"/>
-        <source>Copter firepower increases. Infantry units with 9 HP appear in all his cities, ready to be moved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../resources/scripts/cos/co_sensei.js" line="216"/>
         <source>
 Global Effect: Copters have 25% increased firepower and Naval Units are 10% weaker.</source>
@@ -13553,6 +13598,16 @@ Global Effect: Copters have 25% increased firepower and Naval Units are 10% weak
         <location filename="../resources/scripts/cos/co_sensei.js" line="217"/>
         <source>
 CO Zone Effect: Copters have 50% increased firepower and infantries have 30% increased firepower.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="221"/>
+        <source>Copter firepower increases. Infantry units with 9 HP appear in all his cities, ready to be moved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/cos/co_sensei.js" line="225"/>
+        <source>Copter Command</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
