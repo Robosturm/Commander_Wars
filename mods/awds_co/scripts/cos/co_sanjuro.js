@@ -116,7 +116,7 @@ CO_SANJURO.postBattleActions = function(co, attacker, atkDamage, defender, gotAt
 {
     if (co.getIsCO0() === true)
     {
-        if (gotAttacked === true)
+        if (gotAttacked === true && defender.getOwner() === co.getOwner())
         {
             switch (co.getPowerMode())
             {

@@ -189,7 +189,7 @@ var Constructor = function()
     };
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
     {
-        if (gotAttacked === false)
+        if (gotAttacked === false && attacker.getOwner() === co.getOwner())
         {
             // here begins the fun :D
             var blowRange = 0;

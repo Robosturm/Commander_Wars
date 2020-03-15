@@ -209,7 +209,7 @@ var Constructor = function()
         var variables = co.getVariables();
         var bonusUnitVariable = variables.createVariable("BONUSUNITS");
         var bonusUnits = bonusUnitVariable.readDataListInt32();
-        if (gotAttacked === false)
+        if (gotAttacked === false && attacker.getOwner() === co.getOwner())
         {
             var destroyed = variables.createVariable("DESTROYED");
             if ((defender.getHp() <= 0) &&

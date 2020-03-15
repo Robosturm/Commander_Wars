@@ -1,5 +1,6 @@
 #include "scriptdata.h"
 
+const QString ScriptData::victoryInfo = "victoryInfo";
 const QString ScriptData::immediateStart = "immediateStart";
 const QString ScriptData::victory = "victory";
 const QString ScriptData::turnStart = "turnStart";
@@ -54,6 +55,17 @@ void ScriptData::readScript(QTextStream& rStream)
         }
         else if (started)
         {
+            if (line.endsWith(victoryInfo))
+            {
+                while (!rStream.atEnd())
+                {
+                    line = rStream.readLine().simplified();
+                    if (line.endsWith(victoryInfo))
+                    {
+                        break;
+                    }
+                }
+            }
             if (line.endsWith(immediateStart))
             {
                 while (!rStream.atEnd())
@@ -144,12 +156,12 @@ void ScriptData::writeScript(QTextStream& rStream)
     rStream << "        return " + QVariant(startMode).toString() +  ";\n";
     rStream << "    }; // " + immediateStart + "\n";
 
-    rStream << "    this.getVictoryInfo = function()\n";
+    rStream << "    this.getVictoryInfo = function() // " + victoryInfo + "\n";
     rStream << "    {\n";
     rStream << "        var variables = map.getGameScript().getVariables();\n";
     rStream << "        var textData = variables.createVariable(\"victory_info\");\n";
     rStream << "        return textData.readDataString();\n";
-    rStream << "    };\n";
+    rStream << "    }; // " + victoryInfo + "\n";
 
     rStream << "    this.victory = function(team) { // " + victory + "\n";
     for (qint32 i = 0; i < m_Victory.size(); i++)
@@ -166,7 +178,14 @@ void ScriptData::writeScript(QTextStream& rStream)
 
     // turn start
     rStream << "    this.turnStart = function(turn, player) { // " + turnStart + "\n";
+    rStream << "    // precondition\n";
     rStream << "        var variables = map.getGameScript().getVariables();\n";
+    rStream << "        var campaignVariables;\n";
+    rStream << "        if (map.getCampaign() !== null){\n";
+    rStream << "            var campaignVariables = map.getCampaign().getVariables();\n";
+    rStream << "        }\n";
+    rStream << "    // preconditionend\n";
+
     for (qint32 i = 0; i < m_DayConditions.size(); i++)
     {
         m_DayConditions[i]->writePreCondition(rStream);
@@ -182,6 +201,10 @@ void ScriptData::writeScript(QTextStream& rStream)
     rStream << "    this.actionDone = function() { // " + actionConditions + "\n";
     rStream << "    // precondition\n";
     rStream << "        var variables = map.getGameScript().getVariables();\n";
+    rStream << "        var campaignVariables;\n";
+    rStream << "        if (map.getCampaign() !== null){\n";
+    rStream << "            var campaignVariables = map.getCampaign().getVariables();\n";
+    rStream << "        }\n";
     for (qint32 i = 0; i < m_ActionConditions.size(); i++)
     {
         m_ActionConditions[i]->writePreCondition(rStream);

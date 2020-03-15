@@ -2,7 +2,7 @@ CO_NANA.postBattleActions = function(co, attacker, atkDamage, defender, gotAttac
 {
     if (co.getIsCO0() === true)
     {
-        if (!gotAttacked)
+        if (!gotAttacked && attacker.getOwner() === co.getOwner())
         {
             var owner = co.getOwner();
             var powerMode = co.getPowerMode();

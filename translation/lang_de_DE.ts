@@ -190,7 +190,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="281"/>
+        <location filename="../resources/scripts/actions/ACTION_FIRE.js" line="284"/>
         <source>Damage</source>
         <translation type="unfinished"></translation>
     </message>

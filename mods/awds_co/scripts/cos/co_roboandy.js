@@ -55,27 +55,27 @@ CO_ROBOANDY.postBattleActions = function(co, attacker, atkDamage, defender, gotA
         {
         case GameEnums.PowerMode_Tagpower:
         case GameEnums.PowerMode_Superpower:
-            if (gotAttacked)
+            if (gotAttacked && defender.getOwner() === co.getOwner())
             {
                 if (defender.getHp() <= 0)
                 {
                     attacker.setHp(attacker.getHp() - 3);
                 }
             }
-            else
+            else if (attacker.getOwner() === co.getOwner())
             {
                 attacker.setHp(attacker.getHp() + 3);
             }
             break;
         case GameEnums.PowerMode_Power:
-            if (gotAttacked)
+            if (gotAttacked && defender.getOwner() === co.getOwner())
             {
                 if (defender.getHp() <= 0)
                 {
                     attacker.setHp(attacker.getHp() - 1);
                 }
             }
-            else
+            else if (attacker.getOwner() === co.getOwner())
             {
                 attacker.setHp(attacker.getHp() + 1);
             }

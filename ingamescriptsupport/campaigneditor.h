@@ -42,6 +42,14 @@ public:
         QStringList disableMaps;
         qint32 disableCount{1};
         bool lastMap{false};
+        bool scriptVariableEnable;
+        QString scriptVariableEnableName;
+        QString scriptVariableEnableCompare;
+        qint32 scriptVariableEnableValue;
+        bool scriptVariableDisable;
+        QString scriptVariableDisableName;
+        QString scriptVariableDisableCompare;
+        qint32 scriptVariableDisableValue;
     };
     explicit CampaignEditor();
     virtual ~CampaignEditor() = default;

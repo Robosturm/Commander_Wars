@@ -106,7 +106,7 @@ var Constructor = function()
 
     this.postBattleActions = function(co, attacker, atkDamage, defender, gotAttacked)
     {
-        if (!gotAttacked)
+        if (!gotAttacked && attacker.getOwner() === co.getOwner())
         {
             var owner = co.getOwner();
             var powerMode = co.getPowerMode();

@@ -2,7 +2,7 @@ CO_GRAVES.postBattleActions = function(co, attacker, atkDamage, defender, gotAtt
 {
     if (co.getIsCO0() === true)
     {
-        if (gotAttacked === false)
+        if (gotAttacked === false && attacker.getOwner() === co.getOwner())
         {
             var stunLevel = 0;
             switch (co.getPowerMode())

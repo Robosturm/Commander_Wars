@@ -19,6 +19,7 @@ public:
     static const QString scriptStart;
     static const QString scriptEnd;
     static const QString immediateStart;
+    static const QString victoryInfo;
     static const QString victory;
     static const QString actionConditions;
     static const QString turnStart;

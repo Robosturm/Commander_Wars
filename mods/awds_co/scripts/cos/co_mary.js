@@ -6,7 +6,7 @@ CO_MARY.postBattleActions = function(co, attacker, atkDamage, defender, gotAttac
         var x = -1;
         var y = -1;
         var unitID = 0;
-        if (gotAttacked )
+        if (gotAttacked  && defender.getOwner() === co.getOwner())
         {
             if (attacker.getHp() <= 0)
             {
@@ -19,7 +19,7 @@ CO_MARY.postBattleActions = function(co, attacker, atkDamage, defender, gotAttac
                 unitID = attacker.getUniqueID();
             }
         }
-        else
+        else if (attacker.getOwner() === co.getOwner())
         {
             if (defender.getHp() <= 0)
             {

@@ -88,7 +88,7 @@ var Constructor = function()
         var x = -1;
         var y = -1;
         var unitID = 0;
-        if (gotAttacked )
+        if (gotAttacked && defender.getOwner() === co.getOwner())
         {
             if (attacker.getHp() <= 0)
             {
@@ -96,7 +96,7 @@ var Constructor = function()
                 x = attacker.getX();
                 y = attacker.getY();
             }
-            else
+            else if (attacker.getOwner() === co.getOwner())
             {
                 unitID = attacker.getUniqueID();
             }

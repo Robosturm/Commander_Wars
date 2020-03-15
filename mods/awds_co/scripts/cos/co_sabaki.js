@@ -2,7 +2,7 @@ CO_SABAKI.postBattleActions = function(co, attacker, atkDamage, defender, gotAtt
 {
     if (co.getIsCO0() === true)
     {
-        if (gotAttacked === false)
+        if (gotAttacked === false && attacker.getOwner() === co.getOwner())
         {
             var healPercent = 0.0;
             switch (co.getPowerMode())

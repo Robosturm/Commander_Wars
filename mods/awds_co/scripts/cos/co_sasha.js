@@ -37,7 +37,7 @@ CO_SASHA.postBattleActions = function(co, attacker, atkDamage, defender, gotAtta
 {
     if (co.getIsCO0() === true)
     {
-        if (gotAttacked === false)
+        if (gotAttacked === false && attacker.getOwner() === co.getOwner())
         {
             switch (co.getPowerMode())
             {

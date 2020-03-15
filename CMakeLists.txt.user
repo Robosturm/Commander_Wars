@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.11.1, 2020-03-12T20:57:28. -->
+<!-- Written by QtCreator 4.11.1, 2020-03-15T09:16:21. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -325,7 +325,7 @@
     <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.Executable">D:\Programmierung\Commander_Wars\builds\install\Debug\Commander_Wars.exe</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.CustomExecutableRunConfiguration</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey"></value>
-    <value type="QString" key="RunConfiguration.Arguments"></value>
+    <value type="QString" key="RunConfiguration.Arguments">-qmljsdebugger=port:8888</value>
     <value type="bool" key="RunConfiguration.Arguments.multi">false</value>
     <value type="QString" key="RunConfiguration.OverrideDebuggerStartup"></value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
