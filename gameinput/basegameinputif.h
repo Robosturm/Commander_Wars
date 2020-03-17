@@ -8,6 +8,8 @@
 
 #include "coreengine/fileserializable.h"
 
+#include "game/GameEnums.h"
+
 class Player;
 
 class BaseGameInputIF;
@@ -17,19 +19,7 @@ class BaseGameInputIF : public QObject, public FileSerializable, public oxygine:
 {
     Q_OBJECT
 public:
-    enum class AiTypes
-    {
-        ProxyAi = -1,
-        Human = 0,
-        VeryEasy,
-        Normal,
-        NormalOffensive,
-        NormalDefensive,
-        Max,
-        Open = 200
-    };
-
-    explicit BaseGameInputIF(AiTypes aiType);
+    explicit BaseGameInputIF(GameEnums::AiTypes aiType);
 
     void setPlayer(Player* pPlayer);
 
@@ -38,11 +28,16 @@ public:
     static void serializeInterface(QDataStream& pStream, BaseGameInputIF* input);
 
     static BaseGameInputIF* deserializeInterface(QDataStream& pStream, qint32 version);
-    AiTypes getAiType() const;
-    static BaseGameInputIF* createAi(BaseGameInputIF::AiTypes type);
+
+    static BaseGameInputIF* createAi(GameEnums::AiTypes type);
 signals:
 
 public slots:
+    /**
+     * @brief getAiType
+     * @return
+     */
+    GameEnums::AiTypes getAiType() const;
     /**
      * @brief getEnableNeutralTerrainAttack
      * @return
@@ -80,7 +75,7 @@ public slots:
     qint32 getMoveCostMapValue(qint32 x, qint32 y);
 protected:
     Player* m_pPlayer{nullptr};
-    AiTypes m_AiType{AiTypes::Human};
+    GameEnums::AiTypes m_AiType{GameEnums::AiTypes_Human};
     bool enableNeutralTerrainAttack{true};
     QVector<std::tuple<QString, float>> m_BuildingChanceModifier;
     /**

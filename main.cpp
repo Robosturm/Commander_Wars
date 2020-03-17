@@ -99,6 +99,7 @@ int main(int argc, char* argv[])
     qRegisterMetaType<GameEnums::BattleAnimationMode>("GameEnums::BattleAnimationMode");
     qRegisterMetaType<GameEnums::UnitType>("GameEnums::UnitType");
     qRegisterMetaType<GameEnums::VisionType>("GameEnums::VisionType");
+    qRegisterMetaType<GameEnums::AiTypes>("GameEnums::AiTypes");
     qRegisterMetaType<std::shared_ptr<QTcpSocket>>("std::shared_ptr<QTcpSocket>");
     qRegisterMetaType<spScriptEvent>("spScriptEvent");
     qRegisterMetaType<spScriptCondition>("spScriptCondition");

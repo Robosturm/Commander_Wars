@@ -7,7 +7,7 @@
 #include "QMutexLocker"
 
 ProxyAi::ProxyAi()
-    : CoreAI (BaseGameInputIF::AiTypes::ProxyAi)
+    : CoreAI (GameEnums::AiTypes_ProxyAi)
 {
     Interpreter::setCppOwnerShip(this);
     Mainapp* pApp = Mainapp::getInstance();

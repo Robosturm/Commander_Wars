@@ -21,7 +21,7 @@ const float NormalAi::directIndirectRatio = 1.5f;
 
 NormalAi::NormalAi(float initMinMovementDamage, float initMinAttackFunds, float initMinSuicideDamage,
                    float spamingFunds)
-    : CoreAI (BaseGameInputIF::AiTypes::Normal),
+    : CoreAI (GameEnums::AiTypes_Normal),
       minMovementDamage(initMinMovementDamage),
       minAttackFunds(initMinAttackFunds),
       minSuicideDamage(initMinSuicideDamage),

@@ -26,7 +26,7 @@
 #include "ai/coreai.h"
 
 HumanPlayerInput::HumanPlayerInput()
-    : BaseGameInputIF(BaseGameInputIF::AiTypes::Human)
+    : BaseGameInputIF(GameEnums::AiTypes_Human)
 {    
     Mainapp* pApp = Mainapp::getInstance();
     this->moveToThread(pApp->getWorkerthread());

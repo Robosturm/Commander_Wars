@@ -176,6 +176,19 @@ public:
     };
     Q_ENUM(AiTurnMode)
 
+    enum AiTypes
+    {
+        AiTypes_ProxyAi = -1,
+        AiTypes_Human = 0,
+        AiTypes_VeryEasy,
+        AiTypes_Normal,
+        AiTypes_NormalOffensive,
+        AiTypes_NormalDefensive,
+        AiTypes_Max,
+        AiTypes_Open = 200
+    };
+    Q_ENUM(AiTypes)
+
     static void registerEnums();
 private:
     explicit GameEnums() = default;

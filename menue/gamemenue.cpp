@@ -55,7 +55,7 @@ GameMenue::GameMenue(spNetworkInterface pNetworkInterface, bool saveGame)
         for (qint32 i = 0; i < pMap->getPlayerCount(); i++)
         {
             Player* pPlayer = pMap->getPlayer(i);
-            if (pPlayer->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::ProxyAi)
+            if (pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_ProxyAi)
             {
                 dynamic_cast<ProxyAi*>(pPlayer->getBaseGameInput())->connectInterface(m_pNetworkInterface.get());
             }
@@ -445,7 +445,7 @@ void GameMenue::performAction(GameAction* pGameAction)
         GameMap* pMap = GameMap::getInstance();
         pMap->getGameRules()->pauseRoundTime();
         if (!pGameAction->getIsLocal() &&
-            (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != BaseGameInputIF::AiTypes::ProxyAi))
+            (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi))
         {
             pGameAction = doMultiTurnMovement(pGameAction);
         }
@@ -504,7 +504,7 @@ void GameMenue::performAction(GameAction* pGameAction)
         }
         // send action to other players if needed
         if (!pGameAction->getIsLocal() && m_pNetworkInterface.get() != nullptr &&
-            pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != BaseGameInputIF::AiTypes::ProxyAi)
+            pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_ProxyAi)
         {
             QByteArray data;
             QDataStream stream(&data, QIODevice::WriteOnly);
@@ -568,7 +568,7 @@ void GameMenue::skipAnimations()
             case GameEnums::AnimationMode_Own:
             {
                 // skip animations if the player isn't a human
-                if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != BaseGameInputIF::AiTypes::Human)
+                if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_Human)
                 {
                     skipAnimations = 1;
                 }
@@ -590,7 +590,7 @@ void GameMenue::skipAnimations()
                 Player* pPlayer1 = pMap->getCurrentPlayer();
                 Player* pPlayer2 = pMap->getCurrentViewPlayer();
                 // skip animations if the current player is a human or it's an ally of the current view player
-                if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human ||
+                if (pMap->getCurrentPlayer()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human ||
                     pPlayer2->isAlly(pPlayer1))
                 {
                     skipAnimations = 1;
@@ -630,8 +630,8 @@ void GameMenue::skipAnimations()
                         else if (animMode == GameEnums::AnimationMode_OnlyBattleOwn)
                         {
                             // only show animation if at least one player is a human
-                            if ((pAtkUnit->getOwner()->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human) ||
-                                (pDefUnit != nullptr && pDefUnit->getOwner()->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human))
+                            if ((pAtkUnit->getOwner()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human) ||
+                                (pDefUnit != nullptr && pDefUnit->getOwner()->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human))
                             {
                                 battleActive = true;
                                 i++;
@@ -652,9 +652,9 @@ void GameMenue::skipAnimations()
                         {
                             Player* pPlayer2 = pMap->getCurrentViewPlayer();
                             // only show animation if none of the players is human and all units are enemies of the current view player
-                            if ((pAtkUnit->getOwner()->getBaseGameInput()->getAiType() != BaseGameInputIF::AiTypes::Human) &&
+                            if ((pAtkUnit->getOwner()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_Human) &&
                                 pDefUnit != nullptr &&
-                                pDefUnit->getOwner()->getBaseGameInput()->getAiType() != BaseGameInputIF::AiTypes::Human &&
+                                pDefUnit->getOwner()->getBaseGameInput()->getAiType() != GameEnums::AiTypes_Human &&
                                 pPlayer2->isEnemy(pAtkUnit->getOwner()) &&
                                 pPlayer2->isEnemy(pDefUnit->getOwner()))
                             {
@@ -765,7 +765,7 @@ void GameMenue::victory(qint32 team)
             {
                 pPlayer->defeatPlayer(nullptr);
             }
-            if (pPlayer->getIsDefeated() == false && pPlayer->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
+            if (pPlayer->getIsDefeated() == false && pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
             {
                 humanWin = true;
             }

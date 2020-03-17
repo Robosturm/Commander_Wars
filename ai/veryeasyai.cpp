@@ -19,7 +19,7 @@
 #include "ai/islandmap.h"
 
 VeryEasyAI::VeryEasyAI()
-    : CoreAI(BaseGameInputIF::AiTypes::VeryEasy),
+    : CoreAI(GameEnums::AiTypes_VeryEasy),
       m_COUnitTree("resources/aidata/very_easy/counit.tree", "resources/aidata/very_easy/counit.txt"),
       m_GeneralBuildingTree("resources/aidata/very_easy/generalbuilding.tree", "resources/aidata/very_easy/generalbuilding.txt"),
       m_AirportBuildingTree("resources/aidata/very_easy/airportbuilding.tree", "resources/aidata/very_easy/airportbuilding.txt"),

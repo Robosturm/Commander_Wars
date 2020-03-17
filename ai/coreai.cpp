@@ -50,7 +50,7 @@ const QString CoreAI::ACTION_CO_UNIT_0 = "ACTION_CO_UNIT_0";
 const QString CoreAI::ACTION_CO_UNIT_1 = "ACTION_CO_UNIT_1";
 const QString CoreAI::ACTION_EXPLODE = "ACTION_EXPLODE";
 
-CoreAI::CoreAI(BaseGameInputIF::AiTypes aiType)
+CoreAI::CoreAI(GameEnums::AiTypes aiType)
     : BaseGameInputIF(aiType),
       m_COPowerTree("resources/aidata/copower.tree", "resources/aidata/copower.txt")
 {

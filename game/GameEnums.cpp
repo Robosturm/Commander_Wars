@@ -102,6 +102,13 @@ void GameEnums::registerEnums()
     value.setProperty("AiTurnMode_DuringDay", AiTurnMode_DuringDay);
     value.setProperty("AiTurnMode_EndOfDay", AiTurnMode_EndOfDay);
 
+    value.setProperty("AiTypes_ProxyAi", AiTypes_ProxyAi);
+    value.setProperty("AiTypes_Human", AiTypes_Human);
+    value.setProperty("AiTypes_VeryEasy", AiTypes_VeryEasy);
+    value.setProperty("AiTypes_Normal", AiTypes_Normal);
+    value.setProperty("AiTypes_NormalOffensive", AiTypes_NormalOffensive);
+    value.setProperty("AiTypes_NormalDefensive", AiTypes_NormalDefensive);
+
     pInterpreter->setGlobal("GameEnums", value);
 }
 

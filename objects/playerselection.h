@@ -37,13 +37,13 @@ public:
     bool hasOpenPlayer();
     QString getPlayerAiName(qint32 player);
     void setPlayerAiName(qint32 player, QString name);
-    BaseGameInputIF::AiTypes getPlayerAiType(qint32 player);
+    GameEnums::AiTypes getPlayerAiType(qint32 player);
     /**
      * @brief sendPlayerRequest sends a request to play as a human player
      * @param socketID
      * @param player -1 for any player
      */
-    void sendPlayerRequest(quint64 socketID, qint32 player, BaseGameInputIF::AiTypes aiType);
+    void sendPlayerRequest(quint64 socketID, qint32 player, GameEnums::AiTypes aiType);
     void playerDataChanged();
     void updateCOData(qint32 playerIdx);
     bool getReady(qint32 playerIdx);
@@ -106,7 +106,7 @@ public slots:
      */
     void updatePlayerData(qint32 player);
 protected:
-    void createAi(qint32 player, BaseGameInputIF::AiTypes type);
+    void createAi(qint32 player, GameEnums::AiTypes type);
     /**
      * @brief requestPlayer a client requested to get control of a player. We check the request and execute it if it's valid
      * @param socketID

@@ -53,7 +53,8 @@ void Minimap::updateMinimap(GameMap* pMap, bool useVision)
         {
             for (qint32 y = 0; y < heigth; y++)
             {
-                if (pPlayer->getFieldVisibleType(x, y) == GameEnums::VisionType_Shrouded)
+                if (pPlayer->getFieldVisibleType(x, y) == GameEnums::VisionType_Shrouded &&
+                    pMap->getGameRules()->getFogMode() == GameEnums::Fog_OfShroud)
                 {
                     oxygine::spColorRectSprite pSprite = new oxygine::ColorRectSprite();
                     pSprite->setColor(Qt::black);

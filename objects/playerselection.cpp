@@ -85,25 +85,25 @@ void PlayerSelection::setPlayerAiName(qint32 player, QString name)
     return m_playerAIs[player]->setCurrentItemText(name);
 }
 
-BaseGameInputIF::AiTypes PlayerSelection::getPlayerAiType(qint32 player)
+GameEnums::AiTypes PlayerSelection::getPlayerAiType(qint32 player)
 {
     if (m_pNetworkInterface.get() == nullptr)
     {
-        return static_cast<BaseGameInputIF::AiTypes>(m_playerAIs[player]->getCurrentItem());
+        return static_cast<GameEnums::AiTypes>(m_playerAIs[player]->getCurrentItem());
     }
     else
     {
         if (m_playerAIs[player]->getCurrentItem() == m_playerAIs[player]->getItemCount() - 1)
         {
-            return BaseGameInputIF::AiTypes::Open;
+            return GameEnums::AiTypes_Open;
         }
         else if (m_playerAIs[player]->getCurrentItem() < 0)
         {
-            return BaseGameInputIF::AiTypes::ProxyAi;
+            return GameEnums::AiTypes_ProxyAi;
         }
         else
         {
-            return static_cast<BaseGameInputIF::AiTypes>(m_playerAIs[player]->getCurrentItem());
+            return static_cast<GameEnums::AiTypes>(m_playerAIs[player]->getCurrentItem());
         }
     }
 }
@@ -360,7 +360,7 @@ void PlayerSelection::showPlayerSelection()
             }
             if (pPlayer->getBaseGameInput() != nullptr)
             {
-                if (pPlayer->getBaseGameInput()->getAiType() > BaseGameInputIF::AiTypes::Human)
+                if (pPlayer->getBaseGameInput()->getAiType() > GameEnums::AiTypes_Human)
                 {
                     allHuman = false;
                 }
@@ -541,7 +541,7 @@ void PlayerSelection::showPlayerSelection()
         });
         m_playerAIs.append(playerAi);
         m_pPlayerSelection->addItem(playerAi);
-        createAi(i, static_cast<BaseGameInputIF::AiTypes>(ai));
+        createAi(i, static_cast<GameEnums::AiTypes>(ai));
         m_PlayerSockets.append(0);
 
         itemIndex++;
@@ -901,20 +901,20 @@ void PlayerSelection::selectAI(qint32 player)
 {
     if (m_pNetworkInterface.get() != nullptr)
     {
-        BaseGameInputIF::AiTypes type = static_cast<BaseGameInputIF::AiTypes>(m_playerAIs[player]->getCurrentItem());
+        GameEnums::AiTypes type = static_cast<GameEnums::AiTypes>(m_playerAIs[player]->getCurrentItem());
         if (isOpenPlayer(player))
         {
-            type = BaseGameInputIF::AiTypes::Open;
+            type = GameEnums::AiTypes_Open;
         }
         if (m_pNetworkInterface->getIsServer())
         {
             m_PlayerSockets[player] = 0;
             GameMap* pMap = GameMap::getInstance();
-            createAi(player, static_cast<BaseGameInputIF::AiTypes>(m_playerAIs[player]->getCurrentItem()));
+            createAi(player, static_cast<GameEnums::AiTypes>(m_playerAIs[player]->getCurrentItem()));
             QByteArray data;
             QDataStream stream(&data, QIODevice::WriteOnly);
             stream << NetworkCommands::PLAYERCHANGED;
-            if (type == BaseGameInputIF::AiTypes::Human)
+            if (type == GameEnums::AiTypes_Human)
             {
                 stream << Settings::getUsername();
             }
@@ -923,13 +923,13 @@ void PlayerSelection::selectAI(qint32 player)
                 stream << m_playerAIs[player]->getCurrentItemText();
             }
             stream << player;
-            if (type == BaseGameInputIF::AiTypes::Open)
+            if (type == GameEnums::AiTypes_Open)
             {
-                stream << static_cast<qint32>(BaseGameInputIF::AiTypes::Open);
+                stream << static_cast<qint32>(GameEnums::AiTypes_Open);
             }
             else
             {
-                stream << static_cast<qint32>(BaseGameInputIF::AiTypes::ProxyAi);
+                stream << static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
             }
             pMap->getPlayer(player)->serializeObject(stream);
             // update data for all clients
@@ -943,11 +943,11 @@ void PlayerSelection::selectAI(qint32 player)
     }
     else
     {
-        createAi(player, static_cast<BaseGameInputIF::AiTypes>(m_playerAIs[player]->getCurrentItem()));
+        createAi(player, static_cast<GameEnums::AiTypes>(m_playerAIs[player]->getCurrentItem()));
     }
 }
 
-void PlayerSelection::createAi(qint32 player, BaseGameInputIF::AiTypes type)
+void PlayerSelection::createAi(qint32 player, GameEnums::AiTypes type)
 {
     Player* pPlayer = GameMap::getInstance()->getPlayer(player);
     pPlayer->setBaseGameInput(BaseGameInputIF::createAi(type));
@@ -1055,7 +1055,7 @@ void PlayerSelection::setSaveGame(bool value)
     saveGame = value;
 }
 
-void PlayerSelection::sendPlayerRequest(quint64 socketID, qint32 player, BaseGameInputIF::AiTypes aiType)
+void PlayerSelection::sendPlayerRequest(quint64 socketID, qint32 player, GameEnums::AiTypes aiType)
 {
     QByteArray sendData;
     QDataStream sendStream(&sendData, QIODevice::WriteOnly);
@@ -1078,7 +1078,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
         stream >> username;
         qint32 aiType;
         stream >> aiType;
-        BaseGameInputIF::AiTypes eAiType = static_cast<BaseGameInputIF::AiTypes>(aiType);
+        GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
         // the client wants any player?
         if (player < 0)
         {
@@ -1092,13 +1092,13 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             }
         }
         // opening a player is always valid changing to an human with an open player is also valid
-        if (isOpenPlayer(player) || eAiType == BaseGameInputIF::AiTypes::Open)
+        if (isOpenPlayer(player) || eAiType == GameEnums::AiTypes_Open)
         {
             // valid request
             // change data locally and send remote update
             Player* pPlayer = pMap->getPlayer(player);
             // we need to handle opening a player slightly different here...
-            if (eAiType == BaseGameInputIF::AiTypes::Open)
+            if (eAiType == GameEnums::AiTypes_Open)
             {
                 pPlayer->setBaseGameInput(nullptr);
                 m_playerAIs[player]->setCurrentItem(m_playerAIs[player]->getItemCount() - 1);
@@ -1106,7 +1106,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             }
             else
             {
-                pPlayer->setBaseGameInput(BaseGameInputIF::createAi(BaseGameInputIF::AiTypes::ProxyAi));
+                pPlayer->setBaseGameInput(BaseGameInputIF::createAi(GameEnums::AiTypes_ProxyAi));
                 m_playerAIs[player]->setCurrentItemText(username);
                 m_PlayerSockets[player] = socketID;
             }
@@ -1120,26 +1120,26 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             sendStreamRequester << NetworkCommands::PLAYERCHANGED;
             sendStreamRequester << username;
             sendStreamRequester << player;
-            if (eAiType == BaseGameInputIF::AiTypes::Open)
+            if (eAiType == GameEnums::AiTypes_Open)
             {
-                sendStreamRequester << static_cast<qint32>(BaseGameInputIF::AiTypes::Open);
+                sendStreamRequester << static_cast<qint32>(GameEnums::AiTypes_Open);
             }
             else
             {
-                sendStreamRequester << static_cast<qint32>(BaseGameInputIF::AiTypes::Human);
+                sendStreamRequester << static_cast<qint32>(GameEnums::AiTypes_Human);
             }
             pMap->getPlayer(player)->serializeObject(sendStreamRequester);
             // create data block for other clients
             sendStreamOtherClients << NetworkCommands::PLAYERCHANGED;
             sendStreamOtherClients << username;
             sendStreamOtherClients << player;
-            if (eAiType == BaseGameInputIF::AiTypes::Open)
+            if (eAiType == GameEnums::AiTypes_Open)
             {
-                sendStreamOtherClients << static_cast<qint32>(BaseGameInputIF::AiTypes::Open);
+                sendStreamOtherClients << static_cast<qint32>(GameEnums::AiTypes_Open);
             }
             else
             {
-                sendStreamOtherClients << static_cast<qint32>(BaseGameInputIF::AiTypes::ProxyAi);
+                sendStreamOtherClients << static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
             }
             pMap->getPlayer(player)->serializeObject(sendStreamOtherClients);
             // send player update
@@ -1152,7 +1152,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
             QByteArray sendData;
             QDataStream sendStream(&sendData, QIODevice::WriteOnly);
             sendStream << NetworkCommands::PLAYERCHANGED;
-            if (pPlayer->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
+            if (pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
             {
                 sendStream << Settings::getUsername();
             }
@@ -1161,7 +1161,7 @@ void PlayerSelection::requestPlayer(quint64 socketID, QDataStream& stream)
                 sendStream << m_playerAIs[player]->getCurrentItemText();
             }
             sendStream << player;
-            sendStream << static_cast<qint32>(BaseGameInputIF::AiTypes::ProxyAi);
+            sendStream << static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
             pPlayer->serializeObject(sendStream);
         }
     }
@@ -1178,10 +1178,10 @@ void PlayerSelection::changePlayer(quint64, QDataStream& stream)
         stream >> name;
         stream >> player;
         stream >> aiType;
-        BaseGameInputIF::AiTypes eAiType = static_cast<BaseGameInputIF::AiTypes>(aiType);
-        if (eAiType != BaseGameInputIF::AiTypes::Human)
+        GameEnums::AiTypes eAiType = static_cast<GameEnums::AiTypes>(aiType);
+        if (eAiType != GameEnums::AiTypes_Human)
         {
-            if (eAiType == BaseGameInputIF::AiTypes::Open)
+            if (eAiType == GameEnums::AiTypes_Open)
             {
                 m_playerAIs[player]->setCurrentItem(m_playerAIs[player]->getItemCount() - 1);
             }
@@ -1200,7 +1200,7 @@ void PlayerSelection::changePlayer(quint64, QDataStream& stream)
         bool humanFound = false;
         for (qint32 i = 0; i < m_playerAIs.size(); i++)
         {
-            if (static_cast<BaseGameInputIF::AiTypes>(m_playerAIs[i]->getCurrentItem()) == BaseGameInputIF::AiTypes::Human)
+            if (static_cast<GameEnums::AiTypes>(m_playerAIs[i]->getCurrentItem()) == GameEnums::AiTypes_Human)
             {
                 humanFound = true;
                 break;
@@ -1331,11 +1331,11 @@ void PlayerSelection::updatePlayerData(qint32 player)
         m_playerTeams[player]->setCurrentItem(pPlayer->getTeam());
         // check for open player
         if (pPlayer->getBaseGameInput() == nullptr ||
-            pPlayer->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
+            pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
         {
             m_playerAIs[player]->setEnabled(true);
             if (((pPlayer->getBaseGameInput() != nullptr &&
-                pPlayer->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human) ||
+                pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human) ||
                 m_pNetworkInterface->getIsServer()) &&
                 !saveGame)
             {
@@ -1352,7 +1352,7 @@ void PlayerSelection::updatePlayerData(qint32 player)
             }
 
             if (pPlayer->getBaseGameInput() != nullptr &&
-                pPlayer->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
+                pPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
             {
                 m_pReadyBoxes[player]->setChecked(m_PlayerReady);
             }
@@ -1389,7 +1389,7 @@ void PlayerSelection::updatePlayerData(qint32 player)
         }
         if (m_pCampaign.get() != nullptr)
         {
-            if (pPlayer->getBaseGameInput()->getAiType() != BaseGameInputIF::AiTypes::Human)
+            if (pPlayer->getBaseGameInput()->getAiType() != GameEnums::AiTypes_Human)
             {
                 m_playerAIs[player]->setEnabled(false);
                 m_playerCO1[player]->setEnabled(false);
@@ -1415,8 +1415,8 @@ void PlayerSelection::setPlayerReady(bool value)
     m_PlayerReady = value;
     for (qint32 i = 0; i < m_playerAIs.size(); i++)
     {
-        if (static_cast<BaseGameInputIF::AiTypes>(m_playerAIs[i]->getCurrentItem()) >= BaseGameInputIF::AiTypes::Human &&
-            static_cast<BaseGameInputIF::AiTypes>(m_playerAIs[i]->getCurrentItem()) != BaseGameInputIF::AiTypes::Open)
+        if (static_cast<GameEnums::AiTypes>(m_playerAIs[i]->getCurrentItem()) >= GameEnums::AiTypes_Human &&
+            static_cast<GameEnums::AiTypes>(m_playerAIs[i]->getCurrentItem()) != GameEnums::AiTypes_Open)
         {
             m_pReadyBoxes[i]->setChecked(value);
         }

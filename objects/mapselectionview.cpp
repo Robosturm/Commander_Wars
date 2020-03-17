@@ -95,7 +95,7 @@ MapSelectionView::MapSelectionView()
     m_pBuildingBackground->setResAnim(pAnim);
     m_pBuildingBackground->setSize(pApp->getSettings()->getWidth() - width - 100, 60);
     m_pBuildingBackground->setPosition(m_MapInfo->getX(),
-                                     m_MapInfo->getY() + m_MapInfo->getHeight() + 20);
+                                       m_MapInfo->getY() + m_MapInfo->getHeight() + 20);
     m_pBuildingBackground->setVerticalMode(oxygine::Box9Sprite::STRETCHING);
     m_pBuildingBackground->setHorizontalMode(oxygine::Box9Sprite::STRETCHING);
     oxygine::TextStyle styleTimes10 = FontManager::getTimesFont10();
@@ -130,6 +130,56 @@ MapSelectionView::MapSelectionView()
     slider->setContent(content);
     m_pBuildingBackground->addChild(slider);
     addChild(m_pBuildingBackground);
+
+    oxygine::spButton pButtonTop = new oxygine::Button();
+    pButtonTop->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
+    pButtonTop->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    oxygine::Sprite* ptr = pButtonTop.get();
+    pButtonTop->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    {
+        ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+    });
+    pButtonTop->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    {
+        ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+    });
+    pButtonTop->setFlippedX(true);
+    pButtonTop->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        if (content->getWidth() > slider->getWidth())
+        {
+            content->setX(content->getX() - GameMap::Imagesize);
+            if (content->getX() + content->getWidth() < slider->getWidth())
+            {
+                content->setX(slider->getWidth() - content->getWidth());
+            }
+        }
+    });
+    pButtonTop->setPosition(m_MapInfo->getX() - 25, m_MapInfo->getY() + m_MapInfo->getHeight() + 30);
+    addChild(pButtonTop);
+
+    pButtonTop = new oxygine::Button();
+    pButtonTop->setResAnim(ObjectManager::getInstance()->getResAnim("arrow+right"));
+    pButtonTop->setPriority(static_cast<short>(Mainapp::ZOrder::Objects));
+    ptr = pButtonTop.get();
+    pButtonTop->addEventListener(oxygine::TouchEvent::OVER, [ = ](oxygine::Event*)
+    {
+        ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(16, 16, 16, 0)), oxygine::timeMS(300));
+    });
+    pButtonTop->addEventListener(oxygine::TouchEvent::OUTX, [ = ](oxygine::Event*)
+    {
+        ptr->addTween(oxygine::Sprite::TweenAddColor(QColor(0, 0, 0, 0)), oxygine::timeMS(300));
+    });
+    pButtonTop->addEventListener(oxygine::TouchEvent::CLICK, [ = ](oxygine::Event*)
+    {
+        content->setX(content->getX() + GameMap::Imagesize);
+        if (content->getX() > 0)
+        {
+            content->setX(0);
+        }
+    });
+    pButtonTop->setPosition(m_MapInfo->getX() + slider->getWidth() + 25, m_MapInfo->getY() + m_MapInfo->getHeight() + 30);
+    addChild(pButtonTop);
 }
 
 void MapSelectionView::loadMap(QFileInfo info)

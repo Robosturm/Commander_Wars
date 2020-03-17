@@ -1939,18 +1939,18 @@ This is immediatly applied.</source>
 <context>
     <name>GameEnums</name>
     <message>
-        <location filename="../game/GameEnums.cpp" line="114"/>
+        <location filename="../game/GameEnums.cpp" line="121"/>
         <source>Air</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/GameEnums.cpp" line="118"/>
+        <location filename="../game/GameEnums.cpp" line="125"/>
         <source>Naval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/GameEnums.cpp" line="122"/>
-        <location filename="../game/GameEnums.cpp" line="125"/>
+        <location filename="../game/GameEnums.cpp" line="129"/>
+        <location filename="../game/GameEnums.cpp" line="132"/>
         <source>Ground</source>
         <translation type="unfinished"></translation>
     </message>

@@ -9,7 +9,7 @@
 
 #include "coreengine/mainapp.h"
 
-BaseGameInputIF::BaseGameInputIF(AiTypes aiType)
+BaseGameInputIF::BaseGameInputIF(GameEnums::AiTypes aiType)
     : m_AiType(aiType)
 {
     Mainapp* pApp = Mainapp::getInstance();
@@ -37,7 +37,7 @@ void BaseGameInputIF::serializeInterface(QDataStream& pStream, BaseGameInputIF* 
 {
     if (input == nullptr)
     {
-        pStream << static_cast<qint32>(AiTypes::Open);
+        pStream << static_cast<qint32>(GameEnums::AiTypes_Open);
     }
     else
     {
@@ -51,10 +51,10 @@ BaseGameInputIF* BaseGameInputIF::deserializeInterface(QDataStream& pStream, qin
     BaseGameInputIF* ret = nullptr;
     if (version > 7)
     {
-        AiTypes type;
+        GameEnums::AiTypes type;
         qint32 typeInt;
         pStream >> typeInt;
-        type = static_cast<AiTypes>(typeInt);
+        type = static_cast<GameEnums::AiTypes>(typeInt);
         ret = createAi(type);
         if (ret != nullptr)
         {
@@ -63,51 +63,51 @@ BaseGameInputIF* BaseGameInputIF::deserializeInterface(QDataStream& pStream, qin
     }
     else
     {
-        AiTypes type;
+        GameEnums::AiTypes type;
         qint32 typeInt;
         pStream >> typeInt;
-        type = static_cast<AiTypes>(typeInt);
+        type = static_cast<GameEnums::AiTypes>(typeInt);
         ret = createAi(type);
     }
     return ret;
 }
 
-BaseGameInputIF* BaseGameInputIF::createAi(BaseGameInputIF::AiTypes type)
+BaseGameInputIF* BaseGameInputIF::createAi(GameEnums::AiTypes type)
 {
     BaseGameInputIF* ret = nullptr;
     switch (type)
     {
-        case AiTypes::Human:
+        case GameEnums::AiTypes_Human:
         {
             ret = new HumanPlayerInput();
             break;
         }
-        case AiTypes::VeryEasy:
+        case GameEnums::AiTypes_VeryEasy:
         {
             ret = new VeryEasyAI();
             break;
         }
-        case AiTypes::Normal:
+        case GameEnums::AiTypes_Normal:
         {
             ret = new NormalAi();
             break;
         }
-        case AiTypes::NormalOffensive:
+        case GameEnums::AiTypes_NormalOffensive:
         {
             ret = new NormalAi(0.5f, 0.3f, 1.0f, 6000);
             break;
         }
-        case AiTypes::NormalDefensive:
+        case GameEnums::AiTypes_NormalDefensive:
         {
             ret = new NormalAi(0.1f, 0, 0.3f, 10000);
             break;
         }
-        case AiTypes::ProxyAi:
+        case GameEnums::AiTypes_ProxyAi:
         {
             ret = new ProxyAi();
             break;
         }
-        case AiTypes::Open:
+        case GameEnums::AiTypes_Open:
         {
             ret = nullptr;
             break;
@@ -121,7 +121,7 @@ BaseGameInputIF* BaseGameInputIF::createAi(BaseGameInputIF::AiTypes type)
     return ret;
 }
 
-BaseGameInputIF::AiTypes BaseGameInputIF::getAiType() const
+GameEnums::AiTypes BaseGameInputIF::getAiType() const
 {
     return m_AiType;
 }

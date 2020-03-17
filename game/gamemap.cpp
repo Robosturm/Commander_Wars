@@ -1324,14 +1324,14 @@ void GameMap::nextTurn()
     bool found = false;
     if (m_Rules->getFogMode() != GameEnums::Fog::Fog_Off && m_CurrentPlayer->getBaseGameInput() != nullptr)
     {
-        if (m_CurrentPlayer->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
+        if (m_CurrentPlayer->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
         {
             // search for previous player
             qint32 currentPlayerID = m_CurrentPlayer->getPlayerID();
             for (qint32 i = currentPlayerID - 1; i >= 0; i--)
             {
                 if (players[i]->getBaseGameInput() != nullptr &&
-                    players[i]->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
+                    players[i]->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
                 {
                     if (players[i]->getTeam() != m_CurrentPlayer->getTeam())
                     {
@@ -1346,7 +1346,7 @@ void GameMap::nextTurn()
                 for (qint32 i = players.size() - 1; i > currentPlayerID; i--)
                 {
                     if (players[i]->getBaseGameInput() != nullptr &&
-                        players[i]->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
+                        players[i]->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
                     {
                         if (players[i]->getTeam() != m_CurrentPlayer->getTeam())
                         {
@@ -1377,7 +1377,7 @@ Player* GameMap::getCurrentViewPlayer()
         for (qint32 i = currentPlayerID; i >= 0; i--)
         {
             if (players[i]->getBaseGameInput() != nullptr &&
-                players[i]->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
+                players[i]->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
             {
                 return players[i].get();
             }
@@ -1385,7 +1385,7 @@ Player* GameMap::getCurrentViewPlayer()
         for (qint32 i = players.size() - 1; i > currentPlayerID; i--)
         {
             if (players[i]->getBaseGameInput() != nullptr &&
-                players[i]->getBaseGameInput()->getAiType() == BaseGameInputIF::AiTypes::Human)
+                players[i]->getBaseGameInput()->getAiType() == GameEnums::AiTypes_Human)
             {
                 return players[i].get();
             }

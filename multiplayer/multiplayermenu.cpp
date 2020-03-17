@@ -353,22 +353,22 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                 }
                 for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
                 {
-                    BaseGameInputIF::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
-                    if (aiType == BaseGameInputIF::AiTypes::Human)
+                    GameEnums::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
+                    if (aiType == GameEnums::AiTypes_Human)
                     {
                         sendStream << Settings::getUsername();
-                        sendStream << static_cast<qint32>(BaseGameInputIF::AiTypes::ProxyAi);
+                        sendStream << static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
                     }
                     else
                     {
                         sendStream << m_pPlayerSelection->getPlayerAiName(i);
                         if (m_pPlayerSelection->isOpenPlayer(i))
                         {
-                            sendStream << static_cast<qint32>(BaseGameInputIF::AiTypes::Open);
+                            sendStream << static_cast<qint32>(GameEnums::AiTypes_Open);
                         }
                         else
                         {
-                            sendStream << static_cast<qint32>(BaseGameInputIF::AiTypes::ProxyAi);
+                            sendStream << static_cast<qint32>(GameEnums::AiTypes_ProxyAi);
                         }
                     }
                     m_pMapSelectionView->getCurrentMap()->getPlayer(i)->serializeObject(sendStream);
@@ -397,10 +397,10 @@ void Multiplayermenu::recieveData(quint64 socketID, QByteArray data, NetworkInte
                     stream >> aiType;
                     m_pPlayerSelection->setPlayerAiName(i, name);
                     m_pMapSelectionView->getCurrentMap()->getPlayer(i)->deserializeObject(stream);
-                    m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(static_cast<BaseGameInputIF::AiTypes>(aiType)));
+                    m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(static_cast<GameEnums::AiTypes>(aiType)));
                     m_pPlayerSelection->updatePlayerData(i);
                 }
-                m_pPlayerSelection->sendPlayerRequest(socketID, -1, BaseGameInputIF::AiTypes::Human);
+                m_pPlayerSelection->sendPlayerRequest(socketID, -1, GameEnums::AiTypes_Human);
                 emit sigConnected();
             }
         }
@@ -530,7 +530,7 @@ void Multiplayermenu::initClientGame(quint64, QDataStream &stream)
     Mainapp::setUseSeed(true);
     for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
     {
-        BaseGameInputIF::AiTypes aiType = m_pMapSelectionView->getCurrentMap()->getPlayer(i)->getBaseGameInput()->getAiType();
+        GameEnums::AiTypes aiType = m_pMapSelectionView->getCurrentMap()->getPlayer(i)->getBaseGameInput()->getAiType();
         m_pMapSelectionView->getCurrentMap()->getPlayer(i)->deserializeObject(stream);
         m_pMapSelectionView->getCurrentMap()->getPlayer(i)->setBaseGameInput(BaseGameInputIF::createAi(aiType));
     }
@@ -686,13 +686,13 @@ bool Multiplayermenu::getGameReady()
     bool gameReady = true;
     for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
     {
-        BaseGameInputIF::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
-        if (aiType == BaseGameInputIF::AiTypes::Open)
+        GameEnums::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
+        if (aiType == GameEnums::AiTypes_Open)
         {
             gameReady = false;
             break;
         }
-        else if (aiType == BaseGameInputIF::AiTypes::ProxyAi)
+        else if (aiType == GameEnums::AiTypes_ProxyAi)
         {
             if (m_pPlayerSelection->getReady(i) == false)
             {
@@ -759,9 +759,9 @@ void Multiplayermenu::sendServerReady(bool value)
         QVector<qint32> player;
         for (qint32 i = 0; i < m_pMapSelectionView->getCurrentMap()->getPlayerCount(); i++)
         {
-            BaseGameInputIF::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
-            if (aiType != BaseGameInputIF::AiTypes::Open &&
-                aiType != BaseGameInputIF::AiTypes::ProxyAi)
+            GameEnums::AiTypes aiType = m_pPlayerSelection->getPlayerAiType(i);
+            if (aiType != GameEnums::AiTypes_Open &&
+                aiType != GameEnums::AiTypes_ProxyAi)
             {
                 player.append(i);
             }
