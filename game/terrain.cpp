@@ -61,6 +61,16 @@ Terrain::Terrain(QString terrainID, qint32 x, qint32 y)
     }
 }
 
+bool Terrain::getVisionBlock() const
+{
+    return m_VisionBlock;
+}
+
+void Terrain::setVisionBlock(bool VisionBlock)
+{
+    m_VisionBlock = VisionBlock;
+}
+
 Terrain::~Terrain()
 {
 }

@@ -121,7 +121,18 @@ public:
      * @return
      */
     bool isValid();
+
 public slots:
+    /**
+     * @brief getVisionBlock
+     * @return
+     */
+    bool getVisionBlock() const;
+    /**
+     * @brief setVisionBlock
+     * @param VisionBlock
+     */
+    void setVisionBlock(bool VisionBlock);
     /**
      * @brief getTerrainGroup
      * @return
@@ -380,6 +391,7 @@ private:
       * hp of this unit
       */
     qint32 hp{-1};
+    bool m_VisionBlock{false};
 
     oxygine::intrusive_ptr<JsCallback<Terrain>> m_pStartDayCallback;
 };

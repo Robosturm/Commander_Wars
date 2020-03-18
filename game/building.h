@@ -78,9 +78,20 @@ public:
      * @return
      */
     bool isValid();
+
 signals:
 
 public slots:
+    /**
+     * @brief getVisionBlock
+     * @return
+     */
+    bool getVisionBlock() const;
+    /**
+     * @brief setVisionBlock
+     * @param VisionBlock
+     */
+    void setVisionBlock(bool VisionBlock);
     QStringList getBaseTerrain();
     /**
      * @brief getNeutralLoaded
@@ -333,6 +344,7 @@ private:
 
     bool alwaysVisble{false};
     bool neutralLoaded{false};
+    bool m_VisionBlock{false};
     ScriptVariables m_Variables;
 };
 

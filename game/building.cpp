@@ -656,6 +656,16 @@ GameEnums::BuildingTarget Building::getBuildingTargets()
     return GameEnums::BuildingTarget_All;
 }
 
+bool Building::getVisionBlock() const
+{
+    return m_VisionBlock;
+}
+
+void Building::setVisionBlock(bool VisionBlock)
+{
+    m_VisionBlock = VisionBlock;
+}
+
 bool Building::getNeutralLoaded() const
 {
     return neutralLoaded;

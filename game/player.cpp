@@ -584,11 +584,12 @@ void Player::updatePlayerVision(bool reduceTimer)
                 }
             }
         }
-
+        // create vision for all units and terrain
         for (qint32 x = 0; x < width; x++)
         {
             for (qint32 y = 0; y < heigth; y++)
             {
+                // check terrain vision
                 Terrain* pTerrain = pMap->getTerrain(x, y);
                 qint32 visionRange = pTerrain->getVision();
                 if (visionRange >= 0)
@@ -612,6 +613,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                     }
                     delete pPoints;
                 }
+                // check building vision
                 Building* pBuilding = pTerrain->getBuilding();
                 if ((pBuilding != nullptr) &&
                     ((isAlly( pBuilding->getOwner())) ||
@@ -641,7 +643,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                         delete pPoints;
                     }
                 }
-
+                // create unit vision
                 Unit* pUnit = pTerrain->getUnit();
                 if ((pUnit != nullptr) &&
                     (isAlly(pUnit->getOwner())))
