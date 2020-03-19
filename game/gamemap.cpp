@@ -124,6 +124,108 @@ bool GameMap::isInArea(const QRect& area, std::function<bool (Unit* pUnit)> chec
     return false;
 }
 
+QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRange, qint32 maxVisionRange, qint32 visionHigh)
+{
+
+    QmlVectorPoint* pRet = new QmlVectorPoint();
+    if (maxVisionRange > 0)
+    {
+        if (visionHigh < 0)
+        {
+            visionHigh = 0;
+        }
+        QVector<QRect> m_LineSight;
+        QVector<QRect> m_LineSightEvaluated;
+        m_LineSight.append(QRect(x - 1, y, 0, 2));
+        m_LineSight.append(QRect(x - 1, y, 0, 3));
+        m_LineSight.append(QRect(x + 1, y, 1, 2));
+        m_LineSight.append(QRect(x + 1, y, 1, 3));
+        m_LineSight.append(QRect(x, y - 1, 2, 0));
+        m_LineSight.append(QRect(x, y - 1, 2, 1));
+        m_LineSight.append(QRect(x, y + 1, 3, 0));
+        m_LineSight.append(QRect(x, y + 1, 3, 1));
+
+        QPoint pos(x, y);
+        if (0 >= minVisionRange && 0 <= maxVisionRange)
+        {
+            pRet->append(QPoint(0, 0));
+        }
+        while (m_LineSight.size() > 0)
+        {
+            QRect current = m_LineSight.front();
+            m_LineSight.pop_front();
+            m_LineSightEvaluated.append(current);
+            if (onMap(current.x(), current.y()))
+            {
+                qint32 distance = Mainapp::getDistance(QPoint(current.x(), current.y()), pos);
+                if (distance >= minVisionRange && distance <= maxVisionRange)
+                {
+                    QPoint nextPos(current.x() - x, current.y() - y);
+                    if (!pRet->contains(nextPos))
+                    {
+                        pRet->append(nextPos);
+                    }
+                }
+                Terrain* pTerrain = getTerrain(current.x(), current.y());
+                qint32 currentHeigth = pTerrain->getVisionHigh();
+                if (pTerrain->getBuilding() != nullptr)
+                {
+                    currentHeigth += pTerrain->getBuilding()->getVisionHigh();
+                }
+                // we can see over the terrain continue vision range
+                if (currentHeigth <= visionHigh && distance + 1 <= maxVisionRange)
+                {
+                    for (qint32 i = 0; i < 4; i++)
+                    {
+                        qint32 nextX;
+                        qint32 nextY;
+                        if (i != current.width() && i != current.height())
+                        {
+                            switch (i)
+                            {
+                                case 0:
+                                {
+                                    nextX = current.x() + 1;
+                                    nextY = current.y();
+                                    break;
+                                }
+                                case 1:
+                                {
+                                    nextX = current.x() - 1;
+                                    nextY = current.y();
+                                    break;
+                                }
+                                case 2:
+                                {
+                                    nextX = current.x();
+                                    nextY = current.y() + 1;
+                                    break;
+                                }
+                                case 3:
+                                {
+                                    nextX = current.x();
+                                    nextY = current.y() - 1;
+                                    break;
+                                }
+                            }
+                            // not evaluated yet
+                            if (onMap(nextX, nextY))
+                            {
+                                QRect next(nextX, nextY, current.width(), current.height());
+                                if (!m_LineSightEvaluated.contains(next))
+                                {
+                                    m_LineSight.append(next);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return pRet;
+}
+
 bool GameMap::isUnitInArea(const QRect& area, qint32 unitID)
 {
     return isInArea(area, [=](Unit* pUnit)
@@ -811,7 +913,7 @@ void GameMap::deserializeObject(QDataStream& pStream)
                 replaceTerrain("PLAINS", x, y, false, false);
             }
         }
-    }    
+    }
     setCurrentPlayer(currentPlayerIdx);
     m_Rules = new  GameRules();
     if (version > 2)
@@ -1254,7 +1356,7 @@ QmlVectorUnit* GameMap::getUnits(Player* pPlayer)
             {
                 if ((pUnit->getOwner() == pPlayer))
                 {
-                   ret->append(pUnit.get());
+                    ret->append(pUnit.get());
                 }
             }
         }
@@ -1276,7 +1378,7 @@ QmlVectorBuilding* GameMap::getBuildings(Player* pPlayer)
             {
                 if ((pBuilding->getOwner() == pPlayer))
                 {
-                   ret->append(pBuilding.get());
+                    ret->append(pBuilding.get());
                 }
             }
         }

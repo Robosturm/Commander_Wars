@@ -5,6 +5,7 @@ var BUILDING =
     // loader for stuff which needs C++ Support
     init : function (building)
     {
+        building.setVisionHigh(1);
     },
     getName : function()
     {

@@ -126,6 +126,16 @@ signals:
 
 public slots:
     /**
+     * @brief getVisionHigh
+     * @return
+     */
+    qint32 getVisionHigh() const;
+    /**
+     * @brief setVisionHigh
+     * @param VisionHigh
+     */
+    void setVisionHigh(const qint32 &VisionHigh);
+    /**
      * @brief postBattleActions
      * @param damage
      * @param pUnit
@@ -811,6 +821,8 @@ private:
     GameEnums::GameAi m_AiMode{GameEnums::GameAi::GameAi_Normal};
     ScriptVariables m_Variables;
     ModdingFlags m_ModdingFlags{ModdingFlags::None};
+
+    qint32 m_VisionHigh{-1};
 
     qint32 virtuellX{-1};
     qint32 virtuellY{-1};

@@ -918,17 +918,17 @@
 <context>
     <name>DESERT_FOREST</name>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_FOREST.js" line="14"/>
+        <location filename="../resources/scripts/terrain/DESERT_FOREST.js" line="15"/>
         <source>Desert Forest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_FOREST.js" line="57"/>
+        <location filename="../resources/scripts/terrain/DESERT_FOREST.js" line="58"/>
         <source>In Fog of War conditions, the woods provide ground unit hiding places.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_FOREST.js" line="58"/>
+        <location filename="../resources/scripts/terrain/DESERT_FOREST.js" line="59"/>
         <source> It reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -949,12 +949,12 @@
 <context>
     <name>DESERT_PIPELINE</name>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_PIPELINE.js" line="14"/>
+        <location filename="../resources/scripts/terrain/DESERT_PIPELINE.js" line="15"/>
         <source>Desert Pipeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_PIPELINE.js" line="80"/>
+        <location filename="../resources/scripts/terrain/DESERT_PIPELINE.js" line="81"/>
         <source>Black Hole Pipeline which can&apos;t be crossed by most units. It reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -962,22 +962,22 @@
 <context>
     <name>DESERT_ROCK</name>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="14"/>
+        <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="15"/>
         <source>Rock</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="61"/>
+        <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="62"/>
         <source>Clear view. In Fog of War, Infantry unit&apos;s gain </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="62"/>
+        <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="63"/>
         <source>vision +3.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="63"/>
+        <location filename="../resources/scripts/terrain/DESERT_ROCK.js" line="64"/>
         <source> It reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1011,12 +1011,12 @@
 <context>
     <name>DESERT_WELD</name>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_WELD.js" line="15"/>
+        <location filename="../resources/scripts/terrain/DESERT_WELD.js" line="16"/>
         <source>Desert Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/DESERT_WELD.js" line="109"/>
+        <location filename="../resources/scripts/terrain/DESERT_WELD.js" line="110"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline. It reduces the firerange of indirect units by 1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1849,17 +1849,17 @@ This is immediatly applied.</source>
 <context>
     <name>FOG</name>
     <message>
-        <location filename="../resources/scripts/terrain/FOG.js" line="14"/>
+        <location filename="../resources/scripts/terrain/FOG.js" line="15"/>
         <source>Fog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/FOG.js" line="57"/>
+        <location filename="../resources/scripts/terrain/FOG.js" line="58"/>
         <source>This heavy fog provides ideal hiding places</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/FOG.js" line="58"/>
+        <location filename="../resources/scripts/terrain/FOG.js" line="59"/>
         <source> for naval units in Fog of War.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1867,17 +1867,17 @@ This is immediatly applied.</source>
 <context>
     <name>FOREST</name>
     <message>
-        <location filename="../resources/scripts/terrain/FOREST.js" line="14"/>
+        <location filename="../resources/scripts/terrain/FOREST.js" line="15"/>
         <source>Forest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/FOREST.js" line="54"/>
+        <location filename="../resources/scripts/terrain/FOREST.js" line="55"/>
         <source>In Fog of War conditions, the woods provide ground unit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/FOREST.js" line="55"/>
+        <location filename="../resources/scripts/terrain/FOREST.js" line="56"/>
         <source>hiding places.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2183,17 +2183,17 @@ This is immediatly applied.</source>
 <context>
     <name>METEOR</name>
     <message>
-        <location filename="../resources/scripts/terrain/METEOR.js" line="15"/>
+        <location filename="../resources/scripts/terrain/METEOR.js" line="16"/>
         <source>Meteor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/METEOR.js" line="149"/>
+        <location filename="../resources/scripts/terrain/METEOR.js" line="150"/>
         <source>Meteor pieces which can be attacked and destroyed </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/METEOR.js" line="150"/>
+        <location filename="../resources/scripts/terrain/METEOR.js" line="151"/>
         <source>to eliminate plasma.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2201,17 +2201,17 @@ This is immediatly applied.</source>
 <context>
     <name>MOUNTAIN</name>
     <message>
-        <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="14"/>
+        <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="15"/>
         <source>Mountain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="56"/>
+        <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="57"/>
         <source>Clear view. In Fog of War, Infantry unit&apos;s gain </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="57"/>
+        <location filename="../resources/scripts/terrain/MOUNTAIN.js" line="58"/>
         <source>vision +3.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3012,12 +3012,12 @@ This is immediatly applied.</source>
 <context>
     <name>PIPELINE</name>
     <message>
-        <location filename="../resources/scripts/terrain/PIPELINE.js" line="14"/>
+        <location filename="../resources/scripts/terrain/PIPELINE.js" line="15"/>
         <source>Pipeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PIPELINE.js" line="76"/>
+        <location filename="../resources/scripts/terrain/PIPELINE.js" line="77"/>
         <source>Black Hole Pipeline which can&apos;t be crossed by most units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3064,22 +3064,22 @@ This is immediatly applied.</source>
 <context>
     <name>PLASMA</name>
     <message>
-        <location filename="../resources/scripts/terrain/PLASMA.js" line="14"/>
+        <location filename="../resources/scripts/terrain/PLASMA.js" line="15"/>
         <source>Plasma</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PLASMA.js" line="46"/>
+        <location filename="../resources/scripts/terrain/PLASMA.js" line="47"/>
         <source>Eectric charge us impassable but disappears if </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PLASMA.js" line="47"/>
+        <location filename="../resources/scripts/terrain/PLASMA.js" line="48"/>
         <source> meteor pieces</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/PLASMA.js" line="48"/>
+        <location filename="../resources/scripts/terrain/PLASMA.js" line="49"/>
         <source> are destroyed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3262,22 +3262,22 @@ This is immediatly applied.</source>
 <context>
     <name>REAF</name>
     <message>
-        <location filename="../resources/scripts/terrain/REAF.js" line="14"/>
+        <location filename="../resources/scripts/terrain/REAF.js" line="15"/>
         <source>Reaf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/REAF.js" line="71"/>
+        <location filename="../resources/scripts/terrain/REAF.js" line="72"/>
         <source>This spiky reaf provides ideal </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/REAF.js" line="72"/>
+        <location filename="../resources/scripts/terrain/REAF.js" line="73"/>
         <source>hiding places</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/REAF.js" line="73"/>
+        <location filename="../resources/scripts/terrain/REAF.js" line="74"/>
         <source> for naval units in Fog of War.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3298,12 +3298,12 @@ This is immediatly applied.</source>
 <context>
     <name>ROUGH_SEA</name>
     <message>
-        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="14"/>
+        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="15"/>
         <source>Rough Sea</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="57"/>
+        <location filename="../resources/scripts/terrain/ROUGH_SEA.js" line="58"/>
         <source>Movement of naval units is impeded but air units are not affected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3311,17 +3311,17 @@ This is immediatly applied.</source>
 <context>
     <name>RUIN</name>
     <message>
-        <location filename="../resources/scripts/terrain/RUIN.js" line="14"/>
+        <location filename="../resources/scripts/terrain/RUIN.js" line="15"/>
         <source>Ruin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/RUIN.js" line="50"/>
+        <location filename="../resources/scripts/terrain/RUIN.js" line="51"/>
         <source>In Fog of War conditions, the ruins provide ground unit </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/RUIN.js" line="51"/>
+        <location filename="../resources/scripts/terrain/RUIN.js" line="52"/>
         <source>hiding places.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3449,27 +3449,37 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="229"/>
-        <source>Unit Limit: </source>
+        <location filename="../objects/ruleselection.cpp" line="230"/>
+        <source>Vision Block: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="233"/>
-        <source>The maximum amount of units a single player can own at any time.</source>
+        <location filename="../objects/ruleselection.cpp" line="234"/>
+        <source>If checked units can&apos;t see over certain terrains. Reducing their vision range. Air units are unaffected by this effect.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="243"/>
-        <source>Round Time: </source>
+        <source>Unit Limit: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../objects/ruleselection.cpp" line="247"/>
+        <source>The maximum amount of units a single player can own at any time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="257"/>
+        <source>Round Time: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../objects/ruleselection.cpp" line="261"/>
         <source>The maximum amount of time in hh:mm::ss for each turn for each player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/ruleselection.cpp" line="260"/>
+        <location filename="../objects/ruleselection.cpp" line="274"/>
         <source>Victory Rules</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3524,22 +3534,22 @@ This is immediatly applied.</source>
 <context>
     <name>SNOW_FOREST</name>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="14"/>
+        <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="15"/>
         <source>Snowy Forest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="53"/>
+        <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="54"/>
         <source>In Fog of War conditions, the snowy woods provide ground unit </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="54"/>
+        <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="55"/>
         <source>hiding places.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="55"/>
+        <location filename="../resources/scripts/terrain/SNOW_FOREST.js" line="56"/>
         <source> It&apos;s hard for ground units to cross this terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3547,22 +3557,22 @@ This is immediatly applied.</source>
 <context>
     <name>SNOW_MOUNTAIN</name>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="14"/>
+        <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="15"/>
         <source>Snowy Mountain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="56"/>
+        <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="57"/>
         <source>Clear view. In Fog of War, Infantry unit&apos;s gain </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="57"/>
+        <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="58"/>
         <source>vision +3.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="58"/>
+        <location filename="../resources/scripts/terrain/SNOW_MOUNTAIN.js" line="59"/>
         <source> Extremly high movement costs for infantry units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3570,12 +3580,12 @@ This is immediatly applied.</source>
 <context>
     <name>SNOW_PIPELINE</name>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_PIPELINE.js" line="14"/>
+        <location filename="../resources/scripts/terrain/SNOW_PIPELINE.js" line="15"/>
         <source>Snowy Pipeline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_PIPELINE.js" line="76"/>
+        <location filename="../resources/scripts/terrain/SNOW_PIPELINE.js" line="77"/>
         <source>Black Hole Pipeline which can&apos;t be crossed by most units and is also hard to cross for those who can.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3583,12 +3593,12 @@ This is immediatly applied.</source>
 <context>
     <name>SNOW_WASTELAND</name>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_WASTELAND.js" line="14"/>
+        <location filename="../resources/scripts/terrain/SNOW_WASTELAND.js" line="15"/>
         <source>Snowy Wasteland</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_WASTELAND.js" line="30"/>
+        <location filename="../resources/scripts/terrain/SNOW_WASTELAND.js" line="31"/>
         <source>Mobility is impaired on this rough terrain.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3596,12 +3606,12 @@ This is immediatly applied.</source>
 <context>
     <name>SNOW_WELD</name>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_WELD.js" line="15"/>
+        <location filename="../resources/scripts/terrain/SNOW_WELD.js" line="16"/>
         <source>Snowy Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/SNOW_WELD.js" line="105"/>
+        <location filename="../resources/scripts/terrain/SNOW_WELD.js" line="106"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5484,12 +5494,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>WALL</name>
     <message>
-        <location filename="../resources/scripts/terrain/WALL.js" line="14"/>
+        <location filename="../resources/scripts/terrain/WALL.js" line="15"/>
         <source>Wall</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/WALL.js" line="53"/>
+        <location filename="../resources/scripts/terrain/WALL.js" line="54"/>
         <source>Dark Matter Walls can&apos;t be crossed by most units. They can be destroyed at gates and weak wall parts.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5510,12 +5520,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>WEAK_WALL</name>
     <message>
-        <location filename="../resources/scripts/terrain/WEAK_WALL.js" line="15"/>
+        <location filename="../resources/scripts/terrain/WEAK_WALL.js" line="16"/>
         <source>Weak Wall</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/WEAK_WALL.js" line="89"/>
+        <location filename="../resources/scripts/terrain/WEAK_WALL.js" line="90"/>
         <source>Dark Matter Walls can&apos;t be crossed by most units. The wall can be destroyed here to produce a path through the wall.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5523,12 +5533,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>WELD</name>
     <message>
-        <location filename="../resources/scripts/terrain/WELD.js" line="15"/>
+        <location filename="../resources/scripts/terrain/WELD.js" line="16"/>
         <source>Weld</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/terrain/WELD.js" line="105"/>
+        <location filename="../resources/scripts/terrain/WELD.js" line="106"/>
         <source>Black Hole Pipeline Weld can be destroyed to cross the pipeline.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5585,12 +5595,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ZCOUNIT_KIROV</name>
     <message>
-        <location filename="../resources/scripts/units/ZCOUNIT_KIROV.js" line="37"/>
+        <location filename="../resources/scripts/units/ZCOUNIT_KIROV.js" line="38"/>
         <source>Kirov</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/ZCOUNIT_KIROV.js" line="84"/>
+        <location filename="../resources/scripts/units/ZCOUNIT_KIROV.js" line="85"/>
         <source>Kirov reporting. Special Air Unit with extrem high defense but low mobility and no fuel comsumtion at the start of a turn. Can attack ground and naval units. Exceptional power.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6342,22 +6352,22 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>black_bomb</name>
     <message>
-        <location filename="../resources/scripts/units/black_bomb.js" line="37"/>
+        <location filename="../resources/scripts/units/black_bomb.js" line="38"/>
         <source>Black Bomb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/black_bomb.js" line="101"/>
+        <location filename="../resources/scripts/units/black_bomb.js" line="102"/>
         <source>Air Unit. Has unique ability to </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/black_bomb.js" line="102"/>
+        <location filename="../resources/scripts/units/black_bomb.js" line="103"/>
         <source>explode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/black_bomb.js" line="103"/>
+        <location filename="../resources/scripts/units/black_bomb.js" line="104"/>
         <source> in a huge explosion damaging all units.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6424,12 +6434,12 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>bomber</name>
     <message>
-        <location filename="../resources/scripts/units/bomber.js" line="37"/>
+        <location filename="../resources/scripts/units/bomber.js" line="38"/>
         <source>Bomber</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/bomber.js" line="95"/>
+        <location filename="../resources/scripts/units/bomber.js" line="96"/>
         <source>Air Unit. Can attack ground and naval units. Exceptional power.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6437,7 +6447,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>building</name>
     <message>
-        <location filename="../resources/scripts/general/building.js" line="161"/>
+        <location filename="../resources/scripts/general/building.js" line="162"/>
         <source>REPAIR</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15221,12 +15231,12 @@ CO Zone Effect: Units have 30% increased firepower during sandstorm.</source>
 <context>
     <name>duster</name>
     <message>
-        <location filename="../resources/scripts/units/duster.js" line="33"/>
+        <location filename="../resources/scripts/units/duster.js" line="34"/>
         <source>Duster</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/duster.js" line="92"/>
+        <location filename="../resources/scripts/units/duster.js" line="93"/>
         <source>Air Unit. Can attack ground and air units. Medium power.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15267,12 +15277,12 @@ CO Zone Effect: Units have 30% increased firepower during sandstorm.</source>
 <context>
     <name>fighter</name>
     <message>
-        <location filename="../resources/scripts/units/fighter.js" line="37"/>
+        <location filename="../resources/scripts/units/fighter.js" line="38"/>
         <source>Fighter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/fighter.js" line="92"/>
+        <location filename="../resources/scripts/units/fighter.js" line="93"/>
         <source>Air Unit. Can attack air units. Most mobile aircraft.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -15498,12 +15508,12 @@ CO Zone Effect: Units have 30% increased firepower during sandstorm.</source>
 <context>
     <name>k_heli</name>
     <message>
-        <location filename="../resources/scripts/units/k_heli.js" line="37"/>
+        <location filename="../resources/scripts/units/k_heli.js" line="38"/>
         <source>Battle Copter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/k_heli.js" line="94"/>
+        <location filename="../resources/scripts/units/k_heli.js" line="95"/>
         <source>Air unit. Can attack ground and naval units, and other Helicopters.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16015,22 +16025,22 @@ CO Zone Effect: Units have 30% increased firepower during sandstorm.</source>
 <context>
     <name>stealthbomber</name>
     <message>
-        <location filename="../resources/scripts/units/stealthbomber.js" line="37"/>
+        <location filename="../resources/scripts/units/stealthbomber.js" line="38"/>
         <source>Stealthbomber</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/stealthbomber.js" line="104"/>
+        <location filename="../resources/scripts/units/stealthbomber.js" line="105"/>
         <source>Air unit. After </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/stealthbomber.js" line="105"/>
+        <location filename="../resources/scripts/units/stealthbomber.js" line="106"/>
         <source>hiding </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/stealthbomber.js" line="106"/>
+        <location filename="../resources/scripts/units/stealthbomber.js" line="107"/>
         <source>, it remains hidden unless enemy units adjacent. Can attack any unit.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16061,22 +16071,22 @@ CO Zone Effect: Units have 30% increased firepower during sandstorm.</source>
 <context>
     <name>t_heli</name>
     <message>
-        <location filename="../resources/scripts/units/t_heli.js" line="37"/>
+        <location filename="../resources/scripts/units/t_heli.js" line="38"/>
         <source>Transport Copter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/t_heli.js" line="99"/>
+        <location filename="../resources/scripts/units/t_heli.js" line="100"/>
         <source>Air unit. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/t_heli.js" line="100"/>
+        <location filename="../resources/scripts/units/t_heli.js" line="101"/>
         <source>Carries X 1 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/t_heli.js" line="101"/>
+        <location filename="../resources/scripts/units/t_heli.js" line="102"/>
         <source>Infantry units. No attack capability.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16201,22 +16211,22 @@ CO Zone Effect: Units have 30% increased firepower during sandstorm.</source>
 <context>
     <name>transportplane</name>
     <message>
-        <location filename="../resources/scripts/units/transportplane.js" line="37"/>
+        <location filename="../resources/scripts/units/transportplane.js" line="38"/>
         <source>Transportplane</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/transportplane.js" line="102"/>
+        <location filename="../resources/scripts/units/transportplane.js" line="103"/>
         <source>Air unit. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/transportplane.js" line="103"/>
+        <location filename="../resources/scripts/units/transportplane.js" line="104"/>
         <source>Carries X 2 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/transportplane.js" line="104"/>
+        <location filename="../resources/scripts/units/transportplane.js" line="105"/>
         <source>ground units. No attack capability.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16345,12 +16355,12 @@ CO Zone Effect: Units have 30% increased firepower during sandstorm.</source>
 <context>
     <name>waterplane</name>
     <message>
-        <location filename="../resources/scripts/units/waterplane.js" line="37"/>
+        <location filename="../resources/scripts/units/waterplane.js" line="38"/>
         <source>Waterplane</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/units/waterplane.js" line="94"/>
+        <location filename="../resources/scripts/units/waterplane.js" line="95"/>
         <source>Air unit. Can attack any unit. Can only produced at sea by Carries.</source>
         <translation type="unfinished"></translation>
     </message>

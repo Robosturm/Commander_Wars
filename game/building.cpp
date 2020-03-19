@@ -656,14 +656,14 @@ GameEnums::BuildingTarget Building::getBuildingTargets()
     return GameEnums::BuildingTarget_All;
 }
 
-bool Building::getVisionBlock() const
+qint32 Building::getVisionHigh() const
 {
-    return m_VisionBlock;
+    return m_VisionHigh;
 }
 
-void Building::setVisionBlock(bool VisionBlock)
+void Building::setVisionHigh(qint32 VisionHigh)
 {
-    m_VisionBlock = VisionBlock;
+    m_VisionHigh = VisionHigh;
 }
 
 bool Building::getNeutralLoaded() const

@@ -8,6 +8,7 @@ BLACK_BOMB.init = function(unit)
     unit.setMaxAmmo2(0);
     unit.setWeapon2ID("");
 
+    unit.setVisionHigh(999);
     unit.setFuel(45);
     unit.setMaxFuel(45);
     unit.setBaseMovementPoints(9);

@@ -224,6 +224,20 @@ void RuleSelection::showRuleSelection()
     });
     addChild(fogOfWar);
     y += 50;
+
+    textField = new oxygine::TextField();
+    textField->setStyle(style);
+    textField->setHtmlText(tr("Vision Block: "));
+    textField->setPosition(30, y);
+    addChild(textField);
+    pCheckbox = new Checkbox();
+    pCheckbox->setTooltipText(tr("If checked units can't see over certain terrains. Reducing their vision range. Air units are unaffected by this effect."));
+    pCheckbox->setPosition(textWidth, textField->getY());
+    addChild(pCheckbox);
+    pCheckbox->setChecked(pMap->getGameRules()->getVisionBlock());
+    connect(pCheckbox.get(), &Checkbox::checkChanged, pMap->getGameRules(), &GameRules::setVisionBlock, Qt::QueuedConnection);
+    y += 40;
+
     textField = new oxygine::TextField();
     textField->setStyle(style);
     textField->setHtmlText(tr("Unit Limit: "));

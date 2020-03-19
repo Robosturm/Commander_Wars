@@ -584,6 +584,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                 }
             }
         }
+        bool visionBlock = pMap->getGameRules()->getVisionBlock();
         // create vision for all units and terrain
         for (qint32 x = 0; x < width; x++)
         {
@@ -594,7 +595,15 @@ void Player::updatePlayerVision(bool reduceTimer)
                 qint32 visionRange = pTerrain->getVision();
                 if (visionRange >= 0)
                 {
-                    QmlVectorPoint* pPoints = Mainapp::getCircle(0, visionRange);
+                    QmlVectorPoint* pPoints;
+                    if (visionBlock)
+                    {
+                        pPoints = pMap->getVisionCircle(x, y, 0, visionRange, pTerrain->getVisionHigh());
+                    }
+                    else
+                    {
+                      pPoints = Mainapp::getCircle(0, visionRange);
+                    }
                     for (qint32 i = 0; i < pPoints->size(); i++)
                     {
                         QPoint point = pPoints->at(i);
@@ -623,7 +632,15 @@ void Player::updatePlayerVision(bool reduceTimer)
                     qint32 visionRange = pBuilding->getVision();
                     if (visionRange >= 0)
                     {
-                        QmlVectorPoint* pPoints = Mainapp::getCircle(0, visionRange);
+                        QmlVectorPoint* pPoints;
+                        if (visionBlock)
+                        {
+                            pPoints = pMap->getVisionCircle(x, y, 0, visionRange, pBuilding->getVisionHigh() + pTerrain->getVisionHigh());
+                        }
+                        else
+                        {
+                          pPoints = Mainapp::getCircle(0, visionRange);
+                        }
                         for (qint32 i = 0; i < pPoints->size(); i++)
                         {
                             QPoint point = pPoints->at(i);
@@ -649,7 +666,22 @@ void Player::updatePlayerVision(bool reduceTimer)
                     (isAlly(pUnit->getOwner())))
                 {
                     qint32 visionRange = pUnit->getVision(QPoint(x, y));
-                    QmlVectorPoint* pPoints = Mainapp::getCircle(0, visionRange);
+                    QmlVectorPoint* pPoints;
+                    if (visionBlock)
+                    {
+                        if (pBuilding != nullptr)
+                        {
+                            pPoints = pMap->getVisionCircle(x, y, 0, visionRange,  pUnit->getVisionHigh() + pBuilding->getVisionHigh() + pTerrain->getVisionHigh());
+                        }
+                        else
+                        {
+                            pPoints = pMap->getVisionCircle(x, y, 0, visionRange,  pUnit->getVisionHigh() + pTerrain->getVisionHigh());
+                        }
+                    }
+                    else
+                    {
+                      pPoints = Mainapp::getCircle(0, visionRange);
+                    }
                     for (qint32 i = 0; i < pPoints->size(); i++)
                     {
                         QPoint point = pPoints->at(i);

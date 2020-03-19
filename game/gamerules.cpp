@@ -763,6 +763,16 @@ void GameRules::setCoUnits(bool coUnits)
     m_coUnits = coUnits;
 }
 
+bool GameRules::getVisionBlock() const
+{
+    return m_VisionBlock;
+}
+
+void GameRules::setVisionBlock(bool VisionBlock)
+{
+    m_VisionBlock = VisionBlock;
+}
+
 bool GameRules::getWeatherPrediction() const
 {
     return m_WeatherPrediction;
@@ -838,6 +848,7 @@ void GameRules::serializeObject(QDataStream& pStream)
     pStream << m_WeatherPrediction;
     pStream << m_DayWeather;
     pStream << m_coUnits;
+    pStream << m_VisionBlock;
 }
 
 void GameRules::deserializeObject(QDataStream& pStream)
@@ -992,5 +1003,9 @@ void GameRules::deserializeObject(QDataStream& pStream)
     if (version > 6)
     {
         pStream >> m_coUnits;
+    }
+    if (version > 7)
+    {
+        pStream >> m_VisionBlock;
     }
 }

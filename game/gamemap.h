@@ -261,6 +261,7 @@ signals:
     void sigQueueAction(GameAction* pAction);
     void sigSurrenderGame();
 public slots:
+    QmlVectorPoint* getVisionCircle(qint32 x, qint32 y, qint32 minVisionRange, qint32 maxVisionRange, qint32 visionHigh);
     /**
      * @brief isUnitInArea
      * @param area

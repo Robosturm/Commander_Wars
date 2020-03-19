@@ -8,6 +8,7 @@ T_HELI.init = function(unit)
     unit.setMaxAmmo2(0);
     unit.setWeapon2ID("");
 
+    unit.setVisionHigh(999);
     unit.setFuel(100);
     unit.setMaxFuel(100);
     unit.setBaseMovementPoints(6);

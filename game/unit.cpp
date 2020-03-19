@@ -2014,9 +2014,28 @@ void Unit::moveUnit(QVector<QPoint> movePath)
     }
     // update vision based on the movepath of the unit
     GameMap* pMap = GameMap::getInstance();
+    bool visionBlock = pMap->getGameRules()->getVisionBlock();
     for (qint32 i = 0; i < movePath.size(); i++)
     {
-        QmlVectorPoint* pCircle = Mainapp::getCircle(0, getVision(movePath[i]));
+        QmlVectorPoint* pCircle;
+        qint32 visionRange = getVision(movePath[i]);
+        Terrain* pTerrain = pMap->getTerrain(movePath[i].x(), movePath[i].y());
+        Building* pBuilding = pTerrain->getBuilding();
+        if (visionBlock)
+        {
+            if (pBuilding != nullptr)
+            {
+                pCircle = pMap->getVisionCircle(movePath[i].x(), movePath[i].y(), 0, visionRange,  getVisionHigh() + pBuilding->getVisionHigh() + pTerrain->getVisionHigh());
+            }
+            else
+            {
+                pCircle = pMap->getVisionCircle(movePath[i].x(), movePath[i].y(), 0, visionRange,  getVisionHigh() + pTerrain->getVisionHigh());
+            }
+        }
+        else
+        {
+          pCircle = Mainapp::getCircle(0, visionRange);
+        }
         for (qint32 i2 = 0; i2 < pCircle->size(); i2++)
         {
             QPoint circleField = pCircle->at(i2);
@@ -2222,6 +2241,16 @@ qint32 Unit::getBonus(QVector<QPoint>& data)
         ret += data[i].x();
     }
     return ret;
+}
+
+qint32 Unit::getVisionHigh() const
+{
+    return m_VisionHigh;
+}
+
+void Unit::setVisionHigh(const qint32 &VisionHigh)
+{
+    m_VisionHigh = VisionHigh;
 }
 
 qint32 Unit::getCloaked() const

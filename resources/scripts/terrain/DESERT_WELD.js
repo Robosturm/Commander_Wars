@@ -7,6 +7,7 @@ var Constructor = function()
     // loader for stuff which needs C++ Support
     this.init = function (terrain)
     {
+        terrain.setVisionHigh(2);
         terrain.setTerrainName(DESERT_WELD.getName());
         terrain.setHp(100);
     };

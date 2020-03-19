@@ -8,6 +8,7 @@ STEALTHBOMBER.init = function(unit)
     unit.setMaxAmmo2(0);
     unit.setWeapon2ID("");
 
+    unit.setVisionHigh(999);
     unit.setFuel(60);
     unit.setMaxFuel(60);
     unit.setBaseMovementPoints(6);

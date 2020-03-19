@@ -122,17 +122,18 @@ public:
      */
     bool isValid();
 
+
 public slots:
     /**
-     * @brief getVisionBlock
+     * @brief getVisionHigh
      * @return
      */
-    bool getVisionBlock() const;
+    qint32 getVisionHigh() const;
     /**
-     * @brief setVisionBlock
-     * @param VisionBlock
+     * @brief setVisionHigh
+     * @param VisionHigh
      */
-    void setVisionBlock(bool VisionBlock);
+    void setVisionHigh(const qint32 &VisionHigh);
     /**
      * @brief getTerrainGroup
      * @return
@@ -391,7 +392,7 @@ private:
       * hp of this unit
       */
     qint32 hp{-1};
-    bool m_VisionBlock{false};
+    qint32 m_VisionHigh{0};
 
     oxygine::intrusive_ptr<JsCallback<Terrain>> m_pStartDayCallback;
 };

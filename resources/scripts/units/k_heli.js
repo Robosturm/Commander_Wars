@@ -10,6 +10,7 @@ var Constructor = function()
         unit.setMaxAmmo2(10);
         unit.setWeapon2ID("WEAPON_K_HELI_MG");
 
+        unit.setVisionHigh(999);
         unit.setFuel(100);
         unit.setMaxFuel(100);
         unit.setBaseMovementPoints(6);

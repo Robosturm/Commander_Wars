@@ -83,15 +83,15 @@ signals:
 
 public slots:
     /**
-     * @brief getVisionBlock
+     * @brief getVisionHigh
      * @return
      */
-    bool getVisionBlock() const;
+    qint32 getVisionHigh() const;
     /**
-     * @brief setVisionBlock
-     * @param VisionBlock
+     * @brief setVisionHigh
+     * @param VisionHigh
      */
-    void setVisionBlock(bool VisionBlock);
+    void setVisionHigh(qint32 VisionHigh);
     QStringList getBaseTerrain();
     /**
      * @brief getNeutralLoaded
@@ -344,7 +344,7 @@ private:
 
     bool alwaysVisble{false};
     bool neutralLoaded{false};
-    bool m_VisionBlock{false};
+    qint32 m_VisionHigh{0};
     ScriptVariables m_Variables;
 };
 

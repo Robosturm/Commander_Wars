@@ -10,6 +10,7 @@ var Constructor = function()
         unit.setMaxAmmo2(0);
         unit.setWeapon2ID("");
 
+        unit.setVisionHigh(999);
         unit.setFuel(70);
         unit.setMaxFuel(70);
         unit.setBaseMovementPoints(9);
