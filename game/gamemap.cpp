@@ -212,7 +212,16 @@ QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRan
                             if (onMap(nextX, nextY))
                             {
                                 QRect next(nextX, nextY, current.width(), current.height());
-                                if (!m_LineSightEvaluated.contains(next))
+                                bool notIncluded = true;
+                                for (const auto & item : m_LineSightEvaluated)
+                                {
+                                    if (item.x() == nextX && item.y() == nextY)
+                                    {
+                                        notIncluded = false;
+                                        break;
+                                    }
+                                }
+                                if (notIncluded)
                                 {
                                     m_LineSight.append(next);
                                 }
