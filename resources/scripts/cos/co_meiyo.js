@@ -101,15 +101,9 @@ var Constructor = function()
             var unit = map.getTerrain(x, y).getUnit();
             if (unit !== null)
             {
-                var currentRank = unit.getUnitRank();
-                if (currentRank < GameEnums.UnitRank_Veteran)
+                for (var i = 0; i < upgrade; i++)
                 {
-                    var rank = currentRank + upgrade;
-                    if (rank > GameEnums.UnitRank_Veteran)
-                    {
-                        rank = GameEnums.UnitRank_Veteran;
-                    }
-                    unit.setUnitRank(rank);
+                    UNITRANKINGSYSTEM.increaseRang(unit);
                 }
             }
         }
@@ -120,18 +114,18 @@ var Constructor = function()
         // put the co music in here.
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Power:
-                audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
-                break;
-            case GameEnums.PowerMode_Superpower:
-                audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
-                break;
-            case GameEnums.PowerMode_Tagpower:
-                audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
-                break;
-            default:
-                audio.addMusic("resources/music/cos/meiyo.mp3", 76678, 146244);
-                break;
+        case GameEnums.PowerMode_Power:
+            audio.addMusic("resources/music/cos/power.mp3", 992, 45321);
+            break;
+        case GameEnums.PowerMode_Superpower:
+            audio.addMusic("resources/music/cos/superpower.mp3", 1505, 49515);
+            break;
+        case GameEnums.PowerMode_Tagpower:
+            audio.addMusic("resources/music/cos/tagpower.mp3", 14611, 65538);
+            break;
+        default:
+            audio.addMusic("resources/music/cos/meiyo.mp3", 76678, 146244);
+            break;
         }
     };
 
@@ -144,142 +138,124 @@ var Constructor = function()
         return "GS";
     };
     this.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                      defender, defPosX, defPosY, isDefender)
     {
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                switch (attacker.getUnitRank())
-                {
-                    case GameEnums.UnitRank_Lieutenant:
-                        return 20;
-                    case GameEnums.UnitRank_General:
-                        return 30;
-                    case GameEnums.UnitRank_Veteran:
-                    case GameEnums.UnitRank_CO0:
-                    case GameEnums.UnitRank_CO1:
-                        return 50;
-                    default:
-                        return 10;
-                }
-            case GameEnums.PowerMode_Power:
-                switch (attacker.getUnitRank())
-                {
-                    case GameEnums.UnitRank_Lieutenant:
-                        return 20;
-                    case GameEnums.UnitRank_General:
-                        return 30;
-                    case GameEnums.UnitRank_Veteran:
-                    case GameEnums.UnitRank_CO0:
-                    case GameEnums.UnitRank_CO1:
-                        return 50;
-                    default:
-                        return 10;
-                }
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            switch (attacker.getUnitRank())
+            {
+            case 0:
+                return 10;
+            case 1:
+                return 20;
+            case 2:
+                return 30;
             default:
-                if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+                return 50;
+            }
+        case GameEnums.PowerMode_Power:
+            switch (attacker.getUnitRank())
+            {
+            case 0:
+                return 10;
+            case 1:
+                return 20;
+            case 2:
+                return 30;
+            default:
+                return 50;
+            }
+        default:
+            if (co.inCORange(Qt.point(atkPosX, atkPosY), attacker))
+            {
+                switch (attacker.getUnitRank())
                 {
-                    switch (attacker.getUnitRank())
-                    {
-                        case GameEnums.UnitRank_Lieutenant:
-                            return 15;
-                        case GameEnums.UnitRank_General:
-                            return 20;
-                        case GameEnums.UnitRank_Veteran:
-                        case GameEnums.UnitRank_CO0:
-                        case GameEnums.UnitRank_CO1:
-                            return 30;
-                        default:
-                            return 10;
-                    }
+                case 0:
+                    return 5;
+                case 1:
+                    return 15;
+                case 2:
+                    return 20;
+                default:
+                    return 30;
                 }
-                else
+            }
+            else
+            {
+                switch (attacker.getUnitRank())
                 {
-                    switch (attacker.getUnitRank())
-                    {
-                        case GameEnums.UnitRank_Lieutenant:
-                            return 2.5;
-                        case GameEnums.UnitRank_General:
-                            return 5;
-                        case GameEnums.UnitRank_Veteran:
-                        case GameEnums.UnitRank_CO0:
-                        case GameEnums.UnitRank_CO1:
-                            return 10;
-                        default:
-                            return -5;
-                    }
+                case 1:
+                    return 2.5;
+                case 2:
+                    return 5;
+                default:
+                    return 10;
                 }
+            }
         }
     };
 
     this.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
-                                 defender, defPosX, defPosY, isDefender)
+                                       defender, defPosX, defPosY, isDefender)
     {
         switch (co.getPowerMode())
         {
-            case GameEnums.PowerMode_Tagpower:
-            case GameEnums.PowerMode_Superpower:
-                switch (defender.getUnitRank())
-                {
-                    case GameEnums.UnitRank_Lieutenant:
-                        return 20;
-                    case GameEnums.UnitRank_General:
-                        return 30;
-                    case GameEnums.UnitRank_Veteran:
-                    case GameEnums.UnitRank_CO0:
-                    case GameEnums.UnitRank_CO1:
-                        return 50;
-                    default:
-                        return 10;
-                }
-            case GameEnums.PowerMode_Power:
-                switch (defender.getUnitRank())
-                {
-                    case GameEnums.UnitRank_Lieutenant:
-                        return 20;
-                    case GameEnums.UnitRank_General:
-                        return 30;
-                    case GameEnums.UnitRank_Veteran:
-                    case GameEnums.UnitRank_CO0:
-                    case GameEnums.UnitRank_CO1:
-                        return 50;
-                    default:
-                        return 10;
-                }
+        case GameEnums.PowerMode_Tagpower:
+        case GameEnums.PowerMode_Superpower:
+            switch (defender.getUnitRank())
+            {
+            case 0:
+                return 10;
+            case 1:
+                return 20;
+            case 2:
+                return 30;
             default:
-                if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+                return 50;
+            }
+        case GameEnums.PowerMode_Power:
+            switch (defender.getUnitRank())
+            {
+            case 0:
+                return 10;
+            case 1:
+                return 20;
+            case 2:
+                return 30;
+            default:
+                return 50;
+            }
+        default:
+            if (co.inCORange(Qt.point(defPosX, defPosY), defender))
+            {
+                switch (defender.getUnitRank())
                 {
-                    switch (defender.getUnitRank())
-                    {
-                        case GameEnums.UnitRank_Lieutenant:
-                            return 15;
-                        case GameEnums.UnitRank_General:
-                            return 20;
-                        case GameEnums.UnitRank_Veteran:
-                        case GameEnums.UnitRank_CO0:
-                        case GameEnums.UnitRank_CO1:
-                            return 30;
-                        default:
-                            return 10;
-                    }
+                case 0:
+                    return 10;
+                case 1:
+                    return 15;
+                case 2:
+                    return 20;
+                default:
+                    return 30;
                 }
-                else
+            }
+            else
+            {
+                switch (defender.getUnitRank())
                 {
-                    switch (defender.getUnitRank())
-                    {
-                        case GameEnums.UnitRank_Lieutenant:
-                            return 2.5;
-                        case GameEnums.UnitRank_General:
-                            return 5;
-                        case GameEnums.UnitRank_Veteran:
-                        case GameEnums.UnitRank_CO0:
-                        case GameEnums.UnitRank_CO1:
-                            return 10;
-                        default:
-                            return -5;
-                    }
+                case 0:
+                    return -5;
+                case 1:
+                    return 2.5;
+                case 2:
+                    return 5;
+                default:
+                    return 10;
                 }
+            }
         }
     };
     // CO - Intel
@@ -302,7 +278,7 @@ var Constructor = function()
     this.getLongCODescription = function()
     {
         return qsTr("\nGlobal Effect: Unit Ranks are 50% more effective. Units without a Rank loose 5% firepower.") +
-               qsTr("\nCO Zone Effect: Unit Ranks are 100% more effective.");
+                qsTr("\nCO Zone Effect: Unit Ranks are 100% more effective.");
     };
     this.getPowerDescription = function()
     {

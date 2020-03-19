@@ -222,7 +222,7 @@
 <context>
     <name>ACTION_JOIN</name>
     <message>
-        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="34"/>
+        <location filename="../resources/scripts/actions/ACTION_JOIN.js" line="33"/>
         <source>Join</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1287,47 +1287,27 @@ This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="220"/>
-        <source>Soldier</source>
+        <location filename="../objects/dialogmodifyunit.cpp" line="229"/>
+        <source>Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="220"/>
-        <source>Lieutenant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="220"/>
-        <source>General</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="220"/>
-        <source>Veteran</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="220"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="226"/>
         <source>CO 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="220"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="227"/>
         <source>CO 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="222"/>
-        <source>Selects the Rank of this Unit. CO Ranks may be replaced with Veteran. This is immediatly applied.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="254"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="273"/>
         <source>Loaded Unit </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../objects/dialogmodifyunit.cpp" line="268"/>
+        <location filename="../objects/dialogmodifyunit.cpp" line="287"/>
         <source>Selects the unit loaded by the transporter. - for no unit. This is immediatly applied.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1939,18 +1919,18 @@ This is immediatly applied.</source>
 <context>
     <name>GameEnums</name>
     <message>
-        <location filename="../game/GameEnums.cpp" line="121"/>
+        <location filename="../game/GameEnums.cpp" line="118"/>
         <source>Air</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../game/GameEnums.cpp" line="125"/>
+        <location filename="../game/GameEnums.cpp" line="122"/>
         <source>Naval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../game/GameEnums.cpp" line="126"/>
         <location filename="../game/GameEnums.cpp" line="129"/>
-        <location filename="../game/GameEnums.cpp" line="132"/>
         <source>Ground</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11411,104 +11391,104 @@ CO Zone Effect: Direct Units gain 35% additional firepower.</source>
 <context>
     <name>co_meiyo</name>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="288"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="264"/>
         <source>The Supreme Commander of Golden Sun. A veteran of a lot of battles who relies on experienced troops.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="292"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="268"/>
         <source>Veterans</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="296"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="272"/>
         <source>Recruits</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="300"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="276"/>
         <source>Firepower rises the higher a rank of a unit is. However unexperienced units are weaker.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="304"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="280"/>
         <source>
 Global Effect: Unit Ranks are 50% more effective. Units without a Rank loose 5% firepower.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="305"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="281"/>
         <source>
 CO Zone Effect: Unit Ranks are 100% more effective.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="309"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="285"/>
         <source>Units with a higher rank have even higher defence and offense.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="313"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="289"/>
         <source>Training Camp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="317"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="293"/>
         <source>Units with a higher rank have even higher defence and offense. All units gain two ranks.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="321"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="297"/>
         <source>War Training</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="325"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="301"/>
         <source>Get those recruits out of my way!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="326"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="302"/>
         <source>An army of veterans awaits you...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="327"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="303"/>
         <source>I know how to train soldiers!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="328"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="304"/>
         <source>An old soldier without wounds is the most dangerous.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="332"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="308"/>
         <source>A knight needs to be strong and experienced!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="333"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="309"/>
         <source>The better prepared knight wins.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="334"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="310"/>
         <source>Experience always wins.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="338"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="314"/>
         <source>You getting better recuit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="339"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="315"/>
         <source>Tsss! Some recruits have one! A catastroph.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../resources/scripts/cos/co_meiyo.js" line="343"/>
+        <location filename="../resources/scripts/cos/co_meiyo.js" line="319"/>
         <source>Meiyo</source>
         <translation type="unfinished"></translation>
     </message>

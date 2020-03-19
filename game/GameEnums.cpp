@@ -22,9 +22,6 @@ void GameEnums::registerEnums()
     value.setProperty("RocketTarget_HpLowMoney", RocketTarget_HpLowMoney);
 
     value.setProperty("UnitRank_None", UnitRank_None);
-    value.setProperty("UnitRank_Lieutenant", UnitRank_Lieutenant);
-    value.setProperty("UnitRank_General", UnitRank_General);
-    value.setProperty("UnitRank_Veteran", UnitRank_Veteran);
     value.setProperty("UnitRank_CO0", UnitRank_CO0);
     value.setProperty("UnitRank_CO1", UnitRank_CO1);
 

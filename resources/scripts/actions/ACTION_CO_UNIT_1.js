@@ -20,7 +20,7 @@ var Constructor = function()
             if (((constructionList.indexOf(unit.getUnitID()) >= 0) || (building.getBuildingID() === "HQ")) &&
                 (unit.getUnitCosts() / 2 <= unit.getOwner().getFunds()) &&
                 (co !== null) && (co.getCOUnit() === null) &&
-                (unit.getUnitRank() <= GameEnums.UnitRank_Veteran) &&
+                (unit.getUnitRank() >= GameEnums.UnitRank_None) &&
                 (unit.getOwner() === building.getOwner()))
             {
                 return true;

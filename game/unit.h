@@ -66,7 +66,7 @@ public:
      */
     inline virtual qint32 getVersion() override
     {
-        return 13;
+        return 14;
     }
 
 
@@ -311,8 +311,8 @@ public slots:
      */
     bool isStealthed(Player* pPlayer, bool ignoreOutOfVisionRange = false, qint32 testX = -1, qint32 testY = -1);
 
-    GameEnums::UnitRanks getUnitRank() const;
-    void setUnitRank(const GameEnums::UnitRanks &UnitRank);
+    qint32 getUnitRank() const;
+    void setUnitRank(const qint32 &UnitRank);
 
     qint32 getVision(QPoint position);
     void setVision(const qint32 &value);
@@ -726,6 +726,22 @@ public slots:
      * @param fuelChange
      */
     void modifyUnit(qint32 hpChange, qint32 ammo1Change, qint32 ammo2Change, qint32 fuelChange);
+    /**
+     * @brief getMaxUnitRang
+     * @return
+     */
+    qint32 getMaxUnitRang();
+    /**
+     * @brief getUnitRangIcon
+     * @return
+     */
+    QString getUnitRangIcon();
+    /**
+     * @brief getUnitRangName
+     * @param rang
+     * @return
+     */
+    static QString getUnitRangName(qint32 rang);
 protected:
     /**
      * @brief updateIconTweens creates the visibility toogle tweens for all icons
@@ -781,7 +797,7 @@ private:
     bool m_Moved{false};
     QVector<spUnit> m_TransportUnits;
     qint32 capturePoints{0};
-    GameEnums::UnitRanks m_UnitRank{GameEnums::UnitRank_None};
+    qint32 m_UnitRank{GameEnums::UnitRank_None};
 
     qint32 m_cloaked{false};
     bool m_Hidden{false};

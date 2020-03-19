@@ -217,14 +217,33 @@ void DialogModifyUnit::updateData()
     pLabel->setHtmlText(tr("Unit Rank: "));
     pLabel->setPosition(10, y);
     m_pPanel->addItem(pLabel);
-    items = {tr("Soldier"), tr("Lieutenant"), tr("General"), tr("Veteran"), tr("CO 1"), tr("CO 2")};
+    items.clear();
+    qint32 maxRang = m_pUnit->getMaxUnitRang();
+    for (qint32 i = 0; i <= maxRang; i++)
+    {
+        items.append(m_pUnit->getUnitRangName(i));
+    }
+    items.append(tr("CO 1"));
+    items.append(tr("CO 2"));
     pDropdownmenu = new DropDownmenu(300, items);
-    pDropdownmenu->setTooltipText(tr("Selects the Rank of this Unit. CO Ranks may be replaced with Veteran. This is immediatly applied."));
+    pDropdownmenu->setTooltipText(tr("Selects the Rank of this Unit. CO Ranks may be replaced with highest rang. This is immediatly applied."));
     pDropdownmenu->setPosition(sliderOffset - 160, y);
     pDropdownmenu->setCurrentItem(static_cast<qint32>(m_pUnit->getUnitRank()));
+    qint32 size = items.size();
     connect(pDropdownmenu.get(), &DropDownmenu::sigItemChanged, [=](qint32 value)
     {
-        m_pUnit->setUnitRank(static_cast<GameEnums::UnitRanks>(value));
+        if (size - 2 == value)
+        {
+            m_pUnit->setUnitRank(GameEnums::UnitRank_CO0);
+        }
+        else if (size - 1 == value)
+        {
+            m_pUnit->setUnitRank(GameEnums::UnitRank_CO1);
+        }
+        else
+        {
+            m_pUnit->setUnitRank(value);
+        }
     });
     m_pPanel->addItem(pDropdownmenu);
     y += 40;

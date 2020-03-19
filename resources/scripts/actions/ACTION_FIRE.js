@@ -519,10 +519,7 @@ var Constructor = function()
             attacker = null;
             if (defUnit !== null)
             {
-                if (defUnit.getUnitRank() < GameEnums.UnitRank_Veteran)
-                {
-                    defUnit.setUnitRank(defUnit.getUnitRank() + 1);
-                }
+                UNITRANKINGSYSTEM.increaseRang(defUnit);
             }
         }
         // level up and attacker destruction
@@ -531,11 +528,8 @@ var Constructor = function()
             defUnit.killUnit();
             // we destroyed a unit nice
             map.getGameRecorder().destroyedUnit(attacker.getOwner().getPlayerID());
-            defUnit = null;
-            if (attacker.getUnitRank() < GameEnums.UnitRank_Veteran)
-            {
-                attacker.setUnitRank(attacker.getUnitRank() + 1);
-            }
+            defUnit = null;            
+            UNITRANKINGSYSTEM.increaseRang(attacker);
         }
         ACTION_FIRE.postUnitAnimationAttacker = null;
         ACTION_FIRE.postUnitAnimationDefender = null;

@@ -34,12 +34,9 @@ public:
 
     enum UnitRanks
     {
-        UnitRank_None,
-        UnitRank_Lieutenant,
-        UnitRank_General,
-        UnitRank_Veteran,
-        UnitRank_CO0,
-        UnitRank_CO1
+        UnitRank_CO0 = -1,
+        UnitRank_CO1 = -2,
+        UnitRank_None = 0,
     };
     Q_ENUM(UnitRanks)
 

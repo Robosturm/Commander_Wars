@@ -147,12 +147,12 @@ void Unit::setOwner(Player* pOwner)
     if (m_UnitRank == GameEnums::UnitRank_CO0)
     {
         m_pOwner->getCO(0)->setCOUnit(nullptr);
-        setUnitRank(GameEnums::UnitRank_Veteran);
+        setUnitRank(getMaxUnitRang());
     }
     else if (m_UnitRank == GameEnums::UnitRank_CO1)
     {
         m_pOwner->getCO(1)->setCOUnit(nullptr);
-        setUnitRank(GameEnums::UnitRank_Veteran);
+        setUnitRank(getMaxUnitRang());
     }
     if (m_CORange.get() != nullptr)
     {
@@ -356,12 +356,55 @@ void Unit::updateSprites()
     }
 }
 
-GameEnums::UnitRanks Unit::getUnitRank() const
+qint32 Unit::getUnitRank() const
 {
     return m_UnitRank;
 }
 
-void Unit::setUnitRank(const GameEnums::UnitRanks &UnitRank)
+qint32 Unit::getMaxUnitRang()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getMaxRang";
+    QJSValueList args;
+    QJSValue obj = pInterpreter->newQObject(this);
+    args << obj;
+    QJSValue ret = pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
+    if (ret.isNumber())
+    {
+        return ret.toNumber();
+    }
+    return 0;
+}
+
+QString Unit::getUnitRangIcon()
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getIcon";
+    QJSValueList args;
+    args << m_UnitRank;
+    QJSValue ret = pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    return "";
+}
+
+QString Unit::getUnitRangName(qint32 rang)
+{
+    Interpreter* pInterpreter = Interpreter::getInstance();
+    QString function1 = "getName";
+    QJSValueList args;
+    args << rang;
+    QJSValue ret = pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
+    if (ret.isString())
+    {
+        return ret.toString();
+    }
+    return "Unknown";
+}
+
+void Unit::setUnitRank(const qint32 &UnitRank)
 {
     GameMap* pMap = GameMap::getInstance();
     if (pMap != nullptr)
@@ -372,43 +415,15 @@ void Unit::setUnitRank(const GameEnums::UnitRanks &UnitRank)
         {
             m_UnitRank = UnitRank;
         }
-        unloadIcon("lieutenant");
-        unloadIcon("general");
-        unloadIcon("veteran");
         unloadIcon("co0");
         unloadIcon("co1");
-        switch (m_UnitRank)
-        {
-            case GameEnums::UnitRank_None:
-            {
-                break;
-            }
-            case GameEnums::UnitRank_Lieutenant:
-            {
-                loadIcon("lieutenant", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
-                break;
-            }
-            case GameEnums::UnitRank_General:
-            {
-                loadIcon("general", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
-                break;
-            }
-            case GameEnums::UnitRank_Veteran:
-            {
-                loadIcon("veteran", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
-                break;
-            }
-            case GameEnums::UnitRank_CO0:
-            {
-                loadIcon("co0", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
-                break;
-            }
-            case GameEnums::UnitRank_CO1:
-            {
-                loadIcon("co1", GameMap::Imagesize / 2, GameMap::Imagesize / 2);
-                break;
-            }
-        }
+        Interpreter* pInterpreter = Interpreter::getInstance();
+        QJSValueList args;
+        QString function1 = "unloadIcons";
+        QJSValue obj1 = pInterpreter->newQObject(this);
+        args << obj1;
+        QJSValue ret = pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args);
+        loadIcon(getUnitRangIcon(), GameMap::Imagesize / 2, GameMap::Imagesize / 2);
     }
 }
 
@@ -920,6 +935,7 @@ void Unit::postAction()
 
 qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosition, bool isDefender)
 {
+    Interpreter* pInterpreter = Interpreter::getInstance();
     qint32 bonus = 0;
     bonus += getBonus(m_OffensiveBonus);
     bonus += getUnitBonusOffensive(position, pDefender, defPosition, isDefender);
@@ -959,7 +975,7 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
     if (pCO0 != nullptr && pCO1 != nullptr &&
         pCO0->getPowerMode() == GameEnums::PowerMode_Tagpower)
     {
-        Interpreter* pInterpreter = Interpreter::getInstance();
+
         QString function1 = "getTagpower";
         QJSValueList args1;
         QJSValue obj1 = pInterpreter->newQObject(pCO0);
@@ -990,29 +1006,14 @@ qint32 Unit::getBonusOffensive(QPoint position, Unit* pDefender, QPoint defPosit
     bonus += pMap->getGameRules()->getCurrentWeather()->getOffensiveModifier();
     if (pMap->getGameRules()->getRankingSystem())
     {
-        switch (m_UnitRank)
+        QString function1 = "getOffensiveBonus";
+        QJSValueList args1;
+        QJSValue obj1 = pInterpreter->newQObject(this);
+        args1 << obj1;
+        QJSValue erg = pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args1);
+        if (erg.isNumber())
         {
-            case GameEnums::UnitRank_None:
-            {
-                break;
-            }
-            case GameEnums::UnitRank_Lieutenant:
-            {
-                bonus += 5;
-                break;
-            }
-            case GameEnums::UnitRank_General:
-            {
-                bonus += 10;
-                break;
-            }
-            case GameEnums::UnitRank_Veteran:
-            case GameEnums::UnitRank_CO0:
-            case GameEnums::UnitRank_CO1:
-            {
-                bonus += 20;
-                break;
-            }
+            bonus += erg.toNumber();
         }
     }
     return bonus;
@@ -1118,6 +1119,7 @@ qint32 Unit::getUnitBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkP
 
 qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosition, bool isDefender)
 {
+    Interpreter* pInterpreter = Interpreter::getInstance();
     GameMap* pMap = GameMap::getInstance();
     qint32 bonus = 0;
     bonus += getBonus(m_DefensiveBonus);
@@ -1168,28 +1170,16 @@ qint32 Unit::getBonusDefensive(QPoint position, Unit* pAttacker, QPoint atkPosit
         bonus += getTerrainDefense() * 10;
     }
     bonus += pMap->getGameRules()->getCurrentWeather()->getDefensiveModifier();
-    switch (m_UnitRank)
+    if (pMap->getGameRules()->getRankingSystem())
     {
-        case GameEnums::UnitRank_None:
+        QString function1 = "getDefensiveBonus";
+        QJSValueList args1;
+        QJSValue obj1 = pInterpreter->newQObject(this);
+        args1 << obj1;
+        QJSValue erg = pInterpreter->doFunction("UNITRANKINGSYSTEM", function1, args1);
+        if (erg.isNumber())
         {
-            break;
-        }
-        case GameEnums::UnitRank_Lieutenant:
-        {
-            bonus += 0;
-            break;
-        }
-        case GameEnums::UnitRank_General:
-        {
-            bonus += 0;
-            break;
-        }
-        case GameEnums::UnitRank_Veteran:
-        case GameEnums::UnitRank_CO0:
-        case GameEnums::UnitRank_CO1:
-        {
-            bonus += 20;
-            break;
+            bonus += erg.toNumber();
         }
     }
     return bonus;
@@ -1289,7 +1279,7 @@ void Unit::makeCOUnit(quint8 co)
     }
     else if (pCO == nullptr || pCO->getCOUnit() != this)
     {
-        setUnitRank(GameEnums::UnitRank_Veteran);
+        setUnitRank(getMaxUnitRang());
     }
 }
 
@@ -2164,7 +2154,7 @@ void Unit::loadIcon(QString iconID, qint32 x, qint32 y)
         }
     }
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(iconID);
+    oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(iconID, oxygine::ep_ignore_error);
     if (pAnim != nullptr)
     {
         oxygine::spSprite pSprite = new oxygine::Sprite();
@@ -2186,16 +2176,12 @@ void Unit::loadIcon(QString iconID, qint32 x, qint32 y)
 
         updateIconTweens();
     }
-    else
-    {
-        Console::print("Unable to load icon sprite: " + iconID, Console::eERROR);
-    }
 }
 
 void Unit::unloadIcon(QString iconID)
 {
     UnitSpriteManager* pUnitSpriteManager = UnitSpriteManager::getInstance();
-    oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(iconID);
+    oxygine::ResAnim* pAnim = pUnitSpriteManager->getResAnim(iconID, oxygine::ep_ignore_error);
     if (pAnim != nullptr)
     {
         for (qint32 i = 0; i < m_pIconSprites.size(); i++)
@@ -2590,7 +2576,27 @@ void Unit::deserializeObject(QDataStream& pStream)
     setFuel(fuel);
     qint32 value = 0;
     pStream >> value;
-    setUnitRank(static_cast<GameEnums::UnitRanks>(value));
+    if (version > 13)
+    {
+        setUnitRank(value);
+    }
+    else
+    {
+        // mapping for older versions
+        if (value == 4)
+        {
+            setUnitRank(GameEnums::UnitRank_CO0);
+        }
+        else if (value == 5)
+        {
+            setUnitRank(GameEnums::UnitRank_CO1);
+        }
+        else
+        {
+            setUnitRank(value);
+        }
+    }
+
     quint32 playerID = 0;
     pStream >> playerID;
     m_pOwner = GameMap::getInstance()->getPlayer(playerID);

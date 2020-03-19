@@ -9,44 +9,38 @@ CO_MEIYO.getOffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Superpower:
             switch (attacker.getUnitRank())
             {
-            case GameEnums.UnitRank_Lieutenant:
+            case 0:
                 return 10;
-            case GameEnums.UnitRank_General:
+            case 1:
                 return 20;
-            case GameEnums.UnitRank_Veteran:
-            case GameEnums.UnitRank_CO0:
-            case GameEnums.UnitRank_CO1:
-                return 40;
+            case 2:
+                return 30;
             default:
-                return 0;
+                return 50;
             }
         case GameEnums.PowerMode_Power:
             switch (attacker.getUnitRank())
             {
-            case GameEnums.UnitRank_Lieutenant:
+            case 0:
                 return 10;
-            case GameEnums.UnitRank_General:
+            case 1:
                 return 20;
-            case GameEnums.UnitRank_Veteran:
-            case GameEnums.UnitRank_CO0:
-            case GameEnums.UnitRank_CO1:
-                return 40;
+            case 2:
+                return 30;
             default:
-                return 0;
+                return 50;
             }
         default:
             switch (attacker.getUnitRank())
             {
-            case GameEnums.UnitRank_Lieutenant:
+            case 0:
                 return 5;
-            case GameEnums.UnitRank_General:
-                return 10;
-            case GameEnums.UnitRank_Veteran:
-            case GameEnums.UnitRank_CO0:
-            case GameEnums.UnitRank_CO1:
+            case 1:
+                return 15;
+            case 2:
                 return 20;
             default:
-                return -5;
+                return 30;
             }
         }
     }
@@ -64,44 +58,38 @@ CO_MEIYO.getDeffensiveBonus = function(co, attacker, atkPosX, atkPosY,
         case GameEnums.PowerMode_Superpower:
             switch (defender.getUnitRank())
             {
-            case GameEnums.UnitRank_Lieutenant:
+            case 0:
                 return 10;
-            case GameEnums.UnitRank_General:
+            case 1:
                 return 20;
-            case GameEnums.UnitRank_Veteran:
-            case GameEnums.UnitRank_CO0:
-            case GameEnums.UnitRank_CO1:
-                return 40;
+            case 2:
+                return 30;
             default:
-                return 0;
+                return 50;
             }
         case GameEnums.PowerMode_Power:
             switch (defender.getUnitRank())
             {
-            case GameEnums.UnitRank_Lieutenant:
+            case 0:
                 return 10;
-            case GameEnums.UnitRank_General:
+            case 1:
                 return 20;
-            case GameEnums.UnitRank_Veteran:
-            case GameEnums.UnitRank_CO0:
-            case GameEnums.UnitRank_CO1:
-                return 40;
+            case 2:
+                return 30;
             default:
-                return 0;
+                return 50;
             }
         default:
             switch (defender.getUnitRank())
             {
-            case GameEnums.UnitRank_Lieutenant:
-                return 5;
-            case GameEnums.UnitRank_General:
+            case 0:
                 return 10;
-            case GameEnums.UnitRank_Veteran:
-            case GameEnums.UnitRank_CO0:
-            case GameEnums.UnitRank_CO1:
+            case 1:
+                return 15;
+            case 2:
                 return 20;
             default:
-                return 0;
+                return 30;
             }
         }
     }

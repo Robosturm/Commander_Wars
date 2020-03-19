@@ -160,7 +160,7 @@ bool NormalAi::buildCOUnit(QmlVectorUnit* pUnits)
             {
                 Unit* pUnit = pUnits->at(i);
 
-                if (pUnit->getUnitValue() >= 6000 && pUnit->getUnitRank() < GameEnums::UnitRank_CO0)
+                if (pUnit->getUnitValue() >= 6000 && pUnit->getUnitRank() >= GameEnums::UnitRank_None)
                 {
                     active++;
                 }

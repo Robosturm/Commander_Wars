@@ -20,8 +20,7 @@ var Constructor = function()
                 // join is only allowed with units that don't have anything loaded
                 (unit.getLoadedUnitCount() === 0) && (targetUnit.getLoadedUnitCount() === 0) &&
                 (targetUnit.getHpRounded() < 10) &&
-                !((targetUnit.getUnitRank() > GameEnums.UnitRank_Veteran) &&
-                 (unit.getUnitRank() > GameEnums.UnitRank_Veteran)))
+                ((targetUnit.getUnitRank() >= GameEnums.UnitRank_None)))
 			{
 				return true;
 			}
@@ -80,7 +79,8 @@ var Constructor = function()
             ACTION_JOIN.postAnimationTargetUnit.getOwner().addFunds(income);
             hp = 10;
         }
-        if (ACTION_JOIN.postAnimationUnit.getUnitRank() > ACTION_JOIN.postAnimationTargetUnit.getUnitRank())
+        if (ACTION_JOIN.postAnimationUnit.getUnitRank() > ACTION_JOIN.postAnimationTargetUnit.getUnitRank() &&
+            ACTION_JOIN.postAnimationUnit.getUnitRank() >= GameEnums.UnitRank_None)
         {
             ACTION_JOIN.postAnimationTargetUnit.setUnitRank(ACTION_JOIN.postAnimationUnit.getUnitRank());
         }
