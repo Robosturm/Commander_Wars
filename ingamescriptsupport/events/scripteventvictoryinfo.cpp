@@ -1,5 +1,6 @@
 #include "scripteventvictoryinfo.h"
 
+#include "ingamescriptsupport/scriptdata.h"
 #include "ingamescriptsupport/scripteditor.h"
 #include "ingamescriptsupport/genericbox.h"
 
@@ -19,7 +20,7 @@ ScriptEventVictoryInfo::ScriptEventVictoryInfo()
 void ScriptEventVictoryInfo::readEvent(QTextStream& rStream)
 {
     QString line = rStream.readLine().simplified();
-    QStringList items = line.replace("variables.createVariable(\"victory_info\").writeDataString(\"", "")
+    QStringList items = line.replace(QString(ScriptData::variables) + ".createVariable(\"victory_info\").writeDataString(\"", "")
                             .replace("\"); // ", ",").split(",");
     if (items.size() >= 1)
     {
@@ -29,7 +30,7 @@ void ScriptEventVictoryInfo::readEvent(QTextStream& rStream)
 
 void ScriptEventVictoryInfo::writeEvent(QTextStream& rStream)
 {
-    rStream <<  "            variables.createVariable(\"victory_info\").writeDataString(\"" << info << "\"); // "
+    rStream <<  "            " << ScriptData::variables << ".createVariable(\"victory_info\").writeDataString(\"" << info << "\"); // "
             << QString::number(getVersion()) << " " << EventVictoryInfo << "\n";
 }
 

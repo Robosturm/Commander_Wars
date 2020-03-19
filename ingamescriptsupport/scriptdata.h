@@ -23,6 +23,8 @@ public:
     static const QString victory;
     static const QString actionConditions;
     static const QString turnStart;
+    static constexpr auto campaignVariables = "campaignVariables";
+    static constexpr auto variables = "variables";
 
     explicit ScriptData();
     /**

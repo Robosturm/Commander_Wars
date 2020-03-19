@@ -46,7 +46,7 @@ void ScriptConditionTerrainDestroyed::readCondition(QTextStream& rStream)
 void ScriptConditionTerrainDestroyed::writePreCondition(QTextStream& rStream)
 {
     m_executed = ScriptData::getVariableName();
-    rStream << "        var " << m_executed << " = variables.createVariable(\"" << m_executed << "\");\n";
+    rStream << "        var " << m_executed << " = " << ScriptData::variables << ".createVariable(\"" << m_executed << "\");\n";
     if (subCondition.get() != nullptr)
     {
         subCondition->writePreCondition(rStream);

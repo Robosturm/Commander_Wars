@@ -11,6 +11,7 @@
 #include "scripteventmodifyunit.h"
 #include "scripteventanimation.h"
 #include "scripteventvictoryinfo.h"
+#include "scripteventmodifyvariable.h"
 
 const QString ScriptEvent::EventDialog  = "Dialog";
 const QString ScriptEvent::EventSpawnUnit = "Spawn Unit";
@@ -23,6 +24,7 @@ const QString ScriptEvent::EventModifyUnit = "Modify Unit";
 const QString ScriptEvent::EventAnimation = "Animation";
 const QString ScriptEvent::EventModifyTerrain = "Modify Terrain";
 const QString ScriptEvent::EventVictoryInfo = "Victory Info";
+const QString ScriptEvent::EventModifyVariable = "Modify Variable";
 
 ScriptEvent::ScriptEvent(EventType type)
     : QObject(),
@@ -79,6 +81,10 @@ spScriptEvent ScriptEvent::createReadEvent(QTextStream& rStream)
     else if (line.endsWith(EventVictoryInfo))
     {
          ret = new ScriptEventVictoryInfo();
+    }
+    else if (line.endsWith(EventModifyVariable))
+    {
+         ret = new ScriptEventModifyVariable();
     }
     if (ret != nullptr)
     {
@@ -139,6 +145,10 @@ spScriptEvent ScriptEvent::createEvent(EventType type)
         case EventType::victoryInfo:
         {
             return new ScriptEventVictoryInfo();
+        }
+        case EventType::modifyVariable:
+        {
+            return new ScriptEventModifyVariable();
         }
     }
     return nullptr;

@@ -158,8 +158,8 @@ void ScriptData::writeScript(QTextStream& rStream)
 
     rStream << "    this.getVictoryInfo = function() // " + victoryInfo + "\n";
     rStream << "    {\n";
-    rStream << "        var variables = map.getGameScript().getVariables();\n";
-    rStream << "        var textData = variables.createVariable(\"victory_info\");\n";
+    rStream << "        var " << variables << " = map.getGameScript().getVariables();\n";
+    rStream << "        var textData = " << variables << ".createVariable(\"victory_info\");\n";
     rStream << "        return textData.readDataString();\n";
     rStream << "    }; // " + victoryInfo + "\n";
 
@@ -179,10 +179,10 @@ void ScriptData::writeScript(QTextStream& rStream)
     // turn start
     rStream << "    this.turnStart = function(turn, player) { // " + turnStart + "\n";
     rStream << "    // precondition\n";
-    rStream << "        var variables = map.getGameScript().getVariables();\n";
-    rStream << "        var campaignVariables;\n";
+    rStream << "        var " << variables << " = map.getGameScript().getVariables();\n";
+    rStream << "        var " << campaignVariables << ";\n";
     rStream << "        if (map.getCampaign() !== null){\n";
-    rStream << "            var campaignVariables = map.getCampaign().getVariables();\n";
+    rStream << "            var " << campaignVariables << " = map.getCampaign().getVariables();\n";
     rStream << "        }\n";
     rStream << "    // preconditionend\n";
 
@@ -200,10 +200,10 @@ void ScriptData::writeScript(QTextStream& rStream)
     // action conditions
     rStream << "    this.actionDone = function() { // " + actionConditions + "\n";
     rStream << "    // precondition\n";
-    rStream << "        var variables = map.getGameScript().getVariables();\n";
-    rStream << "        var campaignVariables;\n";
+    rStream << "        var " << variables << " = map.getGameScript().getVariables();\n";
+    rStream << "        var " << campaignVariables << ";\n";
     rStream << "        if (map.getCampaign() !== null){\n";
-    rStream << "            var campaignVariables = map.getCampaign().getVariables();\n";
+    rStream << "            var " << campaignVariables << " = map.getCampaign().getVariables();\n";
     rStream << "        }\n";
     for (qint32 i = 0; i < m_ActionConditions.size(); i++)
     {

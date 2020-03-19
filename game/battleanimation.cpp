@@ -501,5 +501,5 @@ void BattleAnimation::loadImpactAnimation(Unit* pUnit1, Unit* pUnit2, spBattleAn
     pSprite->setMaxUnitCount(-1);
     pSprite->setHpRounded(curHp);
 
-    battleTimer.start(pSprite->getImpactDurationMS(pUnit1) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
+    battleTimer.start(pSprite->getImpactDurationMS(pUnit2) / static_cast<qint32>(Settings::getBattleAnimationSpeed()));
 }

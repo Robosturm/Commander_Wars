@@ -110,7 +110,7 @@ void ScriptConditionPlayerReachedArea::readCondition(QTextStream& rStream)
 void ScriptConditionPlayerReachedArea::writePreCondition(QTextStream& rStream)
 {
     m_executed = ScriptData::getVariableName();
-    rStream << "        var " << m_executed << " = variables.createVariable(\"" << m_executed << "\");\n";
+    rStream << "        var " << m_executed << " = " << ScriptData::variables << ".createVariable(\"" << m_executed << "\");\n";
     if (subCondition.get() != nullptr)
     {
         subCondition->writePreCondition(rStream);

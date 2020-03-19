@@ -116,8 +116,8 @@ void ScriptConditionUnitReachedArea::writePreCondition(QTextStream& rStream)
 {
     m_executed = ScriptData::getVariableName();
     m_unitID = ScriptData::getVariableName();
-    rStream << "        var " << m_executed << " = variables.createVariable(\"" << m_executed << "\");\n";
-    rStream << "        var " << m_unitID << " = variables.createVariable(\"" << m_unitID << "\");\n";
+    rStream << "        var " << m_executed << " = " << ScriptData::variables << ".createVariable(\"" << m_executed << "\");\n";
+    rStream << "        var " << m_unitID << " = " << ScriptData::variables << ".createVariable(\"" << m_unitID << "\");\n";
     rStream << "        var " << m_unitID << "Value = " << m_unitID << ".readDataInt32();\n";
     rStream << "        if (" << m_unitID << "Value === 0){" << m_unitID << ".writeDataInt32(map.getTerrain(" << m_UnitX << ", " << m_UnitY << ").getUnit().getUniqueID());}\n";
     rStream << "        " << m_unitID << "Value = " << m_unitID << ".readDataInt32();\n";

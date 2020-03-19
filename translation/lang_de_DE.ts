@@ -4078,59 +4078,59 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="97"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="98"/>
         <source>The new event that should happen once the conditions are met.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="101"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="102"/>
         <source>Add Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="114"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="115"/>
         <source>Immediate Start: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="118"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="119"/>
         <source>If checked the game starts without beeing able to change rules, players or co&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="125"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="126"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="133"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="134"/>
         <source>Save Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="140"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="141"/>
         <source>Load Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="160"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="161"/>
         <source>Do you want to exit the script editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="301"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="382"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="302"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="383"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="308"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="389"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="309"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="390"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="316"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="317"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4471,6 +4471,49 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
 </context>
 <context>
+    <name>ScriptEventModifyVariable</name>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="92"/>
+        <source>Variable: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="96"/>
+        <source>Name of the Variable that should be changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="108"/>
+        <source>Modifier: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="113"/>
+        <source>The way how the variable gets modified.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="125"/>
+        <source>Value: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="129"/>
+        <source>The value modifying the variable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="141"/>
+        <source>Campaign Variable: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="145"/>
+        <source>If checked the map needs to be played in a campaign and the variable is avaible during all campaign maps and in the campaign.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ScriptEventSpawnUnit</name>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventspawnunit.cpp" line="115"/>
@@ -4526,7 +4569,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
 <context>
     <name>ScriptEventVictoryInfo</name>
     <message>
-        <location filename="../ingamescriptsupport/events/scripteventvictoryinfo.cpp" line="60"/>
+        <location filename="../ingamescriptsupport/events/scripteventvictoryinfo.cpp" line="61"/>
         <source>Victory Info: </source>
         <translation type="unfinished"></translation>
     </message>
