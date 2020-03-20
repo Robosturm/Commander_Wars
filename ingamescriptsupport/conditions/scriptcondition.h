@@ -34,7 +34,8 @@ public:
         unitsDestroyed,
         buildingsOwned,
         playerReachedArea,
-        unitReachedArea
+        unitReachedArea,
+        checkVariable,
     };
     static const QString ConditionVictory;
     static const QString ConditionStartOfTurn;
@@ -48,6 +49,7 @@ public:
     static const QString ConditionBuildingsOwned;
     static const QString ConditionPlayerReachedArea;
     static const QString ConditionUnitReachedArea;
+    static const QString ConditionCheckVariable;
 
     /**
      * @brief createCondition

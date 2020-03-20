@@ -136,6 +136,11 @@ public slots:
      */
     void setVisionHigh(const qint32 &VisionHigh);
     /**
+     * @brief getTotalVisionHigh
+     * @return
+     */
+    qint32 getTotalVisionHigh();
+    /**
      * @brief postBattleActions
      * @param damage
      * @param pUnit

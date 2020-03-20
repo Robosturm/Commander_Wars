@@ -598,7 +598,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                     QmlVectorPoint* pPoints;
                     if (visionBlock)
                     {
-                        pPoints = pMap->getVisionCircle(x, y, 0, visionRange, pTerrain->getVisionHigh());
+                        pPoints = pMap->getVisionCircle(x, y, 0, visionRange, pTerrain->getTotalVisionHigh());
                     }
                     else
                     {
@@ -635,7 +635,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                         QmlVectorPoint* pPoints;
                         if (visionBlock)
                         {
-                            pPoints = pMap->getVisionCircle(x, y, 0, visionRange, pBuilding->getVisionHigh() + pTerrain->getVisionHigh());
+                            pPoints = pMap->getVisionCircle(x, y, 0, visionRange, pBuilding->getTotalVisionHigh());
                         }
                         else
                         {
@@ -671,7 +671,7 @@ void Player::updatePlayerVision(bool reduceTimer)
                     {
                         if (pBuilding != nullptr)
                         {
-                            pPoints = pMap->getVisionCircle(x, y, 0, visionRange,  pUnit->getVisionHigh() + pBuilding->getVisionHigh() + pTerrain->getVisionHigh());
+                            pPoints = pMap->getVisionCircle(x, y, 0, visionRange,  pUnit->getTotalVisionHigh());
                         }
                         else
                         {

@@ -92,6 +92,15 @@ public slots:
      * @param VisionHigh
      */
     void setVisionHigh(qint32 VisionHigh);
+    /**
+     * @brief getTotalVisionHigh
+     * @return
+     */
+    qint32 getTotalVisionHigh();
+    /**
+     * @brief getBaseTerrain
+     * @return
+     */
     QStringList getBaseTerrain();
     /**
      * @brief getNeutralLoaded

@@ -666,6 +666,11 @@ void Building::setVisionHigh(qint32 VisionHigh)
     m_VisionHigh = VisionHigh;
 }
 
+qint32 Building::getTotalVisionHigh()
+{
+    return m_pTerrain->getTotalVisionHigh();
+}
+
 bool Building::getNeutralLoaded() const
 {
     return neutralLoaded;

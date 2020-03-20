@@ -167,11 +167,7 @@ QmlVectorPoint* GameMap::getVisionCircle(qint32 x, qint32 y, qint32 minVisionRan
                     }
                 }
                 Terrain* pTerrain = getTerrain(current.x(), current.y());
-                qint32 currentHeigth = pTerrain->getVisionHigh();
-                if (pTerrain->getBuilding() != nullptr)
-                {
-                    currentHeigth += pTerrain->getBuilding()->getVisionHigh();
-                }
+                qint32 currentHeigth = pTerrain->getTotalVisionHigh();
                 // we can see over the terrain continue vision range
                 if (currentHeigth <= visionHigh && distance + 1 <= maxVisionRange)
                 {

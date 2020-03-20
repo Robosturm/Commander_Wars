@@ -344,6 +344,7 @@ set(${PROJECT_NAME}_SRCS
         ingamescriptsupport/conditions/scriptconditionbuildingsowned.cpp
         ingamescriptsupport/conditions/ScriptConditionPlayerReachedArea.cpp
         ingamescriptsupport/conditions/ScriptConditionUnitReachedArea.cpp
+        ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp
         # event stuff
         ingamescriptsupport/events/scriptevent.cpp
         ingamescriptsupport/events/scripteventdialog.cpp

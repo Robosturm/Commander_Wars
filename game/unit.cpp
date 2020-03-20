@@ -60,7 +60,7 @@ Unit::Unit(QString unitID, Player* pOwner, bool aquireId)
         {
             m_UniqueID = GameMap::getInstance()->getUniqueIdCounter();
         }
-    }        
+    }
 }
 
 Unit::~Unit()
@@ -313,7 +313,7 @@ void Unit::updateSprites()
     Interpreter* pInterpreter = Interpreter::getInstance();
     for (qint32 i = 0; i < m_pUnitSprites.size(); i++)
     {
-        m_pUnitSprites[i]->detach();        
+        m_pUnitSprites[i]->detach();
     }
     for (qint32 i = 0; i < m_pUnitWaitSprites.size(); i++)
     {
@@ -1055,7 +1055,7 @@ qint32 Unit::getTerrainDefense()
 }
 
 float Unit::getDamageReduction(float damage, Unit* pAttacker, QPoint position, qint32 attackerBaseHp,
-                          QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
+                               QPoint defPosition, bool isDefender, GameEnums::LuckDamageMode luckMode)
 {
     float bonus = 0;
     CO* pCO = m_pOwner->getCO(0);
@@ -1400,7 +1400,7 @@ qint32 Unit::getMovementCosts(qint32 x, qint32 y, qint32 curX, qint32 curY)
         Player* pPlayer = pMap->getPlayer(i);
         if (pPlayer != nullptr &&
             (pPlayer->isEnemy(m_pOwner) ||
-            m_pOwner == pPlayer))
+             m_pOwner == pPlayer))
         {
             costs += pPlayer->getMovementcostModifier(this, QPoint(x, y));
         }
@@ -1769,7 +1769,7 @@ QString Unit::getUnitDamageID()
         }
         return retStr;
     }
-        return m_UnitID;
+    return m_UnitID;
 }
 
 float Unit::getUnitDamage(QString weaponID)
@@ -1804,7 +1804,7 @@ qint32 Unit::getY() const
 {
     if (m_pTerrain != nullptr)
     {
-       return m_pTerrain->getY();
+        return m_pTerrain->getY();
     }
     else
     {
@@ -1969,7 +1969,7 @@ qint32 Unit::getMovementFuelCostModifier(qint32 fuelCost)
         Player* pPlayer = pMap->getPlayer(i);
         if (pPlayer != nullptr &&
             (pPlayer->isEnemy(m_pOwner) ||
-            m_pOwner == pPlayer))
+             m_pOwner == pPlayer))
         {
             CO* pCO = pPlayer->getCO(0);
             if (pCO != nullptr)
@@ -2020,21 +2020,13 @@ void Unit::moveUnit(QVector<QPoint> movePath)
         QmlVectorPoint* pCircle;
         qint32 visionRange = getVision(movePath[i]);
         Terrain* pTerrain = pMap->getTerrain(movePath[i].x(), movePath[i].y());
-        Building* pBuilding = pTerrain->getBuilding();
         if (visionBlock)
         {
-            if (pBuilding != nullptr)
-            {
-                pCircle = pMap->getVisionCircle(movePath[i].x(), movePath[i].y(), 0, visionRange,  getVisionHigh() + pBuilding->getVisionHigh() + pTerrain->getVisionHigh());
-            }
-            else
-            {
-                pCircle = pMap->getVisionCircle(movePath[i].x(), movePath[i].y(), 0, visionRange,  getVisionHigh() + pTerrain->getVisionHigh());
-            }
+            pCircle = pMap->getVisionCircle(movePath[i].x(), movePath[i].y(), 0, visionRange,  getVisionHigh() + pTerrain->getTotalVisionHigh());
         }
         else
         {
-          pCircle = Mainapp::getCircle(0, visionRange);
+            pCircle = Mainapp::getCircle(0, visionRange);
         }
         for (qint32 i2 = 0; i2 < pCircle->size(); i2++)
         {
@@ -2251,6 +2243,20 @@ qint32 Unit::getVisionHigh() const
 void Unit::setVisionHigh(const qint32 &VisionHigh)
 {
     m_VisionHigh = VisionHigh;
+}
+
+qint32 Unit::getTotalVisionHigh()
+{
+    qint32 high = m_VisionHigh;
+    if (m_pTerrain != nullptr)
+    {
+        high += m_pTerrain->getTotalVisionHigh();
+    }
+    if (high < 0)
+    {
+        high = 0;
+    }
+    return high;
 }
 
 qint32 Unit::getCloaked() const
@@ -2578,6 +2584,7 @@ void Unit::serializeObject(QDataStream& pStream)
         pStream << m_FirerangeBonus[i];
     }
     pStream << m_cloaked;
+    pStream << m_VisionHigh;
 }
 
 void Unit::deserializeObject(QDataStream& pStream)
@@ -2738,6 +2745,10 @@ void Unit::deserializeObject(QDataStream& pStream)
     if (version > 12)
     {
         pStream >> m_cloaked;
+    }
+    if (version > 13)
+    {
+        pStream >> m_VisionHigh;
     }
 }
 

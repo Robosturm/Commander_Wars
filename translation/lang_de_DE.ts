@@ -3709,6 +3709,49 @@ This is immediatly applied.</source>
     </message>
 </context>
 <context>
+    <name>ScriptConditionCheckVariable</name>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="111"/>
+        <source>Variable: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="115"/>
+        <source>Name of the Variable that should be changed. Try not to use names starting with &quot;variable&quot;. This name is used by the system.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="127"/>
+        <source>Modifier: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="132"/>
+        <source>The way how the variable gets compared with the constant. variable compare value </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="144"/>
+        <source>Value: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="148"/>
+        <source>The value modifying the variable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="160"/>
+        <source>Campaign Variable: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ingamescriptsupport/conditions/scriptconditioncheckvariable.cpp" line="164"/>
+        <source>If checked the map needs to be played in a campaign and the variable is avaible during all campaign maps and in the campaign.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ScriptConditionEachDay</name>
     <message>
         <location filename="../ingamescriptsupport/conditions/scriptconditioneachday.cpp" line="103"/>
@@ -4053,74 +4096,74 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="64"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="65"/>
         <source>Condition type you wan&apos;t to create. If a condition is selected this condition and the selected one need to be fullfilled to activate the event.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="68"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="69"/>
         <source>Add Condition</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="79"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="80"/>
         <source>Events</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="98"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="99"/>
         <source>The new event that should happen once the conditions are met.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="102"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="103"/>
         <source>Add Event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="115"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="116"/>
         <source>Immediate Start: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="119"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="120"/>
         <source>If checked the game starts without beeing able to change rules, players or co&apos;s.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="126"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="127"/>
         <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="134"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="135"/>
         <source>Save Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="141"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="142"/>
         <source>Load Script</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="161"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="162"/>
         <source>Do you want to exit the script editor?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="302"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="383"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="303"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="384"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="309"/>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="390"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="310"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="391"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ingamescriptsupport/scripteditor.cpp" line="317"/>
+        <location filename="../ingamescriptsupport/scripteditor.cpp" line="318"/>
         <source>Select</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4469,7 +4512,7 @@ Note: CO 1 and CO 2 represent the CO of the current Player.</source>
     </message>
     <message>
         <location filename="../ingamescriptsupport/events/scripteventmodifyvariable.cpp" line="96"/>
-        <source>Name of the Variable that should be changed.</source>
+        <source>Name of the Variable that should be changed. Try not to use names starting with &quot;variable&quot;. This name is used by the system.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -16228,6 +16271,39 @@ CO Zone Effect: Units have 30% increased firepower during sandstorm.</source>
     <message>
         <location filename="../resources/scripts/units/transportplane.js" line="105"/>
         <source>ground units. No attack capability.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>unitrankingsystem</name>
+    <message>
+        <location filename="../resources/scripts/general/unitrankingsystem.js" line="12"/>
+        <source>Soldier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/unitrankingsystem.js" line="12"/>
+        <source>Experienced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/unitrankingsystem.js" line="12"/>
+        <source>Veteran</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/unitrankingsystem.js" line="12"/>
+        <source>Elite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/unitrankingsystem.js" line="55"/>
+        <source>CO 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../resources/scripts/general/unitrankingsystem.js" line="59"/>
+        <source>CO 2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -582,7 +582,7 @@ bool VeryEasyAI::moveUnit(GameAction* pAction, Unit* pUnit, QStringList& actions
             {
                 if (action.startsWith(ACTION_PLACE))
                 {
-                    pAction->setActionID(ACTION_PLACE);
+                    pAction->setActionID(action);
                     if (pAction->canBePerformed())
                     {
                         MarkedFieldData* pData = pAction->getMarkedFieldStepData();

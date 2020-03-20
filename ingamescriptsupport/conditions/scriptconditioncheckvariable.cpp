@@ -1,4 +1,4 @@
-#include "scripteventmodifyvariable.h"
+#include "scriptconditioncheckvariable.h"
 
 #include "ingamescriptsupport/scripteditor.h"
 #include "ingamescriptsupport/genericbox.h"
@@ -7,75 +7,94 @@
 
 #include "coreengine/mainapp.h"
 
-#include "objects/textbox.h"
 #include "objects/spinbox.h"
+#include "objects/textbox.h"
 #include "objects/dropdownmenu.h"
-#include "objects/checkbox.h"
 
-ScriptEventModifyVariable::ScriptEventModifyVariable()
-    : ScriptEvent (EventType::modifyVariable)
+ScriptConditionCheckVariable::ScriptConditionCheckVariable()
+    : ScriptCondition (ConditionType::checkVariable)
 {
 
 }
 
-void ScriptEventModifyVariable::readEvent(QTextStream& rStream)
+void ScriptConditionCheckVariable::readCondition(QTextStream& rStream)
 {
     QString line = rStream.readLine().simplified();
-    QString variableName;
+    line = line.replace("if (", "");
     if (line.startsWith(ScriptData::variables))
     {
-        variableName = ScriptData::variables;
+        line = line.replace(QString(ScriptData::variables) + ".createVariable(\"", "");
         m_CampaignVariable = false;
     }
     else
     {
-        variableName = ScriptData::campaignVariables;
+        line = line.replace(QString(ScriptData::campaignVariables) + ".createVariable(\"", "");
         m_CampaignVariable = true;
     }
-    line = line.replace(variableName + ".createVariable(\"", "");
-    QStringList list = line.replace("\").writeDataInt32(", "@").replace("); // ", "@").split("@");
-    if (list.size() > 2)
+    QStringList items = line.replace("\").readDataInt32() ", "@")
+                        .replace(") { // ", "@")
+                        .replace(" ", "@").split("@");
+    if (items.size() >= 3)
     {
-        m_variable = list[0];
-        if (list[1].startsWith(m_variable))
+        m_Variable = items[0];
+        m_Compare = items[1];
+        m_value = items[2].toInt();
+    }
+    while (!rStream.atEnd())
+    {
+        if (readSubCondition(rStream, ConditionVictory))
         {
-            QString item = list[1].replace(m_variable + "\").readDataInt32() ", "");
-            QStringList items = list[1].split(" ");
-            if (items.size() == 2)
-            {
-                m_Modifier = items[0];
-                m_value = items[1].toInt();
-            }
+            break;
         }
-        else
+        spScriptEvent event = ScriptEvent::createReadEvent(rStream);
+        if (event.get() != nullptr)
         {
-            m_Modifier = "=";
-            m_value = list[1].toInt();
+            events.append(event);
         }
     }
 }
 
-void ScriptEventModifyVariable::writeEvent(QTextStream& rStream)
+void ScriptConditionCheckVariable::writePreCondition(QTextStream& rStream)
 {
-    QString equation;
+    m_executed = ScriptData::getVariableName();
+    rStream << "        var " << m_executed << " = " << ScriptData::variables << ".createVariable(\"" << m_executed << "\");\n";
+    if (subCondition.get() != nullptr)
+    {
+        subCondition->writePreCondition(rStream);
+    }
+}
+
+void ScriptConditionCheckVariable::writeCondition(QTextStream& rStream)
+{
     QString variableName = ScriptData::variables;
     if (m_CampaignVariable)
     {
         variableName = ScriptData::campaignVariables;
     }
-    if (m_Modifier == "=")
+    rStream << "        if (" + variableName + ".createVariable(\"" + m_Variable + "\").readDataInt32() " + m_Compare + " " + QString::number(m_value) + ") { // "
+            << QString::number(getVersion()) << " " << ConditionCheckVariable + "\n";
+    for (qint32 i = 0; i < events.size(); i++)
     {
-        equation = QString::number(m_value);
+        events[i]->writeEvent(rStream);
     }
-    else
+    if (subCondition.get() != nullptr)
     {
-        equation = variableName + ".createVariable(\"" + m_variable + "\").readDataInt32() " + m_Modifier + " " + QString::number(m_value);
+        subCondition->writeCondition(rStream);
     }
-    rStream <<  "            " << variableName << ".createVariable(\"" << m_variable << "\").writeDataInt32(" << equation << "); // "
-            << QString::number(getVersion()) << " " << EventModifyVariable << "\n";
+    rStream << "        } // " + ConditionCheckVariable + " End\n";
 }
 
-void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
+void ScriptConditionCheckVariable::writePostCondition(QTextStream& rStream)
+{
+    ScriptCondition::writePostCondition(rStream);
+    for (qint32 i = 0; i < events.size(); i++)
+    {
+        events[i]->writeEvent(rStream);
+    }
+    rStream << "            " << m_executed << ".writeDataBool(true);\n";
+}
+
+void ScriptConditionCheckVariable::showEditCondition(spScriptEditor pScriptEditor)
 {
     spGenericBox pBox = new GenericBox();
 
@@ -95,11 +114,11 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     spTextbox textBox = new Textbox(300);
     textBox->setTooltipText(tr("Name of the Variable that should be changed. Try not to use names starting with \"variable\". This name is used by the system."));
     textBox->setPosition(width, 30);
-    textBox->setCurrentText(m_variable);
+    textBox->setCurrentText(m_Variable);
     connect(textBox.get(), &Textbox::sigTextChanged,
             [=](QString value)
     {
-        m_variable = value;
+        m_Variable = value;
     });
     pBox->addItem(textBox);
 
@@ -108,15 +127,15 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Modifier: "));
     pText->setPosition(30, 70);
     pBox->addItem(pText);
-    QVector<QString> items = {"=", "+", "-", "*", "/", "%"};
+    QVector<QString> items = {"===", "!==", ">=", "<="};
     spDropDownmenu dropDown = new DropDownmenu(150, items);
-    dropDown->setTooltipText(tr("The way how the variable gets modified."));
+    dropDown->setTooltipText(tr("The way how the variable gets compared with the constant. variable compare value "));
     dropDown->setPosition(width, 70);
-    dropDown->setCurrentItemText(m_Modifier);
+    dropDown->setCurrentItemText(m_Compare);
     connect(dropDown.get(), &DropDownmenu::sigItemChanged,
             [=](qint32)
     {
-        m_Modifier = dropDown->getCurrentItemText();
+        m_Compare = dropDown->getCurrentItemText();
     });
     pBox->addItem(dropDown);
 
@@ -125,7 +144,7 @@ void ScriptEventModifyVariable::showEditEvent(spScriptEditor pScriptEditor)
     pText->setHtmlText(tr("Value: "));
     pText->setPosition(30, 110);
     pBox->addItem(pText);
-    spSpinBox spinBox = new SpinBox(150, 0, 999999);
+    spSpinBox spinBox = new SpinBox(150, -999999, 999999);
     spinBox->setTooltipText(tr("The value modifying the variable."));
     spinBox->setPosition(width, 110);
     spinBox->setCurrentValue(m_value);

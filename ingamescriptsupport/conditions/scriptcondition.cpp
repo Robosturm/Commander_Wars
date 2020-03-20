@@ -12,6 +12,7 @@
 #include "scriptconditionbuildingsowned.h"
 #include "ScriptConditionUnitReachedArea.h"
 #include "scriptconditionplayerreachedarea.h"
+#include "scriptconditioncheckvariable.h"
 
 const QString ScriptCondition::ConditionVictory = "Victory";
 const QString ScriptCondition::ConditionStartOfTurn = "Start Of Turn";
@@ -25,7 +26,7 @@ const QString ScriptCondition::ConditionUnitsDestroyed = "Units Destroyed";
 const QString ScriptCondition::ConditionBuildingsOwned = "Buildings Owned";
 const QString ScriptCondition::ConditionPlayerReachedArea = "Player in Area";
 const QString ScriptCondition::ConditionUnitReachedArea = "Unit in Area";
-
+const QString ScriptCondition::ConditionCheckVariable = "Check Variable";
 
 ScriptCondition::ScriptCondition(ConditionType type)
     : QObject(),
@@ -141,6 +142,10 @@ ScriptCondition* ScriptCondition::createCondition(ConditionType type)
         {
             return new ScriptConditionTerrainDestroyed();
         }
+        case ConditionType::checkVariable:
+        {
+            return new ScriptConditionCheckVariable();
+        }
     }
     return nullptr;
 }
@@ -200,6 +205,10 @@ ScriptCondition* ScriptCondition::createReadCondition(QTextStream& rStream)
     {
         ret = new ScriptConditionTerrainDestroyed();
     }
+    else if (line.endsWith(ConditionCheckVariable))
+    {
+        ret = new ScriptConditionCheckVariable();
+    }
     if (ret != nullptr)
     {
         ret->readCondition(rStream);
@@ -236,9 +245,24 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
 {
     switch (type1)
     {
+        case ScriptCondition::ConditionType::checkVariable:
+        {
+            return true;
+        }
         case ScriptCondition::ConditionType::victory:
         {
-            return (type2 == type1);
+            switch (type2)
+            {
+                case ScriptCondition::ConditionType::victory:
+                case ScriptCondition::ConditionType::checkVariable:
+                {
+                    return true;
+                }
+                default:
+                {
+                    return false;
+                }
+            }
         }
         case ScriptCondition::ConditionType::startOfTurn:
         case ScriptCondition::ConditionType::eachDay:
@@ -247,6 +271,7 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
             {
                 case ScriptCondition::ConditionType::startOfTurn:
                 case ScriptCondition::ConditionType::eachDay:
+                case ScriptCondition::ConditionType::checkVariable:
                 {
                     return true;
                 }
@@ -277,6 +302,7 @@ bool ScriptCondition::sameConditionGroup(ConditionType type1, ConditionType type
                 case ScriptCondition::ConditionType::unitDestroyed:
                 case ScriptCondition::ConditionType::unitReachedArea:
                 case ScriptCondition::ConditionType::playerReachedArea:
+                case ScriptCondition::ConditionType::checkVariable:
                 {
                     return true;
                 }

@@ -71,6 +71,20 @@ void Terrain::setVisionHigh(const qint32 &VisionHigh)
     m_VisionHigh = VisionHigh;
 }
 
+qint32 Terrain::getTotalVisionHigh()
+{
+    qint32 high = m_VisionHigh;
+    if (m_Building.get() != nullptr)
+    {
+        high += m_Building->getVisionHigh();
+    }
+    if (high < 0)
+    {
+        high = 0;
+    }
+    return high;
+}
+
 Terrain::~Terrain()
 {
 }

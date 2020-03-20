@@ -59,7 +59,8 @@ ScriptEditor::ScriptEditor()
                               tr(ScriptCondition::ConditionUnitsDestroyed.toStdString().c_str()),
                               tr(ScriptCondition::ConditionBuildingsOwned.toStdString().c_str()),
                               tr(ScriptCondition::ConditionPlayerReachedArea.toStdString().c_str()),
-                              tr(ScriptCondition::ConditionUnitReachedArea.toStdString().c_str())};
+                              tr(ScriptCondition::ConditionUnitReachedArea.toStdString().c_str()),
+                              tr(ScriptCondition::ConditionCheckVariable.toStdString().c_str())};
     m_Conditions = new DropDownmenu(200, items);
     m_Conditions->setTooltipText(tr("Condition type you wan't to create. If a condition is selected this condition and the selected one need to be fullfilled to activate the event."));
     m_Conditions->setPosition(30, pApp->getSettings()->getHeight() / 2 - 45);
@@ -439,6 +440,7 @@ void ScriptEditor::addCondition()
             case ScriptCondition::ConditionType::unitDestroyed:
             case ScriptCondition::ConditionType::unitReachedArea:
             case ScriptCondition::ConditionType::playerReachedArea:
+            case ScriptCondition::ConditionType::checkVariable:
             {
                 pCondition = m_Data->addActionCondition(type);
                 break;
