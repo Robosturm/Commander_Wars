@@ -36,7 +36,7 @@ public slots:
      */
     virtual qint32 getVersion()
     {
-        return 2;
+        return 3;
     }
     /**
      * @brief addCOStyle

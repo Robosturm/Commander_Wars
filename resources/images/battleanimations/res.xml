@@ -412,5 +412,17 @@
 		<image file="iron_shield_generator/iron_shield_generator.png" />
 		<image file="iron_shield_generator/iron_shield_generator+mask.png" />	
 		
+		<!-- iron_shield_generator -->
+		<image file="crystal_tank/crystal_tank.png" />
+		<image file="crystal_tank/crystal_tank+mask.png" />	
+		
+		<!-- missile_sub -->
+		<image file="missile_sub/missile_sub.png" />
+		<image file="missile_sub/missile_sub+mask.png" />	
+		
+		<!-- royal_guard -->
+		<image file="royal_guard/royal_guard.png" />
+		<image file="royal_guard/royal_guard+mask.png" />	
+		
 	</atlas>
 </resources>

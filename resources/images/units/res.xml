@@ -420,11 +420,29 @@
 		<image file="neospider_tank+walk+mask.png" cols = "4" rows = "4" />
 		<image file="neospider_tank+walk.png" cols = "4"  rows = "4" />
 		
-		<!-- neospider_tank -->
+		<!-- iron shield generator -->
 		<image file="iron_shield_generator.png" cols = "4" />
 		<image file="iron_shield_generator+mask.png" cols = "4" />
 		<image file="iron_shield_generator+walk+mask.png" cols = "4" rows = "4" />
 		<image file="iron_shield_generator+walk.png" cols = "4"  rows = "4" />
+		
+		<!-- crystal tank -->
+		<image file="crystal_tank.png" cols = "4" />
+		<image file="crystal_tank+mask.png" cols = "4" />
+		<image file="crystal_tank+walk+mask.png" cols = "4" rows = "4" />
+		<image file="crystal_tank+walk.png" cols = "4"  rows = "4" />
+		
+		<!-- missile sub -->
+		<image file="missile_sub.png" cols = "4" />
+		<image file="missile_sub+mask.png" cols = "4" />
+		<image file="missile_sub+walk+mask.png" cols = "4" rows = "4" />
+		<image file="missile_sub+walk.png" cols = "4"  rows = "4" />
+		
+		<!-- royal guard -->
+		<image file="royal_guard.png" cols = "4" />
+		<image file="royal_guard+mask.png" cols = "4" />
+		<image file="royal_guard+walk+mask.png" cols = "4" rows = "4" />
+		<image file="royal_guard+walk.png" cols = "4"  rows = "4" />
 		
 	</atlas>
 </resources>
